@@ -29,18 +29,17 @@ jobs:
         with:
           node-version: '18'
           
-      - name: Install dependencies
-        run: npm install
+      - name: Clear npm cache
+        run: npm cache clean --force
         
-      - name: Verify installation
+      - name: Install dependencies
         run: |
-          ls node_modules/.bin
-          which react-scripts || echo "react-scripts not in PATH"
+          npm install --verbose
+          ls -la
+          ls -la node_modules/.bin || echo "node_modules/.bin does not exist"
         
       - name: Build React app
-        run: |
-          export PATH=$PATH:./node_modules/.bin
-          npm run build
+        run: npx react-scripts build
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
