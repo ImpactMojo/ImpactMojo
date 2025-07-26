@@ -14,9 +14,7 @@ import {
   X,
   Bookmark,
   Plus,
-  MessageCircle,
-  BookmarkIcon,
-  Star
+  MessageCircle
 } from 'lucide-react';
 
 // Mock auth system for development
