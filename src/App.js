@@ -299,7 +299,7 @@ function App() {
 
 // Navbar Component
 function Navbar() {
-  const { user, currentPage, setCurrentPage, handleSignOut } = useAuth();
+  const { user, currentPage, setCurrentPage, handleSignOut, signInWithGoogle } = useAuth();
   const { darkMode, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -786,7 +786,7 @@ function LabCard({ lab }) {
           {lab.description}
         </p>
         
-        <a
+        
           href={lab.content}
           target="_blank"
           rel="noopener noreferrer"
@@ -816,7 +816,7 @@ function ResourceCard({ resource }) {
         {resource.description}
       </p>
       
-      <a
+      
         href={resource.link}
         target="_blank"
         rel="noopener noreferrer"
