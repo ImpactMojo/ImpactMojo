@@ -30,10 +30,8 @@ import {
   Send,
   ArrowRight,
   CheckCircle,
-  Users,
   Target,
   Award,
-  Calendar,
   Lightbulb
 } from 'lucide-react';
 
@@ -1155,24 +1153,24 @@ function HomePage() {
             <div className="mb-6">
               <img
                 src="https://via.placeholder.com/120"
-                alt="Varna Sri"
+                alt="Varna Sri Raman"
                 className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-blue-500"
               />
               <h3 className="text-2xl font-bold mb-2">About the Maker</h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Created by <strong>Varna Sri</strong> - Development economist passionate about democratizing knowledge for social impact. Building bridges between research and practice.
+                Created by <strong>Varna Sri Raman</strong> - Development economist passionate about democratizing knowledge for social impact. Building bridges between research and practice.
               </p>
               <div className="flex justify-center space-x-6">
-                <a href="https://threads.net/@varnasr" className="text-blue-600 hover:text-blue-700 font-medium" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.threads.com/@varnasriraman" className="text-blue-600 hover:text-blue-700 font-medium" target="_blank" rel="noopener noreferrer">
                   Threads
                 </a>
-                <a href="https://notion.so/@varnasr" className="text-blue-600 hover:text-blue-700 font-medium" target="_blank" rel="noopener noreferrer">
+                <a href="https://vfolio.notion.site/" className="text-blue-600 hover:text-blue-700 font-medium" target="_blank" rel="noopener noreferrer">
                   Notion
                 </a>
-                <a href="https://linkedin.com/in/varnasr" className="text-blue-600 hover:text-blue-700 font-medium" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/varna/" className="text-blue-600 hover:text-blue-700 font-medium" target="_blank" rel="noopener noreferrer">
                   LinkedIn
                 </a>
-                <a href="https://varna.substack.com" className="text-blue-600 hover:text-blue-700 font-medium" target="_blank" rel="noopener noreferrer">
+                <a href="https://varna.substack.com/" className="text-blue-600 hover:text-blue-700 font-medium" target="_blank" rel="noopener noreferrer">
                   Substack
                 </a>
               </div>
