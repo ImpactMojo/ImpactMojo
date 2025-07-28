@@ -28,8 +28,6 @@ import {
   Building,
   Play,
   Send,
-  ArrowRight,
-  CheckCircle,
   Target,
   Award,
   Lightbulb
