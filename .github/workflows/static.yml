@@ -1,19 +1,15 @@
 name: Deploy React App to GitHub Pages
-
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 concurrency:
   group: "pages"
   cancel-in-progress: false
-
 jobs:
   build-and-deploy:
     environment:
@@ -49,6 +45,7 @@ jobs:
         run: |
           export NODE_OPTIONS="--max-old-space-size=4096"
           export PATH="$PWD/node_modules/.bin:$PATH"
+          export CI=false
           react-scripts build
           
       - name: Verify build output
