@@ -2610,16 +2610,4 @@ function App() {
   );
 }
 
-export default App;-gray-600 dark:text-gray-300">Bookmarked Courses</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{bookmarks.length}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-300">Learning Tracks</span>
-                  <span className="font-medium text-gray-900 dark:text-white">4</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-300">Available Labs</span>
-                  <span className="font-medium text-gray-900 dark:text-white">12</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text
+export default App;
