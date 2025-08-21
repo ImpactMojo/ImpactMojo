@@ -815,16 +815,139 @@ const handoutsData = [
   }
 ];
 
-// AI Tools Data
+// AI Tools Data - Complete 16 tools with detailed instructions  
 const aiToolsData = [
-  { id: 'AI1', name: 'Policy Brief Generator', description: 'Generate structured policy briefs from your research', category: 'Writing' },
-  { id: 'AI2', name: 'Research Question Refiner', description: 'Refine and improve your research questions', category: 'Research' },
-  { id: 'AI3', name: 'Data Story Creator', description: 'Turn data insights into compelling narratives', category: 'Analysis' },
-  { id: 'AI4', name: 'Grant Proposal Assistant', description: 'Help structure and improve grant proposals', category: 'Writing' },
-  { id: 'AI5', name: 'Impact Measurement Framework', description: 'Design frameworks to measure social impact', category: 'Analysis' },
-  { id: 'AI6', name: 'Stakeholder Mapping Tool', description: 'Identify and map project stakeholders', category: 'Planning' },
-  { id: 'AI7', name: 'Literature Review Helper', description: 'Organize and synthesize academic literature', category: 'Research' },
-  { id: 'AI8', name: 'Workshop Facilitator', description: 'Plan and structure workshop sessions', category: 'Planning' }
+  // Enhanced existing 8 tools
+  { 
+    id: 'AI1', 
+    name: 'Policy Brief Generator', 
+    description: 'Generate structured policy briefs from your research data and analysis', 
+    category: 'Writing',
+    instructions: 'Enter your research topic, key findings, and recommendations. The tool will create a professional policy brief with executive summary, background, analysis, and policy recommendations sections.',
+    howToUse: 'Steps: 1) Input policy topic/issue 2) Add key research findings 3) Include stakeholder information 4) Specify target audience 5) Generate structured brief'
+  },
+  { 
+    id: 'AI2', 
+    name: 'Research Question Refiner', 
+    description: 'Refine and improve your research questions for better focus and clarity', 
+    category: 'Research',
+    instructions: 'Paste your draft research question(s). The tool will analyze for clarity, specificity, feasibility, and suggest improvements to make them more focused and researchable.',
+    howToUse: 'Steps: 1) Enter initial research question 2) Specify research field 3) Indicate study type 4) Get refined suggestions'
+  },
+  { 
+    id: 'AI3', 
+    name: 'Data Story Creator', 
+    description: 'Turn data insights into compelling narratives and visualizations', 
+    category: 'Analysis',
+    instructions: 'Upload your data or describe key findings. The tool helps create narrative structures that make your data accessible and engaging for your target audience.',
+    howToUse: 'Steps: 1) Input data/findings 2) Define audience 3) Choose story format 4) Select key messages 5) Generate narrative'
+  },
+  { 
+    id: 'AI4', 
+    name: 'Grant Proposal Assistant', 
+    description: 'Help structure and improve grant proposals with proven frameworks', 
+    category: 'Writing',
+    instructions: 'Provide your project idea, budget range, and target funder. The tool structures proposals with compelling problem statements, methodology, and impact projections.',
+    howToUse: 'Steps: 1) Describe project concept 2) Enter budget requirements 3) Specify funder type 4) Add timeline 5) Generate framework'
+  },
+  { 
+    id: 'AI5', 
+    name: 'Impact Measurement Framework', 
+    description: 'Design comprehensive frameworks to measure and evaluate social impact', 
+    category: 'Analysis',
+    instructions: 'Define your program goals and activities. The tool creates logic models, identifies key indicators, and suggests measurement approaches for tracking social impact.',
+    howToUse: 'Steps: 1) Enter program objectives 2) List activities 3) Define beneficiaries 4) Specify timeframe 5) Generate framework'
+  },
+  { 
+    id: 'AI6', 
+    name: 'Stakeholder Mapping Tool', 
+    description: 'Identify and map project stakeholders with influence and interest analysis', 
+    category: 'Planning',
+    instructions: 'Describe your project or initiative. The tool identifies relevant stakeholders, analyzes their influence/interest levels, and suggests engagement strategies.',
+    howToUse: 'Steps: 1) Describe project scope 2) List known stakeholders 3) Define objectives 4) Specify area 5) Generate stakeholder map'
+  },
+  { 
+    id: 'AI7', 
+    name: 'Literature Review Helper', 
+    description: 'Organize and synthesize academic literature with thematic analysis', 
+    category: 'Research',
+    instructions: 'Input research topic and key papers. The tool organizes sources by themes, identifies gaps, and creates synthesis summaries for comprehensive reviews.',
+    howToUse: 'Steps: 1) Enter research topic 2) Add paper abstracts 3) Specify scope 4) Choose organization method 5) Generate synthesis'
+  },
+  { 
+    id: 'AI8', 
+    name: 'Workshop Facilitator', 
+    description: 'Plan and structure effective workshop sessions with activities and timelines', 
+    category: 'Planning',
+    instructions: 'Specify workshop objectives, duration, and participant type. The tool creates detailed agendas with activities, timing, materials, and facilitation tips.',
+    howToUse: 'Steps: 1) Define goals 2) Set duration/participants 3) Choose activities 4) Specify outcomes 5) Generate agenda'
+  },
+
+  // New 8 tools from developer brief
+  { 
+    id: 'AI9', 
+    name: 'Worksheet Generator', 
+    description: 'Generate educational worksheets with various question types on any topic', 
+    category: 'Teaching',
+    instructions: 'Enter your topic, difficulty level, and preferred question types. The tool creates printable worksheets with instructions, varied exercises, and answer keys.',
+    howToUse: 'Steps: 1) Enter subject/topic 2) Select difficulty 3) Choose question types 4) Set question count 5) Generate worksheet'
+  },
+  { 
+    id: 'AI10', 
+    name: 'Choice Board Generator', 
+    description: 'Create activity choice boards for differentiated learning with multiple options', 
+    category: 'Teaching',
+    instructions: 'Provide learning topic and objectives. The tool creates a grid of diverse activities for different learning styles (visual, auditory, kinesthetic, reading/writing).',
+    howToUse: 'Steps: 1) Enter learning topic 2) Define objectives 3) Choose board size 4) Specify grade level 5) Generate choice board'
+  },
+  { 
+    id: 'AI11', 
+    name: 'Multiple Choice Assessment Generator', 
+    description: 'Generate comprehensive MCQ assessments from content with answer keys', 
+    category: 'Assessment',
+    instructions: 'Paste content (text, article, chapter) or enter topics. The tool creates multiple-choice questions with 4 options each, ensuring correct answers and plausible distractors.',
+    howToUse: 'Steps: 1) Input source content 2) Set question count 3) Choose difficulty 4) Specify grade level 5) Generate MCQ assessment'
+  },
+  { 
+    id: 'AI12', 
+    name: 'Writing Feedback Tool', 
+    description: 'Provide detailed AI-powered feedback on student writing with improvement suggestions', 
+    category: 'Assessment',
+    instructions: 'Paste student writing sample. The tool analyzes grammar, structure, clarity, and content, providing constructive feedback with specific improvements.',
+    howToUse: 'Steps: 1) Paste writing sample 2) Select writing type 3) Choose grade level 4) Set feedback focus 5) Generate feedback'
+  },
+  { 
+    id: 'AI13', 
+    name: 'Text Proofreader', 
+    description: 'Advanced grammar, spelling, and style checking for any text content', 
+    category: 'Writing',
+    instructions: 'Paste any text needing proofreading. The tool corrects grammar, spelling, punctuation, and improves clarity while maintaining original meaning and tone.',
+    howToUse: 'Steps: 1) Paste text to proofread 2) Select text type 3) Choose correction level 4) Generate corrected version'
+  },
+  { 
+    id: 'AI14', 
+    name: 'Sentence Starter Generator', 
+    description: 'Generate engaging opening sentences and writing prompts to overcome writer\'s block', 
+    category: 'Writing',
+    instructions: 'Enter writing topic or theme. The tool generates multiple engaging sentence starters and prompts suitable for essays, creative writing, or academic assignments.',
+    howToUse: 'Steps: 1) Enter topic/theme 2) Choose writing type 3) Set starter count 4) Specify audience level 5) Generate starters'
+  },
+  { 
+    id: 'AI15', 
+    name: 'Jeopardy Review Game', 
+    description: 'Create Jeopardy-style quiz games with categories and point values for classroom review', 
+    category: 'Games',
+    instructions: 'Enter review topic and preferred categories. The tool creates a complete Jeopardy game with 5 questions per category, increasing in difficulty from $100-$500.',
+    howToUse: 'Steps: 1) Enter main topic 2) Choose categories (3-5) 3) Set difficulty range 4) Specify grade level 5) Generate Jeopardy game'
+  },
+  { 
+    id: 'AI16', 
+    name: 'Escape Room Generator', 
+    description: 'Design educational escape room experiences with interconnected puzzles and storylines', 
+    category: 'Games',
+    instructions: 'Provide educational topic and learning objectives. The tool creates an immersive storyline with 5-7 interconnected puzzles that teach key concepts while engaging students.',
+    howToUse: 'Steps: 1) Enter educational topic 2) Define learning objectives 3) Choose theme 4) Set difficulty 5) Generate escape room'
+  }
 ];
 
 // Authentication Context
