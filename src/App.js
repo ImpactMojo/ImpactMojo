@@ -1517,21 +1517,28 @@ const Navigation = () => {
   );
 };
 
+// Main App Content Component
+const AppContent = () => {
+  const { darkMode } = usePage();
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
+      <Navigation />
+      {/* Rest of your app components would go here */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome to ImpactMojo</h1>
+        <p className="mt-2 text-gray-600 dark:text-gray-300">Your platform for development learning and tools</p>
+      </div>
+    </div>
+  );
+};
+
 // Main App Component
 const App = () => {
-  const { darkMode } = usePage(); // Added this line to get darkMode from context
-  
   return (
     <AuthProvider>
       <PageProvider>
-        <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
-          <Navigation />
-          {/* Rest of your app components would go here */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome to ImpactMojo</h1>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">Your platform for development learning and tools</p>
-          </div>
-        </div>
+        <AppContent />
       </PageProvider>
     </AuthProvider>
   );
