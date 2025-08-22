@@ -1517,18 +1517,361 @@ const Navigation = () => {
   );
 };
 
-// Main App Content Component
-const AppContent = () => {
+// Home Page Component
+const HomePage = () => {
   const { darkMode } = usePage();
-
+  
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
-      <Navigation />
-      {/* Rest of your app components would go here */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome to ImpactMojo</h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-300">Your platform for development learning and tools</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
+            <span className="block">Welcome to</span>
+            <span className="block text-indigo-600 dark:text-indigo-400">ImpactMojo</span>
+          </h1>
+          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 dark:text-gray-400 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+            Your platform for development learning and tools. Explore courses, labs, and AI-powered tools to enhance your impact.
+          </p>
+          <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+            <div className="rounded-md shadow">
+              <button
+                onClick={() => usePage().setCurrentPage('courses')}
+                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+              >
+                Get started
+              </button>
+            </div>
+            <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
+              <button
+                onClick={() => usePage().setCurrentPage('ai-tools')}
+                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 dark:text-indigo-400 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 md:py-4 md:text-lg md:px-10"
+              >
+                Try AI Tools
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div className="mt-16">
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white text-center">Featured Content</h2>
+          <div className="mt-12 grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none">
+            <div className="flex flex-col rounded-lg shadow-lg overflow-hidden">
+              <div className="flex-1 bg-white dark:bg-gray-800 p-6 flex flex-col justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                    <span>Course</span>
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold text-gray-900 dark:text-white">Gender Studies 101</h3>
+                  <p className="mt-3 text-base text-gray-500 dark:text-gray-400">
+                    Introduction to gender theory and its practical implications in development work.
+                  </p>
+                </div>
+                <div className="mt-6">
+                  <button
+                    onClick={() => usePage().setCurrentPage('courses')}
+                    className="text-base font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
+                  >
+                    Explore courses
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex flex-col rounded-lg shadow-lg overflow-hidden">
+              <div className="flex-1 bg-white dark:bg-gray-800 p-6 flex flex-col justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                    <span>Lab</span>
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold text-gray-900 dark:text-white">Gender Timeline: Climate Edition</h3>
+                  <p className="mt-3 text-base text-gray-500 dark:text-gray-400">
+                    Interactive timeline exploring the intersection of gender and climate change through history.
+                  </p>
+                </div>
+                <div className="mt-6">
+                  <button
+                    onClick={() => usePage().setCurrentPage('labs')}
+                    className="text-base font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
+                  >
+                    Explore labs
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex flex-col rounded-lg shadow-lg overflow-hidden">
+              <div className="flex-1 bg-white dark:bg-gray-800 p-6 flex flex-col justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                    <span>AI Tool</span>
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold text-gray-900 dark:text-white">Theory of Change Builder</h3>
+                  <p className="mt-3 text-base text-gray-500 dark:text-gray-400">
+                    Develop comprehensive Theory of Change frameworks with clear pathways from activities to impact.
+                  </p>
+                </div>
+                <div className="mt-6">
+                  <button
+                    onClick={() => usePage().setCurrentPage('ai-tools')}
+                    className="text-base font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
+                  >
+                    Try AI Tools
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  );
+};
+
+// Courses Page Component
+const CoursesPage = () => {
+  const { darkMode } = usePage();
+  const { bookmarks, toggleBookmark } = useAuth();
+  
+  // Get unique tracks
+  const tracks = [...new Set(courseData.map(course => course.track))];
+  
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+            Development Courses
+          </h1>
+          <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400 sm:mt-4">
+            Explore our comprehensive library of courses designed for development professionals.
+          </p>
+        </div>
+        
+        <div className="mt-12">
+          {tracks.map(track => (
+            <div key={track} className="mb-12">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{track}</h2>
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {courseData
+                  .filter(course => course.track === track)
+                  .map(course => (
+                    <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                      <div className="p-6">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200">
+                              {course.level}
+                            </span>
+                            <h3 className="mt-3 text-lg font-medium text-gray-900 dark:text-white">{course.title}</h3>
+                            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{course.description}</p>
+                          </div>
+                          <button 
+                            onClick={() => toggleBookmark(course.id)}
+                            className="text-gray-400 hover:text-yellow-500 focus:outline-none"
+                          >
+                            {bookmarks.includes(course.id) ? (
+                              <Bookmark className="h-5 w-5 text-yellow-500 fill-current" />
+                            ) : (
+                              <Bookmark className="h-5 w-5" />
+                            )}
+                          </button>
+                        </div>
+                        
+                        <div className="mt-4 flex items-center text-sm text-gray-500 dark:text-gray-400">
+                          <Clock className="flex-shrink-0 mr-1.5 h-4 w-4" />
+                          {course.duration}
+                        </div>
+                        
+                        <div className="mt-6">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                              {course.isPremium ? 'Premium' : 'Free'}
+                            </span>
+                            <a
+                              href={course.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                              Start Course
+                              <ExternalLink className="ml-1 h-4 w-4" />
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Labs Page Component
+const LabsPage = () => {
+  const { darkMode } = usePage();
+  const { bookmarks, toggleBookmark } = useAuth();
+  
+  // Get unique categories
+  const categories = [...new Set(labsData.map(lab => lab.category))];
+  
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+            Interactive Labs
+          </h1>
+          <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400 sm:mt-4">
+            Hands-on learning experiences to apply development concepts in practice.
+          </p>
+        </div>
+        
+        <div className="mt-12">
+          {categories.map(category => (
+            <div key={category} className="mb-12">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{category}</h2>
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {labsData
+                  .filter(lab => lab.category === category)
+                  .map(lab => (
+                    <div key={lab.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                      <div className="p-6">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                              {lab.difficulty}
+                            </span>
+                            <h3 className="mt-3 text-lg font-medium text-gray-900 dark:text-white">{lab.title}</h3>
+                            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{lab.description}</p>
+                          </div>
+                          <button 
+                            onClick={() => toggleBookmark(lab.id)}
+                            className="text-gray-400 hover:text-yellow-500 focus:outline-none"
+                          >
+                            {bookmarks.includes(lab.id) ? (
+                              <Bookmark className="h-5 w-5 text-yellow-500 fill-current" />
+                            ) : (
+                              <Bookmark className="h-5 w-5" />
+                            )}
+                          </button>
+                        </div>
+                        
+                        <div className="mt-4 flex items-center text-sm text-gray-500 dark:text-gray-400">
+                          <Clock className="flex-shrink-0 mr-1.5 h-4 w-4" />
+                          {lab.duration} minutes
+                        </div>
+                        
+                        <div className="mt-6">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-green-600 dark:text-green-400">
+                              {lab.status}
+                            </span>
+                            <a
+                              href={lab.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                            >
+                              Start Lab
+                              <ExternalLink className="ml-1 h-4 w-4" />
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// AI Tools Page Component
+const AIToolsPage = () => {
+  const { darkMode } = usePage();
+  const { bookmarks, toggleBookmark } = useAuth();
+  
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+            AI-Powered Tools
+          </h1>
+          <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400 sm:mt-4">
+            Leverage artificial intelligence to enhance your development work.
+          </p>
+        </div>
+        
+        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {aiToolsData.map(tool => (
+            <div key={tool.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <div className="p-6">
+                <div className="flex justify-between items-start">
+                  <div className="flex items-center">
+                    <div className={`flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-${tool.color}-100 dark:bg-${tool.color}-900`}>
+                      <tool.icon className={`h-6 w-6 text-${tool.color}-600 dark:text-${tool.color}-400`} />
+                    </div>
+                    <h3 className="ml-3 text-lg font-medium text-gray-900 dark:text-white">{tool.title}</h3>
+                  </div>
+                  <button 
+                    onClick={() => toggleBookmark(tool.id)}
+                    className="text-gray-400 hover:text-yellow-500 focus:outline-none"
+                  >
+                    {bookmarks.includes(tool.id) ? (
+                      <Bookmark className="h-5 w-5 text-yellow-500 fill-current" />
+                    ) : (
+                      <Bookmark className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+                
+                <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">{tool.description}</p>
+                
+                <div className="mt-6">
+                  <button
+                    onClick={() => usePage().setCurrentPage('ai-tools')}
+                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Try This Tool
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Main App Content Component
+const AppContent = () => {
+  const { currentPage, darkMode } = usePage();
+  const { loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
+        <Loader2 className="h-12 w-12 animate-spin text-indigo-600" />
+      </div>
+    );
+  }
+
+  return (
+    <div className={darkMode ? 'dark' : ''}>
+      <Navigation />
+      {currentPage === 'home' && <HomePage />}
+      {currentPage === 'courses' && <CoursesPage />}
+      {currentPage === 'labs' && <LabsPage />}
+      {currentPage === 'ai-tools' && <AIToolsPage />}
     </div>
   );
 };
