@@ -10,7 +10,7 @@ import {
   AlertCircle, Info, HelpCircle, Share2, PlayCircle, Scale,
   Lightbulb, Compare, Send, Edit3, Brain, PenTool, FolderOpen,
   Loader2, Copy, Sparkles, Wand2, Bot, Puzzle, Trophy, Shield, Code, ArrowLeft,
-  ClipboardList, DollarSign, Megaphone, Users, Wrench, Build
+  ClipboardList, DollarSign, Megaphone, Wrench, Build
 } from 'lucide-react';
 
 // React Router imports
