@@ -1519,7 +1519,7 @@ const Navigation = () => {
 
 // Home Page Component
 const HomePage = () => {
-  const { darkMode } = usePage();
+  const { darkMode, setCurrentPage } = usePage();
   
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
@@ -1535,7 +1535,7 @@ const HomePage = () => {
           <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div className="rounded-md shadow">
               <button
-                onClick={() => usePage().setCurrentPage('courses')}
+                onClick={() => setCurrentPage('courses')}
                 className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
               >
                 Get started
@@ -1543,7 +1543,7 @@ const HomePage = () => {
             </div>
             <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
               <button
-                onClick={() => usePage().setCurrentPage('ai-tools')}
+                onClick={() => setCurrentPage('ai-tools')}
                 className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 dark:text-indigo-400 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 md:py-4 md:text-lg md:px-10"
               >
                 Try AI Tools
@@ -1568,7 +1568,7 @@ const HomePage = () => {
                 </div>
                 <div className="mt-6">
                   <button
-                    onClick={() => usePage().setCurrentPage('courses')}
+                    onClick={() => setCurrentPage('courses')}
                     className="text-base font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
                   >
                     Explore courses
@@ -1590,7 +1590,7 @@ const HomePage = () => {
                 </div>
                 <div className="mt-6">
                   <button
-                    onClick={() => usePage().setCurrentPage('labs')}
+                    onClick={() => setCurrentPage('labs')}
                     className="text-base font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
                   >
                     Explore labs
@@ -1612,7 +1612,7 @@ const HomePage = () => {
                 </div>
                 <div className="mt-6">
                   <button
-                    onClick={() => usePage().setCurrentPage('ai-tools')}
+                    onClick={() => setCurrentPage('ai-tools')}
                     className="text-base font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
                   >
                     Try AI Tools
@@ -1629,7 +1629,7 @@ const HomePage = () => {
 
 // Courses Page Component
 const CoursesPage = () => {
-  const { darkMode } = usePage();
+  const { darkMode, setCurrentPage } = usePage();
   const { bookmarks, toggleBookmark } = useAuth();
   
   // Get unique tracks
@@ -1712,7 +1712,7 @@ const CoursesPage = () => {
 
 // Labs Page Component
 const LabsPage = () => {
-  const { darkMode } = usePage();
+  const { darkMode, setCurrentPage } = usePage();
   const { bookmarks, toggleBookmark } = useAuth();
   
   // Get unique categories
@@ -1795,7 +1795,7 @@ const LabsPage = () => {
 
 // AI Tools Page Component
 const AIToolsPage = () => {
-  const { darkMode } = usePage();
+  const { darkMode, setCurrentPage } = usePage();
   const { bookmarks, toggleBookmark } = useAuth();
   
   return (
@@ -1837,7 +1837,7 @@ const AIToolsPage = () => {
                 
                 <div className="mt-6">
                   <button
-                    onClick={() => usePage().setCurrentPage('ai-tools')}
+                    onClick={() => setCurrentPage('ai-tools')}
                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Try This Tool
