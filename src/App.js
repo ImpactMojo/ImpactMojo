@@ -9,8 +9,18 @@ import {
   FileText, BarChart, Settings, ArrowRight, CheckCircle,
   AlertCircle, Info, HelpCircle, Share2, PlayCircle, Scale,
   Lightbulb, Compare, Send, Edit3, Brain, PenTool, FolderOpen,
-  Loader2, Copy, Sparkles, Wand2, Bot, Puzzle, Trophy, Shield, Code, ArrowLeft
+  Loader2, Copy, Sparkles, Wand2, Bot, Puzzle, Trophy, Shield, Code, ArrowLeft,
+  ClipboardList, DollarSign, Megaphone, Handshake, Wrench, Build
 } from 'lucide-react';
+
+// React Router imports
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate
+} from 'react-router-dom';
 
 // Firebase imports
 import { initializeApp } from 'firebase/app';
@@ -19,7 +29,9 @@ import {
   GoogleAuthProvider, 
   signInWithPopup, 
   signOut as firebaseSignOut, 
-  onAuthStateChanged 
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
 } from 'firebase/auth';
 import { 
   getFirestore, 
@@ -2928,7 +2940,7 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-750 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="••••••••"
+              placeholder="•••••••••"
             />
           </div>
           
@@ -3085,7 +3097,7 @@ const SignupPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-750 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="••••••••"
+              placeholder="•••••••••"
             />
           </div>
           
@@ -3100,7 +3112,7 @@ const SignupPage = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-750 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="••••••••"
+              placeholder="•••••••••"
             />
           </div>
           
