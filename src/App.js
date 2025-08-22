@@ -1141,7 +1141,7 @@ Constraints:
 - Resources: [what's available]
 - Literacy/Language: [considerations]
 - Technology: [available tools]
-Please create:
+Please provide:
 1. Assessment framework aligned to objectives
 2. Assessment methods mix:
    - Knowledge assessments
@@ -1519,6 +1519,8 @@ const Navigation = () => {
 
 // Main App Component
 const App = () => {
+  const { darkMode } = usePage(); // Added this line to get darkMode from context
+  
   return (
     <AuthProvider>
       <PageProvider>
