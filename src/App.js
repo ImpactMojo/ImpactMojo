@@ -9,7 +9,7 @@ import {
   FileText, BarChart, Settings, ArrowRight, CheckCircle,
   AlertCircle, Info, HelpCircle, Share2, PlayCircle, Scale,
   Lightbulb, Compare, Send, Edit3, Brain, PenTool, FolderOpen,
-  Loader2, Copy, Sparkles, Wand2, Bot, Puzzle, Trophy, Shield, ArrowLeft
+  Loader2, Copy, Sparkles, Wand2, Bot, Puzzle, Trophy, Shield, ArrowLeft, Crown
 } from 'lucide-react';
 
 // Firebase imports
@@ -1218,6 +1218,31 @@ Size: Groups of 4-5 students
 Tech: Tablets available for digital clues/simulations`,
     icon: Puzzle,
     color: 'purple'
+  },
+  // Premium Tools
+  {
+    id: 'im-qual-lab',
+    title: 'IM QualLab',
+    description: 'Advanced qualitative research analysis tool for professional researchers',
+    url: 'https://101.www.impactmojo.in/IMQualLab',
+    isPremium: true,
+    icon: PenTool,
+    color: 'purple',
+    prompt: 'Advanced qualitative research analysis prompt...',
+    systemMessage: 'You are an expert in qualitative research analysis...',
+    exampleInput: 'Example input for IM QualLab...'
+  },
+  {
+    id: 'im-stats-assist',
+    title: 'IM StatsAssist',
+    description: 'Statistical analysis assistant for complex data interpretation',
+    url: 'https://101.www.impactmojo.in/IMStatsAssist',
+    isPremium: true,
+    icon: BarChart,
+    color: 'teal',
+    prompt: 'Statistical analysis assistance prompt...',
+    systemMessage: 'You are an expert statistician specializing in development research...',
+    exampleInput: 'Example input for IM StatsAssist...'
   }
 ];
 
@@ -1367,6 +1392,7 @@ const Navigation = () => {
     { id: 'labs', label: 'Labs', icon: null },
     { id: 'handouts', label: 'Resources', icon: null },
     { id: 'ai-tools', label: 'AI Tools', icon: null },
+    { id: 'premium-tools', label: 'Premium Tools', icon: null, premium: true },
     { id: 'dashboard', label: 'Dashboard', icon: null },
     { id: 'about', label: 'About', icon: null },
     { id: 'contact', label: 'Contact', icon: null },
@@ -1387,19 +1413,25 @@ const Navigation = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-            {navItems.map(item => (
-              <button
-                key={item.id}
-                onClick={() => setCurrentPage(item.id)}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  currentPage === item.id
-                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
+            {navItems.map(item => {
+              // Skip premium tools if not logged in
+              if (item.premium && !user) return null;
+              
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setCurrentPage(item.id)}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
+                    currentPage === item.id
+                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
+                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  {item.label}
+                  {item.premium && <Crown className="w-4 h-4 ml-1 text-yellow-500" />}
+                </button>
+              );
+            })}
             
             <button
               onClick={() => setDarkMode(!darkMode)}
@@ -1436,22 +1468,27 @@ const Navigation = () => {
         {mobileMenuOpen && (
           <div className="md:hidden pb-4">
             <div className="flex flex-col space-y-2">
-              {navItems.map(item => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setCurrentPage(item.id);
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`px-3 py-2 rounded-md text-sm font-medium text-left transition-colors ${
-                    currentPage === item.id
-                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+              {navItems.map(item => {
+                if (item.premium && !user) return null;
+                
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setCurrentPage(item.id);
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`px-3 py-2 rounded-md text-sm font-medium text-left transition-colors flex items-center ${
+                      currentPage === item.id
+                        ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                    }`}
+                  >
+                    {item.label}
+                    {item.premium && <Crown className="w-4 h-4 ml-1 text-yellow-500" />}
+                  </button>
+                );
+              })}
               
               <div className="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700">
                 <button
@@ -2305,6 +2342,90 @@ const AIToolsPage = () => {
   );
 };
 
+// Premium Tools Page Component
+const PremiumToolsPage = () => {
+  const { user } = useAuth();
+  const premiumTools = aiToolsData.filter(tool => tool.isPremium);
+  
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            Premium Access Required
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-8">
+            Please sign in to access premium tools
+          </p>
+          <button
+            onClick={() => setCurrentPage('home')}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium"
+          >
+            Sign In
+          </button>
+        </div>
+      </div>
+    );
+  }
+  
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+            Premium Tools
+            <Crown className="w-6 h-6 ml-3 text-yellow-500" />
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            Advanced tools for professional development work
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-8">
+          {premiumTools.map(tool => (
+            <div key={tool.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 h-full flex flex-col">
+              <div className="p-6 flex-grow">
+                <div className="flex justify-between items-start mb-4">
+                  <span className="text-sm font-bold text-purple-600 dark:text-purple-400">
+                    {tool.id}
+                  </span>
+                  <div className="flex items-center space-x-2">
+                    <Crown className="w-5 h-5 text-yellow-500" title="Premium Tool" />
+                    <Star className="w-5 h-5 text-yellow-500" title="Premium" />
+                  </div>
+                </div>
+                
+                <div className="flex items-center mb-4">
+                  {React.createElement(tool.icon, { 
+                    className: `w-10 h-10 text-${tool.color}-600 mr-3` 
+                  })}
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                    {tool.title}
+                  </h3>
+                </div>
+                
+                <p className="text-gray-600 dark:text-gray-300 mb-6">
+                  {tool.description}
+                </p>
+                
+                <div className="mt-auto">
+                  <button
+                    onClick={() => window.open(tool.url, '_blank')}
+                    className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition-all transform hover:scale-[1.02] flex items-center justify-center space-x-2 shadow-lg"
+                  >
+                    <ExternalLink className="w-5 h-5" />
+                    <span>Access Premium Tool</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Dashboard Page Component
 const DashboardPage = () => {
   const { user, bookmarks, signOut } = useAuth();
@@ -2382,6 +2503,56 @@ const DashboardPage = () => {
             <LogOut className="w-4 h-4" />
             <span>Sign Out</span>
           </button>
+        </div>
+        
+        {/* Premium Tools Section */}
+        <div className="mb-8">
+          <div className="flex items-center mb-4">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Premium Tools</h2>
+            <Crown className="w-5 h-5 ml-2 text-yellow-500" />
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {aiToolsData
+              .filter(tool => tool.isPremium)
+              .map(tool => (
+                <div key={tool.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 h-full flex flex-col">
+                  <div className="p-6 flex-grow">
+                    <div className="flex justify-between items-start mb-4">
+                      <span className="text-sm font-bold text-purple-600 dark:text-purple-400">
+                        {tool.id}
+                      </span>
+                      <div className="flex items-center space-x-2">
+                        <Crown className="w-5 h-5 text-yellow-500" title="Premium Tool" />
+                        <Star className="w-5 h-5 text-yellow-500" title="Premium" />
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center mb-4">
+                      {React.createElement(tool.icon, { 
+                        className: `w-10 h-10 text-${tool.color}-600 mr-3` 
+                      })}
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        {tool.title}
+                      </h3>
+                    </div>
+                    
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                      {tool.description}
+                    </p>
+                    
+                    <div className="mt-auto">
+                      <button
+                        onClick={() => window.open(tool.url, '_blank')}
+                        className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition-all transform hover:scale-[1.02] flex items-center justify-center space-x-2 shadow-lg"
+                      >
+                        <ExternalLink className="w-5 h-5" />
+                        <span>Access Premium Tool</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
         
         {/* Bookmarked Courses */}
@@ -2793,6 +2964,8 @@ const App = () => {
         return <HandoutsPage />;
       case 'ai-tools':
         return <AIToolsPage />;
+      case 'premium-tools':
+        return <PremiumToolsPage />;
       case 'dashboard':
         return <DashboardPage />;
       case 'about':
