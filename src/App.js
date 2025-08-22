@@ -9,7 +9,7 @@ import {
   FileText, BarChart, Settings, ArrowRight, CheckCircle,
   AlertCircle, Info, HelpCircle, Share2, PlayCircle, Scale,
   Lightbulb, Compare, Send, Edit3, Brain, PenTool, FolderOpen,
-  Loader2, Copy, Sparkles, Wand2, Bot, Puzzle, Trophy, Shield
+  Loader2, Copy, Sparkles, Wand2, Bot, Puzzle, Trophy, Shield, Code, ArrowLeft
 } from 'lucide-react';
 
 // Firebase imports
@@ -49,6 +49,9 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
+
+// Theme Context
+export const ThemeContext = createContext();
 
 // ✅ REAL COURSE DATA (37 Courses) - Updated from Project Files
 const courseData = [
@@ -536,6 +539,286 @@ const labsData = [
   },
 ];
 
+// ✅ NEW HANDOUTS DATA (Based on GitHub Repository Structure)
+const handoutsData = [
+  // Cross Cutting Resources
+  {
+    id: "H1",
+    title: "Case Study Template",
+    category: "Cross Cutting Resources",
+    type: "HTML",
+    description: "Template for developing comprehensive case studies.",
+    url: "/handouts/cross-cutting/case-studies/case_study_template.html",
+    track: "All Tracks"
+  },
+  {
+    id: "H2",
+    title: "Case Study Worksheets",
+    category: "Cross Cutting Resources", 
+    type: "HTML",
+    description: "Interactive worksheets for case study analysis.",
+    url: "/handouts/cross-cutting/case-studies/case_study_worksheets.html",
+    track: "All Tracks"
+  },
+  {
+    id: "H3",
+    title: "Communication Guide",
+    category: "Cross Cutting Resources",
+    type: "HTML", 
+    description: "Best practices for effective development communication.",
+    url: "/handouts/cross-cutting/communications/communication_guide.html",
+    track: "All Tracks"
+  },
+  {
+    id: "H4",
+    title: "Local Application Worksheet",
+    category: "Cross Cutting Resources",
+    type: "HTML",
+    description: "Adapt global concepts to local contexts.",
+    url: "/handouts/cross-cutting/local-application/local_application_worksheet.html",
+    track: "All Tracks"
+  },
+  {
+    id: "H5",
+    title: "Software Tools Guide",
+    category: "Cross Cutting Resources",
+    type: "HTML",
+    description: "Essential software tools for development work.",
+    url: "/handouts/cross-cutting/software-tools/software_tools_guide.html",
+    track: "All Tracks"
+  },
+
+  // Data Analysis Track
+  {
+    id: "H6",
+    title: "Bivariate Analysis Guide",
+    category: "Data Analysis",
+    type: "HTML",
+    description: "Comprehensive guide to bivariate statistical analysis.",
+    url: "/handouts/data-analysis/bivariate/bivariate_analysis_guide.html",
+    track: "Data Analysis"
+  },
+  {
+    id: "H7",
+    title: "Data Literacy Handout",
+    category: "Data Analysis",
+    type: "HTML",
+    description: "Essential concepts for data literacy and understanding.",
+    url: "/handouts/data-analysis/data-literacy/data_literacy_handout.html",
+    track: "Data Analysis"
+  },
+  {
+    id: "H8",
+    title: "Econometrics Formula Sheet",
+    category: "Data Analysis",
+    type: "HTML",
+    description: "Quick reference for econometric formulas and methods.",
+    url: "/handouts/data-analysis/econometrics/econometrics_formula_sheet.html",
+    track: "Data Analysis"
+  },
+  {
+    id: "H9",
+    title: "EDA Survey Analysis",
+    category: "Data Analysis", 
+    type: "HTML",
+    description: "Exploratory data analysis techniques for survey data.",
+    url: "/handouts/data-analysis/eda/eda_survey_handout_1.html",
+    track: "Data Analysis"
+  },
+  {
+    id: "H10",
+    title: "Multivariate Analysis Template",
+    category: "Data Analysis",
+    type: "HTML", 
+    description: "Template for multivariate statistical analysis.",
+    url: "/handouts/data-analysis/multivariate/multivariate_analysis_template.html",
+    track: "Data Analysis"
+  },
+  {
+    id: "H11",
+    title: "R Scripts Collection",
+    category: "Data Analysis",
+    type: "R",
+    description: "Collection of R scripts for data analysis tasks.",
+    url: "/handouts/data-analysis/scripts/r-scripts.zip",
+    track: "Data Analysis"
+  },
+  {
+    id: "H12",
+    title: "Python Code Samples", 
+    category: "Data Analysis",
+    type: "Python",
+    description: "Python code examples for data analysis and visualization.",
+    url: "/handouts/data-analysis/scripts/python-samples.zip",
+    track: "Data Analysis"
+  },
+  {
+    id: "H13",
+    title: "Excel Analysis Templates",
+    category: "Data Analysis",
+    type: "Excel", 
+    description: "Ready-to-use Excel templates for statistical analysis.",
+    url: "/handouts/data-analysis/excel/excel-templates.zip",
+    track: "Data Analysis"
+  },
+
+  // Gender Studies Track
+  {
+    id: "H14",
+    title: "Care Economy Analysis",
+    category: "Gender Studies",
+    type: "HTML",
+    description: "Framework for analyzing care economy dynamics.",
+    url: "/handouts/gender-studies/care-economy/care_economy_handout_1.html",
+    track: "Gender Studies"
+  },
+  {
+    id: "H15",
+    title: "Data Feminism in Practice",
+    category: "Gender Studies",
+    type: "HTML", 
+    description: "Applying data feminism principles to research.",
+    url: "/handouts/gender-studies/data-feminism/data_feminism_handout_1.html",
+    track: "Gender Studies"
+  },
+  {
+    id: "H16",
+    title: "Gender Studies Quick Reference",
+    category: "Gender Studies",
+    type: "HTML",
+    description: "Key concepts and frameworks in gender studies.",
+    url: "/handouts/gender-studies/gender-studies/gender_studies_quick_reference.html",
+    track: "Gender Studies"
+  },
+
+  // Policy Analysis Track  
+  {
+    id: "H17",
+    title: "Development Economics Problem Sets",
+    category: "Policy Analysis",
+    type: "HTML",
+    description: "Practice problems for development economics concepts.",
+    url: "/handouts/policy-economics/development-economics/development_economics_problem_sets.html",
+    track: "Policy Analysis"
+  },
+  {
+    id: "H18",
+    title: "Livelihood Assessment Toolkit",
+    category: "Policy Analysis",
+    type: "HTML",
+    description: "Tools for comprehensive livelihood assessments.",
+    url: "/handouts/policy-economics/livelihoods/livelihood_assessment_toolkit.html",
+    track: "Policy Analysis"
+  },
+  {
+    id: "H19",
+    title: "Policy Tracking Sheet",
+    category: "Policy Analysis",
+    type: "HTML",
+    description: "Template for tracking policy developments and impacts.",
+    url: "/handouts/policy-economics/policy-tracking/policy_tracking_sheet.html",
+    track: "Policy Analysis"
+  },
+  {
+    id: "H20",
+    title: "Political Economy Framework",
+    category: "Policy Analysis",
+    type: "HTML",
+    description: "Framework for political economy analysis.",
+    url: "/handouts/policy-economics/political-economy/political_economy_handout_1.html",
+    track: "Policy Analysis"
+  },
+
+  // Research Methods Track
+  {
+    id: "H21",
+    title: "Research Assumptions Checklist",
+    category: "Research Methods",
+    type: "HTML",
+    description: "Checklist for identifying and validating research assumptions.",
+    url: "/handouts/research-methods/assumptions/assumptions_checklist.html", 
+    track: "Research Methods"
+  },
+  {
+    id: "H22",
+    title: "MLE Framework Guide",
+    category: "Research Methods",
+    type: "HTML",
+    description: "Guide to Monitoring, Learning, and Evaluation frameworks.",
+    url: "/handouts/research-methods/mle/mel_handout_1.html",
+    track: "Research Methods"
+  },
+  {
+    id: "H23",
+    title: "Qualitative Research Handbook",
+    category: "Research Methods",
+    type: "HTML",
+    description: "Comprehensive handbook for qualitative research methods.",
+    url: "/handouts/research-methods/qualitative/qualitative_research_handout.html",
+    track: "Research Methods"
+  },
+  {
+    id: "H24",
+    title: "Research Design Worksheet",
+    category: "Research Methods",
+    type: "HTML", 
+    description: "Step-by-step worksheet for research design planning.",
+    url: "/handouts/research-methods/design/research_design_worksheet.html",
+    track: "Research Methods"
+  },
+
+  // Thematic Areas
+  {
+    id: "H25",
+    title: "Climate Change Impact Assessment",
+    category: "Thematic Areas",
+    type: "HTML",
+    description: "Tools for assessing climate change impacts in South Asia.",
+    url: "/handouts/thematic/climate/climate_change_handout_1.html",
+    track: "Policy Analysis"
+  },
+  {
+    id: "H26",
+    title: "Environmental Justice Framework",
+    category: "Thematic Areas", 
+    type: "HTML",
+    description: "Framework for environmental justice analysis.",
+    url: "/handouts/thematic/environmental-justice/environmental_justice_handout_1.html",
+    track: "Policy Analysis"
+  },
+  {
+    id: "H27",
+    title: "Constitutional Analysis Guide",
+    category: "Thematic Areas",
+    type: "HTML",
+    description: "Guide to constitutional law and analysis.",
+    url: "/handouts/thematic/constitution/constitution_handout_1.html",
+    track: "Policy Analysis"
+  },
+
+  // Quick References
+  {
+    id: "H28", 
+    title: "Quick Reference Cards",
+    category: "Quick Reference",
+    type: "HTML",
+    description: "Collection of quick reference cards for key concepts.",
+    url: "/handouts/quick-reference/quick_reference_cards.html",
+    track: "All Tracks"
+  },
+
+  // Education & Pedagogy
+  {
+    id: "H29",
+    title: "Education & Pedagogy Guide",
+    category: "Education",
+    type: "HTML",
+    description: "Best practices in education and pedagogical approaches.", 
+    url: "/handouts/education/education_pedagogy_handout.html",
+    track: "Research Methods"
+  }
+];
+
 // 🤖 ENHANCED AI Tools Data - Complete 16 tools with detailed instructions and prompts
 const aiToolsData = [
   // Enhanced existing 8 tools
@@ -991,673 +1274,673 @@ Style: Encouraging but thorough`,
   },
   { 
     id: 'AI13', 
-    name: 'Text Proofreader', 
-    description: 'Advanced grammar, spelling, and style checking for any text content', 
-    category: 'Writing',
-    instructions: 'Paste any text needing proofreading. The tool corrects grammar, spelling, punctuation, and improves clarity while maintaining original meaning and tone.',
-    howToUse: 'Steps: 1) Paste text to proofread 2) Select text type (academic, business, creative) 3) Choose correction level (light/thorough) 4) Specify tone to maintain 5) Get corrected version with explanations',
-    promptTemplate: `Proofread and improve this text:
+    name: 'Text Processor', 
+    description: 'Process and analyze text documents for key insights and summaries', 
+    category: 'Analysis',
+    instructions: 'Upload or paste text content for analysis. Specify analysis type (summary, keyword extraction, sentiment analysis, etc.). The tool processes text and provides requested insights.',
+    howToUse: 'Steps: 1) Paste or upload text content 2) Select analysis type (summary, keywords, sentiment, etc.) 3) Set output length/depth 4) Specify focus areas if applicable 5) Generate text analysis report',
+    promptTemplate: `Analyze the following text: {text}
 
-{text}
-
-Text Type: {type}
-Correction Level: {level}
-Maintain Tone: {tone}
-Target Audience: {audience}
-Specific Concerns: {concerns}
+Analysis Type: {type}
+Output Length: {length}
+Focus Areas: {focus}
+Special Instructions: {instructions}
 
 Please provide:
-1. Corrected version with all improvements
-2. Summary of changes made:
-   - Grammar corrections
-   - Spelling fixes
-   - Punctuation improvements
-   - Clarity enhancements
-   - Style adjustments
-3. Explanation of major corrections
-4. Suggestions for further improvement
-5. Original meaning preservation confirmation
+1. {type} analysis of the text
+2. Key insights and patterns identified
+3. Main themes and topics
+4. Notable quotes or excerpts
+5. Structural analysis (if applicable)
+6. Contextual relevance assessment
+7. Limitations or gaps in the text
 
-Focus on clarity, correctness, and readability while maintaining the author's voice and intent.`,
-    systemMessage: 'You are a professional editor and proofreader with expertise in grammar, style, and clarity. You improve text while preserving the author\'s voice and intent, providing clear explanations for your corrections.',
-    exampleInput: `Text: [Paste email, essay, or document to proofread]
-Type: Professional business email
-Level: Thorough correction
-Tone: Professional but friendly
-Audience: Company executives
-Concerns: Grammar errors and unclear sentences`,
-    icon: Shield,
-    color: 'red'
+Format the analysis in a clear, structured way suitable for {purpose}.`,
+    systemMessage: 'You are a text analysis specialist with expertise in natural language processing and document analysis. You extract meaningful insights from text content and present them in clear, actionable formats.',
+    exampleInput: `Text: [Paste research article or document]
+Type: Comprehensive summary
+Length: 300 words
+Focus: Methodology and findings
+Instructions: Highlight key research methods and major conclusions`,
+    icon: FileText,
+    color: 'indigo'
   },
   { 
     id: 'AI14', 
-    name: 'Sentence Starter Generator', 
-    description: 'Generate engaging opening sentences and writing prompts to overcome writer\'s block', 
-    category: 'Writing',
-    instructions: 'Enter writing topic, type, and target audience. The tool generates multiple engaging sentence starters and prompts suitable for essays, creative writing, or academic assignments.',
-    howToUse: 'Steps: 1) Enter topic or theme 2) Choose writing type (narrative, persuasive, expository, creative) 3) Select grade/audience level 4) Set number of starters needed 5) Generate varied sentence starters',
-    promptTemplate: `Generate sentence starters for: {topic}
+    name: 'Survey Designer', 
+    description: 'Create effective surveys with well-structured questions for research and feedback', 
+    category: 'Research',
+    instructions: 'Describe your survey purpose, target audience, and key topics. The tool creates structured surveys with appropriate question types, logical flow, and clear instructions.',
+    howToUse: 'Steps: 1) Define survey purpose and goals 2) Describe target respondents 3) List key topics to cover 4) Set survey length preference 5) Generate complete survey with question flow',
+    promptTemplate: `Design a survey for: {purpose}
 
-Writing Type: {type}
-Audience/Grade Level: {audience}
-Purpose: {purpose}
-Number of Starters: {count}
-Style Preference: {style}
+Target Audience: {audience}
+Survey Goals: {goals}
+Key Topics: {topics}
+Estimated Length: {length} minutes
+Distribution Method: {method}
 
-Create {count} engaging sentence starters that:
-1. Hook the reader immediately
-2. Match the writing type and purpose
-3. Are appropriate for the audience level
-4. Offer different approaches (question, statistic, anecdote, bold statement, etc.)
-5. Inspire creative thinking
-6. Are specific enough to provide direction
+Please create:
+1. Survey introduction and purpose statement
+2. 15-20 well-structured questions covering all topics
+3. Appropriate question types (multiple choice, Likert scale, open-ended, etc.)
+4. Logical question flow and grouping
+5. Clear instructions for each section
+6. Demographic questions (if needed)
+7. Closing and thank you message
+8. Estimated completion time
 
-Include variety in:
-- Question starters
-- Statistical openers
-- Anecdotal beginnings
-- Bold statement openers
-- Descriptive scene setters
-- Thought-provoking scenarios
-
-Each starter should be followed by a brief explanation of why it's effective and what direction the writing could take.`,
-    systemMessage: 'You are a creative writing coach who helps writers overcome blocks with engaging, inspiring prompts. You understand different writing genres and create starters that spark creativity while meeting academic or professional requirements.',
-    exampleInput: `Topic: Environmental Conservation
-Type: Persuasive essay
-Audience: High school students (grades 9-12)
-Purpose: Convince peers to adopt eco-friendly habits
-Count: 8 sentence starters
-Style: Engaging and relatable to teenagers`,
-    icon: PenTool,
+Ensure questions are:
+- Clear and unambiguous
+- Unbiased and neutral
+- Appropriate for the target audience
+- Aligned with survey goals`,
+    systemMessage: 'You are a survey design specialist with expertise in creating effective research instruments. You understand question design principles, response biases, and how to structure surveys for maximum response quality.',
+    exampleInput: `Purpose: Assess employee satisfaction with remote work policies
+Audience: Full-time employees who have worked remotely for at least 6 months
+Goals: Identify pain points, gather improvement suggestions, measure satisfaction levels
+Topics: Work-life balance, productivity, communication, technology, management support
+Length: 10-12 minutes
+Method: Online form via email`,
+    icon: ClipboardList,
     color: 'green'
   },
   { 
     id: 'AI15', 
-    name: 'Jeopardy Review Game', 
-    description: 'Create Jeopardy-style quiz games with categories and point values for classroom review', 
-    category: 'Games',
-    instructions: 'Enter review topic and preferred categories. The tool creates a complete Jeopardy game with 5 questions per category, increasing in difficulty from $100-$500.',
-    howToUse: 'Steps: 1) Enter main topic/unit 2) Choose 4-6 categories 3) Set difficulty range 4) Specify grade level 5) Generate complete Jeopardy game with questions and answers',
-    promptTemplate: `Create a Jeopardy review game for: {topic}
+    name: 'Presentation Outliner', 
+    description: 'Structure compelling presentations with clear flow and key talking points', 
+    category: 'Planning',
+    instructions: 'Enter your presentation topic, audience, duration, and key messages. The tool creates a structured outline with slide suggestions, talking points, and visual recommendations.',
+    howToUse: 'Steps: 1) Enter presentation topic and purpose 2) Define target audience and their knowledge level 3) Set presentation duration 4) List 3-5 key messages to convey 5) Generate complete presentation outline',
+    promptTemplate: `Create a presentation outline for: {topic}
 
-Main Subject/Unit: {unit}
-Categories: {categories}
-Grade Level: {grade}
-Point Values: {points}
-Total Questions: {total}
+Presentation Purpose: {purpose}
+Target Audience: {audience} (knowledge level: {level})
+Duration: {duration} minutes
+Key Messages: {messages}
+Visual Style Preference: {style}
 
-Create a complete Jeopardy game with:
-1. 5 categories related to {topic}
-2. 5 questions per category ($100 to $500)
-3. Questions that increase in difficulty with point value
-4. Answers in proper Jeopardy format ("What is..." or "Who is...")
-5. Clear, unambiguous questions appropriate for grade level
-6. Good mix of factual recall and application questions
+Please structure:
+1. Attention-grabbing opening (hook)
+2. Clear agenda/overview
+3. Main content sections (3-5 sections):
+   - Key points for each section
+   - Supporting data/evidence
+   - Slide content suggestions
+4. Engaging transitions between sections
+5. Strong conclusion with call to action
+6. Q&A preparation notes
 
-Format each category as:
-**CATEGORY NAME**
-$100: [Question] 
-Answer: [Response in Jeopardy format]
-$200: [Question]
-Answer: [Response]
-[Continue through $500]
+For each section, include:
+- Approximate time allocation
+- Slide content suggestions
+- Speaker talking points
+- Visual aid recommendations
+- Engagement strategies
 
-Include instructions for gameplay and any needed materials.`,
-    systemMessage: 'You are a game-based learning specialist who creates engaging educational games. You understand how to balance fun with learning objectives and create questions that are challenging but fair for the target grade level.',
-    exampleInput: `Topic: American Civil War
-Unit: Civil War causes, battles, and consequences
-Categories: Key Battles, Important Figures, Causes of War, Technology, Reconstruction
-Grade: 8th grade History
-Points: $100, $200, $300, $400, $500
-Total: 25 questions (5 categories × 5 questions)`,
-    icon: Trophy,
-    color: 'yellow'
+Ensure the presentation flows logically and builds a compelling case.`,
+    systemMessage: 'You are a presentation design expert who creates clear, engaging presentation structures. You understand audience engagement, information hierarchy, and how to structure presentations for maximum impact and retention.',
+    exampleInput: `Topic: Implementing Sustainable Supply Chains
+Purpose: Convince corporate executives to adopt sustainable practices
+Audience: C-suite executives with limited sustainability knowledge
+Duration: 20 minutes
+Messages: 1) Sustainability improves brand reputation 2) Long-term cost savings 3) Competitive advantage in market
+Style: Professional with data visualizations`,
+    icon: Presentation,
+    color: 'blue'
   },
   { 
     id: 'AI16', 
-    name: 'Escape Room Generator', 
-    description: 'Design educational escape room experiences with interconnected puzzles and storylines', 
-    category: 'Games',
-    instructions: 'Provide educational topic and learning objectives. The tool creates an immersive storyline with 5-7 interconnected puzzles that teach key concepts while engaging students.',
-    howToUse: 'Steps: 1) Enter educational topic 2) Define 3-4 key learning objectives 3) Choose theme/storyline 4) Set difficulty and time limit 5) Generate complete escape room with puzzle solutions',
-    promptTemplate: `Design an educational escape room for: {topic}
+    name: 'Project Planner', 
+    description: 'Create comprehensive project plans with timelines, milestones, and resource allocation', 
+    category: 'Planning',
+    instructions: 'Describe your project goals, scope, constraints, and available resources. The tool creates detailed project plans with timelines, milestones, dependencies, and resource allocation.',
+    howToUse: 'Steps: 1) Define project goals and deliverables 2) Set project scope and boundaries 3) Identify constraints (time, budget, resources) 4) List available team/resources 5) Generate complete project plan',
+    promptTemplate: `Create a project plan for: {project}
 
-Learning Objectives: {objectives}
-Theme/Storyline: {theme}
-Grade Level: {grade}
-Time Limit: {time}
-Group Size: {size}
-Available Technology: {tech}
+Project Goals: {goals}
+Key Deliverables: {deliverables}
+Project Scope: {scope}
+Time Constraints: {timeline}
+Budget Constraints: {budget}
+Available Resources: {resources}
+Team Size: {team} people
+Key Stakeholders: {stakeholders}
 
-Create an immersive escape room experience with:
+Please provide:
+1. Project overview and objectives
+2. Work breakdown structure with major phases
+3. Detailed timeline with milestones and dependencies
+4. Resource allocation plan (human, financial, technical)
+5. Risk assessment and mitigation strategies
+6. Communication plan
+7. Success metrics and evaluation methods
+8. Contingency plans for common issues
 
-1. **Engaging Storyline**:
-   - Clear mission/scenario that motivates students
-   - Connection between theme and educational content
-   - Sense of urgency and purpose
-
-2. **5-7 Interconnected Puzzles**:
-   - Each puzzle teaches/reinforces learning objectives
-   - Increasing difficulty progression
-   - Variety of puzzle types (codes, riddles, physical, digital)
-   - Clear connection between puzzles
-   - Final challenge that synthesizes all learning
-
-3. **Complete Implementation Guide**:
-   - Room setup instructions and materials list
-   - Detailed puzzle instructions and solutions
-   - Facilitator guide with hints system
-   - Student handouts and clue sheets
-   - Assessment rubric for learning objectives
-   - Alternative versions for different ability levels
-
-4. **Learning Integration**:
-   - Clear connections between each puzzle and curriculum
-   - Debrief questions to reinforce learning
-   - Extension activities for early finishers
-
-Ensure all puzzles are solvable, age-appropriate, and directly tied to learning goals.`,
-    systemMessage: 'You are an immersive learning experience designer who creates educational escape rooms. You understand game mechanics, puzzle design, and how to seamlessly integrate curriculum content into engaging storylines that promote deep learning.',
-    exampleInput: `Topic: Chemical Bonding and Molecular Structure
-Objectives: 1) Identify ionic vs covalent bonds 2) Predict molecular shapes 3) Understand electronegativity 4) Apply bonding theory to real compounds
-Theme: Secret laboratory - students are chemists who must prevent a dangerous reaction
-Grade: 10th grade Chemistry
-Time: 45 minutes
-Size: Groups of 4-5 students
-Tech: Tablets available for digital clues/simulations`,
-    icon: Puzzle,
+Include specific tasks, owners, deadlines, and dependencies where possible.`,
+    systemMessage: 'You are a project management specialist with expertise in creating comprehensive project plans. You understand task dependencies, resource allocation, risk management, and how to structure projects for successful implementation.',
+    exampleInput: `Project: Community Garden Initiative
+Goals: Establish 5 community gardens in underserved neighborhoods
+Deliverables: 5 functional gardens, training programs, management plan
+Scope: Site selection, garden construction, community training, 6-month support
+Timeline: 9 months (April-December)
+Budget: $75,000
+Resources: 3 staff members, 20 volunteers, local government partnerships
+Team: 1 project manager, 2 coordinators
+Stakeholders: Community groups, local government, sponsors`,
+    icon: Calendar,
     color: 'purple'
   }
 ];
 
-// Authentication Context
-const AuthContext = createContext();
-
-const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [bookmarks, setBookmarks] = useState([]);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
-      if (user) {
-        // Load user bookmarks
-        try {
-          const userDoc = await getDoc(doc(db, 'users', user.uid));
-          if (userDoc.exists()) {
-            setBookmarks(userDoc.data().bookmarks || []);
-          }
-        } catch (error) {
-          console.error('Error loading bookmarks:', error);
-        }
-      } else {
-        setBookmarks([]);
-      }
-      setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
-
-  const signInWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      
-      // Create or update user document
-      await setDoc(doc(db, 'users', user.uid), {
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        lastLogin: new Date()
-      }, { merge: true });
-      
-      return user;
-    } catch (error) {
-      console.error('Error signing in:', error);
-      throw error;
-    }
-  };
-
-  const signOut = async () => {
-    try {
-      await firebaseSignOut(auth);
-    } catch (error) {
-      console.error('Error signing out:', error);
-      throw error;
-    }
-  };
-
-  const toggleBookmark = async (itemId) => {
-    if (!user) return;
-    
-    try {
-      const newBookmarks = bookmarks.includes(itemId)
-        ? bookmarks.filter(id => id !== itemId)
-        : [...bookmarks, itemId];
-      
-      setBookmarks(newBookmarks);
-      
-      await setDoc(doc(db, 'users', user.uid), {
-        bookmarks: newBookmarks
-      }, { merge: true });
-    } catch (error) {
-      console.error('Error updating bookmarks:', error);
-    }
-  };
-
-  const value = {
-    user,
-    loading,
-    signInWithGoogle,
-    signOut,
-    bookmarks,
-    toggleBookmark
-  };
-
+// Navigation Component
+const Navbar = ({ darkMode, setDarkMode, user, signInWithGoogle, signOut }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
   return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
-
-// Course Card Component
-const CourseCard = ({ course, isBookmarked, onBookmark }) => {
-  const { user } = useAuth();
-
-  const handleCourseAccess = () => {
-    if (course.isPremium) {
-      const password = prompt(`This is a premium course. Please enter the access password:`);
-      if (password === course.password) {
-        window.open(course.url, '_blank');
-      } else if (password !== null) {
-        alert('Incorrect password. Please contact support for access.');
-      }
-    } else {
-      window.open(course.url, '_blank');
-    }
-  };
-
-  return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-4">
-          <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
-            {course.id}
-          </span>
-          <div className="flex items-center space-x-2">
-            {course.isPremium && (
-              <span className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 rounded font-medium">
-                Premium
-              </span>
-            )}
-            {user && (
+    <nav className={`sticky top-0 z-50 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md transition-colors duration-300`}>
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <div className="flex-shrink-0 flex items-center">
+              <span className="font-bold text-xl text-blue-600 dark:text-blue-400">ImpactMojo</span>
+            </div>
+            <div className="hidden md:ml-6 md:flex md:space-x-8">
+              <Link to="/" className={`${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-gray-900'} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300`}>Home</Link>
+              <Link to="/courses" className={`${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-gray-900'} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300`}>Courses</Link>
+              <Link to="/labs" className={`${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-gray-900'} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300`}>Labs</Link>
+              <Link to="/resources" className={`${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-gray-900'} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300`}>Resources</Link>
+              <Link to="/ai-tools" className={`${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-gray-900'} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300`}>AI Tools</Link>
+            </div>
+          </div>
+          
+          <div className="hidden md:flex items-center">
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition-colors duration-300"
+            >
+              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            
+            {user ? (
+              <div className="ml-4 flex items-center">
+                <Link to="/profile" className="flex items-center text-sm rounded-full focus:outline-none">
+                  <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">
+                    {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                </Link>
+                <button
+                  onClick={signOut}
+                  className="ml-3 flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                >
+                  <LogOut size={18} className="mr-1" /> Sign out
+                </button>
+              </div>
+            ) : (
               <button
-                onClick={() => onBookmark(course.id)}
-                className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+                onClick={signInWithGoogle}
+                className="ml-4 flex items-center text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-300"
               >
-                <Bookmark 
-                  className={`w-5 h-5 ${isBookmarked ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} 
-                />
+                Sign in
               </button>
             )}
           </div>
+          
+          <div className="flex items-center md:hidden">
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition-colors duration-300"
+            >
+              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="ml-2 p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition-colors duration-300"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
-        
-        <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-          {course.title}
-        </h3>
-        
-        <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-          {course.description}
-        </p>
-        
-        {course.quote && (
-          <blockquote className="text-sm italic text-blue-600 dark:text-blue-400 mb-4 border-l-2 border-blue-200 pl-3">
-            {course.quote}
-          </blockquote>
-        )}
-        
-        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-          <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
-            {course.track}
-          </span>
-          <span className="flex items-center">
-            <Clock className="w-4 h-4 mr-1" />
-            {course.duration}
-          </span>
-        </div>
-        
-        <button
-          onClick={handleCourseAccess}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
-        >
-          <ExternalLink className="w-4 h-4" />
-          <span>Start Course</span>
-        </button>
       </div>
-    </div>
+      
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <Link to="/" className={`${darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'} block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300`}>Home</Link>
+            <Link to="/courses" className={`${darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'} block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300`}>Courses</Link>
+            <Link to="/labs" className={`${darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'} block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300`}>Labs</Link>
+            <Link to="/resources" className={`${darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'} block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300`}>Resources</Link>
+            <Link to="/ai-tools" className={`${darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'} block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300`}>AI Tools</Link>
+            
+            {user ? (
+              <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex items-center px-4">
+                  <div className="flex-shrink-0">
+                    <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">
+                      {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                  </div>
+                  <div className="ml-3">
+                    <div className="text-base font-medium text-gray-800 dark:text-white">{user.displayName}</div>
+                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400">{user.email}</div>
+                  </div>
+                </div>
+                <div className="mt-3 px-2">
+                  <Link to="/profile" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300">Your Profile</Link>
+                  <button
+                    onClick={signOut}
+                    className="mt-1 block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+                <div className="px-2">
+                  <button
+                    onClick={signInWithGoogle}
+                    className="w-full flex items-center justify-center text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-300"
+                  >
+                    Sign in with Google
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
 
-// 🎨 ENHANCED AI Tool Card Component
-const AIToolCard = ({ tool, isSelected, onSelect }) => {
-  const IconComponent = tool.icon;
-  
-  const getCategoryColor = (category) => {
-    switch (category) {
-      case 'Writing': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-      case 'Research': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'Analysis': return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
-      case 'Planning': return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
-      case 'Teaching': return 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200';
-      case 'Assessment': return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200';
-      case 'Games': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
-    }
-  };
-
-  const getColorClass = (color) => {
-    switch (color) {
-      case 'blue': return 'text-blue-600 dark:text-blue-400';
-      case 'green': return 'text-green-600 dark:text-green-400';
-      case 'purple': return 'text-purple-600 dark:text-purple-400';
-      case 'red': return 'text-red-600 dark:text-red-400';
-      case 'orange': return 'text-orange-600 dark:text-orange-400';
-      case 'indigo': return 'text-indigo-600 dark:text-indigo-400';
-      case 'yellow': return 'text-yellow-600 dark:text-yellow-400';
-      default: return 'text-gray-600 dark:text-gray-400';
-    }
-  };
-
+// Footer Component
+const Footer = ({ darkMode }) => {
   return (
-    <div 
-      className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 cursor-pointer border-2 ${
-        isSelected ? 'border-blue-500 dark:border-blue-400' : 'border-transparent'
-      }`}
-      onClick={() => onSelect(tool)}
-    >
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-4">
-          <span className="text-sm font-bold text-purple-600 dark:text-purple-400">
-            {tool.id}
-          </span>
-          <div className={`p-2 rounded-lg bg-gray-100 dark:bg-gray-700 ${getColorClass(tool.color)}`}>
-            <IconComponent className="w-5 h-5" />
-          </div>
-        </div>
-        
-        <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-          {tool.name}
-        </h3>
-        
-        <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-          {tool.description}
-        </p>
-        
-        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-          <span className={`px-2 py-1 rounded font-medium ${getCategoryColor(tool.category)}`}>
-            {tool.category}
-          </span>
-          <div className="flex items-center space-x-1">
-            <Sparkles className="w-4 h-4 text-purple-500" />
-            <span className="text-purple-600 dark:text-purple-400 font-medium">AI Powered</span>
-          </div>
-        </div>
-        
-        <div className={`text-center py-2 px-4 rounded-lg border-2 border-dashed transition-colors ${
-          isSelected 
-            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' 
-            : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-blue-300 hover:text-blue-600'
-        }`}>
-          {isSelected ? 'Selected - Ready to Use!' : 'Click to Select'}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// HomePage Component
-const HomePage = ({ setCurrentPage }) => {
-  const { user } = useAuth();
-  
-  const featuredCourses = courseData.slice(0, 6);
-  const tracks = [
-    { name: 'Gender Studies', color: 'purple', courses: courseData.filter(c => c.track === 'Gender Studies').length },
-    { name: 'Policy Analysis', color: 'blue', courses: courseData.filter(c => c.track === 'Policy Analysis').length },
-    { name: 'Research Methods', color: 'green', courses: courseData.filter(c => c.track === 'Research Methods').length },
-    { name: 'Data Analysis', color: 'red', courses: courseData.filter(c => c.track === 'Data Analysis').length }
-  ];
-
-  return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-8">
-            <Zap className="w-16 h-16 mx-auto mb-4 text-yellow-300" />
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              ImpactMojo
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
-              101 Knowledge Series for Social Impact
-            </p>
-            <p className="text-lg mb-8 max-w-3xl mx-auto text-blue-100">
-              A curated library exploring justice, equity, and development in South Asia. 
-              Learn from 37 courses, 10 interactive labs, and comprehensive handouts.
+    <footer className={`${darkMode ? 'bg-gray-800' : 'bg-gray-100'} transition-colors duration-300`}>
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">ImpactMojo</h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              Empowering change-makers with knowledge, tools, and resources to create sustainable impact.
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => setCurrentPage('courses')}
-              className="bg-white text-blue-600 font-bold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center space-x-2"
-            >
-              <BookOpen className="w-5 h-5" />
-              <span>Browse Courses</span>
-            </button>
-            {user ? (
-              <button
-                onClick={() => setCurrentPage('dashboard')}
-                className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
-              >
-                Go to Dashboard
-              </button>
-            ) : (
-              <button
-                onClick={() => setCurrentPage('about')}
-                className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
-              >
-                Learn More
-              </button>
-            )}
+          <div>
+            <h4 className="text-md font-medium mb-4 text-gray-900 dark:text-white">Quick Links</h4>
+            <ul className="space-y-2">
+              <li><Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Home</Link></li>
+              <li><Link to="/courses" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Courses</Link></li>
+              <li><Link to="/labs" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Labs</Link></li>
+              <li><Link to="/resources" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Resources</Link></li>
+            </ul>
           </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">37</div>
-              <div className="text-gray-600 dark:text-gray-300">Courses</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">10</div>
-              <div className="text-gray-600 dark:text-gray-300">Interactive Labs</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2">100+</div>
-              <div className="text-gray-600 dark:text-gray-300">Handouts</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-red-600 dark:text-red-400 mb-2">Free</div>
-              <div className="text-gray-600 dark:text-gray-300">Open Source</div>
-            </div>
+          
+          <div>
+            <h4 className="text-md font-medium mb-4 text-gray-900 dark:text-white">Resources</h4>
+            <ul className="space-y-2">
+              <li><Link to="/ai-tools" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">AI Tools</Link></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Blog</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Documentation</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Support</a></li>
+            </ul>
           </div>
-        </div>
-      </section>
-
-      {/* Learning Tracks */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
-            Learning Tracks
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {tracks.map(track => (
-              <div key={track.name} className="bg-white dark:bg-gray-800 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{track.name}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">{track.courses} courses available</p>
-                <button
-                  onClick={() => setCurrentPage('courses')}
-                  className="text-blue-600 dark:text-blue-400 font-medium hover:underline"
-                >
-                  Explore Track →
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Courses */}
-      <section className="py-16 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
-            Featured Courses
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredCourses.map(course => (
-              <CourseCard 
-                key={course.id} 
-                course={course} 
-                isBookmarked={false}
-                onBookmark={() => {}}
+          
+          <div>
+            <h4 className="text-md font-medium mb-4 text-gray-900 dark:text-white">Connect</h4>
+            <div className="flex space-x-4 mb-4">
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
+                <Twitter size={20} />
+              </a>
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
+                <Linkedin size={20} />
+              </a>
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
+                <Github size={20} />
+              </a>
+            </div>
+            <p className="text-gray-600 dark:text-gray-400">
+              Subscribe to our newsletter for updates
+            </p>
+            <div className="mt-2 flex">
+              <input 
+                type="email" 
+                placeholder="Your email" 
+                className="px-3 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <button
-              onClick={() => setCurrentPage('courses')}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors"
-            >
-              View All Courses
-            </button>
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r-md transition-colors duration-300">
+                Subscribe
+              </button>
+            </div>
           </div>
         </div>
-      </section>
+        
+        <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-gray-600 dark:text-gray-400 text-sm">
+          <p>&copy; {new Date().getFullYear()} ImpactMojo. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+// Home Page Component
+const HomePage = () => {
+  const [darkMode] = useContext(ThemeContext);
+  
+  return (
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      {/* Hero Section */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-90"></div>
+        <div className="relative container mx-auto px-4 py-24 md:py-32">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Empowering Change-Makers with Knowledge and Tools
+            </h1>
+            <p className="text-xl text-blue-100 mb-8">
+              Access courses, interactive labs, resources, and AI-powered tools to create sustainable impact in your community.
+            </p>
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+              <Link to="/courses" className="bg-white text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-md font-medium text-center transition-colors duration-300">
+                Explore Courses
+              </Link>
+              <Link to="/ai-tools" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 px-6 py-3 rounded-md font-medium text-center transition-colors duration-300">
+                Try AI Tools
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Features Section */}
+      <div className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Everything You Need to Create Impact</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Our comprehensive platform provides learning resources, practical tools, and AI-powered assistance to support your development work.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className={`p-6 rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md transition-colors duration-300`}>
+              <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-4">
+                <BookOpen className="text-blue-600 dark:text-blue-400" size={24} />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Courses</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                37+ expert-led courses on gender studies, policy analysis, research methods, and data analysis.
+              </p>
+              <Link to="/courses" className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+                Explore courses <ArrowRight size={16} className="ml-1" />
+              </Link>
+            </div>
+            
+            <div className={`p-6 rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md transition-colors duration-300`}>
+              <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900 flex items-center justify-center mb-4">
+                <Gamepad2 className="text-green-600 dark:text-green-400" size={24} />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Interactive Labs</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                10 hands-on labs for risk assessment, policy advocacy, MLE frameworks, and more.
+              </p>
+              <Link to="/labs" className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+                Visit labs <ArrowRight size={16} className="ml-1" />
+              </Link>
+            </div>
+            
+            <div className={`p-6 rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md transition-colors duration-300`}>
+              <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-4">
+                <FolderOpen className="text-purple-600 dark:text-purple-400" size={24} />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Resources</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Comprehensive collection of handouts, templates, and guides organized by category.
+              </p>
+              <Link to="/resources" className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+                Browse resources <ArrowRight size={16} className="ml-1" />
+              </Link>
+            </div>
+            
+            <div className={`p-6 rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md transition-colors duration-300`}>
+              <div className="w-12 h-12 rounded-lg bg-red-100 dark:bg-red-900 flex items-center justify-center mb-4">
+                <Bot className="text-red-600 dark:text-red-400" size={24} />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">AI Tools</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                16 AI-powered tools for research, writing, analysis, and project planning.
+              </p>
+              <Link to="/ai-tools" className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+                Try AI tools <ArrowRight size={16} className="ml-1" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Testimonials Section */}
+      <div className={`py-16 ${darkMode ? 'bg-gray-800' : 'bg-white'} transition-colors duration-300`}>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">What Our Community Says</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Hear from change-makers who have used our platform to enhance their work.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className={`p-6 rounded-xl ${darkMode ? 'bg-gray-750' : 'bg-gray-50'} transition-colors duration-300`}>
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium mr-3">
+                  A
+                </div>
+                <div>
+                  <h4 className="font-semibold">Anita Sharma</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">NGO Director</p>
+                </div>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 italic">
+                "The courses on gender studies completely transformed our approach to community development. The practical frameworks are invaluable."
+              </p>
+            </div>
+            
+            <div className={`p-6 rounded-xl ${darkMode ? 'bg-gray-750' : 'bg-gray-50'} transition-colors duration-300`}>
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-medium mr-3">
+                  R
+                </div>
+                <div>
+                  <h4 className="font-semibold">Rajesh Kumar</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Researcher</p>
+                </div>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 italic">
+                "The AI tools have saved me countless hours in data analysis and report writing. The quality of outputs is impressive."
+              </p>
+            </div>
+            
+            <div className={`p-6 rounded-xl ${darkMode ? 'bg-gray-750' : 'bg-gray-50'} transition-colors duration-300`}>
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-medium mr-3">
+                  M
+                </div>
+                <div>
+                  <h4 className="font-semibold">Maria Garcia</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Policy Analyst</p>
+                </div>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 italic">
+                "The interactive labs helped our team design a more effective M&E framework. The hands-on approach made all the difference."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* CTA Section */}
+      <div className="py-16 bg-gradient-to-r from-blue-500 to-indigo-600">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Ready to Create Impact?</h2>
+          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            Join thousands of change-makers using our platform to make a difference in their communities.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <Link to="/courses" className="bg-white text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-md font-medium text-center transition-colors duration-300">
+              Get Started
+            </Link>
+            <Link to="/ai-tools" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 px-6 py-3 rounded-md font-medium text-center transition-colors duration-300">
+              Explore AI Tools
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 // Courses Page Component
 const CoursesPage = () => {
-  const { user, bookmarks, toggleBookmark } = useAuth();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedTrack, setSelectedTrack] = useState('all');
-  const [selectedLevel, setSelectedLevel] = useState('all');
-
+  const [darkMode] = useContext(ThemeContext);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTrack, setSelectedTrack] = useState('All');
+  const [selectedLevel, setSelectedLevel] = useState('All');
+  const [bookmarkedCourses, setBookmarkedCourses] = useState([]);
+  
+  // Get unique tracks and levels
+  const tracks = ['All', ...new Set(courseData.map(course => course.track))];
+  const levels = ['All', ...new Set(courseData.map(course => course.level))];
+  
+  // Filter courses based on search term, track, and level
   const filteredCourses = courseData.filter(course => {
-    const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         course.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTrack = selectedTrack === 'all' || course.track === selectedTrack;
-    const matchesLevel = selectedLevel === 'all' || course.level === selectedLevel;
+    const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                         course.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesTrack = selectedTrack === 'All' || course.track === selectedTrack;
+    const matchesLevel = selectedLevel === 'All' || course.level === selectedLevel;
+    
     return matchesSearch && matchesTrack && matchesLevel;
   });
-
-  const uniqueTracks = [...new Set(courseData.map(course => course.track))];
-  const uniqueLevels = [...new Set(courseData.map(course => course.level))];
-
+  
+  // Toggle bookmark
+  const toggleBookmark = (courseId) => {
+    if (bookmarkedCourses.includes(courseId)) {
+      setBookmarkedCourses(bookmarkedCourses.filter(id => id !== courseId));
+    } else {
+      setBookmarkedCourses([...bookmarkedCourses, courseId]);
+    }
+  };
+  
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Course Catalog
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            Explore our comprehensive collection of 37 development courses
-          </p>
+          <h1 className="text-3xl font-bold mb-2">Courses</h1>
+          <p className="text-gray-600 dark:text-gray-400">Explore our comprehensive collection of courses designed to enhance your impact.</p>
         </div>
-
-        {/* Search and Filters */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 mb-8">
-          <div className="grid md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">Search</label>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search courses..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Track</label>
-              <select
-                value={selectedTrack}
-                onChange={(e) => setSelectedTrack(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              >
-                <option value="all">All Tracks</option>
-                {uniqueTracks.map(track => (
-                  <option key={track} value={track}>{track}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Level</label>
-              <select
-                value={selectedLevel}
-                onChange={(e) => setSelectedLevel(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              >
-                <option value="all">All Levels</option>
-                {uniqueLevels.map(level => (
-                  <option key={level} value={level}>{level}</option>
-                ))}
-              </select>
-            </div>
+        
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <div className="relative flex-grow">
+            <input
+              type="text"
+              placeholder="Search courses..."
+              className="w-full p-3 pl-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Search className="absolute left-3 top-3.5 text-gray-400" size={20} />
+          </div>
+          
+          <div className="flex gap-4">
+            <select
+              className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={selectedTrack}
+              onChange={(e) => setSelectedTrack(e.target.value)}
+            >
+              {tracks.map(track => (
+                <option key={track} value={track}>{track}</option>
+              ))}
+            </select>
+            
+            <select
+              className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={selectedLevel}
+              onChange={(e) => setSelectedLevel(e.target.value)}
+            >
+              {levels.map(level => (
+                <option key={level} value={level}>{level}</option>
+              ))}
+            </select>
           </div>
         </div>
-
-        {/* Course Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCourses.map(course => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              isBookmarked={bookmarks.includes(course.id)}
-              onBookmark={toggleBookmark}
-            />
+            <div key={course.id} className={`rounded-xl overflow-hidden shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'} transition-colors duration-300`}>
+              <div className="p-5">
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <span className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
+                      course.level === 'Beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                      course.level === 'Intermediate' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                      'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                    }`}>
+                      {course.level}
+                    </span>
+                    {course.isPremium && (
+                      <span className="ml-2 inline-block px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                        Premium
+                      </span>
+                    )}
+                  </div>
+                  <button 
+                    onClick={() => toggleBookmark(course.id)}
+                    className={`p-1 rounded-full ${bookmarkedCourses.includes(course.id) ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                  >
+                    <Bookmark size={20} fill={bookmarkedCourses.includes(course.id) ? 'currentColor' : 'none'} />
+                  </button>
+                </div>
+                
+                <h3 className="text-xl font-semibold mb-2">{course.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">{course.description}</p>
+                
+                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+                  <Clock size={16} className="mr-1" />
+                  <span className="mr-4">{course.duration}</span>
+                  <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded">{course.track}</span>
+                </div>
+                
+                <div className={`p-3 rounded-lg mb-4 ${darkMode ? 'bg-gray-750' : 'bg-gray-100'} italic`}>
+                  "{course.quote}"
+                </div>
+                
+                <div className="flex justify-between items-center">
+                  <a 
+                    href={course.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    View course <ExternalLink size={16} className="ml-1" />
+                  </a>
+                  
+                  {course.isPremium && (
+                    <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                      <Shield size={14} className="mr-1" /> Password required
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
-
+        
         {filteredCourses.length === 0 && (
           <div className="text-center py-12">
-            <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              No courses found
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Try adjusting your search criteria
-            </p>
+            <AlertCircle className="mx-auto text-gray-400" size={48} />
+            <h3 className="mt-4 text-xl font-medium">No courses found</h3>
+            <p className="mt-2 text-gray-600 dark:text-gray-400">Try adjusting your search or filter criteria</p>
           </div>
         )}
       </div>
@@ -1667,1211 +1950,1303 @@ const CoursesPage = () => {
 
 // Labs Page Component
 const LabsPage = () => {
-  const handleLabAccess = (lab) => {
-    if (lab.status === 'Available') {
-      window.open(lab.url, '_blank');
-    } else {
-      alert(`${lab.title} - Coming Soon!`);
+  const [darkMode] = useContext(ThemeContext);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedDifficulty, setSelectedDifficulty] = useState('All');
+  
+  // Get unique categories and difficulties
+  const categories = ['All', ...new Set(labsData.map(lab => lab.category))];
+  const difficulties = ['All', ...new Set(labsData.map(lab => lab.difficulty))];
+  
+  // Filter labs based on search term, category, and difficulty
+  const filteredLabs = labsData.filter(lab => {
+    const matchesSearch = lab.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                         lab.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'All' || lab.category === selectedCategory;
+    const matchesDifficulty = selectedDifficulty === 'All' || lab.difficulty === selectedDifficulty;
+    
+    return matchesSearch && matchesCategory && matchesDifficulty;
+  });
+  
+  // Get icon component by name
+  const getIconComponent = (iconName) => {
+    const iconMap = {
+      'shield': Shield,
+      'dollar-sign': DollarSign,
+      'megaphone': Megaphone,
+      'handshake': Handshake,
+      'wrench': Wrench,
+      'build': Build,
+      'users': Users,
+      'book-open': BookOpen,
+      'lightbulb': Lightbulb,
+      'target': Target
+    };
+    
+    const IconComponent = iconMap[iconName] || FileText;
+    return <IconComponent size={20} />;
+  };
+  
+  // Get color by difficulty
+  const getDifficultyColor = (difficulty) => {
+    switch (difficulty) {
+      case 'Beginner': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      case 'Intermediate': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+      case 'Advanced': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
     }
   };
-
+  
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Interactive Labs
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            10 hands-on labs for real-world practice and skill development
-          </p>
+          <h1 className="text-3xl font-bold mb-2">Interactive Labs</h1>
+          <p className="text-gray-600 dark:text-gray-400">Hands-on learning experiences to apply your knowledge in practical scenarios.</p>
         </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {labsData.map(lab => (
-            <div key={lab.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="text-sm font-bold text-green-600 dark:text-green-400">
-                    {lab.id}
+        
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <div className="relative flex-grow">
+            <input
+              type="text"
+              placeholder="Search labs..."
+              className="w-full p-3 pl-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Search className="absolute left-3 top-3.5 text-gray-400" size={20} />
+          </div>
+          
+          <div className="flex gap-4">
+            <select
+              className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              {categories.map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+            
+            <select
+              className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={selectedDifficulty}
+              onChange={(e) => setSelectedDifficulty(e.target.value)}
+            >
+              {difficulties.map(difficulty => (
+                <option key={difficulty} value={difficulty}>{difficulty}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredLabs.map(lab => (
+            <div key={lab.id} className={`rounded-xl overflow-hidden shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'} transition-colors duration-300`}>
+              <div className="p-5">
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-3">
+                      {getIconComponent(lab.icon)}
+                    </div>
+                    <div>
+                      <span className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${getDifficultyColor(lab.difficulty)}`}>
+                        {lab.difficulty}
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                    <Clock size={14} className="mr-1" /> {lab.duration} min
                   </span>
-                  <span className={`px-2 py-1 rounded-lg text-xs font-medium ${
-                    lab.status === 'Available' 
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                      : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                </div>
+                
+                <h3 className="text-xl font-semibold mb-2">{lab.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">{lab.description}</p>
+                
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">{lab.category}</span>
+                  <span className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
+                    lab.status === 'Available' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                    'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
                   }`}>
                     {lab.status}
                   </span>
                 </div>
                 
-                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-                  {lab.title}
-                </h3>
-                
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {lab.description}
-                </p>
-                
-                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                  <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
-                    {lab.category}
-                  </span>
-                  <span className="flex items-center">
-                    <Clock className="w-4 h-4 mr-1" />
-                    {lab.duration} min
-                  </span>
-                </div>
-                
-                <div className="mb-4">
-                  <span className={`text-xs px-2 py-1 rounded ${
-                    lab.difficulty === 'Beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                    lab.difficulty === 'Intermediate' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-                    'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                  }`}>
-                    {lab.difficulty}
-                  </span>
-                </div>
-                
-                <button
-                  onClick={() => handleLabAccess(lab)}
-                  disabled={lab.status !== 'Available'}
-                  className={`w-full font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 ${
-                    lab.status === 'Available'
-                      ? 'bg-green-600 hover:bg-green-700 text-white'
-                      : 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-                  }`}
+                <a 
+                  href={lab.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="mt-4 w-full inline-flex items-center justify-center text-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-300"
                 >
-                  <PlayCircle className="w-4 h-4" />
-                  <span>{lab.status === 'Available' ? 'Launch Lab' : 'Coming Soon'}</span>
-                </button>
+                  Launch Lab <ExternalLink size={16} className="ml-2" />
+                </a>
               </div>
             </div>
           ))}
+        </div>
+        
+        {filteredLabs.length === 0 && (
+          <div className="text-center py-12">
+            <AlertCircle className="mx-auto text-gray-400" size={48} />
+            <h3 className="mt-4 text-xl font-medium">No labs found</h3>
+            <p className="mt-2 text-gray-600 dark:text-gray-400">Try adjusting your search or filter criteria</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Resources Page Component - Card-based style matching impactmojo.in
+const ResourcesPage = () => {
+  const [darkMode] = useContext(ThemeContext);
+  
+  // Main categories for the card layout
+  const resourceCategories = [
+    {
+      id: "cross-cutting",
+      title: "Cross Cutting Resources",
+      description: "Resources applicable across all tracks and disciplines",
+      icon: FolderOpen,
+      color: "blue",
+      items: [
+        { name: "Case Study Template", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/cross-cutting/case-studies/case_study_template.html" },
+        { name: "Case Study Worksheets", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/cross-cutting/case-studies/case_study_worksheets.html" },
+        { name: "Communication Guide", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/cross-cutting/communications/communication_guide.html" },
+        { name: "Local Application Worksheet", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/cross-cutting/local-application/local_application_worksheet.html" },
+        { name: "Software Tools Guide", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/cross-cutting/software-tools/software_tools_guide.html" }
+      ]
+    },
+    {
+      id: "data-analysis",
+      title: "Data Analysis Track",
+      description: "Resources for data analysis, statistics, and quantitative methods",
+      icon: BarChart,
+      color: "green",
+      items: [
+        { name: "Bivariate Analysis Guide", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/data-analysis/bivariate/bivariate_analysis_guide.html" },
+        { name: "Data Literacy Handout", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/data-analysis/data-literacy/data_literacy_handout.html" },
+        { name: "Econometrics Formula Sheet", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/data-analysis/econometrics/econometrics_formula_sheet.html" },
+        { name: "EDA Survey Analysis", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/data-analysis/eda/eda_survey_handout_1.html" },
+        { name: "Multivariate Analysis Template", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/data-analysis/multivariate/multivariate_analysis_template.html" },
+        { name: "R Scripts Collection", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/data-analysis/scripts/r-scripts.zip" },
+        { name: "Python Code Samples", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/data-analysis/scripts/python-samples.zip" },
+        { name: "Excel Analysis Templates", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/data-analysis/excel/excel-templates.zip" }
+      ]
+    },
+    {
+      id: "gender-studies",
+      title: "Gender Studies Track",
+      description: "Resources focused on gender analysis, women's empowerment, and inclusion",
+      icon: Users,
+      color: "purple",
+      items: [
+        { name: "Care Economy Analysis", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/gender-studies/care-economy/care_economy_handout_1.html" },
+        { name: "Data Feminism in Practice", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/gender-studies/data-feminism/data_feminism_handout_1.html" },
+        { name: "Gender Studies Quick Reference", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/gender-studies/gender-studies/gender_studies_quick_reference.html" }
+      ]
+    },
+    {
+      id: "policy-economics",
+      title: "Policy and Economics Track",
+      description: "Resources for policy analysis, economic development, and governance",
+      icon: FileText,
+      color: "indigo",
+      items: [
+        { name: "Development Economics Problem Sets", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/policy-economics/development-economics/development_economics_problem_sets.html" },
+        { name: "Livelihood Assessment Toolkit", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/policy-economics/livelihoods/livelihood_assessment_toolkit.html" },
+        { name: "Policy Tracking Sheet", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/policy-economics/policy-tracking/policy_tracking_sheet.html" },
+        { name: "Political Economy Framework", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/policy-economics/political-economy/political_economy_handout_1.html" }
+      ]
+    },
+    {
+      id: "research-methods",
+      title: "Research Methods Track",
+      description: "Resources for research design, evaluation, and qualitative methods",
+      icon: Search,
+      color: "red",
+      items: [
+        { name: "Research Assumptions Checklist", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/research-methods/assumptions/assumptions_checklist.html" },
+        { name: "MLE Framework Guide", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/research-methods/mle/mel_handout_1.html" },
+        { name: "Qualitative Research Handbook", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/research-methods/qualitative/qualitative_research_handout.html" },
+        { name: "Research Design Worksheet", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/research-methods/design/research_design_worksheet.html" }
+      ]
+    },
+    {
+      id: "thematic",
+      title: "Thematic Areas",
+      description: "Resources focused on specific thematic areas and sectors",
+      icon: Target,
+      color: "yellow",
+      items: [
+        { name: "Climate Change Impact Assessment", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/thematic/climate/climate_change_handout_1.html" },
+        { name: "Environmental Justice Framework", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/thematic/environmental-justice/environmental_justice_handout_1.html" },
+        { name: "Constitutional Analysis Guide", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/thematic/constitution/constitution_handout_1.html" }
+      ]
+    },
+    {
+      id: "quick-reference",
+      title: "Quick Reference",
+      description: "Concise reference materials for key concepts and frameworks",
+      icon: Bookmark,
+      color: "teal",
+      items: [
+        { name: "Quick Reference Cards", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/quick-reference/quick_reference_cards.html" }
+      ]
+    },
+    {
+      id: "education",
+      title: "Education",
+      description: "Resources for education and pedagogical approaches",
+      icon: BookOpen,
+      color: "orange",
+      items: [
+        { name: "Education & Pedagogy Guide", url: "https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/Handouts/education/education_pedagogy_handout.html" }
+      ]
+    }
+  ];
+
+  // Get color classes based on category color
+  const getColorClasses = (color) => {
+    switch (color) {
+      case 'blue': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+      case 'green': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      case 'purple': return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+      case 'indigo': return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200';
+      case 'red': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+      case 'yellow': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+      case 'teal': return 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200';
+      case 'orange': return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+    }
+  };
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">Resources Library</h1>
+          <p className="text-gray-600 dark:text-gray-400">Browse our comprehensive collection of handouts, templates, and guides organized by category.</p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {resourceCategories.map((category) => (
+            <div 
+              key={category.id} 
+              className={`rounded-xl overflow-hidden shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'} transition-colors duration-300 hover:shadow-lg`}
+            >
+              <div className="p-5">
+                <div className="flex items-center mb-4">
+                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center mr-3 ${getColorClasses(category.color)}`}>
+                    <category.icon size={24} />
+                  </div>
+                  <h3 className="text-xl font-semibold">{category.title}</h3>
+                </div>
+                
+                <p className="text-gray-600 dark:text-gray-400 mb-4">{category.description}</p>
+                
+                <div className="space-y-2 mb-4">
+                  {category.items.slice(0, 3).map((item, index) => (
+                    <div key={index} className="flex items-center">
+                      <FileText className="text-gray-400 mr-2" size={16} />
+                      <span className="text-sm truncate">{item.name}</span>
+                    </div>
+                  ))}
+                  {category.items.length > 3 && (
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                      +{category.items.length - 3} more resources
+                    </div>
+                  )}
+                </div>
+                
+                <a 
+                  href={`https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/${category.id}`}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  View folder on GitHub <ExternalLink size={16} className="ml-1" />
+                </a>
+              </div>
+              
+              <div className={`px-5 py-3 ${darkMode ? 'bg-gray-750' : 'bg-gray-100'} border-t border-gray-200 dark:border-gray-700`}>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                    {category.items.length} resources
+                  </span>
+                  <a 
+                    href={category.items[0].url}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded transition-colors duration-300"
+                  >
+                    View Sample
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className={`mt-12 p-6 rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}>
+          <h2 className="text-xl font-semibold mb-4">Browse All Resources</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            Explore the complete collection of resources in our GitHub repository.
+          </p>
+          <a 
+            href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts"
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-300"
+          >
+            <Github size={20} className="mr-2" /> View on GitHub
+          </a>
         </div>
       </div>
     </div>
   );
 };
 
-// NEW HandoutsPage Component - Based on your index.html
-const HandoutsPage = () => {
+// AI Tools Page Component
+const AIToolsPage = () => {
+  const [darkMode] = useContext(ThemeContext);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [activeTool, setActiveTool] = useState(null);
+  const [toolInput, setToolInput] = useState('');
+  const [toolOutput, setToolOutput] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  
+  // Get unique categories
+  const categories = ['All', ...new Set(aiToolsData.map(tool => tool.category))];
+  
+  // Filter tools based on selected category
+  const filteredTools = selectedCategory === 'All' 
+    ? aiToolsData 
+    : aiToolsData.filter(tool => tool.category === selectedCategory);
+  
+  // Handle tool selection
+  const handleToolSelect = (tool) => {
+    setActiveTool(tool);
+    setToolInput(tool.exampleInput || '');
+    setToolOutput('');
+  };
+  
+  // Handle tool execution
+  const handleToolExecute = async () => {
+    if (!activeTool || !toolInput.trim()) return;
+    
+    setIsProcessing(true);
+    
+    // Simulate API call with timeout
+    setTimeout(() => {
+      // This is a mock response - in a real app, you would call an AI API
+      const mockOutput = `This is a simulated output for the ${activeTool.name} tool based on your input:\n\n${toolInput}\n\nIn a real implementation, this would be replaced with actual AI-generated content.`;
+      
+      setToolOutput(mockOutput);
+      setIsProcessing(false);
+    }, 1500);
+  };
+  
+  // Get color by tool color
+  const getColorClasses = (color) => {
+    switch (color) {
+      case 'blue': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+      case 'green': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      case 'purple': return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+      case 'red': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+      case 'indigo': return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200';
+      case 'orange': return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+    }
+  };
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        {/* Header */}
-        <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 mb-8 shadow-2xl">
-          <div className="mb-6">
-            <button
-              onClick={() => window.history.back()}
-              className="text-blue-600 hover:text-blue-800 font-medium text-sm mb-4"
-            >
-              ← Back to ImpactMojo
-            </button>
-          </div>
-          
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Educational Handouts
-          </h1>
-          <div className="text-xl text-gray-600 mb-6">
-            Structured Learning Pathways for Development Education
-          </div>
-          
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border-l-4 border-blue-500 mb-6">
-            <p className="text-gray-700 leading-relaxed">
-              <strong>Curriculum-ready teaching materials</strong> organized into progressive learning pathways for educators working in development studies, public policy, and social research across South Asian contexts. Each pathway builds systematically from foundational concepts to advanced applications.
-            </p>
-          </div>
-          
-          {/* Stats Banner */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white/80 p-4 rounded-lg text-center shadow-md">
-              <span className="text-3xl font-bold text-blue-600 block">4</span>
-              <div className="text-gray-600 text-sm mt-2">Core Learning Tracks</div>
-            </div>
-            <div className="bg-white/80 p-4 rounded-lg text-center shadow-md">
-              <span className="text-3xl font-bold text-purple-600 block">8</span>
-              <div className="text-gray-600 text-sm mt-2">Thematic Areas</div>
-            </div>
-            <div className="bg-white/80 p-4 rounded-lg text-center shadow-md">
-              <span className="text-3xl font-bold text-green-600 block">100+</span>
-              <div className="text-gray-600 text-sm mt-2">Workshop Materials</div>
-            </div>
-            <div className="bg-white/80 p-4 rounded-lg text-center shadow-md">
-              <span className="text-3xl font-bold text-red-600 block">75-90</span>
-              <div className="text-gray-600 text-sm mt-2">Minute Sessions</div>
-            </div>
-          </div>
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">AI Tools</h1>
+          <p className="text-gray-600 dark:text-gray-400">Enhance your productivity with our collection of AI-powered tools.</p>
         </div>
         
-        {/* Learning Pathways Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
-          
-          {/* Data Analysis Track */}
-          <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 shadow-2xl border border-white/20 hover:transform hover:-translate-y-2 transition-all duration-300">
-            <div className="flex items-center mb-6">
-              <div className="text-4xl mr-4">📊</div>
-              <h2 className="text-2xl font-bold text-gray-900">Data Analysis Track</h2>
-            </div>
-            <div className="text-gray-600 mb-6 leading-relaxed">
-              Master quantitative research skills from basic data literacy through advanced econometric modeling. Perfect for building comprehensive data analysis capabilities.
-            </div>
-            <div className="flex flex-wrap gap-2 mb-6">
-              <span className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium">Beginner</span>
-              <span className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium">Intermediate</span>
-              <span className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium">Advanced</span>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-3 flex items-center">
-                📈 Learning Progression:
-              </h4>
-              <ul className="text-gray-700 space-y-2 text-sm">
-                <li className="flex items-center"><span className="text-blue-500 mr-2">📁</span> Data Literacy</li>
-                <li className="flex items-center"><span className="text-blue-500 mr-2">📁</span> EDA (Exploratory Data Analysis)</li>
-                <li className="flex items-center"><span className="text-blue-500 mr-2">📁</span> Bivariate Analysis</li>
-                <li className="flex items-center"><span className="text-blue-500 mr-2">📁</span> Multivariate Analysis</li>
-                <li className="flex items-center"><span className="text-blue-500 mr-2">📁</span> Econometrics</li>
-                <li className="flex items-center"><span className="text-blue-500 mr-2">📁</span> Data Analysis - Examples and Templates</li>
-              </ul>
-            </div>
-          </div>
-          
-          {/* Gender Studies Pathway */}
-          <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 shadow-2xl border border-white/20 hover:transform hover:-translate-y-2 transition-all duration-300">
-            <div className="flex items-center mb-6">
-              <div className="text-4xl mr-4">⚡</div>
-              <h2 className="text-2xl font-bold text-gray-900">Gender Studies Pathway</h2>
-            </div>
-            <div className="text-gray-600 mb-6 leading-relaxed">
-              Comprehensive understanding of gender in development work, from foundational theory through applied economic empowerment and intersectional analysis.
-            </div>
-            <div className="flex flex-wrap gap-2 mb-6">
-              <span className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium">Theory</span>
-              <span className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium">Analysis</span>
-              <span className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium">Application</span>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-3 flex items-center">
-                🎯 Pathway Components:
-              </h4>
-              <ul className="text-gray-700 space-y-2 text-sm">
-                <li className="flex items-center"><span className="text-purple-500 mr-2">📁</span> Gender Studies</li>
-                <li className="flex items-center"><span className="text-purple-500 mr-2">📁</span> Data Feminism</li>
-                <li className="flex items-center"><span className="text-purple-500 mr-2">📁</span> Care Economy</li>
-                <li className="flex items-center"><span className="text-purple-500 mr-2">📁</span> Women's Economic Empowerment</li>
-                <li className="flex items-center"><span className="text-purple-500 mr-2">📁</span> Marginalised Identities</li>
-              </ul>
-            </div>
-          </div>
-          
-          {/* Policy & Economics Track */}
-          <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 shadow-2xl border border-white/20 hover:transform hover:-translate-y-2 transition-all duration-300">
-            <div className="flex items-center mb-6">
-              <div className="text-4xl mr-4">🏛️</div>
-              <h2 className="text-2xl font-bold text-gray-900">Policy & Economics Track</h2>
-            </div>
-            <div className="text-gray-600 mb-6 leading-relaxed">
-              From foundational economic theory to policy analysis and implementation. Covers development economics through social protection systems.
-            </div>
-            <div className="flex flex-wrap gap-2 mb-6">
-              <span className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full text-sm font-medium">Economics</span>
-              <span className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full text-sm font-medium">Policy</span>
-              <span className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full text-sm font-medium">Implementation</span>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-3 flex items-center">
-                💼 Track Components:
-              </h4>
-              <ul className="text-gray-700 space-y-2 text-sm">
-                <li className="flex items-center"><span className="text-green-500 mr-2">📁</span> Development Economics</li>
-                <li className="flex items-center"><span className="text-green-500 mr-2">📁</span> Political Economy</li>
-                <li className="flex items-center"><span className="text-green-500 mr-2">📁</span> Poverty and Inequality</li>
-                <li className="flex items-center"><span className="text-green-500 mr-2">📁</span> Social Safety Nets</li>
-                <li className="flex items-center"><span className="text-green-500 mr-2">📁</span> Livelihoods</li>
-                <li className="flex items-center"><span className="text-green-500 mr-2">📁</span> Policy Tracking</li>
-              </ul>
-            </div>
-          </div>
-          
-          {/* Research Methods Journey */}
-          <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 shadow-2xl border border-white/20 hover:transform hover:-translate-y-2 transition-all duration-300">
-            <div className="flex items-center mb-6">
-              <div className="text-4xl mr-4">🔬</div>
-              <h2 className="text-2xl font-bold text-gray-900">Research Methods Journey</h2>
-            </div>
-            <div className="text-gray-600 mb-6 leading-relaxed">
-              Complete research toolkit covering ethics, qualitative methods, monitoring & evaluation, and research design principles for development work.
-            </div>
-            <div className="flex flex-wrap gap-2 mb-6">
-              <span className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-medium">Ethics</span>
-              <span className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-medium">Methods</span>
-              <span className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-medium">Evaluation</span>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-3 flex items-center">
-                🔍 Research Components:
-              </h4>
-              <ul className="text-gray-700 space-y-2 text-sm">
-                <li className="flex items-center"><span className="text-red-500 mr-2">📁</span> Research Ethics</li>
-                <li className="flex items-center"><span className="text-red-500 mr-2">📁</span> Qualitative Research</li>
-                <li className="flex items-center"><span className="text-red-500 mr-2">📁</span> MLE (Monitoring, Learning & Evaluation)</li>
-                <li className="flex items-center"><span className="text-red-500 mr-2">📁</span> Assumptions Checklist</li>
-                <li className="flex items-center"><span className="text-red-500 mr-2">📁</span> Research Design - Resources</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        {/* Additional Resources Section */}
-        <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 shadow-2xl">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Additional Resources & Thematic Areas</h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-500 hover:bg-gray-100 transition-colors">
-              <h3 className="font-bold text-gray-900 mb-2 flex items-center">
-                🌍 Thematic Areas
-              </h3>
-              <div className="text-gray-600 text-sm leading-relaxed">
-                Specialized topic collections including Digital Development Ethics, Health & Wellbeing, Justice & Governance, and Regional & Applications.
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Tools List */}
+          <div className="lg:w-1/3">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-4">Categories</h2>
+              <div className="flex flex-wrap gap-2">
+                {categories.map(category => (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-300 ${
+                      selectedCategory === category
+                        ? 'bg-blue-600 text-white'
+                        : `${darkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
               </div>
             </div>
             
-            <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-green-500 hover:bg-gray-100 transition-colors">
-              <h3 className="font-bold text-gray-900 mb-2 flex items-center">
-                💚 Health & Wellbeing
-              </h3>
-              <div className="text-gray-600 text-sm leading-relaxed">
-                Public health fundamentals, CDC materials, sexual and reproductive health resources.
-              </div>
-            </div>
-            
-            <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-purple-500 hover:bg-gray-100 transition-colors">
-              <h3 className="font-bold text-gray-900 mb-2 flex items-center">
-                ⚖️ Justice & Governance
-              </h3>
-              <div className="text-gray-600 text-sm leading-relaxed">
-                Community led development, decent work standards, decolonising development practices.
-              </div>
-            </div>
-            
-            <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-orange-500 hover:bg-gray-100 transition-colors">
-              <h3 className="font-bold text-gray-900 mb-2 flex items-center">
-                🗺️ South Asia Region
-              </h3>
-              <div className="text-gray-600 text-sm leading-relaxed">
-                Regional historical timelines, policy dashboards, and contextual development resources.
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Learning Tracks */}
-        <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 shadow-2xl">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Learning Tracks & Resources</h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-md border hover:shadow-lg transition-shadow">
-              <h3 className="font-bold text-gray-900 mb-3 flex items-center">
-                📊 Data Analysis Track
-              </h3>
-              <div className="text-gray-600 text-sm leading-relaxed mb-4">
-                Comprehensive resources covering bivariate analysis, data literacy, econometrics, EDA, and multivariate analysis techniques.
-              </div>
-              <div className="text-xs text-blue-600 font-medium">
-                Includes: Templates, Examples, Statistical Methods
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border hover:shadow-lg transition-shadow">
-              <h3 className="font-bold text-gray-900 mb-3 flex items-center">
-                🎨 Gender Studies Track
-              </h3>
-              <div className="text-gray-600 text-sm leading-relaxed mb-4">
-                Focus areas include care economy, data feminism, gender studies fundamentals, and women's economic empowerment.
-              </div>
-              <div className="text-xs text-purple-600 font-medium">
-                Includes: Research Tools, Policy Frameworks
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border hover:shadow-lg transition-shadow">
-              <h3 className="font-bold text-gray-900 mb-3 flex items-center">
-                📈 Policy and Economics Track
-              </h3>
-              <div className="text-gray-600 text-sm leading-relaxed mb-4">
-                Development economics, livelihoods, marginalized identities, policy tracking, political economy, and social safety nets.
-              </div>
-              <div className="text-xs text-green-600 font-medium">
-                Includes: Policy Analysis, Economic Models
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border hover:shadow-lg transition-shadow">
-              <h3 className="font-bold text-gray-900 mb-3 flex items-center">
-                🔬 Research Methods Track
-              </h3>
-              <div className="text-gray-600 text-sm leading-relaxed mb-4">
-                Assumptions checklist, MLE techniques, qualitative research methods, research design resources, and research ethics.
-              </div>
-              <div className="text-xs text-orange-600 font-medium">
-                Includes: Methodological Guides, Ethics Frameworks
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border hover:shadow-lg transition-shadow">
-              <h3 className="font-bold text-gray-900 mb-3 flex items-center">
-                📚 Education & Pedagogy
-              </h3>
-              <div className="text-gray-600 text-sm leading-relaxed mb-4">
-                Specialized resources for educators focusing on learning theory, curriculum design, and effective teaching practices.
-              </div>
-              <div className="text-xs text-indigo-600 font-medium">
-                Perfect for printing and desk reference
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border hover:shadow-lg transition-shadow">
-              <h3 className="font-bold text-gray-900 mb-3 flex items-center">
-                🔗 Cross Cutting Resources
-              </h3>
-              <div className="text-gray-600 text-sm leading-relaxed mb-4">
-                Case studies, communications guides, local application worksheets, and software tools for development work.
-              </div>
-              <div className="text-xs text-red-600 font-medium">
-                Includes: Practical Tools, Templates
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Quick Reference Section */}
-        <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 shadow-2xl">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">📋 Quick Reference Cards</h2>
-          <div className="bg-gradient-to-r from-yellow-50 to-orange-50 p-6 rounded-xl border-l-4 border-yellow-500">
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Concise, printable reference materials for quick consultation during research, fieldwork, or teaching.
-            </p>
-            <div className="text-sm text-yellow-700 font-medium">
-              Ready-to-print format • Field-tested content • Easy navigation
-            </div>
-          </div>
-        </div>
-        
-        {/* Footer Information */}
-        <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 shadow-2xl text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Open Educational Resources</h3>
-          <p className="text-gray-600 mb-4">
-            All materials are licensed under CC BY-NC-SA 4.0 and available for adaptation.
-          </p>
-          <p className="text-gray-600 mb-4">
-            Perfect for university instructors, training coordinators, and workshop facilitators.
-          </p>
-          <p className="text-sm text-gray-500 italic mb-6">
-            ImpactMojo is provided completely free through the generous support of Pinpoint Ventures.
-          </p>
-          
-          <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-            <p className="text-sm text-gray-700">
-              <strong>How to Use:</strong> Click any pathway or resource to explore materials. 
-              Use your browser's print function (Ctrl+P or Cmd+P) to save handouts as PDFs.
-            </p>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-                );
-                };
-                
-                // Resources Page Component (replaced with HandoutsPage above)
-                const ResourcesPage = () => {
-                return <HandoutsPage />;
-                };
-                
-                // Dashboard Page Component
-                const DashboardPage = () => {
-                const { user, bookmarks, notes, addNote, updateNote, deleteNote } = useAuth();
-                const [activeTab, setActiveTab] = useState('overview');
-                const [noteContent, setNoteContent] = useState('');
-                const [selectedCourse, setSelectedCourse] = useState('');
-                const [editingNote, setEditingNote] = useState(null);
-                
-                if (!user) {
-                return (
-                <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-                  <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                      Please sign in to access your dashboard
-                    </h2>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      Sign in to track your progress, save bookmarks, and access personalized features.
-                    </p>
+            <div className="space-y-4 max-h-[calc(100vh-250px)] overflow-y-auto pr-2">
+              {filteredTools.map(tool => (
+                <div
+                  key={tool.id}
+                  onClick={() => handleToolSelect(tool)}
+                  className={`p-4 rounded-xl cursor-pointer transition-colors duration-300 ${
+                    activeTool?.id === tool.id
+                      ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-gray-800'
+                      : `${darkMode ? 'bg-gray-800 hover:bg-gray-750' : 'bg-white hover:bg-gray-100'} shadow-md`
+                  }`}
+                >
+                  <div className="flex items-start">
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center mr-3 ${getColorClasses(tool.color)}`}>
+                      <tool.icon size={20} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold mb-1">{tool.name}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{tool.description}</p>
+                      <span className={`inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full ${getColorClasses(tool.color)}`}>
+                        {tool.category}
+                      </span>
+                    </div>
                   </div>
                 </div>
-                );
-                }
-                
-                const handleAddNote = async () => {
-                if (noteContent.trim() && selectedCourse) {
-                await addNote(selectedCourse, noteContent);
-                setNoteContent('');
-                setSelectedCourse('');
-                }
-                };
-                
-                const handleEditNote = (note) => {
-                setEditingNote(note);
-                setNoteContent(note.content);
-                setSelectedCourse(note.courseId);
-                };
-                
-                const handleUpdateNote = async () => {
-                if (editingNote && noteContent.trim()) {
-                await updateNote(editingNote.id, noteContent);
-                setEditingNote(null);
-                setNoteContent('');
-                setSelectedCourse('');
-                }
-                };
-                
-                const tabContent = {
-                overview: (
-                <div className="space-y-6">
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
-                      <h3 className="text-lg font-semibold mb-2">Bookmarked Courses</h3>
-                      <div className="text-2xl font-bold text-blue-600">{bookmarks.length}</div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Tool Interface */}
+          <div className="lg:w-2/3">
+            {activeTool ? (
+              <div className={`rounded-xl shadow-md overflow-hidden ${darkMode ? 'bg-gray-800' : 'bg-white'} transition-colors duration-300`}>
+                <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center mb-4">
+                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center mr-4 ${getColorClasses(activeTool.color)}`}>
+                      <activeTool.icon size={24} />
                     </div>
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
-                      <h3 className="text-lg font-semibold mb-2">My Notes</h3>
-                      <div className="text-2xl font-bold text-green-600">{notes.length}</div>
-                    </div>
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
-                      <h3 className="text-lg font-semibold mb-2">Progress</h3>
-                      <div className="text-2xl font-bold text-purple-600">
-                        {Math.round((bookmarks.length / courseData.length) * 100)}%
-                      </div>
+                    <div>
+                      <h2 className="text-2xl font-bold">{activeTool.name}</h2>
+                      <p className="text-gray-600 dark:text-gray-400">{activeTool.description}</p>
                     </div>
                   </div>
                   
-                  <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
-                    <h3 className="text-xl font-bold mb-4">Recent Activity</h3>
-                    <div className="space-y-3">
-                      {bookmarks.slice(0, 5).map(courseId => {
-                      const course = courseData.find(c => c.id === courseId);
-                      return course ? (
-                      <div key={courseId} className="flex items-center space-x-3 py-2">
-                        <Bookmark className="w-4 h-4 text-blue-600" />
-                        <span className="text-gray-700 dark:text-gray-300">{course.title}</span>
-                      </div>
-                      ) : null;
-                      })}
-                    </div>
+                  <div className="mb-4">
+                    <h3 className="font-semibold mb-2">How to Use</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{activeTool.howToUse}</p>
                   </div>
                 </div>
-                ),
                 
-                bookmarks: (
-                <div className="space-y-6">
-                  <h3 className="text-xl font-bold">Your Bookmarked Courses</h3>
-                  {bookmarks.length === 0 ? (
-                  <p className="text-gray-600 dark:text-gray-300">No bookmarked courses yet.</p>
-                  ) : (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {bookmarks.map(courseId => {
-                    const course = courseData.find(c => c.id === courseId);
-                    return course ? (
-                    <CourseCard key={courseId} course={course} />
-                    ) : null;
-                    })}
+                <div className="p-6">
+                  <div className="mb-6">
+                    <label htmlFor="tool-input" className="block text-sm font-medium mb-2">
+                      Input
+                    </label>
+                    <textarea
+                      id="tool-input"
+                      rows={6}
+                      className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-750 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      value={toolInput}
+                      onChange={(e) => setToolInput(e.target.value)}
+                      placeholder={activeTool.instructions}
+                    />
                   </div>
+                  
+                  <div className="flex justify-end mb-6">
+                    <button
+                      onClick={handleToolExecute}
+                      disabled={isProcessing || !toolInput.trim()}
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                    >
+                      {isProcessing ? (
+                        <>
+                          <Loader2 className="animate-spin mr-2" size={16} /> Processing...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="mr-2" size={16} /> Generate
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  
+                  {toolOutput && (
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Output
+                      </label>
+                      <div className="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-750 text-gray-900 dark:text-white whitespace-pre-wrap">
+                        {toolOutput}
+                      </div>
+                      <div className="mt-4 flex justify-end space-x-3">
+                        <button className="px-3 py-1.5 text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-md transition-colors duration-300 flex items-center">
+                          <Copy size={14} className="mr-1" /> Copy
+                        </button>
+                        <button className="px-3 py-1.5 text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-md transition-colors duration-300 flex items-center">
+                          <Download size={14} className="mr-1" /> Download
+                        </button>
+                      </div>
+                    </div>
                   )}
                 </div>
-                ),
+              </div>
+            ) : (
+              <div className={`flex flex-col items-center justify-center h-full p-12 rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md transition-colors duration-300`}>
+                <Bot className="text-gray-400 mb-4" size={64} />
+                <h3 className="text-xl font-semibold mb-2">Select a Tool</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-center">
+                  Choose an AI tool from the list to get started. Each tool is designed to help you with specific tasks in your development work.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Profile Page Component
+const ProfilePage = () => {
+  const [darkMode] = useContext(ThemeContext);
+  const [user] = useContext(UserContext);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [bookmarkedCourses, setBookmarkedCourses] = useState([]);
+  const [completedCourses, setCompletedCourses] = useState([]);
+  const [completedLabs, setCompletedLabs] = useState([]);
+  
+  // Mock data for demonstration
+  useEffect(() => {
+    // In a real app, this data would be fetched from a database
+    setBookmarkedCourses(['C1', 'C5', 'C12']);
+    setCompletedCourses(['C3', 'C8']);
+    setCompletedLabs(['L2', 'L5', 'L7']);
+  }, []);
+  
+  // Get bookmarked course details
+  const bookmarkedCourseDetails = courseData.filter(course => 
+    bookmarkedCourses.includes(course.id)
+  );
+  
+  // Get completed course details
+  const completedCourseDetails = courseData.filter(course => 
+    completedCourses.includes(course.id)
+  );
+  
+  // Get completed lab details
+  const completedLabDetails = labsData.filter(lab => 
+    completedLabs.includes(lab.id)
+  );
+  
+  return (
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">Your Profile</h1>
+          <p className="text-gray-600 dark:text-gray-400">Manage your account and track your learning progress.</p>
+        </div>
+        
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Profile Sidebar */}
+          <div className="lg:w-1/3">
+            <div className={`rounded-xl shadow-md overflow-hidden ${darkMode ? 'bg-gray-800' : 'bg-white'} transition-colors duration-300`}>
+              <div className="p-6 text-center border-b border-gray-200 dark:border-gray-700">
+                <div className="w-24 h-24 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-3xl mx-auto mb-4">
+                  {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
+                </div>
+                <h2 className="text-xl font-bold">{user.displayName || 'User'}</h2>
+                <p className="text-gray-600 dark:text-gray-400">{user.email}</p>
+              </div>
+              
+              <div className="p-6">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 dark:text-gray-400">Member since</span>
+                    <span>{new Date(user.metadata.creationTime).toLocaleDateString()}</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 dark:text-gray-400">Courses completed</span>
+                    <span className="font-semibold">{completedCourses.length}</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 dark:text-gray-400">Labs completed</span>
+                    <span className="font-semibold">{completedLabs.length}</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 dark:text-gray-400">Bookmarks</span>
+                    <span className="font-semibold">{bookmarkedCourses.length}</span>
+                  </div>
+                </div>
                 
-                notes: (
-                <div className="space-y-6">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
-                    <h3 className="text-xl font-bold mb-4">
-                      {editingNote ? 'Edit Note' : 'Add New Note'}
-                    </h3>
+                <button className="w-full mt-6 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-md transition-colors duration-300">
+                  Edit Profile
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          {/* Profile Content */}
+          <div className="lg:w-2/3">
+            <div className={`rounded-xl shadow-md overflow-hidden ${darkMode ? 'bg-gray-800' : 'bg-white'} transition-colors duration-300`}>
+              {/* Tabs */}
+              <div className="flex border-b border-gray-200 dark:border-gray-700">
+                <button
+                  onClick={() => setActiveTab('overview')}
+                  className={`px-6 py-3 font-medium text-sm transition-colors duration-300 ${
+                    activeTab === 'overview'
+                      ? 'text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400'
+                      : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
+                  }`}
+                >
+                  Overview
+                </button>
+                <button
+                  onClick={() => setActiveTab('courses')}
+                  className={`px-6 py-3 font-medium text-sm transition-colors duration-300 ${
+                    activeTab === 'courses'
+                      ? 'text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400'
+                      : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
+                  }`}
+                >
+                  Courses
+                </button>
+                <button
+                  onClick={() => setActiveTab('labs')}
+                  className={`px-6 py-3 font-medium text-sm transition-colors duration-300 ${
+                    activeTab === 'labs'
+                      ? 'text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400'
+                      : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
+                  }`}
+                >
+                  Labs
+                </button>
+                <button
+                  onClick={() => setActiveTab('settings')}
+                  className={`px-6 py-3 font-medium text-sm transition-colors duration-300 ${
+                    activeTab === 'settings'
+                      ? 'text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400'
+                      : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
+                  }`}
+                >
+                  Settings
+                </button>
+              </div>
+              
+              {/* Tab Content */}
+              <div className="p-6">
+                {activeTab === 'overview' && (
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4">Learning Overview</h3>
                     
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Course</label>
-                        <select
-                          value={selectedCourse}
-                          onChange={(e) => setSelectedCourse(e.target.value)}
-                          className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
-                          >
-                          <option value="">Select a course</option>
-                          {courseData.map(course => (
-                          <option key={course.id} value={course.id}>{course.title}</option>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                      <div className={`p-4 rounded-lg ${darkMode ? 'bg-gray-750' : 'bg-gray-100'} transition-colors duration-300`}>
+                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">{completedCourses.length}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">Courses Completed</div>
+                      </div>
+                      
+                      <div className={`p-4 rounded-lg ${darkMode ? 'bg-gray-750' : 'bg-gray-100'} transition-colors duration-300`}>
+                        <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">{completedLabs.length}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">Labs Completed</div>
+                      </div>
+                      
+                      <div className={`p-4 rounded-lg ${darkMode ? 'bg-gray-750' : 'bg-gray-100'} transition-colors duration-300`}>
+                        <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">{bookmarkedCourses.length}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">Bookmarked Courses</div>
+                      </div>
+                    </div>
+                    
+                    <div className="mb-6">
+                      <h4 className="font-semibold mb-3">Recently Completed</h4>
+                      <div className="space-y-3">
+                        {completedCourseDetails.slice(0, 2).map(course => (
+                          <div key={course.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-750">
+                            <div>
+                              <div className="font-medium">{course.title}</div>
+                              <div className="text-sm text-gray-600 dark:text-gray-400">{course.track}</div>
+                            </div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400">Completed</div>
+                          </div>
+                        ))}
+                        
+                        {completedLabDetails.slice(0, 2).map(lab => (
+                          <div key={lab.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-750">
+                            <div>
+                              <div className="font-medium">{lab.title}</div>
+                              <div className="text-sm text-gray-600 dark:text-gray-400">{lab.category}</div>
+                            </div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400">Completed</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {activeTab === 'courses' && (
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4">My Courses</h3>
+                    
+                    <div className="mb-6">
+                      <h4 className="font-semibold mb-3 flex items-center">
+                        <Bookmark className="mr-2 text-yellow-500" size={16} /> Bookmarked Courses
+                      </h4>
+                      
+                      {bookmarkedCourseDetails.length > 0 ? (
+                        <div className="space-y-3">
+                          {bookmarkedCourseDetails.map(course => (
+                            <div key={course.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-750">
+                              <div>
+                                <div className="font-medium">{course.title}</div>
+                                <div className="text-sm text-gray-600 dark:text-gray-400">{course.track} • {course.duration}</div>
+                              </div>
+                              <div className="flex space-x-2">
+                                <Link to={`/courses`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                                  View
+                                </Link>
+                                <button className="text-red-600 dark:text-red-400 hover:underline">
+                                  Remove
+                                </button>
+                              </div>
+                            </div>
                           ))}
-                        </select>
+                        </div>
+                      ) : (
+                        <p className="text-gray-600 dark:text-gray-400 italic">You haven't bookmarked any courses yet.</p>
+                      )}
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-semibold mb-3 flex items-center">
+                        <CheckCircle className="mr-2 text-green-500" size={16} /> Completed Courses
+                      </h4>
+                      
+                      {completedCourseDetails.length > 0 ? (
+                        <div className="space-y-3">
+                          {completedCourseDetails.map(course => (
+                            <div key={course.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-750">
+                              <div>
+                                <div className="font-medium">{course.title}</div>
+                                <div className="text-sm text-gray-600 dark:text-gray-400">{course.track} • {course.duration}</div>
+                              </div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400">Completed</div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-gray-600 dark:text-gray-400 italic">You haven't completed any courses yet.</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+                
+                {activeTab === 'labs' && (
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4">My Labs</h3>
+                    
+                    <div>
+                      <h4 className="font-semibold mb-3 flex items-center">
+                        <CheckCircle className="mr-2 text-green-500" size={16} /> Completed Labs
+                      </h4>
+                      
+                      {completedLabDetails.length > 0 ? (
+                        <div className="space-y-3">
+                          {completedLabDetails.map(lab => (
+                            <div key={lab.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-750">
+                              <div>
+                                <div className="font-medium">{lab.title}</div>
+                                <div className="text-sm text-gray-600 dark:text-gray-400">{lab.category} • {lab.duration} min</div>
+                              </div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400">Completed</div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-gray-600 dark:text-gray-400 italic">You haven't completed any labs yet.</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+                
+                {activeTab === 'settings' && (
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4">Account Settings</h3>
+                    
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold mb-3">Notification Preferences</h4>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-750">
+                            <div>
+                              <div className="font-medium">Email Notifications</div>
+                              <div className="text-sm text-gray-600 dark:text-gray-400">Receive updates about new courses and labs</div>
+                            </div>
+                            <label className="relative inline-flex items-center cursor-pointer">
+                              <input type="checkbox" className="sr-only peer" defaultChecked />
+                              <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-750">
+                            <div>
+                              <div className="font-medium">Course Reminders</div>
+                              <div className="text-sm text-gray-600 dark:text-gray-400">Get reminders for bookmarked courses</div>
+                            </div>
+                            <label className="relative inline-flex items-center cursor-pointer">
+                              <input type="checkbox" className="sr-only peer" />
+                              <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                          </div>
+                        </div>
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-medium mb-2">Note Content</label>
-                        <textarea
-                          value={noteContent}
-                          onChange={(e) => setNoteContent(e.target.value)}
-                          placeholder="Write your notes here..."
-                          className="w-full p-3 border rounded-lg h-32 dark:bg-gray-700 dark:border-gray-600"
-                          />
-                          </div>
-                          
-                          <div className="flex space-x-2">
-                            <button
-                              onClick={editingNote ? handleUpdateNote : handleAddNote}
-                              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-                            >
-                              {editingNote ? 'Update Note' : 'Add Note'}
-                            </button>
-                            {editingNote && (
-                            <button
-                              onClick={() => {
-                              setEditingNote(null);
-                              setNoteContent('');
-                              setSelectedCourse('');
-                              }}
-                              className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg"
-                              >
-                              Cancel
-                            </button>
-                            )}
-                          </div>
-                          </div>
-                          </div>
-                          
-                          <div className="space-y-4">
-                            <h4 className="text-lg font-semibold">Your Notes</h4>
-                            {notes.length === 0 ? (
-                            <p className="text-gray-600 dark:text-gray-300">No notes yet.</p>
-                            ) : (
-                            notes.map(note => {
-                            const course = courseData.find(c => c.id === note.courseId);
-                            return (
-                            <div key={note.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg">
-                              <div className="flex justify-between items-start mb-2">
-                                <h5 className="font-medium text-blue-600">
-                                  {course ? course.title : 'Unknown Course'}
-                                </h5>
-                                <div className="flex space-x-2">
-                                  <button
-                                    onClick={() => handleEditNote(note)}
-                                    className="text-gray-600 hover:text-blue-600"
-                                    >
-                                    <Edit3 className="w-4 h-4" />
-                                  </button>
-                                  <button
-                                    onClick={() => deleteNote(note.id)}
-                                    className="text-gray-600 hover:text-red-600"
-                                    >
-                                    <X className="w-4 h-4" />
-                                  </button>
-                                </div>
-                              </div>
-                              <p className="text-gray-700 dark:text-gray-300 text-sm">{note.content}</p>
-                              <p className="text-xs text-gray-500 mt-2">
-                                {new Date(note.createdAt).toLocaleDateString()}
-                              </p>
+                        <h4 className="font-semibold mb-3">Privacy Settings</h4>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-750">
+                            <div>
+                              <div className="font-medium">Profile Visibility</div>
+                              <div className="text-sm text-gray-600 dark:text-gray-400">Make your profile visible to other users</div>
                             </div>
-                            );
-                            })
-                            )}
+                            <label className="relative inline-flex items-center cursor-pointer">
+                              <input type="checkbox" className="sr-only peer" defaultChecked />
+                              <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
                           </div>
-                          </div>
-                          )
-                          };
                           
-                          return (
-                          <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                              <div className="mb-8">
-                                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                                  Dashboard
-                                </h1>
-                                <p className="text-xl text-gray-600 dark:text-gray-300">
-                                  Welcome back, {user.displayName || user.email}!
-                                </p>
-                              </div>
-                              
-                              {/* Tab Navigation */}
-                              <div className="flex space-x-1 mb-8 bg-gray-200 dark:bg-gray-700 rounded-lg p-1">
-                                {[
-                                { id: 'overview', label: 'Overview', icon: BarChart },
-                                { id: 'bookmarks', label: 'Bookmarks', icon: Bookmark },
-                                { id: 'notes', label: 'Notes', icon: FileText }
-                                ].map(tab => {
-                                const IconComponent = tab.icon;
-                                return (
-                                <button
-                                  key={tab.id}
-                                  onClick={() => setActiveTab(tab.id)}
-                                  className={`flex items-center space-x-2 px-4 py-2 rounded-md font-medium transition-colors ${
-                                  activeTab === tab.id
-                                  ? 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm'
-                                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                                  }`}
-                                  >
-                                  <IconComponent className="w-4 h-4" />
-                                  <span>{tab.label}</span>
-                                </button>
-                                );
-                                })}
-                              </div>
-                              
-                              {/* Tab Content */}
-                              {tabContent[activeTab]}
+                          <div className="flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-750">
+                            <div>
+                              <div className="font-medium">Activity Sharing</div>
+                              <div className="text-sm text-gray-600 dark:text-gray-400">Share your course completion activity</div>
                             </div>
+                            <label className="relative inline-flex items-center cursor-pointer">
+                              <input type="checkbox" className="sr-only peer" />
+                              <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
                           </div>
-                          );
-                          };
-                          
-                          // Contact Page Component
-                          const ContactPage = () => {
-                          const [formData, setFormData] = useState({
-                          name: '',
-                          email: '',
-                          subject: '',
-                          message: ''
-                          });
-                          const [isSubmitting, setIsSubmitting] = useState(false);
-                          const [submitMessage, setSubmitMessage] = useState('');
-                          
-                          const handleChange = (e) => {
-                          setFormData({
-                          ...formData,
-                          [e.target.name]: e.target.value
-                          });
-                          };
-                          
-                          const handleSubmit = async (e) => {
-                          e.preventDefault();
-                          setIsSubmitting(true);
-                          
-                          try {
-                          const response = await fetch('https://formspree.io/f/xpwdvgzp', {
-                          method: 'POST',
-                          headers: {
-                          'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify(formData),
-                          });
-                          
-                          if (response.ok) {
-                          setSubmitMessage('Thank you! Your message has been sent successfully.');
-                          setFormData({ name: '', email: '', subject: '', message: '' });
-                          } else {
-                          setSubmitMessage('There was an error sending your message. Please try again.');
-                          }
-                          } catch (error) {
-                          setSubmitMessage('There was an error sending your message. Please try again.');
-                          }
-                          
-                          setIsSubmitting(false);
-                          };
-                          
-                          return (
-                          <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-                            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                              <div className="mb-8 text-center">
-                                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                                  Get in Touch
-                                </h1>
-                                <p className="text-xl text-gray-600 dark:text-gray-300">
-                                  Have questions, suggestions, or feedback? We'd love to hear from you.
-                                </p>
-                              </div>
-                              
-                              <div className="grid md:grid-cols-2 gap-8">
-                                {/* Contact Form */}
-                                <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
-                                  <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Send us a message</h2>
-                                  
-                                  <form onSubmit={handleSubmit} className="space-y-6">
-                                    <div>
-                                      <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
-                                      <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white"
-                                      />
-                                    </div>
-                                    
-                                    <div>
-                                      <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
-                                      <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white"
-                                      />
-                                    </div>
-                                    
-                                    <div>
-                                      <label htmlFor="subject" className="block text-sm font-medium mb-2">Subject</label>
-                                      <input
-                                        type="text"
-                                        id="subject"
-                                        name="subject"
-                                        value={formData.subject}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white"
-                                      />
-                                    </div>
-                                    
-                                    <div>
-                                      <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
-                                      <textarea
-                                        id="message"
-                                        name="message"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        required
-                                        rows="6"
-                                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white"
-                                      ></textarea>
-                                    </div>
-                                    
-                                    <button
-                                      type="submit"
-                                      disabled={isSubmitting}
-                                      className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center space-x-2"
-                                    >
-                                      {isSubmitting ? (
-                                      <>
-                                      <Loader2 className="w-4 h-4 animate-spin" />
-                                      <span>Sending...</span>
-                                      </>
-                                      ) : (
-                                      <>
-                                      <Send className="w-4 h-4" />
-                                      <span>Send Message</span>
-                                      </>
-                                      )}
-                                    </button>
-                                    
-                                    {submitMessage && (
-                                    <div className={`p-3 rounded-lg ${
-                                      submitMessage.includes('success') 
-                                      ? 'bg-green-100 text-green-700' 
-                                      : 'bg-red-100 text-red-700'
-                                    }`}>
-                                      {submitMessage}
-                                    </div>
-                                    )}
-                                  </form>
-                                </div>
-                                
-                                {/* Contact Information */}
-                                <div className="space-y-6">
-                                  <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
-                                    <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Connect with us</h2>
-                                    
-                                    <div className="space-y-4">
-                                      <div className="flex items-center space-x-3">
-                                        <Mail className="w-5 h-5 text-blue-600" />
-                                        <div>
-                                          <div className="font-medium">Email</div>
-                                          <div className="text-gray-600 dark:text-gray-300">hello@impactmojo.in</div>
-                                        </div>
-                                      </div>
-                                      
-                                      <div className="flex items-center space-x-3">
-                                        <Globe className="w-5 h-5 text-blue-600" />
-                                        <div>
-                                          <div className="font-medium">Website</div>
-                                          <div className="text-gray-600 dark:text-gray-300">www.impactmojo.in</div>
-                                        </div>
-                                      </div>
-                                      
-                                      <div className="flex items-center space-x-3">
-                                        <Github className="w-5 h-5 text-blue-600" />
-                                        <div>
-                                          <div className="font-medium">GitHub</div>
-                                          <div className="text-gray-600 dark:text-gray-300">github.com/Varnasr/ImpactMojo</div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  
-                                  <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
-                                    <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Open Source</h3>
-                                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                      ImpactMojo is an open-source project. We believe in the power of open collaboration 
-                                      to improve education and welcome contributions from the community.
-                                    </p>
-                                    <a
-                                      href="https://github.com/Varnasr/ImpactMojo"
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="inline-flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:underline mt-4"
-                                    >
-                                      <Github className="w-5 h-5" />
-                                      <span>View Source Code</span>
-                                    </a>
-                                  </div>
-                                  
-                                  <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
-                                    <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Disclaimer</h3>
-                                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                      ImpactMojo is an educational resource and does not provide official certifications or endorsements. 
-                                      The content is designed for learning purposes and should be supplemented with formal education and 
-                                      professional development as appropriate for your goals.
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          );
-                          };
-                          
-                          // About Page Component
-                          const AboutPage = () => {
-                          return (
-                          <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-                            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                              <div className="mb-8 text-center">
-                                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                                  About ImpactMojo
-                                </h1>
-                                <p className="text-xl text-gray-600 dark:text-gray-300">
-                                  Democratizing development education through open-source learning
-                                </p>
-                              </div>
-                              
-                              <div className="space-y-8">
-                                <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
-                                  <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Our Mission</h2>
-                                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                    ImpactMojo is a 101 Knowledge Series for Social Impact, providing curated educational 
-                                    resources on justice, equity, and development with a focus on South Asian contexts. 
-                                    We believe that high-quality development education should be accessible to everyone, 
-                                    regardless of their economic background or geographical location.
-                                  </p>
-                                </div>
-                                
-                                <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
-                                  <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">What We Offer</h2>
-                                  <div className="grid md:grid-cols-2 gap-6">
-                                    <div>
-                                      <h3 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-400">
-                                        Comprehensive Courses
-                                      </h3>
-                                      <p className="text-gray-600 dark:text-gray-300 text-sm">
-                                        37 carefully curated courses covering gender studies, data analysis, policy, 
-                                        and research methods tailored for development professionals.
-                                      </p>
-                                    </div>
-                                    
-                                    <div>
-                                      <h3 className="text-lg font-semibold mb-2 text-green-600 dark:text-green-400">
-                                        Interactive Labs
-                                      </h3>
-                                      <p className="text-gray-600 dark:text-gray-300 text-sm">
-                                        Hands-on learning experiences and practical tools to apply theoretical 
-                                        knowledge in real-world scenarios.
-                                      </p>
-                                    </div>
-                                    
-                                    <div>
-                                      <h3 className="text-lg font-semibold mb-2 text-purple-600 dark:text-purple-400">
-                                        Educational Handouts
-                                      </h3>
-                                      <p className="text-gray-600 dark:text-gray-300 text-sm">
-                                        Printable resources, templates, and reference materials perfect for 
-                                        classroom use and workshop facilitation.
-                                      </p>
-                                    </div>
-                                    
-                                    <div>
-                                      <h3 className="text-lg font-semibold mb-2 text-orange-600 dark:text-orange-400">
-                                        AI-Powered Tools
-                                      </h3>
-                                      <p className="text-gray-600 dark:text-gray-300 text-sm">
-                                        Cutting-edge AI tools to support research, writing, analysis, and 
-                                        planning for development professionals.
-                                      </p>
-                                    </div>
-                                  </div>
-                                </div>
-                                
-                                <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
-                                  <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Open Source Commitment</h2>
-                                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-                                    ImpactMojo is completely open source under the MIT license. Our code, content, and 
-                                    educational materials are freely available for anyone to use, modify, and distribute. 
-                                    We believe that transparency and collaboration are essential for creating truly 
-                                    impactful educational resources.
-                                  </p>
-                                  <div className="flex flex-wrap gap-4">
-                                    <a
-                                      href="https://github.com/Varnasr/ImpactMojo"
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="inline-flex items-center space-x-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg transition-colors"
-                                    >
-                                      <Github className="w-4 h-4" />
-                                      <span>View on GitHub</span>
-                                    </a>
-                                    <div className="inline-flex items-center space-x-2 bg-green-100 text-green-800 px-4 py-2 rounded-lg">
-                                      <Shield className="w-4 h-4" />
-                                      <span>MIT Licensed</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                
-                                <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
-                                  <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Support & Acknowledgments</h2>
-                                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-                                    ImpactMojo is made possible through the generous support of Pinpoint Ventures. 
-                                    This support allows us to keep all our educational content completely free and 
-                                    accessible to learners worldwide.
-                                  </p>
-                                  <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                                    <p className="text-blue-800 dark:text-blue-200 text-sm">
-                                      <strong>Note:</strong> ImpactMojo does not provide official certifications or endorsements. 
-                                      Our content is designed for educational purposes and should complement formal education 
-                                      and professional development.
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          );
-                          };
-                          
-                          // Navigation Component
-                          const Navigation = ({ darkMode, setDarkMode, currentPage, setCurrentPage }) => {
-                          const { user, signIn, signOut } = useAuth();
-                          const [isMenuOpen, setIsMenuOpen] = useState(false);
-                          
-                          const menuItems = [
-                          { id: 'home', label: 'Home', icon: Target },
-                          { id: 'courses', label: 'Courses', icon: BookOpen },
-                          { id: 'labs', label: 'Labs', icon: Gamepad2 },
-                          { id: 'handouts', label: 'Handouts', icon: FileText },
-                          { id: 'ai-tools', label: 'AI Tools', icon: Bot },
-                          { id: 'contact', label: 'Contact', icon: Mail },
-                          { id: 'about', label: 'About', icon: Info }
-                          ];
-                          
-                          return (
-                          <nav className="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
-                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                              <div className="flex justify-between items-center py-4">
-                                {/* Logo */}
-                                <div 
-                                  className="flex items-center space-x-2 cursor-pointer"
-                                  onClick={() => setCurrentPage('home')}
-                                  >
-                                  <Target className="w-8 h-8 text-blue-600" />
-                                  <span className="text-xl font-bold text-gray-900 dark:text-white">ImpactMojo</span>
-                                </div>
-                                
-                                {/* Desktop Menu */}
-                                <div className="hidden md:flex items-center space-x-6">
-                                  {menuItems.map(item => {
-                                  const IconComponent = item.icon;
-                                  return (
-                                  <button
-                                    key={item.id}
-                                    onClick={() => setCurrentPage(item.id)}
-                                    className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                                    currentPage === item.id
-                                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                                    }`}
-                                    >
-                                    <IconComponent className="w-4 h-4" />
-                                    <span>{item.label}</span>
-                                  </button>
-                                  );
-                                  })}
-                                </div>
-                                
-                                {/* User Actions */}
-                                <div className="flex items-center space-x-3">
-                                  <button
-                                    onClick={() => setDarkMode(!darkMode)}
-                                    className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                    >
-                                    {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                                  </button>
-                                  
-                                  {user ? (
-                                  <div className="flex items-center space-x-3">
-                                    <button
-                                      onClick={() => setCurrentPage('dashboard')}
-                                      className="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                      >
-                                      <User className="w-4 h-4" />
-                                      <span className="hidden sm:inline">Dashboard</span>
-                                    </button>
-                                    <button
-                                      onClick={signOut}
-                                      className="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                    >
-                                      <LogOut className="w-4 h-4" />
-                                      <span className="hidden sm:inline">Sign Out</span>
-                                    </button>
-                                  </div>
-                                  ) : (
-                                  <button
-                                    onClick={signIn}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                                  >
-                                    Sign In
-                                  </button>
-                                  )}
-                                  
-                                  {/* Mobile Menu Button */}
-                                  <button
-                                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                    className="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                    >
-                                    {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                                      </button>
-                                      </div>
-                                      </div>
-                                      
-                                      {/* Mobile Menu */}
-                                      {isMenuOpen && (
-                                      <div className="md:hidden pb-4">
-                                        <div className="space-y-1">
-                                          {menuItems.map(item => {
-                                          const IconComponent = item.icon;
-                                          return (
-                                          <button
-                                            key={item.id}
-                                            onClick={() => {
-                                            setCurrentPage(item.id);
-                                            setIsMenuOpen(false);
-                                            }}
-                                            className={`w-full flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                                            currentPage === item.id
-                                            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                                            }`}
-                                            >
-                                            <IconComponent className="w-4 h-4" />
-                                            <span>{item.label}</span>
-                                          </button>
-                                          );
-                                          })}
-                                        </div>
-                                      </div>
-                                      )}
-                                      </div>
-                                      </nav>
-                                      );
-                                      };
-                                      
-                                      // Main App Component
-                                      function App() {
-                                      const [darkMode, setDarkMode] = useState(false);
-                                      const [currentPage, setCurrentPage] = useState('home');
-                                      const [showCookieConsent, setShowCookieConsent] = useState(true);
-                                      
-                                      useEffect(() => {
-                                      const savedDarkMode = localStorage.getItem('darkMode');
-                                      if (savedDarkMode) {
-                                      setDarkMode(JSON.parse(savedDarkMode));
-                                      }
-                                      }, []);
-                                      
-                                      useEffect(() => {
-                                      localStorage.setItem('darkMode', JSON.stringify(darkMode));
-                                      if (darkMode) {
-                                      document.documentElement.classList.add('dark');
-                                      } else {
-                                      document.documentElement.classList.remove('dark');
-                                      }
-                                      }, [darkMode]);
-                                      
-                                      const handleCookieAccept = () => {
-                                      setShowCookieConsent(false);
-                                      localStorage.setItem('cookieConsent', 'true');
-                                      };
-                                      
-                                      useEffect(() => {
-                                      const cookieConsent = localStorage.getItem('cookieConsent');
-                                      if (cookieConsent) {
-                                      setShowCookieConsent(false);
-                                      }
-                                      }, []);
-                                      
-                                      return (
-                                      <AuthProvider>
-                                        <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
-                                          <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors">
-                                            <Navigation 
-                                              darkMode={darkMode}
-                                              setDarkMode={setDarkMode}
-                                              currentPage={currentPage}
-                                              setCurrentPage={setCurrentPage}
-                                            />
-                                            
-                                            <main className="pt-0">
-                                              {currentPage === 'home' && <HomePage setCurrentPage={setCurrentPage} />}
-                                              {currentPage === 'courses' && <CoursesPage />}
-                                              {currentPage === 'labs' && <LabsPage />}
-                                              {currentPage === 'handouts' && <HandoutsPage />}
-                                              {currentPage === 'dashboard' && <DashboardPage />}
-                                              {currentPage === 'ai-tools' && <AIToolsPage />}
-                                              {currentPage === 'contact' && <ContactPage />}
-                                              {currentPage === 'about' && <AboutPage />}
-                                            </main>
-                                            
-                                            {/* Cookie Consent */}
-                                            {showCookieConsent && (
-                                            <div className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 z-50">
-                                              <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
-                                                <div className="flex-1">
-                                                  <p className="text-sm">
-                                                    We use cookies and privacy-friendly analytics to improve your experience. 
-                                                    By continuing to use this site, you agree to our use of cookies.
-                                                  </p>
-                                                </div>
-                                                <div className="flex space-x-4">
-                                                  <button
-                                                    onClick={handleCookieAccept}
-                                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm transition-colors"
-                                                  >
-                                                    Accept
-                                                  </button>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            )}
-                                            
-                                            {/* Footer */}
-                                            <footer className="bg-gray-100 dark:bg-gray-800 py-8 mt-16">
-                                              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                                                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                                                  ImpactMojo is an open-source project. No endorsements or certificates are provided.
-                                                </p>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                  © 2025 ImpactMojo. Released under MIT License.
-                                                </p>
-                                              </div>
-                                            </footer>
-                                          </div>
-                                        </div>
-                                      </AuthProvider>
-                                      );
-                                      }
-                                      
-                                      export default App;
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold mb-3">Danger Zone</h4>
+                        <div className="space-y-3">
+                          <button className="w-full p-3 text-left rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors duration-300">
+                            <div className="font-medium">Delete Account</div>
+                            <div className="text-sm">Permanently delete your account and all data</div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Login Page Component
+const LoginPage = () => {
+  const [darkMode] = useContext(ThemeContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [signInWithGoogle] = useGoogleSignIn();
+  const navigate = useNavigate();
+  
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+  
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+  
+  return (
+    <div className={`min-h-screen flex items-center justify-center ${darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-300`}>
+      <div className={`max-w-md w-full p-8 rounded-xl shadow-lg ${darkMode ? 'bg-gray-800' : 'bg-white'} transition-colors duration-300`}>
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">ImpactMojo</h1>
+          <h2 className="text-2xl font-semibold">Sign in to your account</h2>
+        </div>
+        
+        {error && (
+          <div className="mb-6 p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-md">
+            {error}
+          </div>
+        )}
+        
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-1">
+              Email address
+            </label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-750 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="you@example.com"
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium mb-1">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-750 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="••••••••"
+            />
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <input
+                id="remember-me"
+                name="remember-me"
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-600 dark:text-gray-400">
+                Remember me
+              </label>
+            </div>
+            
+            <div className="text-sm">
+              <a href="#" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                Forgot your password?
+              </a>
+            </div>
+          </div>
+          
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors duration-300"
+            >
+              {loading ? 'Signing in...' : 'Sign in'}
+            </button>
+          </div>
+        </form>
+        
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className={`px-2 ${darkMode ? 'bg-gray-800 text-gray-400' : 'bg-white text-gray-600'}`}>
+                Or continue with
+              </span>
+            </div>
+          </div>
+          
+          <div className="mt-6">
+            <button
+              onClick={handleGoogleSignIn}
+              className="w-full flex items-center justify-center py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-750 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300"
+            >
+              <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+                />
+              </svg>
+              Sign in with Google
+            </button>
+          </div>
+        </div>
+        
+        <div className="mt-8 text-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Don't have an account?{' '}
+            <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+              Sign up
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Signup Page Component
+const SignupPage = () => {
+  const [darkMode] = useContext(ThemeContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [signInWithGoogle] = useGoogleSignIn();
+  const navigate = useNavigate();
+  
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+    
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+  
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+  
+  return (
+    <div className={`min-h-screen flex items-center justify-center ${darkMode ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-300`}>
+      <div className={`max-w-md w-full p-8 rounded-xl shadow-lg ${darkMode ? 'bg-gray-800' : 'bg-white'} transition-colors duration-300`}>
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">ImpactMojo</h1>
+          <h2 className="text-2xl font-semibold">Create your account</h2>
+        </div>
+        
+        {error && (
+          <div className="mb-6 p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-md">
+            {error}
+          </div>
+        )}
+        
+        <form onSubmit={handleSignup} className="space-y-6">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-1">
+              Email address
+            </label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-750 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="you@example.com"
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium mb-1">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-750 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="••••••••"
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="confirm-password" className="block text-sm font-medium mb-1">
+              Confirm Password
+            </label>
+            <input
+              id="confirm-password"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-750 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="••••••••"
+            />
+          </div>
+          
+          <div className="flex items-center">
+            <input
+              id="terms"
+              name="terms"
+              type="checkbox"
+              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              required
+            />
+            <label htmlFor="terms" className="ml-2 block text-sm text-gray-600 dark:text-gray-400">
+              I agree to the{' '}
+              <a href="#" className="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                Terms and Conditions
+              </a>
+            </label>
+          </div>
+          
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors duration-300"
+            >
+              {loading ? 'Creating account...' : 'Sign up'}
+            </button>
+          </div>
+        </form>
+        
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className={`px-2 ${darkMode ? 'bg-gray-800 text-gray-400' : 'bg-white text-gray-600'}`}>
+                Or continue with
+              </span>
+            </div>
+          </div>
+          
+          <div className="mt-6">
+            <button
+              onClick={handleGoogleSignIn}
+              className="w-full flex items-center justify-center py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-750 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300"
+            >
+              <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+                />
+              </svg>
+              Sign up with Google
+            </button>
+          </div>
+        </div>
+        
+        <div className="mt-8 text-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Already have an account?{' '}
+            <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Theme Provider
+const ThemeProvider = ({ children }) => {
+  const [darkMode, setDarkMode] = useState(false);
+  
+  return (
+    <ThemeContext.Provider value={[darkMode, setDarkMode]}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+// User Context
+export const UserContext = createContext();
+
+// User Provider
+const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    
+    return () => unsubscribe();
+  }, []);
+  
+  return (
+    <UserContext.Provider value={user}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+// Google Sign In Hook
+const useGoogleSignIn = () => {
+  const signIn = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+      throw error;
+    }
+  };
+  
+  return signIn;
+};
+
+// Main App Component
+function App() {
+  return (
+    <div className="min-h-screen">
+      <ThemeProvider>
+        <UserProvider>
+          <Router>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-grow">
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/courses" element={<CoursesPage />} />
+                  <Route path="/labs" element={<LabsPage />} />
+                  <Route path="/resources" element={<ResourcesPage />} />
+                  <Route path="/ai-tools" element={<AIToolsPage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/signup" element={<SignupPage />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          </Router>
+        </UserProvider>
+      </ThemeProvider>
+    </div>
+  );
+}
+
+export default App;
