@@ -1,4 +1,4 @@
-// src/App.js - Complete ImpactMojo with ALL components and enhanced AI Tools
+// src/App.js
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { 
   Menu, X, Sun, Moon, Search, Bookmark, Heart, MessageCircle, 
@@ -9,7 +9,7 @@ import {
   FileText, BarChart, Settings, ArrowRight, CheckCircle,
   AlertCircle, Info, HelpCircle, Share2, PlayCircle, Scale,
   Lightbulb, Compare, Send, Edit3, Brain, PenTool, FolderOpen,
-  Loader2, Copy, Sparkles, Wand2, Bot, Puzzle, Trophy, Shield
+  Loader2, Copy, Sparkles, Wand2, Bot, Puzzle, Trophy, Shield, ArrowLeft
 } from 'lucide-react';
 
 // Firebase imports
@@ -50,7 +50,7 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
-// ✅ REAL COURSE DATA (37 Courses) - Updated from Project Files
+// Course Data (37 Courses)
 const courseData = [
   {
     id: "C1",
@@ -548,16 +548,13 @@ const aiToolsData = [
     title: 'Data Visualization Generator',
     description: 'Create clear, compelling data visualizations from your dataset with automatic chart selection, color schemes, and accessibility features.',
     prompt: `I need a data visualization that effectively communicates insights from my dataset.
-
 Dataset Details:
 - Type: [survey/time series/categorical/numerical]
 - Size: [number of data points]
 - Key Variables: [list main variables]
 - Story to Tell: [what insight do you want to highlight]
-
 Target Audience: [researchers/policymakers/community/general public]
 Context: [report/presentation/website/social media]
-
 Please provide:
 1. Recommended chart type with justification
 2. Complete code (R/Python/JavaScript) for creating the visualization
@@ -580,17 +577,14 @@ Context: Policy brief on workplace equality`,
     title: 'Theory of Change Builder',
     description: 'Develop comprehensive Theory of Change frameworks with clear pathways from activities to impact.',
     prompt: `Help me develop a Theory of Change for my development program.
-
 Program Overview:
 - Problem Statement: [describe the problem]
 - Target Population: [who are you serving]
 - Geographic Context: [where]
 - Timeframe: [program duration]
-
 Current Activities: [list main activities/interventions]
 Resources Available: [budget, staff, partners]
 Desired Long-term Change: [ultimate goal]
-
 Please create:
 1. Complete Theory of Change narrative
 2. Visual diagram showing:
@@ -614,13 +608,11 @@ Goal: Sustainable employment for 1000 youth`,
     title: 'Grant Proposal Writer',
     description: 'Craft compelling grant proposals with clear narratives, strong evidence, and aligned budgets.',
     prompt: `I need help writing a grant proposal for my development project.
-
 Funder Details:
 - Organization: [funder name]
 - Priority Areas: [what they fund]
 - Grant Size: [amount requesting]
 - Requirements: [specific requirements/format]
-
 Project Information:
 - Title: [project name]
 - Problem/Need: [what problem does this solve]
@@ -628,11 +620,9 @@ Project Information:
 - Target Beneficiaries: [who benefits]
 - Timeline: [project duration]
 - Expected Outcomes: [measurable results]
-
 Organization Background:
 - Track Record: [relevant experience]
 - Capacity: [why you can deliver]
-
 Please provide:
 1. Executive summary (250 words)
 2. Problem statement with evidence
@@ -658,17 +648,14 @@ Outcomes: 50% increase in STEM enrollment`,
     title: 'Stakeholder Mapping Tool',
     description: 'Create comprehensive stakeholder maps with power/interest analysis and engagement strategies.',
     prompt: `Help me create a stakeholder map for my development initiative.
-
 Project Context:
 - Initiative: [describe your project]
 - Sector: [education/health/governance/etc]
 - Geographic Scope: [local/national/regional]
 - Phase: [planning/implementation/evaluation]
-
 Known Stakeholders: [list key stakeholders you've identified]
 Project Goals: [what you're trying to achieve]
 Potential Challenges: [any conflicts or sensitivities]
-
 Please provide:
 1. Comprehensive stakeholder identification by category:
    - Primary (direct beneficiaries)
@@ -695,19 +682,16 @@ Challenges: Resistance from traditional healers`,
     title: 'M&E Indicator Designer',
     description: 'Design SMART indicators with clear measurement frameworks and data collection plans.',
     prompt: `I need help developing monitoring and evaluation indicators for my program.
-
 Program Details:
 - Objective: [main program objective]
 - Activities: [key activities]
 - Target Population: [who and how many]
 - Duration: [timeframe]
 - Budget for M&E: [available resources]
-
 Current M&E Capacity:
 - Staff Skills: [existing M&E expertise]
 - Data Systems: [what systems are in place]
 - Reporting Requirements: [donor/organizational needs]
-
 Please create:
 1. Results chain with clear logic
 2. SMART indicators for each level:
@@ -739,21 +723,17 @@ Reporting: Quarterly to donor, annual evaluation`,
     title: 'Policy Brief Creator',
     description: 'Transform research into actionable policy briefs with clear recommendations.',
     prompt: `Help me create a policy brief from my research/program findings.
-
 Research/Evidence Base:
 - Topic: [issue area]
 - Key Findings: [main findings/data]
 - Methodology: [how evidence was gathered]
 - Context: [country/region specific factors]
-
 Policy Landscape:
 - Current Policies: [existing relevant policies]
 - Policy Gaps: [what's missing]
 - Decision Makers: [target audience]
 - Political Context: [opportunities/constraints]
-
 Desired Change: [what policy change you're advocating for]
-
 Please provide:
 1. Executive Summary (1 paragraph)
 2. Problem Statement with evidence
@@ -779,22 +759,18 @@ Desired Change: Conditional cash transfer program for girls' education`,
     title: 'Interview Guide Generator',
     description: 'Create structured interview guides for qualitative research with cultural sensitivity.',
     prompt: `I need an interview guide for my qualitative research.
-
 Research Context:
 - Research Question: [main question you're exploring]
 - Participant Profile: [who you're interviewing]
 - Cultural Context: [relevant cultural considerations]
 - Language: [interview language/translation needs]
 - Setting: [where interviews will happen]
-
 Interview Details:
 - Type: [structured/semi-structured/unstructured]
 - Duration: [expected length]
 - Sensitivity: [any sensitive topics]
 - Recording: [audio/video/notes only]
-
 Research Goals: [what insights you need]
-
 Please provide:
 1. Interview protocol with:
    - Introduction script
@@ -824,25 +800,21 @@ Goals: Understand barriers and coping strategies`,
     title: 'Workshop Agenda Designer',
     description: 'Design engaging, participatory workshop agendas with clear learning objectives.',
     prompt: `Help me design a workshop agenda for my development program.
-
 Workshop Overview:
 - Topic: [workshop subject]
 - Participants: [number and profile]
 - Duration: [total time available]
 - Objectives: [learning/outcome objectives]
 - Venue: [physical/virtual/hybrid]
-
 Participant Context:
 - Prior Knowledge: [what they already know]
 - Language: [language needs]
 - Cultural Considerations: [important cultural factors]
 - Accessibility Needs: [any special requirements]
-
 Resources Available:
 - Facilitators: [number and expertise]
 - Materials: [available materials/budget]
 - Technology: [available tech tools]
-
 Please create:
 1. Detailed agenda with timings
 2. Session plans with:
@@ -872,25 +844,21 @@ Facilitators: 2 trained facilitators`,
     title: 'Research Report Synthesizer',
     description: 'Synthesize multiple research sources into coherent, actionable reports.',
     prompt: `I need help synthesizing multiple research sources into a comprehensive report.
-
 Research Materials:
 - Number of Sources: [how many documents/studies]
 - Types: [academic papers/reports/data sets/interviews]
 - Key Topics: [main themes covered]
 - Quality: [peer-reviewed/grey literature/internal]
-
 Report Requirements:
 - Purpose: [inform/advocate/evaluate]
 - Audience: [who will read this]
 - Length: [word/page limit]
 - Format: [academic/policy/donor report]
 - Deadline: [when needed]
-
 Specific Needs:
 - Focus Areas: [what to emphasize]
 - Questions to Answer: [key questions]
 - Recommendations Needed: [yes/no and what type]
-
 Please provide:
 1. Report outline with sections
 2. Executive summary template
@@ -917,19 +885,16 @@ Questions: Which approach is more cost-effective? What are implementation best p
     title: 'Program Budget Builder',
     description: 'Create detailed program budgets with proper cost categories and justifications.',
     prompt: `Help me create a comprehensive budget for my development program.
-
 Program Information:
 - Duration: [program length]
 - Total Budget Ceiling: [if known]
 - Funding Source: [donor/organization]
 - Budget Format Required: [specific template?]
-
 Program Components:
 - Main Activities: [list key activities]
 - Staff Required: [positions and time allocation]
 - Geographic Coverage: [locations]
 - Direct Beneficiaries: [number]
-
 Cost Categories Needed:
 - Personnel: [salaries/consultants]
 - Operations: [office/utilities]
@@ -938,7 +903,6 @@ Cost Categories Needed:
 - Equipment: [what's needed]
 - M&E: [monitoring costs]
 - Overhead: [indirect cost rate]
-
 Please provide:
 1. Detailed line-item budget
 2. Budget narrative/justification
@@ -964,25 +928,21 @@ Overhead: 15% allowed`,
     title: 'Survey Questionnaire Designer',
     description: 'Design effective surveys with proper question construction and flow.',
     prompt: `I need help designing a survey questionnaire for my research/program.
-
 Survey Purpose:
 - Objective: [what you're measuring]
 - Population: [who you're surveying]
 - Sample Size: [planned number]
 - Method: [face-to-face/phone/online]
-
 Information Needed:
 - Demographics: [what demographic data]
 - Main Topics: [key areas to cover]
 - Sensitive Topics: [any sensitive questions]
 - Baseline/Endline: [comparison needed?]
-
 Constraints:
 - Length: [time/question limit]
 - Language: [survey language(s)]
 - Literacy Level: [respondent literacy]
 - Cultural Factors: [relevant considerations]
-
 Please create:
 1. Survey structure/flow
 2. Question bank with:
@@ -1013,31 +973,26 @@ Language: Local language, low literacy`,
     title: 'Case Study Developer',
     description: 'Develop compelling case studies that demonstrate impact and learning.',
     prompt: `Help me develop a case study about my program/intervention.
-
 Case Study Focus:
 - Subject: [specific intervention/person/community]
 - Purpose: [learning/advocacy/documentation]
 - Audience: [who will read this]
 - Length: [word count/pages]
-
 Context and Background:
 - Setting: [geographic/social context]
 - Timeline: [when this happened]
 - Key Actors: [people/organizations involved]
 - Initial Situation: [problem/challenge]
-
 The Story:
 - Intervention: [what was done]
 - Process: [how it unfolded]
 - Challenges: [obstacles faced]
 - Solutions: [how challenges were addressed]
 - Results: [what changed]
-
 Evidence Available:
 - Data: [quantitative evidence]
 - Quotes: [testimonials available]
 - Photos: [visual documentation]
-
 Please provide:
 1. Case study structure/outline
 2. Compelling narrative with:
@@ -1068,29 +1023,24 @@ Evidence: Savings data, 20 interviews, photos`,
     title: 'Training Curriculum Developer',
     description: 'Create comprehensive training curricula with modules, materials, and assessments.',
     prompt: `I need help developing a training curriculum for my program.
-
 Training Overview:
 - Topic: [subject matter]
 - Target Learners: [who and background]
 - Duration: [total training period]
 - Format: [in-person/online/blended]
 - Certification: [any certification needs]
-
 Learning Objectives:
 - Knowledge: [what they should know]
 - Skills: [what they should be able to do]
 - Attitudes: [mindset changes needed]
-
 Context:
 - Prior Learning: [existing knowledge/skills]
 - Language: [training language]
 - Resources: [available materials/budget]
 - Venue/Platform: [where training happens]
-
 Post-Training:
 - Application: [how they'll use learning]
 - Support: [follow-up available]
-
 Please create:
 1. Curriculum framework with:
    - Module outline and sequencing
@@ -1123,30 +1073,25 @@ Application: Serve 50 households each`,
     title: 'Advocacy Strategy Planner',
     description: 'Develop comprehensive advocacy strategies with clear pathways to change.',
     prompt: `Help me develop an advocacy strategy for my cause/issue.
-
 Issue Overview:
 - Problem: [issue you're addressing]
 - Current Situation: [status quo]
 - Desired Change: [specific policy/practice change]
 - Geographic Focus: [local/national/global]
-
 Stakeholder Landscape:
 - Decision Makers: [who can make the change]
 - Allies: [supporters/partners]
 - Opposition: [who might resist]
 - Influencers: [who influences decision makers]
-
 Organizational Capacity:
 - Resources: [budget/staff for advocacy]
 - Expertise: [advocacy experience]
 - Network: [connections/coalitions]
 - Time Frame: [urgency/timeline]
-
 Context:
 - Political Climate: [opportunities/risks]
 - Public Opinion: [current attitudes]
 - Media Environment: [media landscape]
-
 Please provide:
 1. Theory of Change for advocacy
 2. Stakeholder power analysis
@@ -1177,30 +1122,25 @@ Timeline: Policy window in 6 months`,
     title: 'Learning Assessment Creator',
     description: 'Design assessments that effectively measure learning outcomes and competencies.',
     prompt: `I need help creating learning assessments for my educational program.
-
 Program Context:
 - Subject/Skills: [what you're teaching]
 - Learner Profile: [age, background, level]
 - Program Duration: [length of learning]
 - Setting: [formal/informal education]
-
 Learning Objectives:
 - Knowledge: [what they should know]
 - Skills: [what they should do]
 - Competencies: [integrated abilities]
-
 Assessment Requirements:
 - Purpose: [formative/summative/diagnostic]
 - Format: [test/project/portfolio/observation]
 - Frequency: [when assessments occur]
 - Stakes: [high/low stakes]
-
 Constraints:
 - Time Available: [for assessment]
 - Resources: [what's available]
 - Literacy/Language: [considerations]
 - Technology: [available tools]
-
 Please create:
 1. Assessment framework aligned to objectives
 2. Assessment methods mix:
@@ -1233,7 +1173,6 @@ Resources: Computer lab available`,
     title: 'Educational Escape Room Designer',
     description: 'Create immersive educational escape rooms that make learning unforgettable through puzzle-solving and teamwork.',
     prompt: `Design an educational escape room experience for my learning objectives.
-
 **Learning Context**:
 - Subject/Topic: [main content area]
 - Learning Objectives: [specific skills/knowledge to teach]
@@ -1242,26 +1181,21 @@ Resources: Computer lab available`,
 - Time Limit: [duration of escape room]
 - Physical Space: [room size and layout available]
 - Technology Available: [tablets/computers/props available]
-
 **Theme Preferences**:
 - Setting: [historical/fantasy/mystery/scientific]
 - Narrative Style: [serious/playful/dramatic]
 - Difficulty Level: [beginner/intermediate/advanced]
-
 Please create:
-
 1. **Immersive Storyline**:
    - Compelling narrative hook that connects to learning objectives
    - Character roles for participants (if applicable)
    - Story progression through puzzle completion
    - Dramatic conclusion that reinforces key concepts
-
 2. **Puzzle Sequence** (5-8 interconnected puzzles):
    - Each puzzle directly teaches/reinforces a learning objective
    - Variety of puzzle types (codes, physical, logic, word, math)
    - Clear connection between puzzle solution and curriculum
    - Progressive difficulty with built-in hints system
-
 3. **Complete Implementation Guide**:
    - Room setup instructions and materials list
    - Detailed puzzle instructions and solutions
@@ -1269,12 +1203,10 @@ Please create:
    - Student handouts and clue sheets
    - Assessment rubric for learning objectives
    - Alternative versions for different ability levels
-
 4. **Learning Integration**:
    - Clear connections between each puzzle and curriculum
    - Debrief questions to reinforce learning
    - Extension activities for early finishers
-
 Ensure all puzzles are solvable, age-appropriate, and directly tied to learning goals.`,
     systemMessage: 'You are an immersive learning experience designer who creates educational escape rooms. You understand game mechanics, puzzle design, and how to seamlessly integrate curriculum content into engaging storylines that promote deep learning.',
     exampleInput: `Topic: Chemical Bonding and Molecular Structure
@@ -1291,7 +1223,6 @@ Tech: Tablets available for digital clues/simulations`,
 
 // Authentication Context
 const AuthContext = createContext();
-
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -1315,7 +1246,6 @@ const AuthProvider = ({ children }) => {
       }
       setLoading(false);
     });
-
     return unsubscribe;
   }, []);
 
@@ -1388,16 +1318,179 @@ const useAuth = () => {
   return context;
 };
 
-// Home Page Component
-const HomePage = ({ setCurrentPage }) => {
-  const { user, signInWithGoogle } = useAuth();
+// Page Context
+const PageContext = createContext();
+const PageProvider = ({ children }) => {
+  const [currentPage, setCurrentPage] = useState('home');
+  const [darkMode, setDarkMode] = useState(false);
 
+  useEffect(() => {
+    // Check for saved theme preference
+    const isDark = localStorage.getItem('darkMode') === 'true';
+    setDarkMode(isDark);
+  }, []);
+
+  useEffect(() => {
+    // Save theme preference
+    localStorage.setItem('darkMode', darkMode);
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  return (
+    <PageContext.Provider value={{ currentPage, setCurrentPage, darkMode, setDarkMode }}>
+      {children}
+    </PageContext.Provider>
+  );
+};
+
+const usePage = () => {
+  const context = useContext(PageContext);
+  if (!context) {
+    throw new Error('usePage must be used within PageProvider');
+  }
+  return context;
+};
+
+// Navigation Component
+const Navigation = () => {
+  const { user, signOut } = useAuth();
+  const { currentPage, setCurrentPage, darkMode, setDarkMode } = usePage();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  const navItems = [
+    { id: 'home', label: 'Home', icon: null },
+    { id: 'courses', label: 'Courses', icon: null },
+    { id: 'labs', label: 'Labs', icon: null },
+    { id: 'handouts', label: 'Resources', icon: null },
+    { id: 'ai-tools', label: 'AI Tools', icon: null },
+    { id: 'dashboard', label: 'Dashboard', icon: null },
+    { id: 'about', label: 'About', icon: null },
+    { id: 'contact', label: 'Contact', icon: null },
+  ];
+
+  return (
+    <nav className="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <button
+              onClick={() => setCurrentPage('home')}
+              className="text-2xl font-bold text-blue-600 dark:text-blue-400"
+            >
+              ImpactMojo
+            </button>
+          </div>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-4">
+            {navItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => setCurrentPage(item.id)}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  currentPage === item.id
+                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
+                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+            
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+            
+            {user && (
+              <button
+                onClick={signOut}
+                className="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900 transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sign Out</span>
+              </button>
+            )}
+          </div>
+          
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+        
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <div className="md:hidden pb-4">
+            <div className="flex flex-col space-y-2">
+              {navItems.map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setCurrentPage(item.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`px-3 py-2 rounded-md text-sm font-medium text-left transition-colors ${
+                    currentPage === item.id
+                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
+                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+              
+              <div className="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700">
+                <button
+                  onClick={() => setDarkMode(!darkMode)}
+                  className="flex items-center space-x-2 p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                  <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                </button>
+                
+                {user && (
+                  <button
+                    onClick={signOut}
+                    className="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900 transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Sign Out</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+};
+
+// Home Page Component
+const HomePage = () => {
+  const { user, signInWithGoogle } = useAuth();
+  const { setCurrentPage } = usePage();
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">
       {/* Hero Section */}
       <section className="relative px-4 py-20 text-center text-white">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
             ImpactMojo
           </h1>
           <p className="text-xl md:text-2xl mb-8 opacity-90">
@@ -1411,7 +1504,7 @@ const HomePage = ({ setCurrentPage }) => {
             {!user ? (
               <button
                 onClick={signInWithGoogle}
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-medium hover:bg-gray-100 transition-colors flex items-center justify-center space-x-2"
+                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-medium hover:bg-gray-100 transition-colors flex items-center justify-center space-x-2 shadow-lg"
               >
                 <User className="w-5 h-5" />
                 <span>Sign in with Google</span>
@@ -1419,7 +1512,7 @@ const HomePage = ({ setCurrentPage }) => {
             ) : (
               <button
                 onClick={() => setCurrentPage('dashboard')}
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-medium hover:bg-gray-100 transition-colors flex items-center justify-center space-x-2"
+                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-medium hover:bg-gray-100 transition-colors flex items-center justify-center space-x-2 shadow-lg"
               >
                 <Target className="w-5 h-5" />
                 <span>Go to Dashboard</span>
@@ -1434,31 +1527,31 @@ const HomePage = ({ setCurrentPage }) => {
           </div>
         </div>
       </section>
-
+      
       {/* Stats Section */}
       <section className="py-16 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 p-6 rounded-xl">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 p-6 rounded-xl shadow-md">
               <div className="text-3xl font-bold text-blue-600 dark:text-blue-300">37</div>
               <div className="text-gray-600 dark:text-gray-300">Courses</div>
             </div>
-            <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 p-6 rounded-xl">
+            <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 p-6 rounded-xl shadow-md">
               <div className="text-3xl font-bold text-green-600 dark:text-green-300">10</div>
               <div className="text-gray-600 dark:text-gray-300">Labs</div>
             </div>
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 p-6 rounded-xl">
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 p-6 rounded-xl shadow-md">
               <div className="text-3xl font-bold text-purple-600 dark:text-purple-300">16</div>
               <div className="text-gray-600 dark:text-gray-300">AI Tools</div>
             </div>
-            <div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 p-6 rounded-xl">
+            <div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 p-6 rounded-xl shadow-md">
               <div className="text-3xl font-bold text-orange-600 dark:text-orange-300">Free</div>
               <div className="text-gray-600 dark:text-gray-300">Forever</div>
             </div>
           </div>
         </div>
       </section>
-
+      
       {/* Features Section */}
       <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1467,7 +1560,7 @@ const HomePage = ({ setCurrentPage }) => {
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
               <BookOpen className="w-12 h-12 text-blue-600 dark:text-blue-400 mb-4" />
               <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">Comprehensive Courses</h3>
               <p className="text-gray-600 dark:text-gray-300">
@@ -1475,7 +1568,7 @@ const HomePage = ({ setCurrentPage }) => {
               </p>
             </div>
             
-            <div className="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
               <Gamepad2 className="w-12 h-12 text-green-600 dark:text-green-400 mb-4" />
               <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">Interactive Labs</h3>
               <p className="text-gray-600 dark:text-gray-300">
@@ -1483,7 +1576,7 @@ const HomePage = ({ setCurrentPage }) => {
               </p>
             </div>
             
-            <div className="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
               <Sparkles className="w-12 h-12 text-purple-600 dark:text-purple-400 mb-4" />
               <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">AI-Powered Tools</h3>
               <p className="text-gray-600 dark:text-gray-300">
@@ -1493,7 +1586,7 @@ const HomePage = ({ setCurrentPage }) => {
           </div>
         </div>
       </section>
-
+      
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="max-w-4xl mx-auto text-center px-4">
@@ -1503,7 +1596,7 @@ const HomePage = ({ setCurrentPage }) => {
           </p>
           <button
             onClick={() => setCurrentPage('courses')}
-            className="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors inline-flex items-center space-x-2"
+            className="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors inline-flex items-center space-x-2 shadow-lg"
           >
             <span>Start Learning Now</span>
             <ArrowRight className="w-5 h-5" />
@@ -1525,8 +1618,8 @@ const CourseCard = ({ course, isBookmarked, onBookmark }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
-      <div className="p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 h-full flex flex-col">
+      <div className="p-6 flex-grow">
         <div className="flex justify-between items-start mb-4">
           <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
             {course.id}
@@ -1539,6 +1632,7 @@ const CourseCard = ({ course, isBookmarked, onBookmark }) => {
               <button
                 onClick={() => onBookmark(course.id)}
                 className="hover:scale-110 transition-transform"
+                aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}
               >
                 <Bookmark 
                   className={`w-5 h-5 ${isBookmarked ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} 
@@ -1571,7 +1665,9 @@ const CourseCard = ({ course, isBookmarked, onBookmark }) => {
             {course.duration}
           </span>
         </div>
-        
+      </div>
+      
+      <div className="p-6 pt-0 mt-auto">
         <button
           onClick={handleCourseAccess}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
@@ -1584,117 +1680,13 @@ const CourseCard = ({ course, isBookmarked, onBookmark }) => {
   );
 };
 
-// Navigation Component
-const Navigation = ({ darkMode, setDarkMode, currentPage, setCurrentPage }) => {
-  const { user, signOut } = useAuth();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const navItems = [
-    { id: 'home', label: 'Home', icon: null },
-    { id: 'courses', label: 'Courses', icon: null },
-    { id: 'labs', label: 'Labs', icon: null },
-    { id: 'handouts', label: 'Resources', icon: null },
-    { id: 'ai-tools', label: 'AI Tools', icon: null },
-    { id: 'dashboard', label: 'Dashboard', icon: null },
-    { id: 'about', label: 'About', icon: null },
-    { id: 'contact', label: 'Contact', icon: null },
-  ];
-
-  return (
-    <nav className="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <button
-              onClick={() => setCurrentPage('home')}
-              className="text-2xl font-bold text-blue-600 dark:text-blue-400"
-            >
-              ImpactMojo
-            </button>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
-            {navItems.map(item => (
-              <button
-                key={item.id}
-                onClick={() => setCurrentPage(item.id)}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  currentPage === item.id
-                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-            
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            >
-              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-            
-            {user && (
-              <button
-                onClick={signOut}
-                className="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900 transition-colors"
-              >
-                <LogOut className="w-4 h-4" />
-                <span>Sign Out</span>
-              </button>
-            )}
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden pb-4">
-            <div className="flex flex-col space-y-2">
-              {navItems.map(item => {
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      setCurrentPage(item.id);
-                      setMobileMenuOpen(false);
-                    }}
-                    className={`px-3 py-2 rounded-md text-sm font-medium text-left transition-colors ${
-                      currentPage === item.id
-                        ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </div>
-    </nav>
-  );
-};
-
 // Courses Page Component
 const CoursesPage = () => {
-  const { user, bookmarks, toggleBookmark } = useAuth();
+  const { bookmarks, toggleBookmark } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTrack, setSelectedTrack] = useState('all');
   const [selectedLevel, setSelectedLevel] = useState('all');
-
+  
   const filteredCourses = courseData.filter(course => {
     const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          course.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -1702,155 +1694,13 @@ const CoursesPage = () => {
     const matchesLevel = selectedLevel === 'all' || course.level === selectedLevel;
     return matchesSearch && matchesTrack && matchesLevel;
   });
-
+  
   const uniqueTracks = [...new Set(courseData.map(course => course.track))];
   const uniqueLevels = [...new Set(courseData.map(course => course.level))];
-
+  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            AI-Powered Development Tools
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            16 specialized AI tools to accelerate your development work
-          </p>
-        </div>
-
-        {/* Tool Selection Grid */}
-        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
-          {aiToolsData.map(tool => {
-            const Icon = tool.icon;
-            return (
-              <button
-                key={tool.id}
-                onClick={() => {
-                  setSelectedTool(tool);
-                  setUserInput('');
-                  setToolOutput('');
-                }}
-                className={`p-4 rounded-lg border-2 transition-all text-left ${
-                  selectedTool?.id === tool.id
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-                }`}
-              >
-                <Icon className={`w-6 h-6 mb-2 ${
-                  selectedTool?.id === tool.id ? 'text-blue-600' : 'text-gray-500'
-                }`} />
-                <h3 className="font-semibold text-sm text-gray-900 dark:text-white">
-                  {tool.title}
-                </h3>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Selected Tool Interface */}
-        {selectedTool && (
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-            <div className="mb-6">
-              <div className="flex items-center mb-4">
-                {React.createElement(selectedTool.icon, { 
-                  className: `w-8 h-8 text-${selectedTool.color}-600 mr-3` 
-                })}
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {selectedTool.title}
-                </h2>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300">
-                {selectedTool.description}
-              </p>
-            </div>
-
-            {/* Example Input */}
-            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                Example Input:
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {selectedTool.exampleInput}
-              </p>
-            </div>
-
-            {/* User Input */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Your Input:
-              </label>
-              <textarea
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                rows={10}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your specific requirements here..."
-              />
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex space-x-4 mb-6">
-              <button
-                onClick={handleGenerateAI}
-                disabled={isProcessing || !userInput.trim()}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-colors ${
-                  isProcessing || !userInput.trim()
-                    ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-700 text-white'
-                }`}
-              >
-                {isProcessing ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>Processing...</span>
-                  </>
-                ) : (
-                  <>
-                    <Wand2 className="w-5 h-5" />
-                    <span>Generate with AI</span>
-                  </>
-                )}
-              </button>
-              <button
-                onClick={() => {
-                  setUserInput('');
-                  setToolOutput('');
-                }}
-                className="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-              >
-                Clear All
-              </button>
-            </div>
-
-            {/* Output Display */}
-            {toolOutput && (
-              <div className="mt-8 border-t pt-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
-                    <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
-                    Generated Result
-                  </h3>
-                  <button
-                    onClick={handleCopyOutput}
-                    className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:underline text-sm"
-                  >
-                    <Copy className="w-4 h-4" />
-                    <span>Copy</span>
-                  </button>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg border">
-                  <div className="prose dark:prose-invert max-w-none">
-                    <pre className="whitespace-pre-wrap text-sm text-gray-700 dark:text-gray-300 font-normal leading-relaxed">
-                      {toolOutput}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    </div>px-6 lg:px-8">
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Course Catalog
@@ -1859,15 +1709,16 @@ const CoursesPage = () => {
             Explore our comprehensive collection of 37 development courses
           </p>
         </div>
-
+        
         {/* Search and Filters */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 mb-8 shadow-md">
           <div className="grid md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Search</label>
+              <label htmlFor="search" className="block text-sm font-medium mb-2">Search</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
+                  id="search"
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -1878,8 +1729,9 @@ const CoursesPage = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-2">Track</label>
+              <label htmlFor="track" className="block text-sm font-medium mb-2">Track</label>
               <select
+                id="track"
                 value={selectedTrack}
                 onChange={(e) => setSelectedTrack(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
@@ -1892,8 +1744,9 @@ const CoursesPage = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-2">Level</label>
+              <label htmlFor="level" className="block text-sm font-medium mb-2">Level</label>
               <select
+                id="level"
                 value={selectedLevel}
                 onChange={(e) => setSelectedLevel(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
@@ -1906,21 +1759,21 @@ const CoursesPage = () => {
             </div>
           </div>
         </div>
-
+        
         {/* Course Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCourses.map(course => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              isBookmarked={bookmarks.includes(course.id)}
-              onBookmark={toggleBookmark}
-            />
-          ))}
-        </div>
-
-        {filteredCourses.length === 0 && (
-          <div className="text-center py-12">
+        {filteredCourses.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredCourses.map(course => (
+              <CourseCard
+                key={course.id}
+                course={course}
+                isBookmarked={bookmarks.includes(course.id)}
+                onBookmark={toggleBookmark}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-md">
             <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
               No courses found
@@ -1956,11 +1809,11 @@ const LabsPage = () => {
             10 hands-on labs for real-world practice and skill development
           </p>
         </div>
-
+        
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {labsData.map(lab => (
-            <div key={lab.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
-              <div className="p-6">
+            <div key={lab.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 h-full flex flex-col">
+              <div className="p-6 flex-grow">
                 <div className="flex justify-between items-start mb-4">
                   <span className="text-sm font-bold text-green-600 dark:text-green-400">
                     {lab.id}
@@ -1991,7 +1844,9 @@ const LabsPage = () => {
                     {lab.duration} min
                   </span>
                 </div>
-                
+              </div>
+              
+              <div className="p-6 pt-0 mt-auto">
                 <button
                   onClick={() => handleLabAccess(lab)}
                   className={`w-full font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 ${
@@ -1999,6 +1854,7 @@ const LabsPage = () => {
                       ? 'bg-green-600 hover:bg-green-700 text-white'
                       : 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
                   }`}
+                  disabled={lab.status !== 'Available'}
                 >
                   <PlayCircle className="w-4 h-4" />
                   <span>{lab.status === 'Available' ? 'Launch Lab' : 'Coming Soon'}</span>
@@ -2012,7 +1868,7 @@ const LabsPage = () => {
   );
 };
 
-// NEW UPDATED HandoutsPage Component - Based on your index.html and folder structure
+// Handouts Page Component
 const HandoutsPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800">
@@ -2023,9 +1879,9 @@ const HandoutsPage = () => {
           <div className="mb-6">
             <button
               onClick={() => window.history.back()}
-              className="text-blue-600 hover:text-blue-800 font-medium text-sm mb-4"
+              className="text-blue-600 hover:text-blue-800 font-medium text-sm mb-4 flex items-center"
             >
-              ← Back to ImpactMojo
+              <ArrowLeft className="w-4 h-4 mr-1" /> Back to ImpactMojo
             </button>
           </div>
           
@@ -2062,7 +1918,7 @@ const HandoutsPage = () => {
             </div>
           </div>
         </div>
-
+        
         {/* Main Pathways */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-white mb-6">Core Learning Pathways</h2>
@@ -2098,7 +1954,7 @@ const HandoutsPage = () => {
                 </ul>
               </div>
             </div>
-
+            
             {/* Gender Studies Track */}
             <div className="bg-white/95 backdrop-blur-md rounded-xl p-6 shadow-xl hover:shadow-2xl transition-all">
               <div className="flex items-center mb-4">
@@ -2127,7 +1983,7 @@ const HandoutsPage = () => {
                 </ul>
               </div>
             </div>
-
+            
             {/* Policy and Economics Track */}
             <div className="bg-white/95 backdrop-blur-md rounded-xl p-6 shadow-xl hover:shadow-2xl transition-all">
               <div className="flex items-center mb-4">
@@ -2160,7 +2016,7 @@ const HandoutsPage = () => {
                 </ul>
               </div>
             </div>
-
+            
             {/* Research Methods Track */}
             <div className="bg-white/95 backdrop-blur-md rounded-xl p-6 shadow-xl hover:shadow-2xl transition-all">
               <div className="flex items-center mb-4">
@@ -2193,7 +2049,7 @@ const HandoutsPage = () => {
             </div>
           </div>
         </div>
-
+        
         {/* Additional Resources Section */}
         <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 shadow-2xl">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Additional Resources & Thematic Areas</h2>
@@ -2254,7 +2110,7 @@ const HandoutsPage = () => {
             </div>
           </div>
         </div>
-
+        
         {/* Footer */}
         <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 mt-8 text-center shadow-xl">
           <p className="text-lg font-semibold text-gray-900 mb-2">Open Educational Resources</p>
@@ -2279,13 +2135,13 @@ const AIToolsPage = () => {
   const [userInput, setUserInput] = useState('');
   const [toolOutput, setToolOutput] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
-
+  
   const handleGenerateAI = async () => {
     if (!selectedTool || !userInput.trim()) {
       alert('Please select a tool and provide input');
       return;
     }
-
+    
     setIsProcessing(true);
     
     // Simulate AI processing
@@ -2294,12 +2150,720 @@ const AIToolsPage = () => {
       setIsProcessing(false);
     }, 2000);
   };
-
+  
   const handleCopyOutput = () => {
     navigator.clipboard.writeText(toolOutput);
     alert('Output copied to clipboard!');
   };
-
+  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            AI-Powered Development Tools
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            16 specialized AI tools to accelerate your development work
+          </p>
+        </div>
+        
+        {/* Tool Selection Grid */}
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+          {aiToolsData.map(tool => {
+            const Icon = tool.icon;
+            return (
+              <button
+                key={tool.id}
+                onClick={() => {
+                  setSelectedTool(tool);
+                  setUserInput('');
+                  setToolOutput('');
+                }}
+                className={`p-4 rounded-lg border-2 transition-all text-left ${
+                  selectedTool?.id === tool.id
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                }`}
+              >
+                <Icon className={`w-6 h-6 mb-2 ${
+                  selectedTool?.id === tool.id ? 'text-blue-600' : 'text-gray-500'
+                }`} />
+                <h3 className="font-semibold text-sm text-gray-900 dark:text-white">
+                  {tool.title}
+                </h3>
+              </button>
+            );
+          })}
+        </div>
+        
+        {/* Selected Tool Interface */}
+        {selectedTool && (
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+            <div className="mb-6">
+              <div className="flex items-center mb-4">
+                {React.createElement(selectedTool.icon, { 
+                  className: `w-8 h-8 text-${selectedTool.color}-600 mr-3` 
+                })}
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {selectedTool.title}
+                </h2>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300">
+                {selectedTool.description}
+              </p>
+            </div>
+            
+            {/* Example Input */}
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                Example Input:
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {selectedTool.exampleInput}
+              </p>
+            </div>
+            
+            {/* User Input */}
+            <div className="mb-6">
+              <label htmlFor="userInput" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Your Input:
+              </label>
+              <textarea
+                id="userInput"
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                rows={10}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Enter your specific requirements here..."
+              />
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-6">
+              <button
+                onClick={handleGenerateAI}
+                disabled={isProcessing || !userInput.trim()}
+                className={`flex items-center justify-center space-x-2 px-6 py-3 rounded-lg font-medium transition-colors ${
+                  isProcessing || !userInput.trim()
+                    ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                }`}
+              >
+                {isProcessing ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  <>
+                    <Wand2 className="w-5 h-5" />
+                    <span>Generate with AI</span>
+                  </>
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  setUserInput('');
+                  setToolOutput('');
+                }}
+                className="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                Clear All
+              </button>
+            </div>
+            
+            {/* Output Display */}
+            {toolOutput && (
+              <div className="mt-8 border-t pt-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center mb-2 sm:mb-0">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
+                    Generated Result
+                  </h3>
+                  <button
+                    onClick={handleCopyOutput}
+                    className="flex items-center justify-center space-x-2 text-blue-600 dark:text-blue-400 hover:underline text-sm"
+                  >
+                    <Copy className="w-4 h-4" />
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg border">
+                  <div className="prose dark:prose-invert max-w-none">
+                    <pre className="whitespace-pre-wrap text-sm text-gray-700 dark:text-gray-300 font-normal leading-relaxed">
+                      {toolOutput}
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Dashboard Page Component
+const DashboardPage = () => {
+  const { user, bookmarks, signOut } = useAuth();
+  const { setCurrentPage } = usePage();
+  
+  const bookmarkedCourses = courseData.filter(course => bookmarks.includes(course.id));
+  
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+            Dashboard
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            Welcome back, {user?.displayName || 'User'}!
+          </p>
+        </div>
+        
+        {/* User Profile Card */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+          <div className="flex items-center mb-6">
+            {user?.photoURL ? (
+              <img 
+                src={user.photoURL} 
+                alt={user.displayName} 
+                className="w-16 h-16 rounded-full mr-4"
+              />
+            ) : (
+              <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-4">
+                <User className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+              </div>
+            )}
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                {user?.displayName || 'User'}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                {user?.email}
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg text-center">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                {bookmarks.length}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Bookmarks</div>
+            </div>
+            <div className="bg-green-50 dark:bg-green-900/30 p-4 rounded-lg text-center">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                {bookmarkedCourses.length}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Courses</div>
+            </div>
+            <div className="bg-purple-50 dark:bg-purple-900/30 p-4 rounded-lg text-center">
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                16
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">AI Tools</div>
+            </div>
+            <div className="bg-orange-50 dark:bg-orange-900/30 p-4 rounded-lg text-center">
+              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+                10
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Labs</div>
+            </div>
+          </div>
+          
+          <button
+            onClick={signOut}
+            className="flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Sign Out</span>
+          </button>
+        </div>
+        
+        {/* Bookmarked Courses */}
+        {bookmarkedCourses.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              Your Bookmarked Courses
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {bookmarkedCourses.map(course => (
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  isBookmarked={true}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Quick Actions */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Quick Actions
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <button
+              onClick={() => setCurrentPage('courses')}
+              className="flex flex-col items-center justify-center p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+            >
+              <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
+              <span className="text-sm text-gray-700 dark:text-gray-300">Browse Courses</span>
+            </button>
+            <button
+              onClick={() => setCurrentPage('labs')}
+              className="flex flex-col items-center justify-center p-4 bg-green-50 dark:bg-green-900/30 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors"
+            >
+              <Gamepad2 className="w-8 h-8 text-green-600 dark:text-green-400 mb-2" />
+              <span className="text-sm text-gray-700 dark:text-gray-300">Explore Labs</span>
+            </button>
+            <button
+              onClick={() => setCurrentPage('ai-tools')}
+              className="flex flex-col items-center justify-center p-4 bg-purple-50 dark:bg-purple-900/30 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
+            >
+              <Sparkles className="w-8 h-8 text-purple-600 dark:text-purple-400 mb-2" />
+              <span className="text-sm text-gray-700 dark:text-gray-300">Try AI Tools</span>
+            </button>
+            <button
+              onClick={() => setCurrentPage('handouts')}
+              className="flex flex-col items-center justify-center p-4 bg-orange-50 dark:bg-orange-900/30 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900/50 transition-colors"
+            >
+              <FileText className="w-8 h-8 text-orange-600 dark:text-orange-400 mb-2" />
+              <span className="text-sm text-gray-700 dark:text-gray-300">Resources</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// About Page Component
+const AboutPage = () => {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            About ImpactMojo
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            Empowering development professionals with knowledge and tools
+          </p>
+        </div>
+        
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Mission</h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            ImpactMojo is dedicated to providing free, high-quality educational resources and tools for development professionals, researchers, and practitioners worldwide. We believe that knowledge should be accessible to everyone working to create positive social change.
+          </p>
+          
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">What We Offer</h2>
+          <ul className="space-y-3 text-gray-600 dark:text-gray-300 mb-6">
+            <li className="flex items-start">
+              <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+              <span>37 comprehensive courses covering all aspects of development work</span>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+              <span>10 interactive labs for hands-on learning and practice</span>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+              <span>16 AI-powered tools to accelerate your development work</span>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+              <span>Extensive library of educational handouts and resources</span>
+            </li>
+          </ul>
+          
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Approach</h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            We combine academic rigor with practical application, ensuring that our courses and tools are both theoretically sound and immediately useful in real-world settings. Our content is developed by experts in the field and continuously updated to reflect the latest research and best practices.
+          </p>
+          
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Team</h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            ImpactMojo is brought to you by a team of passionate development professionals, educators, and technologists committed to making knowledge accessible and actionable. We are supported by the generous contributions of Pinpoint Ventures.
+          </p>
+        </div>
+        
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Contact Us</h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Have questions, feedback, or suggestions? We'd love to hear from you!
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex items-start">
+              <Mail className="w-6 h-6 text-blue-600 dark:text-blue-400 mr-3 mt-1" />
+              <div>
+                <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
+                <p className="text-gray-600 dark:text-gray-300">hello@impactmojo.in</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start">
+              <Globe className="w-6 h-6 text-blue-600 dark:text-blue-400 mr-3 mt-1" />
+              <div>
+                <h3 className="font-semibold text-gray-900 dark:text-white">Website</h3>
+                <p className="text-gray-600 dark:text-gray-300">www.impactmojo.in</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start">
+              <Twitter className="w-6 h-6 text-blue-600 dark:text-blue-400 mr-3 mt-1" />
+              <div>
+                <h3 className="font-semibold text-gray-900 dark:text-white">Twitter</h3>
+                <p className="text-gray-600 dark:text-gray-300">@impactmojo</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start">
+              <Linkedin className="w-6 h-6 text-blue-600 dark:text-blue-400 mr-3 mt-1" />
+              <div>
+                <h3 className="font-semibold text-gray-900 dark:text-white">LinkedIn</h3>
+                <p className="text-gray-600 dark:text-gray-300">ImpactMojo</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Contact Page Component
+const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    }, 1500);
+  };
+  
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Contact Us
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            We'd love to hear from you
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Contact Form */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              Send us a message
+            </h2>
+            
+            {submitSuccess ? (
+              <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-6">
+                <div className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
+                  <span className="text-green-700 dark:text-green-300 font-medium">
+                    Thank you! Your message has been sent successfully.
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <div className="mb-4">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                
+                <div className="mb-6">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  ></textarea>
+                </div>
+                
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
+                    isSubmitting
+                      ? 'bg-blue-400 cursor-not-allowed'
+                      : 'bg-blue-600 hover:bg-blue-700'
+                  } text-white`}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </button>
+              </form>
+            )}
+          </div>
+          
+          {/* Contact Information */}
+          <div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                Get in touch
+              </h2>
+              
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <Mail className="w-6 h-6 text-blue-600 dark:text-blue-400 mr-3 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
+                    <p className="text-gray-600 dark:text-gray-300">hello@impactmojo.in</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <Phone className="w-6 h-6 text-blue-600 dark:text-blue-400 mr-3 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">Phone</h3>
+                    <p className="text-gray-600 dark:text-gray-300">+91 12345 67890</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <Globe className="w-6 h-6 text-blue-600 dark:text-blue-400 mr-3 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">Website</h3>
+                    <p className="text-gray-600 dark:text-gray-300">www.impactmojo.in</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                Follow us
+              </h2>
+              
+              <div className="flex space-x-4">
+                <a 
+                  href="https://twitter.com/impactmojo" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+                  aria-label="Twitter"
+                >
+                  <Twitter className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </a>
+                
+                <a 
+                  href="https://linkedin.com/company/impactmojo" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </a>
+                
+                <a 
+                  href="https://github.com/impactmojo" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+                  aria-label="GitHub"
+                >
+                  <Github className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Plausible Analytics Component
+const PlausibleAnalytics = () => {
+  useEffect(() => {
+    // Add Plausible Analytics script
+    const script = document.createElement('script');
+    script.src = 'https://plausible.io/js/plausible.js';
+    script.async = true;
+    script.defer = true;
+    script.dataset.domain = 'impactmojo.in';
+    document.head.appendChild(script);
+    
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+  
+  return null;
+};
+
+// Main App Component
+const App = () => {
+  const { currentPage } = usePage();
+  
+  const renderPage = () => {
+    switch(currentPage) {
+      case 'home':
+        return <HomePage />;
+      case 'courses':
+        return <CoursesPage />;
+      case 'labs':
+        return <LabsPage />;
+      case 'handouts':
+        return <HandoutsPage />;
+      case 'ai-tools':
+        return <AIToolsPage />;
+      case 'dashboard':
+        return <DashboardPage />;
+      case 'about':
+        return <AboutPage />;
+      case 'contact':
+        return <ContactPage />;
+      default:
+        return <HomePage />;
+    }
+  };
+  
+  return (
+    <div className="min-h-screen flex flex-col">
+      <PlausibleAnalytics />
+      <Navigation />
+      <main className="flex-grow">
+        {renderPage()}
+      </main>
+      <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="mb-4 md:mb-0">
+              <p className="text-gray-600 dark:text-gray-300">
+                © {new Date().getFullYear()} ImpactMojo. All rights reserved.
+              </p>
+            </div>
+            <div className="flex space-x-4">
+              <a 
+                href="https://twitter.com/impactmojo" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                aria-label="Twitter"
+              >
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://linkedin.com/company/impactmojo" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://github.com/impactmojo" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                aria-label="GitHub"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+// Wrap App with providers
+const AppWithProviders = () => {
+  return (
+    <AuthProvider>
+      <PageProvider>
+        <App />
+      </PageProvider>
+    </AuthProvider>
+  );
+};
+
+export default AppWithProviders;
