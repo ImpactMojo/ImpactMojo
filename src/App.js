@@ -4,7 +4,7 @@ import {
   Menu, X, Sun, Moon, Bookmark, MessageCircle, 
   ExternalLink, BookOpen, FileText, Target, Users, 
   Clock, CheckCircle, PlayCircle, Bot, Trophy, 
-  Headphones, Route, Library, Music
+  Headphones, MapPin, Library, Music
 } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
@@ -425,7 +425,7 @@ const Dashboard = () => {
               </div>
             ) : (
               <div className="text-center py-8">
-                <Route className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <p className="text-gray-500 dark:text-gray-300 font-sans mb-4">No courses in your pathway yet</p>
                 <button className="bg-accent-blue hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium font-sans">
                   Build Your Pathway
