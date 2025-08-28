@@ -1,0 +1,66 @@
+name: Deploy React App to GitHub Pages
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Set npm version
+        run: npm install -g npm@10.8.2
+        
+      - name: Clean install
+        run: |
+          rm -rf node_modules package-lock.json
+          npm cache clean --force
+          npm install --verbose
+          
+      - name: Verify react-scripts presence
+        run: |
+          ls -la node_modules/.bin/
+          ls -l node_modules/.bin/react-scripts
+          which node
+          which npm
+          
+      - name: Build React app
+        run: |
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          export PATH="$PWD/node_modules/.bin:$PATH"
+          export CI=false
+          react-scripts build
+          
+      - name: Verify build output
+        run: |
+          ls -la build/
+          ls -la build/static/
+          
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './build'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
