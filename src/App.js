@@ -580,7 +580,7 @@ const Home = () => {
           </div>
         </div>
         
-        {/* Five Learning Tracks */}
+        {/* Learning Tracks */}
         <div className="mt-16">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white text-center font-heading mb-8">Learning Tracks</h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
