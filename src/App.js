@@ -17,7 +17,6 @@ import { premiumResources } from './data/premium-resources-data';
 
 // Page imports
 import AIToolsPage from './pages/AIToolsPage';
-import ResourcesPage from './pages/ResourcesPage';
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -583,12 +582,13 @@ const Home = () => {
         {/* Learning Tracks */}
         <div className="mt-16">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white text-center font-sans mb-8">Learning Tracks</h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
             {[
               { name: "Research Methods", description: "Learn qualitative and quantitative research methods." },
               { name: "Data Analysis", description: "Master data analysis techniques for social impact." },
               { name: "Gender Studies", description: "Explore gender dynamics in development contexts." },
-              { name: "Policy & Economics", description: "Understand policy and economic frameworks." }
+              { name: "Policy & Economics", description: "Understand policy and economic frameworks." },
+              { name: "Thematic Areas", description: "Explore specialized topics across development sectors." }
             ].map((track, index) => (
               <div key={index} className="bg-white dark:bg-chalkboard-dark rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                 <h3 className="text-xl font-semibold mb-2 font-sans">{track.name}</h3>
@@ -725,6 +725,96 @@ const LabsPage = () => {
               </a>
             </div>
           ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Fixed Resources Page Component
+const ResourcesPage = () => {
+  const { darkMode } = usePage();
+  const { user, toggleBookmark, bookmarks } = useAuth();
+  
+  return (
+    <div className={`min-h-screen font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
+      <Navigation />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-chalk-white mb-4 font-sans">
+            Resources & Tools
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-sans">
+            Additional resources, handouts, and premium tools for development professionals.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {premiumResources.map((resource, index) => (
+            <div key={resource.id} className="bg-white dark:bg-chalkboard-dark rounded-lg shadow hover:shadow-lg transition-shadow p-6">
+              <div className="flex items-center justify-between mb-3">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-600 text-white font-sans">
+                  {resource.id}
+                </span>
+                {user && (
+                  <button
+                    onClick={() => toggleBookmark(resource.id)}
+                    className={`p-1 rounded font-sans ${bookmarks.includes(resource.id) ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-500`}
+                  >
+                    <Bookmark className="h-5 w-5" />
+                  </button>
+                )}
+              </div>
+              
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-chalk-white mb-2 font-sans">
+                {resource.title}
+              </h3>
+              
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 font-sans">
+                {resource.description}
+              </p>
+              
+              <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4 font-sans">
+                <span>{resource.category}</span>
+                <span>Resource</span>
+              </div>
+              
+              <a
+                href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors font-sans flex items-center justify-center"
+              >
+                <FileText className="h-4 w-4 mr-2" />
+                Access Resource
+              </a>
+            </div>
+          ))}
+        </div>
+
+        {/* Additional Handouts Section */}
+        <div className="mt-16">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-chalk-white text-center mb-8 font-sans">
+            Additional Handouts
+          </h2>
+          <div className="bg-white dark:bg-chalkboard-dark rounded-lg shadow-lg p-8 text-center">
+            <FileText className="h-16 w-16 text-purple-600 mx-auto mb-4" />
+            <h3 className="text-2xl font-semibold text-gray-900 dark:text-chalk-white mb-4 font-sans">
+              Browse All Resources
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6 font-sans">
+              Access our complete collection of handouts, guides, and reference materials on GitHub.
+            </p>
+            <a
+              href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-medium rounded-md hover:bg-purple-700 transition-colors font-sans"
+            >
+              <ExternalLink className="h-5 w-5 mr-2" />
+              View All Handouts
+            </a>
+          </div>
         </div>
       </div>
     </div>
