@@ -5,11 +5,12 @@ import {
   ExternalLink, BookOpen, FileText, Target, Users, 
   Clock, CheckCircle, PlayCircle, Bot, Trophy, 
   Headphones, MapPin, Library, Music, Download, 
-  Search, Plus, Edit3, Save, Filter, BookmarkIcon, Tag
+  Search, Plus, Edit3, Save, Filter, BookmarkIcon, Tag,
+  Install, AlertTriangle
 } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc, updateDoc, deleteField } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, updateDoc, deleteField, collection, addDoc } from 'firebase/firestore';
 
 // Data imports
 import { courseData, upcomingCourses } from './data/course-data';
@@ -35,7 +36,38 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
-// Quiz questions and logic for "Find Your Track"
+// PWA Installation
+let deferredPrompt;
+
+// Track definitions with courses and resources
+const trackDefinitions = {
+  "Research Methods": {
+    description: "Learn qualitative and quantitative research methods for development work.",
+    courses: ["research-ethics-101", "qualitative-research-methods-101", "visual-ethnography-101"],
+    resourcesUrl: "https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Research%20Methods",
+    color: "blue"
+  },
+  "Data Analysis": {
+    description: "Master data analysis techniques for measuring social impact.",
+    courses: ["data-literacy-101", "exploratory-data-analysis-for-household-surveys-101", "bivariate-analysis-101", "multivariate-analysis-101", "econometrics-101"],
+    resourcesUrl: "https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Data%20Analysis",
+    color: "green"
+  },
+  "Gender Studies": {
+    description: "Explore gender dynamics and women's empowerment in development.",
+    courses: ["gender-studies-101", "womens-economic-empowerment-101", "sexual-and-reproductive-health-rights-101", "care-economy-101"],
+    resourcesUrl: "https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Gender%20Studies",
+    color: "purple"
+  },
+  "Policy & Economics": {
+    description: "Understand policy frameworks and economic systems in development.",
+    courses: ["development-economics-101", "law-and-constitution-101", "political-economy-101", "poverty-and-inequality-101", "global-development-architecture-101"],
+    resourcesUrl: "https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Policy%20Economics",
+    color: "orange"
+  }
+};
+
+// Quiz questions for "Find Your Track"
 const quizQuestions = [
   {
     id: 1,
@@ -68,35 +100,6 @@ const quizQuestions = [
     ]
   }
 ];
-
-// Track definitions with courses
-const trackDefinitions = {
-  "Research Methods": {
-    description: "Learn qualitative and quantitative research methods for development work.",
-    courses: ["research-ethics-101", "qualitative-research-methods-101", "visual-ethnography-101"],
-    color: "blue"
-  },
-  "Data Analysis": {
-    description: "Master data analysis techniques for measuring social impact.",
-    courses: ["data-literacy-101", "exploratory-data-analysis-for-household-surveys-101", "bivariate-analysis-101", "multivariate-analysis-101", "econometrics-101"],
-    color: "green"
-  },
-  "Gender Studies": {
-    description: "Explore gender dynamics and women's empowerment in development.",
-    courses: ["gender-studies-101", "womens-economic-empowerment-101", "sexual-and-reproductive-health-rights-101", "care-economy-101"],
-    color: "purple"
-  },
-  "Policy & Economics": {
-    description: "Understand policy frameworks and economic systems in development.",
-    courses: ["development-economics-101", "law-and-constitution-101", "political-economy-101", "poverty-and-inequality-101", "global-development-architecture-101"],
-    color: "orange"
-  },
-  "Thematic Areas": {
-    description: "Explore specialized topics across development sectors.",
-    courses: ["climate-science-101", "public-health-101", "livelihoods-101", "community-development-101", "environmental-justice-101"],
-    color: "teal"
-  }
-};
 
 // Authentication Context
 const AuthContext = createContext();
@@ -230,6 +233,13 @@ const AuthProvider = ({ children }) => {
   };
 
   const toggleComparison = async (itemId, itemType = 'course') => {
+    const currentComparisons = user ? comparisons : guestComparisons;
+    
+    if (currentComparisons.length >= 3 && !currentComparisons.find(c => c.id === itemId)) {
+      alert('You can only compare up to 3 items at a time. Please remove an item first.');
+      return;
+    }
+
     if (user) {
       try {
         const existingIndex = comparisons.findIndex(c => c.id === itemId);
@@ -237,10 +247,8 @@ const AuthProvider = ({ children }) => {
         
         if (existingIndex >= 0) {
           newComparisons = comparisons.filter(c => c.id !== itemId);
-        } else if (comparisons.length < 3) {
-          newComparisons = [...comparisons, { id: itemId, type: itemType, dateAdded: new Date() }];
         } else {
-          newComparisons = [...comparisons.slice(1), { id: itemId, type: itemType, dateAdded: new Date() }];
+          newComparisons = [...comparisons, { id: itemId, type: itemType, dateAdded: new Date() }];
         }
         
         await updateDoc(doc(db, 'users', user.uid), { comparisons: newComparisons });
@@ -255,10 +263,8 @@ const AuthProvider = ({ children }) => {
       
       if (existingIndex >= 0) {
         newGuestComparisons = guestComparisons.filter(c => c.id !== itemId);
-      } else if (guestComparisons.length < 3) {
-        newGuestComparisons = [...guestComparisons, { id: itemId, type: itemType, dateAdded: new Date() }];
       } else {
-        newGuestComparisons = [...guestComparisons.slice(1), { id: itemId, type: itemType, dateAdded: new Date() }];
+        newGuestComparisons = [...guestComparisons, { id: itemId, type: itemType, dateAdded: new Date() }];
       }
       
       setGuestComparisons(newGuestComparisons);
@@ -348,6 +354,82 @@ const AuthProvider = ({ children }) => {
       console.error('Error deleting note:', error);
     }
   };
+
+  const submitFeedback = async (feedbackData) => {
+    try {
+      // Submit to Formspree
+      const response = await fetch('https://formspree.io/f/xpwdvgzp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'feedback',
+          message: feedbackData.message,
+          email: feedbackData.email || (user ? user.email : 'anonymous'),
+          name: feedbackData.name || (user ? user.displayName : 'anonymous'),
+          userId: user ? user.uid : 'guest'
+        }),
+      });
+
+      if (response.ok) {
+        // Also save to Firebase if user is logged in
+        if (user) {
+          await addDoc(collection(db, 'feedback'), {
+            ...feedbackData,
+            userId: user.uid,
+            userEmail: user.email,
+            userName: user.displayName,
+            timestamp: new Date()
+          });
+        }
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      return false;
+    }
+  };
+
+  const submitSuggestion = async (suggestionData) => {
+    try {
+      // Submit to Formspree
+      const response = await fetch('https://formspree.io/f/xpwdvgzp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'suggestion',
+          title: suggestionData.title,
+          description: suggestionData.description,
+          category: suggestionData.category,
+          email: suggestionData.email || (user ? user.email : 'anonymous'),
+          name: suggestionData.name || (user ? user.displayName : 'anonymous'),
+          userId: user ? user.uid : 'guest'
+        }),
+      });
+
+      if (response.ok) {
+        // Also save to Firebase if user is logged in
+        if (user) {
+          await addDoc(collection(db, 'suggestions'), {
+            ...suggestionData,
+            userId: user.uid,
+            userEmail: user.email,
+            userName: user.displayName,
+            timestamp: new Date()
+          });
+        }
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error submitting suggestion:', error);
+      return false;
+    }
+  };
   
   const getCurrentBookmarks = () => user ? bookmarks : guestBookmarks;
   const getCurrentComparisons = () => user ? comparisons : guestComparisons;
@@ -358,7 +440,7 @@ const AuthProvider = ({ children }) => {
       guestBookmarks, guestComparisons,
       signInWithGoogle, signOut, toggleBookmark, toggleComparison, addToPathway, 
       saveNote, updateNote, deleteNote, updateBookmarkTags, setRecommendedTrack,
-      getCurrentBookmarks, getCurrentComparisons
+      getCurrentBookmarks, getCurrentComparisons, submitFeedback, submitSuggestion
     }}>
       {children}
     </AuthContext.Provider>
@@ -376,6 +458,8 @@ const PageContext = createContext();
 const PageProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState('home');
   const [darkMode, setDarkMode] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState(null);
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   
   useEffect(() => {
     const isDark = localStorage.getItem('darkMode') === 'true';
@@ -390,9 +474,38 @@ const PageProvider = ({ children }) => {
       document.documentElement.classList.remove('dark');
     }
   }, [darkMode]);
+
+  // PWA Install prompt handling
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      setInstallPrompt(e);
+      setShowInstallPrompt(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      setInstallPrompt(null);
+      setShowInstallPrompt(false);
+    }
+  };
   
   return (
-    <PageContext.Provider value={{ currentPage, setCurrentPage, darkMode, setDarkMode }}>
+    <PageContext.Provider value={{ 
+      currentPage, setCurrentPage, darkMode, setDarkMode,
+      installPrompt, showInstallPrompt, setShowInstallPrompt, handleInstallClick
+    }}>
       {children}
     </PageContext.Provider>
   );
@@ -404,6 +517,39 @@ export const usePage = () => {
   return context;
 };
 
+// PWA Install Banner Component
+const PWAInstallBanner = () => {
+  const { showInstallPrompt, setShowInstallPrompt, handleInstallClick } = usePage();
+
+  if (!showInstallPrompt) return null;
+
+  return (
+    <div className="fixed top-16 left-4 right-4 z-50 bg-blue-600 text-white p-4 rounded-lg shadow-lg flex items-center justify-between">
+      <div className="flex items-center space-x-3">
+        <Install className="h-6 w-6" />
+        <div>
+          <h3 className="font-semibold">Install ImpactMojo</h3>
+          <p className="text-sm text-blue-100">Get the app for better experience</p>
+        </div>
+      </div>
+      <div className="flex space-x-2">
+        <button
+          onClick={handleInstallClick}
+          className="bg-white text-blue-600 px-4 py-2 rounded font-medium hover:bg-blue-50"
+        >
+          Install
+        </button>
+        <button
+          onClick={() => setShowInstallPrompt(false)}
+          className="text-blue-100 hover:text-white"
+        >
+          <X className="h-5 w-5" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
 // Track Selection Modal Component
 const TrackModal = ({ isOpen, onClose, track }) => {
   if (!isOpen || !track) return null;
@@ -413,56 +559,55 @@ const TrackModal = ({ isOpen, onClose, track }) => {
     trackInfo.courses.includes(course.id)
   );
 
-  const handleThematicClick = () => {
-    window.open('https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Thematic%20Areas', '_blank');
-  };
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-5/6 overflow-auto">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-xl font-bold">{track}</h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-            <X className="h-5 w-5" />
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-auto">
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">{track}</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close modal"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           </button>
         </div>
         
         <div className="p-6">
           <p className="text-gray-600 dark:text-gray-300 mb-6">{trackInfo.description}</p>
           
-          {track === "Thematic Areas" ? (
-            <div className="text-center">
-              <p className="mb-4">Explore our collection of thematic handouts and resources covering specialized development topics.</p>
-              <button
-                onClick={handleThematicClick}
-                className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 flex items-center mx-auto"
-              >
-                <ExternalLink className="h-5 w-5 mr-2" />
-                View Thematic Resources
-              </button>
-            </div>
-          ) : (
-            <div className="grid gap-4 md:grid-cols-2">
-              {trackCourses.map((course) => (
-                <div key={course.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <h3 className="font-semibold mb-2">{course.title}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{course.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500">{course.level}</span>
-                    <a
-                      href={course.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
-                    >
-                      <ExternalLink className="h-4 w-4 mr-1" />
-                      Access
-                    </a>
-                  </div>
+          <div className="mb-6">
+            <a
+              href={trackInfo.resourcesUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors"
+            >
+              <ExternalLink className="h-5 w-5 mr-2" />
+              View {track} Resources
+            </a>
+          </div>
+          
+          <div className="grid gap-4 md:grid-cols-2">
+            {trackCourses.map((course) => (
+              <div key={course.id} className="border dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <h3 className="font-semibold mb-2 text-gray-900 dark:text-white">{course.title}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{course.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">{course.level}</span>
+                  <a
+                    href={course.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm flex items-center"
+                  >
+                    <ExternalLink className="h-4 w-4 mr-1" />
+                    Access
+                  </a>
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -522,10 +667,14 @@ const QuizModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-xl font-bold">Find Your Learning Track</h2>
-          <button onClick={handleClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-            <X className="h-5 w-5" />
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Find Your Learning Track</h2>
+          <button 
+            onClick={handleClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close quiz"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           </button>
         </div>
         
@@ -533,11 +682,11 @@ const QuizModal = ({ isOpen, onClose }) => {
           {!showResults ? (
             <div>
               <div className="mb-4">
-                <div className="flex justify-between text-sm text-gray-500 mb-2">
+                <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-2">
                   <span>Question {currentQuestion + 1} of {quizQuestions.length}</span>
                   <span>{Math.round(((currentQuestion) / quizQuestions.length) * 100)}% Complete</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div 
                     className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${((currentQuestion) / quizQuestions.length) * 100}%` }}
@@ -545,14 +694,16 @@ const QuizModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
               
-              <h3 className="text-lg font-semibold mb-6">{quizQuestions[currentQuestion].question}</h3>
+              <h3 className="text-lg font-semibold mb-6 text-gray-900 dark:text-white">
+                {quizQuestions[currentQuestion].question}
+              </h3>
               
               <div className="space-y-3">
                 {quizQuestions[currentQuestion].options.map((option, index) => (
                   <button
                     key={index}
                     onClick={() => handleAnswer(option)}
-                    className="w-full text-left p-4 border rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900 hover:border-blue-300 transition-colors"
+                    className="w-full text-left p-4 border dark:border-gray-600 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900 hover:border-blue-300 dark:hover:border-blue-500 transition-colors text-gray-900 dark:text-white"
                   >
                     {option.text}
                   </button>
@@ -561,7 +712,7 @@ const QuizModal = ({ isOpen, onClose }) => {
             </div>
           ) : (
             <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4">Your Recommended Track:</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Your Recommended Track:</h3>
               <div className="bg-blue-50 dark:bg-blue-900 rounded-lg p-6 mb-6">
                 <h4 className="text-xl font-semibold text-blue-800 dark:text-blue-200 mb-2">
                   {recommendedTrack}
@@ -573,26 +724,15 @@ const QuizModal = ({ isOpen, onClose }) => {
               
               <div className="space-y-3">
                 <button
-                  onClick={() => {
-                    handleClose();
-                    // Open track modal
-                    // This would need to be handled by parent component
-                  }}
-                  className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700"
-                >
-                  Explore {recommendedTrack} Courses
-                </button>
-                
-                <button
                   onClick={resetQuiz}
-                  className="w-full border border-gray-300 py-3 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="w-full border border-gray-300 dark:border-gray-600 py-3 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
                 >
                   Retake Quiz
                 </button>
               </div>
               
               {user && (
-                <p className="text-sm text-gray-500 mt-4">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
                   Your recommended track has been saved to your dashboard!
                 </p>
               )}
@@ -670,15 +810,19 @@ const CornellNotesModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white dark:bg-gray-800 rounded-lg max-w-6xl w-full h-5/6 flex flex-col">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-xl font-bold">Cornell Notes</h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-            <X className="h-5 w-5" />
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Cornell Notes</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close notes"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           </button>
         </div>
         
         <div className="flex flex-1 overflow-hidden">
-          <div className="w-1/3 border-r p-4 overflow-y-auto">
+          <div className="w-1/3 border-r dark:border-gray-600 p-4 overflow-y-auto">
             <div className="space-y-4 mb-4">
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -687,13 +831,13 @@ const CornellNotesModal = ({ isOpen, onClose }) => {
                   placeholder="Search notes..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 border rounded-md"
+                  className="w-full pl-10 pr-3 py-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 />
               </div>
               <select
                 value={filterCourse}
                 onChange={(e) => setFilterCourse(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 <option value="">All Courses</option>
                 {uniqueCourses.map(course => (
@@ -717,14 +861,14 @@ const CornellNotesModal = ({ isOpen, onClose }) => {
               {filteredNotes.map(note => (
                 <div
                   key={note.id}
-                  className={`p-3 border rounded cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 ${
+                  className={`p-3 border dark:border-gray-600 rounded cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 ${
                     selectedNote?.id === note.id ? 'bg-blue-50 dark:bg-blue-900' : ''
                   }`}
                   onClick={() => handleEdit(note)}
                 >
-                  <h3 className="font-medium truncate">{note.title}</h3>
-                  <p className="text-sm text-gray-500">{note.course}</p>
-                  <p className="text-xs text-gray-400">
+                  <h3 className="font-medium truncate text-gray-900 dark:text-white">{note.title}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{note.course}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">
                     {new Date(note.lastModified?.toDate?.() || note.lastModified).toLocaleDateString()}
                   </p>
                 </div>
@@ -741,12 +885,12 @@ const CornellNotesModal = ({ isOpen, onClose }) => {
                     placeholder="Note Title"
                     value={formData.title}
                     onChange={(e) => setFormData({...formData, title: e.target.value})}
-                    className="flex-1 p-2 border rounded-md"
+                    className="flex-1 p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   />
                   <select
                     value={formData.course}
                     onChange={(e) => setFormData({...formData, course: e.target.value})}
-                    className="p-2 border rounded-md"
+                    className="p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   >
                     <option value="">Select Course</option>
                     {courseData.map(course => (
@@ -757,33 +901,33 @@ const CornellNotesModal = ({ isOpen, onClose }) => {
                 
                 <div className="flex-1 grid grid-cols-3 gap-4 h-96">
                   <div className="flex flex-col">
-                    <label className="font-medium mb-2">Cues & Questions</label>
+                    <label className="font-medium mb-2 text-gray-900 dark:text-white">Cues & Questions</label>
                     <textarea
                       value={formData.cues}
                       onChange={(e) => setFormData({...formData, cues: e.target.value})}
                       placeholder="Key terms, questions, formulas..."
-                      className="flex-1 p-2 border rounded-md resize-none"
+                      className="flex-1 p-2 border dark:border-gray-600 rounded-md resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     />
                   </div>
                   
                   <div className="flex flex-col col-span-2">
-                    <label className="font-medium mb-2">Notes</label>
+                    <label className="font-medium mb-2 text-gray-900 dark:text-white">Notes</label>
                     <textarea
                       value={formData.notes}
                       onChange={(e) => setFormData({...formData, notes: e.target.value})}
                       placeholder="Main notes content..."
-                      className="flex-1 p-2 border rounded-md resize-none"
+                      className="flex-1 p-2 border dark:border-gray-600 rounded-md resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     />
                   </div>
                 </div>
                 
                 <div className="flex flex-col">
-                  <label className="font-medium mb-2">Summary</label>
+                  <label className="font-medium mb-2 text-gray-900 dark:text-white">Summary</label>
                   <textarea
                     value={formData.summary}
                     onChange={(e) => setFormData({...formData, summary: e.target.value})}
                     placeholder="Key takeaways and summary..."
-                    className="h-20 p-2 border rounded-md resize-none"
+                    className="h-20 p-2 border dark:border-gray-600 rounded-md resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   />
                 </div>
                 
@@ -800,7 +944,7 @@ const CornellNotesModal = ({ isOpen, onClose }) => {
                       setIsEditing(false);
                       setSelectedNote(null);
                     }}
-                    className="px-4 py-2 border rounded-md hover:bg-gray-50"
+                    className="px-4 py-2 border dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
                   >
                     Cancel
                   </button>
@@ -815,7 +959,7 @@ const CornellNotesModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
             ) : (
-              <div className="h-full flex items-center justify-center text-gray-500">
+              <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
                 <div className="text-center">
                   <BookOpen className="h-16 w-16 mx-auto mb-4 opacity-50" />
                   <p>Select a note to view or create a new one</p>
@@ -831,7 +975,7 @@ const CornellNotesModal = ({ isOpen, onClose }) => {
 
 // Enhanced Comparison Modal Component
 const ComparisonModal = ({ isOpen, onClose }) => {
-  const { user, getCurrentComparisons, toggleComparison } = useAuth();
+  const { getCurrentComparisons, toggleComparison } = useAuth();
   const comparisons = getCurrentComparisons();
   
   const getItemData = (id, type) => {
@@ -847,135 +991,72 @@ const ComparisonModal = ({ isOpen, onClose }) => {
     }
   };
 
-  const exportToTxt = () => {
-    const content = comparisons.map(comp => {
-      const item = getItemData(comp.id, comp.type);
-      return `${comp.type.toUpperCase()}: ${item?.title || comp.id}
-Description: ${item?.description || 'N/A'}
-Track/Topic: ${item?.track || item?.topic || item?.category || 'N/A'}
-Level: ${item?.level || item?.difficulty || 'N/A'}
-Duration: ${item?.duration || 'N/A'}
-
-`;
-    }).join('\n');
-    
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'comparison.txt';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const exportToCsv = () => {
-    const headers = ['Type', 'Title', 'Description', 'Track/Topic', 'Level', 'Duration'];
-    const rows = comparisons.map(comp => {
-      const item = getItemData(comp.id, comp.type);
-      return [
-        comp.type,
-        item?.title || comp.id,
-        item?.description || 'N/A',
-        item?.track || item?.topic || item?.category || 'N/A',
-        item?.level || item?.difficulty || 'N/A',
-        item?.duration || 'N/A'
-      ];
-    });
-    
-    const csvContent = [headers, ...rows].map(row => 
-      row.map(field => `"${field}"`).join(',')
-    ).join('\n');
-    
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'comparison.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-6xl w-full max-h-5/6 overflow-auto">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-xl font-bold">Compare Items ({comparisons.length}/3)</h2>
-          <div className="flex gap-2">
-            {user && comparisons.length > 0 && (
-              <>
-                <button
-                  onClick={exportToTxt}
-                  className="flex items-center gap-2 px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
-                  <Download className="h-4 w-4" />
-                  TXT
-                </button>
-                <button
-                  onClick={exportToCsv}
-                  className="flex items-center gap-2 px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                >
-                  <Download className="h-4 w-4" />
-                  CSV
-                </button>
-              </>
-            )}
-            <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-6xl w-full max-h-[90vh] overflow-auto">
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Compare Items ({comparisons.length}/3)</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close comparison"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          </button>
         </div>
         
         <div className="p-4">
           {comparisons.length === 0 ? (
             <div className="text-center py-8">
-              <Target className="h-16 w-16 mx-auto mb-4 opacity-50" />
-              <p className="text-gray-500">No items selected for comparison</p>
-              <p className="text-sm text-gray-400">Use the compare icons on course/lab cards to add items</p>
+              <Target className="h-16 w-16 mx-auto mb-4 opacity-50 text-gray-400" />
+              <p className="text-gray-500 dark:text-gray-400">No items selected for comparison</p>
+              <p className="text-sm text-gray-400 dark:text-gray-500">Use the compare icons on course/lab cards to add items</p>
             </div>
           ) : (
             <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${comparisons.length}, 1fr)` }}>
               {comparisons.map(comp => {
                 const item = getItemData(comp.id, comp.type);
                 return (
-                  <div key={comp.id} className="border rounded-lg p-4">
+                  <div key={comp.id} className="border dark:border-gray-600 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                      <span className="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">
                         {comp.type.toUpperCase()}
                       </span>
                       <button
                         onClick={() => toggleComparison(comp.id, comp.type)}
                         className="text-red-500 hover:text-red-700"
+                        aria-label="Remove from comparison"
                       >
                         <X className="h-4 w-4" />
                       </button>
                     </div>
                     
-                    <h3 className="font-bold mb-2">{item?.title || comp.id}</h3>
+                    <h3 className="font-bold mb-2 text-gray-900 dark:text-white">{item?.title || comp.id}</h3>
                     
                     <div className="space-y-2 text-sm">
                       <div>
-                        <span className="font-medium">Description:</span>
+                        <span className="font-medium text-gray-900 dark:text-white">Description:</span>
                         <p className="text-gray-600 dark:text-gray-300">{item?.description || 'N/A'}</p>
                       </div>
                       
                       <div>
-                        <span className="font-medium">Track/Topic:</span>
+                        <span className="font-medium text-gray-900 dark:text-white">Track/Topic:</span>
                         <p className="text-gray-600 dark:text-gray-300">
                           {item?.track || item?.topic || item?.category || 'N/A'}
                         </p>
                       </div>
                       
                       <div>
-                        <span className="font-medium">Level:</span>
+                        <span className="font-medium text-gray-900 dark:text-white">Level:</span>
                         <p className="text-gray-600 dark:text-gray-300">
                           {item?.level || item?.difficulty || 'N/A'}
                         </p>
                       </div>
                       
                       <div>
-                        <span className="font-medium">Duration:</span>
+                        <span className="font-medium text-gray-900 dark:text-white">Duration:</span>
                         <p className="text-gray-600 dark:text-gray-300">{item?.duration || 'N/A'}</p>
                       </div>
                       
@@ -984,7 +1065,7 @@ Duration: ${item?.duration || 'N/A'}
                           href={item.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800"
+                          className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
                         >
                           <ExternalLink className="h-3 w-3" />
                           Access
@@ -1046,11 +1127,15 @@ const BookmarkModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-5/6 overflow-auto">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-xl font-bold">Your Bookmarks ({bookmarks.length})</h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-            <X className="h-5 w-5" />
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-auto">
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Your Bookmarks ({bookmarks.length})</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close bookmarks"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           </button>
         </div>
         
@@ -1064,14 +1149,14 @@ const BookmarkModal = ({ isOpen, onClose }) => {
                 placeholder="Search bookmarks..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-3 py-2 border rounded-md"
+                className="w-full pl-10 pr-3 py-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               />
             </div>
             {user && allTags.length > 0 && (
               <select
                 value={filterTag}
                 onChange={(e) => setFilterTag(e.target.value)}
-                className="p-2 border rounded-md"
+                className="p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 <option value="">All Tags</option>
                 {allTags.map(tag => (
@@ -1083,9 +1168,9 @@ const BookmarkModal = ({ isOpen, onClose }) => {
 
           {bookmarks.length === 0 ? (
             <div className="text-center py-8">
-              <BookmarkIcon className="h-16 w-16 mx-auto mb-4 opacity-50" />
-              <p className="text-gray-500">No bookmarks yet</p>
-              <p className="text-sm text-gray-400">Use the bookmark icons on courses and labs to save them here</p>
+              <BookmarkIcon className="h-16 w-16 mx-auto mb-4 opacity-50 text-gray-400" />
+              <p className="text-gray-500 dark:text-gray-400">No bookmarks yet</p>
+              <p className="text-sm text-gray-400 dark:text-gray-500">Use the bookmark icons on courses and labs to save them here</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -1096,7 +1181,7 @@ const BookmarkModal = ({ isOpen, onClose }) => {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-medium text-gray-900 dark:text-white">{item.title}</h3>
-                        <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded capitalize">
+                        <span className="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded capitalize">
                           {bookmark.type}
                         </span>
                       </div>
@@ -1110,7 +1195,7 @@ const BookmarkModal = ({ isOpen, onClose }) => {
                                 placeholder="Enter tags (comma separated)"
                                 value={newTags}
                                 onChange={(e) => setNewTags(e.target.value)}
-                                className="text-xs p-1 border rounded"
+                                className="text-xs p-1 border dark:border-gray-600 rounded bg-white dark:bg-gray-600 text-gray-900 dark:text-white"
                                 onKeyPress={(e) => e.key === 'Enter' && handleSaveTags(bookmark.id)}
                               />
                               <button
@@ -1131,20 +1216,20 @@ const BookmarkModal = ({ isOpen, onClose }) => {
                               {bookmark.tags && bookmark.tags.length > 0 ? (
                                 <div className="flex gap-1">
                                   {bookmark.tags.map((tag, index) => (
-                                    <span key={index} className="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded">
+                                    <span key={index} className="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded">
                                       {tag}
                                     </span>
                                   ))}
                                 </div>
                               ) : (
-                                <span className="text-xs text-gray-500">No tags</span>
+                                <span className="text-xs text-gray-500 dark:text-gray-400">No tags</span>
                               )}
                               <button
                                 onClick={() => {
                                   setEditingTags(bookmark.id);
                                   setNewTags(bookmark.tags ? bookmark.tags.join(', ') : '');
                                 }}
-                                className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                                className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex items-center gap-1"
                               >
                                 <Tag className="h-3 w-3" />
                                 Edit Tags
@@ -1160,13 +1245,15 @@ const BookmarkModal = ({ isOpen, onClose }) => {
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800"
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+                        aria-label="Open item"
                       >
                         <ExternalLink className="h-5 w-5" />
                       </a>
                       <button
                         onClick={() => toggleBookmark(bookmark.id, bookmark.type)}
                         className="text-red-500 hover:text-red-700"
+                        aria-label="Remove bookmark"
                       >
                         <X className="h-5 w-5" />
                       </button>
@@ -1182,6 +1269,280 @@ const BookmarkModal = ({ isOpen, onClose }) => {
   );
 };
 
+// Feedback Modal Component
+const FeedbackModal = ({ isOpen, onClose }) => {
+  const { user, submitFeedback } = useAuth();
+  const [formData, setFormData] = useState({
+    message: '',
+    email: '',
+    name: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const success = await submitFeedback(formData);
+    setSubmitStatus(success ? 'success' : 'error');
+    setIsSubmitting(false);
+    
+    if (success) {
+      setTimeout(() => {
+        setFormData({ message: '', email: '', name: '' });
+        setSubmitStatus(null);
+        onClose();
+      }, 2000);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full">
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Send Feedback</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close feedback form"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          </button>
+        </div>
+        
+        <form onSubmit={handleSubmit} className="p-6">
+          {!user && (
+            <>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">
+                  Name (optional)
+                </label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">
+                  Email (optional)
+                </label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                />
+              </div>
+            </>
+          )}
+          
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">
+              Your Feedback *
+            </label>
+            <textarea
+              value={formData.message}
+              onChange={(e) => setFormData({...formData, message: e.target.value})}
+              required
+              rows={4}
+              placeholder="Tell us what you think..."
+              className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+          
+          {submitStatus === 'success' && (
+            <div className="mb-4 p-3 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-md">
+              Thank you for your feedback!
+            </div>
+          )}
+          
+          {submitStatus === 'error' && (
+            <div className="mb-4 p-3 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-md">
+              Sorry, there was an error. Please try again.
+            </div>
+          )}
+          
+          <div className="flex gap-2">
+            <button
+              type="submit"
+              disabled={isSubmitting || !formData.message.trim()}
+              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? 'Sending...' : 'Send Feedback'}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 border dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+// Suggest Course Modal Component
+const SuggestCourseModal = ({ isOpen, onClose }) => {
+  const { user, submitSuggestion } = useAuth();
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    category: '',
+    email: '',
+    name: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const success = await submitSuggestion(formData);
+    setSubmitStatus(success ? 'success' : 'error');
+    setIsSubmitting(false);
+    
+    if (success) {
+      setTimeout(() => {
+        setFormData({ title: '', description: '', category: '', email: '', name: '' });
+        setSubmitStatus(null);
+        onClose();
+      }, 2000);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full">
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Suggest a Course</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close suggestion form"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          </button>
+        </div>
+        
+        <form onSubmit={handleSubmit} className="p-6">
+          {!user && (
+            <>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">
+                  Name (optional)
+                </label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">
+                  Email (optional)
+                </label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                />
+              </div>
+            </>
+          )}
+          
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">
+              Course Title *
+            </label>
+            <input
+              type="text"
+              value={formData.title}
+              onChange={(e) => setFormData({...formData, title: e.target.value})}
+              required
+              placeholder="e.g., Digital Marketing 101"
+              className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+          
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">
+              Category
+            </label>
+            <select
+              value={formData.category}
+              onChange={(e) => setFormData({...formData, category: e.target.value})}
+              className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            >
+              <option value="">Select a category</option>
+              <option value="Research Methods">Research Methods</option>
+              <option value="Data Analysis">Data Analysis</option>
+              <option value="Gender Studies">Gender Studies</option>
+              <option value="Policy & Economics">Policy & Economics</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">
+              Description *
+            </label>
+            <textarea
+              value={formData.description}
+              onChange={(e) => setFormData({...formData, description: e.target.value})}
+              required
+              rows={4}
+              placeholder="Describe what this course should cover and why it would be valuable..."
+              className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+          
+          {submitStatus === 'success' && (
+            <div className="mb-4 p-3 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-md">
+              Thank you for your suggestion!
+            </div>
+          )}
+          
+          {submitStatus === 'error' && (
+            <div className="mb-4 p-3 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-md">
+              Sorry, there was an error. Please try again.
+            </div>
+          )}
+          
+          <div className="flex gap-2">
+            <button
+              type="submit"
+              disabled={isSubmitting || !formData.title.trim() || !formData.description.trim()}
+              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? 'Sending...' : 'Submit Suggestion'}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 border dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 // Navigation Component
 export const Navigation = () => {
   const { user, signOut, signInWithGoogle, isPremium } = useAuth();
@@ -1189,22 +1550,22 @@ export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   return (
-    <nav className="sticky top-0 z-50 bg-white dark:bg-chalkboard-dark shadow-md">
+    <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-md border-b dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center">
-              <div className="h-8 w-8 rounded-md bg-accent-blue flex items-center justify-center">
-                <span className="text-white font-bold">IM</span>
+              <div className="h-8 w-8 rounded-md bg-blue-600 flex items-center justify-center">
+                <span className="text-white font-bold text-sm">IM</span>
               </div>
-              <span className="ml-2 text-xl font-bold text-gray-900 dark:text-chalk-white font-sans">ImpactMojo</span>
+              <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">ImpactMojo</span>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               {['home', 'courses', 'labs', 'resources'].map((page) => (
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className={`${currentPage === page ? 'border-accent-blue text-gray-900 dark:text-chalk-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-chalk-white'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium font-sans capitalize`}
+                  className={`${currentPage === page ? 'border-blue-600 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium capitalize`}
                 >
                   {page}
                 </button>
@@ -1213,13 +1574,13 @@ export const Navigation = () => {
                 <>
                   <button
                     onClick={() => setCurrentPage('dashboard')}
-                    className={`${currentPage === 'dashboard' ? 'border-accent-blue text-gray-900 dark:text-chalk-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-chalk-white'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium font-sans`}
+                    className={`${currentPage === 'dashboard' ? 'border-blue-600 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
                   >
                     Dashboard
                   </button>
                   <button
                     onClick={() => setCurrentPage('ai-tools')}
-                    className={`${currentPage === 'ai-tools' ? 'border-accent-blue text-gray-900 dark:text-chalk-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-chalk-white'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium font-sans flex items-center`}
+                    className={`${currentPage === 'ai-tools' ? 'border-blue-600 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
                   >
                     AI Tools
                   </button>
@@ -1228,39 +1589,51 @@ export const Navigation = () => {
             </div>
           </div>
           
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
+          <div className="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-full text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-chalk-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-blue"
+              className="p-2 rounded-full text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-600"
+              aria-label="Toggle theme"
             >
               {darkMode ? <Sun className="h-5 w-5 text-yellow-400" /> : <Moon className="h-5 w-5" />}
             </button>
             
             {user ? (
-              <div className="ml-3 flex items-center space-x-3">
+              <div className="flex items-center space-x-3">
                 <div className="flex items-center">
                   <img className="h-8 w-8 rounded-full" src={user.photoURL} alt={user.displayName} />
-                  <span className="ml-2 text-gray-900 dark:text-chalk-white text-sm font-medium font-sans hidden md:block">{user.displayName}</span>
+                  <span className="ml-2 text-gray-900 dark:text-white text-sm font-medium hidden md:block">{user.displayName}</span>
                   {isPremium && <span className="ml-1 bg-yellow-400 text-yellow-900 text-xs px-1.5 py-0.5 rounded-full">PRO</span>}
                 </div>
-                <button onClick={signOut} className="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-chalk-white text-sm font-medium font-sans">
+                <button 
+                  onClick={signOut} 
+                  className="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white text-sm font-medium"
+                >
                   Sign Out
                 </button>
               </div>
             ) : (
               <button
                 onClick={signInWithGoogle}
-                className="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-accent-blue hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-blue font-sans"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
               >
                 Sign In
               </button>
             )}
           </div>
           
-          <div className="-mr-2 flex items-center sm:hidden">
+          <div className="flex items-center sm:hidden space-x-2">
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 rounded-full text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white"
+              aria-label="Toggle theme"
+            >
+              {darkMode ? <Sun className="h-5 w-5 text-yellow-400" /> : <Moon className="h-5 w-5" />}
+            </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-chalk-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-blue"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-600"
+              aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
             </button>
@@ -1270,13 +1643,13 @@ export const Navigation = () => {
       
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-white dark:bg-chalkboard-dark">
+        <div className="sm:hidden bg-white dark:bg-gray-900 border-t dark:border-gray-700">
           <div className="pt-2 pb-3 space-y-1">
             {['home', 'courses', 'labs', 'resources'].map((page) => (
               <button
                 key={page}
                 onClick={() => { setCurrentPage(page); setMobileMenuOpen(false); }}
-                className={`${currentPage === page ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-chalk-white' : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-chalk-white'} block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium font-sans capitalize`}
+                className={`${currentPage === page ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'} block w-full text-left pl-3 pr-4 py-2 text-base font-medium capitalize`}
               >
                 {page}
               </button>
@@ -1285,13 +1658,13 @@ export const Navigation = () => {
               <>
                 <button
                   onClick={() => { setCurrentPage('dashboard'); setMobileMenuOpen(false); }}
-                  className={`${currentPage === 'dashboard' ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-chalk-white' : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-chalk-white'} block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium font-sans`}
+                  className={`${currentPage === 'dashboard' ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'} block w-full text-left pl-3 pr-4 py-2 text-base font-medium`}
                 >
                   Dashboard
                 </button>
                 <button
                   onClick={() => { setCurrentPage('ai-tools'); setMobileMenuOpen(false); }}
-                  className={`${currentPage === 'ai-tools' ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-chalk-white' : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-chalk-white'} block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium font-sans flex items-center`}
+                  className={`${currentPage === 'ai-tools' ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'} block w-full text-left pl-3 pr-4 py-2 text-base font-medium`}
                 >
                   AI Tools
                 </button>
@@ -1305,26 +1678,26 @@ export const Navigation = () => {
                 <>
                   <img className="h-10 w-10 rounded-full" src={user.photoURL} alt={user.displayName} />
                   <div className="ml-3">
-                    <div className="text-base font-medium text-gray-900 dark:text-chalk-white font-sans">{user.displayName}</div>
-                    <div className="text-sm font-medium text-gray-500 dark:text-gray-300 font-sans">{user.email}</div>
+                    <div className="text-base font-medium text-gray-900 dark:text-white">{user.displayName}</div>
+                    <div className="text-sm font-medium text-gray-500 dark:text-gray-300">{user.email}</div>
                   </div>
                 </>
               ) : (
-                <div className="text-base font-medium text-gray-900 dark:text-chalk-white font-sans">Not signed in</div>
+                <div className="text-base font-medium text-gray-900 dark:text-white">Not signed in</div>
               )}
             </div>
             <div className="mt-3">
               {user ? (
                 <button
                   onClick={signOut}
-                  className="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-chalk-white hover:bg-gray-100 dark:hover:bg-gray-700 font-sans"
+                  className="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Sign out
                 </button>
               ) : (
                 <button
                   onClick={signInWithGoogle}
-                  className="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-chalk-white hover:bg-gray-100 dark:hover:bg-gray-700 font-sans"
+                  className="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Sign in
                 </button>
@@ -1350,42 +1723,42 @@ const Dashboard = () => {
   
   if (!user) {
     return (
-      <div className={`min-h-screen font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
+      <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
         <Navigation />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white font-sans">Please sign in to access your dashboard</h1>
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Please sign in to access your dashboard</h1>
         </div>
       </div>
     );
   }
   
   return (
-    <div className={`min-h-screen font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
         <div className="mb-8">
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white font-sans">Dashboard</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-300 font-sans">Welcome back, {user.displayName}!</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">Dashboard</h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-300">Welcome back, {user.displayName}!</p>
         </div>
         
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 mb-8">
           {[
             { title: 'Courses Bookmarked', value: bookmarks.filter(b => b.type === 'course').length, icon: BookOpen, color: 'blue' },
             { title: 'Labs Bookmarked', value: bookmarks.filter(b => b.type === 'lab').length, icon: Target, color: 'green' },
             { title: 'Notes Created', value: notes.length, icon: Edit3, color: 'purple' },
             { title: 'Items Comparing', value: comparisons.length, icon: Target, color: 'yellow' }
           ].map((stat, index) => (
-            <div key={index} className="bg-white dark:bg-chalkboard-dark overflow-hidden shadow rounded-lg">
-              <div className="p-5">
+            <div key={index} className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+              <div className="p-3 sm:p-5">
                 <div className="flex items-center">
-                  <div className={`flex-shrink-0 bg-${stat.color}-500 rounded-md p-3`}>
-                    <stat.icon className="h-6 w-6 text-white" />
+                  <div className={`flex-shrink-0 bg-${stat.color}-500 rounded-md p-2 sm:p-3`}>
+                    <stat.icon className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
                   </div>
-                  <div className="ml-5 w-0 flex-1">
+                  <div className="ml-3 sm:ml-5 w-0 flex-1">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 font-sans truncate">{stat.title}</dt>
-                      <dd className="text-lg font-medium text-gray-900 dark:text-chalk-white font-sans">{stat.value}</dd>
+                      <dt className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 truncate">{stat.title}</dt>
+                      <dd className="text-lg font-medium text-gray-900 dark:text-white">{stat.value}</dd>
                     </dl>
                   </div>
                 </div>
@@ -1397,8 +1770,8 @@ const Dashboard = () => {
         {/* Main Features */}
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 mb-8">
           {/* Bookmarks */}
-          <div className="bg-white dark:bg-chalkboard-dark shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-chalk-white font-sans mb-4">Your Bookmarks</h2>
+          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4">Your Bookmarks</h2>
             {bookmarks.length > 0 ? (
               <div className="space-y-3">
                 {bookmarks.slice(0, 5).map((bookmark) => {
@@ -1418,18 +1791,18 @@ const Dashboard = () => {
                   const item = getItemData(bookmark.id, bookmark.type);
                   return item ? (
                     <div key={bookmark.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                      <div>
-                        <h3 className="font-medium text-gray-900 dark:text-chalk-white font-sans">{item.title}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-300 font-sans capitalize">{bookmark.type}</p>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-medium text-gray-900 dark:text-white truncate">{item.title}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">{bookmark.type}</p>
                         {bookmark.tags && bookmark.tags.length > 0 && (
-                          <div className="flex gap-1 mt-1">
+                          <div className="flex gap-1 mt-1 flex-wrap">
                             {bookmark.tags.slice(0, 2).map((tag, index) => (
-                              <span key={index} className="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded">
+                              <span key={index} className="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded">
                                 {tag}
                               </span>
                             ))}
                             {bookmark.tags.length > 2 && (
-                              <span className="text-xs text-gray-500">+{bookmark.tags.length - 2} more</span>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">+{bookmark.tags.length - 2} more</span>
                             )}
                           </div>
                         )}
@@ -1438,7 +1811,8 @@ const Dashboard = () => {
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-accent-blue dark:text-accent-blue hover:text-blue-800 dark:hover:text-blue-300"
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex-shrink-0 ml-2"
+                        aria-label="Open item"
                       >
                         <ExternalLink className="h-5 w-5" />
                       </a>
@@ -1446,7 +1820,7 @@ const Dashboard = () => {
                   ) : null;
                 })}
                 {bookmarks.length > 5 && (
-                  <p className="text-sm text-gray-500 dark:text-gray-300 text-center">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
                     And {bookmarks.length - 5} more...
                   </p>
                 )}
@@ -1454,29 +1828,29 @@ const Dashboard = () => {
             ) : (
               <div className="text-center py-8">
                 <BookmarkIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 dark:text-gray-300 font-sans mb-4">No bookmarks yet</p>
-                <p className="text-sm text-gray-400 font-sans">Use the bookmark icons on courses and labs to save them here</p>
+                <p className="text-gray-500 dark:text-gray-400 mb-4">No bookmarks yet</p>
+                <p className="text-sm text-gray-400 dark:text-gray-500">Use the bookmark icons on courses and labs to save them here</p>
               </div>
             )}
           </div>
           
           {/* Cornell Notes */}
-          <div className="bg-white dark:bg-chalkboard-dark shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-chalk-white font-sans mb-4">Cornell Notes</h2>
+          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4">Cornell Notes</h2>
             {notes.length > 0 ? (
               <div className="space-y-3">
                 {notes.slice(0, 3).map((note) => (
                   <div key={note.id} className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <h3 className="font-medium text-gray-900 dark:text-chalk-white font-sans">{note.title}</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-300 font-sans">{note.course}</p>
-                    <p className="text-xs text-gray-400 mt-1">
+                    <h3 className="font-medium text-gray-900 dark:text-white truncate">{note.title}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{note.course}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                       {new Date(note.lastModified?.toDate?.() || note.lastModified).toLocaleDateString()}
                     </p>
                   </div>
                 ))}
                 <button
                   onClick={() => setShowNotesModal(true)}
-                  className="w-full text-accent-blue dark:text-accent-blue hover:text-blue-800 dark:hover:text-blue-300 font-medium font-sans text-center py-2"
+                  className="w-full text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-center py-2"
                 >
                   View All Notes
                 </button>
@@ -1484,10 +1858,10 @@ const Dashboard = () => {
             ) : (
               <div className="text-center py-8">
                 <Library className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 dark:text-gray-300 font-sans mb-4">No notes yet</p>
+                <p className="text-gray-500 dark:text-gray-400 mb-4">No notes yet</p>
                 <button
                   onClick={() => setShowNotesModal(true)}
-                  className="bg-accent-blue hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium font-sans"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium"
                 >
                   Create Your First Note
                 </button>
@@ -1499,8 +1873,8 @@ const Dashboard = () => {
         {/* Comparison and Pathway */}
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 mb-8">
           {/* Comparison */}
-          <div className="bg-white dark:bg-chalkboard-dark shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-chalk-white font-sans mb-4">
+          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4">
               Item Comparison ({comparisons.length}/3)
             </h2>
             {comparisons.length > 0 ? (
@@ -1522,16 +1896,16 @@ const Dashboard = () => {
                   const item = getItemData(comp.id, comp.type);
                   return item ? (
                     <div key={comp.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                      <div>
-                        <h3 className="font-medium text-gray-900 dark:text-chalk-white font-sans">{item.title}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-300 font-sans capitalize">{comp.type}</p>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-medium text-gray-900 dark:text-white truncate">{item.title}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">{comp.type}</p>
                       </div>
                     </div>
                   ) : null;
                 })}
                 <button
                   onClick={() => setShowComparisonModal(true)}
-                  className="w-full text-accent-blue dark:text-accent-blue hover:text-blue-800 dark:hover:text-blue-300 font-medium font-sans text-center py-2"
+                  className="w-full text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-center py-2"
                 >
                   View Comparison
                 </button>
@@ -1539,30 +1913,31 @@ const Dashboard = () => {
             ) : (
               <div className="text-center py-8">
                 <Target className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 dark:text-gray-300 font-sans mb-4">No items selected for comparison</p>
-                <p className="text-sm text-gray-400 font-sans">Use the compare icons to select up to 3 items</p>
+                <p className="text-gray-500 dark:text-gray-400 mb-4">No items selected for comparison</p>
+                <p className="text-sm text-gray-400 dark:text-gray-500">Use the compare icons to select up to 3 items</p>
               </div>
             )}
           </div>
           
           {/* Custom Pathway */}
-          <div className="bg-white dark:bg-chalkboard-dark shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-chalk-white font-sans mb-4">Your Learning Pathway</h2>
+          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4">Your Learning Pathway</h2>
             {customPathway.length > 0 ? (
               <div className="space-y-3">
                 {customPathway.map((courseId, index) => {
                   const course = courseData.find(c => c.id === courseId);
                   return course ? (
                     <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                      <div>
-                        <h3 className="font-medium text-gray-900 dark:text-chalk-white font-sans">{course.title}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-300 font-sans">{course.track}</p>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-medium text-gray-900 dark:text-white truncate">{course.title}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{course.track}</p>
                       </div>
                       <a
                         href={course.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-accent-blue dark:text-accent-blue hover:text-blue-800 dark:hover:text-blue-300"
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex-shrink-0 ml-2"
+                        aria-label="Open course"
                       >
                         <ExternalLink className="h-5 w-5" />
                       </a>
@@ -1573,10 +1948,10 @@ const Dashboard = () => {
             ) : (
               <div className="text-center py-8">
                 <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 dark:text-gray-300 font-sans mb-4">No courses in your pathway yet</p>
+                <p className="text-gray-500 dark:text-gray-400 mb-4">No courses in your pathway yet</p>
                 <button 
                   onClick={() => setShowQuizModal(true)}
-                  className="bg-accent-blue hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium font-sans"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium"
                 >
                   Find Your Track
                 </button>
@@ -1586,17 +1961,17 @@ const Dashboard = () => {
         </div>
         
         {/* Study Music */}
-        <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg shadow-lg p-6 text-white mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-bold font-sans">Lo-Fi Study Beats</h2>
-              <p className="mt-1 font-sans">Focus better with our curated study playlist</p>
+        <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg shadow-lg p-4 sm:p-6 text-white mb-8">
+          <div className="flex items-center justify-between flex-col sm:flex-row gap-4">
+            <div className="text-center sm:text-left">
+              <h2 className="text-lg sm:text-xl font-bold">Lo-Fi Study Beats</h2>
+              <p className="mt-1">Focus better with our curated study playlist</p>
             </div>
             <a
               href="https://open.spotify.com/playlist/37i9dQZF1DWWQRwui0ExPn"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-purple-600 px-4 py-2 rounded-md font-medium font-sans flex items-center hover:bg-gray-100 transition-colors"
+              className="bg-white text-purple-600 px-4 py-2 rounded-md font-medium flex items-center hover:bg-gray-100 transition-colors"
             >
               <Music className="mr-2 h-5 w-5" />
               Play on Spotify
@@ -1605,13 +1980,13 @@ const Dashboard = () => {
         </div>
         
         {/* Premium Features Info */}
-        <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-lg shadow-lg p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 font-sans">You have Premium Access!</h3>
-              <p className="mt-1 text-gray-800 font-sans">Enjoy all features including AI Tools, Notes, and Comparisons</p>
+        <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-lg shadow-lg p-4 sm:p-6">
+          <div className="flex items-center justify-between flex-col sm:flex-row gap-4">
+            <div className="text-center sm:text-left">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900">You have Premium Access!</h3>
+              <p className="mt-1 text-gray-800">Enjoy all features including AI Tools, Notes, and Comparisons</p>
             </div>
-            <Trophy className="h-12 w-12 text-gray-900" />
+            <Trophy className="h-12 w-12 text-gray-900 flex-shrink-0" />
           </div>
         </div>
       </div>
@@ -1632,6 +2007,8 @@ const Home = () => {
   const [showTrackModal, setShowTrackModal] = useState(false);
   const [showBookmarkModal, setShowBookmarkModal] = useState(false);
   const [showComparisonModal, setShowComparisonModal] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [showSuggestionModal, setShowSuggestionModal] = useState(false);
   
   const bookmarks = getCurrentBookmarks();
   const comparisons = getCurrentComparisons();
@@ -1642,61 +2019,82 @@ const Home = () => {
   };
   
   return (
-    <div className={`min-h-screen font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       <Navigation />
+      <PWAInstallBanner />
       
-      {/* Floating Action Buttons for non-logged-in users */}
-      {!user && (
-        <>
-          {/* Bookmark FAB */}
-          <button
-            onClick={() => setShowBookmarkModal(true)}
-            className="fixed bottom-20 right-4 z-40 bg-yellow-500 hover:bg-yellow-600 text-white p-3 rounded-full shadow-lg transition-colors"
-            title="View Bookmarks"
-          >
-            <Bookmark className="h-6 w-6" fill={bookmarks.length > 0 ? 'currentColor' : 'none'} />
-            {bookmarks.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                {bookmarks.length}
-              </span>
-            )}
-          </button>
-          
-          {/* Compare FAB */}
-          <button
-            onClick={() => setShowComparisonModal(true)}
-            className="fixed bottom-4 right-4 z-40 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-colors"
-            title="Compare Items"
-          >
-            <Target className="h-6 w-6" fill={comparisons.length > 0 ? 'currentColor' : 'none'} />
-            {comparisons.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                {comparisons.length}
-              </span>
-            )}
-          </button>
-        </>
-      )}
+      {/* Floating Action Buttons for all users */}
+      <>
+        {/* Feedback FAB */}
+        <button
+          onClick={() => setShowFeedbackModal(true)}
+          className="fixed bottom-32 right-4 z-40 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition-colors"
+          title="Send Feedback"
+          aria-label="Send feedback"
+        >
+          <MessageCircle className="h-6 w-6" />
+        </button>
+
+        {/* Suggest Course FAB */}
+        <button
+          onClick={() => setShowSuggestionModal(true)}
+          className="fixed bottom-48 right-4 z-40 bg-purple-500 hover:bg-purple-600 text-white p-3 rounded-full shadow-lg transition-colors"
+          title="Suggest a Course"
+          aria-label="Suggest a course"
+        >
+          <Plus className="h-6 w-6" />
+        </button>
+
+        {/* Bookmark FAB */}
+        <button
+          onClick={() => setShowBookmarkModal(true)}
+          className="fixed bottom-20 right-4 z-40 bg-yellow-500 hover:bg-yellow-600 text-white p-3 rounded-full shadow-lg transition-colors"
+          title="View Bookmarks"
+          aria-label="View bookmarks"
+        >
+          <Bookmark className="h-6 w-6" fill={bookmarks.length > 0 ? 'currentColor' : 'none'} />
+          {bookmarks.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              {bookmarks.length}
+            </span>
+          )}
+        </button>
+        
+        {/* Compare FAB */}
+        <button
+          onClick={() => setShowComparisonModal(true)}
+          className="fixed bottom-4 right-4 z-40 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-colors"
+          title="Compare Items"
+          aria-label="Compare items"
+        >
+          <Target className="h-6 w-6" fill={comparisons.length > 0 ? 'currentColor' : 'none'} />
+          {comparisons.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              {comparisons.length}
+            </span>
+          )}
+        </button>
+      </>
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
         <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-chalk-white font-sans mb-4">
-            Welcome to <span className="text-accent-blue">ImpactMojo</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4">
+            Welcome to <span className="text-blue-600">ImpactMojo</span>
           </h1>
           <p className="mt-3 max-w-md mx-auto text-base text-gray-600 dark:text-gray-300 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
             Your platform for development learning and tools. Explore courses, labs, and AI-powered tools to enhance your impact.
           </p>
-          <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+          <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8 gap-4">
             <button
               onClick={() => setCurrentPage('courses')}
-              className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-accent-blue hover:bg-blue-700 md:py-4 md:text-lg md:px-10 font-sans"
+              className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
             >
               Get started
             </button>
             {user && (
               <button
                 onClick={() => setCurrentPage('ai-tools')}
-                className="mt-3 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-accent-blue dark:text-accent-blue bg-white dark:bg-chalkboard-dark hover:bg-gray-50 dark:hover:bg-gray-700 md:py-4 md:text-lg md:px-10 font-sans sm:mt-0 sm:ml-3"
+                className="mt-3 sm:mt-0 w-full sm:w-auto flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 dark:text-blue-400 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 md:py-4 md:text-lg md:px-10"
               >
                 Try AI Tools
               </button>
@@ -1706,22 +2104,22 @@ const Home = () => {
         
         {/* Featured Content */}
         <div className="mt-16">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white text-center font-sans mb-8">Featured Content</h2>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white text-center mb-8">Featured Content</h2>
           <div className="grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none">
             {courseData.slice(0, 3).map((course) => (
-              <div key={course.id} className="flex flex-col rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <div className="flex-1 bg-white dark:bg-chalkboard-dark p-6 flex flex-col justify-between">
+              <div key={course.id} className="flex flex-col rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-gray-800">
+                <div className="flex-1 p-6 flex flex-col justify-between">
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-accent-blue dark:text-accent-blue font-sans">
+                    <p className="text-sm font-medium text-blue-600 dark:text-blue-400">
                       <span>Course</span>
                     </p>
-                    <h3 className="mt-2 text-xl font-semibold text-gray-900 dark:text-chalk-white font-sans">{course.title}</h3>
-                    <p className="mt-3 text-base text-gray-600 dark:text-gray-300 font-sans">{course.description}</p>
+                    <h3 className="mt-2 text-xl font-semibold text-gray-900 dark:text-white">{course.title}</h3>
+                    <p className="mt-3 text-base text-gray-600 dark:text-gray-300">{course.description}</p>
                   </div>
                   <div className="mt-6">
                     <button
                       onClick={() => setCurrentPage('courses')}
-                      className="text-base font-medium text-accent-blue dark:text-accent-blue hover:text-blue-800 dark:hover:text-blue-300 font-sans"
+                      className="text-base font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
                     >
                       Explore courses
                     </button>
@@ -1734,16 +2132,16 @@ const Home = () => {
         
         {/* Learning Tracks */}
         <div className="mt-16">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white text-center font-sans mb-8">Learning Tracks</h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white text-center mb-8">Learning Tracks</h2>
+          <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {Object.entries(trackDefinitions).map(([trackName, trackInfo]) => (
               <button
                 key={trackName}
                 onClick={() => handleTrackClick(trackName)}
-                className="bg-white dark:bg-chalkboard-dark rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow text-left"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 hover:shadow-lg transition-shadow text-left"
               >
-                <h3 className="text-xl font-semibold mb-2 font-sans">{trackName}</h3>
-                <p className="text-gray-600 dark:text-gray-300 font-sans">{trackInfo.description}</p>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 text-gray-900 dark:text-white">{trackName}</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">{trackInfo.description}</p>
               </button>
             ))}
           </div>
@@ -1758,6 +2156,8 @@ const Home = () => {
       />
       <BookmarkModal isOpen={showBookmarkModal} onClose={() => setShowBookmarkModal(false)} />
       <ComparisonModal isOpen={showComparisonModal} onClose={() => setShowComparisonModal(false)} />
+      <FeedbackModal isOpen={showFeedbackModal} onClose={() => setShowFeedbackModal(false)} />
+      <SuggestCourseModal isOpen={showSuggestionModal} onClose={() => setShowSuggestionModal(false)} />
     </div>
   );
 };
@@ -1771,54 +2171,56 @@ const CoursesPage = () => {
   const comparisons = getCurrentComparisons();
   
   return (
-    <div className={`min-h-screen font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-chalk-white mb-4 font-sans">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Development Courses
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-sans">
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Comprehensive learning resources for development practitioners and changemakers.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {courseData.map((course) => {
             const isBookmarked = bookmarks.some(b => b.id === course.id);
             const isInComparison = comparisons.some(c => c.id === course.id);
             
             return (
-              <div key={course.id} className="bg-white dark:bg-chalkboard-dark rounded-lg shadow hover:shadow-lg transition-shadow p-6">
+              <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent-blue text-white font-sans">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-600 text-white">
                     {course.id}
                   </span>
                   <div className="flex gap-2">
                     <button
                       onClick={() => toggleBookmark(course.id, 'course')}
-                      className={`p-1 rounded font-sans ${isBookmarked ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-500`}
+                      className={`p-1 rounded ${isBookmarked ? 'text-yellow-500' : 'text-gray-400 dark:text-gray-500'} hover:text-yellow-500`}
+                      aria-label="Toggle bookmark"
                     >
                       <Bookmark className="h-5 w-5" fill={isBookmarked ? 'currentColor' : 'none'} />
                     </button>
                     <button
                       onClick={() => toggleComparison(course.id, 'course')}
-                      className={`p-1 rounded font-sans ${isInComparison ? 'text-blue-500' : 'text-gray-400'} hover:text-blue-500`}
+                      className={`p-1 rounded ${isInComparison ? 'text-blue-500' : 'text-gray-400 dark:text-gray-500'} hover:text-blue-500`}
+                      aria-label="Toggle comparison"
                     >
                       <Target className="h-5 w-5" fill={isInComparison ? 'currentColor' : 'none'} />
                     </button>
                   </div>
                 </div>
                 
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-chalk-white mb-2 font-sans">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
                   {course.title}
                 </h3>
                 
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 font-sans">
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                   {course.description}
                 </p>
                 
-                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4 font-sans">
+                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                   <span>{course.level}</span>
                   <span>{course.duration}</span>
                 </div>
@@ -1827,7 +2229,7 @@ const CoursesPage = () => {
                   href={course.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-accent-blue text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-sans inline-block text-center"
+                  className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors inline-block text-center"
                 >
                   Access Course
                 </a>
@@ -1849,54 +2251,56 @@ const LabsPage = () => {
   const comparisons = getCurrentComparisons();
   
   return (
-    <div className={`min-h-screen font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-chalk-white mb-4 font-sans">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Interactive Labs
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-sans">
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Hands-on exercises and case studies for practical skill development.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {labsData.map((lab) => {
             const isBookmarked = bookmarks.some(b => b.id === lab.id);
             const isInComparison = comparisons.some(c => c.id === lab.id);
             
             return (
-              <div key={lab.id} className="bg-white dark:bg-chalkboard-dark rounded-lg shadow hover:shadow-lg transition-shadow p-6">
+              <div key={lab.id} className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-600 text-white font-sans">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-600 text-white">
                     {lab.id}
                   </span>
                   <div className="flex gap-2">
                     <button
                       onClick={() => toggleBookmark(lab.id, 'lab')}
-                      className={`p-1 rounded font-sans ${isBookmarked ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-500`}
+                      className={`p-1 rounded ${isBookmarked ? 'text-yellow-500' : 'text-gray-400 dark:text-gray-500'} hover:text-yellow-500`}
+                      aria-label="Toggle bookmark"
                     >
                       <Bookmark className="h-5 w-5" fill={isBookmarked ? 'currentColor' : 'none'} />
                     </button>
                     <button
                       onClick={() => toggleComparison(lab.id, 'lab')}
-                      className={`p-1 rounded font-sans ${isInComparison ? 'text-blue-500' : 'text-gray-400'} hover:text-blue-500`}
+                      className={`p-1 rounded ${isInComparison ? 'text-blue-500' : 'text-gray-400 dark:text-gray-500'} hover:text-blue-500`}
+                      aria-label="Toggle comparison"
                     >
                       <Target className="h-5 w-5" fill={isInComparison ? 'currentColor' : 'none'} />
                     </button>
                   </div>
                 </div>
                 
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-chalk-white mb-2 font-sans">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
                   {lab.title}
                 </h3>
                 
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 font-sans">
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                   {lab.description}
                 </p>
                 
-                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4 font-sans">
+                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                   <span>{lab.topic}</span>
                   <span>{lab.difficulty || 'Interactive'}</span>
                 </div>
@@ -1905,7 +2309,7 @@ const LabsPage = () => {
                   href={lab.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors font-sans flex items-center justify-center"
+                  className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors flex items-center justify-center"
                 >
                   <PlayCircle className="h-4 w-4 mr-2" />
                   Start Lab
@@ -1927,45 +2331,46 @@ const ResourcesPage = () => {
   const bookmarks = getCurrentBookmarks();
   
   return (
-    <div className={`min-h-screen font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-chalk-white mb-4 font-sans">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Resources & Tools
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-sans">
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Additional resources, handouts, and premium tools for development professionals.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {premiumResources.map((resource, index) => {
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {premiumResources.map((resource) => {
             const isBookmarked = bookmarks.some(b => b.id === resource.id);
             
             return (
-              <div key={resource.id} className="bg-white dark:bg-chalkboard-dark rounded-lg shadow hover:shadow-lg transition-shadow p-6">
+              <div key={resource.id} className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-600 text-white font-sans">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-600 text-white">
                     {resource.id}
                   </span>
                   <button
                     onClick={() => toggleBookmark(resource.id, 'resource')}
-                    className={`p-1 rounded font-sans ${isBookmarked ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-500`}
+                    className={`p-1 rounded ${isBookmarked ? 'text-yellow-500' : 'text-gray-400 dark:text-gray-500'} hover:text-yellow-500`}
+                    aria-label="Toggle bookmark"
                   >
                     <Bookmark className="h-5 w-5" fill={isBookmarked ? 'currentColor' : 'none'} />
                   </button>
                 </div>
                 
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-chalk-white mb-2 font-sans">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
                   {resource.title}
                 </h3>
                 
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 font-sans">
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                   {resource.description}
                 </p>
                 
-                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4 font-sans">
+                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                   <span>{resource.category}</span>
                   <span>Resource</span>
                 </div>
@@ -1974,7 +2379,7 @@ const ResourcesPage = () => {
                   href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors font-sans flex items-center justify-center"
+                  className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors flex items-center justify-center"
                 >
                   <FileText className="h-4 w-4 mr-2" />
                   Access Resource
@@ -1986,22 +2391,22 @@ const ResourcesPage = () => {
 
         {/* Additional Handouts Section */}
         <div className="mt-16">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-chalk-white text-center mb-8 font-sans">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white text-center mb-8">
             Additional Handouts
           </h2>
-          <div className="bg-white dark:bg-chalkboard-dark rounded-lg shadow-lg p-8 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sm:p-8 text-center">
             <FileText className="h-16 w-16 text-purple-600 mx-auto mb-4" />
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-chalk-white mb-4 font-sans">
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
               Browse All Resources
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6 font-sans">
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
               Access our complete collection of handouts, guides, and reference materials on GitHub.
             </p>
             <a
               href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-medium rounded-md hover:bg-purple-700 transition-colors font-sans"
+              className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-medium rounded-md hover:bg-purple-700 transition-colors"
             >
               <ExternalLink className="h-5 w-5 mr-2" />
               View All Handouts
@@ -2020,8 +2425,8 @@ const AppContent = () => {
   
   if (loading) {
     return (
-      <div className={`min-h-screen flex items-center justify-center font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent-blue"></div>
+      <div className={`min-h-screen flex items-center justify-center ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
       </div>
     );
   }
@@ -2040,6 +2445,21 @@ const AppContent = () => {
 
 // Main App Component
 const App = () => {
+  useEffect(() => {
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+  }, []);
+
   return (
     <AuthProvider>
       <PageProvider>
