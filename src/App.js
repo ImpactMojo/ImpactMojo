@@ -6,7 +6,7 @@ import {
   Clock, CheckCircle, PlayCircle, Bot, Trophy, 
   Headphones, MapPin, Library, Music, Download, 
   Search, Plus, Edit3, Save, Filter, BookmarkIcon, Tag,
-  Install, AlertTriangle
+  Install, AlertTriangle, ChevronDown, ChevronRight
 } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
@@ -36,7 +36,77 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
-// Track definitions with courses and resources
+// New multi-dimensional browse system
+const browseByRole = {
+  "New to Development": {
+    description: "Just starting your development journey",
+    courses: ["development-economics-101", "global-development-architecture-101", "law-and-constitution-101"],
+    color: "blue"
+  },
+  "Researcher/Academic": {
+    description: "Conducting research and generating knowledge",
+    courses: ["research-ethics-101", "qualitative-research-methods-101", "econometrics-101", "data-literacy-101"],
+    color: "purple"
+  },
+  "Practitioner/Field Worker": {
+    description: "Implementing programs and working directly with communities",
+    courses: ["community-development-101", "monitoring-evaluation-accountability-and-learning-101", "advocacy-and-communications-101"],
+    color: "green"
+  },
+  "Student/Policy Maker": {
+    description: "Learning and shaping policy decisions",
+    courses: ["law-and-constitution-101", "political-economy-101", "global-development-architecture-101"],
+    color: "orange"
+  }
+};
+
+const browseByImpact = {
+  "Health & Wellbeing": {
+    description: "Improving health outcomes and social welfare",
+    courses: ["public-health-101", "sexual-and-reproductive-health-rights-101", "social-welfare-and-safety-nets-101"],
+    color: "red"
+  },
+  "Justice & Equality": {
+    description: "Promoting justice, rights, and equality",
+    courses: ["gender-studies-101", "environmental-justice-101", "marginilised-identities-101"],
+    color: "purple"
+  },
+  "Economic Development": {
+    description: "Building sustainable economic systems",
+    courses: ["development-economics-101", "care-economy-101", "decent-work-101", "livelihoods-101"],
+    color: "green"
+  },
+  "Systems & Governance": {
+    description: "Understanding and changing systems",
+    courses: ["political-economy-101", "global-development-architecture-101", "decolonising-development-101"],
+    color: "blue"
+  }
+};
+
+const browseByGoal = {
+  "Understand the Big Picture": {
+    description: "Get foundational knowledge and context",
+    courses: ["development-economics-101", "global-development-architecture-101", "political-economy-101"],
+    color: "blue"
+  },
+  "Conduct Better Research": {
+    description: "Learn research methods and analysis",
+    courses: ["research-ethics-101", "qualitative-research-methods-101", "data-literacy-101", "econometrics-101"],
+    color: "purple"
+  },
+  "Design Better Programs": {
+    description: "Create and implement effective interventions",
+    courses: ["monitoring-evaluation-accountability-and-learning-101", "community-development-101", "behaviour-change-communication-programming-101"],
+    color: "green"
+  },
+  "Advocate for Change": {
+    description: "Influence policy and drive systemic change",
+    courses: ["advocacy-and-communications-101", "political-economy-101", "law-and-constitution-101"],
+    color: "orange"
+  }
+};
+
+// Keep original track definitions for backwards compatibility (quiz system)
 const trackDefinitions = {
   "Research Methods": {
     description: "Learn qualitative and quantitative research methods for development work.",
@@ -537,7 +607,195 @@ export const useModal = () => {
   return context;
 };
 
-// Track Selection Modal Component
+// Multi-Dimensional Browse Modal Component
+const BrowseModal = ({ isOpen, onClose }) => {
+  const { setCurrentPage } = usePage();
+  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedImpact, setSelectedImpact] = useState('');
+  const [selectedGoal, setSelectedGoal] = useState('');
+  const [results, setResults] = useState([]);
+
+  const generateRecommendations = () => {
+    if (!selectedRole || !selectedImpact || !selectedGoal) return;
+
+    // Combine courses from all three selections
+    const roleCourses = browseByRole[selectedRole]?.courses || [];
+    const impactCourses = browseByImpact[selectedImpact]?.courses || [];
+    const goalCourses = browseByGoal[selectedGoal]?.courses || [];
+
+    // Find intersections and create weighted recommendations
+    const allCourses = [...roleCourses, ...impactCourses, ...goalCourses];
+    const courseCount = {};
+    
+    allCourses.forEach(courseId => {
+      courseCount[courseId] = (courseCount[courseId] || 0) + 1;
+    });
+
+    // Sort by relevance (courses appearing in multiple categories rank higher)
+    const recommendations = Object.entries(courseCount)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, 6) // Top 6 recommendations
+      .map(([courseId]) => courseData.find(course => course.id === courseId))
+      .filter(Boolean);
+
+    setResults(recommendations);
+  };
+
+  useEffect(() => {
+    generateRecommendations();
+  }, [selectedRole, selectedImpact, selectedGoal]);
+
+  const reset = () => {
+    setSelectedRole('');
+    setSelectedImpact('');
+    setSelectedGoal('');
+    setResults([]);
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-auto">
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Find Your Learning Path</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close browse modal"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          </button>
+        </div>
+        
+        <div className="p-6">
+          <div className="grid gap-6 md:grid-cols-3 mb-8">
+            {/* Role Selection */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">1. Who are you?</h3>
+              <div className="space-y-2">
+                {Object.entries(browseByRole).map(([role, info]) => (
+                  <button
+                    key={role}
+                    onClick={() => setSelectedRole(role)}
+                    className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                      selectedRole === role
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900 text-blue-900 dark:text-blue-100'
+                        : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white'
+                    }`}
+                  >
+                    <div className="font-medium">{role}</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">{info.description}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Impact Area Selection */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">2. Focus Area</h3>
+              <div className="space-y-2">
+                {Object.entries(browseByImpact).map(([impact, info]) => (
+                  <button
+                    key={impact}
+                    onClick={() => setSelectedImpact(impact)}
+                    className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                      selectedImpact === impact
+                        ? 'border-green-500 bg-green-50 dark:bg-green-900 text-green-900 dark:text-green-100'
+                        : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white'
+                    }`}
+                  >
+                    <div className="font-medium">{impact}</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">{info.description}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Goal Selection */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">3. Learning Goal</h3>
+              <div className="space-y-2">
+                {Object.entries(browseByGoal).map(([goal, info]) => (
+                  <button
+                    key={goal}
+                    onClick={() => setSelectedGoal(goal)}
+                    className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                      selectedGoal === goal
+                        ? 'border-purple-500 bg-purple-50 dark:bg-purple-900 text-purple-900 dark:text-purple-100'
+                        : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white'
+                    }`}
+                  >
+                    <div className="font-medium">{goal}</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">{info.description}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Results */}
+          {selectedRole && selectedImpact && selectedGoal && (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Recommended for you: {selectedRole} → {selectedImpact} → {selectedGoal}
+                </h3>
+                <button
+                  onClick={reset}
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+                >
+                  Reset
+                </button>
+              </div>
+              
+              {results.length > 0 ? (
+                <div className="grid gap-4 md:grid-cols-2">
+                  {results.map((course) => (
+                    <div key={course.id} className="border dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow">
+                      <h4 className="font-semibold mb-2 text-gray-900 dark:text-white">{course.title}</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{course.description}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">{course.level}</span>
+                        <a
+                          href={course.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm flex items-center"
+                        >
+                          <ExternalLink className="h-4 w-4 mr-1" />
+                          Access
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500 dark:text-gray-400 text-center py-8">
+                  No courses found for this combination. Try different selections.
+                </p>
+              )}
+              
+              <div className="mt-6 text-center">
+                <button
+                  onClick={() => {
+                    setCurrentPage('courses');
+                    onClose();
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md"
+                >
+                  Browse All Courses
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Track Selection Modal Component (kept for backwards compatibility)
 const TrackModal = ({ isOpen, onClose, track }) => {
   if (!isOpen || !track) return null;
 
@@ -1596,6 +1854,10 @@ const GlobalModals = () => {
         isOpen={activeModal === 'quiz'} 
         onClose={closeModal}
       />
+      <BrowseModal 
+        isOpen={activeModal === 'browse'} 
+        onClose={closeModal}
+      />
       <CornellNotesModal 
         isOpen={activeModal === 'notes'} 
         onClose={closeModal}
@@ -2092,10 +2354,6 @@ const Home = () => {
   const { user, isPremium } = useAuth();
   const { openModal } = useModal();
   
-  const handleTrackClick = (track) => {
-    openModal('track', track);
-  };
-  
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       <Navigation />
@@ -2154,29 +2412,34 @@ const Home = () => {
           </div>
         </div>
         
-        {/* Learning Tracks */}
+        {/* Multi-Dimensional Learning Path Finder */}
         <div className="mt-16">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white text-center mb-8">Learning Tracks</h2>
-          <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {Object.entries(trackDefinitions).map(([trackName, trackInfo]) => (
-              <button
-                key={trackName}
-                onClick={() => handleTrackClick(trackName)}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 hover:shadow-lg transition-shadow text-left"
-              >
-                <h3 className="text-lg sm:text-xl font-semibold mb-2 text-gray-900 dark:text-white">{trackName}</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">{trackInfo.description}</p>
-              </button>
-            ))}
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white text-center mb-8">Find Your Learning Path</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sm:p-8 text-center max-w-4xl mx-auto">
+            <Users className="h-16 w-16 text-blue-600 mx-auto mb-4" />
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+              Personalized Course Recommendations
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+              Tell us about your role, focus area, and learning goals to get personalized course recommendations tailored just for you.
+            </p>
+            <button
+              onClick={() => openModal('browse')}
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors"
+            >
+              <Target className="h-5 w-5 mr-2" />
+              Find My Learning Path
+            </button>
           </div>
           
-          {/* Find Your Track CTA */}
-          <div className="text-center mt-8">
+          {/* Alternative Quiz Option */}
+          <div className="text-center mt-6">
+            <p className="text-gray-500 dark:text-gray-400 mb-2">Or try our quick track finder:</p>
             <button
               onClick={() => openModal('quiz')}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md font-medium text-lg"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
             >
-              Find Your Track
+              Take the Learning Track Quiz
             </button>
           </div>
         </div>
@@ -2234,214 +2497,787 @@ const CoursesPage = () => {
                     </button>
                   </div>
                 </div>
-                
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  {course.title}
-                </h3>
-                
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                  {course.description}
-                </p>
-                
-                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                  <span>{course.level}</span>
-                  <span>{course.duration}</span>
-                </div>
-                
-                <a
-                  href={course.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors inline-block text-center"
-                >
-                  Access Course
-                </a>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
+// Continuing from where your current App.js ends...
+
+// Quiz questions for "Find Your Track" (completing the definition)
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What interests you most about development work?",
+    options: [
+      { text: "Understanding how numbers tell stories", track: "Data Analysis", points: 3 },
+      { text: "Creating systems for sustainable change", track: "Policy & Economics", points: 3 },
+      { text: "Exploring social dynamics and power", track: "Gender Studies", points: 3 },
+      { text: "Learning how people experience change", track: "Research Methods", points: 3 }
+    ]
+  },
+  {
+    id: 2,
+    question: "When approaching a development challenge, you prefer to:",
+    options: [
+      { text: "Analyze data to find patterns and insights", track: "Data Analysis", points: 3 },
+      { text: "Design policies and institutional frameworks", track: "Policy & Economics", points: 3 },
+      { text: "Focus on gender dynamics and inclusion", track: "Gender Studies", points: 3 },
+      { text: "Understand community perspectives through research", track: "Research Methods", points: 3 }
+    ]
+  },
+  {
+    id: 3,
+    question: "Your ideal project would involve:",
+    options: [
+      { text: "Building statistical models and conducting evaluations", track: "Data Analysis", points: 3 },
+      { text: "Developing economic strategies and policy recommendations", track: "Policy & Economics", points: 3 },
+      { text: "Addressing gender inequality and women's empowerment", track: "Gender Studies", points: 3 },
+      { text: "Conducting interviews and ethnographic studies", track: "Research Methods", points: 3 }
+    ]
+  },
+  {
+    id: 4,
+    question: "The skill you'd most like to develop is:",
+    options: [
+      { text: "Advanced statistical analysis and data visualization", track: "Data Analysis", points: 3 },
+      { text: "Economic analysis and policy design", track: "Policy & Economics", points: 3 },
+      { text: "Gender analysis and social justice frameworks", track: "Gender Studies", points: 3 },
+      { text: "Qualitative research and community engagement", track: "Research Methods", points: 3 }
+    ]
+  },
+  {
+    id: 5,
+    question: "When reading about development work, you gravitate toward:",
+    options: [
+      { text: "Reports with charts, statistics, and measurable outcomes", track: "Data Analysis", points: 3 },
+      { text: "Policy briefs and economic impact analyses", track: "Policy & Economics", points: 3 },
+      { text: "Case studies on gender and social inclusion", track: "Gender Studies", points: 3 },
+      { text: "Ethnographic studies and community stories", track: "Research Methods", points: 3 }
+    ]
+  }
+];
+
+// Multi-dimensional browse definitions (new enhanced browsing system)
+const browseByRole = {
+  "Researcher": {
+    description: "Academic and field research roles",
+    courses: ["research-ethics-101", "qualitative-research-methods-101", "visual-ethnography-101", "data-literacy-101"],
+    color: "blue"
+  },
+  "Program Manager": {
+    description: "Designing and managing development programs",
+    courses: ["monitoring-evaluation-accountability-and-learning-101", "community-development-101", "behaviour-change-communication-programming-101"],
+    color: "green"
+  },
+  "Policy Analyst": {
+    description: "Government and institutional policy work",
+    courses: ["political-economy-101", "law-and-constitution-101", "global-development-architecture-101"],
+    color: "purple"
+  },
+  "Data Analyst": {
+    description: "Data-driven decision making and analysis",
+    courses: ["data-literacy-101", "exploratory-data-analysis-for-household-surveys-101", "econometrics-101", "bivariate-analysis-101"],
+    color: "orange"
+  },
+  "Gender Specialist": {
+    description: "Gender equality and women's empowerment",
+    courses: ["gender-studies-101", "womens-economic-empowerment-101", "sexual-and-reproductive-health-rights-101", "care-economy-101"],
+    color: "pink"
+  },
+  "Advocacy Professional": {
+    description: "Campaign and advocacy work",
+    courses: ["advocacy-and-communications-101", "decolonising-development-101", "environmental-justice-101"],
+    color: "red"
+  }
 };
 
-// Simple Labs Page Component  
-const LabsPage = () => {
-  const { darkMode } = usePage();
-  const { toggleBookmark, getCurrentBookmarks, toggleComparison, getCurrentComparisons } = useAuth();
-  
-  const bookmarks = getCurrentBookmarks();
-  const comparisons = getCurrentComparisons();
-  
-  return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <Navigation />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
-        <div className="text-center mb-8 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Interactive Labs
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Hands-on exercises and case studies for practical skill development.
-          </p>
-        </div>
+const browseByImpact = {
+  "Economic Empowerment": {
+    description: "Creating economic opportunities and reducing poverty",
+    courses: ["development-economics-101", "care-economy-101", "decent-work-101", "livelihoods-101"],
+    color: "green"
+  },
+  "Social Justice": {
+    description: "Addressing inequality and promoting inclusion",
+    courses: ["gender-studies-101", "marginilised-identities-101", "environmental-justice-101", "decolonising-development-101"],
+    color: "purple"
+  },
+  "Health & Wellbeing": {
+    description: "Improving health outcomes and quality of life",
+    courses: ["public-health-101", "sexual-and-reproductive-health-rights-101", "social-welfare-and-safety-nets-101"],
+    color: "blue"
+  },
+  "Education & Learning": {
+    description: "Enhancing education and capacity building",
+    courses: ["pedagogy-and-education-101", "social-emotional-learning-101", "english-for-development-professionals-101"],
+    color: "yellow"
+  },
+  "Climate & Environment": {
+    description: "Environmental sustainability and climate action",
+    courses: ["climate-science-101", "environmental-justice-101"],
+    color: "teal"
+  },
+  "Systems & Governance": {
+    description: "Understanding and changing systems",
+    courses: ["political-economy-101", "global-development-architecture-101", "decolonising-development-101"],
+    color: "indigo"
+  }
+};
 
-        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {labsData.map((lab) => {
-            const isBookmarked = bookmarks.some(b => b.id === lab.id);
-            const isInComparison = comparisons.some(c => c.id === lab.id);
-            
-            return (
-              <div key={lab.id} className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow p-4 sm:p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-600 text-white">
-                    {lab.id}
-                  </span>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => toggleBookmark(lab.id, 'lab')}
-                      className={`p-1 rounded ${isBookmarked ? 'text-yellow-500' : 'text-gray-400 dark:text-gray-500'} hover:text-yellow-500`}
-                      aria-label="Toggle bookmark"
-                    >
-                      <Bookmark className="h-5 w-5" fill={isBookmarked ? 'currentColor' : 'none'} />
-                    </button>
-                    <button
-                      onClick={() => toggleComparison(lab.id, 'lab')}
-                      className={`p-1 rounded ${isInComparison ? 'text-blue-500' : 'text-gray-400 dark:text-gray-500'} hover:text-blue-500`}
-                      aria-label="Toggle comparison"
-                    >
-                      <Target className="h-5 w-5" fill={isInComparison ? 'currentColor' : 'none'} />
-                    </button>
+const browseByGoal = {
+  "Understand the Big Picture": {
+    description: "Get foundational knowledge and context",
+    courses: ["development-economics-101", "global-development-architecture-101", "political-economy-101"],
+    color: "blue"
+  },
+  "Conduct Better Research": {
+    description: "Learn research methods and analysis",
+    courses: ["research-ethics-101", "qualitative-research-methods-101", "data-literacy-101", "econometrics-101"],
+    color: "purple"
+  },
+  "Design Better Programs": {
+    description: "Create and implement effective interventions",
+    courses: ["monitoring-evaluation-accountability-and-learning-101", "community-development-101", "behaviour-change-communication-programming-101"],
+    color: "green"
+  },
+  "Advocate for Change": {
+    description: "Influence policy and drive systemic change",
+    courses: ["advocacy-and-communications-101", "political-economy-101", "law-and-constitution-101"],
+    color: "orange"
+  }
+};
+
+// Complete the Multi-Dimensional Browse Modal Component
+const BrowseModal = ({ isOpen, onClose }) => {
+  const { setCurrentPage } = usePage();
+  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedImpact, setSelectedImpact] = useState('');
+  const [selectedGoal, setSelectedGoal] = useState('');
+  const [results, setResults] = useState([]);
+
+  const generateRecommendations = () => {
+    if (!selectedRole || !selectedImpact || !selectedGoal) return;
+
+    // Combine courses from all three selections
+    const roleCourses = browseByRole[selectedRole]?.courses || [];
+    const impactCourses = browseByImpact[selectedImpact]?.courses || [];
+    const goalCourses = browseByGoal[selectedGoal]?.courses || [];
+    
+    // Find courses that appear in multiple categories (weighted recommendations)
+    const courseCount = {};
+    [...roleCourses, ...impactCourses, ...goalCourses].forEach(course => {
+      courseCount[course] = (courseCount[course] || 0) + 1;
+    });
+    
+    // Sort by relevance (courses appearing in multiple categories rank higher)
+    const recommendedCourses = Object.entries(courseCount)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, 6)
+      .map(([courseId]) => courseData.find(c => c.id === courseId))
+      .filter(Boolean);
+    
+    setResults(recommendedCourses);
+  };
+
+  useEffect(() => {
+    generateRecommendations();
+  }, [selectedRole, selectedImpact, selectedGoal]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-auto">
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Smart Course Finder</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close browser"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          </button>
+        </div>
+        
+        <div className="p-6">
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Select one option from each category to get personalized course recommendations:
+          </p>
+          
+          {/* Role Selection */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What's your role?</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {Object.entries(browseByRole).map(([role, info]) => (
+                <button
+                  key={role}
+                  onClick={() => setSelectedRole(role)}
+                  className={`p-3 rounded-lg border text-left transition-colors ${
+                    selectedRole === role 
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
+                      : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  <div className="font-medium text-gray-900 dark:text-white text-sm">{role}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{info.description}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Impact Area Selection */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What impact area interests you?</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {Object.entries(browseByImpact).map(([impact, info]) => (
+                <button
+                  key={impact}
+                  onClick={() => setSelectedImpact(impact)}
+                  className={`p-3 rounded-lg border text-left transition-colors ${
+                    selectedImpact === impact 
+                      ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20' 
+                      : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  <div className="font-medium text-gray-900 dark:text-white text-sm">{impact}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{info.description}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Goal Selection */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What's your learning goal?</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {Object.entries(browseByGoal).map(([goal, info]) => (
+                <button
+                  key={goal}
+                  onClick={() => setSelectedGoal(goal)}
+                  className={`p-3 rounded-lg border text-left transition-colors ${
+                    selectedGoal === goal 
+                      ? 'border-green-500 bg-green-50 dark:bg-green-900/20' 
+                      : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  <div className="font-medium text-gray-900 dark:text-white text-sm">{goal}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{info.description}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Results */}
+          {results.length > 0 && (
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Recommended Courses for You
+              </h3>
+              <div className="grid gap-4 md:grid-cols-2">
+                {results.map((course) => (
+                  <div key={course.id} className="border dark:border-gray-600 rounded-lg p-4">
+                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">{course.title}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{course.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">{course.level}</span>
+                      <a
+                        href={course.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm flex items-center"
+                      >
+                        <ExternalLink className="h-4 w-4 mr-1" />
+                        Access
+                      </a>
+                    </div>
                   </div>
-                </div>
-                
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  {lab.title}
-                </h3>
-                
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                  {lab.description}
-                </p>
-                
-                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                  <span>{lab.topic}</span>
-                  <span>{lab.difficulty || 'Interactive'}</span>
-                </div>
-                
-                <a
-                  href={lab.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors flex items-center justify-center"
-                >
-                  <PlayCircle className="h-4 w-4 mr-2" />
-                  Start Lab
-                </a>
+                ))}
               </div>
-            );
-          })}
+            </div>
+          )}
+          
+          {selectedRole && selectedImpact && selectedGoal && results.length === 0 && (
+            <div className="text-center py-8">
+              <p className="text-gray-500 dark:text-gray-400">No courses found for this combination. Try different selections.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-// Fixed Resources Page Component
-const ResourcesPage = () => {
-  const { darkMode } = usePage();
-  const { toggleBookmark, getCurrentBookmarks } = useAuth();
-  
-  const bookmarks = getCurrentBookmarks();
-  
+// Feedback Modal Component
+const FeedbackModal = ({ isOpen, onClose }) => {
+  const [feedback, setFeedback] = useState('');
+  const [category, setCategory] = useState('general');
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch('https://formspree.io/f/xpwdvgzp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          feedback,
+          category,
+          email,
+          timestamp: new Date().toISOString(),
+          page: 'ImpactMojo App'
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          setFeedback('');
+          setCategory('general');
+          setEmail('');
+          onClose();
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+    }
+  };
+
+  if (!isOpen) return null;
+
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <Navigation />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
-        <div className="text-center mb-8 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Resources & Tools
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Additional resources, handouts, and premium tools for development professionals.
-          </p>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full">
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Send Feedback</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close feedback"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          </button>
         </div>
-
-        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {premiumResources.map((resource) => {
-            const isBookmarked = bookmarks.some(b => b.id === resource.id);
+        
+        {submitted ? (
+          <div className="p-6 text-center">
+            <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Thank you!</h3>
+            <p className="text-gray-600 dark:text-gray-300">Your feedback has been submitted successfully.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="p-6">
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Category
+              </label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                required
+              >
+                <option value="general">General Feedback</option>
+                <option value="bug">Bug Report</option>
+                <option value="feature">Feature Request</option>
+                <option value="content">Content Suggestion</option>
+                <option value="ui">UI/UX Feedback</option>
+              </select>
+            </div>
             
-            return (
-              <div key={resource.id} className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow p-4 sm:p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-600 text-white">
-                    {resource.id}
-                  </span>
-                  <button
-                    onClick={() => toggleBookmark(resource.id, 'resource')}
-                    className={`p-1 rounded ${isBookmarked ? 'text-yellow-500' : 'text-gray-400 dark:text-gray-500'} hover:text-yellow-500`}
-                    aria-label="Toggle bookmark"
-                  >
-                    <Bookmark className="h-5 w-5" fill={isBookmarked ? 'currentColor' : 'none'} />
-                  </button>
-                </div>
-                
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  {resource.title}
-                </h3>
-                
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                  {resource.description}
-                </p>
-                
-                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                  <span>{resource.category}</span>
-                  <span>Resource</span>
-                </div>
-                
-                <a
-                  href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors flex items-center justify-center"
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Access Resource
-                </a>
-              </div>
-            );
-          })}
-        </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Your Feedback
+              </label>
+              <textarea
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                rows={4}
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="Tell us what you think..."
+                required
+              />
+            </div>
+            
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Email (optional)
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="your@email.com"
+              />
+            </div>
+            
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+              >
+                Send Feedback
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+};
 
-        {/* Additional Handouts Section */}
-        <div className="mt-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white text-center mb-8">
-            Additional Handouts
-          </h2>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sm:p-8 text-center">
-            <FileText className="h-16 w-16 text-purple-600 mx-auto mb-4" />
-            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              Browse All Resources
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Access our complete collection of handouts, guides, and reference materials on GitHub.
-            </p>
+// Suggest Course Modal Component
+const SuggestCourseModal = ({ isOpen, onClose }) => {
+  const [courseData, setCourseData] = useState({
+    title: '',
+    description: '',
+    category: '',
+    rationale: '',
+    email: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch('https://formspree.io/f/xpwdvgzp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'Course Suggestion',
+          ...courseData,
+          timestamp: new Date().toISOString()
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          setCourseData({
+            title: '',
+            description: '',
+            category: '',
+            rationale: '',
+            email: ''
+          });
+          onClose();
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Error submitting course suggestion:', error);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full max-h-[90vh] overflow-auto">
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Suggest a Course</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            aria-label="Close suggestion form"
+          >
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          </button>
+        </div>
+        
+        {submitted ? (
+          <div className="p-6 text-center">
+            <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Thank you!</h3>
+            <p className="text-gray-600 dark:text-gray-300">Your course suggestion has been submitted for review.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="p-6">
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Course Title
+              </label>
+              <input
+                type="text"
+                value={courseData.title}
+                onChange={(e) => setCourseData({...courseData, title: e.target.value})}
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="e.g., Digital Innovation 101"
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Description
+              </label>
+              <textarea
+                value={courseData.description}
+                onChange={(e) => setCourseData({...courseData, description: e.target.value})}
+                rows={3}
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="Brief description of the course content..."
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Category
+              </label>
+              <select
+                value={courseData.category}
+                onChange={(e) => setCourseData({...courseData, category: e.target.value})}
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                required
+              >
+                <option value="">Select category...</option>
+                <option value="Research Methods">Research Methods</option>
+                <option value="Data Analysis">Data Analysis</option>
+                <option value="Gender Studies">Gender Studies</option>
+                <option value="Policy & Economics">Policy & Economics</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Why is this course needed?
+              </label>
+              <textarea
+                value={courseData.rationale}
+                onChange={(e) => setCourseData({...courseData, rationale: e.target.value})}
+                rows={3}
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="Explain the gap this course would fill..."
+                required
+              />
+            </div>
+            
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Your Email (optional)
+              </label>
+              <input
+                type="email"
+                value={courseData.email}
+                onChange={(e) => setCourseData({...courseData, email: e.target.value})}
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="your@email.com"
+              />
+            </div>
+            
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className="flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors"
+              >
+                Submit Suggestion
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Complete Global Modals component
+const GlobalModals = () => {
+  const { activeModal, modalData, closeModal } = useModal();
+
+  return (
+    <>
+      <TrackModal 
+        isOpen={activeModal === 'track'} 
+        onClose={closeModal}
+        track={modalData}
+      />
+      <QuizModal 
+        isOpen={activeModal === 'quiz'} 
+        onClose={closeModal}
+      />
+      <BrowseModal 
+        isOpen={activeModal === 'browse'} 
+        onClose={closeModal}
+      />
+      <CornellNotesModal 
+        isOpen={activeModal === 'notes'} 
+        onClose={closeModal}
+      />
+      <ComparisonModal 
+        isOpen={activeModal === 'comparison'} 
+        onClose={closeModal}
+      />
+      <BookmarkModal 
+        isOpen={activeModal === 'bookmarks'} 
+        onClose={closeModal}
+      />
+      <FeedbackModal 
+        isOpen={activeModal === 'feedback'} 
+        onClose={closeModal}
+      />
+      <SuggestCourseModal 
+        isOpen={activeModal === 'suggest'} 
+        onClose={closeModal}
+      />
+    </>
+  );
+};
+
+// Complete Global FABs component
+const GlobalFABs = () => {
+  const { user } = useAuth();
+  const { currentPage } = usePage();
+  const { openModal } = useModal();
+  const { getCurrentComparisons } = useAuth();
+  const comparisons = getCurrentComparisons();
+
+  // Don't show FABs on certain pages to avoid clutter
+  if (currentPage === 'dashboard') return null;
+
+  return (
+    <>
+      {/* Floating Action Buttons */}
+      <div className="fixed bottom-4 right-4 flex flex-col gap-3 z-40">
+        {/* Smart Browse FAB */}
+        <button
+          onClick={() => openModal('browse')}
+          className="bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full shadow-lg transition-colors"
+          aria-label="Smart course finder"
+        >
+          <Search className="h-6 w-6" />
+        </button>
+
+        {/* Find Your Track FAB */}
+        <button
+          onClick={() => openModal('quiz')}
+          className="bg-green-600 hover:bg-green-700 text-white p-3 rounded-full shadow-lg transition-colors"
+          aria-label="Find your track"
+        >
+          <Target className="h-6 w-6" />
+        </button>
+
+        {/* Bookmarks FAB */}
+        <button
+          onClick={() => openModal('bookmarks')}
+          className="bg-yellow-600 hover:bg-yellow-700 text-white p-3 rounded-full shadow-lg transition-colors"
+          aria-label="View bookmarks"
+        >
+          <Bookmark className="h-6 w-6" />
+        </button>
+
+        {/* Comparison FAB */}
+        <button
+          onClick={() => openModal('comparison')}
+          className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-colors relative"
+          aria-label="Compare items"
+        >
+          <Target className="h-6 w-6" fill={comparisons.length > 0 ? 'currentColor' : 'none'} />
+          {comparisons.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              {comparisons.length}
+            </span>
+          )}
+        </button>
+
+        {/* Feedback FAB */}
+        <button
+          onClick={() => openModal('feedback')}
+          className="bg-orange-600 hover:bg-orange-700 text-white p-3 rounded-full shadow-lg transition-colors"
+          aria-label="Send feedback"
+        >
+          <MessageCircle className="h-6 w-6" />
+        </button>
+
+        {/* Suggest Course FAB */}
+        <button
+          onClick={() => openModal('suggest')}
+          className="bg-pink-600 hover:bg-pink-700 text-white p-3 rounded-full shadow-lg transition-colors"
+          aria-label="Suggest a course"
+        >
+          <Plus className="h-6 w-6" />
+        </button>
+      </div>
+
+      {/* Lo-Fi Music Player for logged-in users */}
+      {user && (
+        <div className="fixed bottom-4 left-4 z-40">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 border dark:border-gray-700">
+            <div className="flex items-center gap-3 mb-2">
+              <Music className="h-5 w-5 text-purple-600" />
+              <span className="text-sm font-medium text-gray-900 dark:text-white">Lo-Fi Study Music</span>
+            </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">Focus better with ambient background music</p>
             <a
-              href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts"
+              href="https://www.youtube.com/watch?v=jfKfPfyJRdk"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-medium rounded-md hover:bg-purple-700 transition-colors"
+              className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-md text-sm transition-colors"
             >
-              <ExternalLink className="h-5 w-5 mr-2" />
-              View All Handouts
+              <Headphones className="h-4 w-4" />
+              Start Listening
             </a>
           </div>
         </div>
+      )}
+    </>
+  );
+};
+
+// PWA Install Prompt Component
+const PWAInstallPrompt = () => {
+  const { showInstallPrompt, handleInstallClick, setShowInstallPrompt } = usePage();
+
+  if (!showInstallPrompt) return null;
+
+  return (
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white p-4 rounded-lg shadow-lg z-50 max-w-sm">
+      <div className="flex items-center gap-3">
+        <Install className="h-6 w-6 flex-shrink-0" />
+        <div className="flex-1">
+          <h3 className="font-medium text-sm">Install ImpactMojo</h3>
+          <p className="text-xs opacity-90 mt-1">Get quick access to development courses and tools</p>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={handleInstallClick}
+            className="bg-white text-blue-600 px-3 py-1 rounded text-sm font-medium hover:bg-gray-100"
+          >
+            Install
+          </button>
+          <button
+            onClick={() => setShowInstallPrompt(false)}
+            className="text-white hover:text-gray-200"
+            aria-label="Close install prompt"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-// Main App Content Component
+// Complete the AppContent component that was partially defined
 const AppContent = () => {
   const { currentPage, darkMode } = usePage();
   const { loading } = useAuth();
@@ -2456,6 +3292,8 @@ const AppContent = () => {
   
   return (
     <div className={darkMode ? 'dark' : ''}>
+      <PWAInstallPrompt />
+      
       {currentPage === 'home' && <Home />}
       {currentPage === 'dashboard' && <Dashboard />}
       {currentPage === 'courses' && <CoursesPage />}
@@ -2468,6 +3306,14 @@ const AppContent = () => {
       
       {/* Global Modals */}
       <GlobalModals />
+      
+      {/* Counter.dev Analytics */}
+      <script 
+        src="https://cdn.counter.dev/script.js" 
+        data-id="bb8c35b6-8f3d-4a72-8b0a-4dd67d95f84a" 
+        data-utcoffset="5.5"
+        async
+      />
     </div>
   );
 };
