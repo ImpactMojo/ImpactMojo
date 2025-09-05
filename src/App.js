@@ -2517,7 +2517,8 @@ const CoursesPage = () => {
                   className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors inline-block text-center"
                 >
                   Access Course
-                </a>
+               <a>
+                    </a>
               </div>
             );
           })}
