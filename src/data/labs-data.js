@@ -2,30 +2,30 @@
 export const labsData = [
   {
     id: "L1",
-    title: "Gender Timeline: Climate Edition",
-    description: "Interactive timeline exploring the intersection of gender and climate change through history.",
-    url: "https://gen-cc-timelines.netlify.app/",
-    icon: "timeline",
-    category: "Gender Studies",
-    difficulty: "Beginner",
-    duration: 45,
-    status: "Available"
-  },
-  {
-    id: "L2",
-    title: "Research Lab: Methods Comparison",
-    description: "Compare and contrast different research methodologies for your project.",
-    url: "https://researchmethodology-lab.netlify.app/",
-    icon: "flask",
-    category: "Research Methods",
+    title: "Risk Assessment and Mitigation Lab",
+    description: "Comprehensive framework for identifying, assessing, and mitigating risks in development projects.",
+    url: "https://impactrisk-mitigation.netlify.app/",
+    icon: "shield",
+    category: "Risk Management",
     difficulty: "Intermediate",
     duration: 60,
     status: "Available"
   },
   {
+    id: "L2",
+    title: "Resource Mobilisation and Sustainability Lab",
+    description: "Strategic approaches to resource mobilization and ensuring program sustainability.",
+    url: "https://rm-sustainability4impact.netlify.app/",
+    icon: "dollar-sign",
+    category: "Fundraising & Sustainability",
+    difficulty: "Advanced",
+    duration: 75,
+    status: "Available"
+  },
+  {
     id: "L3",
-    title: "Policy Advocacy Impact Lab",
-    description: "Simulate policy advocacy campaigns and measure their potential impact.",
+    title: "Policy and Advocacy Lab",
+    description: "Tools and frameworks for effective policy advocacy and systems change.",
     url: "https://pol-advocacy4impact.netlify.app/",
     icon: "megaphone",
     category: "Policy Analysis", 
@@ -36,7 +36,7 @@ export const labsData = [
   {
     id: "L4",
     title: "Partnership and Collaboration Lab",
-    description: "Framework for building effective partnerships.",
+    description: "Framework for building effective partnerships and collaborative initiatives.",
     url: "https://impact-partnerships.netlify.app/",
     icon: "handshake",
     category: "Stakeholder Engagement",
@@ -47,7 +47,7 @@ export const labsData = [
   {
     id: "L5",
     title: "MLE Framework Workbench",
-    description: "Monitoring, Learning and Evaluation framework design.",
+    description: "Comprehensive Monitoring, Learning and Evaluation framework design toolkit.",
     url: "https://mle-frameworkdesign.netlify.app/",
     icon: "wrench",
     category: "Monitoring & Evaluation",
@@ -58,7 +58,7 @@ export const labsData = [
   {
     id: "L6",
     title: "MLE Framework Builder Lab", 
-    description: "Build comprehensive MLE frameworks for your projects.",
+    description: "Build and customize comprehensive MLE frameworks for your specific projects.",
     url: "https://mle-plan-lab.netlify.app/",
     icon: "build", 
     category: "Monitoring & Evaluation",
@@ -69,7 +69,7 @@ export const labsData = [
   {
     id: "L7",
     title: "Community Engagement Lab",
-    description: "Tools for meaningful community engagement and participation.",
+    description: "Tools and strategies for meaningful community engagement and participatory approaches.",
     url: "https://community-engagement.netlify.app/",
     icon: "users",
     category: "Community Development",
@@ -80,7 +80,7 @@ export const labsData = [
   {
     id: "L8",
     title: "Impact Storytelling Lab",
-    description: "Craft compelling narratives about your impact work.",
+    description: "Craft compelling narratives and stories that communicate your impact effectively.",
     url: "https://impact-storytelling.netlify.app/",
     icon: "book-open",
     category: "Communications",
@@ -91,7 +91,7 @@ export const labsData = [
   {
     id: "L9",
     title: "Innovation and Design Thinking Lab",
-    description: "Apply design thinking to development challenges.",
+    description: "Apply human-centered design thinking methodologies to development challenges.",
     url: "https://impactdesign-thinking.netlify.app/",
     icon: "lightbulb",
     category: "Innovation",
@@ -102,7 +102,7 @@ export const labsData = [
   {
     id: "L10",
     title: "TOC Workbench",
-    description: "Theory of Change development and visualization tools.",
+    description: "Theory of Change development, visualization, and refinement tools.",
     url: "https://toc-workbench.netlify.app/",
     icon: "target",
     category: "Strategic Planning",
