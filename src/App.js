@@ -2497,6 +2497,35 @@ const CoursesPage = () => {
                     </button>
                   </div>
                 </div>
+<h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  {course.title}
+                </h3>
+                
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                  {course.description}
+                </p>
+                
+                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                  <span>{course.level}</span>
+                  <span>{course.duration}</span>
+                </div>
+                
+                
+                  href={course.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors inline-block text-center"
+                >
+                  Access Course
+                </a>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
 // Continuing from where your current App.js ends...
 
 // Quiz questions for "Find Your Track" (completing the definition)
