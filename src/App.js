@@ -208,7 +208,7 @@ export const Navigation = () => {
               <div className="h-8 w-8 rounded-md bg-accent-blue flex items-center justify-center">
                 <span className="text-white font-bold">IM</span>
               </div>
-              <span className="ml-2 text-xl font-bold text-gray-900 dark:text-chalk-white font-sans">ImpactMojo</span>
+              <span className="ml-2 text-xl font-bold text-gray-900 dark:text-chalk-white font-heading">ImpactMojo</span>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               {['home', 'courses', 'labs', 'resources'].map((page) => (
@@ -360,7 +360,7 @@ const Dashboard = () => {
       <div className={`min-h-screen font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
         <Navigation />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white font-sans">Please sign in to access your dashboard</h1>
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white font-heading">Please sign in to access your dashboard</h1>
         </div>
       </div>
     );
@@ -371,7 +371,7 @@ const Dashboard = () => {
       <Navigation />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white font-sans">Dashboard</h1>
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white font-heading">Dashboard</h1>
           <p className="mt-2 text-gray-600 dark:text-gray-300 font-sans">Welcome back, {user.displayName}!</p>
         </div>
         
@@ -405,7 +405,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 mb-8">
           {/* Custom Pathway */}
           <div className="bg-white dark:bg-chalkboard-dark shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-chalk-white font-sans mb-4">Your Learning Pathway</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-chalk-white font-heading mb-4">Your Learning Pathway</h2>
             {customPathway.length > 0 ? (
               <div className="space-y-3">
                 {customPathway.map((courseId, index) => {
@@ -436,7 +436,7 @@ const Dashboard = () => {
           
           {/* Research Notes */}
           <div className="bg-white dark:bg-chalkboard-dark shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-chalk-white font-sans mb-4">Research Notes</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-chalk-white font-heading mb-4">Research Notes</h2>
             {notes.length > 0 ? (
               <div className="space-y-3">
                 {notes.slice(0, 3).map((note, index) => (
@@ -465,14 +465,14 @@ const Dashboard = () => {
         
         {/* Premium Resources */}
         <div className="bg-white dark:bg-chalkboard-dark shadow rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-chalk-white font-sans mb-4">Premium Resources</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-chalk-white font-heading mb-4">Premium Resources</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {premiumResources.map((resource, index) => (
               <div key={index} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow">
                 <h3 className="font-medium text-gray-900 dark:text-chalk-white font-sans mb-2">{resource.title}</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300 font-sans mb-3">{resource.description}</p>
                 <a
-                  href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts"
+                  href={resource.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-accent-blue dark:text-accent-blue hover:text-blue-800 dark:hover:text-blue-300 font-medium font-sans"
@@ -489,7 +489,7 @@ const Dashboard = () => {
         <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg shadow-lg p-6 text-white mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-bold font-sans">Lo-Fi Study Beats</h2>
+              <h2 className="text-xl font-bold font-heading">Lo-Fi Study Beats</h2>
               <p className="mt-1 font-sans">Focus better with our curated study playlist</p>
             </div>
             <button className="bg-white text-purple-600 px-4 py-2 rounded-md font-medium font-sans flex items-center">
@@ -503,7 +503,7 @@ const Dashboard = () => {
           <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-lg shadow-lg p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 font-sans">Upgrade to Premium</h3>
+                <h3 className="text-xl font-bold text-gray-900 font-heading">Upgrade to Premium</h3>
                 <p className="mt-1 text-gray-800 font-sans">Unlock all premium features and content</p>
               </div>
               <button className="px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors font-sans">
@@ -527,7 +527,7 @@ const Home = () => {
       <Navigation />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-chalk-white font-sans mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-chalk-white font-heading mb-4">
             Welcome to <span className="text-accent-blue">ImpactMojo</span>
           </h1>
           <p className="mt-3 max-w-md mx-auto text-base text-gray-600 dark:text-gray-300 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
@@ -554,7 +554,7 @@ const Home = () => {
         
         {/* Featured Content */}
         <div className="mt-16">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white text-center font-sans mb-8">Featured Content</h2>
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white text-center font-heading mb-8">Featured Content</h2>
           <div className="grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none">
             {courseData.slice(0, 3).map((course) => (
               <div key={course.id} className="flex flex-col rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -563,7 +563,7 @@ const Home = () => {
                     <p className="text-sm font-medium text-accent-blue dark:text-accent-blue font-sans">
                       <span>Course</span>
                     </p>
-                    <h3 className="mt-2 text-xl font-semibold text-gray-900 dark:text-chalk-white font-sans">{course.title}</h3>
+                    <h3 className="mt-2 text-xl font-semibold text-gray-900 dark:text-chalk-white font-heading">{course.title}</h3>
                     <p className="mt-3 text-base text-gray-600 dark:text-gray-300 font-sans">{course.description}</p>
                   </div>
                   <div className="mt-6">
@@ -580,151 +580,23 @@ const Home = () => {
           </div>
         </div>
         
-        {/* Learning Tracks */}
+        {/* Five Learning Tracks */}
         <div className="mt-16">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white text-center font-sans mb-8">Learning Tracks</h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-chalk-white text-center font-heading mb-8">Learning Tracks</h2>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
             {[
               { name: "Research Methods", description: "Learn qualitative and quantitative research methods." },
               { name: "Data Analysis", description: "Master data analysis techniques for social impact." },
               { name: "Gender Studies", description: "Explore gender dynamics in development contexts." },
-              { name: "Policy & Economics", description: "Understand policy and economic frameworks." }
+              { name: "Policy & Economics", description: "Understand policy and economic frameworks." },
+              { name: "Thematic Areas", description: "Explore specialized topics across development sectors." }
             ].map((track, index) => (
               <div key={index} className="bg-white dark:bg-chalkboard-dark rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-2 font-sans">{track.name}</h3>
+                <h3 className="text-xl font-semibold mb-2 font-heading">{track.name}</h3>
                 <p className="text-gray-600 dark:text-gray-300 font-sans">{track.description}</p>
               </div>
             ))}
           </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Simple Courses Page Component
-const CoursesPage = () => {
-  const { darkMode } = usePage();
-  const { user, toggleBookmark, bookmarks } = useAuth();
-  
-  return (
-    <div className={`min-h-screen font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
-      <Navigation />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-chalk-white mb-4 font-sans">
-            Development Courses
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-sans">
-            Comprehensive learning resources for development practitioners and changemakers.
-          </p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {courseData.map((course) => (
-            <div key={course.id} className="bg-white dark:bg-chalkboard-dark rounded-lg shadow hover:shadow-lg transition-shadow p-6">
-              <div className="flex items-center justify-between mb-3">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent-blue text-white font-sans">
-                  {course.id}
-                </span>
-                {user && (
-                  <button
-                    onClick={() => toggleBookmark(course.id)}
-                    className={`p-1 rounded font-sans ${bookmarks.includes(course.id) ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-500`}
-                  >
-                    <Bookmark className="h-5 w-5" />
-                  </button>
-                )}
-              </div>
-              
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-chalk-white mb-2 font-sans">
-                {course.title}
-              </h3>
-              
-              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 font-sans">
-                {course.description}
-              </p>
-              
-              <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4 font-sans">
-                <span>{course.level}</span>
-                <span>{course.duration}</span>
-              </div>
-              
-              <a
-                href={course.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-accent-blue text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-sans inline-block text-center"
-              >
-                Access Course
-              </a>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Simple Labs Page Component  
-const LabsPage = () => {
-  const { darkMode } = usePage();
-  const { user, toggleBookmark, bookmarks } = useAuth();
-  
-  return (
-    <div className={`min-h-screen font-sans ${darkMode ? 'dark bg-chalkboard-dark' : 'bg-chalk-white'}`}>
-      <Navigation />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-chalk-white mb-4 font-sans">
-            Interactive Labs
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-sans">
-            Hands-on exercises and case studies for practical skill development.
-          </p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {labsData.map((lab) => (
-            <div key={lab.id} className="bg-white dark:bg-chalkboard-dark rounded-lg shadow hover:shadow-lg transition-shadow p-6">
-              <div className="flex items-center justify-between mb-3">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-600 text-white font-sans">
-                  {lab.id}
-                </span>
-                {user && (
-                  <button
-                    onClick={() => toggleBookmark(lab.id)}
-                    className={`p-1 rounded font-sans ${bookmarks.includes(lab.id) ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-500`}
-                  >
-                    <Target className="h-5 w-5" />
-                  </button>
-                )}
-              </div>
-              
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-chalk-white mb-2 font-sans">
-                {lab.title}
-              </h3>
-              
-              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 font-sans">
-                {lab.description}
-              </p>
-              
-              <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4 font-sans">
-                <span>{lab.topic}</span>
-                <span>{lab.difficulty || 'Interactive'}</span>
-              </div>
-              
-              <a
-                href={lab.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors font-sans flex items-center justify-center"
-              >
-                <PlayCircle className="h-4 w-4 mr-2" />
-                Start Lab
-              </a>
-            </div>
-          ))}
         </div>
       </div>
     </div>
@@ -748,8 +620,8 @@ const AppContent = () => {
     <div className={darkMode ? 'dark' : ''}>
       {currentPage === 'home' && <Home />}
       {currentPage === 'dashboard' && <Dashboard />}
-      {currentPage === 'courses' && <CoursesPage />}
-      {currentPage === 'labs' && <LabsPage />}
+      {currentPage === 'courses' && <div>Courses Page</div>}
+      {currentPage === 'labs' && <div>Labs Page</div>}
       {currentPage === 'resources' && <ResourcesPage />}
       {currentPage === 'ai-tools' && <AIToolsPage />}
     </div>
