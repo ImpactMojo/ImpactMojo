@@ -6,7 +6,7 @@ import {
   Clock, CheckCircle, PlayCircle, Bot, Trophy, 
   Headphones, MapPin, Library, Music, Download, 
   Search, Plus, Edit3, Save, Filter, BookmarkIcon, Tag,
-  Install, AlertTriangle
+  AlertTriangle
 } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
@@ -526,7 +526,7 @@ const PWAInstallBanner = () => {
   return (
     <div className="fixed top-16 left-4 right-4 z-50 bg-blue-600 text-white p-4 rounded-lg shadow-lg flex items-center justify-between">
       <div className="flex items-center space-x-3">
-        <Install className="h-6 w-6" />
+        <Download className="h-6 w-6" />
         <div>
           <h3 className="font-semibold">Install ImpactMojo</h3>
           <p className="text-sm text-blue-100">Get the app for better experience</p>
