@@ -18,7 +18,195 @@ import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc } from
 import { courseData, upcomingCourses } from './data/course-data';
 import { labsData } from './data/labs-data';
 import { premiumResources } from './data/premium-resources-data';
-import { aiToolsData } from './data/ai-tools-data';
+
+// AI Tools Data (embedded to avoid import issues)
+const aiToolsData = [
+  {
+    id: 'data-viz',
+    title: 'Data Visualization Generator',
+    description: 'Create clear, compelling data visualizations from your dataset with automatic chart selection, color schemes, and accessibility features.',
+    prompt: `I need a data visualization that effectively communicates insights from my dataset.
+Dataset Details:
+- Type: [survey/time series/categorical/numerical]
+- Size: [number of data points]
+- Key Variables: [list main variables]
+- Story to Tell: [what insight do you want to highlight]
+Target Audience: [researchers/policymakers/community/general public]
+Context: [report/presentation/website/social media]
+Please provide:
+1. Recommended chart type with justification
+2. Complete code (R/Python/JavaScript) for creating the visualization
+3. Color palette that's accessible and meaningful
+4. Title, labels, and annotations
+5. Alternative text description for accessibility
+6. Tips for presenting this data effectively`,
+    systemMessage: 'You are a data visualization expert who understands both the technical and storytelling aspects of data presentation. You prioritize clarity, accessibility, and impact in your designs.',
+    exampleInput: `Type: Survey data on gender wage gaps
+Size: 500 respondents across 5 industries
+Variables: Gender, Industry, Years of Experience, Salary Range
+Story: Show persistent wage gaps across all experience levels
+Audience: Policy makers
+Context: Policy brief on workplace equality`,
+    icon: 'BarChart',
+    color: 'blue'
+  },
+  {
+    id: 'theory-change',
+    title: 'Theory of Change Builder',
+    description: 'Develop comprehensive Theory of Change frameworks with clear pathways from activities to impact.',
+    prompt: `Help me develop a Theory of Change for my development program.
+Program Overview:
+- Problem Statement: [describe the problem]
+- Target Population: [who are you serving]
+- Geographic Context: [where]
+- Timeframe: [program duration]
+Current Activities: [list main activities/interventions]
+Resources Available: [budget, staff, partners]
+Desired Long-term Change: [ultimate goal]
+Please create:
+1. Complete Theory of Change narrative
+2. Visual diagram showing: Inputs → Activities → Outputs → Outcomes → Impact
+3. Assumptions and risks at each level
+4. Indicators for measuring progress
+5. Feedback loops and adaptation points`,
+    systemMessage: 'You are a strategic planning expert specializing in Theory of Change development for social impact programs. You understand complex causal pathways and can identify critical assumptions.',
+    exampleInput: `Problem: High school dropout rates in rural communities
+Target: 500 at-risk students aged 14-18
+Geography: 3 rural districts
+Timeframe: 5 years
+Activities: Mentorship, scholarships, life skills training
+Resources: $2M budget, 10 staff, 5 partner schools
+Goal: Increase graduation rates from 60% to 85%`,
+    icon: 'Target',
+    color: 'green'
+  },
+  {
+    id: 'meal-framework',
+    title: 'MEAL Framework Designer',
+    description: 'Design monitoring, evaluation, accountability and learning systems with indicators and data collection plans.',
+    prompt: `Help me design a MEAL (Monitoring, Evaluation, Accountability & Learning) framework for my program.
+Program Details:
+- Objective: [main program goal]
+- Activities: [key interventions]
+- Target Beneficiaries: [who and how many]
+- Duration: [timeframe]
+- Budget for M&E: [available resources]
+- Staff Capacity: [M&E skills available]
+- Reporting Requirements: [donor/stakeholder needs]
+Current M&E Systems: [existing tools/processes]
+Please provide:
+1. Logic model with clear results chain
+2. SMART indicators for each level:
+   - Input indicators
+   - Output indicators  
+   - Outcome indicators
+   - Impact indicators (if applicable)
+3. Indicator reference sheets including:
+   - Definition and calculation method
+   - Data source and collection method
+   - Frequency and responsible party
+   - Baseline and targets
+4. Data collection tools outline
+5. Data quality assurance plan`,
+    systemMessage: 'You are an M&E expert who designs practical, measurable indicators that balance rigor with feasibility, ensuring they provide actionable insights for program improvement.',
+    exampleInput: `Objective: Improve girls' literacy in rural schools
+Activities: Teacher training, reading clubs, library setup
+Target: 5000 girls in 50 schools
+Duration: 3 years
+M&E Budget: $50,000
+Staff: 1 M&E officer, program staff can support
+Systems: Basic Excel tracking
+Reporting: Quarterly to donor, annual evaluation`,
+    icon: 'CheckCircle',
+    color: 'teal'
+  },
+  {
+    id: 'policy-brief',
+    title: 'Policy Brief Creator',
+    description: 'Transform research into actionable policy briefs with clear recommendations.',
+    prompt: `Help me create a policy brief from my research/program findings.
+Research/Evidence Base:
+- Topic: [issue area]
+- Key Findings: [main findings/data]
+- Methodology: [how evidence was gathered]
+- Context: [country/region specific factors]
+Policy Landscape:
+- Current Policies: [existing relevant policies]
+- Policy Gaps: [what's missing]
+- Decision Makers: [target audience]
+- Political Context: [opportunities/constraints]
+Desired Change: [what policy change you're advocating for]
+Please provide:
+1. Executive Summary (1 paragraph)
+2. Problem Statement with evidence
+3. Policy Options Analysis (2-3 options with pros/cons)
+4. Recommendations (specific and actionable)
+5. Implementation Roadmap
+6. Cost-Benefit Analysis (if applicable)
+7. Visual elements suggestions (infographics/charts)`,
+    systemMessage: 'You are a policy communication expert who can distill complex research into clear, persuasive policy recommendations that resonate with decision-makers.',
+    exampleInput: `Topic: School dropout rates among adolescent girls
+Key Findings: 40% dropout rate, mainly due to early marriage
+Methodology: Survey of 1000 households, 20 focus groups
+Context: Rural Bangladesh
+Current Policies: Compulsory education until age 14
+Gaps: No enforcement, no support for at-risk girls
+Decision Makers: Ministry of Education, local officials
+Desired Change: Conditional cash transfer program for girls' education`,
+    icon: 'Scale',
+    color: 'amber'
+  },
+  {
+    id: 'case-study',
+    title: 'Case Study Developer',
+    description: 'Develop compelling case studies that demonstrate impact and learning.',
+    prompt: `Help me develop a case study about my program/intervention.
+Case Study Focus:
+- Subject: [specific intervention/person/community]
+- Purpose: [learning/advocacy/documentation]
+- Audience: [who will read this]
+- Length: [word count/pages]
+Context and Background:
+- Setting: [geographic/social context]
+- Timeline: [when this happened]
+- Key Actors: [people/organizations involved]
+- Initial Situation: [problem/challenge]
+The Story:
+- Intervention: [what was done]
+- Process: [how it unfolded]
+- Challenges: [obstacles faced]
+- Solutions: [how challenges were addressed]
+- Results: [what changed]
+Evidence Available:
+- Data: [quantitative evidence]
+- Quotes: [testimonials available]
+- Photos: [visual documentation]
+Please provide:
+1. Case study structure/outline
+2. Compelling narrative with:
+   - Hook/opening
+   - Context setting
+   - Challenge presentation
+   - Solution journey
+   - Impact demonstration
+   - Lessons learned
+3. Sidebar elements (stats, quotes, timeline)
+4. Discussion questions
+5. Replication guidance`,
+    systemMessage: 'You are a storytelling expert who can craft engaging narratives that balance human interest with evidence-based insights and practical learning.',
+    exampleInput: `Subject: Village savings group transforms community
+Purpose: Demonstrate model for replication
+Audience: NGOs and donors
+Setting: Rural Kenya, drought-prone area
+Timeline: 2022-2024
+Intervention: Established women's savings groups
+Challenges: Initial mistrust, low literacy
+Results: 200 women saving, 50 businesses started
+Evidence: Savings data, 20 interviews, photos`,
+    icon: 'Award',
+    color: 'pink'
+  }
+];
 
 // Updated Games Data
 const gamesData = [
@@ -76,7 +264,7 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
-// New multi-dimensional browse system
+// Multi-dimensional browse system
 const browseByRole = {
   "New to Development": {
     description: "Just starting your development journey",
@@ -325,18 +513,25 @@ const PageContext = createContext();
 const PageProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState('home');
   const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('darkMode') === 'true';
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('darkMode') === 'true';
+    }
+    return false;
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [browseMode, setBrowseMode] = useState('role');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('darkMode', darkMode.toString());
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('darkMode', darkMode.toString());
+      if (typeof document !== 'undefined' && document.documentElement) {
+        if (darkMode) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }
     }
   }, [darkMode]);
 
@@ -1887,8 +2082,8 @@ const DashboardPage = () => {
   );
 };
 
-// Main App Component
-const App = () => {
+// App Content Component (uses the hooks)
+const AppContent = () => {
   const { currentPage } = usePage();
 
   const renderPage = () => {
@@ -1913,11 +2108,18 @@ const App = () => {
   };
 
   return (
+    <div className="App">
+      {renderPage()}
+    </div>
+  );
+};
+
+// Main App Component (just provides context)
+const App = () => {
+  return (
     <AuthProvider>
       <PageProvider>
-        <div className="App">
-          {renderPage()}
-        </div>
+        <AppContent />
       </PageProvider>
     </AuthProvider>
   );
