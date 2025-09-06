@@ -964,7 +964,6 @@ const AIToolsPage = () => {
 };
 
 // Home Page Component
-// Enhanced Home Page Component - ADD THIS TO REPLACE YOUR EXISTING HomePage COMPONENT
 
 const HomePage = () => {
   const { darkMode } = usePage();
@@ -1171,7 +1170,7 @@ const HomePage = () => {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {['Research Methods', 'Data Analysis', 'Gender Studies', 'Policy & Economics'].map((track, index) => {
               const colors = ['bg-green-500', 'bg-blue-500', 'bg-purple-500', 'bg-red-500'];
-              const courseCount = courses.filter(course => course.track === track).length;
+              const courseCount = courseData.filter(course => course.track === track).length;
               return (
                 <div
                   key={track}
@@ -1505,6 +1504,7 @@ const HomePage = () => {
     </div>
   );
 };
+
 // Courses Page Component
 const CoursesPage = () => {
   const { darkMode, searchQuery, setSearchQuery, browseMode, setBrowseMode } = usePage();
