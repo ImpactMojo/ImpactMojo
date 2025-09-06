@@ -7,7 +7,8 @@ import {
   Headphones, MapPin, Library, Music, Download, 
   Search, Plus, Edit3, Save, Filter, BookmarkIcon, Tag,
   Install, AlertTriangle, ChevronDown, ChevronRight, Gamepad2,
-  BarChart, Star, ArrowRight
+  BarChart, Star, ArrowRight, Calendar, TrendingUp, Scale, 
+  Award, Puzzle, Zap
 } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
