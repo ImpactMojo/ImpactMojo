@@ -964,16 +964,125 @@ const AIToolsPage = () => {
 };
 
 // Home Page Component
+// Enhanced Home Page Component - ADD THIS TO REPLACE YOUR EXISTING HomePage COMPONENT
+
 const HomePage = () => {
   const { darkMode } = usePage();
   const { user, isPremium } = useAuth();
   const { setCurrentPage } = usePage();
+  const [showCookieConsent, setShowCookieConsent] = useState(false);
+  const [showQuizModal, setShowQuizModal] = useState(false);
+  const [showNewsletterModal, setShowNewsletterModal] = useState(false);
+  const [currentQuizQuestion, setCurrentQuizQuestion] = useState(0);
+  const [quizAnswers, setQuizAnswers] = useState([]);
+  const [quizResult, setQuizResult] = useState(null);
+
+  // Check cookie consent on mount
+  useEffect(() => {
+    const hasConsent = localStorage.getItem('impactmojo-cookie-consent');
+    if (!hasConsent) {
+      setShowCookieConsent(true);
+    }
+  }, []);
+
+  // Social sharing functionality
+  const shareOnSocial = (platform) => {
+    const url = 'https://www.impactmojo.in';
+    const title = 'ImpactMojo - Development Know-How';
+    const description = 'Master the art and science of development with expert-curated courses, labs, and AI-powered tools for South Asia.';
+    
+    const shareUrls = {
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(title + ' - ' + description)}`,
+      whatsapp: `https://wa.me/?text=${encodeURIComponent(title + ' - ' + description + ' ' + url)}`,
+      instagram: `https://www.instagram.com/` // Instagram doesn't support direct sharing, opens app
+    };
+    
+    if (platform === 'instagram') {
+      // For Instagram, copy text to clipboard and open Instagram
+      navigator.clipboard.writeText(`${title} - ${description} ${url}`);
+      alert('Link copied to clipboard! You can now paste it in your Instagram story or post.');
+    }
+    
+    window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+  };
+
+  // Quiz data
+  const quizQuestions = [
+    {
+      question: "What type of work interests you most?",
+      answers: [
+        { text: "Working with data and numbers", tracks: ["Data Analysis"] },
+        { text: "Understanding social dynamics", tracks: ["Gender Studies"] },
+        { text: "Policy analysis and economics", tracks: ["Policy & Economics"] },
+        { text: "Research design and methodology", tracks: ["Research Methods"] }
+      ]
+    },
+    {
+      question: "How do you prefer to learn?",
+      answers: [
+        { text: "Through hands-on data projects", tracks: ["Data Analysis"] },
+        { text: "Case studies and real examples", tracks: ["Gender Studies", "Policy & Economics"] },
+        { text: "Theoretical frameworks", tracks: ["Research Methods"] },
+        { text: "Interactive analysis", tracks: ["Data Analysis", "Research Methods"] }
+      ]
+    },
+    {
+      question: "What's your main goal?",
+      answers: [
+        { text: "Measure and evaluate impact", tracks: ["Data Analysis", "Research Methods"] },
+        { text: "Promote equity and inclusion", tracks: ["Gender Studies"] },
+        { text: "Influence policy decisions", tracks: ["Policy & Economics"] },
+        { text: "Build research skills", tracks: ["Research Methods"] }
+      ]
+    }
+  ];
+
+  const handleQuizAnswer = (answerIndex) => {
+    const newAnswers = [...quizAnswers, answerIndex];
+    setQuizAnswers(newAnswers);
+    
+    if (currentQuizQuestion < quizQuestions.length - 1) {
+      setCurrentQuizQuestion(currentQuizQuestion + 1);
+    } else {
+      // Calculate result
+      const trackScores = {};
+      newAnswers.forEach((answerIdx, questionIdx) => {
+        const tracks = quizQuestions[questionIdx].answers[answerIdx].tracks;
+        tracks.forEach(track => {
+          trackScores[track] = (trackScores[track] || 0) + 1;
+        });
+      });
+      
+      const recommendedTrack = Object.keys(trackScores).reduce((a, b) => 
+        trackScores[a] > trackScores[b] ? a : b
+      );
+      
+      setQuizResult(recommendedTrack);
+    }
+  };
+
+  const resetQuiz = () => {
+    setCurrentQuizQuestion(0);
+    setQuizAnswers([]);
+    setQuizResult(null);
+  };
+
+  // Get popular courses (first 6 courses)
+  const popularCourses = courses.slice(0, 6);
+
+  // Get upcoming courses (mock data)
+  const upcomingCourses = [
+    { id: 'UC1', title: 'Digital Development 101', track: 'Technology', status: 'coming-soon' },
+    { id: 'UC2', title: 'Sustainable Finance 101', track: 'Economics', status: 'coming-soon' }
+  ];
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       <Navigation />
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Hero Section */}
+        {/* Hero Section - KEEPING EXISTING */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
             <span className="block">Development</span>
@@ -983,92 +1092,419 @@ const HomePage = () => {
             Master the art and science of development with expert-curated courses, labs, and AI-powered tools.
           </p>
           <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+            <div className="rounded-md shadow">
+              <button
+                onClick={() => setCurrentPage('courses')}
+                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
+              >
+                Start Learning
+              </button>
+            </div>
+            <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
+              <button
+                onClick={() => setShowQuizModal(true)}
+                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700"
+              >
+                Find Your Track
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Popular Courses Showcase */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Popular Courses</h2>
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Start with our most loved courses</p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {popularCourses.map((course) => (
+              <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="p-6">
+                  <span className="inline-block px-2 py-1 text-xs font-semibold text-blue-800 dark:text-blue-200 bg-blue-100 dark:bg-blue-900 rounded-full mb-2">
+                    {course.track}
+                  </span>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{course.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">{course.description}</p>
+                  {course.quote && (
+                    <blockquote className="text-sm italic text-gray-500 dark:text-gray-400 border-l-4 border-blue-500 pl-3">
+                      {course.quote}
+                    </blockquote>
+                  )}
+                  <div className="mt-4 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                    <span>{course.level}</span>
+                    <span>{course.duration}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
             <button
               onClick={() => setCurrentPage('courses')}
-              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-md text-lg font-medium"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-600 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800"
             >
-              Start Learning
+              View All Courses
             </button>
           </div>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
-            <BookOpen className="h-12 w-12 text-blue-600 dark:text-blue-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Expert Courses</h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">Learn from world-class experts</p>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
-            <FileText className="h-12 w-12 text-green-600 dark:text-green-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Practical Labs</h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">Hands-on learning experiences</p>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
-            <Bot className="h-12 w-12 text-purple-600 dark:text-purple-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">AI Tools</h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">AI-powered development tools</p>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
-            <Users className="h-12 w-12 text-orange-600 dark:text-orange-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Community</h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">Connect with practitioners</p>
+        {/* Featured Content Highlight */}
+        <div className="mb-16">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-xl overflow-hidden">
+            <div className="px-6 py-12 md:px-12 md:py-16 text-center text-white">
+              <h2 className="text-3xl font-bold mb-4">The Real Middle Game</h2>
+              <p className="text-xl mb-6 opacity-90">Explore our spotlight content on navigating development challenges</p>
+              <button className="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 transition-colors">
+                Explore Featured Content
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* AI Tools Preview */}
-        <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-6 sm:p-8 text-white mb-8">
-          <div className="text-center">
-            <Bot className="h-16 w-16 mx-auto mb-4" />
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4">AI-Powered Tools</h2>
-            <p className="text-lg sm:text-xl mb-6">
-              Explore courses, labs, games, and AI-powered tools to enhance your impact.
+        {/* Learning Tracks Overview */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Choose Your Learning Track</h2>
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Four specialized pathways to master development</p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {['Research Methods', 'Data Analysis', 'Gender Studies', 'Policy & Economics'].map((track, index) => {
+              const colors = ['bg-green-500', 'bg-blue-500', 'bg-purple-500', 'bg-red-500'];
+              const courseCount = courses.filter(course => course.track === track).length;
+              return (
+                <div
+                  key={track}
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                  onClick={() => setCurrentPage('courses')}
+                >
+                  <div className={`h-32 ${colors[index]} flex items-center justify-center`}>
+                    <div className="text-white text-center">
+                      <div className="text-3xl mb-2">
+                        {index === 0 ? '🔬' : index === 1 ? '📊' : index === 2 ? '⚖️' : '🏛️'}
+                      </div>
+                      <h3 className="font-bold text-lg">{track}</h3>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                      {index === 0 ? 'Master research design and methodology' :
+                       index === 1 ? 'Analyze data and measure impact' :
+                       index === 2 ? 'Explore equity and social dynamics' :
+                       'Understand policy and economic systems'}
+                    </p>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      {courseCount} courses available
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Upcoming Courses Section */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Coming Soon</h2>
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">New courses launching soon</p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            {upcomingCourses.map((course) => (
+              <div key={course.id} className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden opacity-75">
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="inline-block px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-400 bg-gray-200 dark:bg-gray-700 rounded-full">
+                      {course.track}
+                    </span>
+                    <span className="text-xs text-orange-600 dark:text-orange-400 font-medium">
+                      Launching Soon
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">{course.title}</h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">Get notified when this course becomes available</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Social & About Creator Box */}
+        <div className="mb-16">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+            <div className="text-center">
+              <div className="w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-600 mx-auto mb-4 overflow-hidden">
+                {/* Replace with your actual photo */}
+                <img 
+                  src="https://via.placeholder.com/96x96/4F46E5/FFFFFF?text=VS" 
+                  alt="Varna Sri Raman"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Created by Varna Sri Raman</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                ImpactMojo is built to democratize access to development knowledge. Curated and crafted by Dr. Varna Sri Raman, 
+                it's an open-source project fueling social impact education.
+              </p>
+              
+              {/* Social Links */}
+              <div className="flex justify-center space-x-4 mb-6">
+                <a 
+                  href="https://www.threads.net/@varna_sr" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                >
+                  <span className="text-sm font-bold">T</span>
+                </a>
+                <a 
+                  href="https://varna.notion.site" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                >
+                  <span className="text-sm font-bold">N</span>
+                </a>
+                <a 
+                  href="https://www.linkedin.com/in/varna-sri-raman" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
+                >
+                  <span className="text-white text-sm font-bold">in</span>
+                </a>
+              </div>
+
+              {/* Share Buttons */}
+              <div className="border-t dark:border-gray-700 pt-6">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Share ImpactMojo with your network</p>
+                <div className="flex justify-center space-x-3">
+                  <button
+                    onClick={() => shareOnSocial('linkedin')}
+                    className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors"
+                  >
+                    Share on LinkedIn
+                  </button>
+                  <button
+                    onClick={() => shareOnSocial('whatsapp')}
+                    className="px-4 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition-colors"
+                  >
+                    Share on WhatsApp
+                  </button>
+                  <button
+                    onClick={() => shareOnSocial('facebook')}
+                    className="px-4 py-2 bg-blue-800 text-white text-sm rounded-md hover:bg-blue-900 transition-colors"
+                  >
+                    Share on Facebook
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Newsletter Signup */}
+        <div className="mb-16">
+          <div className="bg-blue-50 dark:bg-blue-900 rounded-lg p-8 text-center">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Stay Updated</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              Get insights and updates via our newsletter on Substack
             </p>
             <button
-              onClick={() => setCurrentPage('ai-tools')}
-              className="bg-white text-blue-600 px-6 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors"
+              onClick={() => window.open('https://varna.substack.com', '_blank')}
+              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
             >
-              Explore AI Tools
+              Subscribe to Newsletter
             </button>
           </div>
         </div>
-        
-        {/* Study Music */}
-        <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg shadow-lg p-4 sm:p-6 text-white mb-8">
-          <div className="flex items-center justify-between flex-col sm:flex-row gap-4">
-            <div className="text-center sm:text-left">
-              <h2 className="text-lg sm:text-xl font-bold">Lo-Fi Study Beats</h2>
-              <p className="mt-1">Focus better with our curated study playlist</p>
-            </div>
-            <a
-              href="https://open.spotify.com/playlist/37i9dQZF1DWWQRwui0ExPn"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-purple-600 px-4 py-2 rounded-md font-medium flex items-center hover:bg-gray-100 transition-colors"
-            >
-              <Music className="mr-2 h-5 w-5" />
-              Play on Spotify
-            </a>
+
+        {/* FAQ Section */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
+          </div>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {[
+              {
+                q: "Are the courses free to access?",
+                a: "Yes, all courses are freely accessible. Premium features offer additional tools and personalization."
+              },
+              {
+                q: "Do I get certificates upon completion?",
+                a: "ImpactMojo focuses on knowledge sharing rather than certification. Our goal is learning, not credentialing."
+              },
+              {
+                q: "Can I use the content for my organization?",
+                a: "Yes, all content is licensed under Creative Commons for non-commercial use with attribution."
+              },
+              {
+                q: "How often is new content added?",
+                a: "We regularly update our library. Subscribe to our newsletter to stay informed about new releases."
+              }
+            ].map((faq, index) => (
+              <details key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-md">
+                <summary className="p-4 cursor-pointer text-gray-900 dark:text-white font-medium hover:bg-gray-50 dark:hover:bg-gray-700">
+                  {faq.q}
+                </summary>
+                <div className="px-4 pb-4 text-gray-600 dark:text-gray-300">
+                  {faq.a}
+                </div>
+              </details>
+            ))}
           </div>
         </div>
-        
-        {/* Premium Features Info */}
-        {isPremium && (
-          <div className="bg-gradient-to-r from-emerald-400 to-cyan-500 rounded-lg shadow-lg p-4 sm:p-6">
-            <div className="flex items-center justify-between flex-col sm:flex-row gap-4">
-              <div className="text-center sm:text-left">
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900">You have Premium Access!</h3>
-                <p className="mt-1 text-gray-800">Enjoy all features including AI Tools, Notes, and Comparisons</p>
-              </div>
-              <Trophy className="h-12 w-12 text-gray-900 flex-shrink-0" />
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="col-span-1 md:col-span-2">
+              <h3 className="text-xl font-bold mb-4">ImpactMojo</h3>
+              <p className="text-gray-300 mb-4">
+                A curated library of knowledge decks exploring justice, equity, and development in South Asia.
+              </p>
+              <p className="text-sm text-gray-400">
+                Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+              </p>
+            </div>
+            <div>
+              <h4 className="font-medium mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li><button onClick={() => setCurrentPage('courses')} className="hover:text-white">Courses</button></li>
+                <li><button onClick={() => setCurrentPage('labs')} className="hover:text-white">Labs</button></li>
+                <li><button onClick={() => setCurrentPage('resources')} className="hover:text-white">Resources</button></li>
+                <li><button onClick={() => setCurrentPage('games')} className="hover:text-white">Games</button></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-4">Connect</h4>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li><a href="https://varna.substack.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">Newsletter</a></li>
+                <li><a href="https://www.linkedin.com/in/varna-sri-raman" target="_blank" rel="noopener noreferrer" className="hover:text-white">LinkedIn</a></li>
+                <li><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener noreferrer" className="hover:text-white">GitHub</a></li>
+                <li><a href="mailto:varna.sr@gmail.com" className="hover:text-white">Contact</a></li>
+              </ul>
             </div>
           </div>
-        )}
-      </div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400 text-center">
+            <p>© 2025 ImpactMojo. No endorsements or certificates. Built for learning and social impact.</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Quiz Modal */}
+      {showQuizModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
+            {!quizResult ? (
+              <>
+                <div className="mb-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">Find Your Track</h3>
+                    <button
+                      onClick={() => setShowQuizModal(false)}
+                      className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-4">
+                    <div 
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${((currentQuizQuestion + 1) / quizQuestions.length) * 100}%` }}
+                    ></div>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Question {currentQuizQuestion + 1} of {quizQuestions.length}
+                  </p>
+                </div>
+                <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                  {quizQuestions[currentQuizQuestion].question}
+                </h4>
+                <div className="space-y-3">
+                  {quizQuestions[currentQuizQuestion].answers.map((answer, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleQuizAnswer(index)}
+                      className="w-full text-left p-3 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
+                    >
+                      {answer.text}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="text-center">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Your Recommended Track</h3>
+                  <div className="text-4xl mb-4">🎯</div>
+                  <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-4">{quizResult}</h4>
+                  <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    Based on your answers, this track aligns best with your interests and goals.
+                  </p>
+                  <div className="space-y-3">
+                    <button
+                      onClick={() => {
+                        setShowQuizModal(false);
+                        setCurrentPage('courses');
+                        resetQuiz();
+                      }}
+                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+                    >
+                      Explore {quizResult} Courses
+                    </button>
+                    <button
+                      onClick={resetQuiz}
+                      className="w-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
+                    >
+                      Retake Quiz
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Cookie Consent */}
+      {showCookieConsent && (
+        <div className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50">
+          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between">
+            <div className="mb-4 sm:mb-0">
+              <p className="text-sm">
+                We use cookies to enhance your experience and analyze site usage. 
+                <a href="/privacy" className="underline ml-1">Learn more</a>
+              </p>
+            </div>
+            <div className="flex space-x-3">
+              <button
+                onClick={() => {
+                  localStorage.setItem('impactmojo-cookie-consent', 'accepted');
+                  setShowCookieConsent(false);
+                }}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700"
+              >
+                Accept
+              </button>
+              <button
+                onClick={() => {
+                  localStorage.setItem('impactmojo-cookie-consent', 'rejected');
+                  setShowCookieConsent(false);
+                }}
+                className="border border-gray-300 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-800"
+              >
+                Decline
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
-
 // Courses Page Component
 const CoursesPage = () => {
   const { darkMode, searchQuery, setSearchQuery, browseMode, setBrowseMode } = usePage();
