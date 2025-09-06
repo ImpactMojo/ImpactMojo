@@ -2528,507 +2528,161 @@ const CoursesPage = () => {
   );
 };
 
+// Quiz questions for "Find Your Track" (completing the definition)
 
+  {
+    id: 1,
+    question: "What interests you most about development work?",
+    options: [
+      { text: "Understanding how numbers tell stories", track: "Data Analysis", points: 3 },
+      { text: "Creating systems for sustainable change", track: "Policy & Economics", points: 3 },
+      { text: "Exploring social dynamics and power", track: "Gender Studies", points: 3 },
+      { text: "Learning how people experience change", track: "Research Methods", points: 3 }
+    ]
+  },
+  {
+    id: 2,
+    question: "When approaching a development challenge, you prefer to:",
+    options: [
+      { text: "Analyze data to find patterns and insights", track: "Data Analysis", points: 3 },
+      { text: "Design policies and institutional frameworks", track: "Policy & Economics", points: 3 },
+      { text: "Focus on gender dynamics and inclusion", track: "Gender Studies", points: 3 },
+      { text: "Understand community perspectives through research", track: "Research Methods", points: 3 }
+    ]
+  },
+  {
+    id: 3,
+    question: "Your ideal project would involve:",
+    options: [
+      { text: "Building statistical models and conducting evaluations", track: "Data Analysis", points: 3 },
+      { text: "Developing economic strategies and policy recommendations", track: "Policy & Economics", points: 3 },
+      { text: "Addressing gender inequality and women's empowerment", track: "Gender Studies", points: 3 },
+      { text: "Conducting interviews and ethnographic studies", track: "Research Methods", points: 3 }
+    ]
+  },
+  {
+    id: 4,
+    question: "The skill you'd most like to develop is:",
+    options: [
+      { text: "Advanced statistical analysis and data visualization", track: "Data Analysis", points: 3 },
+      { text: "Economic analysis and policy design", track: "Policy & Economics", points: 3 },
+      { text: "Gender analysis and social justice frameworks", track: "Gender Studies", points: 3 },
+      { text: "Qualitative research and community engagement", track: "Research Methods", points: 3 }
+    ]
+  },
+  {
+    id: 5,
+    question: "When reading about development work, you gravitate toward:",
+    options: [
+      { text: "Reports with charts, statistics, and measurable outcomes", track: "Data Analysis", points: 3 },
+      { text: "Policy briefs and economic impact analyses", track: "Policy & Economics", points: 3 },
+      { text: "Case studies on gender and social inclusion", track: "Gender Studies", points: 3 },
+      { text: "Ethnographic studies and community stories", track: "Research Methods", points: 3 }
+    ]
+  }
+];
+
+// Multi-dimensional browse definitions (new enhanced browsing system)
+const browseByRole = {
+  "Researcher": {
+    description: "Academic and field research roles",
+    courses: ["research-ethics-101", "qualitative-research-methods-101", "visual-ethnography-101", "data-literacy-101"],
+    color: "blue"
+  },
+  "Program Manager": {
+    description: "Designing and managing development programs",
+    courses: ["monitoring-evaluation-accountability-and-learning-101", "community-development-101", "behaviour-change-communication-programming-101"],
+    color: "green"
+  },
+  "Policy Analyst": {
+    description: "Government and institutional policy work",
+    courses: ["political-economy-101", "law-and-constitution-101", "global-development-architecture-101"],
+    color: "purple"
+  },
+  "Data Analyst": {
+    description: "Data-driven decision making and analysis",
+    courses: ["data-literacy-101", "exploratory-data-analysis-for-household-surveys-101", "econometrics-101", "bivariate-analysis-101"],
+    color: "orange"
+  },
+  "Gender Specialist": {
+    description: "Gender equality and women's empowerment",
+    courses: ["gender-studies-101", "womens-economic-empowerment-101", "sexual-and-reproductive-health-rights-101", "care-economy-101"],
+    color: "pink"
+  },
+  "Advocacy Professional": {
+    description: "Campaign and advocacy work",
+    courses: ["advocacy-and-communications-101", "decolonising-development-101", "environmental-justice-101"],
+    color: "red"
+  }
+};
+
+const browseByImpact = {
+  "Economic Empowerment": {
+    description: "Creating economic opportunities and reducing poverty",
+    courses: ["development-economics-101", "care-economy-101", "decent-work-101", "livelihoods-101"],
+    color: "green"
+  },
+  "Social Justice": {
+    description: "Addressing inequality and promoting inclusion",
+    courses: ["gender-studies-101", "marginilised-identities-101", "environmental-justice-101", "decolonising-development-101"],
+    color: "purple"
+  },
+  "Health & Wellbeing": {
+    description: "Improving health outcomes and quality of life",
+    courses: ["public-health-101", "sexual-and-reproductive-health-rights-101", "social-welfare-and-safety-nets-101"],
+    color: "blue"
+  },
+  "Education & Learning": {
+    description: "Enhancing education and capacity building",
+    courses: ["pedagogy-and-education-101", "social-emotional-learning-101", "english-for-development-professionals-101"],
+    color: "yellow"
+  },
+  "Climate & Environment": {
+    description: "Environmental sustainability and climate action",
+    courses: ["climate-science-101", "environmental-justice-101"],
+    color: "teal"
+  },
+  "Systems & Governance": {
+    description: "Understanding and changing systems",
+    courses: ["political-economy-101", "global-development-architecture-101", "decolonising-development-101"],
+    color: "indigo"
+  }
+};
+
+const browseByGoal = {
+  "Understand the Big Picture": {
+    description: "Get foundational knowledge and context",
+    courses: ["development-economics-101", "global-development-architecture-101", "political-economy-101"],
+    color: "blue"
+  },
+  "Conduct Better Research": {
+    description: "Learn research methods and analysis",
+    courses: ["research-ethics-101", "qualitative-research-methods-101", "data-literacy-101", "econometrics-101"],
+    color: "purple"
+  },
+  "Design Better Programs": {
+    description: "Create and implement effective interventions",
+    courses: ["monitoring-evaluation-accountability-and-learning-101", "community-development-101", "behaviour-change-communication-programming-101"],
+    color: "green"
+  },
+  "Advocate for Change": {
+    description: "Influence policy and drive systemic change",
+    courses: ["advocacy-and-communications-101", "political-economy-101", "law-and-constitution-101"],
+    color: "orange"
+  }
+};
 
 // Complete the Multi-Dimensional Browse Modal Component
-const BrowseModal = ({ isOpen, onClose }) => {
-  const { setCurrentPage } = usePage();
-  const [selectedRole, setSelectedRole] = useState('');
-  const [selectedImpact, setSelectedImpact] = useState('');
-  const [selectedGoal, setSelectedGoal] = useState('');
-  const [results, setResults] = useState([]);
 
-  const generateRecommendations = () => {
-    if (!selectedRole || !selectedImpact || !selectedGoal) return;
-
-    // Combine courses from all three selections
-    const roleCourses = browseByRole[selectedRole]?.courses || [];
-    const impactCourses = browseByImpact[selectedImpact]?.courses || [];
-    const goalCourses = browseByGoal[selectedGoal]?.courses || [];
-    
-    // Find courses that appear in multiple categories (weighted recommendations)
-    const courseCount = {};
-    [...roleCourses, ...impactCourses, ...goalCourses].forEach(course => {
-      courseCount[course] = (courseCount[course] || 0) + 1;
-    });
-    
-    // Sort by relevance (courses appearing in multiple categories rank higher)
-    const recommendedCourses = Object.entries(courseCount)
-      .sort(([,a], [,b]) => b - a)
-      .slice(0, 6)
-      .map(([courseId]) => courseData.find(c => c.id === courseId))
-      .filter(Boolean);
-    
-    setResults(recommendedCourses);
-  };
-
-  useEffect(() => {
-    generateRecommendations();
-  }, [selectedRole, selectedImpact, selectedGoal]);
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-auto">
-        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Smart Course Finder</h2>
-          <button 
-            onClick={onClose} 
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-            aria-label="Close browser"
-          >
-            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-          </button>
-        </div>
-        
-        <div className="p-6">
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
-            Select one option from each category to get personalized course recommendations:
-          </p>
-          
-          {/* Role Selection */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What's your role?</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {Object.entries(browseByRole).map(([role, info]) => (
-                <button
-                  key={role}
-                  onClick={() => setSelectedRole(role)}
-                  className={`p-3 rounded-lg border text-left transition-colors ${
-                    selectedRole === role 
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
-                      : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <div className="font-medium text-gray-900 dark:text-white text-sm">{role}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{info.description}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          {/* Impact Area Selection */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What impact area interests you?</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {Object.entries(browseByImpact).map(([impact, info]) => (
-                <button
-                  key={impact}
-                  onClick={() => setSelectedImpact(impact)}
-                  className={`p-3 rounded-lg border text-left transition-colors ${
-                    selectedImpact === impact 
-                      ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20' 
-                      : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <div className="font-medium text-gray-900 dark:text-white text-sm">{impact}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{info.description}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          {/* Goal Selection */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">What's your learning goal?</h3>
-            <div className="grid grid-cols-2 gap-3">
-              {Object.entries(browseByGoal).map(([goal, info]) => (
-                <button
-                  key={goal}
-                  onClick={() => setSelectedGoal(goal)}
-                  className={`p-3 rounded-lg border text-left transition-colors ${
-                    selectedGoal === goal 
-                      ? 'border-green-500 bg-green-50 dark:bg-green-900/20' 
-                      : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <div className="font-medium text-gray-900 dark:text-white text-sm">{goal}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{info.description}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          {/* Results */}
-          {results.length > 0 && (
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Recommended Courses for You
-              </h3>
-              <div className="grid gap-4 md:grid-cols-2">
-                {results.map((course) => (
-                  <div key={course.id} className="border dark:border-gray-600 rounded-lg p-4">
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">{course.title}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{course.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500 dark:text-gray-400">{course.level}</span>
-                      <a
-                        href={course.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm flex items-center"
-                      >
-                        <ExternalLink className="h-4 w-4 mr-1" />
-                        Access
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          
-          {selectedRole && selectedImpact && selectedGoal && results.length === 0 && (
-            <div className="text-center py-8">
-              <p className="text-gray-500 dark:text-gray-400">No courses found for this combination. Try different selections.</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
 
 // Feedback Modal Component
-const FeedbackModal = ({ isOpen, onClose }) => {
-  const [feedback, setFeedback] = useState('');
-  const [category, setCategory] = useState('general');
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      const response = await fetch('https://formspree.io/f/xpwdvgzp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          feedback,
-          category,
-          email,
-          timestamp: new Date().toISOString(),
-          page: 'ImpactMojo App'
-        }),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-        setTimeout(() => {
-          setSubmitted(false);
-          setFeedback('');
-          setCategory('general');
-          setEmail('');
-          onClose();
-        }, 2000);
-      }
-    } catch (error) {
-      console.error('Error submitting feedback:', error);
-    }
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full">
-        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Send Feedback</h2>
-          <button 
-            onClick={onClose} 
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-            aria-label="Close feedback"
-          >
-            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-          </button>
-        </div>
-        
-        {submitted ? (
-          <div className="p-6 text-center">
-            <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Thank you!</h3>
-            <p className="text-gray-600 dark:text-gray-300">Your feedback has been submitted successfully.</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="p-6">
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Category
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                required
-              >
-                <option value="general">General Feedback</option>
-                <option value="bug">Bug Report</option>
-                <option value="feature">Feature Request</option>
-                <option value="content">Content Suggestion</option>
-                <option value="ui">UI/UX Feedback</option>
-              </select>
-            </div>
-            
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Your Feedback
-              </label>
-              <textarea
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-                rows={4}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                placeholder="Tell us what you think..."
-                required
-              />
-            </div>
-            
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Email (optional)
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                placeholder="your@email.com"
-              />
-            </div>
-            
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
-              >
-                Send Feedback
-              </button>
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        )}
-      </div>
-    </div>
-  );
-};
 
 // Suggest Course Modal Component
-const SuggestCourseModal = ({ isOpen, onClose }) => {
-  const [courseData, setCourseData] = useState({
-    title: '',
-    description: '',
-    category: '',
-    rationale: '',
-    email: ''
-  });
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      const response = await fetch('https://formspree.io/f/xpwdvgzp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          type: 'Course Suggestion',
-          ...courseData,
-          timestamp: new Date().toISOString()
-        }),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-        setTimeout(() => {
-          setSubmitted(false);
-          setCourseData({
-            title: '',
-            description: '',
-            category: '',
-            rationale: '',
-            email: ''
-          });
-          onClose();
-        }, 2000);
-      }
-    } catch (error) {
-      console.error('Error submitting course suggestion:', error);
-    }
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full max-h-[90vh] overflow-auto">
-        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Suggest a Course</h2>
-          <button 
-            onClick={onClose} 
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-            aria-label="Close suggestion form"
-          >
-            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-          </button>
-        </div>
-        
-        {submitted ? (
-          <div className="p-6 text-center">
-            <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Thank you!</h3>
-            <p className="text-gray-600 dark:text-gray-300">Your course suggestion has been submitted for review.</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="p-6">
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Course Title
-              </label>
-              <input
-                type="text"
-                value={courseData.title}
-                onChange={(e) => setCourseData({...courseData, title: e.target.value})}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                placeholder="e.g., Digital Innovation 101"
-                required
-              />
-            </div>
-            
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Description
-              </label>
-              <textarea
-                value={courseData.description}
-                onChange={(e) => setCourseData({...courseData, description: e.target.value})}
-                rows={3}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                placeholder="Brief description of the course content..."
-                required
-              />
-            </div>
-            
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Category
-              </label>
-              <select
-                value={courseData.category}
-                onChange={(e) => setCourseData({...courseData, category: e.target.value})}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                required
-              >
-                <option value="">Select category...</option>
-                <option value="Research Methods">Research Methods</option>
-                <option value="Data Analysis">Data Analysis</option>
-                <option value="Gender Studies">Gender Studies</option>
-                <option value="Policy & Economics">Policy & Economics</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Why is this course needed?
-              </label>
-              <textarea
-                value={courseData.rationale}
-                onChange={(e) => setCourseData({...courseData, rationale: e.target.value})}
-                rows={3}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                placeholder="Explain the gap this course would fill..."
-                required
-              />
-            </div>
-            
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Your Email (optional)
-              </label>
-              <input
-                type="email"
-                value={courseData.email}
-                onChange={(e) => setCourseData({...courseData, email: e.target.value})}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                placeholder="your@email.com"
-              />
-            </div>
-            
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                className="flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors"
-              >
-                Submit Suggestion
-              </button>
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        )}
-      </div>
-    </div>
-  );
-};
 
 // Complete Global Modals component
-const GlobalModals = () => {
-  const { activeModal, modalData, closeModal } = useModal();
 
-  return (
-    <>
-      <TrackModal 
-        isOpen={activeModal === 'track'} 
-        onClose={closeModal}
-        track={modalData}
-      />
-      <QuizModal 
-        isOpen={activeModal === 'quiz'} 
-        onClose={closeModal}
-      />
-      <BrowseModal 
-        isOpen={activeModal === 'browse'} 
-        onClose={closeModal}
-      />
-      <CornellNotesModal 
-        isOpen={activeModal === 'notes'} 
-        onClose={closeModal}
-      />
-      <ComparisonModal 
-        isOpen={activeModal === 'comparison'} 
-        onClose={closeModal}
-      />
-      <BookmarkModal 
-        isOpen={activeModal === 'bookmarks'} 
-        onClose={closeModal}
-      />
-      <FeedbackModal 
-        isOpen={activeModal === 'feedback'} 
-        onClose={closeModal}
-      />
-      <SuggestCourseModal 
-        isOpen={activeModal === 'suggest'} 
-        onClose={closeModal}
-      />
-    </>
-  );
-};
 
 // Complete Global FABs component
 const GlobalFABs = () => {
