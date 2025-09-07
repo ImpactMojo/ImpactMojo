@@ -965,7 +965,7 @@ const AIToolsPage = () => {
 
 // Home Page Component
 
-// Enhanced Home Page Component - ADD THIS TO REPLACE YOUR EXISTING HomePage COMPONENT
+// CORRECTED Home Page Component - Replace your existing HomePage in app1.js
 
 const HomePage = () => {
   const { darkMode } = usePage();
@@ -1069,11 +1069,11 @@ const HomePage = () => {
     setQuizResult(null);
   };
 
-  // Get popular courses (first 6 courses)
-  const popularCourses = courses.slice(0, 6);
+  // Get popular courses (first 6 courses) - USING courseData
+  const popularCourses = courseData.slice(0, 6);
 
-  // Get upcoming courses (mock data)
-  const upcomingCourses = [
+  // Get upcoming courses (mock data or from upcomingCourses if available)
+  const upcomingCoursesData = upcomingCourses || [
     { id: 'UC1', title: 'Digital Development 101', track: 'Technology', status: 'coming-soon' },
     { id: 'UC2', title: 'Sustainable Finance 101', track: 'Economics', status: 'coming-soon' }
   ];
@@ -1163,7 +1163,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* Learning Tracks Overview */}
+        {/* Learning Tracks Overview - USING courseData */}
         <div className="mb-16">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Choose Your Learning Track</h2>
@@ -1211,7 +1211,7 @@ const HomePage = () => {
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">New courses launching soon</p>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
-            {upcomingCourses.map((course) => (
+            {upcomingCoursesData.map((course) => (
               <div key={course.id} className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden opacity-75">
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-4">
@@ -1508,6 +1508,7 @@ const HomePage = () => {
     </div>
   );
 };
+
 // Courses Page Component
 const CoursesPage = () => {
   const { darkMode, searchQuery, setSearchQuery, browseMode, setBrowseMode } = usePage();
