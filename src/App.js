@@ -8,7 +8,7 @@ import {
   Search, Plus, Edit3, Save, Filter, BookmarkIcon, Tag,
   Install, AlertTriangle, ChevronDown, ChevronRight, Gamepad2,
   BarChart, Star, ArrowRight, Calendar, TrendingUp, Scale, 
-  Award, Puzzle, Zap, Send, Lightbulb
+  Award, Puzzle, Zap, Send, Lightbulb, Heart, ExternalLinkIcon
 } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
@@ -85,7 +85,7 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
-// Multi-dimensional browse system
+// CORRECTED Multi-dimensional browse system with AGREED tracks
 const browseByRole = {
   "New to Development": {
     description: "Just starting your development journey",
@@ -102,298 +102,236 @@ const browseByRole = {
     courses: ["community-development-101", "monitoring-evaluation-accountability-and-learning-101", "advocacy-and-communications-101"],
     color: "green"
   },
-  "Student/Policy Maker": {
+  "Policy Maker/Student": {
     description: "Learning and shaping policy decisions",
     courses: ["law-and-constitution-101", "political-economy-101", "global-development-architecture-101"],
     color: "orange"
   }
 };
 
-const browseByImpact = {
+const browseByTheme = {
   "Health & Wellbeing": {
     description: "Improving health outcomes and social welfare",
-    courses: ["public-health-101", "sexual-and-reproductive-health-101", "human-rights-101"],
+    courses: ["public-health-101", "sexual-and-reproductive-health-101"],
     color: "red"
   },
   "Education & Skills": {
     description: "Building knowledge and capacity",
-    courses: ["data-literacy-101", "qualitative-research-methods-101", "econometrics-101"],
-    color: "blue"
+    courses: ["data-literacy-101", "qualitative-research-methods-101"],
+    color: "indigo"
   },
-  "Governance & Justice": {
-    description: "Strengthening institutions and rule of law",
+  "Governance & Rights": {
+    description: "Understanding systems of power and justice",
     courses: ["law-and-constitution-101", "political-economy-101", "research-ethics-101"],
     color: "purple"
   },
-  "Economic Growth": {
-    description: "Creating sustainable economic opportunities",
-    courses: ["development-economics-101", "monitoring-evaluation-accountability-and-learning-101"],
-    color: "green"
-  }
-};
-
-const browseByTimeCommitment = {
-  "Quick Start (< 2 hours)": {
-    description: "Get started with fundamental concepts",
-    courses: ["development-economics-101", "global-development-architecture-101"],
+  "Economic Development": {
+    description: "Creating sustainable economic growth",
+    courses: ["development-economics-101", "econometrics-101", "monitoring-evaluation-accountability-and-learning-101"],
     color: "green"
   },
-  "Deep Dive (2-4 hours)": {
-    description: "Comprehensive exploration of topics",
-    courses: ["qualitative-research-methods-101", "monitoring-evaluation-accountability-and-learning-101", "econometrics-101"],
+  "Social Change": {
+    description: "Driving community and social transformation",
+    courses: ["community-development-101", "advocacy-and-communications-101", "global-development-architecture-101"],
     color: "blue"
-  },
-  "Mastery Track (4+ hours)": {
-    description: "Advanced learning with practical application",
-    courses: ["data-literacy-101", "research-ethics-101", "political-economy-101"],
-    color: "purple"
   }
 };
 
-// Auth Context
-const AuthContext = createContext();
-const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [bookmarks, setBookmarks] = useState([]);
-  const [comparisons, setComparisons] = useState([]);
-  const [customPathway, setCustomPathway] = useState([]);
-  const [notes, setNotes] = useState([]);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
-      if (user) {
-        await loadUserData(user.uid);
-      } else {
-        setBookmarks([]);
-        setComparisons([]);
-        setCustomPathway([]);
-        setNotes([]);
-      }
-      setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
-
-  const loadUserData = async (uid) => {
-    try {
-      const userDoc = await getDoc(doc(db, 'users', uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        setBookmarks(userData.bookmarks || []);
-        setComparisons(userData.comparisons || []);
-        setCustomPathway(userData.customPathway || []);
-        setNotes(userData.notes || []);
-      }
-    } catch (error) {
-      console.error('Error loading user data:', error);
-    }
-  };
-
-  const signIn = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      return result.user;
-    } catch (error) {
-      console.error('Error signing in:', error);
-      throw error;
-    }
-  };
-
-  const signOut = async () => {
-    try {
-      await firebaseSignOut(auth);
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
-  };
-
-  const addBookmark = async (item) => {
-    if (!user) return;
-    const newBookmarks = [...bookmarks, { ...item, bookmarkedAt: new Date().toISOString() }];
-    setBookmarks(newBookmarks);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { bookmarks: newBookmarks });
-    } catch (error) {
-      console.error('Error saving bookmark:', error);
-    }
-  };
-
-  const removeBookmark = async (itemId) => {
-    if (!user) return;
-    const newBookmarks = bookmarks.filter(item => item.id !== itemId);
-    setBookmarks(newBookmarks);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { bookmarks: newBookmarks });
-    } catch (error) {
-      console.error('Error removing bookmark:', error);
-    }
-  };
-
-  const isBookmarked = (itemId) => {
-    return bookmarks.some(item => item.id === itemId);
-  };
-
-  const addToComparison = async (item) => {
-    if (!user) return;
-    const newComparisons = [...comparisons, item];
-    setComparisons(newComparisons);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { comparisons: newComparisons });
-    } catch (error) {
-      console.error('Error saving comparison:', error);
-    }
-  };
-
-  const removeFromComparison = async (itemId) => {
-    if (!user) return;
-    const newComparisons = comparisons.filter(item => item.id !== itemId);
-    setComparisons(newComparisons);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { comparisons: newComparisons });
-    } catch (error) {
-      console.error('Error removing comparison:', error);
-    }
-  };
-
-  const addToPathway = async (courseId) => {
-    if (!user) return;
-    const newPathway = [...customPathway, courseId];
-    setCustomPathway(newPathway);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { customPathway: newPathway });
-    } catch (error) {
-      console.error('Error saving pathway:', error);
-    }
-  };
-
-  const removeFromPathway = async (courseId) => {
-    if (!user) return;
-    const newPathway = customPathway.filter(id => id !== courseId);
-    setCustomPathway(newPathway);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { customPathway: newPathway });
-    } catch (error) {
-      console.error('Error removing from pathway:', error);
-    }
-  };
-
-  const addNote = async (note) => {
-    if (!user) return;
-    const newNote = {
-      id: Date.now().toString(),
-      ...note,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-    const newNotes = [...notes, newNote];
-    setNotes(newNotes);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { notes: newNotes });
-    } catch (error) {
-      console.error('Error saving note:', error);
-    }
-  };
-
-  const updateNote = async (noteId, updatedNote) => {
-    if (!user) return;
-    const newNotes = notes.map(note => 
-      note.id === noteId 
-        ? { ...note, ...updatedNote, updatedAt: new Date().toISOString() }
-        : note
-    );
-    setNotes(newNotes);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { notes: newNotes });
-    } catch (error) {
-      console.error('Error updating note:', error);
-    }
-  };
-
-  const deleteNote = async (noteId) => {
-    if (!user) return;
-    const newNotes = notes.filter(note => note.id !== noteId);
-    setNotes(newNotes);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { notes: newNotes });
-    } catch (error) {
-      console.error('Error deleting note:', error);
-    }
-  };
-
-  const isPremium = user && user.email && user.email.includes('@'); // Simplified check
-
-  const value = {
-    user,
-    loading,
-    signIn,
-    signOut,
-    bookmarks,
-    addBookmark,
-    removeBookmark,
-    isBookmarked,
-    comparisons,
-    addToComparison,
-    removeFromComparison,
-    customPathway,
-    addToPathway,
-    removeFromPathway,
-    notes,
-    addNote,
-    updateNote,
-    deleteNote,
-    isPremium
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
-
-// Page Context
+// Context for global state
 const PageContext = createContext();
-const PageProvider = ({ children }) => {
-  const [currentPage, setCurrentPage] = useState('home');
-  const [darkMode, setDarkMode] = useState(() => {
-    const saved = localStorage.getItem('darkMode');
-    return saved ? JSON.parse(saved) : false;
-  });
+const AuthContext = createContext();
 
-  useEffect(() => {
-    localStorage.setItem('darkMode', JSON.stringify(darkMode));
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
+// Custom hooks
+const usePage = () => useContext(PageContext);
+const useAuth = () => useContext(AuthContext);
 
-  const toggleDarkMode = () => setDarkMode(!darkMode);
+// Improved Floating Action Buttons - positioned at bottom right elegantly
+const ImprovedFloatingActionButtons = () => {
+  const { darkMode } = usePage();
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const buttons = [
+    { icon: MessageCircle, label: 'Feedback', action: 'feedback' },
+    { icon: BookmarkIcon, label: 'Bookmarks', action: 'bookmarks' },
+    { icon: Headphones, label: 'Focus Music', action: 'music' },
+    { icon: Lightbulb, label: 'Quick Quiz', action: 'quiz' }
+  ];
 
-  const value = {
-    currentPage,
-    setCurrentPage,
-    darkMode,
-    toggleDarkMode
-  };
-
-  return <PageContext.Provider value={value}>{children}</PageContext.Provider>;
+  return (
+    <div className="fixed bottom-6 right-6 z-40">
+      <div className="flex flex-col-reverse items-end space-y-reverse space-y-3">
+        {/* Individual action buttons */}
+        {isExpanded && buttons.map((button, index) => (
+          <button
+            key={button.action}
+            className={`flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-full shadow-lg transition-all duration-200 transform ${
+              isExpanded ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+            }`}
+            style={{ transitionDelay: `${index * 50}ms` }}
+          >
+            <button.icon size={20} />
+            <span className="text-sm whitespace-nowrap">{button.label}</span>
+          </button>
+        ))}
+        
+        {/* Main toggle button */}
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-200"
+        >
+          {isExpanded ? <X size={24} /> : <Plus size={24} />}
+        </button>
+      </div>
+    </div>
+  );
 };
 
-const usePage = () => {
-  const context = useContext(PageContext);
-  if (!context) {
-    throw new Error('usePage must be used within a PageProvider');
-  }
-  return context;
+// Cornell Notes Editor Component
+const CornellNotesEditor = ({ note, onSave, onCancel }) => {
+  const [title, setTitle] = useState(note?.title || '');
+  const [cues, setCues] = useState(note?.cues || '');
+  const [notes, setNotes] = useState(note?.notes || '');
+  const [summary, setSummary] = useState(note?.summary || '');
+  const [tags, setTags] = useState(note?.tags || []);
+  const [newTag, setNewTag] = useState('');
+  const { darkMode } = usePage();
+
+  const handleSave = () => {
+    if (!title.trim()) {
+      alert('Please enter a title for your note');
+      return;
+    }
+    
+    onSave({
+      title: title.trim(),
+      cues: cues.trim(),
+      notes: notes.trim(),
+      summary: summary.trim(),
+      tags,
+      createdAt: note?.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    });
+  };
+
+  const addTag = () => {
+    if (newTag.trim() && !tags.includes(newTag.trim())) {
+      setTags([...tags, newTag.trim()]);
+      setNewTag('');
+    }
+  };
+
+  const removeTag = (tagToRemove) => {
+    setTags(tags.filter(tag => tag !== tagToRemove));
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className={`${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto`}>
+        <div className="p-6">
+          <h2 className="text-2xl font-bold mb-4">Cornell Notes</h2>
+          
+          {/* Title */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter note title..."
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700"
+            />
+          </div>
+
+          {/* Tags */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">Tags</label>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {tags.map((tag, index) => (
+                <span key={index} className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-md text-sm flex items-center">
+                  {tag}
+                  <button onClick={() => removeTag(tag)} className="ml-2 text-red-500 hover:text-red-700">
+                    <X size={14} />
+                  </button>
+                </span>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={newTag}
+                onChange={(e) => setNewTag(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && addTag()}
+                placeholder="Add tag..."
+                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700"
+              />
+              <button onClick={addTag} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                <Tag size={16} />
+              </button>
+            </div>
+          </div>
+
+          {/* Cornell Notes Layout */}
+          <div className="border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden mb-4" style={{height: '400px'}}>
+            <div className="flex h-3/4">
+              {/* Cues Column */}
+              <div className="w-1/3 border-r border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800">
+                <div className="p-3 bg-gray-100 dark:bg-gray-700 border-b border-gray-300 dark:border-gray-600">
+                  <h3 className="font-semibold text-sm">Cues & Questions</h3>
+                </div>
+                <textarea
+                  value={cues}
+                  onChange={(e) => setCues(e.target.value)}
+                  placeholder="Key points, questions, keywords..."
+                  className="w-full h-full p-3 resize-none border-none outline-none bg-transparent"
+                />
+              </div>
+              
+              {/* Notes Column */}
+              <div className="w-2/3">
+                <div className="p-3 bg-gray-100 dark:bg-gray-700 border-b border-gray-300 dark:border-gray-600">
+                  <h3 className="font-semibold text-sm">Notes</h3>
+                </div>
+                <textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Main notes, concepts, details..."
+                  className="w-full h-full p-3 resize-none border-none outline-none bg-transparent"
+                />
+              </div>
+            </div>
+            
+            {/* Summary Section */}
+            <div className="border-t border-gray-300 dark:border-gray-600">
+              <div className="p-3 bg-gray-100 dark:bg-gray-700 border-b border-gray-300 dark:border-gray-600">
+                <h3 className="font-semibold text-sm">Summary</h3>
+              </div>
+              <textarea
+                value={summary}
+                onChange={(e) => setSummary(e.target.value)}
+                placeholder="Summarize key takeaways..."
+                className="w-full h-24 p-3 resize-none border-none outline-none bg-transparent"
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-end space-x-3">
+            <button
+              onClick={onCancel}
+              className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+            >
+              Save Note
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 // Navigation Component
@@ -410,12 +348,12 @@ const Navigation = () => {
             <div className="flex-shrink-0 flex items-center">
               <button 
                 onClick={() => setCurrentPage('home')}
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-3"
               >
                 <img 
                   src="/assets/ImpactMojo Logo.png"
                   alt="ImpactMojo Logo"
-                  className="h-8 w-8"
+                  className="h-12 w-12 object-contain"
                   onError={(e) => {
                     e.target.src = "/assets/android-chrome-192x192.png";
                   }}
@@ -453,51 +391,44 @@ const Navigation = () => {
               )}
             </div>
           </div>
-          <div className="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
+          <div className="hidden sm:ml-6 sm:flex sm:items-center">
             <button
               onClick={toggleDarkMode}
-              className="p-2 text-gray-400 hover:text-gray-500 dark:text-gray-300 dark:hover:text-white"
+              className="bg-gray-200 dark:bg-gray-700 relative inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
             >
-              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {darkMode ? <Sun className="block h-6 w-6" aria-hidden="true" /> : <Moon className="block h-6 w-6" aria-hidden="true" />}
             </button>
             {user ? (
-              <div className="flex items-center space-x-3">
-                <img 
-                  src={user.photoURL} 
-                  alt={user.displayName}
-                  className="h-8 w-8 rounded-full"
-                />
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {user.displayName}
-                </span>
-                <button
-                  onClick={signOut}
-                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm"
-                >
-                  Sign Out
-                </button>
+              <div className="ml-3 relative">
+                <div className="flex items-center space-x-3">
+                  <span className="text-gray-700 dark:text-gray-300">{user.displayName}</span>
+                  <button
+                    onClick={signOut}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                  >
+                    Sign Out
+                  </button>
+                </div>
               </div>
             ) : (
               <button
                 onClick={signIn}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                className="ml-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
               >
                 Sign In
               </button>
             )}
           </div>
-          <div className="sm:hidden flex items-center">
+          <div className="-mr-2 flex items-center sm:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-400 hover:text-gray-500 dark:text-gray-300 dark:hover:text-white"
+              className="bg-gray-200 dark:bg-gray-700 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
             </button>
           </div>
         </div>
       </div>
-
-      {/* Mobile menu */}
       {isMenuOpen && (
         <div className="sm:hidden">
           <div className="pt-2 pb-3 space-y-1">
@@ -508,7 +439,7 @@ const Navigation = () => {
                   setCurrentPage(page);
                   setIsMenuOpen(false);
                 }}
-                className={`${currentPage === page ? 'bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-900 dark:text-blue-200' : 'border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-white'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left capitalize`}
+                className={`${currentPage === page ? 'bg-blue-50 dark:bg-blue-900 border-blue-500 text-blue-700 dark:text-blue-200' : 'border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-800 dark:hover:text-white'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left capitalize`}
               >
                 {page}
               </button>
@@ -520,7 +451,7 @@ const Navigation = () => {
                     setCurrentPage('dashboard');
                     setIsMenuOpen(false);
                   }}
-                  className={`${currentPage === 'dashboard' ? 'bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-900 dark:text-blue-200' : 'border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-white'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
+                  className={`${currentPage === 'dashboard' ? 'bg-blue-50 dark:bg-blue-900 border-blue-500 text-blue-700 dark:text-blue-200' : 'border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-800 dark:hover:text-white'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
                 >
                   Dashboard
                 </button>
@@ -529,49 +460,37 @@ const Navigation = () => {
                     setCurrentPage('ai-tools');
                     setIsMenuOpen(false);
                   }}
-                  className={`${currentPage === 'ai-tools' ? 'bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-900 dark:text-blue-200' : 'border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-white'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
+                  className={`${currentPage === 'ai-tools' ? 'bg-blue-50 dark:bg-blue-900 border-blue-500 text-blue-700 dark:text-blue-200' : 'border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-800 dark:hover:text-white'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
                 >
                   AI Tools
                 </button>
               </>
             )}
           </div>
-          <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-600">
-            <div className="flex items-center px-4 space-x-3">
+          <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center px-4">
               <button
                 onClick={toggleDarkMode}
-                className="p-2 text-gray-400 hover:text-gray-500 dark:text-gray-300 dark:hover:text-white"
+                className="bg-gray-200 dark:bg-gray-700 relative inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
               >
-                {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                {darkMode ? <Sun className="block h-6 w-6" aria-hidden="true" /> : <Moon className="block h-6 w-6" aria-hidden="true" />}
               </button>
               {user ? (
-                <>
-                  <img 
-                    src={user.photoURL} 
-                    alt={user.displayName}
-                    className="h-8 w-8 rounded-full"
-                  />
-                  <div className="flex-1">
-                    <div className="text-base font-medium text-gray-800 dark:text-white">
-                      {user.displayName}
-                    </div>
-                    <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-                      {user.email}
-                    </div>
-                  </div>
+                <div className="ml-3 flex items-center space-x-3">
+                  <span className="text-gray-700 dark:text-gray-300">{user.displayName}</span>
                   <button
                     onClick={signOut}
-                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
                   >
                     Sign Out
                   </button>
-                </>
+                </div>
               ) : (
                 <button
                   onClick={signIn}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium w-full"
+                  className="ml-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
                 >
-                  Sign In with Google
+                  Sign In
                 </button>
               )}
             </div>
@@ -582,971 +501,43 @@ const Navigation = () => {
   );
 };
 
-// Home Page Component
-const HomePage = () => {
-  const { darkMode } = usePage();
-  const { user } = useAuth();
-  const { setCurrentPage } = usePage();
-  const [showCookieConsent, setShowCookieConsent] = useState(false);
-  const [showQuizModal, setShowQuizModal] = useState(false);
-  const [showNewsletterModal, setShowNewsletterModal] = useState(false);
-  const [currentQuizQuestion, setCurrentQuizQuestion] = useState(0);
-  const [quizAnswers, setQuizAnswers] = useState([]);
-  const [quizResult, setQuizResult] = useState(null);
-
-  // Check cookie consent on mount
-  useEffect(() => {
-    const hasConsent = localStorage.getItem('impactmojo-cookie-consent');
-    if (!hasConsent) {
-      setShowCookieConsent(true);
-    }
-  }, []);
-
-  // Social sharing functionality
-  const shareOnSocial = (platform) => {
-    const url = 'https://www.impactmojo.in';
-    const title = 'ImpactMojo - Development Know-How';
-    const description = 'Master the art and science of development with expert-curated courses, labs, and AI-powered tools for South Asia.';
-    
-    const shareUrls = {
-      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description)}`,
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(title + ' - ' + description)}`,
-      whatsapp: `https://wa.me/?text=${encodeURIComponent(title + ' - ' + description + ' ' + url)}`,
-      instagram: `https://www.instagram.com/`
-    };
-    
-    if (platform === 'instagram') {
-      navigator.clipboard.writeText(`${title} - ${description} ${url}`);
-      alert('Link copied to clipboard! You can now paste it in your Instagram story or post.');
-    }
-    
-    window.open(shareUrls[platform], '_blank', 'width=600,height=400');
-  };
-
-  // Quiz data
-  const quizQuestions = [
-    {
-      question: "What type of work interests you most?",
-      answers: [
-        { text: "Working with data and numbers", tracks: ["Data Analysis"] },
-        { text: "Understanding social dynamics", tracks: ["Gender Studies"] },
-        { text: "Policy analysis and economics", tracks: ["Policy & Economics"] },
-        { text: "Research design and methodology", tracks: ["Research Methods"] }
-      ]
-    },
-    {
-      question: "How do you prefer to learn?",
-      answers: [
-        { text: "Through hands-on data projects", tracks: ["Data Analysis"] },
-        { text: "Case studies and real examples", tracks: ["Gender Studies", "Policy & Economics"] },
-        { text: "Theoretical frameworks", tracks: ["Research Methods"] },
-        { text: "Interactive analysis", tracks: ["Data Analysis", "Research Methods"] }
-      ]
-    },
-    {
-      question: "What's your main goal?",
-      answers: [
-        { text: "Measure and evaluate impact", tracks: ["Data Analysis", "Research Methods"] },
-        { text: "Promote equity and inclusion", tracks: ["Gender Studies"] },
-        { text: "Influence policy decisions", tracks: ["Policy & Economics"] },
-        { text: "Build research skills", tracks: ["Research Methods"] }
-      ]
-    }
-  ];
-
-  const handleQuizAnswer = (answerIndex) => {
-    const newAnswers = [...quizAnswers, answerIndex];
-    setQuizAnswers(newAnswers);
-    
-    if (currentQuizQuestion < quizQuestions.length - 1) {
-      setCurrentQuizQuestion(currentQuizQuestion + 1);
-    } else {
-      // Calculate result
-      const trackScores = {};
-      newAnswers.forEach((answerIdx, questionIdx) => {
-        const tracks = quizQuestions[questionIdx].answers[answerIdx].tracks;
-        tracks.forEach(track => {
-          trackScores[track] = (trackScores[track] || 0) + 1;
-        });
-      });
-      
-      const recommendedTrack = Object.keys(trackScores).reduce((a, b) => 
-        trackScores[a] > trackScores[b] ? a : b
-      );
-      
-      setQuizResult(recommendedTrack);
-    }
-  };
-
-  const resetQuiz = () => {
-    setCurrentQuizQuestion(0);
-    setQuizAnswers([]);
-    setQuizResult(null);
-  };
-
-  // Get popular courses (first 6 courses)
-  const popularCourses = courseData.slice(0, 6);
-
-  // Get upcoming courses (mock data or from upcomingCourses if available)
-  const upcomingCoursesData = upcomingCourses || [
-    { id: 'UC1', title: 'Digital Development 101', track: 'Technology', status: 'coming-soon' },
-    { id: 'UC2', title: 'Sustainable Finance 101', track: 'Economics', status: 'coming-soon' }
-  ];
-
-  return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <Navigation />
-      <FloatingActionButtons user={user} />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
-            <span className="block">Development</span>
-            <span className="block text-blue-600 dark:text-blue-400">Know-How</span>
-          </h1>
-          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 dark:text-gray-300 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            Master the art and science of development with expert-curated courses, labs, and AI-powered tools.
-          </p>
-          <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
-            <div className="rounded-md shadow">
-              <button
-                onClick={() => setCurrentPage('courses')}
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
-              >
-                Start Learning
-              </button>
-            </div>
-            <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
-              <button
-                onClick={() => setShowQuizModal(true)}
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700"
-              >
-                Find Your Track
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* NEW MODULAR COMPONENTS */}
-        <PopularCoursesSection 
-          darkMode={darkMode} 
-          popularCourses={popularCourses} 
-          setCurrentPage={setCurrentPage} 
-        />
-        
-        <FeaturedContentSection 
-          darkMode={darkMode} 
-          setCurrentPage={setCurrentPage} 
-        />
-        
-        <TestimonialsSection darkMode={darkMode} />
-        
-        <LearningTracksSection 
-          darkMode={darkMode} 
-          courseData={courseData}
-          browseByRole={browseByRole}
-        />
-
-        {/* Upcoming Courses Section */}
-        <div className="mb-16">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Coming Soon</h2>
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">New courses launching soon</p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            {upcomingCoursesData.map((course) => (
-              <div key={course.id} className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden opacity-75">
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="inline-block px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-400 bg-gray-200 dark:bg-gray-700 rounded-full">
-                      {course.track}
-                    </span>
-                    <span className="text-xs text-orange-600 dark:text-orange-400 font-medium">
-                      Launching Soon
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">{course.title}</h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">Get notified when this course becomes available</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Social & About Creator Box */}
-        <div className="mb-16">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-            <div className="text-center">
-              <div className="w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-600 mx-auto mb-4 overflow-hidden">
-                <img 
-                  src="/assets/varna-photo.jpg" 
-                  alt="Varna Sri Raman"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.src = "/assets/android-chrome-192x192.png";
-                  }}
-                />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Created by Varna Sri Raman</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
-                ImpactMojo is built to democratize access to development knowledge.
-              </p>
-              <div className="flex justify-center space-x-4">
-                <button
-                  onClick={() => shareOnSocial('linkedin')}
-                  className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-                >
-                  LinkedIn
-                </button>
-                <button
-                  onClick={() => shareOnSocial('facebook')}
-                  className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-                >
-                  Facebook
-                </button>
-                <button
-                  onClick={() => shareOnSocial('whatsapp')}
-                  className="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
-                >
-                  WhatsApp
-                </button>
-                <button
-                  onClick={() => setShowNewsletterModal(true)}
-                  className="text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300"
-                >
-                  Newsletter
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* FAQ Section */}
-        <div className="mb-16">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
-          </div>
-          <div className="space-y-4 max-w-3xl mx-auto">
-            {[
-              {
-                q: "Are the courses free?",
-                a: "Yes, all courses are freely available. Some premium resources require sign-in."
-              },
-              {
-                q: "Do I get certificates?",
-                a: "ImpactMojo focuses on knowledge sharing rather than certification. Our goal is learning, not credentialing."
-              },
-              {
-                q: "Can I use the content for my organization?",
-                a: "Yes, all content is licensed under Creative Commons for non-commercial use with attribution."
-              },
-              {
-                q: "How often is new content added?",
-                a: "We regularly update our library. Subscribe to our newsletter to stay informed about new releases."
-              }
-            ].map((faq, index) => (
-              <details key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-md">
-                <summary className="p-4 cursor-pointer text-gray-900 dark:text-white font-medium hover:bg-gray-50 dark:hover:bg-gray-700">
-                  {faq.q}
-                </summary>
-                <div className="px-4 pb-4 text-gray-600 dark:text-gray-300">
-                  {faq.a}
-                </div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="col-span-1 md:col-span-2">
-              <h3 className="text-xl font-bold mb-4">ImpactMojo</h3>
-              <p className="text-gray-300 mb-4">
-                A curated library of knowledge decks exploring justice, equity, and development in South Asia.
-              </p>
-              <p className="text-sm text-gray-400">
-                Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0
-              </p>
-            </div>
-            <div>
-              <h4 className="font-medium mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li><button onClick={() => setCurrentPage('courses')} className="hover:text-white">Courses</button></li>
-                <li><button onClick={() => setCurrentPage('labs')} className="hover:text-white">Labs</button></li>
-                <li><button onClick={() => setCurrentPage('resources')} className="hover:text-white">Resources</button></li>
-                <li><button onClick={() => setCurrentPage('games')} className="hover:text-white">Games</button></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium mb-4">Connect</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li><a href="https://varna.substack.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">Newsletter</a></li>
-                <li><a href="https://www.linkedin.com/in/varna-sri-raman" target="_blank" rel="noopener noreferrer" className="hover:text-white">LinkedIn</a></li>
-                <li><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener noreferrer" className="hover:text-white">GitHub</a></li>
-                <li><a href="mailto:varna.sr@gmail.com" className="hover:text-white">Contact</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400 text-center">
-            <p>© 2025 ImpactMojo. No endorsements or certificates. Built for learning and social impact.</p>
-          </div>
-        </div>
-      </footer>
-
-      {/* Cookie Consent Banner */}
-      {showCookieConsent && (
-        <div className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <p className="text-sm">
-              We use analytics to improve your experience. By continuing, you agree to our use of cookies.
-            </p>
-            <button
-              onClick={() => {
-                localStorage.setItem('impactmojo-cookie-consent', 'true');
-                setShowCookieConsent(false);
-              }}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium ml-4"
-            >
-              Accept
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Quiz Modal */}
-      {showQuizModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
-            {!quizResult ? (
-              <>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    Find Your Learning Track
-                  </h3>
-                  <button 
-                    onClick={() => setShowQuizModal(false)}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    <X className="h-6 w-6" />
-                  </button>
-                </div>
-                <div className="mb-4">
-                  <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-                    Question {currentQuizQuestion + 1} of {quizQuestions.length}
-                  </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div 
-                      className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${((currentQuizQuestion + 1) / quizQuestions.length) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-                <div className="mb-6">
-                  <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-                    {quizQuestions[currentQuizQuestion].question}
-                  </h4>
-                  <div className="space-y-2">
-                    {quizQuestions[currentQuizQuestion].answers.map((answer, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleQuizAnswer(index)}
-                        className="w-full text-left p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
-                      >
-                        {answer.text}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    Your Recommended Track
-                  </h3>
-                  <button 
-                    onClick={() => setShowQuizModal(false)}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    <X className="h-6 w-6" />
-                  </button>
-                </div>
-                <div className="text-center mb-6">
-                  <div className="text-3xl mb-2">🎯</div>
-                  <h4 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                    {quizResult}
-                  </h4>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Based on your answers, this track aligns best with your interests and goals.
-                  </p>
-                </div>
-                <div className="flex space-x-3">
-                  <button
-                    onClick={() => {
-                      setCurrentPage('courses');
-                      setShowQuizModal(false);
-                    }}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium"
-                  >
-                    Explore Courses
-                  </button>
-                  <button
-                    onClick={resetQuiz}
-                    className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md font-medium hover:bg-gray-50 dark:hover:bg-gray-700"
-                  >
-                    Retake Quiz
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Newsletter Modal */}
-      {showNewsletterModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Subscribe to Newsletter
-              </h3>
-              <button 
-                onClick={() => setShowNewsletterModal(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Get updates on new courses, resources, and development insights.
-            </p>
-            <button
-              onClick={() => {
-                window.open('https://varna.substack.com', '_blank');
-                setShowNewsletterModal(false);
-              }}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md font-medium"
-            >
-              Visit Newsletter
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// Courses Page Component
-const CoursesPage = () => {
-  const { darkMode } = usePage();
-  const { addBookmark, removeBookmark, isBookmarked } = useAuth();
-  const [selectedTrack, setSelectedTrack] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [browseMode, setBrowseMode] = useState('role');
-
-  const handleBookmark = (course) => {
-    const bookmarkItem = { ...course, type: 'course' };
-    if (isBookmarked(course.id)) {
-      removeBookmark(course.id);
-    } else {
-      addBookmark(bookmarkItem);
-    }
-  };
-
-  const filteredCourses = courseData.filter(course => {
-    const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         course.description.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    if (selectedTrack === 'all') return matchesSearch;
-    
-    if (browseMode === 'role') {
-      const roleData = browseByRole[selectedTrack];
-      return matchesSearch && roleData && roleData.courses.includes(course.id);
-    } else if (browseMode === 'impact') {
-      const impactData = browseByImpact[selectedTrack];
-      return matchesSearch && impactData && impactData.courses.includes(course.id);
-    } else if (browseMode === 'time') {
-      const timeData = browseByTimeCommitment[selectedTrack];
-      return matchesSearch && timeData && timeData.courses.includes(course.id);
-    }
-    
-    return matchesSearch;
-  });
-
-  const getBrowseOptions = () => {
-    switch (browseMode) {
-      case 'role': return browseByRole;
-      case 'impact': return browseByImpact;
-      case 'time': return browseByTimeCommitment;
-      default: return browseByRole;
-    }
-  };
-
-  return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <Navigation />
-      <FloatingActionButtons />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Courses</h1>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-            Explore our comprehensive library of development courses
-          </p>
-        </div>
-
-        {/* Search and Filters */}
-        <div className="mb-8">
-          <div className="flex flex-col sm:flex-row gap-4 mb-4">
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="Search courses..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-              />
-            </div>
-            <div className="flex gap-2">
-              <select
-                value={browseMode}
-                onChange={(e) => {
-                  setBrowseMode(e.target.value);
-                  setSelectedTrack('all');
-                }}
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-              >
-                <option value="role">By Role</option>
-                <option value="impact">By Impact</option>
-                <option value="time">By Time</option>
-              </select>
-              <select
-                value={selectedTrack}
-                onChange={(e) => setSelectedTrack(e.target.value)}
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-              >
-                <option value="all">All Categories</option>
-                {Object.keys(getBrowseOptions()).map((track) => (
-                  <option key={track} value={track}>{track}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Course Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredCourses.map((course) => (
-            <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="inline-block px-2 py-1 text-xs font-semibold text-blue-800 dark:text-blue-200 bg-blue-100 dark:bg-blue-900 rounded-full">
-                    {course.track}
-                  </span>
-                  <button
-                    onClick={() => handleBookmark(course)}
-                    className={`p-2 rounded-full ${isBookmarked(course.id) 
-                      ? 'text-yellow-500 bg-yellow-100 dark:bg-yellow-900' 
-                      : 'text-gray-400 hover:text-yellow-500'}`}
-                    title="Bookmark"
-                  >
-                    <Bookmark className="h-4 w-4" />
-                  </button>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{course.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{course.description}</p>
-                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                  <span>{course.level}</span>
-                  <span>{course.duration}</span>
-                </div>
-                <a
-                  href={course.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center justify-center"
-                >
-                  Start Course
-                  <ExternalLink className="ml-1 h-4 w-4" />
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {filteredCourses.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 dark:text-gray-400">No courses found matching your criteria.</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// Labs Page Component
-const LabsPage = () => {
-  const { darkMode } = usePage();
-  const { addBookmark, removeBookmark, isBookmarked } = useAuth();
-
-  const handleBookmark = (lab) => {
-    const bookmarkItem = { ...lab, type: 'lab' };
-    if (isBookmarked(lab.id)) {
-      removeBookmark(lab.id);
-    } else {
-      addBookmark(bookmarkItem);
-    }
-  };
-
-  return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <Navigation />
-      <FloatingActionButtons />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Labs</h1>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Interactive experiments and tools for development professionals</p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {labsData.map((lab) => (
-            <div key={lab.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="inline-block px-2 py-1 text-xs font-semibold text-green-800 dark:text-green-200 bg-green-100 dark:bg-green-900 rounded-full">
-                    {lab.topic}
-                  </span>
-                  <button
-                    onClick={() => handleBookmark(lab)}
-                    className={`p-2 rounded-full ${isBookmarked(lab.id) 
-                      ? 'text-yellow-500 bg-yellow-100 dark:bg-yellow-900' 
-                      : 'text-gray-400 hover:text-yellow-500'}`}
-                    title="Bookmark"
-                  >
-                    <Bookmark className="h-4 w-4" />
-                  </button>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{lab.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{lab.description}</p>
-                <a
-                  href={lab.content}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center justify-center"
-                >
-                  Launch Lab
-                  <ExternalLink className="ml-1 h-4 w-4" />
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Games Page Component
-const GamesPage = () => {
-  const { darkMode } = usePage();
-  const { addBookmark, removeBookmark, isBookmarked } = useAuth();
-
-  const handleBookmark = (game) => {
-    const bookmarkItem = { ...game, type: 'game' };
-    if (isBookmarked(game.id)) {
-      removeBookmark(game.id);
-    } else {
-      addBookmark(bookmarkItem);
-    }
-  };
-
-  return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <Navigation />
-      <FloatingActionButtons />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Games</h1>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Interactive games for development learning</p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {gamesData.map((game) => (
-            <div key={game.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <span className="inline-block px-2 py-1 text-xs font-semibold text-purple-800 dark:text-purple-200 bg-purple-100 dark:bg-purple-900 rounded-full mb-2">
-                      {game.category}
-                    </span>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{game.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">{game.description}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <a
-                    href={game.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center"
-                  >
-                    Play Game
-                    <ExternalLink className="ml-1 h-4 w-4" />
-                  </a>
-                  
-                  <button
-                    onClick={() => handleBookmark(game)}
-                    className={`p-2 rounded-full ${isBookmarked(game.id) 
-                      ? 'text-yellow-500 bg-yellow-100 dark:bg-yellow-900' 
-                      : 'text-gray-400 hover:text-yellow-500'}`}
-                    title="Bookmark"
-                  >
-                    <Bookmark className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Resources Page Component
-const ResourcesPage = () => {
-  const { darkMode } = usePage();
-  const { addBookmark, removeBookmark, isBookmarked } = useAuth();
-
-  const handleBookmark = (resource) => {
-    const bookmarkItem = { ...resource, type: 'resource' };
-    if (isBookmarked(resource.id)) {
-      removeBookmark(resource.id);
-    } else {
-      addBookmark(bookmarkItem);
-    }
-  };
-
-  return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <Navigation />
-      <FloatingActionButtons />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Resources</h1>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Premium tools and resources for development professionals</p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {updatedPremiumResources.map((resource) => (
-            <div key={resource.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <span className="inline-block px-2 py-1 text-xs font-semibold text-orange-800 dark:text-orange-200 bg-orange-100 dark:bg-orange-900 rounded-full mb-2">
-                      {resource.category}
-                    </span>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{resource.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">{resource.description}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <a
-                    href={resource.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center"
-                  >
-                    Access Resource
-                    <ExternalLink className="ml-1 h-4 w-4" />
-                  </a>
-                  
-                  <button
-                    onClick={() => handleBookmark(resource)}
-                    className={`p-2 rounded-full ${isBookmarked(resource.id) 
-                      ? 'text-yellow-500 bg-yellow-100 dark:bg-yellow-900' 
-                      : 'text-gray-400 hover:text-yellow-500'}`}
-                    title="Bookmark"
-                  >
-                    <Bookmark className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// AI Tools Page Component
-const AIToolsPage = () => {
-  const { darkMode } = usePage();
-  const { user } = useAuth();
-  const [selectedTool, setSelectedTool] = useState(null);
-  const [activeTab, setActiveTab] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const categories = ['all', 'Research Methods', 'Data Analysis', 'Program Management', 'Communications'];
-
-  const filteredTools = aiToolsData.filter(tool => {
-    const matchesSearch = tool.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         tool.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = activeTab === 'all' || tool.category === activeTab;
-    return matchesSearch && matchesCategory;
-  });
-
-  const ToolCard = ({ tool }) => (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer" 
-         onClick={() => setSelectedTool(tool)}>
-      <div className="flex items-start justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{tool.title}</h3>
-        <div className={`p-2 rounded-lg bg-${tool.color}-100 dark:bg-${tool.color}-900`}>
-          <Bot className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-        </div>
-      </div>
-      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{tool.description}</p>
-      <div className="flex items-center justify-between">
-        <span className="inline-block px-2 py-1 text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full">
-          {tool.category}
-        </span>
-        <ArrowRight className="h-4 w-4 text-gray-400" />
-      </div>
-    </div>
-  );
-
-  return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <Navigation />
-      <FloatingActionButtons />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">AI Tools</h1>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-            AI-powered assistants for development professionals
-          </p>
-          {!user && (
-            <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900 rounded-lg">
-              <p className="text-yellow-800 dark:text-yellow-200">
-                <AlertTriangle className="inline h-5 w-5 mr-2" />
-                Sign in to access AI tools
-              </p>
-            </div>
-          )}
-        </div>
-
-        {user && (
-          <>
-            {/* Search Bar */}
-            <div className="mb-6">
-              <input
-                type="text"
-                placeholder="Search AI tools..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-              />
-            </div>
-
-            {/* Category Tabs */}
-            <div className="mb-8">
-              <nav className="flex space-x-8 overflow-x-auto">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setActiveTab(category)}
-                    className={`${activeTab === category
-                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                      : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
-                    } whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </nav>
-            </div>
-
-            {/* Tools Grid */}
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {filteredTools.map((tool) => (
-                <ToolCard key={tool.id} tool={tool} />
-              ))}
-            </div>
-
-            {filteredTools.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-gray-500 dark:text-gray-400">No tools found matching your criteria.</p>
-              </div>
-            )}
-          </>
-        )}
-
-        {/* Tool Modal */}
-        {selectedTool && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                    {selectedTool.title}
-                  </h3>
-                  <button onClick={() => setSelectedTool(null)}>
-                    <X className="h-6 w-6 text-gray-500" />
-                  </button>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  {selectedTool.description}
-                </p>
-                <div className="space-y-4">
-                  <h4 className="font-medium text-gray-900 dark:text-white">How to use this tool:</h4>
-                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                    <p className="text-sm text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
-                      {selectedTool.prompt}
-                    </p>
-                  </div>
-                  {selectedTool.exampleInput && (
-                    <>
-                      <h4 className="font-medium text-gray-900 dark:text-white">Example Input:</h4>
-                      <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
-                        <p className="text-sm text-blue-800 dark:text-blue-200 whitespace-pre-wrap">
-                          {selectedTool.exampleInput}
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// Dashboard Page Component
+// IMPROVED Dashboard Page with Cornell Notes
 const DashboardPage = () => {
   const { darkMode } = usePage();
-  const { user, bookmarks, customPathway, notes } = useAuth();
+  const { user, bookmarks, customPathway, notes, addNote, updateNote, deleteNote } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
+  const [editingNote, setEditingNote] = useState(null);
+  const [showNoteEditor, setShowNoteEditor] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showAdvancedQuiz, setShowAdvancedQuiz] = useState(false);
+
+  const filteredNotes = notes.filter(note => 
+    note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    note.notes.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    note.cues.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    note.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    note.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
+  const handleSaveNote = (noteData) => {
+    if (editingNote) {
+      updateNote(editingNote.id, noteData);
+    } else {
+      addNote(noteData);
+    }
+    setEditingNote(null);
+    setShowNoteEditor(false);
+  };
 
   if (!user) {
     return (
       <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
         <Navigation />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Dashboard
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300 mb-8">
-              Please sign in to access your dashboard
+            <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Please Sign In</h1>
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+              Access your dashboard, notes, and custom learning pathway by signing in with Google.
             </p>
           </div>
         </div>
@@ -1557,36 +548,32 @@ const DashboardPage = () => {
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       <Navigation />
-      <FloatingActionButtons />
+      <ImprovedFloatingActionButtons />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Welcome back, {user.displayName?.split(' ')[0]}!
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300">Here's your learning dashboard</p>
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Welcome back, {user.displayName}!</h1>
+          <p className="mt-2 text-lg text-gray-600 dark:text-gray-300">Your personalized learning dashboard</p>
         </div>
 
         {/* Tabs */}
         <div className="border-b border-gray-200 dark:border-gray-700 mb-8">
           <nav className="-mb-px flex space-x-8">
             {[
-              { id: 'overview', name: 'Overview', icon: Target },
-              { id: 'bookmarks', name: 'Bookmarks', icon: Bookmark },
-              { id: 'pathway', name: 'My Pathway', icon: MapPin },
-              { id: 'notes', name: 'Notes', icon: FileText },
-              { id: 'comparisons', name: 'Comparisons', icon: Scale }
+              { id: 'overview', label: 'Overview', icon: BarChart },
+              { id: 'notes', label: 'Cornell Notes', icon: FileText },
+              { id: 'bookmarks', label: 'Bookmarks', icon: BookmarkIcon },
+              { id: 'pathway', label: 'Custom Pathway', icon: Target }
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`${activeTab === tab.id
                   ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
-                } flex items-center whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300'
+                } whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}
               >
-                <tab.icon className="mr-2 h-5 w-5" />
-                {tab.name}
+                <tab.icon size={16} />
+                <span>{tab.label}</span>
               </button>
             ))}
           </nav>
@@ -1594,175 +581,977 @@ const DashboardPage = () => {
 
         {/* Tab Content */}
         {activeTab === 'overview' && (
-          <div className="space-y-8">
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <Bookmark className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-                  <div className="ml-4">
-                    <p className="text-2xl font-semibold text-gray-900 dark:text-white">{bookmarks.length}</p>
-                    <p className="text-gray-600 dark:text-gray-300">Bookmarks</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <MapPin className="h-8 w-8 text-green-600 dark:text-green-400" />
-                  <div className="ml-4">
-                    <p className="text-2xl font-semibold text-gray-900 dark:text-white">{customPathway.length}</p>
-                    <p className="text-gray-600 dark:text-gray-300">Pathway Courses</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <FileText className="h-8 w-8 text-purple-600 dark:text-purple-400" />
-                  <div className="ml-4">
-                    <p className="text-2xl font-semibold text-gray-900 dark:text-white">{notes.length}</p>
-                    <p className="text-gray-600 dark:text-gray-300">Notes</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <Trophy className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
-                  <div className="ml-4">
-                    <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                      {Math.floor((bookmarks.length + customPathway.length + notes.length) / 3)}
-                    </p>
-                    <p className="text-gray-600 dark:text-gray-300">Activity Score</p>
-                  </div>
-                </div>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Learning Progress</h3>
+              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{bookmarks.length}</div>
+              <p className="text-gray-600 dark:text-gray-300">Bookmarked courses</p>
             </div>
-
-            {/* Recent Activity */}
-            <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h2>
-              <div className="space-y-4">
-                {bookmarks.slice(0, 3).map((item, index) => (
-                  <div key={index} className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <Bookmark className="h-5 w-5 text-yellow-500 mr-3" />
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">{item.title}</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Bookmarked</p>
-                    </div>
-                  </div>
-                ))}
-                {bookmarks.length === 0 && (
-                  <p className="text-gray-500 dark:text-gray-400">No recent activity</p>
-                )}
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Notes</h3>
+              <div className="text-3xl font-bold text-green-600 dark:text-green-400">{notes.length}</div>
+              <p className="text-gray-600 dark:text-gray-300">Cornell notes taken</p>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Pathway</h3>
+              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+                {customPathway ? '1' : '0'}
               </div>
+              <p className="text-gray-600 dark:text-gray-300">Custom pathway created</p>
             </div>
           </div>
         )}
 
-        {activeTab === 'bookmarks' && (
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Your Bookmarks</h2>
-            {bookmarks.length > 0 ? (
-              <div className="space-y-3">
-                {bookmarks.map((item, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-gray-900 dark:text-white truncate">{item.title}</h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">{item.type}</p>
-                    </div>
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex-shrink-0 ml-2"
-                      aria-label="Open course"
-                    >
-                      <ExternalLink className="h-5 w-5" />
-                    </a>
+        {activeTab === 'notes' && (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Cornell Notes</h2>
+              <button
+                onClick={() => setShowNoteEditor(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center space-x-2"
+              >
+                <Plus size={16} />
+                <span>New Note</span>
+              </button>
+            </div>
+
+            {/* Search Notes */}
+            <div className="mb-6">
+              <input
+                type="text"
+                placeholder="Search notes by title, content, or tags..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              />
+            </div>
+
+            {/* Notes Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredNotes.map((note) => (
+                <div key={note.id} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{note.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-3">{note.summary}</p>
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {note.tags.map((tag, index) => (
+                      <span key={index} className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
-                ))}
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {new Date(note.updatedAt).toLocaleDateString()}
+                    </span>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => {
+                          setEditingNote(note);
+                          setShowNoteEditor(true);
+                        }}
+                        className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
+                      >
+                        <Edit3 size={16} />
+                      </button>
+                      <button
+                        onClick={() => deleteNote(note.id)}
+                        className="text-red-600 hover:text-red-800 dark:text-red-400"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {filteredNotes.length === 0 && (
+              <div className="text-center py-8">
+                <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No notes found</h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {searchTerm ? 'Try adjusting your search terms.' : 'Start taking notes with the Cornell method!'}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'bookmarks' && (
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Bookmarked Courses</h2>
+            {bookmarks.length === 0 ? (
+              <div className="text-center py-8">
+                <BookmarkIcon size={48} className="mx-auto text-gray-400 mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No bookmarks yet</h3>
+                <p className="text-gray-600 dark:text-gray-300">Start bookmarking courses to access them quickly here.</p>
               </div>
             ) : (
-              <div className="text-center py-8">
-                <Bookmark className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 dark:text-gray-400 mb-4">No bookmarks yet</p>
-                <p className="text-sm text-gray-400 dark:text-gray-500">Start bookmarking courses to see them here</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {bookmarks.map((courseId) => {
+                  const course = courseData.find(c => c.id === courseId);
+                  if (!course) return null;
+                  return (
+                    <div key={courseId} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{course.title}</h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{course.description}</p>
+                      <a
+                        href={course.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 dark:text-blue-400"
+                      >
+                        <span>Continue Learning</span>
+                        <ExternalLink size={16} />
+                      </a>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>
         )}
 
         {activeTab === 'pathway' && (
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">My Learning Pathway</h2>
-            {customPathway.length > 0 ? (
-              <div className="space-y-3">
-                {customPathway.map((courseId, index) => {
-                  const course = courseData.find(c => c.id === courseId);
-                  return course ? (
-                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-gray-900 dark:text-white truncate">{course.title}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{course.track}</p>
-                      </div>
-                      <a
-                        href={course.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex-shrink-0 ml-2"
-                        aria-label="Open course"
-                      >
-                        <ExternalLink className="h-5 w-5" />
-                      </a>
-                    </div>
-                  ) : null;
-                })}
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 dark:text-gray-400 mb-4">No courses in your pathway yet</p>
-                <p className="text-sm text-gray-400 dark:text-gray-500">Take the quiz to get started</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'notes' && (
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Your Notes</h2>
-            {notes.length > 0 ? (
-              <div className="space-y-4">
-                {notes.map((note) => (
-                  <div key={note.id} className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
-                    <h3 className="font-medium text-gray-900 dark:text-white mb-2">{note.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">{note.content}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Created: {new Date(note.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 dark:text-gray-400 mb-4">No notes yet</p>
-                <p className="text-sm text-gray-400 dark:text-gray-500">Start taking notes to see them here</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'comparisons' && (
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Course Comparisons</h2>
-            <div className="text-center py-8">
-              <Scale className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-500 dark:text-gray-400 mb-4">No comparisons yet</p>
-              <p className="text-sm text-gray-400 dark:text-gray-500">Compare courses to make better learning decisions</p>
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Custom Learning Pathway</h2>
+              <button
+                onClick={() => setShowAdvancedQuiz(true)}
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md flex items-center space-x-2"
+              >
+                <Target size={16} />
+                <span>Create/Update Pathway</span>
+              </button>
             </div>
+            
+            {customPathway ? (
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Your Personalized Path</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Recommended Courses</h4>
+                    <ul className="space-y-2">
+                      {customPathway.courses?.map((courseId, index) => {
+                        const course = courseData.find(c => c.id === courseId);
+                        return course ? (
+                          <li key={index} className="flex items-center space-x-2">
+                            <CheckCircle size={16} className="text-green-500" />
+                            <span className="text-gray-700 dark:text-gray-300">{course.title}</span>
+                          </li>
+                        ) : null;
+                      })}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Recommended Labs</h4>
+                    <ul className="space-y-2">
+                      {customPathway.labs?.map((labId, index) => {
+                        const lab = labsData.find(l => l.id === labId);
+                        return lab ? (
+                          <li key={index} className="flex items-center space-x-2">
+                            <Trophy size={16} className="text-yellow-500" />
+                            <span className="text-gray-700 dark:text-gray-300">{lab.title}</span>
+                          </li>
+                        ) : null;
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <Target size={48} className="mx-auto text-gray-400 mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No custom pathway yet</h3>
+                <p className="text-gray-600 dark:text-gray-300">Take our comprehensive assessment to create your personalized learning path.</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Cornell Notes Editor Modal */}
+        {showNoteEditor && (
+          <CornellNotesEditor
+            note={editingNote}
+            onSave={handleSaveNote}
+            onCancel={() => {
+              setShowNoteEditor(false);
+              setEditingNote(null);
+            }}
+          />
+        )}
+
+        {/* Advanced Quiz Modal */}
+        {showAdvancedQuiz && (
+          <AdvancedQuizModal
+            onClose={() => setShowAdvancedQuiz(false)}
+            onComplete={(pathway) => {
+              // Save pathway to user data
+              console.log('Pathway created:', pathway);
+              setShowAdvancedQuiz(false);
+            }}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Advanced Quiz Modal for Logged-in Users
+const AdvancedQuizModal = ({ onClose, onComplete }) => {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const { darkMode } = usePage();
+
+  const questions = [
+    {
+      id: 'experience_level',
+      question: 'What is your current experience level in development work?',
+      type: 'single',
+      options: [
+        'Complete beginner - new to development',
+        'Some exposure - taken courses or workshops',
+        'Intermediate - 1-3 years experience',
+        'Advanced - 4+ years experience',
+        'Expert - 10+ years with specialized knowledge'
+      ]
+    },
+    {
+      id: 'primary_role',
+      question: 'What is your primary role or aspiration?',
+      type: 'single',
+      options: [
+        'Academic researcher',
+        'Field practitioner/NGO worker',
+        'Policy analyst/government',
+        'Social entrepreneur',
+        'Student/aspiring professional',
+        'Development consultant',
+        'International organization staff'
+      ]
+    },
+    {
+      id: 'interested_themes',
+      question: 'Which themes are you most interested in? (Select all that apply)',
+      type: 'multiple',
+      options: [
+        'Health and wellbeing',
+        'Education and skills development',
+        'Economic development and livelihoods',
+        'Governance and accountability',
+        'Gender equality and social inclusion',
+        'Climate change and environment',
+        'Data and research methods',
+        'Advocacy and communications'
+      ]
+    },
+    {
+      id: 'geographic_focus',
+      question: 'What is your geographic focus?',
+      type: 'single',
+      options: [
+        'India',
+        'South Asia',
+        'Global South',
+        'Specific country (other than India)',
+        'Global/comparative perspective'
+      ]
+    },
+    {
+      id: 'learning_style',
+      question: 'How do you prefer to learn? (Select all that apply)',
+      type: 'multiple',
+      options: [
+        'Reading research papers and reports',
+        'Hands-on practical exercises',
+        'Case studies and real examples',
+        'Interactive simulations and games',
+        'Data analysis and visualization',
+        'Collaborative discussions',
+        'Self-paced online modules'
+      ]
+    },
+    {
+      id: 'skill_priorities',
+      question: 'Which skills do you most want to develop?',
+      type: 'multiple',
+      options: [
+        'Research and analysis',
+        'Program design and implementation',
+        'Data collection and analysis',
+        'Policy analysis and advocacy',
+        'Communication and presentation',
+        'Leadership and management',
+        'Technical/sector-specific knowledge'
+      ]
+    },
+    {
+      id: 'time_availability',
+      question: 'How much time can you dedicate to learning per week?',
+      type: 'single',
+      options: [
+        'Less than 2 hours',
+        '2-5 hours',
+        '5-10 hours',
+        'More than 10 hours'
+      ]
+    },
+    {
+      id: 'specific_goals',
+      question: 'What are your specific learning goals? (Select all that apply)',
+      type: 'multiple',
+      options: [
+        'Career transition into development',
+        'Skill upgrade for current role',
+        'Academic preparation (PhD, research)',
+        'Starting a social venture',
+        'Improving program effectiveness',
+        'Personal interest and knowledge',
+        'Professional certification or credentials'
+      ]
+    }
+  ];
+
+  const handleAnswer = (questionId, answer) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: answer
+    }));
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      // Generate personalized pathway based on answers
+      const pathway = generatePersonalizedPathway(answers);
+      onComplete(pathway);
+    }
+  };
+
+  const generatePersonalizedPathway = (answers) => {
+    // Advanced algorithm to create personalized pathway
+    let recommendedCourses = [];
+    let recommendedLabs = [];
+    let recommendedResources = [];
+
+    // Based on experience level
+    if (answers.experience_level?.includes('beginner')) {
+      recommendedCourses.push('development-economics-101', 'global-development-architecture-101');
+    } else if (answers.experience_level?.includes('Advanced') || answers.experience_level?.includes('Expert')) {
+      recommendedCourses.push('econometrics-101', 'research-ethics-101');
+    }
+
+    // Based on role
+    if (answers.primary_role?.includes('researcher')) {
+      recommendedCourses.push('qualitative-research-methods-101', 'data-literacy-101');
+      recommendedLabs.push('research-methodology-lab');
+    } else if (answers.primary_role?.includes('practitioner')) {
+      recommendedCourses.push('community-development-101', 'monitoring-evaluation-accountability-and-learning-101');
+      recommendedLabs.push('field-work-simulation');
+    }
+
+    // Based on themes
+    if (answers.interested_themes?.includes('Health')) {
+      recommendedCourses.push('public-health-101');
+    }
+    if (answers.interested_themes?.includes('Education')) {
+      recommendedCourses.push('data-literacy-101');
+    }
+
+    // Based on learning style
+    if (answers.learning_style?.includes('Data analysis')) {
+      recommendedLabs.push('data-analysis-lab');
+      recommendedResources.push('PR3'); // Statistical Analysis Assistant
+    }
+    if (answers.learning_style?.includes('research papers')) {
+      recommendedResources.push('PR1'); // Field Notes
+    }
+
+    return {
+      courses: [...new Set(recommendedCourses)].slice(0, 6), // Remove duplicates, limit to 6
+      labs: [...new Set(recommendedLabs)].slice(0, 4),
+      resources: [...new Set(recommendedResources)].slice(0, 3),
+      createdAt: new Date().toISOString(),
+      answers: answers
+    };
+  };
+
+  const currentQ = questions[currentQuestion];
+  const isLastQuestion = currentQuestion === questions.length - 1;
+  const hasAnswer = answers[currentQ.id];
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className={`${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto`}>
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold">Create Your Custom Learning Pathway</h2>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+              <X size={24} />
+            </button>
+          </div>
+
+          {/* Progress bar */}
+          <div className="mb-6">
+            <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+              <span>Question {currentQuestion + 1} of {questions.length}</span>
+              <span>{Math.round(((currentQuestion + 1) / questions.length) * 100)}% Complete</span>
+            </div>
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div 
+                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+
+          {/* Question */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-4">{currentQ.question}</h3>
+            <div className="space-y-3">
+              {currentQ.options.map((option, index) => (
+                <label key={index} className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type={currentQ.type === 'multiple' ? 'checkbox' : 'radio'}
+                    name={currentQ.id}
+                    value={option}
+                    checked={
+                      currentQ.type === 'multiple' 
+                        ? answers[currentQ.id]?.includes(option) || false
+                        : answers[currentQ.id] === option
+                    }
+                    onChange={(e) => {
+                      if (currentQ.type === 'multiple') {
+                        const current = answers[currentQ.id] || [];
+                        if (e.target.checked) {
+                          handleAnswer(currentQ.id, [...current, option]);
+                        } else {
+                          handleAnswer(currentQ.id, current.filter(item => item !== option));
+                        }
+                      } else {
+                        handleAnswer(currentQ.id, option);
+                      }
+                    }}
+                    className="text-blue-600 focus:ring-blue-500"
+                  />
+                  <span className="text-gray-700 dark:text-gray-300">{option}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="flex justify-between">
+            <button
+              onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
+              disabled={currentQuestion === 0}
+              className="px-4 py-2 text-gray-600 dark:text-gray-400 disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={!hasAnswer}
+              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-md"
+            >
+              {isLastQuestion ? 'Create Pathway' : 'Next'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Homepage Component
+const HomePage = () => {
+  const { darkMode } = usePage();
+  const { user } = useAuth();
+  const [showQuizModal, setShowQuizModal] = useState(false);
+  const [quizResult, setQuizResult] = useState(null);
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
+      <Navigation />
+      <ImprovedFloatingActionButtons />
+      
+      {/* Hero Section with Donation Appeal */}
+      <div className="relative bg-gradient-to-r from-blue-600 to-purple-700 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              Development Know-How for Everyone
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 opacity-90">
+              101 Knowledge Series for Social Impact - Justice, Equity & Development in South Asia
+            </p>
+            
+            {/* Donation Appeal */}
+            <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6 mb-8 max-w-2xl mx-auto">
+              <div className="flex items-center justify-center mb-4">
+                <Heart className="text-red-400 mr-2" size={24} />
+                <h3 className="text-lg font-semibold">Support ImpactMojo</h3>
+              </div>
+              <p className="mb-4 text-sm opacity-90">
+                Help us keep ImpactMojo alive and accessible! Your support covers significant labor and tech costs.
+              </p>
+              <div className="text-sm">
+                <p className="mb-2">Donate via UPI:</p>
+                <div className="flex flex-wrap justify-center gap-2 text-yellow-200 font-mono">
+                  <span>impactmojo@ibl</span>
+                  <span>•</span>
+                  <span>impactmojo@ybl</span>
+                  <span>•</span>
+                  <span>impactmojo@axl</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => setShowQuizModal(true)}
+                className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              >
+                Find Your Learning Path
+              </button>
+              <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                Explore Courses
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Learning Tracks Section with CORRECTED tracks */}
+      <div className="py-16 bg-gray-50 dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Choose Your Learning Track
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              Curated pathways designed for different roles and interests in development work
+            </p>
+          </div>
+
+          {/* Browse by Role */}
+          <div className="mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Browse by Role</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {Object.entries(browseByRole).map(([role, data]) => (
+                <div key={role} className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                  <div className={`w-12 h-12 bg-${data.color}-100 dark:bg-${data.color}-900 rounded-lg flex items-center justify-center mb-4`}>
+                    <Users className={`text-${data.color}-600 dark:text-${data.color}-400`} size={24} />
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{role}</h4>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{data.description}</p>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {data.courses.length} courses
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Browse by Theme */}
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Browse by Theme</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Object.entries(browseByTheme).map(([theme, data]) => (
+                <div key={theme} className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                  <div className={`w-12 h-12 bg-${data.color}-100 dark:bg-${data.color}-900 rounded-lg flex items-center justify-center mb-4`}>
+                    <Target className={`text-${data.color}-600 dark:text-${data.color}-400`} size={24} />
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{theme}</h4>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{data.description}</p>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {data.courses.length} courses
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="py-16 bg-white dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Everything You Need to Learn
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="bg-blue-100 dark:bg-blue-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="text-blue-600 dark:text-blue-400" size={32} />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Courses</h3>
+              <p className="text-gray-600 dark:text-gray-300">Comprehensive learning modules</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-green-100 dark:bg-green-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Trophy className="text-green-600 dark:text-green-400" size={32} />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Labs</h3>
+              <p className="text-gray-600 dark:text-gray-300">Hands-on practical exercises</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-purple-100 dark:bg-purple-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Gamepad2 className="text-purple-600 dark:text-purple-400" size={32} />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Games</h3>
+              <p className="text-gray-600 dark:text-gray-300">Interactive learning experiences</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-orange-100 dark:bg-orange-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Library className="text-orange-600 dark:text-orange-400" size={32} />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Resources</h3>
+              <p className="text-gray-600 dark:text-gray-300">Premium tools and materials</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Simple Quiz Modal for Non-Logged In Users */}
+      {showQuizModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
+            {!quizResult ? (
+              <SimpleQuiz 
+                onComplete={(result) => setQuizResult(result)}
+                onClose={() => setShowQuizModal(false)}
+              />
+            ) : (
+              <QuizResult 
+                result={quizResult}
+                onClose={() => {
+                  setShowQuizModal(false);
+                  setQuizResult(null);
+                }}
+              />
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Simple Quiz Component for non-logged users
+const SimpleQuiz = ({ onComplete, onClose }) => {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const { darkMode } = usePage();
+
+  const questions = [
+    {
+      id: 'experience',
+      question: 'What is your experience with development work?',
+      options: ['Complete beginner', 'Some exposure', 'Experienced practitioner']
+    },
+    {
+      id: 'interest',
+      question: 'What interests you most?',
+      options: ['Research and analysis', 'Field work and community engagement', 'Policy and advocacy']
+    },
+    {
+      id: 'goal',
+      question: 'What is your main goal?',
+      options: ['Learn the basics', 'Develop specific skills', 'Advance my career']
+    }
+  ];
+
+  const handleAnswer = (answer) => {
+    const newAnswers = { ...answers, [questions[currentQuestion].id]: answer };
+    setAnswers(newAnswers);
+
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      // Generate simple recommendation
+      let recommendation = 'development-economics-101';
+      if (newAnswers.interest === 'Research and analysis') {
+        recommendation = 'data-literacy-101';
+      } else if (newAnswers.interest === 'Field work and community engagement') {
+        recommendation = 'community-development-101';
+      } else if (newAnswers.interest === 'Policy and advocacy') {
+        recommendation = 'law-and-constitution-101';
+      }
+      
+      onComplete({ recommendation, answers: newAnswers });
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Find Your Starting Point</h3>
+        <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <X size={20} />
+        </button>
+      </div>
+      
+      <div className="mb-4">
+        <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+          Question {currentQuestion + 1} of {questions.length}
+        </div>
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+          <div 
+            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+            style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+          ></div>
+        </div>
+      </div>
+
+      <div className="mb-6">
+        <h4 className="text-gray-900 dark:text-white mb-4">{questions[currentQuestion].question}</h4>
+        <div className="space-y-2">
+          {questions[currentQuestion].options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => handleAnswer(option)}
+              className="w-full text-left p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Quiz Result Component
+const QuizResult = ({ result, onClose }) => {
+  const { darkMode } = usePage();
+  const recommendedCourse = courseData.find(c => c.id === result.recommendation);
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Your Recommended Starting Point</h3>
+        <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <X size={20} />
+        </button>
+      </div>
+
+      {recommendedCourse && (
+        <div className="mb-6">
+          <h4 className="text-gray-900 dark:text-white font-semibold mb-2">{recommendedCourse.title}</h4>
+          <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{recommendedCourse.description}</p>
+          <a
+            href={recommendedCourse.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+          >
+            <span>Start Learning</span>
+            <ExternalLink size={16} />
+          </a>
+        </div>
+      )}
+
+      <div className="text-center">
+        <p className="text-gray-600 dark:text-gray-300 text-sm">
+          Want more personalized recommendations? Sign in to access our comprehensive assessment and custom learning pathways.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+// Enhanced Search and Filter Function
+const useSearchAndFilter = (data, initialCategory = 'all') => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [selectedRole, setSelectedRole] = useState('all');
+  const [selectedTheme, setSelectedTheme] = useState('all');
+
+  // Get unique categories, roles, and themes
+  const categories = ['all', ...new Set(data.map(item => item.category).filter(Boolean))];
+  const roles = ['all', ...new Set(data.map(item => item.role).filter(Boolean))];
+  const themes = ['all', ...new Set(data.map(item => item.theme).filter(Boolean))];
+
+  const filteredData = data.filter(item => {
+    const matchesSearch = searchQuery === '' || 
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
+    
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+    const matchesRole = selectedRole === 'all' || item.role === selectedRole;
+    const matchesTheme = selectedTheme === 'all' || item.theme === selectedTheme;
+    
+    return matchesSearch && matchesCategory && matchesRole && matchesTheme;
+  });
+
+  return {
+    searchQuery,
+    setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    selectedRole,
+    setSelectedRole,
+    selectedTheme,
+    setSelectedTheme,
+    filteredData,
+    categories,
+    roles,
+    themes
+  };
+};
+
+// Courses Page with FIXED search and filters
+const CoursesPage = () => {
+  const { darkMode } = usePage();
+  const { user, bookmarks, toggleBookmark } = useAuth();
+  
+  const {
+    searchQuery,
+    setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    selectedRole,
+    setSelectedRole,
+    selectedTheme,
+    setSelectedTheme,
+    filteredData: filteredCourses,
+    categories,
+    roles,
+    themes
+  } = useSearchAndFilter(courseData);
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+      <Navigation />
+      <ImprovedFloatingActionButtons />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Courses</h1>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Comprehensive learning modules on development topics</p>
+        </div>
+
+        {/* Search and Filters */}
+        <div className="mb-8">
+          <div className="flex flex-col lg:flex-row gap-4">
+            {/* Search */}
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder="Search courses..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              />
+            </div>
+            
+            {/* Filters */}
+            <div className="flex flex-col sm:flex-row gap-2">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category === 'all' ? 'All Categories' : category}
+                  </option>
+                ))}
+              </select>
+              
+              <select
+                value={selectedRole}
+                onChange={(e) => setSelectedRole(e.target.value)}
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              >
+                {roles.map((role) => (
+                  <option key={role} value={role}>
+                    {role === 'all' ? 'All Roles' : role}
+                  </option>
+                ))}
+              </select>
+              
+              <select
+                value={selectedTheme}
+                onChange={(e) => setSelectedTheme(e.target.value)}
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              >
+                {themes.map((theme) => (
+                  <option key={theme} value={theme}>
+                    {theme === 'all' ? 'All Themes' : theme}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Results Count */}
+        <div className="mb-6">
+          <p className="text-gray-600 dark:text-gray-300">
+            Showing {filteredCourses.length} of {courseData.length} courses
+          </p>
+        </div>
+
+        {/* Courses Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCourses.map((course) => (
+            <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{course.title}</h3>
+                  {user && (
+                    <button
+                      onClick={() => toggleBookmark(course.id)}
+                      className={`${bookmarks.includes(course.id) ? 'text-blue-600' : 'text-gray-400'} hover:text-blue-600`}
+                    >
+                      <BookmarkIcon size={20} />
+                    </button>
+                  )}
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{course.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {course.category && (
+                    <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
+                      {course.category}
+                    </span>
+                  )}
+                  {course.difficulty && (
+                    <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
+                      {course.difficulty}
+                    </span>
+                  )}
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                    <Clock size={12} className="mr-1" />
+                    {course.duration || '2-3 hours'}
+                  </span>
+                  <a
+                    href={course.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400"
+                  >
+                    <span>Start Course</span>
+                    <ExternalLink size={16} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* No results */}
+        {filteredCourses.length === 0 && (
+          <div className="text-center py-8">
+            <BookOpen size={48} className="mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No courses found</h3>
+            <p className="text-gray-600 dark:text-gray-300">Try adjusting your search or filter criteria.</p>
           </div>
         )}
       </div>
@@ -1770,8 +1559,689 @@ const DashboardPage = () => {
   );
 };
 
-// App Content Component (uses the hooks)
-const AppContent = () => {
+// Labs Page with ADDED search and filters
+const LabsPage = () => {
+  const { darkMode } = usePage();
+  
+  const {
+    searchQuery,
+    setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    filteredData: filteredLabs,
+    categories
+  } = useSearchAndFilter(labsData);
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+      <Navigation />
+      <ImprovedFloatingActionButtons />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Labs</h1>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Hands-on practical exercises and simulations</p>
+        </div>
+
+        {/* Search and Filters */}
+        <div className="mb-8">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder="Search labs..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              />
+            </div>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category === 'all' ? 'All Categories' : category}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Results Count */}
+        <div className="mb-6">
+          <p className="text-gray-600 dark:text-gray-300">
+            Showing {filteredLabs.length} of {labsData.length} labs
+          </p>
+        </div>
+
+        {/* Labs Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredLabs.map((lab) => (
+            <div key={lab.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{lab.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{lab.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {lab.category && (
+                    <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
+                      {lab.category}
+                    </span>
+                  )}
+                  {lab.difficulty && (
+                    <span className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded text-xs">
+                      {lab.difficulty}
+                    </span>
+                  )}
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                    <Trophy size={12} className="mr-1" />
+                    Interactive Lab
+                  </span>
+                  <a
+                    href={lab.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-green-600 hover:text-green-800 dark:text-green-400"
+                  >
+                    <span>Start Lab</span>
+                    <ExternalLink size={16} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* No results */}
+        {filteredLabs.length === 0 && (
+          <div className="text-center py-8">
+            <Trophy size={48} className="mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No labs found</h3>
+            <p className="text-gray-600 dark:text-gray-300">Try adjusting your search or filter criteria.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Games Page with ADDED search and filters
+const GamesPage = () => {
+  const { darkMode } = usePage();
+  
+  const {
+    searchQuery,
+    setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    filteredData: filteredGames,
+    categories
+  } = useSearchAndFilter(gamesData);
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+      <Navigation />
+      <ImprovedFloatingActionButtons />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Games</h1>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Interactive games for development learning</p>
+        </div>
+
+        {/* Search and Filters */}
+        <div className="mb-8">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder="Search games..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              />
+            </div>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category === 'all' ? 'All Categories' : category}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Results Count */}
+        <div className="mb-6">
+          <p className="text-gray-600 dark:text-gray-300">
+            Showing {filteredGames.length} of {gamesData.length} games
+          </p>
+        </div>
+
+        {/* Games Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredGames.map((game) => (
+            <div key={game.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{game.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{game.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {game.category && (
+                    <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded text-xs">
+                      {game.category}
+                    </span>
+                  )}
+                  {game.difficulty && (
+                    <span className="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded text-xs">
+                      {game.difficulty}
+                    </span>
+                  )}
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                    <Gamepad2 size={12} className="mr-1" />
+                    Interactive Game
+                  </span>
+                  <a
+                    href={game.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-purple-600 hover:text-purple-800 dark:text-purple-400"
+                  >
+                    <span>Play Game</span>
+                    <ExternalLink size={16} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* No results */}
+        {filteredGames.length === 0 && (
+          <div className="text-center py-8">
+            <Gamepad2 size={48} className="mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No games found</h3>
+            <p className="text-gray-600 dark:text-gray-300">Try adjusting your search or filter criteria.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Resources Page with ADDED search and filters
+const ResourcesPage = () => {
+  const { darkMode } = usePage();
+  
+  const {
+    searchQuery,
+    setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    filteredData: filteredResources,
+    categories
+  } = useSearchAndFilter(updatedPremiumResources);
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+      <Navigation />
+      <ImprovedFloatingActionButtons />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Resources</h1>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Premium tools and resources for development professionals</p>
+        </div>
+
+        {/* Search and Filters */}
+        <div className="mb-8">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder="Search resources..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              />
+            </div>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category === 'all' ? 'All Categories' : category}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Results Count */}
+        <div className="mb-6">
+          <p className="text-gray-600 dark:text-gray-300">
+            Showing {filteredResources.length} of {updatedPremiumResources.length} resources
+          </p>
+        </div>
+
+        {/* Resources Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredResources.map((resource) => (
+            <div key={resource.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{resource.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{resource.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {resource.category && (
+                    <span className="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded text-xs">
+                      {resource.category}
+                    </span>
+                  )}
+                  {resource.access && (
+                    <span className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded text-xs">
+                      {resource.access}
+                    </span>
+                  )}
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                    <Library size={12} className="mr-1" />
+                    Premium Resource
+                  </span>
+                  <a
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-orange-600 hover:text-orange-800 dark:text-orange-400"
+                  >
+                    <span>Access Resource</span>
+                    <ExternalLink size={16} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* No results */}
+        {filteredResources.length === 0 && (
+          <div className="text-center py-8">
+            <Library size={48} className="mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No resources found</h3>
+            <p className="text-gray-600 dark:text-gray-300">Try adjusting your search or filter criteria.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// AI Tools Page (for logged-in users)
+const AIToolsPage = () => {
+  const { darkMode } = usePage();
+  const { user } = useAuth();
+
+  if (!user) {
+    return (
+      <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+        <Navigation />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center">
+            <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">AI Tools</h1>
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+              Please sign in to access AI-powered development tools.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+      <Navigation />
+      <ImprovedFloatingActionButtons />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">AI Tools</h1>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">AI-powered tools for development professionals</p>
+        </div>
+
+        {/* AI Tools Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {aiToolsData.map((tool) => (
+            <div key={tool.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="p-6">
+                <div className="flex items-center mb-3">
+                  <Bot className="text-blue-600 dark:text-blue-400 mr-3" size={24} />
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{tool.title}</h3>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{tool.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
+                    {tool.category}
+                  </span>
+                  <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
+                    AI Powered
+                  </span>
+                </div>
+                <a
+                  href={tool.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400"
+                >
+                  <span>Use Tool</span>
+                  <ExternalLink size={16} />
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Lo-Fi Music Player for Logged Users */}
+        <div className="mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <div className="flex items-center mb-4">
+            <Headphones className="text-purple-600 dark:text-purple-400 mr-3" size={24} />
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Focus Music</h3>
+          </div>
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
+            Listen to curated lo-fi music to enhance your learning experience.
+          </p>
+          <a
+            href="https://www.youtube.com/watch?v=jfKfPfyJRdk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md"
+          >
+            <Music size={16} />
+            <span>Open Focus Playlist</span>
+            <ExternalLink size={16} />
+          </a>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+            Use password: <span className="font-mono">focus2024</span> if prompted.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Footer Component with LEGAL pages and PinPoint attribution
+const Footer = () => {
+  const { darkMode } = usePage();
+
+  return (
+    <footer className="bg-gray-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="col-span-1 md:col-span-2">
+            <div className="flex items-center space-x-3 mb-4">
+              <img 
+                src="/assets/ImpactMojo Logo.png"
+                alt="ImpactMojo Logo"
+                className="h-8 w-8"
+                onError={(e) => {
+                  e.target.src = "/assets/android-chrome-192x192.png";
+                }}
+              />
+              <span className="text-xl font-bold">ImpactMojo</span>
+            </div>
+            <p className="text-gray-300 mb-4">
+              101 Knowledge Series for Social Impact - Development education for justice, equity, and sustainable change in South Asia.
+            </p>
+            <p className="text-gray-300 text-sm">
+              No endorsements or certificates. Built for learning and social impact.
+            </p>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Learn</h3>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-gray-300 hover:text-white">Courses</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white">Labs</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white">Games</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white">Resources</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Legal</h3>
+            <ul className="space-y-2">
+              <li><a href="/terms-of-use" target="_blank" className="text-gray-300 hover:text-white">Terms of Use</a></li>
+              <li><a href="/privacy-policy" target="_blank" className="text-gray-300 hover:text-white">Privacy Policy</a></li>
+              <li><a href="/cookie-policy" target="_blank" className="text-gray-300 hover:text-white">Cookie Policy</a></li>
+              <li><a href="/faq" target="_blank" className="text-gray-300 hover:text-white">FAQ</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="border-t border-gray-700 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-gray-300 text-sm mb-4 md:mb-0">
+              © 2024 ImpactMojo. All rights reserved.
+            </div>
+            <div className="flex items-center text-gray-300 text-sm">
+              <span>ImpactMojo is made possible due to the generous support offered by </span>
+              <a 
+                href="https://www.pinpointventures.in" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 mx-1"
+              >
+                PinPoint Ventures
+              </a>
+              <Heart className="text-red-400 ml-1" size={16} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+// Cookie Consent Component
+const CookieConsent = () => {
+  const [showCookieConsent, setShowCookieConsent] = useState(false);
+
+  useEffect(() => {
+    const hasConsent = localStorage.getItem('impactmojo-cookie-consent');
+    if (!hasConsent) {
+      setShowCookieConsent(true);
+    }
+  }, []);
+
+  if (!showCookieConsent) return null;
+
+  return (
+    <div className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <p className="text-sm">
+          We use analytics to improve your experience. By continuing, you agree to our use of cookies.
+        </p>
+        <button
+          onClick={() => {
+            localStorage.setItem('impactmojo-cookie-consent', 'true');
+            setShowCookieConsent(false);
+          }}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium ml-4"
+        >
+          Accept
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Auth Context Provider
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [bookmarks, setBookmarks] = useState([]);
+  const [customPathway, setCustomPathway] = useState(null);
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setUser(user);
+      if (user) {
+        // Load user data from Firestore
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setBookmarks(userData.bookmarks || []);
+          setCustomPathway(userData.customPathway || null);
+          setNotes(userData.notes || []);
+        }
+      } else {
+        setBookmarks([]);
+        setCustomPathway(null);
+        setNotes([]);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const signIn = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (error) {
+      console.error('Error signing in:', error);
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await firebaseSignOut(auth);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  const toggleBookmark = async (courseId) => {
+    if (!user) return;
+
+    const newBookmarks = bookmarks.includes(courseId)
+      ? bookmarks.filter(id => id !== courseId)
+      : [...bookmarks, courseId];
+
+    setBookmarks(newBookmarks);
+    
+    try {
+      await updateDoc(doc(db, 'users', user.uid), {
+        bookmarks: newBookmarks
+      });
+    } catch (error) {
+      console.error('Error updating bookmarks:', error);
+    }
+  };
+
+  const addNote = async (noteData) => {
+    if (!user) return;
+
+    const newNote = {
+      id: Date.now().toString(),
+      ...noteData
+    };
+
+    const newNotes = [...notes, newNote];
+    setNotes(newNotes);
+
+    try {
+      await updateDoc(doc(db, 'users', user.uid), {
+        notes: newNotes
+      });
+    } catch (error) {
+      console.error('Error adding note:', error);
+    }
+  };
+
+  const updateNote = async (noteId, noteData) => {
+    if (!user) return;
+
+    const newNotes = notes.map(note => 
+      note.id === noteId ? { ...note, ...noteData } : note
+    );
+    setNotes(newNotes);
+
+    try {
+      await updateDoc(doc(db, 'users', user.uid), {
+        notes: newNotes
+      });
+    } catch (error) {
+      console.error('Error updating note:', error);
+    }
+  };
+
+  const deleteNote = async (noteId) => {
+    if (!user) return;
+
+    const newNotes = notes.filter(note => note.id !== noteId);
+    setNotes(newNotes);
+
+    try {
+      await updateDoc(doc(db, 'users', user.uid), {
+        notes: newNotes
+      });
+    } catch (error) {
+      console.error('Error deleting note:', error);
+    }
+  };
+
+  const value = {
+    user,
+    loading,
+    signIn,
+    signOut,
+    bookmarks,
+    toggleBookmark,
+    customPathway,
+    setCustomPathway,
+    notes,
+    addNote,
+    updateNote,
+    deleteNote
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+// Page Context Provider
+const PageProvider = ({ children }) => {
+  const [currentPage, setCurrentPage] = useState('home');
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('darkMode') === 'true';
+    }
+    return false;
+  });
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    localStorage.setItem('darkMode', (!darkMode).toString());
+  };
+
+  const value = {
+    currentPage,
+    setCurrentPage,
+    darkMode,
+    toggleDarkMode
+  };
+
+  return <PageContext.Provider value={value}>{children}</PageContext.Provider>;
+};
+
+// Main App Component
+const App = () => {
   const { currentPage } = usePage();
 
   const renderPage = () => {
@@ -1786,31 +2256,33 @@ const AppContent = () => {
         return <GamesPage />;
       case 'resources':
         return <ResourcesPage />;
-      case 'ai-tools':
-        return <AIToolsPage />;
       case 'dashboard':
         return <DashboardPage />;
+      case 'ai-tools':
+        return <AIToolsPage />;
       default:
         return <HomePage />;
     }
   };
 
   return (
-    <div className="App">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {renderPage()}
+      <Footer />
+      <CookieConsent />
     </div>
   );
 };
 
-// Main App Component (just provides context)
-const App = () => {
+// Root App with Providers
+const AppWithProviders = () => {
   return (
-    <AuthProvider>
-      <PageProvider>
-        <AppContent />
-      </PageProvider>
-    </AuthProvider>
+    <PageProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </PageProvider>
   );
 };
 
-export default App;
+export default AppWithProviders;
