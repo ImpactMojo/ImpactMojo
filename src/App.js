@@ -965,6 +965,8 @@ const AIToolsPage = () => {
 
 // Home Page Component
 
+// Enhanced Home Page Component - ADD THIS TO REPLACE YOUR EXISTING HomePage COMPONENT
+
 const HomePage = () => {
   const { darkMode } = usePage();
   const { user, isPremium } = useAuth();
@@ -1233,11 +1235,13 @@ const HomePage = () => {
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
             <div className="text-center">
               <div className="w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-600 mx-auto mb-4 overflow-hidden">
-                {/* Replace with your actual photo */}
                 <img 
-                  src="https://via.placeholder.com/96x96/4F46E5/FFFFFF?text=VS" 
+                  src="/assets/varna-profile.jpg" 
                   alt="Varna Sri Raman"
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.src = "/assets/logo-192.png"; // Fallback to logo if profile image not found
+                  }}
                 />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Created by Varna Sri Raman</h3>
@@ -1504,7 +1508,6 @@ const HomePage = () => {
     </div>
   );
 };
-
 // Courses Page Component
 const CoursesPage = () => {
   const { darkMode, searchQuery, setSearchQuery, browseMode, setBrowseMode } = usePage();
