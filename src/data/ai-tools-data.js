@@ -27,7 +27,8 @@ Story: Show persistent wage gaps across all experience levels
 Audience: Policy makers
 Context: Policy brief on workplace equality`,
     icon: 'BarChart',
-    color: 'blue'
+    color: 'blue',
+    category: 'Data Analysis'
   },
   {
     id: 'theory-change',
@@ -50,89 +51,15 @@ Please create:
 4. Indicators for measuring progress
 5. Feedback loops and adaptation points`,
     systemMessage: 'You are a strategic planning expert specializing in Theory of Change development for social impact programs. You understand complex causal pathways and can identify critical assumptions.',
-    exampleInput: `Problem: High youth unemployment in rural areas
-Target: Youth aged 18-25 in rural districts
-Context: Southeast Asia
-Timeframe: 3-year program
-Activities: Skills training, mentorship, job placement support
-Resources: $500K budget, 10 staff, 5 partner organizations
-Goal: Sustainable employment for 1000 youth`,
+    exampleInput: `Problem: Youth unemployment in urban slums
+Target: 1000 unemployed youth aged 18-25
+Context: Mumbai, India
+Activities: Skills training, job placement, mentorship
+Resources: $500K, 10 staff, corporate partners
+Goal: 70% job placement rate within 6 months`,
     icon: 'Target',
-    color: 'green'
-  },
-  {
-    id: 'grant-proposal',
-    title: 'Grant Proposal Writer',
-    description: 'Craft compelling grant proposals with clear narratives, strong evidence, and aligned budgets.',
-    prompt: `I need help writing a grant proposal for my development project.
-Funder Details:
-- Organization: [funder name]
-- Priority Areas: [what they fund]
-- Grant Size: [amount requesting]
-- Requirements: [specific requirements/format]
-Project Information:
-- Title: [project name]
-- Problem/Need: [what problem does this solve]
-- Solution/Approach: [your approach]
-- Target Beneficiaries: [who benefits]
-- Timeline: [project duration]
-- Expected Outcomes: [measurable results]
-Organization Background:
-- Track Record: [relevant experience]
-- Capacity: [why you can deliver]
-Please provide:
-1. Executive summary (250 words)
-2. Problem statement with evidence
-3. Project description with methodology
-4. Impact and sustainability plan
-5. Budget narrative
-6. Evaluation framework`,
-    systemMessage: 'You are a grant writing expert who knows how to align project narratives with funder priorities while maintaining authenticity and impact focus.',
-    exampleInput: `Funder: Global Education Foundation
-Priorities: Girls' education, STEM, rural areas
-Amount: $250,000
-Project: Mobile STEM Labs for Rural Girls
-Problem: Only 15% of rural girls pursue STEM
-Solution: Mobile labs visiting 20 schools monthly
-Beneficiaries: 2000 girls aged 12-16
-Timeline: 2 years
-Outcomes: 50% increase in STEM enrollment`,
-    icon: 'FileText',
-    color: 'purple'
-  },
-  {
-    id: 'stakeholder-map',
-    title: 'Stakeholder Mapping Tool',
-    description: 'Create comprehensive stakeholder maps with power/interest analysis and engagement strategies.',
-    prompt: `Help me create a stakeholder map for my development initiative.
-Project Context:
-- Initiative: [describe your project]
-- Sector: [education/health/governance/etc]
-- Geographic Scope: [local/national/regional]
-- Phase: [planning/implementation/evaluation]
-Known Stakeholders: [list key stakeholders you've identified]
-Project Goals: [what you're trying to achieve]
-Potential Challenges: [any conflicts or sensitivities]
-Please provide:
-1. Comprehensive stakeholder identification by category:
-   - Primary (direct beneficiaries)
-   - Secondary (indirect beneficiaries)
-   - Key (decision makers/funders)
-2. Power/Interest matrix placement
-3. Influence/Impact assessment
-4. Engagement strategy for each stakeholder group
-5. Risk analysis and mitigation strategies
-6. Communication plan outline`,
-    systemMessage: 'You are a stakeholder engagement specialist who understands power dynamics, cultural contexts, and the importance of inclusive participation in development work.',
-    exampleInput: `Initiative: Community health worker program
-Sector: Public health
-Scope: District-level in rural areas
-Phase: Planning phase
-Known Stakeholders: Ministry of Health, village councils, existing health workers
-Goals: Reduce maternal mortality by 30%
-Challenges: Resistance from traditional healers`,
-    icon: 'Users',
-    color: 'indigo'
+    color: 'green',
+    category: 'Strategic Planning'
   },
   {
     id: 'indicator-framework',
@@ -173,7 +100,8 @@ Staff: 1 M&E officer, program staff can support
 Systems: Basic Excel tracking
 Reporting: Quarterly to donor, annual evaluation`,
     icon: 'CheckCircle',
-    color: 'teal'
+    color: 'teal',
+    category: 'M&E'
   },
   {
     id: 'policy-brief',
@@ -209,7 +137,8 @@ Gaps: No enforcement, no support for at-risk girls
 Decision Makers: Ministry of Education, local officials
 Desired Change: Conditional cash transfer program for girls' education`,
     icon: 'Scale',
-    color: 'amber'
+    color: 'amber',
+    category: 'Policy & Advocacy'
   },
   {
     id: 'interview-guide',
@@ -217,125 +146,41 @@ Desired Change: Conditional cash transfer program for girls' education`,
     description: 'Create structured interview guides for qualitative research with cultural sensitivity.',
     prompt: `I need an interview guide for my qualitative research.
 Research Context:
-- Research Question: [main question you're exploring]
-- Participant Profile: [who you're interviewing]
-- Cultural Context: [relevant cultural considerations]
-- Language: [interview language/translation needs]
-- Setting: [where interviews will happen]
+- Topic: [what you're studying]
+- Population: [who you're interviewing]
+- Sample Size: [number of interviews]
+- Setting: [where interviews happen]
+Research Questions: [main questions you want to answer]
 Interview Details:
-- Type: [structured/semi-structured/unstructured]
-- Duration: [expected length]
-- Sensitivity: [any sensitive topics]
-- Recording: [audio/video/notes only]
-Research Goals: [what insights you need]
+- Duration: [how long per interview]
+- Format: [structured/semi-structured/unstructured]
+- Language: [interview language]
+- Cultural Considerations: [relevant cultural factors]
+Data Use: [how will data be used]
 Please provide:
 1. Interview protocol with:
-   - Introduction script
-   - Consent process
-   - Warm-up questions
-   - Main questions with probes
+   - Opening questions (rapport building)
+   - Main topic questions
+   - Probing questions
    - Closing questions
-2. Cultural adaptation notes
-3. Tips for building rapport
-4. Sensitive topic navigation strategies
-5. Note-taking template`,
-    systemMessage: 'You are a qualitative research expert who understands the nuances of conducting culturally sensitive interviews while maintaining research rigor.',
-    exampleInput: `Research Question: How do women entrepreneurs navigate social norms?
-Participants: Women running small businesses
-Context: Conservative rural communities in South Asia
-Language: Local dialect with translator
-Setting: Participants' shops/homes
-Type: Semi-structured
+2. Consent script and process
+3. Cultural adaptation notes
+4. Interview techniques and tips
+5. Data recording guidelines
+6. Ethical considerations checklist`,
+    systemMessage: 'You are a qualitative research expert who designs culturally sensitive interview guides that generate rich, meaningful data while respecting participant dignity and safety.',
+    exampleInput: `Topic: Women's experiences with microcredit programs
+Population: Rural women borrowers
+Sample: 25 women across 5 villages
+Setting: Village community centers
+Questions: How has microcredit affected their lives? What challenges do they face?
 Duration: 45-60 minutes
-Sensitivity: Family dynamics, income
-Goals: Understand barriers and coping strategies`,
+Format: Semi-structured
+Language: Local language with translator
+Culture: Conservative society, women may be hesitant to speak openly`,
     icon: 'MessageCircle',
-    color: 'rose'
-  },
-  {
-    id: 'workshop-agenda',
-    title: 'Workshop Agenda Designer',
-    description: 'Design engaging, participatory workshop agendas with clear learning objectives.',
-    prompt: `Help me design a workshop agenda for my development program.
-Workshop Overview:
-- Topic: [workshop subject]
-- Participants: [number and profile]
-- Duration: [total time available]
-- Objectives: [learning/outcome objectives]
-- Venue: [physical/virtual/hybrid]
-Participant Context:
-- Prior Knowledge: [what they already know]
-- Language: [language needs]
-- Cultural Considerations: [important cultural factors]
-- Accessibility Needs: [any special requirements]
-Resources Available:
-- Facilitators: [number and expertise]
-- Materials: [available materials/budget]
-- Technology: [available tech tools]
-Please create:
-1. Detailed agenda with timings
-2. Session plans with:
-   - Objectives for each session
-   - Activities and methodologies
-   - Materials needed
-   - Facilitation notes
-3. Energizers and icebreakers
-4. Participation strategies
-5. Evaluation methods
-6. Follow-up action plan template`,
-    systemMessage: 'You are a workshop facilitation expert who designs inclusive, engaging sessions that balance content delivery with participatory learning and account for diverse learning styles.',
-    exampleInput: `Topic: Community-Based Child Protection
-Participants: 30 village leaders and social workers
-Duration: 2 days
-Objectives: Build skills in identifying and responding to child protection issues
-Venue: Community center (basic facilities)
-Prior Knowledge: Basic understanding, no formal training
-Language: Local language with some English
-Cultural: Hierarchical society, gender-mixed group
-Facilitators: 2 trained facilitators`,
-    icon: 'Calendar',
-    color: 'cyan'
-  },
-  {
-    id: 'report-synthesizer',
-    title: 'Research Report Synthesizer',
-    description: 'Synthesize multiple research sources into coherent, actionable reports.',
-    prompt: `I need help synthesizing multiple research sources into a comprehensive report.
-Research Materials:
-- Number of Sources: [how many documents/studies]
-- Types: [academic papers/reports/data sets/interviews]
-- Key Topics: [main themes covered]
-- Quality: [peer-reviewed/grey literature/internal]
-Report Requirements:
-- Purpose: [inform/advocacy/evaluate]
-- Audience: [who will read this]
-- Length: [word/page limit]
-- Format: [academic/policy/donor report]
-- Deadline: [when needed]
-Specific Needs:
-- Focus Areas: [what to emphasize]
-- Questions to Answer: [key questions]
-- Recommendations Needed: [yes/no and what type]
-Please provide:
-1. Report outline with sections
-2. Executive summary template
-3. Literature review synthesis
-4. Key findings organized by theme
-5. Evidence assessment/quality notes
-6. Gaps identified in current research
-7. Recommendations based on evidence
-8. References/citation format`,
-    systemMessage: 'You are a research synthesis expert who can identify patterns across diverse sources, assess evidence quality, and create coherent narratives that serve specific purposes.',
-    exampleInput: `Sources: 15 studies on cash transfer programs
-Types: 10 academic papers, 3 evaluations, 2 datasets
-Topics: Impact on education, health, women's empowerment
-Purpose: Inform program design
-Audience: Development practitioners
-Length: 20 pages
-Focus: What works for conditional vs unconditional transfers
-Questions: Which approach is more cost-effective? What are implementation best practices?`,
-    icon: 'BookOpen',
-    color: 'violet'
+    color: 'pink',
+    category: 'Research Methods'
   },
   {
     id: 'budget-template',
@@ -378,7 +223,8 @@ Coverage: 3 districts
 Beneficiaries: 500 youth
 Overhead: 15% allowed`,
     icon: 'TrendingUp',
-    color: 'emerald'
+    color: 'emerald',
+    category: 'Program Management'
   },
   {
     id: 'survey-designer',
@@ -413,117 +259,139 @@ Please provide:
 6. Pilot testing plan
 7. Translation notes`,
     systemMessage: 'You are a survey methodology expert who understands question construction, survey flow, cultural adaptation, and how to minimize bias while maximizing response quality.',
-    exampleInput: `Objective: Assess impact of nutrition program
-Population: Mothers with children under 5
-Sample: 400 households
-Method: Face-to-face tablet survey
-Demographics: Age, education, income, family size
-Topics: Feeding practices, nutrition knowledge, health seeking
-Sensitive: Household income, food insecurity
+    exampleInput: `Objective: Measure impact of nutrition program on child health
+Population: Mothers of children under 5
+Sample: 500 households
+Method: Face-to-face interviews
+Demographics: Age, education, income, household size
+Topics: Child feeding practices, health status, program satisfaction
 Length: 30 minutes maximum
-Language: Local language, low literacy`,
+Language: Local language
+Literacy: Mixed literacy levels`,
     icon: 'FileText',
-    color: 'orange'
+    color: 'blue',
+    category: 'Research Methods'
   },
   {
-    id: 'case-study',
-    title: 'Case Study Developer',
-    description: 'Develop compelling case studies that demonstrate impact and learning.',
-    prompt: `Help me develop a case study about my program/intervention.
-Case Study Focus:
-- Subject: [specific intervention/person/community]
-- Purpose: [learning/advocacy/documentation]
-- Audience: [who will read this]
-- Length: [word count/pages]
-Context and Background:
-- Setting: [geographic/social context]
-- Timeline: [when this happened]
-- Key Actors: [people/organizations involved]
-- Initial Situation: [problem/challenge]
-The Story:
-- Intervention: [what was done]
-- Process: [how it unfolded]
-- Challenges: [obstacles faced]
-- Solutions: [how challenges were addressed]
-- Results: [what changed]
-Evidence Available:
-- Data: [quantitative evidence]
-- Quotes: [testimonials available]
-- Photos: [visual documentation]
+    id: 'stakeholder-mapping',
+    title: 'Stakeholder Mapping Tool',
+    description: 'Create comprehensive stakeholder maps with power analysis and engagement strategies.',
+    prompt: `Help me create a stakeholder map for my development initiative.
+Project Context:
+- Initiative: [describe your project]
+- Sector: [education/health/governance/etc]
+- Geographic Scope: [local/national/regional]
+- Phase: [planning/implementation/evaluation]
+Known Stakeholders: [list key stakeholders you've identified]
+Project Goals: [what you're trying to achieve]
+Potential Challenges: [any conflicts or sensitivities]
 Please provide:
-1. Case study structure/outline
-2. Compelling narrative with:
-   - Hook/opening
-   - Context setting
-   - Challenge presentation
-   - Solution journey
-   - Impact demonstration
-   - Lessons learned
-3. Sidebar elements (stats, quotes, timeline)
-4. Discussion questions
-5. Replication guidance`,
-    systemMessage: 'You are a storytelling expert who can craft engaging narratives that balance human interest with evidence-based insights and practical learning.',
-    exampleInput: `Subject: Village savings group transforms community
-Purpose: Demonstrate model for replication
-Audience: NGOs and donors
-Setting: Rural Kenya, drought-prone area
-Timeline: 2022-2024
-Intervention: Established women's savings groups
-Challenges: Initial mistrust, low literacy
-Results: 200 women saving, 50 businesses started
-Evidence: Savings data, 20 interviews, photos`,
-    icon: 'Award',
-    color: 'pink'
+1. Comprehensive stakeholder identification by category:
+   - Primary (direct beneficiaries)
+   - Secondary (indirect beneficiaries)
+   - Key (decision makers/funders)
+2. Power/Interest matrix placement
+3. Influence/Impact assessment
+4. Engagement strategy for each stakeholder group
+5. Risk analysis and mitigation strategies
+6. Communication plan outline`,
+    systemMessage: 'You are a stakeholder engagement specialist who understands power dynamics, cultural contexts, and the importance of inclusive participation in development work.',
+    exampleInput: `Initiative: Community health worker program
+Sector: Public health
+Scope: District-level in rural areas
+Phase: Planning phase
+Known Stakeholders: Ministry of Health, village councils, existing health workers
+Goals: Reduce maternal mortality by 30%
+Challenges: Resistance from traditional healers`,
+    icon: 'Users',
+    color: 'indigo',
+    category: 'Strategic Planning'
   },
   {
-    id: 'training-curriculum',
-    title: 'Training Curriculum Developer',
-    description: 'Create comprehensive training curricula with modules, materials, and assessments.',
-    prompt: `I need help developing a training curriculum for my program.
-Training Overview:
-- Topic: [subject matter]
-- Target Learners: [who and background]
-- Duration: [total training period]
-- Format: [in-person/online/blended]
-- Certification: [any certification needs]
-Learning Objectives:
-- Knowledge: [what they should know]
-- Skills: [what they should be able to do]
-- Attitudes: [mindset changes needed]
-Context:
-- Prior Learning: [existing knowledge/skills]
-- Language: [training language]
-- Resources: [available materials/budget]
-- Venue/Platform: [where training happens]
-Post-Training:
-- Application: [how they'll use learning]
-- Support: [follow-up available]
-Please create:
-1. Curriculum framework with:
-   - Module outline and sequencing
-   - Learning objectives per module
-   - Time allocation
-2. For each module:
-   - Content outline
-   - Teaching methods
-   - Activities/exercises
+    id: 'workshop-planner',
+    title: 'Workshop Facilitation Planner',
+    description: 'Design engaging workshops with clear objectives, activities, and evaluation methods.',
+    prompt: `I need help planning a workshop for my program.
+Workshop Overview:
+- Topic: [workshop subject]
+- Participants: [number and profile]
+- Duration: [length of workshop]
+- Objectives: [what participants should achieve]
+Participant Details:
+- Background: [experience/knowledge level]
+- Expectations: [what they want to learn]
+- Group Dynamics: [hierarchy/relationships]
+Logistics:
+- Venue: [type of space/facilities]
+- Resources: [budget/materials available]
+- Language: [working language]
+- Cultural Context: [relevant factors]
+Please provide:
+1. Detailed agenda with timings
+2. Session plans with:
+   - Objectives for each session
+   - Activities and methodologies
    - Materials needed
-   - Assessment methods
-3. Participant materials list
-4. Trainer's guide outline
-5. Assessment strategy
-6. Training evaluation plan`,
-    systemMessage: 'You are a curriculum development expert who understands adult learning principles, competency-based training, and how to create engaging, practical learning experiences.',
-    exampleInput: `Topic: Community Health Worker Training
-Learners: 30 village volunteers, basic education
-Duration: 5 days initial + monthly refreshers
-Format: In-person with WhatsApp follow-up
-Knowledge: Basic health, danger signs, referral
-Skills: Health education, basic first aid, record keeping
-Prior: Traditional health knowledge, no formal training
-Application: Serve 50 households each`,
+   - Facilitation notes
+3. Energizers and icebreakers
+4. Participation strategies
+5. Evaluation methods
+6. Follow-up action plan template`,
+    systemMessage: 'You are a workshop facilitation expert who designs inclusive, engaging sessions that balance content delivery with participatory learning and account for diverse learning styles.',
+    exampleInput: `Topic: Community-Based Child Protection
+Participants: 30 village leaders and social workers
+Duration: 2 days
+Objectives: Build skills in identifying and responding to child protection issues
+Venue: Community center (basic facilities)
+Prior Knowledge: Basic understanding, no formal training
+Language: Local language with some English
+Cultural: Hierarchical society, gender-mixed group
+Facilitators: 2 trained facilitators`,
+    icon: 'Calendar',
+    color: 'cyan',
+    category: 'Training & Education'
+  },
+  {
+    id: 'report-synthesizer',
+    title: 'Research Report Synthesizer',
+    description: 'Synthesize multiple research sources into coherent, actionable reports.',
+    prompt: `I need help synthesizing multiple research sources into a comprehensive report.
+Research Materials:
+- Number of Sources: [how many documents/studies]
+- Types: [academic papers/reports/data sets/interviews]
+- Key Topics: [main themes covered]
+- Quality: [peer-reviewed/grey literature/internal]
+Report Requirements:
+- Purpose: [inform/advocacy/evaluate]
+- Audience: [who will read this]
+- Length: [word/page limit]
+- Format: [academic/policy/donor report]
+- Deadline: [when needed]
+Specific Needs:
+- Focus Areas: [what to emphasize]
+- Questions to Answer: [key questions]
+- Recommendations Needed: [yes/no and what type]
+Please provide:
+1. Report outline with sections
+2. Executive summary template
+3. Literature review synthesis
+4. Key findings organized by theme
+5. Evidence assessment/quality notes
+6. Gaps identified in current research
+7. Recommendations based on evidence
+8. References/citation format`,
+    systemMessage: 'You are a research synthesis expert who can identify patterns across diverse sources, assess evidence quality, and create coherent narratives that serve specific purposes.',
+    exampleInput: `Sources: 15 studies on cash transfer programs
+Types: 10 academic papers, 3 evaluations, 2 datasets
+Topics: Impact on education, health, women's empowerment
+Purpose: Inform program design
+Audience: Development practitioners
+Length: 20 pages
+Focus: What works for conditional vs unconditional transfers
+Questions: Which approach is more cost-effective? What are implementation best practices?`,
     icon: 'BookOpen',
-    color: 'slate'
+    color: 'violet',
+    category: 'Research Methods'
   },
   {
     id: 'advocacy-strategy',
@@ -572,7 +440,111 @@ Opposition: Some conservative groups
 Resources: Small team, $50K budget
 Timeline: Policy window in 6 months`,
     icon: 'Zap',
-    color: 'red'
+    color: 'red',
+    category: 'Policy & Advocacy'
+  },
+  {
+    id: 'training-curriculum',
+    title: 'Training Curriculum Designer',
+    description: 'Design comprehensive training curricula with learning objectives, modules, and assessment methods.',
+    prompt: `Help me design a training curriculum for my target learners.
+Training Overview:
+- Topic: [subject matter]
+- Learners: [profile of participants]
+- Duration: [total training time]
+- Format: [in-person/online/blended]
+Learning Goals:
+- Knowledge: [what they need to know]
+- Skills: [what they need to do]
+- Application: [how they'll use learning]
+Learner Profile:
+- Prior Knowledge: [existing knowledge/skills]
+- Learning Preferences: [how they learn best]
+- Constraints: [time/technology/language]
+Training Context:
+- Setting: [where training happens]
+- Resources: [available materials/technology]
+- Follow-up: [ongoing support available]
+Please create:
+1. Curriculum framework with:
+   - Module outline and sequencing
+   - Learning objectives per module
+   - Time allocation
+2. For each module:
+   - Content outline
+   - Teaching methods
+   - Activities/exercises
+   - Materials needed
+   - Assessment methods
+3. Participant materials list
+4. Trainer's guide outline
+5. Assessment strategy
+6. Training evaluation plan`,
+    systemMessage: 'You are a curriculum development expert who understands adult learning principles, competency-based training, and how to create engaging, practical learning experiences.',
+    exampleInput: `Topic: Community Health Worker Training
+Learners: 30 village volunteers, basic education
+Duration: 5 days initial + monthly refreshers
+Format: In-person with WhatsApp follow-up
+Knowledge: Basic health, danger signs, referral
+Skills: Health education, basic first aid, record keeping
+Prior: Traditional health knowledge, no formal training
+Application: Serve 50 households each`,
+    icon: 'Award',
+    color: 'orange',
+    category: 'Training & Education'
+  },
+  {
+    id: 'case-study',
+    title: 'Case Study Developer',
+    description: 'Develop compelling case studies that demonstrate impact and learning.',
+    prompt: `Help me develop a case study about my program/intervention.
+Program/Intervention:
+- Name: [program name]
+- Objective: [main goal]
+- Duration: [timeframe]
+- Location: [where it happened]
+- Target Population: [who was served]
+Context:
+- Problem Being Addressed: [issue/challenge]
+- Pre-existing Conditions: [starting situation]
+- External Factors: [political/economic/social context]
+Implementation:
+- Key Activities: [what was done]
+- Resources Used: [budget/staff/materials]
+- Partners Involved: [key stakeholders]
+- Challenges Faced: [obstacles encountered]
+Results:
+- Outcomes Achieved: [what changed]
+- Data/Evidence: [measurements/proof]
+- Unexpected Results: [surprises]
+- Lessons Learned: [insights gained]
+Please provide:
+1. Case study narrative structure:
+   - Executive summary
+   - Background and context
+   - Problem definition
+   - Intervention description
+   - Results and impact
+   - Lessons learned
+   - Conclusions and recommendations
+2. Data presentation plan
+3. Visual elements suggestions
+4. Target audience adaptation
+5. Dissemination strategy`,
+    systemMessage: 'You are a case study development expert who can craft compelling narratives that effectively communicate program learning while maintaining analytical rigor.',
+    exampleInput: `Program: Mobile health clinics for remote villages
+Objective: Improve maternal health outcomes
+Duration: 18 months
+Location: 3 remote districts in rural Kenya
+Target: 5000 pregnant women and new mothers
+Problem: 60% of women had no access to prenatal care
+Activities: Monthly clinic visits, health education, referrals
+Results: 85% increase in prenatal care attendance, 40% reduction in complications
+Challenges: Seasonal road access, staff retention
+Data: Patient records, health outcomes, cost analysis`,
+    icon: 'Trophy',
+    color: 'gold',
+    category: 'Program Management'
   },
   {
     id: 'learning-assessment',
@@ -614,53 +586,59 @@ Please provide:
 6. Progress tracking system
 7. Remediation strategies`,
     systemMessage: 'You are an educational assessment expert who designs fair, valid assessments that promote learning while accurately measuring achievement.',
-    exampleInput: `Subject: Digital literacy for adults
-Learners: 25 adults, basic education, no computer experience
-Duration: 10-week course
-Objectives: Basic computer use, internet, email, documents
-Purpose: Summative for certification
-Format: Practical + written test
-Time: 2 hours total
-Resources: Computer lab available`,
-    icon: 'Trophy',
-    color: 'yellow'
+    exampleInput: `Subject: Financial literacy for small business owners
+Learners: 25 microentrepreneurs, mixed education
+Duration: 8-week program
+Setting: Community training center
+Knowledge: Basic accounting, loan management, savings
+Skills: Record keeping, budgeting, financial planning
+Competencies: Making sound financial decisions
+Purpose: Certificate program assessment
+Format: Mixed - tests, practical exercises, business plan
+Time: 2 hours total assessment time
+Resources: Calculators, worksheets
+Language: Local language with some technical terms`,
+    icon: 'GraduationCap',
+    color: 'purple',
+    category: 'Training & Education'
   },
   {
     id: 'escape-room',
     title: 'Educational Escape Room Designer',
-    description: 'Create immersive educational escape rooms that make learning unforgettable through puzzle-solving and teamwork.',
-    prompt: `Design an educational escape room experience for my learning objectives.
-**Learning Context**:
-- Subject/Topic: [main content area]
-- Learning Objectives: [specific skills/knowledge to teach]
-- Target Audience: [age group and prior knowledge]
-- Group Size: [number of participants]
-- Time Limit: [duration of escape room]
-- Physical Space: [room size and layout available]
-- Technology Available: [tablets/computers/props available]
-**Theme Preferences**:
-- Setting: [historical/fantasy/mystery/scientific]
-- Narrative Style: [serious/playful/dramatic]
-- Difficulty Level: [beginner/intermediate/advanced]
-Please create:
-1. **Immersive Storyline**:
-   - Compelling narrative hook that connects to learning objectives
-   - Character roles for participants (if applicable)
-   - Story progression through puzzle completion
-   - Dramatic conclusion that reinforces key concepts
-2. **Puzzle Sequence** (5-8 interconnected puzzles):
-   - Each puzzle directly teaches/reinforces a learning objective
-   - Variety of puzzle types (codes, physical, logic, word, math)
-   - Clear connection between puzzle solution and curriculum
-   - Progressive difficulty with built-in hints system
-3. **Complete Implementation Guide**:
+    description: 'Create immersive learning experiences that combine problem-solving with curriculum content.',
+    prompt: `I want to create an educational escape room experience.
+Learning Context:
+- Subject/Topic: [what curriculum area]
+- Learning Objectives: [specific goals - what should participants learn/practice]
+- Target Audience: [age group, background, group size]
+- Duration: [how long should the experience last]
+- Setting: [available space and technology]
+Experience Design:
+- Theme/Storyline: [overarching narrative that connects to learning]
+- Immersion Level: [how elaborate - simple puzzles to full theatrical experience]
+- Difficulty Level: [appropriate challenge level for audience]
+- Team Structure: [individual/small groups/large group]
+Practical Constraints:
+- Budget: [available resources]
+- Materials: [what can be created/purchased]
+- Facilitator Requirements: [number of staff needed]
+- Safety Considerations: [any special needs]
+Please provide:
+1. **Storyline and Theme**: Compelling narrative that naturally integrates learning objectives
+2. **Room Design**: Physical layout, props, and atmosphere creation
+3. **Puzzle Sequence**: 5-8 interconnected challenges that build on each other and reinforce learning, including:
+   - Opening puzzle (team building/introduction)
+   - Core learning puzzles (directly tied to objectives)
+   - Integration challenge (applying multiple concepts)
+   - Final challenge (synthesis and escape)
+4. **Complete Implementation Guide**:
    - Room setup instructions and materials list
    - Detailed puzzle instructions and solutions
    - Facilitator guide with hints system
    - Student handouts and clue sheets
    - Assessment rubric for learning objectives
    - Alternative versions for different ability levels
-4. **Learning Integration**:
+5. **Learning Integration**:
    - Clear connections between each puzzle and curriculum
    - Debrief questions to reinforce learning
    - Extension activities for early finishers
@@ -674,6 +652,7 @@ Time: 60 minutes
 Size: Groups of 4-6 participants
 Tech: Tablets available for mapping exercises and data analysis`,
     icon: 'Puzzle',
-    color: 'purple'
+    color: 'purple',
+    category: 'Training & Education'
   }
 ];
