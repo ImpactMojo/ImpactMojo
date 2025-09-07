@@ -329,6 +329,16 @@ const browseByTimeCommitment = {
   }
 };
 
+// Function to generate mock active learner counts
+const getActiveLearnerCount = (courseId) => {
+  // Generate consistent mock numbers based on course ID
+  const hash = courseId.split('').reduce((a, b) => {
+    a = ((a << 5) - a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);
+  return Math.abs(hash % 500) + 100; // Between 100-600 learners
+};
+
 // Auth Context
 const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
@@ -592,9 +602,26 @@ export const Navigation = () => {
             <div className="flex-shrink-0 flex items-center">
               <button 
                 onClick={() => setCurrentPage('home')}
-                className="text-2xl font-bold text-blue-600 dark:text-blue-400"
+                className="flex items-center space-x-2"
               >
-                ImpactMojo
+                <img 
+                  src="/assets/android-chrome-192x192.png"
+                  alt="ImpactMojo Logo"
+                  className="h-8 w-8"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextElementSibling.style.display = 'block';
+                  }}
+                />
+                <span 
+                  className="text-2xl font-bold text-blue-600 dark:text-blue-400"
+                  style={{ display: 'none' }}
+                >
+                  ImpactMojo
+                </span>
+                <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                  ImpactMojo
+                </span>
               </button>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -964,9 +991,6 @@ const AIToolsPage = () => {
 };
 
 // Home Page Component
-
-// CORRECTED Home Page Component - Replace your existing HomePage in app1.js
-
 const HomePage = () => {
   const { darkMode } = usePage();
   const { user, isPremium } = useAuth();
@@ -1119,26 +1143,35 @@ const HomePage = () => {
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Start with our most loved courses</p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {popularCourses.map((course) => (
-              <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="p-6">
-                  <span className="inline-block px-2 py-1 text-xs font-semibold text-blue-800 dark:text-blue-200 bg-blue-100 dark:bg-blue-900 rounded-full mb-2">
-                    {course.track}
-                  </span>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{course.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">{course.description}</p>
-                  {course.quote && (
-                    <blockquote className="text-sm italic text-gray-500 dark:text-gray-400 border-l-4 border-blue-500 pl-3">
-                      {course.quote}
-                    </blockquote>
-                  )}
-                  <div className="mt-4 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                    <span>{course.level}</span>
-                    <span>{course.duration}</span>
+            {popularCourses.map((course) => {
+              const activeLearners = getActiveLearnerCount(course.id);
+              return (
+                <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="inline-block px-2 py-1 text-xs font-semibold text-blue-800 dark:text-blue-200 bg-blue-100 dark:bg-blue-900 rounded-full">
+                        {course.track}
+                      </span>
+                      <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                        <Users className="h-3 w-3 mr-1" />
+                        <span>{activeLearners} learners</span>
+                      </div>
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{course.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">{course.description}</p>
+                    {course.quote && (
+                      <blockquote className="text-sm italic text-gray-500 dark:text-gray-400 border-l-4 border-blue-500 pl-3">
+                        {course.quote}
+                      </blockquote>
+                    )}
+                    <div className="mt-4 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                      <span>{course.level}</span>
+                      <span>{course.duration}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className="text-center mt-8">
             <button
@@ -1236,11 +1269,11 @@ const HomePage = () => {
             <div className="text-center">
               <div className="w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-600 mx-auto mb-4 overflow-hidden">
                 <img 
-                  src="/assets/varna-profile.jpg" 
+                  src="/assets/varna-photo.jpg" 
                   alt="Varna Sri Raman"
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    e.target.src = "/assets/logo-192.png"; // Fallback to logo if profile image not found
+                    e.target.src = "/assets/android-chrome-192x192.png"; // Fallback to logo if profile image not found
                   }}
                 />
               </div>
