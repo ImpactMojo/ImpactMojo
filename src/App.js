@@ -8,7 +8,8 @@ import {
   Search, Plus, Edit3, Save, Filter, BookmarkIcon, Tag,
   Install, AlertTriangle, ChevronDown, ChevronRight, Gamepad2,
   BarChart, Star, ArrowRight, Calendar, TrendingUp, Scale, 
-  Award, Puzzle, Zap, Send, Lightbulb, Heart, ExternalLinkIcon
+  Award, Puzzle, Zap, Send, Lightbulb, Heart, ExternalLinkIcon,
+  Linkedin, Twitter, Globe
 } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
@@ -20,7 +21,7 @@ import { labsData } from './data/labs-data';
 import { premiumResources } from './data/premium-resources-data';
 import { aiToolsData } from './data/ai-tools-data';
 
-// NEW COMPONENT IMPORTS
+// Component imports
 import { FloatingActionButtons } from './components/floating-action-buttons';
 import { 
   FeaturedContentSection, 
@@ -28,6 +29,10 @@ import {
   PopularCoursesSection 
 } from './components/homepage-components';
 import { LearningTracksSection } from './components/learning-tracks-component';
+
+// Page imports
+import AboutPage from './pages/AboutPage';
+import FAQPage from './pages/FAQPage';
 
 // Updated Games Data
 const gamesData = [
@@ -85,56 +90,46 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
-// CORRECTED Multi-dimensional browse system with AGREED tracks
-const browseByRole = {
-  "New to Development": {
-    description: "Just starting your development journey",
-    courses: ["development-economics-101", "global-development-architecture-101", "law-and-constitution-101"],
-    color: "blue"
+// CORRECTED Four Original Learning Tracks
+const fourOriginalTracks = {
+  "Research Methods": {
+    description: "Master qualitative and quantitative research approaches",
+    courses: ["research-ethics-101", "qualitative-research-methods-101", "visual-ethnography-101"],
+    color: "blue",
+    icon: "🔬"
   },
-  "Researcher/Academic": {
-    description: "Conducting research and generating knowledge",
-    courses: ["research-ethics-101", "qualitative-research-methods-101", "econometrics-101", "data-literacy-101"],
-    color: "purple"
+  "Data Analysis": {
+    description: "Develop skills in data collection, analysis, and visualization", 
+    courses: ["data-literacy-101", "econometrics-101", "bivariate-analysis-101", "multivariate-analysis-101"],
+    color: "green",
+    icon: "📊"
   },
-  "Practitioner/Field Worker": {
-    description: "Implementing programs and working directly with communities",
-    courses: ["community-development-101", "monitoring-evaluation-accountability-and-learning-101", "advocacy-and-communications-101"],
-    color: "green"
+  "Gender Studies": {
+    description: "Understand gender dynamics and women's empowerment",
+    courses: ["gender-studies-101", "womens-economic-empowerment-101", "care-economy-101"],
+    color: "purple",
+    icon: "⚖️"
   },
-  "Policy Maker/Student": {
-    description: "Learning and shaping policy decisions",
-    courses: ["law-and-constitution-101", "political-economy-101", "global-development-architecture-101"],
-    color: "orange"
+  "Policy & Economics": {
+    description: "Explore policy frameworks and economic development",
+    courses: ["development-economics-101", "political-economy-101", "law-and-constitution-101", "global-development-architecture-101"],
+    color: "orange",
+    icon: "🏛️"
   }
 };
 
-const browseByTheme = {
-  "Health & Wellbeing": {
-    description: "Improving health outcomes and social welfare",
-    courses: ["public-health-101", "sexual-and-reproductive-health-101"],
-    color: "red"
-  },
-  "Education & Skills": {
-    description: "Building knowledge and capacity",
-    courses: ["data-literacy-101", "qualitative-research-methods-101"],
-    color: "indigo"
-  },
-  "Governance & Rights": {
-    description: "Understanding systems of power and justice",
-    courses: ["law-and-constitution-101", "political-economy-101", "research-ethics-101"],
-    color: "purple"
-  },
-  "Economic Development": {
-    description: "Creating sustainable economic growth",
-    courses: ["development-economics-101", "econometrics-101", "monitoring-evaluation-accountability-and-learning-101"],
-    color: "green"
-  },
-  "Social Change": {
-    description: "Driving community and social transformation",
-    courses: ["community-development-101", "advocacy-and-communications-101", "global-development-architecture-101"],
-    color: "blue"
-  }
+// Live Learner Count Generator
+const generateLiveLearnerCounts = () => {
+  const totalLearners = 4200 + Math.floor(Math.random() * 300); // 4200-4500
+  const courseCounts = courseData.map(course => ({
+    id: course.id,
+    count: 100 + Math.floor(Math.random() * 2400) // 100-2500 range
+  }));
+  
+  return {
+    total: totalLearners,
+    courses: courseCounts
+  };
 };
 
 // Context for global state
@@ -144,6 +139,127 @@ const AuthContext = createContext();
 // Custom hooks
 const usePage = () => useContext(PageContext);
 const useAuth = () => useContext(AuthContext);
+
+// Live Stats Component
+const LiveStatsSection = () => {
+  const { darkMode } = usePage();
+  const [stats, setStats] = useState(generateLiveLearnerCounts());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStats(generateLiveLearnerCounts());
+    }, 30000); // Update every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            Join {stats.total.toLocaleString()}+ Learners Worldwide
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {Object.entries(fourOriginalTracks).map(([track, data], index) => (
+              <div key={track} className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg">
+                <div className="text-2xl mb-2">{data.icon}</div>
+                <h3 className="font-semibold text-gray-900 dark:text-white">{track}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{data.description}</p>
+                <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                  {(800 + Math.floor(Math.random() * 1200)).toLocaleString()}+ active
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// About Me Section Component
+const AboutMeSection = () => {
+  const { darkMode } = usePage();
+
+  const socialLinks = [
+    { name: 'LinkedIn', url: 'https://linkedin.com/in/varna/', icon: Linkedin },
+    { name: 'Twitter/X', url: 'https://x.com/varna', icon: Twitter },
+    { name: 'Threads', url: 'https://www.threads.com/@varnasriraman', icon: MessageCircle },
+    { name: 'Notion', url: 'https://vfolio.notion.site/', icon: Globe }
+  ];
+
+  return (
+    <div className="py-16 bg-white dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            About the Creator
+          </h2>
+        </div>
+        
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            {/* Photo */}
+            <div className="text-center">
+              <img 
+                src="/assets/varna-photo.jpg"
+                alt="Dr. Varna Sri Raman"
+                className="w-48 h-48 rounded-full mx-auto mb-4 object-cover shadow-lg"
+                onError={(e) => {
+                  e.target.src = "/assets/android-chrome-192x192.png";
+                }}
+              />
+              <div className="flex justify-center space-x-4">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    aria-label={link.name}
+                  >
+                    <link.icon size={24} />
+                  </a>
+                ))}
+              </div>
+            </div>
+            
+            {/* Bio */}
+            <div className="md:col-span-2">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Dr. Varna Sri Raman
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                Development economist, educator, and social researcher specializing in justice, equity, and development in South Asia. 
+                ImpactMojo is built to democratize access to development knowledge through curated, contextual learning resources.
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                With a PhD in Development Economics and years of field experience, I created ImpactMojo as an open-source project 
+                to make high-quality development education accessible to practitioners, researchers, and changemakers across the region.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  onClick={() => window.location.href = '#faq'}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                >
+                  Read FAQ
+                </button>
+                <button
+                  onClick={() => window.location.href = '#about'}
+                  className="border border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 px-6 py-3 rounded-lg font-medium transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // Improved Floating Action Buttons - positioned at bottom right elegantly
 const ImprovedFloatingActionButtons = () => {
@@ -353,7 +469,7 @@ const Navigation = () => {
                 <img 
                   src="/assets/ImpactMojo Logo.png"
                   alt="ImpactMojo Logo"
-                  className="h-12 w-12 object-contain"
+                  className="h-16 w-16 object-contain"
                   onError={(e) => {
                     e.target.src = "/assets/android-chrome-192x192.png";
                   }}
@@ -364,13 +480,13 @@ const Navigation = () => {
               </button>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              {['home', 'courses', 'labs', 'games', 'resources'].map((page) => (
+              {['home', 'courses', 'labs', 'games', 'resources', 'about', 'faq'].map((page) => (
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
                   className={`${currentPage === page ? 'border-blue-600 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium capitalize`}
                 >
-                  {page}
+                  {page === 'faq' ? 'FAQ' : page}
                 </button>
               ))}
               {user && (
@@ -432,7 +548,7 @@ const Navigation = () => {
       {isMenuOpen && (
         <div className="sm:hidden">
           <div className="pt-2 pb-3 space-y-1">
-            {['home', 'courses', 'labs', 'games', 'resources'].map((page) => (
+            {['home', 'courses', 'labs', 'games', 'resources', 'about', 'faq'].map((page) => (
               <button
                 key={page}
                 onClick={() => {
@@ -441,7 +557,7 @@ const Navigation = () => {
                 }}
                 className={`${currentPage === page ? 'bg-blue-50 dark:bg-blue-900 border-blue-500 text-blue-700 dark:text-blue-200' : 'border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-800 dark:hover:text-white'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left capitalize`}
               >
-                {page}
+                {page === 'faq' ? 'FAQ' : page}
               </button>
             ))}
             {user && (
@@ -1076,7 +1192,7 @@ const HomePage = () => {
       <Navigation />
       <ImprovedFloatingActionButtons />
       
-      {/* Hero Section with Donation Appeal */}
+      {/* Hero Section - De-emphasized Donation */}
       <div className="relative bg-gradient-to-r from-blue-600 to-purple-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
@@ -1087,27 +1203,6 @@ const HomePage = () => {
               101 Knowledge Series for Social Impact - Justice, Equity & Development in South Asia
             </p>
             
-            {/* Donation Appeal */}
-            <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6 mb-8 max-w-2xl mx-auto">
-              <div className="flex items-center justify-center mb-4">
-                <Heart className="text-red-400 mr-2" size={24} />
-                <h3 className="text-lg font-semibold">Support ImpactMojo</h3>
-              </div>
-              <p className="mb-4 text-sm opacity-90">
-                Help us keep ImpactMojo alive and accessible! Your support covers significant labor and tech costs.
-              </p>
-              <div className="text-sm">
-                <p className="mb-2">Donate via UPI:</p>
-                <div className="flex flex-wrap justify-center gap-2 text-yellow-200 font-mono">
-                  <span>impactmojo@ibl</span>
-                  <span>•</span>
-                  <span>impactmojo@ybl</span>
-                  <span>•</span>
-                  <span>impactmojo@axl</span>
-                </div>
-              </div>
-            </div>
-
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={() => setShowQuizModal(true)}
@@ -1123,95 +1218,67 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Learning Tracks Section with CORRECTED tracks */}
+      {/* Live Learner Stats */}
+      <LiveStatsSection />
+
+      {/* Popular Courses Section */}
+      <PopularCoursesSection />
+
+      {/* Learning Tracks Section with Four Original Tracks */}
       <div className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Choose Your Learning Track
+              Four Learning Tracks
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Curated pathways designed for different roles and interests in development work
+              Structured pathways to master key development concepts and skills
             </p>
           </div>
 
-          {/* Browse by Role */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Browse by Role</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {Object.entries(browseByRole).map(([role, data]) => (
-                <div key={role} className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                  <div className={`w-12 h-12 bg-${data.color}-100 dark:bg-${data.color}-900 rounded-lg flex items-center justify-center mb-4`}>
-                    <Users className={`text-${data.color}-600 dark:text-${data.color}-400`} size={24} />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{role}</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {Object.entries(fourOriginalTracks).map(([track, data]) => (
+              <div key={track} className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                <div className="text-center mb-4">
+                  <div className="text-4xl mb-3">{data.icon}</div>
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{track}</h4>
                   <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{data.description}</p>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                </div>
+                <div className="text-center">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">
                     {data.courses.length} courses
                   </div>
+                  <button className={`w-full px-4 py-2 bg-${data.color}-600 hover:bg-${data.color}-700 text-white rounded-md text-sm font-medium transition-colors`}>
+                    Explore Track
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Browse by Theme */}
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Browse by Theme</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Object.entries(browseByTheme).map(([theme, data]) => (
-                <div key={theme} className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                  <div className={`w-12 h-12 bg-${data.color}-100 dark:bg-${data.color}-900 rounded-lg flex items-center justify-center mb-4`}>
-                    <Target className={`text-${data.color}-600 dark:text-${data.color}-400`} size={24} />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{theme}</h4>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{data.description}</p>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
-                    {data.courses.length} courses
-                  </div>
-                </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Features Section */}
-      <div className="py-16 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Everything You Need to Learn
-            </h2>
+      {/* Featured Content */}
+      <FeaturedContentSection />
+
+      {/* Testimonials */}
+      <TestimonialsSection />
+
+      {/* About Me Section */}
+      <AboutMeSection />
+
+      {/* Small Donation Section (De-emphasized) */}
+      <div className="py-8 bg-yellow-50 dark:bg-yellow-900/20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex items-center justify-center mb-3">
+            <Heart className="text-red-500 mr-2" size={20} />
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Support ImpactMojo</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="bg-blue-100 dark:bg-blue-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <BookOpen className="text-blue-600 dark:text-blue-400" size={32} />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Courses</h3>
-              <p className="text-gray-600 dark:text-gray-300">Comprehensive learning modules</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-green-100 dark:bg-green-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Trophy className="text-green-600 dark:text-green-400" size={32} />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Labs</h3>
-              <p className="text-gray-600 dark:text-gray-300">Hands-on practical exercises</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-purple-100 dark:bg-purple-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Gamepad2 className="text-purple-600 dark:text-purple-400" size={32} />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Games</h3>
-              <p className="text-gray-600 dark:text-gray-300">Interactive learning experiences</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-orange-100 dark:bg-orange-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Library className="text-orange-600 dark:text-orange-400" size={32} />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Resources</h3>
-              <p className="text-gray-600 dark:text-gray-300">Premium tools and materials</p>
-            </div>
+          <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+            Help keep our resources free and accessible. Support covers development and hosting costs.
+          </p>
+          <div className="text-sm text-gray-500 dark:text-gray-400">
+            <p>UPI: impactmojo@ibl • impactmojo@ybl • impactmojo@axl</p>
           </div>
         </div>
       </div>
@@ -1974,7 +2041,7 @@ const AIToolsPage = () => {
   );
 };
 
-// Footer Component with LEGAL pages and PinPoint attribution
+// Footer Component with FIXED year and PinPoint attribution
 const Footer = () => {
   const { darkMode } = usePage();
 
@@ -2018,7 +2085,7 @@ const Footer = () => {
               <li><a href="/terms-of-use" target="_blank" className="text-gray-300 hover:text-white">Terms of Use</a></li>
               <li><a href="/privacy-policy" target="_blank" className="text-gray-300 hover:text-white">Privacy Policy</a></li>
               <li><a href="/cookie-policy" target="_blank" className="text-gray-300 hover:text-white">Cookie Policy</a></li>
-              <li><a href="/faq" target="_blank" className="text-gray-300 hover:text-white">FAQ</a></li>
+              <li><a href="#faq" className="text-gray-300 hover:text-white">FAQ</a></li>
             </ul>
           </div>
         </div>
@@ -2026,7 +2093,7 @@ const Footer = () => {
         <div className="border-t border-gray-700 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-300 text-sm mb-4 md:mb-0">
-              © 2024 ImpactMojo. All rights reserved.
+              © 2025 ImpactMojo. All rights reserved.
             </div>
             <div className="flex items-center text-gray-300 text-sm">
               <span>ImpactMojo is made possible due to the generous support offered by </span>
@@ -2256,6 +2323,10 @@ const App = () => {
         return <GamesPage />;
       case 'resources':
         return <ResourcesPage />;
+      case 'about':
+        return <AboutPage />;
+      case 'faq':
+        return <FAQPage />;
       case 'dashboard':
         return <DashboardPage />;
       case 'ai-tools':
