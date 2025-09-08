@@ -15,7 +15,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc } from 'firebase/firestore';
 
-// Data imports - FIXED to use your existing data files
+// Data imports - FIXED to use your existing data files with safety checks
 import { courseData } from './data/course-data';
 import { labsData } from './data/labs-data';
 import { premiumResources } from './data/premium-resources-data';
@@ -33,6 +33,12 @@ import { LearningTracksSection } from './components/learning-tracks-component';
 // Page imports - FIXED
 import AboutPage from './pages/AboutPage';
 import FAQPage from './pages/FAQPage';
+
+// SAFETY CHECKS - Add these to prevent map errors
+const safeCourseData = Array.isArray(courseData) ? courseData : [];
+const safeLabsData = Array.isArray(labsData) ? labsData : [];
+const safePremiumResources = Array.isArray(premiumResources) ? premiumResources : [];
+const safeAiToolsData = Array.isArray(aiToolsData) ? aiToolsData : [];
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -130,7 +136,7 @@ export const usePage = () => {
 // Utility Functions
 const generateLiveLearnerCounts = () => {
   const totalLearners = 4200 + Math.floor(Math.random() * 300); // 4200-4500
-  const courseCounts = courseData.map(course => ({
+  const courseCounts = safeCourseData.map(course => ({
     id: course.id,
     count: 100 + Math.floor(Math.random() * 2400) // 100-2500 range
   }));
@@ -141,23 +147,28 @@ const generateLiveLearnerCounts = () => {
   };
 };
 
-// Search and Filter Hook
-const useSearchAndFilter = (data, initialCategory = 'all') => {
+// Search and Filter Hook - FIXED with safety checks
+const useSearchAndFilter = (data = [], initialCategory = 'all') => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [selectedRole, setSelectedRole] = useState('all');
   const [selectedTheme, setSelectedTheme] = useState('all');
 
-  // Get unique categories, roles, and themes
-  const categories = ['all', ...new Set(data.map(item => item.category).filter(Boolean))];
-  const roles = ['all', ...new Set(data.map(item => item.role).filter(Boolean))];
-  const themes = ['all', ...new Set(data.map(item => item.theme).filter(Boolean))];
+  // Ensure data is always an array - SAFETY CHECK
+  const safeData = Array.isArray(data) ? data : [];
 
-  const filteredData = data.filter(item => {
+  // Get unique categories, roles, and themes - FIXED with safety checks
+  const categories = ['all', ...new Set(safeData.map(item => item?.category).filter(Boolean))];
+  const roles = ['all', ...new Set(safeData.map(item => item?.role).filter(Boolean))];
+  const themes = ['all', ...new Set(safeData.map(item => item?.theme).filter(Boolean))];
+
+  const filteredData = safeData.filter(item => {
+    if (!item) return false; // SAFETY CHECK
+    
     const matchesSearch = searchQuery === '' || 
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
+      (item.tags && Array.isArray(item.tags) && item.tags.some(tag => tag?.toLowerCase().includes(searchQuery.toLowerCase())));
     
     const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
     const matchesRole = selectedRole === 'all' || item.role === selectedRole;
@@ -684,7 +695,7 @@ const SimpleQuiz = ({ onComplete, onClose }) => {
 // Quiz Result Component
 const QuizResult = ({ result, onClose }) => {
   const { darkMode } = usePage();
-  const recommendedCourse = courseData.find(c => c.id === result.recommendation);
+  const recommendedCourse = safeCourseData.find(c => c.id === result.recommendation);
 
   return (
     <div>
@@ -1059,12 +1070,12 @@ const DashboardPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showAdvancedQuiz, setShowAdvancedQuiz] = useState(false);
 
-  const filteredNotes = notes.filter(note => 
-    note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    note.notes.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    note.cues.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    note.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    note.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredNotes = (notes || []).filter(note => 
+    note?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    note?.notes?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    note?.cues?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    note?.summary?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (note?.tags && Array.isArray(note.tags) && note.tags.some(tag => tag?.toLowerCase().includes(searchTerm.toLowerCase())))
   );
 
   const handleSaveNote = (noteData) => {
@@ -1132,12 +1143,12 @@ const DashboardPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Learning Progress</h3>
-              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{bookmarks.length}</div>
+              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{(bookmarks || []).length}</div>
               <p className="text-gray-600 dark:text-gray-300">Bookmarked courses</p>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Notes</h3>
-              <div className="text-3xl font-bold text-green-600 dark:text-green-400">{notes.length}</div>
+              <div className="text-3xl font-bold text-green-600 dark:text-green-400">{(notes || []).length}</div>
               <p className="text-gray-600 dark:text-gray-300">Cornell notes taken</p>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
@@ -1181,7 +1192,7 @@ const DashboardPage = () => {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{note.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-3">{note.summary}</p>
                   <div className="flex flex-wrap gap-1 mb-3">
-                    {note.tags.map((tag, index) => (
+                    {(note.tags || []).map((tag, index) => (
                       <span key={index} className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
                         {tag}
                       </span>
@@ -1228,7 +1239,7 @@ const DashboardPage = () => {
         {activeTab === 'bookmarks' && (
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Bookmarked Courses</h2>
-            {bookmarks.length === 0 ? (
+            {(bookmarks || []).length === 0 ? (
               <div className="text-center py-8">
                 <BookmarkIcon size={48} className="mx-auto text-gray-400 mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No bookmarks yet</h3>
@@ -1237,7 +1248,7 @@ const DashboardPage = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {bookmarks.map((courseId) => {
-                  const course = courseData.find(c => c.id === courseId);
+                  const course = safeCourseData.find(c => c.id === courseId);
                   if (!course) return null;
                   return (
                     <div key={courseId} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
@@ -1280,8 +1291,8 @@ const DashboardPage = () => {
                   <div>
                     <h4 className="font-medium text-gray-900 dark:text-white mb-2">Recommended Courses</h4>
                     <ul className="space-y-2">
-                      {customPathway.courses?.map((courseId, index) => {
-                        const course = courseData.find(c => c.id === courseId);
+                      {(customPathway.courses || []).map((courseId, index) => {
+                        const course = safeCourseData.find(c => c.id === courseId);
                         return course ? (
                           <li key={index} className="flex items-center space-x-2">
                             <CheckCircle size={16} className="text-green-500" />
@@ -1294,8 +1305,8 @@ const DashboardPage = () => {
                   <div>
                     <h4 className="font-medium text-gray-900 dark:text-white mb-2">Recommended Labs</h4>
                     <ul className="space-y-2">
-                      {customPathway.labs?.map((labId, index) => {
-                        const lab = labsData.find(l => l.id === labId);
+                      {(customPathway.labs || []).map((labId, index) => {
+                        const lab = safeLabsData.find(l => l.id === labId);
                         return lab ? (
                           <li key={index} className="flex items-center space-x-2">
                             <Trophy size={16} className="text-yellow-500" />
@@ -1491,7 +1502,7 @@ const CoursesPage = () => {
     categories,
     roles,
     themes
-  } = useSearchAndFilter(courseData);
+  } = useSearchAndFilter(safeCourseData); // FIXED: Use safe data
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
@@ -1561,57 +1572,61 @@ const CoursesPage = () => {
         {/* Results Count */}
         <div className="mb-6">
           <p className="text-gray-600 dark:text-gray-300">
-            Showing {filteredCourses.length} of {courseData.length} courses
+            Showing {filteredCourses.length} of {safeCourseData.length} courses
           </p>
         </div>
 
-        {/* Courses Grid */}
+        {/* Courses Grid - FIXED with safety checks */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCourses.map((course) => (
-            <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{course.title}</h3>
-                  {user && (
-                    <button
-                      onClick={() => toggleBookmark(course.id)}
-                      className={`${bookmarks.includes(course.id) ? 'text-blue-600' : 'text-gray-400'} hover:text-blue-600`}
+          {filteredCourses.map((course) => {
+            if (!course || !course.id) return null; // SAFETY CHECK
+            
+            return (
+              <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{course.title}</h3>
+                    {user && (
+                      <button
+                        onClick={() => toggleBookmark(course.id)}
+                        className={`${(bookmarks || []).includes(course.id) ? 'text-blue-600' : 'text-gray-400'} hover:text-blue-600`}
+                      >
+                        <BookmarkIcon size={20} />
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{course.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {course.category && (
+                      <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
+                        {course.category}
+                      </span>
+                    )}
+                    {course.difficulty && (
+                      <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
+                        {course.difficulty}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                      <Clock size={12} className="mr-1" />
+                      {course.duration || '2-3 hours'}
+                    </span>
+                    <a
+                      href={course.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400"
                     >
-                      <BookmarkIcon size={20} />
-                    </button>
-                  )}
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{course.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {course.category && (
-                    <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
-                      {course.category}
-                    </span>
-                  )}
-                  {course.difficulty && (
-                    <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
-                      {course.difficulty}
-                    </span>
-                  )}
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
-                    <Clock size={12} className="mr-1" />
-                    {course.duration || '2-3 hours'}
-                  </span>
-                  <a
-                    href={course.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400"
-                  >
-                    <span>Start Course</span>
-                    <ExternalLink size={16} />
-                  </a>
+                      <span>Start Course</span>
+                      <ExternalLink size={16} />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* No results */}
@@ -1627,7 +1642,7 @@ const CoursesPage = () => {
   );
 };
 
-// Labs Page with ADDED search and filters
+// Labs Page with ADDED search and filters - FIXED
 const LabsPage = () => {
   const { darkMode } = usePage();
   
@@ -1638,7 +1653,7 @@ const LabsPage = () => {
     setSelectedCategory,
     filteredData: filteredLabs,
     categories
-  } = useSearchAndFilter(labsData);
+  } = useSearchAndFilter(safeLabsData); // FIXED: Use safe data
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
@@ -1679,47 +1694,51 @@ const LabsPage = () => {
         {/* Results Count */}
         <div className="mb-6">
           <p className="text-gray-600 dark:text-gray-300">
-            Showing {filteredLabs.length} of {labsData.length} labs
+            Showing {filteredLabs.length} of {safeLabsData.length} labs
           </p>
         </div>
 
-        {/* Labs Grid */}
+        {/* Labs Grid - FIXED with safety checks */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredLabs.map((lab) => (
-            <div key={lab.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{lab.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{lab.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {lab.category && (
-                    <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
-                      {lab.category}
+          {filteredLabs.map((lab) => {
+            if (!lab || !lab.id) return null; // SAFETY CHECK
+            
+            return (
+              <div key={lab.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{lab.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{lab.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {lab.category && (
+                      <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
+                        {lab.category}
+                      </span>
+                    )}
+                    {lab.difficulty && (
+                      <span className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded text-xs">
+                        {lab.difficulty}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                      <Trophy size={12} className="mr-1" />
+                      Interactive Lab
                     </span>
-                  )}
-                  {lab.difficulty && (
-                    <span className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded text-xs">
-                      {lab.difficulty}
-                    </span>
-                  )}
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
-                    <Trophy size={12} className="mr-1" />
-                    Interactive Lab
-                  </span>
-                  <a
-                    href={lab.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1 text-green-600 hover:text-green-800 dark:text-green-400"
-                  >
-                    <span>Start Lab</span>
-                    <ExternalLink size={16} />
-                  </a>
+                    <a
+                      href={lab.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 text-green-600 hover:text-green-800 dark:text-green-400"
+                    >
+                      <span>Start Lab</span>
+                      <ExternalLink size={16} />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* No results */}
@@ -1735,7 +1754,7 @@ const LabsPage = () => {
   );
 };
 
-// Games Page with ADDED search and filters
+// Games Page with ADDED search and filters - FIXED
 const GamesPage = () => {
   const { darkMode } = usePage();
   
@@ -1791,43 +1810,47 @@ const GamesPage = () => {
           </p>
         </div>
 
-        {/* Games Grid */}
+        {/* Games Grid - FIXED with safety checks */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredGames.map((game) => (
-            <div key={game.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{game.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{game.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {game.category && (
-                    <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded text-xs">
-                      {game.category}
+          {filteredGames.map((game) => {
+            if (!game || !game.id) return null; // SAFETY CHECK
+            
+            return (
+              <div key={game.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{game.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{game.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {game.category && (
+                      <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded text-xs">
+                        {game.category}
+                      </span>
+                    )}
+                    {game.difficulty && (
+                      <span className="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded text-xs">
+                        {game.difficulty}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                      <Gamepad2 size={12} className="mr-1" />
+                      Interactive Game
                     </span>
-                  )}
-                  {game.difficulty && (
-                    <span className="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded text-xs">
-                      {game.difficulty}
-                    </span>
-                  )}
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
-                    <Gamepad2 size={12} className="mr-1" />
-                    Interactive Game
-                  </span>
-                  <a
-                    href={game.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1 text-purple-600 hover:text-purple-800 dark:text-purple-400"
-                  >
-                    <span>Play Game</span>
-                    <ExternalLink size={16} />
-                  </a>
+                    <a
+                      href={game.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 text-purple-600 hover:text-purple-800 dark:text-purple-400"
+                    >
+                      <span>Play Game</span>
+                      <ExternalLink size={16} />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* No results */}
@@ -1843,7 +1866,7 @@ const GamesPage = () => {
   );
 };
 
-// Resources Page with ADDED search and filters
+// Resources Page with ADDED search and filters - FIXED
 const ResourcesPage = () => {
   const { darkMode } = usePage();
   
@@ -1854,7 +1877,7 @@ const ResourcesPage = () => {
     setSelectedCategory,
     filteredData: filteredResources,
     categories
-  } = useSearchAndFilter(premiumResources);
+  } = useSearchAndFilter(safePremiumResources); // FIXED: Use safe data
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
@@ -1895,47 +1918,51 @@ const ResourcesPage = () => {
         {/* Results Count */}
         <div className="mb-6">
           <p className="text-gray-600 dark:text-gray-300">
-            Showing {filteredResources.length} of {premiumResources.length} resources
+            Showing {filteredResources.length} of {safePremiumResources.length} resources
           </p>
         </div>
 
-        {/* Resources Grid */}
+        {/* Resources Grid - FIXED with safety checks */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredResources.map((resource) => (
-            <div key={resource.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{resource.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{resource.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {resource.category && (
-                    <span className="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded text-xs">
-                      {resource.category}
+          {filteredResources.map((resource) => {
+            if (!resource || !resource.id) return null; // SAFETY CHECK
+            
+            return (
+              <div key={resource.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{resource.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{resource.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {resource.category && (
+                      <span className="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded text-xs">
+                        {resource.category}
+                      </span>
+                    )}
+                    {resource.access && (
+                      <span className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded text-xs">
+                        {resource.access}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                      <Library size={12} className="mr-1" />
+                      Premium Resource
                     </span>
-                  )}
-                  {resource.access && (
-                    <span className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded text-xs">
-                      {resource.access}
-                    </span>
-                  )}
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
-                    <Library size={12} className="mr-1" />
-                    Premium Resource
-                  </span>
-                  <a
-                    href={resource.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1 text-orange-600 hover:text-orange-800 dark:text-orange-400"
-                  >
-                    <span>Access Resource</span>
-                    <ExternalLink size={16} />
-                  </a>
+                    <a
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 text-orange-600 hover:text-orange-800 dark:text-orange-400"
+                    >
+                      <span>Access Resource</span>
+                      <ExternalLink size={16} />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* No results */}
@@ -1951,7 +1978,7 @@ const ResourcesPage = () => {
   );
 };
 
-// AI Tools Page (for logged-in users)
+// AI Tools Page (for logged-in users) - FIXED
 const AIToolsPage = () => {
   const { darkMode } = usePage();
   const { user } = useAuth();
@@ -1982,36 +2009,40 @@ const AIToolsPage = () => {
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">AI-powered tools for development professionals</p>
         </div>
 
-        {/* AI Tools Grid */}
+        {/* AI Tools Grid - FIXED with safety checks */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {aiToolsData.map((tool) => (
-            <div key={tool.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="p-6">
-                <div className="flex items-center mb-3">
-                  <Bot className="text-blue-600 dark:text-blue-400 mr-3" size={24} />
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{tool.title}</h3>
+          {safeAiToolsData.map((tool) => {
+            if (!tool || !tool.id) return null; // SAFETY CHECK
+            
+            return (
+              <div key={tool.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6">
+                  <div className="flex items-center mb-3">
+                    <Bot className="text-blue-600 dark:text-blue-400 mr-3" size={24} />
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{tool.title}</h3>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{tool.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
+                      {tool.category}
+                    </span>
+                    <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
+                      AI Powered
+                    </span>
+                  </div>
+                  <a
+                    href={tool.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400"
+                  >
+                    <span>Use Tool</span>
+                    <ExternalLink size={16} />
+                  </a>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{tool.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
-                    {tool.category}
-                  </span>
-                  <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
-                    AI Powered
-                  </span>
-                </div>
-                <a
-                  href={tool.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400"
-                >
-                  <span>Use Tool</span>
-                  <ExternalLink size={16} />
-                </a>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Lo-Fi Music Player for Logged Users */}
