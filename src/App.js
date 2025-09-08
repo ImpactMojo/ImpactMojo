@@ -15,6 +15,27 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc } from 'firebase/firestore';
 
+// Create Contexts
+const AuthContext = createContext();
+const PageContext = createContext();
+
+// Custom Hooks  
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
+export const usePage = () => {
+  const context = useContext(PageContext);
+  if (!context) {
+    throw new Error('usePage must be used within a PageProvider');
+  }
+  return context;
+};
+
 // Data imports
 import { courseData, upcomingCourses } from './data/course-data';
 import { labsData } from './data/labs-data';
@@ -450,6 +471,7 @@ const CornellNotesEditor = ({ note, onSave, onCancel }) => {
   );
 };
 
+export const Navigation = () => {
 // Navigation Component
 const Navigation = () => {
   const { currentPage, setCurrentPage, darkMode, toggleDarkMode } = usePage();
