@@ -15,10 +15,6 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc } from 'firebase/firestore';
 
-// Create Contexts
-export const AuthContext = createContext();
-export const PageContext = createContext();
-
 // Custom Hooks  
 export const useAuth = () => {
   const context = useContext(AuthContext);
