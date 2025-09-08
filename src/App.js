@@ -1,16 +1,15 @@
 import React, { useContext } from 'react';
 
-// ABSOLUTE PATH IMPORTS: Starting from the 'src' directory root.
-import { PageProvider, AuthProvider, usePage } from 'context/AppContext.js';
+// CORRECTED IMPORTS: Using absolute paths from 'src', enabled by jsconfig.json
+import { PageProvider, AuthProvider, usePage } from 'context/AppContext';
 import { 
     HomePage, CoursesPage, LabsPage, GamesPage, ResourcesPage, 
     AboutPage, FAQPage, DashboardPage, AIToolsPage 
-} from 'pages/index.js';
+} from 'pages';
 import { 
     Navigation, ImprovedFloatingActionButtons, Footer 
-} from 'components/index.js';
+} from 'components';
 
-// The main App component remains clean.
 function App() {
   const { currentPage } = usePage();
 
@@ -39,7 +38,6 @@ function App() {
   );
 }
 
-// The final component that wraps the entire app.
 const AppWithProviders = () => (
   <AuthProvider>
     <PageProvider>
