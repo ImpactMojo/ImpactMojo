@@ -16,8 +16,8 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOu
 import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc } from 'firebase/firestore';
 
 // Create Contexts
-const AuthContext = createContext();
-const PageContext = createContext();
+export const AuthContext = createContext();
+export const PageContext = createContext();
 
 // Custom Hooks  
 export const useAuth = () => {
