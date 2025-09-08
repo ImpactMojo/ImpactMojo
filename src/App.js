@@ -153,9 +153,6 @@ const generateLiveLearnerCounts = () => {
 const PageContext = createContext();
 const AuthContext = createContext();
 
-// Custom hooks
-const useAuth = () => useContext(AuthContext);
-
 // Live Stats Component
 const LiveStatsSection = () => {
   const { darkMode } = usePage();
