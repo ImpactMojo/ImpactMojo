@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-// CORRECTED IMPORTS: Using explicit relative paths to ensure the compiler finds the files.
+// This file is the central point and can correctly find all the other files.
 import { PageProvider, AuthProvider, usePage, useAuth } from './context/AppContext.js';
 import { 
     HomePage, CoursesPage, LabsPage, GamesPage, ResourcesPage, 
@@ -10,10 +10,10 @@ import {
     Navigation, ImprovedFloatingActionButtons, Footer 
 } from './components/index.js';
 
-// The main App component remains clean.
+// The main App component now passes all necessary context down as props.
 function App() {
-  const { currentPage } = usePage();
-  const { user } = useAuth();
+  const { currentPage, setCurrentPage, darkMode, toggleDarkMode } = usePage();
+  const { user, signIn, signOut } = useAuth();
 
   const renderPage = () => {
     switch (currentPage) {
@@ -32,7 +32,16 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <Navigation />
+      {/* We are now "handing" the data directly to the Navigation component */}
+      <Navigation
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
+        user={user}
+        signIn={signIn}
+        signOut={signOut}
+      />
       <main>{renderPage()}</main>
       <ImprovedFloatingActionButtons />
       <Footer />
