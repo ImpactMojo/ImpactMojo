@@ -1,22 +1,10 @@
-import AIToolsPage from './AIToolsPage.js';
-import AboutPage from './AboutPage.js';
-import CoursesPage from './CoursesPage.js';
-import DashboardPage from './DashboardPage.js';
-import FAQPage from './FAQPage.js';
-import GamesPage from './GamesPage.js';
-import HomePage from './HomePage.js';
-import LabsPage from './LabsPage.js';
-import ResourcesPage from './ResourcesPage.js';
-
-export {
-  AIToolsPage,
-  AboutPage,
-  CoursesPage,
-  DashboardPage,
-  FAQPage,
-  GamesPage,
-  HomePage,
-  LabsPage,
-  ResourcesPage,
-};
+export { default as AIToolsPage } from './AIToolsPage.js';
+export { default as AboutPage } from './AboutPage.js';
+export { default as CoursesPage } from './CoursesPage.js';
+export { default as DashboardPage } from './DashboardPage.js';
+export { default as FAQPage } from './FAQPage.js';
+export { default as GamesPage } from './GamesPage.js';
+export { default as HomePage } from './HomePage.js';
+export { default as LabsPage } from './LabsPage.js';
+export { default as ResourcesPage } from './ResourcesPage.js';
 
