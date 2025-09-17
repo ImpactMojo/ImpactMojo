@@ -1,5 +1,5 @@
 import React from "react";
-import labsData from "../labs-data"; // <-- this is now correct!
+import labsData from "../data/labs-data";
 import Navigation from "./Navigation";
 
 const LabsPage = () => (
