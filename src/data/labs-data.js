@@ -111,3 +111,4 @@ export const labsData = [
     status: "Available"
   }
 ];
+export default labsData;
