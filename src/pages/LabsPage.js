@@ -1,6 +1,6 @@
 import React from "react";
-import labsData from "../data/labs-data";
-import Navigation from "../components/Navigation";
+import labsData from "../data/labs-data";              // src/data/labs-data.js
+import Navigation from "../components/Navigation";      // src/components/Navigation.js
 
 const LabsPage = () => (
   <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
