@@ -1,3 +1,6 @@
+import './emergency-fix';  // ADD THIS LINE AT THE VERY TOP!
+
+// ... rest of your App.js code stays the same
 import React, { useContext } from 'react';
 
 // This file is the central point and can correctly find all the other files.
