@@ -1,5 +1,5 @@
 import React from "react";
-import labsData from "../labs-data";
+import labsData from "../../labs-data"; // fixed import path for src/pages/LabsPage.js
 import Navigation from "./Navigation";
 
 const LabsPage = () => (
