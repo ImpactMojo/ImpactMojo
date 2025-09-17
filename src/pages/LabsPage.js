@@ -1,6 +1,6 @@
 import React from "react";
 import labsData from "../data/labs-data";
-import Navigation from "./Navigation";
+import Navigation from "../components/Navigation";
 
 const LabsPage = () => (
   <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
