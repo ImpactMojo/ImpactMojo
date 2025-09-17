@@ -1,6 +1,6 @@
 import React from "react";
-import labsData from "../data/labs-data";              // src/data/labs-data.js
-import Navigation from "../components/Navigation";      // src/components/Navigation.js
+import labsData from "../data/labs-data";
+import Navigation from "../components/Navigation";
 
 const LabsPage = () => (
   <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -31,9 +31,9 @@ const LabsPage = () => (
                 ))}
               </div>
             )}
-            {lab.link && (
+            {lab.url && (
               <a
-                href={lab.link}
+                href={lab.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-500 font-medium hover:underline mt-auto"
