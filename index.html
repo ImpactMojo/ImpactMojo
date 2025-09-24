@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ImpactMojo - 101 Knowledge Series for Social Impact. Development Know-How for justice, equity, and development in South Asia.">
+    <title>ImpactMojo - Development Know-How</title>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #0f1419;
+            --secondary-bg: #1a2332;
+            --accent-color: #4ECDC4;
+            --accent-hover: #3BA99F;
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --card-bg: #1e293b;
+            --hover-bg: #2d3748;
+            --border-color: rgba(78, 205, 196, 0.2);
+            --success-color: #4ade80;
+            --warning-color: #facc15;
+            --premium-gold: #FFD700;
+            --premium-orange: #FF8C00;
+        }
+
+        /* Light theme */
+        .light-mode {
+            --primary-bg: #f8fafc;
+            --secondary-bg: #ffffff;
+            --accent-color: #0891b2;
+            --accent-hover: #0e7490;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --card-bg: #ffffff;
+            --hover-bg: #f1f5f9;
+            --border-color: rgba(8, 145, 178, 0.2);
+            --premium-gold: #D4AF37;
+            --premium-orange: #CC7000;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Simple Line Icons (SVG-based) */
+        .icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .icon-large {
+            width: 48px;
+            height: 48px;
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(var(--primary-bg-rgb), 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--secondary-bg);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            opacity: 0.9;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+            opacity: 1;
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-color);
+            color: var(--primary-bg);
+            border-color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Section Styles */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.2);
+        }
+
+        .card-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .card-number.premium {
+            background: linear-gradient(135deg, var(--premium-gold), var(--premium-orange));
+            color: #1a1a1a;
+        }
+
+        .light-mode .card-number.premium {
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .card a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
+        .premium-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--premium-gold);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .light-mode .premium-indicator {
+            color: var(--premium-orange);
+        }
+
+        /* Learner Badge */
+        .learner-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(78, 205, 196, 0.1);
+            color: var(--accent-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid var(--accent-color);
+        }
+
+        /* Testimonial Quote */
+        .testimonial-quote {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-style: italic;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .testimonial-author {
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            margin-top: 0.5rem;
+            font-style: normal;
+        }
+
+        /* Learning Tracks */
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .track-card {
+            background: linear-gradient(135deg, var(--card-bg), var(--hover-bg));
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .track-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.15);
+        }
+
+        .track-icon {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .track-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Premium Badge */
+        .premium-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--premium-gold), var(--premium-orange));
+            color: var(--primary-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .beta-text {
+            background: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .beta-text h3 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* About Section */
+        .about-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .about-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .about-text h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .newsletter h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .newsletter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--secondary-bg);
+            padding: 3rem 1.5rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .donation-section {
+            background: linear-gradient(135deg, var(--card-bg), var(--hover-bg));
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--accent-color);
+        }
+
+        .upi-id {
+            display: inline-block;
+            background: var(--secondary-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .share-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #25D366;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .share-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-bottom p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-bottom a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        .legal-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .legal-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .legal-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--secondary-bg);
+            padding: 1rem;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            border-top: 1px solid var(--accent-color);
+        }
+
+        .cookie-banner.show {
+            display: flex;
+        }
+
+        .cookie-accept {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .cookie-accept:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cookie-banner {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .legal-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Header & Navigation -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">ImpactMojo</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#labs">Labs</a></li>
+                <li><a href="#premium">Premium</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle class="sun" cx="12" cy="12" r="5"></circle>
+                    <line class="sun" x1="12" y1="1" x2="12" y2="3"></line>
+                    <line class="sun" x1="12" y1="21" x2="12" y2="23"></line>
+                    <line class="sun" x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line class="sun" x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line class="sun" x1="1" y1="12" x2="3" y2="12"></line>
+                    <line class="sun" x1="21" y1="12" x2="23" y2="12"></line>
+                    <line class="sun" x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line class="sun" x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1>ImpactMojo</h1>
+        <p>Development Know-How</p>
+        <p style="font-size: 1rem;">101 Knowledge Series for Social Impact - Exploring justice, equity, and development in South Asia</p>
+    </section>
+
+    <!-- Learning Tracks -->
+    <section class="section">
+        <h2 class="section-title">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+            Learning Tracks
+        </h2>
+        <div class="tracks-grid">
+            <div class="track-card">
+                <div class="track-icon">
+                    <svg class="icon icon-large" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </div>
+                <h3 class="track-title">Research Methods</h3>
+                <p class="card-description">Master qualitative and quantitative research approaches</p>
+            </div>
+            <div class="track-card">
+                <div class="track-icon">
+                    <svg class="icon icon-large" viewBox="0 0 24 24">
+                        <line x1="12" y1="20" x2="12" y2="10"></line>
+                        <line x1="18" y1="20" x2="18" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="16"></line>
+                    </svg>
+                </div>
+                <h3 class="track-title">Data Analysis</h3>
+                <p class="card-description">Learn statistical analysis and data visualization</p>
+            </div>
+            <div class="track-card">
+                <div class="track-icon">
+                    <svg class="icon icon-large" viewBox="0 0 24 24">
+                        <circle cx="12" cy="8" r="7"></circle>
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                    </svg>
+                </div>
+                <h3 class="track-title">Gender Studies</h3>
+                <p class="card-description">Explore gender theory and practical applications</p>
+            </div>
+            <div class="track-card">
+                <div class="track-icon">
+                    <svg class="icon icon-large" viewBox="0 0 24 24">
+                        <path d="M3 21h18"></path>
+                        <path d="M3 10h18"></path>
+                        <path d="M5 6l7-3 7 3"></path>
+                        <path d="M4 10v11"></path>
+                        <path d="M20 10v11"></path>
+                        <path d="M8 14v7"></path>
+                        <path d="M12 14v7"></path>
+                        <path d="M16 14v7"></path>
+                    </svg>
+                </div>
+                <h3 class="track-title">Policy & Economics</h3>
+                <p class="card-description">Understand development economics and policy</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section - Featured courses with testimonials -->
+    <section id="courses" class="section">
+        <h2 class="section-title">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            Popular Courses (101 Series)
+        </h2>
+        <div class="cards-grid">
+            <div class="card">
+                <span class="learner-badge">3.2k learners</span>
+                <a href="https://101.www.impactmojo.in/DevEcon" target="_blank">
+                    <span class="card-number">C1</span>
+                    <h3 class="card-title">Development Economics 101</h3>
+                    <p class="card-description">Foundational concepts in development economics and poverty alleviation</p>
+                    <div class="testimonial-quote">
+                        "This course transformed my understanding of economic development. The real-world case studies made complex theories accessible."
+                        <div class="testimonial-author">— Policy Analyst, World Bank</div>
+                    </div>
+                </a>
+            </div>
+            <div class="card">
+                <span class="learner-badge">2.8k learners</span>
+                <a href="https://101.www.impactmojo.in/Gender" target="_blank">
+                    <span class="card-number">C7</span>
+                    <h3 class="card-title">Gender Studies 101</h3>
+                    <p class="card-description">Gender theory and social implications</p>
+                    <div class="testimonial-quote">
+                        "Eye-opening perspectives on gender dynamics. Essential for anyone working in social development."
+                        <div class="testimonial-author">— Program Manager, UN Women</div>
+                    </div>
+                </a>
+            </div>
+            <div class="card">
+                <span class="learner-badge">3.5k learners</span>
+                <a href="https://101.www.impactmojo.in/MEAL" target="_blank">
+                    <span class="card-number">C12</span>
+                    <h3 class="card-title">MEAL 101</h3>
+                    <p class="card-description">Monitoring, Evaluation, Accountability and Learning frameworks</p>
+                    <div class="testimonial-quote">
+                        "Finally, a MEAL course that's practical and immediately applicable. Improved our project evaluation significantly."
+                        <div class="testimonial-author">— M&E Officer, Save the Children</div>
+                    </div>
+                </a>
+            </div>
+            <div class="card">
+                <span class="learner-badge">2.4k learners</span>
+                <a href="https://101.www.impactmojo.in/ClimateScience" target="_blank">
+                    <span class="card-number">C3</span>
+                    <h3 class="card-title">Climate Science 101</h3>
+                    <p class="card-description">Climate change science and environmental impact</p>
+                    <div class="testimonial-quote">
+                        "Comprehensive yet accessible. Perfect foundation for climate advocacy work."
+                        <div class="testimonial-author">— Environmental Consultant, UNDP</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="#all-courses" class="newsletter-btn" onclick="showAllCourses(event)">
+                View All 38 Courses
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Labs Section - Featured labs with testimonials -->
+    <section id="labs" class="section">
+        <h2 class="section-title">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M9 2v17.5A3.5 3.5 0 0 1 5.5 23 3.5 3.5 0 0 1 2 19.5A3.5 3.5 0 0 1 5.5 16H9"></path>
+                <path d="M15 2v17.5a3.5 3.5 0 0 0 3.5 3.5 3.5 3.5 0 0 0 3.5-3.5 3.5 3.5 0 0 0-3.5-3.5H15"></path>
+                <line x1="9" y1="2" x2="15" y2="2"></line>
+            </svg>
+            Popular Interactive Labs
+        </h2>
+        <div class="cards-grid">
+            <div class="card">
+                <span class="learner-badge">4.1k learners</span>
+                <a href="https://toc-workbench.netlify.app/" target="_blank">
+                    <span class="card-number">L10</span>
+                    <h3 class="card-title">TOC Workbench</h3>
+                    <p class="card-description">Theory of Change development and visualization</p>
+                    <div class="testimonial-quote">
+                        "Game-changer for our strategic planning. Made TOC development intuitive and collaborative."
+                        <div class="testimonial-author">— Strategy Director, Oxfam</div>
+                    </div>
+                </a>
+            </div>
+            <div class="card">
+                <span class="learner-badge">3.7k learners</span>
+                <a href="https://mle-frameworkdesign.netlify.app/" target="_blank">
+                    <span class="card-number">L5</span>
+                    <h3 class="card-title">MLE Framework Workbench</h3>
+                    <p class="card-description">Design monitoring, evaluation, and learning frameworks</p>
+                    <div class="testimonial-quote">
+                        "Streamlined our entire MLE process. Essential tool for development practitioners."
+                        <div class="testimonial-author">— Research Manager, Gates Foundation</div>
+                    </div>
+                </a>
+            </div>
+            <div class="card">
+                <span class="learner-badge">2.9k learners</span>
+                <a href="https://impact-storytelling.netlify.app/" target="_blank">
+                    <span class="card-number">L8</span>
+                    <h3 class="card-title">Impact Storytelling Lab</h3>
+                    <p class="card-description">Craft compelling impact narratives</p>
+                    <div class="testimonial-quote">
+                        "Transformed how we communicate our impact. Our donor reports have never been more engaging."
+                        <div class="testimonial-author">— Communications Lead, CARE International</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="#all-labs" class="newsletter-btn" onclick="showAllLabs(event)">
+                View All 10 Labs
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Premium Section -->
+    <section id="premium" class="section">
+        <h2 class="section-title">
+            <svg class="icon" viewBox="0 0 24 24">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            Premium Tools
+        </h2>
+        
+        <div class="beta-text">
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Free While in Beta!
+            </h3>
+            <p>All premium tools are currently available for free during our beta period. Enjoy full access to advanced features and tools.</p>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card">
+                <span class="learner-badge">2.3k learners</span>
+                <a href="https://marginmuse.space/themarginmuse" target="_blank">
+                    <span class="card-number premium">P1</span>
+                    <h3 class="card-title">Field Notes from a Development Economist</h3>
+                    <p class="card-description">Insights and reflections from development practice</p>
+                    <div class="testimonial-quote">
+                        "Raw, honest insights from the field. A must-read for aspiring development economists."
+                        <div class="testimonial-author">— Senior Economist, ADB</div>
+                    </div>
+                </a>
+            </div>
+            <div class="card">
+                <span class="learner-badge">3.1k learners</span>
+                <a href="https://101.www.impactmojo.in/IMQualLab" target="_blank">
+                    <span class="card-number premium">P2</span>
+                    <h3 class="card-title">Qualitative Research Lab</h3>
+                    <p class="card-description">Advanced qualitative research tools and techniques</p>
+                    <div class="testimonial-quote">
+                        "Revolutionary approach to qualitative analysis. Saved weeks of coding time."
+                        <div class="testimonial-author">— Research Director, J-PAL</div>
+                    </div>
+                </a>
+            </div>
+            <div class="card">
+                <span class="learner-badge">2.7k learners</span>
+                <a href="https://101.www.impactmojo.in/IMStatsAssist" target="_blank">
+                    <span class="card-number premium">P3</span>
+                    <h3 class="card-title">Statistical Analysis Assistant</h3>
+                    <p class="card-description">AI-powered statistical analysis support</p>
+                    <div class="testimonial-quote">
+                        "Made statistical analysis accessible to our entire team. Incredible time-saver."
+                        <div class="testimonial-author">— Data Analyst, USAID</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="section">
+        <div class="newsletter">
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                Subscribe to Our Newsletter
+            </h3>
+            <p>Get the latest insights and updates delivered to your inbox</p>
+            <a href="https://varna.substack.com" target="_blank" class="newsletter-btn">
+                Subscribe on Substack
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="about-section">
+            <h2 class="section-title">About the Creator</h2>
+            <div class="about-content">
+                <div class="about-image">VSR</div>
+                <div class="about-text">
+                    <h3>Varna Sri Raman</h3>
+                    <p>Development Economist | PhD Scholar | Creator of ImpactMojo</p>
+                    <p style="margin-top: 1rem;">
+                        ImpactMojo is an open-source educational platform dedicated to democratizing access to development knowledge and social impact education.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://www.threads.com/@varnasriraman" target="_blank">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M21 8v13H3V8"></path>
+                                <path d="M1 3h22v5H1z"></path>
+                                <path d="M10 12h4"></path>
+                            </svg>
+                            Threads
+                        </a>
+                        <a href="https://linkedin.com/in/varna/" target="_blank">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://x.com/varna" target="_blank">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                            </svg>
+                            X (Twitter)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p>Email: <a href="mailto:info@impactmojo.in">info@impactmojo.in</a></p>
+                    <p style="margin-top: 1rem;">
+                        ImpactMojo thanks <a href="https://www.pinpointventures.in" target="_blank" style="color: var(--accent-color);">PinPoint Ventures</a> for their generous support <span style="color: red;">❤</span>
+                    </p>
+                </div>
+                
+                <div class="footer-section donation-section">
+                    <h4>Support Our Work</h4>
+                    <p>Your contribution helps us keep education accessible to all. Donate via UPI:</p>
+                    <div class="upi-id">impactmojo@ibl</div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Share with Friends</h4>
+                    <p style="margin-bottom: 1rem;">Love ImpactMojo? Share it with your network!</p>
+                    <a href="https://wa.me/?text=Check%20out%20ImpactMojo%20-%20Free%20development%20education%20resources%20and%20tools%20for%20social%20impact!%20%F0%9F%8C%8D%20https://impactmojo.in" 
+                       target="_blank" 
+                       class="share-button">
+                        <svg class="icon" viewBox="0 0 24 24" fill="white">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        Share on WhatsApp
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p><strong>© 2025 ImpactMojo. No endorsements or certificates provided.</strong></p>
+                <p>This project is open source under the MIT License and built to support social impact education.</p>
+                <div class="legal-links">
+                    <a href="#" onclick="showTerms(event)">Terms of Use</a>
+                    <a href="#" onclick="showPrivacy(event)">Privacy Policy</a>
+                    <a href="#" onclick="showLicense(event)">MIT License</a>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.75rem;">
+                    Our Terms of Use and Privacy Policy follow the standards set by <a href="https://www.pinpointventures.in" target="_blank">PinPoint Ventures</a> and comply with the Indian IT Act.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <p style="color: var(--text-secondary); margin: 0;">This site uses cookies and similar technologies to improve your experience. By continuing, you agree to our <a href="#" onclick="showPrivacy(event)" style="color: var(--accent-color);">Privacy Policy</a>.</p>
+        <button class="cookie-accept" onclick="acceptCookies()">Accept</button>
+    </div>
+
+    <!-- Modals -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('termsModal')">&times;</span>
+            <h2>Terms of Use</h2>
+            <p><strong>Effective Date:</strong> January 1, 2025</p>
+            
+            <h3>1. Acceptance of Terms</h3>
+            <p>By accessing ImpactMojo, you agree to these Terms of Use in compliance with the Indian Information Technology Act, 2000.</p>
+            
+            <h3>2. Educational Use</h3>
+            <p>ImpactMojo provides educational content for informational purposes only. No certificates or formal accreditation is provided.</p>
+            
+            <h3>3. Intellectual Property</h3>
+            <p>All content is provided under the MIT License for open educational use. Attribution is appreciated but not required.</p>
+            
+            <h3>4. User Conduct</h3>
+            <p>Users agree to use the platform respectfully and for educational purposes only.</p>
+            
+            <h3>5. Disclaimer</h3>
+            <p>Content is provided "as is" without warranties. ImpactMojo is not liable for how information is used.</p>
+            
+            <h3>6. Governing Law</h3>
+            <p>These terms are governed by the laws of India.</p>
+        </div>
+    </div>
+
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('privacyModal')">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p><strong>Effective Date:</strong> January 1, 2025</p>
+            
+            <h3>1. Information We Collect</h3>
+            <p>We collect minimal information necessary for providing educational services, including:</p>
+            <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                <li>Email address (for newsletter subscription)</li>
+                <li>Usage analytics (via Plausible - privacy-friendly)</li>
+                <li>Authentication data (if using Google login)</li>
+            </ul>
+            
+            <h3>2. How We Use Information</h3>
+            <p>Information is used solely for improving educational content and user experience.</p>
+            
+            <h3>3. Data Protection</h3>
+            <p>We comply with the Indian IT Act and implement appropriate security measures.</p>
+            
+            <h3>4. Third-Party Services</h3>
+            <p>We use Firebase (Google), Plausible Analytics, and Substack for specific services.</p>
+            
+            <h3>5. Your Rights</h3>
+            <p>You have the right to access, correct, or delete your personal information.</p>
+            
+            <h3>6. Contact</h3>
+            <p>For privacy concerns, contact: info@impactmojo.in</p>
+        </div>
+    </div>
+
+    <div id="licenseModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('licenseModal')">&times;</span>
+            <h2>MIT License</h2>
+            <p><strong>Copyright (c) 2025 ImpactMojo</strong></p>
+            
+            <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+            
+            <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+            
+            <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+            }
+
+            // Show cookie banner if not accepted
+            const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+            if (!cookiesAccepted) {
+                document.getElementById('cookieBanner').classList.add('show');
+            }
+        });
+
+        // Cookie Banner
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+
+        // Modal Functions
+        function showTerms(e) {
+            e.preventDefault();
+            document.getElementById('termsModal').classList.add('show');
+        }
+
+        function showPrivacy(e) {
+            e.preventDefault();
+            document.getElementById('privacyModal').classList.add('show');
+        }
+
+        function showLicense(e) {
+            e.preventDefault();
+            document.getElementById('licenseModal').classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('show');
+            }
+        }
+
+        // Functions for showing all content
+        function showAllCourses(e) {
+            e.preventDefault();
+            // Create or show the all courses modal
+            let modal = document.getElementById('allCoursesModal');
+            if (!modal) {
+                createAllCoursesModal();
+                modal = document.getElementById('allCoursesModal');
+            }
+            modal.classList.add('show');
+        }
+
+        function showAllLabs(e) {
+            e.preventDefault();
+            // Create or show the all labs modal
+            let modal = document.getElementById('allLabsModal');
+            if (!modal) {
+                createAllLabsModal();
+                modal = document.getElementById('allLabsModal');
+            }
+            modal.classList.add('show');
+        }
+
+        // Create modal with all courses
+        function createAllCoursesModal() {
+            const allCourses = [
+                { id: 'C1', title: 'Development Economics 101', url: 'https://101.www.impactmojo.in/DevEcon', desc: 'Foundational concepts in development economics' },
+                { id: 'C2', title: 'Law and Constitution 101', url: 'https://101.www.impactmojo.in/Law&Cons', desc: 'Understanding legal frameworks' },
+                { id: 'C3', title: 'Climate Science 101', url: 'https://101.www.impactmojo.in/ClimateScience', desc: 'Climate change science and impact' },
+                { id: 'C4', title: 'Pedagogy and Education 101', url: 'https://101.www.impactmojo.in/edu', desc: 'Educational theories and methodologies' },
+                { id: 'C5', title: 'Public Health 101', url: 'https://101.www.impactmojo.in/ph', desc: 'Public health interventions and systems' },
+                { id: 'C6', title: 'Livelihoods 101', url: 'https://101.www.impactmojo.in/Livelihoods', desc: 'Sustainable livelihoods and income' },
+                { id: 'C7', title: 'Gender Studies 101', url: 'https://101.www.impactmojo.in/Gender', desc: 'Gender theory and implications' },
+                { id: 'C8', title: 'Women\'s Economic Empowerment 101', url: 'https://101.www.impactmojo.in/WEE', desc: 'Economic opportunities for women' },
+                { id: 'C9', title: 'Research Ethics 101', url: 'https://101.www.impactmojo.in/ResearchEthics', desc: 'Ethical considerations in research' },
+                { id: 'C10', title: 'Behaviour Change Communication 101', url: 'https://101.www.impactmojo.in/BCCP', desc: 'Strategic communication for change' },
+                { id: 'C11', title: 'Advocacy and Communications 101', url: 'https://101.www.impactmojo.in/adv&comm', desc: 'Effective advocacy strategies' },
+                { id: 'C12', title: 'MEAL 101', url: 'https://101.www.impactmojo.in/MEAL', desc: 'Monitoring, Evaluation, Accountability, Learning' },
+                { id: 'C13', title: 'Visual Ethnography 101', url: 'https://101.www.impactmojo.in/VEthno', desc: 'Visual research methods' },
+                { id: 'C14', title: 'Political Economy 101', url: 'https://101.www.impactmojo.in/polecon', desc: 'Political and economic systems' },
+                { id: 'C15', title: 'Poverty and Inequality 101', url: 'https://101.www.impactmojo.in/pov&inq', desc: 'Understanding poverty dynamics' },
+                { id: 'C16', title: 'Marginalised Identities 101', url: 'https://101.www.impactmojo.in/identities', desc: 'Social exclusion and marginalization' },
+                { id: 'C17', title: 'Sexual and Reproductive Health Rights 101', url: 'https://101.www.impactmojo.in/srhr', desc: 'SRHR frameworks and advocacy' },
+                { id: 'C18', title: 'Decolonising Development 101', url: 'https://101.www.impactmojo.in/decolonD', desc: 'Critical perspectives on development' },
+                { id: 'C19', title: 'Econometrics 101', url: 'https://101.www.impactmojo.in/econometrics', desc: 'Statistical methods for economics' },
+                { id: 'C20', title: 'Care Economy 101', url: 'https://101.www.impactmojo.in/careeconomy', desc: 'Understanding unpaid care work' },
+                { id: 'C21', title: 'Environmental Justice 101', url: 'https://101.www.impactmojo.in/env-jus', desc: 'Environmental rights and equity' },
+                { id: 'C22', title: 'Community Development 101', url: 'https://101.www.impactmojo.in/community-dev', desc: 'Community-led development' },
+                { id: 'C23', title: 'Data Literacy 101', url: 'https://101.www.impactmojo.in/data-lit', desc: 'Understanding and working with data' },
+                { id: 'C24', title: 'Post-Truth Politics 101', url: 'https://101.www.impactmojo.in/post-truth-pol', desc: 'Media literacy and discourse' },
+                { id: 'C25', title: 'Global Development Architecture 101', url: 'https://101.www.impactmojo.in/GDArch', desc: 'International development frameworks' },
+                { id: 'C26', title: 'Fundraising 101', url: 'https://101.www.impactmojo.in/fundraising', desc: 'Resource mobilization strategies' },
+                { id: 'C27', title: 'Qualitative Research Methods 101', url: 'https://101.www.impactmojo.in/QualR', desc: 'In-depth qualitative techniques' },
+                { id: 'C28', title: 'Exploratory Data Analysis for Household Surveys 101', url: 'https://101.www.impactmojo.in/HH-EDA', desc: 'Survey data analysis' },
+                { id: 'C29', title: 'Bivariate Analysis 101', url: 'https://101.www.impactmojo.in/bivariateA', desc: 'Analyzing relationships between variables' },
+                { id: 'C30', title: 'Multivariate Analysis 101', url: 'https://101.www.impactmojo.in/MultivariateA', desc: 'Advanced statistical modeling' },
+                { id: 'C31', title: 'Digital Ethics 101', url: 'https://101.www.impactmojo.in/DigitalEthics', desc: 'Ethics in digital spaces' },
+                { id: 'C32', title: 'Decent Work 101', url: 'https://101.www.impactmojo.in/DecentWork', desc: 'Labor rights and employment' },
+                { id: 'C33', title: 'Social Welfare and Safety Nets 101', url: 'https://101.www.impactmojo.in/safetynets', desc: 'Social protection systems' },
+                { id: 'C34', title: 'Data Feminism 101', url: 'https://101.www.impactmojo.in/DataFem', desc: 'Feminist approaches to data' },
+                { id: 'C35', title: 'Observation to Insight 101', url: 'https://101.www.impactmojo.in/obs2insight', desc: 'Transforming observations to insights', premium: true },
+                { id: 'C36', title: 'Item Response Theory 101', url: 'https://101.www.impactmojo.in/IRT', desc: 'Advanced psychometric methods', premium: true },
+                { id: 'C37', title: 'Social Emotional Learning 101', url: 'https://101.www.impactmojo.in/SEL', desc: 'SEL frameworks and implementation', premium: true },
+                { id: 'C38', title: 'English for Development Professionals 101', url: 'https://101.www.impactmojo.in/eng4dev', desc: 'Professional communication skills', premium: true }
+            ];
+
+            const modalHTML = `
+                <div id="allCoursesModal" class="modal">
+                    <div class="modal-content" style="max-width: 900px;">
+                        <span class="modal-close" onclick="closeModal('allCoursesModal')">&times;</span>
+                        <h2>All Courses (101 Series)</h2>
+                        <div class="cards-grid" style="max-height: 70vh; overflow-y: auto; padding: 1rem;">
+                            ${allCourses.map(course => `
+                                <div class="card">
+                                    <a href="${course.url}" target="_blank">
+                                        <span class="card-number${course.premium ? ' premium' : ''}">${course.id}</span>
+                                        <h3 class="card-title">${course.title}</h3>
+                                        <p class="card-description">${course.desc}</p>
+                                        ${course.premium ? '<div class="premium-indicator">Premium (Password Protected)</div>' : ''}
+                                    </a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        // Create modal with all labs
+        function createAllLabsModal() {
+            const allLabs = [
+                { id: 'L1', title: 'Risk Assessment and Mitigation Lab', url: 'https://impactrisk-mitigation.netlify.app/', desc: 'Interactive risk analysis and planning' },
+                { id: 'L2', title: 'Resource Mobilisation and Sustainability Lab', url: 'https://rm-sustainability4impact.netlify.app/', desc: 'Strategic resource frameworks' },
+                { id: 'L3', title: 'Policy and Advocacy Lab', url: 'https://pol-advocacy4impact.netlify.app/', desc: 'Policy analysis and advocacy tools' },
+                { id: 'L4', title: 'Partnership and Collaboration Lab', url: 'https://impact-partnerships.netlify.app/', desc: 'Building effective partnerships' },
+                { id: 'L5', title: 'MLE Framework Workbench', url: 'https://mle-frameworkdesign.netlify.app/', desc: 'Design MLE frameworks' },
+                { id: 'L6', title: 'MLE Framework Builder Lab', url: 'https://mle-plan-lab.netlify.app/', desc: 'Build comprehensive MLE plans' },
+                { id: 'L7', title: 'Community Engagement Lab', url: 'https://community-engagement.netlify.app/', desc: 'Community participation strategies' },
+                { id: 'L8', title: 'Impact Storytelling Lab', url: 'https://impact-storytelling.netlify.app/', desc: 'Craft compelling narratives' },
+                { id: 'L9', title: 'Innovation and Design Thinking Lab', url: 'https://impactdesign-thinking.netlify.app/', desc: 'Apply design thinking to impact' },
+                { id: 'L10', title: 'TOC Workbench', url: 'https://toc-workbench.netlify.app/', desc: 'Theory of Change development' }
+            ];
+
+            const modalHTML = `
+                <div id="allLabsModal" class="modal">
+                    <div class="modal-content" style="max-width: 900px;">
+                        <span class="modal-close" onclick="closeModal('allLabsModal')">&times;</span>
+                        <h2>All Interactive Labs</h2>
+                        <div class="cards-grid" style="max-height: 70vh; overflow-y: auto; padding: 1rem;">
+                            ${allLabs.map(lab => `
+                                <div class="card">
+                                    <a href="${lab.url}" target="_blank">
+                                        <span class="card-number">${lab.id}</span>
+                                        <h3 class="card-title">${lab.title}</h3>
+                                        <p class="card-description">${lab.desc}</p>
+                                    </a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (!this.getAttribute('onclick')) { // Don't interfere with modal links
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
