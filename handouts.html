@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImpactMojo Educational Handouts - Learning Pathways</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark mode colors (default) */
+            --primary-bg: #0a0e27;
+            --secondary-bg: #151932;
+            --accent-color: #00D9FF;
+            --accent-hover: #00B8E6;
+            --secondary-accent: #7C3AED;
+            --success-color: #10B981;
+            --text-primary: #ffffff;
+            --text-secondary: #94A3B8;
+            --card-bg: #1e293b;
+            --hover-bg: #2d3748;
+            --border-color: rgba(0, 217, 255, 0.2);
+            --gradient-primary: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            --gradient-accent: linear-gradient(135deg, #00D9FF 0%, #7C3AED 100%);
+            --nav-bg: rgba(21, 25, 50, 0.95);
+            --nav-text: #ffffff;
+        }
+
+        body.light-mode {
+            --primary-bg: #ffffff;
+            --secondary-bg: #F9FAFB;
+            --accent-color: #3B82F6;
+            --accent-hover: #2563EB;
+            --secondary-accent: #8B5CF6;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --card-bg: #ffffff;
+            --hover-bg: #F9FAFB;
+            --border-color: rgba(59, 130, 246, 0.2);
+            --gradient-primary: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+            --gradient-accent: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --nav-text: #111827;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+        }
+
+        .back-link {
+            margin-bottom: 1rem;
+        }
+
+        .back-link a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: opacity 0.3s;
+        }
+
+        .back-link a:hover {
+            opacity: 0.8;
+        }
+
+        h1 {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .description {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 2rem;
+        }
+
+        .description p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .stats-banner {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--hover-bg);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .pathway-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .pathway-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .pathway-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .pathway-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .pathway-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .pathway-title:hover {
+            color: var(--accent-color);
+        }
+
+        .pathway-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .pathway-progression {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-badge {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .folder-list {
+            background: var(--hover-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .folder-list h4 {
+            margin: 0 0 0.8rem 0;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .folder-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .folder-list li {
+            padding: 0.3rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .folder-list li:before {
+            content: "📁 ";
+            margin-right: 0.5rem;
+        }
+
+        .resources-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+        }
+
+        .resources-section h2 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .resource-card {
+            background: var(--hover-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .resource-card:hover {
+            border-left-color: var(--secondary-accent);
+            transform: translateY(-2px);
+        }
+
+        .resource-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+            display: block;
+        }
+
+        .resource-title:hover {
+            color: var(--accent-color);
+        }
+
+        .resource-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .footer {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem auto;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+        }
+
+        .footer strong {
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--gradient-accent);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 217, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .pathways-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-banner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+        </svg>
+    </button>
+
+    <div class="container">
+        <div class="header-section">
+            <div class="back-link">
+                <a href="index.html">&larr; Back to ImpactMojo</a>
+            </div>
+            
+            <h1>Educational Handouts</h1>
+            <div class="subtitle">Structured Learning Pathways for Development Education</div>
+            
+            <div class="description">
+                <p><strong>Curriculum-ready teaching materials</strong> organized into progressive learning pathways for educators working in development studies, public policy, and social research across South Asian contexts. Each pathway builds systematically from foundational concepts to advanced applications.</p>
+            </div>
+            
+            <div class="stats-banner">
+                <div class="stat-card">
+                    <span class="stat-number">4</span>
+                    <div class="stat-label">Core Learning Tracks</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">8</span>
+                    <div class="stat-label">Thematic Areas</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100+</span>
+                    <div class="stat-label">Workshop Materials</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">75-90</span>
+                    <div class="stat-label">Minute Sessions</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pathways-grid">
+            <div class="pathway-card">
+                <div class="pathway-header">
+                    <div class="pathway-icon">📊</div>
+                    <a href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Data%20Analysis%20Track" target="_blank" class="pathway-title">Data Analysis Track</a>
+                </div>
+                <div class="pathway-description">
+                    Master quantitative research skills from basic data literacy through advanced econometric modeling. Perfect for building comprehensive data analysis capabilities.
+                </div>
+                <div class="pathway-progression">
+                    <span class="step-badge">Beginner</span>
+                    <span class="step-badge">Intermediate</span>
+                    <span class="step-badge">Advanced</span>
+                </div>
+                <div class="folder-list">
+                    <h4>📈 Learning Progression:</h4>
+                    <ul>
+                        <li>Data Literacy</li>
+                        <li>EDA (Exploratory Data Analysis)</li>
+                        <li>Bivariate Analysis</li>
+                        <li>Multivariate Analysis</li>
+                        <li>Econometrics</li>
+                        <li>Data Analysis - Examples and Templates</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pathway-card">
+                <div class="pathway-header">
+                    <div class="pathway-icon">⚡</div>
+                    <a href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Gender%20Studies%20Pathway" target="_blank" class="pathway-title">Gender Studies Pathway</a>
+                </div>
+                <div class="pathway-description">
+                    Comprehensive understanding of gender in development work, from foundational theory through applied economic empowerment and intersectional analysis.
+                </div>
+                <div class="pathway-progression">
+                    <span class="step-badge">Theory</span>
+                    <span class="step-badge">Analysis</span>
+                    <span class="step-badge">Application</span>
+                </div>
+                <div class="folder-list">
+                    <h4>🎯 Pathway Components:</h4>
+                    <ul>
+                        <li>Gender Studies</li>
+                        <li>Data Feminism</li>
+                        <li>Care Economy</li>
+                        <li>Women's Economic Empowerment</li>
+                        <li>Marginalised Identities</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pathway-card">
+                <div class="pathway-header">
+                    <div class="pathway-icon">🏛️</div>
+                    <a href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Policy%20and%20Economics%20Track" target="_blank" class="pathway-title">Policy & Economics Track</a>
+                </div>
+                <div class="pathway-description">
+                    From foundational economic theory to policy analysis and implementation. Covers development economics through social protection systems.
+                </div>
+                <div class="pathway-progression">
+                    <span class="step-badge">Economics</span>
+                    <span class="step-badge">Policy</span>
+                    <span class="step-badge">Implementation</span>
+                </div>
+                <div class="folder-list">
+                    <h4>💼 Track Components:</h4>
+                    <ul>
+                        <li>Development Economics</li>
+                        <li>Political Economy</li>
+                        <li>Poverty and Inequality</li>
+                        <li>Social Safety Nets</li>
+                        <li>Livelihoods</li>
+                        <li>Policy Tracking</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pathway-card">
+                <div class="pathway-header">
+                    <div class="pathway-icon">🔬</div>
+                    <a href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Research%20Methods%20Journey" target="_blank" class="pathway-title">Research Methods Journey</a>
+                </div>
+                <div class="pathway-description">
+                    Complete research toolkit covering ethics, qualitative methods, monitoring & evaluation, and research design principles for development work.
+                </div>
+                <div class="pathway-progression">
+                    <span class="step-badge">Ethics</span>
+                    <span class="step-badge">Methods</span>
+                    <span class="step-badge">Evaluation</span>
+                </div>
+                <div class="folder-list">
+                    <h4>🔍 Research Components:</h4>
+                    <ul>
+                        <li>Research Ethics</li>
+                        <li>Qualitative Research</li>
+                        <li>MLE (Monitoring, Learning & Evaluation)</li>
+                        <li>Assumptions Checklist</li>
+                        <li>Research Design - Resources</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resources-section">
+            <h2>Additional Resources & Thematic Areas</h2>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <a href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Thematic%20Areas" target="_blank" class="resource-title">🌍 Thematic Areas</a>
+                    <div class="resource-description">
+                        Specialized topic collections including Digital Development Ethics, Health & Wellbeing, Justice & Governance, and Regional & Environmental studies.
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <a href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Cross%20Cutting%20Resources" target="_blank" class="resource-title">🔗 Cross-Cutting Resources</a>
+                    <div class="resource-description">
+                        Essential tools that support all learning tracks: Case Studies, Communications, Local Application Worksheets, and Software Tools Guide.
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <a href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Quick%20Reference%20Cards" target="_blank" class="resource-title">⚡ Quick Reference Cards</a>
+                    <div class="resource-description">
+                        Condensed reference materials for quick lookup during workshops, research, or fieldwork. Perfect for printing and desk reference.
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <a href="https://github.com/Varnasr/ImpactMojo/tree/main/Handouts/Education%20and%20Pedagogy" target="_blank" class="resource-title">📚 Education & Pedagogy</a>
+                    <div class="resource-description">
+                        Specialized resources for educators focusing on learning theory, curriculum design, and effective teaching practices in development education.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Open Educational Resources</strong></p>
+            <p>All materials are licensed under MIT License and available for adaptation.</p>
+            <p>Perfect for university instructors, training coordinators, and workshop facilitators.</p>
+            <p><em>ImpactMojo is provided completely free through the generous support of PinPoint Ventures.</em></p>
+            <p style="margin-top: 1.5rem; font-size: 0.9rem;">
+                <strong>How to Use:</strong> Click any pathway or resource to explore materials on GitHub. 
+                Use your browser's print function (Ctrl+P or Cmd+P) to save handouts as PDFs.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+            }
+        });
+    </script>
+</body>
+</html>
