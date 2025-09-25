@@ -14,18 +14,19 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'npm'
     
+    - name: Upgrade npm
+      run: npm install -g npm@latest
+
     - name: Install dependencies
-      run: |
-        npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+      run: npm ci --legacy-peer-deps --verbose || npm install --legacy-peer-deps --verbose
     
     - name: Build the app
-      run: |
-        npm run build
+      run: npm run build --verbose
       env:
         CI: false
         PUBLIC_URL: https://www.impactmojo.in
