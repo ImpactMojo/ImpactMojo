@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ImpactMojo - 101 Knowledge Series for Social Impact. Development Know-How for justice, equity, and development in South Asia.">
+    <title>ImpactMojo - Development Know-How</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    
+    <!-- Web App Manifest for PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00D9FF">
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark mode colors (default) */
+            --primary-bg: #0a0e27;
+            --secondary-bg: #151932;
+            --accent-color: #00D9FF;
+            --accent-hover: #00B8E6;
+            --secondary-accent: #7C3AED;
+            --success-color: #10B981;
+            --text-primary: #ffffff;
+            --text-secondary: #94A3B8;
+            --card-bg: #1e293b;
+            --hover-bg: #2d3748;
+            --border-color: rgba(0, 217, 255, 0.2);
+            --gradient-primary: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            --gradient-accent: linear-gradient(135deg, #00D9FF 0%, #7C3AED 100%);
+            --warning-color: #F59E0B;
+            --premium-gold: #FFD700;
+            --premium-gradient: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            --nav-bg: rgba(21, 25, 50, 0.95);
+            --nav-text: #ffffff;
+        }
+
+        /* Light theme */
+        body.light-mode {
+            --primary-bg: #ffffff;
+            --secondary-bg: #F9FAFB;
+            --accent-color: #3B82F6;
+            --accent-hover: #2563EB;
+            --secondary-accent: #8B5CF6;
+            --success-color: #10B981;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --card-bg: #ffffff;
+            --hover-bg: #F9FAFB;
+            --border-color: rgba(59, 130, 246, 0.2);
+            --gradient-primary: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+            --gradient-accent: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --nav-text: #111827;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(180deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: sticky;
+            top: 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--nav-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            opacity: 0.9;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+            opacity: 1;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--nav-text);
+            padding: 0.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--gradient-accent);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 217, 255, 0.3);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--nav-text);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Cookie Consent Banner */
+        .cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-top: 2px solid var(--accent-color);
+            z-index: 9999;
+            display: none;
+            animation: slideUp 0.3s ease;
+        }
+
+        .cookie-consent.show {
+            display: block;
+        }
+
+        .cookie-consent-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .cookie-consent p {
+            color: var(--text-secondary);
+            margin: 0;
+            flex: 1;
+        }
+
+        .cookie-consent-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        /* Beta Notice */
+        .beta-notice {
+            background: linear-gradient(135deg, var(--premium-gold) 0%, var(--warning-color) 100%);
+            color: #1a1a1a;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin: 2rem auto;
+            max-width: 800px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* Section Styles */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 40px rgba(0, 217, 255, 0.2);
+        }
+
+        .card:hover::before {
+            transform: translateX(0);
+        }
+
+        .card-number {
+            display: inline-block;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .card-number.premium {
+            background: var(--premium-gradient);
+        }
+
+        .learner-badge {
+            display: inline-block;
+            background: var(--success-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+            font-weight: 600;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card-testimonial {
+            font-style: italic;
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .card-testimonial-author {
+            display: block;
+            margin-top: 0.5rem;
+            font-style: normal;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .card a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Coming Soon Section */
+        .coming-soon {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(0, 217, 255, 0.1) 100%);
+            padding: 4rem 2rem;
+            border-radius: 16px;
+            margin: 3rem auto;
+            max-width: 1000px;
+            border: 1px solid var(--border-color);
+        }
+
+        .coming-soon h3 {
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .coming-soon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .coming-soon-item {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .coming-soon-item h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .coming-soon-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--gradient-accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-color);
+            background: var(--hover-bg);
+        }
+
+        .btn-premium {
+            background: var(--premium-gradient);
+            color: #1a1a1a;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Share Section */
+        .share-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            max-width: 600px;
+            margin: 3rem auto;
+            text-align: center;
+        }
+
+        .share-section h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .share-linkedin {
+            background: #0A66C2;
+        }
+
+        .share-linkedin:hover {
+            background: #004182;
+            transform: translateY(-2px);
+        }
+
+        .share-whatsapp {
+            background: #25D366;
+        }
+
+        .share-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(0, 217, 255, 0.1) 100%);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            max-width: 700px;
+            margin: 3rem auto;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .newsletter-section h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .newsletter-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-btn {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.4);
+        }
+
+        /* About Creator Box */
+        .creator-box {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            margin: 4rem auto;
+            text-align: center;
+        }
+
+        .creator-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--accent-color);
+            object-fit: cover;
+        }
+
+        .creator-box h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .creator-box .title {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .creator-box .title a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .creator-box .title a:hover {
+            text-decoration: underline;
+        }
+
+        .creator-box p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--secondary-bg);
+            padding: 3rem 1.5rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-support {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(245, 158, 11, 0.05) 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--premium-gold);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .footer-support h4 {
+            color: var(--premium-gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer-support p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            color: var(--text-secondary);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: var(--accent-color);
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-item {
+            background: var(--hover-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .modal-item:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .modal-item a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Feedback Form */
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            background: var(--hover-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 217, 255, 0.3);
+        }
+
+        /* Wall of Love */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        }
+
+        .testimonial-quote {
+            color: var(--text-primary);
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -10px;
+            font-size: 3rem;
+            color: var(--accent-color);
+            opacity: 0.3;
+        }
+
+        .testimonial-author {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .testimonial-author strong {
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .testimonial-lang {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        /* Coaching Modal Specific Styles */
+        .coaching-services-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-item {
+            background: var(--hover-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .service-item h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .service-item p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .service-item .price {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .sliding-scale-notice {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--nav-bg);
+                flex-direction: column;
+                padding: 1rem;
+                border-top: 1px solid var(--border-color);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .coming-soon-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cookie-consent-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cookie-consent-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .share-buttons {
+                flex-direction: column;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Service Worker Registration Script Placeholder */
+    </style>
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div class="cookie-consent" id="cookieConsent">
+        <div class="cookie-consent-content">
+            <p>This site uses cookies and similar technologies to improve your experience. By using our site, you agree to our Cookie Policy.</p>
+            <div class="cookie-consent-buttons">
+                <button class="btn btn-primary" onclick="acceptCookies()">Accept</button>
+                <a href="privacy-policy.html" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Header & Navigation -->
+        <header class="header">
+            <nav class="nav-container">
+                <a href="#" class="logo">ImpactMojo</a>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a onclick="openModal('coursesModal')">Courses</a></li>
+                    <li><a onclick="openModal('labsModal')">Labs</a></li>
+                    <li><a onclick="openModal('gamesModal')">Games</a></li>
+                    <li><a onclick="openModal('coachingModal')">Coaching</a></li>
+                    <li><a onclick="openModal('premiumModal')">Premium</a></li>
+                    <li><a href="#wall-of-love">Testimonials</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <h1>ImpactMojo</h1>
+            <p>Development Know-How</p>
+            <p style="font-size: 1.1rem;">101 Knowledge Series for Social Impact - Exploring justice, equity, and development in South Asia</p>
+            
+            <!-- Beta Notice -->
+            <div class="beta-notice">
+                🎉 All Premium Content is FREE while ImpactMojo is in Beta! 🎉
+            </div>
+        </section>
+
+        <!-- Popular Courses Section -->
+        <section class="section">
+            <h2 class="section-title">Popular Courses</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <a href="https://101.www.impactmojo.in/Gender" target="_blank">
+                        <span class="card-number">C7</span>
+                        <span class="learner-badge">2.3K Learners</span>
+                        <h3 class="card-title">Gender Studies 101</h3>
+                        <p class="card-description">Comprehensive exploration of gender theory, intersectionality, and social implications in development contexts</p>
+                        <div class="card-testimonial">
+                            "This course transformed my understanding of gender dynamics in development work. The intersectional approach was eye-opening."
+                            <span class="card-testimonial-author">- Senior Program Manager, International NGO</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://101.www.impactmojo.in/MEAL" target="_blank">
+                        <span class="card-number">C12</span>
+                        <span class="learner-badge">3.1K Learners</span>
+                        <h3 class="card-title">MEAL 101</h3>
+                        <p class="card-description">Monitoring, Evaluation, Accountability and Learning frameworks for impact measurement</p>
+                        <div class="card-testimonial">
+                            "Best MEAL course I've taken! Practical frameworks I immediately applied to our programs. The logical framework approach finally clicked."
+                            <span class="card-testimonial-author">- M&E Specialist, UN Agency</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://101.www.impactmojo.in/ClimateScience" target="_blank">
+                        <span class="card-number">C3</span>
+                        <span class="learner-badge">1.8K Learners</span>
+                        <h3 class="card-title">Climate Science 101</h3>
+                        <p class="card-description">Understanding climate change science, impacts, and resilience strategies for development</p>
+                        <div class="card-testimonial">
+                            "Simplified complex climate science without losing depth. Perfect for development professionals working on adaptation projects."
+                            <span class="card-testimonial-author">- Climate Advisor, Government Think Tank</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="openModal('coursesModal')">View All 38 Courses</button>
+                <button class="btn btn-secondary" onclick="openModal('feedbackModal')">Suggest a Course</button>
+            </div>
+        </section>
+
+        <!-- Labs Section -->
+        <section class="section">
+            <h2 class="section-title">Interactive Labs</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <a href="https://toc-workbench.netlify.app/" target="_blank">
+                        <span class="card-number">L10</span>
+                        <span class="learner-badge">1.5K Users</span>
+                        <h3 class="card-title">TOC Workbench</h3>
+                        <p class="card-description">Theory of Change development and visualization tool</p>
+                        <div class="card-testimonial">
+                            "This tool saved us weeks of work. Created our entire ToC in hours, not days. The logic flow visualization is brilliant."
+                            <span class="card-testimonial-author">- Strategy Consultant, Development Consultancy</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://mle-frameworkdesign.netlify.app/" target="_blank">
+                        <span class="card-number">L5</span>
+                        <span class="learner-badge">2.1K Users</span>
+                        <h3 class="card-title">MLE Framework Workbench</h3>
+                        <p class="card-description">Design monitoring, evaluation, and learning frameworks</p>
+                        <div class="card-testimonial">
+                            "Incredible tool for designing M&E frameworks. The indicator library alone is worth gold. Now our standard tool across all projects."
+                            <span class="card-testimonial-author">- Head of M&E, Bilateral Agency</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://impact-storytelling.netlify.app/" target="_blank">
+                        <span class="card-number">L8</span>
+                        <span class="learner-badge">890 Users</span>
+                        <h3 class="card-title">Impact Storytelling Lab</h3>
+                        <p class="card-description">Craft compelling narratives for social impact</p>
+                        <div class="card-testimonial">
+                            "Helped us transform dry data into powerful stories. Our donor reports have never been more engaging."
+                            <span class="card-testimonial-author">- Communications Director, Social Enterprise</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="openModal('labsModal')">View All 10 Labs</button>
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section class="section">
+            <h2 class="section-title">Interactive Economics Games</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <a href="https://therealmiddle.netlify.app" target="_blank">
+                        <span class="card-number">G1</span>
+                        <span class="learner-badge">850 Players</span>
+                        <h3 class="card-title">The Real Middle</h3>
+                        <p class="card-description">Understand who the "middle-class" really is in India through wealth inequality dynamics</p>
+                        <div class="card-testimonial">
+                            "Eye-opening visualization of wealth distribution. Changed how I think about economic policy targeting."
+                            <span class="card-testimonial-author">- Economics Professor, Delhi University</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://risk-reward-be.netlify.app" target="_blank">
+                        <span class="card-number">G2</span>
+                        <span class="learner-badge">1.2K Players</span>
+                        <h3 class="card-title">Risk & Reward Explorer</h3>
+                        <p class="card-description">Experience behavioral economics through prospect theory and cognitive biases in South Asian contexts</p>
+                        <div class="card-testimonial">
+                            "Perfect for teaching behavioral economics concepts. Students finally understand framing effects!"
+                            <span class="card-testimonial-author">- Behavioral Researcher, Policy Institute</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://cooperationparadox.netlify.app/" target="_blank">
+                        <span class="card-number">G5</span>
+                        <span class="learner-badge">920 Players</span>
+                        <h3 class="card-title">Cooperation Paradox</h3>
+                        <p class="card-description">Explore game theory concepts through strategic decision-making scenarios</p>
+                        <div class="card-testimonial">
+                            "Makes game theory accessible and practical. Great for understanding cooperation dynamics in development."
+                            <span class="card-testimonial-author">- Program Manager, Bilateral Agency</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="openModal('gamesModal')">View All 12 Games</button>
+            </div>
+        </section>
+
+        <!-- Coaching Section -->
+        <section class="section">
+            <h2 class="section-title">Professional Coaching</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="card-number">C1</span>
+                    <span class="learner-badge">180+ Sessions</span>
+                    <h3 class="card-title">Development Career Counselling</h3>
+                    <p class="card-description">One-on-one guidance for your development sector career journey with Dr. Varna Sri Raman</p>
+                    <div class="card-testimonial">
+                        "The career counselling session was transformative. Varna helped me identify my strengths and chart a clear path forward."
+                        <span class="card-testimonial-author">- Early Career Professional</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <span class="card-number">C2</span>
+                    <span class="learner-badge">250+ Sessions</span>
+                    <h3 class="card-title">Research Design Consultation</h3>
+                    <p class="card-description">Expert consultation on research methodology, sampling strategies, and tool development</p>
+                    <div class="card-testimonial">
+                        "Invaluable support for my PhD research design. The methodological insights saved months of trial and error."
+                        <span class="card-testimonial-author">- PhD Candidate, JNU</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <span class="card-number">C3</span>
+                    <span class="learner-badge">15+ Workshops</span>
+                    <h3 class="card-title">Three-Day Intensive Workshops</h3>
+                    <p class="card-description">Deep-dive workshops on any ImpactMojo course topic for organizations and teams</p>
+                    <div class="card-testimonial">
+                        "The Gender Studies workshop transformed our entire team's approach. Worth every penny of the investment."
+                        <span class="card-testimonial-author">- Program Director, International NGO</span>
+                    </div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="openModal('coachingModal')">View All Coaching Services</button>
+                <button class="btn btn-secondary" href="mailto:coaching@impactmojo.in">Contact for Custom Programs</button>
+            </div>
+        </section>
+
+        <!-- Premium Section -->
+        <section class="section">
+            <h2 class="section-title">Premium Offerings</h2>
+            <div class="beta-notice" style="margin-bottom: 2rem;">
+                All Premium Content Currently FREE During Beta! No passwords required.
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <a href="https://marginmuse.space/themarginmuse" target="_blank">
+                        <span class="card-number premium">PREMIUM</span>
+                        <span class="learner-badge">450 Subscribers</span>
+                        <h3 class="card-title">Field Notes from a Development Economist</h3>
+                        <p class="card-description">In-depth analysis and insights from field experiences</p>
+                        <div class="card-testimonial">
+                            "Varna's field insights are invaluable. Real-world economics applied to development challenges. A must-read for practitioners."
+                            <span class="card-testimonial-author">- Chief Economist, Development Bank</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://101.www.impactmojo.in/IMQualLab" target="_blank">
+                        <span class="card-number premium">PREMIUM</span>
+                        <span class="learner-badge">680 Users</span>
+                        <h3 class="card-title">Qualitative Research Lab</h3>
+                        <p class="card-description">Advanced qualitative research methods and tools</p>
+                        <div class="card-testimonial">
+                            "The coding framework generator alone justified the subscription. Transformed our qualitative analysis workflow completely."
+                            <span class="card-testimonial-author">- Lead Researcher, Policy Institute</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://101.www.impactmojo.in/IMStatsAssist" target="_blank">
+                        <span class="card-number premium">PREMIUM</span>
+                        <span class="learner-badge">920 Users</span>
+                        <h3 class="card-title">Statistical Analysis Assistant</h3>
+                        <p class="card-description">Comprehensive statistical analysis toolkit</p>
+                        <div class="card-testimonial">
+                            "Finally, stats made simple for development professionals! The regression analysis tool is a game-changer."
+                            <span class="card-testimonial-author">- Data Analyst, Research Foundation</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-premium" onclick="openModal('premiumModal')">View All Premium Content (FREE in Beta)</button>
+            </div>
+        </section>
+
+        <!-- Coming Soon / Roadmap Section -->
+        <section id="roadmap" class="section">
+            <h2 class="section-title">Coming Soon: Next-Gen Learning Platform</h2>
+            <div class="coming-soon">
+                <h3>🚀 What's Next for ImpactMojo</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">We're building innovative features to revolutionize development education and practice</p>
+                
+                <div class="coming-soon-grid">
+                    <div class="coming-soon-item">
+                        <h4>🤖 AI Learning Assistant</h4>
+                        <p>Personalized AI tutor for development concepts, available 24/7 to answer questions and provide guidance</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>📚 Smart Course Notes</h4>
+                        <p>AI-powered note-taking system with automatic summaries, key points extraction, and citation management</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>🎯 Personalized Learning Paths</h4>
+                        <p>Custom curriculum based on your goals, experience, and learning style</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>📖 Research Library</h4>
+                        <p>Curated collection of development literature with AI-powered search and recommendations</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>📄 Course Comparison Tool</h4>
+                        <p>Compare courses side-by-side, export learning materials, and track progress</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>🎵 Lo-Fi Study Playlists</h4>
+                        <p>Curated background music for focused learning sessions</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>💼 Member Discounts</h4>
+                        <p>Exclusive discounts on development consulting and partner services</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>📋 Smart Reading Lists</h4>
+                        <p>AI-curated reading recommendations based on your interests and progress</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>🔐 User Accounts</h4>
+                        <p>Secure login system to save progress, bookmarks, and personalized content</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>🏆 Certification System</h4>
+                        <p>Blockchain-verified certificates for course completion and achievements</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>🌐 Community Forum</h4>
+                        <p>Connect with fellow learners, share insights, and collaborate on projects</p>
+                    </div>
+                    <div class="coming-soon-item">
+                        <h4>📊 Learning Analytics</h4>
+                        <p>Track your progress with detailed analytics and performance insights</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wall of Love Section -->
+        <section id="wall-of-love" class="section">
+            <h2 class="section-title">Wall of Love</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">What our learners are saying about ImpactMojo</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <span class="testimonial-lang">English</span>
+                    <div class="testimonial-quote">
+                        "ImpactMojo has become my go-to resource for development knowledge. The depth of content combined with practical applications is unmatched. I've recommended it to my entire team."
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Country Director</strong>
+                        International Development Organization
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <span class="testimonial-lang">Hindi</span>
+                    <div class="testimonial-quote">
+                        "इंपैक्टमोजो ने विकास कार्य को समझने का मेरा नजरिया बदल दिया है। जेंडर स्टडीज कोर्स विशेष रूप से प्रभावशाली था। ग्रामीण विकास में काम करने वाले हर व्यक्ति को यह करना चाहिए।"
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>सामुदायिक विकास अधिकारी</strong>
+                        राज्य ग्रामीण विकास विभाग
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <span class="testimonial-lang">Tamil</span>
+                    <div class="testimonial-quote">
+                        "இம்பாக்ட்மோஜோ வளர்ச்சிப் பணிகளுக்கான என் முதல் தேர்வு. MEAL கோர்ஸ் மிகவும் நடைமுறைக்கு உகந்தது. எங்கள் NGO முழுவதும் இதை பயன்படுத்துகிறோம்."
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>திட்ட ஒருங்கிணைப்பாளர்</strong>
+                        தமிழ்நாடு அடிப்படையிலான NGO
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <span class="testimonial-lang">Bengali</span>
+                    <div class="testimonial-quote">
+                        "ইম্প্যাক্টমোজো উন্নয়ন শিক্ষায় বিপ্লব ঘটিয়েছে। জলবায়ু বিজ্ঞান কোর্সটি অসাধারণ। আমাদের জলবায়ু অভিযোজন প্রকল্পের জন্য অমূল্য।"
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>পরিবেশ বিশেষজ্ঞ</strong>
+                        আন্তর্জাতিক পরিবেশ সংস্থা
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <span class="testimonial-lang">Telugu</span>
+                    <div class="testimonial-quote">
+                        "ఇంపాక్ట్‌మోజో అభివృద్ధి వృత్తిపరుల కు ఒక వరం. డేటా విశ్లేషణ కోర్సులు అద్భుతంగా ఉన్నాయి. మా ప్రాజెక్ట్ నివేదికలు ఇప్పుడు చాలా మెరుగ్గా ఉన్నాయి."
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>డేటా విశ్లేషకుడు</strong>
+                        రాష్ట్ర ప్రణాళిక విభాగం
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <span class="testimonial-lang">Marathi</span>
+                    <div class="testimonial-quote">
+                        "इंप्याक्टमोजो हे विकास क्षेत्रातील माझे विश्वविद्यालय आहे. TOC वर्कबेंच अप्रतिम आहे. आमच्या सर्व प्रकल्पांसाठी आम्ही याचा वापर करतो."
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>कार्यक्रम व्यवस्थापक</strong>
+                        महाराष्ट्र शासकीय योजना
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <span class="testimonial-lang">English</span>
+                    <div class="testimonial-quote">
+                        "The Statistical Analysis Assistant has transformed how we handle data. What used to take days now takes hours. Worth every minute spent learning it."
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Senior Economist</strong>
+                        Multilateral Development Bank
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <span class="testimonial-lang">English</span>
+                    <div class="testimonial-quote">
+                        "Finally, development education that's practical, not just theoretical. The Policy & Economics track is brilliantly curated. My policy briefs have improved significantly."
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Policy Advisor</strong>
+                        Government Advisory Council
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section">
+            <h3>Research Rundown Newsletter</h3>
+            <p>Join our Substack newsletter for weekly insights on development research, field notes, and impact analysis from around the world.</p>
+            <a href="https://varna.substack.com/subscribe" target="_blank" class="newsletter-btn">Subscribe on Substack</a>
+        </section>
+
+        <!-- Share Section -->
+        <section class="share-section">
+            <h3>Share ImpactMojo</h3>
+            <p>Help us reach more learners and educators</p>
+            <div class="share-buttons">
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.impactmojo.in" target="_blank" class="share-btn share-linkedin">
+                    <span>Share on LinkedIn</span>
+                </a>
+                <a href="https://wa.me/?text=Check%20out%20ImpactMojo%20-%20Free%20Development%20Education%20Resources%20https://www.impactmojo.in" target="_blank" class="share-btn share-whatsapp">
+                    <span>Share on WhatsApp</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- About Creator Section -->
+        <section id="about" class="section">
+            <div class="creator-box">
+                <img src="assets/images/varna-photo.jpg" alt="Varna Sri Raman" class="creator-photo" onerror="this.style.display='none'">
+                <h3>Varna Sri Raman</h3>
+                <p class="title">Development Economist and Chief Architect of <a href="https://openstacks.dev/" target="_blank">OpenStacks</a></p>
+                <p>ImpactMojo is an open-source educational platform dedicated to democratizing access to development knowledge and social impact education across South Asia and beyond.</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/varnasriraman" target="_blank">LinkedIn</a>
+                    <a href="https://twitter.com/varnasriraman" target="_blank">X (Twitter)</a>
+                    <a href="https://www.threads.net/@varnasriraman" target="_blank">Threads</a>
+                    <a href="https://varnasriraman.notion.site" target="_blank">Notion Portfolio</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="contact" class="footer">
+            <div class="footer-content">
+                <!-- Support Section in Footer -->
+                <div class="footer-support">
+                    <h4>Support Our Mission</h4>
+                    <p>ImpactMojo is provided completely free through the generous support of PinPoint Ventures ♥️</p>
+                    <p>Help us keep education free and accessible</p>
+                    <p style="margin-top: 1rem;">
+                        <strong>Donate via UPI:</strong> 
+                        <span style="font-family: monospace; color: var(--success-color); font-size: 1.2rem;">impactmojo@ibl</span>
+                    </p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>About ImpactMojo</h4>
+                        <ul>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="mailto:info@impactmojo.in">Contact</a></li>
+                            <li>No certifications provided</li>
+                            <li>Educational purposes only</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Legal (IT Act Compliance)</h4>
+                        <ul>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="terms-of-service.html">Terms of Service</a></li>
+                            <li><a href="disclaimer.html">Disclaimer</a></li>
+                            <li><a href="grievance.html">Grievance Redressal</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a onclick="openModal('coursesModal')">All Courses</a></li>
+                            <li><a onclick="openModal('labsModal')">All Labs</a></li>
+                            <li><a onclick="openModal('gamesModal')">All Games</a></li>
+                            <li><a onclick="openModal('premiumModal')">Premium Content</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="handouts.html">Educational Handouts</a></li>
+                            <li><a href="https://varna.substack.com" target="_blank">Research Newsletter</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a onclick="openModal('feedbackModal')">Feedback</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>© 2025 ImpactMojo. All content for educational purposes only. No endorsements or certificates provided.</p>
+                    <p style="margin-top: 0.5rem;">MIT License - Open Source Educational Platform</p>
+                    <p style="margin-top: 0.5rem;"><strong>Disclaimer:</strong> ImpactMojo is an educational resource platform. Content is for learning purposes only and does not constitute professional advice or certification.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <!-- Courses Modal -->
+    <div id="coursesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('coursesModal')">&times;</span>
+            <h2>All Courses (38)</h2>
+            <div class="modal-grid">
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/DevEcon" target="_blank">Development Economics 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/Law&Cons" target="_blank">Law and Constitution 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/ClimateScience" target="_blank">Climate Science 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/edu" target="_blank">Pedagogy and Education 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/ph" target="_blank">Public Health 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/Livelihoods" target="_blank">Livelihoods 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/Gender" target="_blank">Gender Studies 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/WEE" target="_blank">Women's Economic Empowerment 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/ResearchEthics" target="_blank">Research Ethics 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/BCCP" target="_blank">Behaviour Change Communication 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/adv&comm" target="_blank">Advocacy and Communications 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/MEAL" target="_blank">MEAL 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/VEthno" target="_blank">Visual Ethnography 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/polecon" target="_blank">Political Economy 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/pov&inq" target="_blank">Poverty and Inequality 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/identities" target="_blank">Marginalised Identities 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/srhr" target="_blank">SRHR 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/decolonD" target="_blank">Decolonising Development 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/econometrics" target="_blank">Econometrics 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/careeconomy" target="_blank">Care Economy 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/env-jus" target="_blank">Environmental Justice 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/community-dev" target="_blank">Community Development 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/data-lit" target="_blank">Data Literacy 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/post-truth-pol" target="_blank">Post-Truth Politics 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/GDArch" target="_blank">Global Development Architecture 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/fundraising" target="_blank">Fundraising 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/QualR" target="_blank">Qualitative Research Methods 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/HH-EDA" target="_blank">Exploratory Data Analysis 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/bivariateA" target="_blank">Bivariate Analysis 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/MultivariateA" target="_blank">Multivariate Analysis 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/DigitalEthics" target="_blank">Digital Ethics 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/DecentWork" target="_blank">Decent Work 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/safetynets" target="_blank">Social Safety Nets 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/DataFem" target="_blank">Data Feminism 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/obs2insight" target="_blank">Observation to Insight 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/IRT" target="_blank">Item Response Theory 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/SEL" target="_blank">Social Emotional Learning 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/eng4dev" target="_blank">English for Development 101</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Labs Modal -->
+    <div id="labsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('labsModal')">&times;</span>
+            <h2>All Labs (10)</h2>
+            <div class="modal-grid">
+                <div class="modal-item"><a href="https://impactrisk-mitigation.netlify.app/" target="_blank">Risk Assessment and Mitigation Lab</a></div>
+                <div class="modal-item"><a href="https://rm-sustainability4impact.netlify.app/" target="_blank">Resource Mobilisation Lab</a></div>
+                <div class="modal-item"><a href="https://pol-advocacy4impact.netlify.app/" target="_blank">Policy and Advocacy Lab</a></div>
+                <div class="modal-item"><a href="https://impact-partnerships.netlify.app/" target="_blank">Partnership and Collaboration Lab</a></div>
+                <div class="modal-item"><a href="https://mle-frameworkdesign.netlify.app/" target="_blank">MLE Framework Workbench</a></div>
+                <div class="modal-item"><a href="https://mle-plan-lab.netlify.app/" target="_blank">MLE Framework Builder Lab</a></div>
+                <div class="modal-item"><a href="https://community-engagement.netlify.app/" target="_blank">Community Engagement Lab</a></div>
+                <div class="modal-item"><a href="https://impact-storytelling.netlify.app/" target="_blank">Impact Storytelling Lab</a></div>
+                <div class="modal-item"><a href="https://impactdesign-thinking.netlify.app/" target="_blank">Innovation and Design Thinking Lab</a></div>
+                <div class="modal-item"><a href="https://toc-workbench.netlify.app/" target="_blank">TOC Workbench</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Games Modal -->
+    <div id="gamesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('gamesModal')">&times;</span>
+            <h2>All Interactive Economics Games (12)</h2>
+            <div class="modal-grid">
+                <div class="modal-item"><a href="https://therealmiddle.netlify.app" target="_blank">The Real Middle - Wealth Inequality in India</a></div>
+                <div class="modal-item"><a href="https://risk-reward-be.netlify.app" target="_blank">Risk & Reward Explorer - Behavioral Economics</a></div>
+                <div class="modal-item"><a href="https://bidding-wars.netlify.app" target="_blank">Bidding Wars - Advanced Auction Theory</a></div>
+                <div class="modal-item"><a href="https://commons-crisis.netlify.app/" target="_blank">Commons Crisis - Tragedy of the Commons</a></div>
+                <div class="modal-item"><a href="https://cooperationparadox.netlify.app/" target="_blank">Cooperation Paradox - Game Theory</a></div>
+                <div class="modal-item"><a href="https://externalities-equilibria.netlify.app/" target="_blank">Externalities & Equilibria</a></div>
+                <div class="modal-item"><a href="https://econ-puzzles.netlify.app/" target="_blank">Economics Puzzles - Concept Curves</a></div>
+                <div class="modal-item"><a href="https://information-asymmetry.netlify.app/" target="_blank">Information Asymmetry</a></div>
+                <div class="modal-item"><a href="https://network-effects.netlify.app/" target="_blank">Network Effects</a></div>
+                <div class="modal-item"><a href="https://opportunity-cost.netlify.app/" target="_blank">Opportunity Cost Calculator</a></div>
+                <div class="modal-item"><a href="https://prisonersd.netlify.app/" target="_blank">Prisoner's Dilemma</a></div>
+                <div class="modal-item"><a href="https://public-good.netlify.app/" target="_blank">Public Good Provider</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Coaching Modal -->
+    <div id="coachingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('coachingModal')">&times;</span>
+            <h2>Professional Coaching & Consultation</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Personalized guidance from Dr. Varna Sri Raman, Development Economist</p>
+            
+            <div class="sliding-scale-notice">
+                <p><strong>💙 Sliding Scale Pricing Available</strong></p>
+                <p>All services are offered on a sliding scale based on your circumstances. Choose a price that reflects your financial situation (students, NGOs, developing country rates available).</p>
+            </div>
+
+            <div class="coaching-services-grid">
+                <div class="service-item">
+                    <h4>Development Career Counselling</h4>
+                    <p>One-on-one guidance for your development sector career journey. Includes CV review, interview prep, and networking strategies.</p>
+                    <p><strong>Duration:</strong> 60 minutes</p>
+                    <p class="price">₹1,500 (Sliding scale: ₹400-₹2,000)</p>
+                    <a href="https://calendly.com/varnasriraman/coaching" target="_blank" class="btn btn-primary">Book Session</a>
+                </div>
+
+                <div class="service-item">
+                    <h4>Research Design Consultation</h4>
+                    <p>Expert consultation on research methodology, sampling strategies, tool development, and ethics guidance.</p>
+                    <p><strong>Duration:</strong> 90 minutes</p>
+                    <p class="price">₹2,500 (Sliding scale: ₹1,000-₹3,000)</p>
+                    <a href="https://calendly.com/varnasriraman/research-consultation" target="_blank" class="btn btn-primary">Book Session</a>
+                </div>
+
+                <div class="service-item">
+                    <h4>Data Analysis Consultation</h4>
+                    <p>Statistical analysis support, data cleaning strategies, analysis plan development, and visualization guidance.</p>
+                    <p><strong>Duration:</strong> 90 minutes</p>
+                    <p class="price">₹2,000 (Sliding scale: ₹800-₹2,500)</p>
+                    <a href="https://calendly.com/varnasriraman/data-analysis" target="_blank" class="btn btn-primary">Book Session</a>
+                </div>
+
+                <div class="service-item">
+                    <h4>Three-Day Intensive Workshops</h4>
+                    <p>Deep-dive workshop on any ImpactMojo course topic for organizations and teams. Includes comprehensive coverage, interactive exercises, and certificate.</p>
+                    <p><strong>Duration:</strong> 3 days (6 hours/day)</p>
+                    <p class="price">₹6,000 (Sliding scale: ₹3,000-₹8,000)</p>
+                    <a href="mailto:coaching@impactmojo.in?subject=Workshop%20Inquiry" class="btn btn-primary">Contact for Workshop</a>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1.5rem; background: var(--hover-bg); border-radius: 8px;">
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Custom Programs Available</h4>
+                <p style="color: var(--text-secondary);">We also offer organizational training, group sessions, and long-term mentorship programs tailored to your specific needs.</p>
+                <a href="mailto:coaching@impactmojo.in" class="btn btn-secondary">Contact for Custom Programs</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Modal -->
+    <div id="premiumModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('premiumModal')">&times;</span>
+            <h2>Premium Content (FREE in Beta!)</h2>
+            <div class="beta-notice" style="margin: 1rem 0;">
+                🎉 All Premium Content is Currently FREE During Beta Phase - No Passwords Required! 🎉
+            </div>
+            <div class="modal-grid">
+                <div class="modal-item"><a href="https://marginmuse.space/themarginmuse" target="_blank">Field Notes from a Development Economist</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/IMQualLab" target="_blank">Qualitative Research Lab</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/IMStatsAssist" target="_blank">Statistical Analysis Assistant</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/obs2insight" target="_blank">Observation to Insight 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/IRT" target="_blank">Item Response Theory 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/SEL" target="_blank">Social Emotional Learning 101</a></div>
+                <div class="modal-item"><a href="https://101.www.impactmojo.in/eng4dev" target="_blank">English for Development Professionals 101</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('feedbackModal')">&times;</span>
+            <h2>Feedback & Course Suggestions</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">We value your input! Share feedback or suggest new courses.</p>
+            
+            <form action="https://formspree.io/f/xpwdvgzp" method="POST" class="feedback-form">
+                <div class="form-group">
+                    <label for="feedback-type">Type of Submission</label>
+                    <select name="type" id="feedback-type" required>
+                        <option value="">Select an option</option>
+                        <option value="feedback">General Feedback</option>
+                        <option value="course-suggestion">Course Suggestion</option>
+                        <option value="bug-report">Bug Report</option>
+                        <option value="feature-request">Feature Request</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedback-name">Name (Optional)</label>
+                    <input type="text" name="name" id="feedback-name" placeholder="Your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedback-email">Email (Optional)</label>
+                    <input type="email" name="_replyto" id="feedback-email" placeholder="your.email@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedback-message">Your Message</label>
+                    <textarea name="message" id="feedback-message" required placeholder="Share your feedback, suggest a course, or report an issue..."></textarea>
+                </div>
+                
+                <button type="submit" class="form-submit">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Cookie Consent
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!localStorage.getItem('cookieConsent')) {
+                document.getElementById('cookieConsent').classList.add('show');
+            }
+        });
+
+        function acceptCookies() {
+            localStorage.setItem('cookieConsent', 'true');
+            document.getElementById('cookieConsent').classList.remove('show');
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+            }
+        });
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => console.log('ServiceWorker registration successful'))
+                    .catch(err => console.log('ServiceWorker registration failed: ', err));
+            });
+        }
+    </script>
+</body>
+</html>
