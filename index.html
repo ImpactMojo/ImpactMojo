@@ -4017,5 +4017,98 @@
   });
 })();
 </script>
+<script>
+/* Founder/Co-Founder order + PWA prompt helper (surgical) */
+(function () {
+  // ---------- 1) Founder BEFORE Co-Founder (robust reordering) ----------
+  function findBlock(regex) {
+    const hs = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    for (const h of hs) {
+      const t = (h.textContent || '').trim();
+      if (regex.test(t)) {
+        // bubble to a sensible section block
+        return h.closest('section, .section, .container, .card, .content, .row, .col, div') || h.parentElement;
+      }
+    }
+    return null;
+  }
+  function commonAncestor(a, b) {
+    const seen = new Set(); let p = a;
+    while (p) { seen.add(p); p = p.parentNode; }
+    p = b; while (p && !seen.has(p)) p = p.parentNode;
+    return p || document.body;
+  }
+  function topChild(ancestor, el) {
+    let n = el;
+    while (n && n.parentNode !== ancestor) n = n.parentNode;
+    return n || el;
+  }
+  function swapFounderOrder() {
+    const co = document.getElementById('cofounder') || findBlock(/\bCo[- ]?Founder\b/i);
+    const fo = document.getElementById('founder')   || findBlock(/\bFounder\b/i);
+    if (!co || !fo) return;
+    const anc = commonAncestor(co, fo);
+    const coTop = topChild(anc, co);
+    const foTop = topChild(anc, fo);
+    // If Co-Founder is before Founder, move Founder before Co-Founder
+    if (coTop && foTop && coTop.compareDocumentPosition(foTop) & Node.DOCUMENT_POSITION_FOLLOWING) {
+      anc.insertBefore(foTop, coTop);
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', swapFounderOrder);
+  } else {
+    swapFounderOrder();
+  }
+  // Re-try once after layout settles and whenever DOM changes (if other scripts render later)
+  setTimeout(swapFounderOrder, 500);
+  new MutationObserver(swapFounderOrder).observe(document.body, { childList: true, subtree: true });
+
+  // ---------- 2) PWA install prompt (Chrome/Edge/etc.) ----------
+  // Ensure manifest link exists (won't duplicate if already present)
+  (function ensureManifest() {
+    if (!document.querySelector('link[rel="manifest"]')) {
+      const l = document.createElement('link');
+      l.rel = 'manifest';
+      l.href = '/manifest.json?v=2025-10-05-04'; // adjust path if yours is different
+      document.head.appendChild(l);
+    }
+  })();
+
+  // Make sure a service worker is registered (uses your /sw.js)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistration()
+      .then(reg => { if (!reg) return navigator.serviceWorker.register('/sw.js', { scope: '/' }); })
+      .catch(() => {});
+  }
+
+  // Capture beforeinstallprompt and trigger it on first user gesture
+  let deferred;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); // prevent automatic mini-infobar
+    deferred = e;
+    // You can also show your own "Install" button here if you want
+    console.log('[PWA] beforeinstallprompt captured');
+  });
+
+  function tryPrompt() {
+    if (deferred) {
+      deferred.prompt();
+      deferred.userChoice.finally(() => { deferred = null; });
+    }
+  }
+  const gesture = () => { document.removeEventListener('click', gesture, true); document.removeEventListener('touchend', gesture, true); tryPrompt(); };
+  document.addEventListener('click', gesture, true);
+  document.addEventListener('touchend', gesture, true);
+
+  // ---------- 3) iOS note ----------
+  // iOS Safari does NOT fire beforeinstallprompt; users must use Share → Add to Home Screen.
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  if (isIOS && isSafari) {
+    console.info('[PWA] iOS Safari has no install prompt. Use Share → Add to Home Screen.');
+  }
+})();
+</script>
 </body>
 </html>
