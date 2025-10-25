@@ -699,7 +699,7 @@
         }
 
         .modal-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -843,7 +843,7 @@
         .share-section h3 {
             color: var(--text-primary);
             margin-bottom: 0.5rem;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
         }
 
         .share-section p {
@@ -960,7 +960,7 @@
         .creator-box h3 {
             color: var(--text-primary);
             margin-bottom: 0.5rem;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
         }
 
         .creator-box .title {
@@ -1201,8 +1201,8 @@
             color: white;
             font-size: 1.25rem;
             cursor: pointer;
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1589,24 +1589,29 @@
     top: -0.5rem;
     right: -0.5rem;
     color: var(--text-secondary);
-    font-size: 1.5rem;
-    font-weight: normal;
+    font-size: 1.75rem;
+    font-weight: bold;
+    line-height: 1;
     cursor: pointer;
     background: var(--hover-bg);
     border: 1px solid var(--border-color);
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
     font-family: Arial, sans-serif;
+    z-index: 10;
+    padding: 0;
 }
 
 .support-close:hover {
-    background: var(--border-color);
-    color: var(--text-primary);
+    background: var(--danger-color);
+    color: #FFFFFF;
+    border-color: var(--danger-color);
+    transform: scale(1.1);
 }
 
 .support-modal-body {
@@ -2109,8 +2114,770 @@
 .donation-amount-display, .support-slider-labels, label[for="donationSlider"] {
   font-family: 'Inter', 'Noto Sans', 'Noto Sans Symbols 2', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
+</style>
+<style id="imx-unicode-reinforce">
+.footer, .footer *,
+.quiz-section, .quiz-section *,
+.quiz-results, .quiz-results *,
+.modal .modal-body, .modal .modal-body *,
+.card, .card *,
+.card-description, .modal-item-description {
+  font-family: 'Inter','Noto Sans','Noto Sans Devanagari','Noto Sans Bengali','Noto Sans Tamil','Noto Sans Telugu','Noto Sans Malayalam','Noto Sans Kannada','Noto Sans Gurmukhi','Noto Sans Gujarati','Noto Sans Oriya',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+</style>
+<style id="imx-quiz-css-safety">
+/* Hide inline quiz in #tracks; it will be moved into the modal at runtime */
+#tracks .quiz-section{display:none !important;}
+</style>
+<script id="imx-early-sanitize">
+(function(){
+  var MAP = {
+    "'":"'","'":"'",""":""",""":""",
+    "–":"–","—":"—","‒":"‒","•":"•","…":"…",
+    "©":"©","®":"®","Â ":" ","™":"â"¢","₹":"₹",
+    "×":"×","é":"é","è":"è","ê":"ê","ë":"ë",
+    "á":"á","â":"â","ã":"ã","ä":"ä","Ã¥":"å",
+    "ó":"ó","ô":"ô","ö":"ö","ù":"ù","ú":"ú","ü":"ü",
+    "Ñ":"Ñ","ñ":"ñ","ç":"ç","Ü":"Ü","Ö":"Ö"
+  };
+  var SKIP = new Set(["SCRIPT","STYLE","CODE","PRE"]);
+  function go(root){
+    if(!root) return;
+    try{
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n){
+          return SKIP.has(n.parentNode && n.parentNode.nodeName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+        }
+      });
+      var nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+      for(var i=0;i<nodes.length;i++){
+        var t=nodes[i].nodeValue, r=t;
+        for(var k in MAP){ if(r.indexOf(k)>=0){ r = r.split(k).join(MAP[k]); } }
+        if(r!==t) nodes[i].nodeValue = r;
+      }
+    }catch(e){}
+  }
+  function tick(){ if(document.body){ go(document.body); observer(); } else { setTimeout(tick, 50); } }
+  function observer(){
+    try{
+      var mo = new MutationObserver(function(muts){
+        for(var i=0;i<muts.length;i++){
+          var m=muts[i];
+          if(m.type==="childList"){
+            m.addedNodes.forEach(function(n){ if(n.nodeType===1) go(n); else if(n.nodeType===3) go(n.parentNode); });
+          }else if(m.type==="characterData"){ go(m.target.parentNode); }
+        }
+      });
+      mo.observe(document.body,{subtree:true, childList:true, characterData:true});
+    }catch(e){}
+  }
+  tick();
+})();
+</script>
+<style id="imx-quiz-css-safety-v6">
+#tracks .quiz-section{display:none !important;}
+</style>
+<style id="imx-quiz-css-safety-v7">#tracks .quiz-section{display:none!important}</style>
+<script id="imx-sanitize-early">
+(function(){
+  var MAP = {"»":"»","«":"«","‹":"‹","›":"›","‑":"‑","→":"→","↜":"↼","↗":"↔","â""":"ℓ","©":"©","Â":"Â","Ã,©":"©","€":"€","¢":"¢","£":"£",
+    "'":"'","'":"'",""":""",""":""","–":"–","—":"—","‒":"‒","•":"•","…":"…",
+    "©":"©","®":"®","Â ":" ","£":"£","«":"«","»":"»","™":"â"¢","₹":"₹","€":"€",
+    "×":"×","÷":"÷","Â":"Â","É":"É","ÃË":"Ë","Ü":"Ü","Ö":"Ö","ñ":"ñ","Ñ":"Ñ",
+    "é":"é","è":"è","ê":"ê","ë":"ë","á":"á","â":"â","ã":"ã","ä":"ä","Ã¥":"å",
+    "ó":"ó","ô":"ô","ö":"ö","ù":"ù","ú":"ú","ü":"ü","ç":"ç","ú":"ú","ú":"ú"
+  };
+  var SKIP = new Set(["SCRIPT","STYLE","CODE","PRE"]);
+  function rxFix(s){
+      try{
+        s = s.replace(/→/g,"→").replace(/—/g,"—").replace(/–/g,"–");
+        s = s.replace(/'/g,"'").replace(/'/g,"'").replace(/"/g,""").replace(/"/g,""");
+        s = s.replace(/©/g,"©").replace(/Â/g,"Â").replace(/Ã,©/g,"©");
+        s = s.replace(/€/g,"€").replace(/£/g,"£").replace(/¢/g,"¢");
+        // Collapse stray multi-byte prefix repeats like "â'"
+        s = s.replace(/â+€™/g, "'").replace(/â+†'/g, "→");
+        return s;
+      }catch(e){ return s; }
+    }
+    function rxFixSpaced(s){
+      try{
+        s = s.replace(/(?:â\s*)+€™/g,"'")      // â ' -> '
+             .replace(/(?:â\s*)+†'/g,"→")      // â → -> →
+             .replace(/(?:Â\s*)+/g,"")         // strip stray  with optional spaces
+             .replace(/Ã\s*,\s*©/g,"©");      // Ã, © -> ©
+        return s;
+      }catch(e){ return s; }
+    }
+    
+function scoreMojibake(s){
+  if(!s) return 0;
+  var bad = (s.match(/[ÂÃâ€]/g)||[]).length;
+  return bad / Math.max(1, s.length);
+}
+function recodeLatin1ToUtf8(s){
+  try{
+    var bytes = new Uint8Array(Array.prototype.map.call(s, function(ch){ return ch.charCodeAt(0) & 0xFF; }));
+    var dec = new TextDecoder("utf-8",{fatal:false}).decode(bytes);
+    return dec;
+  }catch(e){ return s; }
+}
+function fixTextNode(n){
+    var prev="";
+    if(scoreMojibake(r)>0.01){ var rec=recodeLatin1ToUtf8(r); if(scoreMojibake(rec)<scoreMojibake(r)) r=rec; }
+    for(var pass=0; pass<4; pass++){
+      var t=n.nodeValue, r=t; try{ r = decodeURIComponent(escape(r)); }catch(e){}; r = rxFixSpaced(r); r = rxFix(r);
+      for(var k in MAP){ if(r.indexOf(k)>=0) r=r.split(k).join(MAP[k]); }
+      if(r===t || r===prev){ break; }
+      n.nodeValue = r;
+      prev = r;
+    }
+  }
+  function walk(root){
+    try{
+      var w=document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(node){ return SKIP.has(node.parentNode && node.parentNode.nodeName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; }
+      });
+      var nodes=[]; while(w.nextNode()) nodes.push(w.currentNode);
+      for(var i=0;i<nodes.length;i++) fixTextNode(nodes[i]);
+    }catch(e){}
+  }
+  function start(){
+    if(!document.body){ return setTimeout(start, 20); }
+    walk(document.body);
+    try{
+      var mo=new MutationObserver(function(muts){
+        for(var i=0;i<muts.length;i++){
+          var m=muts[i];
+          if(m.type==="childList"){
+            m.addedNodes.forEach(function(n){ if(n.nodeType===1) walk(n); else if(n.nodeType===3) fixTextNode(n); });
+          }else if(m.type==="characterData"){ fixTextNode(m.target); }
+        }
+      });
+      mo.observe(document.body,{subtree:true, childList:true, characterData:true});
+    }catch(e){}
+  }
+  start();
+})();
+</script>
+<style id="imx-quiz-css-force">.quiz-section{display:none!important}</style>
+<style id="imx-support-typography">
+.imx-support-desc{margin:.5rem 0 0;line-height:1.6}
+.imx-support-desc+ul{margin:.5rem 0 0 1.25rem}
+.imx-support-desc+ul li{margin:.25rem 0}
+</style>
+<style id="imx-support-center-css">
+/* Center the existing support modal when we add .imx-center (fallback only) */
+.support-modal.imx-center, #supportModal.imx-center, [id*="support"].modal.imx-center {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+.support-modal.imx-center .modal-dialog,
+#supportModal.imx-center .modal-dialog,
+.support-modal.imx-center .imx-modal__dialog,
+#supportModal.imx-center .imx-modal__dialog,
+[id*="support"].modal.imx-center .modal-dialog,
+[id*="support"].modal.imx-center .imx-modal__dialog{
+  margin: 0 !important;
+  max-height: 90vh;
+  width: auto;
+  overflow: auto;
+  border-radius: 12px;
+}
+/* Narrative typography */
+.support-modal .imx-support-desc, #supportModal .imx-support-desc { margin-top:.5rem; line-height:1.6; }
+.support-modal .imx-support-desc + ul, #supportModal .imx-support-desc + ul { margin:.5rem 0 0 1.25rem; }
+.support-modal .imx-support-desc + ul li, #supportModal .imx-support-desc + ul li { margin:.25rem 0; }
+</style>
+<style id="imx-support-open-css-v18">
+/* Only applies when our fallback adds classes; doesn't override site styles otherwise */
+.support-modal.imx-open, #supportModal.imx-open, [id*="support"].modal.imx-open { display:flex !important; }
+.support-modal.imx-center, #supportModal.imx-center, [id*="support"].modal.imx-center { align-items:center; justify-content:center; }
+</style>
+<style id="imx-support-visibility-v19">
+.support-modal[aria-hidden="false"], #supportModal[aria-hidden="false"], [id*="support"].modal[aria-hidden="false"]{
+  display:flex !important;
+}
+</style>
+<style data-origin="working-support-modal">
+.imx-container{max-width:1200px;margin:0 auto;padding:0 1rem}
+.imx-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.imx-kicker{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
+.imx-section-title{margin:.25rem 0 .75rem 0}
+.imx-track-card{border:1px solid var(--border-color);border-radius:14px;padding:1rem;background:var(--card-bg);transition:transform .2s ease;cursor:pointer}
+.imx-track-card:hover{transform:translateY(-2px)}
+.imx-line-icon{width:36px;height:36px;stroke:currentColor;fill:none;stroke-width:1.8;margin-bottom:.5rem}
+.imx-track-card h3{margin:.25rem 0;font-size:1.1rem}
+.imx-track-card p{margin:0;color:var(--text-secondary);font-size:.95rem}
+#imxTrackModal .modal-content{max-width:900px!important;max-height:85vh!important}
+#imxTrackModal .modal-body{overflow-y:auto!important;max-height:calc(85vh - 100px)!important}
+@media (max-width:768px){#imxTrackModal .modal-content{width:95%!important}}
+.imx-roadmap-grid{display:grid;gap:1rem}
+.imx-roadmap-row{border:1px dashed var(--border-color);border-radius:12px;padding:.75rem 1rem;background:var(--hover-bg)}
+.imx-row-title{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;color:var(--text-primary)}
+.imx-row-title .dot{width:10px;height:10px;border-radius:50%;display:inline-block;background:currentColor}
+.imx-chip{background:var(--card-bg);border:1px solid var(--border-color);border-radius:999px;padding:.25rem .6rem;font-size:.85rem;color:var(--text-secondary);display:inline-flex;align-items:center;gap:.35rem}
+.imx-chip a{text-decoration:none;color:inherit}
+.imx-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+/* Filter bar */
+.imx-filterbar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.5rem 0 1rem 0}
+.imx-filterbar input[type="search"]{flex:1 1 220px;padding:.5rem .75rem;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-primary);border-radius:10px}
+.imx-filterbar .imx-tag{cursor:pointer}
+.imx-hidden{display:none!important}
+
+/* Support Modal Styles - Beautiful Professional Design */
+.support-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.support-modal-content {
+    background: var(--card-bg);
+    margin: 2% auto;
+    padding: 2.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    animation: slideUp 0.3s ease;
+    position: relative;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.support-modal-header {
+    padding: 0 0 1.5rem 0;
+    position: relative;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.support-modal-header h2 {
+    margin: 0 0 0.75rem 0;
+    color: var(--text-primary);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.support-modal-header .subtitle {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.support-close {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    color: var(--text-secondary);
+    font-size: 1.75rem;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-family: Arial, sans-serif;
+    z-index: 10;
+    padding: 0;
+}
+
+.support-close:hover {
+    background: var(--danger-color);
+    color: #FFFFFF;
+    border-color: var(--danger-color);
+    transform: scale(1.1);
+}
+
+.support-modal-body {
+    padding: 0;
+}
+
+.resources-showcase {
+    background: var(--secondary-bg);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.resources-showcase h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.resources-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.resource-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    border-left: none;
+}
+
+.resource-icon {
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.resource-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--accent-color);
+}
+
+.resource-name {
+    color: var(--text-secondary);
+    font-weight: 400;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.donation-section {
+    margin: 2rem 0;
+}
+
+.donation-section h3 {
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.donation-slider-container {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.donation-amount-display {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.donation-helper-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.donation-slider {
+    width: 100%;
+    height: 12px;
+    border-radius: 10px;
+    background: linear-gradient(to right, 
+        var(--accent-color) 0%, 
+        var(--secondary-accent) 50%, 
+        var(--success-color) 100%);
+    outline: none;
+    -webkit-appearance: none;
+    position: relative;
+}
+
+.donation-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 3px solid var(--accent-color);
+    transition: transform 0.2s ease;
+}
+
+.donation-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.donation-slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 3px solid var(--accent-color);
+    transition: transform 0.2s ease;
+}
+
+.donation-slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.file-upload-container {
+    margin: 1.5rem 0;
+}
+
+.file-upload-container label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.file-upload-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--secondary-bg);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.file-upload-input:hover {
+    border-color: var(--accent-color);
+}
+
+.file-upload-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem auto;
+    background: var(--accent-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-upload-icon svg {
+    width: 30px;
+    height: 30px;
+    stroke: white;
+}
+
+.file-upload-text {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.file-upload-subtext {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.file-selected {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: var(--success-color);
+    color: white;
+    border-radius: 10px;
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.support-submit-btn {
+    width: 100%;
+    padding: 1.25rem;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.support-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(14, 165, 233, 0.4);
+}
+
+.support-submit-btn:active {
+    transform: translateY(0);
+}
+
+/* PDF Gifts Modal */
+.pdf-gifts-modal {
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.pdf-gifts-content {
+    background: var(--card-bg);
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+}
+
+.pdf-gifts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.pdf-gift-item {
+    background: var(--hover-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.pdf-gift-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-md);
+}
+
+.pdf-gift-item a {
+    text-decoration: none;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pdf-gift-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-gift-icon svg {
+    width: 30px;
+    height: 30px;
+    stroke: white;
+    fill: none;
+}
+
+.pdf-gift-name {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+/* Track Finder Quiz Styles */
+.quiz-section {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    border: 2px solid var(--border-color);
+}
+
+.quiz-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.quiz-header h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.quiz-header p {
+    color: var(--text-secondary);
+}
+
+.quiz-question {
+    margin-bottom: 2rem;
+}
+
+.quiz-question h4 {
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.quiz-options {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.quiz-option {
+    padding: 1rem;
+    background: var(--hover-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quiz-option:hover {
+    border-color: var(--accent-color);
+    background: var(--secondary-bg);
+}
+
+.quiz-option.selected {
+    border-color: var(--accent-color);
+    background: rgba(14, 165, 233, 0.1);
+}
+
+.quiz-option input[type="checkbox"],
+.quiz-option input[type="radio"] {
+    margin-right: 0.75rem;
+}
+
+.quiz-nav {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.quiz-results {
+    display: none;
+    margin-top: 2rem;
+}
+
+.quiz-results-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: var(--gradient-primary);
+    border-radius: 15px;
+    color: white;
+}
+
+.recommended-courses {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.recommended-course {
+    background: var(--hover-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.recommended-course h5 {
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.recommended-course p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.recommended-course a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.export-csv-btn {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--success-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.export-csv-btn:hover {
+    opacity: 0.9;
+}
+
+</style><style id="support-target-css">
+/* CSS-only open for Support modal via :target */
+#supportModal { display: none; }
+.support-target:target ~ #supportModal { display: block !important; }
 </style></head>
-<body>
+<body><span aria-hidden="true" id="page-top"></span>
 <!-- Cookie Consent Banner -->
 <div class="cookie-consent" id="cookieConsent">
 <div class="cookie-consent-content">
@@ -2499,7 +3266,7 @@
 <p class="card-description">Comprehensive exploration of gender theory, intersectionality, and social implications in development contexts</p>
 <div class="card-testimonial">
                             "This course transformed my understanding of gender dynamics in development work. The intersectional approach was eye-opening."
-                            <span class="card-testimonial-author">Ã¢â‚¬â€ Senior Program Manager, International NGO</span>
+                            <span class="card-testimonial-author">— Senior Program Manager, International NGO</span>
 </div>
 </a>
 </div>
@@ -2538,7 +3305,7 @@
 <p class="card-description">Monitoring, Evaluation, Accountability and Learning frameworks for impact measurement</p>
 <div class="card-testimonial">
                             "Best MEAL course I've taken! Practical frameworks I immediately applied to our programs. The logical framework approach finally clicked."
-                            <span class="card-testimonial-author">Ã¢â‚¬â€ M&amp;E Specialist, UN Agency</span>
+                            <span class="card-testimonial-author">— M&amp;E Specialist, UN Agency</span>
 </div>
 </a>
 </div>
@@ -2577,7 +3344,7 @@
 <p class="card-description">Understanding climate change science, impacts, and resilience strategies for development</p>
 <div class="card-testimonial">
                             "Simplified complex climate science without losing depth. Perfect for development professionals working on adaptation projects."
-                            <span class="card-testimonial-author">Ã¢â‚¬â€ Climate Advisor, Government Think Tank</span>
+                            <span class="card-testimonial-author">— Climate Advisor, Government Think Tank</span>
 </div>
 </a>
 </div>
@@ -2632,7 +3399,7 @@
 <p class="card-description">Theory of Change development and visualization tool</p>
 <div class="card-testimonial">
                             "This tool saved us weeks of work. Created our entire ToC in hours, not days. The logic flow visualization is brilliant."
-                            <span class="card-testimonial-author">Ã¢â‚¬â€ Strategy Consultant, Development Consultancy</span>
+                            <span class="card-testimonial-author">— Strategy Consultant, Development Consultancy</span>
 </div>
 </a>
 </div>
@@ -2669,7 +3436,7 @@
 <p class="card-description">Design monitoring, evaluation, and learning frameworks</p>
 <div class="card-testimonial">
                             "Incredible tool for designing M&amp;E frameworks. The indicator library alone is worth gold. Now our standard tool across all projects."
-                            <span class="card-testimonial-author">Ã¢â‚¬â€ Head of M&amp;E, Bilateral Agency</span>
+                            <span class="card-testimonial-author">— Head of M&amp;E, Bilateral Agency</span>
 </div>
 </a>
 </div>
@@ -2706,7 +3473,7 @@
 <p class="card-description">Craft compelling narratives for social impact</p>
 <div class="card-testimonial">
                             "Helped us transform dry data into powerful stories. Our donor reports have never been more engaging."
-                            <span class="card-testimonial-author">Ã¢â‚¬â€ Communications Director, Social Enterprise</span>
+                            <span class="card-testimonial-author">— Communications Director, Social Enterprise</span>
 </div>
 </a>
 </div>
@@ -2761,7 +3528,7 @@
 <p class="card-description">Understand who the "middle-class" really is in India through wealth inequality dynamics</p>
 <div class="card-testimonial">
                             "Eye-opening visualization of wealth distribution. Changed how I think about economic policy targeting."
-                            <span class="card-testimonial-author">Ã¢â‚¬â€ Economics Professor, Delhi University</span>
+                            <span class="card-testimonial-author">— Economics Professor, Delhi University</span>
 </div>
 </a>
 </div>
@@ -2799,7 +3566,7 @@
 <p class="card-description">Experience behavioral economics through prospect theory and cognitive biases in South Asian contexts</p>
 <div class="card-testimonial">
                             "Perfect for teaching behavioral economics concepts. Students finally understand framing effects!"
-                            <span class="card-testimonial-author">Ã¢â‚¬â€ Behavioral Researcher, Policy Institute</span>
+                            <span class="card-testimonial-author">— Behavioral Researcher, Policy Institute</span>
 </div>
 </a>
 </div>
@@ -2837,7 +3604,7 @@
 <p class="card-description">Explore game theory concepts through strategic decision-making scenarios</p>
 <div class="card-testimonial">
                             "Makes game theory accessible and practical. Great for understanding cooperation dynamics in development."
-                            <span class="card-testimonial-author">Ã¢â‚¬â€ Program Manager, Bilateral Agency</span>
+                            <span class="card-testimonial-author">— Program Manager, Bilateral Agency</span>
 </div>
 </a>
 </div>
@@ -3681,7 +4448,7 @@
 </div>
 <p class="modal-item-description">Identify, assess, and develop mitigation strategies for risks across development projects through scenario planning and risk matrix tools. Practice real-world risk management using case studies from humanitarian, infrastructure, and governance programs.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3703,7 +4470,7 @@
 </div>
 <p class="modal-item-description">Design and test policy advocacy campaigns through hands-on exercises in stakeholder analysis, message testing, and strategic communication. Work with real policy briefs and practice pitching recommendations to simulated decision-makers and media.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3725,7 +4492,7 @@
 </div>
 <p class="modal-item-description">Analyze resource flows, develop sustainability plans, and create fundraising strategies through practical exercises with real organizational data. Learn to balance financial sustainability with mission alignment while navigating donor requirements and local ownership.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3747,7 +4514,7 @@
 </div>
 <p class="modal-item-description">Map partnership ecosystems, design collaboration frameworks, and measure collective impact through interactive exercises and negotiation simulations. Practice building equitable partnerships that leverage complementary strengths for systems-level change.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3769,7 +4536,7 @@
 </div>
 <p class="modal-item-description">Create comprehensive Monitoring, Learning, and Evaluation systems from scratch, including results frameworks, data collection tools, and learning agendas. Work through real program scenarios to design adaptive management systems that balance accountability with learning.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3791,7 +4558,7 @@
 </div>
 <p class="modal-item-description">Develop detailed MEL plans with indicators, targets, and data management systems through guided exercises using actual program documents. Practice creating user-friendly dashboards and feedback loops that drive evidence-based decision-making.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3813,7 +4580,7 @@
 </div>
 <p class="modal-item-description">Apply human-centered design methodologies to development challenges through rapid prototyping, user journey mapping, and ideation exercises. Learn to facilitate design sprints that generate innovative solutions grounded in community needs and aspirations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3835,7 +4602,7 @@
 </div>
 <p class="modal-item-description">Construct robust theories of change that articulate pathways from activities to impact through assumption mapping and evidence review exercises. Practice backwards mapping, identifying critical assumptions, and creating theories that guide strategic decision-making.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3857,7 +4624,7 @@
 </div>
 <p class="modal-item-description">Transform data and field experiences into compelling narratives through exercises in story structure, character development, and multimedia production. Learn ethical storytelling practices that center community voices while engaging diverse audiences for social change.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3879,7 +4646,7 @@
 </div>
 <p class="modal-item-description">Practice participatory facilitation techniques, community mapping, and consensus-building through role-playing exercises and simulation games. Develop skills for navigating power dynamics and facilitating inclusive decision-making processes in diverse community settings.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3921,7 +4688,7 @@
 </div>
 <p class="modal-item-description">Experience the free-rider problem firsthand as players decide whether to contribute to shared resources that benefit everyone. Learn how public goods create collective action dilemmas and explore mechanisms for sustaining cooperation in communities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3943,7 +4710,7 @@
 </div>
 <p class="modal-item-description">Navigate strategic decision-making where individual rationality leads to collectively suboptimal outcomes through interactive scenarios. Discover how trust, reputation, and repeated interactions can overcome cooperation challenges in development contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3965,7 +4732,7 @@
 </div>
 <p class="modal-item-description">Make resource allocation decisions under constraints and experience the tradeoffs inherent in every economic choice. Learn to evaluate alternatives and understand how opportunity costs shape individual and policy decisions in resource-scarce environments.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -3987,7 +4754,7 @@
 </div>
 <p class="modal-item-description">Build networks and watch value multiply as more participants join, experiencing how digital platforms and social programs scale. Understand positive feedback loops, critical mass dynamics, and the winner-take-all economics of networked systems.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4009,7 +4776,7 @@
 </div>
 <p class="modal-item-description">Explore scenarios where cooperation yields better outcomes but individual incentives push toward competition through interactive gameplay. Master concepts like Nash equilibrium, Pareto efficiency, and mechanism design through practical application.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4031,7 +4798,7 @@
 </div>
 <p class="modal-item-description">Balance risk-taking with potential returns through investment decisions that mirror real-world uncertainty and information asymmetry. Learn about risk preferences, expected utility theory, and portfolio diversification through simulated market environments.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4053,7 +4820,7 @@
 </div>
 <p class="modal-item-description">Participate in various auction formats to understand price discovery, winner's curse, and strategic bidding behavior. Experience how different auction designs affect efficiency and revenue in contexts from spectrum allocation to procurement.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4075,7 +4842,7 @@
 </div>
 <p class="modal-item-description">Navigate markets where buyers and sellers have different information, experiencing adverse selection and moral hazard firsthand. Learn how signaling, screening, and reputation mechanisms can overcome information problems in development programs.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4097,7 +4864,7 @@
 </div>
 <p class="modal-item-description">Solve economic puzzles that teach concepts from supply and demand to game theory through engaging brain-teasers and scenarios. Master economic reasoning through pattern recognition and logical deduction in bite-sized challenges.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4119,7 +4886,7 @@
 </div>
 <p class="modal-item-description">Make production and consumption decisions while discovering the hidden social costs and benefits of your choices. Understand market failures, Pigouvian taxes, and the challenge of internalizing externalities through interactive scenarios.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4141,7 +4908,7 @@
 </div>
 <p class="modal-item-description">Manage shared resources while avoiding the tragedy of the commons through collective decision-making and institution building. Experience how communication, monitoring, and sanctions can sustain common-pool resources across generations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4163,7 +4930,7 @@
 </div>
 <p class="modal-item-description">Navigate economic choices facing India's middle class, from education investments to consumption decisions amid aspirational pressures. Understand income mobility, class dynamics, and the precarity of middle-class status through realistic scenarios.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4209,7 +4976,7 @@
 </div>
 <p class="modal-item-description">Seamlessly translate statistical code between R, Stata, SPSS, and Python while maintaining analytical integrity and reproducibility. Advanced features include automatic documentation generation, error checking, and optimization for large datasets common in development research.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4231,7 +4998,7 @@
 </div>
 <p class="modal-item-description">Access advanced qualitative analysis tools including AI-assisted coding, pattern recognition, and multi-modal data integration capabilities. Generate publication-ready visualizations, theoretical models, and mixed-methods integration frameworks from complex qualitative datasets.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4252,7 +5019,7 @@
 </div>
 </div>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4294,7 +5061,7 @@
 </div>
 <p class="modal-item-description">Master the specialized vocabulary and communication strategies essential for international development work, from writing policy briefs to facilitating stakeholder consultations. Learn to navigate cross-cultural professional contexts while building fluency in technical terminology used by UN agencies, NGOs, and development institutions.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4316,7 +5083,7 @@
 </div>
 <p class="modal-item-description">Transform raw field observations into actionable insights through systematic observation techniques, pattern recognition, and analytical frameworks used by leading ethnographers and field researchers. Develop skills to capture nuanced contextual data and translate ground realities into evidence-based recommendations for program design.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4338,7 +5105,7 @@
 </div>
 <p class="modal-item-description">Bridge the gap between economic theory and real-world policy implementation by understanding cost-benefit analysis, market failures, and welfare economics through a practitioner's lens. Master the economic reasoning behind policy interventions while learning to communicate complex economic concepts to non-specialist audiences.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4360,7 +5127,7 @@
 </div>
 <p class="modal-item-description">Explore how power dynamics shape data collection, analysis, and interpretation through an intersectional feminist framework that challenges traditional approaches to quantitative research. Learn to identify and counter data biases while developing inclusive methodologies that amplify marginalized voices in development research.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4382,7 +5149,7 @@
 </div>
 <p class="modal-item-description">Discover evidence-based teaching methodologies and learning theories that drive educational outcomes in diverse developmental contexts, from early childhood to adult education. Master curriculum design, assessment strategies, and pedagogical approaches that work in resource-constrained environments.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4404,7 +5171,7 @@
 </div>
 <p class="modal-item-description">Understand the science, economics, and politics of climate change through a development lens, exploring mitigation, adaptation, and climate justice frameworks. Learn to integrate climate considerations into development programming while understanding the differential impacts on vulnerable populations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4426,7 +5193,7 @@
 </div>
 <p class="modal-item-description">Navigate the fundamentals of epidemiology, health systems, and disease prevention strategies that underpin global health interventions. Explore the social determinants of health and learn to design community health programs that address both immediate needs and systemic inequities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4448,7 +5215,7 @@
 </div>
 <p class="modal-item-description">Examine the constitutional framework that guides India's democracy, including fundamental rights, directive principles, and the federal structure that shapes development policy. Understand how constitutional provisions intersect with social justice, economic planning, and citizen entitlements in the world's largest democracy.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4470,7 +5237,7 @@
 </div>
 <p class="modal-item-description">Master core theories of economic development from structural transformation to behavioral economics, examining why nations succeed or fail in their development trajectories. Analyze poverty traps, institutional economics, and growth models through case studies from the Global South.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4492,7 +5259,7 @@
 </div>
 <p class="modal-item-description">Unpack how political institutions, power structures, and economic systems interact to shape development outcomes and policy choices. Learn to analyze rent-seeking behavior, elite capture, and the political feasibility of reforms through theoretical frameworks and real-world applications.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4514,7 +5281,7 @@
 </div>
 <p class="modal-item-description">Examine how gender intersects with development through theoretical frameworks spanning from Women in Development (WID) to contemporary intersectional approaches. Develop skills to conduct gender analysis, design gender-responsive programs, and measure women's empowerment across diverse cultural contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4536,7 +5303,7 @@
 </div>
 <p class="modal-item-description">Navigate the ethical complexities of conducting research in development settings, from informed consent procedures to data privacy and community benefit-sharing. Learn international ethical standards while developing culturally sensitive approaches to research with vulnerable populations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4558,7 +5325,7 @@
 </div>
 <p class="modal-item-description">Explore strategies for enhancing women's economic participation, from financial inclusion to entrepreneurship and labor market interventions. Analyze the evidence base for what works in breaking down barriers to women's economic agency across different contexts and sectors.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4580,7 +5347,7 @@
 </div>
 <p class="modal-item-description">Understand sustainable livelihoods frameworks and learn to design interventions that build resilient economic opportunities for vulnerable populations. Master value chain analysis, market systems approaches, and skills development strategies that create lasting pathways out of poverty.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4602,7 +5369,7 @@
 </div>
 <p class="modal-item-description">Develop essential skills for policy advocacy, from stakeholder mapping and message framing to campaign strategy and coalition building. Learn to navigate political landscapes and create compelling narratives that drive policy change for marginalized communities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4624,7 +5391,7 @@
 </div>
 <p class="modal-item-description">Master the psychology and practice of designing communication interventions that shift behaviors, from health practices to environmental conservation. Learn to apply behavioral insights, social marketing principles, and participatory approaches to create lasting social change.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4646,7 +5413,7 @@
 </div>
 <p class="modal-item-description">Build foundational skills in Monitoring, Evaluation, and Learning systems that drive adaptive management and demonstrate program impact. Learn to develop theories of change, design indicators, and create learning loops that improve development outcomes.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4668,7 +5435,7 @@
 </div>
 <p class="modal-item-description">Harness the power of visual methods in development research, from participatory photography to video documentation and visual storytelling. Learn ethical approaches to visual representation while developing skills to capture and analyze visual data that reveals hidden dimensions of social reality.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4690,7 +5457,7 @@
 </div>
 <p class="modal-item-description">Examine multidimensional poverty measurement, inequality indices, and the structural drivers of economic disparities across and within nations. Analyze policy instruments for redistribution and inclusive growth through theoretical frameworks and empirical evidence.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4712,7 +5479,7 @@
 </div>
 <p class="modal-item-description">Develop critical skills for understanding, interpreting, and communicating with data in development contexts, from survey design to visualization. Learn to spot misleading statistics, work with incomplete data, and translate complex findings into actionable insights for diverse stakeholders.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4734,7 +5501,7 @@
 </div>
 <p class="modal-item-description">Understand the fundamentals of Sexual and Reproductive Health and Rights, from clinical services to rights-based approaches and gender-transformative programming. Explore evidence-based interventions that advance bodily autonomy and reproductive justice in diverse cultural contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4756,7 +5523,7 @@
 </div>
 <p class="modal-item-description">Examine how caste, ethnicity, disability, sexuality, and other identity markers create overlapping systems of marginalization that shape development outcomes. Learn intersectional approaches to program design that center the experiences and agency of excluded groups.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4778,7 +5545,7 @@
 </div>
 <p class="modal-item-description">Challenge dominant development paradigms through postcolonial and decolonial theoretical frameworks that question Western-centric approaches to progress. Explore alternative visions of wellbeing, indigenous knowledge systems, and South-South cooperation models that reimagine development practice.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4800,7 +5567,7 @@
 </div>
 <p class="modal-item-description">Master participatory approaches to community mobilization, from asset-based development to collective action and social capital formation. Learn to facilitate community-led planning processes that build local ownership and sustainable change from the grassroots up.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4822,7 +5589,7 @@
 </div>
 <p class="modal-item-description">Explore how environmental degradation disproportionately impacts marginalized communities and learn frameworks for equitable environmental governance. Analyze the intersection of climate change, resource extraction, and social justice through case studies of environmental movements worldwide.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4844,7 +5611,7 @@
 </div>
 <p class="modal-item-description">Understand the economic value of unpaid care work and explore policies that support care workers while redistributing care responsibilities. Analyze care infrastructure, social protection systems, and the care diamond framework through feminist economic perspectives.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4866,7 +5633,7 @@
 </div>
 <p class="modal-item-description">Master statistical techniques for causal inference in development economics, from randomized controlled trials to quasi-experimental methods. Learn to design rigorous impact evaluations and interpret econometric findings while understanding their limitations and ethical implications.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4888,7 +5655,7 @@
 </div>
 <p class="modal-item-description">Navigate the complex ecosystem of development institutions from the UN system to multilateral banks and bilateral agencies. Understand aid effectiveness debates, financing mechanisms, and the evolving architecture of global development cooperation in a multipolar world.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4910,7 +5677,7 @@
 </div>
 <p class="modal-item-description">Analyze how misinformation, polarization, and erosion of institutional trust shape development outcomes in the digital age. Learn strategies for evidence-based communication, fact-checking, and building public trust in development interventions amid information disorder.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4932,7 +5699,7 @@
 </div>
 <p class="modal-item-description">Develop essential skills for resource mobilization in the development sector, from grant writing to donor engagement and partnership building. Learn to navigate funding landscapes, write compelling proposals, and build sustainable financing strategies for social impact.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4954,7 +5721,7 @@
 </div>
 <p class="modal-item-description">Master in-depth interviewing, focus group facilitation, and ethnographic techniques that capture rich contextual insights in development research. Learn to code, analyze, and triangulate qualitative data while ensuring rigor and trustworthiness in your findings.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4976,7 +5743,7 @@
 </div>
 <p class="modal-item-description">Develop skills for cleaning, exploring, and visualizing household survey data using statistical software and reproducible research practices. Learn to identify patterns, detect outliers, and prepare datasets for advanced analysis while understanding survey design effects.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -4998,7 +5765,7 @@
 </div>
 <p class="modal-item-description">Master techniques for examining relationships between two variables, from correlation analysis to cross-tabulations and simple regression. Learn to test hypotheses, interpret statistical significance, and communicate bivariate findings to non-technical audiences.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -5020,7 +5787,7 @@
 </div>
 <p class="modal-item-description">Explore ILO frameworks for promoting productive employment, labor rights, social protection, and social dialogue in development contexts. Analyze informal economy dynamics, labor market policies, and strategies for creating inclusive and dignified work opportunities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -5042,7 +5809,7 @@
 </div>
 <p class="modal-item-description">Learn advanced psychometric techniques for developing and validating measurement instruments in development research, from poverty indices to learning assessments. Master latent trait modeling, differential item functioning, and scale development for cross-cultural contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -5064,7 +5831,7 @@
 </div>
 <p class="modal-item-description">Navigate ethical challenges in digital development, from data privacy and algorithmic bias to digital divides and surveillance concerns. Learn responsible innovation frameworks and develop strategies for equitable and ethical technology deployment in development programs.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -5086,7 +5853,7 @@
 </div>
 <p class="modal-item-description">Master advanced statistical techniques for analyzing complex relationships among multiple variables, from factor analysis to structural equation modeling. Learn to uncover hidden patterns in development data and test sophisticated theoretical models using cutting-edge analytical methods.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -5108,7 +5875,7 @@
 </div>
 <p class="modal-item-description">Understand Social and Emotional Learning frameworks and their application in education and youth development programs worldwide. Learn evidence-based approaches for building emotional intelligence, resilience, and interpersonal skills that enhance learning outcomes and life success.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -5130,7 +5897,7 @@
 </div>
 <p class="modal-item-description">Master economic evaluation techniques for comparing development interventions, from cost-benefit analysis to cost-utility assessments. Learn to calculate incremental cost-effectiveness ratios and make resource allocation decisions that maximize social impact per dollar spent.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open Ã¢â€ â€™</span>
+<span class="modal-item-link">Open ⬠</span>
 </div>
 </a>
 </div>
@@ -5145,7 +5912,7 @@
 <div class="footer-content">
 <div class="footer-support">
 <h4>Support Our Mission</h4>
-<p>ImpactMojo is provided completely free through the generous support of <a href="https://www.pinpointventures.in" style="color: var(--accent-color); text-decoration: none; font-weight: 600;" target="_blank">PinPoint Ventures</a> Ã¢â„¢Â¥</p>
+<p>ImpactMojo is provided completely free through the generous support of <a href="https://www.pinpointventures.in" style="color: var(--accent-color); text-decoration: none; font-weight: 600;" target="_blank">PinPoint Ventures</a> ♥</p>
 <p>Help us keep education free and accessible</p>
 <p style="margin-top: 1rem;">
 <strong><a href="#" onclick="openSupportModal(); return false;" style="color: var(--accent-color); text-decoration: none; cursor: pointer;">Support</a> us via UPI:</strong>
@@ -5195,7 +5962,7 @@
 </div>
 </div>
 <div class="footer-bottom">
-<p>Ã‚Â© 2025 ImpactMojo. All content for educational purposes only.</p>
+<p>© 2025 ImpactMojo. All content for educational purposes only.</p>
 <p style="margin-top: 0.5rem;">
 <strong>DISCLAIMER:</strong> ImpactMojo is an educational resource platform focused on learning, not credentialing. 
                         We do not provide certificates, degrees, or formal credentials. Content is for learning purposes only and does not constitute professional advice.
@@ -5433,11 +6200,11 @@
                 </div>
                 <div>
                     <div class="star-selector" style="display: flex; gap: 0.5rem; justify-content: center; padding: 1rem;">
-                        <button class="star-btn" onclick="setRating(1)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">Ã¢Ëœâ€ </button>
-                        <button class="star-btn" onclick="setRating(2)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">Ã¢Ëœâ€ </button>
-                        <button class="star-btn" onclick="setRating(3)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">Ã¢Ëœâ€ </button>
-                        <button class="star-btn" onclick="setRating(4)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">Ã¢Ëœâ€ </button>
-                        <button class="star-btn" onclick="setRating(5)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">Ã¢Ëœâ€ </button>
+                        <button class="star-btn" onclick="setRating(1)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
+                        <button class="star-btn" onclick="setRating(2)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
+                        <button class="star-btn" onclick="setRating(3)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
+                        <button class="star-btn" onclick="setRating(4)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
+                        <button class="star-btn" onclick="setRating(5)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
                     </div>
                 </div>
             `;
@@ -5453,10 +6220,10 @@
             const stars = document.querySelectorAll('.star-btn');
             stars.forEach((star, index) => {
                 if (index < rating) {
-                    star.textContent = 'Ã¢Ëœâ€¦';
+                    star.textContent = '★';
                     star.style.color = '#FCD34D';
                 } else {
-                    star.textContent = 'Ã¢Ëœâ€ ';
+                    star.textContent = '☆';
                     star.style.color = '#374151';
                 }
             });
@@ -5559,8 +6326,8 @@ document.addEventListener('DOMContentLoaded', function () {
     return n || el;
   }
   function swapNow() {
-    const founder   = document.getElementById('founder')   || findBlock(/Founder/i);
-    const cofounder = document.getElementById('cofounder') || findBlock(/Co[- ]?Founder/i);
+    const founder   = document.getElementById('founder')   || findBlock(/Founder/i);
+    const cofounder = document.getElementById('cofounder') || findBlock(/Co[- ]?Founder/i);
     if (!founder || !cofounder) return;
     const anc  = commonAncestor(founder, cofounder);
     const fTop = topChild(anc, founder);
@@ -5575,8 +6342,8 @@ document.addEventListener('DOMContentLoaded', function () {
   new MutationObserver(swapNow).observe(document.body, { childList: true, subtree: true });
 });
 </script>
-<!-- === Mojini (KB+FAQ) wrapper Ã¢â‚¬â€œ inserted just before 
-<!-- === Mojini KB UI Enhancer Ã¢â‚¬â€ adds KB starter chips, updates greeting & placeholder 
+<!-- === Mojini (KB+FAQ) wrapper —œ inserted just before 
+<!-- === Mojini KB UI Enhancer — adds KB starter chips, updates greeting & placeholder 
 <script>
 (function(){
   const AGENT_NAME = window.IM_AGENT_NAME || 'Mojini';
@@ -5588,14 +6355,14 @@ document.addEventListener('DOMContentLoaded', function () {
     if(!inp) return;
     if(!inp.getAttribute('data-mojini-ph')){
       inp.setAttribute('data-mojini-ph','1');
-      inp.placeholder = 'Ask about courses, labs, credentials, premium, resources, games, foundersÃ¢â‚¬Â¦ or leave feedback';
+      inp.placeholder = 'Ask about courses, labs, credentials, premium, resources, games, founders… or leave feedback';
     }
   }
 
   function greetOnce(){
     if(!once('greeted')) return;
     if (typeof window.addBotMessage === 'function') {
-      window.addBotMessage(`Hi, IÃ¢â‚¬â„¢m ${AGENT_NAME}. I can take feedback **and** answer questions about ImpactMojo (courses, labs, credentials vs certificates, premium, resources, games, founders, ratings/testimonials). Try the quick options below.`);
+      window.addBotMessage(`Hi, I'm ${AGENT_NAME}. I can take feedback **and** answer questions about ImpactMojo (courses, labs, credentials vs certificates, premium, resources, games, founders, ratings/testimonials). Try the quick options below.`);
       return;
     }
     const box = document.getElementById('chatMessages') || document.querySelector('.chat-messages');
@@ -5603,7 +6370,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const wrap = document.createElement('div'); wrap.className = 'message bot-message';
     const av = document.createElement('div'); av.className = 'bot-avatar'; av.innerHTML = '<svg class="icon" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="10" rx="2"/><circle cx="8" cy="13" r="1.5"/><circle cx="16" cy="13" r="1.5"/></svg>';
     const bub = document.createElement('div'); bub.className = 'bot-bubble';
-    bub.textContent = `Hi, IÃ¢â‚¬â„¢m ${AGENT_NAME}. I can take feedback and answer questions about ImpactMojo (courses, labs, credentials vs certificates, premium, resources, games, founders, ratings/testimonials). Try the quick options below.`;
+    bub.textContent = `Hi, I'm ${AGENT_NAME}. I can take feedback and answer questions about ImpactMojo (courses, labs, credentials vs certificates, premium, resources, games, founders, ratings/testimonials). Try the quick options below.`;
     wrap.appendChild(av); wrap.appendChild(bub); box.appendChild(wrap);
     box.scrollTop = box.scrollHeight;
   }
@@ -5623,7 +6390,7 @@ document.addEventListener('DOMContentLoaded', function () {
           ['List all courses','List all courses'],
           ['Show labs','List all labs'],
           ['Certificates vs credentials?','Do you give certificates?'],
-          ['WhatÃ¢â‚¬â„¢s Premium?','What is Premium?'],
+          ['What's Premium?','What is Premium?'],
           ['Resources & games','Resources and games'],
           ['About founders','Who are the founders?'],
           ['Testimonials & ratings','Testimonials and ratings']
@@ -5664,12 +6431,12 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-<!-- === Mojini Welcome Deduper v2 Ã¢â‚¬â€ keep only one dual-role greeting 
+<!-- === Mojini Welcome Deduper v2 — keep only one dual-role greeting 
 <script>
 (function(){
   const AGENT_NAME = window.IM_AGENT_NAME || 'Mojini';
   const flags = window.__mojiniFlags || (window.__mojiniFlags = {});
-  const dual = `Hi, IÃ¢â‚¬â„¢m ${AGENT_NAME}. I can take feedback and answer questions about ImpactMojo (courses, labs, credentials vs certificates, premium, resources, games, founders, ratings/testimonials).`;
+  const dual = `Hi, I'm ${AGENT_NAME}. I can take feedback and answer questions about ImpactMojo (courses, labs, credentials vs certificates, premium, resources, games, founders, ratings/testimonials).`;
 
   const looksLikeFeedbackOnly = (t) => {
     const s = String(t||'').toLowerCase();
@@ -5710,7 +6477,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let dualSeen = false;
     Array.from(bubbles).forEach(b => {
       const t = b.textContent || '';
-      const isDual = /I[Ã¢â‚¬â„¢']?m\s+[^.]*Mojini/i.test(t) && /answer questions/i.test(t);
+      const isDual = /I['']?m\s+[^.]*Mojini/i.test(t) && /answer questions/i.test(t);
       if (isDual) {
         if (!dualSeen) dualSeen = true;
         else {
@@ -6058,7 +6825,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   const AGENT_NAME = window.IM_AGENT_NAME || "Mojini";
 
-  // Ã¢â‚¬â€Ã¢â‚¬â€Ã¢â‚¬â€ Reuse (or define) minimal KB so we can answer course/lab questions crisply Ã¢â‚¬â€Ã¢â‚¬â€Ã¢â‚¬â€
+  // ——— Reuse (or define) minimal KB so we can answer course/lab questions crisply ———
   const COURSES = (window.__MOJINI_COURSES__) || [
     { t:'Development Economics 101', u:'https://101.impactmojo.in/dev-economics', o:'Poverty, inequality, growth; India/South Asia.'},
     { t:'Law and Constitution 101',   u:'https://101.impactmojo.in/ind-constitution', o:'Constitutional principles, rights, institutions.'},
@@ -6079,7 +6846,7 @@ document.addEventListener('DOMContentLoaded', function(){
     { t:'Mixed Methods Research 101', u:'https://101.impactmojo.in/qual-methods', o:'Integrating qual + quant rigorously.'},
     { t:'Impact Evaluation Design 101', u:'https://101.impactmojo.in/econometrics-101', o:'RCT to quasi-experimental choices.'},
     { t:'Fundraising 101',            u:'https://101.impactmojo.in/fundraising-basics', o:'HNI, institutional, grassroots basics.'},
-    { t:'Programme Design Principles 101', u:'https://101.impactmojo.in/community-dev', o:'Problem framing Ã¢â€ â€™ ToC, delivery, risk.'},
+    { t:'Programme Design Principles 101', u:'https://101.impactmojo.in/community-dev', o:'Problem framing → ToC, delivery, risk.'},
     { t:'Environmental Justice 101',  u:'https://101.impactmojo.in/env-justice', o:'Justice-centred climate/environment action.'},
     { t:'Digital Governance 101',     u:'https://101.impactmojo.in/digital-ethics', o:'Platforms, data governance, service delivery.'},
     { t:'Nutrition, Food Systems & Culture 101', u:'https://101.impactmojo.in/care-economy-101', o:'Nutrition security, culture, markets.'},
@@ -6104,10 +6871,10 @@ document.addEventListener('DOMContentLoaded', function(){
   window.__MOJINI_COURSES__ = COURSES;
   window.__MOJINI_LABS__ = LABS;
 
-  // Ã¢â‚¬â€Ã¢â‚¬â€Ã¢â‚¬â€ Helpers Ã¢â‚¬â€Ã¢â‚¬â€Ã¢â‚¬â€
+  // ——— Helpers ———
   const norm = s => String(s||"").toLowerCase();
-  const listCourses = () => COURSES.map(c=>`Ã¢â‚¬Â¢ ${c.t} Ã¢â‚¬â€ ${c.o}\n  ${c.u}`).join("\n");
-  const listLabs = () => LABS.map(l=>`Ã¢â‚¬Â¢ ${l.t}\n  ${l.u}`).join("\n");
+  const listCourses = () => COURSES.map(c=>`• ${c.t} — ${c.o}\n  ${c.u}`).join("\n");
+  const listLabs = () => LABS.map(l=>`• ${l.t}\n  ${l.u}`).join("\n");
   const byTitle = (arr, text) => {
     const s = norm(text);
     return arr.find(x => s.includes(norm(x.t)) || norm(x.t).includes(s));
@@ -6122,22 +6889,22 @@ document.addEventListener('DOMContentLoaded', function(){
     wrap.appendChild(bub); box.appendChild(wrap); box.scrollTop = box.scrollHeight;
   }
 
-  // Ã¢â‚¬â€Ã¢â‚¬â€Ã¢â‚¬â€ FAQ BANK (30+) Ã¢â‚¬â€Ã¢â‚¬â€Ã¢â‚¬â€
+  // ——— FAQ BANK (30+) ———
   // Each item: {re: /pattern/i, a: "answer" }  (safe, non-inventive wording)
   const FAQ = [
     // Credentials / Certificates / Accreditation
     { re: /(certificate|certification)s?\b/i,
-      a: "We donÃ¢â‚¬â„¢t issue formal certificates. ImpactMojo focuses on **skills and credentials** you can demonstrate via real work and portfolio artefacts." },
+      a: "We don't issue formal certificates. ImpactMojo focuses on **skills and credentials** you can demonstrate via real work and portfolio artefacts." },
     { re: /\bcredential(s)?\b|\bbadge(s)?\b|\bportfolio\b/i,
-      a: "Our credentials are skill signals based on doing workÃ¢â‚¬â€labs, projects, and artefacts you can show. TheyÃ¢â‚¬â„¢re designed to be more meaningful than a generic certificate." },
+      a: "Our credentials are skill signals based on doing work—labs, projects, and artefacts you can show. They're designed to be more meaningful than a generic certificate." },
     { re: /\baccredit(ed|ation)|academic credit|university|ugc\b/i,
-      a: "ImpactMojo is not an accredited degree program and doesnÃ¢â‚¬â„¢t offer academic credit. ItÃ¢â‚¬â„¢s a practitioner-focused learning platform." },
+      a: "ImpactMojo is not an accredited degree program and doesn't offer academic credit. It's a practitioner-focused learning platform." },
 
     // Premium / Pricing
     { re: /\bpremium\b(?!.*(what|include|benefit|price))/i,
       a: "Premium provides **curated resource packs**, **deeper dives**, and **advanced labs**. For the latest scope and any pricing updates, please refer to the live Premium page." },
     { re: /\b(what('| i)?s|about).+premium|\bpremium\b.+(include|cover|benefit)/i,
-      a: "Premium includes curated resources, deeper dives, and access to advanced labs. Exact inclusions can evolveÃ¢â‚¬â€please check the live Premium page for the current details." },
+      a: "Premium includes curated resources, deeper dives, and access to advanced labs. Exact inclusions can evolve—please check the live Premium page for the current details." },
     { re: /\b(price|cost|fee|paid|free).+premium|\bpremium.+(price|cost|fee)/i,
       a: "Premium pricing and scope may change over time. The **Premium** page is the source of truth for current details." },
 
@@ -6149,67 +6916,67 @@ document.addEventListener('DOMContentLoaded', function(){
     { re: /(objective|about|overview|syllabus).+development economics|dev(\s|-)?econ/i,
       a: () => {
         const c = byTitle(COURSES, "Development Economics 101");
-        return c ? `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}` : "Development Economics 101 covers poverty, inequality and growth; see the course page for details.";
+        return c ? `${c.t} — ${c.o}\n${c.u}` : "Development Economics 101 covers poverty, inequality and growth; see the course page for details.";
       }},
     { re: /(objective|about|overview|syllabus).+law/i,
-      a: () => { const c = byTitle(COURSES,"Law and Constitution 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Law and Constitution 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+climate/i,
-      a: () => { const c = byTitle(COURSES,"Climate Science 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Climate Science 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(pedagogy|education)/i,
-      a: () => { const c = byTitle(COURSES,"Pedagogy and Education 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Pedagogy and Education 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(public health|health)/i,
-      a: () => { const c = byTitle(COURSES,"Public Health 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Public Health 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+livelihood/i,
-      a: () => { const c = byTitle(COURSES,"Livelihoods 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Livelihoods 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+gender/i,
-      a: () => { const c = byTitle(COURSES,"Gender Studies 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Gender Studies 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(WEE|women)/i,
-      a: () => { const c = byTitle(COURSES,"Womens' Economic Empowerment 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Womens' Economic Empowerment 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(ethics|research ethics)/i,
-      a: () => { const c = byTitle(COURSES,"Research Ethics 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Research Ethics 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(bcc|behaviour|behavior)/i,
-      a: () => { const c = byTitle(COURSES,"Behaviour Change Communication Programming 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Behaviour Change Communication Programming 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+advocacy/i,
-      a: () => { const c = byTitle(COURSES,"Advocacy and Communications 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Advocacy and Communications 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(monitoring|evaluation|meal)\b/i,
-      a: () => { const c = byTitle(COURSES,"Monitoring, Evaluation, Accountability and Learning 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Monitoring, Evaluation, Accountability and Learning 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+ethnograph/i,
-      a: () => { const c = byTitle(COURSES,"Visual Ethnography 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Visual Ethnography 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(political economy|pol.?econ)/i,
-      a: () => { const c = byTitle(COURSES,"Political Economy 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Political Economy 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(poverty|inequality)/i,
-      a: () => { const c = byTitle(COURSES,"Poverty and Inequality 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Poverty and Inequality 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(data vis|datavis|visuali[sz]ation)/i,
-      a: () => { const c = byTitle(COURSES,"Data Visualisation 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Data Visualisation 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(mixed methods|mmr)/i,
-      a: () => { const c = byTitle(COURSES,"Mixed Methods Research 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Mixed Methods Research 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(impact eval|evaluation design)/i,
-      a: () => { const c = byTitle(COURSES,"Impact Evaluation Design 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Impact Evaluation Design 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+fundraising/i,
-      a: () => { const c = byTitle(COURSES,"Fundraising 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Fundraising 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+programme design/i,
-      a: () => { const c = byTitle(COURSES,"Programme Design Principles 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Programme Design Principles 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(environmental justice|env\.?justice)/i,
-      a: () => { const c = byTitle(COURSES,"Environmental Justice 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Environmental Justice 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(digital gov|governance)/i,
-      a: () => { const c = byTitle(COURSES,"Digital Governance 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Digital Governance 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(nutrition|food)/i,
-      a: () => { const c = byTitle(COURSES,"Nutrition, Food Systems & Culture 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Nutrition, Food Systems & Culture 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(social research ethics|consent)/i,
-      a: () => { const c = byTitle(COURSES,"Social Research Ethics & Consent 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Social Research Ethics & Consent 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(language|history of languages)/i,
-      a: () => { const c = byTitle(COURSES,"Language & History of Languages 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Language & History of Languages 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+caste/i,
-      a: () => { const c = byTitle(COURSES,"Caste 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Caste 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(humanitarian|development work)/i,
-      a: () => { const c = byTitle(COURSES,"Humanitarian vs Development Work 101"); return `${c.t} Ã¢â‚¬â€ ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Humanitarian vs Development Work 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
 
     { re: /(beginner|new to this|where to start)/i,
-      a: "Start with any **101** course. TheyÃ¢â‚¬â„¢re beginner-friendly and focus on practical understanding." },
+      a: "Start with any **101** course. They're beginner-friendly and focus on practical understanding." },
     { re: /(advanced|deeper|next step)/i,
       a: "For deeper work, explore **labs** and **Premium** deeper-dives." },
     { re: /(duration|time|how long).+course/i,
-      a: "Most courses are **self-paced**. Time varies by learnerÃ¢â‚¬â€check each course page for modules and suggested pace." },
+      a: "Most courses are **self-paced**. Time varies by learner—check each course page for modules and suggested pace." },
     { re: /\blive\b.+(class|session|cohort)/i,
       a: "Most learning is self-paced. When live/cohort options are offered, the course page will say so." },
     { re: /enrol|enroll|join|sign ?up/i,
@@ -6233,7 +7000,7 @@ document.addEventListener('DOMContentLoaded', function(){
     { re: /(testimonial|review|what people say)/i,
       a: "Testimonials are showcased on-site when available. You can also leave feedback here and we may feature excerpts." },
     { re: /rating(s)?|stars?/i,
-      a: "Ratings vary by context. Where available, they appear with the relevant course or labÃ¢â‚¬â€Mojini avoids quoting numbers out of context." },
+      a: "Ratings vary by context. Where available, they appear with the relevant course or lab—Mojini avoids quoting numbers out of context." },
     { re: /founder|who.*(behind|lead)/i,
       a: "ImpactMojo is led by **Dr. Varna Sri Raman**. (Additional leadership may be featured on the site.)" },
 
@@ -6243,9 +7010,9 @@ document.addEventListener('DOMContentLoaded', function(){
     { re: /\blanguage(s)?\b|hindi|translation/i,
       a: "Content is primarily in **English**. Additional language options may be added over time." },
     { re: /privacy|data|gdpr/i,
-      a: "We respect your privacy. Feedback is used to improve ImpactMojo. Please refer to the siteÃ¢â‚¬â„¢s Privacy/Terms pages for details." },
+      a: "We respect your privacy. Feedback is used to improve ImpactMojo. Please refer to the site's Privacy/Terms pages for details." },
     { re: /(support|help|contact|reach|email)/i,
-      a: "For support, use this chatÃ¢â‚¬â„¢s **Report Bug** or **Feature Request** options. WeÃ¢â‚¬â„¢ll follow up using the info you provide." },
+      a: "For support, use this chat's **Report Bug** or **Feature Request** options. We'll follow up using the info you provide." },
     { re: /(suggest|request).+course/i,
       a: "Use the **Suggest Course** shortcut here in chat to propose a new course or topic." },
 
@@ -6254,7 +7021,7 @@ document.addEventListener('DOMContentLoaded', function(){
       a: "ImpactMojo is designed for practitioners and teams. Courses build foundations; labs help teams design, test, and improve programs." }
   ];
 
-  // Dynamic course objective matcher (covers Ã¢â‚¬Å“WhatÃ¢â‚¬â„¢s the objective of X?Ã¢â‚¬Â without listing all regexes)
+  // Dynamic course objective matcher (covers "What's the objective of X?" without listing all regexes)
   function tryCourseObjective(text){
     const s = norm(text);
     if (!/(objective|about|overview|syllabus|what is)/i.test(text)) return null;
@@ -6266,11 +7033,11 @@ document.addEventListener('DOMContentLoaded', function(){
       title.split(/\s+/).forEach(tok => { if (tok && s.includes(tok)) score++; });
       if (score > bestScore) { bestScore = score; best = c; }
     });
-    if (best && bestScore >= 2) return `${best.t} Ã¢â‚¬â€ ${best.o}\n${best.u}`;
+    if (best && bestScore >= 2) return `${best.t} — ${best.o}\n${best.u}`;
     return null;
   }
 
-  // Main answerer: bank Ã¢â€ â€™ dynamic course objective Ã¢â€ â€™ (optional) existing mojiniAnswer Ã¢â€ â€™ fallback null
+  // Main answerer: bank → dynamic course objective → (optional) existing mojiniAnswer → fallback null
   function answerFromFAQ(userText){
     const text = String(userText||"");
     // 1) Hardcoded bank
@@ -6295,7 +7062,7 @@ document.addEventListener('DOMContentLoaded', function(){
   // Expose so other blocks (wrappers) can use it too
   window.mojiniAnswer = answerFromFAQ;
 
-  // Handle KB chips: answer first and stop propagation so we donÃ¢â‚¬â„¢t double-reply
+  // Handle KB chips: answer first and stop propagation so we don't double-reply
   window.addEventListener("immojo:user", function(e){
     const q = e?.detail?.text || "";
     if (!q) return;
@@ -6320,7 +7087,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if (inp) inp.value = "";
       return;
     }
-    // Not matched Ã¢â€ â€™ pass through to whatever was there before
+    // Not matched → pass through to whatever was there before
     if (typeof __prevSend === "function") return __prevSend.apply(this, arguments);
   };
 })();
@@ -6421,94 +7188,6 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 <!-- Support Modal (ImpactMojo) -->
-<div class="support-modal" id="supportModal" style="display:none;">
-<div class="support-modal-content">
-<div class="support-modal-header">
-<h2>Do you love ImpactMojo?</h2>
-<p class="subtitle">To support us and get access to these quality resources, please choose an amount you think these resources and ImpactMojo are worth</p>
-<span class="support-close" onclick="document.getElementById('supportModal').style.display='none'">×</span>
-</div>
-<div class="support-modal-body">
-<div class="resources-showcase">
-<h3>Access Premium Learning Resources</h3>
-<div class="resources-list">
-<div class="resource-item">
-<div class="resource-icon">
-<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-<polyline points="14 2 14 8 20 8"></polyline>
-</svg>
-</div>
-<span class="resource-name">Comprehensive course handouts covering development economics, gender studies, research methods, and data analysis</span>
-</div>
-<div class="resource-item">
-<div class="resource-icon">
-<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-<rect height="18" rx="2" ry="2" width="18" x="3" y="3"></rect>
-<line x1="9" x2="9" y1="3" y2="21"></line>
-</svg>
-</div>
-<span class="resource-name">Practical MEL frameworks, policy analysis templates, and research design workbooks</span>
-</div>
-<div class="resource-item">
-<div class="resource-icon">
-<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-</svg>
-</div>
-<span class="resource-name">Detailed study guides for qualitative methods, econometrics, and impact evaluation</span>
-</div>
-</div>
-</div>
-<div class="donation-section">
-<h3>Choose Your Support Amount</h3>
-<div class="donation-slider-container">
-<div class="donation-amount-display" id="donationDisplay">₹250</div>
-<p class="donation-helper-text">Slide to choose an amount that reflects the value these resources provide</p>
-<input class="donation-slider" id="donationRange" max="5000" min="50" oninput="document.getElementById('donationDisplay').textContent='₹'+this.value; document.getElementById('donationAmount').value=this.value; document.getElementById('supportAmountMirror').value=this.value;" step="50" type="range" value="250"/>
-<div class="slider-labels">
-<span>₹50</span>
-<span>₹5,000</span>
-</div>
-</div>
-</div>
-<form action="https://formspree.io/f/xpwdvgzp" enctype="multipart/form-data" id="supportForm" method="POST">
-<input name="_subject" type="hidden" value="ImpactMojo Support Contribution"/>
-<input id="supportAmountMirror" name="amount" type="hidden" value="250"/>
-<input id="donationAmount" type="hidden" value="250"/>
-<div class="file-upload-container">
-<label for="screenshotUpload">Transfer to <strong>impactmojo@ibl</strong> and upload your payment screenshot</label>
-<input accept=".png,.jpg,.jpeg,.pdf" class="file-upload-input" id="screenshotUpload" name="screenshot" onchange="document.getElementById('fileName').style.display='flex'; document.getElementById('fileName').querySelector('span').textContent=this.files[0].name" required="" type="file"/>
-<div class="file-selected" id="fileName" style="display:none;">
-<svg fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;" viewbox="0 0 24 24">
-<polyline points="20 6 9 17 4 12"></polyline>
-</svg>
-<span></span>
-</div>
-</div>
-<div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
-<label style="display:flex; flex-direction:column; gap:0.5rem;">
-<span style="color: var(--text-primary); font-weight: 500; font-size: 0.9rem;">Full Name</span>
-<input name="name" required="" style="width:100%; padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--secondary-bg); color:var(--text-primary); font-size:0.9rem;" type="text"/>
-</label>
-<label style="display:flex; flex-direction:column; gap:0.5rem;">
-<span style="color: var(--text-primary); font-weight: 500; font-size: 0.9rem;">Email</span>
-<input name="email" required="" style="width:100%; padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--secondary-bg); color:var(--text-primary); font-size:0.9rem;" type="email"/>
-</label>
-</div>
-<button class="support-submit-btn" type="submit">
-<svg fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;" viewbox="0 0 24 24">
-<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-<polyline points="22 4 12 14.01 9 11.01"></polyline>
-</svg>
-          Send Support Details
-        </button>
-<p style="text-align:center; color:var(--text-secondary); font-size:0.85rem; margin-top:1rem;">We'll email you from friends@impactmojo.in with access details</p>
-</form>
-</div>
-</div>
-</div>
 <script>
 (function(){
   var range = document.getElementById('donationRange');
@@ -6784,71 +7463,11 @@ document.addEventListener('DOMContentLoaded', function(){
   obs.observe(document.documentElement, {childList:true, subtree:true});
 })();
 </script>
-<!-- Support Donation Modal -->
-<div class="support-modal" id="supportModal">
-<div class="support-modal-content">
-<div class="support-modal-header">
-<button class="support-close" onclick="closeSupportModal()">×</button>
-<h2>Do you love ImpactMojo?</h2>
-<p class="subtitle">To support us and get access to these quality resources, please choose an amount you think these resources and ImpactMojo is worth, and send us a screenshot</p>
-</div>
-<div class="resources-showcase">
-<h3>What you'll get:</h3>
-<div class="resources-list">
-<div class="resource-item">
-<div class="resource-icon">
-<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-</svg>
-</div>
-<span class="resource-name">Research Design &amp; Methods Handbook - Comprehensive guide to planning and executing high-quality development research</span>
-</div>
-<div class="resource-item">
-<div class="resource-icon">
-<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-</svg>
-</div>
-<span class="resource-name">Data Analysis Toolkit - Essential statistical methods and tools for development data analysis</span>
-</div>
-<div class="resource-item">
-<div class="resource-icon">
-<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-</svg>
-</div>
-<span class="resource-name">M&amp;E Framework Templates - Ready-to-use monitoring and evaluation frameworks for impact assessment</span>
-</div>
-<div class="resource-item">
-<div class="resource-icon">
-<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-</svg>
-</div>
-<span class="resource-name">Gender &amp; Social Justice Resources - Analysis frameworks and case studies for inclusive development work</span>
-</div>
-</div>
-</div>
-<form action="https://formspree.io/f/xpwdvgzp" enctype="multipart/form-data" id="donationForm" method="POST">
-<div class="donation-slider-container">
-<label for="donationSlider">Choose your amount (₹)</label>
-<input class="donation-slider" id="donationSlider" max="5000" min="50" oninput="updateDonationAmount(this.value)" step="50" type="range" value="500"/>
-<div class="donation-amount-display">₹<span id="donationAmountDisplay">500</span></div>
-<input id="donationAmountInput" name="donation_amount" type="hidden" value="500"/>
-</div>
-<div class="file-upload-container">
-<label for="screenshot">Upload Payment Screenshot</label>
-<input accept="image/*" class="file-upload-input" id="screenshot" name="screenshot" required="" type="file"/>
-</div>
-<button class="support-submit-btn" type="submit">Send &amp; Get Your Resources</button>
-</form>
-</div>
-</div>
 <!-- PDF Gifts Modal -->
 <div class="pdf-gifts-modal" id="pdfGiftsModal">
 <div class="pdf-gifts-content">
 <div class="support-modal-header">
-<h2>Thank You! Here are your gifts Ã°Å¸Å½Â</h2>
+<h2>Thank You! Here are your gifts 🎁</h2>
 <button class="support-close" onclick="closePdfGiftsModal()">×</button>
 </div>
 <p style="text-align: center; color: var(--text-secondary); margin-bottom: 1rem;">
@@ -6861,12 +7480,22 @@ document.addEventListener('DOMContentLoaded', function(){
 </div>
 <script>
 // Support Modal Functions
-function openSupportModal() {
-    document.getElementById('supportModal').style.display = 'block';
+function openSupportModal(){
+  var m = document.getElementById('supportModal') || document.querySelector('.support-modal,[id*="support"].modal');
+  if(!m) return;
+  m.setAttribute('aria-hidden','false');
+  m.classList.add('imx-open','imx-center');
+  try{ m.style.display='flex'; }catch(e){}
+  document.body.style.overflow='hidden';
 }
 
-function closeSupportModal() {
-    document.getElementById('supportModal').style.display = 'none';
+function closeSupportModal(){
+  var m = document.getElementById('supportModal') || document.querySelector('.support-modal,[id*="support"].modal');
+  if(!m) return;
+  m.setAttribute('aria-hidden','true');
+  m.classList.remove('imx-open','imx-center');
+  m.style.display='none';
+  document.body.style.overflow='';
 }
 
 function updateDonationAmount(value) {
@@ -7101,7 +7730,7 @@ function displayRecommendations(recs) {
             <h5>${index + 1}. ${course.name}</h5>
             <p><strong>Category:</strong> ${course.category} | <strong>Level:</strong> ${course.level}</p>
             <p><strong>Match Score:</strong> ${course.score}%</p>
-            <a href="${course.url}" target="_blank">Start Learning Ã¢â€ â€™</a>
+            <a href="${course.url}" target="_blank">Start Learning →</a>
         `;
         container.appendChild(courseDiv);
     });
@@ -7167,5 +7796,1169 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-</body>
+<!-- BEGIN imx patch: minimal styles -->
+<style id="imx-patch-css">
+/* Namespaced utils */
+.imx-visually-hidden{position:absolute!important;left:-9999px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important;}
+.imx-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);z-index:3000;}
+.imx-modal[aria-hidden="false"]{display:block;}
+.imx-modal__dialog{background:var(--card-bg);color:var(--text-primary);width:min(96vw,1100px);max-height:86vh;border-radius:16px;border:1px solid var(--border-color);box-shadow:var(--shadow-xl);margin:4vh auto;display:flex;flex-direction:column;overflow:hidden;}
+.imx-modal__header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:var(--gradient-primary);color:#fff;}
+.imx-modal__title{font:700 1.25rem/1.2 'Poppins',sans-serif;}
+.imx-modal__body{padding:1rem 1.25rem;overflow:auto;}
+.imx-modal__close{background:rgba(255,255,255,.12);border:none;width:36px;height:36px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.imx-modal__close svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* CTA button placed before tracks grid */
+#imx-quiz-cta{margin:.5rem 0 1rem 0}
+#imx-quiz-cta .btn{font-size:.9rem}
+/* Toolbar styles for list modals */
+.imx-filterbar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.25rem 0 1rem 0}
+.imx-filterbar input[type="search"]{flex:1 1 220px;padding:.5rem .75rem;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-primary);border-radius:10px}
+.imx-filterbar select{padding:.5rem .75rem;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-primary);border-radius:10px}
+/* Support resources modal visuals */
+#imx-support-amount{font-family: Inter, 'Noto Sans', 'Noto Sans Symbols 2', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;}
+.imx-amount{font:800 2rem/1 'Poppins',sans-serif;background:var(--gradient-primary);-webkit-background-clip:text;background-clip:text;color:transparent;margin:.25rem 0 .5rem}
+.imx-range{width:100%}
+.imx-live{display:inline-flex;align-items:center;gap:.35rem; padding:.15rem .5rem; border-radius:999px; background:rgba(16,185,129,.15); color:#22c55e; font:700 .7rem/1 'Inter',sans-serif; margin-left:.5rem; position:relative}
+.imx-live::before{content:"";width:.45rem;height:.45rem;border-radius:50%;background:#22c55e;box-shadow:0 0 0 .2rem rgba(34,197,94,.25);animation:imx-pulse 1.2s ease-out infinite}
+@keyframes imx-pulse{0%{transform:scale(1);}60%{transform:scale(1.35);box-shadow:0 0 0 .4rem rgba(34,197,94,.05)}100%{transform:scale(1);box-shadow:0 0 0 .2rem rgba(34,197,94,.25)}}
+/* Ensure testimonial fonts are unicode-safe (reinforce) */
+.testimonial-quote,.testimonial-author{
+  font-family:'Inter','Noto Sans','Noto Sans Devanagari','Noto Sans Bengali','Noto Sans Tamil','Noto Sans Telugu','Noto Sans Malayalam','Noto Sans Kannada','Noto Sans Gurmukhi','Noto Sans Gujarati','Noto Sans Oriya',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+</style>
+<!-- END imx patch: minimal styles -->
+<!-- BEGIN imx patch: Quiz Modal container -->
+<div aria-hidden="true" aria-labelledby="imx-quiz-title" aria-modal="true" class="imx-modal" id="imx-quiz-modal" role="dialog">
+<div class="imx-modal__dialog" tabindex="-1">
+<div class="imx-modal__header">
+<h2 class="imx-modal__title" id="imx-quiz-title">Choose Your Track — Quick Quiz</h2>
+<button class="imx-modal__close" data-imx-close="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
+<span class="imx-visually-hidden">Close</span>
+</button>
+</div>
+<div class="imx-modal__body">
+<!-- The existing .quiz-section will be moved here at runtime -->
+<div id="imx-quiz-host"></div>
+</div>
+</div>
+</div>
+<!-- END imx patch: Quiz Modal container -->
+<!-- removed duplicate imx support modal per user request -->
+<!-- BEGIN imx patch: behavior -->
+<script id="imx-patch-js">
+(function(){
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+  // ---------- 5) Mojibake sanitizer (skip script/style/code/pre) ----------
+  function sanitizeMojibake(){
+    const map = {
+      "'":"'","'":"'",
+      """:""",""":""",
+      "–":"–","—":"—","‒":"‒",
+      "•":"•","…":"…","©":"©"," ":" ",
+      "₹":"₹","×":"×","™":"â"¢"
+    };
+    const skip = new Set(["SCRIPT","STYLE","CODE","PRE"]);
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode(node){
+        return skip.has(node.parentNode.nodeName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(n=>{
+      let t=n.nodeValue, r=t;
+      for(const k in map){ r = r.split(k).join(map[k]); }
+      if(r!==t) n.nodeValue = r;
+    });
+  }
+
+  // ---------- Helpers for accessible modals (focus trap & restore) ----------
+  function setupModal(modal){
+    if(!modal) return;
+    modal.setAttribute('aria-hidden','true');
+    const dialog = $('.imx-modal__dialog', modal);
+    const closeBtn = modal.querySelector('[data-imx-close]');
+    let lastFocus = null;
+
+    function focusables(){
+      return $$('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])', modal)
+              .filter(el => el.offsetParent !== null);
+    }
+
+    function open(){
+      lastFocus = document.activeElement;
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+      const f = focusables()[0] || dialog;
+      (f||dialog).focus();
+      document.addEventListener('keydown', onKey);
+    }
+
+    function close(){
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+      document.removeEventListener('keydown', onKey);
+      if(lastFocus) lastFocus.focus();
+    }
+
+    function onKey(e){
+      if(e.key === 'Escape'){ e.preventDefault(); close(); }
+      if(e.key === 'Tab'){
+        const f = focusables();
+        if(!f.length) return;
+        const i = f.indexOf(document.activeElement);
+        if(e.shiftKey && (i<=0 || i===-1)){ e.preventDefault(); f[f.length-1].focus(); }
+        else if(!e.shiftKey && (i===f.length-1)){ e.preventDefault(); f[0].focus(); }
+      }
+    }
+
+    modal.addEventListener('mousedown', (e)=>{
+      if(e.target === modal) close();
+    });
+    if(closeBtn) closeBtn.addEventListener('click', close);
+
+    return {open, close};
+  }
+
+  // Replace any "×" close glyphs with SVG to avoid mojibake
+  function replaceCloseGlyphs(){
+    $$('.modal .close, .chat-close').forEach(el=>{
+      el.textContent = '';
+      el.setAttribute('aria-label','Close');
+      el.insertAdjacentHTML('beforeend','<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>');
+    });
+  }
+
+  // ---------- 1) Quiz modal-only & CTA before tracks ----------
+  function setupQuizModal(){
+    const host = $('#imx-quiz-host');
+    const inlineQuiz = document.querySelector('#tracks .quiz-section') || document.querySelector('.quiz-section');
+    if(!host || !inlineQuiz) return;
+    // Hide inline and move into modal host
+    inlineQuiz.style.display='none';
+    host.appendChild(inlineQuiz);
+    inlineQuiz.style.display='block';
+
+    // Insert CTA button just above track cards (after tracks heading)
+    const tracksSection = document.getElementById('tracks') || document.querySelector('#tracks, .imx-tracks-badgelist');
+    const heading = tracksSection ? tracksSection.querySelector('.imx-heading, .section-title, h2') : null;
+    if(tracksSection){
+      const ctaWrap = document.createElement('div');
+      ctaWrap.id='imx-quiz-cta';
+      ctaWrap.className='action-buttons';
+      ctaWrap.innerHTML = '<button id="imx-open-quiz" class="btn btn-primary">Take the quick quiz (get your path)</button>';
+      // Place after heading, before cards
+      if(heading && heading.parentNode===tracksSection){
+        heading.insertAdjacentElement('afterend', ctaWrap);
+      }else{
+        tracksSection.insertAdjacentElement('afterbegin', ctaWrap);
+      }
+    }
+    // Modal behavior
+    const quizModal = document.getElementById('imx-quiz-modal');
+    const controller = setupModal(quizModal);
+    const btn = document.getElementById('imx-open-quiz');
+    if(btn && controller){ btn.addEventListener('click', controller.open); }
+  }
+
+  // ---------- 2) Support resources modal + footer entry ----------
+  function setupSupportModal(){
+    var modal = document.querySelector('.support-modal, .modal.support, [id*="support"].modal') || null;
+    if(!modal) return;
+    var controller = setupModal(modal);
+    var footer = document.querySelector('.footer .footer-content') || document.querySelector('.footer');
+    if(footer){
+      var opener = footer.querySelector('#imx-support-open');
+      if(opener && controller){ opener.addEventListener('click', function(){ controller.open(); }); }
+    }
+    try{
+      var body = modal.querySelector('.modal-body, .content, .imx-modal__body, .modal-content, .body') || modal;
+      var desc = body.querySelector('.imx-support-desc');
+      if(!desc){
+        desc = document.createElement('p');
+        desc.className = 'imx-support-desc';
+        body.insertBefore(desc, body.firstChild);
+      }
+      desc.innerHTML = 'Contribute any amount to help us keep these resources free. We'll email you a private landing page with the PDFs listed here: '
+        + '<a href="https://github.com/Varnasr/ImpactMojo/tree/main/SupportGifts" target="_blank" rel="noopener">SupportGifts</a>.';
+    }catch(e){}
+    var slider = modal.querySelector('#donationSlider, #imx-amount');
+    var valEl  = modal.querySelector('#donationAmount, #imx-amount-val');
+    var upi    = modal.querySelector('#upiDeepLink, #imx-upi-link');
+    var hidden = modal.querySelector('#imx-amount-hidden');
+    function sync(v){
+      if(!v) return;
+      if(valEl) valEl.textContent = String(v);
+      if(hidden) hidden.value = String(v);
+      if(upi){
+        var url = 'upi://pay?pa=impactmojo@ibl&pn=ImpactMojo&cu=INR&am=' + encodeURIComponent(v);
+        upi.setAttribute('href', url);
+      }
+    }
+    if(slider){
+      var init = slider.value || slider.getAttribute('value') || '100';
+      sync(init);
+      slider.addEventListener('input', function(e){ sync(e.target.value); });
+    }
+  }
+      const opener = footer.querySelector('#imx-support-open');
+      if(opener && controller){ opener.addEventListener('click', controller.open); }
+    }
+    // Amount slider dynamic updates
+    const slider = document.getElementById('imx-amount');
+    const valEl = document.getElementById('imx-amount-val');
+    const hidden = document.getElementById('imx-amount-hidden');
+    const upi = document.getElementById('imx-upi-link');
+    function sync(v){
+      if(!v) return;
+      valEl.textContent = String(v);
+      hidden.value = String(v);
+      const url = 'upi://pay?pa=impactmojo@ibl&pn=ImpactMojo&cu=INR&am='+encodeURIComponent(v);
+      upi.setAttribute('href', url);
+    }
+    if(slider){ slider.addEventListener('input', e=> sync(e.target.value)); sync(slider.value); }
+  }
+
+  // ---------- 3) Fix 'View all' links to live Handouts ----------
+  function fixViewAllLinks(){
+    const base = 'https://www.impactmojo.in/handouts';
+    $$('#tracks .imx-actions a, #tracks a').forEach(a=>{
+      if(/view all/i.test(a.textContent || '')){
+        try{
+          const url = new URL(a.getAttribute('href'), location.href);
+          const hash = url.hash || '';
+          a.setAttribute('href', base + hash);
+          a.removeAttribute('target'); a.removeAttribute('rel'); // same tab
+        }catch(e){
+          // fallback
+          const href = a.getAttribute('href') || '';
+          const hash = href.includes('#') ? href.slice(href.indexOf('#')) : '';
+          a.setAttribute('href', base + hash);
+          a.removeAttribute('target'); a.removeAttribute('rel');
+        }
+      }
+    });
+  }
+
+  // ---------- 4) Inject search + type filter into list modals ----------
+  function attachFilters(modalId){
+    const modal = document.getElementById(modalId);
+    if(!modal) return;
+    const body = modal.querySelector('.modal-body, .imx-modal__body') || modal;
+    if(!body) return;
+    // Avoid duplicates
+    if(body.querySelector('.imx-filterbar')) return;
+    const toolbar = document.createElement('div');
+    toolbar.className='imx-filterbar';
+    toolbar.innerHTML = '<input type="search" placeholder="Search…" aria-label="Search items"><select aria-label="Filter by type"><option>All</option><option>Course</option><option>Lab</option><option>Game</option><option>Premium</option></select>';
+    // Insert before the first grid/list of items
+    body.insertBefore(toolbar, body.firstChild);
+
+    const q = toolbar.querySelector('input[type="search"]');
+    const sel = toolbar.querySelector('select');
+
+    function inferType(el){
+      const t = (el.textContent || '').toLowerCase();
+      if(t.includes('premium')) return 'premium';
+      if(t.includes('lab')) return 'lab';
+      if(t.includes('game')) return 'game';
+      return 'course';
+    }
+    function apply(){
+      const term = (q.value||'').trim().toLowerCase();
+      const kind = (sel.value||'All').toLowerCase();
+      // items are links/cards; do not restructure: just toggle display
+      const items = Array.from(body.querySelectorAll('.modal-item, .card, li, a')).filter(x=> x !== toolbar && !toolbar.contains(x));
+      items.forEach(it=>{
+        const txt = (it.textContent||'').toLowerCase();
+        const type = inferType(it);
+        const textMatch = !term || txt.includes(term);
+        const typeMatch = (kind==='all') || (type===kind);
+        it.style.display = (textMatch && typeMatch) ? '' : 'none';
+      });
+    }
+    q.addEventListener('input', apply);
+    sel.addEventListener('change', apply);
+    apply();
+  }
+
+  // ---------- 7) Roadmap LIVE badge ----------
+  function addLiveBadge(){
+    var root = document.getElementById('roadmap') || document;
+    var candidates = Array.from(root.querySelectorAll('*:not(script):not(style)'));
+    var target = candidates.find(function(el){
+      var t = (el.textContent||'').toLowerCase().replace(/\\s+/g,' ');
+      return /(personal(iz|is)ed? (learning )?paths?|custom(iz|is)ed? (learning )?paths?|custom(iz|is)ed? pathways?)/.test(t);
+    });
+    if(target && !target.querySelector('.imx-live')){
+      var badge = document.createElement('span');
+      badge.className='imx-live';
+      badge.textContent='LIVE';
+      var h = target.querySelector('h3, h4, .card-title, .title') || target;
+      h.appendChild(badge);
+    }
+  }
+  }
+
+  // ---------- Initialize on DOMContentLoaded ----------
+  document.addEventListener('DOMContentLoaded', function(){
+    try{
+      const mo = new MutationObserver(()=> sanitizeMojibake());
+      mo.observe(document.body, {subtree:true, childList:true, characterData:true});
+    }catch(e){}
+    sanitizeMojibake();
+    replaceCloseGlyphs();
+    setupQuizModal();
+    setupSupportModal();
+    fixViewAllLinks();
+    ['coursesModal','labsModal','gamesModal','premiumModal'].forEach(attachFilters);
+    addLiveBadge(); setTimeout(addLiveBadge, 400);
+  });
+})();
+</script>
+<!-- END imx patch: behavior -->
+<!-- BEGIN imx v6 runtime -->
+<script id="imx-patch-js-v6">
+(function(){
+  const $ = (s,r=document)=>r.querySelector(s);
+  const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+
+  function setupModal(modal){
+    if(!modal) return;
+    modal.setAttribute('aria-hidden','true');
+    const dialog = modal.querySelector('.imx-modal__dialog') || modal;
+    const closeBtn = modal.querySelector('[data-imx-close]');
+    let lastFocus=null;
+    function focusables(){ return $$('a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])', modal).filter(el=>el.offsetParent!==null); }
+    function open(){ lastFocus=document.activeElement; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; (focusables()[0]||dialog).focus(); document.addEventListener('keydown', onKey); }
+    function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; document.removeEventListener('keydown', onKey); if(lastFocus) lastFocus.focus(); }
+    function onKey(e){ if(e.key==='Escape'){e.preventDefault();close();} if(e.key==='Tab'){ const f=focusables(); if(!f.length) return; const i=f.indexOf(document.activeElement); if(e.shiftKey&&(i<=0||i===-1)){e.preventDefault();f[f.length-1].focus();} else if(!e.shiftKey&&(i===f.length-1)){e.preventDefault();f[0].focus();} } }
+    modal.addEventListener('mousedown', e=>{ if(e.target===modal) close(); });
+    if(closeBtn) closeBtn.addEventListener('click', close);
+    return {open, close};
+  }
+
+  function ensureQuizModalOnly(){
+    const host = $('#imx-quiz-host');
+    const inline = document.querySelector('#tracks .quiz-section') || document.querySelector('.quiz-section');
+    if(!host || !inline) return;
+    if(!host.contains(inline)){
+      host.appendChild(inline);
+    }
+    inline.style.display='block';
+    // Insert CTA before tracks cards (after heading)
+    const tracks = document.getElementById('tracks') || document.querySelector('#tracks');
+    if(tracks && !document.getElementById('imx-open-quiz')){
+      const heading = tracks.querySelector('.imx-heading, .section-title, h2');
+      const wrap = document.createElement('div'); wrap.id='imx-quiz-cta'; wrap.className='action-buttons';
+      wrap.innerHTML = '<button id="imx-open-quiz" class="btn btn-primary">Take the quick quiz (get your path)</button>';
+      (heading || tracks.firstElementChild || tracks).insertAdjacentElement('afterend', wrap);
+    }
+    const modal = document.getElementById('imx-quiz-modal');
+    const ctrl = setupModal(modal);
+    const btn = document.getElementById('imx-open-quiz');
+    if(btn && ctrl && !btn.__imxBound){ btn.addEventListener('click', ctrl.open); btn.__imxBound = true; }
+  }
+
+  function fixSupportResourcesCopy(){
+    // Find the existing support modal (do not create a new one)
+    const modal = document.querySelector('.support-modal, .modal.support, [id*="support"].modal') || null;
+    if(!modal) return;
+    const body = modal.querySelector('.modal-body, .content, .imx-modal__body, .modal-content, .body') || modal;
+    // Find any card/list with "Access Premium Learning Resources" and correct it
+    const titleNode = Array.from(body.querySelectorAll('h2,h3,h4,strong,span,div')).find(el=>/access premium learning resources/i.test(el.textContent||''));
+    if(titleNode){ titleNode.textContent = "What you'll receive (PDFs)"; }
+    // Replace bullet list under that title with the actual message + link
+    if(titleNode){
+      // remove the next sibling list if exists
+      let list = titleNode.nextElementSibling;
+      if(list && (list.tagName==='UL' || list.className.toLowerCase().includes('list') || /resource(s)?-list/i.test(list.className))){
+        list.parentNode.removeChild(list);
+      }
+      const p = document.createElement('p');
+      p.className = 'imx-support-desc';
+      p.innerHTML = 'We'll email you a private landing page with download links to the **exact PDFs** listed here: '
+        + '<a href="https://github.com/Varnasr/ImpactMojo/tree/main/SupportGifts" target="_blank" rel="noopener">SupportGifts</a>.';
+      titleNode.parentNode.insertBefore(p, titleNode.nextSibling);
+    } else {
+      // If we can't find the titled block, at least ensure one clear description exists at top
+      let desc = body.querySelector('.imx-support-desc');
+      if(!desc){
+        desc = document.createElement('p');
+        desc.className='imx-support-desc';
+        desc.innerHTML = 'We'll email you a private landing page with the **exact PDFs** from '
+          + '<a href="https://github.com/Varnasr/ImpactMojo/tree/main/SupportGifts" target="_blank" rel="noopener">SupportGifts</a> once you contribute.';
+        body.insertBefore(desc, body.firstChild);
+      }
+    }
+    // Keep UPI/₹ slider wiring if those controls exist
+    const slider = body.querySelector('#donationSlider, #imx-amount');
+    const valEl  = body.querySelector('#donationAmount, #imx-amount-val');
+    const upi    = body.querySelector('#upiDeepLink, #imx-upi-link');
+    const hidden = body.querySelector('#imx-amount-hidden');
+    function sync(v){
+      if(!v) return;
+      if(valEl) valEl.textContent = String(v);
+      if(hidden) hidden.value = String(v);
+      if(upi){ upi.setAttribute('href','upi://pay?pa=impactmojo@ibl&pn=ImpactMojo&cu=INR&am='+encodeURIComponent(v)); }
+    }
+    if(slider){
+      sync(slider.value || slider.getAttribute('value') || '100');
+      slider.addEventListener('input', e=> sync(e.target.value));
+    }
+  }
+
+  function addLiveBadge(){
+    const root = document.getElementById('roadmap') || document;
+    const nodes = Array.from(root.querySelectorAll('*:not(script):not(style)'));
+    const target = nodes.find(el => /(personal(iz|is)ed? (learning )?paths?|custom(iz|is)ed? (learning )?paths?|custom(iz|is)ed? pathways?)/.test((el.textContent||'').toLowerCase()));
+    if(target && !target.querySelector('.imx-live')){
+      const badge = document.createElement('span'); badge.className='imx-live'; badge.textContent='LIVE';
+      (target.querySelector('h3,h4,.card-title,.title')||target).appendChild(badge);
+    }
+  }
+
+  function boot(){
+    ensureQuizModalOnly();
+    fixSupportResourcesCopy();
+    addLiveBadge();
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    try{ boot(); }catch(e){}
+    setTimeout(boot, 400);
+    setTimeout(boot, 1200);
+  });
+})();
+</script>
+<!-- END imx v6 runtime -->
+<script id="imx-hotfix-v7">
+(function(){
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+
+  function setupModal(modal){
+    if(!modal) return;
+    modal.setAttribute('aria-hidden','true');
+    const dialog = modal.querySelector('.imx-modal__dialog')||modal;
+    const closeBtn = modal.querySelector('[data-imx-close]');
+    let lastFocus=null;
+    function focusables(){ return $$('a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])', modal).filter(el=>el.offsetParent!==null); }
+    function open(){ lastFocus=document.activeElement; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; (focusables()[0]||dialog).focus(); document.addEventListener('keydown', onKey); }
+    function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; document.removeEventListener('keydown', onKey); if(lastFocus) lastFocus.focus(); }
+    function onKey(e){ if(e.key==='Escape'){e.preventDefault();close();} if(e.key==='Tab'){ const f=focusables(); if(!f.length) return; const i=f.indexOf(document.activeElement); if(e.shiftKey&&(i<=0||i===-1)){e.preventDefault();f[f.length-1].focus();} else if(!e.shiftKey&&(i===f.length-1)){e.preventDefault();f[0].focus();} } }
+    modal.addEventListener('mousedown', e=>{ if(e.target===modal) close(); });
+    if(closeBtn) closeBtn.addEventListener('click', close);
+    return {open, close};
+  }
+
+  function ensureQuizModalOnly(){
+    const host = $('#imx-quiz-host');
+    const inline = document.querySelector('#tracks .quiz-section') || document.querySelector('.quiz-section');
+    if(!host || !inline) return;
+    if(!host.contains(inline)){
+      host.appendChild(inline);
+    }
+    inline.style.display='block';
+    const tracks = document.getElementById('tracks');
+    if(tracks && !document.getElementById('imx-open-quiz')){
+      const heading = tracks.querySelector('.imx-heading, .section-title, h2');
+      const wrap = document.createElement('div'); wrap.id='imx-quiz-cta'; wrap.className='action-buttons';
+      wrap.innerHTML = '<button id="imx-open-quiz" class="btn btn-primary">Take the quick quiz (get your path)</button>';
+      (heading||tracks).insertAdjacentElement('afterend', wrap);
+    }
+    const modal = document.getElementById('imx-quiz-modal');
+    const ctrl = setupModal(modal);
+    const btn = document.getElementById('imx-open-quiz');
+    if(btn && ctrl && !btn.__imxBound){ btn.addEventListener('click', ctrl.open); btn.__imxBound=true; }
+  }
+
+  function fixSupportModalText(){
+    // Use the existing support modal; do not create a new one.
+    const modal = document.querySelector('.support-modal, .modal.support, [id*="support"].modal');
+    if(!modal) return;
+    const body = modal.querySelector('.modal-body, .content, .imx-modal__body, .modal-content, .body') || modal;
+    // Find the "Access Premium Learning Resources" block
+    const title = Array.from(body.querySelectorAll('h2,h3,h4,strong,div')).find(el=>/access premium learning resources/i.test(el.textContent||''));
+    if(title){
+      title.textContent = "What you'll receive (PDFs)";
+      // Remove sibling list under it, if any
+      const sib = title.nextElementSibling;
+      if(sib && (sib.tagName==='UL' || /list|resources|items/i.test(sib.className||''))){
+        sib.remove();
+      }
+      // Insert the accurate text description (no link-only)
+      const p = document.createElement('p');
+      p.className = 'imx-support-desc';
+      p.innerHTML = "A curated PDF bundle designed for students and practitioners in development, public health, and policy. It includes: "
+        + "<strong>(1)</strong> concise course handouts and quick‑reference sheets across development economics, public health, gender and law; "
+        + "<strong>(2)</strong> study guides and checklists for qualitative methods, survey design, econometrics, and impact evaluation; "
+        + "<strong>(3)</strong> ready‑to‑use templates for MEL frameworks (theory of change, logframe, indicators), policy briefs, and research planning; "
+        + "<strong>(4)</strong> short primers/cheat‑sheets for practical data analysis workflows. "
+        + "After you contribute, we'll email you a private landing page with all the PDFs.";
+      title.insertAdjacentElement('afterend', p);
+    }
+  }
+
+  function addLiveBadge(){
+    const root = document.getElementById('roadmap') || document;
+    const nodes = Array.from(root.querySelectorAll('*:not(script):not(style)'));
+    const target = nodes.find(el => /(personal(iz|is)ed? (learning )?paths?|custom(iz|is)ed? (learning )?paths?|custom(iz|is)ed? pathways?)/.test((el.textContent||'').toLowerCase()));
+    if(target && !target.querySelector('.imx-live')){
+      const badge = document.createElement('span'); badge.className='imx-live'; badge.textContent='LIVE';
+      (target.querySelector('h3,h4,.card-title,.title')||target).appendChild(badge);
+    }
+  }
+
+  function boot(){ ensureQuizModalOnly(); fixSupportModalText(); addLiveBadge(); }
+  document.addEventListener('DOMContentLoaded', function(){ boot(); setTimeout(boot, 400); setTimeout(boot, 1200); });
+})();
+</script>
+<script id="imx-hotfix-v8">
+(function(){
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+
+  // Enforce modal-only quiz (poll-safe)
+  function enforceQuiz(){
+    const host = $('#imx-quiz-host');
+    const inline = document.querySelector('#tracks .quiz-section') || document.querySelector('.quiz-section');
+    if(host && inline && !host.contains(inline)){
+      host.appendChild(inline); inline.style.display='block';
+    }
+    const tracks = $('#tracks');
+    if(tracks && !$('#imx-open-quiz')){
+      const heading = tracks.querySelector('.imx-heading, .section-title, h2');
+      const wrap = document.createElement('div'); wrap.id='imx-quiz-cta'; wrap.className='action-buttons';
+      wrap.innerHTML = '<button id="imx-open-quiz" class="btn btn-primary">Take the quick quiz (get your path)</button>';
+      (heading||tracks).insertAdjacentElement('afterend', wrap);
+      const modal = $('#imx-quiz-modal'); if(modal){ const openBtn = $('#imx-open-quiz'); if(openBtn){ openBtn.addEventListener('click', ()=>{ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; modal.querySelector('[data-imx-close]')?.focus(); }); } }
+    }
+  }
+
+  function fixSupportBox(){
+    const modal = document.querySelector('.support-modal, .modal.support, [id*="support"].modal');
+    if(!modal) return;
+    const body = modal.querySelector('.modal-body, .content, .imx-modal__body, .modal-content, .body') || modal;
+    const title = Array.from(body.querySelectorAll('h2,h3,h4,strong,div')).find(el=>/access premium learning resources/i.test(el.textContent||''));
+    if(!title) return;
+    title.textContent = "What you'll receive (PDFs)";
+    // Remove next list
+    const sib = title.nextElementSibling;
+    if(sib && (sib.tagName==='UL' || /list|resources|items/i.test(sib.className||''))) sib.remove();
+    // Insert the exact 3 bullet points
+    if(!title.nextElementSibling || title.nextElementSibling.tagName!=='UL'){
+      const ul = document.createElement('ul'); ul.style.marginTop = '.5rem';
+      const bullets = [
+        "1000 Reflective Questions (Starter 250).pdf",
+        "Data Visualization Quick Checklist.pdf",
+        "Dev Econ & Econometrics Cheatsheet.pdf",
+        "Ethics & Consent Mini‑Guide.pdf",
+        "MEL Indicator Snap‑Pack.pdf"
+      ];
+      bullets.forEach(t=>{ const li=document.createElement('li'); li.textContent=t; ul.appendChild(li); });
+      title.insertAdjacentElement('afterend', ul);
+    }
+  }
+
+  function addLive(){
+    const root = $('#roadmap') || document;
+    const nodes = Array.from(root.querySelectorAll('*:not(script):not(style)'));
+    const target = nodes.find(el => /(personal(iz|is)ed? (learning )?paths?|custom(iz|is)ed? (learning )?paths?|custom(iz|is)ed? pathways?)/.test((el.textContent||'').toLowerCase()));
+    if(target && !target.querySelector('.imx-live')){
+      const badge = document.createElement('span'); badge.className='imx-live'; badge.textContent='LIVE';
+      (target.querySelector('h3,h4,.card-title,.title')||target).appendChild(badge);
+    }
+  }
+
+  function boot(){ enforceQuiz(); fixSupportBox(); addLive(); }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', boot); } else { boot(); }
+  setTimeout(boot, 400); setTimeout(boot, 1200);
+})();
+</script>
+<script id="imx-hotfix-v10">
+(function(){
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+
+  function setupModal(modal){
+    if(!modal) return;
+    modal.setAttribute('aria-hidden','true');
+    const dialog = modal.querySelector('.imx-modal__dialog')||modal;
+    const closeBtn = modal.querySelector('[data-imx-close]');
+    let lastFocus=null;
+    function focusables(){ return $$('a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])', modal).filter(el=>el.offsetParent!==null); }
+    function open(){ lastFocus=document.activeElement; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; (focusables()[0]||dialog).focus(); document.addEventListener('keydown', onKey); }
+    function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; document.removeEventListener('keydown', onKey); if(lastFocus) lastFocus.focus(); }
+    function onKey(e){ if(e.key==='Escape'){e.preventDefault();close();} if(e.key==='Tab'){ const f=focusables(); if(!f.length) return; const i=f.indexOf(document.activeElement); if(e.shiftKey&&(i<=0||i===-1)){e.preventDefault();f[f.length-1].focus();} else if(!e.shiftKey&&(i===f.length-1)){e.preventDefault();f[0].focus();} } }
+    modal.addEventListener('mousedown', e=>{ if(e.target===modal) close(); });
+    if(closeBtn) closeBtn.addEventListener('click', close);
+    return {open, close};
+  }
+
+  function enforceQuizModalOnly(){
+    const host = $('#imx-quiz-host');
+    const inline = document.querySelector('.quiz-section');
+    if(host && inline && !host.contains(inline)){
+      host.appendChild(inline);
+    }
+    if(inline){ inline.style.display='block'; }
+    const tracks = $('#tracks') || document.body;
+    if(tracks && !$('#imx-open-quiz')){
+      const firstCard = tracks.querySelector('.track-card, .tracks-grid > *');
+      const wrap = document.createElement('div'); wrap.id='imx-quiz-cta'; wrap.className='action-buttons';
+      wrap.innerHTML = '<button id="imx-open-quiz" class="btn btn-primary">Take the quick quiz (get your path)</button>';
+      if(firstCard) firstCard.parentNode.insertBefore(wrap, firstCard);
+      else tracks.insertBefore(wrap, tracks.firstChild);
+    }
+    const modal = $('#imx-quiz-modal');
+    const ctrl = setupModal(modal);
+    const btn = $('#imx-open-quiz');
+    if(btn && ctrl && !btn.__imxBound){ btn.addEventListener('click', ctrl.open); btn.__imxBound=true; }
+  }
+
+  function fixSupportNarrative(){
+    const modal = document.querySelector('.support-modal, .modal.support, [id*="support"].modal');
+    if(!modal) return;
+    const body = modal.querySelector('.modal-body, .content, .imx-modal__body, .modal-content, .body') || modal;
+    // Try to locate the specific box
+    let title = Array.from(body.querySelectorAll('h2,h3,h4,strong,div')).find(el=>/access premium learning resources/i.test(el.textContent||''));
+    if(!title){
+      // fallback: create a clear block at top
+      title = document.createElement('h3');
+      title.textContent = "What you'll receive (PDFs)";
+      body.insertBefore(title, body.firstChild);
+    } else {
+      title.textContent = "What you'll receive (PDFs)";
+      const sib = title.nextElementSibling;
+      if(sib && (sib.tagName==='UL' || /list|resources|items/i.test((sib.className||'')))) sib.remove();
+    }
+    // Insert descriptive narrative (educated guess based on filenames)
+    const descId = 'imx-support-desc';
+    if(!body.querySelector('#'+descId)){
+      const p = document.createElement('p');
+      p.id = descId;
+      p.innerHTML = "A compact starter bundle for learners and practitioners: "
+        + "<strong>Reflective Questions</strong> (Starter 250) to guide self‑assessment and weekly reflections; "
+        + "<strong>Data Visualization Checklist</strong> for quick pre‑publication chart reviews; "
+        + "<strong>Dev Econ & Econometrics Cheatsheet</strong> covering common estimators, effect sizes and assumptions; "
+        + "<strong>Ethics & Consent Mini‑Guide</strong> with fieldwork consent prompts and risk/benefit notes; and "
+        + "<strong>MEL Indicator Snap‑Pack</strong> with ready‑to‑use indicators, definitions and calculation tips. "
+        + "After you contribute, we'll email you a private landing page with all PDFs.";
+      title.insertAdjacentElement('afterend', p);
+    }
+  }
+
+  function addLiveBadge(){
+    const root = $('#roadmap') || document;
+    const nodes = Array.from(root.querySelectorAll('*:not(script):not(style)'));
+    const target = nodes.find(el => /(personal(iz|is)ed? (learning )?paths?|custom(iz|is)ed? (learning )?paths?|custom(iz|is)ed? pathways?)/.test((el.textContent||'').toLowerCase()));
+    if(target && !target.querySelector('.imx-live')){
+      const badge = document.createElement('span'); badge.className='imx-live'; badge.textContent='LIVE';
+      (target.querySelector('h3,h4,.card-title,.title')||target).appendChild(badge);
+    }
+  }
+
+  function boot(){ enforceQuizModalOnly(); fixSupportNarrative(); addLiveBadge(); }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', boot); } else { boot(); }
+  setTimeout(boot, 300); setTimeout(boot, 1200);
+})();
+</script>
+<script id="imx-live-fix">
+(function(){
+  function norm(s){ return (s||"").toLowerCase().replace(/\s+/g," ").trim(); }
+  function attach(){
+    var roadmap = document.getElementById('roadmap') || document;
+    // Remove any previously placed badge under the main section title
+    var wrong = Array.from(roadmap.querySelectorAll('h1,h2')).filter(function(h){
+      return h.textContent && /what\'s next|what's next/i.test(h.textContent);
+    });
+    wrong.forEach(function(h){ var b=h.querySelector('.imx-live'); if(b) b.remove(); });
+
+    // Find the exact card heading
+    var heads = Array.from(roadmap.querySelectorAll('h3,h4,.card-title,.title'));
+    var target = heads.find(function(el){
+      var t = norm(el.textContent);
+      return t === 'personalized learning paths' || t === 'personalised learning paths' || t === 'customised pathways' || t === 'customized pathways';
+    });
+    if(target && !target.querySelector('.imx-live')){
+      var badge = document.createElement('span');
+      badge.className = 'imx-live';
+      badge.textContent = 'LIVE';
+      target.appendChild(badge);
+    }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', attach); } else { attach(); }
+  setTimeout(attach, 400); setTimeout(attach, 1200);
+})();
+</script>
+<script id="imx-support-fallback-v16">
+(function(){
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+
+  function findSupportModal(){
+    return document.querySelector('.support-modal') || document.getElementById('supportModal') || document.querySelector('[id*="support"].modal');
+  }
+
+  function ensureSvgClose(modal){
+    if(!modal) return;
+    const closeBtns = $$('button, .close, [data-close], [data-dismiss="modal"]', modal);
+    closeBtns.forEach(btn=>{
+      if(btn.__imxSvgClose) return;
+      const txt = (btn.textContent||'').trim();
+      if(txt==='×' || txt=='&times;' || txt==='x' || /close/i.test(txt)){
+        btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span class="sr-only">Close</span>';
+        btn.__imxSvgClose = true;
+      }
+    });
+  }
+
+  function fallbackOpen(){
+    const modal = findSupportModal();
+    if(!modal) return;
+    // Add centering class as a non-intrusive fallback
+    modal.classList.add('imx-center');
+    modal.setAttribute('aria-hidden','false');
+    // Respect site's display logic; force visible if necessary
+    try{
+      modal.style.display = (getComputedStyle(modal).display==='none') ? 'flex' : modal.style.display;
+    }catch(e){ modal.style.display='flex'; }
+    ensureSvgClose(modal);
+    // Focus handling
+    try{
+      const focusable = modal.querySelector('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
+      (focusable||modal).focus();
+    }catch(e){}
+  }
+
+  function fallbackClose(e){
+    const modal = findSupportModal();
+    if(!modal) return;
+    modal.setAttribute('aria-hidden','true');
+    modal.classList.remove('imx-center');
+    // Let site JS hide it; otherwise ensure hidden
+    modal.style.display = 'none';
+  }
+
+  // Bind the footer opener if present
+  function bindOpener(){
+    const opener = document.getElementById('imx-support-open') ||
+                   Array.from(document.querySelectorAll('a,button')).find(el=>/get free support resources/i.test((el.textContent||'').trim()));
+    const modal = findSupportModal();
+    if(!modal) return;
+    ensureSvgClose(modal);
+    if(opener && !opener.__imxBound){
+      opener.addEventListener('click', function(ev){
+        try{ fallbackOpen(); }catch(e){}
+      });
+      opener.__imxBound = true;
+    }
+    // Backdrop / ESC close (fallback)
+    if(!modal.__imxBoundClose){
+      modal.addEventListener('mousedown', function(ev){
+        if(ev.target===modal){ fallbackClose(); }
+      });
+      document.addEventListener('keydown', function(ev){
+        if(ev.key==='Escape' && getComputedStyle(modal).display!=='none'){ fallbackClose(); }
+      });
+      modal.__imxBoundClose = true;
+    }
+  }
+
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', bindOpener); } else { bindOpener(); }
+  setTimeout(bindOpener, 400);
+})();
+</script>
+<script id="imx-support-fix-v17">
+(function(){
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+
+  function isInSupport(el){
+    return !!el.closest('.support-modal, #supportModal, [id*="support"].modal');
+  }
+
+  function scrubStrayHeadings(){
+    // Remove any stray "What you'll receive (PDFs)" headings that are not inside the support modal
+    const hs = $$('h3,h4');
+    hs.forEach(h=>{
+      const txt = (h.textContent||'').trim().toLowerCase();
+      if(txt === "what you'll receive (pdfs)" || txt === "what you'll receive (pdfs)"){
+        if(!isInSupport(h)){
+          h.remove();
+        }
+      }
+    });
+  }
+
+  function dedupInsideModal(modal){
+    if(!modal) return;
+    // Keep first heading, remove duplicates
+    const heads = $$('h3,h4', modal).filter(h=>/what (you'|you')ll receive \(pdfs\)/i.test((h.textContent||'').trim()));
+    if(heads.length>1){
+      heads.slice(1).forEach(h=>h.remove());
+    }
+    // Keep only first narrative paragraph with .imx-support-desc
+    const paras = $$('.imx-support-desc', modal);
+    if(paras.length>1){
+      paras.slice(1).forEach(p=>p.remove());
+    }
+  }
+
+  function ensureCenteredOnOpen(){
+    const modal = document.querySelector('.support-modal, #supportModal, [id*="support"].modal');
+    if(!modal) return;
+    function maybeCenter(){
+      try{
+        const disp = getComputedStyle(modal).display;
+        if(disp && disp!=='none'){
+          modal.classList.add('imx-center'); // opt-in centering class defined earlier
+        }
+      }catch(e){}
+    }
+    // Run now and observe for future opens
+    maybeCenter();
+    const mo = new MutationObserver(muts=>{ maybeCenter(); });
+    mo.observe(modal, {attributes:true, attributeFilter:['style','class','aria-hidden']});
+  }
+
+  function boot(){
+    scrubStrayHeadings();
+    const modal = document.querySelector('.support-modal, #supportModal, [id*="support"].modal');
+    dedupInsideModal(modal);
+    ensureCenteredOnOpen();
+  }
+
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', boot); } else { boot(); }
+  setTimeout(boot, 300); setTimeout(boot, 1200);
+})();
+</script>
+<script id="imx-support-open-v18">
+(function(){
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+
+  function getModal(){
+    return document.querySelector('.support-modal') || document.getElementById('supportModal') || document.querySelector('[id*="support"].modal');
+  }
+  function ensureSvgClose(modal){
+    if(!modal) return;
+    const btns = $$('button, .close, [data-dismiss="modal"], [data-imx-close]', modal);
+    btns.forEach(btn=>{
+      if(btn.__imxSvg) return;
+      const txt=(btn.textContent||'').trim();
+      if(txt==='×' || txt==='&times;' || txt==='x' || /close/i.test(txt)){
+        btn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span class="sr-only">Close</span>';
+        btn.__imxSvg=true;
+      }
+    });
+  }
+  function openModal(){
+    const m = getModal(); if(!m) return;
+    m.classList.add('imx-open','imx-center');
+    m.setAttribute('aria-hidden','false');
+    try{ m.style.display = 'flex'; }catch(e){}
+    document.body.style.overflow='hidden';
+    ensureSvgClose(m);
+    // focus first focusable
+    try{
+      const f = m.querySelector('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
+      (f||m).focus();
+    }catch(e){}
+  }
+  function closeModal(){
+    const m = getModal(); if(!m) return;
+    m.classList.remove('imx-open','imx-center');
+    m.setAttribute('aria-hidden','true');
+    m.style.display='none';
+    document.body.style.overflow='';
+  }
+  // Expose for debugging
+  window.imxOpenSupport = openModal;
+  window.imxCloseSupport = closeModal;
+
+  function bindOpeners(){
+    const m = getModal(); if(!m) return;
+    // Likely footer CTA text
+    const textMatch = (el)=>/get\s*free\s*support\s*resources/i.test((el.textContent||'').trim());
+    const candidates = $$('a,button').filter(el=> textMatch(el) || (el.getAttribute('href')||'').match(/#support/i) || (el.getAttribute('data-target')||'').match(/support/i) || el.id==='imx-support-open');
+    candidates.forEach(el=>{
+      if(el.__imxBound) return;
+      el.addEventListener('click', function(ev){
+        // Don't block site JS—just ensure it's open after their handler
+        setTimeout(function(){
+          try{
+            // If modal is still hidden, open via fallback
+            const disp = getComputedStyle(m).display;
+            const hidden = (disp==='none' || m.getAttribute('aria-hidden')==='true');
+            if(hidden) openModal();
+          }catch(e){ openModal(); }
+        }, 0);
+      });
+      el.__imxBound = true;
+    });
+    // Backdrop + ESC fallback
+    if(!m.__imxClose){
+      m.addEventListener('mousedown', function(ev){ if(ev.target===m) closeModal(); });
+      document.addEventListener('keydown', function(ev){ if(ev.key==='Escape'){ closeModal(); }});
+      m.__imxClose = true;
+    }
+  }
+  function boot(){ bindOpeners(); }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', boot); } else { boot(); }
+  setTimeout(boot, 300); setTimeout(boot, 1200);
+})();
+</script>
+<!-- Support Modal (drop-in, no other changes) -->
+<!-- BEGIN: Support Modal (from working file) -->
+<span aria-hidden="true" class="support-target" id="support-anchor"></span>
+<div class="support-modal" id="supportModal" style="display:none;">
+<div class="support-modal-content">
+<div class="support-modal-header">
+<h2>Do you love ImpactMojo?</h2>
+<p class="subtitle">To support us and get access to these quality resources, please choose an amount you think these resources and ImpactMojo are worth</p>
+<button class="support-close" onclick="document.getElementById('supportModal').style.display='none'; document.body.style.overflow='';" aria-label="Close modal">×</button>
+</div>
+<div class="support-modal-body">
+<div class="resources-showcase">
+<h3>Access Premium Learning Resources</h3>
+<div class="resources-list">
+<div class="resource-item">
+<div class="resource-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+<polyline points="14 2 14 8 20 8"></polyline>
+</svg>
+</div>
+<span class="resource-name">Comprehensive course handouts covering development economics, gender studies, research methods, and data analysis</span>
+</div>
+<div class="resource-item">
+<div class="resource-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<rect height="18" rx="2" ry="2" width="18" x="3" y="3"></rect>
+<line x1="9" x2="9" y1="3" y2="21"></line>
+</svg>
+</div>
+<span class="resource-name">Practical MEL frameworks, policy analysis templates, and research design workbooks</span>
+</div>
+<div class="resource-item">
+<div class="resource-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+</svg>
+</div>
+<span class="resource-name">Detailed study guides for qualitative methods, econometrics, and impact evaluation</span>
+</div>
+</div>
+</div>
+<div class="donation-section">
+<h3>Choose Your Support Amount</h3>
+<div class="donation-slider-container">
+<div class="donation-amount-display" id="donationDisplay">₹250</div>
+<p class="donation-helper-text">Slide to choose an amount that reflects the value these resources provide</p>
+<input class="donation-slider" id="donationRange" max="5000" min="50" oninput="document.getElementById('donationDisplay').textContent='₹'+this.value; document.getElementById('donationAmount').value=this.value; document.getElementById('supportAmountMirror').value=this.value;" step="50" type="range" value="250"/>
+<div class="slider-labels">
+<span>₹50</span>
+<span>₹5,000</span>
+</div>
+</div>
+</div>
+<form action="https://formspree.io/f/xpwdvgzp" enctype="multipart/form-data" id="supportForm" method="POST">
+<input name="_subject" type="hidden" value="ImpactMojo Support Contribution"/>
+<input id="supportAmountMirror" name="amount" type="hidden" value="250"/>
+<input id="donationAmount" type="hidden" value="250"/>
+<div class="file-upload-container">
+<label for="screenshotUpload">Transfer to <strong>impactmojo@ibl</strong> and upload your payment screenshot</label>
+<input accept=".png,.jpg,.jpeg,.pdf" class="file-upload-input" id="screenshotUpload" name="screenshot" onchange="document.getElementById('fileName').style.display='flex'; document.getElementById('fileName').querySelector('span').textContent=this.files[0].name" required="" type="file"/>
+<div class="file-selected" id="fileName" style="display:none;">
+<svg fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;" viewbox="0 0 24 24">
+<polyline points="20 6 9 17 4 12"></polyline>
+</svg>
+<span></span>
+</div>
+</div>
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+<label style="display:flex; flex-direction:column; gap:0.5rem;">
+<span style="color: var(--text-primary); font-weight: 500; font-size: 0.9rem;">Full Name</span>
+<input name="name" required="" style="width:100%; padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--secondary-bg); color:var(--text-primary); font-size:0.9rem;" type="text"/>
+</label>
+<label style="display:flex; flex-direction:column; gap:0.5rem;">
+<span style="color: var(--text-primary); font-weight: 500; font-size: 0.9rem;">Email</span>
+<input name="email" required="" style="width:100%; padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--secondary-bg); color:var(--text-primary); font-size:0.9rem;" type="email"/>
+</label>
+</div>
+<button class="support-submit-btn" type="submit">
+<svg fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;" viewbox="0 0 24 24">
+<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+<polyline points="22 4 12 14.01 9 11.01"></polyline>
+</svg>
+          Send Support Details
+        </button>
+<p style="text-align:center; color:var(--text-secondary); font-size:0.85rem; margin-top:1rem;">We'll email you from friends@impactmojo.in with access details</p>
+</form>
+</div>
+</div>
+</div></div>
+</div>
+<!-- END: Support Modal -->
+<script data-origin="working-support-modal">
+(function(){
+  function open(id){ var m = document.getElementById(id); if(!m) return; m.style.display='block'; m.setAttribute('aria-hidden','false'); }
+  function bind(){
+    var candidates = Array.prototype.slice.call(document.querySelectorAll('a,button'));
+    candidates.forEach(function(el){
+      var t=(el.textContent||'').toLowerCase();
+      if(/support/.test(t) || /upi/.test(t)){
+        if(!el.__imxBoundSupport){
+          el.addEventListener('click', function(ev){
+            var href = (el.getAttribute('href')||'').trim();
+            if(href && !/^#/.test(href) && !/javascript:/i.test(href)) return;
+            ev.preventDefault(); open('supportModal');
+          });
+          el.__imxBoundSupport = true;
+        }
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', bind);
+  var obs = new MutationObserver(bind);
+  obs.observe(document.documentElement, {childList:true, subtree:true});
+})();
+</script><script data-origin="working-support-modal">
+// Support Modal Functions
+function updateDonationAmount(value) {
+    document.getElementById('donationAmountDisplay').textContent = value;
+    document.getElementById('donationAmountInput').value = value;
+}
+
+// Handle form submission
+document.addEventListener('DOMContentLoaded', function() {
+    const donationForm = document.getElementById('donationForm');
+    if (donationForm) {
+        donationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(donationForm);
+            
+            fetch(donationForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    closeSupportModal();
+                    showPdfGiftsModal();
+                } else {
+                    // Still show gifts even if form submission has issues
+                    closeSupportModal();
+                    showPdfGiftsModal();
+                }
+            }).catch(error => {
+                // Still show gifts even if form submission has issues
+                closeSupportModal();
+                showPdfGiftsModal();
+            });
+        });
+    }
+});
+
+// PDF Gifts Modal Functions
+function showPdfGiftsModal() {
+    loadPdfGifts();
+    document.getElementById('pdfGiftsModal').style.display = 'block';
+}
+
+function closePdfGiftsModal() {
+    document.getElementById('pdfGiftsModal').style.display = 'none';
+}
+
+async function loadPdfGifts() {
+    const pdfGiftsGrid = document.getElementById('pdfGiftsGrid');
+    
+    // List of PDF gifts from the GitHub folder
+    const pdfGifts = [
+        { name: 'Development Economics Guide', file: 'Dev-Econ-Guide.pdf' },
+        { name: 'M&E Framework Toolkit', file: 'MEL-Framework.pdf' },
+        { name: 'Gender Analysis Templates', file: 'Gender-Analysis.pdf' },
+        { name: 'Cost-Effectiveness Analysis', file: 'CEA-Guide.pdf' },
+        { name: 'Impact Evaluation Methods', file: 'Impact-Eval.pdf' },
+        { name: 'Data Visualization Best Practices', file: 'DataViz-Guide.pdf' }
+    ];
+    
+    pdfGiftsGrid.innerHTML = '';
+    
+    pdfGifts.forEach(pdf => {
+        const pdfItem = document.createElement('div');
+        pdfItem.className = 'pdf-gift-item';
+        pdfItem.innerHTML = `
+            <a href="https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/SupportGifts/${pdf.file}" target="_blank" download>
+                <div class="pdf-gift-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                </div>
+                <div class="pdf-gift-name">${pdf.name}</div>
+            </a>
+        `;
+        pdfGiftsGrid.appendChild(pdfItem);
+    });
+}
+
+// Close modals when clicking outside
+window.addEventListener('click', function(event) {
+    const supportModal = document.getElementById('supportModal');
+    const pdfGiftsModal = document.getElementById('pdfGiftsModal');
+    
+    if (event.target === supportModal) {
+        closeSupportModal();
+    }
+    if (event.target === pdfGiftsModal) {
+        closePdfGiftsModal();
+    }
+});
+</script><script id="support-modal-robust-open">
+(function(){
+  function openSupport(){
+    var m = document.getElementById('supportModal');
+    if(!m) return;
+    // If project styles use class toggling, try both strategies
+    if (m.classList && m.classList.contains('is-open')) {
+      // already open
+    } else if (m.classList) {
+      m.classList.add('is-open');
+    }
+    // also apply inline display as fallback for simple modals
+    m.style.display = 'block';
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-open="support"]');
+    if(!t) return;
+    e.preventDefault();
+    openSupport();
+    return false;
+  }, {capture:true});
+})();
+</script><script id="support-modal-close-helper">
+(function(){
+  var m = document.getElementById('supportModal');
+  if(!m) return;
+  // Close on ESC and backdrop
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape'){ m.style.display='none'; if(m.classList){ m.classList.remove('is-open'); } }
+  });
+  m.addEventListener('click', function(e){
+    if(e.target===m){ m.style.display='none'; if(m.classList){ m.classList.remove('is-open'); } }
+  });
+})();</script></body>
 </html>
