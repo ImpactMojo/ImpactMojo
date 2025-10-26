@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - ImpactMojo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #F5F7FA;
+            --bg-secondary: #ffffff;
+            --bg-card: #F5F7FA;
+            --text-primary: #2c2c2c;
+            --text-secondary: #5a5a5a;
+            --text-tertiary: #949FAA;
+            --heading-color: #376AA0;
+            --accent-color: #9C5B2F;
+            --accent-hover: #7a4622;
+            --border-color: #B5B3BA;
+            --border-accent: #9C5B2F;
+            --shadow: rgba(0,0,0,0.08);
+            --shadow-hover: rgba(0,0,0,0.12);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #242424;
+            --bg-card: #2a2a2a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-tertiary: #808080;
+            --heading-color: #5c9fd8;
+            --accent-color: #d4935f;
+            --accent-hover: #b57a47;
+            --border-color: #404040;
+            --border-accent: #d4935f;
+            --shadow: rgba(0,0,0,0.3);
+            --shadow-hover: rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Devanagari', 'Noto Sans Tamil', 'Noto Sans Bengali', sans-serif;
+            line-height: 1.8;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            padding: 0;
+            margin: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-color);
+        }
+
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .sun-icon {
+            fill: none;
+            stroke: var(--text-primary);
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+
+        .moon-icon {
+            fill: var(--text-primary);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: var(--heading-color);
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: var(--text-tertiary);
+            font-weight: 400;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .gratitude-section {
+            background: var(--bg-secondary);
+            padding: 45px;
+            border-radius: 2px;
+            box-shadow: 0 2px 8px var(--shadow);
+            margin-bottom: 50px;
+            border-left: 4px solid var(--border-accent);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gratitude-section p {
+            font-size: 1.15em;
+            line-height: 1.9;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .gratitude-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: var(--heading-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .download-section {
+            background: var(--bg-secondary);
+            padding: 45px;
+            border-radius: 2px;
+            box-shadow: 0 2px 8px var(--shadow);
+            margin-bottom: 40px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .download-section > p {
+            color: var(--text-secondary);
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .download-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 2px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .download-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px var(--shadow-hover);
+            border-color: var(--border-accent);
+        }
+
+        .download-card h3 {
+            font-size: 1.35em;
+            color: var(--heading-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .download-card p {
+            font-size: 1em;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 14px 28px;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .download-link:hover {
+            background-color: var(--accent-hover);
+            transform: translateX(3px);
+        }
+
+        .download-link::after {
+            content: ' →';
+            margin-left: 8px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .download-link:hover::after {
+            margin-left: 12px;
+        }
+
+        .file-info {
+            font-size: 0.85em;
+            color: var(--text-tertiary);
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .support-message {
+            text-align: center;
+            margin-top: 50px;
+            padding: 35px;
+            background: var(--bg-secondary);
+            border-radius: 2px;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .support-message p {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .support-message p:last-child {
+            margin-bottom: 0;
+        }
+
+        .signature {
+            font-size: 1.05em;
+            color: var(--heading-color);
+            font-style: italic;
+            margin-top: 25px;
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.95em;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 25px;
+            }
+
+            .theme-toggle {
+                top: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .theme-toggle svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            .gratitude-section,
+            .download-section {
+                padding: 30px;
+            }
+
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h2 {
+                font-size: 1.7em;
+            }
+
+            .download-card {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .gratitude-section,
+            .download-section {
+                padding: 25px;
+            }
+
+            .download-link {
+                padding: 12px 22px;
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="moon-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+    </button>
+
+    <div class="container">
+        <header>
+            <h1>Thank You for Your Support</h1>
+            <p class="subtitle">Your contribution strengthens development education across South Asia</p>
+        </header>
+
+        <div class="gratitude-section">
+            <p>We are deeply grateful for your support of ImpactMojo and our mission to democratize access to rigorous, contextualized development knowledge. Your contribution directly enables us to maintain this platform as a free, open-access resource for educators, practitioners, and researchers across South Asia.</p>
+            
+            <p>Every donation helps us expand our library of knowledge decks, develop new teaching materials, and ensure that critical concepts in development economics, social justice, and public policy remain accessible to those who need them most—without paywalls, without barriers.</p>
+            
+            <p>As a token of our appreciation, we're providing you with immediate access to our complete collection of supplementary handouts and teaching materials. These resources are designed to complement our core knowledge decks and can be used in classrooms, workshops, and self-directed learning.</p>
+        </div>
+
+        <div class="download-section">
+            <h2>Download Your Resources</h2>
+            <p>Click the links below to download your PDF materials. All files are stored on our GitHub repository for reliable, permanent access.</p>
+
+            <div class="downloads-grid">
+                <div class="download-card">
+                    <h3>1000 Reflective Questions (Starter 250)</h3>
+                    <p>A curated collection of 250 thought-provoking questions designed to deepen critical thinking about development practice, policy design, and social justice work.</p>
+                    <a href="https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/SupportGifts/1000%20Reflective%20Questions%20(Starter%20250).pdf" class="download-link" download>Download Questions</a>
+                    <p class="file-info">PDF format • Reflective practice</p>
+                </div>
+
+                <div class="download-card">
+                    <h3>Data Visualization Quick Checklist</h3>
+                    <p>Essential principles and practical tips for creating clear, ethical, and impactful data visualizations in development research and reporting.</p>
+                    <a href="https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/SupportGifts/Data%20Visualization%20Quick%20Checklist.pdf" class="download-link" download>Download Checklist</a>
+                    <p class="file-info">PDF format • Data communication</p>
+                </div>
+
+                <div class="download-card">
+                    <h3>Dev Econ & Econometrics Cheatsheet</h3>
+                    <p>Concise reference guide covering key concepts, formulas, and methods in development economics and econometric analysis for field practitioners.</p>
+                    <a href="https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/SupportGifts/Dev%20Econ%20%26%20Econometrics%20Cheatsheet.pdf" class="download-link" download>Download Cheatsheet</a>
+                    <p class="file-info">PDF format • Quick reference</p>
+                </div>
+
+                <div class="download-card">
+                    <h3>Ethics & Consent Mini‑Guide</h3>
+                    <p>Practical framework for navigating ethical considerations and informed consent processes in development research and community engagement.</p>
+                    <a href="https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/SupportGifts/Ethics%20%26%20Consent%20Mini%E2%80%91Guide.pdf" class="download-link" download>Download Guide</a>
+                    <p class="file-info">PDF format • Research ethics</p>
+                </div>
+
+                <div class="download-card">
+                    <h3>MEL Indicator Snap‑Pack</h3>
+                    <p>Ready-to-use monitoring, evaluation, and learning indicators for common development programs, with guidance on adaptation and contextualization.</p>
+                    <a href="https://raw.githubusercontent.com/Varnasr/ImpactMojo/main/SupportGifts/MEL%20Indicator%20Snap%E2%80%91Pack.pdf" class="download-link" download>Download Indicators</a>
+                    <p class="file-info">PDF format • M&E toolkit</p>
+                </div>
+
+                <div class="download-card">
+                    <h3>View All Support Gifts</h3>
+                    <p>Browse the complete collection of supporter resources in our GitHub repository, with direct access to all materials and future additions.</p>
+                    <a href="https://github.com/Varnasr/ImpactMojo/tree/main/SupportGifts" class="download-link" target="_blank" rel="noopener">Browse Repository</a>
+                    <p class="file-info">GitHub folder • All materials</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="support-message">
+            <p><strong>These materials are now yours to use, share, and adapt.</strong> All ImpactMojo resources are released under open licensing, and we encourage you to remix them for your teaching contexts, share them with colleagues, and build upon them for your own educational initiatives.</p>
+            
+            <p>If you have questions about using these materials, encounter any access issues, or simply want to share how you're using ImpactMojo in your work, please don't hesitate to reach out through our support form on the main website.</p>
+            
+            <p class="signature">With gratitude and solidarity,<br>The ImpactMojo Team</p>
+        </div>
+
+        <footer>
+            <p>ImpactMojo is part of the OpenStacks knowledge ecosystem<br>
+            <a href="https://www.impactmojo.in">Return to ImpactMojo</a> | <a href="https://github.com/Varnasr/ImpactMojo/tree/main/SupportGifts">View Support Gifts</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+        const htmlElement = document.documentElement;
+
+        // Function to set theme
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                htmlElement.setAttribute('data-theme', 'dark');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                htmlElement.setAttribute('data-theme', 'light');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
+        // Function to get initial theme
+        function getInitialTheme() {
+            // Check localStorage first
+            const savedTheme = localStorage.getItem('impactmojo-theme');
+            if (savedTheme) {
+                return savedTheme;
+            }
+            
+            // Check device preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            
+            // Default to light
+            return 'light';
+        }
+
+        // Set initial theme on page load
+        const initialTheme = getInitialTheme();
+        setTheme(initialTheme);
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            setTheme(newTheme);
+            localStorage.setItem('impactmojo-theme', newTheme);
+        });
+
+        // Listen for device theme changes
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                // Only update if user hasn't set a preference
+                if (!localStorage.getItem('impactmojo-theme')) {
+                    setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
