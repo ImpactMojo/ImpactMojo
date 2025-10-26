@@ -6,6 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
 :root{--bg:#0F172A;--bg2:#0B1428;--card:#0B1222;--muted:#0A1020;--text:#E6EDF7;--sub:#9FB1C9;--b:#1D2A44;--accent:#2CC7FF;--accent2:#7C8CFF;--chip:#0F1B33;--chip-b:#24324F;--card-grad-end:#0A1424;--header-bg:rgba(7,12,23,.7);--nav-text:#E6EDF7}
+.light{--bg:#FFFFFF;--bg2:#F5F7FA;--card:#FFFFFF;--muted:#F0F2F5;--text:#1F2937;--sub:#6B7280;--b:#E5E7EB;--accent:#0EA5E9;--accent2:#3B82F6;--chip:#EFF6FF;--chip-b:#DBEAFE;--card-grad-end:#F9FAFB;--header-bg:rgba(255,255,255,0.95);--nav-text:#1F2937}
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
 a{color:inherit;text-decoration:none}
@@ -66,7 +67,10 @@ a{color:inherit;text-decoration:none}
     <a href="#tracks" style="margin-right:1rem">Learning Tracks</a>
     <a href="#handouts" style="margin-right:1rem">Handouts</a>
     <a href="#catalog" style="margin-right:1rem">Catalog</a>
-    <button id="themeToggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
+    <button id="themeToggle" class="theme-toggle" title="Toggle dark/light mode">
+      <svg id="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg id="sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
   </div>
 </div></div></div>
 
@@ -1018,54 +1022,42 @@ const parsed = JSON.parse(document.getElementById('imx-data').textContent);
 const DATA = parsed.DATA || [];
 const META = parsed.META || {};
 
-// Theme management
-function initTheme() {
-  const saved = localStorage.getItem('imx-theme') || 'dark';
-  applyTheme(saved);
-  document.getElementById('themeToggle').addEventListener('click', () => {
-    const current = localStorage.getItem('imx-theme') || 'dark';
-    const next = current === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('imx-theme', next);
-    applyTheme(next);
+// Theme management - sophisticated version with system preference detection and sync
+(function(){
+  const root = document.documentElement;
+  function systemPref(){ try { return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; } catch(_) { return 'dark'; } }
+  function getSaved(){ return localStorage.getItem('imx-theme') || (root.classList.contains('light') ? 'light' : root.classList.contains('dark') ? 'dark' : null); }
+  function apply(theme){
+    const t = theme || getSaved() || systemPref();
+    if (t === 'light') {
+      root.classList.remove('dark');
+      root.classList.add('light');
+    } else {
+      root.classList.remove('light');
+      root.classList.add('dark');
+    }
+    document.getElementById('sun').style.display = root.classList.contains('light') ? 'block' : 'none';
+    document.getElementById('moon').style.display = root.classList.contains('light') ? 'none' : 'block';
+    try { localStorage.setItem('imx-theme', root.classList.contains('light') ? 'light' : 'dark'); } catch(_) {}
+  }
+  apply();
+  document.getElementById('themeToggle').addEventListener('click', ()=>{
+    if (root.classList.contains('light')) {
+      root.classList.remove('light');
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+      root.classList.add('light');
+    }
+    apply(root.classList.contains('light') ? 'light' : 'dark');
   });
-}
+  try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>apply()); } catch(_) {}
+  window.addEventListener('storage', (e)=>{ if (e.key === 'imx-theme') apply(e.newValue); });
+})();
 
 function applyTheme(theme) {
-  const root = document.documentElement;
-  const toggle = document.getElementById('themeToggle');
-  if (theme === 'light') {
-    root.style.setProperty('--bg', '#FFFFFF');
-    root.style.setProperty('--bg2', '#F5F7FA');
-    root.style.setProperty('--card', '#FFFFFF');
-    root.style.setProperty('--muted', '#F0F2F5');
-    root.style.setProperty('--text', '#1F2937');
-    root.style.setProperty('--sub', '#6B7280');
-    root.style.setProperty('--b', '#E5E7EB');
-    root.style.setProperty('--accent', '#0EA5E9');
-    root.style.setProperty('--accent2', '#3B82F6');
-    root.style.setProperty('--chip', '#EFF6FF');
-    root.style.setProperty('--chip-b', '#DBEAFE');
-    root.style.setProperty('--card-grad-end', '#F9FAFB');
-    root.style.setProperty('--header-bg', 'rgba(255,255,255,0.95)');
-    root.style.setProperty('--nav-text', '#1F2937');
-    toggle.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
-  } else {
-    root.style.setProperty('--bg', '#0F172A');
-    root.style.setProperty('--bg2', '#0B1428');
-    root.style.setProperty('--card', '#0B1222');
-    root.style.setProperty('--muted', '#0A1020');
-    root.style.setProperty('--text', '#E6EDF7');
-    root.style.setProperty('--sub', '#9FB1C9');
-    root.style.setProperty('--b', '#1D2A44');
-    root.style.setProperty('--accent', '#2CC7FF');
-    root.style.setProperty('--accent2', '#7C8CFF');
-    root.style.setProperty('--chip', '#0F1B33');
-    root.style.setProperty('--chip-b', '#24324F');
-    root.style.setProperty('--card-grad-end', '#0A1424');
-    root.style.setProperty('--header-bg', 'rgba(7,12,23,.7)');
-    root.style.setProperty('--nav-text', '#E6EDF7');
-    toggle.innerHTML = '<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-  }
+  // Legacy function kept for compatibility but no longer used
+  console.log('Using new theme system');
 }
 
 // Star rendering
@@ -1180,7 +1172,6 @@ document.getElementById('sort').addEventListener('change', applyFilters);
     });
   }
   
-  initTheme();
   applyFilters();
 })();
 </script>
