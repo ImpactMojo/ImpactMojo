@@ -239,6 +239,90 @@
             width: 100%;
         }
 
+        /* Dropdown Navigation Styles */
+        .nav-links > li {
+            position: relative;
+        }
+
+        .nav-links > li.has-dropdown > a {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .nav-links > li.has-dropdown > a::after {
+            display: none; /* Remove underline effect for dropdown triggers */
+        }
+
+        .dropdown-arrow {
+            width: 10px;
+            height: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links > li.has-dropdown:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 200px;
+            background: var(--nav-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            margin-top: 0.5rem;
+        }
+
+        .nav-links > li.has-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            margin-top: 0.25rem;
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: var(--nav-text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            text-transform: none;
+            letter-spacing: 0;
+            opacity: 0.85;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--hover-bg);
+            color: var(--accent-color);
+            opacity: 1;
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-menu a::after {
+            display: none; /* No underline in dropdowns */
+        }
+
+        /* Dropdown divider */
+        .dropdown-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 0.5rem 0;
+        }
+
         .theme-toggle {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -1632,10 +1716,66 @@
                 padding: 1rem;
                 border-top: 1px solid var(--border-color);
                 box-shadow: var(--shadow-lg);
+                gap: 0;
             }
 
             .nav-links.active {
                 display: flex;
+            }
+
+            .nav-links > li {
+                width: 100%;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-links > li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links > li > a {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem 0.5rem;
+                width: 100%;
+            }
+
+            .nav-links > li.has-dropdown > a {
+                justify-content: space-between;
+            }
+
+            /* Mobile dropdown - click to expand */
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+                margin: 0;
+                padding: 0;
+                background: var(--secondary-bg);
+            }
+
+            .nav-links > li.has-dropdown.open .dropdown-menu {
+                max-height: 500px;
+                padding: 0.5rem 0;
+            }
+
+            .nav-links > li.has-dropdown.open .dropdown-arrow {
+                transform: rotate(180deg);
+            }
+
+            .dropdown-menu a {
+                padding: 0.75rem 1.5rem;
+            }
+
+            .dropdown-menu a:hover {
+                padding-left: 2rem;
             }
 
             .mobile-menu-toggle {
@@ -1899,17 +2039,53 @@
 </button>
 <ul class="nav-links" id="navLinks">
 <li><a href="#home">Home</a></li>
+
+<!-- Learn Dropdown -->
+<li class="has-dropdown">
+<a href="javascript:void(0)">Learn
+<svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<polyline points="6 9 12 15 18 9"></polyline>
+</svg>
+</a>
+<ul class="dropdown-menu">
 <li><a onclick="openModal('coursesModal')">Courses</a></li>
 <li><a onclick="openModal('labsModal')">Labs</a></li>
 <li><a onclick="openModal('gamesModal')">Games</a></li>
-<li><a onclick="openModal('coachingModal')">Coaching</a></li>
 <li><a onclick="openModal('premiumModal')">Premium</a></li>
+<li class="dropdown-divider"></li>
+<li><a href="handouts.html">Resources</a></li>
+<li><a href="catalog.html">Catalog</a></li>
+</ul>
+</li>
+
+<!-- Services Dropdown -->
+<li class="has-dropdown">
+<a href="javascript:void(0)">Services
+<svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<polyline points="6 9 12 15 18 9"></polyline>
+</svg>
+</a>
+<ul class="dropdown-menu">
+<li><a onclick="openModal('coachingModal')">Coaching</a></li>
 <li><a href="workshops.html">Workshops</a></li>
-<li><a href="https://www.impactmojo.in/handouts" target="_blank" rel="noopener">Resources</a></li>
+</ul>
+</li>
+
+<!-- About Us Dropdown -->
+<li class="has-dropdown">
+<a href="javascript:void(0)">About Us
+<svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<polyline points="6 9 12 15 18 9"></polyline>
+</svg>
+</a>
+<ul class="dropdown-menu">
+<li><a href="#about">Our Team</a></li>
 <li><a href="#wall-of-love">Testimonials</a></li>
 <li><a href="#roadmap">Roadmap</a></li>
-<li><a href="#about">About</a></li>
+<li class="dropdown-divider"></li>
 <li><a href="#contact">Contact</a></li>
+</ul>
+</li>
 </ul>
 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
 <svg class="icon icon-sun" viewbox="0 0 24 24">
@@ -5149,6 +5325,51 @@
             const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('active');
         }
+
+        // Mobile dropdown toggle (click to expand on mobile)
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownItems = document.querySelectorAll('.nav-links > li.has-dropdown');
+            
+            dropdownItems.forEach(item => {
+                const link = item.querySelector('a');
+                link.addEventListener('click', function(e) {
+                    // Only toggle on mobile (check if mobile menu toggle is visible)
+                    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+                    if (mobileToggle && window.getComputedStyle(mobileToggle).display !== 'none') {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // Close other dropdowns
+                        dropdownItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('open');
+                            }
+                        });
+                        
+                        // Toggle this dropdown
+                        item.classList.toggle('open');
+                    }
+                });
+            });
+
+            // Close dropdowns when clicking dropdown links on mobile
+            const dropdownLinks = document.querySelectorAll('.dropdown-menu a');
+            dropdownLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+                    if (mobileToggle && window.getComputedStyle(mobileToggle).display !== 'none') {
+                        // Close the mobile menu after clicking a dropdown item
+                        const navLinks = document.getElementById('navLinks');
+                        setTimeout(() => {
+                            navLinks.classList.remove('active');
+                            document.querySelectorAll('.nav-links > li.has-dropdown').forEach(item => {
+                                item.classList.remove('open');
+                            });
+                        }, 100);
+                    }
+                });
+            });
+        });
 
         // Modal functions
         function openModal(modalId) {
