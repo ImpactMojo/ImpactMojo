@@ -7523,8 +7523,7 @@ document.addEventListener('DOMContentLoaded', function(){
       /* s.setAttribute("data-site-language", "null");*/
       s.setAttribute("data-widget_layout", "full");
       s.setAttribute("data-account", "EksmhlPg9k");
-      s.setAtt
-ribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
+      s.setAttribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
       (d.body || d.head).appendChild(s);
     })(document);
 </script>
@@ -8999,7 +8998,6 @@ IMX.Tour = {
                     tooltipTop = viewportHeight - tooltipHeight - 20;
                 }
             } else if (pos === 'bottom') {
-                tooltipTop = rect.bottom + scrollOffset + gap;
                 tooltipLeft = rect.left;
                 arrowClass = 'arrow-top';
                 
@@ -9011,13 +9009,27 @@ IMX.Tour = {
                     tooltipLeft = 20;
                 }
                 
-                // Ensure tooltip is visible by scrolling if needed
+                // Check if tooltip would be cut off at bottom
                 var tooltipBottomEdge = rect.bottom + gap + tooltipHeight;
                 if (tooltipBottomEdge > viewportHeight) {
-                    // Tooltip would be cut off - scroll to show it
-                    var scrollNeeded = tooltipBottomEdge - viewportHeight + 40;
+                    // Tooltip would be cut off - scroll to show it and recalculate position
+                    var scrollNeeded = tooltipBottomEdge - viewportHeight + 60;
                     window.scrollBy({ top: scrollNeeded, behavior: 'smooth' });
+                    
+                    // Recalculate position after scroll (using setTimeout to wait for scroll)
+                    setTimeout(function() {
+                        var newRect = target.getBoundingClientRect();
+                        var newScrollOffset = window.scrollY;
+                        tooltipTop = newRect.bottom + newScrollOffset + gap;
+                        self.tooltip.style.top = tooltipTop + 'px';
+                        
+                        // Also update spotlight position
+                        self.spotlight.style.top = (newRect.top + newScrollOffset - padding) + 'px';
+                    }, 450);
                 }
+                
+                // Set initial position (will be updated if scroll occurred)
+                tooltipTop = rect.bottom + scrollOffset + gap;
             }
             
             self.tooltip.className = 'imx-tour-tooltip ' + arrowClass;
