@@ -8703,6 +8703,7 @@ IMX.Tour = {
         cursor: '<svg viewBox="0 0 24 24" width="20" height="20"><path d="M5 3l14 9-7 2-3 7-4-18z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>',
         robot: '<svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="8" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"></rect><path d="M12 8V4M8 13v2M16 13v2" stroke="currentColor" stroke-width="1.5"></path><circle cx="12" cy="2" r="1" fill="currentColor"></circle></svg>',
         menu: '<svg viewBox="0 0 24 24" width="20" height="20"><line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.5"></line><line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="1.5"></line><line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="1.5"></line></svg>',
+        accessibility: '<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="4" r="2" fill="none" stroke="currentColor" stroke-width="1.5"></circle><path d="M4 8h16M12 8v6m-4 6l4-6 4 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
         welcome: '<svg viewBox="0 0 24 24" width="48" height="48"><path d="M22 10v6M2 10l10-5 10 5-10 5z" fill="none" stroke="currentColor" stroke-width="1.5"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>'
     },
     
@@ -8759,6 +8760,13 @@ IMX.Tour = {
             icon: 'book',
             title: 'Smart Reading Lists',
             desc: 'Hand-picked resources from UNDP, World Bank, J-PAL, and other development organizations.',
+            position: 'left-of-target'
+        },
+        {
+            target: '.acsb-trigger',
+            icon: 'accessibility',
+            title: 'Accessibility Options',
+            desc: 'Customize your viewing experience! Adjust text size, contrast, colors, and more to make the site work best for you.',
             position: 'left-of-target'
         },
         {
@@ -9001,6 +9009,14 @@ IMX.Tour = {
                 }
                 if (tooltipLeft < 20) {
                     tooltipLeft = 20;
+                }
+                
+                // Ensure tooltip is visible by scrolling if needed
+                var tooltipBottomEdge = rect.bottom + gap + tooltipHeight;
+                if (tooltipBottomEdge > viewportHeight) {
+                    // Tooltip would be cut off - scroll to show it
+                    var scrollNeeded = tooltipBottomEdge - viewportHeight + 40;
+                    window.scrollBy({ top: scrollNeeded, behavior: 'smooth' });
                 }
             }
             
