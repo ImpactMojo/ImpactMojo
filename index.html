@@ -8854,7 +8854,20 @@ IMX.Tour = {
         // For fixed elements, scroll to top/bottom of page as appropriate
         // For non-fixed elements, scroll target into view
         if (!targetIsFixed) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // For bottom-positioned tooltips, we need extra space below the target
+            if (step.position === 'bottom') {
+                // Scroll so target is in upper portion of viewport, leaving room for tooltip
+                var rect = target.getBoundingClientRect();
+                var tooltipHeight = 220; // Approximate tooltip height including buttons
+                var gap = 20;
+                var desiredTargetTop = 100; // Where we want the target to be from top of viewport
+                var currentTargetTop = rect.top;
+                var scrollNeeded = currentTargetTop - desiredTargetTop + window.scrollY;
+                
+                window.scrollTo({ top: Math.max(0, scrollNeeded), behavior: 'smooth' });
+            } else {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         } else {
             // For fixed bottom elements, scroll to bottom of page to ensure visibility
             var rect = target.getBoundingClientRect();
@@ -8998,6 +9011,7 @@ IMX.Tour = {
                     tooltipTop = viewportHeight - tooltipHeight - 20;
                 }
             } else if (pos === 'bottom') {
+                tooltipTop = rect.bottom + scrollOffset + gap;
                 tooltipLeft = rect.left;
                 arrowClass = 'arrow-top';
                 
@@ -9009,27 +9023,11 @@ IMX.Tour = {
                     tooltipLeft = 20;
                 }
                 
-                // Check if tooltip would be cut off at bottom
-                var tooltipBottomEdge = rect.bottom + gap + tooltipHeight;
-                if (tooltipBottomEdge > viewportHeight) {
-                    // Tooltip would be cut off - scroll to show it and recalculate position
-                    var scrollNeeded = tooltipBottomEdge - viewportHeight + 60;
-                    window.scrollBy({ top: scrollNeeded, behavior: 'smooth' });
-                    
-                    // Recalculate position after scroll (using setTimeout to wait for scroll)
-                    setTimeout(function() {
-                        var newRect = target.getBoundingClientRect();
-                        var newScrollOffset = window.scrollY;
-                        tooltipTop = newRect.bottom + newScrollOffset + gap;
-                        self.tooltip.style.top = tooltipTop + 'px';
-                        
-                        // Also update spotlight position
-                        self.spotlight.style.top = (newRect.top + newScrollOffset - padding) + 'px';
-                    }, 450);
+                // Safety check: if tooltip still cut off, cap it at viewport bottom
+                var maxTop = viewportHeight + window.scrollY - tooltipHeight - 20;
+                if (tooltipTop > maxTop) {
+                    tooltipTop = maxTop;
                 }
-                
-                // Set initial position (will be updated if scroll occurred)
-                tooltipTop = rect.bottom + scrollOffset + gap;
             }
             
             self.tooltip.className = 'imx-tour-tooltip ' + arrowClass;
