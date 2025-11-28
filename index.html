@@ -8919,43 +8919,66 @@ IMX.Tour = {
                     tooltipLeft = viewportWidth - tooltipWidth - 20;
                 }
             } else if (pos === 'left-of-target') {
-                // For bottom-left FABs, position tooltip ABOVE and to the RIGHT
-                // This ensures visibility without scrolling issues
+                // Determine if target is on left or right side of screen
+                var targetCenterX = rect.left + (rect.width / 2);
+                var isTargetOnRight = targetCenterX > viewportWidth / 2;
+                
                 if (rect.bottom > viewportHeight - 200) {
-                    // Target is near bottom - position tooltip ABOVE the target
+                    // Target is near bottom of viewport
                     tooltipTop = rect.top + scrollOffset - tooltipHeight - gap;
-                    tooltipLeft = rect.right + gap;
-                    arrowClass = 'arrow-bottom';
                     
-                    // If would go off right side, position to the right of target but still above
-                    if (tooltipLeft + tooltipWidth > viewportWidth - 20) {
-                        tooltipLeft = rect.left;
-                        arrowClass = 'arrow-bottom';
-                    }
-                    
-                    // If tooltip would go off top, position it in upper portion of viewport
-                    if (tooltipTop < 20) {
-                        tooltipTop = 20;
+                    if (isTargetOnRight) {
+                        // Target on RIGHT side (like Mojini) - position tooltip to the LEFT
+                        tooltipLeft = rect.left - tooltipWidth - gap;
+                        arrowClass = 'arrow-right';
+                        
+                        // If would go off left side, position above centered
+                        if (tooltipLeft < 20) {
+                            tooltipLeft = Math.max(20, rect.left - tooltipWidth/2);
+                            arrowClass = 'arrow-bottom';
+                        }
+                    } else {
+                        // Target on LEFT side (like FABs) - position tooltip to the RIGHT
                         tooltipLeft = rect.right + gap;
                         arrowClass = 'arrow-left';
                         
+                        // If would go off right side, position above
                         if (tooltipLeft + tooltipWidth > viewportWidth - 20) {
-                            tooltipLeft = viewportWidth - tooltipWidth - 20;
+                            tooltipLeft = Math.max(20, rect.left);
+                            arrowClass = 'arrow-bottom';
                         }
                     }
-                } else {
-                    // Standard left-of-target positioning
-                    tooltipTop = rect.top + scrollOffset + (rect.height / 2) - (tooltipHeight / 2);
-                    tooltipLeft = rect.left - tooltipWidth - gap;
-                    arrowClass = 'arrow-right';
                     
-                    // If would go off left side, flip to right side
-                    if (tooltipLeft < 20) {
+                    // If tooltip would go off top, adjust
+                    if (tooltipTop < 20) {
+                        tooltipTop = 20;
+                    }
+                } else {
+                    // Standard positioning for elements not near bottom
+                    if (isTargetOnRight) {
+                        // Target on right - position tooltip to left
+                        tooltipTop = rect.top + scrollOffset + (rect.height / 2) - (tooltipHeight / 2);
+                        tooltipLeft = rect.left - tooltipWidth - gap;
+                        arrowClass = 'arrow-right';
+                        
+                        // If would go off left side, flip to above
+                        if (tooltipLeft < 20) {
+                            tooltipTop = rect.top + scrollOffset - tooltipHeight - gap;
+                            tooltipLeft = rect.left - tooltipWidth + rect.width;
+                            arrowClass = 'arrow-bottom';
+                            if (tooltipLeft < 20) tooltipLeft = 20;
+                        }
+                    } else {
+                        // Target on left - position tooltip to right
+                        tooltipTop = rect.top + scrollOffset + (rect.height / 2) - (tooltipHeight / 2);
                         tooltipLeft = rect.right + gap;
                         arrowClass = 'arrow-left';
                         
+                        // If would go off right side, flip to above
                         if (tooltipLeft + tooltipWidth > viewportWidth - 20) {
-                            tooltipLeft = viewportWidth - tooltipWidth - 20;
+                            tooltipTop = rect.top + scrollOffset - tooltipHeight - gap;
+                            tooltipLeft = rect.left;
+                            arrowClass = 'arrow-bottom';
                         }
                     }
                 }
