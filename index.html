@@ -38,7 +38,7 @@
 <meta content="#0066CC" name="theme-color"/>
 <!-- Google Fonts - Inter & Poppins -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin=— href="https://fonts.gstatic.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
 <style>
         * {
@@ -1963,18 +1963,639 @@
 .imx-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .7rem;border-radius:999px;border:1px solid var(--border-color);background:var(--card-bg);text-decoration:none;font-size:.85rem}
 .imx-btn:hover{transform:translateY(-1px)}
 .imx-chip.imx-disabled{opacity:.55;cursor:default}
+
+/* ========================================
+   ImpactMojo Features: Bookmarks, Compare, Lo-Fi
+   ======================================== */
+
+/* Floating Action Buttons (FABs) - Bottom Left to avoid MOJINI */
+.imx-fab-container {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 1000;
+}
+
+.imx-fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.imx-fab:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.imx-fab svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.imx-fab-bookmarks {
+    background: linear-gradient(135deg, #F97316, #EA580C);
+}
+
+.imx-fab-compare {
+    background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+}
+
+.imx-fab-lofi {
+    background: linear-gradient(135deg, #10B981, #059669);
+}
+
+.imx-fab-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #EF4444;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+}
+
+.imx-fab-badge:empty {
+    display: none;
+}
+
+/* Card Action Buttons (Save/Compare on each card) */
+.imx-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.imx-card-btn {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--secondary-bg);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+}
+
+.imx-card-btn:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+.imx-card-btn.active {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.imx-card-btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+/* Modal Styles */
+.imx-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.imx-modal.active {
+    display: flex;
+}
+
+.imx-modal-content {
+    background: var(--card-bg);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 900px;
+    max-height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+}
+
+.imx-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.imx-modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.imx-modal-title svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent-color);
+    fill: none;
+    stroke-width: 2;
+}
+
+.imx-modal-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--secondary-bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.imx-modal-close:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+.imx-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.imx-modal-footer {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    justify-content: flex-end;
+}
+
+.imx-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.imx-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+.imx-btn-primary {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+}
+
+.imx-btn-primary:hover {
+    background: var(--accent-hover);
+}
+
+.imx-btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.imx-btn-secondary:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+.imx-btn-danger {
+    background: transparent;
+    color: #EF4444;
+    border: 1px solid #EF4444;
+}
+
+.imx-btn-danger:hover {
+    background: #EF4444;
+    color: white;
+}
+
+/* Bookmarks List */
+.imx-bookmarks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.imx-bookmark-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--secondary-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.imx-bookmark-info {
+    flex: 1;
+}
+
+.imx-bookmark-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.imx-bookmark-meta {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 1rem;
+}
+
+.imx-bookmark-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.imx-bookmark-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.imx-bookmark-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--text-secondary);
+    fill: none;
+    stroke-width: 2;
+}
+
+.imx-bookmark-btn:hover {
+    background: var(--hover-bg);
+}
+
+.imx-bookmark-btn:hover svg {
+    stroke: var(--text-primary);
+}
+
+.imx-bookmark-btn.delete:hover {
+    background: #FEE2E2;
+    border-color: #EF4444;
+}
+
+.imx-bookmark-btn.delete:hover svg {
+    stroke: #EF4444;
+}
+
+/* Compare Grid */
+.imx-compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.imx-compare-card {
+    background: var(--secondary-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    position: relative;
+}
+
+.imx-compare-remove {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: var(--card-bg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imx-compare-remove svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--text-muted);
+    fill: none;
+    stroke-width: 2;
+}
+
+.imx-compare-remove:hover {
+    background: #FEE2E2;
+}
+
+.imx-compare-remove:hover svg {
+    stroke: #EF4444;
+}
+
+.imx-compare-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    padding-right: 2rem;
+}
+
+.imx-compare-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.imx-compare-row:last-child {
+    border-bottom: none;
+}
+
+.imx-compare-label {
+    color: var(--text-secondary);
+}
+
+.imx-compare-value {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.imx-compare-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.imx-compare-link:hover {
+    text-decoration: underline;
+}
+
+/* Lo-Fi Playlists Grid */
+.imx-lofi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.imx-lofi-card {
+    background: var(--secondary-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.imx-lofi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.imx-lofi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #10B981, #059669);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.imx-lofi-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: white;
+    fill: none;
+    stroke-width: 2;
+}
+
+.imx-lofi-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.imx-lofi-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.imx-lofi-links {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.imx-lofi-link {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.imx-lofi-link.spotify {
+    background: #1DB954;
+    color: white;
+}
+
+.imx-lofi-link.spotify:hover {
+    background: #1AA34A;
+}
+
+.imx-lofi-link.youtube {
+    background: #FF0000;
+    color: white;
+}
+
+.imx-lofi-link.youtube:hover {
+    background: #CC0000;
+}
+
+/* Toast Notifications */
+.imx-toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    z-index: 3000;
+    animation: imxToastIn 0.3s ease;
+}
+
+.imx-toast.fade-out {
+    animation: imxToastOut 0.3s ease forwards;
+}
+
+@keyframes imxToastIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes imxToastOut {
+    from { opacity: 1; transform: translateX(-50%) translateY(0); }
+    to { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}
+
+/* Empty State */
+.imx-empty {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-secondary);
+}
+
+.imx-empty svg {
+    width: 64px;
+    height: 64px;
+    stroke: var(--text-muted);
+    fill: none;
+    stroke-width: 1.5;
+    margin-bottom: 1rem;
+}
+
+.imx-empty p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.imx-empty small {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Live Indicator (pulsating dot) */
+.live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(16, 185, 129, 0.15);
+    color: #10B981;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #10B981;
+    border-radius: 50%;
+    animation: livePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .imx-fab-container {
+        bottom: 1rem;
+        left: 1rem;
+    }
+    
+    .imx-fab {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .imx-fab svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .imx-modal-content {
+        max-height: 90vh;
+        border-radius: 12px;
+    }
+    
+    .imx-compare-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .imx-lofi-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 </style>
 
-<style id="im-hard-disable-compare-bookmarks-20251007">
-[id*="compare" i], [class*="compare" i], [aria-label*="compare" i],
-[id*="bookmark" i], [class*="bookmark" i], [aria-label*="bookmark" i] {
-  display: none !important; visibility: hidden !important; pointer-events: none !important;
-}
-[role="dialog"][aria-label*="compare" i],
-[role="dialog"][aria-label*="bookmark" i] {
-  display:none !important; visibility:hidden !important; pointer-events:none !important;
-}
-</style>
+<!-- Bookmark and Compare features ENABLED - blocking CSS removed -->
 
 <!-- BEGIN imx: scoped styles -->
 <style>
@@ -2998,6 +3619,10 @@
 <line x1="9" x2="15" y1="15" y2="15"></line>
 </svg>
                             Course Comparison Tool
+                            <span class="live-indicator">
+                                <span class="live-dot"></span>
+                                Live
+                            </span>
                         </h4>
 <p>Compare courses side-by-side, export learning materials, and track progress</p>
 </div>
@@ -3007,6 +3632,10 @@
 <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77"></path>
 </svg>
                             Lo-Fi Study Playlists
+                            <span class="live-indicator">
+                                <span class="live-dot"></span>
+                                Live
+                            </span>
                         </h4>
 <p>Curated background music for focused learning sessions</p>
 </div>
@@ -3410,7 +4039,7 @@
                             </h4>
 <p>One-on-one guidance for your development sector career journey.</p>
 <p><strong>Duration:</strong> 60 minutes</p>
-<p class="price">₹1,500 (Sliding scale: ₹400-₹2,000)</p>
+<p class="price">â‚¹1,500 (Sliding scale: â‚¹400-â‚¹2,000)</p>
 <div class="booking-button-container" id="booking-btn-1"></div>
 </div>
 <div class="service-item">
@@ -3423,7 +4052,7 @@
                             </h4>
 <p>Expert consultation on research methodology and sampling strategies.</p>
 <p><strong>Duration:</strong> 90 minutes</p>
-<p class="price">₹2,500 (Sliding scale: ₹1,000-₹3,000)</p>
+<p class="price">â‚¹2,500 (Sliding scale: â‚¹1,000-â‚¹3,000)</p>
 <div class="booking-button-container" id="booking-btn-2"></div>
 </div>
 <div class="service-item">
@@ -3437,7 +4066,7 @@
                             </h4>
 <p>Statistical analysis support and visualization guidance.</p>
 <p><strong>Duration:</strong> 90 minutes</p>
-<p class="price">₹2,000 (Sliding scale: ₹800-₹2,500)</p>
+<p class="price">â‚¹2,000 (Sliding scale: â‚¹800-â‚¹2,500)</p>
 <div class="booking-button-container" id="booking-btn-3"></div>
 </div>
 <div class="service-item">
@@ -3493,7 +4122,7 @@
 <option value="C38">English for Development 101</option>
 </select>
 <p><strong>Duration:</strong> 3 days (6 hours/day)</p>
-<p class="price">₹6,000 (Sliding scale: ₹3,000-₹8,000)</p>
+<p class="price">â‚¹6,000 (Sliding scale: â‚¹3,000-â‚¹8,000)</p>
 <a class="btn btn-primary" href="/cdn-cgi/l/email-protection#f89b97999b9091969fb8919588999b8c95979297d69196c78b8d9a929d9b8cc5af978a938b909788ddcac8b196898d918a81">
 <svg class="icon-sm" viewbox="0 0 24 24">
 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -3539,7 +4168,7 @@
 </div>
 <p class="modal-item-description">Identify, assess, and develop mitigation strategies for risks across development projects through scenario planning and risk matrix tools. Practice real-world risk management using case studies from humanitarian, infrastructure, and governance programs.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3561,7 +4190,7 @@
 </div>
 <p class="modal-item-description">Design and test policy advocacy campaigns through hands-on exercises in stakeholder analysis, message testing, and strategic communication. Work with real policy briefs and practice pitching recommendations to simulated decision-makers and media.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3583,7 +4212,7 @@
 </div>
 <p class="modal-item-description">Analyze resource flows, develop sustainability plans, and create fundraising strategies through practical exercises with real organizational data. Learn to balance financial sustainability with mission alignment while navigating donor requirements and local ownership.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3605,7 +4234,7 @@
 </div>
 <p class="modal-item-description">Map partnership ecosystems, design collaboration frameworks, and measure collective impact through interactive exercises and negotiation simulations. Practice building equitable partnerships that leverage complementary strengths for systems-level change.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3627,7 +4256,7 @@
 </div>
 <p class="modal-item-description">Create comprehensive Monitoring, Learning, and Evaluation systems from scratch, including results frameworks, data collection tools, and learning agendas. Work through real program scenarios to design adaptive management systems that balance accountability with learning.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3649,7 +4278,7 @@
 </div>
 <p class="modal-item-description">Develop detailed MEL plans with indicators, targets, and data management systems through guided exercises using actual program documents. Practice creating user-friendly dashboards and feedback loops that drive evidence-based decision-making.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3671,7 +4300,7 @@
 </div>
 <p class="modal-item-description">Apply human-centered design methodologies to development challenges through rapid prototyping, user journey mapping, and ideation exercises. Learn to facilitate design sprints that generate innovative solutions grounded in community needs and aspirations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3693,7 +4322,7 @@
 </div>
 <p class="modal-item-description">Construct robust theories of change that articulate pathways from activities to impact through assumption mapping and evidence review exercises. Practice backwards mapping, identifying critical assumptions, and creating theories that guide strategic decision-making.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3715,7 +4344,7 @@
 </div>
 <p class="modal-item-description">Transform data and field experiences into compelling narratives through exercises in story structure, character development, and multimedia production. Learn ethical storytelling practices that center community voices while engaging diverse audiences for social change.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3737,7 +4366,7 @@
 </div>
 <p class="modal-item-description">Practice participatory facilitation techniques, community mapping, and consensus-building through role-playing exercises and simulation games. Develop skills for navigating power dynamics and facilitating inclusive decision-making processes in diverse community settings.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3781,7 +4410,7 @@
 </div>
 <p class="modal-item-description">Experience the free-rider problem firsthand as players decide whether to contribute to shared resources that benefit everyone. Learn how public goods create collective action dilemmas and explore mechanisms for sustaining cooperation in communities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3803,7 +4432,7 @@
 </div>
 <p class="modal-item-description">Navigate strategic decision-making where individual rationality leads to collectively suboptimal outcomes through interactive scenarios. Discover how trust, reputation, and repeated interactions can overcome cooperation challenges in development contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3825,7 +4454,7 @@
 </div>
 <p class="modal-item-description">Make resource allocation decisions under constraints and experience the tradeoffs inherent in every economic choice. Learn to evaluate alternatives and understand how opportunity costs shape individual and policy decisions in resource-scarce environments.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3847,7 +4476,7 @@
 </div>
 <p class="modal-item-description">Build networks and watch value multiply as more participants join, experiencing how digital platforms and social programs scale. Understand positive feedback loops, critical mass dynamics, and the winner-take-all economics of networked systems.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3869,7 +4498,7 @@
 </div>
 <p class="modal-item-description">Explore scenarios where cooperation yields better outcomes but individual incentives push toward competition through interactive gameplay. Master concepts like Nash equilibrium, Pareto efficiency, and mechanism design through practical application.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3891,7 +4520,7 @@
 </div>
 <p class="modal-item-description">Balance risk-taking with potential returns through investment decisions that mirror real-world uncertainty and information asymmetry. Learn about risk preferences, expected utility theory, and portfolio diversification through simulated market environments.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3913,7 +4542,7 @@
 </div>
 <p class="modal-item-description">Participate in various auction formats to understand price discovery, winner's curse, and strategic bidding behavior. Experience how different auction designs affect efficiency and revenue in contexts from spectrum allocation to procurement.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3935,7 +4564,7 @@
 </div>
 <p class="modal-item-description">Navigate markets where buyers and sellers have different information, experiencing adverse selection and moral hazard firsthand. Learn how signaling, screening, and reputation mechanisms can overcome information problems in development programs.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3957,7 +4586,7 @@
 </div>
 <p class="modal-item-description">Solve economic puzzles that teach concepts from supply and demand to game theory through engaging brain-teasers and scenarios. Master economic reasoning through pattern recognition and logical deduction in bite-sized challenges.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -3979,7 +4608,7 @@
 </div>
 <p class="modal-item-description">Make production and consumption decisions while discovering the hidden social costs and benefits of your choices. Understand market failures, Pigouvian taxes, and the challenge of internalizing externalities through interactive scenarios.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4001,7 +4630,7 @@
 </div>
 <p class="modal-item-description">Manage shared resources while avoiding the tragedy of the commons through collective decision-making and institution building. Experience how communication, monitoring, and sanctions can sustain common-pool resources across generations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4023,7 +4652,7 @@
 </div>
 <p class="modal-item-description">Navigate economic choices facing India's middle class, from education investments to consumption decisions amid aspirational pressures. Understand income mobility, class dynamics, and the precarity of middle-class status through realistic scenarios.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4209,7 +4838,7 @@
 </div>
 <p class="modal-item-description">Seamlessly translate statistical code between R, Stata, SPSS, and Python while maintaining analytical integrity and reproducibility. Advanced features include automatic documentation generation, error checking, and optimization for large datasets common in development research.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4231,7 +4860,7 @@
 </div>
 <p class="modal-item-description">Access advanced qualitative analysis tools including AI-assisted coding, pattern recognition, and multi-modal data integration capabilities. Generate publication-ready visualizations, theoretical models, and mixed-methods integration frameworks from complex qualitative datasets.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4252,7 +4881,7 @@
 </div>
 </div>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4275,7 +4904,7 @@
 </div>
 <p class="modal-item-description">Turn messy ideas into sharp, researchable questions with worked examples, templates, and 101-style guidance for social impact projects.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4318,7 +4947,7 @@
 </div>
 <p class="modal-item-description">Master the specialized vocabulary and communication strategies essential for international development work, from writing policy briefs to facilitating stakeholder consultations. Learn to navigate cross-cultural professional contexts while building fluency in technical terminology used by UN agencies, NGOs, and development institutions.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4340,7 +4969,7 @@
 </div>
 <p class="modal-item-description">Transform raw field observations into actionable insights through systematic observation techniques, pattern recognition, and analytical frameworks used by leading ethnographers and field researchers. Develop skills to capture nuanced contextual data and translate ground realities into evidence-based recommendations for program design.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4362,7 +4991,7 @@
 </div>
 <p class="modal-item-description">Bridge the gap between economic theory and real-world policy implementation by understanding cost-benefit analysis, market failures, and welfare economics through a practitioner's lens. Master the economic reasoning behind policy interventions while learning to communicate complex economic concepts to non-specialist audiences.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4384,7 +5013,7 @@
 </div>
 <p class="modal-item-description">Explore how power dynamics shape data collection, analysis, and interpretation through an intersectional feminist framework that challenges traditional approaches to quantitative research. Learn to identify and counter data biases while developing inclusive methodologies that amplify marginalized voices in development research.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4406,7 +5035,7 @@
 </div>
 <p class="modal-item-description">Discover evidence-based teaching methodologies and learning theories that drive educational outcomes in diverse developmental contexts, from early childhood to adult education. Master curriculum design, assessment strategies, and pedagogical approaches that work in resource-constrained environments.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4428,7 +5057,7 @@
 </div>
 <p class="modal-item-description">Understand the science, economics, and politics of climate change through a development lens, exploring mitigation, adaptation, and climate justice frameworks. Learn to integrate climate considerations into development programming while understanding the differential impacts on vulnerable populations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4450,7 +5079,7 @@
 </div>
 <p class="modal-item-description">Navigate the fundamentals of epidemiology, health systems, and disease prevention strategies that underpin global health interventions. Explore the social determinants of health and learn to design community health programs that address both immediate needs and systemic inequities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4472,7 +5101,7 @@
 </div>
 <p class="modal-item-description">Examine the constitutional framework that guides India's democracy, including fundamental rights, directive principles, and the federal structure that shapes development policy. Understand how constitutional provisions intersect with social justice, economic planning, and citizen entitlements in the world's largest democracy.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4494,7 +5123,7 @@
 </div>
 <p class="modal-item-description">Master core theories of economic development from structural transformation to behavioral economics, examining why nations succeed or fail in their development trajectories. Analyze poverty traps, institutional economics, and growth models through case studies from the Global South.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4516,7 +5145,7 @@
 </div>
 <p class="modal-item-description">Unpack how political institutions, power structures, and economic systems interact to shape development outcomes and policy choices. Learn to analyze rent-seeking behavior, elite capture, and the political feasibility of reforms through theoretical frameworks and real-world applications.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4538,7 +5167,7 @@
 </div>
 <p class="modal-item-description">Examine how gender intersects with development through theoretical frameworks spanning from Women in Development (WID) to contemporary intersectional approaches. Develop skills to conduct gender analysis, design gender-responsive programs, and measure women's empowerment across diverse cultural contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4560,7 +5189,7 @@
 </div>
 <p class="modal-item-description">Navigate the ethical complexities of conducting research in development settings, from informed consent procedures to data privacy and community benefit-sharing. Learn international ethical standards while developing culturally sensitive approaches to research with vulnerable populations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4582,7 +5211,7 @@
 </div>
 <p class="modal-item-description">Explore strategies for enhancing women's economic participation, from financial inclusion to entrepreneurship and labor market interventions. Analyze the evidence base for what works in breaking down barriers to women's economic agency across different contexts and sectors.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4604,7 +5233,7 @@
 </div>
 <p class="modal-item-description">Understand sustainable livelihoods frameworks and learn to design interventions that build resilient economic opportunities for vulnerable populations. Master value chain analysis, market systems approaches, and skills development strategies that create lasting pathways out of poverty.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4626,7 +5255,7 @@
 </div>
 <p class="modal-item-description">Develop essential skills for policy advocacy, from stakeholder mapping and message framing to campaign strategy and coalition building. Learn to navigate political landscapes and create compelling narratives that drive policy change for marginalized communities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4648,7 +5277,7 @@
 </div>
 <p class="modal-item-description">Master the psychology and practice of designing communication interventions that shift behaviors, from health practices to environmental conservation. Learn to apply behavioral insights, social marketing principles, and participatory approaches to create lasting social change.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4670,7 +5299,7 @@
 </div>
 <p class="modal-item-description">Build foundational skills in Monitoring, Evaluation, and Learning systems that drive adaptive management and demonstrate program impact. Learn to develop theories of change, design indicators, and create learning loops that improve development outcomes.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4692,7 +5321,7 @@
 </div>
 <p class="modal-item-description">Harness the power of visual methods in development research, from participatory photography to video documentation and visual storytelling. Learn ethical approaches to visual representation while developing skills to capture and analyze visual data that reveals hidden dimensions of social reality.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4714,7 +5343,7 @@
 </div>
 <p class="modal-item-description">Examine multidimensional poverty measurement, inequality indices, and the structural drivers of economic disparities across and within nations. Analyze policy instruments for redistribution and inclusive growth through theoretical frameworks and empirical evidence.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4736,7 +5365,7 @@
 </div>
 <p class="modal-item-description">Develop critical skills for understanding, interpreting, and communicating with data in development contexts, from survey design to visualization. Learn to spot misleading statistics, work with incomplete data, and translate complex findings into actionable insights for diverse stakeholders.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4758,7 +5387,7 @@
 </div>
 <p class="modal-item-description">Understand the fundamentals of Sexual and Reproductive Health and Rights, from clinical services to rights-based approaches and gender-transformative programming. Explore evidence-based interventions that advance bodily autonomy and reproductive justice in diverse cultural contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4780,7 +5409,7 @@
 </div>
 <p class="modal-item-description">Examine how caste, ethnicity, disability, sexuality, and other identity markers create overlapping systems of marginalization that shape development outcomes. Learn intersectional approaches to program design that center the experiences and agency of excluded groups.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4802,7 +5431,7 @@
 </div>
 <p class="modal-item-description">Challenge dominant development paradigms through postcolonial and decolonial theoretical frameworks that question Western-centric approaches to progress. Explore alternative visions of wellbeing, indigenous knowledge systems, and South-South cooperation models that reimagine development practice.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4824,7 +5453,7 @@
 </div>
 <p class="modal-item-description">Master participatory approaches to community mobilization, from asset-based development to collective action and social capital formation. Learn to facilitate community-led planning processes that build local ownership and sustainable change from the grassroots up.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4846,7 +5475,7 @@
 </div>
 <p class="modal-item-description">Explore how environmental degradation disproportionately impacts marginalized communities and learn frameworks for equitable environmental governance. Analyze the intersection of climate change, resource extraction, and social justice through case studies of environmental movements worldwide.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4868,7 +5497,7 @@
 </div>
 <p class="modal-item-description">Understand the economic value of unpaid care work and explore policies that support care workers while redistributing care responsibilities. Analyze care infrastructure, social protection systems, and the care diamond framework through feminist economic perspectives.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4890,7 +5519,7 @@
 </div>
 <p class="modal-item-description">Master statistical techniques for causal inference in development economics, from randomized controlled trials to quasi-experimental methods. Learn to design rigorous impact evaluations and interpret econometric findings while understanding their limitations and ethical implications.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4912,7 +5541,7 @@
 </div>
 <p class="modal-item-description">Navigate the complex ecosystem of development institutions from the UN system to multilateral banks and bilateral agencies. Understand aid effectiveness debates, financing mechanisms, and the evolving architecture of global development cooperation in a multipolar world.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4934,7 +5563,7 @@
 </div>
 <p class="modal-item-description">Analyze how misinformation, polarization, and erosion of institutional trust shape development outcomes in the digital age. Learn strategies for evidence-based communication, fact-checking, and building public trust in development interventions amid information disorder.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4956,7 +5585,7 @@
 </div>
 <p class="modal-item-description">Develop essential skills for resource mobilization in the development sector, from grant writing to donor engagement and partnership building. Learn to navigate funding landscapes, write compelling proposals, and build sustainable financing strategies for social impact.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -4978,7 +5607,7 @@
 </div>
 <p class="modal-item-description">Master in-depth interviewing, focus group facilitation, and ethnographic techniques that capture rich contextual insights in development research. Learn to code, analyze, and triangulate qualitative data while ensuring rigor and trustworthiness in your findings.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -5000,7 +5629,7 @@
 </div>
 <p class="modal-item-description">Develop skills for cleaning, exploring, and visualizing household survey data using statistical software and reproducible research practices. Learn to identify patterns, detect outliers, and prepare datasets for advanced analysis while understanding survey design effects.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -5022,7 +5651,7 @@
 </div>
 <p class="modal-item-description">Master techniques for examining relationships between two variables, from correlation analysis to cross-tabulations and simple regression. Learn to test hypotheses, interpret statistical significance, and communicate bivariate findings to non-technical audiences.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -5044,7 +5673,7 @@
 </div>
 <p class="modal-item-description">Explore ILO frameworks for promoting productive employment, labor rights, social protection, and social dialogue in development contexts. Analyze informal economy dynamics, labor market policies, and strategies for creating inclusive and dignified work opportunities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -5066,7 +5695,7 @@
 </div>
 <p class="modal-item-description">Learn advanced psychometric techniques for developing and validating measurement instruments in development research, from poverty indices to learning assessments. Master latent trait modeling, differential item functioning, and scale development for cross-cultural contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -5088,7 +5717,7 @@
 </div>
 <p class="modal-item-description">Navigate ethical challenges in digital development, from data privacy and algorithmic bias to digital divides and surveillance concerns. Learn responsible innovation frameworks and develop strategies for equitable and ethical technology deployment in development programs.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -5110,7 +5739,7 @@
 </div>
 <p class="modal-item-description">Master advanced statistical techniques for analyzing complex relationships among multiple variables, from factor analysis to structural equation modeling. Learn to uncover hidden patterns in development data and test sophisticated theoretical models using cutting-edge analytical methods.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -5132,7 +5761,7 @@
 </div>
 <p class="modal-item-description">Understand Social and Emotional Learning frameworks and their application in education and youth development programs worldwide. Learn evidence-based approaches for building emotional intelligence, resilience, and interpersonal skills that enhance learning outcomes and life success.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -5154,7 +5783,7 @@
 </div>
 <p class="modal-item-description">Master economic evaluation techniques for comparing development interventions, from cost-benefit analysis to cost-utility assessments. Learn to calculate incremental cost-effectiveness ratios and make resource allocation decisions that maximize social impact per dollar spent.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open →</span>
+<span class="modal-item-link">Open â†’</span>
 </div>
 </a>
 </div>
@@ -5171,7 +5800,7 @@
 <div class="footer-content">
 <div class="footer-support">
 <h4>Support Our Mission</h4>
-<p>ImpactMojo is provided completely free through the generous support of <a href="https://www.pinpointventures.in" style="color: var(--accent-color); text-decoration: none; font-weight: 600;" target="_blank">PinPoint Ventures</a> ♥</p>
+<p>ImpactMojo is provided completely free through the generous support of <a href="https://www.pinpointventures.in" style="color: var(--accent-color); text-decoration: none; font-weight: 600;" target="_blank">PinPoint Ventures</a> â™¥</p>
 <p>Help us keep education free and accessible</p>
 <p style="margin-top: 1rem;">
 <strong>Support us via UPI:</strong>
@@ -5239,7 +5868,7 @@
 
 <!-- Google Calendar Integration -->
 <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet"/>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script async=— src="https://calendar.google.com/calendar/scheduling-button-script.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script async="" src="https://calendar.google.com/calendar/scheduling-button-script.js"></script>
 <!-- Feedback FAB -->
 <div class="feedback-fab" onclick="openChatbot()">
 <svg class="icon" viewbox="0 0 24 24">
@@ -5291,7 +5920,7 @@
             }
         }
 
-        // Load theme: saved preference → system preference → time of day
+        // Load theme: saved preference â†’ system preference â†’ time of day
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme');
             const sunIcon = document.querySelector('.theme-toggle .icon-sun');
@@ -5514,11 +6143,11 @@
                 </div>
                 <div>
                     <div class="star-selector" style="display: flex; gap: 0.5rem; justify-content: center; padding: 1rem;">
-                        <button class="star-btn" onclick="setRating(1)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
-                        <button class="star-btn" onclick="setRating(2)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
-                        <button class="star-btn" onclick="setRating(3)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
-                        <button class="star-btn" onclick="setRating(4)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
-                        <button class="star-btn" onclick="setRating(5)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
+                        <button class="star-btn" onclick="setRating(1)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">â˜†</button>
+                        <button class="star-btn" onclick="setRating(2)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">â˜†</button>
+                        <button class="star-btn" onclick="setRating(3)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">â˜†</button>
+                        <button class="star-btn" onclick="setRating(4)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">â˜†</button>
+                        <button class="star-btn" onclick="setRating(5)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">â˜†</button>
                     </div>
                 </div>
             `;
@@ -5534,10 +6163,10 @@
             const stars = document.querySelectorAll('.star-btn');
             stars.forEach((star, index) => {
                 if (index < rating) {
-                    star.textContent = '★';
+                    star.textContent = 'â˜…';
                     star.style.color = '#FCD34D';
                 } else {
-                    star.textContent = '☆';
+                    star.textContent = 'â˜†';
                     star.style.color = '#374151';
                 }
             });
@@ -5742,7 +6371,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- === Mojini (KB+FAQ) wrapper "“ inserted just before 
+<!-- === Mojini (KB+FAQ) wrapper "" inserted just before 
 <!-- === Mojini KB UI Enhancer — adds KB starter chips, updates greeting & placeholder 
 <script>
 (function(){
@@ -5755,7 +6384,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if(!inp) return;
     if(!inp.getAttribute('data-mojini-ph')){
       inp.setAttribute('data-mojini-ph','1');
-      inp.placeholder = 'Ask about courses, labs, credentials, premium, resources, games, founders"¦ or leave feedback';
+      inp.placeholder = 'Ask about courses, labs, credentials, premium, resources, games, founders"Â¦ or leave feedback';
     }
   }
 
@@ -5897,29 +6526,13 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-<script id="im-hard-disable-compare-bookmarks-js-20251007">
+<!-- Bookmark and Compare JS blockers REMOVED - features now enabled -->
+<script>
+// Keep the retargetLinks functionality (opens external links in new tab)
 (function(){
-  try{
-    function noop(n){ try{ if(typeof window[n]!=='undefined') window[n]=function(){}; }catch(e){} }
-    ['showCompare','openCompare','toggleCompare','showCompareModal','renderCompare','addToCompare','removeFromCompare','setupCompareAndBookmarks','showBookmarks','openBookmarks','toggleBookmarks','showBookmarkModal','renderBookmarks','addBookmark','removeBookmark'].forEach(noop);
-    document.addEventListener('click', function(e){
-      var el=e.target;
-      for(var i=0; el && i<5; i++, el=el.parentElement){
-        var txt=(el.innerText||el.textContent||'').toLowerCase();
-        var id=(el.id||'').toLowerCase();
-        var cl=(el.className||'').toString().toLowerCase();
-        var ar=((el.getAttribute&&(el.getAttribute('aria-label')||''))||'').toLowerCase();
-        if(txt.includes('compare')||txt.includes('bookmark')||id.includes('compare')||id.includes('bookmark')||cl.includes('compare')||cl.includes('bookmark')||ar.includes('compare')||ar.includes('bookmark')){
-          e.preventDefault(); e.stopPropagation(); return false;
-        }
-      }
-    }, true);
-    var mo=new MutationObserver(function(ms){ms.forEach(function(m){(m.addedNodes||[]).forEach(function(n){if(!(n instanceof Element))return; var txt=(n.innerText||n.textContent||'').toLowerCase(); var id=(n.id||'').toLowerCase(); var cl=(n.className||'').toString().toLowerCase(); var ar=((n.getAttribute&&(n.getAttribute('aria-label')||''))||'').toLowerCase(); if(txt.includes('compare')||txt.includes('bookmark')||id.includes('compare')||id.includes('bookmark')||cl.includes('compare')||cl.includes('bookmark')||ar.includes('compare')||ar.includes('bookmark')){ if(n.parentNode)n.parentNode.removeChild(n);} });});});
-    mo.observe(document.documentElement,{childList:true,subtree:true});
-    function retargetLinks(){document.querySelectorAll('a[href]').forEach(function(a){var h=a.getAttribute('href')||'';if(/^https?:\\/\\//i.test(h)){a.setAttribute('target','_blank');a.setAttribute('rel','noopener noreferrer');}});}
+    function retargetLinks(){document.querySelectorAll('a[href]').forEach(function(a){var h=a.getAttribute('href')||'';if(/^https?:\/\//i.test(h)){a.setAttribute('target','_blank');a.setAttribute('rel','noopener noreferrer');}});}
     document.addEventListener('DOMContentLoaded', retargetLinks);
     retargetLinks();
-  }catch(e){}
 })();
 </script>
 
@@ -6252,7 +6865,7 @@ document.addEventListener('DOMContentLoaded', function(){
     { t:'Mixed Methods Research 101', u:'https://101.impactmojo.in/qual-methods', o:'Integrating qual + quant rigorously.'},
     { t:'Impact Evaluation Design 101', u:'https://101.impactmojo.in/econometrics-101', o:'RCT to quasi-experimental choices.'},
     { t:'Fundraising 101',            u:'https://101.impactmojo.in/fundraising-basics', o:'HNI, institutional, grassroots basics.'},
-    { t:'Programme Design Principles 101', u:'https://101.impactmojo.in/community-dev', o:'Problem framing → ToC, delivery, risk.'},
+    { t:'Programme Design Principles 101', u:'https://101.impactmojo.in/community-dev', o:'Problem framing â†’ ToC, delivery, risk.'},
     { t:'Environmental Justice 101',  u:'https://101.impactmojo.in/env-justice', o:'Justice-centred climate/environment action.'},
     { t:'Digital Governance 101',     u:'https://101.impactmojo.in/digital-ethics', o:'Platforms, data governance, service delivery.'},
     { t:'Nutrition, Food Systems & Culture 101', u:'https://101.impactmojo.in/care-economy-101', o:'Nutrition security, culture, markets.'},
@@ -6279,8 +6892,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // ——— Helpers ———
   const norm = s => String(s||"").toLowerCase();
-  const listCourses = () => COURSES.map(c=>`"¢ ${c.t} — ${c.o}\n  ${c.u}`).join("\n");
-  const listLabs = () => LABS.map(l=>`"¢ ${l.t}\n  ${l.u}`).join("\n");
+  const listCourses = () => COURSES.map(c=>`"Â¢ ${c.t} — ${c.o}\n  ${c.u}`).join("\n");
+  const listLabs = () => LABS.map(l=>`"Â¢ ${l.t}\n  ${l.u}`).join("\n");
   const byTitle = (arr, text) => {
     const s = norm(text);
     return arr.find(x => s.includes(norm(x.t)) || norm(x.t).includes(s));
@@ -6427,7 +7040,7 @@ document.addEventListener('DOMContentLoaded', function(){
       a: "ImpactMojo is designed for practitioners and teams. Courses build foundations; labs help teams design, test, and improve programs." }
   ];
 
-  // Dynamic course objective matcher (covers "What's the objective of X?" without listing all regexes)
+  // Dynamic course objective matcher (covers "What's the objective of X?"Â without listing all regexes)
   function tryCourseObjective(text){
     const s = norm(text);
     if (!/(objective|about|overview|syllabus|what is)/i.test(text)) return null;
@@ -6443,7 +7056,7 @@ document.addEventListener('DOMContentLoaded', function(){
     return null;
   }
 
-  // Main answerer: bank → dynamic course objective → (optional) existing mojiniAnswer → fallback null
+  // Main answerer: bank â†’ dynamic course objective â†’ (optional) existing mojiniAnswer â†’ fallback null
   function answerFromFAQ(userText){
     const text = String(userText||"");
     // 1) Hardcoded bank
@@ -6493,7 +7106,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if (inp) inp.value = "";
       return;
     }
-    // Not matched → pass through to whatever was there before
+    // Not matched â†’ pass through to whatever was there before
     if (typeof __prevSend === "function") return __prevSend.apply(this, arguments);
   };
 })();
@@ -6612,3 +7225,581 @@ document.addEventListener('DOMContentLoaded', function(){
       s.setAttribute("data-widget_layout", "full");
       s.setAttribute("data-account", "EksmhlPg9k");
       s.setAtt
+ribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
+      (d.body || d.head).appendChild(s);
+    })(document);
+</script>
+
+<!-- ImpactMojo Feature FABs and Modals -->
+<div class="imx-fab-container">
+    <!-- Bookmarks FAB -->
+    <button class="imx-fab imx-fab-bookmarks" onclick="IMX.openBookmarksModal()" title="My Bookmarks" aria-label="Open bookmarks">
+        <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+        <span class="imx-fab-badge" id="imxBookmarkBadge"></span>
+    </button>
+    
+    <!-- Compare FAB -->
+    <button class="imx-fab imx-fab-compare" onclick="IMX.openCompareModal()" title="Compare Items" aria-label="Open compare tool">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+        <span class="imx-fab-badge" id="imxCompareBadge"></span>
+    </button>
+    
+    <!-- Lo-Fi FAB -->
+    <button class="imx-fab imx-fab-lofi" onclick="IMX.openLofiModal()" title="Lo-Fi Study Playlists" aria-label="Open lo-fi playlists">
+        <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+    </button>
+</div>
+
+<!-- Bookmarks Modal -->
+<div class="imx-modal" id="imxBookmarksModal" role="dialog" aria-label="Bookmarks">
+    <div class="imx-modal-content">
+        <div class="imx-modal-header">
+            <div class="imx-modal-title">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                My Bookmarks
+            </div>
+            <button class="imx-modal-close" onclick="IMX.closeBookmarksModal()" aria-label="Close">×</button>
+        </div>
+        <div class="imx-modal-body">
+            <div id="imxBookmarksList" class="imx-bookmarks-list"></div>
+        </div>
+        <div class="imx-modal-footer">
+            <button class="imx-btn imx-btn-danger" onclick="IMX.clearAllBookmarks()">
+                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                Clear All
+            </button>
+            <button class="imx-btn imx-btn-secondary" onclick="IMX.exportBookmarksCSV()">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Export CSV
+            </button>
+            <button class="imx-btn imx-btn-primary" onclick="IMX.closeBookmarksModal()">Done</button>
+        </div>
+    </div>
+</div>
+
+<!-- Compare Modal -->
+<div class="imx-modal" id="imxCompareModal" role="dialog" aria-label="Compare courses">
+    <div class="imx-modal-content">
+        <div class="imx-modal-header">
+            <div class="imx-modal-title">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                Compare (up to 3)
+            </div>
+            <button class="imx-modal-close" onclick="IMX.closeCompareModal()" aria-label="Close">×</button>
+        </div>
+        <div class="imx-modal-body">
+            <div id="imxCompareGrid" class="imx-compare-grid"></div>
+        </div>
+        <div class="imx-modal-footer">
+            <button class="imx-btn imx-btn-danger" onclick="IMX.clearAllCompare()">
+                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                Clear All
+            </button>
+            <button class="imx-btn imx-btn-primary" onclick="IMX.closeCompareModal()">Done</button>
+        </div>
+    </div>
+</div>
+
+<!-- Lo-Fi Playlists Modal -->
+<div class="imx-modal" id="imxLofiModal" role="dialog" aria-label="Lo-Fi Study Playlists">
+    <div class="imx-modal-content">
+        <div class="imx-modal-header">
+            <div class="imx-modal-title">
+                <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                Lo-Fi Study Playlists
+            </div>
+            <button class="imx-modal-close" onclick="IMX.closeLofiModal()" aria-label="Close">×</button>
+        </div>
+        <div class="imx-modal-body">
+            <div class="imx-lofi-grid">
+                <!-- Deep Focus -->
+                <div class="imx-lofi-card">
+                    <div class="imx-lofi-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                    </div>
+                    <div class="imx-lofi-title">Deep Focus</div>
+                    <div class="imx-lofi-desc">Instrumental beats for maximum concentration during study sessions</div>
+                    <div class="imx-lofi-links">
+                        <a href="https://open.spotify.com/playlist/37i9dQZF1DWZeKCadgRdKQ" target="_blank" class="imx-lofi-link spotify">Spotify</a>
+                        <a href="https://www.youtube.com/watch?v=jfKfPfyJRdk" target="_blank" class="imx-lofi-link youtube">YouTube</a>
+                    </div>
+                </div>
+                
+                <!-- Chill Lo-Fi -->
+                <div class="imx-lofi-card">
+                    <div class="imx-lofi-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5z"></path><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5z"></path></svg>
+                    </div>
+                    <div class="imx-lofi-title">Chill Lo-Fi</div>
+                    <div class="imx-lofi-desc">Relaxed beats perfect for background listening while reading</div>
+                    <div class="imx-lofi-links">
+                        <a href="https://open.spotify.com/playlist/0vvXsWCC9xrXsKd4FyS8kM" target="_blank" class="imx-lofi-link spotify">Spotify</a>
+                        <a href="https://www.youtube.com/watch?v=5qap5aO4i9A" target="_blank" class="imx-lofi-link youtube">YouTube</a>
+                    </div>
+                </div>
+                
+                <!-- Ambient Soundscapes -->
+                <div class="imx-lofi-card">
+                    <div class="imx-lofi-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+                    </div>
+                    <div class="imx-lofi-title">Ambient Soundscapes</div>
+                    <div class="imx-lofi-desc">Ethereal atmospheric sounds for immersive focus</div>
+                    <div class="imx-lofi-links">
+                        <a href="https://open.spotify.com/playlist/37i9dQZF1DX3Ogo9pFvBkY" target="_blank" class="imx-lofi-link spotify">Spotify</a>
+                        <a href="https://www.youtube.com/watch?v=lTRiuFIWV54" target="_blank" class="imx-lofi-link youtube">YouTube</a>
+                    </div>
+                </div>
+                
+                <!-- Nature Sounds -->
+                <div class="imx-lofi-card">
+                    <div class="imx-lofi-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 22c4.97 0 9-2.24 9-5s-4.03-5-9-5-9 2.24-9 5 4.03 5 9 5z"></path><path d="M12 17V2"></path><path d="M7 7l5-5 5 5"></path></svg>
+                    </div>
+                    <div class="imx-lofi-title">Nature Sounds</div>
+                    <div class="imx-lofi-desc">Rain, forest, and ocean sounds for peaceful studying</div>
+                    <div class="imx-lofi-links">
+                        <a href="https://open.spotify.com/playlist/37i9dQZF1DX4PP3DA4J0N8" target="_blank" class="imx-lofi-link spotify">Spotify</a>
+                        <a href="https://www.youtube.com/watch?v=q76bMs-NwRk" target="_blank" class="imx-lofi-link youtube">YouTube</a>
+                    </div>
+                </div>
+                
+                <!-- Classical Focus -->
+                <div class="imx-lofi-card">
+                    <div class="imx-lofi-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                    </div>
+                    <div class="imx-lofi-title">Classical Focus</div>
+                    <div class="imx-lofi-desc">Timeless classical pieces for enhanced concentration</div>
+                    <div class="imx-lofi-links">
+                        <a href="https://open.spotify.com/playlist/37i9dQZF1DWWEJlAGA9gs0" target="_blank" class="imx-lofi-link spotify">Spotify</a>
+                        <a href="https://www.youtube.com/watch?v=mIYzp5rcTvU" target="_blank" class="imx-lofi-link youtube">YouTube</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="imx-modal-footer">
+            <button class="imx-btn imx-btn-primary" onclick="IMX.closeLofiModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- ImpactMojo Features JavaScript -->
+<script>
+// ImpactMojo Bookmarks, Compare, and Lo-Fi Features
+// Direct global attachment (no IIFE to avoid scoping issues)
+
+var IMX = window.IMX || {};
+window.IMX = IMX;
+
+// ========================================
+// Storage Functions
+// ========================================
+
+IMX.getBookmarks = function() {
+    try {
+        return JSON.parse(localStorage.getItem('impactmojo_bookmarks') || '[]');
+    } catch(e) {
+        return [];
+    }
+};
+
+IMX.saveBookmarks = function(bookmarks) {
+    localStorage.setItem('impactmojo_bookmarks', JSON.stringify(bookmarks));
+    IMX.updateBadges();
+};
+
+IMX.getCompareItems = function() {
+    try {
+        return JSON.parse(localStorage.getItem('impactmojo_compare') || '[]');
+    } catch(e) {
+        return [];
+    }
+};
+
+IMX.saveCompareItems = function(items) {
+    localStorage.setItem('impactmojo_compare', JSON.stringify(items));
+    IMX.updateBadges();
+};
+
+// ========================================
+// Bookmark Functions
+// ========================================
+
+IMX.addBookmark = function(item) {
+    var bookmarks = IMX.getBookmarks();
+    if (!bookmarks.find(function(b) { return b.id === item.id; })) {
+        item.addedAt = new Date().toISOString();
+        bookmarks.push(item);
+        IMX.saveBookmarks(bookmarks);
+        IMX.showToast('Bookmarked: ' + item.name);
+    }
+    IMX.injectCardButtons();
+};
+
+IMX.removeBookmark = function(id) {
+    var bookmarks = IMX.getBookmarks().filter(function(b) { return b.id !== id; });
+    IMX.saveBookmarks(bookmarks);
+    IMX.renderBookmarksList();
+    IMX.injectCardButtons();
+};
+
+IMX.isBookmarked = function(id) {
+    return IMX.getBookmarks().some(function(b) { return b.id === id; });
+};
+
+IMX.clearAllBookmarks = function() {
+    if (confirm('Clear all bookmarks? This cannot be undone.')) {
+        IMX.saveBookmarks([]);
+        IMX.renderBookmarksList();
+        IMX.injectCardButtons();
+        IMX.showToast('All bookmarks cleared');
+    }
+};
+
+IMX.exportBookmarksCSV = function() {
+    var bookmarks = IMX.getBookmarks();
+    if (bookmarks.length === 0) {
+        IMX.showToast('No bookmarks to export');
+        return;
+    }
+    
+    var csv = 'Name,Type,URL,Rating,Learners,Added\n';
+    bookmarks.forEach(function(b) {
+        csv += '"' + (b.name || '').replace(/"/g, '""') + '",';
+        csv += '"' + (b.type || '') + '",';
+        csv += '"' + (b.url || '') + '",';
+        csv += '"' + (b.rating || '') + '",';
+        csv += '"' + (b.learners || '') + '",';
+        csv += '"' + (b.addedAt || '') + '"\n';
+    });
+    
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'impactmojo_bookmarks_' + new Date().toISOString().split('T')[0] + '.csv';
+    link.click();
+    IMX.showToast('Bookmarks exported!');
+};
+
+IMX.renderBookmarksList = function() {
+    var container = document.getElementById('imxBookmarksList');
+    if (!container) return;
+    
+    var bookmarks = IMX.getBookmarks();
+    
+    if (bookmarks.length === 0) {
+        container.innerHTML = '<div class="imx-empty">' +
+            '<svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>' +
+            '<p>No bookmarks yet</p>' +
+            '<small>Click "Save" on any course or lab to add it here</small>' +
+            '</div>';
+        return;
+    }
+    
+    container.innerHTML = bookmarks.map(function(b) {
+        return '<div class="imx-bookmark-item">' +
+            '<div class="imx-bookmark-info">' +
+            '<div class="imx-bookmark-name">' + (b.name || 'Untitled') + '</div>' +
+            '<div class="imx-bookmark-meta">' +
+            '<span>' + (b.type || 'Item') + '</span>' +
+            (b.rating ? '<span>★ ' + b.rating + '</span>' : '') +
+            '</div>' +
+            '</div>' +
+            '<div class="imx-bookmark-actions">' +
+            '<a href="' + (b.url || '#') + '" class="imx-bookmark-btn" title="Open">' +
+            '<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" fill="none" stroke="currentColor" stroke-width="2"></path><polyline points="15 3 21 3 21 9" fill="none" stroke="currentColor" stroke-width="2"></polyline><line x1="10" y1="14" x2="21" y2="3" fill="none" stroke="currentColor" stroke-width="2"></line></svg>' +
+            '</a>' +
+            '<button class="imx-bookmark-btn delete" onclick="IMX.removeBookmark(\'' + b.id + '\')" title="Remove">' +
+            '<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6" fill="none" stroke="currentColor" stroke-width="2"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" fill="none" stroke="currentColor" stroke-width="2"></path></svg>' +
+            '</button>' +
+            '</div>' +
+            '</div>';
+    }).join('');
+};
+
+// ========================================
+// Compare Functions
+// ========================================
+
+IMX.addToCompare = function(item) {
+    var items = IMX.getCompareItems();
+    if (items.length >= 3) {
+        IMX.showToast('Maximum 3 items for comparison');
+        return;
+    }
+    if (!items.find(function(i) { return i.id === item.id; })) {
+        items.push(item);
+        IMX.saveCompareItems(items);
+        IMX.showToast('Added to compare: ' + item.name);
+    }
+    IMX.injectCardButtons();
+};
+
+IMX.removeFromCompare = function(id) {
+    var items = IMX.getCompareItems().filter(function(i) { return i.id !== id; });
+    IMX.saveCompareItems(items);
+    IMX.renderCompareGrid();
+    IMX.injectCardButtons();
+};
+
+IMX.isInCompare = function(id) {
+    return IMX.getCompareItems().some(function(i) { return i.id === id; });
+};
+
+IMX.clearAllCompare = function() {
+    IMX.saveCompareItems([]);
+    IMX.renderCompareGrid();
+    IMX.injectCardButtons();
+    IMX.showToast('Comparison cleared');
+};
+
+IMX.renderCompareGrid = function() {
+    var container = document.getElementById('imxCompareGrid');
+    if (!container) return;
+    
+    var items = IMX.getCompareItems();
+    
+    if (items.length === 0) {
+        container.innerHTML = '<div class="imx-empty">' +
+            '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="1.5"></rect><line x1="9" y1="9" x2="15" y2="9" fill="none" stroke="currentColor" stroke-width="1.5"></line><line x1="9" y1="15" x2="15" y2="15" fill="none" stroke="currentColor" stroke-width="1.5"></line></svg>' +
+            '<p>No items to compare</p>' +
+            '<small>Click "Compare" on up to 3 courses or labs</small>' +
+            '</div>';
+        return;
+    }
+    
+    container.innerHTML = items.map(function(item) {
+        return '<div class="imx-compare-card">' +
+            '<button class="imx-compare-remove" onclick="IMX.removeFromCompare(\'' + item.id + '\')" title="Remove">' +
+            '<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18" fill="none" stroke="currentColor" stroke-width="2"></line><line x1="6" y1="6" x2="18" y2="18" fill="none" stroke="currentColor" stroke-width="2"></line></svg>' +
+            '</button>' +
+            '<div class="imx-compare-name">' + (item.name || 'Untitled') + '</div>' +
+            '<div class="imx-compare-row"><span class="imx-compare-label">Type</span><span class="imx-compare-value">' + (item.type || '-') + '</span></div>' +
+            '<div class="imx-compare-row"><span class="imx-compare-label">Rating</span><span class="imx-compare-value">' + (item.rating ? '★ ' + item.rating : '-') + '</span></div>' +
+            '<div class="imx-compare-row"><span class="imx-compare-label">Learners</span><span class="imx-compare-value">' + (item.learners || '-') + '</span></div>' +
+            '<a href="' + (item.url || '#') + '" class="imx-compare-link">Open →</a>' +
+            '</div>';
+    }).join('');
+};
+
+// ========================================
+// Modal Functions
+// ========================================
+
+IMX.openBookmarksModal = function() {
+    console.log('Opening bookmarks modal');
+    IMX.renderBookmarksList();
+    var modal = document.getElementById('imxBookmarksModal');
+    if (modal) {
+        modal.classList.add('active');
+        console.log('Modal activated');
+    } else {
+        console.error('Bookmarks modal not found');
+    }
+};
+
+IMX.closeBookmarksModal = function() {
+    var modal = document.getElementById('imxBookmarksModal');
+    if (modal) modal.classList.remove('active');
+};
+
+IMX.openCompareModal = function() {
+    console.log('Opening compare modal');
+    IMX.renderCompareGrid();
+    var modal = document.getElementById('imxCompareModal');
+    if (modal) {
+        modal.classList.add('active');
+    }
+};
+
+IMX.closeCompareModal = function() {
+    var modal = document.getElementById('imxCompareModal');
+    if (modal) modal.classList.remove('active');
+};
+
+IMX.openLofiModal = function() {
+    console.log('Opening lofi modal');
+    var modal = document.getElementById('imxLofiModal');
+    if (modal) {
+        modal.classList.add('active');
+    }
+};
+
+IMX.closeLofiModal = function() {
+    var modal = document.getElementById('imxLofiModal');
+    if (modal) modal.classList.remove('active');
+};
+
+// ========================================
+// UI Functions
+// ========================================
+
+IMX.showToast = function(message) {
+    var existing = document.querySelector('.imx-toast');
+    if (existing) existing.remove();
+    
+    var toast = document.createElement('div');
+    toast.className = 'imx-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(function() {
+        toast.classList.add('fade-out');
+        setTimeout(function() { toast.remove(); }, 300);
+    }, 2500);
+};
+
+IMX.updateBadges = function() {
+    var bookmarkBadge = document.getElementById('imxBookmarkBadge');
+    var compareBadge = document.getElementById('imxCompareBadge');
+    
+    if (bookmarkBadge) {
+        var bookmarkCount = IMX.getBookmarks().length;
+        bookmarkBadge.textContent = bookmarkCount > 0 ? bookmarkCount : '';
+    }
+    
+    if (compareBadge) {
+        var compareCount = IMX.getCompareItems().length;
+        compareBadge.textContent = compareCount > 0 ? compareCount : '';
+    }
+};
+
+// ========================================
+// Card Button Injection
+// ========================================
+
+IMX.injectCardButtons = function() {
+    var cards = document.querySelectorAll('.card');
+    
+    cards.forEach(function(card) {
+        // Remove existing buttons to refresh state
+        var existing = card.querySelector('.imx-card-actions');
+        if (existing) existing.remove();
+        
+        // Extract card data
+        var link = card.querySelector('a[href]');
+        var titleEl = card.querySelector('h3, .card-title');
+        var ratingEl = card.querySelector('.rating-text');
+        var learnersEl = card.querySelector('.learner-badge');
+        var numberEl = card.querySelector('.card-number');
+        
+        var url = link ? link.href : '#';
+        var name = titleEl ? titleEl.textContent.trim() : 'Untitled';
+        var rating = ratingEl ? ratingEl.textContent.trim() : '';
+        var learners = learnersEl ? learnersEl.textContent.trim() : '';
+        
+        // Determine type
+        var type = 'Item';
+        if (numberEl) {
+            var num = numberEl.textContent.trim();
+            if (num.startsWith('C')) type = 'Course';
+            else if (num.startsWith('L')) type = 'Lab';
+            else if (num.startsWith('G')) type = 'Game';
+            else if (num.startsWith('P')) type = 'Premium';
+        }
+        
+        // Create unique ID
+        var id = 'imx_' + name.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 30);
+        
+        var item = {
+            id: id,
+            name: name,
+            url: url,
+            type: type,
+            rating: rating,
+            learners: learners
+        };
+        
+        var itemJson = JSON.stringify(item).replace(/'/g, "\\'");
+        
+        // Create action buttons
+        var actions = document.createElement('div');
+        actions.className = 'imx-card-actions';
+        
+        var isBookmarked = IMX.isBookmarked(id);
+        var isCompared = IMX.isInCompare(id);
+        
+        var saveBtn = document.createElement('button');
+        saveBtn.className = 'imx-card-btn' + (isBookmarked ? ' active' : '');
+        saveBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="2"></path></svg>' + (isBookmarked ? 'Saved' : 'Save');
+        saveBtn.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (IMX.isBookmarked(id)) {
+                IMX.removeBookmark(id);
+            } else {
+                IMX.addBookmark(item);
+            }
+        };
+        
+        var compareBtn = document.createElement('button');
+        compareBtn.className = 'imx-card-btn' + (isCompared ? ' active' : '');
+        compareBtn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"></rect><line x1="9" y1="9" x2="15" y2="9" fill="none" stroke="currentColor" stroke-width="2"></line><line x1="9" y1="15" x2="15" y2="15" fill="none" stroke="currentColor" stroke-width="2"></line></svg>' + (isCompared ? 'Added' : 'Compare');
+        compareBtn.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (IMX.isInCompare(id)) {
+                IMX.removeFromCompare(id);
+            } else {
+                IMX.addToCompare(item);
+            }
+        };
+        
+        actions.appendChild(saveBtn);
+        actions.appendChild(compareBtn);
+        
+        // Insert after card content
+        var cardBody = card.querySelector('.card-body, .card-content');
+        if (cardBody) {
+            cardBody.appendChild(actions);
+        } else {
+            card.appendChild(actions);
+        }
+    });
+};
+
+// ========================================
+// Initialize on DOM Ready
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('IMX: Initializing features');
+    IMX.updateBadges();
+    
+    // Delay card injection slightly to ensure all cards are loaded
+    setTimeout(function() {
+        IMX.injectCardButtons();
+    }, 500);
+    
+    // Close modals on backdrop click
+    document.querySelectorAll('.imx-modal').forEach(function(modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    });
+    
+    // Close modals on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.imx-modal.active').forEach(function(modal) {
+                modal.classList.remove('active');
+            });
+        }
+    });
+});
+
+// Also run injection after a longer delay for dynamically loaded content
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        IMX.injectCardButtons();
+    }, 1000);
+});
+
+console.log('IMX: Script loaded, IMX object:', typeof IMX);
+</script>
+
+</body>
+</html>
