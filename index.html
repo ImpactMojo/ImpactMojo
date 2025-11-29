@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<!-- Version 7.2 - November 29, 2025 - Tour fixes -->
+<!-- Version 7.3 - November 29, 2025 - Notes, Streak, What's New, Mobile fixes -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
 <script>
@@ -24,7 +24,7 @@
 <!-- Aggressive cache-busting script -->
 <script>
 (function() {
-    var CURRENT_VERSION = '7.2.20251129b';
+    var CURRENT_VERSION = '7.3.20251129';
     var STORAGE_KEY = 'imx_page_version';
     
     try {
@@ -1251,6 +1251,143 @@
             box-shadow: var(--shadow-md);
         }
 
+        /* What's New Section */
+        .whats-new-section {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .whats-new-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .whats-new-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #EC4899, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .whats-new-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .whats-new-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .whats-new-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whats-new-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--card-accent, linear-gradient(135deg, #3B82F6, #1D4ED8));
+        }
+
+        .whats-new-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            border-color: transparent;
+        }
+
+        .whats-new-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .whats-new-card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .whats-new-card-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .whats-new-card-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-new {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10B981;
+        }
+
+        .tag-improved {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3B82F6;
+        }
+
+        .tag-beta {
+            background: rgba(236, 72, 153, 0.15);
+            color: #EC4899;
+        }
+
+        /* Card accent colors */
+        .whats-new-card.card-notes { --card-accent: linear-gradient(135deg, #14B8A6, #0D9488); }
+        .whats-new-card.card-streak { --card-accent: linear-gradient(135deg, #EC4899, #DB2777); }
+        .whats-new-card.card-pwa { --card-accent: linear-gradient(135deg, #8B5CF6, #6366F1); }
+        .whats-new-card.card-tour { --card-accent: linear-gradient(135deg, #F59E0B, #D97706); }
+        .whats-new-card.card-compare { --card-accent: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+        .whats-new-card.card-bookmarks { --card-accent: linear-gradient(135deg, #F97316, #EA580C); }
+        .whats-new-card.card-analytics { --card-accent: linear-gradient(135deg, #6366F1, #4F46E5); }
+        .whats-new-card.card-reading { --card-accent: linear-gradient(135deg, #F59E0B, #D97706); }
+
+        .whats-new-card-icon.icon-notes { background: rgba(20, 184, 166, 0.15); }
+        .whats-new-card-icon.icon-streak { background: rgba(236, 72, 153, 0.15); }
+        .whats-new-card-icon.icon-pwa { background: rgba(139, 92, 246, 0.15); }
+        .whats-new-card-icon.icon-tour { background: rgba(245, 158, 11, 0.15); }
+        .whats-new-card-icon.icon-compare { background: rgba(139, 92, 246, 0.15); }
+        .whats-new-card-icon.icon-bookmarks { background: rgba(249, 115, 22, 0.15); }
+        .whats-new-card-icon.icon-analytics { background: rgba(99, 102, 241, 0.15); }
+        .whats-new-card-icon.icon-reading { background: rgba(245, 158, 11, 0.15); }
+
+        @media (max-width: 768px) {
+            .whats-new-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .whats-new-header h2 {
+                font-size: 1.6rem;
+            }
+        }
+
         /* Newsletter Section */
         .newsletter-section {
             background: var(--gradient-primary);
@@ -2299,6 +2436,422 @@
 .imx-sd-reading { background: linear-gradient(135deg, #F59E0B, #D97706); }
 .imx-sd-notes { background: linear-gradient(135deg, #14B8A6, #0D9488); }
 .imx-sd-streak { background: linear-gradient(135deg, #EC4899, #DB2777); }
+
+/* ===== PERSONAL NOTES STYLES ===== */
+.imx-notes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+}
+
+.imx-notes-toolbar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.imx-notes-toolbar input {
+    flex: 1;
+    min-width: 150px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.imx-notes-toolbar button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.imx-notes-btn-primary {
+    background: linear-gradient(135deg, #14B8A6, #0D9488);
+    color: white;
+}
+
+.imx-notes-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+.imx-notes-btn-secondary {
+    background: var(--border-color);
+    color: var(--text-color);
+}
+
+.imx-notes-btn-secondary:hover {
+    background: var(--text-muted);
+    color: white;
+}
+
+.imx-notes-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 200px;
+    max-height: 350px;
+}
+
+.imx-note-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: all 0.2s;
+}
+
+.imx-note-card:hover {
+    border-color: #14B8A6;
+    box-shadow: 0 2px 8px rgba(20, 184, 166, 0.1);
+}
+
+.imx-note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.imx-note-title {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.imx-note-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.imx-note-content {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.imx-note-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.imx-note-actions button {
+    padding: 0.35rem 0.75rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.imx-note-edit {
+    background: rgba(20, 184, 166, 0.1);
+    color: #14B8A6;
+}
+
+.imx-note-edit:hover {
+    background: #14B8A6;
+    color: white;
+}
+
+.imx-note-delete {
+    background: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+}
+
+.imx-note-delete:hover {
+    background: #EF4444;
+    color: white;
+}
+
+.imx-notes-editor {
+    display: none;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.imx-notes-editor.active {
+    display: flex;
+}
+
+.imx-notes-editor input {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.imx-notes-editor textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    min-height: 150px;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+.imx-notes-editor-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.imx-notes-empty {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+}
+
+.imx-notes-empty svg {
+    width: 48px;
+    height: 48px;
+    stroke: var(--border-color);
+    margin-bottom: 1rem;
+}
+
+/* ===== LEARNING STREAK STYLES ===== */
+.imx-streak-container {
+    text-align: center;
+}
+
+.imx-streak-hero {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(219, 39, 119, 0.05));
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+}
+
+.imx-streak-fire {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+}
+
+.imx-streak-count {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #EC4899, #DB2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.imx-streak-label {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+.imx-streak-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.imx-streak-stat {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.imx-streak-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.imx-streak-stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+.imx-streak-calendar {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.imx-streak-calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.imx-streak-calendar-title {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.imx-streak-calendar-nav {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.imx-streak-calendar-nav button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.imx-streak-calendar-nav button:hover {
+    background: var(--border-color);
+}
+
+.imx-streak-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.imx-streak-weekday {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 0.25rem;
+}
+
+.imx-streak-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.imx-streak-day {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--border-color);
+    opacity: 0.3;
+}
+
+.imx-streak-day.current-month {
+    opacity: 1;
+    background: rgba(0,0,0,0.05);
+}
+
+.imx-streak-day.has-activity {
+    background: linear-gradient(135deg, #EC4899, #DB2777);
+    color: white;
+    font-weight: 600;
+}
+
+.imx-streak-day.today {
+    box-shadow: 0 0 0 2px #EC4899;
+}
+
+.imx-streak-milestones {
+    margin-top: 1.5rem;
+}
+
+.imx-streak-milestones-title {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+    text-align: left;
+}
+
+.imx-streak-badges {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.imx-streak-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    min-width: 70px;
+    opacity: 0.4;
+    filter: grayscale(1);
+    transition: all 0.3s;
+}
+
+.imx-streak-badge.earned {
+    opacity: 1;
+    filter: none;
+    border-color: #EC4899;
+    box-shadow: 0 2px 8px rgba(236, 72, 153, 0.2);
+}
+
+.imx-streak-badge-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.imx-streak-badge-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .imx-streak-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .imx-streak-stat {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .imx-streak-stat-value {
+        font-size: 1.25rem;
+    }
+    
+    .imx-streak-badges {
+        gap: 0.5rem;
+    }
+    
+    .imx-streak-badge {
+        min-width: 60px;
+        padding: 0.5rem;
+    }
+}
 
 /* Badge on speed dial buttons */
 .imx-speed-dial-btn .imx-fab-badge {
@@ -4840,6 +5393,97 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
                     </div>
 </div>
 </section>
+
+<!-- What's New Section -->
+<section class="whats-new-section" id="whats-new">
+    <div class="whats-new-header">
+        <h2>✨ What's New</h2>
+        <p>Latest features to enhance your learning journey</p>
+    </div>
+    
+    <div class="whats-new-grid">
+        <!-- Personal Notes -->
+        <div class="whats-new-card card-notes">
+            <div class="whats-new-card-icon icon-notes">📝</div>
+            <div class="whats-new-card-title">Personal Notes</div>
+            <div class="whats-new-card-desc">
+                Take notes while you learn! Create, edit, search, and export your personal study notes. All saved locally on your device.
+            </div>
+            <span class="whats-new-card-tag tag-new">New</span>
+        </div>
+        
+        <!-- Learning Streak -->
+        <div class="whats-new-card card-streak">
+            <div class="whats-new-card-icon icon-streak">🔥</div>
+            <div class="whats-new-card-title">Learning Streak</div>
+            <div class="whats-new-card-desc">
+                Build consistent learning habits! Track your daily visits, maintain streaks, and earn milestone badges as you progress.
+            </div>
+            <span class="whats-new-card-tag tag-new">New</span>
+        </div>
+        
+        <!-- Install as App / ImpactLex -->
+        <div class="whats-new-card card-pwa">
+            <div class="whats-new-card-icon icon-pwa">📱</div>
+            <div class="whats-new-card-title">Mobile Apps</div>
+            <div class="whats-new-card-desc">
+                Install ImpactMojo as a PWA on any device! Plus, check out <a href="https://impactlex.impactmojo.in" target="_blank" style="color: #8B5CF6; font-weight: 600;">ImpactLex</a> — our dedicated development terminology dictionary app.
+            </div>
+            <span class="whats-new-card-tag tag-new">New</span>
+        </div>
+        
+        <!-- Interactive Tour -->
+        <div class="whats-new-card card-tour">
+            <div class="whats-new-card-icon icon-tour">🎯</div>
+            <div class="whats-new-card-title">Interactive Tour</div>
+            <div class="whats-new-card-desc">
+                New to ImpactMojo? Take our guided spotlight tour to discover all features. Click the ? button anytime to restart.
+            </div>
+            <span class="whats-new-card-tag tag-improved">Improved</span>
+        </div>
+        
+        <!-- Compare Tool -->
+        <div class="whats-new-card card-compare">
+            <div class="whats-new-card-icon icon-compare">⚖️</div>
+            <div class="whats-new-card-title">Compare Tool</div>
+            <div class="whats-new-card-desc">
+                Compare up to 3 courses, labs, or games side-by-side. Make informed decisions about what to learn next.
+            </div>
+            <span class="whats-new-card-tag tag-improved">Improved</span>
+        </div>
+        
+        <!-- Bookmarks -->
+        <div class="whats-new-card card-bookmarks">
+            <div class="whats-new-card-icon icon-bookmarks">🔖</div>
+            <div class="whats-new-card-title">Smart Bookmarks</div>
+            <div class="whats-new-card-desc">
+                Save courses for later with one click. Export your reading list as CSV. Never lose track of interesting content again.
+            </div>
+            <span class="whats-new-card-tag tag-improved">Improved</span>
+        </div>
+        
+        <!-- Learning Analytics -->
+        <div class="whats-new-card card-analytics">
+            <div class="whats-new-card-icon icon-analytics">📊</div>
+            <div class="whats-new-card-title">Learning Analytics</div>
+            <div class="whats-new-card-desc">
+                Track your learning patterns, view session history, and understand your engagement. Data stays private on your device.
+            </div>
+            <span class="whats-new-card-tag tag-beta">Beta</span>
+        </div>
+        
+        <!-- Smart Reading Lists -->
+        <div class="whats-new-card card-reading">
+            <div class="whats-new-card-icon icon-reading">📚</div>
+            <div class="whats-new-card-title">Smart Reading Lists</div>
+            <div class="whats-new-card-desc">
+                Curated resources from UNDP, World Bank, J-PAL and more. Quality reading materials organized by topic for deeper learning.
+            </div>
+            <span class="whats-new-card-tag tag-beta">Beta</span>
+        </div>
+    </div>
+</section>
+
 <!-- Newsletter Section -->
 <section class="newsletter-section">
 <h3>Research Rundown Newsletter</h3>
@@ -7369,7 +8013,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
         // VERSION CHECK & AUTO-REFRESH
         // ========================================
         (function() {
-            var SITE_VERSION = '2.5.0'; // Update this when deploying new versions
+            var SITE_VERSION = '2.6.0'; // Update this when deploying new versions - Nov 29 2025: Notes, Streak, What's New
             var VERSION_KEY = 'imx_site_version';
             
             // Check if version changed
@@ -8381,24 +9025,95 @@ document.addEventListener('DOMContentLoaded', function(){
             </button>
         </div>
         
-        <!-- Personal Notes (Coming Soon) -->
+        <!-- Personal Notes -->
         <div class="imx-speed-dial-item">
-            <span class="imx-speed-dial-label">Notes <small style="opacity:0.6">(Soon)</small></span>
-            <button class="imx-speed-dial-btn imx-sd-notes disabled" title="Personal Notes - Coming Soon" aria-label="Personal notes coming soon" disabled>
+            <span class="imx-speed-dial-label">Notes</span>
+            <button class="imx-speed-dial-btn imx-sd-notes" onclick="IMX.openNotesModal(); IMX.SpeedDial.close();" title="Personal Notes" aria-label="Open personal notes">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <span class="imx-fab-badge" id="imxNotesBadge"></span>
             </button>
         </div>
         
-        <!-- Learning Streak (Coming Soon) -->
+        <!-- Learning Streak -->
         <div class="imx-speed-dial-item">
-            <span class="imx-speed-dial-label">Streak <small style="opacity:0.6">(Soon)</small></span>
-            <button class="imx-speed-dial-btn imx-sd-streak disabled" title="Learning Streak - Coming Soon" aria-label="Learning streak coming soon" disabled>
+            <span class="imx-speed-dial-label">Streak</span>
+            <button class="imx-speed-dial-btn imx-sd-streak" onclick="IMX.openStreakModal(); IMX.SpeedDial.close();" title="Learning Streak" aria-label="View learning streak">
                 <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                <span class="imx-fab-badge" id="imxStreakBadge"></span>
             </button>
         </div>
     </div>
 </div>
 <div class="imx-speed-dial-backdrop" onclick="IMX.SpeedDial.close()"></div>
+
+<!-- Personal Notes Modal -->
+<div class="imx-modal" id="imxNotesModal" role="dialog" aria-label="Personal Notes">
+    <div class="imx-modal-content">
+        <div class="imx-modal-header">
+            <div class="imx-modal-title">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                Personal Notes
+            </div>
+            <button class="imx-modal-close" onclick="IMX.closeNotesModal()" aria-label="Close">×</button>
+        </div>
+        <div class="imx-modal-body">
+            <div class="imx-notes-container">
+                <!-- Toolbar -->
+                <div class="imx-notes-toolbar" id="imxNotesToolbar">
+                    <input type="text" id="imxNotesSearch" placeholder="Search notes..." oninput="IMX.Notes.filterNotes(this.value)">
+                    <button class="imx-notes-btn-primary" onclick="IMX.Notes.showEditor()">
+                        + New Note
+                    </button>
+                </div>
+                
+                <!-- Editor (hidden by default) -->
+                <div class="imx-notes-editor" id="imxNotesEditor">
+                    <input type="text" id="imxNoteTitle" placeholder="Note title...">
+                    <textarea id="imxNoteContent" placeholder="Write your note here..."></textarea>
+                    <div class="imx-notes-editor-actions">
+                        <button class="imx-notes-btn-secondary" onclick="IMX.Notes.hideEditor()">Cancel</button>
+                        <button class="imx-notes-btn-primary" onclick="IMX.Notes.saveNote()">Save Note</button>
+                    </div>
+                </div>
+                
+                <!-- Notes List -->
+                <div class="imx-notes-list" id="imxNotesList"></div>
+            </div>
+        </div>
+        <div class="imx-modal-footer">
+            <button class="imx-btn imx-btn-danger" onclick="IMX.Notes.clearAll()">
+                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                Clear All
+            </button>
+            <button class="imx-btn imx-btn-secondary" onclick="IMX.Notes.exportNotes()">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Export
+            </button>
+            <button class="imx-btn imx-btn-primary" onclick="IMX.closeNotesModal()">Done</button>
+        </div>
+    </div>
+</div>
+
+<!-- Learning Streak Modal -->
+<div class="imx-modal" id="imxStreakModal" role="dialog" aria-label="Learning Streak">
+    <div class="imx-modal-content">
+        <div class="imx-modal-header">
+            <div class="imx-modal-title">
+                <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                Learning Streak
+            </div>
+            <button class="imx-modal-close" onclick="IMX.closeStreakModal()" aria-label="Close">×</button>
+        </div>
+        <div class="imx-modal-body">
+            <div class="imx-streak-container" id="imxStreakContainer">
+                <!-- Content rendered by JS -->
+            </div>
+        </div>
+        <div class="imx-modal-footer">
+            <button class="imx-btn imx-btn-primary" onclick="IMX.closeStreakModal()">Keep Learning!</button>
+        </div>
+    </div>
+</div>
 
 <!-- Bookmarks Modal -->
 <div class="imx-modal" id="imxBookmarksModal" role="dialog" aria-label="Bookmarks">
@@ -9730,6 +10445,485 @@ IMX.toggleReadingList = function(listId) {
 };
 
 // ========================================
+// PERSONAL NOTES FEATURE
+// ========================================
+IMX.Notes = {
+    STORAGE_KEY: 'impactmojo_notes',
+    editingId: null,
+    
+    // Get all notes from storage
+    getAll: function() {
+        try {
+            return JSON.parse(localStorage.getItem(this.STORAGE_KEY)) || [];
+        } catch(e) {
+            return [];
+        }
+    },
+    
+    // Save notes to storage
+    saveAll: function(notes) {
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(notes));
+        this.updateBadge();
+    },
+    
+    // Generate unique ID
+    generateId: function() {
+        return 'note_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    },
+    
+    // Format date nicely
+    formatDate: function(timestamp) {
+        var date = new Date(timestamp);
+        var now = new Date();
+        var diff = now - date;
+        
+        if (diff < 60000) return 'Just now';
+        if (diff < 3600000) return Math.floor(diff / 60000) + ' min ago';
+        if (diff < 86400000) return Math.floor(diff / 3600000) + ' hours ago';
+        if (diff < 604800000) return Math.floor(diff / 86400000) + ' days ago';
+        
+        return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    },
+    
+    // Show editor for new note
+    showEditor: function(noteId) {
+        var editor = document.getElementById('imxNotesEditor');
+        var toolbar = document.getElementById('imxNotesToolbar');
+        var titleInput = document.getElementById('imxNoteTitle');
+        var contentInput = document.getElementById('imxNoteContent');
+        
+        if (noteId) {
+            // Editing existing note
+            var notes = this.getAll();
+            var note = notes.find(function(n) { return n.id === noteId; });
+            if (note) {
+                titleInput.value = note.title;
+                contentInput.value = note.content;
+                this.editingId = noteId;
+            }
+        } else {
+            // New note
+            titleInput.value = '';
+            contentInput.value = '';
+            this.editingId = null;
+        }
+        
+        toolbar.style.display = 'none';
+        editor.classList.add('active');
+        titleInput.focus();
+    },
+    
+    // Hide editor
+    hideEditor: function() {
+        var editor = document.getElementById('imxNotesEditor');
+        var toolbar = document.getElementById('imxNotesToolbar');
+        
+        editor.classList.remove('active');
+        toolbar.style.display = 'flex';
+        this.editingId = null;
+    },
+    
+    // Save note
+    saveNote: function() {
+        var titleInput = document.getElementById('imxNoteTitle');
+        var contentInput = document.getElementById('imxNoteContent');
+        
+        var title = titleInput.value.trim();
+        var content = contentInput.value.trim();
+        
+        if (!title && !content) {
+            IMX.showToast('Please enter a title or content');
+            return;
+        }
+        
+        var notes = this.getAll();
+        var now = Date.now();
+        
+        if (this.editingId) {
+            // Update existing note
+            var index = notes.findIndex(function(n) { return n.id === IMX.Notes.editingId; });
+            if (index !== -1) {
+                notes[index].title = title || 'Untitled';
+                notes[index].content = content;
+                notes[index].updated = now;
+            }
+            IMX.showToast('Note updated!');
+        } else {
+            // Create new note
+            notes.unshift({
+                id: this.generateId(),
+                title: title || 'Untitled',
+                content: content,
+                created: now,
+                updated: now
+            });
+            IMX.showToast('Note saved!');
+        }
+        
+        this.saveAll(notes);
+        this.hideEditor();
+        this.render();
+    },
+    
+    // Delete note
+    deleteNote: function(noteId) {
+        if (!confirm('Delete this note?')) return;
+        
+        var notes = this.getAll();
+        notes = notes.filter(function(n) { return n.id !== noteId; });
+        this.saveAll(notes);
+        this.render();
+        IMX.showToast('Note deleted');
+    },
+    
+    // Clear all notes
+    clearAll: function() {
+        if (!confirm('Delete ALL notes? This cannot be undone.')) return;
+        
+        localStorage.removeItem(this.STORAGE_KEY);
+        this.updateBadge();
+        this.render();
+        IMX.showToast('All notes cleared');
+    },
+    
+    // Filter notes by search
+    filterNotes: function(query) {
+        this.render(query.toLowerCase());
+    },
+    
+    // Export notes as text file
+    exportNotes: function() {
+        var notes = this.getAll();
+        if (notes.length === 0) {
+            IMX.showToast('No notes to export');
+            return;
+        }
+        
+        var text = 'ImpactMojo Personal Notes\n';
+        text += 'Exported: ' + new Date().toLocaleString() + '\n';
+        text += '='.repeat(40) + '\n\n';
+        
+        notes.forEach(function(note, i) {
+            text += (i + 1) + '. ' + note.title + '\n';
+            text += 'Created: ' + new Date(note.created).toLocaleString() + '\n';
+            text += '-'.repeat(30) + '\n';
+            text += note.content + '\n\n';
+        });
+        
+        var blob = new Blob([text], { type: 'text/plain' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'impactmojo_notes_' + new Date().toISOString().split('T')[0] + '.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        IMX.showToast('Notes exported!');
+    },
+    
+    // Update badge count
+    updateBadge: function() {
+        var badge = document.getElementById('imxNotesBadge');
+        if (badge) {
+            var count = this.getAll().length;
+            badge.textContent = count > 0 ? count : '';
+        }
+    },
+    
+    // Render notes list
+    render: function(filterQuery) {
+        var container = document.getElementById('imxNotesList');
+        if (!container) return;
+        
+        var notes = this.getAll();
+        
+        // Apply filter if provided
+        if (filterQuery) {
+            notes = notes.filter(function(n) {
+                return n.title.toLowerCase().includes(filterQuery) || 
+                       n.content.toLowerCase().includes(filterQuery);
+            });
+        }
+        
+        if (notes.length === 0) {
+            container.innerHTML = 
+                '<div class="imx-notes-empty">' +
+                '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>' +
+                '<p>' + (filterQuery ? 'No notes match your search' : 'No notes yet') + '</p>' +
+                '<p style="font-size:0.85rem">Click "New Note" to get started!</p>' +
+                '</div>';
+            return;
+        }
+        
+        var self = this;
+        container.innerHTML = notes.map(function(note) {
+            var preview = note.content.length > 150 ? note.content.substring(0, 150) + '...' : note.content;
+            return '<div class="imx-note-card">' +
+                '<div class="imx-note-header">' +
+                '<span class="imx-note-title">' + self.escapeHtml(note.title) + '</span>' +
+                '<span class="imx-note-date">' + self.formatDate(note.updated) + '</span>' +
+                '</div>' +
+                '<div class="imx-note-content">' + self.escapeHtml(preview) + '</div>' +
+                '<div class="imx-note-actions">' +
+                '<button class="imx-note-edit" onclick="IMX.Notes.showEditor(\'' + note.id + '\')">Edit</button>' +
+                '<button class="imx-note-delete" onclick="IMX.Notes.deleteNote(\'' + note.id + '\')">Delete</button>' +
+                '</div>' +
+                '</div>';
+        }).join('');
+    },
+    
+    // Escape HTML for safety
+    escapeHtml: function(text) {
+        var div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+};
+
+// Notes modal functions
+IMX.openNotesModal = function() {
+    IMX.Notes.render();
+    var modal = document.getElementById('imxNotesModal');
+    if (modal) modal.classList.add('active');
+};
+
+IMX.closeNotesModal = function() {
+    var modal = document.getElementById('imxNotesModal');
+    if (modal) modal.classList.remove('active');
+    IMX.Notes.hideEditor();
+};
+
+// ========================================
+// LEARNING STREAK FEATURE
+// ========================================
+IMX.Streak = {
+    STORAGE_KEY: 'impactmojo_streak',
+    
+    // Milestones with emojis
+    milestones: [
+        { days: 3, icon: '🌱', label: '3 Days' },
+        { days: 7, icon: '🔥', label: '1 Week' },
+        { days: 14, icon: '⭐', label: '2 Weeks' },
+        { days: 30, icon: '🏆', label: '1 Month' },
+        { days: 60, icon: '💎', label: '2 Months' },
+        { days: 100, icon: '👑', label: '100 Days' }
+    ],
+    
+    // Get streak data from storage
+    getData: function() {
+        try {
+            var data = JSON.parse(localStorage.getItem(this.STORAGE_KEY));
+            return data || this.getDefaultData();
+        } catch(e) {
+            return this.getDefaultData();
+        }
+    },
+    
+    // Default data structure
+    getDefaultData: function() {
+        return {
+            currentStreak: 0,
+            longestStreak: 0,
+            totalDays: 0,
+            lastVisit: null,
+            visitDates: []
+        };
+    },
+    
+    // Save streak data
+    saveData: function(data) {
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+        this.updateBadge();
+    },
+    
+    // Get today's date string (YYYY-MM-DD)
+    getTodayString: function() {
+        return new Date().toISOString().split('T')[0];
+    },
+    
+    // Record today's visit
+    recordVisit: function() {
+        var data = this.getData();
+        var today = this.getTodayString();
+        
+        // Already recorded today
+        if (data.visitDates.includes(today)) {
+            return;
+        }
+        
+        // Add today to visit dates
+        data.visitDates.push(today);
+        
+        // Keep only last 365 days of data
+        if (data.visitDates.length > 365) {
+            data.visitDates = data.visitDates.slice(-365);
+        }
+        
+        // Calculate streak
+        var yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        var yesterdayStr = yesterday.toISOString().split('T')[0];
+        
+        if (data.lastVisit === yesterdayStr) {
+            // Continuing streak
+            data.currentStreak++;
+        } else if (data.lastVisit === today) {
+            // Same day, no change
+        } else {
+            // Streak broken, start new
+            data.currentStreak = 1;
+        }
+        
+        // Update records
+        data.lastVisit = today;
+        data.totalDays = data.visitDates.length;
+        
+        if (data.currentStreak > data.longestStreak) {
+            data.longestStreak = data.currentStreak;
+        }
+        
+        this.saveData(data);
+        
+        // Show celebration for milestone
+        this.checkMilestone(data.currentStreak);
+    },
+    
+    // Check if we hit a milestone
+    checkMilestone: function(streak) {
+        var milestone = this.milestones.find(function(m) { return m.days === streak; });
+        if (milestone) {
+            setTimeout(function() {
+                IMX.showToast(milestone.icon + ' ' + milestone.label + ' streak! Keep it up!');
+            }, 1000);
+        }
+    },
+    
+    // Update badge on speed dial
+    updateBadge: function() {
+        var badge = document.getElementById('imxStreakBadge');
+        if (badge) {
+            var data = this.getData();
+            badge.textContent = data.currentStreak > 0 ? data.currentStreak : '';
+        }
+    },
+    
+    // Render the streak modal content
+    render: function() {
+        var container = document.getElementById('imxStreakContainer');
+        if (!container) return;
+        
+        var data = this.getData();
+        var self = this;
+        
+        // Build HTML
+        var html = '';
+        
+        // Hero section
+        html += '<div class="imx-streak-hero">';
+        html += '<div class="imx-streak-fire">' + (data.currentStreak > 0 ? '🔥' : '💤') + '</div>';
+        html += '<div class="imx-streak-count">' + data.currentStreak + '</div>';
+        html += '<div class="imx-streak-label">Day Streak</div>';
+        html += '</div>';
+        
+        // Stats
+        html += '<div class="imx-streak-stats">';
+        html += '<div class="imx-streak-stat"><div class="imx-streak-stat-value">' + data.longestStreak + '</div><div class="imx-streak-stat-label">Best Streak</div></div>';
+        html += '<div class="imx-streak-stat"><div class="imx-streak-stat-value">' + data.totalDays + '</div><div class="imx-streak-stat-label">Total Days</div></div>';
+        html += '<div class="imx-streak-stat"><div class="imx-streak-stat-value">' + this.getThisMonthDays(data) + '</div><div class="imx-streak-stat-label">This Month</div></div>';
+        html += '</div>';
+        
+        // Calendar
+        html += this.renderCalendar(data);
+        
+        // Milestones
+        html += '<div class="imx-streak-milestones">';
+        html += '<div class="imx-streak-milestones-title">Milestones</div>';
+        html += '<div class="imx-streak-badges">';
+        this.milestones.forEach(function(m) {
+            var earned = data.longestStreak >= m.days;
+            html += '<div class="imx-streak-badge' + (earned ? ' earned' : '') + '">';
+            html += '<span class="imx-streak-badge-icon">' + m.icon + '</span>';
+            html += '<span class="imx-streak-badge-label">' + m.label + '</span>';
+            html += '</div>';
+        });
+        html += '</div></div>';
+        
+        container.innerHTML = html;
+    },
+    
+    // Get days visited this month
+    getThisMonthDays: function(data) {
+        var now = new Date();
+        var yearMonth = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+        return data.visitDates.filter(function(d) { return d.startsWith(yearMonth); }).length;
+    },
+    
+    // Render calendar for current month
+    renderCalendar: function(data) {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth();
+        
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+        
+        var html = '<div class="imx-streak-calendar">';
+        html += '<div class="imx-streak-calendar-header">';
+        html += '<span class="imx-streak-calendar-title">' + monthNames[month] + ' ' + year + '</span>';
+        html += '</div>';
+        
+        // Weekday headers
+        html += '<div class="imx-streak-weekdays">';
+        ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(function(d) {
+            html += '<div class="imx-streak-weekday">' + d + '</div>';
+        });
+        html += '</div>';
+        
+        // Days grid
+        html += '<div class="imx-streak-days">';
+        
+        var firstDay = new Date(year, month, 1).getDay();
+        var daysInMonth = new Date(year, month + 1, 0).getDate();
+        var today = now.getDate();
+        var todayStr = this.getTodayString();
+        
+        // Empty cells for days before month starts
+        for (var i = 0; i < firstDay; i++) {
+            html += '<div class="imx-streak-day"></div>';
+        }
+        
+        // Days of month
+        for (var d = 1; d <= daysInMonth; d++) {
+            var dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+            var hasActivity = data.visitDates.includes(dateStr);
+            var isToday = dateStr === todayStr;
+            
+            var classes = 'imx-streak-day current-month';
+            if (hasActivity) classes += ' has-activity';
+            if (isToday) classes += ' today';
+            
+            html += '<div class="' + classes + '">' + d + '</div>';
+        }
+        
+        html += '</div></div>';
+        
+        return html;
+    }
+};
+
+// Streak modal functions
+IMX.openStreakModal = function() {
+    IMX.Streak.render();
+    var modal = document.getElementById('imxStreakModal');
+    if (modal) modal.classList.add('active');
+};
+
+IMX.closeStreakModal = function() {
+    var modal = document.getElementById('imxStreakModal');
+    if (modal) modal.classList.remove('active');
+};
+
+// ========================================
 // UI Functions
 // ========================================
 
@@ -9760,6 +10954,14 @@ IMX.updateBadges = function() {
     if (compareBadge) {
         var compareCount = IMX.getCompareItems().length;
         compareBadge.textContent = compareCount > 0 ? compareCount : '';
+    }
+    
+    // Update Notes and Streak badges
+    if (IMX.Notes && IMX.Notes.updateBadge) {
+        IMX.Notes.updateBadge();
+    }
+    if (IMX.Streak && IMX.Streak.updateBadge) {
+        IMX.Streak.updateBadge();
     }
 };
 
@@ -9904,6 +11106,12 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('load', function() {
     setTimeout(function() {
         IMX.injectCardButtons();
+        
+        // Record streak visit and update all badges
+        if (IMX.Streak && IMX.Streak.recordVisit) {
+            IMX.Streak.recordVisit();
+        }
+        IMX.updateBadges();
     }, 1000);
 });
 
