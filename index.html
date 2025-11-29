@@ -208,7 +208,7 @@
             justify-content: center;
             width: 48px;
             height: 40px;
-            margin-right: 20px;
+            margin-right: 8px;
             cursor: pointer;
             text-decoration: none;
             z-index: 10;
@@ -11266,24 +11266,32 @@ IMX.Tour = {
     },
     
     steps: [
-        // MOBILE MENU - only shown on mobile
+        // 1. ACCESSIBILITY - First after welcome
+        {
+            target: '.acsb-trigger',
+            icon: 'accessibility',
+            title: 'Accessibility',
+            desc: 'Welcome to ImpactMojo! Let\'s show you around. First, this button lets you customize your viewing experience - adjust text size, contrast, colors, and more.',
+            position: 'left-of-target'
+        },
+        // 2. THEME TOGGLE
+        {
+            target: '.theme-toggle',
+            icon: 'cursor',
+            title: 'Theme Toggle',
+            desc: 'Switch between light and dark mode. Your preference is saved automatically.',
+            position: 'below-target'
+        },
+        // 3. MOBILE MENU - only shown on mobile
         {
             target: '#mobile-menu-btn',
             icon: 'menu',
             title: 'Navigation Menu',
-            desc: 'Tap here to open the menu. You will find all sections: Learn (Courses, Labs, Games), Services, and About Us.',
+            desc: 'Tap here to open the menu. You\'ll find all sections: Learn (Courses, Labs, Games), Services, and About Us.',
             position: 'below-target',
             mobileOnly: true
         },
-        // NEW! STARBURST BADGE
-        {
-            target: '#newStarburst',
-            icon: 'cursor',
-            title: 'What\'s New!',
-            desc: 'See this badge? Click it anytime to discover our latest features and updates. We\'re always adding new tools!',
-            position: 'below-target'
-        },
-        // HOME
+        // 4. HOME - Desktop only
         {
             target: '#nav-home',
             icon: 'menu',
@@ -11292,7 +11300,7 @@ IMX.Tour = {
             position: 'below-target',
             desktopOnly: true
         },
-        // LEARN MENU
+        // 5. LEARN MENU
         {
             target: '#nav-learn',
             icon: 'menu',
@@ -11443,21 +11451,27 @@ IMX.Tour = {
                 if (aboutDropdown) aboutDropdown.classList.remove('open');
             }
         },
-        // UTILITIES
+        // CONTENT CARDS
         {
-            target: '.tour-toggle',
+            target: '.card:first-of-type',
             icon: 'cursor',
-            title: 'Tour Button',
-            desc: 'Click this anytime to restart this tour and refresh your memory about platform features.',
-            position: 'below-target'
+            title: 'Content Cards',
+            desc: 'Every card has Save and Compare buttons. Click any card to explore courses, labs, and games.',
+            position: 'top'
         },
+        // LEARNING TOOLBOX - overview only, no sub-items
         {
-            target: '.theme-toggle',
-            icon: 'cursor',
-            title: 'Theme Toggle',
-            desc: 'Switch between light and dark mode. Your preference is saved automatically.',
-            position: 'below-target'
+            target: '#imxSpeedDialToggle',
+            icon: 'bookmark',
+            title: 'Learning Toolbox',
+            desc: 'Your productivity hub! Click to access Notes, Streak tracker, Bookmarks, Compare tool, Lo-Fi Music, Pomodoro Timer, Analytics, and Reading Lists. Explore them all!',
+            position: 'right-of-target',
+            action: function() {
+                IMX.SpeedDial.open();
+                setTimeout(function() { IMX.SpeedDial.close(); }, 2000);
+            }
         },
+        // MOJINI
         {
             target: '#mojini-chat-toggle',
             icon: 'robot',
@@ -11465,53 +11479,28 @@ IMX.Tour = {
             desc: 'Your friendly learning companion! Ask MOJINI questions about courses, get recommendations, or find help navigating the platform.',
             position: 'left-of-target'
         },
+        // WHAT'S NEW (starburst and section)
         {
-            target: '#imxSpeedDialToggle',
-            icon: 'bookmark',
-            title: 'Learning Toolbox',
-            desc: 'Your productivity hub! Access Notes, Streak tracker, Bookmarks, Compare tool, Lo-Fi Music, Pomodoro Timer, Analytics, and Reading Lists.',
-            position: 'right-of-target',
-            action: function() {
-                IMX.SpeedDial.open();
-            }
-        },
-        {
-            target: '.imx-sd-notes',
+            target: '#newStarburst',
             icon: 'cursor',
-            title: 'Personal Notes',
-            desc: 'Take notes while you learn! Create, edit, search, and export your study notes. Everything saves automatically on your device.',
-            position: 'right-of-target'
-        },
-        {
-            target: '.imx-sd-streak',
-            icon: 'cursor',
-            title: 'Learning Streak',
-            desc: 'Track your daily learning habit! See your current streak, earn milestone badges, and view your activity calendar.',
-            position: 'right-of-target',
-            action: function() {
-                IMX.SpeedDial.close();
-            }
+            title: 'What\'s New Badge',
+            desc: 'See this badge? Click it anytime to jump to our latest features and updates section.',
+            position: 'below-target'
         },
         {
             target: '#whats-new',
             icon: 'cursor',
-            title: 'What\'s New',
-            desc: 'Check out all our latest features! We\'re constantly adding new tools to enhance your learning experience.',
-            position: 'bottom'
+            title: 'What\'s New Section',
+            desc: 'Here you\'ll find all our latest features! We\'re constantly adding new tools to enhance your learning experience.',
+            position: 'top'
         },
+        // TOUR BUTTON - Last
         {
-            target: '.acsb-trigger',
-            icon: 'accessibility',
-            title: 'Accessibility',
-            desc: 'Customize your viewing experience - adjust text size, contrast, colors, and more.',
-            position: 'left-of-target'
-        },
-        {
-            target: '.card:first-of-type',
+            target: '.tour-toggle',
             icon: 'cursor',
-            title: 'Content Cards',
-            desc: 'Every card has Save and Compare buttons. Explore courses, labs, and games. Happy learning!',
-            position: 'bottom'
+            title: 'Tour Button',
+            desc: 'That\'s the end of our tour! If you ever need this overview again, just click this button anytime. Happy learning!',
+            position: 'below-target'
         }
     ],
     
