@@ -193,19 +193,20 @@
             flex-wrap: wrap;
         }
 
-        /* Animated NEW! Starburst */
+        /* Animated NEW! Sales Burst Badge */
         .new-starburst {
             position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 42px;
-            height: 42px;
+            width: 52px;
+            height: 44px;
             margin-right: 0.5rem;
             cursor: pointer;
             text-decoration: none;
             z-index: 10;
             flex-shrink: 0;
+            animation: burst-wobble 2s ease-in-out infinite;
         }
         
         .new-starburst::before {
@@ -213,51 +214,79 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 38px;
-            height: 38px;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24, #ff6b6b);
-            transform: translate(-50%, -50%) rotate(0deg);
+            width: 100%;
+            height: 100%;
+            background: #dc2626;
+            transform: translate(-50%, -50%);
             clip-path: polygon(
-                50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
-                50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
+                0% 25%, 5% 15%, 15% 20%, 20% 5%, 30% 15%, 40% 0%, 
+                50% 12%, 60% 0%, 70% 15%, 80% 5%, 85% 20%, 95% 15%, 
+                100% 25%, 92% 35%, 100% 50%, 92% 65%, 100% 75%, 
+                95% 85%, 85% 80%, 80% 95%, 70% 85%, 60% 100%, 
+                50% 88%, 40% 100%, 30% 85%, 20% 95%, 15% 80%, 
+                5% 85%, 0% 75%, 8% 65%, 0% 50%, 8% 35%
             );
-            animation: starburst-rotate 8s linear infinite, starburst-pulse 1.5s ease-in-out infinite;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+        }
+        
+        .new-starburst::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: calc(100% - 4px);
+            height: calc(100% - 4px);
+            background: linear-gradient(145deg, #fef2f2, #ffffff);
+            transform: translate(-50%, -50%);
+            clip-path: polygon(
+                0% 25%, 5% 15%, 15% 20%, 20% 5%, 30% 15%, 40% 0%, 
+                50% 12%, 60% 0%, 70% 15%, 80% 5%, 85% 20%, 95% 15%, 
+                100% 25%, 92% 35%, 100% 50%, 92% 65%, 100% 75%, 
+                95% 85%, 85% 80%, 80% 95%, 70% 85%, 60% 100%, 
+                50% 88%, 40% 100%, 30% 85%, 20% 95%, 15% 80%, 
+                5% 85%, 0% 75%, 8% 65%, 0% 50%, 8% 35%
+            );
         }
         
         .new-starburst-text {
             position: relative;
             z-index: 2;
             font-family: 'Poppins', sans-serif;
-            font-size: 0.55rem;
+            font-size: 0.65rem;
             font-weight: 800;
-            color: #fff;
+            color: #dc2626;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            letter-spacing: 0.3px;
         }
         
-        @keyframes starburst-rotate {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        @keyframes burst-wobble {
+            0%, 100% { transform: rotate(-2deg) scale(1); }
+            25% { transform: rotate(1deg) scale(1.02); }
+            50% { transform: rotate(-1deg) scale(1); }
+            75% { transform: rotate(2deg) scale(1.02); }
         }
         
-        @keyframes starburst-pulse {
-            0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); opacity: 1; }
-            50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.1); opacity: 0.9; }
+        .new-starburst:hover {
+            animation: none;
+            transform: scale(1.1);
         }
         
         .new-starburst:hover::before {
-            animation: starburst-rotate 2s linear infinite;
-            background: linear-gradient(135deg, #ff5252, #d63031, #ff5252);
+            background: #b91c1c;
         }
         
-        .new-starburst:hover .new-starburst-text {
-            transform: scale(1.05);
-        }
-        
-        /* Dark mode starburst */
+        /* Dark mode burst */
         [data-theme="dark"] .new-starburst::before {
-            background: linear-gradient(135deg, #f39c12, #e74c3c, #f39c12);
+            background: #ef4444;
+            box-shadow: 0 2px 12px rgba(239, 68, 68, 0.5);
+        }
+        
+        [data-theme="dark"] .new-starburst::after {
+            background: linear-gradient(145deg, #1f1f1f, #2d2d2d);
+        }
+        
+        [data-theme="dark"] .new-starburst-text {
+            color: #fecaca;
         }
 
         /* Professional Logo Design */
@@ -2010,21 +2039,16 @@
                 gap: 0.5rem;
             }
 
-            /* Mobile NEW starburst - positioned in header */
+            /* Mobile NEW burst badge - smaller size */
             .new-starburst {
-                width: 32px;
-                height: 32px;
+                width: 42px;
+                height: 36px;
                 margin-right: 0.25rem;
                 order: 0;
             }
             
-            .new-starburst::before {
-                width: 30px;
-                height: 30px;
-            }
-            
             .new-starburst-text {
-                font-size: 0.45rem;
+                font-size: 0.5rem;
             }
 
             .nav-buttons {
