@@ -2887,52 +2887,52 @@
 <span class="hamburger-line"></span>
 </button>
 <ul class="nav-links" id="navLinks">
-<li><a href="#home">Home</a></li>
+<li id="nav-home"><a href="#home">Home</a></li>
 
 <!-- Learn Dropdown -->
-<li class="has-dropdown">
+<li class="has-dropdown" id="nav-learn">
 <a href="javascript:void(0)">Learn
 <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 <polyline points="6 9 12 15 18 9"></polyline>
 </svg>
 </a>
-<ul class="dropdown-menu">
-<li><a onclick="openModal('coursesModal')">Courses</a></li>
-<li><a onclick="openModal('labsModal')">Labs</a></li>
-<li><a onclick="openModal('gamesModal')">Games</a></li>
-<li><a onclick="openModal('premiumModal')">Premium</a></li>
+<ul class="dropdown-menu" id="learn-dropdown">
+<li id="nav-courses"><a onclick="openModal('coursesModal')">Courses</a></li>
+<li id="nav-labs"><a onclick="openModal('labsModal')">Labs</a></li>
+<li id="nav-games"><a onclick="openModal('gamesModal')">Games</a></li>
+<li id="nav-premium"><a onclick="openModal('premiumModal')">Premium</a></li>
 <li class="dropdown-divider"></li>
-<li><a href="handouts.html">Resources</a></li>
-<li><a href="catalog.html">Catalog</a></li>
+<li id="nav-resources"><a href="handouts.html">Resources</a></li>
+<li id="nav-catalog"><a href="catalog.html">Catalog</a></li>
 </ul>
 </li>
 
 <!-- Services Dropdown -->
-<li class="has-dropdown">
+<li class="has-dropdown" id="nav-services">
 <a href="javascript:void(0)">Services
 <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 <polyline points="6 9 12 15 18 9"></polyline>
 </svg>
 </a>
-<ul class="dropdown-menu">
-<li><a onclick="openModal('coachingModal')">Coaching</a></li>
-<li><a href="workshops.html">Workshops</a></li>
+<ul class="dropdown-menu" id="services-dropdown">
+<li id="nav-coaching"><a onclick="openModal('coachingModal')">Coaching</a></li>
+<li id="nav-workshops"><a href="workshops.html">Workshops</a></li>
 </ul>
 </li>
 
 <!-- About Us Dropdown -->
-<li class="has-dropdown">
+<li class="has-dropdown" id="nav-about">
 <a href="javascript:void(0)">About Us
 <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 <polyline points="6 9 12 15 18 9"></polyline>
 </svg>
 </a>
-<ul class="dropdown-menu">
-<li><a href="#about">Our Team</a></li>
-<li><a href="#wall-of-love">Testimonials</a></li>
-<li><a href="#roadmap">Roadmap</a></li>
+<ul class="dropdown-menu" id="about-dropdown">
+<li id="nav-team"><a href="#about">Our Team</a></li>
+<li id="nav-testimonials"><a href="#wall-of-love">Testimonials</a></li>
+<li id="nav-roadmap"><a href="#roadmap">Roadmap</a></li>
 <li class="dropdown-divider"></li>
-<li><a href="#contact">Contact</a></li>
+<li id="nav-contact"><a href="#contact">Contact</a></li>
 </ul>
 </li>
 </ul>
@@ -3464,6 +3464,17 @@
     opacity: 1;
     pointer-events: auto;
 }
+
+/* Keep dropdown menus visible during tour */
+.imx-tour-overlay.active ~ .container .nav-links > li.has-dropdown.open .dropdown-menu,
+body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown.open .dropdown-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-height: 500px !important;
+    pointer-events: auto;
+    z-index: 10002;
+}
+
 .imx-tour-spotlight {
     position: absolute;
     border-radius: 12px;
@@ -3501,8 +3512,32 @@
 .imx-tour-tooltip.arrow-bottom-right::before { bottom: -8px; right: 24px; left: auto; }
 .imx-tour-step-indicator {
     display: flex;
-    gap: 6px;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary, #666);
+}
+.imx-tour-step-counter {
+    background: var(--accent-color, #0EA5E9);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+.imx-tour-step-progress {
+    flex: 1;
+    height: 4px;
+    background: var(--border-color, #ddd);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.imx-tour-step-progress-bar {
+    height: 100%;
+    background: var(--accent-color, #0EA5E9);
+    border-radius: 2px;
+    transition: width 0.3s ease;
 }
 .imx-tour-dot {
     width: 8px;
@@ -3551,6 +3586,28 @@
     padding: 0.5rem;
 }
 .imx-tour-skip:hover { color: var(--text-primary, #1a1a2e); }
+.imx-tour-nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.imx-tour-prev {
+    background: var(--secondary-bg, #f1f5f9);
+    color: var(--text-primary, #1a1a2e);
+    border: 1px solid var(--border-color, #e2e8f0);
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+}
+.imx-tour-prev:hover {
+    background: var(--border-color, #e2e8f0);
+}
 .imx-tour-next {
     background: linear-gradient(135deg, #0EA5E9, #06B6D4);
     color: white;
@@ -9716,52 +9773,197 @@ IMX.Tour = {
     },
     
     steps: [
+        // HOME
         {
-            target: '.nav-links',
+            target: '#nav-home',
             icon: 'menu',
-            title: 'Site Navigation',
-            desc: 'Browse different sections: Courses, Labs, Games, Premium content, and the Roadmap. Click any link to jump directly to that section.',
-            position: 'below-nav',
+            title: 'Home',
+            desc: 'Return to the homepage at any time. This brings you back to the hero section.',
+            position: 'below-target'
+        },
+        // LEARN MENU
+        {
+            target: '#nav-learn',
+            icon: 'menu',
+            title: 'Learn Menu',
+            desc: 'Your gateway to all learning content. Click to expand and see Courses, Labs, Games, Premium content, Resources, and Catalog.',
+            position: 'below-target',
             action: function() {
-                // Expand dropdown if exists
-                var dropdown = document.querySelector('.nav-links');
-                if (dropdown) dropdown.style.display = 'flex';
+                var learnDropdown = document.querySelector('#nav-learn');
+                if (learnDropdown) learnDropdown.classList.add('open');
             }
+        },
+        {
+            target: '#nav-courses',
+            icon: 'cursor',
+            title: 'Courses',
+            desc: 'Structured learning modules on MEAL, Theory of Change, Gender Studies, Research Methods, and more. Each course includes multiple lessons.',
+            position: 'right-of-target',
+            action: function() {
+                var learnDropdown = document.querySelector('#nav-learn');
+                if (learnDropdown) learnDropdown.classList.add('open');
+            }
+        },
+        {
+            target: '#nav-labs',
+            icon: 'cursor',
+            title: 'Labs',
+            desc: 'Hands-on interactive exercises. Practice data analysis with R, explore statistical concepts, and build practical skills.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-games',
+            icon: 'cursor',
+            title: 'Games',
+            desc: 'Learn through play! Interactive games like the Lorenz Curve Puzzle make complex concepts engaging and memorable.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-premium',
+            icon: 'cursor',
+            title: 'Premium Content',
+            desc: 'Advanced materials and exclusive content. Currently FREE during our beta period!',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-resources',
+            icon: 'cursor',
+            title: 'Resources',
+            desc: 'Downloadable handouts, templates, and reference materials to support your learning journey.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-catalog',
+            icon: 'cursor',
+            title: 'Catalog',
+            desc: 'Browse our complete collection of courses, labs, and games in one searchable view.',
+            position: 'right-of-target',
+            action: function() {
+                var learnDropdown = document.querySelector('#nav-learn');
+                if (learnDropdown) learnDropdown.classList.remove('open');
+            }
+        },
+        // SERVICES MENU
+        {
+            target: '#nav-services',
+            icon: 'menu',
+            title: 'Services Menu',
+            desc: 'Professional services for organizations and individuals seeking personalized support.',
+            position: 'below-target',
+            action: function() {
+                var servicesDropdown = document.querySelector('#nav-services');
+                if (servicesDropdown) servicesDropdown.classList.add('open');
+            }
+        },
+        {
+            target: '#nav-coaching',
+            icon: 'cursor',
+            title: 'Coaching',
+            desc: 'One-on-one coaching sessions with Dr. Varna. Book sessions for career guidance, MEAL support, or research help.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-workshops',
+            icon: 'cursor',
+            title: 'Workshops',
+            desc: 'Group training sessions for teams and organizations. Custom workshops on MEAL, ToC, and more.',
+            position: 'right-of-target',
+            action: function() {
+                var servicesDropdown = document.querySelector('#nav-services');
+                if (servicesDropdown) servicesDropdown.classList.remove('open');
+            }
+        },
+        // ABOUT US MENU
+        {
+            target: '#nav-about',
+            icon: 'menu',
+            title: 'About Us Menu',
+            desc: 'Learn about ImpactMojo, meet the team, read testimonials, and see our roadmap.',
+            position: 'below-target',
+            action: function() {
+                var aboutDropdown = document.querySelector('#nav-about');
+                if (aboutDropdown) aboutDropdown.classList.add('open');
+            }
+        },
+        {
+            target: '#nav-team',
+            icon: 'cursor',
+            title: 'Our Team',
+            desc: 'Meet the people behind ImpactMojo - development professionals passionate about education.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-testimonials',
+            icon: 'cursor',
+            title: 'Testimonials',
+            desc: 'See what our learners say! Real feedback from development practitioners across South Asia.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-roadmap',
+            icon: 'cursor',
+            title: 'Roadmap',
+            desc: 'See what\'s coming next! Our planned features and content updates.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-contact',
+            icon: 'cursor',
+            title: 'Contact',
+            desc: 'Get in touch with us. Questions, feedback, or partnership inquiries welcome!',
+            position: 'right-of-target',
+            action: function() {
+                var aboutDropdown = document.querySelector('#nav-about');
+                if (aboutDropdown) aboutDropdown.classList.remove('open');
+            }
+        },
+        // UTILITIES
+        {
+            target: '.tour-toggle',
+            icon: 'cursor',
+            title: 'Tour Button',
+            desc: 'Click this anytime to restart this tour and refresh your memory about platform features.',
+            position: 'below-target'
+        },
+        {
+            target: '.theme-toggle',
+            icon: 'cursor',
+            title: 'Theme Toggle',
+            desc: 'Switch between light and dark mode. Your preference is saved automatically.',
+            position: 'below-target'
         },
         {
             target: '#mojini-chat-toggle',
             icon: 'robot',
-            title: 'Meet MOJINI - Your Assistant',
-            desc: 'Your friendly learning companion! Ask MOJINI questions about courses, get personalized recommendations, or get help navigating the platform.',
+            title: 'Meet MOJINI',
+            desc: 'Your friendly learning companion! Ask MOJINI questions about courses, get recommendations, or find help navigating the platform.',
             position: 'left-of-target'
         },
         {
             target: '#imxSpeedDialToggle',
             icon: 'bookmark',
-            title: 'Your Learning Toolbox',
-            desc: 'Click to access all your tools: Bookmarks, Compare, Lo-Fi Music, Pomodoro Timer, Analytics, Reading Lists, and more coming soon!',
-            position: 'right',
+            title: 'Learning Toolbox',
+            desc: 'Click to access your tools: Bookmarks, Compare, Lo-Fi Music, Pomodoro Timer, Analytics, Reading Lists, and more!',
+            position: 'right-of-target',
             action: function() {
-                // Open the speed dial to show the tools
                 IMX.SpeedDial.open();
             }
         },
         {
             target: '.acsb-trigger',
             icon: 'accessibility',
-            title: 'Accessibility Options',
-            desc: 'Customize your viewing experience! Adjust text size, contrast, colors, and more to make browsing comfortable.',
+            title: 'Accessibility',
+            desc: 'Customize your viewing experience - adjust text size, contrast, colors, and more.',
             position: 'left-of-target',
             action: function() {
-                // Close speed dial before moving to next step
                 IMX.SpeedDial.close();
             }
         },
         {
             target: '.card:first-of-type',
             icon: 'cursor',
-            title: 'Explore Content',
-            desc: 'Every card has Save and Compare buttons. Click to explore courses, labs, and games.',
+            title: 'Content Cards',
+            desc: 'Every card has Save and Compare buttons. Explore courses, labs, and games. Happy learning!',
             position: 'bottom'
         }
     ],
@@ -9885,25 +10087,32 @@ IMX.Tour = {
             self.spotlight.style.width = (rect.width + padding * 2) + 'px';
             self.spotlight.style.height = (rect.height + padding * 2) + 'px';
             
-            // Build step indicators
-            var dots = self.steps.map(function(s, i) {
-                return '<div class="imx-tour-dot' + (i === index ? ' active' : '') + '"></div>';
-            }).join('');
+            // Build step indicator with counter and progress bar
+            var progress = ((index + 1) / self.steps.length) * 100;
+            var stepIndicator = 
+                '<span class="imx-tour-step-counter">' + (index + 1) + ' / ' + self.steps.length + '</span>' +
+                '<div class="imx-tour-step-progress"><div class="imx-tour-step-progress-bar" style="width:' + progress + '%"></div></div>';
             
             // Get icon
             var iconHtml = self.icons[step.icon] || '';
             
             // Build tooltip content
+            var prevButton = index > 0 ? 
+                '<button class="imx-tour-prev" onclick="IMX.Tour.prev()"><svg viewBox="0 0 24 24" width="16" height="16"><polyline points="15 18 9 12 15 6" fill="none" stroke="currentColor" stroke-width="2"></polyline></svg> Prev</button>' : '';
+            
             self.tooltip.innerHTML = 
-                '<div class="imx-tour-step-indicator">' + dots + '</div>' +
+                '<div class="imx-tour-step-indicator">' + stepIndicator + '</div>' +
                 '<div class="imx-tour-title">' + iconHtml + ' ' + step.title + '</div>' +
                 '<div class="imx-tour-desc">' + step.desc + '</div>' +
                 '<div class="imx-tour-actions">' +
                     '<button class="imx-tour-skip" onclick="IMX.Tour.end()">Skip</button>' +
+                    '<div class="imx-tour-nav-buttons">' +
+                    prevButton +
                     '<button class="imx-tour-next" onclick="IMX.Tour.next()">' +
                         (index === self.steps.length - 1 ? 'Finish' : 'Next') +
                         ' <svg viewBox="0 0 24 24" width="16" height="16"><polyline points="9 18 15 12 9 6" fill="none" stroke="currentColor" stroke-width="2"></polyline></svg>' +
                     '</button>' +
+                    '</div>' +
                 '</div>';
             
             // Position tooltip - use fixed for fixed elements
@@ -9916,6 +10125,13 @@ IMX.Tour = {
             var tooltipTop, tooltipLeft;
             var arrowClass = 'arrow-top';
             
+            // Get actual tooltip dimensions after content is set
+            self.tooltip.style.visibility = 'hidden';
+            self.tooltip.style.display = 'block';
+            var actualTooltipWidth = self.tooltip.offsetWidth || tooltipWidth;
+            var actualTooltipHeight = self.tooltip.offsetHeight || tooltipHeight;
+            self.tooltip.style.visibility = 'visible';
+            
             if (pos === 'below-nav') {
                 // Position below the navigation bar
                 if (isFixed) {
@@ -9927,9 +10143,57 @@ IMX.Tour = {
                 arrowClass = 'arrow-top';
                 
                 // Keep on screen
-                if (tooltipLeft + tooltipWidth > viewportWidth - 20) {
-                    tooltipLeft = viewportWidth - tooltipWidth - 20;
+                if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                    tooltipLeft = viewportWidth - actualTooltipWidth - 20;
                 }
+            } else if (pos === 'below-target') {
+                // Position directly below the target element
+                if (isFixed) {
+                    tooltipTop = rect.bottom + gap;
+                } else {
+                    tooltipTop = rect.bottom + window.scrollY + gap;
+                }
+                // Center below target
+                tooltipLeft = rect.left + (rect.width / 2) - (actualTooltipWidth / 2);
+                arrowClass = 'arrow-top';
+                
+                // Keep on screen horizontally
+                if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                    tooltipLeft = viewportWidth - actualTooltipWidth - 20;
+                }
+                if (tooltipLeft < 20) {
+                    tooltipLeft = 20;
+                }
+            } else if (pos === 'right-of-target') {
+                // Position to the right of the target element
+                if (isFixed) {
+                    tooltipTop = rect.top + (rect.height / 2) - (actualTooltipHeight / 2);
+                } else {
+                    tooltipTop = rect.top + window.scrollY + (rect.height / 2) - (actualTooltipHeight / 2);
+                }
+                tooltipLeft = rect.right + gap;
+                arrowClass = 'arrow-left';
+                
+                // If would go off right side, position below instead
+                if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                    if (isFixed) {
+                        tooltipTop = rect.bottom + gap;
+                    } else {
+                        tooltipTop = rect.bottom + window.scrollY + gap;
+                    }
+                    tooltipLeft = Math.max(20, rect.left);
+                    if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                        tooltipLeft = viewportWidth - actualTooltipWidth - 20;
+                    }
+                    arrowClass = 'arrow-top';
+                }
+                
+                // Keep tooltip vertically on screen
+                var minTop = isFixed ? 20 : window.scrollY + 20;
+                var maxTop = isFixed ? viewportHeight - actualTooltipHeight - 20 : window.scrollY + viewportHeight - actualTooltipHeight - 20;
+                if (tooltipTop < minTop) tooltipTop = minTop;
+                if (tooltipTop > maxTop) tooltipTop = maxTop;
+                
             } else if (pos === 'left-of-target') {
                 // Check if target is on right side of screen
                 var targetCenterX = rect.left + rect.width / 2;
@@ -9938,48 +10202,48 @@ IMX.Tour = {
                 if (isOnRightSide) {
                     // Target on right - position tooltip to LEFT with arrow pointing right
                     if (isFixed) {
-                        tooltipTop = rect.top + (rect.height / 2) - (tooltipHeight / 2);
+                        tooltipTop = rect.top + (rect.height / 2) - (actualTooltipHeight / 2);
                     } else {
-                        tooltipTop = rect.top + window.scrollY + (rect.height / 2) - (tooltipHeight / 2);
+                        tooltipTop = rect.top + window.scrollY + (rect.height / 2) - (actualTooltipHeight / 2);
                     }
-                    tooltipLeft = rect.left - tooltipWidth - gap;
+                    tooltipLeft = rect.left - actualTooltipWidth - gap;
                     arrowClass = 'arrow-right';
                     
                     // If would go off left side, position above
                     if (tooltipLeft < 20) {
                         if (isFixed) {
-                            tooltipTop = rect.top - tooltipHeight - gap;
+                            tooltipTop = rect.top - actualTooltipHeight - gap;
                         } else {
-                            tooltipTop = rect.top + window.scrollY - tooltipHeight - gap;
+                            tooltipTop = rect.top + window.scrollY - actualTooltipHeight - gap;
                         }
-                        tooltipLeft = Math.max(20, rect.right - tooltipWidth);
+                        tooltipLeft = Math.max(20, rect.right - actualTooltipWidth);
                         arrowClass = 'arrow-bottom';
                     }
                 } else {
                     // Target on left - position tooltip to RIGHT with arrow pointing left
                     if (isFixed) {
-                        tooltipTop = rect.top + (rect.height / 2) - (tooltipHeight / 2);
+                        tooltipTop = rect.top + (rect.height / 2) - (actualTooltipHeight / 2);
                     } else {
-                        tooltipTop = rect.top + window.scrollY + (rect.height / 2) - (tooltipHeight / 2);
+                        tooltipTop = rect.top + window.scrollY + (rect.height / 2) - (actualTooltipHeight / 2);
                     }
                     tooltipLeft = rect.right + gap;
                     arrowClass = 'arrow-left';
                     
                     // If would go off right side, position above
-                    if (tooltipLeft + tooltipWidth > viewportWidth - 20) {
+                    if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
                         if (isFixed) {
-                            tooltipTop = rect.top - tooltipHeight - gap;
+                            tooltipTop = rect.top - actualTooltipHeight - gap;
                         } else {
-                            tooltipTop = rect.top + window.scrollY - tooltipHeight - gap;
+                            tooltipTop = rect.top + window.scrollY - actualTooltipHeight - gap;
                         }
-                        tooltipLeft = Math.min(viewportWidth - tooltipWidth - 20, rect.left);
+                        tooltipLeft = Math.min(viewportWidth - actualTooltipWidth - 20, rect.left);
                         arrowClass = 'arrow-bottom';
                     }
                 }
                 
                 // Keep tooltip vertically on screen
                 var minTop = isFixed ? 20 : window.scrollY + 20;
-                var maxTop = isFixed ? viewportHeight - tooltipHeight - 20 : window.scrollY + viewportHeight - tooltipHeight - 20;
+                var maxTop = isFixed ? viewportHeight - actualTooltipHeight - 20 : window.scrollY + viewportHeight - actualTooltipHeight - 20;
                 if (tooltipTop < minTop) tooltipTop = minTop;
                 if (tooltipTop > maxTop) tooltipTop = maxTop;
                 
@@ -9993,8 +10257,8 @@ IMX.Tour = {
                 arrowClass = 'arrow-top';
                 
                 // Keep on screen horizontally
-                if (tooltipLeft + tooltipWidth > viewportWidth - 20) {
-                    tooltipLeft = viewportWidth - tooltipWidth - 20;
+                if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                    tooltipLeft = viewportWidth - actualTooltipWidth - 20;
                 }
                 if (tooltipLeft < 20) {
                     tooltipLeft = 20;
@@ -10002,8 +10266,8 @@ IMX.Tour = {
                 
                 // If tooltip would go below viewport, cap it
                 var maxBottom = isFixed ? viewportHeight - 20 : window.scrollY + viewportHeight - 20;
-                if (tooltipTop + tooltipHeight > maxBottom) {
-                    tooltipTop = maxBottom - tooltipHeight;
+                if (tooltipTop + actualTooltipHeight > maxBottom) {
+                    tooltipTop = maxBottom - actualTooltipHeight;
                 }
             }
             
@@ -10015,6 +10279,12 @@ IMX.Tour = {
     
     next: function() {
         this.showStep(this.currentStep + 1);
+    },
+    
+    prev: function() {
+        if (this.currentStep > 0) {
+            this.showStep(this.currentStep - 1);
+        }
     },
     
     skip: function() {
