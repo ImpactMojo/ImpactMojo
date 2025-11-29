@@ -2000,38 +2000,143 @@
    ======================================== */
 
 /* Floating Action Buttons (FABs) - Bottom Left to avoid MOJINI */
-.imx-fab-container {
+/* Speed Dial FAB Container */
+.imx-speed-dial {
     position: fixed;
     bottom: 2rem;
     left: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
     z-index: 1000;
 }
 
-.imx-fab {
-    width: 56px;
-    height: 56px;
+.imx-speed-dial-toggle {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     transition: all 0.3s ease;
     position: relative;
+    z-index: 10;
 }
 
-.imx-fab:hover {
+.imx-speed-dial-toggle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+}
+
+.imx-speed-dial-toggle svg {
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.3s ease;
+}
+
+.imx-speed-dial.open .imx-speed-dial-toggle svg {
+    transform: rotate(45deg);
+}
+
+.imx-speed-dial-toggle .toggle-icon-close {
+    display: none;
+}
+
+.imx-speed-dial.open .imx-speed-dial-toggle .toggle-icon-tools {
+    display: none;
+}
+
+.imx-speed-dial.open .imx-speed-dial-toggle .toggle-icon-close {
+    display: block;
+}
+
+/* Speed Dial Menu */
+.imx-speed-dial-menu {
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.imx-speed-dial.open .imx-speed-dial-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Speed Dial Items */
+.imx-speed-dial-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+    transition: all 0.2s ease;
+}
+
+.imx-speed-dial.open .imx-speed-dial-item {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Staggered animation */
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(1) { transition-delay: 0.02s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(2) { transition-delay: 0.04s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(3) { transition-delay: 0.06s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(4) { transition-delay: 0.08s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(5) { transition-delay: 0.10s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(6) { transition-delay: 0.12s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(7) { transition-delay: 0.14s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(8) { transition-delay: 0.16s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(9) { transition-delay: 0.18s; }
+
+.imx-speed-dial-label {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border: 1px solid var(--border-color);
+}
+
+.imx-speed-dial-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    transition: all 0.2s ease;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.imx-speed-dial-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.35);
 }
 
-.imx-fab svg {
-    width: 24px;
-    height: 24px;
+.imx-speed-dial-btn svg {
+    width: 22px;
+    height: 22px;
     fill: none;
     stroke: white;
     stroke-width: 2;
@@ -2039,37 +2144,67 @@
     stroke-linejoin: round;
 }
 
-.imx-fab-bookmarks {
-    background: linear-gradient(135deg, #F97316, #EA580C);
+.imx-speed-dial-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #6B7280 !important;
 }
 
-.imx-fab-compare {
-    background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+.imx-speed-dial-btn.disabled:hover {
+    transform: none;
 }
 
-.imx-fab-lofi {
-    background: linear-gradient(135deg, #10B981, #059669);
-}
+/* Speed Dial Button Colors */
+.imx-sd-bookmarks { background: linear-gradient(135deg, #F97316, #EA580C); }
+.imx-sd-compare { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+.imx-sd-lofi { background: linear-gradient(135deg, #10B981, #059669); }
+.imx-sd-pomodoro { background: linear-gradient(135deg, #EF4444, #DC2626); }
+.imx-sd-analytics { background: linear-gradient(135deg, #8B5CF6, #6366F1); }
+.imx-sd-reading { background: linear-gradient(135deg, #F59E0B, #D97706); }
+.imx-sd-notes { background: linear-gradient(135deg, #14B8A6, #0D9488); }
+.imx-sd-streak { background: linear-gradient(135deg, #EC4899, #DB2777); }
 
-.imx-fab-badge {
+/* Badge on speed dial buttons */
+.imx-speed-dial-btn .imx-fab-badge {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -4px;
+    right: -4px;
     background: #EF4444;
     color: white;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    min-width: 20px;
-    height: 20px;
-    border-radius: 10px;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 6px;
+    padding: 0 4px;
 }
 
-.imx-fab-badge:empty {
+.imx-speed-dial-btn .imx-fab-badge:empty {
     display: none;
+}
+
+/* Pomodoro active state */
+.imx-sd-pomodoro.active {
+    animation: pomodoro-pulse 2s ease-in-out infinite;
+}
+
+/* Speed Dial Backdrop */
+.imx-speed-dial-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.imx-speed-dial.open ~ .imx-speed-dial-backdrop {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Card Action Buttons (Save/Compare on each card) */
@@ -2595,19 +2730,38 @@
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-    .imx-fab-container {
+    .imx-speed-dial {
         bottom: 1rem;
         left: 1rem;
     }
     
-    .imx-fab {
-        width: 48px;
-        height: 48px;
+    .imx-speed-dial-toggle {
+        width: 52px;
+        height: 52px;
     }
     
-    .imx-fab svg {
-        width: 20px;
-        height: 20px;
+    .imx-speed-dial-toggle svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .imx-speed-dial-menu {
+        bottom: 62px;
+    }
+    
+    .imx-speed-dial-btn {
+        width: 42px;
+        height: 42px;
+    }
+    
+    .imx-speed-dial-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .imx-speed-dial-label {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
     }
     
     .imx-modal-content {
@@ -2780,6 +2934,29 @@
 </div>
 </section>
 
+<!-- Daily Learning Tip -->
+<div class="imx-daily-tip" id="imxDailyTip">
+    <div class="imx-daily-tip-icon">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path><circle cx="12" cy="12" r="4"></circle></svg>
+    </div>
+    <div class="imx-daily-tip-content">
+        <div class="imx-daily-tip-label">💡 Daily Learning Tip</div>
+        <div class="imx-daily-tip-text" id="imxDailyTipText">Loading tip...</div>
+    </div>
+    <button class="imx-daily-tip-refresh" onclick="IMX.DailyTip.showRandom()" title="New tip" aria-label="Show another tip">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 2v6h6M21.5 22v-6h-6"></path><path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3"></path></svg>
+    </button>
+</div>
+
+<!-- Surprise Me Button -->
+<div style="text-align: center; margin: 1.5rem auto;">
+    <button class="imx-surprise-btn" onclick="IMX.surpriseMe()">
+        <svg viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"></rect><circle cx="8" cy="8" r="1.5" fill="currentColor"></circle><circle cx="16" cy="8" r="1.5" fill="currentColor"></circle><circle cx="8" cy="16" r="1.5" fill="currentColor"></circle><circle cx="16" cy="16" r="1.5" fill="currentColor"></circle><circle cx="12" cy="12" r="1.5" fill="currentColor"></circle></svg>
+        Surprise Me!
+    </button>
+    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Discover something random to learn</p>
+</div>
+
 <!-- ImpactLex Banner -->
 <div class="impactlex-banner">
     <a href="https://on-web.link/ImpactLex" target="_blank" rel="noopener noreferrer" class="impactlex-banner-inner">
@@ -2936,11 +3113,251 @@
 .imx-compare-objectives li { font-size: 0.8rem; color: var(--text-secondary); padding: 0.35rem 0; padding-left: 1.25rem; position: relative; }
 .imx-compare-objectives li::before { content: '→'; position: absolute; left: 0; color: var(--accent-color); }
 
-/* Analytics FAB and Reading Lists FAB */
-.imx-fab-analytics { background: linear-gradient(135deg, #8B5CF6, #6366F1); }
-.imx-fab-analytics:hover { background: linear-gradient(135deg, #7C3AED, #4F46E5); transform: scale(1.1); }
-.imx-fab-reading { background: linear-gradient(135deg, #F59E0B, #D97706); }
-.imx-fab-reading:hover { background: linear-gradient(135deg, #D97706, #B45309); transform: scale(1.1); }
+/* Pomodoro Timer Animation */
+@keyframes pomodoro-pulse {
+    0%, 100% { box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); }
+    50% { box-shadow: 0 4px 24px rgba(239, 68, 68, 0.8); }
+}
+
+/* Pomodoro Modal Styles */
+.imx-pomodoro-display {
+    text-align: center;
+    padding: 2rem;
+    background: var(--hover-bg);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+}
+.imx-pomodoro-time {
+    font-size: 4rem;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--text-primary);
+    letter-spacing: 0.1em;
+}
+.imx-pomodoro-label {
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem;
+}
+.imx-pomodoro-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.imx-pomodoro-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+.imx-pomodoro-btn-start {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+}
+.imx-pomodoro-btn-start:hover { transform: scale(1.05); }
+.imx-pomodoro-btn-pause {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: white;
+}
+.imx-pomodoro-btn-reset {
+    background: var(--secondary-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+.imx-pomodoro-presets {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+.imx-pomodoro-preset {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.imx-pomodoro-preset:hover, .imx-pomodoro-preset.active {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+.imx-pomodoro-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+.imx-pomodoro-stat {
+    text-align: center;
+}
+.imx-pomodoro-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+.imx-pomodoro-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* Daily Learning Tip Banner */
+.imx-daily-tip {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(99, 102, 241, 0.1));
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem auto;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.imx-daily-tip-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #0EA5E9, #6366F1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.imx-daily-tip-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    fill: none;
+}
+.imx-daily-tip-content {
+    flex: 1;
+}
+.imx-daily-tip-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+.imx-daily-tip-text {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+.imx-daily-tip-refresh {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+.imx-daily-tip-refresh:hover {
+    background: var(--hover-bg);
+    color: var(--accent-color);
+}
+
+/* Surprise Me Button */
+.imx-surprise-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #EC4899, #8B5CF6);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+.imx-surprise-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
+}
+.imx-surprise-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    animation: dice-shake 0.5s ease-in-out;
+}
+.imx-surprise-btn:hover svg {
+    animation: dice-shake 0.5s ease-in-out infinite;
+}
+@keyframes dice-shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    75% { transform: rotate(15deg); }
+}
+
+/* Card Duration Badge */
+.card-duration {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--hover-bg);
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    margin-left: auto;
+}
+.card-duration svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* Copy Citation Button */
+.imx-copy-citation {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.imx-copy-citation:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+.imx-copy-citation.copied {
+    background: #10B981;
+    color: white;
+    border-color: #10B981;
+}
+.imx-copy-citation svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+}
 
 /* Analytics Modal Styles */
 .imx-analytics-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
@@ -6619,6 +7036,52 @@
             }
         });
 
+        // ========================================
+        // VERSION CHECK & AUTO-REFRESH
+        // ========================================
+        (function() {
+            var SITE_VERSION = '2.5.0'; // Update this when deploying new versions
+            var VERSION_KEY = 'imx_site_version';
+            
+            // Check if version changed
+            var storedVersion = localStorage.getItem(VERSION_KEY);
+            if (storedVersion && storedVersion !== SITE_VERSION) {
+                console.log('ImpactMojo: New version detected (' + storedVersion + ' → ' + SITE_VERSION + '), refreshing...');
+                localStorage.setItem(VERSION_KEY, SITE_VERSION);
+                // Clear any cached data that might cause issues
+                if ('caches' in window) {
+                    caches.keys().then(function(names) {
+                        names.forEach(function(name) {
+                            caches.delete(name);
+                        });
+                    });
+                }
+                window.location.reload(true); // Force reload from server
+            } else {
+                localStorage.setItem(VERSION_KEY, SITE_VERSION);
+            }
+            
+            // Also check for updates periodically (every 30 minutes)
+            setInterval(function() {
+                fetch(window.location.href + '?_=' + Date.now(), { 
+                    method: 'HEAD',
+                    cache: 'no-store'
+                }).then(function(response) {
+                    var lastModified = response.headers.get('last-modified');
+                    var storedLastMod = sessionStorage.getItem('imx_last_modified');
+                    if (storedLastMod && lastModified && storedLastMod !== lastModified) {
+                        console.log('ImpactMojo: Page updated on server, prompting refresh...');
+                        if (confirm('A new version of ImpactMojo is available! Refresh now?')) {
+                            window.location.reload(true);
+                        }
+                    }
+                    if (lastModified) {
+                        sessionStorage.setItem('imx_last_modified', lastModified);
+                    }
+                }).catch(function() {});
+            }, 30 * 60 * 1000); // 30 minutes
+        })();
+
         // Service Worker Registration for PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -7529,34 +7992,84 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
 <!-- ImpactMojo Feature FABs and Modals -->
-<div class="imx-fab-container">
-    <!-- Bookmarks FAB -->
-    <button class="imx-fab imx-fab-bookmarks" onclick="IMX.openBookmarksModal()" title="My Bookmarks" aria-label="Open bookmarks">
-        <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-        <span class="imx-fab-badge" id="imxBookmarkBadge"></span>
+<!-- Speed Dial Tools Button -->
+<div class="imx-speed-dial" id="imxSpeedDial">
+    <!-- Main Toggle Button -->
+    <button class="imx-speed-dial-toggle" id="imxSpeedDialToggle" onclick="IMX.SpeedDial.toggle()" title="Learning Tools" aria-label="Open learning tools menu">
+        <svg class="toggle-icon-tools" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <svg class="toggle-icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
     </button>
     
-    <!-- Compare FAB -->
-    <button class="imx-fab imx-fab-compare" onclick="IMX.openCompareModal()" title="Compare Items" aria-label="Open compare tool">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-        <span class="imx-fab-badge" id="imxCompareBadge"></span>
-    </button>
-    
-    <!-- Lo-Fi FAB -->
-    <button class="imx-fab imx-fab-lofi" onclick="IMX.openLofiModal()" title="Lo-Fi Study Playlists" aria-label="Open lo-fi playlists">
-        <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-    </button>
-    
-    <!-- Analytics FAB -->
-    <button class="imx-fab imx-fab-analytics" onclick="IMX.openAnalyticsModal()" title="My Learning Analytics" aria-label="Open learning analytics">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
-    </button>
-    
-    <!-- Reading Lists FAB -->
-    <button class="imx-fab imx-fab-reading" onclick="IMX.openReadingListsModal()" title="Smart Reading Lists" aria-label="Open reading lists">
-        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-    </button>
+    <!-- Speed Dial Menu -->
+    <div class="imx-speed-dial-menu">
+        <!-- Reading Lists -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Reading Lists</span>
+            <button class="imx-speed-dial-btn imx-sd-reading" onclick="IMX.openReadingListsModal(); IMX.SpeedDial.close();" title="Smart Reading Lists" aria-label="Open reading lists">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </button>
+        </div>
+        
+        <!-- Analytics -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Analytics</span>
+            <button class="imx-speed-dial-btn imx-sd-analytics" onclick="IMX.openAnalyticsModal(); IMX.SpeedDial.close();" title="Learning Analytics" aria-label="Open learning analytics">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
+            </button>
+        </div>
+        
+        <!-- Pomodoro Timer -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Pomodoro Timer</span>
+            <button class="imx-speed-dial-btn imx-sd-pomodoro" id="imxPomodoroFab" onclick="IMX.Pomodoro.openModal(); IMX.SpeedDial.close();" title="Pomodoro Timer" aria-label="Open pomodoro timer">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </button>
+        </div>
+        
+        <!-- Lo-Fi Music -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Lo-Fi Music</span>
+            <button class="imx-speed-dial-btn imx-sd-lofi" onclick="IMX.openLofiModal(); IMX.SpeedDial.close();" title="Lo-Fi Study Playlists" aria-label="Open lo-fi playlists">
+                <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+            </button>
+        </div>
+        
+        <!-- Compare -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Compare</span>
+            <button class="imx-speed-dial-btn imx-sd-compare" onclick="IMX.openCompareModal(); IMX.SpeedDial.close();" title="Compare Items" aria-label="Open compare tool">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                <span class="imx-fab-badge" id="imxCompareBadge"></span>
+            </button>
+        </div>
+        
+        <!-- Bookmarks -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Bookmarks</span>
+            <button class="imx-speed-dial-btn imx-sd-bookmarks" onclick="IMX.openBookmarksModal(); IMX.SpeedDial.close();" title="My Bookmarks" aria-label="Open bookmarks">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                <span class="imx-fab-badge" id="imxBookmarkBadge"></span>
+            </button>
+        </div>
+        
+        <!-- Personal Notes (Coming Soon) -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Notes <small style="opacity:0.6">(Soon)</small></span>
+            <button class="imx-speed-dial-btn imx-sd-notes disabled" title="Personal Notes - Coming Soon" aria-label="Personal notes coming soon" disabled>
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            </button>
+        </div>
+        
+        <!-- Learning Streak (Coming Soon) -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Streak <small style="opacity:0.6">(Soon)</small></span>
+            <button class="imx-speed-dial-btn imx-sd-streak disabled" title="Learning Streak - Coming Soon" aria-label="Learning streak coming soon" disabled>
+                <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+            </button>
+        </div>
+    </div>
 </div>
+<div class="imx-speed-dial-backdrop" onclick="IMX.SpeedDial.close()"></div>
 
 <!-- Bookmarks Modal -->
 <div class="imx-modal" id="imxBookmarksModal" role="dialog" aria-label="Bookmarks">
@@ -7735,6 +8248,62 @@ document.addEventListener('DOMContentLoaded', function(){
         </div>
         <div class="imx-modal-footer">
             <button class="imx-btn imx-btn-primary" onclick="IMX.closeReadingListsModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Pomodoro Timer Modal -->
+<div class="imx-modal" id="imxPomodoroModal" role="dialog" aria-label="Pomodoro Timer">
+    <div class="imx-modal-content">
+        <div class="imx-modal-header">
+            <div class="imx-modal-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Pomodoro Timer
+            </div>
+            <button class="imx-modal-close" onclick="IMX.Pomodoro.closeModal()" aria-label="Close">×</button>
+        </div>
+        <div class="imx-modal-body">
+            <div class="imx-pomodoro-display">
+                <div class="imx-pomodoro-time" id="imxPomodoroTime">25:00</div>
+                <div class="imx-pomodoro-label" id="imxPomodoroLabel">Focus Time</div>
+            </div>
+            
+            <div class="imx-pomodoro-controls">
+                <button class="imx-pomodoro-btn imx-pomodoro-btn-start" id="imxPomodoroStart" onclick="IMX.Pomodoro.start()">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Start
+                </button>
+                <button class="imx-pomodoro-btn imx-pomodoro-btn-pause" id="imxPomodoroPause" onclick="IMX.Pomodoro.pause()" style="display:none;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                    Pause
+                </button>
+                <button class="imx-pomodoro-btn imx-pomodoro-btn-reset" onclick="IMX.Pomodoro.reset()">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 2v6h6M21.5 22v-6h-6"></path><path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3"></path></svg>
+                    Reset
+                </button>
+            </div>
+            
+            <div class="imx-pomodoro-presets">
+                <button class="imx-pomodoro-preset active" onclick="IMX.Pomodoro.setPreset(25, 'Focus Time')">25 min</button>
+                <button class="imx-pomodoro-preset" onclick="IMX.Pomodoro.setPreset(5, 'Short Break')">5 min</button>
+                <button class="imx-pomodoro-preset" onclick="IMX.Pomodoro.setPreset(15, 'Long Break')">15 min</button>
+                <button class="imx-pomodoro-preset" onclick="IMX.Pomodoro.setPreset(50, 'Deep Focus')">50 min</button>
+            </div>
+            
+            <div class="imx-pomodoro-stats">
+                <div class="imx-pomodoro-stat">
+                    <div class="imx-pomodoro-stat-value" id="imxPomodoroSessions">0</div>
+                    <div class="imx-pomodoro-stat-label">Sessions Today</div>
+                </div>
+                <div class="imx-pomodoro-stat">
+                    <div class="imx-pomodoro-stat-value" id="imxPomodoroTotal">0h 0m</div>
+                    <div class="imx-pomodoro-stat-label">Total Focus Time</div>
+                </div>
+            </div>
+            
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 1.5rem;">
+                💡 Tip: Pair with Lo-Fi music for best focus!
+            </p>
         </div>
     </div>
 </div>
@@ -7991,6 +8560,334 @@ IMX.Analytics.startSession();
 window.addEventListener('beforeunload', function() {
     IMX.Analytics.endSession();
 });
+
+// ========================================
+// SPEED DIAL MENU
+// ========================================
+IMX.SpeedDial = {
+    isOpen: false,
+    
+    toggle: function() {
+        if (this.isOpen) {
+            this.close();
+        } else {
+            this.open();
+        }
+    },
+    
+    open: function() {
+        var dial = document.getElementById('imxSpeedDial');
+        if (dial) {
+            dial.classList.add('open');
+            this.isOpen = true;
+        }
+    },
+    
+    close: function() {
+        var dial = document.getElementById('imxSpeedDial');
+        if (dial) {
+            dial.classList.remove('open');
+            this.isOpen = false;
+        }
+    }
+};
+
+// Close speed dial on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && IMX.SpeedDial.isOpen) {
+        IMX.SpeedDial.close();
+    }
+});
+
+// ========================================
+// DAILY LEARNING TIPS
+// ========================================
+IMX.DailyTip = {
+    tips: [
+        "Theory of Change is not just a document—it's a living roadmap. Review and update yours quarterly as you learn what works.",
+        "The best M&E systems are designed WITH communities, not FOR them. Participatory approaches increase data quality and ownership.",
+        "Disaggregate your data by gender, age, and location. Averages often hide who's being left behind.",
+        "Qualitative data is not 'soft' data. Stories and context explain the 'why' behind the numbers.",
+        "Baseline data isn't just a requirement—it's your starting point for measuring real change. Don't skip it!",
+        "The Sustainable Development Goals are interconnected. Solving one problem often requires addressing multiple SDGs.",
+        "Cost-effectiveness analysis helps donors compare impact across programs. Learn to calculate and communicate yours.",
+        "Adaptive management means being willing to change course when evidence shows a better path.",
+        "The 'Do No Harm' principle should guide every intervention. Always assess potential negative consequences.",
+        "Capacity building isn't just training—it's about creating systems that sustain after the project ends.",
+        "Mixed methods research combines the best of quantitative and qualitative—use them together for richer insights.",
+        "Randomized Controlled Trials (RCTs) are the gold standard, but not always feasible. Know your alternatives.",
+        "Social accountability mechanisms empower communities to hold service providers responsible.",
+        "Gender analysis should happen at design stage, not be retrofitted later.",
+        "Systems thinking helps you see the interconnections that simple logic models miss.",
+        "Behavior change takes time. Design your program timelines and expectations accordingly.",
+        "Local ownership is the key to sustainability. Build it from day one.",
+        "Data visualization can tell a story that numbers alone cannot. Learn the basics.",
+        "Ethical considerations in research protect vulnerable populations. Never compromise on informed consent.",
+        "Network effects can amplify your impact. Think about how change spreads through communities."
+    ],
+    
+    currentIndex: 0,
+    
+    init: function() {
+        // Show a tip based on the day of year for consistency
+        var dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+        this.currentIndex = dayOfYear % this.tips.length;
+        this.display(this.tips[this.currentIndex]);
+    },
+    
+    showRandom: function() {
+        var newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * this.tips.length);
+        } while (newIndex === this.currentIndex && this.tips.length > 1);
+        
+        this.currentIndex = newIndex;
+        this.display(this.tips[this.currentIndex]);
+        
+        // Add a little animation
+        var tipEl = document.getElementById('imxDailyTipText');
+        if (tipEl) {
+            tipEl.style.opacity = '0';
+            setTimeout(function() {
+                tipEl.style.opacity = '1';
+            }, 150);
+        }
+    },
+    
+    display: function(tip) {
+        var tipEl = document.getElementById('imxDailyTipText');
+        if (tipEl) {
+            tipEl.textContent = tip;
+            tipEl.style.transition = 'opacity 0.3s ease';
+        }
+    }
+};
+
+// Initialize daily tip on page load
+document.addEventListener('DOMContentLoaded', function() {
+    IMX.DailyTip.init();
+});
+
+// ========================================
+// SURPRISE ME (Random Content Picker)
+// ========================================
+IMX.surpriseMe = function() {
+    // Collect all content cards
+    var cards = document.querySelectorAll('.card');
+    if (cards.length === 0) {
+        alert('No content found!');
+        return;
+    }
+    
+    // Pick a random card
+    var randomIndex = Math.floor(Math.random() * cards.length);
+    var randomCard = cards[randomIndex];
+    
+    // Scroll to it
+    randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // Add a highlight effect
+    randomCard.style.transition = 'all 0.3s ease';
+    randomCard.style.boxShadow = '0 0 0 4px #EC4899, 0 0 30px rgba(236, 72, 153, 0.5)';
+    randomCard.style.transform = 'scale(1.02)';
+    
+    // Remove highlight after 2 seconds
+    setTimeout(function() {
+        randomCard.style.boxShadow = '';
+        randomCard.style.transform = '';
+    }, 2000);
+    
+    // Get the card title for feedback
+    var titleEl = randomCard.querySelector('.card-title, h3');
+    var title = titleEl ? titleEl.textContent : 'content';
+    
+    // Show a toast notification (simple)
+    IMX.showToast('🎲 Discovered: ' + title);
+};
+
+// Simple toast notification
+IMX.showToast = function(message) {
+    // Remove existing toast
+    var existing = document.getElementById('imxToast');
+    if (existing) existing.remove();
+    
+    // Create toast
+    var toast = document.createElement('div');
+    toast.id = 'imxToast';
+    toast.style.cssText = 'position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--card-bg); color: var(--text-primary); padding: 1rem 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 9999; font-weight: 500; border: 1px solid var(--border-color); animation: toastIn 0.3s ease;';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    // Add animation styles if not present
+    if (!document.getElementById('toastStyles')) {
+        var style = document.createElement('style');
+        style.id = 'toastStyles';
+        style.textContent = '@keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }';
+        document.head.appendChild(style);
+    }
+    
+    // Remove after 3 seconds
+    setTimeout(function() {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(function() { toast.remove(); }, 300);
+    }, 3000);
+};
+
+// ========================================
+// POMODORO TIMER
+// ========================================
+IMX.Pomodoro = {
+    timer: null,
+    timeLeft: 25 * 60, // seconds
+    totalTime: 25 * 60,
+    isRunning: false,
+    currentLabel: 'Focus Time',
+    
+    STORAGE_KEY: 'imx_pomodoro_stats',
+    
+    init: function() {
+        this.loadStats();
+        this.updateDisplay();
+    },
+    
+    openModal: function() {
+        document.getElementById('imxPomodoroModal').style.display = 'flex';
+        this.loadStats();
+    },
+    
+    closeModal: function() {
+        document.getElementById('imxPomodoroModal').style.display = 'none';
+    },
+    
+    start: function() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        
+        document.getElementById('imxPomodoroStart').style.display = 'none';
+        document.getElementById('imxPomodoroPause').style.display = 'inline-flex';
+        document.getElementById('imxPomodoroFab').classList.add('active');
+        
+        var self = this;
+        this.timer = setInterval(function() {
+            self.timeLeft--;
+            self.updateDisplay();
+            
+            if (self.timeLeft <= 0) {
+                self.complete();
+            }
+        }, 1000);
+    },
+    
+    pause: function() {
+        this.isRunning = false;
+        clearInterval(this.timer);
+        
+        document.getElementById('imxPomodoroStart').style.display = 'inline-flex';
+        document.getElementById('imxPomodoroPause').style.display = 'none';
+        document.getElementById('imxPomodoroFab').classList.remove('active');
+    },
+    
+    reset: function() {
+        this.pause();
+        this.timeLeft = this.totalTime;
+        this.updateDisplay();
+    },
+    
+    setPreset: function(minutes, label) {
+        this.pause();
+        this.totalTime = minutes * 60;
+        this.timeLeft = this.totalTime;
+        this.currentLabel = label;
+        this.updateDisplay();
+        document.getElementById('imxPomodoroLabel').textContent = label;
+        
+        // Update active preset button
+        document.querySelectorAll('.imx-pomodoro-preset').forEach(function(btn) {
+            btn.classList.remove('active');
+            if (btn.textContent.includes(minutes + ' min')) {
+                btn.classList.add('active');
+            }
+        });
+    },
+    
+    complete: function() {
+        this.pause();
+        this.playSound();
+        
+        // Save stats
+        var stats = this.getStats();
+        stats.sessions++;
+        stats.totalMinutes += Math.floor(this.totalTime / 60);
+        stats.lastDate = new Date().toDateString();
+        this.saveStats(stats);
+        this.displayStats(stats);
+        
+        // Show notification
+        if (Notification.permission === 'granted') {
+            new Notification('Pomodoro Complete! 🎉', {
+                body: this.currentLabel + ' session finished. Great work!',
+                icon: 'https://impactmojo.in/favicon.ico'
+            });
+        }
+        
+        alert('🎉 ' + this.currentLabel + ' complete! Take a break.');
+        this.reset();
+    },
+    
+    playSound: function() {
+        try {
+            var audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
+            audio.volume = 0.5;
+            audio.play().catch(function() {});
+        } catch(e) {}
+    },
+    
+    updateDisplay: function() {
+        var mins = Math.floor(this.timeLeft / 60);
+        var secs = this.timeLeft % 60;
+        var display = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+        document.getElementById('imxPomodoroTime').textContent = display;
+    },
+    
+    getStats: function() {
+        try {
+            var stored = localStorage.getItem(this.STORAGE_KEY);
+            if (stored) {
+                var stats = JSON.parse(stored);
+                // Reset if different day
+                if (stats.lastDate !== new Date().toDateString()) {
+                    stats.sessions = 0;
+                }
+                return stats;
+            }
+        } catch(e) {}
+        return { sessions: 0, totalMinutes: 0, lastDate: new Date().toDateString() };
+    },
+    
+    saveStats: function(stats) {
+        try {
+            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(stats));
+        } catch(e) {}
+    },
+    
+    loadStats: function() {
+        var stats = this.getStats();
+        this.displayStats(stats);
+    },
+    
+    displayStats: function(stats) {
+        document.getElementById('imxPomodoroSessions').textContent = stats.sessions;
+        var hours = Math.floor(stats.totalMinutes / 60);
+        var mins = stats.totalMinutes % 60;
+        document.getElementById('imxPomodoroTotal').textContent = hours + 'h ' + mins + 'm';
+    }
+};
+
+// Request notification permission on load
+if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+}
 
 // ========================================
 // SMART READING LISTS (Curated Resources)
@@ -8727,46 +9624,26 @@ IMX.Tour = {
             position: 'left-of-target'
         },
         {
-            target: '.imx-fab-bookmarks',
+            target: '#imxSpeedDialToggle',
             icon: 'bookmark',
-            title: 'Save for Later',
-            desc: 'Bookmark any course, lab, or game to build your personal learning list. Export to CSV anytime.',
-            position: 'left-of-target'
-        },
-        {
-            target: '.imx-fab-compare',
-            icon: 'compare',
-            title: 'Compare Side-by-Side',
-            desc: 'Add up to 3 items to compare objectives, duration, audience level, and more.',
-            position: 'left-of-target'
-        },
-        {
-            target: '.imx-fab-lofi',
-            icon: 'music',
-            title: 'Study Music',
-            desc: 'Curated lo-fi playlists for focused learning. Deep focus, chill beats, ambient, or classical.',
-            position: 'left-of-target'
-        },
-        {
-            target: '.imx-fab-analytics',
-            icon: 'analytics',
-            title: 'Learning Analytics',
-            desc: 'Track your progress: time spent, most viewed content, and session history.',
-            position: 'left-of-target'
-        },
-        {
-            target: '.imx-fab-reading',
-            icon: 'book',
-            title: 'Smart Reading Lists',
-            desc: 'Hand-picked resources from UNDP, World Bank, J-PAL, and other development organizations.',
-            position: 'left-of-target'
+            title: 'Your Learning Toolbox',
+            desc: 'Click to access all your tools: Bookmarks, Compare, Lo-Fi Music, Pomodoro Timer, Analytics, Reading Lists, and more coming soon!',
+            position: 'right',
+            action: function() {
+                // Open the speed dial to show the tools
+                IMX.SpeedDial.open();
+            }
         },
         {
             target: '.acsb-trigger',
             icon: 'accessibility',
             title: 'Accessibility Options',
             desc: 'Customize your viewing experience! Adjust text size, contrast, colors, and more to make browsing comfortable.',
-            position: 'left-of-target'
+            position: 'left-of-target',
+            action: function() {
+                // Close speed dial before moving to next step
+                IMX.SpeedDial.close();
+            }
         },
         {
             target: '.card:first-of-type',
