@@ -2,7 +2,9 @@
 
 <html lang="en">
 <head>
-<meta charset="utf-8"/><!-- Google tag (gtag.js) -->
+<meta charset="utf-8"/>
+<!-- Version 7.2 - November 29, 2025 - Tour fixes -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -12,9 +14,48 @@
 </script>
 
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<!-- Cache Control - Force fresh content -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="version" content="7.2.20251129b">
+
+<!-- Aggressive cache-busting script -->
+<script>
+(function() {
+    var CURRENT_VERSION = '7.2.20251129b';
+    var STORAGE_KEY = 'imx_page_version';
+    
+    try {
+        var storedVersion = localStorage.getItem(STORAGE_KEY);
+        
+        // If version mismatch, clear caches and reload
+        if (storedVersion && storedVersion !== CURRENT_VERSION) {
+            localStorage.setItem(STORAGE_KEY, CURRENT_VERSION);
+            
+            // Clear service worker caches if available
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    names.forEach(function(name) {
+                        caches.delete(name);
+                    });
+                });
+            }
+            
+            // Force hard reload bypassing cache
+            if (window.location.href.indexOf('v=') === -1) {
+                var separator = window.location.href.indexOf('?') !== -1 ? '&' : '?';
+                window.location.href = window.location.href + separator + 'v=' + CURRENT_VERSION;
+            }
+        } else {
+            localStorage.setItem(STORAGE_KEY, CURRENT_VERSION);
+        }
+    } catch(e) {
+        // localStorage not available, continue anyway
+    }
+})();
+</script>
 
 <meta name="description" content="Free, practical MEAL, theory of change, research methods, and gender 101 courses for NGOs and impact teams across South Asia."/>
 <meta property="og:title" content="Free MEAL &amp; TOC Courses for NGOs | ImpactMojo">
@@ -150,11 +191,6 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-        }
-
-        /* Mobile header alignment fix */
-        .mobile-header-right {
-            display: none;
         }
 
         /* Professional Logo Design */
@@ -393,6 +429,29 @@
             height: 42px;
             align-items: center;
             justify-content: center;
+            position: relative;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .mobile-menu-toggle .hamburger-line {
+            width: 20px;
+            height: 2px;
+            background: var(--nav-text);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        
+        .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
 
         /* Cookie Consent Banner */
@@ -1686,10 +1745,10 @@
         /* Feedback FAB */
         .feedback-fab {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 56px;
-            height: 56px;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
             background: var(--gradient-primary);
             border-radius: 50%;
             display: flex;
@@ -1740,52 +1799,55 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            /* Mobile nav-container: single row, no wrap */
+            /* Fix header alignment - keep all buttons in one row */
             .nav-container {
                 flex-wrap: nowrap;
                 padding: 0.75rem 1rem;
-            }
-
-            /* Hide desktop nav-buttons on mobile */
-            .nav-buttons {
-                display: none;
-            }
-
-            /* Show mobile header right section */
-            .mobile-header-right {
-                display: flex;
-                align-items: center;
                 gap: 0.5rem;
-                flex-shrink: 0;
             }
 
-            /* Mobile buttons styling */
-            .mobile-header-right .tour-toggle,
-            .mobile-header-right .theme-toggle,
-            .mobile-header-right .mobile-menu-toggle {
+            .nav-buttons {
+                display: flex;
+                order: 2;
+                gap: 0.35rem;
+            }
+
+            .nav-buttons .tour-toggle,
+            .nav-buttons .theme-toggle {
                 width: 38px;
                 height: 38px;
-                padding: 0.5rem;
-                margin: 0;
+                padding: 0.4rem;
             }
 
-            /* Hide the standalone mobile menu toggle (now inside mobile-header-right) */
-            .nav-container > .mobile-menu-toggle {
-                display: none;
+            .mobile-menu-toggle {
+                order: 3;
+                width: 38px;
+                height: 38px;
+            }
+
+            .logo-container {
+                order: 1;
+                flex: 1;
+                min-width: 0;
             }
 
             .nav-links {
+                order: 4;
                 display: none;
                 position: absolute;
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: var(--nav-bg);
+                background: var(--card-bg);
                 flex-direction: column;
-                padding: 1rem;
+                padding: 0.5rem 1rem;
                 border-top: 1px solid var(--border-color);
                 box-shadow: var(--shadow-lg);
                 gap: 0;
+                z-index: 2000;
+                max-height: calc(100vh - 80px);
+                overflow-y: auto;
+                overscroll-behavior: contain;
             }
 
             .nav-links.active {
@@ -1850,24 +1912,28 @@
             .mobile-menu-toggle {
                 display: flex;
             }
+            
+            /* Mobile menu overlay */
+            .mobile-menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1999;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            
+            .mobile-menu-overlay.active {
+                display: block;
+                opacity: 1;
+            }
 
             .logo-tagline {
                 display: none;
-            }
-
-            /* Smaller logo on mobile */
-            .logo-svg {
-                width: 40px;
-                height: 40px;
-            }
-
-            .logo-svg img {
-                width: 40px !important;
-                height: 40px !important;
-            }
-
-            .logo-main {
-                font-size: 1.5rem;
             }
 
             .hero h1 {
@@ -2053,38 +2119,143 @@
    ======================================== */
 
 /* Floating Action Buttons (FABs) - Bottom Left to avoid MOJINI */
-.imx-fab-container {
+/* Speed Dial FAB Container */
+.imx-speed-dial {
     position: fixed;
     bottom: 2rem;
     left: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
     z-index: 1000;
 }
 
-.imx-fab {
-    width: 56px;
-    height: 56px;
+.imx-speed-dial-toggle {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     transition: all 0.3s ease;
     position: relative;
+    z-index: 10;
 }
 
-.imx-fab:hover {
+.imx-speed-dial-toggle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+}
+
+.imx-speed-dial-toggle svg {
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.3s ease;
+}
+
+.imx-speed-dial.open .imx-speed-dial-toggle svg {
+    transform: rotate(45deg);
+}
+
+.imx-speed-dial-toggle .toggle-icon-close {
+    display: none;
+}
+
+.imx-speed-dial.open .imx-speed-dial-toggle .toggle-icon-tools {
+    display: none;
+}
+
+.imx-speed-dial.open .imx-speed-dial-toggle .toggle-icon-close {
+    display: block;
+}
+
+/* Speed Dial Menu */
+.imx-speed-dial-menu {
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.imx-speed-dial.open .imx-speed-dial-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Speed Dial Items */
+.imx-speed-dial-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+    transition: all 0.2s ease;
+}
+
+.imx-speed-dial.open .imx-speed-dial-item {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Staggered animation */
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(1) { transition-delay: 0.02s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(2) { transition-delay: 0.04s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(3) { transition-delay: 0.06s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(4) { transition-delay: 0.08s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(5) { transition-delay: 0.10s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(6) { transition-delay: 0.12s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(7) { transition-delay: 0.14s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(8) { transition-delay: 0.16s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(9) { transition-delay: 0.18s; }
+
+.imx-speed-dial-label {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border: 1px solid var(--border-color);
+}
+
+.imx-speed-dial-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    transition: all 0.2s ease;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.imx-speed-dial-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.35);
 }
 
-.imx-fab svg {
-    width: 24px;
-    height: 24px;
+.imx-speed-dial-btn svg {
+    width: 22px;
+    height: 22px;
     fill: none;
     stroke: white;
     stroke-width: 2;
@@ -2092,37 +2263,67 @@
     stroke-linejoin: round;
 }
 
-.imx-fab-bookmarks {
-    background: linear-gradient(135deg, #F97316, #EA580C);
+.imx-speed-dial-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #6B7280 !important;
 }
 
-.imx-fab-compare {
-    background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+.imx-speed-dial-btn.disabled:hover {
+    transform: none;
 }
 
-.imx-fab-lofi {
-    background: linear-gradient(135deg, #10B981, #059669);
-}
+/* Speed Dial Button Colors */
+.imx-sd-bookmarks { background: linear-gradient(135deg, #F97316, #EA580C); }
+.imx-sd-compare { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+.imx-sd-lofi { background: linear-gradient(135deg, #10B981, #059669); }
+.imx-sd-pomodoro { background: linear-gradient(135deg, #EF4444, #DC2626); }
+.imx-sd-analytics { background: linear-gradient(135deg, #8B5CF6, #6366F1); }
+.imx-sd-reading { background: linear-gradient(135deg, #F59E0B, #D97706); }
+.imx-sd-notes { background: linear-gradient(135deg, #14B8A6, #0D9488); }
+.imx-sd-streak { background: linear-gradient(135deg, #EC4899, #DB2777); }
 
-.imx-fab-badge {
+/* Badge on speed dial buttons */
+.imx-speed-dial-btn .imx-fab-badge {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -4px;
+    right: -4px;
     background: #EF4444;
     color: white;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    min-width: 20px;
-    height: 20px;
-    border-radius: 10px;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 6px;
+    padding: 0 4px;
 }
 
-.imx-fab-badge:empty {
+.imx-speed-dial-btn .imx-fab-badge:empty {
     display: none;
+}
+
+/* Pomodoro active state */
+.imx-sd-pomodoro.active {
+    animation: pomodoro-pulse 2s ease-in-out infinite;
+}
+
+/* Speed Dial Backdrop */
+.imx-speed-dial-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.imx-speed-dial.open ~ .imx-speed-dial-backdrop {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Card Action Buttons (Save/Compare on each card) */
@@ -2648,19 +2849,38 @@
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-    .imx-fab-container {
+    .imx-speed-dial {
         bottom: 1rem;
         left: 1rem;
     }
     
-    .imx-fab {
-        width: 48px;
-        height: 48px;
+    .imx-speed-dial-toggle {
+        width: 52px;
+        height: 52px;
     }
     
-    .imx-fab svg {
-        width: 20px;
-        height: 20px;
+    .imx-speed-dial-toggle svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .imx-speed-dial-menu {
+        bottom: 62px;
+    }
+    
+    .imx-speed-dial-btn {
+        width: 42px;
+        height: 42px;
+    }
+    
+    .imx-speed-dial-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .imx-speed-dial-label {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
     }
     
     .imx-modal-content {
@@ -2728,100 +2948,65 @@
 <nav class="nav-container">
 <a class="logo-container" href="#">
 <div class="logo-svg">
-<img alt="ImpactMojo logo" src="assets/images/ImpactMojo%20Logo.png" style="width:48px;height:48px;border-radius:8px;object-fit:contain;display:block;" width="48" height="48" loading="lazy">
+<img alt="ImpactMojo logo" src="assets/images/ImpactMojo%20Logo.png" style="width:48px;height:48px;border-radius:8px;object-fit:contain;display:block;"/ width="48" height="48" loading="lazy">
 </div>
 <div class="logo-text">
 <div class="logo-main">ImpactMojo</div>
 <div class="logo-tagline">Development Know-How</div>
 </div>
 </a>
-<!-- Mobile header right: tour, theme, hamburger all in one row -->
-<div class="mobile-header-right">
-<button class="tour-toggle" onclick="IMX.Tour.restart()" title="Take a Tour">
-<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
-<circle cx="12" cy="12" r="10"></circle>
-<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-<line x1="12" y1="17" x2="12.01" y2="17"></line>
-</svg>
-</button>
-<button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
-<svg class="icon icon-sun" viewBox="0 0 24 24">
-<circle cx="12" cy="12" r="5"></circle>
-<line x1="12" x2="12" y1="1" y2="3"></line>
-<line x1="12" x2="12" y1="21" y2="23"></line>
-<line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line>
-<line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line>
-<line x1="1" x2="3" y1="12" y2="12"></line>
-<line x1="21" x2="23" y1="12" y2="12"></line>
-<line x1="4.22" x2="5.64" y1="19.78" y2="18.36"></line>
-<line x1="18.36" x2="19.78" y1="5.64" y2="4.22"></line>
-</svg>
-<svg class="icon icon-moon" viewBox="0 0 24 24" style="display:none;">
-<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-</svg>
-</button>
-<button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-<svg class="icon" viewBox="0 0 24 24">
-<line x1="3" x2="21" y1="12" y2="12"></line>
-<line x1="3" x2="21" y1="6" y2="6"></line>
-<line x1="3" x2="21" y1="18" y2="18"></line>
-</svg>
-</button>
-</div>
-<button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-<svg class="icon" viewbox="0 0 24 24">
-<line x1="3" x2="21" y1="12" y2="12"></line>
-<line x1="3" x2="21" y1="6" y2="6"></line>
-<line x1="3" x2="21" y1="18" y2="18"></line>
-</svg>
+<button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+<span class="hamburger-line"></span>
+<span class="hamburger-line"></span>
+<span class="hamburger-line"></span>
 </button>
 <ul class="nav-links" id="navLinks">
-<li><a href="#home">Home</a></li>
+<li id="nav-home"><a href="#home">Home</a></li>
 
 <!-- Learn Dropdown -->
-<li class="has-dropdown">
+<li class="has-dropdown" id="nav-learn">
 <a href="javascript:void(0)">Learn
 <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 <polyline points="6 9 12 15 18 9"></polyline>
 </svg>
 </a>
-<ul class="dropdown-menu">
-<li><a onclick="openModal('coursesModal')">Courses</a></li>
-<li><a onclick="openModal('labsModal')">Labs</a></li>
-<li><a onclick="openModal('gamesModal')">Games</a></li>
-<li><a onclick="openModal('premiumModal')">Premium</a></li>
+<ul class="dropdown-menu" id="learn-dropdown">
+<li id="nav-courses"><a onclick="openModal('coursesModal')">Courses</a></li>
+<li id="nav-labs"><a onclick="openModal('labsModal')">Labs</a></li>
+<li id="nav-games"><a onclick="openModal('gamesModal')">Games</a></li>
+<li id="nav-premium"><a onclick="openModal('premiumModal')">Premium</a></li>
 <li class="dropdown-divider"></li>
-<li><a href="handouts.html">Resources</a></li>
-<li><a href="catalog.html">Catalog</a></li>
+<li id="nav-resources"><a href="handouts.html">Resources</a></li>
+<li id="nav-catalog"><a href="catalog.html">Catalog</a></li>
 </ul>
 </li>
 
 <!-- Services Dropdown -->
-<li class="has-dropdown">
+<li class="has-dropdown" id="nav-services">
 <a href="javascript:void(0)">Services
 <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 <polyline points="6 9 12 15 18 9"></polyline>
 </svg>
 </a>
-<ul class="dropdown-menu">
-<li><a onclick="openModal('coachingModal')">Coaching</a></li>
-<li><a href="workshops.html">Workshops</a></li>
+<ul class="dropdown-menu" id="services-dropdown">
+<li id="nav-coaching"><a onclick="openModal('coachingModal')">Coaching</a></li>
+<li id="nav-workshops"><a href="workshops.html">Workshops</a></li>
 </ul>
 </li>
 
 <!-- About Us Dropdown -->
-<li class="has-dropdown">
+<li class="has-dropdown" id="nav-about">
 <a href="javascript:void(0)">About Us
 <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 <polyline points="6 9 12 15 18 9"></polyline>
 </svg>
 </a>
-<ul class="dropdown-menu">
-<li><a href="#about">Our Team</a></li>
-<li><a href="#wall-of-love">Testimonials</a></li>
-<li><a href="#roadmap">Roadmap</a></li>
+<ul class="dropdown-menu" id="about-dropdown">
+<li id="nav-team"><a href="#about">Our Team</a></li>
+<li id="nav-testimonials"><a href="#wall-of-love">Testimonials</a></li>
+<li id="nav-roadmap"><a href="#roadmap">Roadmap</a></li>
 <li class="dropdown-divider"></li>
-<li><a href="#contact">Contact</a></li>
+<li id="nav-contact"><a href="#contact">Contact</a></li>
 </ul>
 </li>
 </ul>
@@ -2852,6 +3037,8 @@
 </div>
 </nav>
 </header>
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
 <!-- Hero Section -->
 <section class="hero" id="home">
 <h1>Master Development Education</h1>
@@ -2865,6 +3052,29 @@
 <span>All Premium Content is FREE while ImpactMojo is in Beta!</span>
 </div>
 </section>
+
+<!-- Daily Learning Tip -->
+<div class="imx-daily-tip" id="imxDailyTip">
+    <div class="imx-daily-tip-icon">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path><circle cx="12" cy="12" r="4"></circle></svg>
+    </div>
+    <div class="imx-daily-tip-content">
+        <div class="imx-daily-tip-label">💡 Daily Learning Tip</div>
+        <div class="imx-daily-tip-text" id="imxDailyTipText">Loading tip...</div>
+    </div>
+    <button class="imx-daily-tip-refresh" onclick="IMX.DailyTip.showRandom()" title="New tip" aria-label="Show another tip">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 2v6h6M21.5 22v-6h-6"></path><path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3"></path></svg>
+    </button>
+</div>
+
+<!-- Surprise Me Button -->
+<div style="text-align: center; margin: 1.5rem auto;">
+    <button class="imx-surprise-btn" onclick="IMX.surpriseMe()">
+        <svg viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"></rect><circle cx="8" cy="8" r="1.5" fill="currentColor"></circle><circle cx="16" cy="8" r="1.5" fill="currentColor"></circle><circle cx="8" cy="16" r="1.5" fill="currentColor"></circle><circle cx="16" cy="16" r="1.5" fill="currentColor"></circle><circle cx="12" cy="12" r="1.5" fill="currentColor"></circle></svg>
+        Surprise Me!
+    </button>
+    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Discover something random to learn</p>
+</div>
 
 <!-- ImpactLex Banner -->
 <div class="impactlex-banner">
@@ -3020,13 +3230,253 @@
 .imx-compare-section-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
 .imx-compare-objectives { list-style: none; padding: 0; margin: 0; }
 .imx-compare-objectives li { font-size: 0.8rem; color: var(--text-secondary); padding: 0.35rem 0; padding-left: 1.25rem; position: relative; }
-.imx-compare-objectives li::before { content: 'â†’'; position: absolute; left: 0; color: var(--accent-color); }
+.imx-compare-objectives li::before { content: '→'; position: absolute; left: 0; color: var(--accent-color); }
 
-/* Analytics FAB and Reading Lists FAB */
-.imx-fab-analytics { background: linear-gradient(135deg, #8B5CF6, #6366F1); }
-.imx-fab-analytics:hover { background: linear-gradient(135deg, #7C3AED, #4F46E5); transform: scale(1.1); }
-.imx-fab-reading { background: linear-gradient(135deg, #F59E0B, #D97706); }
-.imx-fab-reading:hover { background: linear-gradient(135deg, #D97706, #B45309); transform: scale(1.1); }
+/* Pomodoro Timer Animation */
+@keyframes pomodoro-pulse {
+    0%, 100% { box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); }
+    50% { box-shadow: 0 4px 24px rgba(239, 68, 68, 0.8); }
+}
+
+/* Pomodoro Modal Styles */
+.imx-pomodoro-display {
+    text-align: center;
+    padding: 2rem;
+    background: var(--hover-bg);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+}
+.imx-pomodoro-time {
+    font-size: 4rem;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--text-primary);
+    letter-spacing: 0.1em;
+}
+.imx-pomodoro-label {
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem;
+}
+.imx-pomodoro-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.imx-pomodoro-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+.imx-pomodoro-btn-start {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+}
+.imx-pomodoro-btn-start:hover { transform: scale(1.05); }
+.imx-pomodoro-btn-pause {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: white;
+}
+.imx-pomodoro-btn-reset {
+    background: var(--secondary-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+.imx-pomodoro-presets {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+.imx-pomodoro-preset {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.imx-pomodoro-preset:hover, .imx-pomodoro-preset.active {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+.imx-pomodoro-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+.imx-pomodoro-stat {
+    text-align: center;
+}
+.imx-pomodoro-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+.imx-pomodoro-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* Daily Learning Tip Banner */
+.imx-daily-tip {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(99, 102, 241, 0.1));
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem auto;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.imx-daily-tip-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #0EA5E9, #6366F1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.imx-daily-tip-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    fill: none;
+}
+.imx-daily-tip-content {
+    flex: 1;
+}
+.imx-daily-tip-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+.imx-daily-tip-text {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+.imx-daily-tip-refresh {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+.imx-daily-tip-refresh:hover {
+    background: var(--hover-bg);
+    color: var(--accent-color);
+}
+
+/* Surprise Me Button */
+.imx-surprise-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #EC4899, #8B5CF6);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+.imx-surprise-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
+}
+.imx-surprise-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    animation: dice-shake 0.5s ease-in-out;
+}
+.imx-surprise-btn:hover svg {
+    animation: dice-shake 0.5s ease-in-out infinite;
+}
+@keyframes dice-shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    75% { transform: rotate(15deg); }
+}
+
+/* Card Duration Badge */
+.card-duration {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--hover-bg);
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    margin-left: auto;
+}
+.card-duration svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* Copy Citation Button */
+.imx-copy-citation {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.imx-copy-citation:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+.imx-copy-citation.copied {
+    background: #10B981;
+    color: white;
+    border-color: #10B981;
+}
+.imx-copy-citation svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+}
 
 /* Analytics Modal Styles */
 .imx-analytics-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
@@ -3078,7 +3528,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.75);
+    background: transparent;
     z-index: 10000;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -3088,13 +3538,93 @@
     opacity: 1;
     pointer-events: auto;
 }
+
+/* Keep dropdown menus FULLY visible during tour - highest priority */
+body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown .dropdown-menu,
+body:has(.imx-tour-overlay.active) .dropdown-menu,
+.imx-tour-overlay.active ~ * .dropdown-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-height: none !important;
+    pointer-events: auto !important;
+    z-index: 10005 !important;
+    background: var(--card-bg, #fff) !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3) !important;
+}
+
+body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown.open .dropdown-menu {
+    display: block !important;
+}
+
+/* Ensure entire navigation and dropdowns stay above overlay during tour */
+body:has(.imx-tour-overlay.active) header,
+body:has(.imx-tour-overlay.active) nav,
+body:has(.imx-tour-overlay.active) .nav-links,
+body:has(.imx-tour-overlay.active) .nav-links > li,
+body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown,
+body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown > a {
+    position: relative;
+    z-index: 10004 !important;
+}
+
+/* Make dropdown content fully visible and readable */
+body:has(.imx-tour-overlay.active) .dropdown-menu {
+    z-index: 10006 !important;
+    position: absolute !important;
+    background: var(--card-bg, #ffffff) !important;
+    border: 1px solid var(--border-color, #e5e7eb) !important;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.25) !important;
+}
+
+body:has(.imx-tour-overlay.active) .dropdown-menu a,
+body:has(.imx-tour-overlay.active) .dropdown-menu li {
+    background: var(--card-bg, #ffffff) !important;
+    color: var(--text-color, #1f2937) !important;
+}
+
 .imx-tour-spotlight {
     position: absolute;
     border-radius: 12px;
-    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.75), 0 0 20px rgba(14, 165, 233, 0.5);
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.15), 0 0 40px rgba(14, 165, 233, 0.8), inset 0 0 0 4px rgba(14, 165, 233, 1);
     transition: all 0.4s ease;
     pointer-events: none;
+    background: transparent;
 }
+
+/* Pulsing highlight effect for spotlight */
+@keyframes spotlightPulse {
+    0%, 100% { box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.15), 0 0 40px rgba(14, 165, 233, 0.8), inset 0 0 0 4px rgba(14, 165, 233, 1); }
+    50% { box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.15), 0 0 60px rgba(14, 165, 233, 1), inset 0 0 0 4px rgba(14, 165, 233, 1); }
+}
+.imx-tour-spotlight {
+    animation: spotlightPulse 2s ease-in-out infinite;
+}
+
+/* Arrow connector from tooltip to spotlight */
+.imx-tour-arrow {
+    position: absolute;
+    z-index: 10003;
+    pointer-events: none;
+}
+.imx-tour-arrow svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+.imx-tour-arrow path {
+    fill: none;
+    stroke: var(--accent-color, #0EA5E9);
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+    animation: imxArrowDash 0.5s linear infinite;
+}
+.imx-tour-arrow-head {
+    fill: var(--accent-color, #0EA5E9);
+}
+@keyframes imxArrowDash {
+    to { stroke-dashoffset: -10; }
+}
+
 .imx-tour-tooltip {
     position: absolute;
     background: var(--card-bg, #fff);
@@ -3125,8 +3655,32 @@
 .imx-tour-tooltip.arrow-bottom-right::before { bottom: -8px; right: 24px; left: auto; }
 .imx-tour-step-indicator {
     display: flex;
-    gap: 6px;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary, #666);
+}
+.imx-tour-step-counter {
+    background: var(--accent-color, #0EA5E9);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+.imx-tour-step-progress {
+    flex: 1;
+    height: 4px;
+    background: var(--border-color, #ddd);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.imx-tour-step-progress-bar {
+    height: 100%;
+    background: var(--accent-color, #0EA5E9);
+    border-radius: 2px;
+    transition: width 0.3s ease;
 }
 .imx-tour-dot {
     width: 8px;
@@ -3175,6 +3729,28 @@
     padding: 0.5rem;
 }
 .imx-tour-skip:hover { color: var(--text-primary, #1a1a2e); }
+.imx-tour-nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.imx-tour-prev {
+    background: var(--secondary-bg, #f1f5f9);
+    color: var(--text-primary, #1a1a2e);
+    border: 1px solid var(--border-color, #e2e8f0);
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+}
+.imx-tour-prev:hover {
+    background: var(--border-color, #e2e8f0);
+}
 .imx-tour-next {
     background: linear-gradient(135deg, #0EA5E9, #06B6D4);
     color: white;
@@ -3310,7 +3886,7 @@
 <p class="card-description">Comprehensive exploration of gender theory, intersectionality, and social implications in development contexts</p>
 <div class="card-testimonial">
                             "This course transformed my understanding of gender dynamics in development work. The intersectional approach was eye-opening."
-                            <span class="card-testimonial-author">â€” Sunita Sharma, Senior Program Manager</span>
+                            <span class="card-testimonial-author">— Sunita Sharma, Senior Program Manager</span>
 </div>
 </a>
 </div>
@@ -3349,7 +3925,7 @@
 <p class="card-description">Monitoring, Evaluation, Accountability and Learning frameworks for impact measurement</p>
 <div class="card-testimonial">
                             "Best MEAL course I've taken! Practical frameworks I immediately applied to our programs. The logical framework approach finally clicked."
-                            <span class="card-testimonial-author">â€” Priya Deshmukh, M&amp;E Specialist</span>
+                            <span class="card-testimonial-author">— Priya Deshmukh, M&amp;E Specialist</span>
 </div>
 </a>
 </div>
@@ -3388,7 +3964,7 @@
 <p class="card-description">Understanding climate change science, impacts, and resilience strategies for development</p>
 <div class="card-testimonial">
                             "Simplified complex climate science without losing depth. Perfect for development professionals working on adaptation projects."
-                            <span class="card-testimonial-author">â€” Karthik Subramanian, Climate Advisor</span>
+                            <span class="card-testimonial-author">— Karthik Subramanian, Climate Advisor</span>
 </div>
 </a>
 </div>
@@ -3443,7 +4019,7 @@
 <p class="card-description">Theory of Change development and visualization tool</p>
 <div class="card-testimonial">
                             "This tool saved us weeks of work. Created our entire ToC in hours, not days. The logic flow visualization is brilliant."
-                            <span class="card-testimonial-author">â€” Nisha Patel, Strategy Consultant</span>
+                            <span class="card-testimonial-author">— Nisha Patel, Strategy Consultant</span>
 </div>
 </a>
 </div>
@@ -3480,7 +4056,7 @@
 <p class="card-description">Design monitoring, evaluation, and learning frameworks</p>
 <div class="card-testimonial">
                             "Incredible tool for designing M&amp;E frameworks. The indicator library alone is worth gold. Now our standard tool across all projects."
-                            <span class="card-testimonial-author">â€” Rajesh Kumar, Head of M&amp;E</span>
+                            <span class="card-testimonial-author">— Rajesh Kumar, Head of M&amp;E</span>
 </div>
 </a>
 </div>
@@ -3517,7 +4093,7 @@
 <p class="card-description">Craft compelling narratives for social impact</p>
 <div class="card-testimonial">
                             "Helped us transform dry data into powerful stories. Our donor reports have never been more engaging."
-                            <span class="card-testimonial-author">â€” Anindita Mohanty, Communications Director</span>
+                            <span class="card-testimonial-author">— Anindita Mohanty, Communications Director</span>
 </div>
 </a>
 </div>
@@ -3572,7 +4148,7 @@
 <p class="card-description">Understand who the "middle-class" really is in India through wealth inequality dynamics</p>
 <div class="card-testimonial">
                             "Eye-opening visualization of wealth distribution. Changed how I think about economic policy targeting."
-                            <span class="card-testimonial-author">â€” Prof. Ashok Mishra, Economics Faculty</span>
+                            <span class="card-testimonial-author">— Prof. Ashok Mishra, Economics Faculty</span>
 </div>
 </a>
 </div>
@@ -3610,7 +4186,7 @@
 <p class="card-description">Experience behavioral economics through prospect theory and cognitive biases in South Asian contexts</p>
 <div class="card-testimonial">
                             "Perfect for teaching behavioral economics concepts. Students finally understand framing effects!"
-                            <span class="card-testimonial-author">â€” Meera Rao, Behavioral Researcher</span>
+                            <span class="card-testimonial-author">— Meera Rao, Behavioral Researcher</span>
 </div>
 </a>
 </div>
@@ -3648,7 +4224,7 @@
 <p class="card-description">Explore game theory concepts through strategic decision-making scenarios</p>
 <div class="card-testimonial">
                             "Makes game theory accessible and practical. Great for understanding cooperation dynamics in development."
-                            <span class="card-testimonial-author">â€” Harpreet Singh, Program Manager</span>
+                            <span class="card-testimonial-author">— Harpreet Singh, Program Manager</span>
 </div>
 </a>
 </div>
@@ -3910,7 +4486,7 @@
 <p class="card-description">Advanced research question formulation and hypothesis development framework</p>
 <div class="card-testimonial">
                             "This tool transformed how I approach research design. The question formulation framework helped me develop sharper, more actionable research questions for my PhD dissertation."
-                            <span class="card-testimonial-author">â€” Ankita Verma, Doctoral Researcher</span>
+                            <span class="card-testimonial-author">— Ankita Verma, Doctoral Researcher</span>
 </div>
 </a>
 </div>
@@ -4145,105 +4721,105 @@
 <!-- Hindi Testimonials (4) -->
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à¤‡à¤‚à¤ªà¥ˆà¤•à¥à¤Ÿà¤®à¥‹à¤œà¥‹ à¤¨à¥‡ à¤µà¤¿à¤•à¤¾à¤¸ à¤•à¤¾à¤°à¥à¤¯ à¤•à¥‹ à¤¸à¤®à¤à¤¨à¥‡ à¤•à¤¾ à¤®à¥‡à¤°à¤¾ à¤¨à¤œà¤°à¤¿à¤¯à¤¾ à¤¬à¤¦à¤² à¤¦à¤¿à¤¯à¤¾ à¤¹à¥ˆà¥¤ à¤œà¥‡à¤‚à¤¡à¤° à¤¸à¥à¤Ÿà¤¡à¥€à¤œ à¤•à¥‹à¤°à¥à¤¸ à¤µà¤¿à¤¶à¥‡à¤· à¤°à¥‚à¤ª à¤¸à¥‡ à¤ªà¥à¤°à¤­à¤¾à¤µà¤¶à¤¾à¤²à¥€ à¤¥à¤¾à¥¤"
+                        "इंपैक्टमोजो ने विकास कार्य को समझने का मेरा नजरिया बदल दिया है। जेंडर स्टडीज कोर्स विशेष रूप से प्रभावशाली था।"
                     </div>
 <div class="testimonial-author">
-<strong>à¤¸à¤¾à¤®à¥à¤¦à¤¾à¤¯à¤¿à¤• à¤µà¤¿à¤•à¤¾à¤¸ à¤…à¤§à¤¿à¤•à¤¾à¤°à¥€</strong>
-                        à¤°à¤¾à¤œà¥à¤¯ à¤—à¥à¤°à¤¾à¤®à¥€à¤£ à¤µà¤¿à¤•à¤¾à¤¸ à¤µà¤¿à¤­à¤¾à¤—
+<strong>सामुदायिक विकास अधिकारी</strong>
+                        राज्य ग्रामीण विकास विभाग
                     </div>
 </div>
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à¤¹à¤®à¤¾à¤°à¥‡ à¤«à¤¼à¥€à¤²à¥à¤¡ à¤¸à¥à¤Ÿà¤¾à¤« à¤•à¥‡ à¤²à¤¿à¤ à¤¹à¤¿à¤‚à¤¦à¥€ à¤®à¥‡à¤‚ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤•à¤‚à¤Ÿà¥‡à¤‚à¤Ÿ à¤¬à¤¹à¥à¤¤ à¤‰à¤ªà¤¯à¥‹à¤—à¥€ à¤¹à¥ˆà¥¤ à¤ªà¥à¤°à¤¶à¤¿à¤•à¥à¤·à¤£ à¤•à¥€ à¤—à¥à¤£à¤µà¤¤à¥à¤¤à¤¾ à¤‰à¤¤à¥à¤•à¥ƒà¤·à¥à¤Ÿ à¤¹à¥ˆà¥¤"
+                        "हमारे फ़ील्ड स्टाफ के लिए हिंदी में उपलब्ध कंटेंट बहुत उपयोगी है। प्रशिक्षण की गुणवत्ता उत्कृष्ट है।"
                     </div>
 <div class="testimonial-author">
-<strong>à¤ªà¥à¤°à¤¶à¤¿à¤•à¥à¤·à¤£ à¤¸à¤®à¤¨à¥à¤µà¤¯à¤•</strong>
-                        à¤°à¤¾à¤·à¥à¤Ÿà¥à¤°à¥€à¤¯ à¤—à¥à¤°à¤¾à¤®à¥€à¤£ à¤†à¤œà¥€à¤µà¤¿à¤•à¤¾ à¤®à¤¿à¤¶à¤¨
+<strong>प्रशिक्षण समन्वयक</strong>
+                        राष्ट्रीय ग्रामीण आजीविका मिशन
                     </div>
 </div>
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à¤¡à¥‡à¤Ÿà¤¾ à¤µà¤¿à¤¶à¥à¤²à¥‡à¤·à¤£ à¤•à¥‹à¤°à¥à¤¸ à¤¨à¥‡ à¤¹à¤®à¤¾à¤°à¥€ à¤°à¤¿à¤ªà¥‹à¤°à¥à¤Ÿà¤¿à¤‚à¤— à¤•à¥à¤·à¤®à¤¤à¤¾ à¤•à¥‹ à¤¬à¤¦à¤² à¤¦à¤¿à¤¯à¤¾à¥¤ à¤…à¤¬ à¤¹à¤® evidence-based à¤¨à¤¿à¤°à¥à¤£à¤¯ à¤²à¥‡ à¤¸à¤•à¤¤à¥‡ à¤¹à¥ˆà¤‚à¥¤"
+                        "डेटा विश्लेषण कोर्स ने हमारी रिपोर्टिंग क्षमता को बदल दिया। अब हम evidence-based निर्णय ले सकते हैं।"
                     </div>
 <div class="testimonial-author">
-<strong>à¤œà¤¿à¤²à¤¾ à¤•à¤¾à¤°à¥à¤¯à¤•à¥à¤°à¤® à¤…à¤§à¤¿à¤•à¤¾à¤°à¥€</strong>
-                        à¤‰à¤¤à¥à¤¤à¤° à¤ªà¥à¤°à¤¦à¥‡à¤¶ à¤¸à¤°à¤•à¤¾à¤°
+<strong>जिला कार्यक्रम अधिकारी</strong>
+                        उत्तर प्रदेश सरकार
                     </div>
 </div>
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à¤¸à¤¾à¤®à¤¾à¤œà¤¿à¤• à¤ªà¥à¤°à¤­à¤¾à¤µ à¤®à¤¾à¤ªà¤¨à¥‡ à¤•à¥‡ à¤²à¤¿à¤ à¤‡à¤¸à¤¸à¥‡ à¤¬à¥‡à¤¹à¤¤à¤° à¤®à¤‚à¤š à¤¨à¤¹à¥€à¤‚ à¤®à¤¿à¤²à¤¾à¥¤ TOC à¤µà¤°à¥à¤•à¤¬à¥‡à¤‚à¤š à¤…à¤¦à¥à¤­à¥à¤¤ à¤¹à¥ˆà¥¤"
+                        "सामाजिक प्रभाव मापने के लिए इससे बेहतर मंच नहीं मिला। TOC वर्कबेंच अद्भुत है।"
                     </div>
 <div class="testimonial-author">
-<strong>à¤•à¤¾à¤°à¥à¤¯à¤•à¤¾à¤°à¥€ à¤¨à¤¿à¤¦à¥‡à¤¶à¤•</strong>
-                        à¤¸à¥à¤¥à¤¾à¤¨à¥€à¤¯ NGO, à¤¬à¤¿à¤¹à¤¾à¤°
+<strong>कार्यकारी निदेशक</strong>
+                        स्थानीय NGO, बिहार
                     </div>
 </div>
 <!-- Tamil Testimonials (3) -->
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à®‡à®®à¯à®ªà®¾à®•à¯à®Ÿà¯à®®à¯‹à®œà¯‹ à®µà®³à®°à¯à®šà¯à®šà®¿à®ªà¯ à®ªà®£à®¿à®•à®³à¯à®•à¯à®•à®¾à®© à®Žà®©à¯ à®®à¯à®¤à®²à¯ à®¤à¯‡à®°à¯à®µà¯. MEAL à®•à¯‹à®°à¯à®¸à¯ à®®à®¿à®•à®µà¯à®®à¯ à®¨à®Ÿà¯ˆà®®à¯à®±à¯ˆà®•à¯à®•à¯ à®‰à®•à®¨à¯à®¤à®¤à¯."
+                        "இம்பாக்ட்மோஜோ வளர்ச்சிப் பணிகளுக்கான என் முதல் தேர்வு. MEAL கோர்ஸ் மிகவும் நடைமுறைக்கு உகந்தது."
                     </div>
 <div class="testimonial-author">
-<strong>à®¤à®¿à®Ÿà¯à®Ÿ à®’à®°à¯à®™à¯à®•à®¿à®£à¯ˆà®ªà¯à®ªà®¾à®³à®°à¯</strong>
-                        à®¤à®®à®¿à®´à¯à®¨à®¾à®Ÿà¯ à®…à®Ÿà®¿à®ªà¯à®ªà®Ÿà¯ˆà®¯à®¿à®²à®¾à®© NGO
+<strong>திட்ட ஒருங்கிணைப்பாளர்</strong>
+                        தமிழ்நாடு அடிப்படையிலான NGO
                     </div>
 </div>
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à®•à®¿à®°à®¾à®®à®ªà¯à®ªà¯à®± à®µà®³à®°à¯à®šà¯à®šà®¿ à®¤à®¿à®Ÿà¯à®Ÿà®™à¯à®•à®³à¯à®•à¯à®•à¯ à®®à®¿à®•à®µà¯à®®à¯ à®ªà®¯à®©à¯à®³à¯à®³ à®•à®°à¯à®µà®¿à®•à®³à¯. à®Žà®™à¯à®•à®³à¯ à®…à®©à¯ˆà®¤à¯à®¤à¯ à®Šà®´à®¿à®¯à®°à¯à®•à®³à¯à®®à¯ à®‡à®¤à¯ˆà®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®•à®¿à®±à®¾à®°à¯à®•à®³à¯."
+                        "கிராமப்புற வளர்ச்சி திட்டங்களுக்கு மிகவும் பயனுள்ள கருவிகள். எங்கள் அனைத்து ஊழியர்களும் இதைப் பயன்படுத்துகிறார்கள்."
                     </div>
 <div class="testimonial-author">
-<strong>à®®à®¾à®µà®Ÿà¯à®Ÿ à®’à®°à¯à®™à¯à®•à®¿à®£à¯ˆà®ªà¯à®ªà®¾à®³à®°à¯</strong>
-                        à®¤à®®à®¿à®´à¯à®¨à®¾à®Ÿà¯ à®…à®°à®šà¯
+<strong>மாவட்ட ஒருங்கிணைப்பாளர்</strong>
+                        தமிழ்நாடு அரசு
                     </div>
 </div>
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à®ªà®¾à®²à®¿à®© à®šà®®à®¤à¯à®¤à¯à®µà®®à¯ à®ªà®¾à®Ÿà®¨à¯†à®±à®¿ à®šà®¿à®±à®ªà¯à®ªà®¾à®• à®‰à®³à¯à®³à®¤à¯. à®¨à®®à®¤à¯ à®…à®©à¯ˆà®¤à¯à®¤à¯ à®¤à®¿à®Ÿà¯à®Ÿà®™à¯à®•à®³à®¿à®²à¯à®®à¯ à®‡à®¤à¯ˆ à®šà¯†à®¯à®²à¯à®ªà®Ÿà¯à®¤à¯à®¤à®¿à®¯à¯à®³à¯à®³à¯‹à®®à¯."
+                        "பாலின சமத்துவம் பாடநெறி சிறப்பாக உள்ளது. நமது அனைத்து திட்டங்களிலும் இதை செயல்படுத்தியுள்ளோம்."
                     </div>
 <div class="testimonial-author">
-<strong>à®ªà¯†à®£à¯à®•à®³à¯ à®®à¯‡à®®à¯à®ªà®¾à®Ÿà¯à®Ÿà¯ à®…à®¤à®¿à®•à®¾à®°à®¿</strong>
-                        à®šà¯†à®©à¯à®©à¯ˆ à®®à®¾à®¨à®•à®°à®¾à®Ÿà¯à®šà®¿
+<strong>பெண்கள் மேம்பாட்டு அதிகாரி</strong>
+                        சென்னை மாநகராட்சி
                     </div>
 </div>
 <!-- Bengali Testimonials (2) -->
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à¦‡à¦®à§à¦ªà§à¦¯à¦¾à¦•à§à¦Ÿà¦®à§‹à¦œà§‹ à¦‰à¦¨à§à¦¨à¦¯à¦¼à¦¨ à¦¶à¦¿à¦•à§à¦·à¦¾à¦¯à¦¼ à¦¬à¦¿à¦ªà§à¦²à¦¬ à¦˜à¦Ÿà¦¿à¦¯à¦¼à§‡à¦›à§‡à¥¤ à¦œà¦²à¦¬à¦¾à¦¯à¦¼à§ à¦¬à¦¿à¦œà§à¦žà¦¾à¦¨ à¦•à§‹à¦°à§à¦¸à¦Ÿà¦¿ à¦…à¦¸à¦¾à¦§à¦¾à¦°à¦£à¥¤"
+                        "ইম্প্যাক্টমোজো উন্নয়ন শিক্ষায় বিপ্লব ঘটিয়েছে। জলবায়ু বিজ্ঞান কোর্সটি অসাধারণ।"
                     </div>
 <div class="testimonial-author">
-<strong>à¦ªà¦°à¦¿à¦¬à§‡à¦¶ à¦¬à¦¿à¦¶à§‡à¦·à¦œà§à¦ž</strong>
-                        à¦†à¦¨à§à¦¤à¦°à§à¦œà¦¾à¦¤à¦¿à¦• à¦ªà¦°à¦¿à¦¬à§‡à¦¶ à¦¸à¦‚à¦¸à§à¦¥à¦¾
+<strong>পরিবেশ বিশেষজ্ঞ</strong>
+                        আন্তর্জাতিক পরিবেশ সংস্থা
                     </div>
 </div>
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à¦†à¦®à¦¾à¦¦à§‡à¦° à¦¸à¦‚à¦¸à§à¦¥à¦¾à¦° à¦¸à¦•à¦² à¦•à¦°à§à¦®à§€à¦¦à§‡à¦° à¦œà¦¨à§à¦¯ à¦à¦Ÿà¦¿ à¦¬à¦¾à¦§à§à¦¯à¦¤à¦¾à¦®à§‚à¦²à¦• à¦ªà§à¦°à¦¶à¦¿à¦•à§à¦·à¦£à¥¤ à¦—à§à¦£à¦®à¦¾à¦¨ à¦…à¦¤à§à¦²à¦¨à§€à¦¯à¦¼à¥¤"
+                        "আমাদের সংস্থার সকল কর্মীদের জন্য এটি বাধ্যতামূলক প্রশিক্ষণ। গুণমান অতুলনীয়।"
                     </div>
 <div class="testimonial-author">
-<strong>à¦ªà§à¦°à¦¶à¦¿à¦•à§à¦·à¦£ à¦ªà¦°à¦¿à¦šà¦¾à¦²à¦•</strong>
-                        BRAC, à¦¢à¦¾à¦•à¦¾
+<strong>প্রশিক্ষণ পরিচালক</strong>
+                        BRAC, ঢাকা
                     </div>
 </div>
 <!-- Telugu (1) -->
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à°‡à°‚à°ªà°¾à°•à±à°Ÿà±à°®à±‹à°œà±‹ à°…à°­à°¿à°µà±ƒà°¦à±à°§à°¿ à°µà±ƒà°¤à±à°¤à°¿à°ªà°°à±à°² à°•à± à°’à°• à°µà°°à°‚. à°¡à±‡à°Ÿà°¾ à°µà°¿à°¶à±à°²à±‡à°·à°£ à°•à±‹à°°à±à°¸à±à°²à± à°…à°¦à±à°­à±à°¤à°‚à°—à°¾ à°‰à°¨à±à°¨à°¾à°¯à°¿."
+                        "ఇంపాక్ట్మోజో అభివృద్ధి వృత్తిపరుల కు ఒక వరం. డేటా విశ్లేషణ కోర్సులు అద్భుతంగా ఉన్నాయి."
                     </div>
 <div class="testimonial-author">
-<strong>à°¡à±‡à°Ÿà°¾ à°µà°¿à°¶à±à°²à±‡à°·à°•à±à°¡à±</strong>
-                        à°°à°¾à°·à±à°Ÿà±à°° à°ªà±à°°à°£à°¾à°³à°¿à°• à°µà°¿à°­à°¾à°—à°‚
+<strong>డేటా విశ్లేషకుడు</strong>
+                        రాష్ట్ర ప్రణాళిక విభాగం
                     </div>
 </div>
 <!-- Marathi (1) -->
 <div class="testimonial-card">
 <div class="testimonial-quote">
-                        "à¤‡à¤‚à¤ªà¥…à¤•à¥à¤Ÿà¤®à¥‹à¤œà¥‹ à¤¹à¥‡ à¤µà¤¿à¤•à¤¾à¤¸ à¤•à¥à¤·à¥‡à¤¤à¥à¤°à¤¾à¤¤à¥€à¤² à¤®à¤¾à¤à¥‡ à¤µà¤¿à¤¶à¥à¤µà¤µà¤¿à¤¦à¥à¤¯à¤¾à¤²à¤¯ à¤†à¤¹à¥‡. TOC à¤µà¤°à¥à¤•à¤¬à¥‡à¤‚à¤š à¤…à¤ªà¥à¤°à¤¤à¤¿à¤® à¤†à¤¹à¥‡à¥¤"
+                        "इंपॅक्टमोजो हे विकास क्षेत्रातील माझे विश्वविद्यालय आहे. TOC वर्कबेंच अप्रतिम आहे।"
                     </div>
 <div class="testimonial-author">
-<strong>à¤•à¤¾à¤°à¥à¤¯à¤•à¥à¤°à¤® à¤µà¥à¤¯à¤µà¤¸à¥à¤¥à¤¾à¤ªà¤•</strong>
-                        à¤®à¤¹à¤¾à¤°à¤¾à¤·à¥à¤Ÿà¥à¤° à¤¶à¤¾à¤¸à¤•à¥€à¤¯ à¤¯à¥‹à¤œà¤¨à¤¾
+<strong>कार्यक्रम व्यवस्थापक</strong>
+                        महाराष्ट्र शासकीय योजना
                     </div>
 </div>
 </section>
@@ -4356,7 +4932,7 @@
 </svg>
                     Feedback Assistant
                 </h3>
-<button class="chat-close" onclick="closeChatbot()">Ã—</button>
+<button class="chat-close" onclick="closeChatbot()">×</button>
 </div>
 <div class="chat-messages" id="chatMessages">
 <div class="message bot-message">
@@ -4402,7 +4978,7 @@
 </svg>
                         Professional Coaching &amp; Consultation
                     </h2>
-<span class="close" onclick="closeModal('coachingModal')">Ã—</span>
+<span class="close" onclick="closeModal('coachingModal')">×</span>
 </div>
 <div class="modal-body">
 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; text-align: center;">Led by Dr. Varna Sri Raman - Development Economist</p>
@@ -4424,7 +5000,7 @@
                             </h4>
 <p>One-on-one guidance for your development sector career journey.</p>
 <p><strong>Duration:</strong> 60 minutes</p>
-<p class="price">â‚¹1,500 (Sliding scale: â‚¹400-â‚¹2,000)</p>
+<p class="price">₹1,500 (Sliding scale: ₹400-₹2,000)</p>
 <div class="booking-button-container" id="booking-btn-1"></div>
 </div>
 <div class="service-item">
@@ -4437,7 +5013,7 @@
                             </h4>
 <p>Expert consultation on research methodology and sampling strategies.</p>
 <p><strong>Duration:</strong> 90 minutes</p>
-<p class="price">â‚¹2,500 (Sliding scale: â‚¹1,000-â‚¹3,000)</p>
+<p class="price">₹2,500 (Sliding scale: ₹1,000-₹3,000)</p>
 <div class="booking-button-container" id="booking-btn-2"></div>
 </div>
 <div class="service-item">
@@ -4451,7 +5027,7 @@
                             </h4>
 <p>Statistical analysis support and visualization guidance.</p>
 <p><strong>Duration:</strong> 90 minutes</p>
-<p class="price">â‚¹2,000 (Sliding scale: â‚¹800-â‚¹2,500)</p>
+<p class="price">₹2,000 (Sliding scale: ₹800-₹2,500)</p>
 <div class="booking-button-container" id="booking-btn-3"></div>
 </div>
 <div class="service-item">
@@ -4507,7 +5083,7 @@
 <option value="C38">English for Development 101</option>
 </select>
 <p><strong>Duration:</strong> 3 days (6 hours/day)</p>
-<p class="price">â‚¹6,000 (Sliding scale: â‚¹3,000-â‚¹8,000)</p>
+<p class="price">₹6,000 (Sliding scale: ₹3,000-₹8,000)</p>
 <a class="btn btn-primary" href="/cdn-cgi/l/email-protection#f89b97999b9091969fb8919588999b8c95979297d69196c78b8d9a929d9b8cc5af978a938b909788ddcac8b196898d918a81">
 <svg class="icon-sm" viewbox="0 0 24 24">
 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -4532,7 +5108,7 @@
 </svg>
                         All Labs (10)
                     </h2>
-<span class="close" onclick="closeModal('labsModal')">Ã—</span>
+<span class="close" onclick="closeModal('labsModal')">×</span>
 </div>
 <div class="modal-body">
 <div class="modal-grid">
@@ -4553,7 +5129,7 @@
 </div>
 <p class="modal-item-description">Identify, assess, and develop mitigation strategies for risks across development projects through scenario planning and risk matrix tools. Practice real-world risk management using case studies from humanitarian, infrastructure, and governance programs.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4575,7 +5151,7 @@
 </div>
 <p class="modal-item-description">Design and test policy advocacy campaigns through hands-on exercises in stakeholder analysis, message testing, and strategic communication. Work with real policy briefs and practice pitching recommendations to simulated decision-makers and media.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4597,7 +5173,7 @@
 </div>
 <p class="modal-item-description">Analyze resource flows, develop sustainability plans, and create fundraising strategies through practical exercises with real organizational data. Learn to balance financial sustainability with mission alignment while navigating donor requirements and local ownership.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4619,7 +5195,7 @@
 </div>
 <p class="modal-item-description">Map partnership ecosystems, design collaboration frameworks, and measure collective impact through interactive exercises and negotiation simulations. Practice building equitable partnerships that leverage complementary strengths for systems-level change.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4641,7 +5217,7 @@
 </div>
 <p class="modal-item-description">Create comprehensive Monitoring, Learning, and Evaluation systems from scratch, including results frameworks, data collection tools, and learning agendas. Work through real program scenarios to design adaptive management systems that balance accountability with learning.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4663,7 +5239,7 @@
 </div>
 <p class="modal-item-description">Develop detailed MEL plans with indicators, targets, and data management systems through guided exercises using actual program documents. Practice creating user-friendly dashboards and feedback loops that drive evidence-based decision-making.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4685,7 +5261,7 @@
 </div>
 <p class="modal-item-description">Apply human-centered design methodologies to development challenges through rapid prototyping, user journey mapping, and ideation exercises. Learn to facilitate design sprints that generate innovative solutions grounded in community needs and aspirations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4707,7 +5283,7 @@
 </div>
 <p class="modal-item-description">Construct robust theories of change that articulate pathways from activities to impact through assumption mapping and evidence review exercises. Practice backwards mapping, identifying critical assumptions, and creating theories that guide strategic decision-making.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4729,7 +5305,7 @@
 </div>
 <p class="modal-item-description">Transform data and field experiences into compelling narratives through exercises in story structure, character development, and multimedia production. Learn ethical storytelling practices that center community voices while engaging diverse audiences for social change.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4751,7 +5327,7 @@
 </div>
 <p class="modal-item-description">Practice participatory facilitation techniques, community mapping, and consensus-building through role-playing exercises and simulation games. Develop skills for navigating power dynamics and facilitating inclusive decision-making processes in diverse community settings.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4774,7 +5350,7 @@
 </svg>
                         All Interactive Economics Games (12)
                     </h2>
-<span class="close" onclick="closeModal('gamesModal')">Ã—</span>
+<span class="close" onclick="closeModal('gamesModal')">×</span>
 </div>
 <div class="modal-body">
 <div class="modal-grid">
@@ -4795,7 +5371,7 @@
 </div>
 <p class="modal-item-description">Experience the free-rider problem firsthand as players decide whether to contribute to shared resources that benefit everyone. Learn how public goods create collective action dilemmas and explore mechanisms for sustaining cooperation in communities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4817,7 +5393,7 @@
 </div>
 <p class="modal-item-description">Navigate strategic decision-making where individual rationality leads to collectively suboptimal outcomes through interactive scenarios. Discover how trust, reputation, and repeated interactions can overcome cooperation challenges in development contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4839,7 +5415,7 @@
 </div>
 <p class="modal-item-description">Make resource allocation decisions under constraints and experience the tradeoffs inherent in every economic choice. Learn to evaluate alternatives and understand how opportunity costs shape individual and policy decisions in resource-scarce environments.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4861,7 +5437,7 @@
 </div>
 <p class="modal-item-description">Build networks and watch value multiply as more participants join, experiencing how digital platforms and social programs scale. Understand positive feedback loops, critical mass dynamics, and the winner-take-all economics of networked systems.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4883,7 +5459,7 @@
 </div>
 <p class="modal-item-description">Explore scenarios where cooperation yields better outcomes but individual incentives push toward competition through interactive gameplay. Master concepts like Nash equilibrium, Pareto efficiency, and mechanism design through practical application.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4905,7 +5481,7 @@
 </div>
 <p class="modal-item-description">Balance risk-taking with potential returns through investment decisions that mirror real-world uncertainty and information asymmetry. Learn about risk preferences, expected utility theory, and portfolio diversification through simulated market environments.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4927,7 +5503,7 @@
 </div>
 <p class="modal-item-description">Participate in various auction formats to understand price discovery, winner's curse, and strategic bidding behavior. Experience how different auction designs affect efficiency and revenue in contexts from spectrum allocation to procurement.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4949,7 +5525,7 @@
 </div>
 <p class="modal-item-description">Navigate markets where buyers and sellers have different information, experiencing adverse selection and moral hazard firsthand. Learn how signaling, screening, and reputation mechanisms can overcome information problems in development programs.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4971,7 +5547,7 @@
 </div>
 <p class="modal-item-description">Solve economic puzzles that teach concepts from supply and demand to game theory through engaging brain-teasers and scenarios. Master economic reasoning through pattern recognition and logical deduction in bite-sized challenges.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -4993,7 +5569,7 @@
 </div>
 <p class="modal-item-description">Make production and consumption decisions while discovering the hidden social costs and benefits of your choices. Understand market failures, Pigouvian taxes, and the challenge of internalizing externalities through interactive scenarios.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5015,7 +5591,7 @@
 </div>
 <p class="modal-item-description">Manage shared resources while avoiding the tragedy of the commons through collective decision-making and institution building. Experience how communication, monitoring, and sanctions can sustain common-pool resources across generations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5037,7 +5613,7 @@
 </div>
 <p class="modal-item-description">Navigate economic choices facing India's middle class, from education investments to consumption decisions amid aspirational pressures. Understand income mobility, class dynamics, and the precarity of middle-class status through realistic scenarios.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5060,7 +5636,7 @@
         </svg>
         Find your starting track
       </h2>
-      <span class="close" onclick="closeModal('trackQuizModal')">Ã—</span>
+      <span class="close" onclick="closeModal('trackQuizModal')">×</span>
     </div>
     <div class="modal-body quiz-modal-body">
       <form id="trackQuizForm" onsubmit="saveTrackQuiz(event)">
@@ -5196,7 +5772,7 @@
 </svg>
                         Premium Content (FREE in Beta!)
                     </h2>
-<span class="close" onclick="closeModal('premiumModal')">Ã—</span>
+<span class="close" onclick="closeModal('premiumModal')">×</span>
 </div>
 <div class="modal-body">
 <div class="beta-notice" style="margin: 1rem 0;">
@@ -5223,7 +5799,7 @@
 </div>
 <p class="modal-item-description">Seamlessly translate statistical code between R, Stata, SPSS, and Python while maintaining analytical integrity and reproducibility. Advanced features include automatic documentation generation, error checking, and optimization for large datasets common in development research.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5245,7 +5821,7 @@
 </div>
 <p class="modal-item-description">Access advanced qualitative analysis tools including AI-assisted coding, pattern recognition, and multi-modal data integration capabilities. Generate publication-ready visualizations, theoretical models, and mixed-methods integration frameworks from complex qualitative datasets.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5266,7 +5842,7 @@
 </div>
 </div>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5289,7 +5865,7 @@
 </div>
 <p class="modal-item-description">Turn messy ideas into sharp, researchable questions with worked examples, templates, and 101-style guidance for social impact projects.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5311,7 +5887,7 @@
 </svg>
                         All Courses (39)
                     </h2>
-<span class="close" onclick="closeModal('coursesModal')">Ã—</span>
+<span class="close" onclick="closeModal('coursesModal')">×</span>
 </div>
 <div class="modal-body">
 <div class="modal-grid">
@@ -5332,7 +5908,7 @@
 </div>
 <p class="modal-item-description">Master the specialized vocabulary and communication strategies essential for international development work, from writing policy briefs to facilitating stakeholder consultations. Learn to navigate cross-cultural professional contexts while building fluency in technical terminology used by UN agencies, NGOs, and development institutions.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5354,7 +5930,7 @@
 </div>
 <p class="modal-item-description">Transform raw field observations into actionable insights through systematic observation techniques, pattern recognition, and analytical frameworks used by leading ethnographers and field researchers. Develop skills to capture nuanced contextual data and translate ground realities into evidence-based recommendations for program design.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5376,7 +5952,7 @@
 </div>
 <p class="modal-item-description">Bridge the gap between economic theory and real-world policy implementation by understanding cost-benefit analysis, market failures, and welfare economics through a practitioner's lens. Master the economic reasoning behind policy interventions while learning to communicate complex economic concepts to non-specialist audiences.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5398,7 +5974,7 @@
 </div>
 <p class="modal-item-description">Explore how power dynamics shape data collection, analysis, and interpretation through an intersectional feminist framework that challenges traditional approaches to quantitative research. Learn to identify and counter data biases while developing inclusive methodologies that amplify marginalized voices in development research.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5420,7 +5996,7 @@
 </div>
 <p class="modal-item-description">Discover evidence-based teaching methodologies and learning theories that drive educational outcomes in diverse developmental contexts, from early childhood to adult education. Master curriculum design, assessment strategies, and pedagogical approaches that work in resource-constrained environments.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5442,7 +6018,7 @@
 </div>
 <p class="modal-item-description">Understand the science, economics, and politics of climate change through a development lens, exploring mitigation, adaptation, and climate justice frameworks. Learn to integrate climate considerations into development programming while understanding the differential impacts on vulnerable populations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5464,7 +6040,7 @@
 </div>
 <p class="modal-item-description">Navigate the fundamentals of epidemiology, health systems, and disease prevention strategies that underpin global health interventions. Explore the social determinants of health and learn to design community health programs that address both immediate needs and systemic inequities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5486,7 +6062,7 @@
 </div>
 <p class="modal-item-description">Examine the constitutional framework that guides India's democracy, including fundamental rights, directive principles, and the federal structure that shapes development policy. Understand how constitutional provisions intersect with social justice, economic planning, and citizen entitlements in the world's largest democracy.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5508,7 +6084,7 @@
 </div>
 <p class="modal-item-description">Master core theories of economic development from structural transformation to behavioral economics, examining why nations succeed or fail in their development trajectories. Analyze poverty traps, institutional economics, and growth models through case studies from the Global South.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5530,7 +6106,7 @@
 </div>
 <p class="modal-item-description">Unpack how political institutions, power structures, and economic systems interact to shape development outcomes and policy choices. Learn to analyze rent-seeking behavior, elite capture, and the political feasibility of reforms through theoretical frameworks and real-world applications.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5552,7 +6128,7 @@
 </div>
 <p class="modal-item-description">Examine how gender intersects with development through theoretical frameworks spanning from Women in Development (WID) to contemporary intersectional approaches. Develop skills to conduct gender analysis, design gender-responsive programs, and measure women's empowerment across diverse cultural contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5574,7 +6150,7 @@
 </div>
 <p class="modal-item-description">Navigate the ethical complexities of conducting research in development settings, from informed consent procedures to data privacy and community benefit-sharing. Learn international ethical standards while developing culturally sensitive approaches to research with vulnerable populations.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5596,7 +6172,7 @@
 </div>
 <p class="modal-item-description">Explore strategies for enhancing women's economic participation, from financial inclusion to entrepreneurship and labor market interventions. Analyze the evidence base for what works in breaking down barriers to women's economic agency across different contexts and sectors.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5618,7 +6194,7 @@
 </div>
 <p class="modal-item-description">Understand sustainable livelihoods frameworks and learn to design interventions that build resilient economic opportunities for vulnerable populations. Master value chain analysis, market systems approaches, and skills development strategies that create lasting pathways out of poverty.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5640,7 +6216,7 @@
 </div>
 <p class="modal-item-description">Develop essential skills for policy advocacy, from stakeholder mapping and message framing to campaign strategy and coalition building. Learn to navigate political landscapes and create compelling narratives that drive policy change for marginalized communities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5662,7 +6238,7 @@
 </div>
 <p class="modal-item-description">Master the psychology and practice of designing communication interventions that shift behaviors, from health practices to environmental conservation. Learn to apply behavioral insights, social marketing principles, and participatory approaches to create lasting social change.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5684,7 +6260,7 @@
 </div>
 <p class="modal-item-description">Build foundational skills in Monitoring, Evaluation, and Learning systems that drive adaptive management and demonstrate program impact. Learn to develop theories of change, design indicators, and create learning loops that improve development outcomes.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5706,7 +6282,7 @@
 </div>
 <p class="modal-item-description">Harness the power of visual methods in development research, from participatory photography to video documentation and visual storytelling. Learn ethical approaches to visual representation while developing skills to capture and analyze visual data that reveals hidden dimensions of social reality.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5728,7 +6304,7 @@
 </div>
 <p class="modal-item-description">Examine multidimensional poverty measurement, inequality indices, and the structural drivers of economic disparities across and within nations. Analyze policy instruments for redistribution and inclusive growth through theoretical frameworks and empirical evidence.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5750,7 +6326,7 @@
 </div>
 <p class="modal-item-description">Develop critical skills for understanding, interpreting, and communicating with data in development contexts, from survey design to visualization. Learn to spot misleading statistics, work with incomplete data, and translate complex findings into actionable insights for diverse stakeholders.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5772,7 +6348,7 @@
 </div>
 <p class="modal-item-description">Understand the fundamentals of Sexual and Reproductive Health and Rights, from clinical services to rights-based approaches and gender-transformative programming. Explore evidence-based interventions that advance bodily autonomy and reproductive justice in diverse cultural contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5794,7 +6370,7 @@
 </div>
 <p class="modal-item-description">Examine how caste, ethnicity, disability, sexuality, and other identity markers create overlapping systems of marginalization that shape development outcomes. Learn intersectional approaches to program design that center the experiences and agency of excluded groups.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5816,7 +6392,7 @@
 </div>
 <p class="modal-item-description">Challenge dominant development paradigms through postcolonial and decolonial theoretical frameworks that question Western-centric approaches to progress. Explore alternative visions of wellbeing, indigenous knowledge systems, and South-South cooperation models that reimagine development practice.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5838,7 +6414,7 @@
 </div>
 <p class="modal-item-description">Master participatory approaches to community mobilization, from asset-based development to collective action and social capital formation. Learn to facilitate community-led planning processes that build local ownership and sustainable change from the grassroots up.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5860,7 +6436,7 @@
 </div>
 <p class="modal-item-description">Explore how environmental degradation disproportionately impacts marginalized communities and learn frameworks for equitable environmental governance. Analyze the intersection of climate change, resource extraction, and social justice through case studies of environmental movements worldwide.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5882,7 +6458,7 @@
 </div>
 <p class="modal-item-description">Understand the economic value of unpaid care work and explore policies that support care workers while redistributing care responsibilities. Analyze care infrastructure, social protection systems, and the care diamond framework through feminist economic perspectives.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5904,7 +6480,7 @@
 </div>
 <p class="modal-item-description">Master statistical techniques for causal inference in development economics, from randomized controlled trials to quasi-experimental methods. Learn to design rigorous impact evaluations and interpret econometric findings while understanding their limitations and ethical implications.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5926,7 +6502,7 @@
 </div>
 <p class="modal-item-description">Navigate the complex ecosystem of development institutions from the UN system to multilateral banks and bilateral agencies. Understand aid effectiveness debates, financing mechanisms, and the evolving architecture of global development cooperation in a multipolar world.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5948,7 +6524,7 @@
 </div>
 <p class="modal-item-description">Analyze how misinformation, polarization, and erosion of institutional trust shape development outcomes in the digital age. Learn strategies for evidence-based communication, fact-checking, and building public trust in development interventions amid information disorder.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5970,7 +6546,7 @@
 </div>
 <p class="modal-item-description">Develop essential skills for resource mobilization in the development sector, from grant writing to donor engagement and partnership building. Learn to navigate funding landscapes, write compelling proposals, and build sustainable financing strategies for social impact.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -5992,7 +6568,7 @@
 </div>
 <p class="modal-item-description">Master in-depth interviewing, focus group facilitation, and ethnographic techniques that capture rich contextual insights in development research. Learn to code, analyze, and triangulate qualitative data while ensuring rigor and trustworthiness in your findings.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -6014,7 +6590,7 @@
 </div>
 <p class="modal-item-description">Develop skills for cleaning, exploring, and visualizing household survey data using statistical software and reproducible research practices. Learn to identify patterns, detect outliers, and prepare datasets for advanced analysis while understanding survey design effects.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -6036,7 +6612,7 @@
 </div>
 <p class="modal-item-description">Master techniques for examining relationships between two variables, from correlation analysis to cross-tabulations and simple regression. Learn to test hypotheses, interpret statistical significance, and communicate bivariate findings to non-technical audiences.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -6058,7 +6634,7 @@
 </div>
 <p class="modal-item-description">Explore ILO frameworks for promoting productive employment, labor rights, social protection, and social dialogue in development contexts. Analyze informal economy dynamics, labor market policies, and strategies for creating inclusive and dignified work opportunities.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -6080,7 +6656,7 @@
 </div>
 <p class="modal-item-description">Learn advanced psychometric techniques for developing and validating measurement instruments in development research, from poverty indices to learning assessments. Master latent trait modeling, differential item functioning, and scale development for cross-cultural contexts.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -6102,7 +6678,7 @@
 </div>
 <p class="modal-item-description">Navigate ethical challenges in digital development, from data privacy and algorithmic bias to digital divides and surveillance concerns. Learn responsible innovation frameworks and develop strategies for equitable and ethical technology deployment in development programs.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -6124,7 +6700,7 @@
 </div>
 <p class="modal-item-description">Master advanced statistical techniques for analyzing complex relationships among multiple variables, from factor analysis to structural equation modeling. Learn to uncover hidden patterns in development data and test sophisticated theoretical models using cutting-edge analytical methods.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -6146,7 +6722,7 @@
 </div>
 <p class="modal-item-description">Understand Social and Emotional Learning frameworks and their application in education and youth development programs worldwide. Learn evidence-based approaches for building emotional intelligence, resilience, and interpersonal skills that enhance learning outcomes and life success.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -6168,7 +6744,7 @@
 </div>
 <p class="modal-item-description">Master economic evaluation techniques for comparing development interventions, from cost-benefit analysis to cost-utility assessments. Learn to calculate incremental cost-effectiveness ratios and make resource allocation decisions that maximize social impact per dollar spent.</p>
 <div class="modal-item-meta">
-<span class="modal-item-link">Open â†’</span>
+<span class="modal-item-link">Open →</span>
 </div>
 </a>
 </div>
@@ -6185,7 +6761,7 @@
 <div class="footer-content">
 <div class="footer-support">
 <h4>Support Our Mission</h4>
-<p>ImpactMojo is provided completely free through the generous support of <a href="https://www.pinpointventures.in" style="color: var(--accent-color); text-decoration: none; font-weight: 600;" target="_blank">PinPoint Ventures</a> Ã¢â„¢Â¥</p>
+<p>ImpactMojo is provided completely free through the generous support of <a href="https://www.pinpointventures.in" style="color: var(--accent-color); text-decoration: none; font-weight: 600;" target="_blank">PinPoint Ventures</a> ♥</p>
 <p>Help us keep education free and accessible</p>
 <p style="margin-top: 1rem;">
 <strong>Support us via UPI:</strong>
@@ -6235,7 +6811,7 @@
 </div>
 </div>
 <div class="footer-bottom">
-<p>Â© 2025 ImpactMojo. All content for educational purposes only.</p>
+<p>© 2025 ImpactMojo. All content for educational purposes only.</p>
 <p style="margin-top: 0.5rem;">
 <strong>DISCLAIMER:</strong> ImpactMojo is an educational resource platform focused on learning, not credentialing. 
                         We do not provide certificates, degrees, or formal credentials. Content is for learning purposes only and does not constitute professional advice.
@@ -6255,7 +6831,7 @@
 <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet"/>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script async="" src="https://calendar.google.com/calendar/scheduling-button-script.js"></script>
 <!-- Feedback FAB -->
-<div class="feedback-fab" onclick="openChatbot()">
+<div class="feedback-fab" id="mojini-chat-toggle" onclick="openChatbot()">
 <svg class="icon" viewbox="0 0 24 24">
 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
 </svg>
@@ -6292,23 +6868,24 @@
             const isLight = document.body.classList.contains('light-mode');
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
             
-            // Update icon visibility for ALL theme toggle buttons (desktop and mobile)
-            const sunIcons = document.querySelectorAll('.theme-toggle .icon-sun');
-            const moonIcons = document.querySelectorAll('.theme-toggle .icon-moon');
+            // Update icon visibility
+            const sunIcon = document.querySelector('.theme-toggle .icon-sun');
+            const moonIcon = document.querySelector('.theme-toggle .icon-moon');
             
-            sunIcons.forEach(icon => {
-                icon.style.display = isLight ? 'none' : 'block';
-            });
-            moonIcons.forEach(icon => {
-                icon.style.display = isLight ? 'block' : 'none';
-            });
+            if (isLight) {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
         }
 
         // Load theme: saved preference → system preference → time of day
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme');
-            const sunIcons = document.querySelectorAll('.theme-toggle .icon-sun');
-            const moonIcons = document.querySelectorAll('.theme-toggle .icon-moon');
+            const sunIcon = document.querySelector('.theme-toggle .icon-sun');
+            const moonIcon = document.querySelector('.theme-toggle .icon-moon');
             
             let isLight;
             if (savedTheme === 'light') {
@@ -6324,20 +6901,78 @@
             
             if (isLight) {
                 document.body.classList.add('light-mode');
-                sunIcons.forEach(icon => { icon.style.display = 'none'; });
-                moonIcons.forEach(icon => { icon.style.display = 'block'; });
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
             } else {
                 document.body.classList.remove('light-mode');
-                sunIcons.forEach(icon => { icon.style.display = 'block'; });
-                moonIcons.forEach(icon => { icon.style.display = 'none'; });
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
             }
         });
 
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             const navLinks = document.getElementById('navLinks');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
             navLinks.classList.toggle('active');
+            
+            // Toggle hamburger to X icon
+            if (navLinks.classList.contains('active')) {
+                mobileToggle.classList.add('active');
+                document.getElementById('mobileMenuOverlay').classList.add('active');
+            } else {
+                mobileToggle.classList.remove('active');
+                document.getElementById('mobileMenuOverlay').classList.remove('active');
+                // Close all dropdowns when menu closes
+                document.querySelectorAll('.nav-links > li.has-dropdown').forEach(item => {
+                    item.classList.remove('open');
+                });
+            }
         }
+        
+        // Close mobile menu function
+        function closeMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            
+            if (navLinks) navLinks.classList.remove('active');
+            if (mobileToggle) mobileToggle.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+            
+            document.querySelectorAll('.nav-links > li.has-dropdown').forEach(item => {
+                item.classList.remove('open');
+            });
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navLinks = document.getElementById('navLinks');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const navContainer = document.querySelector('.nav-container');
+            
+            if (navLinks && navLinks.classList.contains('active')) {
+                // Check if click is outside nav container
+                if (navContainer && !navContainer.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            }
+        });
+        
+        // Close mobile menu on scroll
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            const navLinks = document.getElementById('navLinks');
+            
+            if (navLinks && navLinks.classList.contains('active')) {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                // Close menu if scrolled more than 50px
+                if (Math.abs(scrollTop - lastScrollTop) > 50) {
+                    closeMobileMenu();
+                }
+            }
+            lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        }, { passive: true });
 
         // Mobile dropdown toggle (click to expand on mobile)
         document.addEventListener('DOMContentLoaded', function() {
@@ -6372,12 +7007,21 @@
                     const mobileToggle = document.querySelector('.mobile-menu-toggle');
                     if (mobileToggle && window.getComputedStyle(mobileToggle).display !== 'none') {
                         // Close the mobile menu after clicking a dropdown item
-                        const navLinks = document.getElementById('navLinks');
                         setTimeout(() => {
-                            navLinks.classList.remove('active');
-                            document.querySelectorAll('.nav-links > li.has-dropdown').forEach(item => {
-                                item.classList.remove('open');
-                            });
+                            closeMobileMenu();
+                        }, 100);
+                    }
+                });
+            });
+            
+            // Close mobile menu when clicking non-dropdown nav links (like Home)
+            const navDirectLinks = document.querySelectorAll('.nav-links > li:not(.has-dropdown) > a');
+            navDirectLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+                    if (mobileToggle && window.getComputedStyle(mobileToggle).display !== 'none') {
+                        setTimeout(() => {
+                            closeMobileMenu();
                         }, 100);
                     }
                 });
@@ -6527,11 +7171,11 @@
                 </div>
                 <div>
                     <div class="star-selector" style="display: flex; gap: 0.5rem; justify-content: center; padding: 1rem;">
-                        <button class="star-btn" onclick="setRating(1)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">Ã¢Ëœâ€ </button>
-                        <button class="star-btn" onclick="setRating(2)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">Ã¢Ëœâ€ </button>
-                        <button class="star-btn" onclick="setRating(3)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">Ã¢Ëœâ€ </button>
-                        <button class="star-btn" onclick="setRating(4)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">Ã¢Ëœâ€ </button>
-                        <button class="star-btn" onclick="setRating(5)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">Ã¢Ëœâ€ </button>
+                        <button class="star-btn" onclick="setRating(1)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
+                        <button class="star-btn" onclick="setRating(2)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
+                        <button class="star-btn" onclick="setRating(3)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
+                        <button class="star-btn" onclick="setRating(4)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
+                        <button class="star-btn" onclick="setRating(5)" style="font-size: 2rem; color: #374151; cursor: pointer; background: none; border: none;">☆</button>
                     </div>
                 </div>
             `;
@@ -6547,10 +7191,10 @@
             const stars = document.querySelectorAll('.star-btn');
             stars.forEach((star, index) => {
                 if (index < rating) {
-                    star.textContent = 'Ã¢Ëœâ€¦';
+                    star.textContent = '★';
                     star.style.color = '#FCD34D';
                 } else {
-                    star.textContent = 'Ã¢Ëœâ€ ';
+                    star.textContent = '☆';
                     star.style.color = '#374151';
                 }
             });
@@ -6704,6 +7348,52 @@
             }
         });
 
+        // ========================================
+        // VERSION CHECK & AUTO-REFRESH
+        // ========================================
+        (function() {
+            var SITE_VERSION = '2.5.0'; // Update this when deploying new versions
+            var VERSION_KEY = 'imx_site_version';
+            
+            // Check if version changed
+            var storedVersion = localStorage.getItem(VERSION_KEY);
+            if (storedVersion && storedVersion !== SITE_VERSION) {
+                console.log('ImpactMojo: New version detected (' + storedVersion + ' → ' + SITE_VERSION + '), refreshing...');
+                localStorage.setItem(VERSION_KEY, SITE_VERSION);
+                // Clear any cached data that might cause issues
+                if ('caches' in window) {
+                    caches.keys().then(function(names) {
+                        names.forEach(function(name) {
+                            caches.delete(name);
+                        });
+                    });
+                }
+                window.location.reload(true); // Force reload from server
+            } else {
+                localStorage.setItem(VERSION_KEY, SITE_VERSION);
+            }
+            
+            // Also check for updates periodically (every 30 minutes)
+            setInterval(function() {
+                fetch(window.location.href + '?_=' + Date.now(), { 
+                    method: 'HEAD',
+                    cache: 'no-store'
+                }).then(function(response) {
+                    var lastModified = response.headers.get('last-modified');
+                    var storedLastMod = sessionStorage.getItem('imx_last_modified');
+                    if (storedLastMod && lastModified && storedLastMod !== lastModified) {
+                        console.log('ImpactMojo: Page updated on server, prompting refresh...');
+                        if (confirm('A new version of ImpactMojo is available! Refresh now?')) {
+                            window.location.reload(true);
+                        }
+                    }
+                    if (lastModified) {
+                        sessionStorage.setItem('imx_last_modified', lastModified);
+                    }
+                }).catch(function() {});
+            }, 30 * 60 * 1000); // 30 minutes
+        })();
+
         // Service Worker Registration for PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -6738,8 +7428,8 @@ document.addEventListener('DOMContentLoaded', function () {
     return n || el;
   }
   function swapNow() {
-    const founder   = document.getElementById('founder')   || findBlock(/Founder/i);
-    const cofounder = document.getElementById('cofounder') || findBlock(/Co[- ]?Founder/i);
+    const founder   = document.getElementById('founder')   || findBlock(/Founder/i);
+    const cofounder = document.getElementById('cofounder') || findBlock(/Co[- ]?Founder/i);
     if (!founder || !cofounder) return;
     const anc  = commonAncestor(founder, cofounder);
     const fTop = topChild(anc, founder);
@@ -6756,7 +7446,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <!-- === Mojini (KB+FAQ) wrapper "" inserted just before 
-<!-- === Mojini KB UI Enhancer â€” adds KB starter chips, updates greeting & placeholder 
+<!-- === Mojini KB UI Enhancer — adds KB starter chips, updates greeting & placeholder 
 <script>
 (function(){
   const AGENT_NAME = window.IM_AGENT_NAME || 'Mojini';
@@ -6768,7 +7458,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if(!inp) return;
     if(!inp.getAttribute('data-mojini-ph')){
       inp.setAttribute('data-mojini-ph','1');
-      inp.placeholder = 'Ask about courses, labs, credentials, premium, resources, games, founders"â€¦ or leave feedback';
+      inp.placeholder = 'Ask about courses, labs, credentials, premium, resources, games, founders"… or leave feedback';
     }
   }
 
@@ -6844,7 +7534,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-<!-- === Mojini Welcome Deduper v2 â€” keep only one dual-role greeting 
+<!-- === Mojini Welcome Deduper v2 — keep only one dual-role greeting 
 <script>
 (function(){
   const AGENT_NAME = window.IM_AGENT_NAME || 'Mojini';
@@ -7228,7 +7918,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   const AGENT_NAME = window.IM_AGENT_NAME || "Mojini";
 
-  // â€” â€” â€” Reuse (or define) minimal KB so we can answer course/lab questions crisply â€” â€” â€” 
+  // — — — Reuse (or define) minimal KB so we can answer course/lab questions crisply — — — 
   const COURSES = (window.__MOJINI_COURSES__) || [
     { t:'Development Economics 101', u:'https://101.impactmojo.in/dev-economics', o:'Poverty, inequality, growth; India/South Asia.'},
     { t:'Law and Constitution 101',   u:'https://101.impactmojo.in/ind-constitution', o:'Constitutional principles, rights, institutions.'},
@@ -7249,7 +7939,7 @@ document.addEventListener('DOMContentLoaded', function(){
     { t:'Mixed Methods Research 101', u:'https://101.impactmojo.in/qual-methods', o:'Integrating qual + quant rigorously.'},
     { t:'Impact Evaluation Design 101', u:'https://101.impactmojo.in/econometrics-101', o:'RCT to quasi-experimental choices.'},
     { t:'Fundraising 101',            u:'https://101.impactmojo.in/fundraising-basics', o:'HNI, institutional, grassroots basics.'},
-    { t:'Programme Design Principles 101', u:'https://101.impactmojo.in/community-dev', o:'Problem framing â†’ ToC, delivery, risk.'},
+    { t:'Programme Design Principles 101', u:'https://101.impactmojo.in/community-dev', o:'Problem framing → ToC, delivery, risk.'},
     { t:'Environmental Justice 101',  u:'https://101.impactmojo.in/env-justice', o:'Justice-centred climate/environment action.'},
     { t:'Digital Governance 101',     u:'https://101.impactmojo.in/digital-ethics', o:'Platforms, data governance, service delivery.'},
     { t:'Nutrition, Food Systems & Culture 101', u:'https://101.impactmojo.in/care-economy-101', o:'Nutrition security, culture, markets.'},
@@ -7274,10 +7964,10 @@ document.addEventListener('DOMContentLoaded', function(){
   window.__MOJINI_COURSES__ = COURSES;
   window.__MOJINI_LABS__ = LABS;
 
-  // â€” â€” â€” Helpers â€” â€” â€” 
+  // — — — Helpers — — — 
   const norm = s => String(s||"").toLowerCase();
-  const listCourses = () => COURSES.map(c=>`"â€¢ ${c.t} â€” ${c.o}\n  ${c.u}`).join("\n");
-  const listLabs = () => LABS.map(l=>`"â€¢ ${l.t}\n  ${l.u}`).join("\n");
+  const listCourses = () => COURSES.map(c=>`"• ${c.t} — ${c.o}\n  ${c.u}`).join("\n");
+  const listLabs = () => LABS.map(l=>`"• ${l.t}\n  ${l.u}`).join("\n");
   const byTitle = (arr, text) => {
     const s = norm(text);
     return arr.find(x => s.includes(norm(x.t)) || norm(x.t).includes(s));
@@ -7292,14 +7982,14 @@ document.addEventListener('DOMContentLoaded', function(){
     wrap.appendChild(bub); box.appendChild(wrap); box.scrollTop = box.scrollHeight;
   }
 
-  // â€” â€” â€” FAQ BANK (30+) â€” â€” â€” 
+  // — — — FAQ BANK (30+) — — — 
   // Each item: {re: /pattern/i, a: "answer" }  (safe, non-inventive wording)
   const FAQ = [
     // Credentials / Certificates / Accreditation
     { re: /(certificate|certification)s?\b/i,
       a: "We don't issue formal certificates. ImpactMojo focuses on **skills and credentials** you can demonstrate via real work and portfolio artefacts." },
     { re: /\bcredential(s)?\b|\bbadge(s)?\b|\bportfolio\b/i,
-      a: "Our credentials are skill signals based on doing workâ€” labs, projects, and artefacts you can show. They're designed to be more meaningful than a generic certificate." },
+      a: "Our credentials are skill signals based on doing work— labs, projects, and artefacts you can show. They're designed to be more meaningful than a generic certificate." },
     { re: /\baccredit(ed|ation)|academic credit|university|ugc\b/i,
       a: "ImpactMojo is not an accredited degree program and doesn't offer academic credit. It's a practitioner-focused learning platform." },
 
@@ -7307,7 +7997,7 @@ document.addEventListener('DOMContentLoaded', function(){
     { re: /\bpremium\b(?!.*(what|include|benefit|price))/i,
       a: "Premium provides **curated resource packs**, **deeper dives**, and **advanced labs**. For the latest scope and any pricing updates, please refer to the live Premium page." },
     { re: /\b(what('| i)?s|about).+premium|\bpremium\b.+(include|cover|benefit)/i,
-      a: "Premium includes curated resources, deeper dives, and access to advanced labs. Exact inclusions can evolveâ€” please check the live Premium page for the current details." },
+      a: "Premium includes curated resources, deeper dives, and access to advanced labs. Exact inclusions can evolve— please check the live Premium page for the current details." },
     { re: /\b(price|cost|fee|paid|free).+premium|\bpremium.+(price|cost|fee)/i,
       a: "Premium pricing and scope may change over time. The **Premium** page is the source of truth for current details." },
 
@@ -7319,67 +8009,67 @@ document.addEventListener('DOMContentLoaded', function(){
     { re: /(objective|about|overview|syllabus).+development economics|dev(\s|-)?econ/i,
       a: () => {
         const c = byTitle(COURSES, "Development Economics 101");
-        return c ? `${c.t} â€” ${c.o}\n${c.u}` : "Development Economics 101 covers poverty, inequality and growth; see the course page for details.";
+        return c ? `${c.t} — ${c.o}\n${c.u}` : "Development Economics 101 covers poverty, inequality and growth; see the course page for details.";
       }},
     { re: /(objective|about|overview|syllabus).+law/i,
-      a: () => { const c = byTitle(COURSES,"Law and Constitution 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Law and Constitution 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+climate/i,
-      a: () => { const c = byTitle(COURSES,"Climate Science 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Climate Science 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(pedagogy|education)/i,
-      a: () => { const c = byTitle(COURSES,"Pedagogy and Education 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Pedagogy and Education 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(public health|health)/i,
-      a: () => { const c = byTitle(COURSES,"Public Health 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Public Health 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+livelihood/i,
-      a: () => { const c = byTitle(COURSES,"Livelihoods 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Livelihoods 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+gender/i,
-      a: () => { const c = byTitle(COURSES,"Gender Studies 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Gender Studies 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(WEE|women)/i,
-      a: () => { const c = byTitle(COURSES,"Womens' Economic Empowerment 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Womens' Economic Empowerment 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(ethics|research ethics)/i,
-      a: () => { const c = byTitle(COURSES,"Research Ethics 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Research Ethics 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(bcc|behaviour|behavior)/i,
-      a: () => { const c = byTitle(COURSES,"Behaviour Change Communication Programming 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Behaviour Change Communication Programming 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+advocacy/i,
-      a: () => { const c = byTitle(COURSES,"Advocacy and Communications 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Advocacy and Communications 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(monitoring|evaluation|meal)\b/i,
-      a: () => { const c = byTitle(COURSES,"Monitoring, Evaluation, Accountability and Learning 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Monitoring, Evaluation, Accountability and Learning 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+ethnograph/i,
-      a: () => { const c = byTitle(COURSES,"Visual Ethnography 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Visual Ethnography 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(political economy|pol.?econ)/i,
-      a: () => { const c = byTitle(COURSES,"Political Economy 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Political Economy 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(poverty|inequality)/i,
-      a: () => { const c = byTitle(COURSES,"Poverty and Inequality 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Poverty and Inequality 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(data vis|datavis|visuali[sz]ation)/i,
-      a: () => { const c = byTitle(COURSES,"Data Visualisation 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Data Visualisation 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(mixed methods|mmr)/i,
-      a: () => { const c = byTitle(COURSES,"Mixed Methods Research 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Mixed Methods Research 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(impact eval|evaluation design)/i,
-      a: () => { const c = byTitle(COURSES,"Impact Evaluation Design 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Impact Evaluation Design 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+fundraising/i,
-      a: () => { const c = byTitle(COURSES,"Fundraising 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Fundraising 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+programme design/i,
-      a: () => { const c = byTitle(COURSES,"Programme Design Principles 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Programme Design Principles 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(environmental justice|env\.?justice)/i,
-      a: () => { const c = byTitle(COURSES,"Environmental Justice 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Environmental Justice 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(digital gov|governance)/i,
-      a: () => { const c = byTitle(COURSES,"Digital Governance 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Digital Governance 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(nutrition|food)/i,
-      a: () => { const c = byTitle(COURSES,"Nutrition, Food Systems & Culture 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Nutrition, Food Systems & Culture 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(social research ethics|consent)/i,
-      a: () => { const c = byTitle(COURSES,"Social Research Ethics & Consent 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Social Research Ethics & Consent 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(language|history of languages)/i,
-      a: () => { const c = byTitle(COURSES,"Language & History of Languages 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Language & History of Languages 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+caste/i,
-      a: () => { const c = byTitle(COURSES,"Caste 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Caste 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
     { re: /(objective|about|overview|syllabus).+(humanitarian|development work)/i,
-      a: () => { const c = byTitle(COURSES,"Humanitarian vs Development Work 101"); return `${c.t} â€” ${c.o}\n${c.u}`; } },
+      a: () => { const c = byTitle(COURSES,"Humanitarian vs Development Work 101"); return `${c.t} — ${c.o}\n${c.u}`; } },
 
     { re: /(beginner|new to this|where to start)/i,
       a: "Start with any **101** course. They're beginner-friendly and focus on practical understanding." },
     { re: /(advanced|deeper|next step)/i,
       a: "For deeper work, explore **labs** and **Premium** deeper-dives." },
     { re: /(duration|time|how long).+course/i,
-      a: "Most courses are **self-paced**. Time varies by learnerâ€” check each course page for modules and suggested pace." },
+      a: "Most courses are **self-paced**. Time varies by learner— check each course page for modules and suggested pace." },
     { re: /\blive\b.+(class|session|cohort)/i,
       a: "Most learning is self-paced. When live/cohort options are offered, the course page will say so." },
     { re: /enrol|enroll|join|sign ?up/i,
@@ -7403,7 +8093,7 @@ document.addEventListener('DOMContentLoaded', function(){
     { re: /(testimonial|review|what people say)/i,
       a: "Testimonials are showcased on-site when available. You can also leave feedback here and we may feature excerpts." },
     { re: /rating(s)?|stars?/i,
-      a: "Ratings vary by context. Where available, they appear with the relevant course or labâ€” Mojini avoids quoting numbers out of context." },
+      a: "Ratings vary by context. Where available, they appear with the relevant course or lab— Mojini avoids quoting numbers out of context." },
     { re: /founder|who.*(behind|lead)/i,
       a: "ImpactMojo is led by **Dr. Varna Sri Raman**. (Additional leadership may be featured on the site.)" },
 
@@ -7436,11 +8126,11 @@ document.addEventListener('DOMContentLoaded', function(){
       title.split(/\s+/).forEach(tok => { if (tok && s.includes(tok)) score++; });
       if (score > bestScore) { bestScore = score; best = c; }
     });
-    if (best && bestScore >= 2) return `${best.t} â€” ${best.o}\n${best.u}`;
+    if (best && bestScore >= 2) return `${best.t} — ${best.o}\n${best.u}`;
     return null;
   }
 
-  // Main answerer: bank â†’ dynamic course objective â†’ (optional) existing mojiniAnswer â†’ fallback null
+  // Main answerer: bank → dynamic course objective → (optional) existing mojiniAnswer → fallback null
   function answerFromFAQ(userText){
     const text = String(userText||"");
     // 1) Hardcoded bank
@@ -7490,7 +8180,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if (inp) inp.value = "";
       return;
     }
-    // Not matched â†’ pass through to whatever was there before
+    // Not matched → pass through to whatever was there before
     if (typeof __prevSend === "function") return __prevSend.apply(this, arguments);
   };
 })();
@@ -7608,41 +8298,90 @@ document.addEventListener('DOMContentLoaded', function(){
       /* s.setAttribute("data-site-language", "null");*/
       s.setAttribute("data-widget_layout", "full");
       s.setAttribute("data-account", "EksmhlPg9k");
-      s.setAtt
-ribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
+      s.setAttribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
       (d.body || d.head).appendChild(s);
     })(document);
 </script>
 
 <!-- ImpactMojo Feature FABs and Modals -->
-<div class="imx-fab-container">
-    <!-- Bookmarks FAB -->
-    <button class="imx-fab imx-fab-bookmarks" onclick="IMX.openBookmarksModal()" title="My Bookmarks" aria-label="Open bookmarks">
-        <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-        <span class="imx-fab-badge" id="imxBookmarkBadge"></span>
+<!-- Speed Dial Tools Button -->
+<div class="imx-speed-dial" id="imxSpeedDial">
+    <!-- Main Toggle Button -->
+    <button class="imx-speed-dial-toggle" id="imxSpeedDialToggle" onclick="IMX.SpeedDial.toggle()" title="Learning Tools" aria-label="Open learning tools menu">
+        <svg class="toggle-icon-tools" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <svg class="toggle-icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
     </button>
     
-    <!-- Compare FAB -->
-    <button class="imx-fab imx-fab-compare" onclick="IMX.openCompareModal()" title="Compare Items" aria-label="Open compare tool">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-        <span class="imx-fab-badge" id="imxCompareBadge"></span>
-    </button>
-    
-    <!-- Lo-Fi FAB -->
-    <button class="imx-fab imx-fab-lofi" onclick="IMX.openLofiModal()" title="Lo-Fi Study Playlists" aria-label="Open lo-fi playlists">
-        <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-    </button>
-    
-    <!-- Analytics FAB -->
-    <button class="imx-fab imx-fab-analytics" onclick="IMX.openAnalyticsModal()" title="My Learning Analytics" aria-label="Open learning analytics">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
-    </button>
-    
-    <!-- Reading Lists FAB -->
-    <button class="imx-fab imx-fab-reading" onclick="IMX.openReadingListsModal()" title="Smart Reading Lists" aria-label="Open reading lists">
-        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-    </button>
+    <!-- Speed Dial Menu -->
+    <div class="imx-speed-dial-menu">
+        <!-- Reading Lists -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Reading Lists</span>
+            <button class="imx-speed-dial-btn imx-sd-reading" onclick="IMX.openReadingListsModal(); IMX.SpeedDial.close();" title="Smart Reading Lists" aria-label="Open reading lists">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </button>
+        </div>
+        
+        <!-- Analytics -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Analytics</span>
+            <button class="imx-speed-dial-btn imx-sd-analytics" onclick="IMX.openAnalyticsModal(); IMX.SpeedDial.close();" title="Learning Analytics" aria-label="Open learning analytics">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
+            </button>
+        </div>
+        
+        <!-- Pomodoro Timer -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Pomodoro Timer</span>
+            <button class="imx-speed-dial-btn imx-sd-pomodoro" id="imxPomodoroFab" onclick="IMX.Pomodoro.openModal(); IMX.SpeedDial.close();" title="Pomodoro Timer" aria-label="Open pomodoro timer">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </button>
+        </div>
+        
+        <!-- Lo-Fi Music -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Lo-Fi Music</span>
+            <button class="imx-speed-dial-btn imx-sd-lofi" onclick="IMX.openLofiModal(); IMX.SpeedDial.close();" title="Lo-Fi Study Playlists" aria-label="Open lo-fi playlists">
+                <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+            </button>
+        </div>
+        
+        <!-- Compare -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Compare</span>
+            <button class="imx-speed-dial-btn imx-sd-compare" onclick="IMX.openCompareModal(); IMX.SpeedDial.close();" title="Compare Items" aria-label="Open compare tool">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                <span class="imx-fab-badge" id="imxCompareBadge"></span>
+            </button>
+        </div>
+        
+        <!-- Bookmarks -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Bookmarks</span>
+            <button class="imx-speed-dial-btn imx-sd-bookmarks" onclick="IMX.openBookmarksModal(); IMX.SpeedDial.close();" title="My Bookmarks" aria-label="Open bookmarks">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                <span class="imx-fab-badge" id="imxBookmarkBadge"></span>
+            </button>
+        </div>
+        
+        <!-- Personal Notes (Coming Soon) -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Notes <small style="opacity:0.6">(Soon)</small></span>
+            <button class="imx-speed-dial-btn imx-sd-notes disabled" title="Personal Notes - Coming Soon" aria-label="Personal notes coming soon" disabled>
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            </button>
+        </div>
+        
+        <!-- Learning Streak (Coming Soon) -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Streak <small style="opacity:0.6">(Soon)</small></span>
+            <button class="imx-speed-dial-btn imx-sd-streak disabled" title="Learning Streak - Coming Soon" aria-label="Learning streak coming soon" disabled>
+                <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+            </button>
+        </div>
+    </div>
 </div>
+<div class="imx-speed-dial-backdrop" onclick="IMX.SpeedDial.close()"></div>
 
 <!-- Bookmarks Modal -->
 <div class="imx-modal" id="imxBookmarksModal" role="dialog" aria-label="Bookmarks">
@@ -7652,7 +8391,7 @@ ribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
                 <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
                 My Bookmarks
             </div>
-            <button class="imx-modal-close" onclick="IMX.closeBookmarksModal()" aria-label="Close">Ã—</button>
+            <button class="imx-modal-close" onclick="IMX.closeBookmarksModal()" aria-label="Close">×</button>
         </div>
         <div class="imx-modal-body">
             <div id="imxBookmarksList" class="imx-bookmarks-list"></div>
@@ -7679,7 +8418,7 @@ ribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
                 <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
                 Compare (up to 3)
             </div>
-            <button class="imx-modal-close" onclick="IMX.closeCompareModal()" aria-label="Close">Ã—</button>
+            <button class="imx-modal-close" onclick="IMX.closeCompareModal()" aria-label="Close">×</button>
         </div>
         <div class="imx-modal-body">
             <div id="imxCompareGrid" class="imx-compare-grid"></div>
@@ -7706,7 +8445,7 @@ ribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
                 <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
                 Lo-Fi Study Playlists
             </div>
-            <button class="imx-modal-close" onclick="IMX.closeLofiModal()" aria-label="Close">Ã—</button>
+            <button class="imx-modal-close" onclick="IMX.closeLofiModal()" aria-label="Close">×</button>
         </div>
         <div class="imx-modal-body">
             <div class="imx-lofi-grid">
@@ -7790,7 +8529,7 @@ ribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
                 <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
                 My Learning Analytics
             </div>
-            <button class="imx-modal-close" onclick="IMX.closeAnalyticsModal()" aria-label="Close">Ã—</button>
+            <button class="imx-modal-close" onclick="IMX.closeAnalyticsModal()" aria-label="Close">×</button>
         </div>
         <div class="imx-modal-body">
             <div id="imxAnalyticsContent"></div>
@@ -7813,7 +8552,7 @@ ribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
                 <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 Smart Reading Lists
             </div>
-            <button class="imx-modal-close" onclick="IMX.closeReadingListsModal()" aria-label="Close">Ã—</button>
+            <button class="imx-modal-close" onclick="IMX.closeReadingListsModal()" aria-label="Close">×</button>
         </div>
         <div class="imx-modal-body">
             <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">Curated resources from leading development organizations. Click a list to expand.</p>
@@ -7821,6 +8560,62 @@ ribute("src", "https://acsbapp.com/apps/app/dist/js/app.js");
         </div>
         <div class="imx-modal-footer">
             <button class="imx-btn imx-btn-primary" onclick="IMX.closeReadingListsModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Pomodoro Timer Modal -->
+<div class="imx-modal" id="imxPomodoroModal" role="dialog" aria-label="Pomodoro Timer">
+    <div class="imx-modal-content">
+        <div class="imx-modal-header">
+            <div class="imx-modal-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Pomodoro Timer
+            </div>
+            <button class="imx-modal-close" onclick="IMX.Pomodoro.closeModal()" aria-label="Close">×</button>
+        </div>
+        <div class="imx-modal-body">
+            <div class="imx-pomodoro-display">
+                <div class="imx-pomodoro-time" id="imxPomodoroTime">25:00</div>
+                <div class="imx-pomodoro-label" id="imxPomodoroLabel">Focus Time</div>
+            </div>
+            
+            <div class="imx-pomodoro-controls">
+                <button class="imx-pomodoro-btn imx-pomodoro-btn-start" id="imxPomodoroStart" onclick="IMX.Pomodoro.start()">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Start
+                </button>
+                <button class="imx-pomodoro-btn imx-pomodoro-btn-pause" id="imxPomodoroPause" onclick="IMX.Pomodoro.pause()" style="display:none;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                    Pause
+                </button>
+                <button class="imx-pomodoro-btn imx-pomodoro-btn-reset" onclick="IMX.Pomodoro.reset()">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 2v6h6M21.5 22v-6h-6"></path><path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3"></path></svg>
+                    Reset
+                </button>
+            </div>
+            
+            <div class="imx-pomodoro-presets">
+                <button class="imx-pomodoro-preset active" onclick="IMX.Pomodoro.setPreset(25, 'Focus Time')">25 min</button>
+                <button class="imx-pomodoro-preset" onclick="IMX.Pomodoro.setPreset(5, 'Short Break')">5 min</button>
+                <button class="imx-pomodoro-preset" onclick="IMX.Pomodoro.setPreset(15, 'Long Break')">15 min</button>
+                <button class="imx-pomodoro-preset" onclick="IMX.Pomodoro.setPreset(50, 'Deep Focus')">50 min</button>
+            </div>
+            
+            <div class="imx-pomodoro-stats">
+                <div class="imx-pomodoro-stat">
+                    <div class="imx-pomodoro-stat-value" id="imxPomodoroSessions">0</div>
+                    <div class="imx-pomodoro-stat-label">Sessions Today</div>
+                </div>
+                <div class="imx-pomodoro-stat">
+                    <div class="imx-pomodoro-stat-value" id="imxPomodoroTotal">0h 0m</div>
+                    <div class="imx-pomodoro-stat-label">Total Focus Time</div>
+                </div>
+            </div>
+            
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 1.5rem;">
+                💡 Tip: Pair with Lo-Fi music for best focus!
+            </p>
         </div>
     </div>
 </div>
@@ -8079,6 +8874,334 @@ window.addEventListener('beforeunload', function() {
 });
 
 // ========================================
+// SPEED DIAL MENU
+// ========================================
+IMX.SpeedDial = {
+    isOpen: false,
+    
+    toggle: function() {
+        if (this.isOpen) {
+            this.close();
+        } else {
+            this.open();
+        }
+    },
+    
+    open: function() {
+        var dial = document.getElementById('imxSpeedDial');
+        if (dial) {
+            dial.classList.add('open');
+            this.isOpen = true;
+        }
+    },
+    
+    close: function() {
+        var dial = document.getElementById('imxSpeedDial');
+        if (dial) {
+            dial.classList.remove('open');
+            this.isOpen = false;
+        }
+    }
+};
+
+// Close speed dial on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && IMX.SpeedDial.isOpen) {
+        IMX.SpeedDial.close();
+    }
+});
+
+// ========================================
+// DAILY LEARNING TIPS
+// ========================================
+IMX.DailyTip = {
+    tips: [
+        "Theory of Change is not just a document—it's a living roadmap. Review and update yours quarterly as you learn what works.",
+        "The best M&E systems are designed WITH communities, not FOR them. Participatory approaches increase data quality and ownership.",
+        "Disaggregate your data by gender, age, and location. Averages often hide who's being left behind.",
+        "Qualitative data is not 'soft' data. Stories and context explain the 'why' behind the numbers.",
+        "Baseline data isn't just a requirement—it's your starting point for measuring real change. Don't skip it!",
+        "The Sustainable Development Goals are interconnected. Solving one problem often requires addressing multiple SDGs.",
+        "Cost-effectiveness analysis helps donors compare impact across programs. Learn to calculate and communicate yours.",
+        "Adaptive management means being willing to change course when evidence shows a better path.",
+        "The 'Do No Harm' principle should guide every intervention. Always assess potential negative consequences.",
+        "Capacity building isn't just training—it's about creating systems that sustain after the project ends.",
+        "Mixed methods research combines the best of quantitative and qualitative—use them together for richer insights.",
+        "Randomized Controlled Trials (RCTs) are the gold standard, but not always feasible. Know your alternatives.",
+        "Social accountability mechanisms empower communities to hold service providers responsible.",
+        "Gender analysis should happen at design stage, not be retrofitted later.",
+        "Systems thinking helps you see the interconnections that simple logic models miss.",
+        "Behavior change takes time. Design your program timelines and expectations accordingly.",
+        "Local ownership is the key to sustainability. Build it from day one.",
+        "Data visualization can tell a story that numbers alone cannot. Learn the basics.",
+        "Ethical considerations in research protect vulnerable populations. Never compromise on informed consent.",
+        "Network effects can amplify your impact. Think about how change spreads through communities."
+    ],
+    
+    currentIndex: 0,
+    
+    init: function() {
+        // Show a tip based on the day of year for consistency
+        var dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+        this.currentIndex = dayOfYear % this.tips.length;
+        this.display(this.tips[this.currentIndex]);
+    },
+    
+    showRandom: function() {
+        var newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * this.tips.length);
+        } while (newIndex === this.currentIndex && this.tips.length > 1);
+        
+        this.currentIndex = newIndex;
+        this.display(this.tips[this.currentIndex]);
+        
+        // Add a little animation
+        var tipEl = document.getElementById('imxDailyTipText');
+        if (tipEl) {
+            tipEl.style.opacity = '0';
+            setTimeout(function() {
+                tipEl.style.opacity = '1';
+            }, 150);
+        }
+    },
+    
+    display: function(tip) {
+        var tipEl = document.getElementById('imxDailyTipText');
+        if (tipEl) {
+            tipEl.textContent = tip;
+            tipEl.style.transition = 'opacity 0.3s ease';
+        }
+    }
+};
+
+// Initialize daily tip on page load
+document.addEventListener('DOMContentLoaded', function() {
+    IMX.DailyTip.init();
+});
+
+// ========================================
+// SURPRISE ME (Random Content Picker)
+// ========================================
+IMX.surpriseMe = function() {
+    // Collect all content cards
+    var cards = document.querySelectorAll('.card');
+    if (cards.length === 0) {
+        alert('No content found!');
+        return;
+    }
+    
+    // Pick a random card
+    var randomIndex = Math.floor(Math.random() * cards.length);
+    var randomCard = cards[randomIndex];
+    
+    // Scroll to it
+    randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // Add a highlight effect
+    randomCard.style.transition = 'all 0.3s ease';
+    randomCard.style.boxShadow = '0 0 0 4px #EC4899, 0 0 30px rgba(236, 72, 153, 0.5)';
+    randomCard.style.transform = 'scale(1.02)';
+    
+    // Remove highlight after 2 seconds
+    setTimeout(function() {
+        randomCard.style.boxShadow = '';
+        randomCard.style.transform = '';
+    }, 2000);
+    
+    // Get the card title for feedback
+    var titleEl = randomCard.querySelector('.card-title, h3');
+    var title = titleEl ? titleEl.textContent : 'content';
+    
+    // Show a toast notification (simple)
+    IMX.showToast('🎲 Discovered: ' + title);
+};
+
+// Simple toast notification
+IMX.showToast = function(message) {
+    // Remove existing toast
+    var existing = document.getElementById('imxToast');
+    if (existing) existing.remove();
+    
+    // Create toast
+    var toast = document.createElement('div');
+    toast.id = 'imxToast';
+    toast.style.cssText = 'position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--card-bg); color: var(--text-primary); padding: 1rem 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 9999; font-weight: 500; border: 1px solid var(--border-color); animation: toastIn 0.3s ease;';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    // Add animation styles if not present
+    if (!document.getElementById('toastStyles')) {
+        var style = document.createElement('style');
+        style.id = 'toastStyles';
+        style.textContent = '@keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }';
+        document.head.appendChild(style);
+    }
+    
+    // Remove after 3 seconds
+    setTimeout(function() {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(function() { toast.remove(); }, 300);
+    }, 3000);
+};
+
+// ========================================
+// POMODORO TIMER
+// ========================================
+IMX.Pomodoro = {
+    timer: null,
+    timeLeft: 25 * 60, // seconds
+    totalTime: 25 * 60,
+    isRunning: false,
+    currentLabel: 'Focus Time',
+    
+    STORAGE_KEY: 'imx_pomodoro_stats',
+    
+    init: function() {
+        this.loadStats();
+        this.updateDisplay();
+    },
+    
+    openModal: function() {
+        document.getElementById('imxPomodoroModal').style.display = 'flex';
+        this.loadStats();
+    },
+    
+    closeModal: function() {
+        document.getElementById('imxPomodoroModal').style.display = 'none';
+    },
+    
+    start: function() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        
+        document.getElementById('imxPomodoroStart').style.display = 'none';
+        document.getElementById('imxPomodoroPause').style.display = 'inline-flex';
+        document.getElementById('imxPomodoroFab').classList.add('active');
+        
+        var self = this;
+        this.timer = setInterval(function() {
+            self.timeLeft--;
+            self.updateDisplay();
+            
+            if (self.timeLeft <= 0) {
+                self.complete();
+            }
+        }, 1000);
+    },
+    
+    pause: function() {
+        this.isRunning = false;
+        clearInterval(this.timer);
+        
+        document.getElementById('imxPomodoroStart').style.display = 'inline-flex';
+        document.getElementById('imxPomodoroPause').style.display = 'none';
+        document.getElementById('imxPomodoroFab').classList.remove('active');
+    },
+    
+    reset: function() {
+        this.pause();
+        this.timeLeft = this.totalTime;
+        this.updateDisplay();
+    },
+    
+    setPreset: function(minutes, label) {
+        this.pause();
+        this.totalTime = minutes * 60;
+        this.timeLeft = this.totalTime;
+        this.currentLabel = label;
+        this.updateDisplay();
+        document.getElementById('imxPomodoroLabel').textContent = label;
+        
+        // Update active preset button
+        document.querySelectorAll('.imx-pomodoro-preset').forEach(function(btn) {
+            btn.classList.remove('active');
+            if (btn.textContent.includes(minutes + ' min')) {
+                btn.classList.add('active');
+            }
+        });
+    },
+    
+    complete: function() {
+        this.pause();
+        this.playSound();
+        
+        // Save stats
+        var stats = this.getStats();
+        stats.sessions++;
+        stats.totalMinutes += Math.floor(this.totalTime / 60);
+        stats.lastDate = new Date().toDateString();
+        this.saveStats(stats);
+        this.displayStats(stats);
+        
+        // Show notification
+        if (Notification.permission === 'granted') {
+            new Notification('Pomodoro Complete! 🎉', {
+                body: this.currentLabel + ' session finished. Great work!',
+                icon: 'https://impactmojo.in/favicon.ico'
+            });
+        }
+        
+        alert('🎉 ' + this.currentLabel + ' complete! Take a break.');
+        this.reset();
+    },
+    
+    playSound: function() {
+        try {
+            var audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
+            audio.volume = 0.5;
+            audio.play().catch(function() {});
+        } catch(e) {}
+    },
+    
+    updateDisplay: function() {
+        var mins = Math.floor(this.timeLeft / 60);
+        var secs = this.timeLeft % 60;
+        var display = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+        document.getElementById('imxPomodoroTime').textContent = display;
+    },
+    
+    getStats: function() {
+        try {
+            var stored = localStorage.getItem(this.STORAGE_KEY);
+            if (stored) {
+                var stats = JSON.parse(stored);
+                // Reset if different day
+                if (stats.lastDate !== new Date().toDateString()) {
+                    stats.sessions = 0;
+                }
+                return stats;
+            }
+        } catch(e) {}
+        return { sessions: 0, totalMinutes: 0, lastDate: new Date().toDateString() };
+    },
+    
+    saveStats: function(stats) {
+        try {
+            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(stats));
+        } catch(e) {}
+    },
+    
+    loadStats: function() {
+        var stats = this.getStats();
+        this.displayStats(stats);
+    },
+    
+    displayStats: function(stats) {
+        document.getElementById('imxPomodoroSessions').textContent = stats.sessions;
+        var hours = Math.floor(stats.totalMinutes / 60);
+        var mins = stats.totalMinutes % 60;
+        document.getElementById('imxPomodoroTotal').textContent = hours + 'h ' + mins + 'm';
+    }
+};
+
+// Request notification permission on load
+if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+}
+
+// ========================================
 // SMART READING LISTS (Curated Resources)
 // ========================================
 IMX.ReadingLists = {
@@ -8279,7 +9402,7 @@ IMX.renderBookmarksList = function() {
             '<div class="imx-bookmark-name">' + (b.name || 'Untitled') + '</div>' +
             '<div class="imx-bookmark-meta">' +
             '<span>' + (b.type || 'Item') + '</span>' +
-            (b.rating ? '<span>Ã¢Ëœâ€¦ ' + b.rating + '</span>' : '') +
+            (b.rating ? '<span>★ ' + b.rating + '</span>' : '') +
             '</div>' +
             '</div>' +
             '<div class="imx-bookmark-actions">' +
@@ -8378,14 +9501,14 @@ IMX.renderCompareGrid = function() {
             '</button>' +
             '<div class="imx-compare-name">' + (item.name || 'Untitled') + '</div>' +
             '<div class="imx-compare-type-badge ' + typeClass + '">' + (item.type || 'Course') + '</div>' +
-            '<div class="imx-compare-row"><span class="imx-compare-label">Rating</span><span class="imx-compare-value">' + (item.rating ? 'Ã¢Ëœâ€¦ ' + item.rating : 'â€”') + '</span></div>' +
-            '<div class="imx-compare-row"><span class="imx-compare-label">Learners</span><span class="imx-compare-value">' + (item.learners || 'â€”') + '</span></div>' +
-            '<div class="imx-compare-row"><span class="imx-compare-label">Audience</span><span class="imx-compare-value">' + (item.audience || 'â€”') + '</span></div>' +
-            '<div class="imx-compare-row"><span class="imx-compare-label">Duration</span><span class="imx-compare-value">' + (item.duration || 'â€”') + '</span></div>' +
-            '<div class="imx-compare-row"><span class="imx-compare-label">Format</span><span class="imx-compare-value">' + (item.format || 'â€”') + '</span></div>' +
+            '<div class="imx-compare-row"><span class="imx-compare-label">Rating</span><span class="imx-compare-value">' + (item.rating ? '★ ' + item.rating : '—') + '</span></div>' +
+            '<div class="imx-compare-row"><span class="imx-compare-label">Learners</span><span class="imx-compare-value">' + (item.learners || '—') + '</span></div>' +
+            '<div class="imx-compare-row"><span class="imx-compare-label">Audience</span><span class="imx-compare-value">' + (item.audience || '—') + '</span></div>' +
+            '<div class="imx-compare-row"><span class="imx-compare-label">Duration</span><span class="imx-compare-value">' + (item.duration || '—') + '</span></div>' +
+            '<div class="imx-compare-row"><span class="imx-compare-label">Format</span><span class="imx-compare-value">' + (item.format || '—') + '</span></div>' +
             (item.description ? '<div class="imx-compare-description">' + item.description + '</div>' : '') +
             objectivesHtml +
-            '<a href="' + (item.url || '#') + '" target="_blank" rel="noopener" class="imx-compare-link">Open â†’</a>' +
+            '<a href="' + (item.url || '#') + '" target="_blank" rel="noopener" class="imx-compare-link">Open →</a>' +
             '</div>';
     }).join('');
 };
@@ -8788,69 +9911,202 @@ IMX.Tour = {
         cursor: '<svg viewBox="0 0 24 24" width="20" height="20"><path d="M5 3l14 9-7 2-3 7-4-18z" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>',
         robot: '<svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="8" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"></rect><path d="M12 8V4M8 13v2M16 13v2" stroke="currentColor" stroke-width="1.5"></path><circle cx="12" cy="2" r="1" fill="currentColor"></circle></svg>',
         menu: '<svg viewBox="0 0 24 24" width="20" height="20"><line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.5"></line><line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="1.5"></line><line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="1.5"></line></svg>',
-        welcome: '<svg viewBox="0 0 24 24" width="48" height="48"><path d="M22 10v6M2 10l10-5 10 5-10 5z" fill="none" stroke="currentColor" stroke-width="1.5"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>'
+        welcome: '<svg viewBox="0 0 24 24" width="48" height="48"><path d="M22 10v6M2 10l10-5 10 5-10 5z" fill="none" stroke="currentColor" stroke-width="1.5"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>',
+        accessibility: '<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="4" r="2" fill="none" stroke="currentColor" stroke-width="1.5"></circle><path d="M4 8h16M12 8v6m-4 6l4-6l4 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>'
     },
     
     steps: [
+        // HOME
         {
-            target: '.nav-links',
+            target: '#nav-home',
             icon: 'menu',
-            title: 'Site Navigation',
-            desc: 'Browse different sections: Courses, Labs, Games, Premium content, and the Roadmap. Click any link to jump directly to that section.',
-            position: 'below-nav',
+            title: 'Home',
+            desc: 'Return to the homepage at any time. This brings you back to the hero section.',
+            position: 'below-target'
+        },
+        // LEARN MENU
+        {
+            target: '#nav-learn',
+            icon: 'menu',
+            title: 'Learn Menu',
+            desc: 'Your gateway to all learning content. Click to expand and see Courses, Labs, Games, Premium content, Resources, and Catalog.',
+            position: 'below-target',
             action: function() {
-                // Expand dropdown if exists
-                var dropdown = document.querySelector('.nav-links');
-                if (dropdown) dropdown.style.display = 'flex';
+                var learnDropdown = document.querySelector('#nav-learn');
+                if (learnDropdown) learnDropdown.classList.add('open');
             }
+        },
+        {
+            target: '#nav-courses',
+            icon: 'cursor',
+            title: 'Courses',
+            desc: 'Structured learning modules on MEAL, Theory of Change, Gender Studies, Research Methods, and more. Each course includes multiple lessons.',
+            position: 'right-of-target',
+            action: function() {
+                var learnDropdown = document.querySelector('#nav-learn');
+                if (learnDropdown) learnDropdown.classList.add('open');
+            }
+        },
+        {
+            target: '#nav-labs',
+            icon: 'cursor',
+            title: 'Labs',
+            desc: 'Hands-on interactive exercises. Practice data analysis with R, explore statistical concepts, and build practical skills.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-games',
+            icon: 'cursor',
+            title: 'Games',
+            desc: 'Learn through play! Interactive games like the Lorenz Curve Puzzle make complex concepts engaging and memorable.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-premium',
+            icon: 'cursor',
+            title: 'Premium Content',
+            desc: 'Advanced materials and exclusive content. Currently FREE during our beta period!',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-resources',
+            icon: 'cursor',
+            title: 'Resources',
+            desc: 'Downloadable handouts, templates, and reference materials to support your learning journey.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-catalog',
+            icon: 'cursor',
+            title: 'Catalog',
+            desc: 'Browse our complete collection of courses, labs, and games in one searchable view.',
+            position: 'right-of-target',
+            action: function() {
+                var learnDropdown = document.querySelector('#nav-learn');
+                if (learnDropdown) learnDropdown.classList.remove('open');
+            }
+        },
+        // SERVICES MENU
+        {
+            target: '#nav-services',
+            icon: 'menu',
+            title: 'Services Menu',
+            desc: 'Professional services for organizations and individuals seeking personalized support.',
+            position: 'below-target',
+            action: function() {
+                var servicesDropdown = document.querySelector('#nav-services');
+                if (servicesDropdown) servicesDropdown.classList.add('open');
+            }
+        },
+        {
+            target: '#nav-coaching',
+            icon: 'cursor',
+            title: 'Coaching',
+            desc: 'One-on-one coaching sessions with Dr. Varna. Book sessions for career guidance, MEAL support, or research help.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-workshops',
+            icon: 'cursor',
+            title: 'Workshops',
+            desc: 'Group training sessions for teams and organizations. Custom workshops on MEAL, ToC, and more.',
+            position: 'right-of-target',
+            action: function() {
+                var servicesDropdown = document.querySelector('#nav-services');
+                if (servicesDropdown) servicesDropdown.classList.remove('open');
+            }
+        },
+        // ABOUT US MENU
+        {
+            target: '#nav-about',
+            icon: 'menu',
+            title: 'About Us Menu',
+            desc: 'Learn about ImpactMojo, meet the team, read testimonials, and see our roadmap.',
+            position: 'below-target',
+            action: function() {
+                var aboutDropdown = document.querySelector('#nav-about');
+                if (aboutDropdown) aboutDropdown.classList.add('open');
+            }
+        },
+        {
+            target: '#nav-team',
+            icon: 'cursor',
+            title: 'Our Team',
+            desc: 'Meet the people behind ImpactMojo - development professionals passionate about education.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-testimonials',
+            icon: 'cursor',
+            title: 'Testimonials',
+            desc: 'See what our learners say! Real feedback from development practitioners across South Asia.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-roadmap',
+            icon: 'cursor',
+            title: 'Roadmap',
+            desc: 'See what\'s coming next! Our planned features and content updates.',
+            position: 'right-of-target'
+        },
+        {
+            target: '#nav-contact',
+            icon: 'cursor',
+            title: 'Contact',
+            desc: 'Get in touch with us. Questions, feedback, or partnership inquiries welcome!',
+            position: 'right-of-target',
+            action: function() {
+                var aboutDropdown = document.querySelector('#nav-about');
+                if (aboutDropdown) aboutDropdown.classList.remove('open');
+            }
+        },
+        // UTILITIES
+        {
+            target: '.tour-toggle',
+            icon: 'cursor',
+            title: 'Tour Button',
+            desc: 'Click this anytime to restart this tour and refresh your memory about platform features.',
+            position: 'below-target'
+        },
+        {
+            target: '.theme-toggle',
+            icon: 'cursor',
+            title: 'Theme Toggle',
+            desc: 'Switch between light and dark mode. Your preference is saved automatically.',
+            position: 'below-target'
         },
         {
             target: '#mojini-chat-toggle',
             icon: 'robot',
-            title: 'Meet MOJINI - Your Assistant',
-            desc: 'Your friendly learning companion! Ask MOJINI questions about courses, get personalized recommendations, or get help navigating the platform.',
+            title: 'Meet MOJINI',
+            desc: 'Your friendly learning companion! Ask MOJINI questions about courses, get recommendations, or find help navigating the platform.',
             position: 'left-of-target'
         },
         {
-            target: '.imx-fab-bookmarks',
+            target: '#imxSpeedDialToggle',
             icon: 'bookmark',
-            title: 'Save for Later',
-            desc: 'Bookmark any course, lab, or game to build your personal learning list. Export to CSV anytime.',
-            position: 'left-of-target'
+            title: 'Learning Toolbox',
+            desc: 'Click to access your tools: Bookmarks, Compare, Lo-Fi Music, Pomodoro Timer, Analytics, Reading Lists, and more!',
+            position: 'right-of-target',
+            action: function() {
+                IMX.SpeedDial.open();
+            }
         },
         {
-            target: '.imx-fab-compare',
-            icon: 'compare',
-            title: 'Compare Side-by-Side',
-            desc: 'Add up to 3 items to compare objectives, duration, audience level, and more.',
-            position: 'left-of-target'
-        },
-        {
-            target: '.imx-fab-lofi',
-            icon: 'music',
-            title: 'Study Music',
-            desc: 'Curated lo-fi playlists for focused learning. Deep focus, chill beats, ambient, or classical.',
-            position: 'left-of-target'
-        },
-        {
-            target: '.imx-fab-analytics',
-            icon: 'analytics',
-            title: 'Learning Analytics',
-            desc: 'Track your progress: time spent, most viewed content, and session history.',
-            position: 'left-of-target'
-        },
-        {
-            target: '.imx-fab-reading',
-            icon: 'book',
-            title: 'Smart Reading Lists',
-            desc: 'Hand-picked resources from UNDP, World Bank, J-PAL, and other development organizations.',
-            position: 'left-of-target'
+            target: '.acsb-trigger',
+            icon: 'accessibility',
+            title: 'Accessibility',
+            desc: 'Customize your viewing experience - adjust text size, contrast, colors, and more.',
+            position: 'left-of-target',
+            action: function() {
+                IMX.SpeedDial.close();
+            }
         },
         {
             target: '.card:first-of-type',
             icon: 'cursor',
-            title: 'Explore Content',
-            desc: 'Every card has Save and Compare buttons. Click to explore courses, labs, and games.',
+            title: 'Content Cards',
+            desc: 'Every card has Save and Compare buttons. Explore courses, labs, and games. Happy learning!',
             position: 'bottom'
         }
     ],
@@ -8900,6 +10156,12 @@ IMX.Tour = {
         this.tooltip.className = 'imx-tour-tooltip';
         document.body.appendChild(this.tooltip);
         
+        // Create arrow connector
+        this.arrow = document.createElement('div');
+        this.arrow.className = 'imx-tour-arrow';
+        this.arrow.innerHTML = '<svg viewBox="0 0 100 50" preserveAspectRatio="none"><defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" class="imx-tour-arrow-head"/></marker></defs><path d="M5,25 Q50,5 95,25" marker-end="url(#arrowhead)"/></svg>';
+        document.body.appendChild(this.arrow);
+        
         this.showStep(0);
     },
     
@@ -8922,108 +10184,349 @@ IMX.Tour = {
         // Run any step action
         if (step.action) step.action();
         
-        // Scroll target into view
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Check if target has fixed positioning (check element and parents)
+        var isFixed = false;
+        var checkEl = target;
+        while (checkEl && checkEl !== document.body) {
+            var style = window.getComputedStyle(checkEl);
+            if (style.position === 'fixed') {
+                isFixed = true;
+                break;
+            }
+            checkEl = checkEl.parentElement;
+        }
         
         var self = this;
+        var pos = step.position || 'bottom';
+        
+        // For 'bottom' position, pre-scroll to put target near top so tooltip fits below
+        if (pos === 'bottom') {
+            var targetRect = target.getBoundingClientRect();
+            var scrollTarget = window.scrollY + targetRect.top - 120;
+            window.scrollTo({ top: Math.max(0, scrollTarget), behavior: 'smooth' });
+        } else if (isFixed) {
+            // For fixed elements in bottom half, scroll to bottom of page
+            var targetRect = target.getBoundingClientRect();
+            if (targetRect.top > window.innerHeight / 2) {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        } else {
+            // Normal scroll into view
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
         setTimeout(function() {
             var rect = target.getBoundingClientRect();
             var padding = 8;
+            var viewportWidth = window.innerWidth;
+            var viewportHeight = window.innerHeight;
+            var tooltipWidth = 320;
+            var tooltipHeight = 200;
+            var gap = 20;
             
-            // Position spotlight
-            self.spotlight.style.top = (rect.top + window.scrollY - padding) + 'px';
+            // Position spotlight - use fixed for fixed elements, absolute otherwise
+            if (isFixed) {
+                self.spotlight.style.position = 'fixed';
+                self.spotlight.style.top = (rect.top - padding) + 'px';
+            } else {
+                self.spotlight.style.position = 'absolute';
+                self.spotlight.style.top = (rect.top + window.scrollY - padding) + 'px';
+            }
             self.spotlight.style.left = (rect.left - padding) + 'px';
             self.spotlight.style.width = (rect.width + padding * 2) + 'px';
             self.spotlight.style.height = (rect.height + padding * 2) + 'px';
             
-            // Build step indicators
-            var dots = self.steps.map(function(s, i) {
-                return '<div class="imx-tour-dot' + (i === index ? ' active' : '') + '"></div>';
-            }).join('');
+            // Build step indicator with counter and progress bar
+            var progress = ((index + 1) / self.steps.length) * 100;
+            var stepIndicator = 
+                '<span class="imx-tour-step-counter">' + (index + 1) + ' / ' + self.steps.length + '</span>' +
+                '<div class="imx-tour-step-progress"><div class="imx-tour-step-progress-bar" style="width:' + progress + '%"></div></div>';
             
             // Get icon
             var iconHtml = self.icons[step.icon] || '';
             
             // Build tooltip content
+            var prevButton = index > 0 ? 
+                '<button class="imx-tour-prev" onclick="IMX.Tour.prev()"><svg viewBox="0 0 24 24" width="16" height="16"><polyline points="15 18 9 12 15 6" fill="none" stroke="currentColor" stroke-width="2"></polyline></svg> Prev</button>' : '';
+            
             self.tooltip.innerHTML = 
-                '<div class="imx-tour-step-indicator">' + dots + '</div>' +
+                '<div class="imx-tour-step-indicator">' + stepIndicator + '</div>' +
                 '<div class="imx-tour-title">' + iconHtml + ' ' + step.title + '</div>' +
                 '<div class="imx-tour-desc">' + step.desc + '</div>' +
                 '<div class="imx-tour-actions">' +
                     '<button class="imx-tour-skip" onclick="IMX.Tour.end()">Skip</button>' +
+                    '<div class="imx-tour-nav-buttons">' +
+                    prevButton +
                     '<button class="imx-tour-next" onclick="IMX.Tour.next()">' +
                         (index === self.steps.length - 1 ? 'Finish' : 'Next') +
                         ' <svg viewBox="0 0 24 24" width="16" height="16"><polyline points="9 18 15 12 9 6" fill="none" stroke="currentColor" stroke-width="2"></polyline></svg>' +
                     '</button>' +
+                    '</div>' +
                 '</div>';
             
-            // Position tooltip - keeping it fully visible and NOT overlapping target
-            var viewportWidth = window.innerWidth;
-            var viewportHeight = window.innerHeight;
-            var tooltipWidth = 320;
-            var tooltipHeight = 180;
-            var gap = 24; // Gap between target and tooltip
+            // Position tooltip - use fixed for fixed elements
+            if (isFixed) {
+                self.tooltip.style.position = 'fixed';
+            } else {
+                self.tooltip.style.position = 'absolute';
+            }
             
-            var pos = step.position || 'bottom';
             var tooltipTop, tooltipLeft;
             var arrowClass = 'arrow-top';
             
+            // Get actual tooltip dimensions after content is set
+            self.tooltip.style.visibility = 'hidden';
+            self.tooltip.style.display = 'block';
+            var actualTooltipWidth = self.tooltip.offsetWidth || tooltipWidth;
+            var actualTooltipHeight = self.tooltip.offsetHeight || tooltipHeight;
+            self.tooltip.style.visibility = 'visible';
+            
             if (pos === 'below-nav') {
                 // Position below the navigation bar
-                tooltipTop = rect.bottom + window.scrollY + gap;
+                if (isFixed) {
+                    tooltipTop = rect.bottom + gap;
+                } else {
+                    tooltipTop = rect.bottom + window.scrollY + gap;
+                }
                 tooltipLeft = Math.max(20, rect.left);
                 arrowClass = 'arrow-top';
                 
                 // Keep on screen
-                if (tooltipLeft + tooltipWidth > viewportWidth - 20) {
-                    tooltipLeft = viewportWidth - tooltipWidth - 20;
+                if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                    tooltipLeft = viewportWidth - actualTooltipWidth - 20;
                 }
-            } else if (pos === 'left-of-target') {
-                // Position to the LEFT of target with gap (for right-side FABs)
-                tooltipTop = rect.top + window.scrollY + (rect.height / 2) - (tooltipHeight / 2);
-                tooltipLeft = rect.left - tooltipWidth - gap;
-                arrowClass = 'arrow-right';
-                
-                // If would go off left side, flip to bottom
-                if (tooltipLeft < 20) {
+            } else if (pos === 'below-target') {
+                // Position directly below the target element
+                if (isFixed) {
+                    tooltipTop = rect.bottom + gap;
+                } else {
                     tooltipTop = rect.bottom + window.scrollY + gap;
-                    tooltipLeft = Math.max(20, rect.left - tooltipWidth + rect.width);
-                    arrowClass = 'arrow-top-right';
+                }
+                // Center below target
+                tooltipLeft = rect.left + (rect.width / 2) - (actualTooltipWidth / 2);
+                arrowClass = 'arrow-top';
+                
+                // Keep on screen horizontally
+                if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                    tooltipLeft = viewportWidth - actualTooltipWidth - 20;
+                }
+                if (tooltipLeft < 20) {
+                    tooltipLeft = 20;
+                }
+            } else if (pos === 'right-of-target') {
+                // Position to the right of the target element
+                if (isFixed) {
+                    tooltipTop = rect.top + (rect.height / 2) - (actualTooltipHeight / 2);
+                } else {
+                    tooltipTop = rect.top + window.scrollY + (rect.height / 2) - (actualTooltipHeight / 2);
+                }
+                tooltipLeft = rect.right + gap;
+                arrowClass = 'arrow-left';
+                
+                // If would go off right side, position below instead
+                if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                    if (isFixed) {
+                        tooltipTop = rect.bottom + gap;
+                    } else {
+                        tooltipTop = rect.bottom + window.scrollY + gap;
+                    }
+                    tooltipLeft = Math.max(20, rect.left);
+                    if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                        tooltipLeft = viewportWidth - actualTooltipWidth - 20;
+                    }
+                    arrowClass = 'arrow-top';
+                }
+                
+                // Keep tooltip vertically on screen
+                var minTop = isFixed ? 20 : window.scrollY + 20;
+                var maxTop = isFixed ? viewportHeight - actualTooltipHeight - 20 : window.scrollY + viewportHeight - actualTooltipHeight - 20;
+                if (tooltipTop < minTop) tooltipTop = minTop;
+                if (tooltipTop > maxTop) tooltipTop = maxTop;
+                
+            } else if (pos === 'left-of-target') {
+                // Check if target is on right side of screen and near bottom
+                var targetCenterX = rect.left + rect.width / 2;
+                var targetCenterY = rect.top + rect.height / 2;
+                var isOnRightSide = targetCenterX > viewportWidth / 2;
+                var isNearBottom = targetCenterY > viewportHeight * 0.6 || rect.bottom > viewportHeight - 150;
+                var isInCorner = (isOnRightSide && isNearBottom) || (!isOnRightSide && isNearBottom);
+                
+                if (isNearBottom || isInCorner) {
+                    // Target near bottom or in corner - position tooltip well ABOVE 
+                    // Use center of viewport vertically to ensure visibility
+                    var safeTop = Math.min(
+                        rect.top - actualTooltipHeight - 80,  // Above target with big gap
+                        viewportHeight * 0.4  // Or at 40% of viewport height
+                    );
                     
-                    if (tooltipLeft + tooltipWidth > viewportWidth - 20) {
-                        tooltipLeft = viewportWidth - tooltipWidth - 20;
+                    if (isFixed) {
+                        tooltipTop = safeTop;
+                    } else {
+                        tooltipTop = safeTop + window.scrollY;
+                    }
+                    
+                    // Ensure tooltip is not above viewport
+                    var minSafeTop = isFixed ? 80 : window.scrollY + 80;
+                    if (tooltipTop < minSafeTop) tooltipTop = minSafeTop;
+                    
+                    // Center horizontally - prefer center-right for right-side targets
+                    if (isOnRightSide) {
+                        tooltipLeft = viewportWidth - actualTooltipWidth - 40;
+                    } else {
+                        tooltipLeft = 40;
+                    }
+                    arrowClass = 'arrow-bottom';
+                    
+                } else if (isOnRightSide) {
+                    // Target on right - position tooltip to LEFT with arrow pointing right
+                    if (isFixed) {
+                        tooltipTop = rect.top + (rect.height / 2) - (actualTooltipHeight / 2);
+                    } else {
+                        tooltipTop = rect.top + window.scrollY + (rect.height / 2) - (actualTooltipHeight / 2);
+                    }
+                    tooltipLeft = rect.left - actualTooltipWidth - gap;
+                    arrowClass = 'arrow-right';
+                    
+                    // If would go off left side, position above
+                    if (tooltipLeft < 20) {
+                        if (isFixed) {
+                            tooltipTop = rect.top - actualTooltipHeight - gap - 40;
+                        } else {
+                            tooltipTop = rect.top + window.scrollY - actualTooltipHeight - gap - 40;
+                        }
+                        tooltipLeft = Math.max(20, rect.right - actualTooltipWidth);
+                        arrowClass = 'arrow-bottom';
+                    }
+                } else {
+                    // Target on left - position tooltip to RIGHT with arrow pointing left
+                    if (isFixed) {
+                        tooltipTop = rect.top + (rect.height / 2) - (actualTooltipHeight / 2);
+                    } else {
+                        tooltipTop = rect.top + window.scrollY + (rect.height / 2) - (actualTooltipHeight / 2);
+                    }
+                    tooltipLeft = rect.right + gap;
+                    arrowClass = 'arrow-left';
+                    
+                    // If would go off right side, position above
+                    if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                        if (isFixed) {
+                            tooltipTop = rect.top - actualTooltipHeight - gap - 40;
+                        } else {
+                            tooltipTop = rect.top + window.scrollY - actualTooltipHeight - gap - 40;
+                        }
+                        tooltipLeft = Math.min(viewportWidth - actualTooltipWidth - 20, rect.left);
+                        arrowClass = 'arrow-bottom';
                     }
                 }
                 
                 // Keep tooltip vertically on screen
-                if (tooltipTop < window.scrollY + 20) {
-                    tooltipTop = window.scrollY + 20;
-                }
-                if (tooltipTop + tooltipHeight > window.scrollY + viewportHeight - 20) {
-                    tooltipTop = window.scrollY + viewportHeight - tooltipHeight - 20;
-                }
+                var minTop = isFixed ? 20 : window.scrollY + 20;
+                var maxTop = isFixed ? viewportHeight - actualTooltipHeight - 20 : window.scrollY + viewportHeight - actualTooltipHeight - 20;
+                if (tooltipTop < minTop) tooltipTop = minTop;
+                if (tooltipTop > maxTop) tooltipTop = maxTop;
+                
             } else if (pos === 'bottom') {
-                tooltipTop = rect.bottom + window.scrollY + gap;
+                if (isFixed) {
+                    tooltipTop = rect.bottom + gap;
+                } else {
+                    tooltipTop = rect.bottom + window.scrollY + gap;
+                }
                 tooltipLeft = rect.left;
                 arrowClass = 'arrow-top';
                 
                 // Keep on screen horizontally
-                if (tooltipLeft + tooltipWidth > viewportWidth - 20) {
-                    tooltipLeft = viewportWidth - tooltipWidth - 20;
+                if (tooltipLeft + actualTooltipWidth > viewportWidth - 20) {
+                    tooltipLeft = viewportWidth - actualTooltipWidth - 20;
                 }
                 if (tooltipLeft < 20) {
                     tooltipLeft = 20;
+                }
+                
+                // If tooltip would go below viewport, cap it
+                var maxBottom = isFixed ? viewportHeight - 20 : window.scrollY + viewportHeight - 20;
+                if (tooltipTop + actualTooltipHeight > maxBottom) {
+                    tooltipTop = maxBottom - actualTooltipHeight;
                 }
             }
             
             self.tooltip.className = 'imx-tour-tooltip ' + arrowClass;
             self.tooltip.style.top = tooltipTop + 'px';
             self.tooltip.style.left = tooltipLeft + 'px';
-        }, 400);
+            
+            // Position and draw arrow connector
+            if (self.arrow) {
+                var spotlightCenterX = rect.left + rect.width / 2;
+                var spotlightCenterY = rect.top + rect.height / 2;
+                if (!isFixed) {
+                    spotlightCenterY += window.scrollY;
+                }
+                
+                var tooltipCenterX = tooltipLeft + actualTooltipWidth / 2;
+                var tooltipCenterY = tooltipTop + actualTooltipHeight / 2;
+                
+                // Calculate arrow position and angle
+                var arrowStartX, arrowStartY, arrowEndX, arrowEndY;
+                
+                // Determine which edge of tooltip to start from based on arrow class
+                if (arrowClass === 'arrow-top') {
+                    arrowStartX = tooltipLeft + 30;
+                    arrowStartY = tooltipTop;
+                    arrowEndX = spotlightCenterX;
+                    arrowEndY = isFixed ? rect.bottom + 5 : rect.bottom + window.scrollY + 5;
+                } else if (arrowClass === 'arrow-bottom') {
+                    arrowStartX = tooltipLeft + 30;
+                    arrowStartY = tooltipTop + actualTooltipHeight;
+                    arrowEndX = spotlightCenterX;
+                    arrowEndY = isFixed ? rect.top - 5 : rect.top + window.scrollY - 5;
+                } else if (arrowClass === 'arrow-left') {
+                    arrowStartX = tooltipLeft;
+                    arrowStartY = tooltipTop + 30;
+                    arrowEndX = isFixed ? rect.right + 5 : rect.right + 5;
+                    arrowEndY = spotlightCenterY;
+                } else if (arrowClass === 'arrow-right') {
+                    arrowStartX = tooltipLeft + actualTooltipWidth;
+                    arrowStartY = tooltipTop + 30;
+                    arrowEndX = isFixed ? rect.left - 5 : rect.left - 5;
+                    arrowEndY = spotlightCenterY;
+                }
+                
+                // Create curved path
+                var midX = (arrowStartX + arrowEndX) / 2;
+                var midY = (arrowStartY + arrowEndY) / 2;
+                var curvature = 20;
+                
+                // Perpendicular offset for curve
+                var dx = arrowEndX - arrowStartX;
+                var dy = arrowEndY - arrowStartY;
+                var len = Math.sqrt(dx * dx + dy * dy);
+                if (len > 0) {
+                    var perpX = -dy / len * curvature;
+                    var perpY = dx / len * curvature;
+                    midX += perpX;
+                    midY += perpY;
+                }
+                
+                var pathD = 'M' + arrowStartX + ',' + arrowStartY + ' Q' + midX + ',' + midY + ' ' + arrowEndX + ',' + arrowEndY;
+                
+                self.arrow.style.position = isFixed ? 'fixed' : 'absolute';
+                self.arrow.style.top = '0';
+                self.arrow.style.left = '0';
+                self.arrow.style.width = '100%';
+                self.arrow.style.height = '100%';
+                self.arrow.style.pointerEvents = 'none';
+                self.arrow.innerHTML = '<svg style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;"><defs><marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#0EA5E9"/></marker></defs><path d="' + pathD + '" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowhead)"><animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1s" repeatCount="indefinite"/></path></svg>';
+            }
+        }, 500);
     },
     
     next: function() {
         this.showStep(this.currentStep + 1);
+    },
+    
+    prev: function() {
+        if (this.currentStep > 0) {
+            this.showStep(this.currentStep - 1);
+        }
     },
     
     skip: function() {
@@ -9033,6 +10536,11 @@ IMX.Tour = {
     end: function() {
         this.isActive = false;
         localStorage.setItem(this.STORAGE_KEY, 'true');
+        
+        // Close any open dropdowns
+        document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+            item.classList.remove('open');
+        });
         
         if (this.overlay) {
             this.overlay.classList.remove('active');
@@ -9045,6 +10553,10 @@ IMX.Tour = {
         
         if (this.tooltip && this.tooltip.parentNode) {
             this.tooltip.parentNode.removeChild(this.tooltip);
+        }
+        
+        if (this.arrow && this.arrow.parentNode) {
+            this.arrow.parentNode.removeChild(this.arrow);
         }
         
         IMX.showToast('Tour complete. Explore and enjoy learning.');
