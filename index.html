@@ -525,29 +525,39 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--nav-text);
-            padding: 0.5rem;
+            padding: 0;
             border-radius: 8px;
             cursor: pointer;
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             align-items: center;
             justify-content: center;
             position: relative;
             flex-direction: column;
             gap: 5px;
-            z-index: 1001;
+            z-index: 9999;
             touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.1);
             user-select: none;
+            -webkit-user-select: none;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        .mobile-menu-toggle:active {
+            background: var(--hover-bg, #f0f0f0);
+            transform: scale(0.95);
         }
         
         .mobile-menu-toggle .hamburger-line {
-            width: 20px;
+            width: 22px;
             height: 2px;
             background: var(--nav-text);
             transition: all 0.3s ease;
             border-radius: 2px;
             pointer-events: none;
+            display: block;
         }
         
         .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
@@ -2516,7 +2526,7 @@
             cursor: pointer;
             box-shadow: var(--shadow-lg);
             transition: all 0.3s;
-            z-index: 1999;
+            z-index: 1000;
         }
 
         .feedback-fab:hover {
@@ -2563,6 +2573,8 @@
                 padding: 0.75rem 1rem;
                 gap: 0.5rem;
                 position: relative;
+                align-items: center;
+                justify-content: flex-start;
             }
 
             /* Mobile NEW burst badge - smaller size */
@@ -2571,6 +2583,7 @@
                 height: 32px;
                 margin-right: 0;
                 order: 4;
+                flex-shrink: 0;
             }
             
             .new-starburst-text {
@@ -2586,6 +2599,7 @@
                 display: flex;
                 order: 2;
                 gap: 0.35rem;
+                flex-shrink: 0;
             }
 
             .nav-buttons .tour-toggle,
@@ -2598,18 +2612,21 @@
             .mobile-menu-toggle {
                 display: flex !important;
                 order: 3;
-                width: 44px;
-                height: 44px;
-                min-width: 44px;
-                min-height: 44px;
-                z-index: 1001;
+                width: 48px;
+                height: 48px;
+                min-width: 48px;
+                min-height: 48px;
+                z-index: 9999;
                 position: relative;
+                flex-shrink: 0;
+                margin-left: auto;
             }
 
             .logo-container {
                 order: 1;
-                flex: 1;
+                flex: 0 1 auto;
                 min-width: 0;
+                max-width: 160px;
             }
 
             .nav-links {
@@ -2689,10 +2706,6 @@
             .dropdown-menu a:hover {
                 padding-left: 2rem;
             }
-
-            .mobile-menu-toggle {
-                display: flex;
-            }
             
             /* Mobile menu overlay */
             .mobile-menu-overlay {
@@ -2735,28 +2748,35 @@
 
             /* Fix FAB buttons horizontal alignment on mobile */
             .imx-speed-dial {
-                bottom: 1.5rem;
-                left: 1rem;
+                position: fixed !important;
+                bottom: 1.25rem !important;
+                left: 1rem !important;
+                right: auto !important;
                 z-index: 1000;
+            }
+            
+            .imx-speed-dial-toggle {
+                width: 52px !important;
+                height: 52px !important;
             }
 
             .feedback-fab {
-                bottom: 1.5rem;
-                right: 1rem;
+                position: fixed !important;
+                bottom: 1.25rem !important;
+                right: 1rem !important;
+                left: auto !important;
                 z-index: 1000;
+                width: 52px !important;
+                height: 52px !important;
             }
 
             .imx-speed-dial-toggle,
             .feedback-fab {
-                width: 56px;
-                height: 56px;
+                width: 52px;
+                height: 52px;
             }
             
-            /* Ensure both FABs are visually aligned */
-            .imx-speed-dial-toggle {
-                width: 56px;
-                height: 56px;
-            }
+            /* Remove the duplicate rule */
             
             /* ===== MOBILE TOUR STYLES ===== */
             .imx-tour-welcome {
@@ -4288,6 +4308,165 @@
 .imx-hidden{display:none!important}
 </style>
 <!-- END imx: scoped styles -->
+
+<!-- CRITICAL MOBILE FIXES - DO NOT REMOVE -->
+<style id="mobile-critical-fixes">
+/* Hamburger Menu - Maximum Priority Fix */
+@media (max-width: 768px) {
+    button#mobile-menu-btn.mobile-menu-toggle {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        position: relative !important;
+        z-index: 99999 !important;
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: var(--card-bg, #fff) !important;
+        border: 2px solid var(--border-color, #e5e5e5) !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.1) !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 5px !important;
+        flex-shrink: 0 !important;
+    }
+    
+    button#mobile-menu-btn.mobile-menu-toggle .hamburger-line {
+        display: block !important;
+        width: 22px !important;
+        height: 2px !important;
+        background: var(--nav-text, #333) !important;
+        border-radius: 2px !important;
+        pointer-events: none !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    button#mobile-menu-btn.mobile-menu-toggle:active {
+        transform: scale(0.92) !important;
+        background: var(--hover-bg, #f5f5f5) !important;
+    }
+    
+    /* Nav container mobile layout */
+    nav.nav-container {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0.5rem 0.75rem !important;
+        gap: 0.5rem !important;
+    }
+    
+    /* Logo should not expand */
+    .nav-container .logo-container {
+        flex: 0 0 auto !important;
+        max-width: 140px !important;
+        min-width: 0 !important;
+    }
+    
+    /* FAB Buttons - Perfect Alignment */
+    div.imx-speed-dial {
+        position: fixed !important;
+        bottom: 20px !important;
+        left: 16px !important;
+        right: auto !important;
+        top: auto !important;
+        z-index: 1000 !important;
+    }
+    
+    div.imx-speed-dial button.imx-speed-dial-toggle {
+        width: 54px !important;
+        height: 54px !important;
+    }
+    
+    div.feedback-fab#mojini-chat-toggle {
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 16px !important;
+        left: auto !important;
+        top: auto !important;
+        z-index: 1000 !important;
+        width: 54px !important;
+        height: 54px !important;
+    }
+}
+</style>
+<script>
+// Immediate hamburger fix - runs before DOMContentLoaded
+(function() {
+    function initHamburger() {
+        var btn = document.getElementById('mobile-menu-btn');
+        if (!btn) return false;
+        
+        // Remove any existing onclick
+        btn.onclick = null;
+        btn.removeAttribute('onclick');
+        
+        // Single handler for all interactions
+        function handleToggle(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            }
+            
+            var navLinks = document.getElementById('navLinks');
+            var overlay = document.getElementById('mobileMenuOverlay');
+            
+            if (!navLinks) return;
+            
+            var isOpen = navLinks.classList.contains('active');
+            
+            if (isOpen) {
+                navLinks.classList.remove('active');
+                btn.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            } else {
+                navLinks.classList.add('active');
+                btn.classList.add('active');
+                if (overlay) overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        // Remove all existing listeners by cloning
+        var newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        btn = newBtn;
+        
+        // Add fresh listeners
+        btn.addEventListener('click', handleToggle, { passive: false, capture: true });
+        btn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handleToggle(e);
+        }, { passive: false, capture: true });
+        
+        console.log('[ImpactMojo] Hamburger menu initialized');
+        return true;
+    }
+    
+    // Try immediately
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHamburger);
+    } else {
+        initHamburger();
+    }
+    
+    // Also try after a delay as backup
+    setTimeout(initHamburger, 100);
+    setTimeout(initHamburger, 500);
+})();
+</script>
 
 </head>
 <body>
@@ -8934,16 +9113,8 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
             });
         }
         
-        // Add touch event support for mobile menu toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            var mobileBtn = document.getElementById('mobile-menu-btn');
-            if (mobileBtn) {
-                mobileBtn.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                    toggleMobileMenu();
-                }, { passive: false });
-            }
-        });
+        // Mobile menu touch handling is now in inline script in <head>
+        // See: <script> block after "CRITICAL MOBILE FIXES" styles
         
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(e) {
