@@ -1,9 +1,14 @@
 /**
  * ImpactMojo Section Router
- * Version 1.0.1 - December 3, 2025
+ * Version 1.1.0 - December 3, 2025
+ * 
  * Enables clean URLs like /courses, /labs, /about that work with Netlify
- * Maps URLs to either sections (scroll) or modals (open)
- * Fixed: Header offset for proper scroll positioning
+ * Maps URLs to sections (scroll), modals (open), or feature panels (speed dial)
+ * 
+ * FIXED in v1.1.0:
+ * - Added polling to wait for IMX object to be ready
+ * - Better handling of feature URLs (/bookmarks, /notes, etc.)
+ * - External page redirects handled by _redirects file
  */
 
 (function() {
@@ -41,15 +46,11 @@
         '/notes': { type: 'function', target: 'openNotes' },
         '/compare': { type: 'function', target: 'openCompare' },
         '/reading-list': { type: 'function', target: 'openReadingList' },
+        '/analytics': { type: 'function', target: 'openAnalytics' },
+        '/streak': { type: 'function', target: 'openStreak' },
+        '/pomodoro': { type: 'function', target: 'openPomodoro' }
         
-        // External page aliases (redirect)
-        '/blog': { type: 'redirect', target: 'blog.html' },
-        '/impactlex': { type: 'redirect', target: 'impactlex/' },
-        '/dictionary': { type: 'redirect', target: 'impactlex/' },
-        '/community': { type: 'redirect', target: 'community/' },
-        '/login': { type: 'redirect', target: 'login.html' },
-        '/signup': { type: 'redirect', target: 'signup.html' },
-        '/account': { type: 'redirect', target: 'account.html' }
+        // Note: /impactlex, /dictionary, /community are handled by _redirects (301)
     };
 
     // Get current path without trailing slash
@@ -72,7 +73,6 @@
         if (section) {
             // Small delay to ensure page is loaded
             setTimeout(() => {
-                // Get the fixed header height (approximately 80px)
                 const headerOffset = 100;
                 const elementPosition = section.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -109,47 +109,136 @@
         return false;
     }
 
+    // Wait for IMX object to be available, then execute callback
+    function waitForIMX(callback, maxAttempts = 50) {
+        let attempts = 0;
+        
+        function check() {
+            attempts++;
+            
+            // Check if IMX and required methods exist
+            if (typeof window.IMX !== 'undefined' && 
+                typeof window.IMX.SpeedDial !== 'undefined') {
+                console.log('Router: IMX ready after ' + attempts + ' attempts');
+                callback();
+                return;
+            }
+            
+            if (attempts < maxAttempts) {
+                setTimeout(check, 100); // Check every 100ms
+            } else {
+                console.warn('Router: IMX not available after ' + maxAttempts + ' attempts');
+            }
+        }
+        
+        check();
+    }
+
     // Handle feature functions (speed dial items)
     function handleFeatureFunction(funcName) {
-        switch(funcName) {
-            case 'openBookmarks':
-                if (window.IMX && window.IMX.SpeedDial) {
-                    window.IMX.SpeedDial.open();
-                    // Small delay then switch to bookmarks tab
+        waitForIMX(() => {
+            switch(funcName) {
+                case 'openBookmarks':
+                    // Open speed dial, then click bookmarks tab
+                    IMX.SpeedDial.open();
                     setTimeout(() => {
-                        const bookmarksTab = document.querySelector('[data-panel="bookmarks"]');
-                        if (bookmarksTab) bookmarksTab.click();
-                    }, 200);
-                }
-                break;
-            case 'openNotes':
-                if (window.IMX && window.IMX.SpeedDial) {
-                    window.IMX.SpeedDial.open();
+                        // Try multiple selectors
+                        const bookmarksBtn = document.querySelector('.imx-sd-bookmarks') || 
+                                            document.querySelector('[data-panel="bookmarks"]');
+                        if (bookmarksBtn) {
+                            bookmarksBtn.click();
+                        } else if (typeof IMX.openBookmarksModal === 'function') {
+                            IMX.openBookmarksModal();
+                        }
+                    }, 300);
+                    break;
+                    
+                case 'openNotes':
+                    IMX.SpeedDial.open();
                     setTimeout(() => {
-                        const notesTab = document.querySelector('[data-panel="notes"]');
-                        if (notesTab) notesTab.click();
-                    }, 200);
-                }
-                break;
-            case 'openCompare':
-                if (window.IMX && window.IMX.Compare) {
-                    window.IMX.Compare.showModal();
-                }
-                break;
-            case 'openReadingList':
-                if (window.IMX && window.IMX.ReadingList) {
-                    window.IMX.ReadingList.show();
-                }
-                break;
-            default:
-                console.log('Unknown function:', funcName);
-        }
+                        const notesBtn = document.querySelector('.imx-sd-notes') ||
+                                        document.querySelector('[data-panel="notes"]');
+                        if (notesBtn) {
+                            notesBtn.click();
+                        } else if (typeof IMX.openNotesModal === 'function') {
+                            IMX.openNotesModal();
+                        }
+                    }, 300);
+                    break;
+                    
+                case 'openCompare':
+                    if (typeof IMX.openCompareModal === 'function') {
+                        IMX.openCompareModal();
+                    } else {
+                        IMX.SpeedDial.open();
+                        setTimeout(() => {
+                            const compareBtn = document.querySelector('.imx-sd-compare');
+                            if (compareBtn) compareBtn.click();
+                        }, 300);
+                    }
+                    break;
+                    
+                case 'openReadingList':
+                    if (typeof IMX.openReadingListsModal === 'function') {
+                        IMX.openReadingListsModal();
+                    } else {
+                        IMX.SpeedDial.open();
+                        setTimeout(() => {
+                            const readingBtn = document.querySelector('.imx-sd-reading');
+                            if (readingBtn) readingBtn.click();
+                        }, 300);
+                    }
+                    break;
+                    
+                case 'openAnalytics':
+                    if (typeof IMX.openAnalyticsModal === 'function') {
+                        IMX.openAnalyticsModal();
+                    } else {
+                        IMX.SpeedDial.open();
+                        setTimeout(() => {
+                            const analyticsBtn = document.querySelector('.imx-sd-analytics');
+                            if (analyticsBtn) analyticsBtn.click();
+                        }, 300);
+                    }
+                    break;
+                    
+                case 'openStreak':
+                    if (typeof IMX.openStreakModal === 'function') {
+                        IMX.openStreakModal();
+                    } else {
+                        IMX.SpeedDial.open();
+                        setTimeout(() => {
+                            const streakBtn = document.querySelector('.imx-sd-streak');
+                            if (streakBtn) streakBtn.click();
+                        }, 300);
+                    }
+                    break;
+                    
+                case 'openPomodoro':
+                    if (typeof IMX.Pomodoro !== 'undefined' && typeof IMX.Pomodoro.openModal === 'function') {
+                        IMX.Pomodoro.openModal();
+                    } else {
+                        IMX.SpeedDial.open();
+                        setTimeout(() => {
+                            const pomodoroBtn = document.querySelector('.imx-sd-pomodoro') ||
+                                               document.getElementById('imxPomodoroFab');
+                            if (pomodoroBtn) pomodoroBtn.click();
+                        }, 300);
+                    }
+                    break;
+                    
+                default:
+                    console.log('Router: Unknown function:', funcName);
+            }
+        });
     }
 
     // Main route handler
     function handleRoute() {
         const path = getCurrentPath();
         const route = routeConfig[path];
+
+        console.log('Router: Handling path:', path);
 
         if (!route) {
             // No matching route, check for hash fragment
@@ -159,6 +248,8 @@
             }
             return;
         }
+
+        console.log('Router: Route found:', route);
 
         switch(route.type) {
             case 'section':
@@ -171,13 +262,8 @@
                 }, 300);
                 break;
             case 'function':
-                // Wait for IMX object to be available
-                setTimeout(() => {
-                    handleFeatureFunction(route.target);
-                }, 500);
-                break;
-            case 'redirect':
-                window.location.href = route.target;
+                // handleFeatureFunction has its own waiting logic
+                handleFeatureFunction(route.target);
                 break;
         }
     }
@@ -212,6 +298,8 @@
 
     // Initialize router
     function init() {
+        console.log('ImpactMojo Router v1.1.0 initializing...');
+        
         // Handle initial route
         handleRoute();
         
@@ -236,7 +324,8 @@
         scrollToSection: scrollToSection,
         openModal: openModalByName,
         handleRoute: handleRoute,
-        routes: routeConfig
+        routes: routeConfig,
+        version: '1.1.0'
     };
 
 })();
