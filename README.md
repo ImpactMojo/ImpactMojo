@@ -1,26 +1,61 @@
 # ImpactMojo
 
-**Development Know-How for Social Impact**
+**Free Development Education for Social Impact**
 
-ImpactMojo is an open-source learning platform providing rigorous, theory-grounded educational content on development, equity, and social justice in India and South Asia.
+ImpactMojo is a free learning platform providing rigorous, practical educational content on MEAL, Theory of Change, research methods, gender studies, and development economics for NGOs, impact practitioners, and students across South Asia.
 
-**Live:** [impactmojo.in](https://www.impactmojo.in)
+🌐 **Live:** [impactmojo.in](https://www.impactmojo.in)
+
+---
 
 ## About
 
-ImpactMojo addresses a critical gap in development education. Development work in India and South Asia lacks a standardized, evidence-based knowledge foundation—resulting in many interventions lacking rigor and impact. 
+ImpactMojo addresses a critical gap in development education. Development work in India and South Asia often lacks standardized, evidence-based knowledge foundations—resulting in interventions that lack rigor and measurable impact.
 
-This project curates accessible, high-quality educational materials on:
+We provide accessible, high-quality educational materials grounded in South Asian context, designed for educators, practitioners, researchers, students, and policymakers.
 
-- **Development Economics 101** – Growth, inequality, institutions, and policy through an Indian lens
-- **Data Feminism 101** – Challenging dominant data narratives using feminist theory
-- **Social Safety Nets 101** – Understanding India's welfare architecture (PDS, NREGA, pensions, Aadhaar)
-- **Climate Change 101** – IPCC basics, vulnerability, adaptation, and climate justice
-- **Decent Work for All 101** – Fair livelihoods, labor rights, and informality
-- **Gender Studies 101** – Feminist theory, queer movements, and legal shifts in South Asia
-- **And more** – Public Health, Education, Digital Ethics, Livelihoods, Indian Constitution
+### What We Offer
 
-All materials are grounded in South Asian context and designed for educators, practitioners, researchers, and policymakers.
+| Category | Description |
+|----------|-------------|
+| **Courses** | Comprehensive learning tracks on MEAL, Theory of Change, Research Methods, Gender Studies, and more |
+| **Labs** | Interactive tools like the Theory of Change Workbench, Sample Size Calculator, and Data Analysis Sandbox |
+| **Games** | Gamified learning experiences for development concepts |
+| **ImpactLex** | Development sector terminology dictionary with 23+ terms, formulas, and case studies |
+| **Coaching** | Premium 1-on-1 guidance for development professionals |
+| **Community** | Discord and Telegram communities for peer learning |
+
+---
+
+## Features
+
+### Learning Platform
+- 📚 **10+ Courses** — MEAL 101, Theory of Change, Research Methods, Gender Studies, Development Economics, Climate Change, Public Health, and more
+- 🔬 **Interactive Labs** — Hands-on tools for practical application
+- 🎮 **Learning Games** — Gamified concept reinforcement
+- 📖 **ImpactLex Dictionary** — PWA-enabled terminology reference
+
+### User Features
+- 🔖 **Bookmarks** — Save courses and content for later
+- 📝 **Personal Notes** — Take notes while learning with streak tracking
+- 📊 **Progress Tracking** — Monitor your learning journey
+- 📚 **Reading Lists** — Curated resource collections
+- ⚖️ **Course Comparison** — Compare courses side-by-side
+
+### Account System
+- 🔐 **Secure Authentication** — Powered by Supabase
+- 👤 **User Profiles** — Track progress and preferences
+- ⭐ **Tiered Access** — Explorer (free), Practitioner, Professional, Organization tiers
+- 🌐 **Community Access** — Discord and Telegram for premium members
+
+### Technical
+- 📱 **Mobile-Optimized** — Dedicated mobile experience
+- 🌍 **Multilingual** — Content in English, Hindi, Tamil, Bengali, Telugu, Marathi
+- ⚡ **Fast & Lightweight** — Static site with no heavy dependencies
+- 🔗 **Clean URLs** — SEO-friendly routing (`/courses`, `/labs`, `/about`)
+- ♿ **Accessible** — Built with accessibility standards (UserWay integration)
+
+---
 
 ## Quick Start
 
@@ -32,62 +67,82 @@ All materials are grounded in South Asian context and designed for educators, pr
    cd ImpactMojo
    ```
 
-2. **Open in your browser:**
-   - Simply open `index.html` in any browser, or
-   - Use a local server:
-     ```bash
-     # Using Python 3
-     python -m http.server 8000
-     
-     # Using Python 2
-     python -m SimpleHTTPServer 8000
-     
-     # Using Node.js (if you have it)
-     npx http-server
-     ```
-   - Then visit `http://localhost:8000`
+2. **Start a local server:**
+   ```bash
+   # Using Python 3
+   python -m http.server 8000
+   
+   # Using Node.js
+   npx http-server
+   ```
+
+3. **Open in browser:**
+   ```
+   http://localhost:8000
+   ```
+
+> **Note:** A local server is required for authentication and routing features to work properly.
+
+---
 
 ## Project Structure
 
 ```
 ImpactMojo/
-├── index.html          # Main entry point
-├── styles/
-│   └── style.css       # Styling
+├── index.html              # Main site (desktop)
+├── mobile.html             # Mobile-optimized version
+├── _redirects              # Netlify clean URL routing
+├── manifest.json           # PWA manifest
+│
 ├── js/
-│   ├── app.js          # Main application logic
-│   └── service-worker.js  # PWA offline support
+│   ├── auth.js             # Supabase authentication
+│   └── router.js           # Clean URL section router
+│
+├── login.html              # User login
+├── signup.html             # User registration
+├── account.html            # User dashboard
+├── forgot-password.html    # Password recovery
+├── premium.html            # Premium features & registration
+│
+├── blog.html               # Learning Loops blog
+├── community/
+│   └── index.html          # Community landing page
+├── impactlex/
+│   └── index.html          # ImpactLex dictionary (PWA)
+│
 ├── assets/
-│   ├── images/
-│   ├── icons/
-│   └── fonts/
-├── manifest.json       # PWA manifest
-├── netlify.toml        # Netlify configuration
+│   ├── images/             # Logos, icons, illustrations
+│   └── fonts/              # Custom fonts
+│
 └── README.md
 ```
 
-## Features
+---
 
-- 📚 **Curated Knowledge Decks** – Theory-grounded, applied to real contexts
-- 📱 **Progressive Web App (PWA)** – Works offline, installable
-- ♿ **Accessible** – Built with accessibility standards in mind
-- 📱 **Responsive** – Works on desktop, tablet, and mobile
-- ⚡ **Fast** – Static HTML, no heavy dependencies
-- 🔄 **Service Worker** – Offline-first functionality
+## Tech Stack
 
-## Progressive Web App
+| Technology | Purpose |
+|------------|---------|
+| **HTML/CSS/JS** | Core frontend (no frameworks) |
+| **Supabase** | Authentication & database |
+| **Netlify** | Hosting & deployment |
+| **Google Analytics** | Usage analytics |
+| **Formspree** | Contact form handling |
+| **UserWay** | Accessibility widget |
+| **Google Fonts** | Inter & Poppins typography |
 
-This site is a partial PWA and can be installed on devices:
-
-- **Desktop (Chrome/Edge):** Click the install icon in the address bar
-- **Mobile:** Tap "Add to Home Screen" or "Install App"
-- **Offline:** Core functionality works without internet
-
-The `service-worker.js` handles caching and offline support.
+---
 
 ## Deployment
 
-This project is deployed on **Netlify** with automatic updates.
+### Automatic Deployment (Netlify)
+
+This project deploys automatically via Netlify. Any push to `main` triggers a new deployment.
+
+**Netlify Configuration:**
+- Build command: None (static site)
+- Publish directory: `.` (root)
+- `_redirects` file handles clean URL routing
 
 ### Deploy Your Own Fork
 
@@ -95,130 +150,173 @@ This project is deployed on **Netlify** with automatic updates.
 2. **Connect to Netlify:**
    - Go to [netlify.com](https://www.netlify.com)
    - Click "Add new site" → "Import an existing project"
-   - Select GitHub and authorize
-   - Choose your forked repository
-   - Click "Deploy site"
-3. **Done!** Your site is live. Any push to main will auto-deploy.
+   - Select your forked repository
+   - Deploy
+3. **Configure Supabase** (for authentication):
+   - Create a Supabase project
+   - Update credentials in `js/auth.js`
+   - Set up `profiles` table in Supabase
 
-**Netlify Settings:**
-- Build command: None (static site)
-- Publish directory: `.` (root)
+---
 
-To add a custom domain:
-1. In Netlify, go to Domain settings
-2. Add your domain or update nameservers
+## Environment & Configuration
 
-### Local Development
+### Supabase Setup
 
-No build step needed. Simply edit files and refresh your browser:
+The authentication system requires a Supabase project with:
 
-```bash
-# Make changes to index.html, styles/style.css, or js/app.js
-# Then refresh your browser to see updates
-```
+1. **Authentication** enabled (Email, Google OAuth, Magic Links)
+2. **Profiles table** with schema:
+   ```sql
+   create table profiles (
+     id uuid references auth.users primary key,
+     full_name text,
+     display_name text,
+     organization text,
+     city text,
+     country text,
+     linkedin_url text,
+     bio text,
+     avatar_url text,
+     subscription_tier text default 'explorer',
+     subscription_status text default 'active',
+     courses_completed text[],
+     total_learning_hours integer default 0,
+     streak_days integer default 0,
+     created_at timestamp with time zone default now(),
+     updated_at timestamp with time zone default now()
+   );
+   ```
+
+### Clean URL Routing
+
+The `_redirects` file enables clean URLs:
+- `/courses` → Opens Courses modal
+- `/labs` → Opens Labs modal  
+- `/about` → Scrolls to About section
+- `/testimonials` → Scrolls to Wall of Love
+
+The `router.js` script handles client-side navigation after Netlify serves `index.html`.
+
+---
+
+## Content & Courses
+
+### Available Courses
+
+| Course | Description |
+|--------|-------------|
+| **MEAL 101** | Monitoring, Evaluation, Accountability & Learning fundamentals |
+| **Theory of Change** | Building effective theories of change and logic models |
+| **Research Methods** | Qualitative and quantitative research design |
+| **Gender Studies 101** | Feminist theory, intersectionality, and South Asian context |
+| **Development Economics 101** | Growth, inequality, institutions, and policy |
+| **Climate Change 101** | IPCC basics, vulnerability, adaptation, and climate justice |
+| **Public Health 101** | Health systems, epidemiology, and health equity |
+| **Data Feminism 101** | Challenging dominant data narratives |
+| **Social Safety Nets 101** | India's welfare architecture (PDS, NREGA, Aadhaar) |
+| **Decent Work 101** | Labor rights, informality, and fair livelihoods |
+
+### Multilingual Support
+
+Content is available in:
+- 🇬🇧 English
+- 🇮🇳 Hindi (हिंदी)
+- 🇮🇳 Tamil (தமிழ்)
+- 🇮🇳 Bengali (বাংলা)
+- 🇮🇳 Telugu (తెలుగు)
+- 🇮🇳 Marathi (मराठी)
+
+---
 
 ## Contributing
 
-We welcome contributions! Whether you're improving design, adding content, fixing bugs, or enhancing accessibility, your work strengthens this resource for the development community.
+We welcome contributions! Whether improving content, fixing bugs, enhancing accessibility, or adding translations.
 
 ### How to Contribute
 
 1. **Fork the repository**
 2. **Create a feature branch:** `git checkout -b feature/your-feature`
-3. **Make your changes** – Edit HTML, CSS, or JavaScript
-4. **Test locally** – Open in a browser to verify
-5. **Commit:** `git commit -am 'Add feature'`
-6. **Push:** `git push origin feature/your-feature`
-7. **Submit a Pull Request** with a description of your changes
+3. **Make changes and test locally**
+4. **Commit:** `git commit -am 'Add feature'`
+5. **Push:** `git push origin feature/your-feature`
+6. **Submit a Pull Request**
 
 ### Contribution Ideas
 
-- **Content** – Refine existing decks, update examples, add new topics
-- **Design & UX** – Improve navigation, layout, visual design, readability
-- **Accessibility** – Enhance WCAG compliance, improve screen reader support
-- **Translations** – Translate content into other South Asian languages
-- **Testing** – Report bugs, test across browsers and devices
-- **Documentation** – Improve guides and comments
+- 📝 **Content** — Improve courses, add case studies, update examples
+- 🎨 **Design** — Enhance UI/UX, improve mobile experience
+- ♿ **Accessibility** — WCAG compliance, screen reader support
+- 🌐 **Translations** — Translate content into South Asian languages
+- 🐛 **Bug fixes** — Report and fix issues
+- 📚 **Documentation** — Improve guides and comments
+
+---
 
 ## Browser Support
 
-- Chrome/Chromium (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
+| Browser | Support |
+|---------|---------|
+| Chrome/Chromium | ✅ Latest |
+| Firefox | ✅ Latest |
+| Safari | ✅ Latest |
+| Edge | ✅ Latest |
+| Mobile Safari (iOS) | ✅ Latest |
+| Chrome Mobile | ✅ Latest |
 
-## Offline Usage
+---
 
-1. Visit the site online once to cache content
-2. The service worker will cache key assets
-3. Offline functionality will work on revisits
-4. Check the browser console for service worker status
+## Support & Contact
+
+- 🐛 **Report bugs:** [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues)
+- 💡 **Feature requests:** [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues)
+- 📧 **General inquiries:** hello@impactmojo.in
+- 📧 **Registration:** register@impactmojo.in
+- 💬 **Discord:** [Join Community](https://discord.gg/M3ZCmUe7ab)
+- 💬 **Telegram:** [Join Channel](https://t.me/impactmojo)
+
+### Support the Platform
+
+ImpactMojo operates on a "pay what you think is fair" model.
+
+**UPI:** `impactmojo@ibl`
+
+---
 
 ## License
 
 This project is released under the **Creative Commons Attribution 4.0 International (CC-BY-4.0)** license.
 
-The educational content and knowledge decks are made available for educational and non-commercial use. Educators are encouraged to adapt and use materials in their teaching with appropriate attribution.
+Educational content is available for educational and non-commercial use. Educators are encouraged to adapt materials with appropriate attribution.
 
-See [LICENSE](./LICENSE) for details.
+---
 
 ## Citation
 
-If you use ImpactMojo materials in research, teaching, or practice, please cite:
+If you use ImpactMojo materials in research, teaching, or practice:
 
 ```
-Raman, V. S. (2024). ImpactMojo: Development Know-How for Social Impact. 
+Raman, V. S. (2025). ImpactMojo: Free Development Education for Social Impact. 
 Retrieved from https://www.impactmojo.in
 ```
 
-## Issues & Support
-
-- **Report bugs:** [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues)
-- **Feature requests:** [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues)
-- **General inquiries:** Visit [impactmojo.in](https://www.impactmojo.in)
-
-## Performance Tips
-
-- Keep CSS in `styles/` folder for easy management
-- Compress images before adding to `assets/images/`
-- Cache files in service worker for offline functionality
-- Use semantic HTML for accessibility
-
-## Maintenance
-
-### Regular Updates
-
-```bash
-# Pull latest changes
-git pull origin main
-
-# Test locally before deploying
-# (Simply open index.html or run local server)
-
-# Push changes
-git add .
-git commit -m "Update content or fix"
-git push origin main
-
-# Netlify automatically deploys
-```
-
-### Service Worker Cache Management
-
-To update what's cached offline:
-- Edit `service-worker.js`
-- Update the cache version number (e.g., `v1` → `v2`)
-- This forces browsers to fetch new content on next visit
+---
 
 ## Acknowledgments
 
-ImpactMojo was founded by **Dr. Varna Sri Raman**, a development economist with two decades of experience in development practice, research, and education across South Asia.
+**Founded by Dr. Varna Sri Raman**, a development economist with two decades of experience in development practice, research, and education across South Asia.
+
+**Sponsored by** PinPoint Ventures
+
+**Key Contributors:**
+- Vandana Soni — Social Media & Marketing
+- Vignesh — Technical Support
 
 The platform is shaped by contributions from educators, practitioners, designers, and the broader development community.
 
 ---
 
-**Last Updated:** October 2025  
+**Version:** 7.9.1  
+**Last Updated:** December 2025  
 **License:** CC-BY-4.0  
 **Hosting:** Netlify
