@@ -750,6 +750,7 @@
             left: 20px;
             z-index: 9998;
             font-family: 'Inter', sans-serif;
+            display: block;
         }
 
         .cookie-icon-btn {
@@ -1079,6 +1080,76 @@
         .card-number.premium svg {
             stroke: white;
             fill: white;
+        }
+
+        /* Premium Tier Hover Benefits Tooltips */
+        [data-required-tier] {
+            position: relative;
+        }
+        
+        [data-required-tier]::before {
+            content: attr(data-tier-benefits);
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            color: #F1F5F9;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            white-space: normal;
+            width: max-content;
+            max-width: 280px;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            pointer-events: none;
+        }
+        
+        [data-required-tier]::after {
+            content: '';
+            position: absolute;
+            bottom: calc(100% + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: #1E293B;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 101;
+        }
+        
+        [data-required-tier]:hover::before,
+        [data-required-tier]:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) scale(1);
+        }
+        
+        [data-required-tier="practitioner"]::before {
+            border-color: rgba(14, 165, 233, 0.4);
+        }
+        
+        [data-required-tier="professional"]::before {
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+        
+        [data-required-tier="organization"]::before {
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            [data-required-tier]::before,
+            [data-required-tier]::after {
+                display: none;
+            }
         }
 
         .learner-badge {
@@ -4900,6 +4971,28 @@
 <h1>Master Development Education</h1>
 <p>101 Knowledge Series for Social Impact</p>
 <p style="font-size: 1rem; color: var(--text-secondary);">Comprehensive courses, interactive labs, and practical tools for development professionals exploring justice, equity, and sustainable development across South Asia</p>
+
+<!-- Hero CTAs -->
+<div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+<a href="premium.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-weight: 600;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+View Premium Plans
+</a>
+<a href="#" onclick="event.preventDefault(); if(window.ImpactMojoAuth && !ImpactMojoAuth.isLoggedIn()) { ImpactMojoAuth.showAuthModal('signup'); } else { IMX.showToast('You\\'re already signed in!'); }" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-weight: 600;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+Sign Up Free
+</a>
+</div>
+
+<!-- Free Account Benefits -->
+<div style="margin-top: 1.25rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; max-width: 600px; margin-left: auto; margin-right: auto;">
+<p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary); display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.5rem;">
+<span style="display: inline-flex; align-items: center; gap: 0.35rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Track Progress</span>
+<span style="display: inline-flex; align-items: center; gap: 0.35rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Save Bookmarks</span>
+<span style="display: inline-flex; align-items: center; gap: 0.35rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Personal Notes</span>
+<span style="display: inline-flex; align-items: center; gap: 0.35rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Cloud Sync</span>
+</p>
+</div>
 </section>
 
 <!-- Daily Learning Tip -->
@@ -6239,7 +6332,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 <h2 class="section-title">Premium Offerings</h2>
 <p class="section-subtitle">Advanced tools and in-depth content for serious practitioners</p>
 <div class="cards-grid">
-<div class="card" data-required-tier="practitioner">
+<div class="card" data-required-tier="practitioner" data-tier-benefits="🔓 Upgrade to Practitioner (₹399/mo): Unlock field insights, TOC Workbench Pro, completion certificates & community access!">
 <a href="https://marginmuse.space/themarginmuse" target="_blank">
 <div class="card-header">
 <span class="card-number premium">
@@ -6271,7 +6364,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 <p class="card-description">In-depth analysis and insights from field experiences</p>
 </a>
 </div>
-<div class="card" data-required-tier="professional">
+<div class="card" data-required-tier="professional" data-tier-benefits="🔓 Upgrade to Professional (₹999/mo): Unlock AI-powered qualitative analysis, power analysis tools, templates & monthly expert webinars!">
 <a href="https://101.impactmojo.in/IMQualLab" target="_blank">
 <div class="card-header">
 <span class="card-number premium">
@@ -6303,7 +6396,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 <p class="card-description">Advanced qualitative research methods and tools</p>
 </a>
 </div>
-<div class="card" data-required-tier="professional">
+<div class="card" data-required-tier="professional" data-tier-benefits="🔓 Upgrade to Professional (₹999/mo): Unlock statistical tools, priority coaching, downloadable templates & early access to new content!">
 <a href="https://101.impactmojo.in/IMStatsAssist" target="_blank">
 <div class="card-header">
 <span class="card-number premium">
@@ -6335,7 +6428,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 <p class="card-description">Comprehensive statistical analysis toolkit</p>
 </a>
 </div>
-<div class="card" data-required-tier="practitioner">
+<div class="card" data-required-tier="practitioner" data-tier-benefits="🔓 Upgrade to Practitioner (₹399/mo): Unlock advanced research tools, completion certificates & Discord/Telegram community!">
 <a href="https://101.impactmojo.in/IMResearchQuestionsPro" target="_blank">
 <div class="card-header">
 <span class="card-number premium">
@@ -7963,7 +8056,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 <div class="modal-body">
 <p style="color: var(--text-secondary); margin: 0 0 1rem 0; font-size: 0.9rem;">Access advanced tools based on your membership tier. <a href="premium.html" style="color: var(--accent-color);">View pricing →</a></p>
 <div class="modal-grid">
-<div class="modal-item" data-required-tier="professional">
+<div class="modal-item" data-required-tier="professional" data-tier-benefits="🔓 Professional (₹999/mo): Unlock AI tools, templates, webinars & priority coaching!">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
 <div class="modal-item-content">
 <a href="https://101.impactmojo.in/code-convert-pro" data-fallback="https://code-convertor-production.netlify.app/" target="_blank" rel="noopener noreferrer">
@@ -7985,7 +8078,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 </a>
 </div>
 </div>
-<div class="modal-item" data-required-tier="professional">
+<div class="modal-item" data-required-tier="professional" data-tier-benefits="🔓 Professional (₹999/mo): Unlock AI analysis, expert webinars & priority support!">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
 <div class="modal-item-content">
 <a href="https://101.impactmojo.in/qual-insights" data-fallback="https://qualitative-data-analyser-production.netlify.app/" target="_blank" rel="noopener noreferrer">
@@ -8007,7 +8100,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 </a>
 </div>
 </div>
-<div class="modal-item" data-required-tier="practitioner">
+<div class="modal-item" data-required-tier="practitioner" data-tier-benefits="🔓 Practitioner (₹399/mo): Unlock field insights, certificates & community access!">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
 <div class="modal-item-content">
 <a href="https://marginmuse.space/themarginmuse" target="_blank">
@@ -8029,7 +8122,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 </div>
 </div>
 
-<div class="modal-item" data-required-tier="practitioner">
+<div class="modal-item" data-required-tier="practitioner" data-tier-benefits="🔓 Practitioner (₹399/mo): Unlock advanced research tools & community access!">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16v12H5.5L4 17.5V4z"></path><path d="M9 8h6M9 11h3"></path><circle cx="17" cy="17" r="3"></circle><path d="M19 19l1.5 1.5"></path></svg></div>
 <div class="modal-item-content">
 <a href="https://101.impactmojo.in/researchQ-pro" target="_blank" rel="noopener noreferrer">
@@ -9904,7 +9997,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
         // VERSION CHECK & AUTO-REFRESH
         // ========================================
         (function() {
-            var SITE_VERSION = '2.9.1'; // Update this when deploying new versions - Dec 3 2025: Premium content gating
+            var SITE_VERSION = '7.9.6.20251203'; // Update this when deploying new versions - Dec 3 2025: Premium content gating
             var VERSION_KEY = 'imx_site_version';
             
             // Check if version changed
@@ -13170,7 +13263,7 @@ IMX.Tour = {
             target: '#nav-coaching',
             icon: 'cursor',
             title: 'Coaching',
-            desc: 'One-on-one coaching sessions with Dr. Varna. Book sessions for career guidance, MEAL support, or research help.',
+            desc: 'One-on-one coaching sessions with Dr. Varna and Vandana. Book sessions for career guidance, MEAL support, research help, or social media strategy.',
             position: 'right-of-target',
             desktopOnly: true
         },
@@ -14291,3 +14384,22 @@ console.log('IMX: Script loaded, Tour available:', typeof IMX !== 'undefined' &&
             console.log('[AutoSync] Full sync complete');
         });
     }
+ }
+
+// Initialize auto-sync when dependencies are ready
+waitForDependencies(patchSaveFunctions);
+})();
+</script>
+
+<!-- UserWay Accessibility Widget -->
+<script>
+(function(d){
+    var s = d.createElement("script");
+    s.setAttribute("data-account", "8yPrhvmrzj");
+    s.setAttribute("src", "https://cdn.userway.org/widget.js");
+    (d.body || d.head).appendChild(s);
+})(document);
+</script>
+
+</body>
+</html>
