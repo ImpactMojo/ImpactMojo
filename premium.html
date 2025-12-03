@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Membership | ImpactMojo</title>
+<meta name="description" content="Unlock advanced MEAL tools, priority coaching, and exclusive resources with ImpactMojo Premium membership.">
+
+<!-- Favicons -->
+<link href="assets/images/favicon.png" rel="icon" type="image/png">
+<link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --accent-color: #0EA5E9;
+    --accent-hover: #0284C7;
+    --secondary-accent: #6366F1;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --gradient-premium: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode {
+    --primary-bg: #FFFFFF;
+    --secondary-bg: #F8FAFC;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Background Pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Header */
+.header {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+body.light-mode .header {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.logo-link img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.logo-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-outline:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(245, 158, 11, 0.15);
+    color: #F59E0B;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero p {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+/* USD Notice */
+.usd-notice {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(14, 165, 233, 0.1));
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.usd-notice svg {
+    flex-shrink: 0;
+    color: var(--secondary-accent);
+}
+
+/* Pricing Grid */
+.pricing-section {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.pricing-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+.pricing-card.featured {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 1px var(--accent-color), var(--shadow-lg);
+}
+
+.pricing-card.featured::before {
+    content: 'Most Popular';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gradient-primary);
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.pricing-card.org-tier {
+    border-color: #F59E0B;
+}
+
+.pricing-card.org-tier::before {
+    content: 'Teams';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gradient-premium);
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.tier-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.tier-icon.explorer { background: rgba(100, 116, 139, 0.2); color: #94A3B8; }
+.tier-icon.practitioner { background: rgba(14, 165, 233, 0.2); color: #0EA5E9; }
+.tier-icon.professional { background: rgba(99, 102, 241, 0.2); color: #6366F1; }
+.tier-icon.organization { background: rgba(245, 158, 11, 0.2); color: #F59E0B; }
+
+.tier-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.tier-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    min-height: 40px;
+}
+
+.tier-price {
+    margin-bottom: 1.5rem;
+}
+
+.price-amount {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+.price-amount.free {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.price-currency {
+    font-size: 1.25rem;
+    font-weight: 600;
+    vertical-align: top;
+}
+
+.price-period {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.tier-features {
+    list-style: none;
+    margin-bottom: 1.5rem;
+}
+
+.tier-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.tier-features li svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.tier-features li svg.check { color: var(--success-color); }
+.tier-features li svg.x { color: var(--text-muted); opacity: 0.5; }
+
+.tier-features li.disabled {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.tier-cta {
+    width: 100%;
+    padding: 0.875rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tier-cta.outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.tier-cta.outline:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.tier-cta.primary {
+    background: var(--gradient-primary);
+    border: none;
+    color: white;
+}
+
+.tier-cta.primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.tier-cta.premium {
+    background: var(--gradient-premium);
+    border: none;
+    color: white;
+}
+
+/* How It Works Section */
+.how-it-works {
+    position: relative;
+    z-index: 1;
+    background: var(--secondary-bg);
+    padding: 4rem 2rem;
+}
+
+.section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+}
+
+.steps-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.step-card {
+    text-align: center;
+}
+
+.step-number {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.step-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.step-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* UPI Payment Section */
+.upi-section {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.upi-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+}
+
+.upi-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.upi-id {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--hover-bg);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin: 1rem 0;
+}
+
+.upi-id button {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 0.2s;
+}
+
+.upi-id button:hover {
+    color: var(--accent-color);
+}
+
+.upi-instructions {
+    text-align: left;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.upi-instructions h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.upi-instructions ol {
+    padding-left: 1.25rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.upi-instructions li {
+    margin-bottom: 0.75rem;
+}
+
+.upi-instructions a {
+    color: var(--accent-color);
+}
+
+/* FAQ Section */
+.faq-section {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+}
+
+.faq-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 1.25rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.faq-question:hover {
+    background: var(--hover-bg);
+}
+
+.faq-question svg {
+    flex-shrink: 0;
+    transition: transform 0.3s;
+}
+
+.faq-item.open .faq-question svg {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    display: none;
+    padding: 0 1.25rem 1.25rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.faq-item.open .faq-answer {
+    display: block;
+}
+
+/* Footer */
+.footer {
+    position: relative;
+    z-index: 1;
+    background: var(--secondary-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 2rem;
+    text-align: center;
+}
+
+.footer p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem;
+    }
+    
+    .hero {
+        padding: 3rem 1rem 2rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .pricing-section {
+        padding: 0 1rem 3rem;
+    }
+    
+    .pricing-card {
+        padding: 1.5rem;
+    }
+    
+    .price-amount {
+        font-size: 2rem;
+    }
+    
+    .how-it-works {
+        padding: 3rem 1rem;
+    }
+    
+    .upi-section {
+        padding: 3rem 1rem;
+    }
+    
+    .upi-id {
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* Auth state visibility */
+.auth-logged-in { display: none !important; }
+.auth-logged-out { display: flex !important; }
+
+body.user-authenticated .auth-logged-in { display: flex !important; }
+body.user-authenticated .auth-logged-out { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <a href="index.html" class="logo-link">
+            <img src="assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="40" height="40">
+            <span class="logo-text">ImpactMojo</span>
+        </a>
+        <div class="header-actions">
+            <a href="index.html" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Home
+            </a>
+            <a href="login.html" class="btn btn-outline auth-logged-out">Log In</a>
+            <a href="signup.html" class="btn btn-primary auth-logged-out">Sign Up Free</a>
+            <a href="account.html" class="btn btn-primary auth-logged-in">My Account</a>
+        </div>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-badge">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/>
+        </svg>
+        Premium Membership
+    </div>
+    <h1>Accelerate Your Impact Journey</h1>
+    <p>Unlock advanced tools, priority coaching, and exclusive resources designed for development professionals who are serious about making a difference.</p>
+    
+    <div class="usd-notice">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+        </svg>
+        <span><strong>USD pricing coming soon!</strong> Currently accepting payments in INR via UPI.</span>
+    </div>
+</section>
+
+<!-- Pricing Cards -->
+<section class="pricing-section">
+    <div class="pricing-grid">
+        <!-- Explorer (Free) -->
+        <div class="pricing-card">
+            <div class="tier-icon explorer">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 16v-4M12 8h.01"/>
+                </svg>
+            </div>
+            <div class="tier-name">Explorer</div>
+            <div class="tier-desc">Perfect for getting started with development education</div>
+            <div class="tier-price">
+                <span class="price-amount free">Free</span>
+                <span class="price-period">Forever</span>
+            </div>
+            <ul class="tier-features">
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    All foundational courses
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Progress tracking
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Basic labs access
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Personal notes & bookmarks
+                </li>
+                <li class="disabled">
+                    <svg class="x" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Advanced tools & calculators
+                </li>
+                <li class="disabled">
+                    <svg class="x" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Priority coaching
+                </li>
+            </ul>
+            <a href="signup.html" class="tier-cta outline">Get Started Free</a>
+        </div>
+
+        <!-- Practitioner -->
+        <div class="pricing-card featured">
+            <div class="tier-icon practitioner">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+            </div>
+            <div class="tier-name">Practitioner</div>
+            <div class="tier-desc">For active development practitioners</div>
+            <div class="tier-price">
+                <span class="price-currency">₹</span><span class="price-amount">399</span>
+                <span class="price-period">/month</span>
+            </div>
+            <ul class="tier-features">
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Everything in Explorer
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Advanced courses & deep dives
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Sample size calculator
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    TOC Workbench Pro
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Completion certificates
+                </li>
+                <li class="disabled">
+                    <svg class="x" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Priority coaching
+                </li>
+            </ul>
+            <button class="tier-cta primary" onclick="scrollToPayment()">Subscribe Now</button>
+        </div>
+
+        <!-- Professional -->
+        <div class="pricing-card">
+            <div class="tier-icon professional">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+            </div>
+            <div class="tier-name">Professional</div>
+            <div class="tier-desc">For M&E leads and senior practitioners</div>
+            <div class="tier-price">
+                <span class="price-currency">₹</span><span class="price-amount">999</span>
+                <span class="price-period">/month</span>
+            </div>
+            <ul class="tier-features">
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Everything in Practitioner
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Priority coaching access
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Power analysis tools
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Downloadable templates
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Monthly expert webinars
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Early access to new content
+                </li>
+            </ul>
+            <button class="tier-cta primary" onclick="scrollToPayment()">Subscribe Now</button>
+        </div>
+
+        <!-- Organization -->
+        <div class="pricing-card org-tier">
+            <div class="tier-icon organization">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+            </div>
+            <div class="tier-name">Organization</div>
+            <div class="tier-desc">For NGOs and impact teams</div>
+            <div class="tier-price">
+                <span class="price-currency">₹</span><span class="price-amount">1,499</span>
+                <span class="price-period">/user/month</span>
+            </div>
+            <ul class="tier-features">
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Everything in Professional
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Team dashboard & analytics
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Custom learning paths
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Bulk certificate management
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Dedicated account manager
+                </li>
+                <li>
+                    <svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Invoice billing available
+                </li>
+            </ul>
+            <a href="mailto:hello@impactmojo.in?subject=Organization%20Plan%20Inquiry" class="tier-cta premium">Contact Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works">
+    <h2 class="section-title">How Subscriptions Work</h2>
+    <p class="section-subtitle">Simple manual process until we integrate automated payments</p>
+    
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-title">Choose Your Plan</div>
+            <div class="step-desc">Select the tier that best fits your learning needs and goals</div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-title">Pay via UPI</div>
+            <div class="step-desc">Send payment to our UPI ID with your email as reference</div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-title">Confirm Payment</div>
+            <div class="step-desc">Fill the confirmation form with your transaction details</div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">4</div>
+            <div class="step-title">Get Activated</div>
+            <div class="step-desc">We'll upgrade your account within 24 hours (usually faster!)</div>
+        </div>
+    </div>
+</section>
+
+<!-- UPI Payment -->
+<section class="upi-section" id="payment">
+    <div class="upi-card">
+        <h3>Pay via UPI</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Scan QR code or use our UPI ID</p>
+        
+        <div class="upi-id">
+            <span id="upiId">impactmojo@ibl</span>
+            <button onclick="copyUPI()" title="Copy UPI ID">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="upi-instructions">
+            <h4>After Payment:</h4>
+            <ol>
+                <li>Take a screenshot of your payment confirmation</li>
+                <li>Note down the UPI Transaction ID</li>
+                <li>Email us at <a href="mailto:hello@impactmojo.in">hello@impactmojo.in</a> with:
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Your registered email address</li>
+                        <li>Chosen plan (Practitioner/Professional/Organization)</li>
+                        <li>UPI Transaction ID</li>
+                        <li>Payment screenshot</li>
+                    </ul>
+                </li>
+                <li>We'll activate your premium access within 24 hours!</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-subtitle">Everything you need to know about Premium</p>
+    
+    <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+            Why manual payments instead of automatic?
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </button>
+        <div class="faq-answer">
+            We're a bootstrapped platform focused on keeping costs low so we can offer quality education at accessible prices. Automated payment gateways charge 2-3% per transaction, which adds up. Our manual UPI process keeps 100% of your payment going toward platform development. We're working on integrating Razorpay for convenience—USD pricing coming soon!
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+            How long does activation take?
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </button>
+        <div class="faq-answer">
+            Typically within a few hours during business hours (IST). Maximum 24 hours. We'll send you an email confirmation once your account is upgraded.
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+            Can I get a refund?
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </button>
+        <div class="faq-answer">
+            Yes! If you're not satisfied within the first 7 days, email us and we'll process a full refund. No questions asked. We believe in our content and want you to feel confident trying Premium.
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+            What happens when my subscription ends?
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </button>
+        <div class="faq-answer">
+            Your account reverts to Explorer (free) tier. You keep all your notes, bookmarks, and progress data. You just lose access to premium tools and content until you renew. We'll send you a reminder email 7 days before expiry.
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+            Do you offer discounts for NGOs?
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </button>
+        <div class="faq-answer">
+            Absolutely! We operate on a "pay what you think is fair" philosophy. If your organization has budget constraints, email us at <a href="mailto:hello@impactmojo.in">hello@impactmojo.in</a> and we'll work something out. Our mission is democratizing development education, not maximizing revenue.
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+            Can I pay annually for a discount?
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </button>
+        <div class="faq-answer">
+            Yes! Annual plans get 2 months free (pay for 10, get 12). Contact us via email to set up annual billing. Annual amounts: Practitioner ₹3,990/year, Professional ₹9,990/year.
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>© 2025 ImpactMojo. <a href="index.html">Back to Home</a> | <a href="mailto:hello@impactmojo.in">Contact Us</a></p>
+    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Sponsored by PinPoint Ventures</p>
+</footer>
+
+<script src="js/auth.js"></script>
+<script>
+// Copy UPI ID
+function copyUPI() {
+    const upiId = document.getElementById('upiId').textContent;
+    navigator.clipboard.writeText(upiId).then(() => {
+        alert('UPI ID copied: ' + upiId);
+    });
+}
+
+// Scroll to payment section
+function scrollToPayment() {
+    document.getElementById('payment').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Toggle FAQ
+function toggleFAQ(button) {
+    const item = button.parentElement;
+    const wasOpen = item.classList.contains('open');
+    
+    // Close all
+    document.querySelectorAll('.faq-item').forEach(faq => {
+        faq.classList.remove('open');
+    });
+    
+    // Open clicked if it wasn't open
+    if (!wasOpen) {
+        item.classList.add('open');
+    }
+}
+
+// Check for saved theme
+if (localStorage.getItem('imx-theme') === 'light') {
+    document.body.classList.add('light-mode');
+}
+</script>
+
+</body>
+</html>
