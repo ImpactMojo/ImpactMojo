@@ -23,7 +23,7 @@
 </script>
 
 
-<!-- Version 7.9.1 - December 3, 2025 - Added clean URL router for sections -->
+<!-- Version 7.9.2 - December 3, 2025 - Added auto-sync for cloud data + fixed feature URLs -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
 <script>
@@ -44,7 +44,7 @@
 <!-- Aggressive cache-busting script -->
 <script>
 (function() {
-    var CURRENT_VERSION = '7.9.1.20251203';
+    var CURRENT_VERSION = '7.9.2.20251203';
     var STORAGE_KEY = 'imx_page_version';
     
     try {
@@ -9723,7 +9723,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
         // VERSION CHECK & AUTO-REFRESH
         // ========================================
         (function() {
-            var SITE_VERSION = '2.8.0'; // Update this when deploying new versions - Dec 1 2025: Mobile fixes
+            var SITE_VERSION = '2.9.0'; // Update this when deploying new versions - Dec 3 2025: Auto-sync + fixed feature URLs
             var VERSION_KEY = 'imx_site_version';
             
             // Check if version changed
@@ -13990,6 +13990,136 @@ console.log('IMX: Script loaded, Tour available:', typeof IMX !== 'undefined' &&
 
 <!-- Clean URL Router for sections -->
 <script src="js/router.js"></script>
+
+<!-- Auto-Sync Wrapper for Cloud Sync -->
+<script>
+/**
+ * ImpactMojo Auto-Sync Wrapper
+ * Version 1.0.0 - December 3, 2025
+ * 
+ * Patches IMX save functions to automatically sync data to cloud
+ * after user actions (with debouncing to avoid excessive syncing)
+ */
+(function() {
+    'use strict';
+    
+    // Wait for both IMX and ImpactMojoAuth to be available
+    function waitForDependencies(callback, maxAttempts) {
+        maxAttempts = maxAttempts || 100;
+        var attempts = 0;
+        
+        function check() {
+            attempts++;
+            if (typeof window.IMX !== 'undefined' && typeof window.ImpactMojoAuth !== 'undefined') {
+                console.log('[AutoSync] Dependencies ready, patching save functions...');
+                callback();
+                return;
+            }
+            if (attempts < maxAttempts) {
+                setTimeout(check, 100);
+            } else {
+                console.log('[AutoSync] Dependencies not available, skipping patches');
+            }
+        }
+        check();
+    }
+    
+    function patchSaveFunctions() {
+        // Store original functions
+        var originalSaveBookmarks = IMX.saveBookmarks;
+        var originalSaveCompareItems = IMX.saveCompareItems;
+        
+        // Patch IMX.saveBookmarks
+        IMX.saveBookmarks = function(bookmarks) {
+            originalSaveBookmarks.call(IMX, bookmarks);
+            // Queue sync if user is logged in
+            if (ImpactMojoAuth.isLoggedIn()) {
+                ImpactMojoAuth.queueSync();
+            }
+        };
+        
+        // Patch IMX.saveCompareItems
+        IMX.saveCompareItems = function(items) {
+            originalSaveCompareItems.call(IMX, items);
+            if (ImpactMojoAuth.isLoggedIn()) {
+                ImpactMojoAuth.queueSync();
+            }
+        };
+        
+        // Patch IMX.Notes.saveAll if Notes object exists
+        if (IMX.Notes && IMX.Notes.saveAll) {
+            var originalNotesSaveAll = IMX.Notes.saveAll;
+            IMX.Notes.saveAll = function(notes) {
+                originalNotesSaveAll.call(IMX.Notes, notes);
+                if (ImpactMojoAuth.isLoggedIn()) {
+                    ImpactMojoAuth.queueSync();
+                }
+            };
+        }
+        
+        // Patch IMX.Streak.saveData if Streak object exists
+        if (IMX.Streak && IMX.Streak.saveData) {
+            var originalStreakSaveData = IMX.Streak.saveData;
+            IMX.Streak.saveData = function(data) {
+                originalStreakSaveData.call(IMX.Streak, data);
+                if (ImpactMojoAuth.isLoggedIn()) {
+                    ImpactMojoAuth.queueSync();
+                }
+            };
+        }
+        
+        // Patch IMX.Analytics.saveData if Analytics object exists
+        if (IMX.Analytics && IMX.Analytics.saveData) {
+            var originalAnalyticsSaveData = IMX.Analytics.saveData;
+            IMX.Analytics.saveData = function(data) {
+                originalAnalyticsSaveData.call(IMX.Analytics, data);
+                // Don't sync analytics on every save (too frequent)
+                // Analytics will sync on page unload or next manual sync
+            };
+        }
+        
+        console.log('[AutoSync] Save functions patched for cloud sync');
+        
+        // Listen for sync events to update UI
+        window.addEventListener('dataSynced', function(e) {
+            console.log('[AutoSync] Data synced from cloud');
+            // Refresh IMX UI if badges exist
+            if (typeof IMX.updateBadges === 'function') {
+                IMX.updateBadges();
+            }
+            // Refresh bookmarks list if visible
+            if (typeof IMX.renderBookmarksList === 'function') {
+                var bookmarksModal = document.getElementById('imxBookmarksModal');
+                if (bookmarksModal && bookmarksModal.style.display === 'flex') {
+                    IMX.renderBookmarksList();
+                }
+            }
+            // Refresh notes list if visible
+            if (IMX.Notes && typeof IMX.Notes.renderList === 'function') {
+                var notesModal = document.getElementById('imxNotesModal');
+                if (notesModal && notesModal.style.display === 'flex') {
+                    IMX.Notes.renderList();
+                }
+            }
+        });
+        
+        window.addEventListener('syncComplete', function(e) {
+            console.log('[AutoSync] Full sync complete');
+        });
+    }
+    
+    // Initialize when ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            waitForDependencies(patchSaveFunctions);
+        });
+    } else {
+        waitForDependencies(patchSaveFunctions);
+    }
+    
+    console.log('[AutoSync] Script loaded');
+})();
+</script>
 
 </body>
 </html>
