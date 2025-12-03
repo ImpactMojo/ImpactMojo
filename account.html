@@ -706,21 +706,50 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            margin-top: 1rem;
         }
 
         .sync-status i {
-            font-size: 0.7rem;
+            font-size: 1rem;
         }
 
         .sync-status.local {
-            color: var(--warning-color);
+            background: #fef3c7;
+            color: #92400e;
         }
 
         .sync-status.synced {
-            color: var(--success-color);
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .sync-status.syncing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .sync-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sync-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .sync-btn.syncing i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         /* Empty state */
@@ -925,7 +954,7 @@
                             </svg>
                             <span>Upgrade Plan</span>
                         </a>
-                        <a href="mailto:hello@impactmojo.in?subject=Billing%20Inquiry" class="action-btn">
+                        <a href="/cdn-cgi/l/email-protection#452d2029292a052c2835242631282a2f2a6b2c2b7a3630272f20263178072c29292c2b226077750c2b34302c373c" class="action-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
                                 <line x1="1" y1="10" x2="23" y2="10"/>
@@ -943,9 +972,14 @@
                         <i class="fas fa-bookmark" style="color: var(--primary-color);"></i>
                         My Saved Items
                     </h2>
-                    <span class="badge badge-local" id="syncStatusBadge">
-                        <i class="fas fa-laptop"></i> Saved Locally
-                    </span>
+                    <div class="sync-controls">
+                        <span class="badge badge-local" id="syncStatusBadge">
+                            <i class="fas fa-laptop"></i> Saved Locally
+                        </span>
+                        <button class="btn btn-outline btn-small sync-btn" id="syncNowBtn" onclick="handleSyncNow()" style="display: none;">
+                            <i class="fas fa-sync-alt"></i> Sync Now
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="saved-items-grid" id="savedItemsGrid">
@@ -997,7 +1031,7 @@
 
                     <div class="sync-status local" id="syncStatusMessage">
                         <i class="fas fa-info-circle"></i>
-                        Your saved items are stored in this browser. Sign in on any device to access them.
+                        <span id="syncStatusText">Your saved items are stored in this browser. Sign in on any device to access them.</span>
                     </div>
                 </div>
             </div>
@@ -1163,7 +1197,7 @@
     <!-- Footer -->
     <footer style="background: var(--bg-tertiary); padding: 2rem; text-align: center; margin-top: 2rem;">
         <p style="color: var(--text-secondary); font-size: 0.9rem;">
-            Need help? Contact us at <a href="mailto:hello@impactmojo.in" style="color: var(--primary-color);">hello@impactmojo.in</a>
+            Need help? Contact us at <a href="/cdn-cgi/l/email-protection#e58d8089898aa58c8895848691888a8f8acb8c8b" style="color: var(--primary-color);"><span class="__cf_email__" data-cfemail="6f070a0303002f06021f0e0c1b02000500410601">[email&#160;protected]</span></a>
         </p>
         <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem;">
             &copy; 2024-2025 ImpactMojo. Free development education for all.
@@ -1171,7 +1205,7 @@
     </footer>
 
     <!-- Supabase JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/auth.js"></script>
     
     <script>
@@ -1417,16 +1451,95 @@
             // Update community access
             updateCommunityAccess(config.isPremium);
 
-            // Update sync status badge
+            // Update sync status badge and button
             const syncBadge = document.getElementById('syncStatusBadge');
             const syncMessage = document.getElementById('syncStatusMessage');
+            const syncText = document.getElementById('syncStatusText');
+            const syncBtn = document.getElementById('syncNowBtn');
+            
             if (ImpactMojoAuth.isLoggedIn()) {
-                syncBadge.innerHTML = '<i class="fas fa-cloud"></i> Account Linked';
+                const lastSync = ImpactMojoAuth.getLastSyncDisplay();
+                syncBadge.innerHTML = '<i class="fas fa-cloud"></i> Synced to Cloud';
                 syncBadge.className = 'badge badge-premium';
-                syncMessage.innerHTML = '<i class="fas fa-check-circle"></i> Your account is active. Full cloud sync coming soon!';
+                if (syncText) {
+                    syncText.textContent = 'Your data is synced across devices. Last sync: ' + lastSync;
+                }
                 syncMessage.className = 'sync-status synced';
+                if (syncBtn) {
+                    syncBtn.style.display = 'inline-flex';
+                }
+            } else {
+                if (syncBtn) {
+                    syncBtn.style.display = 'none';
+                }
             }
         }
+
+        // =====================================================
+        // SYNC NOW HANDLER (NEW)
+        // =====================================================
+        async function handleSyncNow() {
+            const syncBtn = document.getElementById('syncNowBtn');
+            const syncText = document.getElementById('syncStatusText');
+            const syncMessage = document.getElementById('syncStatusMessage');
+            
+            if (!ImpactMojoAuth.isLoggedIn()) {
+                showAlert('Please log in to sync your data', 'error');
+                return;
+            }
+            
+            // Update UI to show syncing
+            syncBtn.disabled = true;
+            syncBtn.classList.add('syncing');
+            syncBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Syncing...';
+            syncMessage.className = 'sync-status syncing';
+            if (syncText) {
+                syncText.textContent = 'Syncing your data...';
+            }
+            
+            try {
+                const result = await ImpactMojoAuth.syncAll();
+                
+                if (result.success) {
+                    showAlert('Data synced successfully!', 'success');
+                    const lastSync = ImpactMojoAuth.getLastSyncDisplay();
+                    if (syncText) {
+                        syncText.textContent = 'Your data is synced across devices. Last sync: ' + lastSync;
+                    }
+                    syncMessage.className = 'sync-status synced';
+                    
+                    // Refresh the saved items display
+                    updateSavedItemsDisplay();
+                } else {
+                    showAlert('Sync failed: ' + result.message, 'error');
+                    syncMessage.className = 'sync-status local';
+                    if (syncText) {
+                        syncText.textContent = 'Sync failed. Please try again.';
+                    }
+                }
+            } catch (err) {
+                showAlert('Sync error: ' + err.message, 'error');
+                syncMessage.className = 'sync-status local';
+            }
+            
+            // Reset button
+            syncBtn.disabled = false;
+            syncBtn.classList.remove('syncing');
+            syncBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Sync Now';
+        }
+        
+        // Listen for sync events from auth.js
+        window.addEventListener('dataSynced', () => {
+            updateSavedItemsDisplay();
+        });
+        
+        window.addEventListener('syncComplete', () => {
+            const lastSync = ImpactMojoAuth.getLastSyncDisplay();
+            const syncText = document.getElementById('syncStatusText');
+            if (syncText && ImpactMojoAuth.isLoggedIn()) {
+                syncText.textContent = 'Your data is synced across devices. Last sync: ' + lastSync;
+            }
+        });
 
         // =====================================================
         // PROFILE FORM HANDLER
@@ -1552,15 +1665,3 @@
         // =====================================================
         document.addEventListener('DOMContentLoaded', () => {
             // Update saved items from localStorage immediately
-            updateSavedItemsDisplay();
-            
-            // Check auth after a short delay
-            setTimeout(() => {
-                if (!ImpactMojoAuth.isLoggedIn()) {
-                    window.location.href = 'login.html';
-                }
-            }, 2000);
-        });
-    </script>
-</body>
-</html>
