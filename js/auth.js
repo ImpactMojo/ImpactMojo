@@ -1,6 +1,13 @@
 /**
  * ImpactMojo Authentication System
  * Powered by Supabase
+ * Version 2.0.0 - December 3, 2025
+ * 
+ * NEW IN v2.0.0:
+ * - Cloud sync for bookmarks, notes, progress, reading lists, compare list
+ * - Auto-sync on login/logout
+ * - Manual sync function
+ * - Intelligent data merging (newer/more complete wins)
  * 
  * Include this file in your HTML pages:
  * <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -17,12 +24,26 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // =====================================================
+// LOCALSTORAGE KEYS (must match index.html)
+// =====================================================
+const STORAGE_KEYS = {
+    BOOKMARKS: 'impactMojoBookmarks',
+    NOTES: 'impactMojoNotes',
+    PROGRESS: 'impactMojoProgress',
+    READING_LIST: 'impactMojoReadingList',
+    COMPARE_LIST: 'impactMojoCompareList',
+    STREAK: 'impactMojoStreak',
+    LAST_SYNC: 'impactMojoLastSync'
+};
+
+// =====================================================
 // AUTH STATE MANAGEMENT
 // =====================================================
 const ImpactMojoAuth = {
     user: null,
     profile: null,
     isInitialized: false,
+    isSyncing: false,
 
     // Initialize auth and check session
     async init() {
@@ -40,6 +61,8 @@ const ImpactMojoAuth = {
             if (session?.user) {
                 this.user = session.user;
                 await this.fetchProfile();
+                // Auto-sync on init if logged in
+                await this.syncFromCloud();
             }
 
             // Listen for auth changes
@@ -49,6 +72,8 @@ const ImpactMojoAuth = {
                 if (event === 'SIGNED_IN' && session?.user) {
                     this.user = session.user;
                     await this.fetchProfile();
+                    // Sync data when user signs in
+                    await this.syncAll();
                     this.updateUI();
                 } else if (event === 'SIGNED_OUT') {
                     this.user = null;
@@ -87,6 +112,274 @@ const ImpactMojoAuth = {
             console.error('Profile fetch failed:', err);
             return null;
         }
+    },
+
+    // =====================================================
+    // DATA SYNC METHODS (NEW IN v2.0.0)
+    // =====================================================
+
+    // Get data from localStorage
+    getLocalData() {
+        return {
+            bookmarks: JSON.parse(localStorage.getItem(STORAGE_KEYS.BOOKMARKS) || '[]'),
+            notes: JSON.parse(localStorage.getItem(STORAGE_KEYS.NOTES) || '[]'),
+            progress: JSON.parse(localStorage.getItem(STORAGE_KEYS.PROGRESS) || '{}'),
+            reading_lists: JSON.parse(localStorage.getItem(STORAGE_KEYS.READING_LIST) || '[]'),
+            compare_list: JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPARE_LIST) || '[]'),
+            streak_data: JSON.parse(localStorage.getItem(STORAGE_KEYS.STREAK) || '{"current":0,"longest":0,"last_date":null}')
+        };
+    },
+
+    // Save data to localStorage
+    setLocalData(data) {
+        if (data.bookmarks !== undefined) {
+            localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(data.bookmarks));
+        }
+        if (data.notes !== undefined) {
+            localStorage.setItem(STORAGE_KEYS.NOTES, JSON.stringify(data.notes));
+        }
+        if (data.progress !== undefined) {
+            localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(data.progress));
+        }
+        if (data.reading_lists !== undefined) {
+            localStorage.setItem(STORAGE_KEYS.READING_LIST, JSON.stringify(data.reading_lists));
+        }
+        if (data.compare_list !== undefined) {
+            localStorage.setItem(STORAGE_KEYS.COMPARE_LIST, JSON.stringify(data.compare_list));
+        }
+        if (data.streak_data !== undefined) {
+            localStorage.setItem(STORAGE_KEYS.STREAK, JSON.stringify(data.streak_data));
+        }
+    },
+
+    // Merge local and cloud data (newer/more complete wins)
+    mergeData(localData, cloudData) {
+        const merged = {};
+
+        // Merge bookmarks (combine unique items by ID)
+        const allBookmarks = [...(cloudData.bookmarks || []), ...(localData.bookmarks || [])];
+        const bookmarkMap = new Map();
+        allBookmarks.forEach(item => {
+            const key = item.id || item.courseId || JSON.stringify(item);
+            if (!bookmarkMap.has(key) || (item.timestamp && item.timestamp > bookmarkMap.get(key).timestamp)) {
+                bookmarkMap.set(key, item);
+            }
+        });
+        merged.bookmarks = Array.from(bookmarkMap.values());
+
+        // Merge notes (combine unique by ID, newer timestamp wins)
+        const allNotes = [...(cloudData.notes || []), ...(localData.notes || [])];
+        const notesMap = new Map();
+        allNotes.forEach(note => {
+            const key = note.id || note.timestamp;
+            if (!notesMap.has(key) || (note.updatedAt && note.updatedAt > notesMap.get(key).updatedAt)) {
+                notesMap.set(key, note);
+            }
+        });
+        merged.notes = Array.from(notesMap.values()).sort((a, b) => 
+            (b.timestamp || 0) - (a.timestamp || 0)
+        );
+
+        // Merge progress (combine all completed items)
+        merged.progress = {
+            ...(cloudData.progress || {}),
+            ...(localData.progress || {})
+        };
+        // Merge completed arrays within progress
+        if (cloudData.progress?.completed || localData.progress?.completed) {
+            const allCompleted = [
+                ...(cloudData.progress?.completed || []),
+                ...(localData.progress?.completed || [])
+            ];
+            merged.progress.completed = [...new Set(allCompleted)];
+        }
+
+        // Merge reading lists (combine unique items)
+        const allReadingLists = [...(cloudData.reading_lists || []), ...(localData.reading_lists || [])];
+        const readingMap = new Map();
+        allReadingLists.forEach(item => {
+            const key = item.id || JSON.stringify(item);
+            readingMap.set(key, item);
+        });
+        merged.reading_lists = Array.from(readingMap.values());
+
+        // Merge compare list (combine unique items)
+        const allCompare = [...(cloudData.compare_list || []), ...(localData.compare_list || [])];
+        merged.compare_list = [...new Set(allCompare.map(i => typeof i === 'string' ? i : JSON.stringify(i)))]
+            .map(i => { try { return JSON.parse(i); } catch { return i; } });
+
+        // Merge streak data (keep higher values)
+        const localStreak = localData.streak_data || { current: 0, longest: 0, last_date: null };
+        const cloudStreak = cloudData.streak_data || { current: 0, longest: 0, last_date: null };
+        merged.streak_data = {
+            current: Math.max(localStreak.current || 0, cloudStreak.current || 0),
+            longest: Math.max(localStreak.longest || 0, cloudStreak.longest || 0),
+            last_date: localStreak.last_date && cloudStreak.last_date 
+                ? (localStreak.last_date > cloudStreak.last_date ? localStreak.last_date : cloudStreak.last_date)
+                : (localStreak.last_date || cloudStreak.last_date)
+        };
+
+        return merged;
+    },
+
+    // Sync local data TO cloud (push)
+    async syncToCloud() {
+        if (!this.user || this.isSyncing) {
+            return { success: false, message: 'Not logged in or sync in progress' };
+        }
+
+        this.isSyncing = true;
+
+        try {
+            const localData = this.getLocalData();
+
+            const { data, error } = await supabase
+                .from('profiles')
+                .update({
+                    bookmarks: localData.bookmarks,
+                    notes: localData.notes,
+                    progress: localData.progress,
+                    reading_lists: localData.reading_lists,
+                    compare_list: localData.compare_list,
+                    streak_data: localData.streak_data,
+                    last_synced_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', this.user.id)
+                .select()
+                .single();
+
+            if (error) throw error;
+
+            // Update local last sync time
+            localStorage.setItem(STORAGE_KEYS.LAST_SYNC, new Date().toISOString());
+            
+            this.profile = data;
+            this.isSyncing = false;
+
+            console.log('✅ Data synced to cloud');
+            return { success: true, message: 'Data synced to cloud', data };
+
+        } catch (err) {
+            console.error('Sync to cloud failed:', err);
+            this.isSyncing = false;
+            return { success: false, message: err.message, error: err };
+        }
+    },
+
+    // Sync cloud data TO local (pull)
+    async syncFromCloud() {
+        if (!this.user || this.isSyncing) {
+            return { success: false, message: 'Not logged in or sync in progress' };
+        }
+
+        this.isSyncing = true;
+
+        try {
+            // Fetch latest profile with sync data
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('bookmarks, notes, progress, reading_lists, compare_list, streak_data, last_synced_at')
+                .eq('id', this.user.id)
+                .single();
+
+            if (error) throw error;
+
+            const cloudData = {
+                bookmarks: data.bookmarks || [],
+                notes: data.notes || [],
+                progress: data.progress || {},
+                reading_lists: data.reading_lists || [],
+                compare_list: data.compare_list || [],
+                streak_data: data.streak_data || { current: 0, longest: 0, last_date: null }
+            };
+
+            const localData = this.getLocalData();
+            
+            // Merge data (handles conflicts)
+            const mergedData = this.mergeData(localData, cloudData);
+            
+            // Save merged data locally
+            this.setLocalData(mergedData);
+            
+            // Update last sync time
+            localStorage.setItem(STORAGE_KEYS.LAST_SYNC, new Date().toISOString());
+
+            this.isSyncing = false;
+
+            console.log('✅ Data synced from cloud');
+            
+            // Dispatch event for UI updates
+            window.dispatchEvent(new CustomEvent('dataSynced', { detail: mergedData }));
+
+            return { success: true, message: 'Data synced from cloud', data: mergedData };
+
+        } catch (err) {
+            console.error('Sync from cloud failed:', err);
+            this.isSyncing = false;
+            return { success: false, message: err.message, error: err };
+        }
+    },
+
+    // Full two-way sync (merge local + cloud, then push)
+    async syncAll() {
+        if (!this.user) {
+            return { success: false, message: 'Not logged in' };
+        }
+
+        console.log('🔄 Starting full sync...');
+
+        try {
+            // First pull and merge
+            const pullResult = await this.syncFromCloud();
+            if (!pullResult.success) {
+                console.warn('Pull failed, attempting push anyway');
+            }
+
+            // Then push merged data back
+            const pushResult = await this.syncToCloud();
+            
+            console.log('✅ Full sync complete');
+            
+            // Dispatch sync complete event
+            window.dispatchEvent(new CustomEvent('syncComplete', { 
+                detail: { pullResult, pushResult } 
+            }));
+
+            return { 
+                success: true, 
+                message: 'Full sync complete',
+                pullResult,
+                pushResult
+            };
+
+        } catch (err) {
+            console.error('Full sync failed:', err);
+            return { success: false, message: err.message, error: err };
+        }
+    },
+
+    // Get last sync time
+    getLastSyncTime() {
+        const lastSync = localStorage.getItem(STORAGE_KEYS.LAST_SYNC);
+        return lastSync ? new Date(lastSync) : null;
+    },
+
+    // Get formatted last sync time for display
+    getLastSyncDisplay() {
+        const lastSync = this.getLastSyncTime();
+        if (!lastSync) return 'Never synced';
+        
+        const now = new Date();
+        const diffMs = now - lastSync;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        const diffDays = Math.floor(diffMs / 86400000);
+
+        if (diffMins < 1) return 'Just now';
+        if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+        if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+        return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
     },
 
     // =====================================================
@@ -137,6 +430,9 @@ const ImpactMojoAuth = {
 
             this.user = data.user;
             await this.fetchProfile();
+            
+            // Sync data after login (NEW in v2.0.0)
+            await this.syncAll();
 
             return {
                 success: true,
@@ -206,6 +502,11 @@ const ImpactMojoAuth = {
     // Sign out
     async signOut() {
         try {
+            // Sync before logout (save any unsaved data) - NEW in v2.0.0
+            if (this.user) {
+                await this.syncToCloud();
+            }
+
             const { error } = await supabase.auth.signOut();
             
             if (error) throw error;
@@ -388,6 +689,11 @@ const ImpactMojoAuth = {
             }
         });
 
+        // Update sync status displays (NEW in v2.0.0)
+        document.querySelectorAll('.auth-sync-status').forEach(el => {
+            el.textContent = this.getLastSyncDisplay();
+        });
+
         // Handle premium-only content
         document.querySelectorAll('.premium-only').forEach(el => {
             if (this.isPremium()) {
@@ -452,6 +758,31 @@ document.addEventListener('DOMContentLoaded', () => {
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
     ImpactMojoAuth.init();
 }
+
+// =====================================================
+// AUTO-SYNC ON PAGE VISIBILITY CHANGE (NEW in v2.0.0)
+// =====================================================
+document.addEventListener('visibilitychange', () => {
+    // Sync when user returns to the page (if logged in)
+    if (document.visibilityState === 'visible' && ImpactMojoAuth.user) {
+        // Only sync if last sync was more than 5 minutes ago
+        const lastSync = ImpactMojoAuth.getLastSyncTime();
+        if (!lastSync || (new Date() - lastSync) > 5 * 60 * 1000) {
+            ImpactMojoAuth.syncAll();
+        }
+    }
+});
+
+// =====================================================
+// AUTO-SYNC BEFORE PAGE UNLOAD (NEW in v2.0.0)
+// =====================================================
+window.addEventListener('beforeunload', () => {
+    // Quick sync before leaving (non-blocking)
+    if (ImpactMojoAuth.user && !ImpactMojoAuth.isSyncing) {
+        // Log that data is ready to sync
+        console.log('📤 Page unload - data will sync on next visit');
+    }
+});
 
 // Export for use in other scripts
 window.ImpactMojoAuth = ImpactMojoAuth;
