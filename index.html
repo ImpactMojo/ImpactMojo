@@ -39,12 +39,12 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta name="version" content="7.9.9.20251203">
+<meta name="version" content="8.0.1.20251205">
 
 <!-- Aggressive cache-busting script -->
 <script>
 (function() {
-    var CURRENT_VERSION = '7.9.9.20251203';
+    var CURRENT_VERSION = '8.0.1.20251205';
     var STORAGE_KEY = 'imx_page_version';
     
     try {
@@ -746,8 +746,7 @@
         /* Cookie Consent - Minimal Cookie Icon Design */
         .cookie-consent {
             position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
+            bottom: 2rem;
             left: 20px;
             z-index: 9998;
             font-family: 'Inter', sans-serif;
@@ -795,7 +794,7 @@
 
         .cookie-expanded {
             position: absolute;
-            top: 60px;
+            bottom: 60px;
             left: 0;
             width: 320px;
             background: var(--card-bg);
@@ -888,7 +887,7 @@
         @media (max-width: 480px) {
             .cookie-consent {
                 left: 10px;
-                top: 45%;
+                bottom: 1.5rem;
             }
             .cookie-expanded {
                 width: calc(100vw - 40px);
@@ -897,25 +896,33 @@
         }
 
         /* UserWay Accessibility Widget Positioning */
-        /* Move UserWay DOWN and away from header buttons (theme toggle) */
+        /* Move UserWay to TOP LEFT to completely avoid toolbox overlap */
         .acsb-trigger,
         #acsb-trigger,
         [data-acsb-trigger],
         .acsb-trigger-wrap,
-        div[class*="acsb"] {
-            top: auto !important;
-            bottom: 20px !important;
-            right: 20px !important;
+        div[class*="acsb"],
+        .userway_p1 {
+            position: fixed !important;
+            top: 100px !important;
+            left: 20px !important;
+            right: auto !important;
+            bottom: auto !important;
+            z-index: 999 !important;
         }
         
-        /* Ensure it doesn't overlap with Speed Dial toolbox */
+        /* Mobile positioning for UserWay */
         @media (max-width: 768px) {
             .acsb-trigger,
             #acsb-trigger,
             [data-acsb-trigger],
-            .acsb-trigger-wrap {
-                bottom: 80px !important;
-                right: 10px !important;
+            .acsb-trigger-wrap,
+            div[class*="acsb"],
+            .userway_p1 {
+                top: 80px !important;
+                left: 10px !important;
+                right: auto !important;
+                bottom: auto !important;
             }
         }
 
@@ -2879,22 +2886,9 @@
         }
 
         /* Feedback FAB */
+        /* Standalone Mojini FAB - moved into Speed Dial toolbox */
         .feedback-fab {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            box-shadow: var(--shadow-lg);
-            transition: all 0.3s;
-            z-index: 1000;
+            display: none; /* Now accessed via Speed Dial toolbox */
         }
 
         .feedback-fab:hover {
@@ -3118,8 +3112,8 @@
             .imx-speed-dial {
                 position: fixed !important;
                 bottom: 1.25rem !important;
-                left: 1rem !important;
-                right: auto !important;
+                right: 3rem !important;
+                left: auto !important;
                 z-index: 1000;
             }
             
@@ -3128,23 +3122,15 @@
                 height: 52px !important;
             }
 
+            /* Standalone Mojini FAB removed - now in Speed Dial */
             .feedback-fab {
-                position: fixed !important;
-                bottom: 1.25rem !important;
-                right: 1rem !important;
-                left: auto !important;
-                z-index: 1000;
-                width: 52px !important;
-                height: 52px !important;
+                display: none !important;
             }
 
-            .imx-speed-dial-toggle,
-            .feedback-fab {
-                width: 52px;
-                height: 52px;
+            .imx-speed-dial-label {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.6rem;
             }
-            
-            /* Remove the duplicate rule */
             
             /* ===== MOBILE TOUR STYLES ===== */
             .imx-tour-welcome {
@@ -3454,7 +3440,7 @@
 .imx-speed-dial {
     position: fixed;
     bottom: 2rem;
-    left: 2rem;
+    right: 5rem;
     z-index: 1000;
 }
 
@@ -3510,7 +3496,7 @@
 .imx-speed-dial-menu {
     position: absolute;
     bottom: 70px;
-    left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -3526,10 +3512,11 @@
     transform: translateY(0);
 }
 
-/* Speed Dial Items */
+/* Speed Dial Items - label on left, button on right */
 .imx-speed-dial-item {
     display: flex;
     align-items: center;
+    flex-direction: row-reverse;
     gap: 0.75rem;
     opacity: 0;
     transform: translateY(10px) scale(0.8);
@@ -3551,6 +3538,7 @@
 .imx-speed-dial.open .imx-speed-dial-item:nth-child(7) { transition-delay: 0.14s; }
 .imx-speed-dial.open .imx-speed-dial-item:nth-child(8) { transition-delay: 0.16s; }
 .imx-speed-dial.open .imx-speed-dial-item:nth-child(9) { transition-delay: 0.18s; }
+.imx-speed-dial.open .imx-speed-dial-item:nth-child(10) { transition-delay: 0.20s; }
 
 .imx-speed-dial-label {
     background: var(--card-bg);
@@ -4598,7 +4586,8 @@
 @media (max-width: 768px) {
     .imx-speed-dial {
         bottom: 1rem;
-        left: 1rem;
+        right: 1rem;
+        left: auto;
     }
     
     .imx-speed-dial-toggle {
@@ -4745,8 +4734,8 @@
     div.imx-speed-dial {
         position: fixed !important;
         bottom: 20px !important;
-        left: 16px !important;
-        right: auto !important;
+        right: 16px !important;
+        left: auto !important;
         top: auto !important;
         z-index: 1000 !important;
     }
@@ -4756,15 +4745,9 @@
         height: 54px !important;
     }
     
+    /* Standalone Mojini FAB hidden - now in toolbox */
     div.feedback-fab#mojini-chat-toggle {
-        position: fixed !important;
-        bottom: 20px !important;
-        right: 16px !important;
-        left: auto !important;
-        top: auto !important;
-        z-index: 1000 !important;
-        width: 54px !important;
-        height: 54px !important;
+        display: none !important;
     }
 }
 </style>
@@ -4920,10 +4903,12 @@
 </svg>
 </a>
 <ul class="dropdown-menu" id="about-dropdown">
+<li id="nav-about-page"><a href="about.html">About ImpactMojo</a></li>
 <li id="nav-team"><a href="#about">Our Team</a></li>
 <li id="nav-testimonials"><a href="#wall-of-love">Testimonials</a></li>
 <li id="nav-roadmap"><a href="#roadmap">Roadmap</a></li>
 <li class="dropdown-divider"></li>
+<li id="nav-community"><a href="community/community.html">Community <svg class="inline-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></a></li>
 <li id="nav-whats-new"><a href="#whats-new">What's New <svg class="inline-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg></a></li>
 <li id="nav-support"><a href="#support-us">Support Us <svg class="inline-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a></li>
 <li class="dropdown-divider"></li>
@@ -4933,6 +4918,9 @@
 
 <!-- Blog Link -->
 <li id="nav-blog"><a href="blog.html">Blog <svg class="inline-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></a></li>
+
+<!-- Podcast Link -->
+<li id="nav-podcast"><a href="podcast.html">Podcast <svg class="inline-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></a></li>
 </ul>
 </div><!-- end nav-with-badge -->
 <div class="nav-buttons">
@@ -6592,43 +6580,6 @@ Workshops & Master Classes
 </div>
 <p class="card-description">Comprehensive statistical analysis toolkit</p>
 </a>
-</div>
-<div class="card" data-required-tier="practitioner" data-tier-benefits="🔓 Upgrade to Practitioner (₹399/mo): Unlock advanced research tools, completion certificates & Discord/Telegram community!">
-<a href="https://101.impactmojo.in/IMResearchQuestionsPro" target="_blank">
-<div class="card-header">
-<span class="card-number premium">
-<svg class="icon-sm" viewbox="0 0 24 24">
-<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-</svg>
-                                PREMIUM
-                            </span>
-<span class="learner-badge">
-<svg class="icon-sm" viewbox="0 0 24 24">
-<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-<circle cx="9" cy="7" r="4"></circle>
-</svg>
-                                540 Users
-                            </span>
-</div>
-<h3 class="card-title">Research Questions Pro</h3>
-<div class="star-rating">
-<div class="stars">
-<svg class="star-icon" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-<svg class="star-icon" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-<svg class="star-icon" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-<svg class="star-icon" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-<svg class="star-icon" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-</div>
-<span class="rating-text">4.8</span>
-<span class="rating-count">(89 reviews)</span>
-</div>
-<p class="card-description">Advanced research question formulation and hypothesis development framework</p>
-<div class="card-testimonial">
-                            "This tool transformed how I approach research design. The question formulation framework helped me develop sharper, more actionable research questions for my PhD dissertation."
-                            <span class="card-testimonial-author">— Ankita Verma, Doctoral Researcher</span>
-</div>
-</a>
-</div>
 </div>
 <div class="action-buttons">
 <button class="btn btn-premium" onclick="openModal('premiumModal')">
@@ -8304,7 +8255,7 @@ Workshops & Master Classes
 <div class="modal-item-content">
 <a href="https://101.impactmojo.in/researchQ-pro" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">
-                        Research Question Pro
+                        RQ Builder Pro
                         <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 <svg class="star-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.26 12 2"></polygon></svg>
@@ -9446,11 +9397,11 @@ Workshops & Master Classes
 <div class="footer-section">
 <h4>About ImpactMojo</h4>
 <ul>
-<li><a href="#about">About Us</a></li>
+<li><a href="about.html">About Us</a></li>
+<li><a href="community/community.html">Community</a></li>
 <li><a href="#support-us">Support Us</a></li>
 <li><a href="#" onclick="openModal('contactModal'); return false;">Contact</a></li>
 <li><a href="https://github.com/impactmojo" target="_blank">GitHub (Open Source)</a></li>
-<li>MIT License</li>
 </ul>
 </div>
 <div class="footer-section">
@@ -9478,9 +9429,10 @@ Workshops & Master Classes
 <h4>Resources</h4>
 <ul>
 <li><a href="handouts.html">Educational Handouts</a></li>
+<li><a href="blog.html">Learning Loops Blog</a></li>
+<li><a href="podcast.html">Between the Logframes</a></li>
 <li><a href="https://varna.substack.com" target="_blank">Research Newsletter</a></li>
 <li><a href="faq.html">FAQ</a></li>
-<li><a onclick="openChatbot()">Feedback</a></li>
 <li><a href="sitemap.html">Sitemap</a></li>
 </ul>
 </div>
@@ -9505,12 +9457,7 @@ Workshops & Master Classes
 <!-- Google Calendar Integration -->
 <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet"/>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script async="" src="https://calendar.google.com/calendar/scheduling-button-script.js"></script>
-<!-- Feedback FAB -->
-<div class="feedback-fab" id="mojini-chat-toggle" onclick="openChatbot()">
-<svg class="icon" viewbox="0 0 24 24">
-<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-</svg>
-</div>
+<!-- Mojini FAB moved into Speed Dial toolbox -->
 <script>
         // Cookie Consent
         window.addEventListener('DOMContentLoaded', () => {
@@ -11184,6 +11131,14 @@ document.addEventListener('DOMContentLoaded', function(){
     
     <!-- Speed Dial Menu -->
     <div class="imx-speed-dial-menu">
+        <!-- Mojini Assist -->
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Mojini</span>
+            <button class="imx-speed-dial-btn imx-sd-mojini" onclick="openChatbot(); IMX.SpeedDial.close();" title="Chat with Mojini" aria-label="Open Mojini chatbot" style="background: linear-gradient(135deg, #F97316, #EA580C);">
+                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </button>
+        </div>
+        
         <!-- Reading Lists -->
         <div class="imx-speed-dial-item">
             <span class="imx-speed-dial-label">Reading Lists</span>
@@ -11692,18 +11647,6 @@ var IMPACTMOJO_COURSE_DATA = {
         duration: '15-25 minutes',
         format: 'Interactive simulation',
         url: 'https://101.impactmojo.in/prisoners-dilemma-game'
-    },
-    'research-questions-pro': {
-        name: 'Research Questions Pro',
-        type: 'Premium',
-        rating: '4.8',
-        learners: '540+',
-        description: 'Advanced research question formulation and hypothesis development framework',
-        objectives: ['Develop sharp research questions', 'Build testable hypotheses', 'Design research frameworks', 'Apply to thesis work'],
-        audience: 'Advanced - Researchers',
-        duration: '4-6 hours',
-        format: 'Interactive framework',
-        url: 'https://101.impactmojo.in/IMResearchQuestionsPro'
     }
 };
 
@@ -13352,13 +13295,13 @@ IMX.Tour = {
     },
     
     steps: [
-        // 1. ACCESSIBILITY - First after welcome
+        // 1. ACCESSIBILITY - First after welcome (TOP LEFT)
         {
             target: '.acsb-trigger',
             icon: 'accessibility',
             title: 'Accessibility',
-            desc: 'Welcome to ImpactMojo! Let\'s show you around. First, this button lets you customize your viewing experience - adjust text size, contrast, colors, and more.',
-            position: 'left-of-target'
+            desc: 'Welcome to ImpactMojo! Let\'s show you around. First, this button (top-left) lets you customize your viewing experience - adjust text size, contrast, colors, and more.',
+            position: 'right-of-target'
         },
         // 2. THEME TOGGLE
         {
@@ -13502,6 +13445,14 @@ IMX.Tour = {
             }
         },
         {
+            target: '#nav-about-page',
+            icon: 'cursor',
+            title: 'About ImpactMojo',
+            desc: 'Learn our story, mission, and vision. Discover how ImpactMojo is democratizing development education across South Asia.',
+            position: 'right-of-target',
+            desktopOnly: true
+        },
+        {
             target: '#nav-team',
             icon: 'cursor',
             title: 'Our Team',
@@ -13526,6 +13477,14 @@ IMX.Tour = {
             desktopOnly: true
         },
         {
+            target: '#nav-community',
+            icon: 'heart',
+            title: 'Community',
+            desc: 'Join our growing community of development practitioners! Connect, learn, and share with others on a similar journey.',
+            position: 'right-of-target',
+            desktopOnly: true
+        },
+        {
             target: '#nav-contact',
             icon: 'cursor',
             title: 'Contact',
@@ -13546,6 +13505,15 @@ IMX.Tour = {
             position: 'below-target',
             desktopOnly: true
         },
+        // PODCAST - Between the Logframes
+        {
+            target: '#nav-podcast',
+            icon: 'music',
+            title: 'Between the Logframes Podcast',
+            desc: 'Listen to Dr. Varna and Vandana discuss real-world development challenges, MEAL insights, and stories from the field. Subscribe wherever you get your podcasts!',
+            position: 'below-target',
+            desktopOnly: true
+        },
         // AUTH BUTTONS - Account Access
         {
             target: '.auth-btn-signup',
@@ -13563,25 +13531,17 @@ IMX.Tour = {
             desc: 'Every card has Save and Compare buttons. Click any card to explore courses, labs, and games.',
             position: 'top'
         },
-        // LEARNING TOOLBOX - overview only, no sub-items
+        // LEARNING TOOLBOX - includes Mojini
         {
             target: '#imxSpeedDialToggle',
             icon: 'bookmark',
             title: 'Learning Toolbox',
-            desc: 'Your productivity hub! Click to access Notes, Streak tracker, Bookmarks, Compare tool, Lo-Fi Music, Pomodoro Timer, Analytics, and Reading Lists. Explore them all!',
-            position: 'right-of-target',
+            desc: 'Your productivity hub! Click to access Mojini assistant, Notes, Streak tracker, Bookmarks, Compare tool, Lo-Fi Music, Pomodoro Timer, Analytics, and Reading Lists.',
+            position: 'left-of-target',
             action: function() {
                 IMX.SpeedDial.open();
-                setTimeout(function() { IMX.SpeedDial.close(); }, 2000);
+                setTimeout(function() { IMX.SpeedDial.close(); }, 2500);
             }
-        },
-        // MOJINI
-        {
-            target: '#mojini-chat-toggle',
-            icon: 'robot',
-            title: 'Meet MOJINI',
-            desc: 'Your friendly learning companion! Ask MOJINI questions about courses, get recommendations, or find help navigating the platform.',
-            position: 'left-of-target'
         },
         // WHAT'S NEW (starburst and section)
         {
