@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <!--
     ╔══════════════════════════════════════════════════════════════════════════════╗
-    ║  IMPACTMOJO - FULL CATALOGUE PAGE                                            ║
-    ║  Version: 3.0.0 - December 5, 2025                                           ║
-    ║  Complete catalogue with Courses, Labs, Games, Premium Tools                 ║
+    ║  IMPACTMOJO - COURSE CATALOGUE PAGE                                          ║
+    ║  Version: 2.0.1 - December 5, 2025                                           ║
+    ║  Dynamic course loading with filtering and search                            ║
     ║                                                                              ║
     ║  INCLUDED FEATURES:                                                          ║
-    ║  ✓ Google Analytics (G-JRCMEB9TBW)                                          ║
-    ║  ✓ UserWay Accessibility Widget (account: EksmhlPg9k)                       ║
-    ║  ✓ Theme Toggle (Sun/Moon) with localStorage sync                           ║
-    ║  ✓ Auto-refresh on back/forward navigation                                  ║
-    ║  ✓ Mojini Chatbot                                                           ║
-    ║  ✓ 40 Courses with category filtering                                       ║
-    ║  ✓ 10 Labs with descriptions                                                ║
-    ║  ✓ 12 Games with descriptions                                               ║
-    ║  ✓ 3 Premium Tools                                                          ║
-    ║  ✓ Handouts link                                                            ║
-    ║  ✓ Tab-based navigation between sections                                    ║
-    ║  ✓ Real-time search                                                         ║
-    ║  ✓ Beautiful animated cards                                                 ║
-    ║  ✓ Full 4-section footer                                                    ║
+    ║  ✓ Google Analytics (G-JRCMEB9TBW)                                           ║
+    ║  ✓ UserWay Accessibility Widget (account: EksmhlPg9k)                        ║
+    ║  ✓ Theme Toggle (Sun/Moon) with localStorage sync                            ║
+    ║  ✓ Auto-refresh on back/forward navigation                                   ║
+    ║  ✓ Mojini Chatbot                                                            ║
+    ║  ✓ 40 courses with category filtering                                        ║
+    ║  ✓ Real-time search                                                          ║
+    ║  ✓ Beautiful animated cards                                                  ║
+    ║  ✓ Full 4-section footer                                                     ║
     ╚══════════════════════════════════════════════════════════════════════════════╝
 -->
 <html lang="en">
@@ -43,7 +38,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta name="version" content="3.0.0.20251205">
+<meta name="version" content="2.0.1.20251205">
 
 <!-- Auto-refresh on back/forward navigation -->
 <script>
@@ -55,17 +50,17 @@ window.addEventListener('pageshow', function(event) {
 </script>
 
 <!-- SEO Meta Tags -->
-<meta name="description" content="ImpactMojo Full Catalogue - 40+ free courses, 10 interactive labs, 12 economics games, and premium research tools for development professionals.">
-<meta property="og:title" content="Full Catalogue | ImpactMojo">
-<meta property="og:description" content="40+ free courses, 10 labs, 12 games, and premium tools for development professionals.">
+<meta name="description" content="Course Catalogue - 40+ free courses on MEAL, Theory of Change, research methods, gender studies, development economics, and more for development professionals.">
+<meta property="og:title" content="Course Catalogue | ImpactMojo">
+<meta property="og:description" content="40+ free courses on MEAL, research methods, gender studies, development economics and more.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.impactmojo.in/catalog.html">
 <meta property="og:image" content="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Full Catalogue | ImpactMojo">
-<meta name="twitter:description" content="40+ free courses, 10 labs, 12 games for development professionals.">
+<meta name="twitter:title" content="Course Catalogue | ImpactMojo">
+<meta name="twitter:description" content="40+ free courses for development professionals.">
 
-<title>Full Catalogue | ImpactMojo</title>
+<title>Course Catalogue | ImpactMojo</title>
 
 <!-- Favicons -->
 <link href="assets/images/favicon.png" rel="icon" type="image/png">
@@ -96,7 +91,6 @@ window.addEventListener('pageshow', function(event) {
     --success-color: #10B981;
     --warning-color: #F59E0B;
     --danger-color: #EF4444;
-    --premium-color: #D946EF;
     --text-primary: #F1F5F9;
     --text-secondary: #94A3B8;
     --text-muted: #64748B;
@@ -109,8 +103,6 @@ window.addEventListener('pageshow', function(event) {
     --gradient-orange: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
     --gradient-pink: linear-gradient(135deg, #EC4899 0%, #BE185D 100%);
     --gradient-teal: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
-    --gradient-premium: linear-gradient(135deg, #D946EF 0%, #8B5CF6 100%);
-    --gradient-games: linear-gradient(135deg, #EF4444 0%, #F59E0B 100%);
     --nav-bg: rgba(15, 23, 42, 0.95);
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
     --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -159,9 +151,7 @@ body::before {
     padding: 0 24px;
 }
 
-/* =====================================================
-   HEADER / NAVIGATION
-===================================================== */
+/* Header */
 .header {
     position: sticky;
     top: 0;
@@ -212,41 +202,46 @@ body::before {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 24px;
-    list-style: none;
+    gap: 8px;
 }
 
-.nav-links a {
+.nav-link {
+    padding: 8px 16px;
+    border-radius: 8px;
     color: var(--text-secondary);
     text-decoration: none;
-    font-weight: 500;
     font-size: 0.9rem;
-    transition: color 0.2s ease;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
-.nav-links a:hover {
+.nav-link:hover {
+    color: var(--text-primary);
+    background: var(--hover-bg);
+}
+
+.nav-link.active {
     color: var(--accent-color);
-}
-
-.nav-buttons {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    background: rgba(14, 165, 233, 0.1);
 }
 
 .theme-toggle {
-    background: var(--hover-bg);
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 8px;
-    cursor: pointer;
+    background: var(--card-bg);
     color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.2s ease;
 }
 
 .theme-toggle:hover {
-    background: var(--accent-color);
-    color: white;
+    background: var(--hover-bg);
+    border-color: var(--accent-color);
 }
 
 .theme-toggle svg {
@@ -257,16 +252,25 @@ body::before {
     stroke-width: 2;
 }
 
-.mobile-menu-btn {
+.icon-sun { display: block; }
+.icon-moon { display: none; }
+body.light-mode .icon-sun { display: none; }
+body.light-mode .icon-moon { display: block; }
+
+.mobile-menu-toggle {
     display: none;
-    background: none;
-    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
     color: var(--text-primary);
     cursor: pointer;
-    padding: 8px;
+    align-items: center;
+    justify-content: center;
 }
 
-.mobile-menu-btn svg {
+.mobile-menu-toggle svg {
     width: 24px;
     height: 24px;
     stroke: currentColor;
@@ -274,23 +278,26 @@ body::before {
     stroke-width: 2;
 }
 
-/* =====================================================
-   PAGE HERO
-===================================================== */
-.page-hero {
-    padding: 48px 0 32px;
+/* Main Content */
+.main-content {
+    padding: 60px 0;
+    min-height: calc(100vh - 200px);
+}
+
+.page-header {
     text-align: center;
+    margin-bottom: 48px;
 }
 
 .page-title {
     font-family: 'Poppins', sans-serif;
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 800;
+    font-size: 2.5rem;
+    font-weight: 700;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .page-subtitle {
@@ -300,114 +307,53 @@ body::before {
     margin: 0 auto 24px;
 }
 
-/* =====================================================
-   SECTION TABS
-===================================================== */
-.section-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-    padding: 0 16px;
-}
-
-.section-tab {
-    display: flex;
+.course-count {
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 24px;
-    border: 2px solid var(--border-color);
-    border-radius: 50px;
-    background: var(--card-bg);
-    color: var(--text-secondary);
-    font-weight: 600;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    padding: 8px 16px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 20px;
+    color: var(--success-color);
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
-.section-tab svg {
-    width: 18px;
-    height: 18px;
+.course-count svg {
+    width: 16px;
+    height: 16px;
     stroke: currentColor;
     fill: none;
     stroke-width: 2;
 }
 
-.section-tab:hover {
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-}
-
-.section-tab.active {
-    background: var(--gradient-primary);
-    border-color: transparent;
-    color: white;
-}
-
-.section-tab .tab-count {
-    background: rgba(255,255,255,0.2);
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-}
-
-.section-tab.active .tab-count {
-    background: rgba(255,255,255,0.3);
-}
-
-/* Tab-specific colors */
-.section-tab[data-section="courses"].active {
-    background: var(--gradient-primary);
-}
-.section-tab[data-section="labs"].active {
-    background: var(--gradient-green);
-}
-.section-tab[data-section="games"].active {
-    background: var(--gradient-games);
-}
-.section-tab[data-section="premium"].active {
-    background: var(--gradient-premium);
-}
-.section-tab[data-section="handouts"].active {
-    background: var(--gradient-purple);
-}
-
-/* =====================================================
-   SEARCH & FILTER BAR
-===================================================== */
-.search-filter-bar {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-}
-
+/* Search Box */
 .search-container {
-    position: relative;
-    flex: 1;
-    min-width: 280px;
     max-width: 500px;
+    margin: 0 auto 32px;
+    position: relative;
 }
 
 .search-box {
     width: 100%;
     padding: 14px 20px 14px 48px;
-    border: 2px solid var(--border-color);
-    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     background: var(--card-bg);
     color: var(--text-primary);
     font-size: 1rem;
-    transition: all 0.3s ease;
+    outline: none;
+    transition: all 0.2s ease;
 }
 
 .search-box:focus {
-    outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.search-box::placeholder {
+    color: var(--text-muted);
 }
 
 .search-icon {
@@ -422,108 +368,86 @@ body::before {
     stroke-width: 2;
 }
 
-.results-count {
-    font-weight: 600;
-    color: var(--text-secondary);
-    white-space: nowrap;
-}
-
-/* =====================================================
-   FILTER CHIPS (for Courses)
-===================================================== */
+/* Filter Bar */
 .filter-bar {
     display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 8px 0 16px;
-    margin-bottom: 16px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.filter-bar::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 40px;
 }
 
 .filter-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
+    padding: 10px 18px;
     border: 1px solid var(--border-color);
-    border-radius: 50px;
+    border-radius: 25px;
     background: var(--card-bg);
     color: var(--text-secondary);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
-    white-space: nowrap;
     transition: all 0.2s ease;
-}
-
-.filter-btn svg {
-    width: 14px;
-    height: 14px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .filter-btn:hover {
     border-color: var(--accent-color);
-    color: var(--accent-color);
+    color: var(--text-primary);
 }
 
 .filter-btn.active {
-    background: var(--accent-color);
-    border-color: var(--accent-color);
+    background: var(--gradient-primary);
     color: white;
+    border-color: transparent;
 }
 
 .filter-count {
-    background: rgba(255,255,255,0.2);
-    padding: 2px 6px;
-    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 11px;
     font-size: 0.75rem;
+    font-weight: 600;
 }
 
-/* =====================================================
-   CONTENT SECTIONS
-===================================================== */
-.content-section {
-    display: none;
-    animation: fadeIn 0.3s ease;
+.filter-btn:not(.active) .filter-count {
+    background: var(--hover-bg);
 }
 
-.content-section.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* =====================================================
-   CARDS GRID
-===================================================== */
-.cards-grid {
+/* Courses Grid */
+.courses-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 24px;
 }
 
-/* Course Card */
 .course-card {
     background: var(--card-bg);
-    border-radius: 20px;
-    overflow: hidden;
     border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
     transition: all 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.course-card.hidden {
+    display: none;
+}
+
+.course-card.fade-out {
+    opacity: 0;
+    transform: translateY(10px);
 }
 
 .course-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
     border-color: var(--accent-color);
 }
@@ -549,24 +473,14 @@ body::before {
     position: absolute;
     top: 12px;
     right: 12px;
+    padding: 5px 12px;
     background: var(--success-color);
     color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
     font-weight: 700;
-}
-
-.premium-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: var(--premium-color);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .course-content {
@@ -576,59 +490,60 @@ body::before {
 .course-tag {
     display: inline-block;
     padding: 4px 12px;
-    background: var(--hover-bg);
+    background: rgba(14, 165, 233, 0.1);
     border-radius: 20px;
     font-size: 0.75rem;
-    font-weight: 600;
     color: var(--accent-color);
+    font-weight: 500;
     margin-bottom: 12px;
 }
 
 .course-title {
     font-family: 'Poppins', sans-serif;
     font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text-primary);
+    font-weight: 600;
     margin-bottom: 8px;
+    color: var(--text-primary);
     line-height: 1.4;
 }
 
 .course-desc {
-    font-size: 0.9rem;
     color: var(--text-secondary);
+    font-size: 0.9rem;
     margin-bottom: 16px;
-    line-height: 1.5;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .course-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
 }
 
 .course-level {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.8rem;
     color: var(--text-muted);
+    font-size: 0.85rem;
 }
 
 .course-level svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     stroke: currentColor;
     fill: none;
     stroke-width: 2;
 }
 
 .course-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
+    padding: 10px 20px;
     background: var(--gradient-primary);
     color: white;
     text-decoration: none;
@@ -636,11 +551,14 @@ body::before {
     font-size: 0.85rem;
     font-weight: 600;
     transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .course-btn:hover {
     transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
 }
 
 .course-btn svg {
@@ -651,95 +569,11 @@ body::before {
     stroke-width: 2;
 }
 
-/* Lab Card Variations */
-.lab-card .course-image {
-    background: var(--gradient-green);
-}
-
-.lab-card .course-btn {
-    background: var(--gradient-green);
-}
-
-/* Game Card Variations */
-.game-card .course-image {
-    background: var(--gradient-games);
-}
-
-.game-card .course-btn {
-    background: var(--gradient-games);
-}
-
-/* Premium Card Variations */
-.premium-card {
-    border: 2px solid var(--premium-color);
-}
-
-.premium-card .course-image {
-    background: var(--gradient-premium);
-}
-
-.premium-card .course-btn {
-    background: var(--gradient-premium);
-}
-
-/* =====================================================
-   HANDOUTS SECTION
-===================================================== */
-.handouts-banner {
-    background: var(--gradient-purple);
-    border-radius: 24px;
-    padding: 48px;
-    text-align: center;
-    color: white;
-}
-
-.handouts-banner h2 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
-    margin-bottom: 16px;
-}
-
-.handouts-banner p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    max-width: 600px;
-    margin: 0 auto 24px;
-}
-
-.handouts-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 32px;
-    background: white;
-    color: #8B5CF6;
-    text-decoration: none;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.handouts-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-}
-
-.handouts-btn svg {
-    width: 20px;
-    height: 20px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-}
-
-/* =====================================================
-   EMPTY STATE
-===================================================== */
+/* Empty State */
 .empty-state {
-    display: none;
     text-align: center;
     padding: 60px 20px;
+    display: none;
 }
 
 .empty-state.visible {
@@ -747,16 +581,17 @@ body::before {
 }
 
 .empty-state svg {
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     stroke: var(--text-muted);
     fill: none;
     stroke-width: 1.5;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .empty-state h3 {
-    font-size: 1.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
     color: var(--text-primary);
     margin-bottom: 8px;
 }
@@ -765,18 +600,16 @@ body::before {
     color: var(--text-secondary);
 }
 
-/* =====================================================
-   FOOTER
-===================================================== */
+/* Footer */
 .footer {
     background: var(--secondary-bg);
     border-top: 1px solid var(--border-color);
-    padding: 60px 0 30px;
-    margin-top: 80px;
+    padding: 60px 0 40px;
+    margin-top: 60px;
 }
 
 .footer-content {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
 }
@@ -787,6 +620,7 @@ body::before {
     padding-bottom: 30px;
     border-bottom: 1px solid var(--border-color);
     color: var(--text-muted);
+    font-size: 0.9rem;
 }
 
 .footer-sponsor a {
@@ -794,9 +628,13 @@ body::before {
     text-decoration: none;
 }
 
-.footer-links {
+.footer-sponsor a:hover {
+    text-decoration: underline;
+}
+
+.footer-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 40px;
     margin-bottom: 40px;
 }
@@ -804,9 +642,9 @@ body::before {
 .footer-section h4 {
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
 
 .footer-section ul {
@@ -814,7 +652,7 @@ body::before {
 }
 
 .footer-section li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .footer-section a {
@@ -828,6 +666,11 @@ body::before {
     color: var(--accent-color);
 }
 
+.footer-section li:not(:has(a)) {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
 .footer-bottom {
     text-align: center;
     padding-top: 30px;
@@ -835,8 +678,8 @@ body::before {
 }
 
 .footer-bottom p {
-    font-size: 0.85rem;
     color: var(--text-muted);
+    font-size: 0.85rem;
     margin-bottom: 8px;
 }
 
@@ -845,53 +688,60 @@ body::before {
     text-decoration: none;
 }
 
-/* =====================================================
-   CHATBOT MODAL
-===================================================== */
-.chatbot-fab {
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom strong {
+    color: var(--text-secondary);
+}
+
+/* Mojini Chatbot */
+.feedback-fab {
     position: fixed;
     bottom: 24px;
     right: 24px;
-    width: 60px;
-    height: 60px;
-    background: var(--gradient-primary);
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
+    background: var(--gradient-primary);
+    border: none;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     box-shadow: var(--shadow-lg);
-    z-index: 999;
-    transition: transform 0.3s ease;
+    z-index: 9000;
+    transition: all 0.3s ease;
 }
 
-.chatbot-fab:hover {
+.feedback-fab:hover {
     transform: scale(1.1);
 }
 
-.chatbot-fab svg {
-    width: 28px;
-    height: 28px;
+.feedback-fab svg {
+    width: 24px;
+    height: 24px;
     stroke: white;
     fill: none;
     stroke-width: 2;
 }
 
 .chatbot-modal {
+    display: none;
     position: fixed;
-    bottom: 100px;
+    bottom: 90px;
     right: 24px;
     width: 380px;
     max-width: calc(100vw - 48px);
+    max-height: 500px;
     background: var(--card-bg);
-    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
     box-shadow: var(--shadow-xl);
-    z-index: 1000;
-    display: none;
+    z-index: 9001;
     flex-direction: column;
     overflow: hidden;
-    border: 1px solid var(--border-color);
-    max-height: 500px;
 }
 
 .chatbot-modal.active {
@@ -900,17 +750,17 @@ body::before {
 
 .chat-header {
     background: var(--gradient-primary);
+    color: white;
     padding: 16px 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    color: white;
+    justify-content: space-between;
 }
 
 .chat-header h3 {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     font-size: 1rem;
     font-weight: 600;
 }
@@ -918,46 +768,47 @@ body::before {
 .chat-header svg {
     width: 20px;
     height: 20px;
-    stroke: currentColor;
+    stroke: white;
     fill: none;
     stroke-width: 2;
 }
 
 .chat-close {
-    background: rgba(255,255,255,0.2);
+    background: none;
     border: none;
     color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+    font-size: 24px;
     cursor: pointer;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    opacity: 0.8;
+}
+
+.chat-close:hover {
+    opacity: 1;
 }
 
 .chat-messages {
     flex: 1;
-    padding: 20px;
     overflow-y: auto;
-    max-height: 320px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .message {
-    margin-bottom: 16px;
+    display: flex;
+    gap: 8px;
 }
 
 .bot-message {
-    display: flex;
-    gap: 10px;
+    flex-direction: row;
 }
 
 .bot-avatar {
-    width: 36px;
-    height: 36px;
-    background: var(--hover-bg);
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
+    background: var(--gradient-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -965,20 +816,26 @@ body::before {
 }
 
 .bot-avatar svg {
-    width: 20px;
-    height: 20px;
-    stroke: var(--accent-color);
+    width: 16px;
+    height: 16px;
+    stroke: white;
     fill: none;
     stroke-width: 2;
 }
 
 .bot-bubble {
-    background: var(--hover-bg);
-    padding: 12px 16px;
-    border-radius: 16px 16px 16px 4px;
-    max-width: 280px;
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 16px;
     font-size: 0.9rem;
+    line-height: 1.5;
+    background: var(--secondary-bg);
     color: var(--text-primary);
+    border-bottom-left-radius: 4px;
+}
+
+.bot-bubble a {
+    color: var(--accent-color);
 }
 
 .quick-options {
@@ -989,65 +846,70 @@ body::before {
 }
 
 .quick-option {
-    padding: 6px 12px;
-    background: var(--accent-color);
-    color: white;
-    border: none;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
     border-radius: 20px;
+    background: var(--card-bg);
+    color: var(--text-primary);
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .quick-option:hover {
-    background: var(--accent-hover);
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
 }
 
 .chat-input-container {
     display: flex;
     gap: 8px;
-    padding: 16px;
+    padding: 12px 16px;
     border-top: 1px solid var(--border-color);
+    background: var(--secondary-bg);
 }
 
 .chat-input {
     flex: 1;
-    padding: 12px 16px;
+    padding: 10px 14px;
     border: 1px solid var(--border-color);
-    border-radius: 24px;
-    background: var(--hover-bg);
+    border-radius: 20px;
+    background: var(--card-bg);
     color: var(--text-primary);
     font-size: 0.9rem;
+    outline: none;
 }
 
 .chat-input:focus {
-    outline: none;
     border-color: var(--accent-color);
 }
 
 .chat-send {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     background: var(--accent-color);
     border: none;
-    border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.chat-send:hover {
+    background: var(--accent-hover);
+}
+
 .chat-send svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     stroke: white;
     fill: none;
     stroke-width: 2;
 }
 
-/* =====================================================
-   RESPONSIVE DESIGN
-===================================================== */
+/* Mobile Responsive */
 @media (max-width: 768px) {
     .nav-links {
         display: none;
@@ -1056,54 +918,80 @@ body::before {
         left: 0;
         right: 0;
         background: var(--nav-bg);
+        border-bottom: 1px solid var(--border-color);
         flex-direction: column;
         padding: 16px;
-        border-bottom: 1px solid var(--border-color);
+        gap: 4px;
     }
 
     .nav-links.active {
         display: flex;
     }
 
-    .mobile-menu-btn {
-        display: block;
+    .mobile-menu-toggle {
+        display: flex;
     }
 
-    .section-tabs {
-        justify-content: flex-start;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 16px;
+    .nav-link {
+        width: 100%;
+        padding: 12px 16px;
     }
 
-    .section-tab {
-        padding: 10px 16px;
-        font-size: 0.85rem;
+    .page-title {
+        font-size: 1.8rem;
     }
 
-    .cards-grid {
+    .courses-grid {
         grid-template-columns: 1fr;
     }
 
-    .search-filter-bar {
-        flex-direction: column;
-        align-items: stretch;
+    .filter-bar {
+        gap: 8px;
     }
 
-    .search-container {
-        max-width: none;
+    .filter-btn {
+        padding: 8px 14px;
+        font-size: 0.85rem;
     }
 
-    .handouts-banner {
-        padding: 32px 24px;
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
     }
 
     .chatbot-modal {
-        bottom: 80px;
-        right: 16px;
-        left: 16px;
-        width: auto;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        max-width: 100%;
+        max-height: 70vh;
+        border-radius: 16px 16px 0 0;
     }
+}
+
+@media (max-width: 480px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .filter-bar {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-btn {
+        flex-shrink: 0;
+    }
+}
+
+/* UserWay Positioning */
+.uwy.userway_p2 .uai {
+    top: 80px !important;
 }
 </style>
 </head>
@@ -1116,18 +1004,18 @@ body::before {
             <div class="logo-icon">IM</div>
             <span class="logo-text">ImpactMojo</span>
         </a>
+        
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="catalog.html" class="nav-link active">Catalogue</a>
+            <a href="workshops.html" class="nav-link">Workshops</a>
+            <a href="handouts.html" class="nav-link">Resources</a>
+            <a href="blog.html" class="nav-link">Blog</a>
+            <a href="index.html#about" class="nav-link">About</a>
+        </div>
 
-        <ul class="nav-links" id="navLinks">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="catalog.html">Catalogue</a></li>
-            <li><a href="workshops.html">Workshops</a></li>
-            <li><a href="handouts.html">Handouts</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-        </ul>
-
-        <div class="nav-buttons">
-            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
                 <svg class="icon-sun" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="5"></circle>
                     <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -1139,12 +1027,12 @@ body::before {
                     <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                 </svg>
-                <svg class="icon-moon" style="display: none;" viewBox="0 0 24 24">
+                <svg class="icon-moon" viewBox="0 0 24 24">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
             </button>
-
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
                 <svg viewBox="0 0 24 24">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -1156,170 +1044,66 @@ body::before {
 </header>
 
 <!-- Main Content -->
-<main>
+<main class="main-content">
     <div class="container">
-        <!-- Page Hero -->
-        <section class="page-hero">
-            <h1 class="page-title">Full Catalogue</h1>
-            <p class="page-subtitle">Explore our complete collection of free courses, interactive labs, economics games, and premium research tools.</p>
-        </section>
-
-        <!-- Section Tabs -->
-        <div class="section-tabs">
-            <button class="section-tab active" data-section="courses" onclick="switchSection('courses')">
-                <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                Courses
-                <span class="tab-count">40</span>
-            </button>
-            <button class="section-tab" data-section="labs" onclick="switchSection('labs')">
-                <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                Labs
-                <span class="tab-count">10</span>
-            </button>
-            <button class="section-tab" data-section="games" onclick="switchSection('games')">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-                Games
-                <span class="tab-count">12</span>
-            </button>
-            <button class="section-tab" data-section="premium" onclick="switchSection('premium')">
-                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                Premium
-                <span class="tab-count">3</span>
-            </button>
-            <button class="section-tab" data-section="handouts" onclick="switchSection('handouts')">
-                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                Handouts
-            </button>
+        <div class="page-header">
+            <h1 class="page-title">Course Catalogue</h1>
+            <p class="page-subtitle">Free, practical courses for development professionals, NGOs, and impact practitioners</p>
+            <div class="course-count" id="courseCount">
+                <svg viewBox="0 0 24 24">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                </svg>
+                <span id="totalCourses">40 Courses</span> &#8226; All Free
+            </div>
         </div>
 
-        <!-- ==================== COURSES SECTION ==================== -->
-        <section id="coursesSection" class="content-section active">
-            <div class="search-filter-bar">
-                <div class="search-container">
-                    <svg class="search-icon" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <input type="text" class="search-box" id="searchBox" placeholder="Search courses...">
-                </div>
-                <span class="results-count" id="totalCourses">40 Courses</span>
-            </div>
+        <!-- Search -->
+        <div class="search-container">
+            <svg class="search-icon" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchBox" class="search-box" placeholder="Search courses by title or topic...">
+        </div>
 
-            <div class="filter-bar" id="filterBar"></div>
+        <!-- Filter Bar -->
+        <div class="filter-bar" id="filterBar">
+            <!-- Filters will be generated by JavaScript -->
+        </div>
 
-            <div class="cards-grid" id="coursesGrid"></div>
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <h3>No courses found</h3>
+            <p>Try a different search term or filter</p>
+        </div>
 
-            <div class="empty-state" id="emptyState">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <h3>No courses found</h3>
-                <p>Try adjusting your search or filter criteria.</p>
-            </div>
-        </section>
-
-        <!-- ==================== LABS SECTION ==================== -->
-        <section id="labsSection" class="content-section">
-            <div class="search-filter-bar">
-                <div class="search-container">
-                    <svg class="search-icon" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <input type="text" class="search-box" id="labSearchBox" placeholder="Search labs...">
-                </div>
-                <span class="results-count" id="totalLabs">10 Labs</span>
-            </div>
-
-            <div class="cards-grid" id="labsGrid"></div>
-
-            <div class="empty-state" id="labsEmptyState">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <h3>No labs found</h3>
-                <p>Try adjusting your search criteria.</p>
-            </div>
-        </section>
-
-        <!-- ==================== GAMES SECTION ==================== -->
-        <section id="gamesSection" class="content-section">
-            <div class="search-filter-bar">
-                <div class="search-container">
-                    <svg class="search-icon" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <input type="text" class="search-box" id="gameSearchBox" placeholder="Search games...">
-                </div>
-                <span class="results-count" id="totalGames">12 Games</span>
-            </div>
-
-            <div class="cards-grid" id="gamesGrid"></div>
-
-            <div class="empty-state" id="gamesEmptyState">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <h3>No games found</h3>
-                <p>Try adjusting your search criteria.</p>
-            </div>
-        </section>
-
-        <!-- ==================== PREMIUM SECTION ==================== -->
-        <section id="premiumSection" class="content-section">
-            <div style="text-align: center; margin-bottom: 32px;">
-                <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
-                    Advanced research tools for professionals who need more powerful capabilities. 
-                    All premium tools are offered on a <strong>"pay what you think is fair"</strong> basis.
-                </p>
-            </div>
-
-            <div class="cards-grid" id="premiumGrid"></div>
-        </section>
-
-        <!-- ==================== HANDOUTS SECTION ==================== -->
-        <section id="handoutsSection" class="content-section">
-            <div class="handouts-banner">
-                <svg viewBox="0 0 24 24" style="width: 64px; height: 64px; stroke: white; fill: none; stroke-width: 1.5; margin-bottom: 16px;">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                <h2>Educational Handouts</h2>
-                <p>Downloadable PDF resources, templates, and quick-reference guides organised by learning track. Perfect for offline study and field work.</p>
-                <a href="handouts.html" class="handouts-btn">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Browse All Handouts
-                </a>
-            </div>
-        </section>
-
+        <!-- Courses Grid -->
+        <div class="courses-grid" id="coursesGrid">
+            <!-- Courses will be generated by JavaScript -->
+        </div>
     </div>
 </main>
 
 <!-- Footer -->
-<footer class="footer">
+<footer class="footer" id="contact">
     <div class="footer-content">
-        <p class="footer-sponsor">Made with &#10084; by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener">PinPoint Ventures</a></p>
+        <div class="footer-sponsor">
+            Made with &#10084;&#65039; by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener">PinPoint Ventures</a>
+        </div>
         
-        <div class="footer-links">
+        <div class="footer-grid">
             <!-- About ImpactMojo -->
             <div class="footer-section">
                 <h4>About ImpactMojo</h4>
                 <ul>
                     <li><a href="index.html#about">About Us</a></li>
                     <li><a href="index.html#support-us">Support Us</a></li>
-                    <li><a href="/cdn-cgi/l/email-protection#8ae2efe6e6e5cae3e7faebe9fee7e5e0e5a4e3e4">Contact</a></li>
+                    <li><a href="mailto:hello@impactmojo.in">Contact</a></li>
                     <li><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener">GitHub (Open Source)</a></li>
                     <li>MIT License</li>
                 </ul>
@@ -1342,11 +1126,11 @@ body::before {
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="catalog.html">Full Catalogue</a></li>
-                    <li><a href="premium.html">Premium Tools</a></li>
+                    <li><a href="catalog.html">All Courses</a></li>
+                    <li><a href="index.html#labs">All Labs</a></li>
+                    <li><a href="index.html#games">All Games</a></li>
+                    <li><a href="premium.html">Premium Content</a></li>
                     <li><a href="workshops.html">Workshops</a></li>
-                    <li><a href="handouts.html">Handouts</a></li>
-                    <li><a href="blog.html">Blog</a></li>
                 </ul>
             </div>
             
@@ -1357,6 +1141,7 @@ body::before {
                     <li><a href="handouts.html">Educational Handouts</a></li>
                     <li><a href="https://varna.substack.com" target="_blank" rel="noopener">Research Newsletter</a></li>
                     <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                     <li><a href="sitemap.html">Sitemap</a></li>
                 </ul>
             </div>
@@ -1371,14 +1156,7 @@ body::before {
     </div>
 </footer>
 
-<!-- Mojini Chatbot FAB -->
-<div class="chatbot-fab" onclick="openChatbot()">
-    <svg viewBox="0 0 24 24">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-    </svg>
-</div>
-
-<!-- Mojini Chatbot Modal -->
+<!-- Mojini Chatbot -->
 <div class="chatbot-modal" id="chatbotModal">
     <div class="chat-header">
         <h3>
@@ -1399,18 +1177,17 @@ body::before {
                 </svg>
             </div>
             <div>
-                <div class="bot-bubble">Hi! I'm Mojini. Looking for something specific? I can help you navigate our courses, labs, games, and tools!</div>
+                <div class="bot-bubble">Hi! I'm Mojini. Looking for a specific course? I can help you find the right one!</div>
                 <div class="quick-options">
                     <button class="quick-option" onclick="selectOption('meal')">MEAL courses</button>
                     <button class="quick-option" onclick="selectOption('research')">Research Methods</button>
-                    <button class="quick-option" onclick="selectOption('labs')">Labs</button>
-                    <button class="quick-option" onclick="selectOption('games')">Games</button>
+                    <button class="quick-option" onclick="selectOption('beginner')">I'm a beginner</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="chat-input-container">
-        <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything..." onkeypress="handleKeyPress(event)">
+        <input type="text" class="chat-input" id="chatInput" placeholder="What do you want to learn?" onkeypress="handleKeyPress(event)">
         <button class="chat-send" onclick="sendMessage()">
             <svg viewBox="0 0 24 24">
                 <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -1420,36 +1197,44 @@ body::before {
     </div>
 </div>
 
+<!-- Mojini FAB -->
+<button class="feedback-fab" onclick="openChatbot()" aria-label="Open chat assistant">
+    <svg viewBox="0 0 24 24">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+</button>
+
 <!-- UserWay Accessibility Widget -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  (function(d){
+<script>
+(function(d){
     var s = d.createElement("script");
+    s.setAttribute("data-position", 2);
     s.setAttribute("data-widget_layout", "full");
     s.setAttribute("data-account", "EksmhlPg9k");
     s.setAttribute("src", "https://cdn.userway.org/widget.js");
     (d.body || d.head).appendChild(s);
-  })(document);
+})(document);
 </script>
 
 <script>
 // =====================================================
-// DATA: COURSES (40 courses)
+// Course Data - All 40 Courses
 // =====================================================
 const COURSES = [
-    // MEAL
-    { id: 1, title: "MEL Basics 101", url: "https://101.impactmojo.in/mel-basics", category: "MEAL", desc: "Foundational concepts in Monitoring, Evaluation, and Learning for development programmes.", gradient: "var(--gradient-primary)" },
-    { id: 2, title: "Data Literacy 101", url: "https://101.impactmojo.in/data-lit", category: "MEAL", desc: "Essential skills for understanding, interpreting, and communicating with data.", gradient: "var(--gradient-primary)" },
-    { id: 3, title: "Data Storytelling 101", url: "https://101.impactmojo.in/data-storytelling", category: "MEAL", desc: "Transform data into compelling narratives that drive action and understanding.", gradient: "var(--gradient-primary)" },
-    { id: 4, title: "Cost Effectiveness 101", url: "https://101.impactmojo.in/CE", category: "MEAL", desc: "Evaluate programme value and compare intervention efficiency for better resource allocation.", gradient: "var(--gradient-primary)" },
+    // MEAL & Evaluation
+    { id: 1, title: "MEL Basics 101", url: "https://101.impactmojo.in/mel-basics", category: "MEAL", desc: "Master the fundamentals of Monitoring, Evaluation, and Learning for development projects.", gradient: "var(--gradient-primary)" },
+    { id: 2, title: "Data Literacy 101", url: "https://101.impactmojo.in/data-lit", category: "MEAL", desc: "Build essential skills in understanding, interpreting, and communicating data effectively.", gradient: "var(--gradient-primary)" },
+    { id: 3, title: "Data Storytelling 101", url: "https://101.impactmojo.in/data-storytelling", category: "MEAL", desc: "Learn to craft compelling narratives from data to drive impact and decision-making.", gradient: "var(--gradient-primary)" },
+    { id: 4, title: "Cost Effectiveness 101", url: "https://101.impactmojo.in/CE", category: "MEAL", desc: "Understand cost-effectiveness analysis for evaluating development interventions.", gradient: "var(--gradient-primary)" },
     
-    // Research
-    { id: 5, title: "Qualitative Research Methods 101", url: "https://101.impactmojo.in/qual-methods", category: "Research", desc: "Comprehensive introduction to qualitative research design and analysis methods.", gradient: "var(--gradient-purple)" },
-    { id: 6, title: "Research Ethics 101", url: "https://101.impactmojo.in/research-ethics", category: "Research", desc: "Ethical principles and practices for conducting responsible research.", gradient: "var(--gradient-purple)" },
-    { id: 7, title: "Visual Ethnography 101", url: "https://101.impactmojo.in/visual-eth", category: "Research", desc: "Using visual methods for ethnographic research and documentation.", gradient: "var(--gradient-purple)" },
+    // Research Methods
+    { id: 5, title: "Qualitative Research Methods 101", url: "https://101.impactmojo.in/qual-methods", category: "Research", desc: "Comprehensive introduction to qualitative research design, data collection, and analysis.", gradient: "var(--gradient-purple)" },
+    { id: 6, title: "Research Ethics 101", url: "https://101.impactmojo.in/research-ethics", category: "Research", desc: "Essential principles of ethical research with human subjects in development contexts.", gradient: "var(--gradient-purple)" },
+    { id: 7, title: "Visual Ethnography 101", url: "https://101.impactmojo.in/visual-eth", category: "Research", desc: "Use visual methods to document and understand communities and social phenomena.", gradient: "var(--gradient-purple)" },
     { id: 8, title: "Getting to Insights from Field Observations 101", url: "https://101.impactmojo.in/obs2insight", category: "Research", desc: "Transform field observations into actionable insights for programme design.", gradient: "var(--gradient-purple)" },
     
     // Data Analysis
-    { id: 9, title: "Exploratory Quantitative Data Analysis for HH Surveys 101", url: "https://101.impactmojo.in/eda-hhs", category: "Data Analysis", desc: "Analyse household survey data using exploratory quantitative methods.", gradient: "var(--gradient-teal)" },
+    { id: 9, title: "Exploratory Data Analysis for HH Surveys 101", url: "https://101.impactmojo.in/eda-hhs", category: "Data Analysis", desc: "Analyse household survey data using exploratory quantitative methods.", gradient: "var(--gradient-teal)" },
     { id: 10, title: "Bivariate Analysis 101", url: "https://101.impactmojo.in/bi-analysis", category: "Data Analysis", desc: "Learn statistical techniques for analysing relationships between two variables.", gradient: "var(--gradient-teal)" },
     { id: 11, title: "Multivariate Analysis 101", url: "https://101.impactmojo.in/multivariate-basics", category: "Data Analysis", desc: "Advanced statistical analysis with multiple variables for complex research questions.", gradient: "var(--gradient-teal)" },
     { id: 12, title: "Item Response Theory 101", url: "https://101.impactmojo.in/irt-basics", category: "Data Analysis", desc: "Understand IRT for developing and analysing assessments and surveys.", gradient: "var(--gradient-teal)" },
@@ -1476,7 +1261,7 @@ const COURSES = [
     { id: 27, title: "Behaviour Change Communications 101", url: "https://101.impactmojo.in/bcc-comms", category: "Development", desc: "Design effective behaviour change interventions and communication strategies.", gradient: "var(--gradient-green)" },
     { id: 28, title: "Fundraising Basics 101", url: "https://101.impactmojo.in/fundraising-basics", category: "Development", desc: "Essential skills for NGO fundraising and donor relationship management.", gradient: "var(--gradient-green)" },
     { id: 29, title: "Decent Work For All 101", url: "https://101.impactmojo.in/decent-work", category: "Development", desc: "ILO decent work agenda and labour rights in development contexts.", gradient: "var(--gradient-green)" },
-    { id: 30, title: "Global Development Governance and Architecture 101", url: "https://101.impactmojo.in/dev-architecture", category: "Development", desc: "Navigate the global development architecture and multilateral institutions.", gradient: "var(--gradient-green)" },
+    { id: 30, title: "Global Development Governance 101", url: "https://101.impactmojo.in/dev-architecture", category: "Development", desc: "Navigate the global development architecture and multilateral institutions.", gradient: "var(--gradient-green)" },
     { id: 31, title: "Decolonial Development 101", url: "https://101.impactmojo.in/decolonize-dev", category: "Development", desc: "Critical perspectives on decolonising development theory and practice.", gradient: "var(--gradient-green)" },
     
     // Health & Environment
@@ -1495,52 +1280,7 @@ const COURSES = [
     { id: 40, title: "Post Truth Politics 101", url: "https://101.impactmojo.in/post-truth-101", category: "Governance", desc: "Understanding misinformation, media literacy, and democratic discourse.", gradient: "var(--gradient-orange)" }
 ];
 
-// =====================================================
-// DATA: LABS (10 labs)
-// =====================================================
-const LABS = [
-    { id: 1, title: "Theory of Change Lab", url: "https://101.impactmojo.in/toc-workbench", desc: "Build and visualise your programme's Theory of Change with guided frameworks and templates." },
-    { id: 2, title: "MEL Design Lab", url: "https://101.impactmojo.in/mel-design-lab", desc: "Design comprehensive Monitoring, Evaluation, and Learning frameworks for your programmes." },
-    { id: 3, title: "MEL Plan Lab", url: "https://101.impactmojo.in/mel-plan-lab", desc: "Create detailed MEL implementation plans with indicators, data collection schedules, and reporting frameworks." },
-    { id: 4, title: "Design Thinking Lab", url: "https://101.impactmojo.in/design-thinking-lab", desc: "Apply human-centred design principles to solve development challenges creatively." },
-    { id: 5, title: "Risk and Mitigation Lab", url: "https://101.impactmojo.in/risk-mitigation-lab", desc: "Identify, assess, and develop mitigation strategies for programme risks." },
-    { id: 6, title: "Policy and Advocacy Lab", url: "https://101.impactmojo.in/policy-advocacy-lab", desc: "Develop evidence-based policy briefs and advocacy strategies for systemic change." },
-    { id: 7, title: "Resource and Sustainability Lab", url: "https://101.impactmojo.in/resource-sustainability-lab", desc: "Plan for long-term programme sustainability and resource mobilisation." },
-    { id: 8, title: "Impact and Partnerships Lab", url: "https://101.impactmojo.in/impact-partnerships", desc: "Design partnership strategies and measure collective impact across stakeholders." },
-    { id: 9, title: "Storytelling Lab", url: "https://101.impactmojo.in/storytelling-lab", desc: "Craft compelling narratives to communicate your programme's impact effectively." },
-    { id: 10, title: "Community Development and Engagement Lab", url: "https://101.impactmojo.in/community-lab", desc: "Design participatory community engagement strategies and development approaches." }
-];
-
-// =====================================================
-// DATA: GAMES (12 games)
-// =====================================================
-const GAMES = [
-    { id: 1, title: "Public Good Game", url: "https://101.impactmojo.in/public-good-game", desc: "A game exploring the economic idea of a public good and collective action problems." },
-    { id: 2, title: "Prisoner's Dilemma Game", url: "https://101.impactmojo.in/prisoners-dilemma-game", desc: "A game exploring the classic Prisoner's Dilemma and strategic decision-making." },
-    { id: 3, title: "Opportunity Cost Game", url: "https://101.impactmojo.in/opportunity-cost-game", desc: "A game exploring the economic concept of opportunity cost in decision-making." },
-    { id: 4, title: "Network Effects Game", url: "https://101.impactmojo.in/network-effects-game", desc: "A game exploring how network effects influence value and adoption." },
-    { id: 5, title: "Cooperation Paradox Game", url: "https://101.impactmojo.in/cooperation-paradox-game", desc: "A game about the Cooperation Paradox and Game Theory dynamics." },
-    { id: 6, title: "Risk and Reward Game", url: "https://101.impactmojo.in/risk-reward-game", desc: "A game about risk assessment and reward optimisation in economic theory." },
-    { id: 7, title: "Bidding Wars Game", url: "https://101.impactmojo.in/bidding-wars-game", desc: "A game about auction theory and strategic bidding behaviour." },
-    { id: 8, title: "Information Asymmetry Game", url: "https://101.impactmojo.in/info-asymmetry-game", desc: "A game about information asymmetry and its effects on markets." },
-    { id: 9, title: "Economics Concepts Puzzle", url: "https://101.impactmojo.in/econ-concepts-game", desc: "Test your knowledge of economic concepts in this puzzle-based challenge." },
-    { id: 10, title: "Externality Game", url: "https://101.impactmojo.in/externality-game", desc: "A game about externalities and hidden costs in economic decisions." },
-    { id: 11, title: "Commons Crisis Game", url: "https://101.impactmojo.in/commons-crisis-game", desc: "A game about managing commons and sustainable stewardship." },
-    { id: 12, title: "Real Middle India Game", url: "https://101.impactmojo.in/real-middle-india", desc: "A game exploring the economic realities of the middle class in India." }
-];
-
-// =====================================================
-// DATA: PREMIUM TOOLS (3 tools)
-// =====================================================
-const PREMIUM_TOOLS = [
-    { id: 1, title: "Statistical Code Converter Pro", url: "https://101.impactmojo.in/code-convert-pro", desc: "Convert statistical code between R, Stata, SPSS, and Python seamlessly. Perfect for multi-platform research teams.", tier: "Professional" },
-    { id: 2, title: "Qualitative Insights Lab Pro", url: "https://101.impactmojo.in/qual-insights", desc: "Advanced qualitative data analysis with AI-assisted coding, theme identification, and visualisation tools.", tier: "Professional" },
-    { id: 3, title: "RQ Builder Pro", url: "https://101.impactmojo.in/researchQ-pro", desc: "Turn messy ideas into sharp, researchable questions with worked examples, templates, and 101-style guidance.", tier: "Professional" }
-];
-
-// =====================================================
-// Category definitions
-// =====================================================
+// Category definitions with icons
 const CATEGORIES = {
     "All": { icon: "grid", count: COURSES.length },
     "MEAL": { icon: "check-circle", count: 0 },
@@ -1563,6 +1303,18 @@ COURSES.forEach(course => {
 });
 
 // =====================================================
+// DOM Elements
+// =====================================================
+const coursesGrid = document.getElementById('coursesGrid');
+const filterBar = document.getElementById('filterBar');
+const searchBox = document.getElementById('searchBox');
+const emptyState = document.getElementById('emptyState');
+const totalCoursesEl = document.getElementById('totalCourses');
+
+let currentFilter = 'All';
+let searchTerm = '';
+
+// =====================================================
 // SVG Icons
 // =====================================================
 const ICONS = {
@@ -1577,56 +1329,10 @@ const ICONS = {
     'leaf': '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>',
     'book-open': '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>',
     'shield': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>',
-    'award': '<circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>',
-    'tool': '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>',
-    'play': '<circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon>',
-    'star': '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>'
+    'play': '<polygon points="5 3 19 12 5 21 5 3"></polygon>',
+    'clock': '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>',
+    'award': '<circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>'
 };
-
-// =====================================================
-// DOM Elements
-// =====================================================
-const coursesGrid = document.getElementById('coursesGrid');
-const filterBar = document.getElementById('filterBar');
-const searchBox = document.getElementById('searchBox');
-const emptyState = document.getElementById('emptyState');
-const totalCoursesEl = document.getElementById('totalCourses');
-
-const labsGrid = document.getElementById('labsGrid');
-const labSearchBox = document.getElementById('labSearchBox');
-const labsEmptyState = document.getElementById('labsEmptyState');
-const totalLabsEl = document.getElementById('totalLabs');
-
-const gamesGrid = document.getElementById('gamesGrid');
-const gameSearchBox = document.getElementById('gameSearchBox');
-const gamesEmptyState = document.getElementById('gamesEmptyState');
-const totalGamesEl = document.getElementById('totalGames');
-
-const premiumGrid = document.getElementById('premiumGrid');
-
-let currentFilter = 'All';
-let searchTerm = '';
-let labSearchTerm = '';
-let gameSearchTerm = '';
-
-// =====================================================
-// Section Switching
-// =====================================================
-function switchSection(sectionName) {
-    // Update tabs
-    document.querySelectorAll('.section-tab').forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.dataset.section === sectionName) {
-            tab.classList.add('active');
-        }
-    });
-
-    // Update sections
-    document.querySelectorAll('.content-section').forEach(section => {
-        section.classList.remove('active');
-    });
-    document.getElementById(sectionName + 'Section').classList.add('active');
-}
 
 // =====================================================
 // Render Functions
@@ -1634,7 +1340,7 @@ function switchSection(sectionName) {
 function renderFilters() {
     filterBar.innerHTML = Object.entries(CATEGORIES).map(([name, data]) => `
         <button class="filter-btn ${name === currentFilter ? 'active' : ''}" data-filter="${name}">
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
                 ${ICONS[data.icon]}
             </svg>
             ${name}
@@ -1642,6 +1348,7 @@ function renderFilters() {
         </button>
     `).join('');
 
+    // Add click handlers
     filterBar.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             currentFilter = btn.dataset.filter;
@@ -1661,8 +1368,10 @@ function renderCourses() {
         return matchesFilter && matchesSearch;
     });
 
+    // Update count
     totalCoursesEl.textContent = `${filteredCourses.length} Course${filteredCourses.length !== 1 ? 's' : ''}`;
 
+    // Show/hide empty state
     if (filteredCourses.length === 0) {
         emptyState.classList.add('visible');
         coursesGrid.style.display = 'none';
@@ -1685,130 +1394,13 @@ function renderCourses() {
                 <p class="course-desc">${course.desc}</p>
                 <div class="course-meta">
                     <span class="course-level">
-                        <svg viewBox="0 0 24 24">${ICONS['award']}</svg>
+                        <svg viewBox="0 0 24 24">
+                            ${ICONS['award']}
+                        </svg>
                         Beginner
                     </span>
                     <a href="${course.url}" target="_blank" rel="noopener" class="course-btn">
                         Start Course
-                        <svg viewBox="0 0 24 24">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </article>
-    `).join('');
-}
-
-function renderLabs() {
-    const filteredLabs = LABS.filter(lab => {
-        return labSearchTerm === '' || 
-            lab.title.toLowerCase().includes(labSearchTerm.toLowerCase()) ||
-            lab.desc.toLowerCase().includes(labSearchTerm.toLowerCase());
-    });
-
-    totalLabsEl.textContent = `${filteredLabs.length} Lab${filteredLabs.length !== 1 ? 's' : ''}`;
-
-    if (filteredLabs.length === 0) {
-        labsEmptyState.classList.add('visible');
-        labsGrid.style.display = 'none';
-    } else {
-        labsEmptyState.classList.remove('visible');
-        labsGrid.style.display = 'grid';
-    }
-
-    labsGrid.innerHTML = filteredLabs.map(lab => `
-        <article class="course-card lab-card">
-            <div class="course-image">
-                <span class="free-badge">FREE</span>
-                <svg viewBox="0 0 24 24">${ICONS['tool']}</svg>
-            </div>
-            <div class="course-content">
-                <span class="course-tag" style="color: #10B981;">Interactive Lab</span>
-                <h3 class="course-title">${lab.title}</h3>
-                <p class="course-desc">${lab.desc}</p>
-                <div class="course-meta">
-                    <span class="course-level">
-                        <svg viewBox="0 0 24 24">${ICONS['tool']}</svg>
-                        Hands-on
-                    </span>
-                    <a href="${lab.url}" target="_blank" rel="noopener" class="course-btn">
-                        Open Lab
-                        <svg viewBox="0 0 24 24">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </article>
-    `).join('');
-}
-
-function renderGames() {
-    const filteredGames = GAMES.filter(game => {
-        return gameSearchTerm === '' || 
-            game.title.toLowerCase().includes(gameSearchTerm.toLowerCase()) ||
-            game.desc.toLowerCase().includes(gameSearchTerm.toLowerCase());
-    });
-
-    totalGamesEl.textContent = `${filteredGames.length} Game${filteredGames.length !== 1 ? 's' : ''}`;
-
-    if (filteredGames.length === 0) {
-        gamesEmptyState.classList.add('visible');
-        gamesGrid.style.display = 'none';
-    } else {
-        gamesEmptyState.classList.remove('visible');
-        gamesGrid.style.display = 'grid';
-    }
-
-    gamesGrid.innerHTML = filteredGames.map(game => `
-        <article class="course-card game-card">
-            <div class="course-image">
-                <span class="free-badge">FREE</span>
-                <svg viewBox="0 0 24 24">${ICONS['play']}</svg>
-            </div>
-            <div class="course-content">
-                <span class="course-tag" style="color: #EF4444;">Economics Game</span>
-                <h3 class="course-title">${game.title}</h3>
-                <p class="course-desc">${game.desc}</p>
-                <div class="course-meta">
-                    <span class="course-level">
-                        <svg viewBox="0 0 24 24">${ICONS['play']}</svg>
-                        Interactive
-                    </span>
-                    <a href="${game.url}" target="_blank" rel="noopener" class="course-btn">
-                        Play Game
-                        <svg viewBox="0 0 24 24">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </article>
-    `).join('');
-}
-
-function renderPremium() {
-    premiumGrid.innerHTML = PREMIUM_TOOLS.map(tool => `
-        <article class="course-card premium-card">
-            <div class="course-image">
-                <span class="premium-badge">PREMIUM</span>
-                <svg viewBox="0 0 24 24">${ICONS['star']}</svg>
-            </div>
-            <div class="course-content">
-                <span class="course-tag" style="color: #D946EF;">${tool.tier} Tier</span>
-                <h3 class="course-title">${tool.title}</h3>
-                <p class="course-desc">${tool.desc}</p>
-                <div class="course-meta">
-                    <span class="course-level">
-                        <svg viewBox="0 0 24 24">${ICONS['star']}</svg>
-                        Advanced
-                    </span>
-                    <a href="${tool.url}" target="_blank" rel="noopener" class="course-btn">
-                        Try Pro
                         <svg viewBox="0 0 24 24">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>
@@ -1827,28 +1419,13 @@ function toggleTheme() {
     document.body.classList.toggle('light-mode');
     const isLight = document.body.classList.contains('light-mode');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    
-    const sunIcon = document.querySelector('.icon-sun');
-    const moonIcon = document.querySelector('.icon-moon');
-    
-    if (isLight) {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-    } else {
-        sunIcon.style.display = 'block';
-        moonIcon.style.display = 'none';
-    }
 }
 
 function initTheme() {
     const saved = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isLight = saved === 'light' || (!saved && !prefersDark);
-    
-    if (isLight) {
+    if (saved === 'light' || (!saved && !prefersDark)) {
         document.body.classList.add('light-mode');
-        document.querySelector('.icon-sun').style.display = 'none';
-        document.querySelector('.icon-moon').style.display = 'block';
     }
 }
 
@@ -1880,25 +1457,18 @@ function sendMessage() {
     if (!message) return;
     input.value = '';
     
+    // Simple keyword matching for recommendations
     const lowerMsg = message.toLowerCase();
-    let response = "All our courses, labs, and games are completely free! Use the tabs above to explore different sections.";
+    let response = "All our courses above are completely free! Just click 'Start Course' to begin learning. Use the search or filters to find specific topics.";
     
     if (lowerMsg.includes('meal') || lowerMsg.includes('monitoring') || lowerMsg.includes('evaluation')) {
-        response = "Check out our MEAL courses: MEL Basics 101, Data Literacy 101, Data Storytelling 101, and Cost Effectiveness 101. Also try the MEL Design Lab and MEL Plan Lab!";
+        response = "Check out our MEAL courses: MEL Basics 101, Data Literacy 101, Data Storytelling 101, and Cost Effectiveness 101. All free!";
     } else if (lowerMsg.includes('research') || lowerMsg.includes('qualitative') || lowerMsg.includes('method')) {
-        response = "We have great research courses: Qualitative Methods 101, Research Ethics 101, Visual Ethnography 101. For premium users, try RQ Builder Pro!";
-    } else if (lowerMsg.includes('lab')) {
-        response = "We have 10 interactive labs including Theory of Change Lab, MEL Design Lab, Design Thinking Lab, and Storytelling Lab. Click the Labs tab to explore!";
-        switchSection('labs');
-    } else if (lowerMsg.includes('game')) {
-        response = "Explore 12 economics games! Learn about Public Goods, Prisoner's Dilemma, Network Effects, and more through interactive gameplay. Click the Games tab!";
-        switchSection('games');
-    } else if (lowerMsg.includes('premium') || lowerMsg.includes('pro')) {
-        response = "Our 3 premium tools: Statistical Code Converter Pro, Qualitative Insights Lab Pro, and RQ Builder Pro. All on a pay-what-you-think-is-fair basis!";
-        switchSection('premium');
-    } else if (lowerMsg.includes('handout') || lowerMsg.includes('pdf') || lowerMsg.includes('download')) {
-        response = "We have downloadable PDF handouts organised by learning track. Click the Handouts tab or visit our dedicated handouts page!";
-        switchSection('handouts');
+        response = "We have great research courses: Qualitative Methods 101, Research Ethics 101, Visual Ethnography 101. Perfect for field researchers!";
+    } else if (lowerMsg.includes('gender') || lowerMsg.includes('women') || lowerMsg.includes('feminist')) {
+        response = "Explore our Gender courses: Gender Studies 101, Data Feminism 101, Women's Economic Empowerment, SRHR Basics. All free!";
+    } else if (lowerMsg.includes('data') || lowerMsg.includes('analysis') || lowerMsg.includes('statistics')) {
+        response = "For data analysis, try: Bivariate Analysis 101, Multivariate Analysis 101, EDA for HH Surveys, or Econometrics 101!";
     }
     
     addBotMessage(response);
@@ -1907,14 +1477,10 @@ function sendMessage() {
 function selectOption(option) {
     const responses = {
         'meal': "Our MEAL courses include MEL Basics 101, Data Literacy 101, Data Storytelling 101, and Cost Effectiveness 101. All completely free!",
-        'research': "For research methods, we have Qualitative Methods 101, Research Ethics 101, Visual Ethnography 101, and more!",
-        'labs': "We have 10 interactive labs! Theory of Change, MEL Design, Design Thinking, Storytelling, and more. Let me show you...",
-        'games': "Explore 12 economics games! Public Goods, Prisoner's Dilemma, Network Effects, Commons Crisis, and more!"
+        'research': "For research methods, we have Qualitative Methods 101, Research Ethics 101, Visual Ethnography 101, and more. Great for field researchers!",
+        'beginner': "New to development? Start with MEL Basics 101, Development Economics 101, or Community Development 101. They're beginner-friendly and free!"
     };
     addBotMessage(responses[option]);
-    
-    if (option === 'labs') switchSection('labs');
-    if (option === 'games') switchSection('games');
 }
 
 function addBotMessage(text) {
@@ -1936,7 +1502,7 @@ function addBotMessage(text) {
 }
 
 // =====================================================
-// Search Handlers
+// Search Handler
 // =====================================================
 let searchTimeout;
 searchBox.addEventListener('input', function() {
@@ -1947,23 +1513,15 @@ searchBox.addEventListener('input', function() {
     }, 300);
 });
 
-labSearchBox.addEventListener('input', function() {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-        labSearchTerm = this.value.trim();
-        renderLabs();
-    }, 300);
-});
-
-gameSearchBox.addEventListener('input', function() {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-        gameSearchTerm = this.value.trim();
-        renderGames();
-    }, 300);
-});
-
 // =====================================================
 // Initialize
 // =====================================================
-document.addEventListener('DOMContentLoaded', function()
+document.addEventListener('DOMContentLoaded', function() {
+    initTheme();
+    renderFilters();
+    renderCourses();
+});
+</script>
+
+</body>
+</html>
