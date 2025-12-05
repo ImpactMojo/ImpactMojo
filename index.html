@@ -39,7 +39,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta name="version" content="9.3.0.20251206">
+<meta name="version" content="9.4.2.20251205">
 
 <!-- Aggressive cache-busting script -->
 <script>
@@ -1113,56 +1113,7 @@
             fill: white;
         }
 
-        /* Premium Tier Hover Benefits Tooltips */
-        [data-required-tier] {
-            position: relative;
-        }
-        
-        [data-required-tier]::before {
-            content: attr(data-tier-benefits);
-            position: absolute;
-            bottom: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%) scale(0.9);
-            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
-            color: #F1F5F9;
-            padding: 0.75rem 1rem;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            line-height: 1.5;
-            white-space: normal;
-            width: max-content;
-            max-width: 280px;
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-            z-index: 100;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            pointer-events: none;
-        }
-        
-        [data-required-tier]::after {
-            content: '';
-            position: absolute;
-            bottom: calc(100% + 2px);
-            left: 50%;
-            transform: translateX(-50%);
-            border: 8px solid transparent;
-            border-top-color: #1E293B;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-            z-index: 101;
-        }
-        
-        [data-required-tier]:hover::before,
-        [data-required-tier]:hover::after {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) scale(1);
-        }
+        /* Premium tooltips moved to V3 section */
         
         [data-required-tier="practitioner"]::before {
             border-color: rgba(14, 165, 233, 0.4);
@@ -5637,62 +5588,181 @@ footer::before {
     filter: brightness(0) saturate(100%) invert(57%) sepia(80%) saturate(2000%) hue-rotate(165deg);
 }
 
-/* ---------- PREMIUM OVERLAY FIX ---------- */
+
+/* ========== PREMIUM TIER TOOLTIPS - BEAUTIFUL GLASSMORPHISM V2 ========== */
 [data-required-tier] {
     position: relative;
     overflow: visible;
 }
 
+/* Premium badge indicator */
 [data-required-tier]::before {
     content: attr(data-tier-benefits);
     position: absolute;
-    bottom: calc(100% + 15px);
+    bottom: calc(100% + 18px);
     left: 50%;
-    transform: translateX(-50%) scale(0.95);
-    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
-    color: #F8FAFC;
-    padding: 1rem 1.25rem;
-    border-radius: 14px;
-    font-size: 0.85rem;
-    font-weight: 500;
+    transform: translateX(-50%) translateY(10px);
+    
+    /* Glassmorphism background */
+    background: linear-gradient(
+        135deg,
+        rgba(99, 102, 241, 0.95) 0%,
+        rgba(139, 92, 246, 0.95) 50%,
+        rgba(168, 85, 247, 0.95) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    
+    /* Text styling */
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    font-weight: 600;
     line-height: 1.6;
-    white-space: normal;
-    width: max-content;
-    max-width: 300px;
+    letter-spacing: 0.01em;
     text-align: center;
+    white-space: normal;
+    
+    /* Dimensions */
+    padding: 1rem 1.5rem;
+    width: max-content;
+    max-width: 320px;
+    min-width: 200px;
+    
+    /* Border & shadow */
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 20px 50px rgba(99, 102, 241, 0.4),
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    
+    /* Animation */
     opacity: 0;
     visibility: hidden;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 500;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(99, 102, 241, 0.3);
-    border: 2px solid rgba(99, 102, 241, 0.4);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 9999;
     pointer-events: none;
 }
 
+/* Arrow/pointer */
 [data-required-tier]::after {
     content: '';
     position: absolute;
-    bottom: calc(100% + 5px);
+    bottom: calc(100% + 6px);
     left: 50%;
     transform: translateX(-50%);
-    border: 10px solid transparent;
-    border-top-color: #1E293B;
+    
+    /* Triangle arrow */
+    border: 12px solid transparent;
+    border-top-color: rgba(139, 92, 246, 0.95);
+    
+    /* Match tooltip animation */
     opacity: 0;
     visibility: hidden;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 501;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10000;
 }
 
+/* Hover state - show tooltip */
 [data-required-tier]:hover::before {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) scale(1) translateY(-5px);
+    transform: translateX(-50%) translateY(0);
 }
 
 [data-required-tier]:hover::after {
     opacity: 1;
     visibility: visible;
 }
+
+/* Focus state for accessibility */
+[data-required-tier]:focus-within::before,
+[data-required-tier]:focus-within::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+[data-required-tier]:focus-within::before {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Light mode adjustments */
+[data-theme="light"] [data-required-tier]::before {
+    background: linear-gradient(
+        135deg,
+        rgba(79, 70, 229, 0.98) 0%,
+        rgba(124, 58, 237, 0.98) 50%,
+        rgba(147, 51, 234, 0.98) 100%
+    );
+    box-shadow: 
+        0 20px 50px rgba(79, 70, 229, 0.35),
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="light"] [data-required-tier]::after {
+    border-top-color: rgba(124, 58, 237, 0.98);
+}
+
+/* Ensure cards don't clip tooltips */
+.card[data-required-tier],
+.modal-item[data-required-tier] {
+    overflow: visible !important;
+}
+
+.card[data-required-tier] > *,
+.modal-item[data-required-tier] > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Mobile: Touch-friendly tooltips */
+@media (max-width: 768px) {
+    [data-required-tier]::before {
+        position: fixed;
+        bottom: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        max-width: calc(100vw - 40px);
+        padding: 1.25rem 1.5rem;
+        font-size: 0.9rem;
+        border-radius: 20px;
+    }
+    
+    [data-required-tier]::after {
+        display: none;
+    }
+    
+    [data-required-tier]:hover::before,
+    [data-required-tier]:active::before {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    [data-required-tier]::before,
+    [data-required-tier]::after {
+        transition: opacity 0.15s ease;
+    }
+    
+    [data-required-tier]:hover::before {
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Premium sparkle animation on hover */
+@keyframes premium-shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+[data-required-tier]:hover::before {
+    background-size: 200% auto;
+    animation: premium-shimmer 3s linear infinite;
+}
+
 
 /* Ensure card content doesn't overlap */
 .card[data-required-tier] > a,
@@ -5965,8 +6035,30 @@ footer::before {
    Version: 1.0.0 | December 2025
    ============================================================ */
 
+/* ---------- DESKTOP: Hide mobile-only elements ---------- */
+.mobile-auth-section {
+    display: none !important;
+}
+
+.mobile-menu-toggle {
+    display: none;
+}
+
+.mobile-menu-overlay {
+    display: none;
+}
+
 /* ---------- MOBILE BASE ADJUSTMENTS (768px and below) ---------- */
 @media screen and (max-width: 768px) {
+    
+    /* Re-enable mobile elements */
+    .mobile-menu-toggle {
+        display: flex !important;
+    }
+    
+    .mobile-menu-overlay {
+        display: block;
+    }
     
     /* Body & scroll behavior */
     body {
@@ -6212,8 +6304,8 @@ footer::before {
         display: flex !important;
     }
     
-    .mobile-auth-section {
-        display: flex !important;
+    /* Mobile auth section styling when visible */
+    .mobile-auth-section.active {
         gap: 0.75rem;
         padding: 1rem;
         margin-bottom: 0.5rem;
@@ -6802,8 +6894,8 @@ footer::before {
 <li id="nav-testimonials"><a href="#wall-of-love">Testimonials</a></li>
 <li id="nav-roadmap"><a href="#roadmap">Roadmap</a></li>
 <li class="dropdown-divider"></li>
-<li id="nav-community"><a href="community/community.html">Community <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Users.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
-<li id="nav-whats-new"><a href="#whats-new">What's New <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Star.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
+<li id="nav-community"><a href="community/community.html">Community <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
+<li id="nav-whats-new"><a href="#whats-new">What's New <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
 <li id="nav-support"><a href="#support-us">Support Us <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Heart.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
 <li class="dropdown-divider"></li>
 <li id="nav-contact"><a href="contact.html">Contact</a></li>
@@ -6811,10 +6903,10 @@ footer::before {
 </li>
 
 <!-- Blog Link -->
-<li id="nav-blog"><a href="blog.html">Blog <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Edit.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
+<li id="nav-blog"><a href="blog.html">Blog <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Article.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
 
 <!-- Podcast Link -->
-<li id="nav-podcast"><a href="podcast.html">Podcast <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Microphone.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
+<li id="nav-podcast"><a href="podcast.html">Podcast <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Album.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
 </ul>
 </div><!-- end nav-with-badge -->
 <div class="nav-buttons">
@@ -6888,11 +6980,11 @@ footer::before {
 <div class="v3-hero-cta-wrapper">
     <div class="v3-hero-buttons">
         <a href="#courses" class="v3-btn-primary">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Compass.svg" alt="" class="v3-btn-icon" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Direction_alt.svg" alt="" class="v3-btn-icon" loading="lazy">
             Start Exploring →
         </a>
         <a href="#" onclick="event.preventDefault(); if(window.ImpactMojoAuth && !ImpactMojoAuth.isLoggedIn()) { ImpactMojoAuth.showAuthModal('signup'); } else { IMX.showToast('You\\'re already signed in!'); }" class="v3-btn-secondary">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_User_add.svg" alt="" class="v3-btn-icon" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Add_circle.svg" alt="" class="v3-btn-icon" loading="lazy">
             Sign Up Free
         </a>
     </div>
@@ -6923,7 +7015,7 @@ footer::before {
     
     <!-- Premium link for those interested -->
     <a href="premium.html" class="v3-premium-link">
-        <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Star.svg" alt="" class="v3-premium-link-icon" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="v3-premium-link-icon" loading="lazy">
         Or explore Premium Plans →
     </a>
 </div>
@@ -6959,15 +7051,15 @@ footer::before {
             MEAL & Evaluation
         </a>
         <a href="#courses" class="v3-category-badge" style="--rotation: 2deg;">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Plant.svg" alt="" class="v3-badge-icon" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Activity.svg" alt="" class="v3-badge-icon" loading="lazy">
             Policy & Governance
         </a>
         <a href="#labs" class="v3-category-badge" style="--rotation: -1.5deg;">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Microscope.svg" alt="" class="v3-badge-icon" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Search.svg" alt="" class="v3-badge-icon" loading="lazy">
             Research Methods
         </a>
         <a href="#labs" class="v3-category-badge" style="--rotation: 1.5deg;">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Target.svg" alt="" class="v3-badge-icon" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="" class="v3-badge-icon" loading="lazy">
             Impact Measurement
         </a>
     </div>
@@ -8878,7 +8970,7 @@ Workshops & Master Classes
 <!-- What's New Section - Interactive -->
 <section class="whats-new-section" id="whats-new">
     <div class="whats-new-header">
-        <h2><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Star.svg" alt="" class="v3-inline-icon" loading="lazy"> What's New</h2>
+        <h2><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="v3-inline-icon" loading="lazy"> What's New</h2>
         <p>Click any card to learn more about our latest features</p>
     </div>
     
