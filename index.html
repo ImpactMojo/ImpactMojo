@@ -21,7 +21,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta name="version" content="9.4.3.20251205">
+<meta name="version" content="9.4.4.20251205">
 
 <!-- Aggressive cache-busting script -->
 <script>
@@ -5571,122 +5571,37 @@ footer::before {
 }
 
 
-/* ========== PREMIUM TIER TOOLTIPS - BEAUTIFUL GLASSMORPHISM V2 ========== */
-[data-required-tier] {
+/* ========== PREMIUM TIER CARD STYLING ========== */
+/* Hide the pink tooltip completely - black overlay from premium.js is sufficient */
+[data-required-tier]::before,
+[data-required-tier]::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Fix positioning of black overlay from premium.js */
+/* Move it down so it doesn't cover the tier badge (PRACTITIONER/PROFESSIONAL) */
+.premium-lock-overlay,
+.tier-lock-overlay,
+[data-required-tier] .card-lock-overlay,
+[data-required-tier] > div:last-child:not(.card-header):not(a) {
+    top: 75px !important; /* Below the tier badge */
+    border-radius: 0 0 16px 16px !important;
+}
+
+/* Ensure the black overlay links to premium page */
+.card[data-required-tier] {
     position: relative;
     overflow: visible;
 }
 
-/* Premium badge indicator */
-[data-required-tier]::before {
-    content: attr(data-tier-benefits);
-    position: absolute;
-    bottom: calc(100% + 18px);
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    
-    /* Glassmorphism background */
-    background: linear-gradient(
-        135deg,
-        rgba(99, 102, 241, 0.95) 0%,
-        rgba(139, 92, 246, 0.95) 50%,
-        rgba(168, 85, 247, 0.95) 100%
-    );
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    
-    /* Text styling */
-    color: #FFFFFF;
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.6;
-    letter-spacing: 0.01em;
-    text-align: center;
-    white-space: normal;
-    
-    /* Dimensions */
-    padding: 1rem 1.5rem;
-    width: max-content;
-    max-width: 320px;
-    min-width: 200px;
-    
-    /* Border & shadow */
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 
-        0 20px 50px rgba(99, 102, 241, 0.4),
-        0 10px 30px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    
-    /* Animation */
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 9999;
-    pointer-events: none;
+/* Keep tier badge visible above overlay */
+.card[data-required-tier] .card-header {
+    position: relative;
+    z-index: 10;
 }
 
-/* Arrow/pointer */
-[data-required-tier]::after {
-    content: '';
-    position: absolute;
-    bottom: calc(100% + 6px);
-    left: 50%;
-    transform: translateX(-50%);
-    
-    /* Triangle arrow */
-    border: 12px solid transparent;
-    border-top-color: rgba(139, 92, 246, 0.95);
-    
-    /* Match tooltip animation */
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 10000;
-}
-
-/* Hover state - show tooltip */
-[data-required-tier]:hover::before {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
-
-[data-required-tier]:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Focus state for accessibility */
-[data-required-tier]:focus-within::before,
-[data-required-tier]:focus-within::after {
-    opacity: 1;
-    visibility: visible;
-}
-
-[data-required-tier]:focus-within::before {
-    transform: translateX(-50%) translateY(0);
-}
-
-/* Light mode adjustments */
-[data-theme="light"] [data-required-tier]::before {
-    background: linear-gradient(
-        135deg,
-        rgba(79, 70, 229, 0.98) 0%,
-        rgba(124, 58, 237, 0.98) 50%,
-        rgba(147, 51, 234, 0.98) 100%
-    );
-    box-shadow: 
-        0 20px 50px rgba(79, 70, 229, 0.35),
-        0 10px 30px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
-}
-
-[data-theme="light"] [data-required-tier]::after {
-    border-top-color: rgba(124, 58, 237, 0.98);
-}
-
-/* Ensure cards don't clip tooltips */
+/* Ensure cards don't clip content */
 .card[data-required-tier],
 .modal-item[data-required-tier] {
     overflow: visible !important;
@@ -5697,54 +5612,6 @@ footer::before {
     position: relative;
     z-index: 1;
 }
-
-/* Mobile: Touch-friendly tooltips */
-@media (max-width: 768px) {
-    [data-required-tier]::before {
-        position: fixed;
-        bottom: auto;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.9);
-        max-width: calc(100vw - 40px);
-        padding: 1.25rem 1.5rem;
-        font-size: 0.9rem;
-        border-radius: 20px;
-    }
-    
-    [data-required-tier]::after {
-        display: none;
-    }
-    
-    [data-required-tier]:hover::before,
-    [data-required-tier]:active::before {
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    [data-required-tier]::before,
-    [data-required-tier]::after {
-        transition: opacity 0.15s ease;
-    }
-    
-    [data-required-tier]:hover::before {
-        transform: translateX(-50%) translateY(0);
-    }
-}
-
-/* Premium sparkle animation on hover */
-@keyframes premium-shimmer {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
-}
-
-[data-required-tier]:hover::before {
-    background-size: 200% auto;
-    animation: premium-shimmer 3s linear infinite;
-}
-
 
 /* Ensure card content doesn't overlap */
 .card[data-required-tier] > a,
