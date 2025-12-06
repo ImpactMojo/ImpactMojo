@@ -115,7 +115,7 @@ function toggleMobileDropdown(event, element) {
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!-- Version 9.4.3 - December 6, 2025 - Removed mobile redirect, fully responsive design -->
+<!-- Version 9.5.2 - December 6, 2025 - Enhanced mobile hamburger menu, all fixes applied -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
 <script>
@@ -131,12 +131,12 @@ function toggleMobileDropdown(event, element) {
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta name="version" content="9.5.1.20251205">
+<meta name="version" content="9.5.2.20251206">
 
 <!-- Aggressive cache-busting script -->
 <script>
 (function() {
-    var CURRENT_VERSION = '8.0.8.20251205';
+    var CURRENT_VERSION = '9.5.2.20251206';
     var STORAGE_KEY = 'imx_page_version';
     
     try {
@@ -4802,70 +4802,109 @@ function toggleMobileDropdown(event, element) {
 }
 </style>
 <script>
-// Immediate hamburger fix - runs before DOMContentLoaded
+/* ============================================================
+   BULLETPROOF HAMBURGER INITIALIZATION
+   Works on all mobile devices - touch, click, and tap
+   ============================================================ */
 (function() {
+    var hamburgerInitialized = false;
+    
     function initHamburger() {
+        if (hamburgerInitialized) return true;
+        
         var btn = document.getElementById('mobile-menu-btn');
         if (!btn) return false;
         
-        // Remove any existing onclick
-        btn.onclick = null;
-        btn.removeAttribute('onclick');
+        // Mark as initialized
+        hamburgerInitialized = true;
+        btn.setAttribute('data-initialized', 'true');
         
-        // Single handler for all interactions
-        function handleToggle(e) {
+        // The global toggleMobileMenu function handles the actual toggle
+        // We just need to ensure events are properly captured
+        
+        // Prevent double-firing from touch + click
+        var lastTap = 0;
+        
+        function handleInteraction(e) {
+            var now = Date.now();
+            if (now - lastTap < 300) return; // Debounce
+            lastTap = now;
+            
             if (e) {
                 e.preventDefault();
                 e.stopPropagation();
-                e.stopImmediatePropagation();
             }
             
-            var navLinks = document.getElementById('navLinks');
-            var overlay = document.getElementById('mobileMenuOverlay');
-            
-            if (!navLinks) return;
-            
-            var isOpen = navLinks.classList.contains('active');
-            
-            if (isOpen) {
-                navLinks.classList.remove('active');
-                btn.classList.remove('active');
-                if (overlay) overlay.classList.remove('active');
-                document.body.style.overflow = '';
+            // Use the global function defined in <head>
+            if (typeof window.toggleMobileMenu === 'function') {
+                window.toggleMobileMenu();
             } else {
-                navLinks.classList.add('active');
-                btn.classList.add('active');
-                if (overlay) overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                // Fallback direct implementation
+                var navLinks = document.getElementById('navLinks');
+                var overlay = document.getElementById('mobileMenuOverlay');
+                var authSection = document.getElementById('mobileAuthSection');
+                
+                if (!navLinks) return;
+                
+                var isOpen = navLinks.classList.contains('active');
+                
+                if (isOpen) {
+                    navLinks.classList.remove('active');
+                    btn.classList.remove('active');
+                    if (overlay) overlay.classList.remove('active');
+                    if (authSection) authSection.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                    document.body.style.overflow = '';
+                } else {
+                    navLinks.classList.add('active');
+                    btn.classList.add('active');
+                    if (overlay) overlay.classList.add('active');
+                    if (authSection) authSection.classList.add('active');
+                    document.body.classList.add('menu-open');
+                    document.body.style.overflow = 'hidden';
+                }
             }
         }
         
-        // Remove all existing listeners by cloning
-        var newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        btn = newBtn;
+        // Add multiple event listeners for maximum compatibility
+        // Keep the onclick as primary handler
+        btn.onclick = handleInteraction;
         
-        // Add fresh listeners
-        btn.addEventListener('click', handleToggle, { passive: false, capture: true });
+        // Add touch events for mobile
         btn.addEventListener('touchend', function(e) {
             e.preventDefault();
-            handleToggle(e);
-        }, { passive: false, capture: true });
+            handleInteraction(e);
+        }, { passive: false });
         
-        console.log('[ImpactMojo] Hamburger menu initialized');
+        // Ensure button is focusable
+        btn.setAttribute('tabindex', '0');
+        btn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleInteraction(e);
+            }
+        });
+        
+        console.log('[ImpactMojo] Hamburger menu initialized successfully');
         return true;
     }
     
-    // Try immediately
+    // Multiple initialization attempts for reliability
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initHamburger);
     } else {
         initHamburger();
     }
     
-    // Also try after a delay as backup
-    setTimeout(initHamburger, 100);
+    // Backup attempts
+    setTimeout(initHamburger, 50);
+    setTimeout(initHamburger, 200);
     setTimeout(initHamburger, 500);
+    
+    // Final fallback after page fully loaded
+    window.addEventListener('load', function() {
+        setTimeout(initHamburger, 100);
+    });
 })();
 </script>
 
