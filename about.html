@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <!--
-    ╔═══════════════════════════════════════════════════════════════════════════╗
-    ║  IMPACTMOJO - ABOUT PAGE                                                  ║
-    ║  Version: 3.0.0 - December 6, 2025                                        ║
-    ║  Based on PAGE-TEMPLATE.html v3.0.0                                       ║
-    ╚═══════════════════════════════════════════════════════════════════════════╝
+    ╔═══════════════════════════════════════════════════════════════════════════════╗
+    ║  IMPACTMOJO ABOUT PAGE v3.3.0                                                 ║
+    ║  Version: 3.3.0 - December 6, 2025                                            ║
+    ║                                                                               ║
+    ║  Changes:                                                                      ║
+    ║  - Removed Speed Dial toolbox (not needed on info pages)                      ║
+    ║  - Paper planes visible (opacity 0.15, z-index 0)                             ║
+    ║  - UserWay positioned via CSS (top-left) matching index.html                  ║
+    ║  - Mojini chatbot FAB on bottom-right                                         ║
+    ╚═══════════════════════════════════════════════════════════════════════════════╝
 -->
 <html lang="en">
 <head>
@@ -104,7 +109,7 @@ function toggleMobileDropdown(event, element) {
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta name="version" content="3.0.0.20251206">
+<meta name="version" content="3.1.0.20251206">
 
 <!-- Auto-refresh on back/forward navigation -->
 <script>
@@ -116,15 +121,15 @@ window.addEventListener('pageshow', function(event) {
 </script>
 
 <!-- SEO Meta Tags -->
-<meta name="description" content="Learn about ImpactMojo - free development education for impact practitioners across South Asia. Meet our team and discover our mission.">
+<meta name="description" content="About ImpactMojo - Free development education for NGOs and impact teams across South Asia. Learn about our mission, team, and commitment to accessible learning.">
 <meta property="og:title" content="About Us | ImpactMojo">
-<meta property="og:description" content="Free development education for NGOs and impact teams across South Asia. Meet our team and discover our mission.">
+<meta property="og:description" content="Free development education for impact practitioners across South Asia.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.impactmojo.in/about.html">
 <meta property="og:image" content="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="About Us | ImpactMojo">
-<meta name="twitter:description" content="Free development education for NGOs and impact teams across South Asia.">
+<meta name="twitter:description" content="Free development education for impact practitioners across South Asia.">
 <meta name="twitter:image" content="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png">
 
 <title>About Us | ImpactMojo</title>
@@ -140,7 +145,7 @@ window.addEventListener('pageshow', function(event) {
 <!-- Google Fonts - Inter & Poppins -->
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
 
 <style>
 /* ========================================
@@ -161,55 +166,41 @@ window.addEventListener('pageshow', function(event) {
     --secondary-bg: #1E293B;
     --accent-color: #0EA5E9;
     --accent-hover: #0284C7;
-    --secondary-accent: #6366F1;
-    --success-color: #10B981;
-    --warning-color: #F59E0B;
-    --danger-color: #EF4444;
+    --accent-glow: rgba(14, 165, 233, 0.3);
     
     /* Text Colors */
-    --text-primary: #F1F5F9;
+    --text-primary: #F8FAFC;
     --text-secondary: #94A3B8;
     --text-muted: #64748B;
     
-    /* Card & Surface */
-    --card-bg: #1E293B;
-    --hover-bg: #334155;
-    --border-color: #334155;
-    
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
-    --gradient-accent: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
-    --gradient-hero: linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+    --gradient-secondary: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+    --gradient-accent: linear-gradient(135deg, #0EA5E9 0%, #38BDF8 100%);
     
-    /* Navigation */
-    --nav-bg: rgba(15, 23, 42, 0.95);
-    --nav-text: #F1F5F9;
+    /* Borders & Shadows */
+    --border-color: rgba(148, 163, 184, 0.2);
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --card-hover-shadow: 0 20px 40px -15px rgba(14, 165, 233, 0.3);
     
-    /* Shadows */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
-    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
+    /* Spacing */
+    --container-max: 1200px;
+    --section-padding: 80px;
+    
+    /* Typography */
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Poppins', 'Inter', sans-serif;
 }
 
-/* Light Mode Variables */
-[data-theme="light"],
+/* Light Mode */
 body.light-mode {
     --primary-bg: #F8FAFC;
     --secondary-bg: #FFFFFF;
-    --accent-color: #0284C7;
-    --accent-hover: #0369A1;
     --text-primary: #0F172A;
     --text-secondary: #475569;
     --text-muted: #64748B;
-    --card-bg: #FFFFFF;
-    --hover-bg: #F1F5F9;
-    --border-color: #E2E8F0;
-    --nav-bg: rgba(248, 250, 252, 0.95);
-    --nav-text: #0F172A;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --border-color: rgba(15, 23, 42, 0.1);
+    --gradient-secondary: linear-gradient(135deg, #FFFFFF 0%, #F1F5F9 100%);
 }
 
 /* ========================================
@@ -220,13 +211,11 @@ html {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-body);
     background: var(--primary-bg);
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
     overflow-x: hidden;
 }
 
@@ -240,14 +229,252 @@ a:hover {
     color: var(--accent-hover);
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    line-height: 1.3;
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* ========================================
-   V3 DECORATIVE ELEMENTS - Paper Planes & Blobs
+   HEADER & NAVIGATION
+   ======================================== */
+.header {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.light-mode .header {
+    background: rgba(248, 250, 252, 0.95);
+}
+
+.nav-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-svg img {
+    width: 48px;
+    height: 48px;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-main {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.logo-tagline {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+}
+
+.nav-links > li > a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 16px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-links > li > a:hover {
+    color: var(--text-primary);
+    background: rgba(14, 165, 233, 0.1);
+}
+
+.nav-links .v3-inline-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+}
+
+/* Dropdown Menu */
+.has-dropdown {
+    position: relative;
+}
+
+.dropdown-arrow {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+}
+
+.has-dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+    list-style: none;
+    box-shadow: var(--card-shadow);
+}
+
+.has-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 10px 16px;
+    color: var(--text-secondary);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu li a:hover {
+    background: rgba(14, 165, 233, 0.1);
+    color: var(--accent-color);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 8px 0;
+}
+
+/* Nav Buttons */
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(14, 165, 233, 0.1);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: var(--text-secondary);
+    stroke-width: 2;
+}
+
+.icon-sun { display: block; }
+.icon-moon { display: none; }
+
+body.light-mode .icon-sun { display: none; }
+body.light-mode .icon-moon { display: block; }
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    gap: 5px;
+    z-index: 1002;
+}
+
+.hamburger-line {
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile Auth Section */
+.mobile-auth-section {
+    display: none;
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+}
+
+/* ========================================
+   V3 DECORATIVE ELEMENTS
    ======================================== */
 .v3-decoration-container {
     position: fixed;
@@ -349,361 +576,94 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ========================================
-   HEADER & NAVIGATION
-   ======================================== */
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: var(--nav-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0.75rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    text-decoration: none;
-}
-
-.logo-svg img {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
-    object-fit: contain;
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-main {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1.2;
-}
-
-.logo-tagline {
-    font-size: 0.7rem;
-    color: var(--accent-color);
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-
-/* Mobile Menu Toggle */
-.mobile-menu-toggle {
-    display: none;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    cursor: pointer;
-    width: 48px;
-    height: 48px;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 5px;
-    padding: 10px;
-    z-index: 9999;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-}
-
-.mobile-menu-toggle .hamburger-line {
-    width: 22px;
-    height: 2px;
-    background: var(--text-primary);
-    border-radius: 2px;
-    transition: all 0.3s ease;
-    display: block;
-}
-
-.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-}
-
-.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
-    opacity: 0;
-}
-
-.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-}
-
-/* Navigation Links */
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    list-style: none;
-}
-
-.nav-links > li > a {
-    padding: 0.6rem 1rem;
-    color: var(--nav-text);
-    font-weight: 500;
-    font-size: 0.95rem;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.nav-links > li > a:hover {
-    background: var(--hover-bg);
-    color: var(--accent-color);
-}
-
-.nav-links > li > a.active {
-    color: var(--accent-color);
-    background: rgba(14, 165, 233, 0.1);
-}
-
-/* Sargam inline icons */
-.v3-inline-icon {
-    width: 16px;
-    height: 16px;
-    opacity: 0.7;
-    vertical-align: middle;
-    filter: brightness(0) saturate(100%) invert(56%) sepia(92%) saturate(1500%) hue-rotate(175deg) brightness(96%) contrast(91%);
-}
-
-/* Dropdown Menu */
-.has-dropdown {
-    position: relative;
-}
-
-.dropdown-arrow {
-    width: 14px;
-    height: 14px;
-    transition: transform 0.3s ease;
-}
-
-.has-dropdown:hover .dropdown-arrow {
-    transform: rotate(180deg);
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 0.5rem;
-    min-width: 200px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-lg);
-    z-index: 100;
-    list-style: none;
-}
-
-.has-dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.dropdown-menu a {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
-    color: var(--text-primary);
-    border-radius: 8px;
-    transition: all 0.2s ease;
-}
-
-.dropdown-menu a:hover {
-    background: var(--hover-bg);
-    color: var(--accent-color);
-    padding-left: 1.25rem;
-}
-
-.dropdown-divider {
-    height: 1px;
-    background: var(--border-color);
-    margin: 0.5rem 0;
-}
-
-/* Nav Buttons */
-.nav-buttons {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.theme-toggle {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.theme-toggle:hover {
-    background: var(--hover-bg);
-    border-color: var(--accent-color);
-}
-
-.theme-toggle svg {
-    width: 20px;
-    height: 20px;
-    stroke: var(--text-primary);
-    fill: none;
-    stroke-width: 2;
-}
-
-.theme-toggle .icon-moon {
-    display: none;
-}
-
-.light-mode .theme-toggle .icon-sun {
-    display: none;
-}
-
-.light-mode .theme-toggle .icon-moon {
-    display: block;
-}
-
-/* Mobile Menu Overlay */
-.mobile-menu-overlay,
-.mobile-auth-section {
-    display: none;
-}
-
-/* ========================================
-   PAGE CONTENT AREA
+   PAGE CONTENT
    ======================================== */
 .page-content {
-    flex: 1;
-    position: relative;
-    z-index: 1;
+    min-height: calc(100vh - 70px);
+    padding-bottom: 60px;
 }
 
 .page-hero {
-    padding: 4rem 2rem;
     text-align: center;
-    background: var(--gradient-hero);
-    position: relative;
+    padding: 60px 20px 40px;
+    background: var(--gradient-secondary);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .page-hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    margin-bottom: 12px;
 }
 
 .page-hero p {
-    font-size: 1.1rem;
+    font-size: 1.125rem;
     color: var(--text-secondary);
     max-width: 600px;
     margin: 0 auto;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 2rem;
 }
 
 /* ========================================
    ABOUT PAGE SPECIFIC STYLES
    ======================================== */
 
-/* Section Titles */
+/* Section Styles */
+.about-section {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.about-section:last-child {
+    border-bottom: none;
+}
+
 .section-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
     color: var(--text-primary);
+    margin-bottom: 24px;
 }
 
-.section-text {
+.section-subtitle {
+    font-size: 1.125rem;
     color: var(--text-secondary);
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 1.25rem;
+    margin-bottom: 16px;
+    line-height: 1.7;
 }
 
-.section-text a {
-    color: var(--accent-color);
-    text-decoration: none;
-}
-
-.section-text a:hover {
-    text-decoration: underline;
-}
-
-/* Content Section */
-.content-section {
-    padding: 3.5rem 2rem;
-}
-
-.content-section.alt-bg {
-    background: var(--secondary-bg);
-}
-
-.content-section .inner {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Stats Grid */
+/* Stats Grid - Matching Catalog */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
-    margin: 2.5rem 0;
+    gap: 24px;
+    margin: 40px 0;
 }
 
 .stat-card {
-    background: var(--card-bg);
+    background: var(--secondary-bg);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 1.75rem;
+    padding: 24px;
     text-align: center;
     transition: all 0.3s ease;
 }
 
 .stat-card:hover {
-    border-color: var(--accent-color);
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--card-hover-shadow);
+    border-color: var(--accent-color);
 }
 
 .stat-number {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-heading);
     font-size: 2.5rem;
-    font-weight: 800;
+    font-weight: 700;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -712,267 +672,315 @@ h1, h2, h3, h4, h5, h6 {
 
 .stat-label {
     color: var(--text-secondary);
-    font-size: 0.95rem;
-    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    margin-top: 4px;
 }
 
-/* Tracks Grid */
+/* Learning Tracks */
 .tracks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-    margin-top: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
 }
 
 .track-badge {
-    background: var(--card-bg);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--secondary-bg);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    text-align: center;
+    border-radius: 100px;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
     font-weight: 500;
-    color: var(--text-primary);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .track-badge:hover {
     border-color: var(--accent-color);
-    background: rgba(14, 165, 233, 0.1);
-}
-
-/* Philosophy Section */
-.philosophy-quote {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.4rem;
-    font-style: italic;
-    text-align: center;
     color: var(--accent-color);
-    max-width: 800px;
-    margin: 0 auto 2.5rem;
-    padding: 1.75rem;
-    border-left: 4px solid var(--accent-color);
-    background: rgba(14, 165, 233, 0.1);
-    border-radius: 0 16px 16px 0;
 }
 
-.pillars-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.pillar-card {
-    background: var(--card-bg);
+/* Philosophy Cards */
+.philosophy-quote {
+    background: var(--gradient-secondary);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 1.75rem;
+    padding: 32px;
     text-align: center;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin: 32px 0;
+}
+
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.philosophy-card {
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
     transition: all 0.3s ease;
 }
 
-.pillar-card:hover {
+.philosophy-card:hover {
     border-color: var(--accent-color);
-    transform: translateY(-4px);
+    transform: translateY(-2px);
 }
 
-.pillar-card h4 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.05rem;
-    margin-bottom: 0.75rem;
+.philosophy-card-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--gradient-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.philosophy-card-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: white;
+    fill: none;
+    stroke-width: 2;
+}
+
+.philosophy-card h4 {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
     color: var(--text-primary);
+    margin-bottom: 8px;
 }
 
-.pillar-card p {
+.philosophy-card p {
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
 }
 
-/* Languages Section */
+/* Languages Grid */
 .languages-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1rem;
-    margin-top: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
 }
 
 .language-card {
-    background: var(--card-bg);
+    background: var(--secondary-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 1.25rem;
+    padding: 20px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
-.language-card:hover {
+.language-card.available {
     border-color: var(--accent-color);
+    background: rgba(14, 165, 233, 0.05);
 }
 
-.language-card .native {
-    font-size: 1.4rem;
-    font-weight: 700;
+.language-card .lang-native {
+    font-size: 1.25rem;
+    font-weight: 600;
     color: var(--text-primary);
-    display: block;
-    margin-bottom: 0.35rem;
+    margin-bottom: 4px;
 }
 
-.language-card .english {
+.language-card .lang-english {
+    font-size: 0.8125rem;
     color: var(--text-secondary);
-    font-size: 0.85rem;
 }
 
-.language-card .status {
+.language-card .lang-status {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
+    margin-top: 8px;
+    padding: 4px 12px;
+    border-radius: 100px;
     font-size: 0.75rem;
-    margin-top: 0.5rem;
+    font-weight: 500;
 }
 
-.language-card .status.available {
-    background: rgba(16, 185, 129, 0.2);
-    color: var(--success-color);
+.language-card.available .lang-status {
+    background: rgba(14, 165, 233, 0.15);
+    color: var(--accent-color);
 }
 
-.language-card .status.coming {
-    background: rgba(245, 158, 11, 0.2);
-    color: var(--warning-color);
+.language-card:not(.available) .lang-status {
+    background: rgba(148, 163, 184, 0.1);
+    color: var(--text-muted);
 }
 
 /* Team Section */
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.75rem;
-    margin-top: 1.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
 }
 
 .team-card {
-    background: var(--card-bg);
+    background: var(--secondary-bg);
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 2.25rem 1.75rem;
+    border-radius: 16px;
+    padding: 32px;
     text-align: center;
     transition: all 0.3s ease;
 }
 
 .team-card:hover {
-    border-color: var(--accent-color);
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    box-shadow: var(--card-hover-shadow);
 }
 
 .team-avatar {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    border: 3px solid var(--accent-color);
+}
+
+.team-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team-avatar-placeholder {
+    width: 100%;
+    height: 100%;
     background: var(--gradient-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.25rem;
+    font-family: var(--font-heading);
+    font-size: 2rem;
     font-weight: 700;
     color: white;
-    margin: 0 auto 1.25rem;
 }
 
 .team-card h4 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.15rem;
-    margin-bottom: 0.35rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
     color: var(--text-primary);
+    margin-bottom: 4px;
 }
 
-.team-card .role {
+.team-role {
     color: var(--accent-color);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 12px;
 }
 
-.team-card p {
+.team-bio {
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     line-height: 1.6;
 }
 
-/* Partner Section */
+/* Partner Card */
 .partner-card {
-    max-width: 600px;
-    margin: 0 auto;
-    background: var(--card-bg);
+    background: var(--gradient-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 2.25rem;
+    border-radius: 16px;
+    padding: 32px;
     text-align: center;
+    margin-top: 40px;
 }
 
 .partner-card h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
     color: var(--text-primary);
+    margin-bottom: 8px;
 }
 
-.partner-card .partner-name {
-    color: var(--accent-color);
-    font-weight: 600;
-    font-size: 1.15rem;
-    margin-bottom: 0.75rem;
+.partner-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
 }
 
 .partner-card p {
     color: var(--text-secondary);
+    font-size: 0.9375rem;
 }
 
 /* Partnership Form */
-.partnership-form {
-    max-width: 600px;
-    margin: 2.5rem auto 0;
-    background: var(--card-bg);
+.partnership-section {
+    background: var(--secondary-bg);
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 2.25rem;
+    border-radius: 16px;
+    padding: 40px;
+    margin-top: 40px;
 }
 
-.partnership-form h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.25rem;
-    margin-bottom: 1.25rem;
-    text-align: center;
+.partnership-section h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
     color: var(--text-primary);
+    margin-bottom: 8px;
 }
 
-.partnership-form .form-intro {
-    text-align: center;
+.partnership-section > p {
     color: var(--text-secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }
 
 .form-group {
-    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
     color: var(--text-secondary);
-    font-size: 0.9rem;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-    width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 12px 16px;
     background: var(--primary-bg);
     border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: 8px;
     color: var(--text-primary);
+    font-family: inherit;
     font-size: 1rem;
-    font-family: 'Inter', sans-serif;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.2s ease;
 }
 
 .form-group input:focus,
@@ -983,154 +991,175 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-group textarea {
-    resize: vertical;
     min-height: 100px;
+    resize: vertical;
 }
 
-.submit-btn {
-    width: 100%;
-    padding: 0.875rem;
+.btn-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 32px;
     background: var(--gradient-primary);
-    border: none;
-    border-radius: 10px;
     color: white;
-    font-size: 1rem;
     font-weight: 600;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    margin-top: 8px;
 }
 
-.submit-btn:hover {
+.btn-submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
 }
 
-/* Contact Section */
+/* Contact Grid */
 .contact-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    margin: 1.75rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
 }
 
 .contact-card {
-    background: var(--card-bg);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--secondary-bg);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 1.5rem;
-    text-align: center;
+    border-radius: 12px;
     text-decoration: none;
-    transition: all 0.3s ease;
-    display: block;
+    transition: all 0.2s ease;
 }
 
 .contact-card:hover {
     border-color: var(--accent-color);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 }
 
-.contact-card .icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
+.contact-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(14, 165, 233, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-.contact-card .label {
+.contact-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--accent-color);
+    fill: none;
+    stroke-width: 2;
+}
+
+.contact-info h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.contact-info p {
+    font-size: 0.8125rem;
     color: var(--text-secondary);
-    font-size: 0.85rem;
-    display: block;
-    margin-bottom: 0.35rem;
 }
 
-.contact-card .value {
-    color: var(--accent-color);
-    font-weight: 500;
-}
-
+/* UPI Box */
 .upi-box {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 1.5rem;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 12px;
+    padding: 24px;
     text-align: center;
-    max-width: 300px;
-    margin: 1.25rem auto;
+    margin-top: 32px;
 }
 
-.upi-box .label {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 0.75rem;
+.upi-box h4 {
+    color: #A78BFA;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 8px;
 }
 
-.upi-box .upi-id {
+.upi-id {
     font-family: monospace;
-    font-size: 1.15rem;
-    color: var(--accent-color);
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    padding: 8px 16px;
     background: var(--primary-bg);
-    padding: 0.65rem 1.25rem;
-    border-radius: 8px;
+    border-radius: 6px;
     display: inline-block;
 }
 
 /* CTA Section */
 .cta-section {
     text-align: center;
-    padding: 3.5rem 2rem;
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(99, 102, 241, 0.1));
+    padding: 60px 20px;
+    background: var(--gradient-secondary);
+    border-radius: 16px;
+    margin-top: 40px;
 }
 
 .cta-section h2 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
     color: var(--text-primary);
+    margin-bottom: 12px;
 }
 
 .cta-section p {
     color: var(--text-secondary);
-    margin-bottom: 1.75rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 24px;
 }
 
 .cta-buttons {
     display: flex;
     justify-content: center;
-    gap: 1.25rem;
+    gap: 16px;
     flex-wrap: wrap;
 }
 
-.cta-btn {
-    padding: 0.875rem 1.75rem;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
+.btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
-.cta-btn.primary {
+.btn-primary {
     background: var(--gradient-primary);
     color: white;
 }
 
-.cta-btn.secondary {
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+    color: white;
+}
+
+.btn-secondary {
     background: transparent;
     border: 2px solid var(--accent-color);
     color: var(--accent-color);
 }
 
-.cta-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
-}
-
-.cta-btn.secondary:hover {
-    background: var(--accent-color);
-    color: white;
+.btn-secondary:hover {
+    background: rgba(14, 165, 233, 0.1);
 }
 
 /* ========================================
@@ -1139,68 +1168,66 @@ h1, h2, h3, h4, h5, h6 {
 .footer {
     background: var(--secondary-bg);
     border-top: 1px solid var(--border-color);
-    padding: 3rem 2rem 1.5rem;
-    position: relative;
-    z-index: 1;
+    padding: 60px 0 30px;
 }
 
 .footer-content {
-    max-width: 1200px;
+    max-width: var(--container-max);
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .footer-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
 }
 
 .footer-section h4 {
-    color: var(--text-primary);
-    font-size: 0.9rem;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 16px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
 }
 
 .footer-section ul {
     list-style: none;
 }
 
-.footer-section li {
-    margin-bottom: 0.5rem;
+.footer-section ul li {
+    margin-bottom: 10px;
 }
 
-.footer-section a {
+.footer-section ul li a {
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.9375rem;
     transition: color 0.2s ease;
 }
 
-.footer-section a:hover {
+.footer-section ul li a:hover {
     color: var(--accent-color);
 }
 
 .footer-bottom {
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border-color);
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-color);
 }
 
 .footer-copyright {
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-size: 0.875rem;
 }
 
 .footer-social {
     display: flex;
-    gap: 1rem;
+    gap: 16px;
 }
 
 .footer-social a {
@@ -1209,37 +1236,33 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
     border-radius: 8px;
-    color: var(--text-secondary);
     transition: all 0.2s ease;
 }
 
 .footer-social a:hover {
-    background: var(--accent-color);
-    border-color: var(--accent-color);
-    color: white;
+    background: rgba(14, 165, 233, 0.1);
 }
 
 .footer-social svg {
     width: 18px;
     height: 18px;
-    fill: currentColor;
-    stroke: none;
+    fill: none;
+    stroke: var(--text-secondary);
+    stroke-width: 2;
+}
+
+.footer-social a:hover svg {
+    stroke: var(--accent-color);
 }
 
 /* ========================================
-   SPEED DIAL
+   MOJINI CHATBOT
    ======================================== */
-.imx-speed-dial {
+.feedback-fab {
     position: fixed;
     bottom: 24px;
-    left: 24px;
-    z-index: 999;
-}
-
-.imx-speed-dial-toggle {
+    right: 24px;
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -1250,123 +1273,36 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     box-shadow: var(--shadow-lg);
+    z-index: 9000;
     transition: all 0.3s ease;
 }
 
-.imx-speed-dial-toggle:hover {
-    transform: scale(1.05);
-}
-
-.imx-speed-dial-toggle svg {
-    width: 24px;
-    height: 24px;
-    fill: white;
-    transition: transform 0.3s ease;
-}
-
-.imx-speed-dial.open .imx-speed-dial-toggle svg {
-    transform: rotate(45deg);
-}
-
-.imx-speed-dial-menu {
-    position: absolute;
-    bottom: 70px;
-    left: 0;
-    display: none;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1rem;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
+.feedback-fab:hover {
+    transform: scale(1.1);
     box-shadow: var(--shadow-xl);
-    min-width: 200px;
 }
 
-.imx-speed-dial.open .imx-speed-dial-menu {
-    display: flex;
-}
-
-.imx-speed-dial-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.imx-speed-dial-item:hover {
-    border-color: var(--accent-color);
-    background: rgba(14, 165, 233, 0.1);
-}
-
-.imx-speed-dial-item .icon {
-    font-size: 1.15rem;
-}
-
-.imx-speed-dial-item .label {
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-/* ========================================
-   CHATBOT FAB & MODAL
-   ======================================== */
-.feedback-fab {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 998;
-}
-
-.feedback-fab-btn {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--card-bg);
-    border: 2px solid var(--accent-color);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-lg);
-    transition: all 0.3s ease;
-}
-
-.feedback-fab-btn:hover {
-    transform: scale(1.05);
-    background: var(--accent-color);
-}
-
-.feedback-fab-btn:hover svg {
-    fill: white;
-}
-
-.feedback-fab-btn svg {
+.feedback-fab svg {
     width: 24px;
     height: 24px;
-    fill: var(--accent-color);
-    transition: fill 0.3s ease;
+    stroke: white;
+    fill: none;
+    stroke-width: 2;
 }
 
 .chatbot-modal {
-    display: none;
     position: fixed;
     bottom: 100px;
-    right: 24px;
+    right: 20px;
     width: 360px;
-    max-height: 480px;
-    background: var(--card-bg);
+    max-height: 500px;
+    background: var(--secondary-bg);
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    box-shadow: var(--shadow-xl);
-    z-index: 997;
+    border-radius: 16px;
     overflow: hidden;
+    z-index: 9001;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    display: none;
     flex-direction: column;
 }
 
@@ -1374,51 +1310,61 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
 }
 
-.chatbot-header {
-    background: var(--gradient-primary);
-    padding: 1.25rem;
-    color: white;
+.chat-header {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
+    padding: 16px 20px;
+    background: var(--gradient-primary);
+    color: white;
 }
 
-.chatbot-header h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.05rem;
-    margin-bottom: 0.25rem;
-}
-
-.chatbot-header p {
-    font-size: 0.8rem;
-    opacity: 0.9;
-}
-
-.chatbot-close {
-    background: rgba(255,255,255,0.2);
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
+.chat-header h3 {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.25rem;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
-.chatbot-messages {
+.chat-header svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+}
+
+.chat-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.chat-close svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    stroke-width: 2;
+}
+
+.chat-messages {
     flex: 1;
-    padding: 1rem;
     overflow-y: auto;
-    max-height: 280px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .message {
     display: flex;
-    gap: 0.65rem;
-    margin-bottom: 1rem;
+    gap: 10px;
+}
+
+.bot-message {
+    align-items: flex-start;
 }
 
 .bot-avatar {
@@ -1435,59 +1381,66 @@ h1, h2, h3, h4, h5, h6 {
 .bot-avatar svg {
     width: 18px;
     height: 18px;
-    fill: white;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
 }
 
 .bot-bubble {
-    background: var(--secondary-bg);
-    padding: 0.75rem 1rem;
-    border-radius: 12px 12px 12px 4px;
+    background: var(--primary-bg);
+    padding: 12px 16px;
+    border-radius: 12px;
+    border-top-left-radius: 4px;
+    font-size: 0.9375rem;
     color: var(--text-primary);
-    font-size: 0.9rem;
-    line-height: 1.5;
+    max-width: 260px;
 }
 
-.quick-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    padding: 0 1rem 1rem;
-}
-
-.quick-option {
-    padding: 0.5rem 0.875rem;
-    background: rgba(14, 165, 233, 0.1);
-    border: 1px solid var(--accent-color);
-    border-radius: 20px;
+.bot-bubble a {
     color: var(--accent-color);
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
 
-.quick-option:hover {
-    background: var(--accent-color);
-    color: white;
-}
-
-.chatbot-input {
+.chat-options {
     display: flex;
-    gap: 0.5rem;
-    padding: 1rem;
+    gap: 8px;
+    padding: 0 20px 16px;
+    flex-wrap: wrap;
+}
+
+.chat-option {
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 100px;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chat-option:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 10px;
+    padding: 16px 20px;
     border-top: 1px solid var(--border-color);
 }
 
-.chat-input {
+.chat-input-area input {
     flex: 1;
-    padding: 0.65rem 1rem;
-    background: var(--secondary-bg);
+    padding: 10px 14px;
+    background: var(--primary-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     color: var(--text-primary);
-    font-size: 0.9rem;
+    font-size: 0.9375rem;
 }
 
-.chat-input:focus {
+.chat-input-area input:focus {
     outline: none;
     border-color: var(--accent-color);
 }
@@ -1502,18 +1455,32 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease;
-}
-
-.chat-send:hover {
-    transform: scale(1.05);
 }
 
 .chat-send svg {
     width: 18px;
     height: 18px;
-    stroke: white;
     fill: none;
+    stroke: white;
+    stroke-width: 2;
+}
+
+/* ========================================
+   USERWAY ACCESSIBILITY WIDGET POSITIONING
+   ======================================== */
+/* Move UserWay to TOP LEFT to completely avoid toolbox overlap */
+.acsb-trigger,
+#acsb-trigger,
+[data-acsb-trigger],
+.acsb-trigger-wrap,
+div[class*="acsb"],
+.userway_p1 {
+    position: fixed !important;
+    top: 100px !important;
+    left: 20px !important;
+    right: auto !important;
+    bottom: auto !important;
+    z-index: 999 !important;
 }
 
 /* ========================================
@@ -1521,74 +1488,82 @@ h1, h2, h3, h4, h5, h6 {
    ======================================== */
 .cookie-consent {
     position: fixed;
-    bottom: 24px;
-    left: 90px;
-    z-index: 10000;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 950;
     display: none;
 }
 
+.cookie-consent.hidden {
+    display: none !important;
+}
+
 .cookie-icon-btn {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: var(--card-bg);
+    background: var(--secondary-bg);
     border: 1px solid var(--border-color);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-lg);
     transition: all 0.2s ease;
 }
 
 .cookie-icon-btn:hover {
-    transform: scale(1.1);
     border-color: var(--accent-color);
 }
 
 .cookie-icon-btn svg {
-    width: 24px;
-    height: 24px;
-    fill: var(--warning-color);
+    width: 22px;
+    height: 22px;
+    fill: var(--text-secondary);
 }
 
 .cookie-expanded {
-    display: none;
     position: absolute;
-    bottom: 60px;
+    bottom: 54px;
     left: 0;
     width: 320px;
-    background: var(--card-bg);
+    background: var(--secondary-bg);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 20px;
-    box-shadow: var(--shadow-xl);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    box-shadow: var(--card-shadow);
 }
 
 .cookie-consent.expanded .cookie-expanded {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 .cookie-expanded-header {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 12px;
     font-weight: 600;
     color: var(--text-primary);
+    margin-bottom: 12px;
 }
 
 .cookie-expanded-header svg {
-    width: 24px;
-    height: 24px;
-    fill: var(--warning-color);
+    width: 20px;
+    height: 20px;
+    fill: var(--accent-color);
 }
 
 .cookie-expanded p {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     color: var(--text-secondary);
-    margin-bottom: 16px;
     line-height: 1.5;
+    margin-bottom: 16px;
 }
 
 .cookie-expanded-buttons {
@@ -1602,22 +1577,22 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--gradient-primary);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 6px;
+    font-weight: 500;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .cookie-btn-accept:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .cookie-btn-settings {
     padding: 10px 16px;
     background: transparent;
-    color: var(--text-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 6px;
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -1627,70 +1602,104 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--accent-color);
 }
 
-.cookie-consent.hidden {
-    display: none !important;
-}
-
 /* ========================================
-   MOBILE RESPONSIVE STYLES
+   MOBILE RESPONSIVE
    ======================================== */
 @media (max-width: 768px) {
-    /* Hide tour on mobile */
-    .tour-toggle,
-    .shepherd-element,
-    .imx-tour-welcome,
-    .imx-tour-tooltip {
-        display: none !important;
+    /* Mobile positioning for UserWay */
+    .acsb-trigger,
+    #acsb-trigger,
+    [data-acsb-trigger],
+    .acsb-trigger-wrap,
+    div[class*="acsb"],
+    .userway_p1 {
+        top: 80px !important;
+        left: 10px !important;
+        right: auto !important;
+        bottom: auto !important;
     }
     
-    /* Header mobile */
-    .nav-container {
-        padding: 0.75rem 1rem;
-    }
-    
-    /* Show hamburger */
     .mobile-menu-toggle {
-        display: flex !important;
+        display: flex;
     }
     
-    .logo-tagline {
-        display: none;
-    }
-    
-    /* Hide desktop nav */
     .nav-links {
-        display: none;
         position: fixed;
         top: 70px;
         left: 0;
         right: 0;
-        width: 100%;
-        background: var(--card-bg);
+        bottom: 0;
+        background: var(--primary-bg);
         flex-direction: column;
-        padding: 1rem;
-        border-top: 1px solid var(--border-color);
-        box-shadow: var(--shadow-lg);
-        z-index: 9998;
-        max-height: calc(100vh - 70px);
+        align-items: stretch;
+        padding: 20px;
+        gap: 0;
         overflow-y: auto;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1001;
+    }
+    
+    body.light-mode .nav-links {
+        background: var(--primary-bg);
     }
     
     .nav-links.active {
-        display: flex;
-    }
-    
-    .nav-links > li {
-        width: 100%;
-        border-bottom: 1px solid var(--border-color);
+        transform: translateX(0);
     }
     
     .nav-links > li > a {
-        padding: 1rem;
-        justify-content: space-between;
+        padding: 16px;
+        border-bottom: 1px solid var(--border-color);
     }
     
-    /* Mobile dropdowns */
-    .dropdown-menu {
+    .mobile-menu-overlay {
+        display: block;
+    }
+    
+    .mobile-auth-section {
+        display: flex;
+        gap: 12px;
+        padding: 20px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--secondary-bg);
+        border-top: 1px solid var(--border-color);
+        z-index: 1001;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .mobile-auth-section.active {
+        transform: translateY(0);
+    }
+    
+    .mobile-auth-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    
+    .mobile-auth-login {
+        background: transparent;
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+    }
+    
+    .mobile-auth-signup {
+        background: var(--gradient-primary);
+        color: white;
+    }
+    
+    .has-dropdown .dropdown-menu {
         position: static;
         opacity: 1;
         visibility: visible;
@@ -1699,208 +1708,97 @@ h1, h2, h3, h4, h5, h6 {
         overflow: hidden;
         padding: 0;
         border: none;
-        box-shadow: none;
-        background: var(--secondary-bg);
+        background: transparent;
         transition: max-height 0.3s ease;
     }
     
     .has-dropdown.open .dropdown-menu {
-        max-height: 500px;
-        padding: 0.5rem 0;
+        max-height: 300px;
+        padding: 8px 0;
     }
     
-    .has-dropdown.open .dropdown-arrow {
-        transform: rotate(180deg);
+    .dropdown-menu li a {
+        padding-left: 32px;
     }
     
-    /* Mobile menu overlay */
-    .mobile-menu-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.5);
-        z-index: 9997;
-    }
-    
-    .mobile-menu-overlay.active {
-        display: block;
-    }
-    
-    /* Mobile auth section */
-    .mobile-auth-section {
-        display: none;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 1rem;
-        background: var(--secondary-bg);
-        border-top: 1px solid var(--border-color);
-        z-index: 9999;
-        gap: 0.75rem;
-    }
-    
-    .mobile-auth-section.active {
-        display: flex;
-    }
-    
-    .mobile-auth-btn {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        padding: 0.875rem;
-        border-radius: 10px;
-        font-weight: 600;
-        text-decoration: none;
-    }
-    
-    .mobile-auth-login {
-        background: var(--card-bg);
-        color: var(--text-primary);
-        border: 1px solid var(--border-color);
-    }
-    
-    .mobile-auth-signup {
-        background: var(--gradient-primary);
-        color: white;
-    }
-    
-    /* Body scroll lock */
-    body.menu-open {
-        overflow: hidden;
-    }
-    
-    /* Hide desktop nav buttons on mobile */
-    .nav-buttons .auth-btn {
+    .nav-buttons {
         display: none;
     }
     
-    /* Page hero mobile */
-    .page-hero {
-        padding: 2.5rem 1.25rem;
-    }
-    
-    .page-hero h1 {
-        font-size: 1.75rem;
-    }
-    
-    .page-hero p {
-        font-size: 1rem;
-    }
-    
-    /* Container mobile */
-    .container {
-        padding: 2rem 1.25rem;
-    }
-    
-    /* About page mobile adjustments */
-    .content-section {
-        padding: 2.5rem 1.25rem;
-    }
-    
+    /* Page Content Mobile */
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
     }
     
-    .stat-number {
-        font-size: 1.8rem;
-    }
-    
-    .pillars-grid {
+    .philosophy-grid {
         grid-template-columns: 1fr;
     }
     
-    .languages-grid {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+    
+    .chatbot-modal {
+        right: 10px;
+        left: 10px;
+        width: auto;
+        bottom: 90px;
+    }
+    
+    /* Mojini FAB mobile */
+    .feedback-fab {
+        bottom: 80px;
+        right: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .stat-card {
+        padding: 16px;
+    }
+    
+    .stat-number {
+        font-size: 1.75rem;
     }
     
     .team-grid {
         grid-template-columns: 1fr;
     }
     
-    .contact-grid {
+    .footer-grid {
         grid-template-columns: 1fr;
     }
     
     .cta-buttons {
         flex-direction: column;
-        align-items: center;
     }
     
-    /* Footer mobile */
-    .footer {
-        padding: 2rem 1.25rem 1rem;
-    }
-    
-    .footer-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-    .footer-bottom {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    /* FABs mobile */
-    .imx-speed-dial {
-        bottom: 80px;
-        left: 16px;
-    }
-    
-    .feedback-fab {
-        bottom: 80px;
-        right: 16px;
-    }
-    
-    .chatbot-modal {
-        bottom: 140px;
-        right: 16px;
-        left: 16px;
-        width: auto;
-        max-height: 60vh;
-    }
-    
-    /* Cookie consent mobile */
-    .cookie-consent {
-        left: 16px;
-        bottom: 80px;
-    }
-    
-    /* Decorative elements mobile */
-    .v3-paper-plane {
-        opacity: 0.08;
-        transform: scale(0.6);
-    }
-    
-    .v3-blob {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .page-hero h1 {
-        font-size: 1.5rem;
-    }
-    
-    .languages-grid {
-        grid-template-columns: 1fr;
+    .btn {
+        width: 100%;
+        justify-content: center;
     }
 }
 </style>
 </head>
 <body>
 
-<!-- V3 Decorative Elements - Paper Planes & Blobs -->
+<!-- V3 Decorative Elements -->
 <div class="v3-decoration-container">
     <!-- Paper Planes -->
     <div class="v3-paper-plane v3-paper-plane-1">
@@ -1988,7 +1886,7 @@ h1, h2, h3, h4, h5, h6 {
             
             <!-- About Us Dropdown -->
             <li class="has-dropdown">
-                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)" class="active">About Us
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">About Us
                     <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
@@ -2029,30 +1927,28 @@ h1, h2, h3, h4, h5, h6 {
 <!-- Mobile Menu Overlay -->
 <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
 
-<!-- PAGE CONTENT -->
+<!-- Page Content -->
 <main class="page-content">
-    <!-- Hero Section -->
     <section class="page-hero">
         <h1>About ImpactMojo</h1>
         <p>Free development education for impact practitioners across South Asia</p>
     </section>
     
-    <!-- Mission Section -->
-    <section class="content-section">
-        <div class="inner">
+    <div class="container">
+        
+        <!-- Mission Section -->
+        <section class="about-section">
             <h2 class="section-title">Our Mission</h2>
-            <p class="section-text">
+            <p class="section-subtitle">
                 ImpactMojo is a free educational platform for development professionals, NGOs, and impact practitioners across South Asia. We provide practical, accessible courses on MEAL, research methods, impact evaluation, and more – designed by practitioners, for practitioners.
             </p>
-            <p class="section-text">
+            <p class="section-subtitle">
                 Read about our plans for the future in our blog post: <a href="blog/whats-coming-in-2026.html">What's Coming in 2026</a>
             </p>
-        </div>
-    </section>
-
-    <!-- What We Offer Section -->
-    <section class="content-section alt-bg">
-        <div class="inner">
+        </section>
+        
+        <!-- What We Offer Section -->
+        <section class="about-section">
             <h2 class="section-title">What We Offer</h2>
             
             <div class="stats-grid">
@@ -2074,220 +1970,237 @@ h1, h2, h3, h4, h5, h6 {
                 </div>
             </div>
             
-            <h3 style="font-family: 'Poppins', sans-serif; margin: 2.5rem 0 1.25rem; color: var(--text-primary);">Learning Tracks</h3>
+            <h3 class="section-title" style="font-size: 1.25rem; margin-top: 40px;">Learning Tracks</h3>
             <div class="tracks-grid">
-                <div class="track-badge">MEAL</div>
-                <div class="track-badge">Theory of Change</div>
-                <div class="track-badge">Research Methods</div>
-                <div class="track-badge">Impact Evaluation</div>
-                <div class="track-badge">Gender &amp; Social Inclusion</div>
-                <div class="track-badge">Development Economics</div>
-                <div class="track-badge">Public Health</div>
+                <span class="track-badge">MEAL</span>
+                <span class="track-badge">Theory of Change</span>
+                <span class="track-badge">Research Methods</span>
+                <span class="track-badge">Impact Evaluation</span>
+                <span class="track-badge">Gender &amp; Social Inclusion</span>
+                <span class="track-badge">Development Economics</span>
+                <span class="track-badge">Public Health</span>
             </div>
             
-            <h3 style="font-family: 'Poppins', sans-serif; margin: 2.5rem 0 1.25rem; color: var(--text-primary);">Beyond Courses</h3>
-            <p class="section-text">
+            <p class="section-subtitle" style="margin-top: 32px;">
                 We also offer interactive labs for hands-on practice, educational games that make complex concepts engaging, premium tools for advanced practitioners, one-on-one coaching, and organizational workshops tailored to your team's needs.
             </p>
-        </div>
-    </section>
-
-    <!-- Philosophy Section -->
-    <section class="content-section">
-        <div class="inner">
+        </section>
+        
+        <!-- Philosophy Section -->
+        <section class="about-section">
+            <h2 class="section-title">Our Philosophy</h2>
+            
             <div class="philosophy-quote">
                 "Pay what you think is fair. Learn what you need to know. Create the change you want to see."
             </div>
             
-            <p class="section-text" style="text-align: center; max-width: 800px; margin: 0 auto 2.5rem;">
+            <p class="section-subtitle">
                 All core educational content on ImpactMojo is and will remain permanently free. We believe that financial barriers should never prevent someone from accessing quality development education.
             </p>
             
-            <h3 style="font-family: 'Poppins', sans-serif; text-align: center; margin-bottom: 1.75rem; color: var(--text-primary);">Our Sustainability Model</h3>
+            <h3 class="section-title" style="font-size: 1.25rem; margin-top: 40px;">Our Sustainability Model</h3>
             
-            <div class="pillars-grid">
-                <div class="pillar-card">
-                    <h4>💚 Accessibility First</h4>
+            <div class="philosophy-grid">
+                <div class="philosophy-card">
+                    <div class="philosophy-card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h4>Accessibility First</h4>
                     <p>Education should be free at the point of access for those who need it most.</p>
                 </div>
-                <div class="pillar-card">
-                    <h4>🛠️ Practice Over Theory</h4>
+                <div class="philosophy-card">
+                    <div class="philosophy-card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    </div>
+                    <h4>Practice Over Theory</h4>
                     <p>Real-world applicability and practical skills take priority over abstract concepts.</p>
                 </div>
-                <div class="pillar-card">
-                    <h4>🤝 Community Driven</h4>
+                <div class="philosophy-card">
+                    <div class="philosophy-card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h4>Community Driven</h4>
                     <p>Built by practitioners, for practitioners, with continuous feedback integration.</p>
                 </div>
-                <div class="pillar-card">
-                    <h4>🌏 South Asia Context</h4>
+                <div class="philosophy-card">
+                    <div class="philosophy-card-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <h4>South Asia Context</h4>
                     <p>Content designed specifically for the realities of development work in our region.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Languages Section -->
-    <section class="content-section alt-bg">
-        <div class="inner">
+        </section>
+        
+        <!-- Languages Section -->
+        <section class="about-section">
             <h2 class="section-title">Languages</h2>
-            <p class="section-text">
+            <p class="section-subtitle">
                 We're committed to making development education accessible in multiple South Asian languages. Content is currently available in English, with translations in development:
             </p>
             
             <div class="languages-grid">
-                <div class="language-card">
-                    <span class="native">English</span>
-                    <span class="status available">Available</span>
+                <div class="language-card available">
+                    <div class="lang-native">English</div>
+                    <div class="lang-status">Available</div>
                 </div>
                 <div class="language-card">
-                    <span class="native">हिन्दी</span>
-                    <span class="english">Hindi</span>
-                    <span class="status coming">Coming Soon</span>
+                    <div class="lang-native">हिन्दी</div>
+                    <div class="lang-english">Hindi</div>
+                    <div class="lang-status">Coming Soon</div>
                 </div>
                 <div class="language-card">
-                    <span class="native">தமிழ்</span>
-                    <span class="english">Tamil</span>
-                    <span class="status coming">Coming Soon</span>
+                    <div class="lang-native">தமிழ்</div>
+                    <div class="lang-english">Tamil</div>
+                    <div class="lang-status">Coming Soon</div>
                 </div>
                 <div class="language-card">
-                    <span class="native">বাংলা</span>
-                    <span class="english">Bengali</span>
-                    <span class="status coming">Coming Soon</span>
+                    <div class="lang-native">বাংলা</div>
+                    <div class="lang-english">Bengali</div>
+                    <div class="lang-status">Coming Soon</div>
                 </div>
                 <div class="language-card">
-                    <span class="native">తెలుగు</span>
-                    <span class="english">Telugu</span>
-                    <span class="status coming">Coming Soon</span>
+                    <div class="lang-native">తెలుగు</div>
+                    <div class="lang-english">Telugu</div>
+                    <div class="lang-status">Coming Soon</div>
                 </div>
                 <div class="language-card">
-                    <span class="native">मराठी</span>
-                    <span class="english">Marathi</span>
-                    <span class="status coming">Coming Soon</span>
+                    <div class="lang-native">मराठी</div>
+                    <div class="lang-english">Marathi</div>
+                    <div class="lang-status">Coming Soon</div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section class="content-section">
-        <div class="inner">
+        </section>
+        
+        <!-- Team Section -->
+        <section class="about-section">
             <h2 class="section-title">Our Team</h2>
             
             <div class="team-grid">
                 <div class="team-card">
-                    <div class="team-avatar">V</div>
+                    <div class="team-avatar">
+                        <div class="team-avatar-placeholder">V</div>
+                    </div>
                     <h4>Dr. Varna Sri Raman</h4>
-                    <div class="role">Founder &amp; Lead Educator</div>
-                    <p>PhD in Development Economics with extensive experience in impact evaluation, research methods, and capacity building for NGOs and social enterprises.</p>
+                    <div class="team-role">Founder &amp; Lead of Learning Design &amp; Impact</div>
+                    <p class="team-bio">PhD in Development Economics with extensive experience in impact evaluation, research methods, and capacity building for NGOs and social enterprises.</p>
                 </div>
                 <div class="team-card">
-                    <div class="team-avatar">VS</div>
+                    <div class="team-avatar">
+                        <img src="assets/images/team/vandana.jpeg" alt="Vandana Soni">
+                    </div>
                     <h4>Vandana Soni</h4>
-                    <div class="role">Business Partner &amp; Social Media</div>
-                    <p>Co-host of the "Between the Logframes" podcast. Manages ImpactMojo's social media presence and business partnerships.</p>
+                    <div class="team-role">Co-Founder &amp; Lead of Partnerships &amp; Programmes</div>
+                    <p class="team-bio">Co-host of the "Between the Logframes" podcast. Manages ImpactMojo's social media presence and business partnerships.</p>
                 </div>
                 <div class="team-card">
-                    <div class="team-avatar">VG</div>
+                    <div class="team-avatar">
+                        <div class="team-avatar-placeholder">VP</div>
+                    </div>
                     <h4>Vignesh</h4>
-                    <div class="role">Technical Support</div>
-                    <p>Provides technical support for the ImpactMojo platform, ensuring smooth operation of our learning tools and infrastructure.</p>
+                    <div class="team-role">Honorary Technical Lead</div>
+                    <p class="team-bio">Provides technical support for the ImpactMojo platform, ensuring smooth operation of our learning tools and infrastructure.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Sponsor & Partner Section -->
-    <section class="content-section alt-bg">
-        <div class="inner">
+            
+            <!-- Partner Card -->
             <div class="partner-card">
-                <h3>🤝 Sponsor &amp; Partner</h3>
-                <p class="partner-name">PinPoint Ventures</p>
+                <h3>Sponsor &amp; Partner</h3>
+                <div class="partner-name">PinPoint Ventures</div>
                 <p>We're grateful for PinPoint Ventures' support in making free development education accessible across South Asia.</p>
             </div>
             
-            <div class="partnership-form">
+            <!-- Partnership Form -->
+            <div class="partnership-section">
                 <h3>Interested in Partnering with Us?</h3>
-                <p class="form-intro">We're always looking for sponsors and partners who share our mission of democratizing development education.</p>
+                <p>We're always looking for sponsors and partners who share our mission of democratizing development education.</p>
                 
                 <form action="https://formspree.io/f/xpwdvgzp" method="POST">
-                    <input type="hidden" name="_subject" value="Partnership Inquiry - ImpactMojo About Page">
-                    
-                    <div class="form-group">
-                        <label for="name">Your Name *</label>
-                        <input type="text" id="name" name="name" required>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="partner-name">Your Name *</label>
+                            <input type="text" id="partner-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="partner-email">Email Address *</label>
+                            <input type="email" id="partner-email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="partner-org">Organization Name *</label>
+                            <input type="text" id="partner-org" name="organization" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="partner-interest">Interest Type *</label>
+                            <select id="partner-interest" name="interest" required>
+                                <option value="">Select an option...</option>
+                                <option value="sponsorship">Sponsorship</option>
+                                <option value="partnership">Partnership</option>
+                                <option value="both">Both Sponsorship &amp; Partnership</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="partner-message">Tell us more about your interest</label>
+                            <textarea id="partner-message" name="message" rows="4"></textarea>
+                        </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="organization">Organization Name *</label>
-                        <input type="text" id="organization" name="organization" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="interest">Interest Type *</label>
-                        <select id="interest" name="interest" required>
-                            <option value="">Select an option...</option>
-                            <option value="Sponsorship">Sponsorship</option>
-                            <option value="Partnership">Partnership</option>
-                            <option value="Both">Both Sponsorship &amp; Partnership</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Tell us more about your interest</label>
-                        <textarea id="message" name="message"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Submit Interest</button>
+                    <button type="submit" class="btn-submit">Submit Interest</button>
                 </form>
             </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="content-section">
-        <div class="inner">
+        </section>
+        
+        <!-- Contact Section -->
+        <section class="about-section">
             <h2 class="section-title">Get in Touch</h2>
             
             <div class="contact-grid">
                 <a href="mailto:hello@impactmojo.in" class="contact-card">
-                    <div class="icon">📧</div>
-                    <span class="label">Email</span>
-                    <span class="value">hello@impactmojo.in</span>
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div class="contact-info">
+                        <h4>Email</h4>
+                        <p>hello@impactmojo.in</p>
+                    </div>
                 </a>
                 <a href="https://varna.substack.com" target="_blank" rel="noopener" class="contact-card">
-                    <div class="icon">📰</div>
-                    <span class="label">Newsletter</span>
-                    <span class="value">Subscribe on Substack</span>
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <div class="contact-info">
+                        <h4>Newsletter</h4>
+                        <p>Subscribe on Substack</p>
+                    </div>
                 </a>
                 <a href="https://github.com/impactmojo" target="_blank" rel="noopener" class="contact-card">
-                    <div class="icon">💻</div>
-                    <span class="label">GitHub</span>
-                    <span class="value">@impactmojo</span>
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                    </div>
+                    <div class="contact-info">
+                        <h4>GitHub</h4>
+                        <p>@impactmojo</p>
+                    </div>
                 </a>
             </div>
             
+            <!-- UPI Box -->
             <div class="upi-box">
-                <div class="label">💜 Support us via UPI</div>
+                <h4>Support us via UPI</h4>
                 <div class="upi-id">impactmojo@ibl</div>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <h2>Ready to Start Learning?</h2>
-        <p>Explore our catalog of free courses or reach out if you'd like to support our mission.</p>
-        <div class="cta-buttons">
-            <a href="catalog.html" class="cta-btn primary">📚 Browse Catalog</a>
-            <a href="index.html#support-us" class="cta-btn secondary">💜 Support Us</a>
-        </div>
-    </section>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Ready to Start Learning?</h2>
+            <p>Explore our catalog of free courses or reach out if you'd like to support our mission.</p>
+            <div class="cta-buttons">
+                <a href="catalog.html" class="btn btn-primary">Browse Catalog</a>
+                <a href="index.html#support-us" class="btn btn-secondary">Support Us</a>
+            </div>
+        </section>
+        
+    </div>
 </main>
 
 <!-- Footer -->
@@ -2344,105 +2257,56 @@ h1, h2, h3, h4, h5, h6 {
     </div>
 </footer>
 
-<!-- Speed Dial Toolbox -->
-<div class="imx-speed-dial" id="imxSpeedDial">
-    <button class="imx-speed-dial-toggle" onclick="toggleSpeedDial()" title="Tools">
-        <svg viewBox="0 0 24 24">
-            <path d="M12 4v16m8-8H4"/>
-        </svg>
-    </button>
-    <div class="imx-speed-dial-menu">
-        <div class="imx-speed-dial-item" onclick="openChatbot()">
-            <span class="icon">🤖</span>
-            <span class="label">Mojini Assistant</span>
-        </div>
-        <div class="imx-speed-dial-item" onclick="window.location.href='index.html'">
-            <span class="icon">🏠</span>
-            <span class="label">Home</span>
-        </div>
-        <div class="imx-speed-dial-item" onclick="window.location.href='catalog.html'">
-            <span class="icon">📚</span>
-            <span class="label">Browse Catalog</span>
-        </div>
-        <div class="imx-speed-dial-item" onclick="window.location.href='handouts.html'">
-            <span class="icon">📄</span>
-            <span class="label">Resources</span>
-        </div>
-        <div class="imx-speed-dial-item" onclick="window.location.href='index.html#support-us'">
-            <span class="icon">💜</span>
-            <span class="label">Support Us</span>
-        </div>
-    </div>
-</div>
-
-<!-- Chatbot FAB -->
-<div class="feedback-fab">
-    <button class="feedback-fab-btn" onclick="openChatbot()" title="Chat with Mojini">
-        <svg viewBox="0 0 24 24">
-            <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-            <circle cx="12" cy="5" r="2"></circle>
-            <path d="M12 7v4"></path>
-        </svg>
-    </button>
-</div>
+<!-- Mojini Chatbot FAB -->
+<button class="feedback-fab" id="mojini-chat-toggle" onclick="openChatbot()" title="Chat with Mojini">
+    <svg viewBox="0 0 24 24">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+</button>
 
 <!-- Chatbot Modal -->
 <div class="chatbot-modal" id="chatbotModal">
-    <div class="chatbot-header">
-        <div>
-            <h3>🤖 Mojini</h3>
-            <p>ImpactMojo Assistant</p>
-        </div>
-        <button class="chatbot-close" onclick="closeChatbot()">×</button>
+    <div class="chat-header">
+        <h3>
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+            Mojini
+        </h3>
+        <button class="chat-close" onclick="closeChatbot()">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
     </div>
-    <div class="chatbot-messages" id="chatMessages">
+    <div class="chat-messages" id="chatMessages">
         <div class="message bot-message">
             <div class="bot-avatar">
-                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path></svg>
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
             </div>
-            <div class="bot-bubble">
-                Hi! I'm Mojini, ImpactMojo's assistant. I can help you find courses, answer questions about our platform, and take your feedback. How can I help?
-            </div>
+            <div class="bot-bubble">Hey there! I'm Mojini, your ImpactMojo assistant. How can I help you today?</div>
         </div>
     </div>
-    <div class="quick-options">
-        <button class="quick-option" onclick="selectOption('courses')">Browse Courses</button>
-        <button class="quick-option" onclick="selectOption('contact')">Contact Us</button>
-        <button class="quick-option" onclick="selectOption('feedback')">Give Feedback</button>
+    <div class="chat-options">
+        <button class="chat-option" onclick="selectOption('courses')">Courses</button>
+        <button class="chat-option" onclick="selectOption('contact')">Contact</button>
+        <button class="chat-option" onclick="selectOption('feedback')">Feedback</button>
     </div>
-    <div class="chatbot-input">
-        <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." onkeypress="handleChatKeyPress(event)">
+    <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
         <button class="chat-send" onclick="sendChatMessage()">
-            <svg viewBox="0 0 24 24" stroke-width="2">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
     </div>
 </div>
 
 <!-- Cookie Consent -->
 <div class="cookie-consent" id="cookieConsent">
-    <button class="cookie-icon-btn" onclick="toggleCookieExpand()">
-        <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"/>
-            <circle cx="8" cy="9" r="1.5"/>
-            <circle cx="15" cy="11" r="1.5"/>
-            <circle cx="10" cy="15" r="1.5"/>
-            <circle cx="16" cy="16" r="1"/>
-        </svg>
+    <button class="cookie-icon-btn" onclick="toggleCookieExpand()" title="Cookie Settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="9" r="1.5"/><circle cx="15" cy="11" r="1.5"/><circle cx="10" cy="15" r="1"/><circle cx="14" cy="7" r="1"/></svg>
     </button>
     <div class="cookie-expanded">
         <div class="cookie-expanded-header">
-            <svg viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10"/>
-                <circle cx="8" cy="9" r="1.5"/>
-                <circle cx="15" cy="11" r="1.5"/>
-                <circle cx="10" cy="15" r="1.5"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="9" r="1.5"/><circle cx="15" cy="11" r="1.5"/><circle cx="10" cy="15" r="1"/><circle cx="14" cy="7" r="1"/></svg>
             Cookie Settings
         </div>
-        <p>We use cookies to enhance your learning experience and analyze site usage. By continuing, you agree to our Cookie Policy.</p>
+        <p>We use cookies to improve your experience and analyze site usage. By continuing, you agree to our use of cookies.</p>
         <div class="cookie-expanded-buttons">
             <button class="cookie-btn-accept" onclick="acceptCookies()">Accept All</button>
             <button class="cookie-btn-settings" onclick="window.location.href='privacy.html'">Learn More</button>
@@ -2454,7 +2318,6 @@ h1, h2, h3, h4, h5, h6 {
 <script>
     (function(d) {
       var s = d.createElement("script");
-      s.setAttribute("data-position", 2);
       s.setAttribute("data-widget_layout", "full");
       s.setAttribute("data-account", "EksmhlPg9k");
       s.setAttribute("src", "https://cdn.userway.org/widget.js");
@@ -2498,15 +2361,9 @@ function initCookieConsent() {
     }
 }
 
-// Speed Dial
-function toggleSpeedDial() {
-    document.getElementById('imxSpeedDial').classList.toggle('open');
-}
-
 // Chatbot
 function openChatbot() {
     document.getElementById('chatbotModal').classList.add('open');
-    document.getElementById('imxSpeedDial').classList.remove('open');
 }
 
 function closeChatbot() {
@@ -2519,7 +2376,7 @@ function selectOption(option) {
     
     switch(option) {
         case 'courses':
-            response = 'We offer 39 free courses on MEAL, Theory of Change, Research Methods, Gender Studies, and more! Visit our <a href="catalog.html">Catalog</a> to browse all courses.';
+            response = 'We offer free courses on MEAL, Theory of Change, Research Methods, Gender Studies, and more! Visit our <a href="catalog.html">Catalog</a> to browse all courses.';
             break;
         case 'contact':
             response = 'You can reach us at <a href="mailto:hello@impactmojo.in">hello@impactmojo.in</a> or visit our <a href="contact.html">Contact page</a>.';
@@ -2571,15 +2428,13 @@ function sendChatMessage() {
         
         const lowerMsg = message.toLowerCase();
         if (lowerMsg.includes('course') || lowerMsg.includes('learn')) {
-            response = "We offer 39 free courses on MEAL, Theory of Change, Research Methods, and more! Check our <a href='catalog.html'>Catalog</a> for all courses.";
+            response = "We offer free courses on MEAL, Theory of Change, Research Methods, and more! Check our <a href='catalog.html'>Catalog</a> for all courses.";
         } else if (lowerMsg.includes('workshop') || lowerMsg.includes('training')) {
             response = "We offer customized workshops for NGOs and development teams. Visit our <a href='workshops.html'>Workshops page</a> for details.";
         } else if (lowerMsg.includes('coach') || lowerMsg.includes('mentor')) {
             response = "Our coaching services provide personalized guidance for your development career. Learn more on our <a href='coaching.html'>Coaching page</a>.";
         } else if (lowerMsg.includes('free') || lowerMsg.includes('cost') || lowerMsg.includes('price')) {
             response = "All core educational content on ImpactMojo is completely free! We follow a 'pay what you think is fair' philosophy.";
-        } else if (lowerMsg.includes('support') || lowerMsg.includes('donate') || lowerMsg.includes('upi')) {
-            response = "Thank you for considering supporting us! You can donate via UPI to impactmojo@ibl, or visit our main page's Support section.";
         }
         
         const botMsg = document.createElement('div');
@@ -2602,13 +2457,6 @@ document.addEventListener('click', function(e) {
         document.querySelectorAll('.has-dropdown.open').forEach(function(el) {
             el.classList.remove('open');
         });
-    }
-});
-
-// Close speed dial when clicking outside
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.imx-speed-dial')) {
-        document.getElementById('imxSpeedDial').classList.remove('open');
     }
 });
 </script>
