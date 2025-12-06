@@ -89,24 +89,78 @@ function toggleMobileDropdown(event, element) {
     li.classList.toggle('open');
 }
 
-/* Skip tour on mobile devices */
+/* Skip tour on mobile devices - FIXED VERSION */
 (function() {
     var isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
+    // Set global flag that can be checked anywhere
+    window.IMPACTMOJO_IS_MOBILE = isMobile;
+    
     if (isMobile) {
-        // Prevent Shepherd tour from starting
-        window.shepherdTourDisabled = true;
+        console.log('[Mobile] Tour DISABLED - mobile device detected');
         
-        // Hide any tour elements
+        // Set ALL disable flags
+        window.shepherdTourDisabled = true;
+        window.tourDisabled = true;
+        window.imxTourDisabled = true;
+        
+        // Hide any tour elements via CSS
         var style = document.createElement('style');
-        style.textContent = '.shepherd-modal-overlay-container, .shepherd-element, #shepherd-toast, .tour-guide { display: none !important; }';
+        style.id = 'mobile-tour-disable-css';
+        style.textContent = '.shepherd-modal-overlay-container, .shepherd-element, #shepherd-toast, .tour-guide, .imx-tour-overlay, .imx-tour-welcome, .imx-tour-tooltip, .imx-tour-spotlight, .imx-tour-arrow { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }';
         document.head.appendChild(style);
         
-        // Override tour start functions
-        window.startTour = function() { console.log('Tour disabled on mobile'); };
+        // Hide tour toggle button
+        var style2 = document.createElement('style');
+        style2.textContent = '.tour-toggle { display: none !important; }';
+        document.head.appendChild(style2);
+        
+        // Override Shepherd tour if it exists
+        window.startTour = function() { console.log('[Mobile] Tour blocked'); };
         if (window.Shepherd) {
-            window.Shepherd.Tour.prototype.start = function() { console.log('Shepherd tour disabled on mobile'); };
+            window.Shepherd.Tour.prototype.start = function() { console.log('[Mobile] Shepherd blocked'); };
         }
+        
+        // Override IMX.Tour BEFORE it's created - using defineProperty
+        // This intercepts when IMX.Tour is assigned and disables it
+        var _IMX = window.IMX || {};
+        Object.defineProperty(window, 'IMX', {
+            get: function() { return _IMX; },
+            set: function(val) {
+                _IMX = val;
+                // Immediately disable tour functions when IMX is set
+                if (_IMX && _IMX.Tour) {
+                    console.log('[Mobile] Disabling IMX.Tour functions');
+                    _IMX.Tour.showWelcome = function() { console.log('[Mobile] IMX.Tour.showWelcome blocked'); };
+                    _IMX.Tour.start = function() { console.log('[Mobile] IMX.Tour.start blocked'); };
+                    _IMX.Tour.restart = function() { console.log('[Mobile] IMX.Tour.restart blocked'); };
+                    _IMX.Tour.show = function() { console.log('[Mobile] IMX.Tour.show blocked'); };
+                }
+            },
+            configurable: true
+        });
+        
+        // Also override after DOMContentLoaded as a backup
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.IMX && window.IMX.Tour) {
+                window.IMX.Tour.showWelcome = function() { console.log('[Mobile] IMX.Tour.showWelcome blocked (DOMContentLoaded)'); };
+                window.IMX.Tour.start = function() { console.log('[Mobile] IMX.Tour.start blocked (DOMContentLoaded)'); };
+                window.IMX.Tour.restart = function() { console.log('[Mobile] IMX.Tour.restart blocked (DOMContentLoaded)'); };
+            }
+        });
+        
+        // And override after load event as another backup
+        window.addEventListener('load', function() {
+            if (window.IMX && window.IMX.Tour) {
+                window.IMX.Tour.showWelcome = function() { console.log('[Mobile] IMX.Tour.showWelcome blocked (load)'); };
+                window.IMX.Tour.start = function() { console.log('[Mobile] IMX.Tour.start blocked (load)'); };
+                window.IMX.Tour.restart = function() { console.log('[Mobile] IMX.Tour.restart blocked (load)'); };
+            }
+            // Remove any tour elements that might have been created
+            document.querySelectorAll('.imx-tour-overlay, .imx-tour-welcome, .imx-tour-tooltip').forEach(function(el) {
+                el.remove();
+            });
+        });
     }
 })();
 </script>
@@ -115,7 +169,7 @@ function toggleMobileDropdown(event, element) {
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!-- Version 9.5.2 - December 6, 2025 - Enhanced mobile hamburger menu, all fixes applied -->
+<!-- Version 9.6.0 - December 6, 2025 - FIXED: Mobile hamburger + Tour disabled on mobile -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
 <script>
@@ -131,12 +185,12 @@ function toggleMobileDropdown(event, element) {
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta name="version" content="9.5.2.20251206">
+<meta name="version" content="9.5.1.20251205">
 
 <!-- Aggressive cache-busting script -->
 <script>
 (function() {
-    var CURRENT_VERSION = '9.5.2.20251206';
+    var CURRENT_VERSION = '8.0.8.20251205';
     var STORAGE_KEY = 'imx_page_version';
     
     try {
@@ -4802,109 +4856,70 @@ function toggleMobileDropdown(event, element) {
 }
 </style>
 <script>
-/* ============================================================
-   BULLETPROOF HAMBURGER INITIALIZATION
-   Works on all mobile devices - touch, click, and tap
-   ============================================================ */
+// Immediate hamburger fix - runs before DOMContentLoaded
 (function() {
-    var hamburgerInitialized = false;
-    
     function initHamburger() {
-        if (hamburgerInitialized) return true;
-        
         var btn = document.getElementById('mobile-menu-btn');
         if (!btn) return false;
         
-        // Mark as initialized
-        hamburgerInitialized = true;
-        btn.setAttribute('data-initialized', 'true');
+        // Remove any existing onclick
+        btn.onclick = null;
+        btn.removeAttribute('onclick');
         
-        // The global toggleMobileMenu function handles the actual toggle
-        // We just need to ensure events are properly captured
-        
-        // Prevent double-firing from touch + click
-        var lastTap = 0;
-        
-        function handleInteraction(e) {
-            var now = Date.now();
-            if (now - lastTap < 300) return; // Debounce
-            lastTap = now;
-            
+        // Single handler for all interactions
+        function handleToggle(e) {
             if (e) {
                 e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation();
             }
             
-            // Use the global function defined in <head>
-            if (typeof window.toggleMobileMenu === 'function') {
-                window.toggleMobileMenu();
+            var navLinks = document.getElementById('navLinks');
+            var overlay = document.getElementById('mobileMenuOverlay');
+            
+            if (!navLinks) return;
+            
+            var isOpen = navLinks.classList.contains('active');
+            
+            if (isOpen) {
+                navLinks.classList.remove('active');
+                btn.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+                document.body.style.overflow = '';
             } else {
-                // Fallback direct implementation
-                var navLinks = document.getElementById('navLinks');
-                var overlay = document.getElementById('mobileMenuOverlay');
-                var authSection = document.getElementById('mobileAuthSection');
-                
-                if (!navLinks) return;
-                
-                var isOpen = navLinks.classList.contains('active');
-                
-                if (isOpen) {
-                    navLinks.classList.remove('active');
-                    btn.classList.remove('active');
-                    if (overlay) overlay.classList.remove('active');
-                    if (authSection) authSection.classList.remove('active');
-                    document.body.classList.remove('menu-open');
-                    document.body.style.overflow = '';
-                } else {
-                    navLinks.classList.add('active');
-                    btn.classList.add('active');
-                    if (overlay) overlay.classList.add('active');
-                    if (authSection) authSection.classList.add('active');
-                    document.body.classList.add('menu-open');
-                    document.body.style.overflow = 'hidden';
-                }
+                navLinks.classList.add('active');
+                btn.classList.add('active');
+                if (overlay) overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
             }
         }
         
-        // Add multiple event listeners for maximum compatibility
-        // Keep the onclick as primary handler
-        btn.onclick = handleInteraction;
+        // Remove all existing listeners by cloning
+        var newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        btn = newBtn;
         
-        // Add touch events for mobile
+        // Add fresh listeners
+        btn.addEventListener('click', handleToggle, { passive: false, capture: true });
         btn.addEventListener('touchend', function(e) {
             e.preventDefault();
-            handleInteraction(e);
-        }, { passive: false });
+            handleToggle(e);
+        }, { passive: false, capture: true });
         
-        // Ensure button is focusable
-        btn.setAttribute('tabindex', '0');
-        btn.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleInteraction(e);
-            }
-        });
-        
-        console.log('[ImpactMojo] Hamburger menu initialized successfully');
+        console.log('[ImpactMojo] Hamburger menu initialized');
         return true;
     }
     
-    // Multiple initialization attempts for reliability
+    // Try immediately
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initHamburger);
     } else {
         initHamburger();
     }
     
-    // Backup attempts
-    setTimeout(initHamburger, 50);
-    setTimeout(initHamburger, 200);
+    // Also try after a delay as backup
+    setTimeout(initHamburger, 100);
     setTimeout(initHamburger, 500);
-    
-    // Final fallback after page fully loaded
-    window.addEventListener('load', function() {
-        setTimeout(initHamburger, 100);
-    });
 })();
 </script>
 
@@ -11614,48 +11629,8 @@ Workshops & Master Classes
             }
         });
 
-        // Mobile Menu Toggle
-        function toggleMobileMenu() {
-            var navLinks = document.getElementById('navLinks');
-            var mobileToggle = document.querySelector('.mobile-menu-toggle');
-            var overlay = document.getElementById('mobileMenuOverlay');
-            
-            if (!navLinks || !mobileToggle) return;
-            
-            navLinks.classList.toggle('active');
-            
-            // Toggle hamburger to X icon
-            if (navLinks.classList.contains('active')) {
-                mobileToggle.classList.add('active');
-                if (overlay) overlay.classList.add('active');
-                // Prevent body scroll when menu is open
-                document.body.style.overflow = 'hidden';
-            } else {
-                mobileToggle.classList.remove('active');
-                if (overlay) overlay.classList.remove('active');
-                document.body.style.overflow = '';
-                // Close all dropdowns when menu closes
-                document.querySelectorAll('.nav-links > li.has-dropdown').forEach(function(item) {
-                    item.classList.remove('open');
-                });
-            }
-        }
-        
-        // Close mobile menu function
-        function closeMobileMenu() {
-            var navLinks = document.getElementById('navLinks');
-            var mobileToggle = document.querySelector('.mobile-menu-toggle');
-            var overlay = document.getElementById('mobileMenuOverlay');
-            
-            if (navLinks) navLinks.classList.remove('active');
-            if (mobileToggle) mobileToggle.classList.remove('active');
-            if (overlay) overlay.classList.remove('active');
-            document.body.style.overflow = '';
-            
-            document.querySelectorAll('.nav-links > li.has-dropdown').forEach(function(item) {
-                item.classList.remove('open');
-            });
-        }
+        // NOTE: toggleMobileMenu() and closeMobileMenu() are defined in <head> section
+        // Do not duplicate them here - the global definitions take precedence
         
         // Mobile menu touch handling is now in inline script in <head>
         // See: <script> block after "CRITICAL MOBILE FIXES" styles
@@ -15988,6 +15963,14 @@ IMX.Tour = {
 (function initTour() {
     function startTourCheck() {
         console.log('IMX Tour: Checking first visit...');
+        
+        // CRITICAL: Check if on mobile - do NOT show tour on mobile
+        var isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (isMobile || window.imxTourDisabled || window.IMPACTMOJO_IS_MOBILE) {
+            console.log('IMX Tour: BLOCKED - mobile device detected or tour disabled');
+            return; // Exit without showing tour
+        }
+        
         if (IMX && IMX.Tour) {
             console.log('IMX Tour: Tour object exists, checking localStorage...');
             var completed = localStorage.getItem('impactmojo_tour_completed');
@@ -16662,6 +16645,121 @@ waitForDependencies(patchSaveFunctions);
     } else {
         init();
     }
+})();
+</script>
+
+<!-- ============================================== -->
+<!-- BULLETPROOF MOBILE TOUCH HANDLER              -->
+<!-- Last script = highest priority                -->
+<!-- ============================================== -->
+<script>
+(function() {
+    'use strict';
+    
+    // Only run on mobile
+    var isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) return;
+    
+    console.log('[BulletproofMobile] Initializing touch handlers...');
+    
+    var touchStartTime = 0;
+    var DEBOUNCE = 300;
+    
+    function handleHamburgerTap(e) {
+        // Debounce to prevent double-firing
+        var now = Date.now();
+        if (now - touchStartTime < DEBOUNCE) {
+            console.log('[BulletproofMobile] Debounced');
+            return;
+        }
+        touchStartTime = now;
+        
+        e.preventDefault();
+        e.stopPropagation();
+        
+        console.log('[BulletproofMobile] Hamburger tapped!');
+        
+        // Call the global function
+        if (typeof toggleMobileMenu === 'function') {
+            toggleMobileMenu();
+        } else {
+            // Fallback: manual toggle
+            console.log('[BulletproofMobile] Using fallback toggle');
+            var navLinks = document.getElementById('navLinks');
+            var btn = document.getElementById('mobile-menu-btn');
+            var overlay = document.getElementById('mobileMenuOverlay');
+            
+            if (navLinks) {
+                var isOpen = navLinks.classList.contains('active');
+                if (isOpen) {
+                    navLinks.classList.remove('active');
+                    if (btn) btn.classList.remove('active');
+                    if (overlay) overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                } else {
+                    navLinks.classList.add('active');
+                    if (btn) btn.classList.add('active');
+                    if (overlay) overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+        }
+    }
+    
+    function attachTouchHandlers() {
+        var hamburger = document.getElementById('mobile-menu-btn');
+        
+        if (!hamburger) {
+            console.log('[BulletproofMobile] Hamburger not found, retrying...');
+            return false;
+        }
+        
+        // Remove any existing onclick to prevent double-firing
+        hamburger.onclick = null;
+        
+        // Add touchstart (more reliable than touchend on some devices)
+        hamburger.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            handleHamburgerTap(e);
+        }, { passive: false });
+        
+        // Also add click for devices that don't fire touch events
+        hamburger.addEventListener('click', handleHamburgerTap, { passive: false });
+        
+        // Make sure button is clickable
+        hamburger.style.pointerEvents = 'auto';
+        hamburger.style.cursor = 'pointer';
+        hamburger.style.touchAction = 'manipulation';
+        
+        console.log('[BulletproofMobile] Touch handlers attached successfully!');
+        return true;
+    }
+    
+    // Try multiple times to attach handlers
+    function tryAttach(attempts) {
+        if (attempts <= 0) {
+            console.error('[BulletproofMobile] Failed to attach handlers after all attempts');
+            return;
+        }
+        
+        if (!attachTouchHandlers()) {
+            setTimeout(function() { tryAttach(attempts - 1); }, 200);
+        }
+    }
+    
+    // Start trying when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() { tryAttach(10); }, 100);
+        });
+    } else {
+        setTimeout(function() { tryAttach(10); }, 100);
+    }
+    
+    // Also try on window load
+    window.addEventListener('load', function() {
+        setTimeout(function() { tryAttach(5); }, 200);
+    });
 })();
 </script>
 
