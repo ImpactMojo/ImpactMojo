@@ -2,16 +2,29 @@
 <!--
     ╔═══════════════════════════════════════════════════════════════════════════╗
     ║  IMPACTMOJO MOBILE HOMEPAGE                                               ║
-    ║  Version: 1.0.0 - December 6, 2025                                        ║
+    ║  Version: 1.2.0 - December 6, 2025                                        ║
     ║                                                                           ║
-    ║  Clean, simple mobile version with guaranteed working navigation          ║
+    ║  Features:                                                                ║
+    ║  - Team section with Varna, Vandana, Vignesh                              ║
+    ║  - Support ImpactMojo section                                             ║
+    ║  - Subtle single plane animation                                          ║
+    ║  - Cache control headers                                                  ║
+    ║  - Google Analytics (G-JRCMEB9TBW)                                        ║
+    ║  - UserWay accessibility (EksmhlPg9k)                                     ║
+    ║  - Inter + Poppins fonts                                                  ║
     ║  Desktop users are redirected to index.html                               ║
     ╚═══════════════════════════════════════════════════════════════════════════╝
 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+
+<!-- Cache Control -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
 
 <!-- Redirect desktop users to main site -->
 <script>
@@ -554,9 +567,294 @@ footer {
     font-size: 0.875rem;
 }
 
+/* ========================================
+   SUBTLE PLANE ANIMATION
+   ======================================== */
+.mobile-plane {
+    position: fixed;
+    top: 15%;
+    right: -60px;
+    width: 50px;
+    height: 50px;
+    opacity: 0.12;
+    z-index: 0;
+    pointer-events: none;
+    animation: mobile-plane-float 25s ease-in-out infinite;
+}
+
+.mobile-plane svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--accent-color);
+    transform: rotate(-15deg);
+}
+
+@keyframes mobile-plane-float {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.12;
+    }
+    25% {
+        transform: translate(-30vw, 15vh) rotate(-5deg);
+        opacity: 0.15;
+    }
+    50% {
+        transform: translate(-50vw, 5vh) rotate(5deg);
+        opacity: 0.1;
+    }
+    75% {
+        transform: translate(-20vw, -10vh) rotate(-3deg);
+        opacity: 0.14;
+    }
+}
+
+body.light-mode .mobile-plane {
+    opacity: 0.08;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .mobile-plane {
+        animation: none;
+        opacity: 0.08;
+    }
+}
+
+/* ========================================
+   TEAM SECTION
+   ======================================== */
+.team-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.team-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+}
+
+.team-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+    border: 3px solid var(--accent-color);
+}
+
+.team-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.team-title {
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.team-bio {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.team-social {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.team-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+}
+
+.team-social a:active {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+
+.team-social svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+/* ========================================
+   SUPPORT SECTION
+   ======================================== */
+.support-section {
+    background: var(--secondary-bg);
+    padding: 2rem 1rem;
+}
+
+.support-intro {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.support-intro a {
+    color: var(--accent-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.support-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.support-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.support-card.highlight {
+    border-color: #10B981;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(6, 78, 59, 0.1) 100%);
+}
+
+.support-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.support-card-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-accent) 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.support-card.highlight .support-card-icon {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+}
+
+.support-card-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2;
+}
+
+.support-card-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.support-card-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.support-share-btns {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.support-share-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
+.support-share-btn:active {
+    transform: scale(0.98);
+}
+
+.support-share-btn.linkedin {
+    background: #0A66C2;
+    color: #fff;
+}
+
+.support-share-btn.whatsapp {
+    background: #25D366;
+    color: #fff;
+}
+
+.support-share-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.support-action-btn {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-accent) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.support-action-btn.green {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+}
+
+.support-action-btn:active {
+    transform: scale(0.98);
+}
+
 </style>
 </head>
 <body>
+
+<!-- Subtle Background Plane Animation -->
+<div class="mobile-plane" aria-hidden="true">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+    </svg>
+</div>
 
 <!-- Header -->
 <header>
@@ -747,6 +1045,137 @@ footer {
         </div>
         <div class="sponsor-badge">
             Proudly sponsored by PinPoint Ventures
+        </div>
+    </section>
+    
+    <!-- Team Section -->
+    <section class="section" style="background: var(--secondary-bg);">
+        <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Meet the Team
+        </h2>
+        <div class="team-grid">
+            <!-- Varna Sri Raman -->
+            <div class="team-card">
+                <img src="assets/images/varna-photo.jpg" alt="Varna Sri Raman" class="team-photo" loading="lazy">
+                <div class="team-name">Varna Sri Raman</div>
+                <div class="team-title">Founder and Lead of Learning Design & Impact</div>
+                <div class="team-bio">Development Economist with a PhD, specializing in social impact measurement, gender studies, and development research across South Asia.</div>
+                <div class="team-social">
+                    <a href="https://www.linkedin.com/in/varnasriraman" target="_blank" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect height="12" width="4" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
+                    <a href="https://twitter.com/varnasriraman" target="_blank" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Vandana Soni -->
+            <div class="team-card">
+                <img src="assets/images/vandana-photo.jpg" alt="Vandana Soni" class="team-photo" loading="lazy">
+                <div class="team-name">Vandana Soni</div>
+                <div class="team-title">Co-Founder and Lead of Partnerships & Programmes</div>
+                <div class="team-bio">Expert in partnership development and programme management, building bridges between ImpactMojo and development organizations across the region.</div>
+                <div class="team-social">
+                    <a href="https://www.linkedin.com/in/vandanasoni" target="_blank" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect height="12" width="4" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Vignesh -->
+            <div class="team-card">
+                <img src="assets/images/vignesh-photo.jpg" alt="Vignesh" class="team-photo" loading="lazy">
+                <div class="team-name">Vignesh</div>
+                <div class="team-title">Honorary Technical Lead</div>
+                <div class="team-bio">Driving ImpactMojo's technical infrastructure and platform development, ensuring seamless learning experiences for users across South Asia.</div>
+                <div class="team-social">
+                    <a href="https://www.linkedin.com/in/vignesh" target="_blank" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect height="12" width="4" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Support ImpactMojo Section -->
+    <section class="support-section">
+        <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Support Our Mission
+        </h2>
+        <p class="support-intro">
+            ImpactMojo is provided <strong>completely free</strong> thanks to the generous support of 
+            <a href="https://www.pinpointventures.in" target="_blank">PinPoint Ventures</a>. 
+            Help us keep high-quality development education accessible to everyone.
+        </p>
+        
+        <div class="support-options">
+            <!-- Share Card -->
+            <div class="support-card">
+                <div class="support-card-header">
+                    <div class="support-card-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                    </div>
+                    <div class="support-card-title">Spread the Word</div>
+                </div>
+                <div class="support-card-desc">
+                    Enjoyed learning with us? Share your experience with your network and help fellow development professionals discover ImpactMojo!
+                </div>
+                <div class="support-share-btns">
+                    <a href="https://www.linkedin.com/feed/?shareActive=true&text=%F0%9F%8E%93%20I%27ve%20been%20learning%20with%20ImpactMojo%20-%20a%20fantastic%20FREE%20platform%20for%20development%20professionals!%0A%0A%E2%9C%85%2039%2B%20courses%20on%20MEAL%2C%20Gender%20Studies%2C%20Development%20Economics%0A%E2%9C%85%20Interactive%20labs%20and%20economics%20games%0A%E2%9C%85%20Perfect%20for%20NGO%20teams%2C%20students%20%26%20researchers%0A%0AIf%20you%20work%20in%20the%20development%20sector%2C%20check%20it%20out%3A%20https%3A%2F%2Fwww.impactmojo.in%0A%0A%23DevelopmentSector%20%23MEAL%20%23SocialImpact%20%23FreeEducation%20%23NGO%20%23ImpactMojo" target="_blank" class="support-share-btn linkedin">
+                        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect height="12" width="4" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                        LinkedIn
+                    </a>
+                    <a href="https://wa.me/?text=%F0%9F%8E%93%20I%27ve%20been%20learning%20with%20ImpactMojo%20-%20a%20fantastic%20FREE%20platform%20for%20development%20professionals!%0A%0A%E2%9C%85%2039%2B%20courses%20on%20MEAL%2C%20Gender%20Studies%2C%20Development%20Economics%0A%E2%9C%85%20Interactive%20labs%20and%20economics%20games%0A%E2%9C%85%20Perfect%20for%20NGO%20teams%2C%20students%20%26%20researchers%0A%0AIf%20you%20work%20in%20the%20development%20sector%2C%20check%20it%20out%3A%20https%3A%2F%2Fwww.impactmojo.in" target="_blank" class="support-share-btn whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/><path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2z"/></svg>
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Testimonial Card -->
+            <div class="support-card">
+                <div class="support-card-header">
+                    <div class="support-card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <div class="support-card-title">Leave a Testimonial</div>
+                </div>
+                <div class="support-card-desc">
+                    Your feedback helps us improve and inspires others to join. Share your learning experience with us!
+                </div>
+                <a href="contact.html" class="support-action-btn">Share Feedback</a>
+            </div>
+            
+            <!-- Partner Card -->
+            <div class="support-card">
+                <div class="support-card-header">
+                    <div class="support-card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="support-card-title">Partner With Us</div>
+                </div>
+                <div class="support-card-desc">
+                    Are you an organization looking to train your team? We offer custom workshops and institutional partnerships.
+                </div>
+                <a href="contact.html" class="support-action-btn">Get in Touch</a>
+            </div>
+            
+            <!-- Pay What You Think Is Fair Card -->
+            <div class="support-card highlight">
+                <div class="support-card-header">
+                    <div class="support-card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <div class="support-card-title">Pay What You Think Is Fair</div>
+                </div>
+                <div class="support-card-desc">
+                    Get our curated resource pack — cheatsheets, checklists, and guides for development professionals.
+                </div>
+                <a href="premium.html" class="support-action-btn green">Support & Get Resources</a>
+            </div>
         </div>
     </section>
 </main>
