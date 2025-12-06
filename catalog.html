@@ -1,1420 +1,2400 @@
 <!DOCTYPE html>
+<!--
+    ╔═══════════════════════════════════════════════════════════════════════════════╗
+    ║  IMPACTMOJO CATALOG PAGE v3.0.0                                               ║
+    ║  Version: 3.0.0 - December 6, 2025                                            ║
+    ║                                                                               ║
+    ║  Complete catalog page with V3 design system matching index.html standards.   ║
+    ║  Features 39 courses, 10 labs, 12 games, 6 premium tools with filtering.      ║
+    ║                                                                               ║
+    ║  INCLUDED FEATURES (ALL Required Elements):                                   ║
+    ║  ✔ Google Analytics (G-JRCMEB9TBW)                                            ║
+    ║  ✔ UserWay Accessibility Widget (account: EksmhlPg9k)                         ║
+    ║  ✔ Cache Control Meta Tags                                                    ║
+    ║  ✔ Auto-refresh on back/forward navigation (pageshow)                         ║
+    ║  ✔ Theme Toggle (Sun/Moon) with localStorage sync                             ║
+    ║  ✔ CSS Variables (Dark/Light mode matching index.html)                        ║
+    ║  ✔ Google Fonts (Inter body + Poppins headings)                               ║
+    ║  ✔ Favicons (all 4 sizes + manifest.json)                                     ║
+    ║  ✔ Full Navigation with Dropdowns (Learn, Services, About Us)                 ║
+    ║  ✔ V3 Design Elements (Paper Planes, Gradient Blobs)                          ║
+    ║  ✔ Full 4-Section Footer (About, Legal IT Act, Quick Links, Resources)        ║
+    ║  ✔ Mojini Chatbot with FAQ bank                                               ║
+    ║  ✔ Cookie Consent Banner                                                      ║
+    ║  ✔ Speed Dial Toolbox (Bookmarks, Notes, Streak)                              ║
+    ║  ✔ Mobile Responsive Design with Fixed Menu                                   ║
+    ║  ✔ Tour Disabled on Mobile                                                    ║
+    ╚═══════════════════════════════════════════════════════════════════════════════╝
+-->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Course Catalog | ImpactMojo</title>
-    <meta name="description" content="Browse 39 free courses, 10 interactive labs, and 12 educational games on MEAL, Theory of Change, Research Methods, Gender Studies, and more.">
+<!-- Early Mobile Menu Functions - Must load before DOM -->
+<script>
+/* Mobile Menu Functions - Defined early for onclick handlers */
+function toggleMobileMenu() {
+    var navLinks = document.getElementById('navLinks');
+    var toggle = document.getElementById('mobile-menu-btn');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    var authSection = document.getElementById('mobileAuthSection');
     
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-JRCMEB9TBW');
-    </script>
+    if (!navLinks) return;
     
-    <!-- UserWay Accessibility Widget -->
-    <script defer src="https://cdn.userway.org/widget.js" data-account="EksmhlPg9k"></script>
+    var isOpen = navLinks.classList.contains('active');
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    if (isOpen) {
+        navLinks.classList.remove('active');
+        if (toggle) toggle.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        if (authSection) authSection.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        document.body.style.overflow = '';
+        document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+            item.classList.remove('open');
+        });
+    } else {
+        navLinks.classList.add('active');
+        if (toggle) toggle.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        if (authSection) authSection.classList.add('active');
+        document.body.classList.add('menu-open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeMobileMenu() {
+    var navLinks = document.getElementById('navLinks');
+    var toggle = document.getElementById('mobile-menu-btn');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    var authSection = document.getElementById('mobileAuthSection');
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    if (navLinks) navLinks.classList.remove('active');
+    if (toggle) toggle.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    if (authSection) authSection.classList.remove('active');
+    document.body.classList.remove('menu-open');
+    document.body.style.overflow = '';
     
-    <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: #1a1a24;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --accent-primary: #6366f1;
-            --accent-secondary: #8b5cf6;
-            --accent-tertiary: #06b6d4;
-            --border-color: #2a2a3a;
-            --gradient-start: #6366f1;
-            --gradient-end: #8b5cf6;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-        }
-        
-        .light-mode {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-card: #ffffff;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --border-color: #e2e8f0;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        
-        /* Cookie Consent Banner */
-        .cookie-consent {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            max-width: 380px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            z-index: 9999;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            animation: slideUp 0.5s ease-out;
-        }
-        
-        .cookie-consent.hidden {
-            display: none;
-        }
-        
-        .cookie-consent h4 {
-            font-size: 1rem;
-            margin-bottom: 10px;
-            color: var(--text-primary);
-        }
-        
-        .cookie-consent p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-        
-        .cookie-consent .cookie-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .cookie-consent .cookie-btn {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .cookie-consent .cookie-btn.accept {
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            color: white;
-        }
-        
-        .cookie-consent .cookie-btn.learn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
-        
-        .light-mode .navbar {
-            background: rgba(255, 255, 255, 0.95);
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--text-primary);
-        }
-        
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: white;
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-        
-        .logo-text span {
-            display: block;
-            font-size: 0.7rem;
-            font-weight: 400;
-            color: var(--text-secondary);
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            list-style: none;
-        }
-        
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .nav-links a:hover {
-            color: var(--accent-primary);
-        }
-        
-        .nav-links a.active {
-            color: var(--accent-primary);
-        }
-        
-        .theme-toggle {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        
-        .theme-toggle:hover {
-            border-color: var(--accent-primary);
-        }
-        
-        .theme-toggle svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--text-secondary);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        /* Main Content */
-        .main-content {
-            padding-top: 100px;
-            min-height: calc(100vh - 300px);
-        }
-        
-        /* Hero Section */
-        .hero-section {
-            text-align: center;
-            padding: 60px 40px;
-            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-        }
-        
-        .hero-section h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .hero-section .subtitle {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        /* Stats Bar */
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        /* Search and Filter Section */
-        .filter-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 30px 40px;
-        }
-        
-        .search-box {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 14px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-        }
-        
-        .search-input::placeholder {
-            color: var(--text-secondary);
-        }
-        
-        /* Filter Tabs */
-        .filter-tabs {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        
-        .filter-tab {
-            padding: 10px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 25px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-tab:hover {
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
-        }
-        
-        .filter-tab.active {
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            border-color: transparent;
-            color: white;
-        }
-        
-        /* Track Filters */
-        .track-filters {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .track-filter {
-            padding: 8px 16px;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .track-filter:hover {
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
-        }
-        
-        .track-filter.active {
-            background: rgba(99, 102, 241, 0.2);
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
-        }
-        
-        /* Content Grid */
-        .content-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 40px 60px;
-        }
-        
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-        
-        .section-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        
-        .result-count {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        /* Course Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
-        
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .card:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-        
-        .card-type {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        
-        .card-type.course {
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--accent-primary);
-        }
-        
-        .card-type.lab {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
-        }
-        
-        .card-type.game {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning);
-        }
-        
-        .card-type.premium {
-            background: rgba(139, 92, 246, 0.2);
-            color: var(--accent-secondary);
-        }
-        
-        .card-rating {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: var(--warning);
-            font-size: 0.85rem;
-        }
-        
-        .card-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--text-primary);
-        }
-        
-        .card-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            flex-grow: 1;
-            margin-bottom: 15px;
-        }
-        
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .card-track {
-            font-size: 0.8rem;
-            color: var(--accent-tertiary);
-            font-weight: 500;
-        }
-        
-        .card-users {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-        
-        .card-btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            text-align: center;
-            display: block;
-            margin-top: auto;
-        }
-        
-        .card-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-        }
-        
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-        }
-        
-        .empty-state .icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        
-        .empty-state h3 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--text-primary);
-        }
-        
-        .empty-state p {
-            color: var(--text-secondary);
-        }
-        
-        /* Full Footer - 4 Sections */
-        .footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 60px 40px 30px;
-        }
-        
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto 40px;
-        }
-        
-        .footer-section h4 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-        }
-        
-        .footer-section ul {
-            list-style: none;
-        }
-        
-        .footer-section li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-section a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-section a:hover {
-            color: var(--accent-primary);
-        }
-        
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 30px;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-        }
-        
-        .footer-bottom p {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-        }
-        
-        .footer-bottom .disclaimer {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            opacity: 0.7;
-            max-width: 800px;
-            margin: 15px auto 0;
-        }
-        
-        .footer-bottom a {
-            color: var(--accent-primary);
-            text-decoration: none;
-        }
-        
-        .footer-bottom a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Speed Dial Toolbox */
-        .imx-speed-dial {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9998;
-        }
-        
-        .imx-speed-dial-toggle {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-            transition: all 0.3s ease;
-        }
-        
-        .imx-speed-dial-toggle:hover {
-            transform: scale(1.1);
-        }
-        
-        .imx-speed-dial-toggle svg {
-            width: 24px;
-            height: 24px;
-            fill: white;
-            transition: transform 0.3s ease;
-        }
-        
-        .imx-speed-dial.open .imx-speed-dial-toggle svg {
-            transform: rotate(45deg);
-        }
-        
-        .imx-speed-dial-menu {
-            position: absolute;
-            bottom: 70px;
-            right: 0;
-            display: none;
-            flex-direction: column;
-            gap: 12px;
-            padding: 15px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            min-width: 200px;
-        }
-        
-        .imx-speed-dial.open .imx-speed-dial-menu {
-            display: flex;
-        }
-        
-        .imx-speed-dial-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .imx-speed-dial-item:hover {
-            border-color: var(--accent-primary);
-            background: rgba(99, 102, 241, 0.1);
-        }
-        
-        .imx-speed-dial-item .icon {
-            font-size: 1.2rem;
-        }
-        
-        .imx-speed-dial-item .label {
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        
-        /* Mojini Chatbot */
-        #mojini-modal {
-            display: none;
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 350px;
-            max-height: 450px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            z-index: 9996;
-            overflow: hidden;
-        }
-        
-        .mojini-header {
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            padding: 20px;
-            color: white;
-        }
-        
-        .mojini-header h3 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-        
-        .mojini-header p {
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-        
-        .mojini-body {
-            padding: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .chat-messages {
-            margin-bottom: 15px;
-        }
-        
-        .message {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .bot-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .bot-avatar svg {
-            width: 18px;
-            height: 18px;
-            fill: white;
-        }
-        
-        .bot-bubble {
-            background: var(--bg-secondary);
-            padding: 12px 16px;
-            border-radius: 16px 16px 16px 4px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        
-        .quick-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .quick-option {
-            padding: 8px 14px;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid var(--accent-primary);
-            border-radius: 20px;
-            color: var(--accent-primary);
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .quick-option:hover {
-            background: var(--accent-primary);
-            color: white;
-        }
-        
-        /* Mobile Responsive */
-        @media (max-width: 1024px) {
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 20px;
-            }
-            
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--bg-secondary);
-                flex-direction: column;
-                padding: 20px;
-                gap: 15px;
-                border-bottom: 1px solid var(--border-color);
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-section h1 {
-                font-size: 2rem;
-            }
-            
-            .hero-section {
-                padding: 40px 20px;
-            }
-            
-            .stats-bar {
-                gap: 20px;
-            }
-            
-            .stat-number {
-                font-size: 1.8rem;
-            }
-            
-            .filter-section {
-                padding: 20px;
-            }
-            
-            .content-section {
-                padding: 20px;
-            }
-            
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .imx-speed-dial {
-                bottom: 20px;
-                right: 20px;
-            }
-            
-            #mojini-modal {
-                right: 10px;
-                left: 10px;
-                width: auto;
-                bottom: 90px;
-            }
-            
-            .cookie-consent {
-                left: 10px;
-                right: 10px;
-                max-width: none;
-            }
-        }
-    </style>
+    document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+        item.classList.remove('open');
+    });
+}
+
+function toggleMobileDropdown(event, element) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    var li = element.closest('li.has-dropdown');
+    if (!li) return;
+    
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+            if (item !== li) item.classList.remove('open');
+        });
+        li.classList.toggle('open');
+    }
+}
+
+/* Disable tour on mobile */
+(function() {
+    var isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+        window.shepherdTourDisabled = true;
+        window.tourDisabled = true;
+        window.startTour = function() { console.log('Tour disabled on mobile'); };
+    }
+})();
+</script>
+
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Google tag (gtag.js) - G-JRCMEB9TBW -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Cache Control - Force fresh content -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="version" content="3.0.0.20251206">
+
+<!-- Auto-refresh on back/forward navigation -->
+<script>
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+</script>
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Browse 39 free courses, 10 interactive labs, and 12 educational games on MEAL, Theory of Change, Research Methods, Gender Studies, and more. ImpactMojo: Free development education for NGOs and impact teams across South Asia.">
+<meta property="og:title" content="Course Catalog | ImpactMojo">
+<meta property="og:description" content="Browse 39 free courses, 10 interactive labs, and 12 educational games on MEAL, Theory of Change, Research Methods, Gender Studies, and more.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.impactmojo.in/catalog.html">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Course Catalog | ImpactMojo">
+<meta name="twitter:description" content="Browse 39 free courses, 10 interactive labs, and 12 educational games on MEAL, Theory of Change, Research Methods, Gender Studies, and more.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png">
+
+<title>Course Catalog | ImpactMojo</title>
+
+<!-- Favicons -->
+<link href="assets/images/favicon.png" rel="icon" type="image/png">
+<link href="assets/images/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+<link href="assets/images/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+<link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="manifest.json" rel="manifest">
+<meta name="theme-color" content="#0EA5E9">
+
+<!-- Google Fonts - Inter & Poppins -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ========================================
+   CSS RESET
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   CSS VARIABLES - V3 Design System
+   ======================================== */
+:root {
+    /* Primary Colors - Sky Blue Accent */
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --accent-color: #0EA5E9;
+    --accent-hover: #0284C7;
+    --secondary-accent: #6366F1;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    
+    /* Text Colors */
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    
+    /* Card & Surface */
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --gradient-accent: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+    --gradient-hero: linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+    
+    /* Navigation */
+    --nav-bg: rgba(15, 23, 42, 0.95);
+    --nav-text: #F1F5F9;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Light Mode Variables */
+[data-theme="light"],
+body.light-mode {
+    --primary-bg: #F8FAFC;
+    --secondary-bg: #FFFFFF;
+    --accent-color: #0284C7;
+    --accent-hover: #0369A1;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --nav-bg: rgba(248, 250, 252, 0.95);
+    --nav-text: #0F172A;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--accent-hover);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* ========================================
+   V3 DECORATIVE ELEMENTS - Paper Planes & Blobs
+   ======================================== */
+.v3-decoration-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.v3-paper-plane {
+    position: absolute;
+    opacity: 0.15;
+    animation: floatPlane 20s ease-in-out infinite;
+}
+
+.v3-paper-plane svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--accent-color);
+}
+
+.v3-paper-plane-1 {
+    top: 15%;
+    left: 5%;
+    width: 120px;
+    height: 120px;
+    animation-delay: 0s;
+}
+
+.v3-paper-plane-2 {
+    top: 60%;
+    right: 8%;
+    width: 80px;
+    height: 80px;
+    animation-delay: -7s;
+    transform: rotate(45deg);
+}
+
+.v3-paper-plane-3 {
+    bottom: 20%;
+    left: 15%;
+    width: 60px;
+    height: 60px;
+    animation-delay: -14s;
+    transform: rotate(-30deg);
+}
+
+@keyframes floatPlane {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+        opacity: 0.15;
+    }
+    25% { 
+        transform: translateY(-20px) rotate(5deg); 
+        opacity: 0.2;
+    }
+    50% { 
+        transform: translateY(-10px) rotate(-3deg); 
+        opacity: 0.15;
+    }
+    75% { 
+        transform: translateY(-25px) rotate(3deg); 
+        opacity: 0.18;
+    }
+}
+
+.v3-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: pulseBlob 15s ease-in-out infinite;
+}
+
+.v3-blob-1 {
+    top: 10%;
+    right: 10%;
+    width: 400px;
+    height: 400px;
+    background: var(--accent-color);
+    animation-delay: 0s;
+}
+
+.v3-blob-2 {
+    bottom: 20%;
+    left: 5%;
+    width: 300px;
+    height: 300px;
+    background: var(--secondary-accent);
+    animation-delay: -5s;
+}
+
+@keyframes pulseBlob {
+    0%, 100% { transform: scale(1); opacity: 0.15; }
+    50% { transform: scale(1.1); opacity: 0.2; }
+}
+
+/* ========================================
+   HEADER & NAVIGATION
+   ======================================== */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+.logo-svg img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-main {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.logo-tagline {
+    font-size: 0.7rem;
+    color: var(--accent-color);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    z-index: 9999;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.mobile-menu-toggle .hamburger-line {
+    width: 22px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+}
+
+.nav-links > li > a {
+    padding: 0.6rem 1rem;
+    color: var(--nav-text);
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-links > li > a:hover {
+    background: var(--hover-bg);
+    color: var(--accent-color);
+}
+
+.nav-links > li > a.active {
+    color: var(--accent-color);
+}
+
+/* Sargam inline icons */
+.v3-inline-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+    vertical-align: middle;
+    filter: brightness(0) saturate(100%) invert(56%) sepia(92%) saturate(1500%) hue-rotate(175deg) brightness(96%) contrast(91%);
+}
+
+/* Dropdown Menu */
+.has-dropdown {
+    position: relative;
+}
+
+.dropdown-arrow {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+}
+
+.has-dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.5rem;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    list-style: none;
+}
+
+.has-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+    background: var(--hover-bg);
+    color: var(--accent-color);
+    padding-left: 1.25rem;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.5rem 0;
+}
+
+/* Nav Buttons */
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.theme-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--hover-bg);
+    border-color: var(--accent-color);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--text-primary);
+    fill: none;
+    stroke-width: 2;
+}
+
+.theme-toggle .icon-moon {
+    display: none;
+}
+
+.light-mode .theme-toggle .icon-sun {
+    display: none;
+}
+
+.light-mode .theme-toggle .icon-moon {
+    display: block;
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay,
+.mobile-auth-section {
+    display: none;
+}
+
+/* ========================================
+   PAGE CONTENT AREA
+   ======================================== */
+.page-content {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+/* Hero Section */
+.page-hero {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: var(--gradient-hero);
+    position: relative;
+}
+
+.page-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-hero p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Stats Bar */
+.stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* ========================================
+   FILTER SECTION
+   ======================================== */
+.filter-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 2rem;
+}
+
+.search-box {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 14px 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+/* Filter Tabs */
+.filter-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.filter-tab {
+    padding: 10px 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-tab:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.filter-tab.active {
+    background: var(--gradient-primary);
+    border-color: transparent;
+    color: white;
+}
+
+/* Track Filters */
+.track-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.track-filter {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.track-filter:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.track-filter.active {
+    background: rgba(14, 165, 233, 0.2);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+/* ========================================
+   CONTENT SECTION & CARDS
+   ======================================== */
+.content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 2rem 60px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.result-count {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Course Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.card-type {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.card-type.course {
+    background: rgba(14, 165, 233, 0.2);
+    color: var(--accent-color);
+}
+
+.card-type.lab {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success-color);
+}
+
+.card-type.game {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--warning-color);
+}
+
+.card-type.premium {
+    background: rgba(99, 102, 241, 0.2);
+    color: var(--secondary-accent);
+}
+
+.card-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--warning-color);
+    font-size: 0.85rem;
+}
+
+.card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.card-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    flex-grow: 1;
+    margin-bottom: 15px;
+}
+
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.card-track {
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.card-users {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state .icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+    background: var(--secondary-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 3rem 2rem 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.footer-section a:hover {
+    color: var(--accent-color);
+}
+
+.footer-bottom {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-copyright {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-social a {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.footer-social a:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+.footer-social svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* ========================================
+   SPEED DIAL TOOLBOX
+   ======================================== */
+.imx-speed-dial {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 9000;
+}
+
+.imx-speed-dial-toggle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+}
+
+.imx-speed-dial-toggle:hover {
+    background: var(--hover-bg);
+    border-color: var(--accent-color);
+}
+
+.imx-speed-dial-toggle svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--text-primary);
+    fill: none;
+    stroke-width: 1.5;
+}
+
+.imx-speed-dial-menu {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.imx-speed-dial.open .imx-speed-dial-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.imx-speed-dial-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.imx-speed-dial-label {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    box-shadow: var(--shadow-md);
+}
+
+.imx-speed-dial-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s ease;
+}
+
+.imx-speed-dial-btn:hover {
+    background: var(--hover-bg);
+    border-color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.imx-speed-dial-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--accent-color);
+    fill: none;
+    stroke-width: 2;
+}
+
+/* ========================================
+   MOJINI CHATBOT
+   ======================================== */
+.feedback-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    z-index: 9000;
+    transition: all 0.3s ease;
+}
+
+.feedback-fab:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-xl);
+}
+
+.feedback-fab svg {
+    width: 24px;
+    height: 24px;
+    stroke: white;
+    fill: none;
+    stroke-width: 2;
+}
+
+.chatbot-modal {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 24px;
+    width: 380px;
+    max-width: calc(100vw - 48px);
+    max-height: 500px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--shadow-xl);
+    z-index: 9001;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.chatbot-modal.open {
+    display: flex;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.chat-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.chat-header svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    fill: none;
+}
+
+.chat-close {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.chat-close:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.chat-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: white;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+}
+
+.bot-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.bot-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.bot-avatar svg {
+    width: 18px;
+    height: 18px;
+    stroke: white;
+    fill: none;
+}
+
+.bot-bubble {
+    background: var(--secondary-bg);
+    padding: 12px 16px;
+    border-radius: 12px;
+    border-top-left-radius: 4px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 85%;
+}
+
+.chat-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 16px 12px;
+}
+
+.chat-option {
+    padding: 8px 14px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chat-option:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 10px;
+    padding: 16px;
+    border-top: 1px solid var(--border-color);
+    background: var(--secondary-bg);
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.chat-input-area input:focus {
+    border-color: var(--accent-color);
+}
+
+.chat-send {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--gradient-primary);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.chat-send:hover {
+    transform: scale(1.05);
+}
+
+.chat-send svg {
+    width: 18px;
+    height: 18px;
+    stroke: white;
+    fill: none;
+}
+
+/* ========================================
+   COOKIE CONSENT
+   ======================================== */
+.cookie-consent {
+    position: fixed;
+    bottom: 24px;
+    left: 90px;
+    z-index: 10000;
+    display: none;
+}
+
+.cookie-icon-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.2s ease;
+}
+
+.cookie-icon-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--accent-color);
+}
+
+.cookie-icon-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--warning-color);
+}
+
+.cookie-expanded {
+    display: none;
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    width: 320px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: var(--shadow-xl);
+}
+
+.cookie-consent.expanded .cookie-expanded {
+    display: block;
+}
+
+.cookie-expanded-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.cookie-expanded-header svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--warning-color);
+}
+
+.cookie-expanded p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.cookie-expanded-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.cookie-btn-accept {
+    flex: 1;
+    padding: 10px 16px;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.cookie-btn-accept:hover {
+    transform: translateY(-2px);
+}
+
+.cookie-btn-settings {
+    padding: 10px 16px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cookie-btn-settings:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.cookie-consent.hidden {
+    display: none !important;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE STYLES
+   ======================================== */
+@media (max-width: 768px) {
+    /* Hide tour on mobile */
+    .tour-toggle,
+    .shepherd-element,
+    .imx-tour-welcome,
+    .imx-tour-tooltip {
+        display: none !important;
+    }
+    
+    /* Header mobile */
+    .nav-container {
+        padding: 0.75rem 1rem;
+    }
+    
+    /* Show hamburger */
+    .mobile-menu-toggle {
+        display: flex !important;
+    }
+    
+    .logo-tagline {
+        display: none;
+    }
+    
+    /* Hide desktop nav */
+    .nav-links {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: var(--card-bg);
+        flex-direction: column;
+        padding: 1rem;
+        border-top: 1px solid var(--border-color);
+        box-shadow: var(--shadow-lg);
+        z-index: 9998;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .nav-links > li {
+        width: 100%;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .nav-links > li > a {
+        padding: 1rem;
+        justify-content: space-between;
+    }
+    
+    /* Mobile dropdowns */
+    .dropdown-menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+        background: var(--secondary-bg);
+        transition: max-height 0.3s ease;
+    }
+    
+    .has-dropdown.open .dropdown-menu {
+        max-height: 500px;
+        padding: 0.5rem 0;
+    }
+    
+    .has-dropdown.open .dropdown-arrow {
+        transform: rotate(180deg);
+    }
+    
+    /* Mobile menu overlay */
+    .mobile-menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 9997;
+    }
+    
+    .mobile-menu-overlay.active {
+        display: block;
+    }
+    
+    /* Mobile auth section */
+    .mobile-auth-section {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        background: var(--secondary-bg);
+        border-top: 1px solid var(--border-color);
+        z-index: 9999;
+        gap: 0.75rem;
+    }
+    
+    .mobile-auth-section.active {
+        display: flex;
+    }
+    
+    .mobile-auth-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.875rem;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    
+    .mobile-auth-login {
+        background: var(--card-bg);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+    }
+    
+    .mobile-auth-signup {
+        background: var(--gradient-primary);
+        color: white;
+    }
+    
+    /* Body scroll lock */
+    body.menu-open {
+        overflow: hidden;
+    }
+    
+    /* Hide desktop nav buttons on mobile */
+    .nav-buttons .auth-btn {
+        display: none;
+    }
+    
+    /* Page hero mobile */
+    .page-hero {
+        padding: 2.5rem 1.25rem;
+    }
+    
+    .page-hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .page-hero p {
+        font-size: 0.95rem;
+    }
+    
+    /* Stats bar mobile */
+    .stats-bar {
+        gap: 20px;
+    }
+    
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    
+    /* Filter section mobile */
+    .filter-section {
+        padding: 20px 1rem;
+    }
+    
+    .content-section {
+        padding: 20px 1rem;
+    }
+    
+    /* Cards grid mobile */
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Footer mobile */
+    .footer {
+        padding: 2rem 1rem;
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    /* Speed dial mobile */
+    .imx-speed-dial {
+        bottom: 80px;
+        left: 16px;
+    }
+    
+    /* Chatbot mobile */
+    .chatbot-modal {
+        right: 12px;
+        left: 12px;
+        width: auto;
+        bottom: 80px;
+    }
+    
+    /* Cookie consent mobile */
+    .cookie-consent {
+        left: 16px;
+        bottom: 80px;
+    }
+    
+    .cookie-expanded {
+        width: calc(100vw - 48px);
+        max-width: 320px;
+    }
+    
+    /* Decorative elements mobile */
+    .v3-paper-plane {
+        opacity: 0.08;
+        transform: scale(0.6);
+    }
+    
+    .v3-blob {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .page-hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+}
+</style>
 </head>
 <body>
-    <!-- Cookie Consent Banner -->
-    <div class="cookie-consent" id="cookieConsent">
-        <h4>🍪 Cookie Settings</h4>
-        <p>We use cookies to enhance your learning experience, remember your preferences, and analyze site usage. By continuing, you agree to our Cookie Policy.</p>
-        <div class="cookie-buttons">
-            <button class="cookie-btn accept" onclick="acceptCookies()">Accept All</button>
-            <button class="cookie-btn learn" onclick="window.location.href='/privacy-policy'">Learn More</button>
-        </div>
-    </div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <a href="/" class="logo">
-            <div class="logo-icon">IM</div>
+<!-- V3 Decorative Elements - Paper Planes & Blobs -->
+<div class="v3-decoration-container">
+    <!-- Paper Planes -->
+    <div class="v3-paper-plane v3-paper-plane-1">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+    </div>
+    <div class="v3-paper-plane v3-paper-plane-2">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+    </div>
+    <div class="v3-paper-plane v3-paper-plane-3">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+    </div>
+    
+    <!-- Gradient Blobs -->
+    <div class="v3-blob v3-blob-1"></div>
+    <div class="v3-blob v3-blob-2"></div>
+</div>
+
+<!-- Header -->
+<header class="header">
+    <nav class="nav-container">
+        <a class="logo-container" href="index.html">
+            <div class="logo-svg">
+                <img alt="ImpactMojo logo" src="assets/images/ImpactMojo%20Logo.png" width="48" height="48" loading="lazy">
+            </div>
             <div class="logo-text">
-                ImpactMojo
-                <span>Development Know-How</span>
+                <div class="logo-main">ImpactMojo</div>
+                <div class="logo-tagline">Development Know-How</div>
             </div>
         </a>
         
+        <button class="mobile-menu-toggle" id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu" type="button">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        
+        <!-- Mobile Auth Section -->
+        <div class="mobile-auth-section" id="mobileAuthSection">
+            <a href="login.html" class="mobile-auth-btn mobile-auth-login" onclick="closeMobileMenu()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                Log In
+            </a>
+            <a href="signup.html" class="mobile-auth-btn mobile-auth-signup" onclick="closeMobileMenu()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                Sign Up
+            </a>
+        </div>
+        
         <ul class="nav-links" id="navLinks">
-            <li><a href="/">Home</a></li>
-            <li><a href="/catalog" class="active">Catalog</a></li>
-            <li><a href="/workshops">Workshops</a></li>
-            <li><a href="/handouts">Resources</a></li>
-            <li><a href="/blog">📝 Blog</a></li>
-            <li><a href="/podcast">🎙️ Podcast</a></li>
-            <li><a href="/about">About</a></li>
+            <li><a href="index.html">Home</a></li>
+            
+            <!-- Learn Dropdown -->
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)" class="active">Learn
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="catalog.html">Catalog</a></li>
+                    <li><a href="handouts.html">Resources</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="premium.html">Premium</a></li>
+                </ul>
+            </li>
+            
+            <!-- Services Dropdown -->
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">Services
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="coaching.html">Coaching</a></li>
+                    <li><a href="workshops.html">Workshops</a></li>
+                </ul>
+            </li>
+            
+            <!-- About Us Dropdown -->
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">About Us
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="about.html">About ImpactMojo</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="community/community.html">Community</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="blog.html">Blog <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Article.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
+            <li><a href="podcast.html">Podcast <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Album.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
         </ul>
         
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-                <svg viewBox="0 0 24 24" class="sun-icon">
-                    <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+        <div class="nav-buttons">
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                <svg class="icon-sun" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
             </button>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">☰</button>
         </div>
     </nav>
+</header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <h1>Course Catalog</h1>
-            <p class="subtitle">Explore our complete collection of courses, interactive labs, and educational games for development professionals</p>
-            
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <div class="stat-number">39</div>
-                    <div class="stat-label">Courses</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">10</div>
-                    <div class="stat-label">Labs</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">Games</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">6+</div>
-                    <div class="stat-label">Premium</div>
-                </div>
-            </div>
-        </section>
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
 
-        <!-- Filter Section -->
-        <section class="filter-section">
-            <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search courses, labs, games...">
+<!-- PAGE CONTENT -->
+<main class="page-content">
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <h1>Course Catalog</h1>
+        <p>Explore our complete collection of courses, interactive labs, and educational games for development professionals</p>
+        
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number">39</div>
+                <div class="stat-label">Courses</div>
             </div>
-            
-            <div class="filter-tabs">
-                <button class="filter-tab active" data-filter="all">All</button>
-                <button class="filter-tab" data-filter="course">Courses (39)</button>
-                <button class="filter-tab" data-filter="lab">Labs (10)</button>
-                <button class="filter-tab" data-filter="game">Games (12)</button>
-                <button class="filter-tab" data-filter="premium">Premium (6)</button>
+            <div class="stat-item">
+                <div class="stat-number">10</div>
+                <div class="stat-label">Labs</div>
             </div>
-            
-            <div class="track-filters">
-                <button class="track-filter" data-track="all">All Tracks</button>
-                <button class="track-filter" data-track="meal">MEAL</button>
-                <button class="track-filter" data-track="research">Research Methods</button>
-                <button class="track-filter" data-track="gender">Gender Studies</button>
-                <button class="track-filter" data-track="economics">Economics</button>
-                <button class="track-filter" data-track="health">Public Health</button>
-                <button class="track-filter" data-track="policy">Policy</button>
+            <div class="stat-item">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Games</div>
             </div>
-        </section>
+            <div class="stat-item">
+                <div class="stat-number">6+</div>
+                <div class="stat-label">Premium</div>
+            </div>
+        </div>
+    </section>
 
-        <!-- Content Grid -->
-        <section class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">All Content</h2>
-                <span class="result-count" id="resultCount">Showing 67 items</span>
-            </div>
-            
-            <div class="cards-grid" id="cardsGrid">
-                <!-- Cards will be dynamically populated -->
-            </div>
-            
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <div class="icon">🔍</div>
-                <h3>No results found</h3>
-                <p>Try adjusting your search or filters</p>
-            </div>
-        </section>
-    </main>
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search courses, labs, games...">
+        </div>
+        
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="course">Courses (39)</button>
+            <button class="filter-tab" data-filter="lab">Labs (10)</button>
+            <button class="filter-tab" data-filter="game">Games (12)</button>
+            <button class="filter-tab" data-filter="premium">Premium (6)</button>
+        </div>
+        
+        <div class="track-filters">
+            <button class="track-filter active" data-track="all">All Tracks</button>
+            <button class="track-filter" data-track="meal">MEAL</button>
+            <button class="track-filter" data-track="research">Research Methods</button>
+            <button class="track-filter" data-track="gender">Gender Studies</button>
+            <button class="track-filter" data-track="economics">Economics</button>
+            <button class="track-filter" data-track="health">Public Health</button>
+            <button class="track-filter" data-track="policy">Policy</button>
+        </div>
+    </section>
 
-    <!-- Full 4-Section Footer -->
-    <footer class="footer">
+    <!-- Content Grid -->
+    <section class="content-section">
+        <div class="section-header">
+            <h2 class="section-title">All Content</h2>
+            <span class="result-count" id="resultCount">Showing 67 items</span>
+        </div>
+        
+        <div class="cards-grid" id="cardsGrid">
+            <!-- Cards will be dynamically populated -->
+        </div>
+        
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="icon">🔍</div>
+            <h3>No results found</h3>
+            <p>Try adjusting your search or filters</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
         <div class="footer-grid">
             <div class="footer-section">
-                <h4>About ImpactMojo</h4>
+                <h4>About</h4>
                 <ul>
-                    <li><a href="/#about">About Us</a></li>
-                    <li><a href="/#support-us">Support Us</a></li>
-                    <li><a href="/#contact">Contact</a></li>
-                    <li><a href="https://github.com/impactmojo" target="_blank">GitHub (Open Source)</a></li>
-                    <li>MIT License</li>
+                    <li><a href="about.html">About ImpactMojo</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="community/community.html">Community</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h4>Legal (IT Act Compliance)</h4>
+                <h4>Legal & IT Act</h4>
                 <ul>
-                    <li><a href="/privacy-policy">Privacy Policy</a></li>
-                    <li><a href="/terms-of-service">Terms of Service</a></li>
-                    <li><a href="/disclaimer">Disclaimer</a></li>
-                    <li><a href="/grievance">Grievance Redressal</a></li>
-                    <li><a href="/refund-policy">Refund Policy</a></li>
-                    <li><a href="/data-protection">Data Protection</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="/catalog">All Courses</a></li>
-                    <li><a href="/catalog#labs">All Labs</a></li>
-                    <li><a href="/catalog#games">All Games</a></li>
-                    <li><a href="/premium">Premium Content</a></li>
-                    <li><a href="/coaching">Coaching Services</a></li>
+                    <li><a href="catalog.html">Course Catalog</a></li>
+                    <li><a href="premium.html">Premium Access</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Resources</h4>
                 <ul>
-                    <li><a href="/handouts">Educational Handouts</a></li>
-                    <li><a href="https://varna.substack.com" target="_blank">Research Newsletter</a></li>
-                    <li><a href="/faq">FAQ</a></li>
-                    <li><a href="javascript:void(0)" onclick="toggleChatbot()">Feedback</a></li>
-                    <li><a href="/sitemap">Sitemap</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="podcast.html">Podcast</a></li>
+                    <li><a href="handouts.html">Handouts</a></li>
                 </ul>
             </div>
         </div>
-        
         <div class="footer-bottom">
-            <p>Made with 💜 by <a href="https://www.pinpointventures.in" target="_blank">PinPoint Ventures</a></p>
-            <p>© 2025 ImpactMojo. All content for educational purposes only.</p>
-            <p class="disclaimer">
-                <strong>DISCLAIMER:</strong> ImpactMojo is an educational resource platform focused on learning, not credentialing.
-                We do not provide certificates, degrees, or formal credentials. Content is for learning purposes only and does not constitute professional advice.
-            </p>
-            <p style="margin-top: 15px; font-size: 0.8rem;">
-                Released under <strong>MIT License</strong> - Free and Open Source Educational Platform | Supported by <a href="https://www.pinpointventures.in" target="_blank">PinPoint Ventures</a>
-            </p>
-            <p style="font-size: 0.75rem; opacity: 0.6; margin-top: 10px;">
-                Registered in India | Compliant with Information Technology Act, 2000 and IT Rules, 2011
-            </p>
+            <p class="footer-copyright">© 2024-2025 ImpactMojo. All rights reserved. Made with ♥ in India.</p>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/company/impactmojo" target="_blank" rel="noopener" title="LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://www.instagram.com/impactmojo" target="_blank" rel="noopener" title="Instagram">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+                <a href="https://twitter.com/impactmojo" target="_blank" rel="noopener" title="X (Twitter)">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <!-- Speed Dial Toolbox -->
-    <div class="imx-speed-dial" id="speedDial">
-        <div class="imx-speed-dial-menu">
-            <div class="imx-speed-dial-item" onclick="toggleChatbot(); closeSpeedDial();">
-                <span class="icon">🤖</span>
-                <span class="label">Mojini Assistant</span>
-            </div>
-            <div class="imx-speed-dial-item" onclick="window.location.href='/'">
-                <span class="icon">🏠</span>
-                <span class="label">Home</span>
-            </div>
-            <div class="imx-speed-dial-item" onclick="window.location.href='/about'">
-                <span class="icon">ℹ️</span>
-                <span class="label">About Us</span>
-            </div>
-            <div class="imx-speed-dial-item" onclick="window.location.href='/handouts'">
-                <span class="icon">📄</span>
-                <span class="label">Resources</span>
-            </div>
-            <div class="imx-speed-dial-item" onclick="window.location.href='/#support-us'">
-                <span class="icon">💜</span>
-                <span class="label">Support Us</span>
-            </div>
+<!-- Speed Dial Toolbox -->
+<div class="imx-speed-dial" id="imxSpeedDial">
+    <button class="imx-speed-dial-toggle" onclick="toggleSpeedDial()" title="Tools">
+        <svg viewBox="0 0 24 24" class="toggle-icon-tools">
+            <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+    </button>
+    <div class="imx-speed-dial-menu">
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Bookmarks</span>
+            <button class="imx-speed-dial-btn" title="Bookmarks">
+                <svg viewBox="0 0 24 24"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
         </div>
-        <button class="imx-speed-dial-toggle" onclick="toggleSpeedDial()" aria-label="Open tools menu">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 4v16m8-8H4"/>
-            </svg>
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Notes</span>
+            <button class="imx-speed-dial-btn" title="Notes">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </button>
+        </div>
+        <div class="imx-speed-dial-item">
+            <span class="imx-speed-dial-label">Progress</span>
+            <button class="imx-speed-dial-btn" title="Progress">
+                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Mojini Chatbot FAB -->
+<button class="feedback-fab" id="mojini-chat-toggle" onclick="openChatbot()" title="Chat with Mojini">
+    <svg viewBox="0 0 24 24">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+</button>
+
+<!-- Chatbot Modal -->
+<div class="chatbot-modal" id="chatbotModal">
+    <div class="chat-header">
+        <h3>
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+            Mojini
+        </h3>
+        <button class="chat-close" onclick="closeChatbot()">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
     </div>
-
-    <!-- Mojini Chatbot Modal -->
-    <div id="mojini-modal">
-        <div class="mojini-header">
-            <h3>🤖 Mojini</h3>
-            <p>ImpactMojo Assistant</p>
-        </div>
-        <div class="mojini-body">
-            <div class="chat-messages" id="chatMessages">
-                <div class="message">
-                    <div class="bot-avatar">
-                        <svg viewBox="0 0 24 24">
-                            <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-                            <circle cx="12" cy="5" r="2"></circle>
-                            <path d="M12 7v4"></path>
-                        </svg>
-                    </div>
-                    <div class="bot-bubble">
-                        Hi! I'm Mojini. Looking for a specific course or topic? I can help you find the right learning resource. What are you interested in?
-                    </div>
-                </div>
+    <div class="chat-messages" id="chatMessages">
+        <div class="message bot-message">
+            <div class="bot-avatar">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
             </div>
-            <div class="quick-options">
-                <button class="quick-option" onclick="selectOption('meal')">MEAL Courses</button>
-                <button class="quick-option" onclick="selectOption('research')">Research Methods</button>
-                <button class="quick-option" onclick="selectOption('beginner')">I'm New Here</button>
-            </div>
+            <div class="bot-bubble">Hey there! 👋 I'm Mojini, your ImpactMojo assistant. How can I help you today?</div>
         </div>
     </div>
+    <div class="chat-options">
+        <button class="chat-option" onclick="selectOption('courses')">📚 Courses</button>
+        <button class="chat-option" onclick="selectOption('contact')">📧 Contact</button>
+        <button class="chat-option" onclick="selectOption('feedback')">💬 Feedback</button>
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+        <button class="chat-send" onclick="sendChatMessage()">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+    </div>
+</div>
 
-    <script>
-        // =====================================================
-        // Course Data - All 67 items
-        // =====================================================
-        const allContent = [
-            // COURSES (39)
-            { id: 'c1', type: 'course', title: 'MEL Basics 101', description: 'Build foundational skills in Monitoring, Evaluation, and Learning systems that drive adaptive management and demonstrate program impact.', track: 'meal', rating: 4.8, users: '3.1K', url: 'https://101.impactmojo.in/mel-basics' },
-            { id: 'c2', type: 'course', title: 'Gender Studies 101', description: 'Examine how gender intersects with development through theoretical frameworks from WID to contemporary intersectional approaches.', track: 'gender', rating: 5.0, users: '2.3K', url: 'https://101.impactmojo.in/gender-studies' },
-            { id: 'c3', type: 'course', title: 'Climate Essentials 101', description: 'Understand the science, economics, and politics of climate change through a development lens.', track: 'policy', rating: 4.0, users: '1.8K', url: 'https://101.impactmojo.in/climate-essentials' },
-            { id: 'c4', type: 'course', title: 'Development Economics 101', description: 'Master core theories of economic development from structural transformation to behavioral economics.', track: 'economics', rating: 4.8, users: '2.5K', url: 'https://101.impactmojo.in/dev-economics' },
-            { id: 'c5', type: 'course', title: 'Public Health 101', description: 'Navigate the fundamentals of epidemiology, health systems, and disease prevention strategies.', track: 'health', rating: 4.8, users: '1.9K', url: 'https://101.impactmojo.in/pub-health-basics' },
-            { id: 'c6', type: 'course', title: 'Research Ethics 101', description: 'Navigate the ethical complexities of conducting research in development settings.', track: 'research', rating: 4.8, users: '1.6K', url: 'https://101.impactmojo.in/research-ethics' },
-            { id: 'c7', type: 'course', title: 'Qualitative Methods 101', description: 'Master in-depth interviewing, focus group facilitation, and ethnographic techniques.', track: 'research', rating: 4.8, users: '2.1K', url: 'https://101.impactmojo.in/qual-methods' },
-            { id: 'c8', type: 'course', title: 'Womens Economic Empowerment 101', description: 'Explore strategies for enhancing womens economic participation and agency.', track: 'gender', rating: 4.8, users: '1.4K', url: 'https://101.impactmojo.in/wee-studies' },
-            { id: 'c9', type: 'course', title: 'Political Economy 101', description: 'Unpack how political institutions, power structures, and economic systems interact.', track: 'economics', rating: 4.8, users: '1.7K', url: 'https://101.impactmojo.in/pol-economy' },
-            { id: 'c10', type: 'course', title: 'Livelihoods 101', description: 'Understand sustainable livelihoods frameworks and design resilient economic opportunities.', track: 'economics', rating: 4.8, users: '1.5K', url: 'https://101.impactmojo.in/livelihood-basics' },
-            { id: 'c11', type: 'course', title: 'Data Literacy 101', description: 'Develop critical skills for understanding, interpreting, and communicating with data.', track: 'research', rating: 4.8, users: '2.0K', url: 'https://101.impactmojo.in/data-lit' },
-            { id: 'c12', type: 'course', title: 'Advocacy Basics 101', description: 'Develop essential skills for policy advocacy, from stakeholder mapping to campaign strategy.', track: 'policy', rating: 4.8, users: '1.3K', url: 'https://101.impactmojo.in/advocacy-basics' },
-            { id: 'c13', type: 'course', title: 'Behaviour Change Communications 101', description: 'Master the psychology and practice of designing communication interventions.', track: 'health', rating: 4.8, users: '1.6K', url: 'https://101.impactmojo.in/bcc-comms' },
-            { id: 'c14', type: 'course', title: 'Visual Ethnography 101', description: 'Harness the power of visual methods in development research.', track: 'research', rating: 4.8, users: '1.1K', url: 'https://101.impactmojo.in/visual-eth' },
-            { id: 'c15', type: 'course', title: 'Poverty and Inequality 101', description: 'Examine multidimensional poverty measurement and inequality indices.', track: 'economics', rating: 4.8, users: '1.8K', url: 'https://101.impactmojo.in/inequality-basics' },
-            { id: 'c16', type: 'course', title: 'SRHR Basics 101', description: 'Understand Sexual and Reproductive Health and Rights fundamentals.', track: 'health', rating: 4.8, users: '1.2K', url: 'https://101.impactmojo.in/SRHR-basics' },
-            { id: 'c17', type: 'course', title: 'Marginalised Identities 101', description: 'Examine how caste, ethnicity, disability, and other identity markers create overlapping systems.', track: 'gender', rating: 4.8, users: '1.4K', url: 'https://101.impactmojo.in/social-margins' },
-            { id: 'c18', type: 'course', title: 'Decolonial Development 101', description: 'Challenge dominant development paradigms through postcolonial frameworks.', track: 'policy', rating: 4.8, users: '1.0K', url: 'https://101.impactmojo.in/decolonize-dev' },
-            { id: 'c19', type: 'course', title: 'Community Development 101', description: 'Master participatory approaches to community mobilization and asset-based development.', track: 'meal', rating: 4.8, users: '1.5K', url: 'https://101.impactmojo.in/community-dev' },
-            { id: 'c20', type: 'course', title: 'Environmental Justice 101', description: 'Explore how environmental degradation disproportionately impacts marginalized communities.', track: 'policy', rating: 4.8, users: '1.1K', url: 'https://101.impactmojo.in/env-justice' },
-            { id: 'c21', type: 'course', title: 'Care Economy 101', description: 'Understand the economic value of unpaid care work and explore supportive policies.', track: 'gender', rating: 4.8, users: '980', url: 'https://101.impactmojo.in/care-economy-101' },
-            { id: 'c22', type: 'course', title: 'Econometrics 101', description: 'Master statistical techniques for causal inference in development economics.', track: 'economics', rating: 4.8, users: '1.6K', url: 'https://101.impactmojo.in/econometrics-101' },
-            { id: 'c23', type: 'course', title: 'Global Development Governance 101', description: 'Navigate the complex ecosystem of development institutions.', track: 'policy', rating: 4.8, users: '1.2K', url: 'https://101.impactmojo.in/dev-architecture' },
-            { id: 'c24', type: 'course', title: 'Post Truth Politics 101', description: 'Analyze how misinformation and polarization shape development outcomes.', track: 'policy', rating: 4.8, users: '890', url: 'https://101.impactmojo.in/post-truth-101' },
-            { id: 'c25', type: 'course', title: 'Fundraising Basics 101', description: 'Develop essential skills for resource mobilization in the development sector.', track: 'meal', rating: 4.8, users: '1.3K', url: 'https://101.impactmojo.in/fundraising-basics' },
-            { id: 'c26', type: 'course', title: 'Exploratory Data Analysis 101', description: 'Develop skills for cleaning, exploring, and visualizing household survey data.', track: 'research', rating: 4.8, users: '1.4K', url: 'https://101.impactmojo.in/eda-hhs' },
-            { id: 'c27', type: 'course', title: 'Bivariate Analysis 101', description: 'Master techniques for examining relationships between two variables.', track: 'research', rating: 4.8, users: '1.1K', url: 'https://101.impactmojo.in/bi-analysis' },
-            { id: 'c28', type: 'course', title: 'Decent Work For All 101', description: 'Explore ILO frameworks for promoting productive employment and labor rights.', track: 'economics', rating: 4.8, users: '780', url: 'https://101.impactmojo.in/decent-work' },
-            { id: 'c29', type: 'course', title: 'Item Response Theory 101', description: 'Learn advanced psychometric techniques for developing measurement instruments.', track: 'research', rating: 4.8, users: '650', url: 'https://101.impactmojo.in/irt-basics' },
-            { id: 'c30', type: 'course', title: 'Digital Ethics 101', description: 'Navigate ethical challenges in digital development and responsible innovation.', track: 'research', rating: 4.8, users: '920', url: 'https://101.impactmojo.in/digital-ethics' },
-            { id: 'c31', type: 'course', title: 'Multivariate Analysis 101', description: 'Master advanced statistical techniques for analyzing complex relationships.', track: 'research', rating: 4.8, users: '1.0K', url: 'https://101.impactmojo.in/multivariate-basics' },
-            { id: 'c32', type: 'course', title: 'SEL Basics 101', description: 'Understand Social and Emotional Learning frameworks for education programs.', track: 'health', rating: 4.8, users: '750', url: 'https://101.impactmojo.in/sel-basics' },
-            { id: 'c33', type: 'course', title: 'Cost Effectiveness 101', description: 'Master economic evaluation techniques for comparing development interventions.', track: 'meal', rating: 4.8, users: '1.1K', url: 'https://101.impactmojo.in/CE' },
-            { id: 'c34', type: 'course', title: 'Data Feminism 101', description: 'Explore how power dynamics shape data collection through an intersectional feminist framework.', track: 'gender', rating: 4.8, users: '890', url: 'https://101.impactmojo.in/data-feminism' },
-            { id: 'c35', type: 'course', title: 'Education and Pedagogy 101', description: 'Discover evidence-based teaching methodologies and learning theories.', track: 'health', rating: 4.8, users: '1.0K', url: 'https://101.impactmojo.in/edu-pedagogy' },
-            { id: 'c36', type: 'course', title: 'Indian Constitution 101', description: 'Examine the constitutional framework that guides Indias democracy.', track: 'policy', rating: 4.8, users: '1.3K', url: 'https://101.impactmojo.in/ind-constitution' },
-            { id: 'c37', type: 'course', title: 'Observation to Insight 101', description: 'Transform raw field observations into actionable insights.', track: 'research', rating: 4.8, users: '720', url: 'https://101.impactmojo.in/obs2insight' },
-            { id: 'c38', type: 'course', title: 'Economics for Policy Practitioners 101', description: 'Bridge the gap between economic theory and real-world policy implementation.', track: 'economics', rating: 4.8, users: '980', url: 'https://101.impactmojo.in/dev-economics' },
-            { id: 'c39', type: 'course', title: 'English for Development 101', description: 'Master the specialized vocabulary and communication strategies for development work.', track: 'meal', rating: 4.8, users: '1.2K', url: 'https://101.impactmojo.in/eng-dev' },
-            
-            // LABS (10)
-            { id: 'l1', type: 'lab', title: 'Theory of Change Lab', description: 'Construct robust theories of change through assumption mapping and evidence review exercises.', track: 'meal', rating: 5.0, users: '1.5K', url: 'https://101.impactmojo.in/toc-workbench' },
-            { id: 'l2', type: 'lab', title: 'MLE Design Lab', description: 'Create comprehensive Monitoring, Learning, and Evaluation systems from scratch.', track: 'meal', rating: 4.8, users: '1.2K', url: 'https://101.impactmojo.in/mel-design-lab' },
-            { id: 'l3', type: 'lab', title: 'MEL Plan Lab', description: 'Develop detailed MEL plans with indicators, targets, and data management systems.', track: 'meal', rating: 4.8, users: '980', url: 'https://101.impactmojo.in/mel-plan-lab' },
-            { id: 'l4', type: 'lab', title: 'Storytelling Lab', description: 'Transform data and field experiences into compelling narratives.', track: 'meal', rating: 4.0, users: '890', url: 'https://101.impactmojo.in/storytelling-lab' },
-            { id: 'l5', type: 'lab', title: 'Design Thinking Lab', description: 'Apply human-centered design methodologies to development challenges.', track: 'research', rating: 4.8, users: '750', url: 'https://101.impactmojo.in/design-thinking-lab' },
-            { id: 'l6', type: 'lab', title: 'Community Development Lab', description: 'Practice participatory facilitation techniques and community mapping.', track: 'meal', rating: 4.8, users: '680', url: 'https://101.impactmojo.in/community-lab' },
-            { id: 'l7', type: 'lab', title: 'Policy & Advocacy Lab', description: 'Design and test policy advocacy campaigns through hands-on exercises.', track: 'policy', rating: 4.8, users: '620', url: 'https://101.impactmojo.in/policy-advocacy-lab' },
-            { id: 'l8', type: 'lab', title: 'Risk and Mitigation Lab', description: 'Identify, assess, and develop mitigation strategies for risks.', track: 'meal', rating: 4.8, users: '540', url: 'https://101.impactmojo.in/risk-mitigation-lab' },
-            { id: 'l9', type: 'lab', title: 'Resource and Sustainability Lab', description: 'Analyze resource flows and develop sustainability plans.', track: 'meal', rating: 4.8, users: '490', url: 'https://101.impactmojo.in/resource-sustainability-lab' },
-            { id: 'l10', type: 'lab', title: 'Impact and Partnerships Lab', description: 'Map partnership ecosystems and design collaboration frameworks.', track: 'meal', rating: 4.8, users: '450', url: 'https://101.impactmojo.in/impact-partnerships' },
-            
-            // GAMES (12)
-            { id: 'g1', type: 'game', title: 'The Real Middle', description: 'Understand who the middle-class really is in India through wealth inequality dynamics.', track: 'economics', rating: 4.0, users: '850', url: 'https://therealmiddle.netlify.app' },
-            { id: 'g2', type: 'game', title: 'Risk & Reward Explorer', description: 'Experience behavioral economics through prospect theory and cognitive biases.', track: 'economics', rating: 4.5, users: '1.2K', url: 'https://risk-reward-be.netlify.app' },
-            { id: 'g3', type: 'game', title: 'Cooperation Paradox', description: 'Explore game theory concepts through strategic decision-making scenarios.', track: 'economics', rating: 4.0, users: '920', url: 'https://cooperationparadox.netlify.app/' },
-            { id: 'g4', type: 'game', title: 'Public Good Game', description: 'Experience the free-rider problem as players decide whether to contribute to shared resources.', track: 'economics', rating: 4.8, users: '780', url: 'https://101.impactmojo.in/public-good-game' },
-            { id: 'g5', type: 'game', title: 'Prisoners Dilemma Game', description: 'Navigate strategic decision-making where individual rationality leads to suboptimal outcomes.', track: 'economics', rating: 4.8, users: '890', url: 'https://101.impactmojo.in/prisoners-dilemma-game' },
-            { id: 'g6', type: 'game', title: 'Opportunity Cost Game', description: 'Make resource allocation decisions under constraints and experience tradeoffs.', track: 'economics', rating: 4.8, users: '720', url: 'https://101.impactmojo.in/opportunity-cost-game' },
-            { id: 'g7', type: 'game', title: 'Network Effects Game', description: 'Build networks and watch value multiply as more participants join.', track: 'economics', rating: 4.8, users: '650', url: 'https://101.impactmojo.in/network-effects-game' },
-            { id: 'g8', type: 'game', title: 'Bidding Wars Game', description: 'Participate in various auction formats to understand price discovery.', track: 'economics', rating: 4.8, users: '580', url: 'https://101.impactmojo.in/bidding-wars-game' },
-            { id: 'g9', type: 'game', title: 'Information Asymmetry Game', description: 'Navigate markets where buyers and sellers have different information.', track: 'economics', rating: 4.8, users: '520', url: 'https://101.impactmojo.in/info-asymmetry-game' },
-            { id: 'g10', type: 'game', title: 'Externality Game', description: 'Make production decisions while discovering hidden social costs and benefits.', track: 'economics', rating: 4.8, users: '480', url: 'https://101.impactmojo.in/externality-game' },
-            { id: 'g11', type: 'game', title: 'Commons Crisis Game', description: 'Manage shared resources while avoiding the tragedy of the commons.', track: 'economics', rating: 4.8, users: '430', url: 'https://101.impactmojo.in/commons-crisis-game' },
-            { id: 'g12', type: 'game', title: 'Econ Concepts Puzzle', description: 'Solve economic puzzles that teach concepts through engaging brain-teasers.', track: 'economics', rating: 4.8, users: '610', url: 'https://101.impactmojo.in/econ-concepts-game' },
-            
-            // PREMIUM (6)
-            { id: 'p1', type: 'premium', title: 'Field Notes from a Development Economist', description: 'In-depth analysis and insights from field experiences with Dr. Varna.', track: 'economics', rating: 5.0, users: '450', url: 'https://marginmuse.space/themarginmuse' },
-            { id: 'p2', type: 'premium', title: 'Qualitative Research Lab Pro', description: 'Advanced qualitative research methods and AI-assisted coding tools.', track: 'research', rating: 4.5, users: '680', url: 'https://101.impactmojo.in/qual-insights' },
-            { id: 'p3', type: 'premium', title: 'Statistical Analysis Assistant', description: 'Comprehensive statistical analysis toolkit for development research.', track: 'research', rating: 4.5, users: '920', url: 'https://101.impactmojo.in/IMStatsAssist' },
-            { id: 'p4', type: 'premium', title: 'RQ Builder Pro', description: 'Advanced research question formulation and hypothesis development framework.', track: 'research', rating: 4.9, users: '540', url: 'https://101.impactmojo.in/researchQ-pro' },
-            { id: 'p5', type: 'premium', title: 'Code Converter Pro', description: 'Seamlessly translate statistical code between R, Stata, SPSS, and Python.', track: 'research', rating: 4.8, users: '380', url: 'https://101.impactmojo.in/code-convert-pro' },
-            { id: 'p6', type: 'premium', title: 'Team Training Dashboard', description: 'Centralized dashboard to track your entire teams learning progress.', track: 'meal', rating: 5.0, users: '120', url: 'mailto:hello@impactmojo.in' }
-        ];
+<!-- Cookie Consent -->
+<div class="cookie-consent" id="cookieConsent">
+    <button class="cookie-icon-btn" onclick="toggleCookieExpand()" title="Cookie Settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="9" r="1.5"/><circle cx="15" cy="11" r="1.5"/><circle cx="10" cy="15" r="1"/><circle cx="14" cy="7" r="1"/></svg>
+    </button>
+    <div class="cookie-expanded">
+        <div class="cookie-expanded-header">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="9" r="1.5"/><circle cx="15" cy="11" r="1.5"/><circle cx="10" cy="15" r="1"/><circle cx="14" cy="7" r="1"/></svg>
+            Cookie Settings
+        </div>
+        <p>We use cookies to improve your experience and analyze site usage. By continuing, you agree to our use of cookies.</p>
+        <div class="cookie-expanded-buttons">
+            <button class="cookie-btn-accept" onclick="acceptCookies()">Accept All</button>
+            <button class="cookie-btn-settings" onclick="window.location.href='privacy.html'">Learn More</button>
+        </div>
+    </div>
+</div>
 
-        // =====================================================
-        // State
-        // =====================================================
-        let currentTypeFilter = 'all';
-        let currentTrackFilter = 'all';
-        let searchTerm = '';
+<!-- UserWay Accessibility Widget -->
+<script>
+    (function(d) {
+      var s = d.createElement("script");
+      s.setAttribute("data-position", 2);
+      s.setAttribute("data-widget_layout", "full");
+      s.setAttribute("data-account", "EksmhlPg9k");
+      s.setAttribute("src", "https://cdn.userway.org/widget.js");
+      (d.body || d.head).appendChild(s);
+    })(document);
+</script>
 
-        // =====================================================
-        // Theme Toggle
-        // =====================================================
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
-            if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
-                document.body.classList.add('light-mode');
-            }
+<!-- JavaScript -->
+<script>
+// =====================================================
+// ALL CONTENT DATA
+// =====================================================
+const allContent = [
+    // COURSES (39)
+    { id: 'c1', type: 'course', title: 'MEL Basics 101', description: 'Master the fundamentals of Monitoring, Evaluation, and Learning for development projects.', track: 'meal', rating: 4.8, users: '2.5K', url: 'https://101.impactmojo.in/mel-basics-101' },
+    { id: 'c2', type: 'course', title: 'Theory of Change 101', description: 'Learn to design robust theories of change that articulate impact pathways.', track: 'meal', rating: 4.9, users: '2.1K', url: 'https://101.impactmojo.in/toc-basics-101' },
+    { id: 'c3', type: 'course', title: 'Data Literacy 101', description: 'Build essential data skills for collecting, analyzing, and interpreting information.', track: 'meal', rating: 4.8, users: '1.8K', url: 'https://101.impactmojo.in/data-literacy' },
+    { id: 'c4', type: 'course', title: 'Qualitative Methods 101', description: 'Master qualitative research techniques including interviews, focus groups, and ethnography.', track: 'research', rating: 4.8, users: '1.6K', url: 'https://101.impactmojo.in/qual-methods' },
+    { id: 'c5', type: 'course', title: 'Survey Design 101', description: 'Create effective questionnaires and sampling strategies for field research.', track: 'research', rating: 4.8, users: '1.5K', url: 'https://101.impactmojo.in/survey-design' },
+    { id: 'c6', type: 'course', title: 'Research Ethics 101', description: 'Navigate ethical considerations in development research and protect vulnerable populations.', track: 'research', rating: 4.8, users: '1.3K', url: 'https://101.impactmojo.in/research-ethics' },
+    { id: 'c7', type: 'course', title: 'Gender Mainstreaming 101', description: 'Integrate gender perspectives across all stages of development programming.', track: 'gender', rating: 4.8, users: '1.4K', url: 'https://101.impactmojo.in/gender-mainstreaming' },
+    { id: 'c8', type: 'course', title: 'Development Economics 101', description: 'Understand core economic concepts shaping development policy and practice.', track: 'economics', rating: 4.8, users: '1.7K', url: 'https://101.impactmojo.in/development-economics' },
+    { id: 'c9', type: 'course', title: 'Public Health 101', description: 'Explore epidemiology, health systems, and disease prevention strategies.', track: 'health', rating: 4.8, users: '1.2K', url: 'https://101.impactmojo.in/public-health' },
+    { id: 'c10', type: 'course', title: 'Visual Ethnography 101', description: 'Learn to document and analyze social phenomena through photography and video.', track: 'research', rating: 4.8, users: '890', url: 'https://101.impactmojo.in/visual-ethnography' },
+    { id: 'c11', type: 'course', title: 'Mixed Methods 101', description: 'Combine quantitative and qualitative approaches for comprehensive research.', track: 'research', rating: 4.8, users: '1.1K', url: 'https://101.impactmojo.in/mixed-methods' },
+    { id: 'c12', type: 'course', title: 'Impact Evaluation 101', description: 'Design rigorous impact evaluations using experimental and quasi-experimental methods.', track: 'meal', rating: 4.8, users: '1.3K', url: 'https://101.impactmojo.in/impact-eval' },
+    { id: 'c13', type: 'course', title: 'Maternal Health 101', description: 'Understand maternal health challenges and evidence-based interventions.', track: 'health', rating: 4.8, users: '980', url: 'https://101.impactmojo.in/maternal-health' },
+    { id: 'c14', type: 'course', title: 'Child Development 101', description: 'Explore early childhood development and nutrition interventions.', track: 'health', rating: 4.8, users: '1.0K', url: 'https://101.impactmojo.in/child-development' },
+    { id: 'c15', type: 'course', title: 'Sexual Health 101', description: 'Navigate sensitive topics in sexual and reproductive health programming.', track: 'health', rating: 4.8, users: '780', url: 'https://101.impactmojo.in/sexual-health' },
+    { id: 'c16', type: 'course', title: 'Feminist Research 101', description: 'Apply feminist methodologies to challenge power dynamics in knowledge production.', track: 'gender', rating: 4.8, users: '1.1K', url: 'https://101.impactmojo.in/feminist-research' },
+    { id: 'c17', type: 'course', title: 'Marginalised Identities 101', description: 'Examine how caste, ethnicity, disability, and other identity markers create overlapping systems.', track: 'gender', rating: 4.8, users: '1.4K', url: 'https://101.impactmojo.in/social-margins' },
+    { id: 'c18', type: 'course', title: 'Decolonial Development 101', description: 'Challenge dominant development paradigms through postcolonial frameworks.', track: 'policy', rating: 4.8, users: '1.0K', url: 'https://101.impactmojo.in/decolonize-dev' },
+    { id: 'c19', type: 'course', title: 'Community Development 101', description: 'Master participatory approaches to community mobilization and asset-based development.', track: 'meal', rating: 4.8, users: '1.5K', url: 'https://101.impactmojo.in/community-dev' },
+    { id: 'c20', type: 'course', title: 'Environmental Justice 101', description: 'Explore how environmental degradation disproportionately impacts marginalized communities.', track: 'policy', rating: 4.8, users: '1.1K', url: 'https://101.impactmojo.in/env-justice' },
+    { id: 'c21', type: 'course', title: 'Care Economy 101', description: 'Understand the economic value of unpaid care work and explore supportive policies.', track: 'gender', rating: 4.8, users: '980', url: 'https://101.impactmojo.in/care-economy-101' },
+    { id: 'c22', type: 'course', title: 'Econometrics 101', description: 'Master statistical techniques for causal inference in development economics.', track: 'economics', rating: 4.8, users: '1.6K', url: 'https://101.impactmojo.in/econometrics-101' },
+    { id: 'c23', type: 'course', title: 'Global Development Governance 101', description: 'Navigate the complex ecosystem of development institutions.', track: 'policy', rating: 4.8, users: '1.2K', url: 'https://101.impactmojo.in/dev-architecture' },
+    { id: 'c24', type: 'course', title: 'Post Truth Politics 101', description: 'Analyze how misinformation and polarization shape development outcomes.', track: 'policy', rating: 4.8, users: '890', url: 'https://101.impactmojo.in/post-truth-101' },
+    { id: 'c25', type: 'course', title: 'Fundraising Basics 101', description: 'Develop essential skills for resource mobilization in the development sector.', track: 'meal', rating: 4.8, users: '1.3K', url: 'https://101.impactmojo.in/fundraising-basics' },
+    { id: 'c26', type: 'course', title: 'Exploratory Data Analysis 101', description: 'Develop skills for cleaning, exploring, and visualizing household survey data.', track: 'research', rating: 4.8, users: '1.4K', url: 'https://101.impactmojo.in/eda-hhs' },
+    { id: 'c27', type: 'course', title: 'Bivariate Analysis 101', description: 'Master techniques for examining relationships between two variables.', track: 'research', rating: 4.8, users: '1.1K', url: 'https://101.impactmojo.in/bi-analysis' },
+    { id: 'c28', type: 'course', title: 'Decent Work For All 101', description: 'Explore ILO frameworks for promoting productive employment and labor rights.', track: 'economics', rating: 4.8, users: '780', url: 'https://101.impactmojo.in/decent-work' },
+    { id: 'c29', type: 'course', title: 'Item Response Theory 101', description: 'Learn advanced psychometric techniques for developing measurement instruments.', track: 'research', rating: 4.8, users: '650', url: 'https://101.impactmojo.in/irt-basics' },
+    { id: 'c30', type: 'course', title: 'Digital Ethics 101', description: 'Navigate ethical challenges in digital development and responsible innovation.', track: 'research', rating: 4.8, users: '920', url: 'https://101.impactmojo.in/digital-ethics' },
+    { id: 'c31', type: 'course', title: 'Multivariate Analysis 101', description: 'Master advanced statistical techniques for analyzing complex relationships.', track: 'research', rating: 4.8, users: '1.0K', url: 'https://101.impactmojo.in/multivariate-basics' },
+    { id: 'c32', type: 'course', title: 'SEL Basics 101', description: 'Understand Social and Emotional Learning frameworks for education programs.', track: 'health', rating: 4.8, users: '750', url: 'https://101.impactmojo.in/sel-basics' },
+    { id: 'c33', type: 'course', title: 'Cost Effectiveness 101', description: 'Master economic evaluation techniques for comparing development interventions.', track: 'meal', rating: 4.8, users: '1.1K', url: 'https://101.impactmojo.in/CE' },
+    { id: 'c34', type: 'course', title: 'Data Feminism 101', description: 'Explore how power dynamics shape data collection through an intersectional feminist framework.', track: 'gender', rating: 4.8, users: '890', url: 'https://101.impactmojo.in/data-feminism' },
+    { id: 'c35', type: 'course', title: 'Education and Pedagogy 101', description: 'Discover evidence-based teaching methodologies and learning theories.', track: 'health', rating: 4.8, users: '1.0K', url: 'https://101.impactmojo.in/edu-pedagogy' },
+    { id: 'c36', type: 'course', title: 'Indian Constitution 101', description: 'Examine the constitutional framework that guides Indias democracy.', track: 'policy', rating: 4.8, users: '1.3K', url: 'https://101.impactmojo.in/ind-constitution' },
+    { id: 'c37', type: 'course', title: 'Observation to Insight 101', description: 'Transform raw field observations into actionable insights.', track: 'research', rating: 4.8, users: '720', url: 'https://101.impactmojo.in/obs2insight' },
+    { id: 'c38', type: 'course', title: 'Economics for Policy Practitioners 101', description: 'Bridge the gap between economic theory and real-world policy implementation.', track: 'economics', rating: 4.8, users: '980', url: 'https://101.impactmojo.in/dev-economics' },
+    { id: 'c39', type: 'course', title: 'English for Development 101', description: 'Master the specialized vocabulary and communication strategies for development work.', track: 'meal', rating: 4.8, users: '1.2K', url: 'https://101.impactmojo.in/eng-dev' },
+    
+    // LABS (10)
+    { id: 'l1', type: 'lab', title: 'Theory of Change Lab', description: 'Construct robust theories of change through assumption mapping and evidence review exercises.', track: 'meal', rating: 5.0, users: '1.5K', url: 'https://101.impactmojo.in/toc-workbench' },
+    { id: 'l2', type: 'lab', title: 'MLE Design Lab', description: 'Create comprehensive Monitoring, Learning, and Evaluation systems from scratch.', track: 'meal', rating: 4.8, users: '1.2K', url: 'https://101.impactmojo.in/mel-design-lab' },
+    { id: 'l3', type: 'lab', title: 'MEL Plan Lab', description: 'Develop detailed MEL plans with indicators, targets, and data management systems.', track: 'meal', rating: 4.8, users: '980', url: 'https://101.impactmojo.in/mel-plan-lab' },
+    { id: 'l4', type: 'lab', title: 'Storytelling Lab', description: 'Transform data and field experiences into compelling narratives.', track: 'meal', rating: 4.0, users: '890', url: 'https://101.impactmojo.in/storytelling-lab' },
+    { id: 'l5', type: 'lab', title: 'Design Thinking Lab', description: 'Apply human-centered design methodologies to development challenges.', track: 'research', rating: 4.8, users: '750', url: 'https://101.impactmojo.in/design-thinking-lab' },
+    { id: 'l6', type: 'lab', title: 'Community Development Lab', description: 'Practice participatory facilitation techniques and community mapping.', track: 'meal', rating: 4.8, users: '680', url: 'https://101.impactmojo.in/community-lab' },
+    { id: 'l7', type: 'lab', title: 'Policy & Advocacy Lab', description: 'Design and test policy advocacy campaigns through hands-on exercises.', track: 'policy', rating: 4.8, users: '620', url: 'https://101.impactmojo.in/policy-advocacy-lab' },
+    { id: 'l8', type: 'lab', title: 'Risk and Mitigation Lab', description: 'Identify, assess, and develop mitigation strategies for risks.', track: 'meal', rating: 4.8, users: '540', url: 'https://101.impactmojo.in/risk-mitigation-lab' },
+    { id: 'l9', type: 'lab', title: 'Resource and Sustainability Lab', description: 'Analyze resource flows and develop sustainability plans.', track: 'meal', rating: 4.8, users: '490', url: 'https://101.impactmojo.in/resource-sustainability-lab' },
+    { id: 'l10', type: 'lab', title: 'Impact and Partnerships Lab', description: 'Map partnership ecosystems and design collaboration frameworks.', track: 'meal', rating: 4.8, users: '450', url: 'https://101.impactmojo.in/impact-partnerships' },
+    
+    // GAMES (12)
+    { id: 'g1', type: 'game', title: 'The Real Middle', description: 'Understand who the middle-class really is in India through wealth inequality dynamics.', track: 'economics', rating: 4.0, users: '850', url: 'https://therealmiddle.netlify.app' },
+    { id: 'g2', type: 'game', title: 'Risk & Reward Explorer', description: 'Experience behavioral economics through prospect theory and cognitive biases.', track: 'economics', rating: 4.5, users: '1.2K', url: 'https://risk-reward-be.netlify.app' },
+    { id: 'g3', type: 'game', title: 'Cooperation Paradox', description: 'Explore game theory concepts through strategic decision-making scenarios.', track: 'economics', rating: 4.0, users: '920', url: 'https://cooperationparadox.netlify.app/' },
+    { id: 'g4', type: 'game', title: 'Public Good Game', description: 'Experience the free-rider problem as players decide whether to contribute to shared resources.', track: 'economics', rating: 4.8, users: '780', url: 'https://101.impactmojo.in/public-good-game' },
+    { id: 'g5', type: 'game', title: 'Prisoners Dilemma Game', description: 'Navigate strategic decision-making where individual rationality leads to suboptimal outcomes.', track: 'economics', rating: 4.8, users: '890', url: 'https://101.impactmojo.in/prisoners-dilemma-game' },
+    { id: 'g6', type: 'game', title: 'Opportunity Cost Game', description: 'Make resource allocation decisions under constraints and experience tradeoffs.', track: 'economics', rating: 4.8, users: '720', url: 'https://101.impactmojo.in/opportunity-cost-game' },
+    { id: 'g7', type: 'game', title: 'Network Effects Game', description: 'Build networks and watch value multiply as more participants join.', track: 'economics', rating: 4.8, users: '650', url: 'https://101.impactmojo.in/network-effects-game' },
+    { id: 'g8', type: 'game', title: 'Bidding Wars Game', description: 'Participate in various auction formats to understand price discovery.', track: 'economics', rating: 4.8, users: '580', url: 'https://101.impactmojo.in/bidding-wars-game' },
+    { id: 'g9', type: 'game', title: 'Information Asymmetry Game', description: 'Navigate markets where buyers and sellers have different information.', track: 'economics', rating: 4.8, users: '520', url: 'https://101.impactmojo.in/info-asymmetry-game' },
+    { id: 'g10', type: 'game', title: 'Externality Game', description: 'Make production decisions while discovering hidden social costs and benefits.', track: 'economics', rating: 4.8, users: '480', url: 'https://101.impactmojo.in/externality-game' },
+    { id: 'g11', type: 'game', title: 'Commons Crisis Game', description: 'Manage shared resources while avoiding the tragedy of the commons.', track: 'economics', rating: 4.8, users: '430', url: 'https://101.impactmojo.in/commons-crisis-game' },
+    { id: 'g12', type: 'game', title: 'Econ Concepts Puzzle', description: 'Solve economic puzzles that teach concepts through engaging brain-teasers.', track: 'economics', rating: 4.8, users: '610', url: 'https://101.impactmojo.in/econ-concepts-game' },
+    
+    // PREMIUM (6)
+    { id: 'p1', type: 'premium', title: 'Field Notes from a Development Economist', description: 'In-depth analysis and insights from field experiences with Dr. Varna.', track: 'economics', rating: 5.0, users: '450', url: 'https://marginmuse.space/themarginmuse' },
+    { id: 'p2', type: 'premium', title: 'Qualitative Research Lab Pro', description: 'Advanced qualitative research methods and AI-assisted coding tools.', track: 'research', rating: 4.5, users: '680', url: 'https://101.impactmojo.in/qual-insights' },
+    { id: 'p3', type: 'premium', title: 'Statistical Analysis Assistant', description: 'Comprehensive statistical analysis toolkit for development research.', track: 'research', rating: 4.5, users: '920', url: 'https://101.impactmojo.in/IMStatsAssist' },
+    { id: 'p4', type: 'premium', title: 'RQ Builder Pro', description: 'Advanced research question formulation and hypothesis development framework.', track: 'research', rating: 4.9, users: '540', url: 'https://101.impactmojo.in/researchQ-pro' },
+    { id: 'p5', type: 'premium', title: 'Code Converter Pro', description: 'Seamlessly translate statistical code between R, Stata, SPSS, and Python.', track: 'research', rating: 4.8, users: '380', url: 'https://101.impactmojo.in/code-convert-pro' },
+    { id: 'p6', type: 'premium', title: 'Team Training Dashboard', description: 'Centralized dashboard to track your entire teams learning progress.', track: 'meal', rating: 5.0, users: '120', url: 'mailto:hello@impactmojo.in' }
+];
+
+// =====================================================
+// State
+// =====================================================
+let currentTypeFilter = 'all';
+let currentTrackFilter = 'all';
+let searchTerm = '';
+
+// =====================================================
+// Theme Toggle
+// =====================================================
+function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+        document.body.classList.add('light-mode');
+    }
+}
+
+// =====================================================
+// Cookie Consent
+// =====================================================
+function toggleCookieExpand() {
+    document.getElementById('cookieConsent').classList.toggle('expanded');
+}
+
+function acceptCookies() {
+    localStorage.setItem('cookieConsent', 'true');
+    document.getElementById('cookieConsent').classList.add('hidden');
+}
+
+function initCookieConsent() {
+    if (!localStorage.getItem('cookieConsent')) {
+        document.getElementById('cookieConsent').style.display = 'block';
+    } else {
+        document.getElementById('cookieConsent').classList.add('hidden');
+    }
+}
+
+// =====================================================
+// Speed Dial
+// =====================================================
+function toggleSpeedDial() {
+    document.getElementById('imxSpeedDial').classList.toggle('open');
+}
+
+// =====================================================
+// Chatbot
+// =====================================================
+function openChatbot() {
+    document.getElementById('chatbotModal').classList.add('open');
+}
+
+function closeChatbot() {
+    document.getElementById('chatbotModal').classList.remove('open');
+}
+
+function selectOption(option) {
+    const messages = document.getElementById('chatMessages');
+    let response = '';
+    
+    switch(option) {
+        case 'courses':
+            response = 'We offer free courses on MEAL, Theory of Change, Research Methods, Gender Studies, and more! Visit our <a href="catalog.html">Catalog</a> to browse all courses.';
+            break;
+        case 'contact':
+            response = 'You can reach us at <a href="mailto:hello@impactmojo.in">hello@impactmojo.in</a> or visit our <a href="contact.html">Contact page</a>.';
+            break;
+        case 'feedback':
+            response = 'We love hearing from you! Please share your feedback, suggestions, or bug reports. Your input helps us improve ImpactMojo for everyone.';
+            break;
+        default:
+            response = 'How can I help you today?';
+    }
+    
+    const userMsg = document.createElement('div');
+    userMsg.className = 'message';
+    userMsg.innerHTML = `<div class="bot-bubble" style="margin-left: auto; background: var(--gradient-primary); color: white; border-radius: 12px; border-top-right-radius: 4px;">${option.charAt(0).toUpperCase() + option.slice(1)}</div>`;
+    messages.appendChild(userMsg);
+    
+    setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'message bot-message';
+        botMsg.innerHTML = `
+            <div class="bot-avatar">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path></svg>
+            </div>
+            <div class="bot-bubble">${response}</div>
+        `;
+        messages.appendChild(botMsg);
+        messages.scrollTop = messages.scrollHeight;
+    }, 500);
+}
+
+function handleChatKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendChatMessage();
+    }
+}
+
+function sendChatMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    const messages = document.getElementById('chatMessages');
+    
+    const userMsg = document.createElement('div');
+    userMsg.className = 'message';
+    userMsg.innerHTML = `<div class="bot-bubble" style="margin-left: auto; background: var(--gradient-primary); color: white; border-radius: 12px; border-top-right-radius: 4px;">${message}</div>`;
+    messages.appendChild(userMsg);
+    
+    input.value = '';
+    
+    setTimeout(() => {
+        let response = "Thanks for your message! For detailed assistance, please email us at <a href='mailto:hello@impactmojo.in'>hello@impactmojo.in</a> or visit our <a href='faq.html'>FAQ page</a>.";
+        
+        const lowerMsg = message.toLowerCase();
+        if (lowerMsg.includes('course') || lowerMsg.includes('learn')) {
+            response = "We offer free courses on MEAL, Theory of Change, Research Methods, and more! Check our <a href='catalog.html'>Catalog</a> for all courses.";
+        } else if (lowerMsg.includes('workshop') || lowerMsg.includes('training')) {
+            response = "We offer customized workshops for NGOs and development teams. Visit our <a href='workshops.html'>Workshops page</a> for details.";
+        } else if (lowerMsg.includes('coach') || lowerMsg.includes('mentor')) {
+            response = "Our coaching services provide personalized guidance for your development career. Learn more on our <a href='coaching.html'>Coaching page</a>.";
+        } else if (lowerMsg.includes('free') || lowerMsg.includes('cost') || lowerMsg.includes('price')) {
+            response = "All core educational content on ImpactMojo is completely free! We follow a 'pay what you think is fair' philosophy.";
         }
         
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            const isLight = document.body.classList.contains('light-mode');
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
-        }
+        const botMsg = document.createElement('div');
+        botMsg.className = 'message bot-message';
+        botMsg.innerHTML = `
+            <div class="bot-avatar">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path></svg>
+            </div>
+            <div class="bot-bubble">${response}</div>
+        `;
+        messages.appendChild(botMsg);
+        messages.scrollTop = messages.scrollHeight;
+    }, 800);
+}
 
-        // =====================================================
-        // Cookie Consent
-        // =====================================================
-        function initCookieConsent() {
-            const consent = localStorage.getItem('cookieConsent');
-            const banner = document.getElementById('cookieConsent');
-            if (consent === 'accepted' && banner) {
-                banner.classList.add('hidden');
-            }
-        }
+// =====================================================
+// Filtering and Rendering
+// =====================================================
+function filterContent() {
+    return allContent.filter(item => {
+        const matchesType = currentTypeFilter === 'all' || item.type === currentTypeFilter;
+        const matchesTrack = currentTrackFilter === 'all' || item.track === currentTrackFilter;
+        const matchesSearch = searchTerm === '' || 
+            item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.description.toLowerCase().includes(searchTerm.toLowerCase());
         
-        function acceptCookies() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            const banner = document.getElementById('cookieConsent');
-            if (banner) {
-                banner.classList.add('hidden');
-            }
-        }
+        return matchesType && matchesTrack && matchesSearch;
+    });
+}
 
-        // =====================================================
-        // Speed Dial
-        // =====================================================
-        function toggleSpeedDial() {
-            document.getElementById('speedDial').classList.toggle('open');
-        }
-        
-        function closeSpeedDial() {
-            document.getElementById('speedDial').classList.remove('open');
-        }
-        
-        document.addEventListener('click', function(e) {
-            const speedDial = document.getElementById('speedDial');
-            if (speedDial && !speedDial.contains(e.target)) {
-                closeSpeedDial();
-            }
+function renderCards() {
+    const filtered = filterContent();
+    const grid = document.getElementById('cardsGrid');
+    const emptyState = document.getElementById('emptyState');
+    const resultCount = document.getElementById('resultCount');
+    
+    resultCount.textContent = `Showing ${filtered.length} items`;
+    
+    if (filtered.length === 0) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+    }
+    
+    grid.style.display = 'grid';
+    emptyState.style.display = 'none';
+    
+    grid.innerHTML = filtered.map(item => `
+        <a href="${item.url}" target="_blank" class="card">
+            <div class="card-header">
+                <span class="card-type ${item.type}">${item.type}</span>
+                <span class="card-rating">⭐ ${item.rating}</span>
+            </div>
+            <h3 class="card-title">${item.title}</h3>
+            <p class="card-description">${item.description}</p>
+            <div class="card-meta">
+                <span class="card-track">${item.track.toUpperCase()}</span>
+                <span class="card-users">${item.users} users</span>
+            </div>
+        </a>
+    `).join('');
+}
+
+// =====================================================
+// Event Listeners
+// =====================================================
+document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        currentTypeFilter = this.dataset.filter;
+        renderCards();
+    });
+});
+
+document.querySelectorAll('.track-filter').forEach(filter => {
+    filter.addEventListener('click', function() {
+        document.querySelectorAll('.track-filter').forEach(f => f.classList.remove('active'));
+        this.classList.add('active');
+        currentTrackFilter = this.dataset.track;
+        renderCards();
+    });
+});
+
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    searchTerm = e.target.value;
+    renderCards();
+});
+
+// =====================================================
+// Initialization
+// =====================================================
+document.addEventListener('DOMContentLoaded', function() {
+    initTheme();
+    initCookieConsent();
+    renderCards();
+});
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.has-dropdown') && window.innerWidth <= 768) {
+        document.querySelectorAll('.has-dropdown.open').forEach(el => {
+            el.classList.remove('open');
         });
+    }
+});
 
-        // =====================================================
-        // Mobile Menu
-        // =====================================================
-        function toggleMobileMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
-        }
+// Close speed dial when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.imx-speed-dial')) {
+        document.getElementById('imxSpeedDial').classList.remove('open');
+    }
+});
+</script>
 
-        // =====================================================
-        // Mojini Chatbot
-        // =====================================================
-        function toggleChatbot() {
-            const modal = document.getElementById('mojini-modal');
-            modal.style.display = modal.style.display === 'none' || modal.style.display === '' ? 'block' : 'none';
-        }
-        
-        function selectOption(option) {
-            const responses = {
-                'meal': "Our MEAL courses include MEL Basics 101, Data Literacy 101, Cost Effectiveness 101, and more. We also have the TOC Workbench and MEL Design Lab for hands-on practice!",
-                'research': "For research methods, check out Qualitative Methods 101, Research Ethics 101, Visual Ethnography 101, and our advanced Data Analysis courses. Great for field researchers!",
-                'beginner': "New to development? Start with MEL Basics 101, Development Economics 101, or Community Development 101. They're beginner-friendly and completely free!"
-            };
-            addBotMessage(responses[option]);
-        }
-        
-        function addBotMessage(text) {
-            const messagesDiv = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message';
-            messageDiv.innerHTML = `
-                <div class="bot-avatar">
-                    <svg viewBox="0 0 24 24">
-                        <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-                        <circle cx="12" cy="5" r="2"></circle>
-                        <path d="M12 7v4"></path>
-                    </svg>
-                </div>
-                <div class="bot-bubble">${text}</div>
-            `;
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        // =====================================================
-        // Filtering and Rendering
-        // =====================================================
-        function filterContent() {
-            return allContent.filter(item => {
-                const matchesType = currentTypeFilter === 'all' || item.type === currentTypeFilter;
-                const matchesTrack = currentTrackFilter === 'all' || item.track === currentTrackFilter;
-                const matchesSearch = searchTerm === '' || 
-                    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    item.description.toLowerCase().includes(searchTerm.toLowerCase());
-                
-                return matchesType && matchesTrack && matchesSearch;
-            });
-        }
-        
-        function renderCards() {
-            const filtered = filterContent();
-            const grid = document.getElementById('cardsGrid');
-            const emptyState = document.getElementById('emptyState');
-            const resultCount = document.getElementById('resultCount');
-            
-            resultCount.textContent = `Showing ${filtered.length} items`;
-            
-            if (filtered.length === 0) {
-                grid.style.display = 'none';
-                emptyState.style.display = 'block';
-                return;
-            }
-            
-            grid.style.display = 'grid';
-            emptyState.style.display = 'none';
-            
-            grid.innerHTML = filtered.map(item => `
-                <a href="${item.url}" target="_blank" class="card">
-                    <div class="card-header">
-                        <span class="card-type ${item.type}">${item.type}</span>
-                        <span class="card-rating">⭐ ${item.rating}</span>
-                    </div>
-                    <h3 class="card-title">${item.title}</h3>
-                    <p class="card-description">${item.description}</p>
-                    <div class="card-meta">
-                        <span class="card-track">${item.track.toUpperCase()}</span>
-                        <span class="card-users">${item.users} users</span>
-                    </div>
-                </a>
-            `).join('');
-        }
-
-        // =====================================================
-        // Event Listeners
-        // =====================================================
-        document.querySelectorAll('.filter-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                currentTypeFilter = this.dataset.filter;
-                renderCards();
-            });
-        });
-        
-        document.querySelectorAll('.track-filter').forEach(filter => {
-            filter.addEventListener('click', function() {
-                document.querySelectorAll('.track-filter').forEach(f => f.classList.remove('active'));
-                this.classList.add('active');
-                currentTrackFilter = this.dataset.track;
-                renderCards();
-            });
-        });
-        
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            searchTerm = e.target.value;
-            renderCards();
-        });
-
-        // =====================================================
-        // Auto-refresh on navigation
-        // =====================================================
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                window.location.reload();
-            }
-        });
-
-        // =====================================================
-        // Initialize
-        // =====================================================
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-            initCookieConsent();
-            renderCards();
-        });
-    </script>
 </body>
 </html>
