@@ -1,31 +1,110 @@
 <!DOCTYPE html>
 <!--
-    ╔══════════════════════════════════════════════════════════════════════════════╗
-    ║  IMPACTMOJO PAGE TEMPLATE v2.0.0                                             ║
-    ║  Version: 2.0.0 - December 5, 2025                                           ║
+    ╔═══════════════════════════════════════════════════════════════════════════════╗
+    ║  IMPACTMOJO PAGE TEMPLATE v3.0.0                                              ║
+    ║  Version: 3.0.0 - December 6, 2025                                            ║
     ║                                                                               ║
-    ║  COMPLETE template matching index.html standards exactly.                    ║
-    ║  Replace [PAGE_TITLE], [PAGE_DESCRIPTION], [PAGE_FILENAME], [PAGE_CONTENT]   ║
+    ║  COMPLETE template with V3 design system matching index.html standards.       ║
+    ║  Replace [PAGE_TITLE], [PAGE_DESCRIPTION], [PAGE_FILENAME], [PAGE_CONTENT]    ║
     ║                                                                               ║
-    ║  INCLUDED FEATURES (ALL 12+ Required Elements):                              ║
-    ║  ✓ Google Analytics (G-JRCMEB9TBW)                                           ║
-    ║  ✓ UserWay Accessibility Widget (account: EksmhlPg9k)                        ║
-    ║  ✓ Cache Control Meta Tags                                                   ║
-    ║  ✓ Auto-refresh on back/forward navigation (pageshow)                        ║
-    ║  ✓ Theme Toggle (Sun/Moon) with localStorage sync                            ║
-    ║  ✓ CSS Variables (Dark/Light mode matching index.html)                       ║
-    ║  ✓ Google Fonts (Inter body + Poppins headings)                              ║
-    ║  ✓ Favicons (all 4 sizes + manifest.json)                                    ║
-    ║  ✓ Full Navigation with Dropdowns (Learn, Services, About Us)                ║
-    ║  ✓ Full 4-Section Footer (About, Legal IT Act, Quick Links, Resources)       ║
-    ║  ✓ Mojini Chatbot with FAQ bank                                              ║
-    ║  ✓ Cookie Consent Banner                                                     ║
-    ║  ✓ Speed Dial Toolbox (Bookmarks, Notes, Streak)                             ║
-    ║  ✓ Mobile Responsive Design                                                  ║
-    ╚══════════════════════════════════════════════════════════════════════════════╝
+    ║  INCLUDED FEATURES (ALL Required Elements):                                   ║
+    ║  ✓ Google Analytics (G-JRCMEB9TBW)                                            ║
+    ║  ✓ UserWay Accessibility Widget (account: EksmhlPg9k)                         ║
+    ║  ✓ Cache Control Meta Tags                                                    ║
+    ║  ✓ Auto-refresh on back/forward navigation (pageshow)                         ║
+    ║  ✓ Theme Toggle (Sun/Moon) with localStorage sync                             ║
+    ║  ✓ CSS Variables (Dark/Light mode matching index.html)                        ║
+    ║  ✓ Google Fonts (Inter body + Poppins headings)                               ║
+    ║  ✓ Favicons (all 4 sizes + manifest.json)                                     ║
+    ║  ✓ Full Navigation with Dropdowns (Learn, Services, About Us)                 ║
+    ║  ✓ V3 Design Elements (Paper Planes, Gradient Blobs)                          ║
+    ║  ✓ Full 4-Section Footer (About, Legal IT Act, Quick Links, Resources)        ║
+    ║  ✓ Mojini Chatbot with FAQ bank                                               ║
+    ║  ✓ Cookie Consent Banner                                                      ║
+    ║  ✓ Speed Dial Toolbox (Bookmarks, Notes, Streak)                              ║
+    ║  ✓ Mobile Responsive Design with Fixed Menu                                   ║
+    ║  ✓ Tour Disabled on Mobile                                                    ║
+    ╚═══════════════════════════════════════════════════════════════════════════════╝
 -->
 <html lang="en">
 <head>
+<!-- Early Mobile Menu Functions - Must load before DOM -->
+<script>
+/* Mobile Menu Functions - Defined early for onclick handlers */
+function toggleMobileMenu() {
+    var navLinks = document.getElementById('navLinks');
+    var toggle = document.getElementById('mobile-menu-btn');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    var authSection = document.getElementById('mobileAuthSection');
+    
+    if (!navLinks) return;
+    
+    var isOpen = navLinks.classList.contains('active');
+    
+    if (isOpen) {
+        navLinks.classList.remove('active');
+        if (toggle) toggle.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        if (authSection) authSection.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        document.body.style.overflow = '';
+        document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+            item.classList.remove('open');
+        });
+    } else {
+        navLinks.classList.add('active');
+        if (toggle) toggle.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        if (authSection) authSection.classList.add('active');
+        document.body.classList.add('menu-open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeMobileMenu() {
+    var navLinks = document.getElementById('navLinks');
+    var toggle = document.getElementById('mobile-menu-btn');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    var authSection = document.getElementById('mobileAuthSection');
+    
+    if (navLinks) navLinks.classList.remove('active');
+    if (toggle) toggle.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    if (authSection) authSection.classList.remove('active');
+    document.body.classList.remove('menu-open');
+    document.body.style.overflow = '';
+    
+    document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+        item.classList.remove('open');
+    });
+}
+
+function toggleMobileDropdown(event, element) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    var li = element.closest('li.has-dropdown');
+    if (!li) return;
+    
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+            if (item !== li) item.classList.remove('open');
+        });
+        li.classList.toggle('open');
+    }
+}
+
+/* Disable tour on mobile */
+(function() {
+    var isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+        window.shepherdTourDisabled = true;
+        window.tourDisabled = true;
+        window.startTour = function() { console.log('Tour disabled on mobile'); };
+    }
+})();
+</script>
+
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -45,7 +124,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta name="version" content="2.0.0.20251205">
+<meta name="version" content="3.0.0.20251206">
 
 <!-- Auto-refresh on back/forward navigation -->
 <script>
@@ -76,7 +155,7 @@ window.addEventListener('pageshow', function(event) {
 <link href="assets/images/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
 <link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon">
 <link href="manifest.json" rel="manifest">
-<meta name="theme-color" content="#0066CC">
+<meta name="theme-color" content="#0EA5E9">
 
 <!-- Google Fonts - Inter & Poppins -->
 <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -94,10 +173,10 @@ window.addEventListener('pageshow', function(event) {
 }
 
 /* ========================================
-   CSS VARIABLES - MUST MATCH index.html
+   CSS VARIABLES - V3 Design System
    ======================================== */
 :root {
-    /* Professional Dark Mode Colors */
+    /* Primary Colors - Sky Blue Accent */
     --primary-bg: #0F172A;
     --secondary-bg: #1E293B;
     --accent-color: #0EA5E9;
@@ -106,16 +185,27 @@ window.addEventListener('pageshow', function(event) {
     --success-color: #10B981;
     --warning-color: #F59E0B;
     --danger-color: #EF4444;
+    
+    /* Text Colors */
     --text-primary: #F1F5F9;
     --text-secondary: #94A3B8;
     --text-muted: #64748B;
+    
+    /* Card & Surface */
     --card-bg: #1E293B;
     --hover-bg: #334155;
     --border-color: #334155;
+    
+    /* Gradients */
     --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
     --gradient-accent: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+    --gradient-hero: linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+    
+    /* Navigation */
     --nav-bg: rgba(15, 23, 42, 0.95);
     --nav-text: #F1F5F9;
+    
+    /* Shadows */
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -123,6 +213,7 @@ window.addEventListener('pageshow', function(event) {
 }
 
 /* Light Mode Variables */
+[data-theme="light"],
 body.light-mode {
     --primary-bg: #F8FAFC;
     --secondary-bg: #FFFFFF;
@@ -156,6 +247,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 a {
@@ -175,19 +267,655 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ========================================
-   COOKIE CONSENT BANNER
+   V3 DECORATIVE ELEMENTS - Paper Planes & Blobs
    ======================================== */
-.cookie-consent {
+.v3-decoration-container {
     position: fixed;
-    bottom: 24px;
-    left: 24px;
-    z-index: 10000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.v3-paper-plane {
+    position: absolute;
+    opacity: 0.15;
+    animation: floatPlane 20s ease-in-out infinite;
+}
+
+.v3-paper-plane svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--accent-color);
+}
+
+.v3-paper-plane-1 {
+    top: 15%;
+    left: 5%;
+    width: 120px;
+    height: 120px;
+    animation-delay: 0s;
+}
+
+.v3-paper-plane-2 {
+    top: 60%;
+    right: 8%;
+    width: 80px;
+    height: 80px;
+    animation-delay: -7s;
+    transform: rotate(45deg);
+}
+
+.v3-paper-plane-3 {
+    bottom: 20%;
+    left: 15%;
+    width: 60px;
+    height: 60px;
+    animation-delay: -14s;
+    transform: rotate(-30deg);
+}
+
+@keyframes floatPlane {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+        opacity: 0.15;
+    }
+    25% { 
+        transform: translateY(-20px) rotate(5deg); 
+        opacity: 0.2;
+    }
+    50% { 
+        transform: translateY(-10px) rotate(-3deg); 
+        opacity: 0.15;
+    }
+    75% { 
+        transform: translateY(-25px) rotate(3deg); 
+        opacity: 0.18;
+    }
+}
+
+.v3-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: pulseBlob 15s ease-in-out infinite;
+}
+
+.v3-blob-1 {
+    top: 10%;
+    right: 10%;
+    width: 400px;
+    height: 400px;
+    background: var(--accent-color);
+    animation-delay: 0s;
+}
+
+.v3-blob-2 {
+    bottom: 20%;
+    left: 5%;
+    width: 300px;
+    height: 300px;
+    background: var(--secondary-accent);
+    animation-delay: -5s;
+}
+
+@keyframes pulseBlob {
+    0%, 100% { transform: scale(1); opacity: 0.15; }
+    50% { transform: scale(1.1); opacity: 0.2; }
+}
+
+/* ========================================
+   HEADER & NAVIGATION
+   ======================================== */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+.logo-svg img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-main {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.logo-tagline {
+    font-size: 0.7rem;
+    color: var(--accent-color);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    z-index: 9999;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.mobile-menu-toggle .hamburger-line {
+    width: 22px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+}
+
+.nav-links > li > a {
+    padding: 0.6rem 1rem;
+    color: var(--nav-text);
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-links > li > a:hover {
+    background: var(--hover-bg);
+    color: var(--accent-color);
+}
+
+/* Sargam inline icons */
+.v3-inline-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+    vertical-align: middle;
+    filter: brightness(0) saturate(100%) invert(56%) sepia(92%) saturate(1500%) hue-rotate(175deg) brightness(96%) contrast(91%);
+}
+
+/* Dropdown Menu */
+.has-dropdown {
+    position: relative;
+}
+
+.dropdown-arrow {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+}
+
+.has-dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.5rem;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    list-style: none;
+}
+
+.has-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+    background: var(--hover-bg);
+    color: var(--accent-color);
+    padding-left: 1.25rem;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.5rem 0;
+}
+
+/* Nav Buttons */
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.theme-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--hover-bg);
+    border-color: var(--accent-color);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--text-primary);
+    fill: none;
+    stroke-width: 2;
+}
+
+.theme-toggle .icon-moon {
     display: none;
 }
 
-.cookie-icon-btn {
-    width: 48px;
-    height: 48px;
+.light-mode .theme-toggle .icon-sun {
+    display: none;
+}
+
+.light-mode .theme-toggle .icon-moon {
+    display: block;
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay,
+.mobile-auth-section {
+    display: none;
+}
+
+/* ========================================
+   PAGE CONTENT AREA
+   ======================================== */
+.page-content {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.page-hero {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: var(--gradient-hero);
+    position: relative;
+}
+
+.page-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-hero p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+}
+
+/* Buttons */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: var(--gradient-primary);
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+    color: white;
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    font-weight: 600;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+    background: var(--secondary-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 3rem 2rem 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.footer-section a:hover {
+    color: var(--accent-color);
+}
+
+.footer-bottom {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-copyright {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-social a {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.footer-social a:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+.footer-social svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* ========================================
+   SPEED DIAL TOOLBOX
+   ======================================== */
+.imx-speed-dial {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 9000;
+}
+
+.imx-speed-dial-toggle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+}
+
+.imx-speed-dial-toggle:hover {
+    background: var(--hover-bg);
+    border-color: var(--accent-color);
+}
+
+.imx-speed-dial-toggle svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--text-primary);
+    fill: none;
+    stroke-width: 1.5;
+}
+
+.imx-speed-dial-menu {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.imx-speed-dial.open .imx-speed-dial-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.imx-speed-dial-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.imx-speed-dial-label {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    box-shadow: var(--shadow-md);
+}
+
+.imx-speed-dial-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s ease;
+}
+
+.imx-speed-dial-btn:hover {
+    background: var(--hover-bg);
+    border-color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.imx-speed-dial-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--accent-color);
+    fill: none;
+    stroke-width: 2;
+}
+
+/* ========================================
+   MOJINI CHATBOT
+   ======================================== */
+.feedback-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background: var(--gradient-primary);
     border: none;
@@ -196,11 +924,234 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     box-shadow: var(--shadow-lg);
+    z-index: 9000;
+    transition: all 0.3s ease;
+}
+
+.feedback-fab:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-xl);
+}
+
+.feedback-fab svg {
+    width: 24px;
+    height: 24px;
+    stroke: white;
+    fill: none;
+    stroke-width: 2;
+}
+
+.chatbot-modal {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 24px;
+    width: 380px;
+    max-width: calc(100vw - 48px);
+    max-height: 500px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--shadow-xl);
+    z-index: 9001;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.chatbot-modal.open {
+    display: flex;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.chat-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.chat-header svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    fill: none;
+}
+
+.chat-close {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.chat-close:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.chat-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: white;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+}
+
+.bot-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.bot-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.bot-avatar svg {
+    width: 18px;
+    height: 18px;
+    stroke: white;
+    fill: none;
+}
+
+.bot-bubble {
+    background: var(--secondary-bg);
+    padding: 12px 16px;
+    border-radius: 12px;
+    border-top-left-radius: 4px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 85%;
+}
+
+.chat-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 16px 12px;
+}
+
+.chat-option {
+    padding: 8px 14px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chat-option:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 10px;
+    padding: 16px;
+    border-top: 1px solid var(--border-color);
+    background: var(--secondary-bg);
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.chat-input-area input:focus {
+    border-color: var(--accent-color);
+}
+
+.chat-send {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--gradient-primary);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: transform 0.2s ease;
+}
+
+.chat-send:hover {
+    transform: scale(1.05);
+}
+
+.chat-send svg {
+    width: 18px;
+    height: 18px;
+    stroke: white;
+    fill: none;
+}
+
+/* ========================================
+   COOKIE CONSENT
+   ======================================== */
+.cookie-consent {
+    position: fixed;
+    bottom: 24px;
+    left: 90px;
+    z-index: 10000;
+    display: none;
+}
+
+.cookie-icon-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.2s ease;
 }
 
 .cookie-icon-btn:hover {
     transform: scale(1.1);
+    border-color: var(--accent-color);
 }
 
 .cookie-icon-btn svg {
@@ -289,913 +1240,265 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ========================================
-   HEADER & NAVIGATION
+   MOBILE RESPONSIVE STYLES
    ======================================== */
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: var(--nav-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 70px;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-}
-
-.logo-svg img {
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
-    object-fit: contain;
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-main {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-.logo-tagline {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-}
-
-/* Navigation Links */
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    list-style: none;
-}
-
-.nav-links > li {
-    position: relative;
-}
-
-.nav-links > li > a {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 10px 16px;
-    color: var(--nav-text);
-    font-size: 0.95rem;
-    font-weight: 500;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.nav-links > li > a:hover {
-    background: var(--hover-bg);
-    color: var(--accent-color);
-}
-
-.dropdown-arrow {
-    width: 14px;
-    height: 14px;
-    transition: transform 0.2s ease;
-}
-
-.has-dropdown:hover .dropdown-arrow {
-    transform: rotate(180deg);
-}
-
-/* Dropdown Menu */
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 200px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 8px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-lg);
-    z-index: 1001;
-    list-style: none;
-}
-
-.nav-links > li.has-dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.dropdown-menu li {
-    list-style: none;
-}
-
-.dropdown-menu a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.dropdown-menu a:hover {
-    background: var(--hover-bg);
-    color: var(--accent-color);
-}
-
-.dropdown-divider {
-    height: 1px;
-    background: var(--border-color);
-    margin: 8px 0;
-}
-
-/* Nav Buttons */
-.nav-buttons {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Theme Toggle Button */
-.theme-toggle {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    background: var(--secondary-bg);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.theme-toggle:hover {
-    border-color: var(--accent-color);
-    background: var(--hover-bg);
-}
-
-.theme-toggle svg {
-    width: 20px;
-    height: 20px;
-    stroke: var(--text-primary);
-    fill: none;
-    stroke-width: 2;
-}
-
-.icon-sun { display: block; }
-.icon-moon { display: none; }
-
-body.light-mode .icon-sun { display: none; }
-body.light-mode .icon-moon { display: block; }
-
-/* Mobile Menu Toggle */
-.mobile-menu-toggle {
-    display: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    background: var(--secondary-bg);
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 5px;
-    padding: 10px;
-}
-
-.hamburger-line {
-    width: 100%;
-    height: 2px;
-    background: var(--text-primary);
-    border-radius: 2px;
-    transition: all 0.3s ease;
-}
-
-/* ========================================
-   MAIN CONTENT
-   ======================================== */
-.main-content {
-    flex: 1;
-    padding: 40px 0;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-}
-
-/* Back Link */
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 24px;
-    transition: color 0.2s ease;
-}
-
-.back-link:hover {
-    color: var(--accent-color);
-}
-
-.back-link svg {
-    width: 18px;
-    height: 18px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-}
-
-/* Page Header */
-.page-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.page-title {
-    font-size: 2.5rem;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 12px;
-}
-
-.page-subtitle {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Content Card */
-.content-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 32px;
-    margin-bottom: 24px;
-}
-
-.content-card h2 {
-    font-size: 1.5rem;
-    color: var(--text-primary);
-    margin-bottom: 16px;
-}
-
-.content-card h3 {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    margin: 24px 0 12px 0;
-}
-
-.content-card p {
-    color: var(--text-secondary);
-    margin-bottom: 16px;
-    line-height: 1.7;
-}
-
-.content-card ul, .content-card ol {
-    color: var(--text-secondary);
-    margin: 16px 0;
-    padding-left: 24px;
-}
-
-.content-card li {
-    margin-bottom: 8px;
-    line-height: 1.6;
-}
-
-/* ========================================
-   FOOTER - FULL 4-SECTION
-   ======================================== */
-.footer {
-    background: var(--secondary-bg);
-    border-top: 1px solid var(--border-color);
-    padding: 60px 0 40px 0;
-    margin-top: auto;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-}
-
-.footer-tagline {
-    text-align: center;
-    margin-bottom: 40px;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-}
-
-.footer-tagline a {
-    color: var(--accent-color);
-}
-
-.footer-links {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.footer-section h4 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 16px;
-}
-
-.footer-section ul {
-    list-style: none;
-}
-
-.footer-section li {
-    margin-bottom: 10px;
-}
-
-.footer-section a {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    transition: color 0.2s ease;
-    cursor: pointer;
-}
-
-.footer-section a:hover {
-    color: var(--accent-color);
-}
-
-.footer-section li:not(:has(a)) {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 24px;
-    border-top: 1px solid var(--border-color);
-    color: var(--text-muted);
-    font-size: 0.85rem;
-}
-
-.footer-bottom p {
-    margin-bottom: 8px;
-}
-
-.footer-bottom a {
-    color: var(--accent-color);
-}
-
-/* ========================================
-   SPEED DIAL TOOLBOX
-   ======================================== */
-.imx-speed-dial {
-    position: fixed;
-    bottom: 90px;
-    right: 24px;
-    z-index: 9000;
-}
-
-.imx-speed-dial-toggle {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-lg);
-    transition: all 0.3s ease;
-}
-
-.imx-speed-dial-toggle:hover {
-    background: var(--hover-bg);
-    border-color: var(--accent-color);
-    transform: scale(1.05);
-}
-
-.imx-speed-dial-toggle svg {
-    width: 22px;
-    height: 22px;
-    stroke: var(--text-primary);
-    fill: none;
-    stroke-width: 1.5;
-    transition: transform 0.3s ease;
-}
-
-.imx-speed-dial.open .imx-speed-dial-toggle svg {
-    transform: rotate(90deg);
-}
-
-.imx-speed-dial-toggle .toggle-icon-close {
-    display: none;
-}
-
-.imx-speed-dial.open .imx-speed-dial-toggle .toggle-icon-tools {
-    display: none;
-}
-
-.imx-speed-dial.open .imx-speed-dial-toggle .toggle-icon-close {
-    display: block;
-}
-
-.imx-speed-dial-menu {
-    position: absolute;
-    bottom: 60px;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(20px);
-    transition: all 0.3s ease;
-}
-
-.imx-speed-dial.open .imx-speed-dial-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.imx-speed-dial-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    justify-content: flex-end;
-    opacity: 0;
-    transform: translateX(20px);
-    transition: all 0.2s ease;
-}
-
-.imx-speed-dial.open .imx-speed-dial-item {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.imx-speed-dial.open .imx-speed-dial-item:nth-child(1) { transition-delay: 0.02s; }
-.imx-speed-dial.open .imx-speed-dial-item:nth-child(2) { transition-delay: 0.04s; }
-.imx-speed-dial.open .imx-speed-dial-item:nth-child(3) { transition-delay: 0.06s; }
-
-.imx-speed-dial-label {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    white-space: nowrap;
-    box-shadow: var(--shadow-md);
-}
-
-.imx-speed-dial-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-md);
-    transition: all 0.2s ease;
-    position: relative;
-}
-
-.imx-speed-dial-btn:hover {
-    background: var(--hover-bg);
-    border-color: var(--accent-color);
-    transform: scale(1.1);
-}
-
-.imx-speed-dial-btn svg {
-    width: 20px;
-    height: 20px;
-    stroke: var(--accent-color);
-    fill: none;
-    stroke-width: 2;
-}
-
-.imx-speed-dial-backdrop {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 8999;
-}
-
-.imx-speed-dial.open ~ .imx-speed-dial-backdrop {
-    display: block;
-}
-
-/* ========================================
-   MOJINI CHATBOT
-   ======================================== */
-.feedback-fab {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-lg);
-    z-index: 9000;
-    transition: all 0.3s ease;
-}
-
-.feedback-fab:hover {
-    transform: scale(1.1);
-    box-shadow: var(--shadow-xl);
-}
-
-.feedback-fab svg {
-    width: 24px;
-    height: 24px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-.chatbot-modal {
-    display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 24px;
-    width: 380px;
-    max-width: calc(100vw - 48px);
-    max-height: 500px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    box-shadow: var(--shadow-xl);
-    z-index: 9001;
-    overflow: hidden;
-    flex-direction: column;
-}
-
-.chatbot-modal.open {
-    display: flex;
-}
-
-.chat-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px;
-    background: var(--gradient-primary);
-    color: white;
-}
-
-.chat-header h3 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.chat-header svg {
-    width: 20px;
-    height: 20px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-.chat-close {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    line-height: 1;
-    opacity: 0.8;
-    transition: opacity 0.2s ease;
-}
-
-.chat-close:hover {
-    opacity: 1;
-}
-
-.chat-messages {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.message {
-    display: flex;
-    gap: 12px;
-}
-
-.bot-message {
-    align-items: flex-start;
-}
-
-.bot-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.bot-avatar svg {
-    width: 18px;
-    height: 18px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-.bot-bubble {
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
-    padding: 12px 16px;
-    border-radius: 12px;
-    border-top-left-radius: 4px;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    line-height: 1.5;
-    max-width: 260px;
-}
-
-.quick-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.quick-option {
-    padding: 8px 14px;
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    color: var(--text-secondary);
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.quick-option:hover {
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-}
-
-.chat-input-container {
-    display: flex;
-    gap: 10px;
-    padding: 16px 20px;
-    border-top: 1px solid var(--border-color);
-}
-
-.chat-input {
-    flex: 1;
-    padding: 12px 16px;
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s ease;
-}
-
-.chat-input:focus {
-    border-color: var(--accent-color);
-}
-
-.chat-input::placeholder {
-    color: var(--text-muted);
-}
-
-.chat-send {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease;
-}
-
-.chat-send:hover {
-    transform: scale(1.1);
-}
-
-.chat-send svg {
-    width: 18px;
-    height: 18px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-/* ========================================
-   RESPONSIVE STYLES
-   ======================================== */
-@media (max-width: 1024px) {
-    .footer-links {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 32px;
-    }
-}
-
 @media (max-width: 768px) {
+    /* Hide tour on mobile */
+    .tour-toggle,
+    .shepherd-element,
+    .imx-tour-welcome,
+    .imx-tour-tooltip {
+        display: none !important;
+    }
+    
+    /* Header mobile */
+    .nav-container {
+        padding: 0.75rem 1rem;
+    }
+    
+    /* Show hamburger */
+    .mobile-menu-toggle {
+        display: flex !important;
+    }
+    
+    .logo-tagline {
+        display: none;
+    }
+    
+    /* Hide desktop nav */
     .nav-links {
         display: none;
         position: fixed;
         top: 70px;
         left: 0;
         right: 0;
+        width: 100%;
         background: var(--card-bg);
         flex-direction: column;
-        padding: 20px;
-        border-bottom: 1px solid var(--border-color);
+        padding: 1rem;
+        border-top: 1px solid var(--border-color);
         box-shadow: var(--shadow-lg);
+        z-index: 9998;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
     }
     
-    .nav-links.open {
+    .nav-links.active {
         display: flex;
     }
     
-    .mobile-menu-toggle {
-        display: flex;
+    .nav-links > li {
+        width: 100%;
+        border-bottom: 1px solid var(--border-color);
     }
     
-    .has-dropdown .dropdown-menu {
+    .nav-links > li > a {
+        padding: 1rem;
+        justify-content: space-between;
+    }
+    
+    /* Mobile dropdowns */
+    .dropdown-menu {
         position: static;
         opacity: 1;
         visibility: visible;
         transform: none;
-        box-shadow: none;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
         border: none;
-        background: transparent;
-        padding-left: 16px;
-        display: none;
+        box-shadow: none;
+        background: var(--secondary-bg);
+        transition: max-height 0.3s ease;
     }
     
     .has-dropdown.open .dropdown-menu {
+        max-height: 500px;
+        padding: 0.5rem 0;
+    }
+    
+    .has-dropdown.open .dropdown-arrow {
+        transform: rotate(180deg);
+    }
+    
+    /* Mobile menu overlay */
+    .mobile-menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 9997;
+    }
+    
+    .mobile-menu-overlay.active {
         display: block;
     }
     
-    .dropdown-menu a {
-        padding: 8px 12px;
+    /* Mobile auth section */
+    .mobile-auth-section {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        background: var(--secondary-bg);
+        border-top: 1px solid var(--border-color);
+        z-index: 9999;
+        gap: 0.75rem;
     }
     
-    .page-title {
-        font-size: 1.8rem;
+    .mobile-auth-section.active {
+        display: flex;
     }
     
-    .content-card {
-        padding: 24px;
+    .mobile-auth-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.875rem;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
     }
     
-    .footer-links {
+    .mobile-auth-login {
+        background: var(--card-bg);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+    }
+    
+    .mobile-auth-signup {
+        background: var(--gradient-primary);
+        color: white;
+    }
+    
+    /* Body scroll lock */
+    body.menu-open {
+        overflow: hidden;
+    }
+    
+    /* Hide desktop nav buttons on mobile */
+    .nav-buttons .auth-btn {
+        display: none;
+    }
+    
+    /* Page hero mobile */
+    .page-hero {
+        padding: 2.5rem 1.25rem;
+    }
+    
+    .page-hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .page-hero p {
+        font-size: 1rem;
+    }
+    
+    /* Container mobile */
+    .container {
+        padding: 2rem 1.25rem;
+    }
+    
+    /* Cards mobile */
+    .cards-grid {
         grid-template-columns: 1fr;
-        gap: 24px;
+    }
+    
+    /* Footer mobile */
+    .footer {
+        padding: 2rem 1.25rem 1rem;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
         text-align: center;
     }
     
-    .footer-section ul {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px 16px;
-    }
-    
-    .footer-section li {
-        margin-bottom: 0;
-    }
-    
-    .chatbot-modal {
-        bottom: 0;
-        right: 0;
-        left: 0;
-        width: 100%;
-        max-width: 100%;
-        max-height: 70vh;
-        border-radius: 16px 16px 0 0;
-    }
-    
+    /* FABs mobile */
     .imx-speed-dial {
-        bottom: 90px;
+        bottom: 80px;
+        left: 16px;
+    }
+    
+    .feedback-fab {
+        bottom: 80px;
         right: 16px;
     }
     
-    .imx-speed-dial-toggle {
-        width: 44px;
-        height: 44px;
+    .chatbot-modal {
+        bottom: 140px;
+        right: 16px;
+        left: 16px;
+        width: auto;
+        max-height: 60vh;
     }
     
+    /* Cookie consent mobile */
     .cookie-consent {
         left: 16px;
-        bottom: 16px;
+        bottom: 80px;
+    }
+    
+    /* Decorative elements mobile */
+    .v3-paper-plane {
+        opacity: 0.08;
+        transform: scale(0.6);
+    }
+    
+    .v3-blob {
+        display: none;
     }
 }
 
 @media (max-width: 480px) {
-    .logo-tagline {
-        display: none;
+    .footer-grid {
+        grid-template-columns: 1fr;
     }
     
-    .nav-buttons {
-        gap: 8px;
-    }
-    
-    .theme-toggle {
-        width: 36px;
-        height: 36px;
+    .page-hero h1 {
+        font-size: 1.5rem;
     }
 }
 </style>
 </head>
-
 <body>
-<!-- Cookie Consent - Minimal Cookie Icon -->
-<div class="cookie-consent" id="cookieConsent">
-    <button class="cookie-icon-btn" onclick="toggleCookieExpand()" aria-label="Cookie preferences">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="10"/>
-            <circle cx="8" cy="9" r="1.5" fill="var(--primary-bg)"/>
-            <circle cx="15" cy="8" r="1" fill="var(--primary-bg)"/>
-            <circle cx="10" cy="14" r="1.2" fill="var(--primary-bg)"/>
-            <circle cx="16" cy="13" r="1" fill="var(--primary-bg)"/>
-            <circle cx="13" cy="17" r="0.8" fill="var(--primary-bg)"/>
+
+<!-- V3 Decorative Elements - Paper Planes & Blobs -->
+<div class="v3-decoration-container">
+    <!-- Paper Planes -->
+    <div class="v3-paper-plane v3-paper-plane-1">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
         </svg>
-    </button>
-    <div class="cookie-expanded">
-        <div class="cookie-expanded-header">
-            <svg viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10"/>
-                <circle cx="8" cy="9" r="1.5" fill="var(--primary-bg)"/>
-                <circle cx="15" cy="8" r="1" fill="var(--primary-bg)"/>
-                <circle cx="10" cy="14" r="1.2" fill="var(--primary-bg)"/>
-            </svg>
-            <span>Cookie Settings</span>
-        </div>
-        <p>We use cookies to enhance your learning experience, remember your preferences, and analyze site usage. By continuing, you agree to our Cookie Policy.</p>
-        <div class="cookie-expanded-buttons">
-            <button class="cookie-btn-accept" onclick="acceptCookies()">Accept All</button>
-            <button class="cookie-btn-settings" onclick="window.open('privacy-policy.html', '_blank')">Learn More</button>
-        </div>
     </div>
+    <div class="v3-paper-plane v3-paper-plane-2">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+    </div>
+    <div class="v3-paper-plane v3-paper-plane-3">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+    </div>
+    
+    <!-- Gradient Blobs -->
+    <div class="v3-blob v3-blob-1"></div>
+    <div class="v3-blob v3-blob-2"></div>
 </div>
 
-<!-- Professional Header & Navigation -->
+<!-- Header -->
 <header class="header">
     <nav class="nav-container">
         <a class="logo-container" href="index.html">
@@ -1208,36 +1511,45 @@ body.light-mode .icon-moon { display: block; }
             </div>
         </a>
         
-        <button class="mobile-menu-toggle" id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+        <button class="mobile-menu-toggle" id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu" type="button">
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
         </button>
         
+        <!-- Mobile Auth Section -->
+        <div class="mobile-auth-section" id="mobileAuthSection">
+            <a href="login.html" class="mobile-auth-btn mobile-auth-login" onclick="closeMobileMenu()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                Log In
+            </a>
+            <a href="signup.html" class="mobile-auth-btn mobile-auth-signup" onclick="closeMobileMenu()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                Sign Up
+            </a>
+        </div>
+        
         <ul class="nav-links" id="navLinks">
             <li><a href="index.html">Home</a></li>
             
             <!-- Learn Dropdown -->
-            <li class="has-dropdown" onclick="toggleDropdown(this)">
-                <a href="javascript:void(0)">Learn
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">Learn
                     <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="index.html#courses">Courses</a></li>
-                    <li><a href="index.html#labs">Labs</a></li>
-                    <li><a href="index.html#games">Games</a></li>
-                    <li><a href="premium.html">Premium</a></li>
-                    <li class="dropdown-divider"></li>
-                    <li><a href="handouts.html">Resources</a></li>
                     <li><a href="catalog.html">Catalog</a></li>
+                    <li><a href="handouts.html">Resources</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="premium.html">Premium</a></li>
                 </ul>
             </li>
             
             <!-- Services Dropdown -->
-            <li class="has-dropdown" onclick="toggleDropdown(this)">
-                <a href="javascript:void(0)">Services
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">Services
                     <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
@@ -1249,31 +1561,26 @@ body.light-mode .icon-moon { display: block; }
             </li>
             
             <!-- About Us Dropdown -->
-            <li class="has-dropdown" onclick="toggleDropdown(this)">
-                <a href="javascript:void(0)">About Us
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">About Us
                     <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="index.html#about">Our Team</a></li>
-                    <li><a href="index.html#wall-of-love">Testimonials</a></li>
-                    <li><a href="index.html#roadmap">Roadmap</a></li>
-                    <li class="dropdown-divider"></li>
-                    <li><a href="index.html#whats-new">What's New</a></li>
-                    <li><a href="index.html#support-us">Support Us</a></li>
-                    <li class="dropdown-divider"></li>
+                    <li><a href="about.html">About ImpactMojo</a></li>
                     <li><a href="contact.html">Contact</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="community/community.html">Community</a></li>
                 </ul>
             </li>
             
-            <!-- Blog Link -->
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href="blog.html">Blog <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Article.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
+            <li><a href="podcast.html">Podcast <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Album.svg" alt="" class="v3-inline-icon" loading="lazy"></a></li>
         </ul>
         
         <div class="nav-buttons">
-            <!-- Theme Toggle -->
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
                 <svg class="icon-sun" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="5"></circle>
                     <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -1293,209 +1600,164 @@ body.light-mode .icon-moon { display: block; }
     </nav>
 </header>
 
-<!-- Main Content Area -->
-<main class="main-content">
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+
+<!-- PAGE CONTENT - Replace [PAGE_CONTENT] with your page content -->
+<main class="page-content">
+    <section class="page-hero">
+        <h1>[PAGE_TITLE]</h1>
+        <p>[PAGE_DESCRIPTION]</p>
+    </section>
+    
     <div class="container">
-        
-        <!-- Back Link (optional - remove if not needed) -->
-        <a href="index.html" class="back-link">
-            <svg viewBox="0 0 24 24">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Back to Home
-        </a>
-
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">[PAGE_TITLE]</h1>
-            <p class="page-subtitle">[PAGE_SUBTITLE]</p>
-        </div>
-
-        <!-- Content Card(s) -->
-        <div class="content-card">
-            <h2>Section Heading</h2>
-            <p>[PAGE_CONTENT goes here. Replace this placeholder with your actual content.]</p>
-            
-            <h3>Subsection</h3>
-            <p>Additional content as needed.</p>
-            
-            <ul>
-                <li>List item one</li>
-                <li>List item two</li>
-                <li>List item three</li>
-            </ul>
-        </div>
-
-        <!-- Add more content cards as needed -->
-
+        [PAGE_CONTENT]
     </div>
 </main>
 
-<!-- Footer - Full 4-Section -->
-<footer class="footer" id="contact">
+<!-- Footer -->
+<footer class="footer">
     <div class="footer-content">
-        <p class="footer-tagline">
-            Made with ❤️ by <a href="https://www.pinpointventures.in" target="_blank">PinPoint Ventures</a>
-        </p>
-        <div class="footer-links">
+        <div class="footer-grid">
             <div class="footer-section">
-                <h4>About ImpactMojo</h4>
+                <h4>About</h4>
                 <ul>
-                    <li><a href="index.html#about">About Us</a></li>
-                    <li><a href="index.html#support-us">Support Us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="https://github.com/impactmojo" target="_blank">GitHub (Open Source)</a></li>
-                    <li>MIT License</li>
+                    <li><a href="about.html">About ImpactMojo</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="community/community.html">Community</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h4>Legal (IT Act Compliance)</h4>
+                <h4>Legal & IT Act</h4>
                 <ul>
-                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                    <li><a href="terms-of-service.html">Terms of Service</a></li>
-                    <li><a href="disclaimer.html">Disclaimer</a></li>
-                    <li><a href="grievance.html">Grievance Redressal</a></li>
-                    <li><a href="refund-policy.html">Refund Policy</a></li>
-                    <li><a href="data-protection.html">Data Protection</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="catalog.html">All Courses</a></li>
-                    <li><a href="index.html#labs">All Labs</a></li>
-                    <li><a href="index.html#games">All Games</a></li>
-                    <li><a href="premium.html">Premium Content</a></li>
-                    <li><a href="coaching.html">Coaching Services</a></li>
+                    <li><a href="catalog.html">Course Catalog</a></li>
+                    <li><a href="premium.html">Premium Access</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Resources</h4>
                 <ul>
-                    <li><a href="handouts.html">Educational Handouts</a></li>
-                    <li><a href="https://varna.substack.com" target="_blank">Research Newsletter</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="javascript:void(0)" onclick="openChatbot()">Feedback</a></li>
-                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="podcast.html">Podcast</a></li>
+                    <li><a href="handouts.html">Handouts</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 ImpactMojo. All content for educational purposes only.</p>
-            <p>
-                <strong>DISCLAIMER:</strong> ImpactMojo is an educational resource platform focused on learning, not credentialing. 
-                We do not provide certificates, degrees, or formal credentials. Content is for learning purposes only and does not constitute professional advice.
-            </p>
-            <p>
-                Released under <strong>MIT License</strong> - Free and Open Source Educational Platform | 
-                Supported by <a href="https://www.pinpointventures.in" target="_blank">PinPoint Ventures</a>
-            </p>
-            <p style="margin-top: 8px; font-size: 0.8rem; opacity: 0.8;">
-                Registered in India | Compliant with Information Technology Act, 2000 and IT Rules, 2011
-            </p>
+            <p class="footer-copyright">© 2024-2025 ImpactMojo. All rights reserved. Made with ♥ in India.</p>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/company/impactmojo" target="_blank" rel="noopener" title="LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://www.instagram.com/impactmojo" target="_blank" rel="noopener" title="Instagram">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+                <a href="https://twitter.com/impactmojo" target="_blank" rel="noopener" title="X (Twitter)">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
         </div>
     </div>
 </footer>
 
 <!-- Speed Dial Toolbox -->
 <div class="imx-speed-dial" id="imxSpeedDial">
-    <button class="imx-speed-dial-toggle" onclick="toggleSpeedDial()" title="Learning Tools" aria-label="Open learning tools menu">
-        <svg class="toggle-icon-tools" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-        </svg>
-        <svg class="toggle-icon-close" viewBox="0 0 24 24">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
+    <button class="imx-speed-dial-toggle" onclick="toggleSpeedDial()" title="Tools">
+        <svg viewBox="0 0 24 24" class="toggle-icon-tools">
+            <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
         </svg>
     </button>
-    
     <div class="imx-speed-dial-menu">
-        <!-- Bookmarks -->
         <div class="imx-speed-dial-item">
             <span class="imx-speed-dial-label">Bookmarks</span>
-            <button class="imx-speed-dial-btn" onclick="alert('Bookmarks feature - link to index.html for full functionality'); closeSpeedDial();" title="My Bookmarks" aria-label="Open bookmarks">
-                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+            <button class="imx-speed-dial-btn" title="Bookmarks">
+                <svg viewBox="0 0 24 24"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
             </button>
         </div>
-        
-        <!-- Notes -->
         <div class="imx-speed-dial-item">
             <span class="imx-speed-dial-label">Notes</span>
-            <button class="imx-speed-dial-btn" onclick="alert('Notes feature - link to index.html for full functionality'); closeSpeedDial();" title="Personal Notes" aria-label="Open personal notes">
-                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <button class="imx-speed-dial-btn" title="Notes">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </button>
         </div>
-        
-        <!-- Learning Streak -->
         <div class="imx-speed-dial-item">
-            <span class="imx-speed-dial-label">Streak</span>
-            <button class="imx-speed-dial-btn" onclick="alert('Streak feature - link to index.html for full functionality'); closeSpeedDial();" title="Learning Streak" aria-label="View learning streak">
-                <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+            <span class="imx-speed-dial-label">Progress</span>
+            <button class="imx-speed-dial-btn" title="Progress">
+                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </button>
         </div>
     </div>
 </div>
-<div class="imx-speed-dial-backdrop" onclick="closeSpeedDial()"></div>
 
-<!-- Mojini Chatbot Modal -->
+<!-- Mojini Chatbot FAB -->
+<button class="feedback-fab" id="mojini-chat-toggle" onclick="openChatbot()" title="Chat with Mojini">
+    <svg viewBox="0 0 24 24">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+</button>
+
+<!-- Chatbot Modal -->
 <div class="chatbot-modal" id="chatbotModal">
     <div class="chat-header">
         <h3>
-            <svg viewBox="0 0 24 24">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-            Mojini - ImpactMojo Assistant
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+            Mojini
         </h3>
-        <button class="chat-close" onclick="closeChatbot()">×</button>
+        <button class="chat-close" onclick="closeChatbot()">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
     </div>
     <div class="chat-messages" id="chatMessages">
         <div class="message bot-message">
             <div class="bot-avatar">
-                <svg viewBox="0 0 24 24">
-                    <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-                    <circle cx="12" cy="5" r="2"></circle>
-                    <path d="M12 7v4"></path>
-                </svg>
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
             </div>
-            <div>
-                <div class="bot-bubble">
-                    Hi! I'm Mojini, your ImpactMojo assistant. How can I help you today?
-                </div>
-                <div class="quick-options">
-                    <button class="quick-option" onclick="selectOption('courses')">Browse Courses</button>
-                    <button class="quick-option" onclick="selectOption('contact')">Contact Us</button>
-                    <button class="quick-option" onclick="selectOption('feedback')">Give Feedback</button>
-                </div>
-            </div>
+            <div class="bot-bubble">Hey there! 👋 I'm Mojini, your ImpactMojo assistant. How can I help you today?</div>
         </div>
     </div>
-    <div class="chat-input-container">
-        <input type="text" class="chat-input" id="chatInput" placeholder="Ask about courses, labs, workshops..." onkeypress="handleChatKeyPress(event)">
+    <div class="chat-options">
+        <button class="chat-option" onclick="selectOption('courses')">📚 Courses</button>
+        <button class="chat-option" onclick="selectOption('contact')">📧 Contact</button>
+        <button class="chat-option" onclick="selectOption('feedback')">💬 Feedback</button>
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
         <button class="chat-send" onclick="sendChatMessage()">
-            <svg viewBox="0 0 24 24">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
     </div>
 </div>
 
-<!-- Mojini FAB Button -->
-<div class="feedback-fab" id="mojini-chat-toggle" onclick="openChatbot()">
-    <svg viewBox="0 0 24 24">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-    </svg>
+<!-- Cookie Consent -->
+<div class="cookie-consent" id="cookieConsent">
+    <button class="cookie-icon-btn" onclick="toggleCookieExpand()" title="Cookie Settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="9" r="1.5"/><circle cx="15" cy="11" r="1.5"/><circle cx="10" cy="15" r="1"/><circle cx="14" cy="7" r="1"/></svg>
+    </button>
+    <div class="cookie-expanded">
+        <div class="cookie-expanded-header">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="9" r="1.5"/><circle cx="15" cy="11" r="1.5"/><circle cx="10" cy="15" r="1"/><circle cx="14" cy="7" r="1"/></svg>
+            Cookie Settings
+        </div>
+        <p>We use cookies to improve your experience and analyze site usage. By continuing, you agree to our use of cookies.</p>
+        <div class="cookie-expanded-buttons">
+            <button class="cookie-btn-accept" onclick="acceptCookies()">Accept All</button>
+            <button class="cookie-btn-settings" onclick="window.location.href='privacy.html'">Learn More</button>
+        </div>
+    </div>
 </div>
 
-<!-- ============================================
-     USERWAY ACCESSIBILITY WIDGET
-     Account: EksmhlPg9k (ImpactMojo's account)
-     IMPORTANT: Use this EXACT code on ALL pages
-     ============================================ -->
+<!-- UserWay Accessibility Widget -->
 <script>
-    (function(d){
+    (function(d) {
       var s = d.createElement("script");
       s.setAttribute("data-position", 2);
       s.setAttribute("data-widget_layout", "full");
@@ -1505,13 +1767,9 @@ body.light-mode .icon-moon { display: block; }
     })(document);
 </script>
 
-<!-- ============================================
-     JAVASCRIPT - All Page Functions
-     ============================================ -->
+<!-- JavaScript -->
 <script>
-// ============================================
-// THEME MANAGEMENT
-// ============================================
+// Theme Management
 function toggleTheme() {
     document.body.classList.toggle('light-mode');
     const isLight = document.body.classList.contains('light-mode');
@@ -1527,33 +1785,14 @@ function initTheme() {
     }
 }
 
-// ============================================
-// MOBILE MENU
-// ============================================
-function toggleMobileMenu() {
-    const navLinks = document.getElementById('navLinks');
-    navLinks.classList.toggle('open');
-}
-
-function toggleDropdown(element) {
-    // Only for mobile
-    if (window.innerWidth <= 768) {
-        element.classList.toggle('open');
-    }
-}
-
-// ============================================
-// COOKIE CONSENT
-// ============================================
+// Cookie Consent
 function toggleCookieExpand() {
-    const cookieEl = document.getElementById('cookieConsent');
-    cookieEl.classList.toggle('expanded');
+    document.getElementById('cookieConsent').classList.toggle('expanded');
 }
 
 function acceptCookies() {
     localStorage.setItem('cookieConsent', 'true');
-    const cookieEl = document.getElementById('cookieConsent');
-    cookieEl.classList.add('hidden');
+    document.getElementById('cookieConsent').classList.add('hidden');
 }
 
 function initCookieConsent() {
@@ -1564,22 +1803,12 @@ function initCookieConsent() {
     }
 }
 
-// ============================================
-// SPEED DIAL
-// ============================================
+// Speed Dial
 function toggleSpeedDial() {
-    const speedDial = document.getElementById('imxSpeedDial');
-    speedDial.classList.toggle('open');
+    document.getElementById('imxSpeedDial').classList.toggle('open');
 }
 
-function closeSpeedDial() {
-    const speedDial = document.getElementById('imxSpeedDial');
-    speedDial.classList.remove('open');
-}
-
-// ============================================
-// MOJINI CHATBOT
-// ============================================
+// Chatbot
 function openChatbot() {
     document.getElementById('chatbotModal').classList.add('open');
 }
@@ -1606,13 +1835,11 @@ function selectOption(option) {
             response = 'How can I help you today?';
     }
     
-    // Add user message
     const userMsg = document.createElement('div');
     userMsg.className = 'message';
     userMsg.innerHTML = `<div class="bot-bubble" style="margin-left: auto; background: var(--gradient-primary); color: white; border-radius: 12px; border-top-right-radius: 4px;">${option.charAt(0).toUpperCase() + option.slice(1)}</div>`;
     messages.appendChild(userMsg);
     
-    // Add bot response
     setTimeout(() => {
         const botMsg = document.createElement('div');
         botMsg.className = 'message bot-message';
@@ -1641,7 +1868,6 @@ function sendChatMessage() {
     
     const messages = document.getElementById('chatMessages');
     
-    // Add user message
     const userMsg = document.createElement('div');
     userMsg.className = 'message';
     userMsg.innerHTML = `<div class="bot-bubble" style="margin-left: auto; background: var(--gradient-primary); color: white; border-radius: 12px; border-top-right-radius: 4px;">${message}</div>`;
@@ -1649,7 +1875,6 @@ function sendChatMessage() {
     
     input.value = '';
     
-    // Simple FAQ responses
     setTimeout(() => {
         let response = "Thanks for your message! For detailed assistance, please email us at <a href='mailto:hello@impactmojo.in'>hello@impactmojo.in</a> or visit our <a href='faq.html'>FAQ page</a>.";
         
@@ -1677,9 +1902,7 @@ function sendChatMessage() {
     }, 800);
 }
 
-// ============================================
-// INITIALIZATION
-// ============================================
+// Initialization
 document.addEventListener('DOMContentLoaded', function() {
     initTheme();
     initCookieConsent();
@@ -1691,6 +1914,13 @@ document.addEventListener('click', function(e) {
         document.querySelectorAll('.has-dropdown.open').forEach(el => {
             el.classList.remove('open');
         });
+    }
+});
+
+// Close speed dial when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.imx-speed-dial')) {
+        document.getElementById('imxSpeedDial').classList.remove('open');
     }
 });
 </script>
