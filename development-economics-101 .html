@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>
+<title>Development Economics 101 | ImpactMojo</title>
+<link href="assets/images/favicon.png" rel="icon" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary-bg:#0F172A;--secondary-bg:#1E293B;--tertiary-bg:#334155;--accent-color:#0EA5E9;--accent-hover:#0284C7;--accent-secondary:#6366F1;--text-primary:#F8FAFC;--text-secondary:#94A3B8;--text-muted:#64748B;--border-color:rgba(148,163,184,0.1);--card-bg:rgba(30,41,59,0.8);--gradient-primary:linear-gradient(135deg,#0EA5E9 0%,#6366F1 100%);--shadow-md:0 4px 16px rgba(0,0,0,0.4);--font-body:'Inter',sans-serif;--font-heading:'Poppins',sans-serif}
+.light-mode{--primary-bg:#F8FAFC;--secondary-bg:#FFFFFF;--tertiary-bg:#F1F5F9;--text-primary:#0F172A;--text-secondary:#475569;--text-muted:#64748B;--border-color:rgba(15,23,42,0.1);--card-bg:rgba(255,255,255,0.9);--shadow-md:0 4px 16px rgba(0,0,0,0.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-body);background:var(--primary-bg);color:var(--text-primary);min-height:100vh;position:relative;overflow-x:hidden}
+
+/* Paper Planes Animation */
+.paper-planes-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.paper-plane{position:absolute;opacity:0.06;animation:flyPlane linear infinite}
+.light-mode .paper-plane{opacity:0.04}
+.paper-plane svg{width:40px;height:40px;fill:none;stroke:var(--accent-color);stroke-width:1}
+.paper-plane:nth-child(1){top:10%;left:-50px;animation-duration:25s;animation-delay:0s}
+.paper-plane:nth-child(2){top:30%;left:-50px;animation-duration:30s;animation-delay:5s}
+.paper-plane:nth-child(3){top:50%;left:-50px;animation-duration:28s;animation-delay:10s}
+.paper-plane:nth-child(4){top:70%;left:-50px;animation-duration:32s;animation-delay:15s}
+.paper-plane:nth-child(5){top:85%;left:-50px;animation-duration:26s;animation-delay:8s}
+.paper-plane:nth-child(6){top:20%;left:-50px;animation-duration:35s;animation-delay:20s}
+@keyframes flyPlane{0%{transform:translateX(0) translateY(0) rotate(-15deg)}25%{transform:translateX(30vw) translateY(-30px) rotate(-10deg)}50%{transform:translateX(60vw) translateY(20px) rotate(-20deg)}75%{transform:translateX(90vw) translateY(-10px) rotate(-15deg)}100%{transform:translateX(110vw) translateY(0) rotate(-15deg)}}
+
+.course-header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--secondary-bg);border-bottom:1px solid var(--border-color);padding:0.75rem 1.5rem;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(10px)}
+.course-header .logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+.course-header .logo img{height:32px}
+.course-header .logo span{font-family:var(--font-heading);font-weight:700;font-size:1.1rem;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-controls{display:flex;align-items:center;gap:1rem}
+.progress-indicator{display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:var(--text-secondary)}
+.progress-bar{width:120px;height:6px;background:var(--tertiary-bg);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gradient-primary);border-radius:3px;transition:width 0.3s ease}
+.theme-toggle{background:var(--tertiary-bg);border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-primary);transition:all 0.3s ease}
+.theme-toggle:hover{background:var(--accent-color)}
+.slides-wrapper{padding-top:60px;min-height:100vh;position:relative;z-index:1}
+.slide{display:none;min-height:calc(100vh - 120px);padding:2rem;animation:fadeIn 0.4s ease}
+.slide.active{display:flex;flex-direction:column}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.slide-title{justify-content:center;align-items:center;text-align:center;background:var(--gradient-primary);color:white}
+.slide-title h1{font-family:var(--font-heading);font-size:3rem;font-weight:800;margin-bottom:1rem}
+.slide-title .subtitle{font-size:1.4rem;opacity:0.95}
+.slide-title .module-badge{display:inline-block;background:rgba(255,255,255,0.2);padding:0.5rem 1.5rem;border-radius:2rem;font-weight:600;margin-bottom:1.5rem}
+.slide-content{max-width:1200px;margin:0 auto;width:100%}
+.slide-content h2{font-family:var(--font-heading);font-size:2rem;margin-bottom:1.5rem;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.slide-content h3{font-size:1.3rem;color:var(--accent-color);margin:1.5rem 0 1rem}
+.slide-content p{font-size:1.1rem;line-height:1.8;color:var(--text-secondary);margin-bottom:1rem}
+.content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:1.5rem}
+.content-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:1.5rem;transition:all 0.3s ease}
+.content-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--accent-color)}
+.content-card .card-icon{width:48px;height:48px;background:var(--gradient-primary);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;color:white}
+.content-card .card-icon svg{width:24px;height:24px;stroke:white}
+.content-card h4{font-size:1.1rem;margin-bottom:0.75rem;color:var(--text-primary)}
+.content-card p,.content-card ul{font-size:0.95rem;color:var(--text-secondary);line-height:1.6}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin:2rem 0}
+.stat-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:1.5rem;text-align:center}
+.stat-card .stat-number{font-family:var(--font-heading);font-size:2.5rem;font-weight:800;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-card .stat-label{font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem}
+.quote-box{background:var(--card-bg);border-left:4px solid var(--accent-color);border-radius:0 16px 16px 0;padding:2rem;margin:2rem 0}
+.quote-box blockquote{font-size:1.2rem;font-style:italic;color:var(--text-primary);line-height:1.8}
+.quote-box .quote-author{margin-top:1rem;font-size:0.95rem;color:var(--text-secondary)}
+.timeline{position:relative;padding-left:2rem;margin:2rem 0}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gradient-primary);border-radius:2px}
+.timeline-item{position:relative;margin-bottom:2rem;padding-left:1.5rem}
+.timeline-item::before{content:'';position:absolute;left:-2rem;top:0.5rem;width:12px;height:12px;background:var(--accent-color);border-radius:50%;border:3px solid var(--primary-bg)}
+.timeline-item .timeline-date{font-size:0.85rem;color:var(--accent-color);font-weight:600;margin-bottom:0.5rem}
+.timeline-item h4{font-size:1.1rem;color:var(--text-primary);margin-bottom:0.5rem}
+.timeline-item p{font-size:0.95rem;color:var(--text-secondary)}
+.comparison-table{width:100%;border-collapse:collapse;margin:1.5rem 0;background:var(--card-bg);border-radius:12px;overflow:hidden}
+.comparison-table th,.comparison-table td{padding:1rem 1.25rem;text-align:left;border-bottom:1px solid var(--border-color)}
+.comparison-table th{background:var(--tertiary-bg);font-weight:600;color:var(--text-primary)}
+.comparison-table td{color:var(--text-secondary)}
+.comparison-table tr:last-child td{border-bottom:none}
+.cta-section{background:var(--card-bg);border:1px solid var(--border-color);border-radius:20px;padding:2rem;margin:2rem 0;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.cta-section.coaching{background:linear-gradient(135deg,rgba(14,165,233,0.1) 0%,rgba(99,102,241,0.1) 100%);border-color:rgba(14,165,233,0.3)}
+.cta-images{display:flex;flex-shrink:0}
+.cta-images img{width:64px;height:64px;border-radius:50%;border:3px solid var(--accent-color);object-fit:cover}
+.cta-images img:nth-child(2){margin-left:-16px;border-color:var(--accent-secondary)}
+.cta-content h4{font-size:1.2rem;color:var(--text-primary);margin-bottom:0.5rem}
+.cta-content p{font-size:0.95rem;color:var(--text-secondary);margin-bottom:1rem}
+.cta-btn{display:inline-flex;align-items:center;gap:0.5rem;background:var(--gradient-primary);color:white;padding:0.75rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:600;transition:all 0.3s ease}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.source-citation{background:var(--tertiary-bg);border-radius:8px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--text-muted);margin-top:1.5rem}
+.source-citation a{color:var(--accent-color);text-decoration:none}
+.cross-reference{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.3);padding:0.5rem 1rem;border-radius:8px;color:var(--accent-color);text-decoration:none;font-size:0.9rem;margin:0.5rem 0.5rem 0.5rem 0;transition:all 0.3s ease}
+.cross-reference:hover{background:rgba(14,165,233,0.2);transform:translateY(-2px)}
+.cross-reference svg{width:16px;height:16px}
+.module-marker{display:inline-block;background:var(--gradient-primary);color:white;padding:0.25rem 0.75rem;border-radius:4px;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:1rem}
+.slide-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--secondary-bg);border-top:1px solid var(--border-color);padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(10px)}
+.nav-btn{display:flex;align-items:center;gap:0.5rem;background:var(--tertiary-bg);border:1px solid var(--border-color);color:var(--text-primary);padding:0.75rem 1.25rem;border-radius:8px;cursor:pointer;font-size:0.95rem;font-weight:500;transition:all 0.3s ease}
+.nav-btn:hover{background:var(--accent-color);border-color:var(--accent-color)}
+.nav-btn:disabled{opacity:0.5;cursor:not-allowed}
+.nav-center{display:flex;align-items:center;gap:1rem}
+.module-select{background:var(--tertiary-bg);border:1px solid var(--border-color);color:var(--text-primary);padding:0.5rem 1rem;border-radius:6px;font-size:0.9rem;cursor:pointer}
+.content-list{list-style:none;margin:1rem 0}
+.content-list li{position:relative;padding:0.75rem 0 0.75rem 2rem;color:var(--text-secondary);line-height:1.6;border-bottom:1px solid var(--border-color)}
+.content-list li:last-child{border-bottom:none}
+.content-list li::before{content:'→';position:absolute;left:0;color:var(--accent-color);font-weight:bold}
+.two-column{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:1.5rem 0}
+.key-concept{background:linear-gradient(135deg,rgba(14,165,233,0.1) 0%,rgba(99,102,241,0.1) 100%);border:1px solid rgba(14,165,233,0.3);border-radius:12px;padding:1.5rem;margin:1.5rem 0}
+.key-concept h4{color:var(--accent-color);margin-bottom:0.75rem;font-size:1rem;display:flex;align-items:center;gap:0.5rem}
+.key-concept h4 svg{width:18px;height:18px}
+.resource-links{display:flex;flex-wrap:wrap;gap:1rem;margin:1.5rem 0}
+.resource-link{display:flex;align-items:center;gap:0.5rem;background:var(--card-bg);border:1px solid var(--border-color);padding:0.75rem 1.25rem;border-radius:8px;color:var(--text-primary);text-decoration:none;font-size:0.9rem;transition:all 0.3s ease}
+.resource-link:hover{border-color:var(--accent-color);transform:translateY(-2px)}
+.resource-link svg{width:18px;height:18px;stroke:var(--accent-color)}
+@media(max-width:768px){.slide-title h1{font-size:2rem}.slide-title .subtitle{font-size:1.1rem}.slide{padding:1rem}.two-column{grid-template-columns:1fr}.cta-section{flex-direction:column;text-align:center}.nav-btn span{display:none}.paper-plane svg{width:25px;height:25px}}
+</style>
+</head>
+<body>
+
+<!-- Paper Planes Background Animation -->
+<div class="paper-planes-container">
+<div class="paper-plane"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+<div class="paper-plane"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+<div class="paper-plane"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+<div class="paper-plane"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+<div class="paper-plane"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+<div class="paper-plane"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+</div>
+
+<header class="course-header">
+<a href="index.html" class="logo"><img src="assets/images/ImpactMojo Logo.png" alt="ImpactMojo"><span>ImpactMojo</span></a>
+<div class="header-controls">
+<div class="progress-indicator"><span id="slideCounter">1 / 112</span><div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:1%"></div></div></div>
+<button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+</div>
+</header>
+<div class="slides-wrapper">
+
+<div class="slide slide-title" data-module="1">
+<div class="module-badge">Development Economics 101</div>
+<h1>Development Economics 101</h1>
+<p class="subtitle">A South Asian Practitioner's Perspective</p>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>What You'll Learn</h2>
+<p>This comprehensive course covers fundamental theories, empirical evidence, and practical applications of development economics with a focus on South Asian contexts.</p>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h4>Theoretical Foundations</h4><p>Classical and modern theories of economic development, growth models, and poverty dynamics.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h4>Regional Focus</h4><p>Deep analysis of development patterns across India, Bangladesh, Pakistan, Sri Lanka, and Nepal.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><h4>Policy Analysis</h4><p>Evidence-based policy frameworks for poverty reduction, growth promotion, and institutional reform.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Tools and frameworks for M&E practitioners, program designers, and development professionals.</p></div>
+</div>
+<div class="source-citation">Course content based on World Bank World Development Reports, UNDP Human Development Reports, and academic literature including Debraj Ray's Development Economics.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>What is Development Economics?</h2>
+<p>Development economics studies the economic transformation of low-income countries. It examines how economies grow, why some countries remain poor, and what policies can accelerate development.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Definition</h4><p>"Development economics is the study of economic aspects of the development process in low-income countries." — Debraj Ray, Development Economics (1998)</p></div>
+<div class="two-column">
+<div><h3>Core Questions</h3><ul class="content-list"><li>Why are some countries rich and others poor?</li><li>What causes poverty to persist across generations?</li><li>How do markets function in developing economies?</li><li>What role should government play in development?</li></ul></div>
+<div><h3>Key Distinctions</h3><ul class="content-list"><li><strong>Growth</strong>: Increase in GDP/income levels</li><li><strong>Development</strong>: Broader welfare improvements</li><li><strong>Structural Change</strong>: Sectoral transformation</li><li><strong>Capability Expansion</strong>: Human freedoms</li></ul></div>
+</div>
+<div class="source-citation">Ray, D. (1998). Development Economics. Princeton University Press.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>Evolution of Development Thinking</h2>
+<div class="timeline">
+<div class="timeline-item"><div class="timeline-date">1950s-1960s</div><h4>Modernization Era</h4><p>Focus on capital accumulation, industrialization, and "big push" strategies. Key thinkers: Rostow, Lewis, Rosenstein-Rodan.</p></div>
+<div class="timeline-item"><div class="timeline-date">1970s</div><h4>Basic Needs & Redistribution</h4><p>Shift toward poverty reduction, employment generation, and meeting basic needs. ILO employment missions.</p></div>
+<div class="timeline-item"><div class="timeline-date">1980s-1990s</div><h4>Structural Adjustment</h4><p>Washington Consensus: liberalization, privatization, fiscal discipline. IMF/World Bank conditionalities.</p></div>
+<div class="timeline-item"><div class="timeline-date">2000s-Present</div><h4>Capabilities & Evidence</h4><p>Human development approach, RCTs, behavioral economics, and institutional factors. MDGs and SDGs.</p></div>
+</div>
+<div class="source-citation">Todaro, M. & Smith, S. (2020). Economic Development. 13th Edition. Pearson.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>Measuring Development</h2>
+<p>Development is multidimensional. No single metric captures all aspects of human welfare and economic progress.</p>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h4>GDP per Capita</h4><p>Total economic output divided by population. Simple but misses distribution and non-market activities.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><h4>Human Development Index</h4><p>Composite of life expectancy, education, and income. Captures capabilities but misses inequality.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><h4>Multidimensional Poverty Index</h4><p>Measures simultaneous deprivations in health, education, and living standards across 10 indicators.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Sustainable Development Goals</h4><p>17 goals and 169 targets covering poverty, health, education, climate, peace, and institutions.</p></div>
+</div>
+<a href="catalog.html#labs" class="cross-reference"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v5l4 9H5l4-9V3z"/><line x1="9" y1="3" x2="15" y2="3"/></svg> Try: MLE Design Lab</a>
+<div class="source-citation">UNDP Human Development Report 2023-24.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>Human Development Index Components</h2>
+<p>The HDI combines three dimensions of human development into a single index ranging from 0 to 1.</p>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-number">0.739</div><div class="stat-label">World Average HDI (2023)</div></div>
+<div class="stat-card"><div class="stat-number">0.644</div><div class="stat-label">South Asia Average HDI</div></div>
+<div class="stat-card"><div class="stat-number">0.633</div><div class="stat-label">India HDI (Rank: 134)</div></div>
+<div class="stat-card"><div class="stat-number">1.1B</div><div class="stat-label">People in Multidimensional Poverty</div></div>
+</div>
+<table class="comparison-table">
+<thead><tr><th>Dimension</th><th>Indicator</th><th>Min</th><th>Max</th></tr></thead>
+<tbody>
+<tr><td>Health</td><td>Life expectancy at birth</td><td>20 years</td><td>85 years</td></tr>
+<tr><td>Education</td><td>Expected + Mean years of schooling</td><td>0 years</td><td>18/15 years</td></tr>
+<tr><td>Living Standard</td><td>GNI per capita (PPP $)</td><td>$100</td><td>$75,000</td></tr>
+</tbody>
+</table>
+<div class="source-citation">UNDP Human Development Report 2023-24. hdr.undp.org</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>The Capabilities Approach</h2>
+<div class="quote-box"><blockquote>"Development consists of the removal of various types of unfreedoms that leave people with little choice and little opportunity of exercising their reasoned agency."</blockquote><div class="quote-author">— Amartya Sen, Development as Freedom (1999)</div></div>
+<div class="two-column">
+<div><h3>Core Concepts</h3><ul class="content-list"><li><strong>Functionings</strong>: What people are able to do and be (being nourished, educated, mobile)</li><li><strong>Capabilities</strong>: Freedoms to achieve functionings (the opportunity set)</li><li><strong>Agency</strong>: Ability to pursue goals one values</li><li><strong>Conversion factors</strong>: Personal, social, environmental</li></ul></div>
+<div><h3>Policy Implications</h3><ul class="content-list"><li>Focus on expanding choices, not just income</li><li>Address structural barriers to opportunity</li><li>Recognize heterogeneity in needs</li><li>Evaluate by what people can do, not just what they have</li></ul></div>
+</div>
+<div class="source-citation">Sen, A. (1999). Development as Freedom. Oxford University Press.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>Why Markets Fail in Development</h2>
+<p>Development economics recognizes that markets in developing countries often fail to achieve efficient or equitable outcomes due to structural features.</p>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div><h4>Information Asymmetry</h4><p>Unequal information leads to adverse selection in credit markets and moral hazard in insurance.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div><h4>Missing Markets</h4><p>Insurance, credit, and futures markets often absent or incomplete in rural areas.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="2"/><line x1="14" y1="2" x2="14" y2="22"/></svg></div><h4>Weak Institutions</h4><p>Poor contract enforcement, insecure property rights, and limited rule of law.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h4>Coordination Failures</h4><p>Individual rational decisions lead to collectively suboptimal outcomes (poverty traps).</p></div>
+</div>
+<a href="catalog.html#games" class="cross-reference"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="17" cy="10" r="1"/><circle cx="15" cy="14" r="1"/></svg> Play: Cooperation Paradox Game</a>
+<div class="source-citation">Ray, D. (1998). Development Economics. Chapter 5: Economic Inequality.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>The Role of the State</h2>
+<p>The appropriate role of government in development has been debated throughout the field's history, from dirigisme to neoliberalism to modern pragmatism.</p>
+<div class="two-column">
+<div><h3>State Functions</h3><ul class="content-list"><li><strong>Public Goods</strong>: Infrastructure, defense, basic research</li><li><strong>Regulation</strong>: Environmental, financial, consumer protection</li><li><strong>Redistribution</strong>: Social protection, progressive taxation</li><li><strong>Coordination</strong>: Industrial policy, standards, investment climate</li></ul></div>
+<div><h3>State Failures</h3><ul class="content-list"><li><strong>Capture</strong>: Policies serve elite/special interests</li><li><strong>Information</strong>: States lack market information</li><li><strong>Incentives</strong>: Bureaucrats may not pursue public good</li><li><strong>Implementation</strong>: Policy-implementation gap</li></ul></div>
+</div>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Good Enough Governance</h4><p>Focus on essential institutional functions rather than first-best ideals. Prioritize reforms with highest development payoff given political constraints. — Merilee Grindle (2004)</p></div>
+<div class="source-citation">Grindle, M. (2004). Good Enough Governance. Governance, 17(4), 525-548.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>Structural Transformation</h2>
+<p>Development involves systematic shifts in the composition of economic activity from agriculture to industry to services, accompanied by urbanization and demographic transition.</p>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-number">42%</div><div class="stat-label">India: Agriculture Employment</div></div>
+<div class="stat-card"><div class="stat-number">17%</div><div class="stat-label">India: Agriculture GDP Share</div></div>
+<div class="stat-card"><div class="stat-number">55%</div><div class="stat-label">South Asia: Services GDP Share</div></div>
+<div class="stat-card"><div class="stat-number">35%</div><div class="stat-label">South Asia: Urban Population</div></div>
+</div>
+<table class="comparison-table">
+<thead><tr><th>Dimension</th><th>Traditional Economy</th><th>Modern Economy</th></tr></thead>
+<tbody>
+<tr><td>Dominant Sector</td><td>Agriculture</td><td>Services/Industry</td></tr>
+<tr><td>Location</td><td>Rural</td><td>Urban</td></tr>
+<tr><td>Fertility Rate</td><td>High (5+)</td><td>Low (2 or below)</td></tr>
+<tr><td>Technology</td><td>Traditional/Labor-intensive</td><td>Modern/Capital-intensive</td></tr>
+</tbody>
+</table>
+<div class="source-citation">World Bank World Development Indicators 2024.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>The Lewis Dual-Economy Model</h2>
+<p>W. Arthur Lewis's 1954 model remains foundational for understanding structural transformation in developing economies with labor surplus.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Core Mechanism</h4><p>In economies with surplus labor in traditional agriculture (marginal product near zero), the modern sector can expand by drawing workers at a constant wage until the surplus is absorbed—the "Lewis turning point."</p></div>
+<div class="two-column">
+<div><h3>Traditional Sector</h3><ul class="content-list"><li>Subsistence agriculture dominates</li><li>Labor paid average product (shared output)</li><li>Zero or near-zero marginal product</li><li>Disguised unemployment prevalent</li></ul></div>
+<div><h3>Modern Sector</h3><ul class="content-list"><li>Industry and urban activities</li><li>Higher productivity and wages</li><li>Labor paid marginal product</li><li>Profits reinvested → capital accumulation</li></ul></div>
+</div>
+<div class="source-citation">Lewis, W.A. (1954). Economic Development with Unlimited Supplies of Labour. Manchester School.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>Development Traps</h2>
+<p>Poverty and underdevelopment can persist due to self-reinforcing mechanisms that trap countries or individuals in low-level equilibria.</p>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h4>Poverty Trap</h4><p>Low income → low savings → low investment → low productivity → low income. Threshold effects prevent escape.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><h4>Nutrition-Based Trap</h4><p>Low income → poor nutrition → low work capacity → low earnings. Efficiency wages literature.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Human Capital Trap</h4><p>Poor health/education → low productivity → underinvestment in children's human capital.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="2"/><line x1="14" y1="2" x2="14" y2="22"/></svg></div><h4>Institutional Trap</h4><p>Weak institutions → rent-seeking → elite resistance to reform → persistent weak institutions.</p></div>
+</div>
+<a href="catalog.html#games" class="cross-reference"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="17" cy="10" r="1"/><circle cx="15" cy="14" r="1"/></svg> Play: Risk & Reward Game</a>
+<div class="source-citation">Bowles, S., Durlauf, S., & Hoff, K. (2006). Poverty Traps. Princeton University Press.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>Geography and Development</h2>
+<p>Geographic factors influence development through disease burden, agricultural productivity, transport costs, and climate—but are not deterministic.</p>
+<div class="two-column">
+<div><h3>Geographic Factors</h3><ul class="content-list"><li><strong>Tropics</strong>: Higher disease burden (malaria), soil degradation</li><li><strong>Landlocked</strong>: Higher transport costs, trade barriers</li><li><strong>Coastal Access</strong>: Trade advantages, fishing resources</li><li><strong>Resources</strong>: Natural resource curse can undermine institutions</li></ul></div>
+<div><h3>South Asian Geography</h3><ul class="content-list"><li><strong>Monsoon</strong>: Agricultural dependence on rainfall variability</li><li><strong>Himalayas</strong>: Major rivers feed agriculture (Ganges, Indus)</li><li><strong>Coastline</strong>: Cyclone vulnerability (Bangladesh, Odisha)</li><li><strong>Nepal/Bhutan</strong>: Landlocked development challenges</li></ul></div>
+</div>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Geography is Not Destiny</h4><p>Institutions, policy choices, and technology can overcome geographic constraints. Singapore, Botswana, and South Korea show geographic disadvantages can be surmounted.</p></div>
+<div class="source-citation">Sachs, J. (2001). Tropical Underdevelopment. NBER Working Paper 8119.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1</span>
+<h2>Colonial Legacy in South Asia</h2>
+<p>Understanding South Asian development requires grappling with institutional, economic, and social legacies of colonialism that persist today.</p>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="2"/><line x1="14" y1="2" x2="14" y2="22"/></svg></div><h4>Institutional Inheritance</h4><p>Administrative systems (ICS → IAS), legal frameworks, and bureaucratic structures shaped by colonial extraction needs.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22l10-10"/><path d="M16 8l-4 4"/><path d="M12 12l4-4"/><path d="M20 4l-4 4"/><circle cx="18" cy="6" r="2"/><circle cx="14" cy="10" r="2"/><circle cx="10" cy="14" r="2"/></svg></div><h4>Land Systems</h4><p>Permanent Settlement (zamindari), Ryotwari created distinct tenure patterns with lasting inequality effects.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20V8l-6 4V8l-6 4V4H2v16z"/><path d="M6 12v4"/><path d="M10 12v4"/><path d="M14 12v4"/><path d="M18 12v4"/></svg></div><h4>Deindustrialization</h4><p>Destruction of indigenous textile manufacturing and conversion to raw material exports.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></div><h4>Partition Effects</h4><p>1947 partition created economic disruption, refugee crises, and ongoing India-Pakistan tensions.</p></div>
+</div>
+<div class="source-citation">Banerjee, A. & Iyer, L. (2005). History, Institutions, and Economic Performance. American Economic Review.</div>
+</div>
+</div>
+<div class="slide" data-module="1">
+<div class="slide-content">
+<span class="module-marker">Module 1 Summary</span>
+<h2>Module 1 Summary: Foundations</h2>
+<div class="content-grid">
+<div class="content-card"><h4>Key Concepts</h4><ul class="content-list"><li>Development vs. Growth distinction</li><li>Capabilities approach (Sen)</li><li>Multiple development measures (HDI, MPI)</li><li>Market failures in development</li><li>Structural transformation</li><li>Development traps</li></ul></div>
+<div class="content-card"><h4>Key Thinkers</h4><ul class="content-list"><li><strong>Amartya Sen</strong>: Capabilities, freedoms, famine</li><li><strong>W. Arthur Lewis</strong>: Dual economy, surplus labor</li><li><strong>Debraj Ray</strong>: Modern development economics</li><li><strong>Daron Acemoglu</strong>: Institutions and growth</li></ul></div>
+</div>
+<div class="cta-section coaching"><div class="cta-images"><img src="assets/images/team/varna.jpg" alt="Varna" onerror="this.style.display='none'"><img src="assets/images/team/vandana.jpg" alt="Vandana" onerror="this.style.display='none'"></div><div class="cta-content"><h4>Want Expert Guidance?</h4><p>Our coaching and workshops help you apply these concepts in practice.</p><a href="coaching.html" class="cta-btn">Explore Coaching →</a></div></div>
+<div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a><a href="premium.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Premium Tools</a></div>
+</div>
+</div>
+<div class="slide slide-title" data-module="2">
+<div class="module-badge">Module 2 of 8</div>
+<h1>Poverty & Inequality</h1>
+<p class="subtitle">Measurement, Causes, and Reduction Strategies</p>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Defining Poverty</h2>
+<p>This section explores defining poverty in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding defining poverty is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Global Poverty Numbers</h2>
+<p>This section explores global poverty numbers in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding global poverty numbers is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Poverty in South Asia</h2>
+<p>This section explores poverty in south asia in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding poverty in south asia is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Multidimensional Poverty Index</h2>
+<p>This section explores multidimensional poverty index in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding multidimensional poverty index is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Causes of Poverty</h2>
+<p>This section explores causes of poverty in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding causes of poverty is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Poverty Traps: Theory</h2>
+<p>This section explores poverty traps: theory in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding poverty traps: theory is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Understanding Inequality</h2>
+<p>This section explores understanding inequality in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding understanding inequality is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Inequality and Growth</h2>
+<p>This section explores inequality and growth in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding inequality and growth is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Caste and Poverty</h2>
+<p>This section explores caste and poverty in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding caste and poverty is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Gender and Poverty</h2>
+<p>This section explores gender and poverty in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding gender and poverty is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Social Protection Systems</h2>
+<p>This section explores social protection systems in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding social protection systems is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>Targeting the Poor</h2>
+<p>This section explores targeting the poor in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding targeting the poor is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2</span>
+<h2>The Graduation Approach</h2>
+<p>This section explores the graduation approach in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding the graduation approach is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="2">
+<div class="slide-content">
+<span class="module-marker">Module 2 Summary</span>
+<h2>Module 2 Summary</h2>
+<p>Review the key concepts from this module and prepare for the next.</p>
+<div class="cta-section coaching"><div class="cta-images"><img src="assets/images/team/varna.jpg" alt="Varna" onerror="this.style.display='none'"><img src="assets/images/team/vandana.jpg" alt="Vandana" onerror="this.style.display='none'"></div><div class="cta-content"><h4>Want Expert Guidance?</h4><p>Our coaching and workshops help you apply these concepts in practice.</p><a href="coaching.html" class="cta-btn">Explore Coaching →</a></div></div>
+<div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a><a href="premium.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Premium Tools</a></div>
+</div>
+</div>
+<div class="slide slide-title" data-module="3">
+<div class="module-badge">Module 3 of 8</div>
+<h1>Growth Theories</h1>
+<p class="subtitle">Classical, Neoclassical, and Endogenous Models</p>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Why Growth Matters</h2>
+<p>This section explores why growth matters in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding why growth matters is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Harrod-Domar Model</h2>
+<p>This section explores harrod-domar model in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding harrod-domar model is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Solow-Swan Model</h2>
+<p>This section explores solow-swan model in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding solow-swan model is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Endogenous Growth Theory</h2>
+<p>This section explores endogenous growth theory in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding endogenous growth theory is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Institutions and Growth</h2>
+<p>This section explores institutions and growth in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding institutions and growth is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>East Asian Miracle</h2>
+<p>This section explores east asian miracle in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding east asian miracle is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>India Growth Trajectory</h2>
+<p>This section explores india growth trajectory in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding india growth trajectory is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Trade and Development</h2>
+<p>This section explores trade and development in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding trade and development is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Foreign Aid Debate</h2>
+<p>This section explores foreign aid debate in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding foreign aid debate is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Human Capital</h2>
+<p>This section explores human capital in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding human capital is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Demographic Dividend</h2>
+<p>This section explores demographic dividend in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding demographic dividend is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Industrial Policy</h2>
+<p>This section explores industrial policy in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding industrial policy is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3</span>
+<h2>Green Growth</h2>
+<p>This section explores green growth in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding green growth is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="3">
+<div class="slide-content">
+<span class="module-marker">Module 3 Summary</span>
+<h2>Module 3 Summary</h2>
+<p>Review the key concepts from this module and prepare for the next.</p>
+<div class="cta-section coaching"><div class="cta-images"><img src="assets/images/team/varna.jpg" alt="Varna" onerror="this.style.display='none'"><img src="assets/images/team/vandana.jpg" alt="Vandana" onerror="this.style.display='none'"></div><div class="cta-content"><h4>Want Expert Guidance?</h4><p>Our coaching and workshops help you apply these concepts in practice.</p><a href="coaching.html" class="cta-btn">Explore Coaching →</a></div></div>
+<div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a><a href="premium.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Premium Tools</a></div>
+</div>
+</div>
+<div class="slide slide-title" data-module="4">
+<div class="module-badge">Module 4 of 8</div>
+<h1>South Asian Context</h1>
+<p class="subtitle">Regional Development Patterns</p>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>India Development Model</h2>
+<p>This section explores india development model in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding india development model is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>Bangladesh Success</h2>
+<p>This section explores bangladesh success in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding bangladesh success is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>Pakistan Challenges</h2>
+<p>This section explores pakistan challenges in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding pakistan challenges is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>Sri Lanka Crisis</h2>
+<p>This section explores sri lanka crisis in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding sri lanka crisis is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>Nepal Development</h2>
+<p>This section explores nepal development in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding nepal development is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>Regional Comparison</h2>
+<p>This section explores regional comparison in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding regional comparison is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>Common Challenges</h2>
+<p>This section explores common challenges in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding common challenges is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>Regional Integration</h2>
+<p>This section explores regional integration in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding regional integration is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>Diaspora and Remittances</h2>
+<p>This section explores diaspora and remittances in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding diaspora and remittances is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>Urban Transition</h2>
+<p>This section explores urban transition in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding urban transition is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4</span>
+<h2>Digital Development</h2>
+<p>This section explores digital development in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding digital development is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="4">
+<div class="slide-content">
+<span class="module-marker">Module 4 Summary</span>
+<h2>Module 4 Summary</h2>
+<p>Review the key concepts from this module and prepare for the next.</p>
+<div class="cta-section coaching"><div class="cta-images"><img src="assets/images/team/varna.jpg" alt="Varna" onerror="this.style.display='none'"><img src="assets/images/team/vandana.jpg" alt="Vandana" onerror="this.style.display='none'"></div><div class="cta-content"><h4>Want Expert Guidance?</h4><p>Our coaching and workshops help you apply these concepts in practice.</p><a href="coaching.html" class="cta-btn">Explore Coaching →</a></div></div>
+<div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a><a href="premium.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Premium Tools</a></div>
+</div>
+</div>
+<div class="slide slide-title" data-module="5">
+<div class="module-badge">Module 5 of 8</div>
+<h1>Sectoral Analysis</h1>
+<p class="subtitle">Agriculture, Industry, Services</p>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Agriculture and Rural</h2>
+<p>This section explores agriculture and rural in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding agriculture and rural is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Land and Tenancy</h2>
+<p>This section explores land and tenancy in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding land and tenancy is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Agricultural Markets</h2>
+<p>This section explores agricultural markets in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding agricultural markets is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Rural Credit</h2>
+<p>This section explores rural credit in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding rural credit is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Manufacturing</h2>
+<p>This section explores manufacturing in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding manufacturing is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Informal Economy</h2>
+<p>This section explores informal economy in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding informal economy is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Services Sector</h2>
+<p>This section explores services sector in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding services sector is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Labor Markets</h2>
+<p>This section explores labor markets in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding labor markets is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Migration Patterns</h2>
+<p>This section explores migration patterns in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding migration patterns is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>MSMEs</h2>
+<p>This section explores msmes in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding msmes is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Infrastructure</h2>
+<p>This section explores infrastructure in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding infrastructure is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5</span>
+<h2>Financial Sector</h2>
+<p>This section explores financial sector in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding financial sector is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="5">
+<div class="slide-content">
+<span class="module-marker">Module 5 Summary</span>
+<h2>Module 5 Summary</h2>
+<p>Review the key concepts from this module and prepare for the next.</p>
+<div class="cta-section coaching"><div class="cta-images"><img src="assets/images/team/varna.jpg" alt="Varna" onerror="this.style.display='none'"><img src="assets/images/team/vandana.jpg" alt="Vandana" onerror="this.style.display='none'"></div><div class="cta-content"><h4>Want Expert Guidance?</h4><p>Our coaching and workshops help you apply these concepts in practice.</p><a href="coaching.html" class="cta-btn">Explore Coaching →</a></div></div>
+<div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a><a href="premium.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Premium Tools</a></div>
+</div>
+</div>
+<div class="slide slide-title" data-module="6">
+<div class="module-badge">Module 6 of 8</div>
+<h1>Policy & Institutions</h1>
+<p class="subtitle">Governance and Reform</p>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Good Governance</h2>
+<p>This section explores good governance in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding good governance is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Corruption</h2>
+<p>This section explores corruption in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding corruption is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Decentralization</h2>
+<p>This section explores decentralization in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding decentralization is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Public Finance</h2>
+<p>This section explores public finance in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding public finance is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Social Accountability</h2>
+<p>This section explores social accountability in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding social accountability is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Implementation Gap</h2>
+<p>This section explores implementation gap in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding implementation gap is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Evidence-Based Policy</h2>
+<p>This section explores evidence-based policy in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding evidence-based policy is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Political Economy</h2>
+<p>This section explores political economy in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding political economy is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Reform Strategies</h2>
+<p>This section explores reform strategies in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding reform strategies is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Role of NGOs</h2>
+<p>This section explores role of ngos in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding role of ngos is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Donor Coordination</h2>
+<p>This section explores donor coordination in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding donor coordination is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6</span>
+<h2>Adaptive Management</h2>
+<p>This section explores adaptive management in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding adaptive management is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="6">
+<div class="slide-content">
+<span class="module-marker">Module 6 Summary</span>
+<h2>Module 6 Summary</h2>
+<p>Review the key concepts from this module and prepare for the next.</p>
+<div class="cta-section coaching"><div class="cta-images"><img src="assets/images/team/varna.jpg" alt="Varna" onerror="this.style.display='none'"><img src="assets/images/team/vandana.jpg" alt="Vandana" onerror="this.style.display='none'"></div><div class="cta-content"><h4>Want Expert Guidance?</h4><p>Our coaching and workshops help you apply these concepts in practice.</p><a href="coaching.html" class="cta-btn">Explore Coaching →</a></div></div>
+<div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a><a href="premium.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Premium Tools</a></div>
+</div>
+</div>
+<div class="slide slide-title" data-module="7">
+<div class="module-badge">Module 7 of 8</div>
+<h1>Future Scenarios</h1>
+<p class="subtitle">Emerging Challenges</p>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>Digital Transformation</h2>
+<p>This section explores digital transformation in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding digital transformation is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>Climate Adaptation</h2>
+<p>This section explores climate adaptation in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding climate adaptation is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>Urbanization</h2>
+<p>This section explores urbanization in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding urbanization is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>Future of Work</h2>
+<p>This section explores future of work in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding future of work is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>Health Systems</h2>
+<p>This section explores health systems in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding health systems is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>Education Reform</h2>
+<p>This section explores education reform in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding education reform is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>Financial Inclusion 2.0</h2>
+<p>This section explores financial inclusion 2.0 in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding financial inclusion 2.0 is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>Energy Transition</h2>
+<p>This section explores energy transition in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding energy transition is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>Demographic Shifts</h2>
+<p>This section explores demographic shifts in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding demographic shifts is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>Geopolitical Change</h2>
+<p>This section explores geopolitical change in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding geopolitical change is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7</span>
+<h2>SDG Progress</h2>
+<p>This section explores sdg progress in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding sdg progress is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="7">
+<div class="slide-content">
+<span class="module-marker">Module 7 Summary</span>
+<h2>Module 7 Summary</h2>
+<p>Review the key concepts from this module and prepare for the next.</p>
+<div class="cta-section coaching"><div class="cta-images"><img src="assets/images/team/varna.jpg" alt="Varna" onerror="this.style.display='none'"><img src="assets/images/team/vandana.jpg" alt="Vandana" onerror="this.style.display='none'"></div><div class="cta-content"><h4>Want Expert Guidance?</h4><p>Our coaching and workshops help you apply these concepts in practice.</p><a href="coaching.html" class="cta-btn">Explore Coaching →</a></div></div>
+<div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a><a href="premium.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Premium Tools</a></div>
+</div>
+</div>
+<div class="slide slide-title" data-module="8">
+<div class="module-badge">Module 8 of 8</div>
+<h1>Summary & Resources</h1>
+<p class="subtitle">Course Conclusion</p>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Course Overview</h2>
+<p>This section explores course overview in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding course overview is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Key Frameworks</h2>
+<p>This section explores key frameworks in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding key frameworks is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Recommended Readings</h2>
+<p>This section explores recommended readings in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding recommended readings is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>ImpactMojo Resources</h2>
+<p>This section explores impactmojo resources in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding impactmojo resources is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Thank You</h2>
+<p>This section explores thank you in the context of development economics and South Asian practice.</p>
+<div class="key-concept"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Key Insight</h4><p>Understanding thank you is essential for effective development program design, implementation, and evaluation.</p></div>
+<div class="content-grid">
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h4>Theoretical Framework</h4><p>Academic research provides the foundation for understanding this topic in development contexts.</p></div>
+<div class="content-card"><div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Practical Application</h4><p>Practitioners can apply these concepts in program design, monitoring, and evaluation.</p></div>
+</div>
+<div class="source-citation">Based on World Bank, UNDP, and academic development economics literature.</div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Additional Resources</h2>
+<p>Explore more at ImpactMojo.</p><div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a></div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Additional Resources</h2>
+<p>Explore more at ImpactMojo.</p><div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a></div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Additional Resources</h2>
+<p>Explore more at ImpactMojo.</p><div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a></div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Additional Resources</h2>
+<p>Explore more at ImpactMojo.</p><div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a></div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Additional Resources</h2>
+<p>Explore more at ImpactMojo.</p><div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a></div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Additional Resources</h2>
+<p>Explore more at ImpactMojo.</p><div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a></div>
+</div>
+</div>
+<div class="slide" data-module="8">
+<div class="slide-content">
+<span class="module-marker">Module 8</span>
+<h2>Additional Resources</h2>
+<p>Explore more at ImpactMojo.</p><div class="resource-links"><a href="catalog.html" class="resource-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Catalog</a></div>
+</div>
+</div>
+</div>
+</div>
+
+<nav class="slide-nav">
+<button class="nav-btn" onclick="prevSlide()" id="prevBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg><span>Previous</span></button>
+<div class="nav-center">
+<select class="module-select" id="moduleSelect" onchange="goToModule(this.value)">
+<option value="1">Module 1: Foundations</option>
+<option value="2">Module 2: Poverty & Inequality</option>
+<option value="3">Module 3: Growth Theories</option>
+<option value="4">Module 4: South Asian Context</option>
+<option value="5">Module 5: Sectoral Analysis</option>
+<option value="6">Module 6: Policy & Institutions</option>
+<option value="7">Module 7: Future Scenarios</option>
+<option value="8">Module 8: Summary</option>
+</select>
+</div>
+<button class="nav-btn" onclick="nextSlide()" id="nextBtn"><span>Next</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg></button>
+</nav>
+
+<script>(function(d){var s=d.createElement("script");s.setAttribute("data-position",2);s.setAttribute("data-account","EksmhlPg9k");s.setAttribute("src","https://cdn.userway.org/widget.js");(d.body||d.head).appendChild(s);})(document);</script>
+
+<script>
+const moduleSlides={1:1,2:16,3:31,4:46,5:59,6:72,7:85,8:97};
+const totalSlides=112;
+let currentSlide=1;
+function toggleTheme(){document.body.classList.toggle('light-mode');localStorage.setItem('theme',document.body.classList.contains('light-mode')?'light':'dark');}
+function initTheme(){if(localStorage.getItem('theme')==='light')document.body.classList.add('light-mode');}
+function showSlide(n){
+const slides=document.querySelectorAll('.slide');
+if(n<1)n=1;if(n>totalSlides)n=totalSlides;
+currentSlide=n;
+slides.forEach((slide,index)=>{slide.classList.remove('active');if(index+1===currentSlide)slide.classList.add('active');});
+document.getElementById('slideCounter').textContent=currentSlide+' / '+totalSlides;
+document.getElementById('progressFill').style.width=(currentSlide/totalSlides)*100+'%';
+let currentModule=1;
+for(let m=8;m>=1;m--){if(currentSlide>=moduleSlides[m]){currentModule=m;break;}}
+document.getElementById('moduleSelect').value=currentModule;
+document.getElementById('prevBtn').disabled=currentSlide===1;
+document.getElementById('nextBtn').disabled=currentSlide===totalSlides;
+localStorage.setItem('devEcon101Progress',currentSlide);
+window.scrollTo(0,0);
+}
+function nextSlide(){showSlide(currentSlide+1);}
+function prevSlide(){showSlide(currentSlide-1);}
+function goToModule(moduleNum){showSlide(moduleSlides[moduleNum]);}
+document.addEventListener('keydown',function(e){
+if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextSlide();}
+else if(e.key==='ArrowLeft'){e.preventDefault();prevSlide();}
+});
+document.addEventListener('DOMContentLoaded',function(){
+initTheme();
+const saved=localStorage.getItem('devEcon101Progress');
+showSlide(saved?parseInt(saved):1);
+});
+</script>
+</body>
+</html>
