@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development Economics Lexicon | ImpactMojo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0EA5E9;
+            --primary-dark: #0284C7;
+            --primary-light: #E0F2FE;
+            --secondary: #6366F1;
+            --accent: #10B981;
+            --warning: #F59E0B;
+            --bg: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text: #1E293B;
+            --text-secondary: #64748B;
+            --border: #E2E8F0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 200%;
+            background: rgba(255,255,255,0.05);
+            transform: rotate(15deg);
+        }
+
+        .header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Search and Filter */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Terms Grid */
+        .terms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.25rem;
+        }
+
+        /* Term Card */
+        .term-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .term-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .term-card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .term-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .term-original {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 0.25rem;
+        }
+
+        .term-category {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .term-card-body {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .term-definition {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .term-example {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding: 0.75rem 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .term-example strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .term-sources {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .term-sources a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .term-sources a:hover {
+            text-decoration: underline;
+        }
+
+        /* Category Colors */
+        .cat-growth { background: #DBEAFE; color: #1D4ED8; }
+        .cat-poverty { background: #FCE7F3; color: #BE185D; }
+        .cat-institutions { background: #E0E7FF; color: #4338CA; }
+        .cat-markets { background: #D1FAE5; color: #047857; }
+        .cat-trade { background: #FEF3C7; color: #B45309; }
+        .cat-finance { background: #CCFBF1; color: #0F766E; }
+        .cat-human { background: #FEE2E2; color: #B91C1C; }
+        .cat-methods { background: #F3E8FF; color: #7C3AED; }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .no-results svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .terms-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-bar {
+                gap: 1rem;
+            }
+            
+            .filter-btn {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to Course
+        </a>
+        <h1>Development Economics Lexicon</h1>
+        <p>Essential concepts for understanding global development</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stat">
+            <div class="stat-value" id="totalTerms">60+</div>
+            <div class="stat-label">Terms</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="visibleTerms">60+</div>
+            <div class="stat-label">Showing</div>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="controls">
+            <div class="search-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search terms, definitions, or examples...">
+            </div>
+            <div class="category-filters" id="categoryFilters">
+                <button class="filter-btn active" data-category="all">All</button>
+            </div>
+        </div>
+
+        <div class="terms-grid" id="termsGrid"></div>
+        
+        <div class="no-results" id="noResults" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+            </svg>
+            <p>No terms found matching your search.</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Part of <a href="index.html">Understanding Development: Theory, Evidence & Policy</a></p>
+        <p style="margin-top: 0.5rem;">© 2025 <a href="https://www.impactmojo.in">ImpactMojo</a> | CC-BY-4.0</p>
+    </footer>
+
+    <script>
+    const LEXICON = [
+        // Growth & Development Theory
+        {
+            term: "Economic Growth",
+            original: null,
+            category: "Growth & Development Theory",
+            categoryClass: "cat-growth",
+            definition: "The increase in the inflation-adjusted market value of goods and services produced by an economy over time, typically measured as the percentage change in real GDP.",
+            example: "India's economy grew at 7.2% annually between 2014-2019, making it one of the fastest-growing major economies.",
+            sources: "Mankiw (2020); World Bank national accounts data"
+        },
+        {
+            term: "Economic Development",
+            original: null,
+            category: "Growth & Development Theory",
+            categoryClass: "cat-growth",
+            definition: "A broader concept than growth, encompassing improvements in living standards, reduction of poverty and inequality, and structural transformation of the economy.",
+            example: "South Korea's transformation from an agrarian economy in 1960 to a high-tech industrial economy by 2000 exemplifies development beyond mere growth.",
+            sources: "Sen (1999) Development as Freedom; Todaro & Smith (2020)"
+        },
+        {
+            term: "Solow Growth Model",
+            original: null,
+            category: "Growth & Development Theory",
+            categoryClass: "cat-growth",
+            definition: "A neoclassical model showing that long-run economic growth depends on technological progress, with capital accumulation subject to diminishing returns.",
+            example: "The model explains why simply adding more machines (capital) eventually yields smaller growth gains without technological innovation.",
+            sources: "Solow (1956) 'A Contribution to the Theory of Economic Growth'"
+        },
+        {
+            term: "Convergence",
+            original: null,
+            category: "Growth & Development Theory",
+            categoryClass: "cat-growth",
+            definition: "The hypothesis that poorer economies' per capita incomes will tend to grow faster than richer economies, eventually 'catching up' to similar income levels.",
+            example: "Conditional convergence: Countries with similar institutions and policies tend to converge, explaining why East Asian tigers caught up while others didn't.",
+            sources: "Barro & Sala-i-Martin (1992); Mankiw, Romer & Weil (1992)"
+        },
+        {
+            term: "Structural Transformation",
+            original: null,
+            category: "Growth & Development Theory",
+            categoryClass: "cat-growth",
+            definition: "The reallocation of economic activity from agriculture to manufacturing and services that accompanies development, involving changes in output, employment, and urbanization.",
+            example: "China's share of agricultural employment fell from 70% in 1980 to under 25% by 2020 as workers moved to manufacturing and services.",
+            sources: "Kuznets (1966); McMillan & Rodrik (2011)"
+        },
+        {
+            term: "Poverty Trap",
+            original: null,
+            category: "Growth & Development Theory",
+            categoryClass: "cat-growth",
+            definition: "A self-reinforcing mechanism where poverty persists because the poor lack the resources to escape it—low income leads to low savings, low investment, and continued low income.",
+            example: "A farmer too poor to afford fertilizer produces less, earns less, and remains unable to afford fertilizer—a classic poverty trap.",
+            sources: "Sachs (2005) The End of Poverty; Banerjee & Duflo (2011)"
+        },
+        {
+            term: "Big Push",
+            original: null,
+            category: "Growth & Development Theory",
+            categoryClass: "cat-growth",
+            definition: "Theory that developing economies need large-scale coordinated investments across multiple sectors simultaneously to escape poverty traps and achieve self-sustaining growth.",
+            example: "Rosenstein-Rodan argued that a shoe factory alone would fail, but coordinated industrialization creates mutual demand and succeeds.",
+            sources: "Rosenstein-Rodan (1943); Murphy, Shleifer & Vishny (1989)"
+        },
+
+        // Poverty & Inequality
+        {
+            term: "Absolute Poverty",
+            original: null,
+            category: "Poverty & Inequality",
+            categoryClass: "cat-poverty",
+            definition: "A condition where individuals lack the income to meet basic needs for survival, typically measured against a fixed poverty line (e.g., $2.15/day in 2017 PPP).",
+            example: "In 2019, approximately 659 million people lived below the $2.15/day international poverty line.",
+            sources: "World Bank PovCalNet; Ravallion (2016)"
+        },
+        {
+            term: "Relative Poverty",
+            original: null,
+            category: "Poverty & Inequality",
+            categoryClass: "cat-poverty",
+            definition: "A measure of poverty relative to the economic standards of the surrounding society, often defined as income below 50% or 60% of median national income.",
+            example: "A family in the UK earning £15,000 may not be absolutely poor but could be relatively poor compared to median UK income.",
+            sources: "Townsend (1979); OECD poverty measures"
+        },
+        {
+            term: "Multidimensional Poverty Index (MPI)",
+            original: null,
+            category: "Poverty & Inequality",
+            categoryClass: "cat-poverty",
+            definition: "A measure that captures overlapping deprivations across health, education, and living standards, recognizing poverty as more than just income insufficiency.",
+            example: "A household deprived in nutrition, school attendance, and sanitation would be multidimensionally poor even if above the income poverty line.",
+            sources: "Alkire & Foster (2011); UNDP Human Development Reports"
+        },
+        {
+            term: "Gini Coefficient",
+            original: null,
+            category: "Poverty & Inequality",
+            categoryClass: "cat-poverty",
+            definition: "A measure of inequality ranging from 0 (perfect equality) to 1 (perfect inequality), calculated from the Lorenz curve of income or wealth distribution.",
+            example: "South Africa has one of the world's highest Gini coefficients (~0.63), while Nordic countries have among the lowest (~0.25).",
+            sources: "Gini (1912); World Bank Development Indicators"
+        },
+        {
+            term: "Lorenz Curve",
+            original: null,
+            category: "Poverty & Inequality",
+            categoryClass: "cat-poverty",
+            definition: "A graphical representation of inequality showing the cumulative share of income received by cumulative percentages of the population, ordered from poorest to richest.",
+            example: "If the bottom 50% of the population receives only 20% of total income, the Lorenz curve bows below the 45-degree line of perfect equality.",
+            sources: "Lorenz (1905); Atkinson (1970)"
+        },
+        {
+            term: "Headcount Ratio",
+            original: null,
+            category: "Poverty & Inequality",
+            categoryClass: "cat-poverty",
+            definition: "The proportion of a population living below the poverty line—simple but insensitive to how far below the line the poor actually are.",
+            example: "India's headcount ratio at $2.15/day fell from 45% in 1993 to under 10% by 2019.",
+            sources: "Foster, Greer & Thorbecke (1984); World Bank"
+        },
+        {
+            term: "Poverty Gap",
+            original: null,
+            category: "Poverty & Inequality",
+            categoryClass: "cat-poverty",
+            definition: "The average shortfall of the poor from the poverty line, expressed as a percentage of the poverty line—captures the depth of poverty, not just incidence.",
+            example: "A poverty gap of 10% means that, on average, poor households need 10% more income to reach the poverty line.",
+            sources: "Foster, Greer & Thorbecke (1984)"
+        },
+        {
+            term: "Kuznets Curve",
+            original: null,
+            category: "Poverty & Inequality",
+            categoryClass: "cat-poverty",
+            definition: "The hypothesis that inequality first rises and then falls as an economy develops, creating an inverted-U relationship between income and inequality.",
+            example: "Early industrialization may increase inequality as some workers move to higher-paying urban jobs; later, broader education and redistribution reduce it.",
+            sources: "Kuznets (1955); Piketty (2014) critiques"
+        },
+
+        // Institutions & Governance
+        {
+            term: "Institutions",
+            original: null,
+            category: "Institutions & Governance",
+            categoryClass: "cat-institutions",
+            definition: "The formal and informal rules that structure human interaction—including laws, property rights, social norms, and enforcement mechanisms.",
+            example: "Secure property rights encourage investment because owners can expect to benefit from improvements they make.",
+            sources: "North (1990) Institutions, Institutional Change; Acemoglu & Robinson (2012)"
+        },
+        {
+            term: "Extractive Institutions",
+            original: null,
+            category: "Institutions & Governance",
+            categoryClass: "cat-institutions",
+            definition: "Economic and political institutions designed to extract resources from the many for the benefit of the few, concentrating power and discouraging broad-based investment.",
+            example: "Colonial systems that forced labor extraction and prevented local entrepreneurship exemplify extractive institutions.",
+            sources: "Acemoglu & Robinson (2012) Why Nations Fail"
+        },
+        {
+            term: "Inclusive Institutions",
+            original: null,
+            category: "Institutions & Governance",
+            categoryClass: "cat-institutions",
+            definition: "Institutions that allow and encourage broad participation in economic activities, protect property rights, and provide a level playing field.",
+            example: "Patent systems that protect inventors while eventually making knowledge public balance innovation incentives with broad access.",
+            sources: "Acemoglu & Robinson (2012) Why Nations Fail"
+        },
+        {
+            term: "Rule of Law",
+            original: null,
+            category: "Institutions & Governance",
+            categoryClass: "cat-institutions",
+            definition: "The principle that all persons, institutions, and entities are accountable to laws that are publicly promulgated, equally enforced, and independently adjudicated.",
+            example: "Businesses invest more in countries where contracts are enforced consistently and disputes can be resolved through impartial courts.",
+            sources: "World Justice Project; World Bank Governance Indicators"
+        },
+        {
+            term: "Property Rights",
+            original: null,
+            category: "Institutions & Governance",
+            categoryClass: "cat-institutions",
+            definition: "Legally and socially recognized claims to use, benefit from, and transfer assets—fundamental for investment incentives and market transactions.",
+            example: "De Soto argues that the poor hold trillions in 'dead capital'—assets without clear title that cannot be used as collateral.",
+            sources: "De Soto (2000) The Mystery of Capital; Besley & Ghatak (2010)"
+        },
+        {
+            term: "Corruption",
+            original: null,
+            category: "Institutions & Governance",
+            categoryClass: "cat-institutions",
+            definition: "The abuse of public power for private gain, including bribery, embezzlement, and nepotism—imposes costs through misallocation of resources and reduced trust.",
+            example: "Studies estimate corruption costs developing countries 2-5% of GDP annually through inefficient spending and reduced investment.",
+            sources: "Transparency International; Mauro (1995)"
+        },
+        {
+            term: "Resource Curse",
+            original: "Dutch Disease",
+            category: "Institutions & Governance",
+            categoryClass: "cat-institutions",
+            definition: "The paradox that countries rich in natural resources often experience slower growth and worse governance than resource-poor countries.",
+            example: "Nigeria earned over $400 billion in oil revenues since 1970 but saw little poverty reduction, while resource-poor South Korea industrialized rapidly.",
+            sources: "Sachs & Warner (1995); Ross (2012)"
+        },
+        {
+            term: "Good Governance",
+            original: null,
+            category: "Institutions & Governance",
+            categoryClass: "cat-institutions",
+            definition: "The exercise of authority through political and institutional processes that are transparent, accountable, participatory, and responsive to citizens' needs.",
+            example: "Participatory budgeting in Porto Alegre, Brazil allowed citizens direct input into municipal spending priorities.",
+            sources: "World Bank (1992); Kaufmann, Kraay & Mastruzzi (2010)"
+        },
+
+        // Market Failures & Interventions
+        {
+            term: "Market Failure",
+            original: null,
+            category: "Market Failures & Interventions",
+            categoryClass: "cat-markets",
+            definition: "Situations where free markets fail to allocate resources efficiently, creating rationales for government intervention—including externalities, public goods, and information asymmetries.",
+            example: "Pollution is a negative externality: factories don't bear the full cost of emissions, so they pollute more than is socially optimal.",
+            sources: "Stiglitz (2000) Economics of the Public Sector"
+        },
+        {
+            term: "Public Goods",
+            original: null,
+            category: "Market Failures & Interventions",
+            categoryClass: "cat-markets",
+            definition: "Goods that are non-excludable (cannot prevent access) and non-rivalrous (one person's use doesn't reduce availability)—typically underprovided by markets.",
+            example: "National defense, street lighting, and basic research are classic public goods that require government provision or subsidy.",
+            sources: "Samuelson (1954); Stiglitz (2000)"
+        },
+        {
+            term: "Externality",
+            original: null,
+            category: "Market Failures & Interventions",
+            categoryClass: "cat-markets",
+            definition: "A cost or benefit that affects parties not directly involved in a transaction—markets fail to account for these spillovers without intervention.",
+            example: "Education generates positive externalities: an educated workforce benefits employers and society beyond the individual student.",
+            sources: "Pigou (1920); Coase (1960)"
+        },
+        {
+            term: "Information Asymmetry",
+            original: null,
+            category: "Market Failures & Interventions",
+            categoryClass: "cat-markets",
+            definition: "A situation where one party to a transaction has more or better information than another, leading to market inefficiencies like adverse selection or moral hazard.",
+            example: "Used car sellers know more about vehicle quality than buyers, potentially leading to a 'market for lemons' where good cars leave the market.",
+            sources: "Akerlof (1970) 'The Market for Lemons'; Stiglitz & Weiss (1981)"
+        },
+        {
+            term: "Moral Hazard",
+            original: null,
+            category: "Market Failures & Interventions",
+            categoryClass: "cat-markets",
+            definition: "The tendency of a party insulated from risk to behave differently than they would if fully exposed to the risk.",
+            example: "Banks deemed 'too big to fail' may take excessive risks knowing governments will bail them out.",
+            sources: "Arrow (1963); Holmström (1979)"
+        },
+        {
+            term: "Adverse Selection",
+            original: null,
+            category: "Market Failures & Interventions",
+            categoryClass: "cat-markets",
+            definition: "A market outcome where information asymmetry causes higher-risk individuals to be more likely to participate, potentially unraveling the market.",
+            example: "Health insurance markets may attract sicker people if healthy people opt out, driving up premiums and worsening the pool.",
+            sources: "Akerlof (1970); Rothschild & Stiglitz (1976)"
+        },
+        {
+            term: "Conditional Cash Transfer (CCT)",
+            original: null,
+            category: "Market Failures & Interventions",
+            categoryClass: "cat-markets",
+            definition: "Social assistance programs that provide cash to poor families contingent on specific behaviors like children's school attendance or health check-ups.",
+            example: "Mexico's Progresa/Oportunidades program increased school enrollment by 3-6 percentage points and improved child health outcomes.",
+            sources: "Fiszbein & Schady (2009); Gertler (2004)"
+        },
+        {
+            term: "Targeting",
+            original: null,
+            category: "Market Failures & Interventions",
+            categoryClass: "cat-markets",
+            definition: "Methods for directing program benefits to intended recipients—including means-testing, proxy means testing, geographic targeting, and self-selection.",
+            example: "India's BPL (Below Poverty Line) cards use proxy means testing based on housing, assets, and occupation to identify poor households.",
+            sources: "Coady, Grosh & Hoddinott (2004)"
+        },
+
+        // Trade & Globalization
+        {
+            term: "Comparative Advantage",
+            original: null,
+            category: "Trade & Globalization",
+            categoryClass: "cat-trade",
+            definition: "The ability to produce a good at a lower opportunity cost than trading partners—the basis for mutually beneficial trade even when one country is more productive at everything.",
+            example: "Bangladesh may be less productive than Germany in both textiles and cars, but its comparative advantage in textiles makes specialization beneficial.",
+            sources: "Ricardo (1817); Krugman & Obstfeld (2018)"
+        },
+        {
+            term: "Terms of Trade",
+            original: null,
+            category: "Trade & Globalization",
+            categoryClass: "cat-trade",
+            definition: "The ratio of export prices to import prices—improvements mean a country can buy more imports for a given amount of exports.",
+            example: "Commodity exporters face volatile terms of trade; coffee price drops mean more bags must be sold to buy the same tractor.",
+            sources: "Prebisch (1950); Singer (1950)"
+        },
+        {
+            term: "Import Substitution Industrialization (ISI)",
+            original: null,
+            category: "Trade & Globalization",
+            categoryClass: "cat-trade",
+            definition: "A development strategy using tariffs and quotas to protect domestic industries from imports, aiming to build local manufacturing capacity.",
+            example: "Latin American countries pursued ISI from the 1950s-1980s with mixed results—some industries developed but often remained inefficient.",
+            sources: "Prebisch (1950); Bruton (1998)"
+        },
+        {
+            term: "Export-Oriented Industrialization",
+            original: null,
+            category: "Trade & Globalization",
+            categoryClass: "cat-trade",
+            definition: "A development strategy emphasizing production for export markets, often with government support for export industries and openness to foreign investment.",
+            example: "South Korea, Taiwan, and Singapore achieved rapid growth through EOI, combining export promotion with strategic industrial policy.",
+            sources: "World Bank (1993) East Asian Miracle; Rodrik (1995)"
+        },
+        {
+            term: "Infant Industry Argument",
+            original: null,
+            category: "Trade & Globalization",
+            categoryClass: "cat-trade",
+            definition: "The case for temporary protection of new industries until they achieve scale economies and learning-by-doing benefits to compete internationally.",
+            example: "South Korea protected its auto industry in the 1970s; Hyundai now competes globally, though many protected industries never 'grew up.'",
+            sources: "List (1841); Krugman (1987)"
+        },
+        {
+            term: "Global Value Chains (GVCs)",
+            original: null,
+            category: "Trade & Globalization",
+            categoryClass: "cat-trade",
+            definition: "The full range of activities required to bring a product from conception to final consumer, spread across multiple countries.",
+            example: "An iPhone involves design in California, chips from Taiwan, assembly in China, and components from 43 countries.",
+            sources: "Gereffi & Fernandez-Stark (2016); World Bank (2020)"
+        },
+        {
+            term: "Foreign Direct Investment (FDI)",
+            original: null,
+            category: "Trade & Globalization",
+            categoryClass: "cat-trade",
+            definition: "Investment made by a firm in one country into business interests in another country, typically involving ownership and control of foreign enterprises.",
+            example: "Toyota building a factory in Thailand is FDI; it can transfer technology and create jobs but may also crowd out local firms.",
+            sources: "UNCTAD World Investment Reports; Alfaro et al. (2004)"
+        },
+
+        // Finance & Credit
+        {
+            term: "Financial Inclusion",
+            original: null,
+            category: "Finance & Credit",
+            categoryClass: "cat-finance",
+            definition: "Access to useful and affordable financial services—transactions, payments, savings, credit, and insurance—delivered responsibly and sustainably.",
+            example: "M-Pesa in Kenya brought mobile money to millions without bank accounts, enabling payments and savings via basic phones.",
+            sources: "Demirgüç-Kunt et al. (2018) Global Findex; World Bank"
+        },
+        {
+            term: "Microfinance",
+            original: null,
+            category: "Finance & Credit",
+            categoryClass: "cat-finance",
+            definition: "Financial services targeted at low-income individuals or groups who lack access to conventional banking, including microcredit, microsavings, and microinsurance.",
+            example: "Grameen Bank pioneered group lending to poor Bangladeshi women, with 97% repayment rates and millions of borrowers.",
+            sources: "Yunus (2007) Banker to the Poor; Banerjee & Duflo (2011)"
+        },
+        {
+            term: "Credit Constraints",
+            original: null,
+            category: "Finance & Credit",
+            categoryClass: "cat-finance",
+            definition: "Limitations on borrowing faced by individuals or firms due to lack of collateral, information asymmetries, or underdeveloped financial markets.",
+            example: "A talented entrepreneur with a viable business idea but no collateral may be unable to get a loan, keeping the business small.",
+            sources: "Banerjee & Newman (1993); De Mel, McKenzie & Woodruff (2008)"
+        },
+        {
+            term: "Savings Constraints",
+            original: null,
+            category: "Finance & Credit",
+            categoryClass: "cat-finance",
+            definition: "Barriers to saving including lack of access to safe savings products, social pressure to share, present-biased preferences, and transaction costs.",
+            example: "Commitment savings accounts that restrict withdrawals help people overcome self-control problems and save more.",
+            sources: "Dupas & Robinson (2013); Karlan et al. (2014)"
+        },
+        {
+            term: "Collateral",
+            original: null,
+            category: "Finance & Credit",
+            categoryClass: "cat-finance",
+            definition: "Assets pledged by a borrower to secure a loan—if the borrower defaults, the lender can seize the collateral. The poor often lack acceptable collateral.",
+            example: "Land titles allow farmers to use property as collateral; without clear titles, they cannot access formal credit.",
+            sources: "De Soto (2000); Besley & Ghatak (2010)"
+        },
+        {
+            term: "Group Lending",
+            original: null,
+            category: "Finance & Credit",
+            categoryClass: "cat-finance",
+            definition: "A microfinance methodology where loans are made to individuals in groups who guarantee each other's repayments, using social pressure as collateral.",
+            example: "In Grameen Bank's model, five women form a group; if one defaults, others must cover her payment or lose future access.",
+            sources: "Ghatak (1999); Armendáriz & Morduch (2010)"
+        },
+
+        // Human Capital
+        {
+            term: "Human Capital",
+            original: null,
+            category: "Human Capital",
+            categoryClass: "cat-human",
+            definition: "The stock of knowledge, skills, and health that enable people to be productive—investments in education, training, and health build human capital.",
+            example: "Returns to education in developing countries average 10% per year of schooling—each year of school increases future earnings.",
+            sources: "Becker (1964); Psacharopoulos & Patrinos (2018)"
+        },
+        {
+            term: "Human Development Index (HDI)",
+            original: null,
+            category: "Human Capital",
+            categoryClass: "cat-human",
+            definition: "A composite measure of development combining life expectancy, education (mean and expected years of schooling), and income per capita.",
+            example: "Norway typically ranks highest on HDI; the measure reveals that GDP alone misses crucial dimensions of wellbeing.",
+            sources: "UNDP Human Development Reports; Sen (1999)"
+        },
+        {
+            term: "Returns to Education",
+            original: null,
+            category: "Human Capital",
+            categoryClass: "cat-human",
+            definition: "The percentage increase in wages associated with an additional year of schooling—private returns accrue to individuals; social returns include externalities.",
+            example: "Primary education often has highest returns in low-income countries (10-15%), declining for higher levels as supply expands.",
+            sources: "Mincer (1974); Psacharopoulos & Patrinos (2018)"
+        },
+        {
+            term: "Child Mortality",
+            original: null,
+            category: "Human Capital",
+            categoryClass: "cat-human",
+            definition: "Deaths of children under age five, typically expressed per 1,000 live births—a key indicator of health system effectiveness and development.",
+            example: "Global under-5 mortality fell from 93 per 1,000 in 1990 to 37 in 2020, saving millions of lives through vaccines, nutrition, and healthcare.",
+            sources: "UN Inter-agency Group for Child Mortality Estimation; Deaton (2013)"
+        },
+        {
+            term: "Nutrition",
+            original: null,
+            category: "Human Capital",
+            categoryClass: "cat-human",
+            definition: "Adequate intake of calories, protein, and micronutrients essential for physical and cognitive development—malnutrition impairs human capital formation.",
+            example: "Stunting (low height-for-age) affects 22% of children under 5 globally and is associated with reduced cognitive development and adult earnings.",
+            sources: "Black et al. (2013) Lancet Maternal and Child Nutrition Series"
+        },
+        {
+            term: "Demographic Transition",
+            original: null,
+            category: "Human Capital",
+            categoryClass: "cat-human",
+            definition: "The shift from high birth and death rates to low birth and death rates as a country develops, typically involving a temporary bulge in working-age population.",
+            example: "East Asia's 'demographic dividend'—a rising share of working-age adults—contributed an estimated 1-2 percentage points to annual growth.",
+            sources: "Bloom & Williamson (1998); Galor (2011)"
+        },
+        {
+            term: "Demographic Dividend",
+            original: null,
+            category: "Human Capital",
+            categoryClass: "cat-human",
+            definition: "The economic growth potential from a favorable age structure when the working-age share of population rises relative to dependents.",
+            example: "Africa's youth bulge could yield a demographic dividend if accompanied by job creation, education, and lower fertility.",
+            sources: "Bloom, Canning & Sevilla (2003)"
+        },
+
+        // Measurement & Methods
+        {
+            term: "Randomized Controlled Trial (RCT)",
+            original: null,
+            category: "Measurement & Methods",
+            categoryClass: "cat-methods",
+            definition: "An experimental design that randomly assigns subjects to treatment and control groups, enabling causal inference about program effects.",
+            example: "Kremer's RCT found that deworming Kenyan schoolchildren cost just $3.50 per additional year of schooling achieved.",
+            sources: "Duflo, Glennerster & Kremer (2007); Banerjee & Duflo (2011)"
+        },
+        {
+            term: "Difference-in-Differences",
+            original: null,
+            category: "Measurement & Methods",
+            categoryClass: "cat-methods",
+            definition: "A quasi-experimental method comparing changes over time between treatment and control groups to estimate causal effects when random assignment isn't possible.",
+            example: "Comparing employment changes in New Jersey (which raised minimum wage) to Pennsylvania (which didn't) to estimate minimum wage effects.",
+            sources: "Card & Krueger (1994); Angrist & Pischke (2009)"
+        },
+        {
+            term: "Regression Discontinuity",
+            original: null,
+            category: "Measurement & Methods",
+            categoryClass: "cat-methods",
+            definition: "A method exploiting arbitrary cutoffs in program eligibility to estimate causal effects by comparing units just above and below the threshold.",
+            example: "Comparing students who barely passed vs. barely failed an exam cutoff to estimate the effect of passing on future outcomes.",
+            sources: "Lee & Lemieux (2010); Cattaneo, Idrobo & Titiunik (2020)"
+        },
+        {
+            term: "Instrumental Variables",
+            original: null,
+            category: "Measurement & Methods",
+            categoryClass: "cat-methods",
+            definition: "A method addressing endogeneity by using a variable (instrument) that affects the outcome only through its effect on the treatment variable.",
+            example: "Using distance to school as an instrument for education: it affects schooling but shouldn't directly affect adult earnings.",
+            sources: "Angrist & Krueger (1991); Angrist & Pischke (2009)"
+        },
+        {
+            term: "Purchasing Power Parity (PPP)",
+            original: null,
+            category: "Measurement & Methods",
+            categoryClass: "cat-methods",
+            definition: "An adjustment for price level differences across countries, enabling meaningful comparison of living standards and poverty across nations.",
+            example: "$100 buys more in India than in Switzerland; PPP adjustments account for this when comparing incomes across countries.",
+            sources: "World Bank International Comparison Program"
+        },
+        {
+            term: "Gross Domestic Product (GDP)",
+            original: null,
+            category: "Measurement & Methods",
+            categoryClass: "cat-methods",
+            definition: "The total market value of all final goods and services produced within a country's borders in a given period—the most common measure of economic output.",
+            example: "GDP growth is widely used but criticized for ignoring inequality, environmental degradation, and non-market activities.",
+            sources: "Kuznets (1934); Stiglitz, Sen & Fitoussi (2009)"
+        },
+        {
+            term: "Theory of Change",
+            original: null,
+            category: "Measurement & Methods",
+            categoryClass: "cat-methods",
+            definition: "A comprehensive description of how and why a desired change is expected to happen, mapping the causal pathway from activities to outcomes.",
+            example: "A nutrition program's theory of change: training → better feeding practices → improved child nutrition → reduced stunting.",
+            sources: "Weiss (1995); Rogers (2014)"
+        },
+        {
+            term: "Impact Evaluation",
+            original: null,
+            category: "Measurement & Methods",
+            categoryClass: "cat-methods",
+            definition: "Assessment of changes in outcomes attributable to a specific intervention, requiring comparison to a valid counterfactual of what would have happened otherwise.",
+            example: "J-PAL has conducted over 1,000 impact evaluations across 91 countries to identify what works in development.",
+            sources: "Gertler et al. (2016) Impact Evaluation in Practice; J-PAL"
+        }
+    ];
+
+    const categoryColors = {
+        "Growth & Development Theory": "cat-growth",
+        "Poverty & Inequality": "cat-poverty",
+        "Institutions & Governance": "cat-institutions",
+        "Market Failures & Interventions": "cat-markets",
+        "Trade & Globalization": "cat-trade",
+        "Finance & Credit": "cat-finance",
+        "Human Capital": "cat-human",
+        "Measurement & Methods": "cat-methods"
+    };
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        initFilters();
+        renderTerms(LEXICON);
+        updateStats(LEXICON.length);
+        
+        document.getElementById('searchInput').addEventListener('input', handleSearch);
+    });
+
+    function initFilters() {
+        const container = document.getElementById('categoryFilters');
+        const categories = [...new Set(LEXICON.map(t => t.category))];
+        
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = 'filter-btn';
+            btn.dataset.category = cat;
+            btn.textContent = cat.split(' & ')[0]; // Shortened label
+            btn.addEventListener('click', handleFilter);
+            container.appendChild(btn);
+        });
+    }
+
+    function handleFilter(e) {
+        const category = e.target.dataset.category;
+        
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        e.target.classList.add('active');
+        
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        filterAndRender(category, searchTerm);
+    }
+
+    function handleSearch(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const activeCategory = document.querySelector('.filter-btn.active').dataset.category;
+        filterAndRender(activeCategory, searchTerm);
+    }
+
+    function filterAndRender(category, searchTerm) {
+        let filtered = LEXICON;
+        
+        if (category !== 'all') {
+            filtered = filtered.filter(t => t.category === category);
+        }
+        
+        if (searchTerm) {
+            filtered = filtered.filter(t => 
+                t.term.toLowerCase().includes(searchTerm) ||
+                t.definition.toLowerCase().includes(searchTerm) ||
+                t.example.toLowerCase().includes(searchTerm) ||
+                (t.original && t.original.toLowerCase().includes(searchTerm))
+            );
+        }
+        
+        renderTerms(filtered);
+        updateStats(filtered.length);
+    }
+
+    function renderTerms(terms) {
+        const grid = document.getElementById('termsGrid');
+        const noResults = document.getElementById('noResults');
+        
+        if (terms.length === 0) {
+            grid.innerHTML = '';
+            noResults.style.display = 'block';
+            return;
+        }
+        
+        noResults.style.display = 'none';
+        
+        grid.innerHTML = terms.map(t => `
+            <article class="term-card">
+                <div class="term-card-header">
+                    <div>
+                        <div class="term-title">${t.term}</div>
+                        ${t.original ? `<div class="term-original">${t.original}</div>` : ''}
+                    </div>
+                    <span class="term-category ${t.categoryClass}">${t.category.split(' & ')[0]}</span>
+                </div>
+                <div class="term-card-body">
+                    <p class="term-definition">${t.definition}</p>
+                    <div class="term-example">
+                        <strong>Example:</strong> ${t.example}
+                    </div>
+                    <div class="term-sources">
+                        <strong>Sources:</strong> ${t.sources}
+                    </div>
+                </div>
+            </article>
+        `).join('');
+    }
+
+    function updateStats(count) {
+        document.getElementById('visibleTerms').textContent = count;
+        document.getElementById('totalTerms').textContent = LEXICON.length;
+    }
+    </script>
+</body>
+</html>
