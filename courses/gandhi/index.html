@@ -1766,62 +1766,46 @@
             filter: var(--icon-filter, none);
         }
 
-        /* Coach Callout Popup Animation */
+    
+        /* Coach Callout Popup Animation - Robust Version */
+        .coach-callout:not(.popup-visible) {
+            opacity: 0 !important;
+            transform: translateY(40px) scale(0.9) !important;
+        }
+        
         .coach-callout {
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
         
         .coach-callout.popup-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) !important;
+        }
+        
+        .coach-callout:not(.popup-visible) .coach-photo {
+            opacity: 0 !important;
+            transform: scale(0.5) !important;
+        }
+        
+        .coach-callout:not(.popup-visible) .coach-content {
+            opacity: 0 !important;
+            transform: translateX(-30px) !important;
+        }
+        
+        .coach-callout .coach-photo,
+        .coach-callout .coach-content {
+            transition: opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s !important;
         }
         
         .coach-callout.popup-visible .coach-photo {
-            animation: photoPopIn 0.5s ease-out 0.2s both;
+            opacity: 1 !important;
+            transform: scale(1) !important;
         }
         
         .coach-callout.popup-visible .coach-content {
-            animation: contentSlideIn 0.5s ease-out 0.3s both;
-        }
-        
-        @keyframes photoPopIn {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes contentSlideIn {
-            0% {
-                transform: translateX(-20px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        .coach-callout .coach-photo {
-            opacity: 0;
-        }
-        
-        .coach-callout .coach-content {
-            opacity: 0;
-        }
-        
-        .coach-callout.popup-visible .coach-photo,
-        .coach-callout.popup-visible .coach-content {
-            opacity: 1;
+            opacity: 1 !important;
+            transform: translateX(0) !important;
         }
 
     </style>
@@ -6883,25 +6867,34 @@
         }
 
 
-            // ============================================
-            // COACH CALLOUT POPUP ANIMATION
-            // ============================================
-            const coachCallouts = document.querySelectorAll('.coach-callout');
+    </script>
+<script>
+        // Coach Callout Popup Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            var coachCallouts = document.querySelectorAll('.coach-callout');
             
-            const popupObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('popup-visible');
-                    }
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('popup-visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.15,
+                    rootMargin: '0px 0px -30px 0px'
                 });
-            }, {
-                threshold: 0.2,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            coachCallouts.forEach(callout => {
-                popupObserver.observe(callout);
-            });
+                
+                coachCallouts.forEach(function(callout) {
+                    observer.observe(callout);
+                });
+            } else {
+                // Fallback for older browsers
+                coachCallouts.forEach(function(callout) {
+                    callout.classList.add('popup-visible');
+                });
+            }
+        });
 
     </script>
 </body>
