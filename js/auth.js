@@ -660,6 +660,13 @@ const ImpactMojoAuth = {
     updateUI() {
         const isLoggedIn = !!this.user;
 
+        // Add/remove body class for CSS-based auth display (handles !important)
+        if (isLoggedIn) {
+            document.body.classList.add('user-authenticated');
+        } else {
+            document.body.classList.remove('user-authenticated');
+        }
+
         // Update login/signup buttons visibility
         document.querySelectorAll('.auth-logged-out').forEach(el => {
             el.style.display = isLoggedIn ? 'none' : '';
