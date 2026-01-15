@@ -2303,6 +2303,10 @@ h1, h2, h3, h4, h5, h6 {
     })(document);
 </script>
 
+<!-- Supabase Authentication -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/auth.js"></script>
+
 <!-- JavaScript -->
 <script>
 // Theme Management
@@ -2475,51 +2479,7 @@ function updateCommunityAccess(isPremium) {
     }
 }
 
-// Mock ImpactMojoAuth (replace with actual auth implementation)
-const ImpactMojoAuth = {
-    user: null,
-    profile: null,
-    
-    isLoggedIn() {
-        return !!this.user;
-    },
-    
-    getLastSyncDisplay() {
-        return 'Just now';
-    },
-    
-    async syncAll() {
-        return { success: true };
-    },
-    
-    async updateProfile(updates) {
-        this.profile = { ...this.profile, ...updates };
-        return { success: true };
-    },
-    
-    async resetPassword(email) {
-        return { success: true, message: 'Password reset email sent!' };
-    },
-    
-    async signOut() {
-        this.user = null;
-        this.profile = null;
-        window.location.href = 'login.html';
-    },
-    
-    init() {
-        // Check for stored session
-        const storedUser = localStorage.getItem('impactMojoUser');
-        if (storedUser) {
-            try {
-                this.user = JSON.parse(storedUser);
-                this.profile = JSON.parse(localStorage.getItem('impactMojoProfile') || '{}');
-                return true;
-            } catch { return false; }
-        }
-        return false;
-    }
-};
+// ImpactMojoAuth is loaded from js/auth.js - do not redefine here
 
 // Page Data Update
 function updatePageData() {
@@ -2541,16 +2501,17 @@ function updatePageData() {
     document.getElementById('editBio').value = profile.bio || '';
     
     // Update subscription display
-    const isPremium = profile.tier && profile.tier !== 'explorer';
+    const tier = profile.subscription_tier || 'explorer';
+    const isPremium = tier && tier !== 'explorer';
     const tierBadge = document.getElementById('tierBadge');
     const tierName = document.getElementById('tierName');
     const tierDescription = document.getElementById('tierDescription');
     const upgradeBanner = document.getElementById('upgradeBanner');
     
     if (isPremium) {
-        tierBadge.className = `tier-badge tier-${profile.tier}`;
-        tierBadge.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> ${profile.tier.charAt(0).toUpperCase() + profile.tier.slice(1)}`;
-        tierName.textContent = profile.tier.charAt(0).toUpperCase() + profile.tier.slice(1) + ' Tier';
+        tierBadge.className = `tier-badge tier-${tier}`;
+        tierBadge.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> ${tier.charAt(0).toUpperCase() + tier.slice(1)}`;
+        tierName.textContent = tier.charAt(0).toUpperCase() + tier.slice(1) + ' Tier';
         tierDescription.textContent = 'Full access to premium features';
         upgradeBanner.style.display = 'none';
     } else {
@@ -2738,21 +2699,21 @@ document.addEventListener('DOMContentLoaded', function() {
     initTheme();
     updateSavedItemsDisplay();
     
-    // Initialize auth
-    const isLoggedIn = ImpactMojoAuth.init();
-    
+    // Auth is initialized via auth.js automatically
+    // The authStateChanged event will trigger updatePageData when ready
+    // Show loading state until auth is confirmed
     const loadingOverlay = document.getElementById('loadingOverlay');
     
-    if (isLoggedIn) {
-        loadingOverlay.style.display = 'none';
-        updatePageData();
-    } else {
-        // For demo purposes, show the page with mock data
-        loadingOverlay.style.display = 'none';
-        document.getElementById('profileName').textContent = 'Guest User';
-        document.getElementById('profileEmail').textContent = 'Not logged in';
-        updateCommunityAccess(false);
-    }
+    // Set a timeout to hide loading if auth takes too long
+    setTimeout(function() {
+        if (loadingOverlay.style.display !== 'none') {
+            loadingOverlay.style.display = 'none';
+            // Check if user is logged in after timeout
+            if (!ImpactMojoAuth.isLoggedIn()) {
+                window.location.href = 'login.html';
+            }
+        }
+    }, 5000);
 });
 
 // Close dropdowns when clicking outside
