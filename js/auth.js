@@ -1,13 +1,17 @@
 /**
  * ImpactMojo Authentication System
  * Powered by Supabase
- * Version 2.0.1 - December 3, 2025
+ * Version 2.0.2 - January 15, 2026
  * 
  * FEATURES:
  * - Cloud sync for bookmarks, notes, compare list, streak data
  * - Auto-sync on login/logout
  * - Manual sync function
  * - Intelligent data merging (newer/more complete wins)
+ * 
+ * FIXED in v2.0.2:
+ * - Fixed "Identifier 'supabase' has already been declared" error
+ * - Renamed client variable to avoid conflict with window.supabase library
  * 
  * FIXED in v2.0.1:
  * - Storage keys now match index.html (impactmojo_bookmarks, etc.)
@@ -23,8 +27,8 @@
 const SUPABASE_URL = 'https://ddyszmfffyedolkcugld.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkeXN6bWZmZnllZG9sa2N1Z2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3MzMxMzEsImV4cCI6MjA4MDMwOTEzMX0.vPLlFkC3pqOBtofZ8B6_FBLbRfOKwlyv3DzLvJBS16w';
 
-// Initialize Supabase client
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Initialize Supabase client (using different name to avoid conflict with window.supabase library)
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // =====================================================
 // LOCALSTORAGE KEYS (MUST match index.html exactly!)
@@ -53,7 +57,7 @@ const ImpactMojoAuth = {
         
         try {
             // Get current session
-            const { data: { session }, error } = await supabase.auth.getSession();
+            const { data: { session }, error } = await supabaseClient.auth.getSession();
             
             if (error) {
                 console.error('Auth init error:', error);
@@ -68,7 +72,7 @@ const ImpactMojoAuth = {
             }
 
             // Listen for auth changes
-            supabase.auth.onAuthStateChange(async (event, session) => {
+            supabaseClient.auth.onAuthStateChange(async (event, session) => {
                 console.log('Auth state changed:', event);
                 
                 if (event === 'SIGNED_IN' && session?.user) {
@@ -97,7 +101,7 @@ const ImpactMojoAuth = {
         if (!this.user) return null;
 
         try {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('profiles')
                 .select('*')
                 .eq('id', this.user.id)
@@ -220,7 +224,7 @@ const ImpactMojoAuth = {
         try {
             const localData = this.getLocalData();
 
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('profiles')
                 .update({
                     bookmarks: localData.bookmarks,
@@ -263,7 +267,7 @@ const ImpactMojoAuth = {
 
         try {
             // Fetch latest profile with sync data
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('profiles')
                 .select('bookmarks, notes, compare_list, streak_data, progress, last_synced_at')
                 .eq('id', this.user.id)
@@ -391,7 +395,7 @@ const ImpactMojoAuth = {
     // Sign up with email and password
     async signUp(email, password, fullName = '') {
         try {
-            const { data, error } = await supabase.auth.signUp({
+            const { data, error } = await supabaseClient.auth.signUp({
                 email: email,
                 password: password,
                 options: {
@@ -423,7 +427,7 @@ const ImpactMojoAuth = {
     // Sign in with email and password
     async signIn(email, password) {
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
                 email: email,
                 password: password
             });
@@ -454,7 +458,7 @@ const ImpactMojoAuth = {
     // Sign in with Google
     async signInWithGoogle() {
         try {
-            const { data, error } = await supabase.auth.signInWithOAuth({
+            const { data, error } = await supabaseClient.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
                     redirectTo: window.location.origin + '/account.html'
@@ -477,7 +481,7 @@ const ImpactMojoAuth = {
     // Sign in with magic link (passwordless)
     async signInWithMagicLink(email) {
         try {
-            const { data, error } = await supabase.auth.signInWithOtp({
+            const { data, error } = await supabaseClient.auth.signInWithOtp({
                 email: email,
                 options: {
                     emailRedirectTo: window.location.origin + '/account.html'
@@ -509,7 +513,7 @@ const ImpactMojoAuth = {
                 await this.syncToCloud();
             }
 
-            const { error } = await supabase.auth.signOut();
+            const { error } = await supabaseClient.auth.signOut();
             
             if (error) throw error;
 
@@ -533,7 +537,7 @@ const ImpactMojoAuth = {
     // Reset password
     async resetPassword(email) {
         try {
-            const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+            const { data, error } = await supabaseClient.auth.resetPasswordForEmail(email, {
                 redirectTo: window.location.origin + '/reset-password.html'
             });
 
@@ -557,7 +561,7 @@ const ImpactMojoAuth = {
     // Update password (when user has reset token)
     async updatePassword(newPassword) {
         try {
-            const { data, error } = await supabase.auth.updateUser({
+            const { data, error } = await supabaseClient.auth.updateUser({
                 password: newPassword
             });
 
@@ -589,7 +593,7 @@ const ImpactMojoAuth = {
         }
 
         try {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('profiles')
                 .update({
                     ...updates,
@@ -786,4 +790,4 @@ window.addEventListener('beforeunload', () => {
 
 // Export for use in other scripts
 window.ImpactMojoAuth = ImpactMojoAuth;
-window.supabase = supabase;
+window.supabaseClient = supabaseClient;
