@@ -4,20 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MEL Lexicon | ImpactMojo</title>
+    <meta name="description" content="Interactive glossary of 65+ essential MEL terms for development professionals.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-bg: #0F172A;
             --secondary-bg: #1E293B;
             --accent-color: #0EA5E9;
-            --success-color: #10B981;
+            --accent-hover: #0284C7;
             --text-primary: #F1F5F9;
             --text-secondary: #94A3B8;
             --text-muted: #64748B;
-            --card-bg: #1E293B;
             --border-color: #334155;
+            --card-bg: #1E293B;
+            --hover-bg: #334155;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --indigo: #6366F1;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-heading: 'Poppins', sans-serif;
         }
+        
         [data-theme="light"] {
             --primary-bg: #FFFFFF;
             --secondary-bg: #F8FAFC;
@@ -25,76 +34,546 @@
             --text-secondary: #475569;
             --text-muted: #94A3B8;
             --card-bg: #FFFFFF;
+            --hover-bg: #F1F5F9;
             --border-color: #E2E8F0;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--primary-bg); color: var(--text-primary); line-height: 1.6; }
-        .header { background: var(--secondary-bg); border-bottom: 1px solid var(--border-color); padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; }
-        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--text-primary); font-weight: 600; }
-        .logo img { width: 32px; height: 32px; border-radius: 6px; }
-        .back-link { color: var(--accent-color); text-decoration: none; font-size: 0.9rem; }
-        .back-link:hover { text-decoration: underline; }
-        .main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-        .hero { text-align: center; margin-bottom: 2rem; }
-        .hero h1 { font-family: 'Poppins', sans-serif; font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--accent-color), var(--success-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { color: var(--text-secondary); font-size: 1.1rem; }
-        .search-container { max-width: 600px; margin: 1.5rem auto; }
-        .search-input { width: 100%; padding: 1rem 1.5rem; font-size: 1rem; border: 2px solid var(--border-color); border-radius: 12px; background: var(--secondary-bg); color: var(--text-primary); outline: none; }
-        .search-input:focus { border-color: var(--accent-color); }
-        .search-input::placeholder { color: var(--text-muted); }
-        .category-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 2rem; }
-        .category-tab { padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 20px; background: transparent; color: var(--text-secondary); font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
-        .category-tab:hover, .category-tab.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
-        .terms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
-        .term-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; }
-        .term-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
-        .term-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
-        .term-name { font-weight: 600; font-size: 1.1rem; color: var(--accent-color); }
-        .term-category { font-size: 0.65rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: var(--secondary-bg); color: var(--text-muted); text-transform: uppercase; }
-        .term-definition { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.75rem; }
-        .term-example { font-size: 0.85rem; color: var(--text-muted); padding-left: 1rem; border-left: 2px solid var(--accent-color); font-style: italic; }
-        .stats { text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.9rem; }
-        .theme-toggle { background: transparent; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem; cursor: pointer; color: var(--text-secondary); font-size: 1.1rem; }
-        @media (max-width: 768px) { .terms-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.75rem; } .header-content { flex-direction: column; gap: 1rem; } }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-sans);
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0EA5E9, #6366F1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .logo-text {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        
+        .theme-toggle, .back-link {
+            padding: 0.5rem 1rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .theme-toggle:hover, .back-link:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 2rem 0 3rem;
+        }
+        
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #0EA5E9, #6366F1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+        }
+        
+        .filter-btn[data-category="foundations"].active { background: #0EA5E9; border-color: #0EA5E9; }
+        .filter-btn[data-category="theory-of-change"].active { background: #6366F1; border-color: #6366F1; }
+        .filter-btn[data-category="indicators"].active { background: #10B981; border-color: #10B981; }
+        .filter-btn[data-category="data-methods"].active { background: #F59E0B; border-color: #F59E0B; }
+        .filter-btn[data-category="evaluation"].active { background: #EF4444; border-color: #EF4444; }
+        .filter-btn[data-category="oecd-dac"].active { background: #8B5CF6; border-color: #8B5CF6; }
+        .filter-btn[data-category="learning"].active { background: #EC4899; border-color: #EC4899; }
+        .filter-btn[data-category="donor-terms"].active { background: #14B8A6; border-color: #14B8A6; }
+        
+        .terms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .term-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s;
+        }
+        
+        .term-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .term-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+        
+        .term-name {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .term-category {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .category-foundations { background: rgba(14, 165, 233, 0.2); color: #0EA5E9; }
+        .category-theory-of-change { background: rgba(99, 102, 241, 0.2); color: #6366F1; }
+        .category-indicators { background: rgba(16, 185, 129, 0.2); color: #10B981; }
+        .category-data-methods { background: rgba(245, 158, 11, 0.2); color: #F59E0B; }
+        .category-evaluation { background: rgba(239, 68, 68, 0.2); color: #EF4444; }
+        .category-oecd-dac { background: rgba(139, 92, 246, 0.2); color: #8B5CF6; }
+        .category-learning { background: rgba(236, 72, 153, 0.2); color: #EC4899; }
+        .category-donor-terms { background: rgba(20, 184, 166, 0.2); color: #14B8A6; }
+        
+        .term-definition {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .term-example {
+            background: var(--hover-bg);
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-size: 0.85rem;
+        }
+        
+        .term-example-label {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+        
+        .term-example-text {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+        
+        .download-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--secondary-bg);
+            border-radius: 12px;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--success-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .download-btn:hover {
+            background: #0d9668;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .hero h1 { font-size: 1.75rem; }
+            .terms-grid { grid-template-columns: 1fr; }
+            .filter-buttons { justify-content: center; }
+        }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <a href="../../index.html" class="logo"><img src="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo"><span>ImpactMojo</span></a>
-            <a href="index.html" class="back-link">← Back to MEL Course</a>
-            <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
-        </div>
-    </header>
-    <main class="main">
-        <div class="hero">
+    <div class="container">
+        <header>
+            <a href="index.html" class="logo">
+                <div class="logo-icon">IM</div>
+                <span class="logo-text">ImpactMojo</span>
+            </a>
+            <div class="header-actions">
+                <a href="index.html" class="back-link">← Back to Course</a>
+                <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+            </div>
+        </header>
+        
+        <section class="hero">
             <h1>MEL Lexicon</h1>
-            <p>65 essential terms for Monitoring, Evaluation & Learning practitioners</p>
+            <p>Master the language of Monitoring, Evaluation & Learning with our interactive glossary of essential terms.</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">65</div>
+                    <div class="stat-label">Terms</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="search" placeholder="Search terms..." oninput="filterTerms()">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all" onclick="setFilter('all')">All</button>
+                <button class="filter-btn" data-category="foundations" onclick="setFilter('foundations')">Foundations</button>
+                <button class="filter-btn" data-category="theory-of-change" onclick="setFilter('theory-of-change')">Theory of Change</button>
+                <button class="filter-btn" data-category="indicators" onclick="setFilter('indicators')">Indicators</button>
+                <button class="filter-btn" data-category="data-methods" onclick="setFilter('data-methods')">Data & Methods</button>
+                <button class="filter-btn" data-category="evaluation" onclick="setFilter('evaluation')">Evaluation</button>
+                <button class="filter-btn" data-category="oecd-dac" onclick="setFilter('oecd-dac')">OECD-DAC</button>
+                <button class="filter-btn" data-category="learning" onclick="setFilter('learning')">Learning</button>
+                <button class="filter-btn" data-category="donor-terms" onclick="setFilter('donor-terms')">Donor Terms</button>
+            </div>
         </div>
-        <div class="search-container">
-            <input type="text" class="search-input" id="search" placeholder="Search terms..." oninput="filterTerms()">
-        </div>
-        <div class="category-tabs">
-            <button class="category-tab active" data-category="all" onclick="filterByCategory('all')">All (65)</button>
-            <button class="category-tab" data-category="foundations" onclick="filterByCategory('foundations')">Foundations</button>
-            <button class="category-tab" data-category="design" onclick="filterByCategory('design')">Design</button>
-            <button class="category-tab" data-category="data" onclick="filterByCategory('data')">Data</button>
-            <button class="category-tab" data-category="analysis" onclick="filterByCategory('analysis')">Analysis</button>
-            <button class="category-tab" data-category="evaluation" onclick="filterByCategory('evaluation')">Evaluation</button>
-            <button class="category-tab" data-category="learning" onclick="filterByCategory('learning')">Learning</button>
-        </div>
+        
         <div class="terms-grid" id="terms-grid"></div>
-        <div class="stats" id="stats">Showing 65 terms</div>
-    </main>
+        
+        <div class="download-section">
+            <p style="margin-bottom: 1rem; color: var(--text-secondary);">Download the complete lexicon for offline reference</p>
+            <a href="https://www.dropbox.com/scl/fi/rt6d5qyrd5ql1rfmxa2ed/mel-lexicon.xlsx?rlkey=slrmibf5ckj2xoyr2j6lal03s&dl=1" class="download-btn" target="_blank">
+                📥 Download Excel Version
+            </a>
+        </div>
+        
+        <footer>
+            <p>© 2025 <a href="https://www.impactmojo.in">ImpactMojo</a>. Free for development professionals.</p>
+        </footer>
+    </div>
+    
     <script>
-const terms=[{name:"Monitoring",category:"foundations",definition:"The continuous, systematic collection of data on specified indicators to track progress toward objectives and inform management decisions.",example:"Monthly tracking of school attendance rates to identify dropout patterns."},{name:"Evaluation",category:"foundations",definition:"A systematic assessment of an ongoing or completed project to determine relevance, efficiency, effectiveness, impact, and sustainability.",example:"Endline evaluation comparing learning outcomes between treatment and control schools."},{name:"Learning",category:"foundations",definition:"The process of generating insights from M&E data and applying them to improve programs.",example:"Adjusting training curriculum based on participant feedback and assessment scores."},{name:"Accountability",category:"foundations",definition:"The obligation to demonstrate that work has been conducted in compliance with agreed rules and to report fairly on performance.",example:"Annual reports to donors showing how funds were spent and results achieved."},{name:"Results-Based Management",category:"foundations",definition:"A management strategy focused on performance and achievement of outputs, outcomes, and impact, rather than just activities.",example:"Shifting from reporting 'workshops conducted' to 'farmers adopting improved practices'."},{name:"Results Chain",category:"foundations",definition:"A causal sequence showing how inputs lead to activities, outputs, outcomes, and ultimately impact.",example:"Funds → Training → Farmers trained → Practices adopted → Yield increase → Income improvement."},{name:"Inputs",category:"foundations",definition:"The financial, human, and material resources used for a development intervention.",example:"Budget of $500,000, 10 staff members, training materials, vehicles."},{name:"Activities",category:"foundations",definition:"Actions taken or work performed to convert inputs into outputs.",example:"Conducting farmer training sessions, distributing seeds, installing irrigation systems."},{name:"Outputs",category:"foundations",definition:"The direct products or services delivered by program activities.",example:"500 farmers trained, 1,000 seed kits distributed, 50 wells constructed."},{name:"Outcomes",category:"foundations",definition:"Short and medium-term effects of outputs, typically changes in behavior, knowledge, or practice.",example:"70% of trained farmers adopting at least two improved agricultural practices."},{name:"Impact",category:"foundations",definition:"Long-term, sustainable changes in conditions or well-being attributable to the intervention.",example:"25% reduction in child malnutrition in target communities over 5 years."},{name:"Theory of Change",category:"design",definition:"A comprehensive description of how and why desired change is expected to happen, articulating assumptions and causal pathways.",example:"Diagram showing how teacher training leads to better instruction, engagement, and learning."},{name:"Logical Framework",category:"design",definition:"A 4x4 matrix summarizing goal, purpose, outputs, and activities with indicators, means of verification, and assumptions.",example:"Project document table showing impact, outcomes, outputs with SMART indicators."},{name:"IF-THEN-BECAUSE",category:"design",definition:"A framework for articulating causal logic: IF we do X, THEN Y will happen, BECAUSE of mechanism Z.",example:"IF we provide microloans, THEN women will start businesses, BECAUSE they lack capital."},{name:"Assumptions",category:"design",definition:"Conditions that must hold true for the causal logic to work as expected.",example:"Assuming trained health workers will remain in their posts and not migrate."},{name:"Theory Failure",category:"design",definition:"When a program fails because the underlying causal logic was wrong, not due to implementation problems.",example:"Textbooks didn't improve learning because children couldn't read—the theory was flawed."},{name:"Implementation Failure",category:"design",definition:"When a program fails due to poor execution, despite having sound underlying logic.",example:"Teacher training was effective but only 30% attended due to poor scheduling."},{name:"SMART Indicators",category:"design",definition:"Indicators that are Specific, Measurable, Achievable, Relevant, and Time-bound.",example:"'Percentage of children under 5 who are stunted' rather than 'improved nutrition'."},{name:"CREAM Indicators",category:"design",definition:"World Bank framework: Clear, Relevant, Economic, Adequate, and Monitorable.",example:"Selecting indicators that can be collected cost-effectively with existing systems."},{name:"Indicator",category:"design",definition:"A quantitative or qualitative measure used to track progress toward objectives.",example:"Percentage of households with access to improved water sources within 30 minutes."},{name:"Baseline",category:"design",definition:"Data collected at program start to establish initial conditions against which progress is measured.",example:"Before the intervention, 45% of children were reading at grade level."},{name:"Target",category:"design",definition:"The specific, planned level of results to be achieved within a given timeframe.",example:"Increase reading proficiency from 45% to 70% by end of Year 3."},{name:"Benchmark",category:"design",definition:"A reference point or standard against which performance can be assessed.",example:"National average stunting rate of 35% used to contextualize district data."},{name:"Disaggregation",category:"design",definition:"Breaking down data by categories such as sex, age, geography, or wealth to reveal patterns.",example:"Analyzing school enrollment separately for boys and girls in each district."},{name:"Sampling",category:"data",definition:"The process of selecting a subset of a population for data collection, designed to be representative.",example:"Randomly selecting 60 villages from 500 using probability proportional to size (PPS)."},{name:"Sample Size",category:"data",definition:"The number of observations needed to detect effects with adequate statistical power.",example:"400 households per group needed to detect a 10 percentage point change."},{name:"Power Calculation",category:"data",definition:"Statistical analysis to determine sample size needed to detect an effect of given size.",example:"80% power to detect d=0.3 effect at 95% confidence requires n=176 per group."},{name:"Household Survey",category:"data",definition:"A systematic data collection method using structured questionnaires administered to households.",example:"DHS-style survey collecting health, education, and economic data from 5,000 households."},{name:"Key Informant Interview",category:"data",definition:"A qualitative method involving in-depth interviews with knowledgeable individuals.",example:"Interviewing district health officers about barriers to service delivery."},{name:"Focus Group Discussion",category:"data",definition:"A moderated group discussion (6-12 participants) exploring perspectives on a topic.",example:"Discussing farming practices with groups of male and female farmers separately."},{name:"Most Significant Change",category:"data",definition:"A participatory method for collecting and selecting stories of change.",example:"Asking 'What was the most significant change in your life from this program?'"},{name:"Administrative Data",category:"data",definition:"Data collected routinely by government or organizations for operational purposes.",example:"Health facility records, school enrollment registers, tax records."},{name:"Data Quality",category:"data",definition:"The fitness of data for intended use, assessed across validity, reliability, timeliness, and integrity.",example:"Conducting back-checks on 10% of surveys to verify enumerator accuracy."},{name:"Validity",category:"data",definition:"The degree to which data measures what it claims to measure.",example:"Does 'household income' capture economic well-being or miss home production?"},{name:"Reliability",category:"data",definition:"The consistency of measurement—whether repeated measures produce the same result.",example:"Two enumerators measuring the same child's height should get the same reading."},{name:"Back-check",category:"data",definition:"Re-interviewing a sample of respondents to verify data quality and detect errors or fraud.",example:"Supervisors revisiting 10% of households to confirm key responses."},{name:"Mean",category:"analysis",definition:"The arithmetic average, calculated by summing all values and dividing by count.",example:"Mean household income of ₹15,000 when summing all incomes and dividing by count."},{name:"Median",category:"analysis",definition:"The middle value when data is arranged in order; less sensitive to outliers than the mean.",example:"Median income of ₹12,000 better represents 'typical' household than mean of ₹63,500."},{name:"Standard Deviation",category:"analysis",definition:"A measure of the spread or dispersion of data around the mean.",example:"SD of ₹5,000 indicates most incomes fall within ₹10,000-20,000 of the mean."},{name:"Effect Size",category:"analysis",definition:"A standardized measure of the magnitude of an effect, independent of sample size.",example:"Cohen's d of 0.5 means treatment group scored 0.5 standard deviations higher."},{name:"Statistical Significance",category:"analysis",definition:"The probability that an observed result occurred by chance; typically p<0.05 is significant.",example:"p=0.03 means only 3% probability the difference occurred by chance."},{name:"Confidence Interval",category:"analysis",definition:"A range within which the true population parameter is likely to fall.",example:"95% CI of 45-55% means we're 95% confident true value lies in this range."},{name:"Percentage Point",category:"analysis",definition:"The arithmetic difference between two percentages.",example:"From 40% to 60% is a 20 percentage point increase (not 50% increase)."},{name:"Difference-in-Differences",category:"analysis",definition:"Comparing changes over time between treatment and comparison groups.",example:"(Treatment endline - baseline) minus (Control endline - baseline)."},{name:"Accuracy",category:"analysis",definition:"How close measurements are to the true value; absence of systematic bias.",example:"Survey estimates 35% poverty vs. true rate of 36%—accurate but imprecise."},{name:"Precision",category:"analysis",definition:"The consistency of measurements; narrow confidence intervals indicate high precision.",example:"Estimate of 35% ± 2% is more precise than 35% ± 15%."},{name:"Thematic Analysis",category:"analysis",definition:"A qualitative method for identifying, analyzing, and reporting patterns within data.",example:"Coding interview transcripts to identify recurring themes about barriers."},{name:"Cumulative vs Current",category:"analysis",definition:"Cumulative = total since program start; current = this reporting period only.",example:"'500,000 trained since 2018' (cumulative) vs '75,000 in 2024' (current)."},{name:"Unique Beneficiaries",category:"analysis",definition:"Distinct individuals served, deduplicated to avoid counting same person multiple times.",example:"320,000 unique farmers (not 500,000 service contacts which may double-count)."},{name:"Counterfactual",category:"evaluation",definition:"What would have happened to participants in the absence of the intervention.",example:"Estimating what farmers' yields would have been without the training program."},{name:"Attribution",category:"evaluation",definition:"The extent to which observed effects can be causally linked to a specific intervention.",example:"Determining whether improved learning was caused by the program or other factors."},{name:"Contribution",category:"evaluation",definition:"The extent to which an intervention contributed to observed changes, alongside other factors.",example:"The program contributed to reduced malnutrition, along with economic growth."},{name:"Randomized Controlled Trial",category:"evaluation",definition:"An experimental design randomly assigning units to treatment and control to establish causation.",example:"Randomly assigning 100 villages to program and 100 to comparison."},{name:"Internal Validity",category:"evaluation",definition:"The extent to which effects can be attributed to the intervention rather than confounders.",example:"Randomization ensures treatment and control groups are comparable."},{name:"External Validity",category:"evaluation",definition:"The extent to which findings can be generalized to other populations, settings, or times.",example:"Would a program that worked in Kenya also work in Bangladesh?"},{name:"Selection Bias",category:"evaluation",definition:"Systematic differences between groups that affect outcomes independently of the intervention.",example:"Villages that opted in may have been more motivated, confounding estimates."},{name:"Quasi-Experimental Design",category:"evaluation",definition:"Evaluation designs that approximate experimental conditions without random assignment.",example:"Regression discontinuity comparing students just above and below a cutoff."},{name:"OECD-DAC Criteria",category:"evaluation",definition:"Six criteria: Relevance, Coherence, Effectiveness, Efficiency, Impact, and Sustainability.",example:"Structuring an evaluation report around each of the six DAC criteria."},{name:"Contribution Analysis",category:"evaluation",definition:"A theory-based approach building a credible 'contribution story' verified against evidence.",example:"Developing and testing alternative explanations for observed nutrition changes."},{name:"Adaptive Management",category:"learning",definition:"A structured approach emphasizing learning and adjusting strategies based on evidence.",example:"Quarterly reviews where teams analyze data and adjust implementation."},{name:"CLA Framework",category:"learning",definition:"USAID's Collaborating, Learning, Adapting framework for organizational learning.",example:"Embedding pause-and-reflect sessions into project workplans."},{name:"Pause and Reflect",category:"learning",definition:"Scheduled sessions for teams to step back, review data, and discuss implications.",example:"Monthly meetings dedicated to reviewing monitoring data and adapting plans."},{name:"Knowledge Management",category:"learning",definition:"Systematic approaches to capturing, organizing, and sharing knowledge.",example:"Maintaining a lessons learned database accessible to all project staff."},{name:"Utilization-Focused Evaluation",category:"learning",definition:"An approach judging evaluation success by whether findings are actually used.",example:"Designing questions based on what decisions stakeholders need to make."},{name:"Feedback Loop",category:"learning",definition:"A mechanism for systematically collecting and responding to stakeholder input.",example:"Hotline where farmers report problems and receive responses within 48 hours."}];
-let currentCategory='all';
-function renderTerms(f){const g=document.getElementById('terms-grid');g.innerHTML=f.map(t=>`<div class="term-card" data-category="${t.category}"><div class="term-header"><span class="term-name">${t.name}</span><span class="term-category">${t.category}</span></div><p class="term-definition">${t.definition}</p><p class="term-example">${t.example}</p></div>`).join('');document.getElementById('stats').textContent=`Showing ${f.length} of ${terms.length} terms`;}
-function filterTerms(){const s=document.getElementById('search').value.toLowerCase();let f=terms;if(currentCategory!=='all')f=f.filter(t=>t.category===currentCategory);if(s)f=f.filter(t=>t.name.toLowerCase().includes(s)||t.definition.toLowerCase().includes(s)||t.example.toLowerCase().includes(s));renderTerms(f);}
-function filterByCategory(c){currentCategory=c;document.querySelectorAll('.category-tab').forEach(t=>t.classList.toggle('active',t.dataset.category===c));filterTerms();}
-function toggleTheme(){const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='light'?'dark':'light');}
-renderTerms(terms);
+        const terms = [
+            // FOUNDATIONS (11)
+            { term: "Monitoring", category: "foundations", definition: "The systematic and continuous collection, analysis, and use of information to track program implementation and progress toward objectives.", example: "Tracking monthly enrollment figures to see if the health program is reaching its target population." },
+            { term: "Evaluation", category: "foundations", definition: "A systematic assessment of an ongoing or completed project, program, or policy, its design, implementation, and results.", example: "A midterm evaluation examining whether a vocational training program is improving employment outcomes." },
+            { term: "Learning", category: "foundations", definition: "The process of generating insights from monitoring and evaluation data and using them to improve program design and implementation.", example: "Quarterly learning sessions where staff discuss monitoring data and adjust outreach strategies." },
+            { term: "Accountability", category: "foundations", definition: "The obligation to demonstrate that work has been conducted in accordance with agreed rules and standards, and to report fairly and accurately on results.", example: "Publishing annual reports showing how donor funds were spent and what results were achieved." },
+            { term: "Results Chain", category: "foundations", definition: "The causal sequence linking inputs through activities to outputs, outcomes, and impacts. Also called logic model or results framework.", example: "Inputs (funding) → Activities (training) → Outputs (people trained) → Outcomes (new skills applied) → Impact (increased income)." },
+            { term: "Logframe", category: "foundations", definition: "A matrix that presents the key elements of a project's design: goals, purpose, outputs, activities, indicators, means of verification, and assumptions.", example: "A 4x4 matrix showing how teacher training activities connect to improved learning outcomes with specific indicators." },
+            { term: "M&E Plan", category: "foundations", definition: "A document describing the monitoring and evaluation strategy for a program, including indicators, data collection methods, responsibilities, and timelines.", example: "A 20-page plan specifying quarterly surveys, annual evaluations, and monthly administrative data collection." },
+            { term: "Results-Based Management (RBM)", category: "foundations", definition: "A management strategy focusing on achieving results (outputs, outcomes, impacts) rather than just completing activities.", example: "Setting performance targets for health clinics based on patients treated rather than hours open." },
+            { term: "MEAL", category: "foundations", definition: "Monitoring, Evaluation, Accountability, and Learning—a framework common in humanitarian contexts that explicitly includes accountability to affected populations.", example: "UNHCR's MEAL system includes community feedback mechanisms to ensure refugee voices are heard." },
+            { term: "MLE", category: "foundations", definition: "Monitoring, Learning, and Evaluation—an acronym emphasizing that learning should be continuous, not just post-evaluation.", example: "The Hewlett Foundation uses MLE to emphasize real-time learning throughout grantee programs." },
+            { term: "DME", category: "foundations", definition: "Design, Monitoring, and Evaluation—emphasizing that MEL should be built into program design from the start.", example: "Including evaluation questions in the initial program design phase, not as an afterthought." },
+            
+            // THEORY OF CHANGE (8)
+            { term: "Theory of Change", category: "theory-of-change", definition: "A comprehensive description of how and why a desired change is expected to happen, articulating causal pathways and underlying assumptions.", example: "If we train community health workers in newborn care (activity), they will identify danger signs (output), leading to timely referrals (outcome) and reduced neonatal mortality (impact)." },
+            { term: "Assumption", category: "theory-of-change", definition: "Conditions or factors that must hold true for the expected causal relationships in a theory of change to work.", example: "Assumption: 'Health facilities have capacity to receive referrals' must be true for CHW referrals to save lives." },
+            { term: "Causal Pathway", category: "theory-of-change", definition: "The sequence of changes through which an intervention is expected to lead to desired outcomes.", example: "Training → Knowledge gain → Behavior change → Health outcomes." },
+            { term: "Missing Middle", category: "theory-of-change", definition: "The gap in many theories of change between activities and outcomes where causal mechanisms are assumed rather than articulated.", example: "Weak ToC: 'Training → [black box] → Behavior change' without explaining how training leads to change." },
+            { term: "Theory Failure", category: "theory-of-change", definition: "When a program fails because its underlying logic was wrong—even perfect implementation wouldn't have worked.", example: "Providing textbooks didn't improve learning because children couldn't read in the first place." },
+            { term: "Implementation Failure", category: "theory-of-change", definition: "When a program fails because execution fell short, even though the theory was sound.", example: "Teacher training was effective but only 30% of teachers attended due to poor logistics." },
+            { term: "Outcome Mapping", category: "theory-of-change", definition: "An approach focusing on changes in 'boundary partners' (people the program works with directly) rather than ultimate impacts.", example: "Tracking changes in how partner organizations behave rather than final beneficiary outcomes." },
+            { term: "Contribution Analysis", category: "theory-of-change", definition: "An approach building evidence for contribution claims through 'contribution stories' verified against evidence, without claiming exclusive attribution.", example: "Building a credible story that our advocacy contributed to policy change, among other factors." },
+            
+            // INDICATORS (10)
+            { term: "Indicator", category: "indicators", definition: "A specific, measurable signal used to track progress toward an objective. Translates abstract concepts into observable data points.", example: "'Percentage of children who can read a simple story' as an indicator of literacy." },
+            { term: "SMART Indicators", category: "indicators", definition: "Indicators that are Specific, Measurable, Achievable, Relevant, and Time-bound.", example: "Increase the percentage of households with access to clean water from 45% to 70% by December 2025." },
+            { term: "CREAM Indicators", category: "indicators", definition: "World Bank framework: indicators should be Clear, Relevant, Economic, Adequate, and Monitorable.", example: "Choosing 'stunting prevalence' over a complex nutrition index because it's clearer and more economic to measure." },
+            { term: "Proxy Indicator", category: "indicators", definition: "An indirect measure used when direct measurement is impossible, too expensive, or impractical.", example: "Using 'ownership of mobile phone' as a proxy for household wealth when detailed income surveys aren't feasible." },
+            { term: "Disaggregation", category: "indicators", definition: "Breaking down aggregate data to reveal who is (or isn't) benefiting, typically by sex, age, geography, wealth, or disability status.", example: "Reporting school enrollment separately for boys and girls, and for urban vs. rural areas." },
+            { term: "Output Indicator", category: "indicators", definition: "A measure of the direct products or services delivered by a program.", example: "Number of teachers trained, number of wells constructed, number of loans disbursed." },
+            { term: "Outcome Indicator", category: "indicators", definition: "A measure of changes in behavior, knowledge, practice, or conditions resulting from outputs.", example: "Percentage of farmers adopting improved techniques after training." },
+            { term: "Impact Indicator", category: "indicators", definition: "A measure of long-term changes in well-being or systems attributable to the intervention.", example: "Reduction in under-5 mortality rate, increase in household income." },
+            { term: "Leading Indicator", category: "indicators", definition: "A predictive measure that signals future outcomes before they occur.", example: "Attendance at prenatal care visits predicting institutional delivery rates." },
+            { term: "Lagging Indicator", category: "indicators", definition: "A confirmatory measure that shows whether expected outcomes have materialized after the fact.", example: "Graduation rates confirm whether education interventions succeeded." },
+            
+            // DATA & METHODS (10)
+            { term: "Baseline", category: "data-methods", definition: "Data collected before an intervention begins, establishing starting conditions for measuring change.", example: "Surveying household income before a livelihoods program starts to enable before-after comparison." },
+            { term: "Endline", category: "data-methods", definition: "Data collected at the end of an intervention to compare with baseline and assess change.", example: "Final survey conducted 3 years after program start using the same questionnaire as baseline." },
+            { term: "Counterfactual", category: "data-methods", definition: "What would have happened in the absence of the intervention—the comparison scenario for measuring impact.", example: "A control group that didn't receive the training, showing what outcomes would have been without it." },
+            { term: "Sampling", category: "data-methods", definition: "The process of selecting a subset of a population for data collection that represents the whole.", example: "Randomly selecting 50 villages from 500 for a household survey to estimate district-level indicators." },
+            { term: "Statistical Power", category: "data-methods", definition: "The probability that a study will detect an effect when there is one. Underpowered studies may miss real impacts.", example: "Calculating that 1,200 households are needed to detect a 10 percentage point change with 80% power." },
+            { term: "Attrition", category: "data-methods", definition: "Loss of study participants over time, which can bias results if those who drop out differ systematically from those who remain.", example: "If healthier participants are more likely to complete a 2-year health study, results will overestimate program effects." },
+            { term: "Back-check", category: "data-methods", definition: "Quality assurance process of re-contacting a sample of survey respondents to verify key responses.", example: "Supervisors call 10% of households within 48 hours to confirm enumerator visited and key answers match." },
+            { term: "Enumerator Effect", category: "data-methods", definition: "Systematic differences in data collected by different enumerators due to interview style, bias, or errors.", example: "One enumerator consistently records higher income figures, suggesting social desirability bias in their interviews." },
+            { term: "KoBoToolbox", category: "data-methods", definition: "Free, open-source mobile data collection platform widely used in humanitarian and development contexts.", example: "Field teams using KoBo on tablets to collect survey data offline, syncing when connectivity is available." },
+            { term: "DHIS2", category: "data-methods", definition: "Open-source health information management system used by governments and organizations worldwide.", example: "India's HMIS uses DHIS2 to aggregate health facility data from district to national level." },
+            
+            // EVALUATION (10)
+            { term: "Randomized Controlled Trial (RCT)", category: "evaluation", definition: "Experimental design randomly assigning units to treatment and control groups to establish causal impact.", example: "Randomly assigning 100 villages to receive a sanitation program and 100 to serve as controls." },
+            { term: "Quasi-Experimental Design", category: "evaluation", definition: "Evaluation designs that estimate causal effects without random assignment, using statistical methods to construct comparison groups.", example: "Using propensity score matching to compare program participants with similar non-participants." },
+            { term: "Difference-in-Differences", category: "evaluation", definition: "Comparing changes over time between treatment and comparison groups to estimate program effects.", example: "Impact = (Treatment endline - Treatment baseline) - (Control endline - Control baseline)." },
+            { term: "Regression Discontinuity", category: "evaluation", definition: "Exploiting eligibility cutoffs (e.g., poverty line, age threshold) to estimate program effects near the cutoff.", example: "Comparing outcomes for households just above and just below the poverty line eligibility threshold." },
+            { term: "Propensity Score Matching", category: "evaluation", definition: "Matching treatment units with similar non-treatment units based on observable characteristics to estimate effects.", example: "Matching each trained farmer with an untrained farmer who has similar land size, crops, and education." },
+            { term: "Process Evaluation", category: "evaluation", definition: "Assessment of how a program is being implemented, examining fidelity, reach, and quality of delivery.", example: "Documenting whether training sessions followed the curriculum and how many participants attended." },
+            { term: "Formative Evaluation", category: "evaluation", definition: "Evaluation conducted during implementation to provide feedback for program improvement.", example: "Midterm assessment identifying implementation bottlenecks while there's still time to address them." },
+            { term: "Summative Evaluation", category: "evaluation", definition: "Evaluation conducted at program end to assess overall effectiveness and inform future decisions.", example: "Final evaluation determining whether the program achieved its objectives and should be continued." },
+            { term: "Realist Evaluation", category: "evaluation", definition: "Approach asking 'what works, for whom, in what circumstances?' using Context-Mechanism-Outcome configurations.", example: "Finding that microfinance works for women (context) through peer pressure (mechanism) leading to repayment (outcome)." },
+            { term: "Most Significant Change", category: "evaluation", definition: "Participatory method collecting and selecting stories of change to reveal unexpected outcomes and stakeholder values.", example: "Community members vote on which change stories best represent program impact, revealing local priorities." },
+            
+            // OECD-DAC (6)
+            { term: "Relevance", category: "oecd-dac", definition: "The extent to which an intervention's objectives and design respond to beneficiaries' needs and priorities.", example: "Assessing whether a vocational training program teaches skills actually demanded by local employers." },
+            { term: "Coherence", category: "oecd-dac", definition: "How well the intervention fits with other interventions (internal coherence) and broader policies and norms (external coherence). Added in 2019 revision.", example: "Checking whether a nutrition program aligns with national health policy and doesn't duplicate other NGO efforts." },
+            { term: "Effectiveness", category: "oecd-dac", definition: "The extent to which an intervention is achieving or is expected to achieve its objectives and results.", example: "Measuring whether a teacher training program actually improved student learning outcomes." },
+            { term: "Efficiency", category: "oecd-dac", definition: "How economically resources/inputs are converted to results. Could the same results be achieved with fewer resources?", example: "Comparing cost per child reached across different education delivery models." },
+            { term: "Impact (DAC)", category: "oecd-dac", definition: "The extent to which the intervention has generated significant positive or negative, intended or unintended, higher-level effects.", example: "Assessing whether an agricultural program contributed to regional food security and poverty reduction." },
+            { term: "Sustainability", category: "oecd-dac", definition: "The extent to which net benefits will continue after external support ends, including financial, institutional, and environmental dimensions.", example: "Evaluating whether community water committees can maintain wells without ongoing NGO support." },
+            
+            // LEARNING (7)
+            { term: "Adaptive Management", category: "learning", definition: "Management approach that uses monitoring data to make ongoing adjustments to program design and implementation.", example: "Quarterly reviews where teams examine data and decide whether to shift resources between activities." },
+            { term: "CLA (USAID)", category: "learning", definition: "Collaborating, Learning, and Adapting—USAID's framework for organizational learning and evidence-based management.", example: "Implementing pause-and-reflect sessions, learning questions, and knowledge management systems." },
+            { term: "Pause and Reflect", category: "learning", definition: "Regular (often quarterly) sessions where teams review monitoring data and discuss implications for program adaptation.", example: "A half-day meeting where field teams share what's working, what isn't, and propose adjustments." },
+            { term: "After Action Review", category: "learning", definition: "A structured debrief conducted after an activity or project to capture lessons learned.", example: "Post-campaign review asking: What was supposed to happen? What actually happened? Why? What can we learn?" },
+            { term: "Knowledge Management", category: "learning", definition: "Systematic processes for capturing, organizing, sharing, and applying organizational knowledge.", example: "A searchable database of past project reports, evaluations, and lessons learned." },
+            { term: "Learning Agenda", category: "learning", definition: "A set of prioritized questions that an organization seeks to answer through its monitoring, evaluation, and research activities.", example: "Strategic questions like 'What delivery models work best for reaching marginalized groups?' guiding MEL investments." },
+            { term: "Utilization-Focused Evaluation", category: "learning", definition: "Evaluation approach prioritizing the information needs of intended users to ensure findings are actually used.", example: "Involving program managers in evaluation design to ensure questions address their real decision needs." },
+            
+            // DONOR TERMS (8)
+            { term: "Logframe Approach (LFA)", category: "donor-terms", definition: "Project design and management method developed for USAID in 1969, using a 4x4 matrix to link objectives, indicators, and assumptions.", example: "The standard format required by most bilateral donors for project proposals and reporting." },
+            { term: "Results Framework", category: "donor-terms", definition: "A diagram or matrix showing the hierarchy of results (goal, purpose, outputs) and how they connect.", example: "A visual showing how training activities lead to outputs, outcomes, and contribute to the strategic objective." },
+            { term: "Performance Management Plan", category: "donor-terms", definition: "A document describing how a program will track and report on performance indicators.", example: "USAID-required document specifying indicators, baselines, targets, data sources, and responsibilities." },
+            { term: "Data Quality Assessment (DQA)", category: "donor-terms", definition: "Systematic review of data systems to verify accuracy, reliability, and integrity of reported results.", example: "Annual verification visits checking that reported numbers match source documents." },
+            { term: "Value for Money (VfM)", category: "donor-terms", definition: "Assessment of whether results justify costs, often using the '4Es': Economy, Efficiency, Effectiveness, Equity.", example: "FCDO analysis comparing cost-effectiveness across different education delivery approaches." },
+            { term: "Portfolio Review", category: "donor-terms", definition: "Assessment of multiple projects or grants together to identify patterns, gaps, and strategic insights.", example: "Analyzing all health grants in a region to see which approaches are most effective." },
+            { term: "Theory-Based Evaluation", category: "donor-terms", definition: "Evaluation approaches that test the assumptions and causal logic underlying a program's theory of change.", example: "Examining whether each link in the causal chain held—did training lead to knowledge, did knowledge lead to practice?" },
+            { term: "Beneficiary Feedback Mechanism", category: "donor-terms", definition: "Systems allowing program participants to provide input, complaints, and suggestions.", example: "Toll-free hotline, suggestion boxes, or community meetings where beneficiaries can report concerns." }
+        ];
+        
+        let currentFilter = 'all';
+        
+        function renderTerms(termsToRender) {
+            const grid = document.getElementById('terms-grid');
+            
+            if (termsToRender.length === 0) {
+                grid.innerHTML = '<div class="no-results">No terms found matching your search.</div>';
+                return;
+            }
+            
+            grid.innerHTML = termsToRender.map(t => `
+                <div class="term-card" data-category="${t.category}">
+                    <div class="term-header">
+                        <span class="term-name">${t.term}</span>
+                        <span class="term-category category-${t.category}">${t.category.replace(/-/g, ' ')}</span>
+                    </div>
+                    <p class="term-definition">${t.definition}</p>
+                    <div class="term-example">
+                        <div class="term-example-label">Example</div>
+                        <div class="term-example-text">${t.example}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function filterTerms() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            let filtered = terms;
+            
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(t => t.category === currentFilter);
+            }
+            
+            if (searchTerm) {
+                filtered = filtered.filter(t => 
+                    t.term.toLowerCase().includes(searchTerm) || 
+                    t.definition.toLowerCase().includes(searchTerm) ||
+                    t.example.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            renderTerms(filtered);
+        }
+        
+        function setFilter(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.category === category);
+            });
+            filterTerms();
+        }
+        
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            document.querySelector('.theme-toggle').textContent = newTheme === 'dark' ? '🌙 Dark' : '☀️ Light';
+            localStorage.setItem('impactmojo-theme', newTheme);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('impactmojo-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            document.querySelector('.theme-toggle').textContent = saved === 'dark' ? '🌙 Dark' : '☀️ Light';
+            renderTerms(terms);
+        });
     </script>
 </body>
 </html>
