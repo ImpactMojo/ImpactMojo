@@ -5800,58 +5800,59 @@ footer::before {
 
 
 /* ========== PREMIUM TIER CARD STYLING ========== */
-/* Hide the pink tooltip completely - black overlay from premium.js is sufficient */
+/* Hide the pink tooltip pseudo-elements - lock overlay from premium.js is sufficient */
 [data-required-tier]::before,
 [data-required-tier]::after {
     display: none !important;
     content: none !important;
 }
 
-/* Fix positioning of black overlay from premium.js */
-/* Move it down so it doesn't cover the tier badge - CARDS ONLY */
+/* --- CARD-GRID premium cards --- */
+.card[data-required-tier] {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Keep PREMIUM badge header visible above the lock overlay */
+.card[data-required-tier] .card-header {
+    position: relative;
+    z-index: 25;
+}
+
+/* Content inside the <a> sits below overlay */
+.card[data-required-tier] > a {
+    position: relative;
+    z-index: 1;
+}
+
+/* CRITICAL: let premium.js lock overlay keep its own position:absolute and z-index:20.
+   The old > * rule was overriding these with position:relative and z-index:1. */
+.card[data-required-tier] > .premium-lock-overlay,
+.card[data-required-tier] > .premium-tier-badge {
+    /* Do NOT override - let premium.js injected styles control these */
+}
+
+/* Offset overlay below the PREMIUM badge row on cards */
 .card .premium-lock-overlay {
-    top: 75px !important; /* Below the tier badge */
+    top: 75px !important;
     border-radius: 0 0 16px 16px !important;
 }
 
-/* Ensure the black overlay links to premium page */
-.card[data-required-tier] {
-    position: relative;
-    overflow: visible;
+/* Hide Save/Compare action buttons on premium-gated cards */
+.card[data-required-tier] .imx-card-actions,
+.premium-locked .imx-card-actions {
+    display: none !important;
 }
 
-/* Keep tier badge visible above overlay */
-.card[data-required-tier] .card-header {
-    position: relative;
-    z-index: 10;
-}
-
-/* Ensure cards don't clip content - CARDS ONLY */
-.card[data-required-tier] {
-    overflow: visible !important;
-}
-
-/* Modal items need hidden overflow so lock overlay stays contained */
+/* --- MODAL-ITEM premium items --- */
 .modal-item[data-required-tier] {
     position: relative;
     overflow: hidden !important;
 }
 
-/* Hide Save/Compare action buttons on locked premium cards */
-.premium-locked .imx-card-actions,
-.card[data-required-tier] .imx-card-actions {
-    display: none !important;
-}
-
-.card[data-required-tier] > *,
-.modal-item[data-required-tier] > * {
-    position: relative;
-    z-index: 1;
-}
-
-/* Ensure card content doesn't overlap */
-.card[data-required-tier] > a,
-.card[data-required-tier] > * {
+/* Content inside modal items sits below overlay */
+.modal-item[data-required-tier] > .modal-item-icon,
+.modal-item[data-required-tier] > .modal-item-content {
     position: relative;
     z-index: 1;
 }
