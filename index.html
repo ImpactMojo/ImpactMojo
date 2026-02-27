@@ -178,7 +178,7 @@ function toggleMobileDropdown(event, element) {
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!-- Version 9.12.0 - February 26, 2026 - 9 flagships (added Constitution & Law, SEL coming soon), VaniScribe premium card, Visualization Cookbook premium card, fixed Smart Lists icon color, fixed si_Tool 404, updated counts and tour -->
+<!-- Version 9.13.0 - February 27, 2026 - Premium card title+tooltip fix, hover benefits popup, Law/SEL status updates, typo fixes, count consistency audit, SEO/speed optimizations -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
 <script>
@@ -5921,63 +5921,151 @@ footer::before {
 
 
 /* ========== PREMIUM TIER CARD STYLING ========== */
-/* Overrides must use !important because js/premium.js injects its own
-   <style id="premium-gating-styles"> AFTER this CSS loads.
-   premium.js also sets inline styles on elements (element.style.position). */
+/* Overrides use !important to beat js/premium.js injected styles.
+   premium.js injects <style id="premium-gating-styles"> at runtime and
+   also sets element.style.position = 'relative' inline on each card.
+   Overlay: .premium-lock-overlay { position:absolute; inset:0; z-index:20 }
+   Badge:   .premium-tier-badge  { position:absolute; top:0.5rem; z-index:10 }
+   Border:  .premium-locked::after { position:absolute; inset:0; z-index:5 }  */
 
-/* 1. Hide legacy tooltip pseudo-elements */
-[data-required-tier]::before,
-[data-required-tier]::after {
-    display: none !important;
-    content: none !important;
-}
-
-/* 2. Cards MUST contain all children (badge + overlay). 
-   premium.js sets element.style.position='relative' inline, which is fine.
-   The critical part is overflow:hidden to stop badge/overlay spilling out. */
+/* 1. Cards MUST contain all positioned children within bounds. */
 .card[data-required-tier],
 .card.premium-locked {
     overflow: hidden !important;
 }
 
-/* 3. Also override the dashed-border ::after from premium.js 
-   (.premium-locked::after { inset:0; position:absolute; border:2px dashed; z-index:5 })
-   Keep it but make sure it respects card bounds */
+/* 2. Soften the dashed-border pseudo from premium.js */
 .premium-locked::after {
     border-radius: inherit !important;
+    border-color: rgba(148, 163, 184, 0.15) !important;
 }
 
-/* 4. Card header must sit above the lock overlay (z-index:20 in premium.js) */
+/* 3. The <a> wrapper inside premium cards: make it a positioned
+   stacking layer ABOVE the overlay so ALL its children (header,
+   title, stars, description) render on top. This is the key fix:
+   one rule elevates everything inside the link above the overlay. */
+.card[data-required-tier] > a {
+    position: relative !important;
+    z-index: 25 !important;
+    display: block;
+}
+
+/* 4. Card header also above overlay (belt+suspenders) */
 .card[data-required-tier] .card-header {
     position: relative !important;
     z-index: 25 !important;
 }
 
-/* 5. Tier badge (Practitioner/Professional pill) must be above overlay.
-   premium.js sets: position:absolute; top:0.5rem; right:0.5rem; z-index:10
-   We just boost z-index to beat the overlay's z-index:20. */
+/* 5. Tier badge above overlay */
 .premium-tier-badge {
-    z-index: 25 !important;
+    z-index: 30 !important;
 }
 
-/* 6. Lock overlay: premium.js uses inset:0 (=top:0). Push it down so the 
-   card header + tier badge remain visible. Override the dark 85% background
-   with a lighter glassmorphism effect. */
+/* 6. Lock overlay: pushed below header+title so users see what
+   the card is. Title area ~120px, overlay starts below that. */
 .premium-lock-overlay {
-    top: 75px !important;
+    top: 120px !important;
     border-radius: 0 0 16px 16px !important;
     background: linear-gradient(
-        135deg,
-        rgba(15, 23, 42, 0.5) 0%,
-        rgba(30, 41, 59, 0.6) 100%
+        180deg,
+        rgba(15, 23, 42, 0.35) 0%,
+        rgba(15, 23, 42, 0.65) 40%,
+        rgba(15, 23, 42, 0.8) 100%
     ) !important;
     backdrop-filter: blur(6px) saturate(120%) !important;
     -webkit-backdrop-filter: blur(6px) saturate(120%) !important;
 }
 
-/* 7. Modal items with premium gating */
+/* 7. Lock content box (the unlock prompt inside overlay) */
+.premium-lock-content {
+    background: rgba(15, 23, 42, 0.55) !important;
+    border-radius: 12px !important;
+    padding: 1rem 1.5rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* 8. Modal items with premium gating */
 .modal-item[data-required-tier] {
     overflow: hidden !important;
+}
+
+/* 9. Hover tooltip: positioned by JS to avoid overflow:hidden clipping.
+   See premium-tooltip script near end of file. */
+.card[data-required-tier] {
+    cursor: pointer;
+}
+.imx-premium-tooltip {
+    position: fixed;
+    max-width: 320px;
+    padding: 0.85rem 1.1rem;
+    background: rgba(15, 23, 42, 0.97);
+    color: #e2e8f0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    border-radius: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    text-align: left;
+    white-space: normal;
+}
+.imx-premium-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.imx-premium-tooltip-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #fff;
+    margin-bottom: 0.35rem;
+    font-family: 'Poppins', sans-serif;
+}
+.imx-premium-tooltip-desc {
+    color: #cbd5e1;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    margin-bottom: 0.5rem;
+}
+.imx-premium-tooltip-tier {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    background: rgba(99, 102, 241, 0.2);
+    color: #a5b4fc;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* 10. Premium card content: title, stars, description always visible
+   above the overlay. The > a wrapper at z-index:25 handles this,
+   but we also make sure individual elements are positioned. */
+.card[data-required-tier] .card-title {
+    position: relative;
+    z-index: 26;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary, #f8fafc);
+    margin-bottom: 0.35rem;
+    line-height: 1.3;
+}
+.card[data-required-tier] .star-rating {
+    position: relative;
+    z-index: 26;
+}
+.card[data-required-tier] .card-description {
+    position: relative;
+    z-index: 26;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--text-secondary, #94a3b8);
+    margin-top: 0.25rem;
 }
 
 
@@ -6313,6 +6401,10 @@ footer::before {
     .card[data-required-tier] {
         position: relative !important;
         overflow: hidden !important;
+    }
+    .card[data-required-tier] > a {
+        position: relative !important;
+        z-index: 25 !important;
     }
     
     /* === HIDE ON MOBILE === */
@@ -7184,7 +7276,7 @@ body.dark-mode .v3-dot {
         Learn.<br>
         <span class="v3-highlight">Make Impact.</span>
     </h1>
-    <p class="v3-hero-description">A curious explorer's guide to development education—courses, labs, and tools for social impact across South Asia.</p>
+    <p class="v3-hero-description">A curious explorer's guide to development education: courses, labs, and tools for social impact across South Asia.</p>
 </div>
 
 <!-- Hero CTAs - V3 Layout with Speech Bubble -->
@@ -7452,7 +7544,7 @@ Join the PLC on WhatsApp
                 <!-- Card Body -->
                 <div style="padding: 1.5rem;">
                     <p class="imx-card-desc">
-                        A comprehensive journey through Gandhi's political thought—from Swaraj and Satyagraha to Gram Swaraj and Trusteeship. Includes an interactive lexicon with 55+ annotated terms.
+                        A comprehensive journey through Gandhi's political thought, from Swaraj and Satyagraha to Gram Swaraj and Trusteeship. Includes an interactive lexicon with 55+ annotated terms.
                     </p>
                     
                     <!-- Features -->
@@ -7514,7 +7606,7 @@ Join the PLC on WhatsApp
                 <!-- Card Body -->
                 <div style="padding: 1.5rem;">
                     <p class="imx-card-desc">
-                        Master the foundational theories and empirical approaches of development economics—from growth models and poverty measurement to institutional economics and behavioral insights.
+                        Master the foundational theories and empirical approaches of development economics, from growth models and poverty measurement to institutional economics and behavioral insights.
                     </p>
                     
                     <!-- Features -->
@@ -7576,7 +7668,7 @@ Join the PLC on WhatsApp
                 <!-- Card Body -->
                 <div style="padding: 1.5rem;">
                     <p class="imx-card-desc">
-                        Master the art and science of data visualization—from Tufte's principles to interactive dashboards. Learn to communicate development data effectively with chart choosers, color tools, and hands-on exercises.
+                        Master the art and science of data visualization, from Tufte's principles to interactive dashboards. Learn to communicate development data effectively with chart choosers, color tools, and hands-on exercises.
                     </p>
                     
                     <!-- Features -->
@@ -7636,7 +7728,7 @@ Join the PLC on WhatsApp
                 <!-- Card Body -->
                 <div style="padding: 1.5rem;">
                     <p class="imx-card-desc">
-                        Navigate the AI revolution in development work—from predictive targeting to NLP for qualitative data. Learn when AI helps, when it harms, and how to deploy ML responsibly in M&E contexts across South Asia and Africa.
+                        Navigate the AI revolution in development work, from predictive targeting to NLP for qualitative data. Learn when AI helps, when it harms, and how to deploy ML responsibly in M&E contexts across South Asia and Africa.
                     </p>
                     
                     <!-- Features -->
@@ -7697,7 +7789,7 @@ Join the PLC on WhatsApp
                 <!-- Card Body -->
                 <div style="padding: 1.5rem;">
                     <p class="imx-card-desc">
-                        Master the complete MEL cycle—from designing theories of change and SMART indicators to rigorous data collection, analysis, and adaptive learning. Features 65-term interactive lexicon and hands-on Excel exercises with South Asian case studies.
+                        Master the complete MEL cycle, from designing theories of change and SMART indicators to rigorous data collection, analysis, and adaptive learning. Features 65-term interactive lexicon and hands-on Excel exercises with South Asian case studies.
                     </p>
                     
                     <!-- Features -->
@@ -7757,7 +7849,7 @@ Join the PLC on WhatsApp
                 <!-- Card Body -->
                 <div style="padding: 1.5rem;">
                     <p class="imx-card-desc">
-                        Explore how India's rights-based programs—RTI, NREGA, Food Security Act, Forest Rights—create insurance against shocks and enable poor households to pursue aspirations. Bridges Appadurai's "capacity to aspire" with policy practice.
+                        Explore how India's rights-based programs (RTI, NREGA, Food Security Act, Forest Rights) create insurance against shocks and enable poor households to pursue aspirations. Bridges Appadurai's "capacity to aspire" with policy practice.
                     </p>
                     
                     <!-- Features -->
@@ -7975,7 +8067,7 @@ Join the PLC on WhatsApp
         <div style="text-align: center;">
             <p style="color: var(--text-secondary, #64748b); font-size: 0.9rem; margin: 0;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; vertical-align: middle; margin-right: 0.35rem;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <a href="#courses" style="color: #6366F1; text-decoration: none; font-weight: 500;">Explore our 101 courses</a> for more learning paths
+                <a href="#courses" style="color: #6366F1; text-decoration: none; font-weight: 500;">Explore all courses</a> for more learning paths
             </p>
         </div>
         
@@ -8043,6 +8135,8 @@ Join the PLC on WhatsApp
 <li><a class="imx-link" href="https://101.impactmojo.in/SRHR-basics" title="Srhr Basics"><span class="badge badge-courses">Course</span><span class="imx-text">Srhr Basics</span></a></li>
 <li><a class="imx-link" href="https://101.impactmojo.in/multivariate-basics" title="Multivariate Basics"><span class="badge badge-courses">Course</span><span class="imx-text">Multivariate Basics</span></a></li>
 <li><a class="imx-link" href="https://101.impactmojo.in/bcc-comms" title="Bcc Comms"><span class="badge badge-courses">Course</span><span class="imx-text">Bcc Comms</span></a></li>
+<li><a class="imx-link" href="/courses/dataviz/" title="Data Visualization for Impact"><span class="badge badge-courses" style="background:#84CC16;">Flagship</span><span class="imx-text">Seeing Data: Visualization</span></a></li>
+<li><a class="imx-link" href="/courses/devai/" title="AI for Impact"><span class="badge badge-courses" style="background:#8B5CF6;">Flagship</span><span class="imx-text">AI for Impact</span></a></li>
         </ul>
         <div class="imx-actions">
           <a class='imx-btn' href='/handouts#data-analysis'>View all</a>
@@ -8082,6 +8176,7 @@ Join the PLC on WhatsApp
 <li><a class="imx-link" href="https://101.impactmojo.in/policy-advocacy-lab" title="Policy Advocacy Lab"><span class="badge badge-labs">Lab</span><span class="imx-text">Policy Advocacy Lab</span></a></li>
 <li><a class="imx-link" href="https://101.impactmojo.in/network-effects-game" title="Network Effects (Game)"><span class="badge badge-games">Game</span><span class="imx-text">Network Effects (Game)</span></a></li>
 <li><a class="imx-link" href="https://101.impactmojo.in/opportunity-cost-game" title="Opportunity Cost (Game)"><span class="badge badge-games">Game</span><span class="imx-text">Opportunity Cost (Game)</span></a></li>
+<li><a class="imx-link" href="/courses/devecon/" title="Development Economics"><span class="badge badge-courses" style="background:#F97316;">Flagship</span><span class="imx-text">Development Economics</span></a></li>
 <li><a class="imx-link" href="/courses/poa/" title="Politics of Aspiration"><span class="badge badge-courses" style="background:#D129C3;">Flagship</span><span class="imx-text">Politics of Aspiration</span></a></li>
         </ul>
         <div class="imx-actions">
@@ -8955,7 +9050,7 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 <rect height="7" width="7" x="14" y="14"></rect>
 <rect height="7" width="7" x="3" y="14"></rect>
 </svg>
-                    View All 45 Courses
+                    View All 48 Courses
                 </button>
 </div>
 </section>
@@ -9483,7 +9578,7 @@ Workshops & Master Classes
         Training for Your Team or Organization?
     </h3>
     <p style="color: var(--text-secondary, #64748b); max-width: 550px; margin: 0 auto 1.5rem; line-height: 1.6; font-size: 1rem;">
-        We offer tailored cohort programs for organizations—customized to your team's context, with hands-on exercises using your own data and case studies from your sector.
+        We offer tailored cohort programs for organizations, customized to your team's context, with hands-on exercises using your own data and case studies from your sector.
     </p>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;">
         <a href='/workshops' style='display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.75rem; background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%); color: white; text-decoration: none; font-weight: 600; border-radius: 10px; font-size: 0.95rem; transition: all 0.3s ease; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);'>
@@ -9521,7 +9616,7 @@ Workshops & Master Classes
                 </div>
             </div>
             <p style="color: var(--text-secondary, #64748b); line-height: 1.7; font-size: 1rem; margin-bottom: 1.5rem;">
-                Cohort-based practice sessions that build practitioner skills through <strong>doing, not just learning</strong>. 90-minute bi-weekly sessions in Delhi, Bangalore, or online. Inspired by rationality workshops—adapted for development economics.
+                Cohort-based practice sessions that build practitioner skills through <strong>doing, not just learning</strong>. 90-minute bi-weekly sessions in Delhi, Bangalore, or online. Inspired by rationality workshops, adapted for development economics.
             </p>
             
             <!-- Stats -->
@@ -9569,6 +9664,16 @@ Workshops & Master Classes
 <section class="section" id="premium">
 <h2 class="section-title">Premium Offerings</h2>
 <p class="section-subtitle">Advanced tools and in-depth content for serious practitioners</p>
+<div style="max-width: 800px; margin: 0 auto 2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;">
+    <div style="flex: 1; min-width: 220px; padding: 1rem 1.25rem; border-radius: 12px; background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.15);">
+        <div style="font-weight: 700; font-size: 0.85rem; color: #a5b4fc; margin-bottom: 0.4rem;">Practitioner Tier</div>
+        <div style="font-size: 0.78rem; color: var(--text-secondary, #94a3b8); line-height: 1.5;">Field Notes, RQ Builder Pro, completion certificates, and community access</div>
+    </div>
+    <div style="flex: 1; min-width: 220px; padding: 1rem 1.25rem; border-radius: 12px; background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.15);">
+        <div style="font-weight: 700; font-size: 0.85rem; color: #c4b5fd; margin-bottom: 0.4rem;">Professional Tier</div>
+        <div style="font-size: 0.78rem; color: var(--text-secondary, #94a3b8); line-height: 1.5;">Qual Lab, Stats Assistant, VaniScribe AI, DevData Practice, Viz Cookbook, DevEcon Toolkit, and priority coaching</div>
+    </div>
+</div>
 <div class="cards-grid">
 <div class="card" data-required-tier="practitioner" data-tier-benefits="Upgrade to Practitioner (₹399/mo): Unlock field insights, TOC Workbench Pro, completion certificates & community access!">
 <a href="https://marginmuse.space/themarginmuse" rel="noopener noreferrer" target="_blank">
@@ -10105,7 +10210,23 @@ Workshops & Master Classes
             <div class="whats-new-card-title">Premium Content</div>
             <div class="whats-new-card-desc">Field toolkits, AI-powered tools, DevData Practice datasets, DevEconomics Toolkit, and advanced practitioner materials.</div>
             <span class="whats-new-card-tag tag-improved">Updated</span>
-            <div class="whats-new-card-expand"><div class="whats-new-card-expand-content"><strong>Premium includes:</strong><ul><li>Field Notes from a Development Economist (Practitioner tier)</li><li>Qualitative Research Lab and Statistical Analysis Assistant (Professional)</li><li>VaniScribe AI Transcription for South Asian languages (Professional)</li><li>VaniScribe AI Transcription for 10+ South Asian languages (Professional)</li><li>DevData Practice: 36 dataset generators with 840k+ rows (Professional)</li><li>Visualization Cookbook: 14 chart types with production-ready Python code (Professional)</li><li>DevEconomics Toolkit: 11 interactive Shiny apps for impact evaluation and poverty analysis (Professional)</li></ul></div><a href="/premium" class="whats-new-card-action" onclick="event.stopPropagation();"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2"/></svg>Explore Premium</a></div>
+            <div class="whats-new-card-expand"><div class="whats-new-card-expand-content"><strong>Premium includes:</strong><ul><li>Field Notes from a Development Economist (Practitioner tier)</li><li>Qualitative Research Lab and Statistical Analysis Assistant (Professional)</li><li>VaniScribe AI Transcription for 10+ South Asian languages (Professional)</li><li>DevData Practice: 36 dataset generators with 840k+ rows (Professional)</li><li>Visualization Cookbook: 14 chart types with production-ready Python code (Professional)</li><li>DevEconomics Toolkit: 11 interactive Shiny apps for impact evaluation and poverty analysis (Professional)</li></ul></div><a href="/premium" class="whats-new-card-action" onclick="event.stopPropagation();"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2"/></svg>Explore Premium</a></div>
+        </div>
+        <div class="whats-new-card card-notes" onclick="toggleWhatsNewCard(this)">
+            <span class="whats-new-toggle-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+            <div class="whats-new-card-icon icon-notes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#si_Balance"/></svg></div>
+            <div class="whats-new-card-title">Constitution & Law</div>
+            <div class="whats-new-card-desc">New flagship: Indian Constitution, fundamental rights, judicial review, and rights-based development frameworks. 13 modules.</div>
+            <span class="whats-new-card-tag tag-new">New Course</span>
+            <div class="whats-new-card-expand"><div class="whats-new-card-expand-content"><strong>Covers:</strong><ul><li>Constitutional design and the basic structure doctrine</li><li>Fundamental rights, DPSPs, and their intersection with development</li><li>Judicial activism, PIL, and environmental jurisprudence</li><li>Interactive lexicon with 60+ constitutional and legal terms</li></ul></div><a href="/courses/law/" class="whats-new-card-action" onclick="event.stopPropagation();"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Preview Course</a></div>
+        </div>
+        <div class="whats-new-card card-streak" onclick="toggleWhatsNewCard(this)">
+            <span class="whats-new-toggle-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+            <div class="whats-new-card-icon icon-streak"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#si_Heart_broken"/></svg></div>
+            <div class="whats-new-card-title">Social-Emotional Learning</div>
+            <div class="whats-new-card-desc">New flagship for development practitioners: burnout prevention, empathy, resilience, and team wellbeing. 13 modules.</div>
+            <span class="whats-new-card-tag tag-new">Coming Soon</span>
+            <div class="whats-new-card-expand"><div class="whats-new-card-expand-content"><strong>Covers:</strong><ul><li>Burnout prevention and compassion fatigue in development work</li><li>Emotional regulation, team dynamics, and conflict resolution</li><li>Self-care frameworks grounded in South Asian contexts</li><li>Interactive lexicon with 55+ SEL and wellbeing terms</li></ul></div><a href="/courses/sel/" class="whats-new-card-action" onclick="event.stopPropagation();"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Preview Course</a></div>
         </div>
         <div class="whats-new-card card-bookmarks" onclick="toggleWhatsNewCard(this)">
             <span class="whats-new-toggle-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
@@ -10158,11 +10279,11 @@ Workshops & Master Classes
                     Have you enjoyed learning with us? Share your experience with your network and help fellow development professionals discover ImpactMojo!
                 </div>
                 <div class="support-share-buttons">
-                    <a href="https://www.linkedin.com/feed/?shareActive=true&text=%F0%9F%8E%93%20I%27ve%20been%20learning%20with%20ImpactMojo%20-%20a%20fantastic%20FREE%20platform%20for%20development%20professionals!%0A%0A%E2%9C%85%2038%2B%20courses%20on%20MEAL%2C%20Gender%20Studies%2C%20Development%20Economics%0A%E2%9C%85%20Interactive%20labs%20and%20economics%20games%0A%E2%9C%85%20Perfect%20for%20NGO%20teams%2C%20students%20%26%20researchers%0A%0AIf%20you%20work%20in%20the%20development%20sector%2C%20check%20it%20out%3A%20https%3A%2F%2Fwww.impactmojo.in%0A%0A%23DevelopmentSector%20%23MEAL%20%23SocialImpact%20%23FreeEducation%20%23NGO%20%23ImpactMojo" rel="noopener noreferrer" target="_blank" class="support-share-btn support-share-linkedin">
+                    <a href="https://www.linkedin.com/feed/?shareActive=true&text=%F0%9F%8E%93%20I%27ve%20been%20learning%20with%20ImpactMojo%20-%20a%20fantastic%20FREE%20platform%20for%20development%20professionals!%0A%0A%E2%9C%85%2050%2B%20courses%2C%20labs%20%26%20tools%20for%20development%20professionals%0A%E2%9C%85%20Interactive%20labs%20and%20economics%20games%0A%E2%9C%85%20Perfect%20for%20NGO%20teams%2C%20students%20%26%20researchers%0A%0AIf%20you%20work%20in%20the%20development%20sector%2C%20check%20it%20out%3A%20https%3A%2F%2Fwww.impactmojo.in%0A%0A%23DevelopmentSector%20%23MEAL%20%23SocialImpact%20%23FreeEducation%20%23NGO%20%23ImpactMojo" rel="noopener noreferrer" target="_blank" class="support-share-btn support-share-linkedin">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect height="12" width="4" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                         LinkedIn
                     </a>
-                    <a href="https://wa.me/?text=%F0%9F%8E%93%20I%27ve%20been%20learning%20with%20ImpactMojo%20-%20a%20fantastic%20FREE%20platform%20for%20development%20professionals!%0A%0A%E2%9C%85%2038%2B%20courses%20on%20MEAL%2C%20Gender%20Studies%2C%20Development%20Economics%0A%E2%9C%85%20Interactive%20labs%20and%20economics%20games%0A%E2%9C%85%20Perfect%20for%20NGO%20teams%2C%20students%20%26%20researchers%0A%0AIf%20you%20work%20in%20the%20development%20sector%2C%20check%20it%20out%3A%20https%3A%2F%2Fwww.impactmojo.in" rel="noopener noreferrer" target="_blank" class="support-share-btn support-share-whatsapp">
+                    <a href="https://wa.me/?text=%F0%9F%8E%93%20I%27ve%20been%20learning%20with%20ImpactMojo%20-%20a%20fantastic%20FREE%20platform%20for%20development%20professionals!%0A%0A%E2%9C%85%2050%2B%20courses%2C%20labs%20%26%20tools%20for%20development%20professionals%0A%E2%9C%85%20Interactive%20labs%20and%20economics%20games%0A%E2%9C%85%20Perfect%20for%20NGO%20teams%2C%20students%20%26%20researchers%0A%0AIf%20you%20work%20in%20the%20development%20sector%2C%20check%20it%20out%3A%20https%3A%2F%2Fwww.impactmojo.in" rel="noopener noreferrer" target="_blank" class="support-share-btn support-share-whatsapp">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5.01 13.5c-.25.7-.99 1.31-1.63 1.49-.42.11-.97.2-2.81-.6-2.36-.99-3.87-3.37-3.99-3.52-.12-.15-.97-1.29-.97-2.46s.61-1.74.83-1.98c.21-.24.47-.3.63-.3.15 0 .31 0 .44.01.14 0 .34-.05.53.4.19.46.65 1.59.71 1.7.06.12.1.25.02.4-.08.15-.12.24-.24.37-.11.13-.24.29-.35.39-.11.1-.23.21-.1.41.13.21.59.97 1.26 1.57.87.78 1.6 1.02 1.83 1.14.23.11.36.1.49-.06.13-.17.56-.65.71-.88.15-.22.3-.19.5-.11.21.08 1.31.62 1.54.73.23.12.38.17.44.27.06.09.06.54-.13 1.06z"/></svg>
                         WhatsApp
                     </a>
@@ -10295,10 +10416,10 @@ Workshops & Master Classes
         Why We Built ImpactMojo
     </h3>
     <p style="color: var(--text-secondary, #64748b); line-height: 1.75; margin: 0 0 1rem 0; font-size: 1rem;">
-        After years of field research and teaching across South Asia, we kept encountering the same frustration: rigorous development education was either locked behind expensive degrees or scattered across dense academic papers. Practitioners in the field—the people actually implementing programs—deserved better.
+        After years of field research and teaching across South Asia, we kept encountering the same frustration: rigorous development education was either locked behind expensive degrees or scattered across dense academic papers. Practitioners in the field, the people actually implementing programs, deserved better.
     </p>
     <p style="color: var(--text-secondary, #64748b); line-height: 1.75; margin: 0; font-size: 1rem;">
-        We built ImpactMojo to bridge that gap—<strong style="color: var(--text-primary, #1e293b);">PhD-level content with practitioner-level accessibility</strong>. Every course, lab, and game is designed for people who need to apply these concepts tomorrow, not just understand them in theory. It's playful, earthy, wise, and accessible—because learning shouldn't feel like suffering.
+        We built ImpactMojo to bridge that gap. <strong style="color: var(--text-primary, #1e293b);">PhD-level content with practitioner-level accessibility</strong>. Every course, lab, and game is designed for people who need to apply these concepts tomorrow, not just understand them in theory. It's playful, earthy, wise, and accessible, because learning shouldn't feel like suffering.
     </p>
 </div>
 
@@ -10698,7 +10819,7 @@ Workshops & Master Classes
 <div class="modal-item-content">
 <a href="https://101.impactmojo.in/community-lab" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">
-                        Communinty Development and Engagement Lab
+                        Community Development and Engagement Lab
                         <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -11256,7 +11377,7 @@ Workshops & Master Classes
 <div class="modal-item-content">
 <a href="https://101.impactmojo.in/vaniscribe" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">
-                        VaniScribe — AI Transcription for Development
+                        VaniScribe: AI Transcription for Development
                         <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -11409,7 +11530,7 @@ Workshops & Master Classes
 <path d="M12 14l9-5-9-5-9 5z"></path>
 <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
 </svg>
-                        All Courses (46)
+                        All Courses (48)
                     </h2>
 <span class="close" onclick="closeModal('coursesModal')">×</span>
 </div>
@@ -11454,7 +11575,7 @@ Workshops & Master Classes
 <span class="imx-star-text">4.9</span>
 </div>
 </div>
-<p class="modal-item-description">Master foundational theories and empirical approaches in development economics—from growth models and poverty measurement to institutional economics and behavioral insights. 12 modules covering Solow model, RCTs, structural transformation, and capabilities approach with AI study companion and interactive tools.</p>
+<p class="modal-item-description">Master foundational theories and empirical approaches in development economics, from growth models and poverty measurement to institutional economics and behavioral insights. 12 modules covering Solow model, RCTs, structural transformation, and capabilities approach with AI study companion and interactive tools.</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Open -></span>
 </div>
@@ -11477,7 +11598,7 @@ Workshops & Master Classes
 <span class="imx-star-text">4.9</span>
 </div>
 </div>
-<p class="modal-item-description">Navigate the AI revolution in development work—from predictive targeting to NLP for qualitative data. 12 modules covering machine learning fundamentals, computer vision, survey automation, algorithmic bias, and real-time monitoring. Includes interactive lexicon with 50+ ML/AI terms and global case studies from South Asia and Africa.</p>
+<p class="modal-item-description">Navigate the AI revolution in development work, from predictive targeting to NLP for qualitative data. 12 modules covering machine learning fundamentals, computer vision, survey automation, algorithmic bias, and real-time monitoring. Includes interactive lexicon with 50+ ML/AI terms and global case studies from South Asia and Africa.</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Open -></span>
 </div>
@@ -11523,7 +11644,7 @@ Workshops & Master Classes
 <span class="imx-star-text">4.9</span>
 </div>
 </div>
-<p class="modal-item-description">Master the complete MEL cycle for development programs—from designing theories of change and SMART indicators to rigorous data collection, statistical analysis, and adaptive learning. 13 modules with 65-term interactive lexicon, hands-on Excel exercises, and South Asian case studies from MGNREGA, ASER, and health programs.</p>
+<p class="modal-item-description">Master the complete MEL cycle for development programs, from designing theories of change and SMART indicators to rigorous data collection, statistical analysis, and adaptive learning. 13 modules with 65-term interactive lexicon, hands-on Excel exercises, and South Asian case studies from MGNREGA, ASER, and health programs.</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Open -></span>
 </div>
@@ -11546,7 +11667,7 @@ Workshops & Master Classes
 <span class="imx-star-text">4.9</span>
 </div>
 </div>
-<p class="modal-item-description">Explore how India's rights-based programs—RTI, NREGA, Food Security Act, Forest Rights—create insurance against shocks and enable poor households to pursue aspirations. 13 modules bridging Appadurai's "capacity to aspire" with Debraj Ray's aspirations economics and grassroots practice. Features 60-term interactive lexicon and policy analysis tools.</p>
+<p class="modal-item-description">Explore how India's rights-based programs (RTI, NREGA, Food Security Act, Forest Rights) create insurance against shocks and enable poor households to pursue aspirations. 13 modules bridging Appadurai's "capacity to aspire" with Debraj Ray's aspirations economics and grassroots practice. Features 60-term interactive lexicon and policy analysis tools.</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Open -></span>
 </div>
@@ -14025,11 +14146,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Premium / Pricing
     { re: /\bpremium\b(?!.*(what|include|benefit|price))/i,
-      a: "Premium provides **curated resource packs**, **deeper dives**, and **advanced labs**. For the latest scope and any pricing updates, please refer to the live Premium page." },
+      a: "Premium offers two tiers. **Practitioner** includes Field Notes from a Development Economist, RQ Builder Pro, certificates, and community access. **Professional** adds Qualitative Research Lab, Statistical Analysis Assistant, VaniScribe AI Transcription (10+ South Asian languages), DevData Practice (36 generators, 840k+ rows), Visualization Cookbook (14 chart types), and the DevEconomics Toolkit (11 Shiny apps). Visit the Premium page for details." },
     { re: /\b(what('| i)?s|about).+premium|\bpremium\b.+(include|cover|benefit)/i,
-      a: "Premium includes curated resources, deeper dives, and access to advanced labs. Exact inclusions can evolve"" please check the live Premium page for the current details." },
+      a: "**Practitioner Tier** includes Field Notes, RQ Builder Pro, completion certificates, and community access. **Professional Tier** adds Qual Research Lab, Stats Assistant, VaniScribe AI Transcription, DevData Practice datasets, Visualization Cookbook, and the DevEconomics Toolkit with 11 interactive Shiny apps. See the Premium page for current pricing." },
     { re: /\b(price|cost|fee|paid|free).+premium|\bpremium.+(price|cost|fee)/i,
-      a: "Premium pricing and scope may change over time. The **Premium** page is the source of truth for current details." },
+      a: "Premium has two tiers: **Practitioner** and **Professional**. Pricing and full details are on the live Premium page. All 9 flagship courses, 101-level courses, labs, and games remain **free** forever." },
 
     // Courses (catalog, objectives, level, format)
     { re: /\b(list|show|see).+course(s)?\b|^\s*courses?\s*$/i,
@@ -14141,7 +14262,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Services: Dojos, Workshops, Coaching
     { re: /\bdojo(s)?\b/i,
-      a: "**Dojos** are practice-based skill sessions—90-minute cohort workshops that build practitioner skills through doing. Topics include pre-mortems, stakeholder mapping, cost-effectiveness analysis, and 32+ other techniques. ₹1,500 per session in Delhi, Bangalore, or online. Check the **Dojos** page under Services." },
+      a: "**Dojos** are practice-based skill sessions: 90-minute cohort workshops that build practitioner skills through doing. Topics include pre-mortems, stakeholder mapping, cost-effectiveness analysis, and 32+ other techniques. ₹1,500 per session in Delhi, Bangalore, or online. Check the **Dojos** page under Services." },
     { re: /\bworkshop(s)?\b/i,
       a: "We offer **Workshops** like the Three-Day MEAL Intensive and Theory of Change Design Sprint. For organizations, we provide custom training on any ImpactMojo topic. Check the **Workshops** page under Services." },
     { re: /\bcoaching\b/i,
@@ -14159,7 +14280,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Flagship count
     { re: /how many.*course|flagship|all.*course/i,
-      a: () => "We have **9 flagship courses** (Gandhi, DevEcon, DataViz, DevAI, MEL, Politics of Aspiration, Media for Development, Constitution & Law, and Social-Emotional Learning) plus **25+ specialist 101 courses**. Each flagship includes 12-13 modules, interactive lexicons, AI companions, and coach callouts.\n\n" + listCourses() },
+      a: () => "We have **9 flagship courses** (Gandhi, DevEcon, DataViz, DevAI, MEL, Politics of Aspiration, Media for Development, Constitution & Law, and Social-Emotional Learning) plus **39 specialist courses**. Each flagship includes 12-13 modules, interactive lexicons, AI companions, and coach callouts.\n\n" + listCourses() },
 
     // PoA specific
     { re: /poa|politics.*aspiration|nrega|rti|nfsa|forest.*right/i,
@@ -14994,17 +15115,17 @@ document.addEventListener('keydown', function(e) {
 // ========================================
 IMX.DailyTip = {
     tips: [
-        "Theory of Change is not just a document—it's a living roadmap. Review and update yours quarterly as you learn what works.",
+        "Theory of Change is not just a document. It's a living roadmap. Review and update yours quarterly as you learn what works.",
         "The best M&E systems are designed WITH communities, not FOR them. Participatory approaches increase data quality and ownership.",
         "Disaggregate your data by gender, age, and location. Averages often hide who's being left behind.",
         "Qualitative data is not 'soft' data. Stories and context explain the 'why' behind the numbers.",
-        "Baseline data isn't just a requirement—it's your starting point for measuring real change. Don't skip it!",
+        "Baseline data isn't just a requirement. It's your starting point for measuring real change. Don't skip it!",
         "The Sustainable Development Goals are interconnected. Solving one problem often requires addressing multiple SDGs.",
         "Cost-effectiveness analysis helps donors compare impact across programs. Learn to calculate and communicate yours.",
         "Adaptive management means being willing to change course when evidence shows a better path.",
         "The 'Do No Harm' principle should guide every intervention. Always assess potential negative consequences.",
-        "Capacity building isn't just training—it's about creating systems that sustain after the project ends.",
-        "Mixed methods research combines the best of quantitative and qualitative—use them together for richer insights.",
+        "Capacity building isn't just training. It's about creating systems that sustain after the project ends.",
+        "Mixed methods research combines the best of quantitative and qualitative. Use them together for richer insights.",
         "Randomized Controlled Trials (RCTs) are the gold standard, but not always feasible. Know your alternatives.",
         "Social accountability mechanisms empower communities to hold service providers responsible.",
         "Gender analysis should happen at design stage, not be retrofitted later.",
@@ -17151,6 +17272,41 @@ IMX.Tour = {
 
 <!-- Premium Content Gating -->
 <script defer src="js/premium.js"></script>
+
+<!-- Premium Card Tooltip (shows title, description & tier on hover) -->
+<script>
+(function(){
+    var tip = document.createElement('div');
+    tip.className = 'imx-premium-tooltip';
+    document.body.appendChild(tip);
+    var hideTimeout;
+    document.addEventListener('mouseover', function(e) {
+        var card = e.target.closest('.card[data-tier-benefits]');
+        if (!card || window.innerWidth < 768) return;
+        clearTimeout(hideTimeout);
+        var titleEl = card.querySelector('.card-title');
+        var descEl = card.querySelector('.card-description');
+        var tier = card.getAttribute('data-required-tier') || '';
+        var title = titleEl ? titleEl.textContent.trim() : '';
+        var desc = descEl ? descEl.textContent.trim() : '';
+        var tierLabel = tier === 'practitioner' ? 'Practitioner' : tier === 'professional' ? 'Professional' : tier.charAt(0).toUpperCase() + tier.slice(1);
+        tip.innerHTML =
+            (title ? '<div class="imx-premium-tooltip-title">' + title + '</div>' : '') +
+            (desc ? '<div class="imx-premium-tooltip-desc">' + desc + '</div>' : '') +
+            '<span class="imx-premium-tooltip-tier">' + tierLabel + ' Tier</span>';
+        var r = card.getBoundingClientRect();
+        tip.style.left = Math.max(8, Math.min(window.innerWidth - 340, r.left + r.width/2 - 160)) + 'px';
+        tip.style.top = (r.top - 10) + 'px';
+        tip.style.transform = 'translateY(-100%)';
+        tip.classList.add('visible');
+    });
+    document.addEventListener('mouseout', function(e) {
+        var card = e.target.closest('.card[data-tier-benefits]');
+        if (!card) return;
+        hideTimeout = setTimeout(function(){ tip.classList.remove('visible'); }, 150);
+    });
+})();
+</script>
 
 <!-- Clean URL Router for sections -->
 <script defer src="js/router.js"></script>
