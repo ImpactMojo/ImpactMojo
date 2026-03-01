@@ -53,17 +53,17 @@ window.addEventListener('pageshow', function(event) {
 </script>
 
 <!-- SEO Meta Tags -->
-<meta name="description" content="Free educational handouts and resources for MEAL, Theory of Change, research methods, gender studies, and development economics. 400+ HTML resources organized by theme.">
-<meta property="og:title" content="Educational Handouts &amp; Resources | ImpactMojo">
+<meta name="description" content="Free educational handouts and resources for development professionals. 6 learning tracks covering data, gender, policy, MEL, governance, and health. 400+ HTML resources.">
+<meta property="og:title" content="Learning Tracks &amp; Handouts | ImpactMojo">
 <meta property="og:description" content="Free educational handouts and resources for development professionals - MEAL, ToC, research methods, and more.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.impactmojo.in/handouts.html">
 <meta property="og:image" content="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Educational Handouts &amp; Resources | ImpactMojo">
+<meta name="twitter:title" content="Learning Tracks &amp; Handouts | ImpactMojo">
 <meta name="twitter:description" content="Free educational handouts for development professionals.">
 
-<title>Educational Handouts &amp; Resources | ImpactMojo</title>
+<title>Learning Tracks & Handouts | ImpactMojo</title>
 
 <!-- Favicons -->
 <link href="assets/images/favicon.png" rel="icon" type="image/png">
@@ -374,6 +374,7 @@ body.light-mode .icon-moon { display: block; }
     border-radius: 16px;
     overflow: hidden;
     transition: all 0.3s ease;
+    scroll-margin-top: 80px;
 }
 
 .category-card:hover {
@@ -913,8 +914,18 @@ body.light-mode .icon-moon { display: block; }
 <main class="main-content">
     <div class="container">
         <div class="page-header">
-            <h1 class="page-title">Educational Handouts</h1>
-            <p class="page-subtitle">Free, downloadable HTML resources for development professionals. Browse by theme or search for specific topics.</p>
+            <h1 class="page-title">Learning Tracks & Handouts</h1>
+            <p class="page-subtitle">400+ free, downloadable resources for development professionals, organised into 6 learning tracks.</p>
+
+            <!-- Track jump-nav -->
+            <div class="ho-jump-nav" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
+                <a href="#data-technology" class="ho-jump-pill" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.35rem 0.75rem;border-radius:20px;border:1px solid rgba(14,165,233,0.3);font-size:0.78rem;font-weight:600;color:#0EA5E9;text-decoration:none;transition:all 0.15s;">Data & Technology</a>
+                <a href="#gender-equity-inclusion" class="ho-jump-pill" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.35rem 0.75rem;border-radius:20px;border:1px solid rgba(236,72,153,0.3);font-size:0.78rem;font-weight:600;color:#EC4899;text-decoration:none;transition:all 0.15s;">Gender, Equity & Inclusion</a>
+                <a href="#policy-economics" class="ho-jump-pill" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.35rem 0.75rem;border-radius:20px;border:1px solid rgba(99,102,241,0.3);font-size:0.78rem;font-weight:600;color:#6366F1;text-decoration:none;transition:all 0.15s;">Policy & Economics</a>
+                <a href="#monitoring-evaluation-learning" class="ho-jump-pill" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.35rem 0.75rem;border-radius:20px;border:1px solid rgba(16,185,129,0.3);font-size:0.78rem;font-weight:600;color:#10B981;text-decoration:none;transition:all 0.15s;">MEL</a>
+                <a href="#philosophy-law-governance" class="ho-jump-pill" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.35rem 0.75rem;border-radius:20px;border:1px solid rgba(139,92,246,0.3);font-size:0.78rem;font-weight:600;color:#8B5CF6;text-decoration:none;transition:all 0.15s;">Philosophy, Law & Governance</a>
+                <a href="#health-communication-wellbeing" class="ho-jump-pill" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.35rem 0.75rem;border-radius:20px;border:1px solid rgba(245,158,11,0.3);font-size:0.78rem;font-weight:600;color:#F59E0B;text-decoration:none;transition:all 0.15s;">Health, Communication & Wellbeing</a>
+            </div>
         </div>
 
         <!-- Search -->
@@ -1167,6 +1178,48 @@ const GITHUB_CONFIG = {
     rootDir: 'Handouts'
 };
 
+// Map GitHub folder names to the 6-track system
+// Each entry: { slug, displayName, color, icon, order }
+// Folders not in this map go to "Other Resources" at the bottom
+const TRACK_MAPPING = {
+    'Data Analysis Track': {
+        slug: 'data-technology',
+        displayName: 'Data & Technology',
+        color: '#0EA5E9',
+        order: 1
+    },
+    'Gender Studies Track': {
+        slug: 'gender-equity-inclusion',
+        displayName: 'Gender, Equity & Inclusion',
+        color: '#EC4899',
+        order: 2
+    },
+    'Policy and Economics Track': {
+        slug: 'policy-economics',
+        displayName: 'Policy & Economics',
+        color: '#6366F1',
+        order: 3
+    },
+    'Research Methods Track': {
+        slug: 'monitoring-evaluation-learning',
+        displayName: 'Monitoring, Evaluation & Learning',
+        color: '#10B981',
+        order: 4
+    },
+    'Philosophy Law and Governance': {
+        slug: 'philosophy-law-governance',
+        displayName: 'Philosophy, Law & Governance',
+        color: '#8B5CF6',
+        order: 5
+    },
+    'Health Communication and Wellbeing': {
+        slug: 'health-communication-wellbeing',
+        displayName: 'Health, Communication & Wellbeing',
+        color: '#F59E0B',
+        order: 6
+    }
+};
+
 // Elements
 const loadingState = document.getElementById('loadingState');
 const emptyState = document.getElementById('emptyState');
@@ -1210,6 +1263,9 @@ function renderCards(groups) {
         if (!searchTerm) return true;
         // Search in category title
         if (g.title.toLowerCase().includes(searchTerm)) return true;
+        // Search in mapped display name
+        const mapped = TRACK_MAPPING[g.title];
+        if (mapped && mapped.displayName.toLowerCase().includes(searchTerm)) return true;
         // Search in subcategories
         if (g.subs.some(s => s.toLowerCase().includes(searchTerm))) return true;
         // Search in file names
@@ -1224,6 +1280,16 @@ function renderCards(groups) {
     }
 
     emptyState.style.display = 'none';
+
+    // Sort: mapped tracks first (by order), then others alphabetically
+    filteredGroups.sort((a, b) => {
+        const mapA = TRACK_MAPPING[a.title];
+        const mapB = TRACK_MAPPING[b.title];
+        if (mapA && mapB) return mapA.order - mapB.order;
+        if (mapA) return -1;
+        if (mapB) return 1;
+        return a.title.localeCompare(b.title);
+    });
 
     handoutsGrid.innerHTML = filteredGroups.map(g => {
         const htmlFiles = g.files.filter(f => f.type === 'html');
@@ -1258,11 +1324,14 @@ function renderCards(groups) {
         const tagsHTML = g.subs.length ? 
             `<div style="padding: 0 20px 12px;">${g.subs.slice(0, 5).map(s => `<span class="subcategory-tag">${escapeHTML(s)}</span>`).join('')}</div>` : '';
 
-        // Format title - replace dashes/underscores with spaces
-        const displayTitle = g.title.replace(/[-_]/g, ' ');
+        // Use TRACK_MAPPING for display name, slug, and color
+        const mapped = TRACK_MAPPING[g.title];
+        const displayTitle = mapped ? mapped.displayName : g.title.replace(/[-_]/g, ' ');
+        const anchorId = mapped ? mapped.slug : g.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        const borderColor = mapped ? mapped.color : 'var(--border-color)';
 
         return `
-            <article class="category-card">
+            <article class="category-card" id="${escapeHTML(anchorId)}" style="border-top: 3px solid ${borderColor};">
                 <div class="category-header">
                     <div class="category-title">${escapeHTML(displayTitle)}</div>
                     <div class="category-count">${countText}</div>
@@ -1272,6 +1341,14 @@ function renderCards(groups) {
             </article>
         `;
     }).join('');
+
+    // After render, scroll to anchor if present in URL
+    if (window.location.hash) {
+        const target = document.getElementById(window.location.hash.substring(1));
+        if (target) {
+            setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+        }
+    }
 }
 
 // Load handouts from GitHub API
