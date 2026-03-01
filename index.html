@@ -6348,25 +6348,27 @@ footer::before {
     overflow: hidden !important;
 }
 
-/* === GRID: 3-col on desktop === */
+/* === GRID: 2-col on desktop, wider cards === */
 #premium .cards-grid {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)) !important;
     gap: 1.5rem !important;
 }
 #premium .card {
     padding: 1.5rem;
 }
 #premium .card-header {
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 0.5rem;
 }
+#premium .card-number,
 #premium .learner-badge {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.5rem;
+    font-size: 0.72rem;
     white-space: nowrap;
 }
 #premium .card-title {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
+    margin-top: 0.25rem;
 }
 .imx-premium-tooltip {
     position: fixed;
@@ -8095,26 +8097,6 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
   box-shadow: var(--shadow-xl);
 }
 
-/* === Community Section Fix === */
-.imx-connect-grid {
-  align-items: stretch !important;
-}
-.imx-community-col {
-  display: flex;
-  flex-direction: column;
-}
-.imx-community-col .whatsapp-plc-section {
-  flex: 1;
-}
-.imx-community-extra-link {
-  padding: 1rem 1.25rem;
-  font-size: 0.9rem;
-}
-.imx-community-extra-link svg {
-  stroke: var(--accent-color); fill: none; stroke-width: 1.5;
-  flex-shrink: 0;
-}
-
 /* === Premium Tiers Box === */
 .imx-premium-tiers {
   max-width: 900px;
@@ -8125,6 +8107,97 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 }
 @media (max-width: 600px) {
   .imx-premium-tiers { grid-template-columns: 1fr; }
+}
+
+/* === Community 3-Card Grid === */
+.imx-community-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+@media (max-width: 900px) { .imx-community-grid { grid-template-columns: 1fr; } }
+
+.imx-community-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.5rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.imx-community-card:hover {
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+.imx-community-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  margin-bottom: 0.75rem;
+  width: fit-content;
+}
+.imx-community-card-badge svg {
+  stroke: currentColor; fill: none; stroke-width: 1.5;
+}
+.imx-community-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+.imx-community-card-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  flex: 1;
+}
+.imx-community-card-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+.imx-community-card-features span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--hover-bg);
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+}
+.imx-community-card-features svg {
+  stroke: var(--text-muted); fill: none; stroke-width: 1.5;
+}
+.imx-community-card-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.15s;
+  margin-top: auto;
+  width: fit-content;
+}
+.imx-community-card-cta:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
 /* END V3 DESIGN SYSTEM */
@@ -9705,63 +9778,70 @@ body:has(.imx-tour-overlay.active) .dropdown-menu li {
 </div>
 </section>
 <!-- Coaching & Workshops Section -->
-<!-- Coaching section consolidated into Community grid above -->
 <section id="community" style="padding: 3rem 0;">
 <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
 <h2 class="section-title" style="text-align: center; margin-bottom: 0.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 0.4rem;"><use href="#si_Chat"/></svg>Connect & Community</h2>
 <p class="section-subtitle" style="text-align: center; margin-bottom: 2rem;">Join fellow practitioners across South Asia</p>
 
-<div class="imx-connect-grid" style="padding: 0;">
-<!-- Left: Community channels -->
-<div class="imx-community-col">
-<section class="whatsapp-plc-section">
-<div class="whatsapp-plc-badge">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="width: 14px; height: 14px; filter: brightness(0) saturate(100%) invert(68%) sepia(74%) saturate(409%) hue-rotate(93deg) brightness(92%) contrast(98%);"><use href="#si_Chat"/></svg>
-Professional Learning Community
-</div>
-<h3>Join Our WhatsApp Community</h3>
-<p>Connect with fellow development practitioners, researchers, and changemakers across South Asia. Share resources, discuss fieldwork challenges, and grow together in a peer learning space curated by the ImpactMojo team.</p>
-<a href="https://chat.whatsapp.com/EsBjbKaQfupG1HbtajTjHM" target="_blank" rel="noopener noreferrer" class="whatsapp-plc-btn">
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-Join the PLC on WhatsApp
-</a>
-<div class="whatsapp-plc-features">
-<span class="whatsapp-plc-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#si_User_alt_4"/></svg> Peer Learning</span>
-<span class="whatsapp-plc-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#si_Book"/></svg> Resource Sharing</span>
-<span class="whatsapp-plc-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#si_Globe_detailed"/></svg> South Asia Focus</span>
-<span class="whatsapp-plc-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><use href="#si_Flare"/></svg> Curated Discussions</span>
-</div>
-</section>
-<div class="imx-community-extra-links">
-    <a href="https://varna.substack.com/subscribe" target="_blank" rel="noopener noreferrer" class="imx-community-extra-link">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><use href="#si_Mail"/></svg>
-        <div>
-            <div>Research Rundown Newsletter</div>
-            <small>Bi-monthly insights on development research via Substack</small>
-        </div>
+<div class="imx-community-grid">
+
+<!-- Card 1: WhatsApp PLC -->
+<div class="imx-community-card imx-community-card--plc">
+    <div class="imx-community-card-badge" style="color: #25D366; background: rgba(37, 211, 102, 0.1);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Chat"/></svg>
+        Professional Learning Community
+    </div>
+    <h3 class="imx-community-card-title">WhatsApp Community</h3>
+    <p class="imx-community-card-desc">Connect with development practitioners, researchers, and changemakers. Share resources, discuss fieldwork challenges, and grow in a peer learning space.</p>
+    <div class="imx-community-card-features">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_User_alt_4"/></svg> Peer Learning</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Book"/></svg> Resource Sharing</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Globe_detailed"/></svg> South Asia Focus</span>
+    </div>
+    <a href="https://chat.whatsapp.com/EsBjbKaQfupG1HbtajTjHM" target="_blank" rel="noopener noreferrer" class="imx-community-card-cta" style="background: #25D366;">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px; fill: white;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Join the PLC
     </a>
 </div>
+
+<!-- Card 2: Newsletter -->
+<div class="imx-community-card imx-community-card--newsletter">
+    <div class="imx-community-card-badge" style="color: var(--accent-color); background: rgba(14, 165, 233, 0.1);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Mail"/></svg>
+        Substack Newsletter
+    </div>
+    <h3 class="imx-community-card-title">Research Rundown</h3>
+    <p class="imx-community-card-desc">Bi-monthly newsletter unpacking new development research, data releases, and policy analysis. Curated for practitioners who want rigour without the jargon.</p>
+    <div class="imx-community-card-features">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Article"/></svg> Research Digests</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Bar_chart"/></svg> Data Insights</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Flare"/></svg> Policy Analysis</span>
+    </div>
+    <a href="https://varna.substack.com/subscribe" target="_blank" rel="noopener noreferrer" class="imx-community-card-cta" style="background: var(--accent-color);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: white; stroke-width: 2;"><use href="#si_Mail"/></svg>
+        Subscribe Free
+    </a>
 </div>
 
-<!-- Right: Coaching summary -->
-<div style="background: var(--card-bg, var(--bg-secondary)); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column;">
-    <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#si_Briefcase"/></svg>
+<!-- Card 3: Coaching -->
+<div class="imx-community-card imx-community-card--coaching">
+    <div class="imx-community-card-badge" style="color: #8B5CF6; background: rgba(139, 92, 246, 0.1);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Briefcase"/></svg>
         Coaching & Training
-    </h3>
-    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.6;">Personalised guidance from Dr. Varna and Vandana. Sliding-scale pricing available.</p>
-    <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; flex: 1;">
-        <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem;"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent-color); flex-shrink: 0;"></span> Development Career Counselling</div>
-        <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem;"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent-color); flex-shrink: 0;"></span> Research Design Consultation</div>
-        <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem;"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent-color); flex-shrink: 0;"></span> 3-Day MEAL Intensive Workshops</div>
-        <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem;"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent-color); flex-shrink: 0;"></span> Custom Organisational Training</div>
-        <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem;"><span style="width: 6px; height: 6px; border-radius: 50%; background: #F59E0B; flex-shrink: 0;"></span> <strong>Dojos</strong> &mdash; 90-min practice sessions (NEW)</div>
     </div>
-    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-        <a href="/coaching" style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.5rem 1.25rem; background: var(--accent-color); color: white; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none;">Explore Services &rarr;</a>
-        <a href="/dojos" style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.5rem 1.25rem; border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none;">View Dojos</a>
+    <h3 class="imx-community-card-title">Personalised Guidance</h3>
+    <p class="imx-community-card-desc">One-on-one sessions with Dr. Varna and Vandana. Sliding-scale pricing. Career counselling, research design, MEAL workshops, and custom organisational training.</p>
+    <div class="imx-community-card-features">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Target"/></svg> Career Counselling</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Fact_check"/></svg> MEAL Workshops</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><use href="#si_Flare"/></svg> Dojos (NEW)</span>
+    </div>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: auto;">
+        <a href="/coaching" class="imx-community-card-cta" style="background: #8B5CF6;">Explore Services</a>
+        <a href="/dojos" class="imx-community-card-cta" style="background: transparent; color: var(--text-primary); border: 1px solid var(--border-color);">View Dojos</a>
     </div>
 </div>
+
 </div>
 </div>
 </section>
@@ -9913,12 +9993,7 @@ Join the PLC on WhatsApp
                 </button>
 </div>
 </section>
-<!-- Coming Soon / Roadmap Section -->
-<div class="imx-roadmap-compact" id="roadmap">
-<h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 0.3rem;"><use href="#si_Lightning"/></svg>What's Next for ImpactMojo</h3>
-<p>AI learning assistant, smart course notes, certification system, and more are in the works.</p>
-<a href="/updates"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 0.2rem;"><use href="#si_Arrow_right"/></svg>View Full Roadmap &amp; Updates</a>
-</div>
+<!-- Roadmap moved to standalone /updates page -->
 
 
 
