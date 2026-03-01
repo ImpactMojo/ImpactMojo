@@ -335,8 +335,8 @@ function toggleMobileDropdown(event, element) {
         section[id] { scroll-margin-top: 80px; }
         /* Defer rendering of below-fold sections until they scroll into view.
            This is a major speed win: the browser skips layout+paint for ~60% of the page. */
-        #popular-courses, #labs, #games, #premium, #coaching-workshops,
-        #roadmap, #wall-of-love, #whats-new, #support-us, #newsletter, #about {
+        #popular-courses, #labs, #games, #premium,
+        #roadmap, #support-us, #about {
             content-visibility: auto;
             contain-intrinsic-size: auto 600px;
         }
@@ -7244,6 +7244,758 @@ body.dark-mode .v3-dot {
 
 
 
+
+/* ============================================
+   RESTORED CSS (was inside old tracks section)
+   ============================================ */
+
+.badge{display:inline-block;border:1px solid var(--border-color);border-radius:999px;font-size:.68rem;padding:.15rem .5rem;color:var(--text-secondary);white-space:nowrap;flex:0 0 auto}
+  .badge-courses{border-color:#60A5FA33;color:#60A5FA}
+  .badge-labs{border-color:#34D39933;color:#34D399}
+  .badge-games{border-color:#F59E0B33;color:#F59E0B}
+  .badge-premium{border-color:#F472B633;color:#F472B6}
+  .badge-resources{border-color:#A78BFA33;color:#A78BFA}
+  .imx-actions{margin-top:.75rem;padding-top:.6rem;border-top:1px solid var(--border-color)}
+  
+/* Floating Section Navigator */
+@media (max-width: 900px) {
+}
+
+/* Rich Comparison Modal Styles */
+.imx-compare-card-rich { padding: 1.5rem; min-height: 400px; }
+.imx-compare-type-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1rem; }
+.imx-type-course { background: rgba(14, 165, 233, 0.15); color: #0EA5E9; }
+.imx-type-lab { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+.imx-type-game { background: rgba(245, 158, 11, 0.15); color: #F59E0B; }
+.imx-type-premium { background: rgba(139, 92, 246, 0.15); color: #8B5CF6; }
+.imx-compare-description { font-size: 0.85rem; color: var(--text-secondary); margin: 1rem 0; padding: 0.75rem; background: var(--hover-bg); border-radius: 8px; line-height: 1.5; }
+.imx-compare-section { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
+.imx-compare-section-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+.imx-compare-objectives { list-style: none; padding: 0; margin: 0; }
+.imx-compare-objectives li { font-size: 0.8rem; color: var(--text-secondary); padding: 0.35rem 0; padding-left: 1.25rem; position: relative; }
+.imx-compare-objectives li::before { content: '->'; position: absolute; left: 0; color: var(--accent-color); }
+
+/* Pomodoro Timer Animation */
+@keyframes pomodoro-pulse {
+    0%, 100% { box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); }
+    50% { box-shadow: 0 4px 24px rgba(239, 68, 68, 0.8); }
+}
+
+/* Pomodoro Modal Styles */
+.imx-pomodoro-display {
+    text-align: center;
+    padding: 2rem;
+    background: var(--hover-bg);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+}
+.imx-pomodoro-time {
+    font-size: 4rem;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--text-primary);
+    letter-spacing: 0.1em;
+}
+.imx-pomodoro-label {
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem;
+}
+.imx-pomodoro-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.imx-pomodoro-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+.imx-pomodoro-btn-start {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+}
+.imx-pomodoro-btn-start:hover { transform: scale(1.05); }
+.imx-pomodoro-btn-pause {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: white;
+}
+.imx-pomodoro-btn-reset {
+    background: var(--secondary-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+.imx-pomodoro-presets {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+.imx-pomodoro-preset {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.imx-pomodoro-preset:hover, .imx-pomodoro-preset.active {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+.imx-pomodoro-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+.imx-pomodoro-stat {
+    text-align: center;
+}
+.imx-pomodoro-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+.imx-pomodoro-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* Daily Learning Tip Banner */
+.imx-daily-tip {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(99, 102, 241, 0.1));
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem auto;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.imx-daily-tip-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #0EA5E9, #6366F1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.imx-daily-tip-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    fill: none;
+}
+.imx-daily-tip-content {
+    flex: 1;
+}
+.imx-daily-tip-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+.imx-daily-tip-text {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+.imx-daily-tip-refresh {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+.imx-daily-tip-refresh:hover {
+    background: var(--hover-bg);
+    color: var(--accent-color);
+}
+
+/* Surprise Me Button */
+.imx-surprise-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #EC4899, #8B5CF6);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+.imx-surprise-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
+}
+.imx-surprise-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    animation: dice-shake 0.5s ease-in-out;
+}
+.imx-surprise-btn:hover svg {
+    animation: dice-shake 0.5s ease-in-out infinite;
+}
+@keyframes dice-shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    75% { transform: rotate(15deg); }
+}
+
+/* Card Duration Badge */
+.card-duration {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--hover-bg);
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    margin-left: auto;
+}
+.card-duration svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* Copy Citation Button */
+.imx-copy-citation {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.imx-copy-citation:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+.imx-copy-citation.copied {
+    background: #10B981;
+    color: white;
+    border-color: #10B981;
+}
+.imx-copy-citation svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* Analytics Modal Styles */
+.imx-analytics-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.imx-analytics-stat { background: var(--hover-bg); border-radius: 12px; padding: 1.25rem; text-align: center; }
+.imx-analytics-stat-value { font-size: 2rem; font-weight: 700; color: var(--accent-color); }
+.imx-analytics-stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-top: 0.25rem; }
+.imx-analytics-section { margin-top: 1.5rem; }
+.imx-analytics-section h4 { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.75rem; text-transform: uppercase; }
+.imx-analytics-list { list-style: none; padding: 0; margin: 0; }
+.imx-analytics-list li { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; border-radius: 8px; margin-bottom: 0.5rem; background: var(--hover-bg); }
+.imx-analytics-item-name { font-weight: 500; color: var(--text-primary); }
+.imx-analytics-item-badge { background: var(--accent-color); color: white; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+.imx-analytics-item-time { font-size: 0.8rem; color: var(--text-muted); }
+.imx-analytics-dates { margin-top: 1.5rem; text-align: center; color: var(--text-muted); }
+
+/* Reading Lists Modal Styles */
+.imx-modal-large { max-width: 700px; }
+.imx-reading-list { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 0.75rem; overflow: hidden; }
+.imx-reading-list-header { display: flex; align-items: center; padding: 1rem 1.25rem; cursor: pointer; transition: background 0.2s; }
+.imx-reading-list-header:hover { background: var(--hover-bg); }
+.imx-reading-list-icon { 
+    color: var(--accent-color, #0EA5E9); 
+    margin-right: 1rem; 
+    flex-shrink: 0;
+}
+.imx-reading-list-info { flex: 1; }
+.imx-reading-list-name { font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
+.imx-reading-list-desc { font-size: 0.85rem; color: var(--text-muted); }
+.imx-reading-list-toggle { color: var(--text-muted); font-size: 0.8rem; }
+.imx-reading-list-items { padding: 0 1rem 1rem; border-top: 1px solid var(--border-color); background: var(--hover-bg); }
+.imx-reading-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0.5rem; border-bottom: 1px solid var(--border-color); text-decoration: none; transition: all 0.2s; }
+.imx-reading-item:last-child { border-bottom: none; }
+.imx-reading-item:hover { background: rgba(14, 165, 233, 0.1); padding-left: 0.75rem; }
+.imx-reading-item-title { color: var(--text-primary); font-weight: 500; }
+.imx-reading-item-type { background: rgba(14, 165, 233, 0.15); color: var(--accent-color); padding: 0.2rem 0.6rem; border-radius: 8px; font-size: 0.7rem; font-weight: 600; }
+
+/* Mobile responsive for analytics */
+@media (max-width: 600px) {
+    .imx-analytics-stats { grid-template-columns: 1fr; }
+    .imx-analytics-stat-value { font-size: 1.5rem; }
+}
+
+/* ========================================
+   SPOTLIGHT TOUR STYLES
+   ======================================== */
+.imx-tour-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+.imx-tour-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Keep dropdown menus FULLY visible during tour - highest priority */
+body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown .dropdown-menu,
+body:has(.imx-tour-overlay.active) .dropdown-menu,
+.imx-tour-overlay.active ~ * .dropdown-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-height: none !important;
+    pointer-events: auto !important;
+    z-index: 10005 !important;
+    background: var(--card-bg, #fff) !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3) !important;
+}
+
+body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown.open .dropdown-menu {
+    display: block !important;
+}
+
+/* Ensure entire navigation and dropdowns stay above overlay during tour */
+body:has(.imx-tour-overlay.active) header,
+body:has(.imx-tour-overlay.active) nav,
+body:has(.imx-tour-overlay.active) .nav-links,
+body:has(.imx-tour-overlay.active) .nav-links > li,
+body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown,
+body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown > a {
+    position: relative;
+    z-index: 10004 !important;
+}
+
+/* Make dropdown content fully visible and readable */
+body:has(.imx-tour-overlay.active) .dropdown-menu {
+    z-index: 10006 !important;
+    position: absolute !important;
+    background: var(--card-bg, #ffffff) !important;
+    border: 1px solid var(--border-color, #e5e7eb) !important;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.25) !important;
+}
+
+body:has(.imx-tour-overlay.active) .dropdown-menu a,
+body:has(.imx-tour-overlay.active) .dropdown-menu li {
+    background: var(--card-bg, #ffffff) !important;
+    color: var(--text-color, #1f2937) !important;
+}
+
+.imx-tour-spotlight {
+    position: absolute;
+    border-radius: 12px;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.15), 0 0 40px rgba(14, 165, 233, 0.8), inset 0 0 0 4px rgba(14, 165, 233, 1);
+    transition: all 0.4s ease;
+    pointer-events: none;
+    background: transparent;
+}
+
+/* Pulsing highlight effect for spotlight */
+@keyframes spotlightPulse {
+    0%, 100% { box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.15), 0 0 40px rgba(14, 165, 233, 0.8), inset 0 0 0 4px rgba(14, 165, 233, 1); }
+    50% { box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.15), 0 0 60px rgba(14, 165, 233, 1), inset 0 0 0 4px rgba(14, 165, 233, 1); }
+}
+.imx-tour-spotlight {
+    animation: spotlightPulse 2s ease-in-out infinite;
+}
+
+/* Arrow connector from tooltip to spotlight */
+.imx-tour-arrow {
+    position: absolute;
+    z-index: 10003;
+    pointer-events: none;
+}
+.imx-tour-arrow svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+.imx-tour-arrow path {
+    fill: none;
+    stroke: var(--accent-color, #0EA5E9);
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+    animation: imxArrowDash 0.5s linear infinite;
+}
+.imx-tour-arrow-head {
+    fill: var(--accent-color, #0EA5E9);
+}
+@keyframes imxArrowDash {
+    to { stroke-dashoffset: -10; }
+}
+
+.imx-tour-tooltip {
+    position: absolute;
+    background: var(--card-bg, #fff);
+    border-radius: 16px;
+    padding: 1.5rem;
+    max-width: 340px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 10001;
+    animation: imxTourPop 0.3s ease;
+}
+@keyframes imxTourPop {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.imx-tour-tooltip::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--card-bg, #fff);
+    transform: rotate(45deg);
+}
+.imx-tour-tooltip.arrow-top::before { top: -8px; left: 24px; }
+.imx-tour-tooltip.arrow-bottom::before { bottom: -8px; left: 24px; }
+.imx-tour-tooltip.arrow-left::before { left: -8px; top: 24px; }
+.imx-tour-tooltip.arrow-right::before { right: -8px; top: 24px; }
+.imx-tour-tooltip.arrow-top-right::before { top: -8px; right: 24px; left: auto; }
+.imx-tour-tooltip.arrow-bottom-right::before { bottom: -8px; right: 24px; left: auto; }
+.imx-tour-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary, #666);
+}
+.imx-tour-step-counter {
+    background: var(--accent-color, #0EA5E9);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+.imx-tour-step-progress {
+    flex: 1;
+    height: 4px;
+    background: var(--border-color, #ddd);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.imx-tour-step-progress-bar {
+    height: 100%;
+    background: var(--accent-color, #0EA5E9);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+.imx-tour-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-color, #ddd);
+    transition: all 0.2s;
+}
+.imx-tour-dot.active {
+    background: var(--accent-color, #0EA5E9);
+    width: 24px;
+    border-radius: 4px;
+}
+.imx-tour-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary, #1a1a2e);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.imx-tour-title svg {
+    width: 20px;
+    height: 20px;
+    color: var(--accent-color, #0EA5E9);
+}
+.imx-tour-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary, #64748b);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+}
+.imx-tour-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+}
+.imx-tour-skip {
+    background: none;
+    border: none;
+    color: var(--text-muted, #94a3b8);
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+.imx-tour-skip:hover { color: var(--text-primary, #1a1a2e); }
+.imx-tour-skip:active { transform: scale(0.97); }
+.imx-tour-nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.imx-tour-prev {
+    background: var(--secondary-bg, #f1f5f9);
+    color: var(--text-primary, #1a1a2e);
+    border: 1px solid var(--border-color, #e2e8f0);
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+.imx-tour-prev:hover {
+    background: var(--border-color, #e2e8f0);
+}
+.imx-tour-prev:active {
+    transform: scale(0.97);
+}
+.imx-tour-next {
+    background: linear-gradient(135deg, #0EA5E9, #06B6D4);
+    color: white;
+    border: none;
+    padding: 0.65rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+.imx-tour-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+}
+.imx-tour-next:active {
+    transform: scale(0.97);
+}
+.imx-tour-welcome {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--card-bg, #fff);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 440px;
+    text-align: center;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+    z-index: 10001;
+    animation: imxTourPop 0.4s ease;
+}
+.imx-tour-welcome-icon {
+    margin-bottom: 1rem;
+    color: var(--accent-color, #0EA5E9);
+}
+.imx-tour-welcome h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary, #1a1a2e);
+    margin-bottom: 0.75rem;
+}
+.imx-tour-welcome p {
+    color: var(--text-secondary, #64748b);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+.imx-tour-welcome-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+.imx-tour-btn-primary {
+    background: linear-gradient(135deg, #0EA5E9, #06B6D4);
+    color: white;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.imx-tour-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+}
+.imx-tour-btn-primary:active {
+    transform: scale(0.97);
+}
+.imx-tour-btn-secondary {
+    background: var(--hover-bg, #f1f5f9);
+    color: var(--text-primary, #1a1a2e);
+    border: none;
+    padding: 0.85rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+.imx-tour-btn-secondary:hover {
+    background: var(--border-color, #e2e8f0);
+}
+.imx-tour-btn-secondary:active {
+    transform: scale(0.97);
+}
+/* ============================================
+   NEW COMPONENT CSS
+   ============================================ */
+
+/* Free Resources & Libraries Grid */
+.imx-libraries-grid-section { padding: 2rem 0; }
+.imx-libraries-grid-section .section-title { text-align: center; }
+.imx-libraries-grid-section .section-subtitle { text-align: center; margin-bottom: 1.5rem; }
+.imx-libraries-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Community Connect Grid (2-col) */
+.imx-connect-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .imx-connect-grid { grid-template-columns: 1fr; }
+}
+.imx-community-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.imx-community-extra-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.imx-community-extra-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.imx-community-extra-link:hover {
+  border-color: var(--accent-color);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
+}
+.imx-community-extra-link small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  margin-top: 0.15rem;
+}
+
+/* Flagship Courses Section */
+.imx-flagship-courses { padding: 4rem 2rem; }
+
+/* Roadmap Compact */
+.imx-roadmap-compact {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* .imx-h2 gradient heading */
+.imx-h2 {
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 1.9rem;
+  letter-spacing: .1px;
+  margin: .1rem 0 .1rem;
+  background: linear-gradient(135deg, #0EA5E9, #6366F1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Modal large variant */
+.imx-modal-large .modal-content {
+  max-width: 900px;
+}
+
+
+
 /* END V3 DESIGN SYSTEM */
 
 </style>
@@ -7440,7 +8192,7 @@ body.dark-mode .v3-dot {
 
 <!-- Nav with NEW badge wrapper -->
 <div class="nav-with-badge">
-<a href="#whats-new" class="new-starburst" id="newStarburst" title="See What's New!">
+<a href="/updates" class="new-starburst" id="newStarburst" title="See What's New!">
     <span class="new-starburst-text">NEW!</span>
 </a>
 <ul class="nav-links" id="navLinks">
@@ -7493,10 +8245,10 @@ body.dark-mode .v3-dot {
 <li id="nav-about-page"><a href='/about'>About ImpactMojo</a></li>
 <li id="nav-team"><a href="#about">Our Team</a></li>
 <li id="nav-testimonials"><a href="/testimonials">Testimonials</a></li>
-<li id="nav-roadmap"><a href="/whats-new">Roadmap</a></li>
+<li id="nav-roadmap"><a href="/updates">Updates & Roadmap</a></li>
 <li class="dropdown-divider"></li>
 <li id="nav-community"><a href='/community/community'>Community <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Chat"/></svg></a></li>
-<li id="nav-whats-new"><a href="#whats-new">What's New <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg></a></li>
+<li id="nav-whats-new"><a href="/updates#whats-new">What's New <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg></a></li>
 <li id="nav-support"><a href="#support-us">Support Us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Heart"/></svg></a></li>
 <li class="dropdown-divider"></li>
 <li id="nav-contact"><a href='/contact'>Contact</a></li>
@@ -9290,12 +10042,12 @@ Join the PLC on WhatsApp
 <div class="imx-roadmap-compact" id="roadmap">
 <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 0.3rem;"><use href="#si_Lightning"/></svg>What's Next for ImpactMojo</h3>
 <p>AI learning assistant, smart course notes, certification system, and more are in the works.</p>
-<a href="/whats-new"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 0.2rem;"><use href="#si_Arrow_right"/></svg>View Full Roadmap &amp; Updates</a>
+<a href="/updates"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 0.2rem;"><use href="#si_Arrow_right"/></svg>View Full Roadmap &amp; Updates</a>
 </div>
 <!-- Wall of Love Section -->
 <!-- Wall of Love moved to standalone /testimonials page -->
 
-<!-- What's New moved to standalone /whats-new page -->
+<!-- What's New moved to standalone /updates page -->
 
 <!-- Enhanced Support Section -->
 <section class="enhanced-support-section" id="support-us">
