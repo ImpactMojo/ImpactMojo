@@ -1,0 +1,91 @@
+# CI — broken link checks + accessibility audit on every push and PR
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  broken-links:
+    name: Check broken links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Broken link check
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >
+            --verbose
+            --no-progress
+            --accept 200,204,301,302,403
+            --exclude-path ./netlify-env-files
+            --exclude 'chat.whatsapp.com'
+            --exclude 'discord.gg'
+            --exclude 't.me'
+            --exclude 'localhost'
+            --exclude 'impactmojo@ibl'
+            '**/*.html'
+            '**/*.md'
+          fail: false
+
+      - name: Upload link check report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: broken-links-report
+          path: ./lychee/out.md
+
+  accessibility:
+    name: Accessibility audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install axe-core CLI
+        run: npm install -g @axe-core/cli http-server
+
+      - name: Start local server
+        run: npx http-server -p 8080 -s &
+
+      - name: Wait for server
+        run: sleep 3
+
+      - name: Run accessibility audit on index.html
+        run: |
+          axe http://localhost:8080/index.html \
+            --tags wcag2a,wcag2aa \
+            --exit || true
+
+      - name: Run accessibility audit on login.html
+        run: |
+          axe http://localhost:8080/login.html \
+            --tags wcag2a,wcag2aa \
+            --exit || true
+
+  html-validate:
+    name: Validate HTML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install html-validate
+        run: npm install -g html-validate
+
+      - name: Validate key pages
+        run: |
+          html-validate \
+            --config '{"extends":["html-validate:recommended"],"rules":{"no-inline-style":"off","no-trailing-whitespace":"off","attribute-boolean-style":"off","element-permitted-content":"off","heading-level":"off"}}' \
+            index.html login.html signup.html premium.html about.html || true
