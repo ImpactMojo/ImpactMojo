@@ -1,9 +1,18 @@
 // Service Worker for ImpactMojo PWA
-const CACHE_NAME = 'impactmojo-v1';
+const CACHE_NAME = 'impactmojo-v2';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/js/auth.js',
+  '/js/premium.js',
+  '/js/router.js',
+  '/js/resource-launch.js',
+  '/js/bookmarks-compare.js',
+  '/js/faq-bank.js',
+  '/js/mobile-ui.js',
+  '/js/learning-tracks.js',
+  '/js/cookie-ui.js',
   '/assets/images/favicon.ico',
   '/assets/images/favicon-16x16.png',
   '/assets/images/favicon-32x32.png',
@@ -23,41 +32,29 @@ self.addEventListener('install', event => {
   );
 });
 
-// Fetch event - serve from cache when offline
+// Fetch event - stale-while-revalidate for own assets, network-first for API
 self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+
+  // Skip non-GET and cross-origin API calls
+  if (event.request.method !== 'GET' || url.origin !== self.location.origin) {
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
+    caches.match(event.request).then(cached => {
+      // Fetch fresh copy in background
+      const fetchPromise = fetch(event.request).then(response => {
+        if (response && response.status === 200 && response.type === 'basic') {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         }
+        return response;
+      }).catch(() => cached || caches.match('/index.html'));
 
-        // Clone the request
-        const fetchRequest = event.request.clone();
-
-        return fetch(fetchRequest).then(
-          response => {
-            // Check if valid response
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone the response
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          }
-        ).catch(() => {
-          // Return offline page if available
-          return caches.match('/index.html');
-        });
-      })
+      // Return cached immediately if available, otherwise wait for network
+      return cached || fetchPromise;
+    })
   );
 });
 
