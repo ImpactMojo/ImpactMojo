@@ -14,21 +14,17 @@
 (function () {
   'use strict';
 
-  // ── Map resource IDs to their deployment URLs ──────────────────────
-  // These are the actual premium resources (NOT flagship courses).
-  // Resources on 101.impactmojo.in can use the Netlify auth-gate.
-  // Resources on GitHub Pages need their own verification layer.
+  // ── Map resource IDs to their REAL deployment URLs ─────────────────
+  // The launcher opens these directly (bypassing short.io cloaking)
+  // so the ?token= query param reaches the auth-gate / token-gate.
   const RESOURCE_URLS = {
     // Practitioner tier
     'field-notes':      'https://marginmuse.space/themarginmuse',
-    'rq-builder':       'https://101.impactmojo.in/researchQ-pro',
+    'rq-builder':       'https://researchquestions.netlify.app/',
     // Professional tier
-    'code-convert-pro': 'https://101.impactmojo.in/code-convert-pro',
-    'qual-insights':    'https://101.impactmojo.in/qual-insights',
-    'vaniscribe':       'https://101.impactmojo.in/vaniscribe',
-    'qual-lab':         'https://101.impactmojo.in/IMQualLab',
-    'stats-assistant':  'https://101.impactmojo.in/IMStatsAssist',
-    'ce-tool':          'https://101.impactmojo.in/CE',
+    'code-convert-pro': 'https://stats-assist.netlify.app/',
+    'qual-insights':    'https://qual-lab.netlify.app/',
+    'vaniscribe':       'https://vaniscribe.netlify.app/',
     'devdata-practice': 'https://varnasr.github.io/devdata-practice/',
     'viz-cookbook':      'https://varnasr.github.io/devdata-practice/charts.html',
     'devecon-toolkit':  'https://varnasr.github.io/deveconomics-toolkit/',

@@ -18,21 +18,18 @@ import { create, getNumericDate } from "https://deno.land/x/djwt@v3.0.2/mod.ts";
 const TIER_RESOURCES: Record<string, string[]> = {
   explorer: [],
   practitioner: [
-    "field-notes",      // Field Notes from a Development Economist (marginmuse.space)
-    "rq-builder",       // RQ Builder Pro
+    "field-notes",      // Field Notes (marginmuse.space)
+    "rq-builder",       // RQ Builder Pro (researchquestions.netlify.app)
   ],
   professional: [
     "field-notes",
     "rq-builder",
-    "code-convert-pro", // Statistical Code Convertor Pro
-    "qual-insights",    // Qualitative Insights Lab Pro
-    "vaniscribe",       // VaniScribe: AI Transcription
-    "qual-lab",         // Qualitative Research Lab
-    "stats-assistant",  // Statistical Analysis Assistant
-    "devdata-practice", // DevData Practice: Development Datasets
-    "viz-cookbook",      // Visualization Cookbook
-    "devecon-toolkit",  // DevEconomics Toolkit: Interactive Shiny Apps
-    "ce-tool",          // Cost-Effectiveness Analysis Tool
+    "code-convert-pro", // Code Converter Pro (stats-assist.netlify.app)
+    "qual-insights",    // Qual Insights Lab Pro (qual-lab.netlify.app)
+    "vaniscribe",       // VaniScribe AI (vaniscribe.netlify.app)
+    "devdata-practice", // DevData Practice (varnasr.github.io)
+    "viz-cookbook",      // Visualization Cookbook (varnasr.github.io)
+    "devecon-toolkit",  // DevEcon Toolkit (varnasr.github.io)
   ],
   organization: [
     "field-notes",
@@ -40,12 +37,9 @@ const TIER_RESOURCES: Record<string, string[]> = {
     "code-convert-pro",
     "qual-insights",
     "vaniscribe",
-    "qual-lab",
-    "stats-assistant",
     "devdata-practice",
     "viz-cookbook",
     "devecon-toolkit",
-    "ce-tool",
   ],
 };
 
