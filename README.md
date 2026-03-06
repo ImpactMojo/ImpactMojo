@@ -1,5 +1,9 @@
 # ImpactMojo
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/impactmojo/deploy-status)](https://www.impactmojo.in)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 **Free Development Education for Social Impact**
 
 ImpactMojo is a free learning platform providing rigorous, practical educational content on MEAL, Theory of Change, research methods, gender studies, and development economics for NGOs, impact practitioners, and students across South Asia.
@@ -23,7 +27,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **Games** | Gamified learning experiences for development concepts |
 | **ImpactLex** | Development sector terminology dictionary with 23+ terms, formulas, and case studies |
 | **Coaching** | Premium 1-on-1 guidance for development professionals |
-| **Community** | Discord and Telegram communities for peer learning |
+| **Community** | WhatsApp PLC, Discord, and Telegram for peer learning & resources |
 
 ---
 
@@ -46,7 +50,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 - 🔐 **Secure Authentication** — Powered by Supabase
 - 👤 **User Profiles** — Track progress and preferences
 - ⭐ **Tiered Access** — Explorer (free), Practitioner, Professional, Organization tiers
-- 🌐 **Community Access** — Discord and Telegram for premium members
+- 🌐 **Community Access** — WhatsApp PLC, Discord, and Telegram
 
 ### Technical
 - 📱 **Mobile-Optimized** — Dedicated mobile experience
@@ -114,6 +118,10 @@ ImpactMojo/
 │   ├── images/             # Logos, icons, illustrations
 │   └── fonts/              # Custom fonts
 │
+├── LICENSE                 # CC-BY-4.0 license
+├── CONTRIBUTING.md         # Contribution guidelines
+├── CODE_OF_CONDUCT.md      # Community code of conduct
+├── SECURITY.md             # Security policy
 └── README.md
 ```
 
@@ -231,25 +239,9 @@ Content is available in:
 
 ## Contributing
 
-We welcome contributions! Whether improving content, fixing bugs, enhancing accessibility, or adding translations.
+We welcome contributions! Whether improving content, fixing bugs, enhancing accessibility, or adding translations. See **[CONTRIBUTING.md](CONTRIBUTING.md)** for full guidelines.
 
-### How to Contribute
-
-1. **Fork the repository**
-2. **Create a feature branch:** `git checkout -b feature/your-feature`
-3. **Make changes and test locally**
-4. **Commit:** `git commit -am 'Add feature'`
-5. **Push:** `git push origin feature/your-feature`
-6. **Submit a Pull Request**
-
-### Contribution Ideas
-
-- 📝 **Content** — Improve courses, add case studies, update examples
-- 🎨 **Design** — Enhance UI/UX, improve mobile experience
-- ♿ **Accessibility** — WCAG compliance, screen reader support
-- 🌐 **Translations** — Translate content into South Asian languages
-- 🐛 **Bug fixes** — Report and fix issues
-- 📚 **Documentation** — Improve guides and comments
+**Quick ideas:** Content improvements, South Asian case studies, translations (Hindi, Tamil, Bengali, Telugu, Marathi), accessibility fixes, UI/UX enhancements, bug reports, new tools & labs.
 
 ---
 
@@ -272,8 +264,9 @@ We welcome contributions! Whether improving content, fixing bugs, enhancing acce
 - 💡 **Feature requests:** [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues)
 - 📧 **General inquiries:** hello@impactmojo.in
 - 📧 **Registration:** register@impactmojo.in
-- 💬 **Discord:** [Join Community](https://discord.gg/M3ZCmUe7ab)
-- 💬 **Telegram:** [Join Channel](https://t.me/impactmojo)
+- 💬 **WhatsApp PLC:** [Professional Learning Community](https://chat.whatsapp.com/EsBjbKaQfupG1HbtajTjHM) — Peer discussions & fieldwork support
+- 💬 **Discord:** [Join Server](https://discord.gg/M3ZCmUe7ab) — Tech tinkering, data tools, MPC servers & code
+- 💬 **Telegram:** [Follow Channel](https://t.me/impactmojo) — Free toolkits, datasets, templates & reading lists
 
 ### Support the Platform
 
@@ -316,7 +309,7 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 7.9.1  
-**Last Updated:** December 2025  
+**Version:** 8.0.0
+**Last Updated:** March 2026
 **License:** CC-BY-4.0  
 **Hosting:** Netlify
