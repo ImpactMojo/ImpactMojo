@@ -53,6 +53,7 @@ const ImpactMojoAuth = {
     _authReadyPromise: null,
     _authReadyResolve: null,
     isSyncing: false,
+    _initialSessionHadUser: false,
 
     // Initialize auth and check session
     async init() {
@@ -76,12 +77,18 @@ const ImpactMojoAuth = {
                         this.user = session.user;
                         await this.fetchProfile();
                         await this.syncFromCloud();
+                        this._initialSessionHadUser = true;
                     }
                     // Mark auth as ready - we now know the true auth state
                     this.isAuthReady = true;
                     if (this._authReadyResolve) this._authReadyResolve();
                     this.updateUI();
                 } else if (event === 'SIGNED_IN' && session?.user) {
+                    // Skip redundant work if INITIAL_SESSION already handled this user
+                    // (happens on OAuth redirects where both events fire)
+                    if (this._initialSessionHadUser && this.user?.id === session.user.id) {
+                        return;
+                    }
                     this.user = session.user;
                     await this.fetchProfile();
                     // Sync data when user signs in
