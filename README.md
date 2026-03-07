@@ -34,6 +34,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **ImpactLex Dictionary** | 500+ development terms with contextual definitions (PWA) |
 | **Dev Case Studies** | 200 evidence-based case studies from 117 countries |
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
+| **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
 | **400+ Handouts** | Downloadable resources across 6 learning tracks |
 | **Learning Loops Blog** | Articles, tutorials, and case studies on development practice |
 | **Between the Logframes** | Development podcast — honest conversations on MEAL and impact work |
@@ -170,6 +171,7 @@ Economics simulations and behavioral experiments:
 - **ImpactLex** — 500+ development terms with contextual definitions (PWA)
 - **Dev Case Studies Library** — 200 evidence-based case studies from 117 countries
 - **DevDiscourses** — 500+ curated open-access research papers, books, and grey literature
+- **PolicyDhara** — Curated Indian public policy documents, government schemes, and legislative frameworks
 - **400+ Handouts** — Downloadable HTML resources across 6 learning tracks
 - **Learning Loops Blog** — Articles, tutorials, case studies, platform updates
 - **Between the Logframes Podcast** — Development conversations on MEAL, ToC, and impact work
