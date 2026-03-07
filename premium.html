@@ -99,28 +99,46 @@ body.dark-mode .header {
     background: rgba(15, 23, 42, 0.95);
 }
 
-/* Theme Toggle */
-.theme-toggle-btn {
-    background: transparent;
+/* Theme Selector - Three Button Layout */
+.theme-selector {
+    display: flex;
+    gap: 4px;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 0.5rem;
+    border-radius: 10px;
+    padding: 4px;
+}
+
+.theme-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    color: var(--text-primary);
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    width: 36px;
+    height: 36px;
 }
 
-.theme-toggle-btn:hover {
+.theme-btn:hover {
     background: var(--hover-bg);
+    color: var(--text-primary);
 }
 
-.theme-toggle-btn .sun-icon { display: none; }
-.theme-toggle-btn .moon-icon { display: block; }
-body.dark-mode .theme-toggle-btn .sun-icon { display: block; }
-body.dark-mode .theme-toggle-btn .moon-icon { display: none; }
+.theme-btn.active {
+    background: var(--accent-color);
+    color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.theme-btn svg {
+    width: 18px;
+    height: 18px;
+}
 
 .header-content {
     max-width: 1200px;
@@ -1142,14 +1160,33 @@ body.user-authenticated .auth-logged-out { display: none !important; }
                 </svg>
                 Back to Home
             </a>
-            <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle theme">
-                <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                </svg>
-                <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </button>
+            <div class="theme-selector" aria-label="Theme selection">
+                <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                </button>
+                <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
             <a href="login.html" class="btn btn-outline auth-logged-out">Log In</a>
             <a href="signup.html" class="btn btn-primary auth-logged-out">Sign Up Free</a>
             <a href="account.html" class="btn btn-primary auth-logged-in">My Account</a>
@@ -1278,7 +1315,7 @@ body.user-authenticated .auth-logged-out { display: none !important; }
                 <li><svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Branded certificates & invoice billing</li>
                 <li><svg class="check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Dedicated account manager</li>
             </ul>
-            <a href="/cdn-cgi/l/email-protection#dfb7bab3b3b09fb6b2afbebcabb2b0b5b0f1b6b1e0acaabdb5babcabe290adb8beb1b6a5beabb6b0b1faedef8fb3beb1faedef96b1aeaab6ada6" class="tier-cta premium">Contact Us</a>
+            <a href="mailto:hello@impactmojo.in?subject=Organization%20Tier%20Inquiry" class="tier-cta premium">Contact Us</a>
             <a href="#detail-organization" class="tier-detail-link">See everything included &darr;</a>
         </div>
     </div>
@@ -1454,7 +1491,7 @@ body.user-authenticated .auth-logged-out { display: none !important; }
 <!-- How It Works -->
 <section class="how-it-works">
     <h2 class="section-title">How Subscriptions Work</h2>
-    <p class="section-subtitle">Simple manual process until we integrate automated payments</p>
+    <p class="section-subtitle">Simple direct UPI process &mdash; no middlemen, no gateway fees</p>
     
     <div class="steps-grid">
         <div class="step-card">
@@ -1614,7 +1651,7 @@ body.user-authenticated .auth-logged-out { display: none !important; }
             </svg>
         </button>
         <div class="faq-answer">
-            We're a bootstrapped platform focused on keeping costs low so we can offer quality education at accessible prices. Automated payment gateways charge 2-3% per transaction, which adds up. Our manual UPI process keeps 100% of your payment going toward platform development. We're working on integrating Razorpay for convenience. USD pricing coming soon!
+            We're a bootstrapped platform focused on keeping costs low so we can offer quality education at accessible prices. Automated payment gateways charge 2-3% per transaction, which adds up. Our direct UPI process keeps 100% of your payment going toward platform development &mdash; no middlemen, no gateway fees. USD pricing coming soon!
         </div>
     </div>
     
@@ -1698,24 +1735,42 @@ body.user-authenticated .auth-logged-out { display: none !important; }
 </footer>
 
 <script>
-// Theme initialization - respects system preference, defaults to light
+// Three-way theme system (system / light / dark)
 (function() {
+    function applyTheme(theme) {
+        if (theme === 'system') {
+            var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.body.classList.toggle('dark-mode', systemDark);
+        } else {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+        }
+    }
+
+    function updateActiveButton(theme) {
+        document.querySelectorAll('.theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.dataset.theme === theme);
+        });
+    }
+
     var saved = localStorage.getItem('theme') || 'system';
-    var isDark;
-    if (saved === 'dark') {
-        isDark = true;
-    } else if (saved === 'light') {
-        isDark = false;
-    } else {
-        isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    if (isDark) {
-        document.body.classList.add('dark-mode');
-    }
-    // Theme toggle
-    document.getElementById('themeToggle').addEventListener('click', function() {
-        var isDarkNow = document.body.classList.toggle('dark-mode');
-        localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+    applyTheme(saved);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateActiveButton(saved);
+        document.querySelectorAll('.theme-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var theme = btn.dataset.theme;
+                localStorage.setItem('theme', theme);
+                updateActiveButton(theme);
+                applyTheme(theme);
+            });
+        });
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+        if ((localStorage.getItem('theme') || 'system') === 'system') {
+            applyTheme('system');
+        }
     });
 })();
 </script>

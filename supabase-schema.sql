@@ -23,8 +23,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     subscription_status TEXT DEFAULT 'active', -- active, cancelled, expired, trial
     subscription_start DATE,
     subscription_end DATE,
-    razorpay_customer_id TEXT,
-    razorpay_subscription_id TEXT,
+    upi_vpa TEXT,  -- user's UPI VPA for payment tracking
     phone TEXT,
     country TEXT DEFAULT 'India',
     city TEXT,
@@ -118,9 +117,8 @@ CREATE TABLE IF NOT EXISTS public.certificates (
 CREATE TABLE IF NOT EXISTS public.payments (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-    razorpay_payment_id TEXT,
-    razorpay_order_id TEXT,
-    razorpay_signature TEXT,
+    upi_transaction_id TEXT,
+    upi_reference TEXT,
     amount DECIMAL NOT NULL,
     currency TEXT DEFAULT 'INR',
     status TEXT DEFAULT 'pending', -- pending, completed, failed, refunded
@@ -145,6 +143,72 @@ CREATE TABLE IF NOT EXISTS public.coaching_bookings (
     notes TEXT,
     payment_id UUID REFERENCES public.payments(id),
     created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- =====================================================
+-- 8. ORGANIZATIONS TABLE
+-- For Organization tier team management
+-- =====================================================
+CREATE TABLE IF NOT EXISTS public.organizations (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    name TEXT NOT NULL,
+    slug TEXT UNIQUE,
+    admin_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    logo_url TEXT,
+    domain TEXT,
+    max_seats INTEGER DEFAULT 10,
+    billing_email TEXT,
+    billing_address TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- =====================================================
+-- 9. ORGANIZATION MEMBERS TABLE
+-- Links users to organizations
+-- =====================================================
+CREATE TABLE IF NOT EXISTS public.organization_members (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    org_id UUID REFERENCES public.organizations(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    role TEXT DEFAULT 'member', -- admin, manager, member
+    invited_by UUID REFERENCES public.profiles(id),
+    invited_at TIMESTAMPTZ DEFAULT NOW(),
+    joined_at TIMESTAMPTZ,
+    status TEXT DEFAULT 'invited', -- invited, active, removed
+    UNIQUE(org_id, user_id)
+);
+
+-- =====================================================
+-- 10. LEARNING PATHS TABLE
+-- Custom learning paths for organizations
+-- =====================================================
+CREATE TABLE IF NOT EXISTS public.learning_paths (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    org_id UUID REFERENCES public.organizations(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,
+    description TEXT,
+    course_ids TEXT[] NOT NULL, -- ordered array of course IDs
+    created_by UUID REFERENCES public.profiles(id),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- =====================================================
+-- 11. LEARNING PATH ASSIGNMENTS TABLE
+-- Assigns learning paths to org members
+-- =====================================================
+CREATE TABLE IF NOT EXISTS public.learning_path_assignments (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    path_id UUID REFERENCES public.learning_paths(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    assigned_by UUID REFERENCES public.profiles(id),
+    assigned_at TIMESTAMPTZ DEFAULT NOW(),
+    due_date DATE,
+    status TEXT DEFAULT 'assigned', -- assigned, in_progress, completed
+    completed_at TIMESTAMPTZ,
+    UNIQUE(path_id, user_id)
 );
 
 -- =====================================================
@@ -194,6 +258,54 @@ CREATE POLICY "Users can view own payments" ON public.payments
 -- Coaching Bookings: Users can manage their own bookings
 CREATE POLICY "Users can manage own bookings" ON public.coaching_bookings
     FOR ALL USING (auth.uid() = user_id);
+
+-- Enable RLS on organization tables
+ALTER TABLE public.organizations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.organization_members ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.learning_paths ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.learning_path_assignments ENABLE ROW LEVEL SECURITY;
+
+-- Organizations: Admins can manage, members can view
+CREATE POLICY "Org admins can manage org" ON public.organizations
+    FOR ALL USING (auth.uid() = admin_id);
+
+CREATE POLICY "Org members can view org" ON public.organizations
+    FOR SELECT USING (
+        EXISTS (SELECT 1 FROM public.organization_members WHERE org_id = id AND user_id = auth.uid() AND status = 'active')
+    );
+
+-- Organization Members: Admins can manage, members can view their own org
+CREATE POLICY "Org admins can manage members" ON public.organization_members
+    FOR ALL USING (
+        EXISTS (SELECT 1 FROM public.organizations WHERE id = org_id AND admin_id = auth.uid())
+    );
+
+CREATE POLICY "Users can view own membership" ON public.organization_members
+    FOR SELECT USING (auth.uid() = user_id);
+
+-- Learning Paths: Org admins can manage, members can view
+CREATE POLICY "Org admins can manage learning paths" ON public.learning_paths
+    FOR ALL USING (
+        EXISTS (SELECT 1 FROM public.organizations WHERE id = org_id AND admin_id = auth.uid())
+    );
+
+CREATE POLICY "Org members can view learning paths" ON public.learning_paths
+    FOR SELECT USING (
+        EXISTS (SELECT 1 FROM public.organization_members WHERE org_id = learning_paths.org_id AND user_id = auth.uid() AND status = 'active')
+    );
+
+-- Learning Path Assignments: Admins can manage, users can view own
+CREATE POLICY "Admins can manage assignments" ON public.learning_path_assignments
+    FOR ALL USING (
+        EXISTS (
+            SELECT 1 FROM public.learning_paths lp
+            JOIN public.organizations o ON o.id = lp.org_id
+            WHERE lp.id = path_id AND o.admin_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "Users can view own assignments" ON public.learning_path_assignments
+    FOR SELECT USING (auth.uid() = user_id);
 
 -- =====================================================
 -- FUNCTIONS AND TRIGGERS
@@ -248,6 +360,11 @@ CREATE INDEX IF NOT EXISTS idx_user_progress_user_id ON public.user_progress(use
 CREATE INDEX IF NOT EXISTS idx_bookmarks_user_id ON public.bookmarks(user_id);
 CREATE INDEX IF NOT EXISTS idx_certificates_user_id ON public.certificates(user_id);
 CREATE INDEX IF NOT EXISTS idx_payments_user_id ON public.payments(user_id);
+CREATE INDEX IF NOT EXISTS idx_org_members_org_id ON public.organization_members(org_id);
+CREATE INDEX IF NOT EXISTS idx_org_members_user_id ON public.organization_members(user_id);
+CREATE INDEX IF NOT EXISTS idx_learning_paths_org_id ON public.learning_paths(org_id);
+CREATE INDEX IF NOT EXISTS idx_learning_path_assignments_user_id ON public.learning_path_assignments(user_id);
+CREATE INDEX IF NOT EXISTS idx_coaching_bookings_user_id ON public.coaching_bookings(user_id);
 
 -- =====================================================
 -- SUCCESS MESSAGE

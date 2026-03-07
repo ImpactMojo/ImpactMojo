@@ -1993,12 +1993,40 @@ h1, h2, h3, h4, h5, h6 {
                             <p id="tierDescription">Access to all free courses</p>
                         </div>
                     </div>
+                    <div id="subscriptionManage" style="display:none; margin-top:1rem; padding:1rem; background:var(--hover-bg); border-radius:8px; font-size:0.9rem;">
+                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+                            <div>
+                                <p style="color:var(--text-muted); font-size:0.8rem;">Subscription Period</p>
+                                <p id="subPeriod" style="font-weight:500;">-</p>
+                            </div>
+                            <div style="display:flex; gap:0.5rem; align-items:center;">
+                                <a href="premium.html" class="upgrade-btn" style="font-size:0.8rem; padding:0.4rem 0.75rem; border-radius:6px;">Change Plan</a>
+                                <a id="orgDashLink" href="org-dashboard.html" style="display:none; font-size:0.8rem; padding:0.4rem 0.75rem; border-radius:6px; background:rgba(245,158,11,0.15); color:#D97706; text-decoration:none; font-weight:500;">Org Dashboard</a>
+                            </div>
+                        </div>
+                        <p style="margin-top:0.5rem; font-size:0.8rem; color:var(--text-muted);">To cancel or modify your subscription, email <a href="mailto:hello@impactmojo.in" style="color:var(--accent-color);">hello@impactmojo.in</a></p>
+                    </div>
                     <div id="upgradeBanner" class="upgrade-banner">
                         <div>
                             <h3>Unlock Premium Features</h3>
                             <p>Get access to premium tools, advanced content, and community support.</p>
                         </div>
                         <a href="premium.html" class="upgrade-btn">Upgrade</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certificates Card (Practitioner+ only) -->
+            <div class="card" id="certificatesCard" style="display:none;">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h10M7 12h10M7 17h6"/></svg>
+                        My Certificates
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div id="certificatesList" style="display:flex; flex-direction:column; gap:0.75rem;">
+                        <p style="color:var(--text-muted); font-size:0.9rem; text-align:center; padding:1rem;">Complete flagship courses to earn certificates shareable on LinkedIn.</p>
                     </div>
                 </div>
             </div>
@@ -2020,6 +2048,10 @@ h1, h2, h3, h4, h5, h6 {
                         <a href="handouts.html" class="action-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                             <span>Resources</span>
+                        </a>
+                        <a href="coaching.html" class="action-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <span>Coaching</span>
                         </a>
                         <button class="action-btn" onclick="exportData()">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -2514,10 +2546,27 @@ function updatePageData() {
         tierName.textContent = tier.charAt(0).toUpperCase() + tier.slice(1) + ' Tier';
         tierDescription.textContent = 'Full access to premium features';
         upgradeBanner.style.display = 'none';
+        // Show subscription management
+        const subManage = document.getElementById('subscriptionManage');
+        if (subManage) {
+            subManage.style.display = 'block';
+            const start = profile.subscription_start ? new Date(profile.subscription_start).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}) : 'Active';
+            const end = profile.subscription_end ? new Date(profile.subscription_end).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}) : 'Ongoing';
+            document.getElementById('subPeriod').textContent = start + ' — ' + end;
+            if (tier === 'organization') {
+                document.getElementById('orgDashLink').style.display = 'inline-block';
+            }
+        }
     } else {
         upgradeBanner.style.display = 'flex';
     }
     
+    // Show certificates card for premium users and load certificates
+    if (isPremium) {
+        document.getElementById('certificatesCard').style.display = 'block';
+        loadCertificates(user.id);
+    }
+
     // Update community access
     updateCommunityAccess(isPremium);
     
@@ -2536,6 +2585,32 @@ function updatePageData() {
         syncBtn.style.display = 'inline-flex';
     } else {
         syncBtn.style.display = 'none';
+    }
+}
+
+// Load certificates from Supabase
+async function loadCertificates(userId) {
+    try {
+        const { data: certs, error } = await supabaseClient
+            .from('certificates')
+            .select('*')
+            .eq('user_id', userId)
+            .order('issued_at', { ascending: false });
+
+        if (error || !certs || certs.length === 0) return;
+
+        const container = document.getElementById('certificatesList');
+        container.innerHTML = certs.map(function(cert) {
+            var date = new Date(cert.issued_at).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
+            return '<div style="display:flex; align-items:center; gap:1rem; padding:0.75rem; background:var(--hover-bg); border-radius:8px;">' +
+                '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#10B981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' +
+                '<div style="flex:1;"><div style="font-weight:500; font-size:0.9rem;">' + (cert.course_name || cert.course_id) + '</div>' +
+                '<div style="font-size:0.75rem; color:var(--text-muted);">Issued ' + date + ' &middot; #' + cert.certificate_number + '</div></div>' +
+                (cert.verification_url ? '<a href="' + cert.verification_url + '" target="_blank" style="font-size:0.75rem; color:var(--accent-color);">Verify</a>' : '') +
+                '</div>';
+        }).join('');
+    } catch (e) {
+        console.error('Failed to load certificates:', e);
     }
 }
 

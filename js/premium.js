@@ -87,11 +87,11 @@
             ],
             'organization': [
                 'Everything in Professional',
-                'Team dashboard',
+                'Team dashboard & progress analytics',
                 'Bulk user management',
                 'Custom learning paths',
-                'Dedicated support',
-                'Invoice billing'
+                'Dedicated account manager',
+                'Branded certificates & invoice billing'
             ]
         },
         

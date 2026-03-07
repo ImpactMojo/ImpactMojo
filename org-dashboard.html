@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organization Dashboard | ImpactMojo</title>
+<meta name="description" content="Manage your organization's team, learning paths, and progress on ImpactMojo.">
+
+<!-- Favicons -->
+<link href="assets/images/favicon.png" rel="icon" type="image/png">
+<link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --primary-bg: #FFFFFF;
+    --secondary-bg: #F8FAFC;
+    --accent-color: #F59E0B;
+    --accent-hover: #D97706;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+}
+
+body.dark-mode {
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Theme Selector */
+.theme-selector {
+    display: flex; gap: 4px; background: var(--card-bg);
+    border: 1px solid var(--border-color); border-radius: 10px; padding: 4px;
+}
+.theme-btn {
+    background: transparent; border: none; color: var(--text-secondary);
+    padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;
+    display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+}
+.theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+.theme-btn.active { background: var(--accent-color); color: white; }
+.theme-btn svg { width: 18px; height: 18px; }
+
+/* Header */
+.header {
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color); padding: 1rem 2rem;
+    position: sticky; top: 0; z-index: 100;
+}
+body.dark-mode .header { background: rgba(15,23,42,0.95); }
+.header-content {
+    max-width: 1200px; margin: 0 auto; display: flex;
+    justify-content: space-between; align-items: center;
+}
+.logo-link {
+    display: flex; align-items: center; gap: 0.75rem;
+    text-decoration: none; color: var(--text-primary);
+}
+.logo-link img { width: 40px; height: 40px; border-radius: 8px; }
+.logo-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.25rem; }
+.header-actions { display: flex; gap: 0.75rem; align-items: center; }
+
+.btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem;
+    font-weight: 500; text-decoration: none; transition: all 0.2s ease;
+    cursor: pointer; border: none;
+}
+.btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+.btn-outline:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.btn-primary { background: var(--accent-color); color: white; }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-danger { background: var(--danger-color); color: white; font-size: 0.8rem; padding: 0.35rem 0.75rem; }
+
+/* Page Title */
+.page-title {
+    text-align: center; padding: 2.5rem 2rem 1.5rem;
+}
+.page-title h1 { font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 0.5rem; }
+.page-title p { color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+.org-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(245,158,11,0.15); color: #D97706; border-radius: 20px;
+    padding: 0.35rem 1rem; font-size: 0.8rem; font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+    max-width: 1200px; margin: 0 auto 2rem; padding: 0 2rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
+}
+.stat-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 12px; padding: 1.25rem; text-align: center;
+}
+.stat-value { font-size: 2rem; font-weight: 700; color: var(--accent-color); }
+.stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+/* Tab Navigation */
+.tab-nav {
+    max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+    display: flex; gap: 0; border-bottom: 2px solid var(--border-color);
+}
+.tab-btn {
+    background: none; border: none; padding: 0.75rem 1.5rem;
+    cursor: pointer; color: var(--text-muted); font-weight: 500;
+    border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s;
+}
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+
+/* Tab Content */
+.tab-content { max-width: 1200px; margin: 0 auto; padding: 2rem; display: none; }
+.tab-content.active { display: block; }
+
+/* Members Table */
+.members-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;
+}
+.search-input {
+    padding: 0.5rem 1rem; border: 1px solid var(--border-color);
+    border-radius: 8px; background: var(--card-bg); color: var(--text-primary);
+    font-size: 0.875rem; width: 250px;
+}
+.members-table {
+    width: 100%; border-collapse: collapse; background: var(--card-bg);
+    border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;
+}
+.members-table th, .members-table td {
+    padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border-color);
+}
+.members-table th {
+    background: var(--secondary-bg); font-size: 0.75rem;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);
+}
+.members-table tr:last-child td { border-bottom: none; }
+.members-table tr:hover td { background: var(--hover-bg); }
+
+.status-badge {
+    display: inline-block; padding: 0.2rem 0.6rem; border-radius: 12px;
+    font-size: 0.75rem; font-weight: 500;
+}
+.status-active { background: rgba(16,185,129,0.15); color: #059669; }
+.status-invited { background: rgba(245,158,11,0.15); color: #D97706; }
+.progress-bar {
+    width: 100px; height: 6px; background: var(--border-color);
+    border-radius: 3px; overflow: hidden;
+}
+.progress-fill { height: 100%; background: var(--success-color); border-radius: 3px; }
+
+/* Invite Modal */
+.modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5); z-index: 200; justify-content: center; align-items: center;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+    background: var(--card-bg); border-radius: 16px; padding: 2rem;
+    max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+}
+.modal h3 { margin-bottom: 1rem; }
+.modal label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.35rem; color: var(--text-secondary); }
+.modal input, .modal select, .modal textarea {
+    width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--border-color);
+    border-radius: 8px; background: var(--primary-bg); color: var(--text-primary);
+    font-size: 0.875rem; margin-bottom: 1rem;
+}
+.modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 0.5rem; }
+
+/* Learning Paths */
+.path-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;
+}
+.path-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+.path-title { font-weight: 600; font-size: 1.1rem; }
+.path-meta { font-size: 0.8rem; color: var(--text-muted); }
+.path-courses { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+.path-course-tag {
+    display: inline-block; padding: 0.25rem 0.75rem; background: var(--secondary-bg);
+    border: 1px solid var(--border-color); border-radius: 6px;
+    font-size: 0.8rem; color: var(--text-secondary);
+}
+.path-stats {
+    display: flex; gap: 1.5rem; margin-top: 1rem; padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+.path-stat { font-size: 0.8rem; color: var(--text-muted); }
+.path-stat strong { color: var(--text-primary); }
+
+/* Empty State */
+.empty-state {
+    text-align: center; padding: 3rem 2rem; color: var(--text-muted);
+}
+.empty-state svg { width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.4; }
+.empty-state p { margin-top: 0.5rem; }
+
+/* Footer */
+.footer {
+    text-align: center; padding: 2rem; margin-top: 3rem;
+    border-top: 1px solid var(--border-color); color: var(--text-muted);
+    font-size: 0.85rem;
+}
+.footer a { color: var(--accent-color); text-decoration: none; }
+
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .tab-nav { overflow-x: auto; }
+    .members-toolbar { flex-direction: column; align-items: stretch; }
+    .search-input { width: 100%; }
+    .members-table { font-size: 0.8rem; }
+    .members-table th:nth-child(4), .members-table td:nth-child(4),
+    .members-table th:nth-child(5), .members-table td:nth-child(5) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <a href="index.html" class="logo-link">
+            <img src="assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="40" height="40">
+            <span class="logo-text">ImpactMojo</span>
+        </a>
+        <div class="header-actions">
+            <a href="index.html" class="btn btn-outline">Home</a>
+            <a href="account.html" class="btn btn-outline">My Account</a>
+            <div class="theme-selector" aria-label="Theme selection">
+                <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </button>
+                <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                </button>
+                <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Auth Gate (shown if not org admin) -->
+<div id="authGate" style="display:none;">
+    <div class="empty-state" style="padding: 5rem 2rem;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <h2>Organization Dashboard</h2>
+        <p>This page is available to Organization tier admins only.</p>
+        <a href="premium.html" class="btn btn-primary" style="margin-top:1rem;">View Plans</a>
+    </div>
+</div>
+
+<!-- Dashboard Content (shown if org admin) -->
+<div id="dashboardContent" style="display:none;">
+
+    <div class="page-title">
+        <div class="org-badge">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Organization Tier
+        </div>
+        <h1 id="orgName">Your Organization</h1>
+        <p>Manage your team, track learning progress, and build custom pathways.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value" id="statMembers">0</div>
+            <div class="stat-label">Team Members</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="statSeats">0</div>
+            <div class="stat-label">Available Seats</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="statPaths">0</div>
+            <div class="stat-label">Learning Paths</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="statCompletion">0%</div>
+            <div class="stat-label">Avg Completion</div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-nav">
+        <button class="tab-btn active" data-tab="members">Team Members</button>
+        <button class="tab-btn" data-tab="paths">Learning Paths</button>
+        <button class="tab-btn" data-tab="progress">Progress & Reports</button>
+        <button class="tab-btn" data-tab="settings">Settings</button>
+    </div>
+
+    <!-- Members Tab -->
+    <div class="tab-content active" id="tab-members">
+        <div class="members-toolbar">
+            <input type="text" class="search-input" id="memberSearch" placeholder="Search members...">
+            <button class="btn btn-primary" onclick="openInviteModal()">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Invite Member
+            </button>
+        </div>
+        <table class="members-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Progress</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="membersTableBody">
+                <tr><td colspan="6" class="empty-state"><p>No team members yet. Invite your first member above.</p></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Learning Paths Tab -->
+    <div class="tab-content" id="tab-paths">
+        <div class="members-toolbar">
+            <h3>Custom Learning Paths</h3>
+            <button class="btn btn-primary" onclick="openPathModal()">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Create Path
+            </button>
+        </div>
+        <div id="pathsList">
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+                <h3>No Learning Paths Yet</h3>
+                <p>Create custom course sequences aligned to your team's capacity needs.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Tab -->
+    <div class="tab-content" id="tab-progress">
+        <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            <h3>Team Progress Analytics</h3>
+            <p>Track completion rates, quiz scores, time-on-task, and engagement metrics across your team. Reports will populate as your team begins their learning journeys.</p>
+        </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div class="tab-content" id="tab-settings">
+        <div class="path-card">
+            <h3 style="margin-bottom:1rem;">Organization Settings</h3>
+            <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;">Organization Name</label>
+            <input type="text" id="settingsOrgName" class="search-input" style="width:100%; margin-bottom:1rem;">
+            <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;">Billing Email</label>
+            <input type="email" id="settingsBillingEmail" class="search-input" style="width:100%; margin-bottom:1rem;">
+            <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;">Billing Address (for invoices)</label>
+            <textarea id="settingsBillingAddress" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; min-height:80px; margin-bottom:1rem; resize:vertical;"></textarea>
+            <button class="btn btn-primary" onclick="saveOrgSettings()">Save Settings</button>
+        </div>
+        <div class="path-card" style="margin-top:1rem;">
+            <h3 style="margin-bottom:0.5rem;">Invoice Billing</h3>
+            <p style="color:var(--text-secondary); font-size:0.9rem;">Need purchase orders or bank transfer options? Contact us at <a href="mailto:hello@impactmojo.in" style="color:var(--accent-color);">hello@impactmojo.in</a> and we'll work with your procurement team.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Invite Member Modal -->
+<div class="modal-overlay" id="inviteModal">
+    <div class="modal">
+        <h3>Invite Team Member</h3>
+        <label>Email Address</label>
+        <input type="email" id="inviteEmail" placeholder="colleague@org.com">
+        <label>Role</label>
+        <select id="inviteRole">
+            <option value="member">Member</option>
+            <option value="manager">Manager</option>
+        </select>
+        <div class="modal-actions">
+            <button class="btn btn-outline" onclick="closeModal('inviteModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="inviteMember()">Send Invite</button>
+        </div>
+    </div>
+</div>
+
+<!-- Create Learning Path Modal -->
+<div class="modal-overlay" id="pathModal">
+    <div class="modal">
+        <h3>Create Learning Path</h3>
+        <label>Path Title</label>
+        <input type="text" id="pathTitle" placeholder="e.g., MEL Foundations for Field Staff">
+        <label>Description</label>
+        <textarea id="pathDesc" placeholder="What skills will this path develop?" style="resize:vertical; min-height:60px;"></textarea>
+        <label>Courses (select in order)</label>
+        <div id="courseSelector" style="max-height:200px; overflow-y:auto; border:1px solid var(--border-color); border-radius:8px; padding:0.5rem; margin-bottom:1rem;">
+            <label style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; cursor:pointer; font-size:0.85rem;"><input type="checkbox" value="devecon"> Development Economics</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; cursor:pointer; font-size:0.85rem;"><input type="checkbox" value="mel"> Monitoring, Evaluation & Learning</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; cursor:pointer; font-size:0.85rem;"><input type="checkbox" value="dataviz"> Data Visualization</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; cursor:pointer; font-size:0.85rem;"><input type="checkbox" value="devai"> AI for Impact</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; cursor:pointer; font-size:0.85rem;"><input type="checkbox" value="gandhi"> Gandhian Political Philosophy</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; cursor:pointer; font-size:0.85rem;"><input type="checkbox" value="poa"> Program on Accountability</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; cursor:pointer; font-size:0.85rem;"><input type="checkbox" value="media"> Media for Development</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; cursor:pointer; font-size:0.85rem;"><input type="checkbox" value="law"> Constitution & Law</label>
+            <label style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; cursor:pointer; font-size:0.85rem;"><input type="checkbox" value="sel"> Social-Emotional Learning</label>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-outline" onclick="closeModal('pathModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="createPath()">Create Path</button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025-2026 ImpactMojo. <a href="index.html">Home</a> | <a href="premium.html">Premium</a> | <a href="mailto:hello@impactmojo.in">Contact</a></p>
+</footer>
+
+<script>
+// Three-way theme
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            document.body.classList.toggle('dark-mode', window.matchMedia('(prefers-color-scheme: dark)').matches);
+        } else {
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateBtn(t) {
+        document.querySelectorAll('.theme-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.theme === t); });
+    }
+    var s = localStorage.getItem('theme') || 'system';
+    applyTheme(s);
+    document.addEventListener('DOMContentLoaded', function() {
+        updateBtn(s);
+        document.querySelectorAll('.theme-btn').forEach(function(b) {
+            b.addEventListener('click', function() {
+                var t = b.dataset.theme; localStorage.setItem('theme', t); updateBtn(t); applyTheme(t);
+            });
+        });
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+        if ((localStorage.getItem('theme') || 'system') === 'system') applyTheme('system');
+    });
+})();
+</script>
+<script src="js/auth.js"></script>
+<script>
+// Organization Dashboard Logic
+(function() {
+    var orgData = null;
+    var members = [];
+    var paths = [];
+
+    async function init() {
+        await ImpactMojoAuth.init();
+
+        if (!ImpactMojoAuth.isLoggedIn()) {
+            document.getElementById('authGate').style.display = 'block';
+            return;
+        }
+
+        var profile = ImpactMojoAuth.getProfile();
+        if (!profile || profile.subscription_tier !== 'organization' || profile.subscription_status !== 'active') {
+            document.getElementById('authGate').style.display = 'block';
+            return;
+        }
+
+        // Load org data
+        var { data: org } = await supabaseClient
+            .from('organizations')
+            .select('*')
+            .eq('admin_id', profile.id)
+            .single();
+
+        if (!org) {
+            // Create org for first-time admin
+            var { data: newOrg } = await supabaseClient
+                .from('organizations')
+                .insert({
+                    name: profile.organization || 'My Organization',
+                    admin_id: profile.id,
+                    billing_email: ImpactMojoAuth.getUser().email
+                })
+                .select()
+                .single();
+            org = newOrg;
+        }
+
+        if (!org) {
+            document.getElementById('authGate').style.display = 'block';
+            return;
+        }
+
+        orgData = org;
+        document.getElementById('dashboardContent').style.display = 'block';
+        document.getElementById('orgName').textContent = org.name;
+        document.getElementById('settingsOrgName').value = org.name || '';
+        document.getElementById('settingsBillingEmail').value = org.billing_email || '';
+        document.getElementById('settingsBillingAddress').value = org.billing_address || '';
+
+        await loadMembers();
+        await loadPaths();
+        updateStats();
+    }
+
+    async function loadMembers() {
+        if (!orgData) return;
+        var { data } = await supabaseClient
+            .from('organization_members')
+            .select('*, profiles:user_id(full_name, display_name, email, total_learning_hours, courses_completed)')
+            .eq('org_id', orgData.id);
+        members = data || [];
+        renderMembers();
+    }
+
+    function renderMembers(filter) {
+        var tbody = document.getElementById('membersTableBody');
+        var filtered = members;
+        if (filter) {
+            var q = filter.toLowerCase();
+            filtered = members.filter(function(m) {
+                var name = (m.profiles?.display_name || m.profiles?.full_name || '').toLowerCase();
+                var email = (m.profiles?.email || '').toLowerCase();
+                return name.includes(q) || email.includes(q);
+            });
+        }
+        if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:2rem; color:var(--text-muted);">No team members found.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = filtered.map(function(m) {
+            var name = m.profiles?.display_name || m.profiles?.full_name || 'Invited';
+            var email = m.profiles?.email || '';
+            var completed = (m.profiles?.courses_completed || []).length;
+            var pct = Math.min(Math.round((completed / 9) * 100), 100);
+            return '<tr>' +
+                '<td><strong>' + escHtml(name) + '</strong></td>' +
+                '<td style="color:var(--text-secondary)">' + escHtml(email) + '</td>' +
+                '<td>' + m.role + '</td>' +
+                '<td><div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%"></div></div> <span style="font-size:0.75rem;color:var(--text-muted)">' + pct + '%</span></td>' +
+                '<td><span class="status-badge status-' + m.status + '">' + m.status + '</span></td>' +
+                '<td>' + (m.role !== 'admin' ? '<button class="btn-danger btn" onclick="removeMember(\'' + m.id + '\')">Remove</button>' : '') + '</td>' +
+                '</tr>';
+        }).join('');
+    }
+
+    async function loadPaths() {
+        if (!orgData) return;
+        var { data } = await supabaseClient
+            .from('learning_paths')
+            .select('*')
+            .eq('org_id', orgData.id)
+            .order('created_at', { ascending: false });
+        paths = data || [];
+        renderPaths();
+    }
+
+    function renderPaths() {
+        var container = document.getElementById('pathsList');
+        if (paths.length === 0) {
+            container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><h3>No Learning Paths Yet</h3><p>Create custom course sequences aligned to your team\'s capacity needs.</p></div>';
+            return;
+        }
+        var courseNames = {
+            devecon: 'Development Economics', mel: 'MEL', dataviz: 'Data Visualization',
+            devai: 'AI for Impact', gandhi: 'Gandhian Philosophy', poa: 'Program on Accountability',
+            media: 'Media for Development', law: 'Constitution & Law', sel: 'Social-Emotional Learning'
+        };
+        container.innerHTML = paths.map(function(p) {
+            var courses = (p.course_ids || []).map(function(c) {
+                return '<span class="path-course-tag">' + (courseNames[c] || c) + '</span>';
+            }).join('');
+            return '<div class="path-card">' +
+                '<div class="path-header"><div><div class="path-title">' + escHtml(p.title) + '</div>' +
+                '<div class="path-meta">' + (p.description || '') + '</div></div></div>' +
+                '<div class="path-courses">' + courses + '</div>' +
+                '<div class="path-stats"><span class="path-stat"><strong>' + (p.course_ids || []).length + '</strong> courses</span></div></div>';
+        }).join('');
+    }
+
+    function updateStats() {
+        var activeMembers = members.filter(function(m) { return m.status === 'active'; });
+        document.getElementById('statMembers').textContent = members.length;
+        document.getElementById('statSeats').textContent = Math.max(0, (orgData?.max_seats || 10) - members.length);
+        document.getElementById('statPaths').textContent = paths.length;
+        if (activeMembers.length > 0) {
+            var totalPct = activeMembers.reduce(function(sum, m) {
+                return sum + Math.min(Math.round(((m.profiles?.courses_completed || []).length / 9) * 100), 100);
+            }, 0);
+            document.getElementById('statCompletion').textContent = Math.round(totalPct / activeMembers.length) + '%';
+        }
+    }
+
+    function escHtml(s) {
+        var d = document.createElement('div');
+        d.textContent = s || '';
+        return d.innerHTML;
+    }
+
+    // Tab switching
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.tab-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+                document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+                btn.classList.add('active');
+                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        document.getElementById('memberSearch').addEventListener('input', function() {
+            renderMembers(this.value);
+        });
+    });
+
+    // Modal functions
+    window.openInviteModal = function() { document.getElementById('inviteModal').classList.add('active'); };
+    window.openPathModal = function() { document.getElementById('pathModal').classList.add('active'); };
+    window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); };
+
+    window.inviteMember = async function() {
+        var email = document.getElementById('inviteEmail').value.trim();
+        var role = document.getElementById('inviteRole').value;
+        if (!email) { alert('Please enter an email address.'); return; }
+        if (members.length >= (orgData?.max_seats || 10)) {
+            alert('You have reached your seat limit. Contact hello@impactmojo.in to add more seats.');
+            return;
+        }
+
+        // Look up user by email
+        var { data: invitee } = await supabaseClient
+            .from('profiles')
+            .select('id')
+            .eq('email', email)
+            .single();
+
+        if (!invitee) {
+            alert('No ImpactMojo account found with that email. The user must sign up first at impactmojo.in/signup');
+            return;
+        }
+
+        var { error } = await supabaseClient
+            .from('organization_members')
+            .insert({
+                org_id: orgData.id,
+                user_id: invitee.id,
+                role: role,
+                invited_by: ImpactMojoAuth.getUser().id,
+                status: 'active',
+                joined_at: new Date().toISOString()
+            });
+
+        if (error) {
+            if (error.code === '23505') alert('This user is already a member.');
+            else alert('Error: ' + error.message);
+            return;
+        }
+
+        closeModal('inviteModal');
+        document.getElementById('inviteEmail').value = '';
+        await loadMembers();
+        updateStats();
+    };
+
+    window.removeMember = async function(memberId) {
+        if (!confirm('Remove this member from your organization?')) return;
+        await supabaseClient
+            .from('organization_members')
+            .update({ status: 'removed' })
+            .eq('id', memberId);
+        await loadMembers();
+        updateStats();
+    };
+
+    window.createPath = async function() {
+        var title = document.getElementById('pathTitle').value.trim();
+        var desc = document.getElementById('pathDesc').value.trim();
+        var checked = document.querySelectorAll('#courseSelector input:checked');
+        var courseIds = Array.from(checked).map(function(c) { return c.value; });
+
+        if (!title) { alert('Please enter a path title.'); return; }
+        if (courseIds.length === 0) { alert('Please select at least one course.'); return; }
+
+        var { error } = await supabaseClient
+            .from('learning_paths')
+            .insert({
+                org_id: orgData.id,
+                title: title,
+                description: desc,
+                course_ids: courseIds,
+                created_by: ImpactMojoAuth.getUser().id
+            });
+
+        if (error) { alert('Error: ' + error.message); return; }
+
+        closeModal('pathModal');
+        document.getElementById('pathTitle').value = '';
+        document.getElementById('pathDesc').value = '';
+        document.querySelectorAll('#courseSelector input').forEach(function(c) { c.checked = false; });
+        await loadPaths();
+        updateStats();
+    };
+
+    window.saveOrgSettings = async function() {
+        if (!orgData) return;
+        var { error } = await supabaseClient
+            .from('organizations')
+            .update({
+                name: document.getElementById('settingsOrgName').value.trim(),
+                billing_email: document.getElementById('settingsBillingEmail').value.trim(),
+                billing_address: document.getElementById('settingsBillingAddress').value.trim(),
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', orgData.id);
+
+        if (error) { alert('Error saving: ' + error.message); return; }
+        orgData.name = document.getElementById('settingsOrgName').value.trim();
+        document.getElementById('orgName').textContent = orgData.name;
+        alert('Settings saved!');
+    };
+
+    // Initialize
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        init();
+    } else {
+        document.addEventListener('DOMContentLoaded', init);
+    }
+})();
+</script>
+</body>
+</html>
