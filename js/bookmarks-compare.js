@@ -603,7 +603,7 @@ IMX.ReadingLists = {
             description: 'Core resources for Monitoring, Evaluation, Accountability & Learning',
             items: [
                 { title: 'BetterEvaluation Rainbow Framework', url: 'https://www.betterevaluation.org/frameworks-guides/rainbow-framework', type: 'Framework' },
-                { title: 'USAID Evaluation Toolkit', url: 'https://www.usaid.gov/evaluation/evaluation-toolkit', type: 'Toolkit' },
+                { title: 'USAID Evaluation Toolkit', url: 'https://www.usaid.gov/evaluation', type: 'Toolkit' },
                 { title: 'World Bank Impact Evaluation Guide', url: 'https://dimewiki.worldbank.org/Impact_Evaluation', type: 'Guide' },
                 { title: 'ODI Results-Based Management', url: 'https://odi.org/en/publications/results-based-management-in-development-cooperation/', type: 'Publication' },
                 { title: 'ALNAP Evaluation Resources', url: 'https://www.alnap.org/help-library/evaluation', type: 'Library' }
@@ -628,7 +628,7 @@ IMX.ReadingLists = {
             items: [
                 { title: 'UN Women Training Centre', url: 'https://trainingcentre.unwomen.org/', type: 'Courses' },
                 { title: 'BRIDGE Gender & Development', url: 'https://www.bridge.ids.ac.uk/', type: 'Research' },
-                { title: 'Gender Analysis Toolkit (USAID)', url: 'https://www.usaid.gov/engendering-industries/gender-analysis-toolkit', type: 'Toolkit' },
+                { title: 'Gender Analysis Toolkit (USAID)', url: 'https://www.usaid.gov/engendering-industries', type: 'Toolkit' },
                 { title: 'CARE Gender Toolkit', url: 'https://www.care.org/our-work/womens-economic-justice/', type: 'Resources' },
                 { title: 'World Bank Gender Data Portal', url: 'https://genderdata.worldbank.org/', type: 'Data' }
             ]
