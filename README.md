@@ -475,7 +475,7 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 9.0.0
+**Version:** 9.1.0
 **Last Updated:** March 2026
 **License:** CC-BY-4.0
 **Hosting:** Netlify

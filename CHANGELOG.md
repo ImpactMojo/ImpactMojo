@@ -5,6 +5,26 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.1.0] - 2026-03-07
+
+### Added
+- **PolicyDhara** as 4th free resource (homepage, mobile, nav dropdown) linking to https://on-web.link/PolicyDhara
+- Organization Dashboard content: welcome getting-started guide, "What's Included" feature grid, "Coming Soon for Teams" roadmap preview
+- New roadmap items: Open Badges & Micro-credentials (#30), Live Case Challenges (#31)
+- GitHub Issues for all roadmap features (#25-#31)
+
+### Changed
+- Org dashboard loads members and paths in parallel (`Promise.all`) for faster rendering
+- Added `preconnect` hints for Supabase and CDN on org dashboard
+
+### Fixed
+- Org dashboard auth gate now waits for auth to fully resolve before checking tier access
+- Google OAuth sign-in no longer triggers redundant profile fetch/sync on redirect
+
+### Removed
+- "Qualitative Data Lab" from roadmap (already live as Qual Insights Lab)
+- "AI Learning Assistant" from roadmap (commoditized by general AI agents)
+
 ## [9.0.0] - 2026-03-06
 
 ### Added
@@ -65,6 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dojos skill session page
 - Blog (Learning Loops) and podcast (Between the Logframes)
 
+[9.1.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.0.0...v9.1.0
 [9.0.0]: https://github.com/Varnasr/ImpactMojo/compare/v8.0.0...v9.0.0
 [8.0.0]: https://github.com/Varnasr/ImpactMojo/compare/v7.0.0...v8.0.0
 [7.0.0]: https://github.com/Varnasr/ImpactMojo/releases/tag/v7.0.0
