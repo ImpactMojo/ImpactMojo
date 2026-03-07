@@ -232,6 +232,42 @@
         .resource-link:hover { border-color: var(--color-ai-primary); box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15); }
         .resource-link img { width: 20px; height: 20px; }
         
+        .capstone-box { background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(6, 182, 212, 0.08) 100%); border: 2px solid var(--color-ai-primary); border-radius: 16px; padding: 2rem; margin-top: 2rem; }
+        .capstone-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .capstone-icon { width: 48px; height: 48px; background: var(--color-ai-primary); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .capstone-icon svg { width: 24px; height: 24px; }
+        .capstone-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+        .capstone-timeline { display: grid; gap: 1rem; margin: 1.5rem 0; }
+        .capstone-phase { display: flex; gap: 1rem; padding: 1.25rem; background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color); }
+        .phase-number { width: 32px; height: 32px; background: var(--color-accent-cyan); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.9rem; flex-shrink: 0; }
+        .phase-content h5 { font-family: var(--font-display); font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .phase-content p { color: var(--text-secondary); font-size: 0.95rem; margin: 0; }
+
+        .check-answer-btn { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; padding: 0.6rem 1.25rem; background: var(--color-ai-primary); color: white; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
+        .check-answer-btn:hover { background: var(--color-ai-dark); transform: translateY(-1px); }
+        .check-answer-btn svg { width: 16px; height: 16px; }
+        .quiz-feedback { margin-top: 0.75rem; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; display: none; }
+        .quiz-feedback.show { display: block; }
+        .quiz-feedback.correct { background: rgba(16, 185, 129, 0.1); color: var(--color-success); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .quiz-feedback.incorrect { background: rgba(239, 68, 68, 0.1); color: var(--color-warning); border: 1px solid rgba(239, 68, 68, 0.3); }
+        .quiz-option.correct { background: rgba(16, 185, 129, 0.15); border-color: var(--color-success); }
+        .quiz-option.incorrect { background: rgba(239, 68, 68, 0.15); border-color: var(--color-warning); }
+        .quiz-option { display: flex; align-items: center; gap: 0.5rem; padding: var(--spacing-sm) var(--spacing-md); margin-bottom: var(--spacing-xs); background: var(--bg-secondary); border-radius: 8px; cursor: pointer; transition: all var(--transition-fast); color: var(--text-secondary); border: 1px solid transparent; }
+        .quiz-option input[type="radio"] { accent-color: var(--color-ai-primary); }
+        .question-text { font-weight: 500; color: var(--text-primary); margin-bottom: var(--spacing-sm); }
+        .question-number { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--color-ai-primary); color: #fff; border-radius: 50%; font-size: 0.85rem; font-weight: 600; margin-right: var(--spacing-sm); }
+        .question-type { display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: var(--spacing-sm); }
+
+        .coach-name { font-family: var(--font-display); font-weight: 700; color: var(--text-primary); margin-bottom: var(--spacing-xs); }
+        .coach-message { color: var(--text-secondary); margin-bottom: var(--spacing-md); }
+        .coach-links { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); }
+        .coach-link { display: inline-flex; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-sm) var(--spacing-md); background: var(--color-ai-light); color: var(--color-ai-primary); border-radius: 8px; font-size: 0.85rem; font-weight: 500; transition: all var(--transition-fast); }
+        [data-theme="dark"] .coach-link { background: var(--color-ai-dark); color: var(--color-ai-secondary); }
+        .coach-link:hover { background: var(--color-ai-primary); color: #fff; }
+        .coach-link img { width: 16px; height: 16px; }
+        .coach-link.secondary { background: var(--bg-secondary); color: var(--text-secondary); }
+        .coach-link.secondary:hover { background: var(--color-ai-primary); color: #fff; }
+
         .lexicon-section { background: linear-gradient(135deg, var(--color-ai-light) 0%, rgba(6, 182, 212, 0.1) 100%); border-radius: 16px; padding: var(--spacing-2xl); margin: var(--spacing-3xl) 0; }
         [data-theme="dark"] .lexicon-section { background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(6, 182, 212, 0.1) 100%); }
         .lexicon-section h2 { text-align: center; margin-bottom: var(--spacing-md); }
@@ -293,7 +329,7 @@
     <div class="reading-progress" id="readingProgress"></div>
     
     <div class="page-container">
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Course navigation">
             <div class="sidebar-header">
                 <a class='sidebar-logo' href='/'>
                     <img src="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo">
@@ -303,49 +339,49 @@
             
             <nav class="sidebar-nav">
                 <div class="nav-section">
-                    <div class="nav-section-title">Overview</div>
+                    <div class="nav-section-title" role="button" aria-expanded="true">Overview</div>
                     <a href="#hero" class="nav-link"><span class="nav-number">→</span>Course Introduction</a>
                     <a href="#resources" class="nav-link"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="">Papers & Resources</a>
                     <a href="#lexicon" class="nav-link"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">Lexicon (60 Terms)</a>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">Foundations</div>
+                    <div class="nav-section-title" role="button" aria-expanded="true">Foundations</div>
                     <a href="#module1" class="nav-link"><span class="nav-number">01</span>The AI-M&E Landscape</a>
                     <a href="#module2" class="nav-link"><span class="nav-number">02</span>Needs Assessment</a>
                     <a href="#module3" class="nav-link"><span class="nav-number">03</span>AI for Data Collection</a>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">AI Applications</div>
+                    <div class="nav-section-title" role="button" aria-expanded="true">AI Applications</div>
                     <a href="#module4" class="nav-link"><span class="nav-number">04</span>Computer Vision & Geospatial</a>
                     <a href="#module5" class="nav-link"><span class="nav-number">05</span>NLP for Qualitative Data</a>
                     <a href="#module6" class="nav-link"><span class="nav-number">06</span>Algorithmic Targeting</a>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">Implementation</div>
+                    <div class="nav-section-title" role="button" aria-expanded="true">Implementation</div>
                     <a href="#module7" class="nav-link"><span class="nav-number">07</span>Real-Time Monitoring</a>
                     <a href="#module8" class="nav-link"><span class="nav-number">08</span>Adaptive Programming</a>
                     <a href="#module9" class="nav-link"><span class="nav-number">09</span>Limits of AI in Causal Inference</a>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">Ethics & Practice</div>
+                    <div class="nav-section-title" role="button" aria-expanded="true">Ethics & Practice</div>
                     <a href="#module10" class="nav-link"><span class="nav-number">10</span>Ethics, Bias & Accountability</a>
                     <a href="#module11" class="nav-link"><span class="nav-number">11</span>Context Assessment: Case Studies</a>
                     <a href="#module12" class="nav-link"><span class="nav-number">12</span>Strategy Building</a>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">Completion</div>
+                    <div class="nav-section-title" role="button" aria-expanded="true">Completion</div>
                     <a href="#capstone" class="nav-link"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">Capstone Project</a>
                     <a href="#founders" class="nav-link"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">Meet the Founders</a>
                 </div>
             </nav>
             
             <div class="sidebar-footer">
-                <button class="theme-toggle" id="themeToggle">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-expanded="false">
                     <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
                     <span>Light mode</span>
                 </button>
@@ -358,7 +394,7 @@
                     <img src="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" style="width: 28px; height: 28px; border-radius: 4px;">
                     ImpactMojo
                 </a>
-                <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open navigation menu" aria-expanded="false" type="button"><span></span><span></span><span></span></button>
             </header>
             
             <section class="hero" id="hero">
@@ -481,36 +517,174 @@
                     
                     <div class="source-citation">Sources: World Bank AI Lab; J-PAL AI & Development Initiative; Ghana Ministry of Gender, Children and Social Protection; Jean et al. (2016) Science</div>
                     
-                    <div class="quiz-section">
-                        <div class="quiz-header"><h4>Check Your Understanding</h4></div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">1</span>
-                            <p>The key difference between classical ML and deep learning is:</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">Deep learning requires less data</label>
-                                <label class="quiz-option">Deep learning uses neural networks and requires significantly more data</label>
-                                <label class="quiz-option">Classical ML is always more accurate</label>
-                                <label class="quiz-option">They are essentially the same</label>
+                    <div class="coach-callout">
+                        <img src="https://www.impactmojo.in/assets/images/varna-photo.jpg" alt="Coach Varna" class="coach-photo">
+                        <div class="coach-content">
+                            <div class="coach-name">Varna</div>
+                            <div class="coach-message">
+                                The AI taxonomy can feel abstract at first. The key takeaway is that most M&E challenges don't need deep learning -- rule-based automation and classical ML solve 80% of real-world problems. Let's discuss which tier makes sense for your context.
                             </div>
-                            <button class="quiz-btn">Check Answer</button>
+                            <div class="coach-links">
+                                <a href="/coaching" class="coach-link">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                    Book 1:1 Coaching
+                                </a>
+                                <a href="/#labs" class="coach-link secondary">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                    Try Interactive Labs
+                                </a>
+                            </div>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">2</span>
-                            <p>Why did Ghana's LEAP targeting model accuracy decline from 70% to 55% over 5 years?</p>
-                            <span class="quiz-type">Reflection</span>
+                    </div>
+
+                    <div class="quiz-section">
+                        <div class="quiz-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <h4>Check Your Understanding</h4>
+                        </div>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">1</span>
+                                The key difference between classical ML and deep learning is:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m1q1" id="m1q1a" value="a">
+                                    <label for="m1q1a">Deep learning requires less data</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m1q1" id="m1q1b" value="b">
+                                    <label for="m1q1b">Deep learning uses neural networks and requires significantly more data</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m1q1" id="m1q1c" value="c">
+                                    <label for="m1q1c">Classical ML is always more accurate</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m1q1" id="m1q1d" value="d">
+                                    <label for="m1q1d">They are essentially the same</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="c">
+                            <div class="question-text">
+                                <span class="question-number">2</span>
+                                Ghana's LEAP targeting model accuracy declined from 70% to 55% primarily because:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m1q2" id="m1q2a" value="a">
+                                    <label for="m1q2a">The algorithm had a software bug</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m1q2" id="m1q2b" value="b">
+                                    <label for="m1q2b">The government stopped updating the system</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m1q2" id="m1q2c" value="c">
+                                    <label for="m1q2c">Economic conditions changed and the model trained on old census data could not adapt</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m1q2" id="m1q2d" value="d">
+                                    <label for="m1q2d">Households deliberately provided false information</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">3</span>
+                                The distinction between prediction and causation in M&E means:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m1q3" id="m1q3a" value="a">
+                                    <label for="m1q3a">ML models can prove program impact if the dataset is large enough</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m1q3" id="m1q3b" value="b">
+                                    <label for="m1q3b">ML excels at prediction (who is poor) but cannot determine causation (does a program reduce poverty)</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m1q3" id="m1q3c" value="c">
+                                    <label for="m1q3c">Prediction and causation are interchangeable in development contexts</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m1q3" id="m1q3d" value="d">
+                                    <label for="m1q3d">RCTs are a type of machine learning</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="d">
+                            <div class="question-text">
+                                <span class="question-number">4</span>
+                                LLMs like GPT and Claude are best suited in development M&E for:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m1q4" id="m1q4a" value="a">
+                                    <label for="m1q4a">Replacing all human data collectors</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m1q4" id="m1q4b" value="b">
+                                    <label for="m1q4b">Running randomized controlled trials</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m1q4" id="m1q4c" value="c">
+                                    <label for="m1q4c">Directly measuring poverty through satellite imagery</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m1q4" id="m1q4d" value="d">
+                                    <label for="m1q4d">Report writing, data synthesis, and chatbot-based data collection</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
                     </div>
                 </section>
-                
+
                 <div class="coach-callout">
-                    <img src="https://www.impactmojo.in/assets/images/varna-photo.jpg" alt="Varna" class="coach-photo">
+                    <img src="https://www.impactmojo.in/assets/images/varna-photo.jpg" alt="Coach Varna" class="coach-photo">
                     <div class="coach-content">
-                        <h4>Varna</h4>
-                        <p>Feeling overwhelmed by the AI landscape? I've evaluated dozens of AI tools for development organizations and can help you cut through the hype. Let's discuss which approaches actually make sense for your context.</p>
-                        <div class="coach-actions">
-                            <a class='coach-btn' href='/coaching'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">Book 1:1 Coaching</a>
-                            <a class='coach-btn' href='/#labs'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">Try Interactive Labs</a>
+                        <div class="coach-name">Varna</div>
+                        <div class="coach-message">
+                            Feeling overwhelmed by the AI landscape? I've evaluated dozens of AI tools for development organizations and can help you cut through the hype. Let's discuss which approaches actually make sense for your context.
+                        </div>
+                        <div class="coach-links">
+                            <a href="/coaching" class="coach-link">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                Book 1:1 Coaching
+                            </a>
+                            <a href="/#labs" class="coach-link secondary">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                Try Interactive Labs
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -580,48 +754,174 @@
                     
                     <div class="source-citation">Sources: Ministry of Agriculture, Government of India; World Bank Development Report 2021; Muralidharan et al. (2016)</div>
                     
+                    <div class="coach-callout">
+                        <img src="https://www.impactmojo.in/assets/images/vandana-photo.jpeg" alt="Coach Vandana" class="coach-photo">
+                        <div class="coach-content">
+                            <div class="coach-name">Vandana</div>
+                            <div class="coach-message">
+                                The "Is AI Even Necessary?" checklist is one of the most practical tools in this course. In my experience, over half the organizations I work with discover they need better data systems before they need AI. That's not a failure -- it's a smart investment.
+                            </div>
+                            <div class="coach-links">
+                                <a href="/coaching" class="coach-link">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                    Book 1:1 Coaching
+                                </a>
+                                <a href="/#labs" class="coach-link secondary">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                    Try Interactive Labs
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="quiz-section">
-                        <div class="quiz-header"><h4>Check Your Understanding</h4></div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">1</span>
-                            <p>According to the AI readiness framework, which factor is MOST critical before implementing AI in M&E systems?</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">Access to the latest AI models</label>
-                                <label class="quiz-option">Sufficient data quality and infrastructure</label>
-                                <label class="quiz-option">Executive enthusiasm for innovation</label>
-                                <label class="quiz-option">Large technology budget</label>
-                            </div>
-                            <button class="quiz-btn">Check Answer</button>
+                        <div class="quiz-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <h4>Check Your Understanding</h4>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">2</span>
-                            <p>The PM-KISAN case study demonstrates that AI targeting failed primarily because:</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">The algorithms were poorly designed</label>
-                                <label class="quiz-option">Land records were incomplete and couldn't distinguish owner-cultivators from tenants</label>
-                                <label class="quiz-option">Farmers refused to participate</label>
-                                <label class="quiz-option">The government lacked funding</label>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">1</span>
+                                According to the AI readiness framework, which factor is MOST critical before implementing AI in M&E systems?
+                                <span class="question-type">Multiple Choice</span>
                             </div>
-                            <button class="quiz-btn">Check Answer</button>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m2q1" id="m2q1a" value="a">
+                                    <label for="m2q1a">Access to the latest AI models</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m2q1" id="m2q1b" value="b">
+                                    <label for="m2q1b">Sufficient data quality and infrastructure</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m2q1" id="m2q1c" value="c">
+                                    <label for="m2q1c">Executive enthusiasm for innovation</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m2q1" id="m2q1d" value="d">
+                                    <label for="m2q1d">Large technology budget</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">3</span>
-                            <p>Your organization is considering AI for beneficiary targeting. You have 500 records from a 2019 survey and limited internet connectivity in field offices. How would you assess AI readiness, and what would you recommend?</p>
-                            <span class="quiz-type">Reflection</span>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">2</span>
+                                The PM-KISAN case study demonstrates that AI targeting failed primarily because:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m2q2" id="m2q2a" value="a">
+                                    <label for="m2q2a">The algorithms were poorly designed</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m2q2" id="m2q2b" value="b">
+                                    <label for="m2q2b">Land records were incomplete and couldn't distinguish owner-cultivators from tenants</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m2q2" id="m2q2c" value="c">
+                                    <label for="m2q2c">Farmers refused to participate</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m2q2" id="m2q2d" value="d">
+                                    <label for="m2q2d">The government lacked funding</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="c">
+                            <div class="question-text">
+                                <span class="question-number">3</span>
+                                Data cleaning typically accounts for what percentage of AI project time in development contexts?
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m2q3" id="m2q3a" value="a">
+                                    <label for="m2q3a">10-20%</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m2q3" id="m2q3b" value="b">
+                                    <label for="m2q3b">30-40%</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m2q3" id="m2q3c" value="c">
+                                    <label for="m2q3c">60-80%</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m2q3" id="m2q3d" value="d">
+                                    <label for="m2q3d">Less than 5%</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="d">
+                            <div class="question-text">
+                                <span class="question-number">4</span>
+                                The PM-KISAN case shows that self-declaration with Aadhaar verification was preferred over AI targeting because:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m2q4" id="m2q4a" value="a">
+                                    <label for="m2q4a">AI technology was not available in India</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m2q4" id="m2q4b" value="b">
+                                    <label for="m2q4b">Self-declaration was 100% accurate</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m2q4" id="m2q4c" value="c">
+                                    <label for="m2q4c">The government mandated against AI use</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m2q4" id="m2q4d" value="d">
+                                    <label for="m2q4d">It was simpler, nearly as accurate, and far less expensive than AI-based approaches</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
                     </div>
                 </section>
-                
+
                 <div class="coach-callout">
-                    <img src="https://www.impactmojo.in/assets/images/vandana-photo.jpeg" alt="Vandana" class="coach-photo">
+                    <img src="https://www.impactmojo.in/assets/images/vandana-photo.jpeg" alt="Coach Vandana" class="coach-photo">
                     <div class="coach-content">
-                        <h4>Vandana</h4>
-                        <p>Readiness assessments can feel abstract. Our workshops walk you through a practical framework for evaluating whether AI makes sense for your organization—and what to do if the answer is "not yet."</p>
-                        <div class="coach-actions">
-                            <a class='coach-btn' href='/workshops'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">Request a Workshop</a>
-                            <a class='coach-btn' href='/handouts'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Article.svg" alt="">Free Handouts</a>
+                        <div class="coach-name">Vandana</div>
+                        <div class="coach-message">
+                            Readiness assessments can feel abstract. Our workshops walk you through a practical framework for evaluating whether AI makes sense for your organization -- and what to do if the answer is "not yet."
+                        </div>
+                        <div class="coach-links">
+                            <a href="/coaching" class="coach-link">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                Book 1:1 Coaching
+                            </a>
+                            <a href="/#labs" class="coach-link secondary">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                Try Interactive Labs
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -690,48 +990,174 @@
                     
                     <div class="source-citation">Sources: UNICEF U-Report; CGD Mobile Phone Surveys Research; ACL South Asian NLP Workshop; Meta AI Massively Multilingual Speech Project</div>
                     
+                    <div class="coach-callout">
+                        <img src="https://www.impactmojo.in/assets/images/varna-photo.jpg" alt="Coach Varna" class="coach-photo">
+                        <div class="coach-content">
+                            <div class="coach-name">Varna</div>
+                            <div class="coach-message">
+                                The language gap is the single biggest barrier to AI-powered data collection in South Asia and Africa. Before you invest in fancy tools, map the languages your respondents actually speak -- you may find that human enumerators with tablets still outperform any AI solution.
+                            </div>
+                            <div class="coach-links">
+                                <a href="/coaching" class="coach-link">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                    Book 1:1 Coaching
+                                </a>
+                                <a href="/#labs" class="coach-link secondary">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                    Try Interactive Labs
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="quiz-section">
-                        <div class="quiz-header"><h4>Check Your Understanding</h4></div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">1</span>
-                            <p>Automated speech-to-text transcription in South Asian languages faces which primary limitation?</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">The technology doesn't exist</label>
-                                <label class="quiz-option">Training data scarcity for regional dialects and accents</label>
-                                <label class="quiz-option">High cost of cloud computing</label>
-                                <label class="quiz-option">Lack of mobile phone penetration</label>
-                            </div>
-                            <button class="quiz-btn">Check Answer</button>
+                        <div class="quiz-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <h4>Check Your Understanding</h4>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">2</span>
-                            <p>U-Report's success in engaging youth through chatbots demonstrates that AI in data collection works best when:</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">Using the most advanced language models</label>
-                                <label class="quiz-option">Combining simple automation with human follow-up for complex cases</label>
-                                <label class="quiz-option">Replacing all human interviewers</label>
-                                <label class="quiz-option">Collecting only quantitative data</label>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">1</span>
+                                Automated speech-to-text transcription in South Asian languages faces which primary limitation?
+                                <span class="question-type">Multiple Choice</span>
                             </div>
-                            <button class="quiz-btn">Check Answer</button>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m3q1" id="m3q1a" value="a">
+                                    <label for="m3q1a">The technology doesn't exist</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m3q1" id="m3q1b" value="b">
+                                    <label for="m3q1b">Training data scarcity for regional dialects and accents</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m3q1" id="m3q1c" value="c">
+                                    <label for="m3q1c">High cost of cloud computing</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m3q1" id="m3q1d" value="d">
+                                    <label for="m3q1d">Lack of mobile phone penetration</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">3</span>
-                            <p>You're designing a household survey in rural Bihar where 40% of respondents speak Bhojpuri (no commercial ASR available). What hybrid approach would you propose for data collection?</p>
-                            <span class="quiz-type">Reflection</span>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">2</span>
+                                U-Report's success in engaging youth through chatbots demonstrates that AI in data collection works best when:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m3q2" id="m3q2a" value="a">
+                                    <label for="m3q2a">Using the most advanced language models</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m3q2" id="m3q2b" value="b">
+                                    <label for="m3q2b">Combining simple automation with human follow-up for complex cases</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m3q2" id="m3q2c" value="c">
+                                    <label for="m3q2c">Replacing all human interviewers</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m3q2" id="m3q2d" value="d">
+                                    <label for="m3q2d">Collecting only quantitative data</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="c">
+                            <div class="question-text">
+                                <span class="question-number">3</span>
+                                IVR (Interactive Voice Response) systems are particularly valuable in development contexts because:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m3q3" id="m3q3a" value="a">
+                                    <label for="m3q3a">They produce the highest quality qualitative data</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m3q3" id="m3q3b" value="b">
+                                    <label for="m3q3b">They eliminate the need for informed consent</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m3q3" id="m3q3c" value="c">
+                                    <label for="m3q3c">They enable high-frequency, simple surveys at scale using basic phones</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m3q3" id="m3q3d" value="d">
+                                    <label for="m3q3d">They work without any phone network coverage</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="a">
+                            <div class="question-text">
+                                <span class="question-number">4</span>
+                                Code-switching (mixing languages within a conversation) is a major challenge for AI data collection tools because:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m3q4" id="m3q4a" value="a">
+                                    <label for="m3q4a">Most speech recognition models are trained on monolingual data and fail on mixed-language input</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m3q4" id="m3q4b" value="b">
+                                    <label for="m3q4b">Code-switching only occurs in urban areas</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m3q4" id="m3q4c" value="c">
+                                    <label for="m3q4c">It is easily solved by asking respondents to speak one language</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m3q4" id="m3q4d" value="d">
+                                    <label for="m3q4d">Code-switching has no impact on AI accuracy</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
                     </div>
                 </section>
-                
+
                 <div class="coach-callout">
                     <img src="https://www.impactmojo.in/assets/images/varna-photo.jpg" alt="Coach Varna" class="coach-photo">
                     <div class="coach-content">
-                        <h4>Varna</h4>
-                        <p>Designing AI-augmented data collection systems requires balancing technological possibilities with ground realities. I've helped organizations navigate these trade-offs—let's discuss what makes sense for your context.</p>
-                        <div class="coach-actions">
-                            <a class='coach-btn' href='/coaching'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">Book 1:1 Coaching</a>
-                            <a class='coach-btn' href='/#labs'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">Try Interactive Labs</a>
+                        <div class="coach-name">Varna</div>
+                        <div class="coach-message">
+                            Designing AI-augmented data collection systems requires balancing technological possibilities with ground realities. I've helped organizations navigate these trade-offs -- let's discuss what makes sense for your context.
+                        </div>
+                        <div class="coach-links">
+                            <a href="/coaching" class="coach-link">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                Book 1:1 Coaching
+                            </a>
+                            <a href="/#labs" class="coach-link secondary">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                Try Interactive Labs
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -786,48 +1212,174 @@
                     
                     <div class="source-citation">Sources: Jean et al. (2016) Science; World Bank Poverty Maps; NASA FEWS NET; Facebook Data for Good</div>
                     
+                    <div class="coach-callout">
+                        <img src="https://www.impactmojo.in/assets/images/vandana-photo.jpeg" alt="Coach Vandana" class="coach-photo">
+                        <div class="coach-content">
+                            <div class="coach-name">Vandana</div>
+                            <div class="coach-message">
+                                Satellite imagery analysis is exciting but remember: the best poverty maps still need ground-truthing. In our workshops, we walk through how to combine remote sensing with field verification -- the combination is far more powerful than either alone.
+                            </div>
+                            <div class="coach-links">
+                                <a href="/coaching" class="coach-link">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                    Book 1:1 Coaching
+                                </a>
+                                <a href="/#labs" class="coach-link secondary">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                    Try Interactive Labs
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="quiz-section">
-                        <div class="quiz-header"><h4>Check Your Understanding</h4></div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">1</span>
-                            <p>Jean et al.'s groundbreaking 2016 paper demonstrated that satellite imagery can predict poverty by:</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">Counting people from space</label>
-                                <label class="quiz-option">Using nighttime lights as a proxy for economic activity, then transfer learning to daytime imagery</label>
-                                <label class="quiz-option">Directly measuring income from roof materials</label>
-                                <label class="quiz-option">Analyzing social media posts geotagged to locations</label>
-                            </div>
-                            <button class="quiz-btn">Check Answer</button>
+                        <div class="quiz-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <h4>Check Your Understanding</h4>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">2</span>
-                            <p>A key limitation of satellite-based poverty prediction for targeting social programs is:</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">Images are too expensive to obtain</label>
-                                <label class="quiz-option">Predictions work at area-level but cannot identify specific households within communities</label>
-                                <label class="quiz-option">The technology only works in African countries</label>
-                                <label class="quiz-option">Cloud cover makes all imagery unusable</label>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">1</span>
+                                Jean et al.'s 2016 paper demonstrated that satellite imagery can predict poverty by:
+                                <span class="question-type">Multiple Choice</span>
                             </div>
-                            <button class="quiz-btn">Check Answer</button>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m4q1" id="m4q1a" value="a">
+                                    <label for="m4q1a">Counting people from space</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m4q1" id="m4q1b" value="b">
+                                    <label for="m4q1b">Using nighttime lights as a proxy for economic activity, then transfer learning to daytime imagery</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m4q1" id="m4q1c" value="c">
+                                    <label for="m4q1c">Directly measuring income from roof materials</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m4q1" id="m4q1d" value="d">
+                                    <label for="m4q1d">Analyzing social media posts geotagged to locations</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">3</span>
-                            <p>Your drought early warning system uses NDVI (vegetation index) from satellites. A district shows declining NDVI but ground reports indicate normal conditions. What might explain this discrepancy, and how would you validate?</p>
-                            <span class="quiz-type">Reflection</span>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">2</span>
+                                A key limitation of satellite-based poverty prediction for targeting social programs is:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m4q2" id="m4q2a" value="a">
+                                    <label for="m4q2a">Images are too expensive to obtain</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m4q2" id="m4q2b" value="b">
+                                    <label for="m4q2b">Predictions work at area-level but cannot identify specific households within communities</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m4q2" id="m4q2c" value="c">
+                                    <label for="m4q2c">The technology only works in African countries</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m4q2" id="m4q2d" value="d">
+                                    <label for="m4q2d">Cloud cover makes all imagery unusable</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="c">
+                            <div class="question-text">
+                                <span class="question-number">3</span>
+                                Transfer learning in computer vision for development applications means:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m4q3" id="m4q3a" value="a">
+                                    <label for="m4q3a">Physically transferring satellite imagery files between organizations</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m4q3" id="m4q3b" value="b">
+                                    <label for="m4q3b">Training a new model from scratch for each country</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m4q3" id="m4q3c" value="c">
+                                    <label for="m4q3c">Using a model pre-trained on one task and adapting it for a related task with less data</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m4q3" id="m4q3d" value="d">
+                                    <label for="m4q3d">Converting satellite images to tabular data</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="d">
+                            <div class="question-text">
+                                <span class="question-number">4</span>
+                                Chi et al. (2022) PNAS paper on micro-estimates of wealth advanced the field by:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m4q4" id="m4q4a" value="a">
+                                    <label for="m4q4a">Replacing all household surveys globally</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m4q4" id="m4q4b" value="b">
+                                    <label for="m4q4b">Using only nighttime light data</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m4q4" id="m4q4c" value="c">
+                                    <label for="m4q4c">Proving that satellite imagery is unnecessary for poverty mapping</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m4q4" id="m4q4d" value="d">
+                                    <label for="m4q4d">Providing granular wealth estimates for all low- and middle-income countries at unprecedented resolution</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
                     </div>
                 </section>
-                
+
                 <div class="coach-callout">
-                    <img src="https://www.impactmojo.in/assets/images/varna-photo.jpg" alt="Varna" class="coach-photo">
+                    <img src="https://www.impactmojo.in/assets/images/vandana-photo.jpeg" alt="Coach Vandana" class="coach-photo">
                     <div class="coach-content">
-                        <h4>Varna</h4>
-                        <p>Geospatial analysis is one of the most promising AI applications for development—and one of the most misunderstood. I can help you assess whether satellite imagery makes sense for your monitoring needs.</p>
-                        <div class="coach-actions">
-                            <a class='coach-btn' href='/coaching'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">Research Consultation</a>
-                            <a class='coach-btn' href='/premium'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">Premium Tools</a>
+                        <div class="coach-name">Vandana</div>
+                        <div class="coach-message">
+                            Geospatial analysis is one of the most promising AI applications for development -- and one of the most misunderstood. Our workshops include hands-on exercises with real satellite data to help you understand both the power and the limitations.
+                        </div>
+                        <div class="coach-links">
+                            <a href="/coaching" class="coach-link">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                Book 1:1 Coaching
+                            </a>
+                            <a href="/#labs" class="coach-link secondary">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                Try Interactive Labs
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -871,48 +1423,174 @@
                     
                     <div class="source-citation">Sources: Grimmer & Stewart (2013); GroundTruth Labs; USAID Beneficiary Feedback Initiative</div>
                     
+                    <div class="coach-callout">
+                        <img src="https://www.impactmojo.in/assets/images/varna-photo.jpg" alt="Coach Varna" class="coach-photo">
+                        <div class="coach-content">
+                            <div class="coach-name">Varna</div>
+                            <div class="coach-message">
+                                The golden rule with NLP in development: use it to explore and triage, never to replace close reading. I've seen organizations make costly mistakes by trusting sentiment scores on culturally complex data. Let me help you design a workflow that gets the balance right.
+                            </div>
+                            <div class="coach-links">
+                                <a href="/coaching" class="coach-link">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                    Book 1:1 Coaching
+                                </a>
+                                <a href="/#labs" class="coach-link secondary">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                    Try Interactive Labs
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="quiz-section">
-                        <div class="quiz-header"><h4>Check Your Understanding</h4></div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">1</span>
-                            <p>When using topic modeling (LDA) for analyzing open-ended survey responses, the model outputs:</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">Exact categories that match your theory of change</label>
-                                <label class="quiz-option">Statistical clusters of co-occurring words that require human interpretation</label>
-                                <label class="quiz-option">Sentiment scores from positive to negative</label>
-                                <label class="quiz-option">Automatic summaries of each response</label>
-                            </div>
-                            <button class="quiz-btn">Check Answer</button>
+                        <div class="quiz-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <h4>Check Your Understanding</h4>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">2</span>
-                            <p>A major validity concern when using NLP for beneficiary feedback analysis is:</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">NLP is too slow for real-time analysis</label>
-                                <label class="quiz-option">Models trained on English may misinterpret cultural expressions and local idioms</label>
-                                <label class="quiz-option">Beneficiaries prefer paper surveys</label>
-                                <label class="quiz-option">NLP cannot process text data</label>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">1</span>
+                                When using topic modeling (LDA) for analyzing open-ended survey responses, the model outputs:
+                                <span class="question-type">Multiple Choice</span>
                             </div>
-                            <button class="quiz-btn">Check Answer</button>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m5q1" id="m5q1a" value="a">
+                                    <label for="m5q1a">Exact categories that match your theory of change</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m5q1" id="m5q1b" value="b">
+                                    <label for="m5q1b">Statistical clusters of co-occurring words that require human interpretation</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m5q1" id="m5q1c" value="c">
+                                    <label for="m5q1c">Sentiment scores from positive to negative</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m5q1" id="m5q1d" value="d">
+                                    <label for="m5q1d">Automatic summaries of each response</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">3</span>
-                            <p>You have 2,000 qualitative interview transcripts from an education program. Propose a hybrid approach combining NLP automation with human analysis that maintains interpretive validity.</p>
-                            <span class="quiz-type">Reflection</span>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">2</span>
+                                A major validity concern when using NLP for beneficiary feedback analysis is:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m5q2" id="m5q2a" value="a">
+                                    <label for="m5q2a">NLP is too slow for real-time analysis</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m5q2" id="m5q2b" value="b">
+                                    <label for="m5q2b">Models trained on English may misinterpret cultural expressions and local idioms</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m5q2" id="m5q2c" value="c">
+                                    <label for="m5q2c">Beneficiaries prefer paper surveys</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m5q2" id="m5q2d" value="d">
+                                    <label for="m5q2d">NLP cannot process text data</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="c">
+                            <div class="question-text">
+                                <span class="question-number">3</span>
+                                Automated coding of qualitative data achieves approximately 60-80% agreement with human coders, which means:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m5q3" id="m5q3a" value="a">
+                                    <label for="m5q3a">It is accurate enough to replace human coding entirely</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m5q3" id="m5q3b" value="b">
+                                    <label for="m5q3b">It should never be used in development research</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m5q3" id="m5q3c" value="c">
+                                    <label for="m5q3c">It is useful for initial exploration but requires human review for final analysis</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m5q3" id="m5q3d" value="d">
+                                    <label for="m5q3d">The remaining 20-40% disagreement is always due to machine errors</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="a">
+                            <div class="question-text">
+                                <span class="question-number">4</span>
+                                For sensitive topics like GBV or mental health, NLP analysis should be limited to:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m5q4" id="m5q4a" value="a">
+                                    <label for="m5q4a">Triage and flagging, with all interpretation done by trained human analysts</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m5q4" id="m5q4b" value="b">
+                                    <label for="m5q4b">Full automated analysis with sentiment scoring</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m5q4" id="m5q4c" value="c">
+                                    <label for="m5q4c">These topics should never be studied at all</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m5q4" id="m5q4d" value="d">
+                                    <label for="m5q4d">Only topic modeling, not sentiment analysis</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
                     </div>
                 </section>
-                
+
                 <div class="coach-callout">
-                    <img src="https://www.impactmojo.in/assets/images/vandana-photo.jpeg" alt="Coach Vandana" class="coach-photo">
+                    <img src="https://www.impactmojo.in/assets/images/varna-photo.jpg" alt="Coach Varna" class="coach-photo">
                     <div class="coach-content">
-                        <h4>Vandana</h4>
-                        <p>NLP tools are evolving rapidly, and it's hard to know what actually works for development contexts. Our workshops include hands-on exercises with real qualitative data—join us to learn practical approaches.</p>
-                        <div class="coach-actions">
-                            <a class='coach-btn' href='/workshops'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">Request a Workshop</a>
-                            <a class='coach-btn' href='/handouts'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Article.svg" alt="">Free Handouts</a>
+                        <div class="coach-name">Varna</div>
+                        <div class="coach-message">
+                            NLP tools are evolving rapidly, and it's hard to know what actually works for development contexts. Our workshops include hands-on exercises with real qualitative data -- join us to learn practical approaches.
+                        </div>
+                        <div class="coach-links">
+                            <a href="/coaching" class="coach-link">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                Book 1:1 Coaching
+                            </a>
+                            <a href="/#labs" class="coach-link secondary">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                Try Interactive Labs
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -975,48 +1653,174 @@
                     
                     <div class="source-citation">Sources: GiveDirectly Research; J-PAL Targeting the Poor Evidence Review; World Bank Social Protection Reports</div>
                     
+                    <div class="coach-callout">
+                        <img src="https://www.impactmojo.in/assets/images/vandana-photo.jpeg" alt="Coach Vandana" class="coach-photo">
+                        <div class="coach-content">
+                            <div class="coach-name">Vandana</div>
+                            <div class="coach-message">
+                                Algorithmic targeting is where AI in development gets most politically sensitive. The 40% gender gap in mobile ownership means phone-based models systematically miss women. Always ask: whose data is missing from the training set?
+                            </div>
+                            <div class="coach-links">
+                                <a href="/coaching" class="coach-link">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                    Book 1:1 Coaching
+                                </a>
+                                <a href="/#labs" class="coach-link secondary">
+                                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                    Try Interactive Labs
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="quiz-section">
-                        <div class="quiz-header"><h4>Check Your Understanding</h4></div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">1</span>
-                            <p>GiveDirectly's research on targeting methods found that machine learning models using satellite imagery:</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">Perfectly identified the poorest households</label>
-                                <label class="quiz-option">Performed comparably to community-based targeting at lower cost, but with different error types</label>
-                                <label class="quiz-option">Were rejected by communities as unfair</label>
-                                <label class="quiz-option">Required more field staff than traditional methods</label>
-                            </div>
-                            <button class="quiz-btn">Check Answer</button>
+                        <div class="quiz-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <h4>Check Your Understanding</h4>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">2</span>
-                            <p>The distinction between "exclusion errors" and "inclusion errors" in targeting is important because:</p>
-                            <span class="quiz-type">Multiple Choice</span>
-                            <div class="quiz-options">
-                                <label class="quiz-option">They have the same consequences for program effectiveness</label>
-                                <label class="quiz-option">Exclusion errors deny benefits to eligible people while inclusion errors waste resources on ineligible people</label>
-                                <label class="quiz-option">ML models only produce inclusion errors</label>
-                                <label class="quiz-option">Exclusion errors are easy to detect</label>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">1</span>
+                                GiveDirectly's research on targeting methods found that machine learning models using satellite imagery:
+                                <span class="question-type">Multiple Choice</span>
                             </div>
-                            <button class="quiz-btn">Check Answer</button>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m6q1" id="m6q1a" value="a">
+                                    <label for="m6q1a">Perfectly identified the poorest households</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m6q1" id="m6q1b" value="b">
+                                    <label for="m6q1b">Performed comparably to community-based targeting at lower cost, but with different error types</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m6q1" id="m6q1c" value="c">
+                                    <label for="m6q1c">Were rejected by communities as unfair</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m6q1" id="m6q1d" value="d">
+                                    <label for="m6q1d">Required more field staff than traditional methods</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
-                        <div class="quiz-question">
-                            <span class="quiz-question-number">3</span>
-                            <p>An algorithmic targeting system flags 30% of households as "likely ineligible" but community leaders report these families are among the poorest. How would you investigate this discrepancy and what governance mechanisms would you propose?</p>
-                            <span class="quiz-type">Reflection</span>
+
+                        <div class="quiz-question" data-correct="b">
+                            <div class="question-text">
+                                <span class="question-number">2</span>
+                                The distinction between "exclusion errors" and "inclusion errors" in targeting is important because:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m6q2" id="m6q2a" value="a">
+                                    <label for="m6q2a">They have the same consequences for program effectiveness</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m6q2" id="m6q2b" value="b">
+                                    <label for="m6q2b">Exclusion errors deny benefits to eligible people while inclusion errors waste resources on ineligible people</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m6q2" id="m6q2c" value="c">
+                                    <label for="m6q2c">ML models only produce inclusion errors</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m6q2" id="m6q2d" value="d">
+                                    <label for="m6q2d">Exclusion errors are easy to detect</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="c">
+                            <div class="question-text">
+                                <span class="question-number">3</span>
+                                Phone-based targeting algorithms in South Asia create gender bias because:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m6q3" id="m6q3a" value="a">
+                                    <label for="m6q3a">Women do not use mobile phones at all</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m6q3" id="m6q3b" value="b">
+                                    <label for="m6q3b">The algorithms intentionally discriminate against women</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m6q3" id="m6q3c" value="c">
+                                    <label for="m6q3c">A 40% gender gap in mobile ownership means women are underrepresented in training data</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m6q3" id="m6q3d" value="d">
+                                    <label for="m6q3d">Women's phone usage patterns are identical to men's</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
+                        </div>
+
+                        <div class="quiz-question" data-correct="d">
+                            <div class="question-text">
+                                <span class="question-number">4</span>
+                                Universal basic income (UBI) avoids many targeting challenges because:
+                                <span class="question-type">Multiple Choice</span>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-option="a">
+                                    <input type="radio" name="m6q4" id="m6q4a" value="a">
+                                    <label for="m6q4a">It is always cheaper than targeted programs</label>
+                                </div>
+                                <div class="quiz-option" data-option="b">
+                                    <input type="radio" name="m6q4" id="m6q4b" value="b">
+                                    <label for="m6q4b">It uses better algorithms than targeted programs</label>
+                                </div>
+                                <div class="quiz-option" data-option="c">
+                                    <input type="radio" name="m6q4" id="m6q4c" value="c">
+                                    <label for="m6q4c">It guarantees the poorest always receive the most</label>
+                                </div>
+                                <div class="quiz-option" data-option="d">
+                                    <input type="radio" name="m6q4" id="m6q4d" value="d">
+                                    <label for="m6q4d">It eliminates exclusion errors and reduces administrative costs, though at higher total program cost</label>
+                                </div>
+                            </div>
+                            <button class="check-answer-btn" onclick="checkAnswer(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                Check Answer
+                            </button>
+                            <div class="quiz-feedback"></div>
                         </div>
                     </div>
                 </section>
-                
+
                 <div class="coach-callout">
-                    <img src="https://www.impactmojo.in/assets/images/vandana-photo.jpeg" alt="Vandana" class="coach-photo">
+                    <img src="https://www.impactmojo.in/assets/images/vandana-photo.jpeg" alt="Coach Vandana" class="coach-photo">
                     <div class="coach-content">
-                        <h4>Vandana</h4>
-                        <p>Targeting decisions are among the most consequential in program design. If you're grappling with inclusion/exclusion tradeoffs or evaluating algorithmic approaches, our workshops cover the evidence and practical frameworks.</p>
-                        <div class="coach-actions">
-                            <a class='coach-btn' href='/workshops'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">Request Workshop</a>
-                            <a class='coach-btn' href='/#labs'><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">Interactive Labs</a>
+                        <div class="coach-name">Vandana</div>
+                        <div class="coach-message">
+                            Targeting decisions are among the most consequential in program design. If you're grappling with inclusion/exclusion tradeoffs or evaluating algorithmic approaches, our workshops cover the evidence and practical frameworks.
+                        </div>
+                        <div class="coach-links">
+                            <a href="/coaching" class="coach-link">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="">
+                                Book 1:1 Coaching
+                            </a>
+                            <a href="/#labs" class="coach-link secondary">
+                                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="">
+                                Try Interactive Labs
+                            </a>
                         </div>
                     </div>
                 </div>
