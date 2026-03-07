@@ -188,12 +188,7 @@
                 this.isAuthenticated = true;
                 this.currentTier = window.ImpactMojoAuth.profile?.subscription_tier || 'explorer';
                 
-                // Check if subscription is active
-                const status = window.ImpactMojoAuth.profile?.subscription_status;
-                if (status && status !== 'active' && this.currentTier !== 'explorer') {
-                    // Subscription not active, downgrade to explorer
-                    this.currentTier = 'explorer';
-                }
+                // Tier is determined by subscription_tier field alone
             } else {
                 this.isAuthenticated = false;
                 this.currentTier = 'explorer';

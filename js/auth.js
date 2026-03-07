@@ -652,8 +652,7 @@ const ImpactMojoAuth = {
     // Check if user has active premium subscription
     isPremium() {
         if (!this.profile) return false;
-        return ['practitioner', 'professional', 'organization'].includes(this.profile.subscription_tier) 
-            && this.profile.subscription_status === 'active';
+        return ['practitioner', 'professional', 'organization'].includes(this.profile.subscription_tier);
     },
 
     // Check specific tier access
@@ -661,7 +660,7 @@ const ImpactMojoAuth = {
         const tierHierarchy = ['explorer', 'practitioner', 'professional', 'organization'];
         const userTierIndex = tierHierarchy.indexOf(this.profile?.subscription_tier || 'explorer');
         const requiredTierIndex = tierHierarchy.indexOf(requiredTier);
-        return userTierIndex >= requiredTierIndex && this.profile?.subscription_status === 'active';
+        return userTierIndex >= requiredTierIndex;
     },
 
     // Get subscription tier display name
