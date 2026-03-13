@@ -7617,47 +7617,26 @@ body.dark-mode .v3-dot {
     pointer-events: auto;
 }
 
-/* Keep dropdown menus FULLY visible during tour - highest priority */
+/* HIDE all dropdown menus during tour to prevent random menu popups */
 body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown .dropdown-menu,
 body:has(.imx-tour-overlay.active) .dropdown-menu,
 .imx-tour-overlay.active ~ * .dropdown-menu {
-    opacity: 1 !important;
-    visibility: visible !important;
-    max-height: none !important;
-    pointer-events: auto !important;
-    z-index: 10005 !important;
-    background: var(--card-bg, #fff) !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3) !important;
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
+/* Suppress hover-triggered dropdowns during tour */
+body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown:hover .dropdown-menu {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Suppress open class dropdowns during tour */
 body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown.open .dropdown-menu {
-    display: block !important;
-}
-
-/* Ensure entire navigation and dropdowns stay above overlay during tour */
-body:has(.imx-tour-overlay.active) header,
-body:has(.imx-tour-overlay.active) nav,
-body:has(.imx-tour-overlay.active) .nav-links,
-body:has(.imx-tour-overlay.active) .nav-links > li,
-body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown,
-body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown > a {
-    position: relative;
-    z-index: 10004 !important;
-}
-
-/* Make dropdown content fully visible and readable */
-body:has(.imx-tour-overlay.active) .dropdown-menu {
-    z-index: 10006 !important;
-    position: absolute !important;
-    background: var(--card-bg, #ffffff) !important;
-    border: 1px solid var(--border-color, #e5e7eb) !important;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.25) !important;
-}
-
-body:has(.imx-tour-overlay.active) .dropdown-menu a,
-body:has(.imx-tour-overlay.active) .dropdown-menu li {
-    background: var(--card-bg, #ffffff) !important;
-    color: var(--text-color, #1f2937) !important;
+    display: none !important;
 }
 
 .imx-tour-spotlight {
