@@ -11,13 +11,12 @@
     ║  ✓ Rich detail: definition, examples, use cases, how-to-apply              ║
     ║  ✓ Search, filter by category/sector/evidence level                        ║
     ║  ✓ Export CSV, share/copy link per technique                               ║
-    ║  ✓ Dark mode, responsive, accessible                                       ║
+    ║  ✓ Dark mode, responsive, accessible (WCAG 2.1 AA)                        ║
     ╚══════════════════════════════════════════════════════════════════════════════╝
 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
@@ -58,6 +57,32 @@ window.addEventListener('pageshow', function(event) {
 
 <title>Behavior Change Technique Repository | ImpactMojo</title>
 
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOccupationalResource",
+  "name": "Behavior Change Technique Repository",
+  "description": "Free repository of 200+ Behavior Change Techniques (BCTs) for development professionals, contextualized for South Asian BCC work.",
+  "url": "https://www.impactmojo.in/bct-repository",
+  "provider": {
+    "@type": "Organization",
+    "name": "ImpactMojo",
+    "url": "https://www.impactmojo.in"
+  },
+  "educationalLevel": "Professional",
+  "learningResourceType": "Reference",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "license": "https://opensource.org/licenses/MIT",
+  "about": [
+    { "@type": "Thing", "name": "Behavior Change Techniques" },
+    { "@type": "Thing", "name": "Behavior Change Communication" },
+    { "@type": "Thing", "name": "South Asian Development" }
+  ]
+}
+</script>
+
 <!-- Favicons -->
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 <link href="/assets/images/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
@@ -73,6 +98,33 @@ window.addEventListener('pageshow', function(event) {
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===== Skip to Content (Accessibility) ===== */
+.skip-to-content {
+    position: absolute; top: -100%; left: 50%; transform: translateX(-50%);
+    background: var(--accent-color); color: #fff;
+    padding: 12px 24px; border-radius: 0 0 8px 8px;
+    font-weight: 600; font-size: 0.9rem;
+    z-index: 200; text-decoration: none;
+    transition: top 0.2s;
+}
+.skip-to-content:focus { top: 0; }
+
+/* ===== Focus Visible (Keyboard Navigation) ===== */
+:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+.technique-card:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
 
 :root {
     --primary-bg: #FFFFFF;
@@ -257,33 +309,32 @@ body::before {
 .search-container { flex: 1; min-width: 280px; }
 .search-wrapper { position: relative; }
 
-.search-box {
-    width: 100%; padding: 14px 18px 14px 46px;
+.search-box,
+.filter-select {
     border: 2px solid var(--border-color);
     border-radius: 14px;
     background: var(--card-bg);
     color: var(--text-primary);
-    font-size: 0.95rem;
     outline: none;
     transition: all 0.25s;
 }
-.search-box:focus { border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
+.search-box:focus,
+.filter-select:focus { border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
+
+.search-box {
+    width: 100%; padding: 14px 18px 14px 46px;
+    font-size: 0.95rem;
+}
 .search-box::placeholder { color: var(--text-muted); }
 
 .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; stroke: var(--text-muted); fill: none; stroke-width: 2; pointer-events: none; }
 
 .filter-select {
     padding: 14px 18px;
-    border: 2px solid var(--border-color);
-    border-radius: 14px;
-    background: var(--card-bg);
-    color: var(--text-primary);
     font-size: 0.9rem;
-    outline: none; cursor: pointer;
+    cursor: pointer;
     min-width: 160px;
-    transition: all 0.25s;
 }
-.filter-select:focus { border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
 
 .export-btn {
     display: inline-flex; align-items: center; gap: 6px;
@@ -386,21 +437,20 @@ body::before {
     margin-bottom: 14px;
 }
 
-.technique-id-badge {
-    font-size: 0.7rem; font-weight: 700;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 8px;
+.technique-id-badge,
+.technique-evidence-badge {
+    font-size: 0.7rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 8px;
     white-space: nowrap; flex-shrink: 0;
+}
+
+.technique-id-badge {
+    font-weight: 700; color: white;
     letter-spacing: 0.3px;
 }
 
 .technique-evidence-badge {
     margin-left: auto;
-    font-size: 0.7rem; font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 8px;
-    white-space: nowrap; flex-shrink: 0;
 }
 
 .evidence-strong { background: rgba(16, 185, 129, 0.12); color: #059669; }
