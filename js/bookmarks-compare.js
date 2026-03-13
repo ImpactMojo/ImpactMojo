@@ -1835,30 +1835,57 @@ IMX.Tour = {
     },
     
     showWelcome: function() {
+        var self = this;
+
+        // Close any open dropdown menus immediately
+        document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+            item.classList.remove('open');
+        });
+
         // Create overlay
         this.overlay = document.createElement('div');
         this.overlay.className = 'imx-tour-overlay active';
-        
+
+        // Clicking overlay background dismisses the welcome
+        this.overlay.addEventListener('click', function(e) {
+            if (e.target === self.overlay) {
+                self.skip();
+            }
+        });
+
         // Create welcome modal
         var welcome = document.createElement('div');
         welcome.className = 'imx-tour-welcome';
-        welcome.innerHTML = 
+        welcome.innerHTML =
             '<div class="imx-tour-welcome-icon">' + this.icons.welcome + '</div>' +
             '<h2>Welcome to ImpactMojo</h2>' +
             '<p>Your free platform for development education. Take a quick tour to discover powerful features that enhance your learning experience.</p>' +
             '<div class="imx-tour-welcome-buttons">' +
-                '<button class="imx-tour-btn-secondary" type="button" onclick="IMX.Tour.skip()">Skip Tour</button>' +
-                '<button class="imx-tour-btn-primary" type="button" onclick="IMX.Tour.start()">Start Tour <svg viewBox="0 0 24 24" width="16" height="16"><polyline points="9 18 15 12 9 6" fill="none" stroke="currentColor" stroke-width="2"></polyline></svg></button>' +
+                '<button class="imx-tour-btn-secondary" type="button" onclick="IMX.Tour.skip()">No Thanks</button>' +
+                '<button class="imx-tour-btn-primary" type="button" onclick="IMX.Tour.start()">Take the Tour <svg viewBox="0 0 24 24" width="16" height="16"><polyline points="9 18 15 12 9 6" fill="none" stroke="currentColor" stroke-width="2"></polyline></svg></button>' +
             '</div>';
-        
+
         this.overlay.appendChild(welcome);
         document.body.appendChild(this.overlay);
+
+        // Escape key dismisses welcome
+        this._escHandler = function(e) {
+            if (e.key === 'Escape') {
+                self.skip();
+            }
+        };
+        document.addEventListener('keydown', this._escHandler);
     },
     
     start: function() {
         this.isActive = true;
         this.currentStep = 0;
-        
+
+        // Close any open dropdowns before starting
+        document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+            item.classList.remove('open');
+        });
+
         // Clear welcome content
         this.overlay.innerHTML = '';
         
@@ -2060,11 +2087,17 @@ IMX.Tour = {
     skip: function() {
         this.end();
     },
-    
+
     end: function() {
         this.isActive = false;
         localStorage.setItem(this.STORAGE_KEY, 'true');
-        
+
+        // Remove escape key handler
+        if (this._escHandler) {
+            document.removeEventListener('keydown', this._escHandler);
+            this._escHandler = null;
+        }
+
         // Close any open dropdowns
         document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
             item.classList.remove('open');
