@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <!--
     ╔══════════════════════════════════════════════════════════════════════════════╗
-    ║  IMPACTMOJO - BEHAVIOR CHANGE TECHNIQUE (BCT) REPOSITORY                    ║
-    ║  Version: 1.0.0 - March 11, 2026                                             ║
-    ║  200+ BCTs for South Asian Development & BCC Work                            ║
-    ║                                                                                ║
-    ║  INCLUDED FEATURES:                                                            ║
-    ║  ✓ Google Analytics (G-JRCMEB9TBW)                                            ║
-    ║  ✓ UserWay Accessibility Widget (account: EksmhlPg9k)                         ║
-    ║  ✓ Theme Toggle (Sun/Moon) with localStorage sync                             ║
-    ║  ✓ Auto-refresh on back/forward navigation                                    ║
-    ║  ✓ Search, filter by category/sector/evidence level                          ║
-    ║  ✓ Expandable technique cards with full details                               ║
-    ║  ✓ Export/bookmark functionality                                               ║
-    ║  ✓ Responsive grid layout                                                      ║
+    ║  IMPACTMOJO - BEHAVIOR CHANGE TECHNIQUE (BCT) REPOSITORY v2.0             ║
+    ║  Version: 2.0.0 - March 13, 2026                                          ║
+    ║  203 BCTs for South Asian Development & BCC Work                           ║
+    ║                                                                            ║
+    ║  FEATURES:                                                                 ║
+    ║  ✓ Beautiful card grid with gradient accents                               ║
+    ║  ✓ Full-screen modal detail view with prev/next navigation                 ║
+    ║  ✓ Rich detail: definition, examples, use cases, how-to-apply              ║
+    ║  ✓ Search, filter by category/sector/evidence level                        ║
+    ║  ✓ Export CSV, share/copy link per technique                               ║
+    ║  ✓ Dark mode, responsive, accessible                                       ║
     ╚══════════════════════════════════════════════════════════════════════════════╝
 -->
 <html lang="en">
@@ -37,14 +35,12 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta name="version" content="1.0.0.20260311">
+<meta name="version" content="2.0.0.20260313">
 
 <!-- Auto-refresh on back/forward navigation -->
 <script>
 window.addEventListener('pageshow', function(event) {
-    if (event.persisted) {
-        window.location.reload();
-    }
+    if (event.persisted) window.location.reload();
 });
 </script>
 
@@ -76,11 +72,7 @@ window.addEventListener('pageshow', function(event) {
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
     --primary-bg: #FFFFFF;
@@ -102,22 +94,15 @@ window.addEventListener('pageshow', function(event) {
     --gradient-hero: linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
     --nav-bg: rgba(255, 255, 255, 0.95);
     --nav-text: #0F172A;
-    --star-color: #FCD34D;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 body.dark-mode {
     --primary-bg: #0F172A;
     --secondary-bg: #1E293B;
-    --accent-color: #0EA5E9;
-    --accent-hover: #0284C7;
-    --secondary-accent: #6366F1;
-    --success-color: #10B981;
-    --warning-color: #F59E0B;
-    --danger-color: #EF4444;
     --text-primary: #F1F5F9;
     --text-secondary: #94A3B8;
     --text-muted: #64748B;
@@ -126,10 +111,10 @@ body.dark-mode {
     --border-color: #334155;
     --nav-bg: rgba(15, 23, 42, 0.95);
     --nav-text: #F1F5F9;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
-    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 body {
@@ -138,777 +123,575 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
-    transition: all 0.3s ease;
+    transition: background 0.3s, color 0.3s;
 }
 
 body::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.05) 0%, transparent 50%),
-                      radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.04) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.04) 0%, transparent 50%);
     pointer-events: none;
-    z-index: 1;
+    z-index: 0;
 }
 
-.container {
-    position: relative;
-    z-index: 2;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 24px;
-}
+.container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
-/* Header */
+/* ===== Header ===== */
 .header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    position: sticky; top: 0; z-index: 100;
     background: var(--nav-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-color);
     padding: 12px 0;
 }
 
 .nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: var(--text-primary);
-    transition: transform 0.3s;
-}
-
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); transition: transform 0.3s; }
 .logo:hover { transform: translateY(-2px); }
+.logo-icon { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; }
+.logo-text-wrap { display: flex; flex-direction: column; }
+.logo-text { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.35rem; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.5px; line-height: 1; }
+.logo-tagline { font-size: 0.65rem; color: var(--text-secondary); font-weight: 500; margin-top: 2px; letter-spacing: 0.5px; text-transform: uppercase; }
 
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    object-fit: contain;
-    display: block;
-}
+.nav-links { display: flex; align-items: center; gap: 8px; }
+.nav-link { padding: 8px 16px; border-radius: 8px; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; }
+.nav-link:hover { color: var(--text-primary); background: var(--hover-bg); }
+.nav-link.active { color: var(--accent-color); background: rgba(14, 165, 233, 0.1); }
 
-.logo-text-wrap {
-    display: flex;
-    flex-direction: column;
-}
+.theme-selector { display: flex; gap: 4px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 4px; }
+.theme-btn { background: transparent; border: none; color: var(--text-secondary); padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+.theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+.theme-btn.active { background: var(--accent-color); color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.theme-btn svg { width: 18px; height: 18px; }
 
-.logo-text {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    font-size: 1.35rem;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.5px;
-    line-height: 1;
-}
+.mobile-menu-toggle { display: none; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-primary); cursor: pointer; align-items: center; justify-content: center; }
+.mobile-menu-toggle svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-.logo-tagline {
-    font-size: 0.65rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-    margin-top: 2px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.nav-link {
-    padding: 8px 16px;
-    border-radius: 8px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.nav-link:hover {
-    color: var(--text-primary);
-    background: var(--hover-bg);
-}
-
-.nav-link.active {
-    color: var(--accent-color);
-    background: rgba(14, 165, 233, 0.1);
-}
-
-.theme-selector {
-    display: flex;
-    gap: 4px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 4px;
-}
-
-.theme-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    padding: 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-}
-
-.theme-btn:hover {
-    background: var(--hover-bg);
-    color: var(--text-primary);
-}
-
-.theme-btn.active {
-    background: var(--accent-color);
-    color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.theme-btn svg {
-    width: 18px;
-    height: 18px;
-}
-
-.mobile-menu-toggle {
-    display: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    background: var(--card-bg);
-    color: var(--text-primary);
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-}
-
-.mobile-menu-toggle svg {
-    width: 24px;
-    height: 24px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-}
-
-/* Main Content */
-.main-content {
-    padding: 48px 0;
-    min-height: calc(100vh - 200px);
-}
-
-.page-header {
+/* ===== Hero Section ===== */
+.hero-section {
     text-align: center;
-    margin-bottom: 40px;
+    padding: 56px 0 40px;
+    position: relative;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+    pointer-events: none;
 }
 
 .page-title {
     font-family: 'Poppins', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 2.8rem; font-weight: 800;
     background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 12px;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
 }
 
 .page-subtitle {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    max-width: 700px;
-    margin: 0 auto 8px;
+    font-size: 1.15rem; color: var(--text-secondary);
+    max-width: 720px; margin: 0 auto 12px;
+    line-height: 1.7;
 }
 
 .page-credit {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-top: 8px;
+    font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;
 }
+.page-credit a { color: var(--accent-color); text-decoration: none; }
+.page-credit a:hover { text-decoration: underline; }
 
-.page-credit a {
-    color: var(--accent-color);
-    text-decoration: none;
-}
-
-.page-credit a:hover {
-    text-decoration: underline;
-}
-
-/* Stats Bar */
+/* ===== Stats Bar ===== */
 .stats-bar {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
+    display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+    margin-bottom: 36px;
 }
 
 .stat-item {
-    text-align: center;
-    padding: 14px 20px;
+    text-align: center; padding: 18px 28px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    min-width: 120px;
+    border-radius: 16px;
+    min-width: 130px;
+    transition: all 0.3s;
 }
 
-.stat-number {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--accent-color);
+.stat-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-color);
 }
 
-.stat-label {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-}
+.stat-number { font-family: 'Poppins', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--accent-color); }
+.stat-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; margin-top: 2px; }
 
-/* Controls Bar */
+/* ===== Attribution ===== */
+.attribution-banner {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+    display: flex; gap: 16px; align-items: flex-start;
+}
+.attribution-banner .attr-icon { font-size: 2rem; flex-shrink: 0; }
+.attribution-banner .attr-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+.attribution-banner .attr-text strong { color: var(--text-primary); }
+.attribution-banner .attr-text a { color: var(--accent-color); text-decoration: none; }
+.attribution-banner .attr-text a:hover { text-decoration: underline; }
+
+/* ===== Controls ===== */
 .controls-bar {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-    align-items: center;
+    display: flex; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 28px; align-items: center;
 }
 
-.search-container {
-    flex: 1;
-    min-width: 250px;
-}
+.search-container { flex: 1; min-width: 280px; }
+.search-wrapper { position: relative; }
 
 .search-box {
-    width: 100%;
-    padding: 12px 16px 12px 42px;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    width: 100%; padding: 14px 18px 14px 46px;
+    border: 2px solid var(--border-color);
+    border-radius: 14px;
     background: var(--card-bg);
     color: var(--text-primary);
     font-size: 0.95rem;
     outline: none;
-    transition: all 0.2s ease;
+    transition: all 0.25s;
 }
+.search-box:focus { border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
+.search-box::placeholder { color: var(--text-muted); }
 
-.search-box:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-}
-
-.search-box::placeholder {
-    color: var(--text-muted);
-}
-
-.search-wrapper {
-    position: relative;
-}
-
-.search-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    stroke: var(--text-muted);
-    fill: none;
-    stroke-width: 2;
-    pointer-events: none;
-}
+.search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; stroke: var(--text-muted); fill: none; stroke-width: 2; pointer-events: none; }
 
 .filter-select {
-    padding: 12px 16px;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    padding: 14px 18px;
+    border: 2px solid var(--border-color);
+    border-radius: 14px;
     background: var(--card-bg);
     color: var(--text-primary);
     font-size: 0.9rem;
-    outline: none;
-    cursor: pointer;
+    outline: none; cursor: pointer;
     min-width: 160px;
-    transition: all 0.2s ease;
+    transition: all 0.25s;
 }
+.filter-select:focus { border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
 
-.filter-select:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+.export-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 12px 20px; border-radius: 14px;
+    border: 2px solid var(--border-color);
+    background: var(--card-bg); color: var(--text-secondary);
+    font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; transition: all 0.25s;
 }
+.export-btn:hover { background: var(--hover-bg); color: var(--text-primary); border-color: var(--accent-color); }
+.export-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-.view-toggle {
-    display: flex;
-    gap: 4px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 4px;
-}
-
-.view-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-.view-btn:hover {
-    background: var(--hover-bg);
-    color: var(--text-primary);
-}
-
-.view-btn.active {
-    background: var(--accent-color);
-    color: white;
-}
-
-/* Category Navigation */
+/* ===== Category Chips ===== */
 .category-nav {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-    padding: 16px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 36px;
+    padding: 20px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 16px;
 }
 
 .category-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 16px; border-radius: 24px;
+    border: 1.5px solid var(--border-color);
     background: var(--secondary-bg);
     color: var(--text-secondary);
-    font-size: 0.82rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    font-size: 0.82rem; font-weight: 500;
+    cursor: pointer; transition: all 0.25s;
     white-space: nowrap;
 }
+.category-chip:hover { border-color: var(--accent-color); color: var(--accent-color); background: rgba(14, 165, 233, 0.06); transform: translateY(-1px); }
+.category-chip.active { border-color: var(--accent-color); background: rgba(14, 165, 233, 0.12); color: var(--accent-color); font-weight: 600; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.15); }
+.category-chip .chip-icon { font-size: 1rem; line-height: 1; }
+.category-chip .chip-count { background: var(--border-color); color: var(--text-muted); padding: 2px 8px; border-radius: 12px; font-size: 0.72rem; font-weight: 600; }
+.category-chip.active .chip-count { background: rgba(14, 165, 233, 0.2); color: var(--accent-color); }
 
-.category-chip:hover {
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-    background: rgba(14, 165, 233, 0.08);
-}
-
-.category-chip.active {
-    border-color: var(--accent-color);
-    background: rgba(14, 165, 233, 0.15);
-    color: var(--accent-color);
-    font-weight: 600;
-}
-
-.category-chip .chip-icon {
-    font-size: 1rem;
-    line-height: 1;
-}
-
-.category-chip .chip-count {
-    background: var(--border-color);
-    color: var(--text-muted);
-    padding: 1px 7px;
-    border-radius: 10px;
-    font-size: 0.72rem;
-    font-weight: 600;
-}
-
-.category-chip.active .chip-count {
-    background: rgba(14, 165, 233, 0.2);
-    color: var(--accent-color);
-}
-
-/* Category Section */
-.category-section {
-    margin-bottom: 40px;
-    scroll-margin-top: 80px;
-}
+/* ===== Category Section ===== */
+.category-section { margin-bottom: 48px; scroll-margin-top: 80px; }
 
 .category-section-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 20px; padding-bottom: 16px;
     border-bottom: 2px solid var(--border-color);
 }
 
 .category-section-icon {
-    font-size: 1.5rem;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    flex-shrink: 0;
+    font-size: 1.5rem; width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 14px; flex-shrink: 0;
 }
 
-.category-section-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--text-primary);
-}
+.category-section-title { font-family: 'Poppins', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text-primary); }
+.category-section-desc { font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px; }
+.category-section-count { margin-left: auto; font-size: 0.85rem; color: var(--text-muted); font-weight: 500; white-space: nowrap; }
 
-.category-section-desc {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-top: 2px;
-}
-
-.category-section-count {
-    margin-left: auto;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-/* Technique Cards */
+/* ===== Technique Cards — Beautiful Grid ===== */
 .techniques-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
 }
 
 .technique-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 14px;
+    border-radius: 16px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     cursor: pointer;
+    position: relative;
+}
+
+.technique-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 16px 16px 0 0;
+    transition: height 0.3s;
 }
 
 .technique-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--accent-color);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+    border-color: transparent;
 }
 
-.technique-card-header {
-    padding: 16px 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+.technique-card:hover::before {
+    height: 5px;
 }
 
-.technique-id {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 0.72rem;
-    font-weight: 600;
+.technique-card-inner {
+    padding: 24px;
+}
+
+.technique-card-top {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 14px;
+}
+
+.technique-id-badge {
+    font-size: 0.7rem; font-weight: 700;
     color: white;
-    background: var(--accent-color);
-    padding: 3px 8px;
-    border-radius: 6px;
-    white-space: nowrap;
-    flex-shrink: 0;
-    margin-top: 2px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    white-space: nowrap; flex-shrink: 0;
+    letter-spacing: 0.3px;
 }
 
-.technique-info {
-    flex: 1;
-    min-width: 0;
+.technique-evidence-badge {
+    margin-left: auto;
+    font-size: 0.7rem; font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 8px;
+    white-space: nowrap; flex-shrink: 0;
 }
+
+.evidence-strong { background: rgba(16, 185, 129, 0.12); color: #059669; }
+.evidence-moderate { background: rgba(245, 158, 11, 0.12); color: #D97706; }
+.evidence-emerging { background: rgba(99, 102, 241, 0.12); color: #6366F1; }
+
+body.dark-mode .evidence-strong { color: #34D399; }
+body.dark-mode .evidence-moderate { color: #FBBF24; }
+body.dark-mode .evidence-emerging { color: #A5B4FC; }
 
 .technique-name {
-    font-weight: 600;
-    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: 1.05rem;
     color: var(--text-primary);
-    margin-bottom: 4px;
-    line-height: 1.3;
+    margin-bottom: 8px;
+    line-height: 1.35;
 }
 
 .technique-definition {
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     color: var(--text-secondary);
-    line-height: 1.5;
+    line-height: 1.6;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    margin-bottom: 16px;
 }
 
-.technique-expand-icon {
-    width: 20px;
-    height: 20px;
-    stroke: var(--text-muted);
-    fill: none;
-    stroke-width: 2;
-    flex-shrink: 0;
-    margin-top: 2px;
-    transition: transform 0.3s;
-}
-
-.technique-card.expanded .technique-expand-icon {
-    transform: rotate(180deg);
-}
-
-.technique-card.expanded .technique-definition {
-    -webkit-line-clamp: unset;
-}
-
-.technique-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    padding: 0 20px 12px;
-}
-
-.technique-tag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    font-weight: 500;
-}
-
-.tag-sector {
-    background: rgba(14, 165, 233, 0.1);
-    color: var(--accent-color);
-}
-
-.tag-evidence-strong {
-    background: rgba(16, 185, 129, 0.15);
-    color: var(--success-color);
-}
-
-.tag-evidence-moderate {
-    background: rgba(245, 158, 11, 0.15);
-    color: var(--warning-color);
-}
-
-.tag-evidence-emerging {
-    background: rgba(99, 102, 241, 0.15);
-    color: var(--secondary-accent);
-}
-
-/* Expanded Detail */
-.technique-detail {
-    display: none;
-    padding: 0 20px 20px;
+.technique-card-footer {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding-top: 14px;
     border-top: 1px solid var(--border-color);
-    margin-top: 4px;
 }
 
-.technique-card.expanded .technique-detail {
-    display: block;
-}
-
-.detail-section {
-    margin-top: 14px;
-}
-
-.detail-section:first-child {
-    margin-top: 16px;
-}
-
-.detail-label {
+.sector-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
     font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-weight: 500;
+    background: rgba(14, 165, 233, 0.08);
+    color: var(--accent-color);
+    border: 1px solid rgba(14, 165, 233, 0.15);
+}
+
+.sector-pill-more {
+    background: var(--hover-bg);
     color: var(--text-muted);
-    margin-bottom: 6px;
+    border-color: var(--border-color);
 }
 
-.detail-text {
-    font-size: 0.88rem;
-    color: var(--text-primary);
-    line-height: 1.6;
-}
-
-.detail-list {
-    list-style: none;
-    padding: 0;
-}
-
-.detail-list li {
-    position: relative;
-    padding-left: 16px;
-    font-size: 0.85rem;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-    line-height: 1.5;
-}
-
-.detail-list li::before {
-    content: '';
+.technique-card-arrow {
     position: absolute;
-    left: 0;
-    top: 8px;
-    width: 6px;
-    height: 6px;
+    bottom: 24px; right: 24px;
+    width: 28px; height: 28px;
     border-radius: 50%;
+    background: var(--hover-bg);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    opacity: 0;
+}
+
+.technique-card-arrow svg {
+    width: 14px; height: 14px;
+    stroke: var(--text-muted);
+    fill: none; stroke-width: 2;
+}
+
+.technique-card:hover .technique-card-arrow {
+    opacity: 1;
     background: var(--accent-color);
 }
 
-.related-techniques {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 6px;
+.technique-card:hover .technique-card-arrow svg {
+    stroke: white;
 }
 
-.related-link {
-    padding: 3px 10px;
-    border-radius: 8px;
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
-    color: var(--accent-color);
-    font-size: 0.75rem;
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s;
-}
-
-.related-link:hover {
-    background: rgba(14, 165, 233, 0.1);
-    border-color: var(--accent-color);
-}
-
-/* List View */
-.techniques-list {
-    display: none;
-}
-
-.techniques-list.active {
-    display: block;
-}
-
-.techniques-grid.active {
-    display: grid;
-}
-
-.techniques-grid:not(.active) {
-    display: none;
-}
-
-.list-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 20px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.list-item:hover {
-    background: var(--hover-bg);
-    border-color: var(--accent-color);
-}
-
-.list-item .technique-id {
-    min-width: 60px;
-    text-align: center;
-}
-
-.list-item .technique-name {
-    flex: 1;
-    margin-bottom: 0;
-}
-
-.list-item .technique-tags {
-    padding: 0;
-    flex-wrap: nowrap;
-}
-
-/* Loading & Empty States */
-.loading-state, .empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-secondary);
-}
-
-.spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid var(--border-color);
-    border-top-color: var(--accent-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 16px;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* Attribution Banner */
-.attribution-banner {
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
+/* ===== Modal Overlay ===== */
+.modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
     padding: 24px;
-    margin-bottom: 32px;
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s, visibility 0.35s;
 }
 
-.attribution-banner .attr-icon {
-    font-size: 2rem;
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-container {
+    background: var(--card-bg);
+    border-radius: 24px;
+    width: 100%; max-width: 840px;
+    max-height: calc(100vh - 48px);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    transform: translateY(30px) scale(0.97);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.active .modal-container {
+    transform: translateY(0) scale(1);
+}
+
+.modal-header {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex; align-items: flex-start; gap: 16px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.modal-header-content { flex: 1; min-width: 0; }
+
+.modal-category-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.78rem; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    padding: 4px 12px;
+    border-radius: 8px;
+}
+
+.modal-technique-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem; font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 6px;
+}
+
+.modal-technique-id {
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--text-muted);
+}
+
+.modal-close-btn {
+    position: absolute; top: 20px; right: 20px;
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--secondary-bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+.modal-close-btn:hover { background: var(--danger-color); color: white; border-color: var(--danger-color); }
+.modal-close-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+.modal-body {
+    overflow-y: auto;
+    padding: 28px 32px;
+    flex: 1;
+}
+
+.modal-section {
+    margin-bottom: 28px;
+}
+
+.modal-section:last-child { margin-bottom: 0; }
+
+.modal-section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+}
+
+.modal-section-icon {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
     flex-shrink: 0;
 }
 
-.attribution-banner .attr-text {
-    font-size: 0.88rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-}
-
-.attribution-banner .attr-text strong {
+.modal-section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem; font-weight: 700;
     color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.attribution-banner .attr-text a {
+.modal-section-body {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    padding-left: 42px;
+}
+
+.modal-section-body ul {
+    list-style: none; padding: 0;
+}
+
+.modal-section-body ul li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.modal-section-body ul li::before {
+    content: '';
+    position: absolute; left: 0; top: 10px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+}
+
+/* ===== Modal Tags Row ===== */
+.modal-tags-row {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 28px;
+}
+
+.modal-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 6px 14px;
+    border-radius: 24px;
+    font-size: 0.78rem; font-weight: 600;
+    border: 1px solid;
+}
+
+.modal-tag-evidence { border-color: transparent; }
+.modal-tag-sector { background: rgba(14, 165, 233, 0.06); border-color: rgba(14, 165, 233, 0.2); color: var(--accent-color); }
+
+/* ===== Modal Footer / Nav ===== */
+.modal-footer {
+    padding: 16px 32px;
+    border-top: 1px solid var(--border-color);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+    background: var(--secondary-bg);
+}
+
+.modal-nav-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    font-size: 0.82rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+}
+.modal-nav-btn:hover { border-color: var(--accent-color); color: var(--accent-color); background: rgba(14, 165, 233, 0.05); }
+.modal-nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.modal-nav-btn:disabled:hover { border-color: var(--border-color); color: var(--text-secondary); background: var(--card-bg); }
+.modal-nav-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+.modal-share-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 18px; border-radius: 12px;
+    border: none;
+    background: var(--gradient-primary);
+    color: white;
+    font-size: 0.82rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+}
+.modal-share-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); }
+.modal-share-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+.modal-related-techniques {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding-left: 42px;
+}
+
+.related-chip {
+    padding: 6px 14px; border-radius: 10px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
     color: var(--accent-color);
+    font-size: 0.78rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
     text-decoration: none;
 }
+.related-chip:hover { background: rgba(14, 165, 233, 0.1); border-color: var(--accent-color); }
 
-.attribution-banner .attr-text a:hover {
-    text-decoration: underline;
-}
+/* ===== Loading & Empty States ===== */
+.loading-state, .empty-state { text-align: center; padding: 60px 20px; color: var(--text-secondary); }
+.spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* Footer */
+/* ===== Footer ===== */
 .footer {
     background: var(--secondary-bg);
     border-top: 1px solid var(--border-color);
@@ -916,205 +699,76 @@ body::before {
     padding: 48px 0 24px;
 }
 
-.footer-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 24px;
-}
+.footer-content { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+.footer-sponsor { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 32px; }
+.footer-sponsor a { color: var(--accent-color); text-decoration: none; }
 
-.footer-sponsor {
-    text-align: center;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 32px;
-}
+.footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 32px; }
+.footer-section h4 { font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; }
+.footer-section ul { list-style: none; }
+.footer-section li { margin-bottom: 6px; }
+.footer-section a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+.footer-section a:hover { color: var(--accent-color); }
 
-.footer-sponsor a {
-    color: var(--accent-color);
-    text-decoration: none;
-}
+.footer-bottom { border-top: 1px solid var(--border-color); padding-top: 24px; text-align: center; font-size: 0.78rem; color: var(--text-muted); line-height: 1.8; }
+.footer-bottom a { color: var(--accent-color); text-decoration: none; }
 
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-    margin-bottom: 32px;
-}
-
-.footer-section h4 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 12px;
-}
-
-.footer-section ul {
-    list-style: none;
-}
-
-.footer-section li {
-    margin-bottom: 6px;
-}
-
-.footer-section a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 0.85rem;
-    transition: color 0.2s;
-}
-
-.footer-section a:hover {
-    color: var(--accent-color);
-}
-
-.footer-bottom {
-    border-top: 1px solid var(--border-color);
-    padding-top: 24px;
-    text-align: center;
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    line-height: 1.8;
-}
-
-.footer-bottom a {
-    color: var(--accent-color);
-    text-decoration: none;
-}
-
-/* Export button */
-.export-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 18px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    background: var(--card-bg);
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.export-btn:hover {
-    background: var(--hover-bg);
-    color: var(--text-primary);
-    border-color: var(--accent-color);
-}
-
-.export-btn svg {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-}
-
-/* Responsive */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
-    .page-title {
-        font-size: 1.8rem;
-    }
-
-    .nav-links {
-        display: none;
-    }
-
-    .mobile-menu-toggle {
-        display: flex;
-    }
-
-    .controls-bar {
-        flex-direction: column;
-    }
-
-    .search-container {
-        width: 100%;
-    }
-
-    .filter-select {
-        width: 100%;
-    }
-
-    .techniques-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .category-nav {
-        padding: 12px;
-    }
-
-    .stats-bar {
-        gap: 8px;
-    }
-
-    .stat-item {
-        padding: 10px 14px;
-        min-width: 90px;
-    }
-
-    .stat-number {
-        font-size: 1.2rem;
-    }
-
-    .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-    }
-
-    .attribution-banner {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .category-section-header {
-        flex-wrap: wrap;
-    }
-
-    .category-section-count {
-        margin-left: 0;
-        width: 100%;
-    }
+    .page-title { font-size: 1.8rem; }
+    .nav-links { display: none; }
+    .mobile-menu-toggle { display: flex; }
+    .controls-bar { flex-direction: column; }
+    .search-container { width: 100%; }
+    .filter-select { width: 100%; }
+    .techniques-grid { grid-template-columns: 1fr; }
+    .category-nav { padding: 12px; }
+    .stats-bar { gap: 8px; }
+    .stat-item { padding: 12px 16px; min-width: 90px; }
+    .stat-number { font-size: 1.2rem; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .attribution-banner { flex-direction: column; text-align: center; }
+    .category-section-header { flex-wrap: wrap; }
+    .category-section-count { margin-left: 0; width: 100%; }
+    .modal-overlay { padding: 8px; }
+    .modal-container { border-radius: 18px; max-height: calc(100vh - 16px); }
+    .modal-header { padding: 20px 20px 16px; }
+    .modal-body { padding: 20px; }
+    .modal-section-body { padding-left: 0; }
+    .modal-related-techniques { padding-left: 0; }
+    .modal-footer { padding: 12px 20px; flex-wrap: wrap; gap: 8px; }
+    .modal-technique-title { font-size: 1.3rem; }
+    .hero-section { padding: 36px 0 28px; }
 }
 
 @media (max-width: 480px) {
-    .page-title {
-        font-size: 1.5rem;
-    }
-
-    .footer-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .category-chip {
-        font-size: 0.75rem;
-        padding: 6px 10px;
-    }
+    .page-title { font-size: 1.5rem; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .category-chip { font-size: 0.75rem; padding: 8px 12px; }
 }
 
-/* Print styles */
+/* ===== Print ===== */
 @media print {
-    .header, .category-nav, .controls-bar, .footer, .theme-selector, .export-btn, .view-toggle {
-        display: none !important;
-    }
-
-    .technique-card {
-        break-inside: avoid;
-        border: 1px solid #ddd !important;
-        box-shadow: none !important;
-    }
-
-    .technique-detail {
-        display: block !important;
-    }
-
-    body {
-        background: white;
-        color: black;
-    }
+    .header, .category-nav, .controls-bar, .footer, .theme-selector, .export-btn, .modal-overlay { display: none !important; }
+    .technique-card { break-inside: avoid; border: 1px solid #ddd !important; box-shadow: none !important; }
+    body { background: white; color: black; }
 }
+
+/* ===== Body locked when modal open ===== */
+body.modal-open { overflow: hidden; }
+
+/* ===== Copied toast ===== */
+.copy-toast {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: #10B981; color: white;
+    padding: 12px 24px; border-radius: 12px;
+    font-size: 0.85rem; font-weight: 600;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+    opacity: 0; transition: all 0.3s;
+    z-index: 2000;
+    pointer-events: none;
+}
+.copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -1154,11 +808,11 @@ body::before {
 <main class="main-content">
     <div class="container">
 
-        <!-- Page Header -->
-        <div class="page-header">
+        <!-- Hero -->
+        <div class="hero-section">
             <h1 class="page-title">Behavior Change Technique Repository</h1>
             <p class="page-subtitle">200+ evidence-based techniques for development practitioners, contextualized for South Asian BCC interventions across health, education, livelihoods, WASH, gender, and governance.</p>
-            <p class="page-credit">Built on the <strong>BCT Taxonomy v1</strong> (Michie et al., 2013) with additional techniques for community mobilization, cultural approaches, nudge design, and sector-specific BCC in South Asia.</p>
+            <p class="page-credit">Built on the <strong>BCT Taxonomy v1</strong> (Michie et al., 2013) with additional techniques for community mobilization, cultural approaches, nudge design, and sector-specific BCC.</p>
         </div>
 
         <!-- Stats -->
@@ -1209,20 +863,14 @@ body::before {
                 <option value="Moderate">Moderate Evidence</option>
                 <option value="Emerging">Emerging Evidence</option>
             </select>
-            <div class="view-toggle">
-                <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')">Grid</button>
-                <button class="view-btn" id="listViewBtn" onclick="setView('list')">List</button>
-            </div>
             <button class="export-btn" onclick="exportCSV()" title="Export filtered results as CSV">
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Export CSV
             </button>
         </div>
 
-        <!-- Category Chips Navigation -->
-        <div class="category-nav" id="categoryNav">
-            <!-- Populated by JS -->
-        </div>
+        <!-- Category Chips -->
+        <div class="category-nav" id="categoryNav"></div>
 
         <!-- Loading -->
         <div class="loading-state" id="loadingState">
@@ -1240,12 +888,44 @@ body::before {
         </div>
 
         <!-- Techniques Container -->
-        <div id="techniquesContainer">
-            <!-- Populated by JS -->
-        </div>
+        <div id="techniquesContainer"></div>
 
     </div>
 </main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-container" id="modalContainer">
+        <div class="modal-header" id="modalHeader">
+            <div class="modal-header-content">
+                <div class="modal-category-label" id="modalCategoryLabel"></div>
+                <h2 class="modal-technique-title" id="modalTitle"></h2>
+                <div class="modal-technique-id" id="modalId"></div>
+            </div>
+            <button class="modal-close-btn" onclick="closeModal()" title="Close (Esc)">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer">
+            <button class="modal-nav-btn" id="modalPrevBtn" onclick="navigateModal(-1)">
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                Previous
+            </button>
+            <button class="modal-share-btn" onclick="shareTechnique()">
+                <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                Copy Link
+            </button>
+            <button class="modal-nav-btn" id="modalNextBtn" onclick="navigateModal(1)">
+                Next
+                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Copy Toast -->
+<div class="copy-toast" id="copyToast">Link copied to clipboard!</div>
 
 <!-- Footer -->
 <footer class="footer" id="contact">
@@ -1253,7 +933,6 @@ body::before {
         <div class="footer-sponsor">
             Made with &#10084;&#65039; by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener">PinPoint Ventures</a>
         </div>
-
         <div class="footer-grid">
             <div class="footer-section">
                 <h4>About ImpactMojo</h4>
@@ -1265,7 +944,6 @@ body::before {
                     <li><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener">GitHub (Open Source)</a></li>
                 </ul>
             </div>
-
             <div class="footer-section">
                 <h4>Legal (IT Act Compliance)</h4>
                 <ul>
@@ -1278,7 +956,6 @@ body::before {
                     <li><a href="/ai-policy">AI Policy</a></li>
                 </ul>
             </div>
-
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
@@ -1290,7 +967,6 @@ body::before {
                     <li><a href="/workshops">Workshops</a></li>
                 </ul>
             </div>
-
             <div class="footer-section">
                 <h4>Resources</h4>
                 <ul>
@@ -1304,7 +980,6 @@ body::before {
                 </ul>
             </div>
         </div>
-
         <div class="footer-bottom">
             <p>&#169; 2026 ImpactMojo. All content for educational purposes only.</p>
             <p><strong>DISCLAIMER:</strong> ImpactMojo is an educational resource platform focused on learning, not credentialing.</p>
@@ -1322,11 +997,7 @@ body::before {
 // Theme Management
 // =====================================================
 function setTheme(theme) {
-    if (theme === 'dark') {
-        document.body.classList.add('dark-mode');
-    } else {
-        document.body.classList.remove('dark-mode');
-    }
+    document.body.classList.toggle('dark-mode', theme === 'dark');
     localStorage.setItem('theme_preference', theme);
     updateThemeButtons(theme);
 }
@@ -1337,8 +1008,7 @@ function updateThemeButtons(theme) {
 }
 
 function initThemeSelector() {
-    const saved = localStorage.getItem('theme_preference') || 'light';
-    setTheme(saved);
+    setTheme(localStorage.getItem('theme_preference') || 'light');
 }
 
 function toggleMobileMenu() {
@@ -1360,27 +1030,14 @@ function toggleMobileMenu() {
 }
 
 // =====================================================
-// View Management
-// =====================================================
-let currentView = 'grid';
-
-function setView(view) {
-    currentView = view;
-    document.getElementById('gridViewBtn').classList.toggle('active', view === 'grid');
-    document.getElementById('listViewBtn').classList.toggle('active', view === 'list');
-    renderTechniques();
-}
-
-// =====================================================
 // Data & State
 // =====================================================
 let bctData = null;
 let activeCategory = '';
 let allSectors = new Set();
+let flatTechniques = []; // flat list for modal navigation
+let currentModalIndex = -1;
 
-// =====================================================
-// Escape HTML
-// =====================================================
 function escapeHTML(str) {
     const map = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'};
     return String(str).replace(/[&<>"']/g, c => map[c]);
@@ -1395,14 +1052,17 @@ async function loadBCTData() {
         if (!response.ok) throw new Error('Failed to load BCT data: ' + response.status);
         bctData = await response.json();
 
-        // Collect all sectors
         bctData.categories.forEach(cat => {
             cat.techniques.forEach(t => {
+                t._categoryName = cat.name;
+                t._categoryIcon = cat.icon;
+                t._categoryColor = cat.color;
+                t._categoryId = cat.id;
                 (t.sectors || []).forEach(s => allSectors.add(s));
             });
         });
 
-        // Update stats
+        // Stats
         const totalT = bctData.categories.reduce((sum, c) => sum + c.techniques.length, 0);
         const strongCount = bctData.categories.reduce((sum, c) => sum + c.techniques.filter(t => t.evidenceLevel === 'Strong').length, 0);
         document.getElementById('totalTechniques').textContent = totalT;
@@ -1410,7 +1070,7 @@ async function loadBCTData() {
         document.getElementById('totalSectors').textContent = allSectors.size;
         document.getElementById('totalStrong').textContent = strongCount;
 
-        // Populate category filter
+        // Populate filters
         const catFilter = document.getElementById('categoryFilter');
         bctData.categories.forEach(cat => {
             const opt = document.createElement('option');
@@ -1419,7 +1079,6 @@ async function loadBCTData() {
             catFilter.appendChild(opt);
         });
 
-        // Populate sector filter
         const secFilter = document.getElementById('sectorFilter');
         [...allSectors].sort().forEach(s => {
             const opt = document.createElement('option');
@@ -1428,52 +1087,37 @@ async function loadBCTData() {
             secFilter.appendChild(opt);
         });
 
-        // Build category chips
         buildCategoryNav();
-
-        // Hide loading, render
         document.getElementById('loadingState').style.display = 'none';
         renderTechniques();
     } catch (err) {
         console.error('Error loading BCT data:', err);
-        document.getElementById('loadingState').innerHTML = '<svg viewBox="0 0 24 24" style="width:48px;height:48px;stroke:var(--danger-color);fill:none;margin:0 auto 16px;display:block;" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><p>Error loading BCT data. Please try refreshing the page.</p>';
+        document.getElementById('loadingState').innerHTML = '<p style="color:var(--danger-color);">Error loading BCT data. Please try refreshing.</p>';
     }
 }
 
 // =====================================================
-// Category Navigation Chips
+// Category Navigation
 // =====================================================
 function buildCategoryNav() {
     const nav = document.getElementById('categoryNav');
-
-    // "All" chip
-    let html = '<button class="category-chip active" data-category="" onclick="filterByCategory(\'\')"><span class="chip-icon">&#128203;</span> All<span class="chip-count">' + bctData.categories.reduce((s, c) => s + c.techniques.length, 0) + '</span></button>';
-
+    const totalCount = bctData.categories.reduce((s, c) => s + c.techniques.length, 0);
+    let html = '<button class="category-chip active" data-category="" onclick="filterByCategory(\'\')"><span class="chip-icon">&#128203;</span> All<span class="chip-count">' + totalCount + '</span></button>';
     bctData.categories.forEach(cat => {
         html += '<button class="category-chip" data-category="' + escapeHTML(cat.id) + '" onclick="filterByCategory(\'' + escapeHTML(cat.id) + '\')">';
-        html += '<span class="chip-icon">' + cat.icon + '</span> ';
-        html += escapeHTML(cat.name);
-        html += '<span class="chip-count">' + cat.techniques.length + '</span>';
-        html += '</button>';
+        html += '<span class="chip-icon">' + cat.icon + '</span> ' + escapeHTML(cat.name);
+        html += '<span class="chip-count">' + cat.techniques.length + '</span></button>';
     });
-
     nav.innerHTML = html;
 }
 
 function filterByCategory(catId) {
     activeCategory = catId;
-
-    // Update chips
     document.querySelectorAll('.category-chip').forEach(chip => {
         chip.classList.toggle('active', chip.dataset.category === catId);
     });
-
-    // Update dropdown
     document.getElementById('categoryFilter').value = catId;
-
     renderTechniques();
-
-    // Scroll to first result
     if (catId) {
         const section = document.getElementById('section-' + catId);
         if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1485,45 +1129,25 @@ function filterByCategory(catId) {
 // =====================================================
 function getFilteredCategories() {
     if (!bctData) return [];
-
     const searchTerm = (document.getElementById('searchBox').value || '').trim().toLowerCase();
     const catFilter = activeCategory || document.getElementById('categoryFilter').value;
     const secFilter = document.getElementById('sectorFilter').value;
     const evFilter = document.getElementById('evidenceFilter').value;
 
-    return bctData.categories
-        .map(cat => {
-            if (catFilter && cat.id !== catFilter) return null;
-
-            const filteredTechniques = cat.techniques.filter(t => {
-                // Sector filter
-                if (secFilter && !(t.sectors || []).includes(secFilter)) return false;
-
-                // Evidence filter
-                if (evFilter && t.evidenceLevel !== evFilter) return false;
-
-                // Search
-                if (searchTerm) {
-                    const haystack = [
-                        t.name,
-                        t.definition,
-                        t.example,
-                        t.southAsianContext,
-                        ...(t.sectors || []),
-                        ...(t.implementationTips || []),
-                        t.id
-                    ].join(' ').toLowerCase();
-                    return haystack.includes(searchTerm);
-                }
-
-                return true;
-            });
-
-            if (filteredTechniques.length === 0) return null;
-
-            return { ...cat, techniques: filteredTechniques };
-        })
-        .filter(Boolean);
+    return bctData.categories.map(cat => {
+        if (catFilter && cat.id !== catFilter) return null;
+        const filteredTechniques = cat.techniques.filter(t => {
+            if (secFilter && !(t.sectors || []).includes(secFilter)) return false;
+            if (evFilter && t.evidenceLevel !== evFilter) return false;
+            if (searchTerm) {
+                const haystack = [t.name, t.definition, t.example, t.southAsianContext, ...(t.sectors || []), ...(t.implementationTips || []), t.id].join(' ').toLowerCase();
+                return haystack.includes(searchTerm);
+            }
+            return true;
+        });
+        if (filteredTechniques.length === 0) return null;
+        return { ...cat, techniques: filteredTechniques };
+    }).filter(Boolean);
 }
 
 // =====================================================
@@ -1534,6 +1158,12 @@ function renderTechniques() {
     const emptyState = document.getElementById('emptyState');
     const filtered = getFilteredCategories();
 
+    // Build flat list for modal navigation
+    flatTechniques = [];
+    filtered.forEach(cat => {
+        cat.techniques.forEach(t => flatTechniques.push(t));
+    });
+
     if (filtered.length === 0) {
         container.innerHTML = '';
         emptyState.style.display = 'block';
@@ -1541,135 +1171,265 @@ function renderTechniques() {
     }
 
     emptyState.style.display = 'none';
-
     let html = '';
 
     filtered.forEach(cat => {
         html += '<div class="category-section" id="section-' + escapeHTML(cat.id) + '">';
         html += '<div class="category-section-header">';
-        html += '<div class="category-section-icon" style="background:' + escapeHTML(cat.color) + '20;color:' + escapeHTML(cat.color) + '">' + cat.icon + '</div>';
+        html += '<div class="category-section-icon" style="background:' + escapeHTML(cat.color) + '18;color:' + escapeHTML(cat.color) + '">' + cat.icon + '</div>';
         html += '<div><div class="category-section-title">' + escapeHTML(cat.name) + '</div>';
         html += '<div class="category-section-desc">' + escapeHTML(cat.description) + '</div></div>';
         html += '<div class="category-section-count">' + cat.techniques.length + ' technique' + (cat.techniques.length !== 1 ? 's' : '') + '</div>';
         html += '</div>';
+        html += '<div class="techniques-grid">';
 
-        if (currentView === 'grid') {
-            html += '<div class="techniques-grid active">';
-            cat.techniques.forEach(t => {
-                html += renderTechniqueCard(t, cat.color);
-            });
-            html += '</div>';
-        } else {
-            html += '<div class="techniques-list active">';
-            cat.techniques.forEach(t => {
-                html += renderTechniqueListItem(t);
-            });
-            html += '</div>';
-        }
+        cat.techniques.forEach(t => {
+            html += renderCard(t, cat.color);
+        });
 
-        html += '</div>';
+        html += '</div></div>';
     });
 
     container.innerHTML = html;
 }
 
-function renderTechniqueCard(t, catColor) {
-    const evidenceClass = 'tag-evidence-' + (t.evidenceLevel || 'emerging').toLowerCase();
+function renderCard(t, catColor) {
+    const evidenceClass = 'evidence-' + (t.evidenceLevel || 'emerging').toLowerCase();
+    const sectors = t.sectors || [];
 
-    let html = '<div class="technique-card" id="card-' + escapeHTML(t.id) + '" onclick="toggleCard(this)">';
-    html += '<div class="technique-card-header">';
-    html += '<span class="technique-id" style="background:' + escapeHTML(catColor) + '">' + escapeHTML(t.id) + '</span>';
-    html += '<div class="technique-info">';
+    let html = '<div class="technique-card" onclick="openModal(\'' + escapeHTML(t.id) + '\')">';
+    html += '<div style="position:absolute;top:0;left:0;right:0;height:4px;border-radius:16px 16px 0 0;background:' + escapeHTML(catColor) + ';"></div>';
+    html += '<div class="technique-card-inner">';
+
+    // Top row: ID badge + evidence badge
+    html += '<div class="technique-card-top">';
+    html += '<span class="technique-id-badge" style="background:' + escapeHTML(catColor) + '">' + escapeHTML(t.id) + '</span>';
+    html += '<span class="technique-evidence-badge ' + evidenceClass + '">' + escapeHTML(t.evidenceLevel || 'Emerging') + '</span>';
+    html += '</div>';
+
+    // Name + definition
     html += '<div class="technique-name">' + escapeHTML(t.name) + '</div>';
     html += '<div class="technique-definition">' + escapeHTML(t.definition) + '</div>';
-    html += '</div>';
-    html += '<svg class="technique-expand-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>';
-    html += '</div>';
 
-    // Tags
-    html += '<div class="technique-tags">';
-    html += '<span class="technique-tag ' + evidenceClass + '">' + escapeHTML(t.evidenceLevel || 'Emerging') + '</span>';
-    (t.sectors || []).slice(0, 4).forEach(s => {
-        html += '<span class="technique-tag tag-sector">' + escapeHTML(s) + '</span>';
+    // Footer: sector pills
+    html += '<div class="technique-card-footer">';
+    sectors.slice(0, 3).forEach(s => {
+        html += '<span class="sector-pill">' + escapeHTML(s) + '</span>';
     });
-    if ((t.sectors || []).length > 4) {
-        html += '<span class="technique-tag tag-sector">+' + ((t.sectors || []).length - 4) + '</span>';
+    if (sectors.length > 3) {
+        html += '<span class="sector-pill sector-pill-more">+' + (sectors.length - 3) + '</span>';
     }
     html += '</div>';
 
-    // Expanded detail
-    html += '<div class="technique-detail">';
+    // Arrow indicator
+    html += '<div class="technique-card-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>';
 
+    html += '</div></div>';
+    return html;
+}
+
+// =====================================================
+// Modal
+// =====================================================
+function findTechniqueById(id) {
+    for (const cat of bctData.categories) {
+        for (const t of cat.techniques) {
+            if (t.id === id) return t;
+        }
+    }
+    return null;
+}
+
+function openModal(techniqueId) {
+    const t = findTechniqueById(techniqueId);
+    if (!t) return;
+
+    currentModalIndex = flatTechniques.findIndex(ft => ft.id === techniqueId);
+
+    renderModalContent(t);
+
+    document.getElementById('modalOverlay').classList.add('active');
+    document.body.classList.add('modal-open');
+
+    // Update prev/next
+    document.getElementById('modalPrevBtn').disabled = currentModalIndex <= 0;
+    document.getElementById('modalNextBtn').disabled = currentModalIndex >= flatTechniques.length - 1;
+
+    // Update URL hash
+    history.replaceState(null, '', '#' + techniqueId);
+}
+
+function renderModalContent(t) {
+    const catColor = t._categoryColor || '#0EA5E9';
+    const evidenceClass = 'evidence-' + (t.evidenceLevel || 'emerging').toLowerCase();
+
+    // Header
+    document.getElementById('modalCategoryLabel').innerHTML = '<span>' + (t._categoryIcon || '') + '</span> ' + escapeHTML(t._categoryName || '');
+    document.getElementById('modalCategoryLabel').style.background = catColor + '15';
+    document.getElementById('modalCategoryLabel').style.color = catColor;
+    document.getElementById('modalTitle').textContent = t.name;
+    document.getElementById('modalId').textContent = t.id + ' \u00B7 ' + (t.evidenceLevel || 'Emerging') + ' Evidence';
+
+    // Body
+    let body = '';
+
+    // Tags row
+    body += '<div class="modal-tags-row">';
+    body += '<span class="modal-tag modal-tag-evidence ' + evidenceClass + '">' + escapeHTML(t.evidenceLevel || 'Emerging') + ' Evidence</span>';
+    (t.sectors || []).forEach(s => {
+        body += '<span class="modal-tag modal-tag-sector">' + escapeHTML(s) + '</span>';
+    });
+    body += '</div>';
+
+    // Definition
+    body += renderModalSection('&#128220;', catColor, 'Definition', '<p>' + escapeHTML(t.definition) + '</p>');
+
+    // Example
     if (t.example) {
-        html += '<div class="detail-section"><div class="detail-label">Example</div>';
-        html += '<div class="detail-text">' + escapeHTML(t.example) + '</div></div>';
+        body += renderModalSection('&#128161;', '#F59E0B', 'Field Example', '<p>' + escapeHTML(t.example) + '</p>');
     }
 
+    // South Asian Context
     if (t.southAsianContext) {
-        html += '<div class="detail-section"><div class="detail-label">South Asian Context</div>';
-        html += '<div class="detail-text">' + escapeHTML(t.southAsianContext) + '</div></div>';
+        body += renderModalSection('&#127759;', '#10B981', 'South Asian Context', '<p>' + escapeHTML(t.southAsianContext) + '</p>');
     }
 
+    // How to Apply
+    body += renderModalSection('&#128736;', '#6366F1', 'How to Apply in Social Development', renderHowToApply(t));
+
+    // Implementation Tips
     if (t.implementationTips && t.implementationTips.length > 0) {
-        html += '<div class="detail-section"><div class="detail-label">Implementation Tips</div>';
-        html += '<ul class="detail-list">';
+        let tipsHtml = '<ul>';
         t.implementationTips.forEach(tip => {
-            html += '<li>' + escapeHTML(tip) + '</li>';
+            tipsHtml += '<li style="color: var(--text-secondary);"><span style="color:var(--text-primary);">' + escapeHTML(tip) + '</span></li>';
         });
-        html += '</ul></div>';
+        tipsHtml += '</ul>';
+        body += renderModalSection('&#9989;', '#0EA5E9', 'Implementation Tips', tipsHtml);
     }
 
+    // Related Techniques
     if (t.relatedTechniques && t.relatedTechniques.length > 0) {
-        html += '<div class="detail-section"><div class="detail-label">Related Techniques</div>';
-        html += '<div class="related-techniques">';
+        body += '<div class="modal-section">';
+        body += '<div class="modal-section-header">';
+        body += '<div class="modal-section-icon" style="background: rgba(99, 102, 241, 0.1);">&#128279;</div>';
+        body += '<div class="modal-section-title">Related Techniques</div>';
+        body += '</div>';
+        body += '<div class="modal-related-techniques">';
         t.relatedTechniques.forEach(rt => {
-            html += '<a class="related-link" onclick="event.stopPropagation(); scrollToTechnique(\'' + escapeHTML(rt) + '\')">' + escapeHTML(rt) + '</a>';
+            const related = findTechniqueById(rt);
+            const label = related ? rt + ' \u2013 ' + escapeHTML(related.name) : rt;
+            body += '<a class="related-chip" onclick="openModal(\'' + escapeHTML(rt) + '\')">' + label + '</a>';
         });
-        html += '</div></div>';
+        body += '</div></div>';
     }
 
-    html += '</div>'; // technique-detail
-    html += '</div>'; // technique-card
+    document.getElementById('modalBody').innerHTML = body;
+
+    // Set bullet colors
+    document.querySelectorAll('#modalBody .modal-section-body ul li::before, .modal-section-body ul li').forEach(li => {});
+}
+
+function renderModalSection(icon, color, title, content) {
+    let html = '<div class="modal-section">';
+    html += '<div class="modal-section-header">';
+    html += '<div class="modal-section-icon" style="background:' + color + '15;">' + icon + '</div>';
+    html += '<div class="modal-section-title">' + escapeHTML(title) + '</div>';
+    html += '</div>';
+    html += '<div class="modal-section-body">' + content + '</div>';
+    html += '</div>';
+    return html;
+}
+
+function renderHowToApply(t) {
+    const sectors = t.sectors || [];
+    const sectorExamples = {
+        'Health': 'Integrate into ASHA/ANM training modules, PHC outreach, and NHM communication campaigns.',
+        'Education': 'Use in teacher training, school management committees, and education quality improvement programs.',
+        'Livelihoods': 'Apply through SHG platforms, skill development programs, and MGNREGA social audits.',
+        'WASH': 'Deploy in Swachh Bharat Mission, CLTS triggers, and community-led sanitation campaigns.',
+        'Nutrition': 'Embed in Poshan Abhiyaan, ICDS supplementary feeding, and growth monitoring sessions.',
+        'Gender': 'Integrate into gender sensitization workshops, women empowerment programs, and GBV prevention.',
+        'Governance': 'Apply in citizen engagement platforms, RTI campaigns, and participatory budgeting.',
+        'Agriculture': 'Use in agricultural extension services, KVK demonstrations, and farmer field schools.',
+        'Financial Inclusion': 'Deploy through Jan Dhan Yojana outreach, SHG bank linkage, and financial literacy camps.',
+        'Social Protection': 'Apply in social safety net enrollment drives and beneficiary communication strategies.'
+    };
+
+    let html = '<ul>';
+
+    // Context-driven tips
+    if (t.southAsianContext) {
+        html += '<li><span style="color:var(--text-primary);">Draw on existing community structures (SHGs, PRIs, VHSNCs) to embed this technique in ongoing group activities.</span></li>';
+    }
+
+    // Sector-specific tips
+    let sectorTips = 0;
+    sectors.forEach(s => {
+        if (sectorExamples[s] && sectorTips < 2) {
+            html += '<li><span style="color:var(--text-primary);"><strong>' + escapeHTML(s) + ':</strong> ' + escapeHTML(sectorExamples[s]) + '</span></li>';
+            sectorTips++;
+        }
+    });
+
+    // Evidence-based recommendation
+    if (t.evidenceLevel === 'Strong') {
+        html += '<li><span style="color:var(--text-primary);">This technique has strong evidence — prioritize it as a core component in program design and Theory of Change.</span></li>';
+    } else if (t.evidenceLevel === 'Moderate') {
+        html += '<li><span style="color:var(--text-primary);">Moderate evidence base — combine with complementary techniques and build in monitoring to assess local effectiveness.</span></li>';
+    } else {
+        html += '<li><span style="color:var(--text-primary);">Emerging evidence — pilot test in small-scale programs before scaling, and document outcomes to build the evidence base.</span></li>';
+    }
+
+    html += '<li><span style="color:var(--text-primary);">Adapt language and framing to local cultural context. Use vernacular terms and community reference points for maximum resonance.</span></li>';
+    html += '</ul>';
 
     return html;
 }
 
-function renderTechniqueListItem(t) {
-    const evidenceClass = 'tag-evidence-' + (t.evidenceLevel || 'emerging').toLowerCase();
-    let html = '<div class="list-item" onclick="scrollToAndExpandCard(\'' + escapeHTML(t.id) + '\')">';
-    html += '<span class="technique-id">' + escapeHTML(t.id) + '</span>';
-    html += '<div class="technique-name">' + escapeHTML(t.name) + '</div>';
-    html += '<div class="technique-tags">';
-    html += '<span class="technique-tag ' + evidenceClass + '">' + escapeHTML(t.evidenceLevel || 'Emerging') + '</span>';
-    html += '</div>';
-    html += '</div>';
-    return html;
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.classList.remove('modal-open');
+    currentModalIndex = -1;
+    history.replaceState(null, '', window.location.pathname);
 }
 
-// =====================================================
-// Interactions
-// =====================================================
-function toggleCard(card) {
-    card.classList.toggle('expanded');
+function navigateModal(direction) {
+    const newIndex = currentModalIndex + direction;
+    if (newIndex < 0 || newIndex >= flatTechniques.length) return;
+    currentModalIndex = newIndex;
+    const t = flatTechniques[newIndex];
+    renderModalContent(t);
+    document.getElementById('modalPrevBtn').disabled = newIndex <= 0;
+    document.getElementById('modalNextBtn').disabled = newIndex >= flatTechniques.length - 1;
+    document.getElementById('modalBody').scrollTop = 0;
+    history.replaceState(null, '', '#' + t.id);
 }
 
-function scrollToTechnique(id) {
-    const card = document.getElementById('card-' + id);
-    if (card) {
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        card.classList.add('expanded');
-        card.style.boxShadow = '0 0 0 3px var(--accent-color)';
-        setTimeout(() => { card.style.boxShadow = ''; }, 2000);
-    }
+function shareTechnique() {
+    const t = flatTechniques[currentModalIndex];
+    if (!t) return;
+    const url = window.location.origin + '/bct-repository#' + t.id;
+    navigator.clipboard.writeText(url).then(() => {
+        const toast = document.getElementById('copyToast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+    }).catch(() => {
+        prompt('Copy this link:', url);
+    });
 }
 
-function scrollToAndExpandCard(id) {
-    // Switch to grid view to show full cards
-    if (currentView !== 'grid') {
-        setView('grid');
-    }
-    setTimeout(() => scrollToTechnique(id), 100);
-}
+// Close modal on overlay click
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+// Close modal on Escape, navigate with arrow keys
+document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('modalOverlay').classList.contains('active')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') navigateModal(-1);
+    if (e.key === 'ArrowRight') navigateModal(1);
+});
 
 // =====================================================
 // Export CSV
@@ -1683,15 +1443,9 @@ function exportCSV() {
     filtered.forEach(cat => {
         cat.techniques.forEach(t => {
             rows.push([
-                t.id,
-                t.name,
-                cat.name,
-                t.definition,
-                t.example || '',
-                t.southAsianContext || '',
-                t.evidenceLevel || '',
-                (t.sectors || []).join('; '),
-                (t.implementationTips || []).join('; ')
+                t.id, t.name, cat.name, t.definition, t.example || '',
+                t.southAsianContext || '', t.evidenceLevel || '',
+                (t.sectors || []).join('; '), (t.implementationTips || []).join('; ')
             ]);
         });
     });
@@ -1729,15 +1483,26 @@ document.getElementById('categoryFilter').addEventListener('change', function() 
 document.getElementById('sectorFilter').addEventListener('change', renderTechniques);
 document.getElementById('evidenceFilter').addEventListener('change', renderTechniques);
 
-// Handle URL hash for direct linking to categories
+// Handle URL hash for direct linking
 function handleHash() {
     const hash = window.location.hash.replace('#', '');
-    if (hash && bctData) {
-        const cat = bctData.categories.find(c => c.id === hash);
-        if (cat) {
-            filterByCategory(hash);
-        }
+    if (!hash || !bctData) return;
+
+    // Check if it's a technique ID (e.g., BCT001)
+    const technique = findTechniqueById(hash);
+    if (technique) {
+        // Build flatTechniques first
+        flatTechniques = [];
+        bctData.categories.forEach(cat => {
+            cat.techniques.forEach(t => flatTechniques.push(t));
+        });
+        openModal(hash);
+        return;
     }
+
+    // Check if it's a category
+    const cat = bctData.categories.find(c => c.id === hash);
+    if (cat) filterByCategory(hash);
 }
 
 window.addEventListener('hashchange', handleHash);
