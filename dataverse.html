@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ImpactMojo Dataverse | Curated Tools & Data for Social Impact</title>
+<meta name="description" content="ImpactMojo Dataverse: A curated catalog of 60+ tools, datasets, APIs, and platforms for social impact, development economics, and policy research.">
+<link rel="icon" href="assets/images/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
+:root {
+    --earth-brown: #8B4513;
+    --earth-sienna: #D2691E;
+    --earth-tan: #DEB887;
+    --earth-wheat: #F5DEB3;
+    --earth-green: #2E8B57;
+    --earth-blue: #4682B4;
+    --earth-cream: #FFF8F0;
+    --earth-dark: #3E2723;
+    --earth-light: #FAEBD7;
+    --earth-red: #CD5C5C;
+    --text-primary: #2C1810;
+    --text-secondary: #5D4E37;
+    --text-muted: #8B7D6B;
+    --card-bg: #FFFFFF;
+    --card-border: #E8DDD0;
+    --card-shadow: 0 2px 12px rgba(139, 69, 19, 0.08);
+    --card-shadow-hover: 0 8px 32px rgba(139, 69, 19, 0.15);
+    --pill-bg: rgba(139, 69, 19, 0.08);
+    --hero-gradient: linear-gradient(135deg, #3E2723 0%, #5D4037 40%, #6D4C41 100%);
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-pill: 50px;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--earth-cream);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(62, 39, 35, 0.97);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+}
+
+.nav-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: #FFF;
+}
+
+.nav-brand-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--earth-sienna), var(--earth-green));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: -1px;
+}
+
+.nav-brand-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #FFF;
+}
+
+.nav-brand-text span {
+    color: var(--earth-tan);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: #FFF;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link--active {
+    color: #FFF;
+    background: rgba(210, 105, 30, 0.3);
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+    background: var(--hero-gradient);
+    padding: 4rem 1.5rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(46, 139, 87, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(70, 130, 180, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(210, 105, 30, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    color: var(--earth-tan);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: #FFF;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+}
+
+.hero h1 span {
+    background: linear-gradient(135deg, var(--earth-tan), var(--earth-wheat));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+}
+
+/* ============================================================
+   STATS BAR
+   ============================================================ */
+.stats-bar {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--card-border);
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(139, 69, 19, 0.06);
+}
+
+.stats-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.stat-number {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--earth-brown);
+}
+
+.stat-label {
+    font-weight: 500;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--card-border);
+}
+
+/* ============================================================
+   CONTROLS SECTION
+   ============================================================ */
+.controls-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 0;
+}
+
+/* Search Bar */
+.search-container {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 3rem;
+    border: 2px solid var(--card-border);
+    border-radius: var(--radius-pill);
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    transition: var(--transition);
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: var(--earth-sienna);
+    box-shadow: 0 0 0 4px rgba(210, 105, 30, 0.12);
+}
+
+.search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-clear {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: none;
+    padding: 0.25rem;
+    line-height: 1;
+}
+
+.search-clear.visible {
+    display: block;
+}
+
+/* Type Filter */
+.type-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.type-filter-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-right: 0.25rem;
+}
+
+.type-btn {
+    padding: 0.4rem 0.9rem;
+    border: 1.5px solid var(--card-border);
+    border-radius: var(--radius-pill);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.type-btn:hover {
+    border-color: var(--earth-sienna);
+    color: var(--earth-sienna);
+    background: rgba(210, 105, 30, 0.05);
+}
+
+.type-btn.active {
+    background: var(--earth-brown);
+    color: #FFF;
+    border-color: var(--earth-brown);
+}
+
+.type-emoji {
+    font-size: 0.9rem;
+}
+
+/* Category Filters */
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    padding-bottom: 1.5rem;
+}
+
+.cat-pill {
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--text-secondary);
+}
+
+.cat-pill:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cat-pill.active {
+    color: #FFF;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================================
+   RESULTS INFO
+   ============================================================ */
+.results-info {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.results-count {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.results-count strong {
+    color: var(--earth-brown);
+}
+
+/* ============================================================
+   CARD GRID
+   ============================================================ */
+.card-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+}
+
+/* ============================================================
+   INDIVIDUAL CARD
+   ============================================================ */
+.dv-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    animation: cardIn 0.4s ease-out both;
+}
+
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dv-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: transparent;
+}
+
+.dv-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.dv-card:hover::before {
+    opacity: 1;
+}
+
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.card-type-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.card-header-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 0.15rem;
+}
+
+.card-type-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.card-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+.badge-free {
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    background: rgba(46, 139, 87, 0.1);
+    color: var(--earth-green);
+    border: 1px solid rgba(46, 139, 87, 0.2);
+}
+
+.badge-status {
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.badge-status--active {
+    background: rgba(46, 139, 87, 0.08);
+    color: #2E7D32;
+}
+
+.badge-status--beta {
+    background: rgba(70, 130, 180, 0.1);
+    color: var(--earth-blue);
+}
+
+.badge-status--coming-soon {
+    background: rgba(210, 105, 30, 0.1);
+    color: var(--earth-sienna);
+}
+
+.badge-featured {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--earth-sienna);
+    box-shadow: 0 0 6px rgba(210, 105, 30, 0.5);
+}
+
+.card-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1;
+}
+
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.card-tag {
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.7rem;
+    font-weight: 500;
+    background: var(--pill-bg);
+    color: var(--text-muted);
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--card-border);
+    margin-top: auto;
+}
+
+.card-cats {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.card-cat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--earth-brown);
+    background: rgba(139, 69, 19, 0.08);
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.card-link:hover {
+    background: var(--earth-brown);
+    color: #FFF;
+}
+
+.card-link--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.dv-footer {
+    background: var(--earth-dark);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+}
+
+.footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-brand {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #FFF;
+    margin-bottom: 0.5rem;
+}
+
+.footer-brand span {
+    color: var(--earth-tan);
+}
+
+.footer-links-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.footer-link:hover {
+    color: var(--earth-tan);
+}
+
+.footer-copy {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.footer-copy a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+}
+
+.footer-copy a:hover {
+    color: var(--earth-tan);
+}
+
+/* ============================================================
+   SCROLL TO TOP
+   ============================================================ */
+.scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--earth-brown);
+    color: #FFF;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(139, 69, 19, 0.3);
+    transition: var(--transition);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 50;
+}
+
+.scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-top:hover {
+    background: var(--earth-sienna);
+    transform: translateY(-2px);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+    .hero {
+        padding: 3rem 1rem 2rem;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+    }
+
+    .stats-inner {
+        gap: 1rem;
+    }
+
+    .stat-divider {
+        display: none;
+    }
+
+    .stat-item {
+        font-size: 0.8rem;
+    }
+
+    .stat-number {
+        font-size: 1.1rem;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem 2rem;
+    }
+
+    .controls-section {
+        padding: 1rem 1rem 0;
+    }
+
+    .results-info {
+        padding: 0 1rem 0.75rem;
+    }
+
+    .category-filters {
+        gap: 0.4rem;
+    }
+
+    .cat-pill {
+        font-size: 0.72rem;
+        padding: 0.35rem 0.7rem;
+    }
+
+    .nav-inner {
+        padding: 0.75rem 1rem;
+    }
+
+    .nav-links {
+        gap: 0.25rem;
+    }
+
+    .nav-link {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    .dv-footer {
+        padding: 2rem 1rem;
+    }
+
+    .footer-links-row {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+
+    .type-filter {
+        gap: 0.35rem;
+    }
+
+    .type-btn {
+        padding: 0.35rem 0.65rem;
+        font-size: 0.75rem;
+    }
+
+    .nav-brand-text {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .card-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<header class="nav-header">
+    <nav class="nav-inner">
+        <a href="index.html" class="nav-brand">
+            <div class="nav-brand-icon">IM</div>
+            <div class="nav-brand-text">Impact<span>Mojo</span></div>
+        </a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="index.html#courses" class="nav-link">Courses</a>
+            <a href="dataverse.html" class="nav-link nav-link--active">Dataverse</a>
+            <a href="index.html#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+</header>
+
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span>&#9733;</span> Open Catalog
+        </div>
+        <h1>ImpactMojo <span>Dataverse</span></h1>
+        <p>A curated collection of tools, datasets, APIs, and platforms powering social impact work across South Asia and beyond. Discover resources for development economics, policy research, and evidence-based practice.</p>
+    </div>
+</section>
+
+<!-- ============================================================
+     STATS BAR
+     ============================================================ -->
+<div class="stats-bar">
+    <div class="stats-inner">
+        <div class="stat-item">
+            <span class="stat-number" id="statTotal">--</span>
+            <span class="stat-label">Resources</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-number" id="statFree">--</span>
+            <span class="stat-label">Free</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-number" id="statCategories">--</span>
+            <span class="stat-label">Categories</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-number" id="statTypes">--</span>
+            <span class="stat-label">Types</span>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     CONTROLS
+     ============================================================ -->
+<div class="controls-section">
+    <!-- Search -->
+    <div class="search-container">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search tools, datasets, APIs..." autocomplete="off">
+        <button class="search-clear" id="searchClear" title="Clear search">&times;</button>
+    </div>
+
+    <!-- Type Filter -->
+    <div class="type-filter" id="typeFilter"></div>
+
+    <!-- Category Filters -->
+    <div class="category-filters" id="categoryFilters"></div>
+</div>
+
+<!-- ============================================================
+     RESULTS INFO
+     ============================================================ -->
+<div class="results-info">
+    <span class="results-count" id="resultsCount"></span>
+</div>
+
+<!-- ============================================================
+     CARD GRID
+     ============================================================ -->
+<div class="card-grid" id="cardGrid"></div>
+
+<!-- ============================================================
+     SCROLL TO TOP
+     ============================================================ -->
+<button class="scroll-top" id="scrollTop" title="Back to top">&#8593;</button>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="dv-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">Impact<span>Mojo</span> Dataverse</div>
+        <div class="footer-links-row">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="index.html#courses" class="footer-link">Courses</a>
+            <a href="/about" class="footer-link">About</a>
+            <a href="/community/community" class="footer-link">Community</a>
+            <a href="/privacy-policy" class="footer-link">Privacy</a>
+            <a href="/terms-of-service" class="footer-link">Terms</a>
+            <a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 ImpactMojo. All content for educational purposes only. Made with care by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener noreferrer">PinPoint Ventures</a></p>
+    </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function() {
+    'use strict';
+
+    /* ----------------------------------------------------------
+       STATE
+       ---------------------------------------------------------- */
+    let allData = null;       // full JSON response
+    let items = [];           // items array
+    let categories = [];      // categories array
+    let activeCategory = null;
+    let activeType = null;
+    let searchQuery = '';
+
+    const TYPE_EMOJIS = {
+        'Dataset':    '&#128202;',
+        'Tool':       '&#128295;',
+        'Platform':   '&#127760;',
+        'API':        '&#128268;',
+        'MCP Server': '&#129302;'
+    };
+
+    const TYPE_COLORS = {
+        'Dataset':    { bg: 'rgba(46,139,87,0.1)', text: '#2E8B57' },
+        'Tool':       { bg: 'rgba(70,130,180,0.1)', text: '#4682B4' },
+        'Platform':   { bg: 'rgba(210,105,30,0.1)', text: '#D2691E' },
+        'API':        { bg: 'rgba(139,69,19,0.1)', text: '#8B4513' },
+        'MCP Server': { bg: 'rgba(106,90,205,0.1)', text: '#6A5ACD' }
+    };
+
+    /* ----------------------------------------------------------
+       DOM REFS
+       ---------------------------------------------------------- */
+    const searchInput     = document.getElementById('searchInput');
+    const searchClear     = document.getElementById('searchClear');
+    const typeFilterEl    = document.getElementById('typeFilter');
+    const categoryFilters = document.getElementById('categoryFilters');
+    const cardGrid        = document.getElementById('cardGrid');
+    const resultsCount    = document.getElementById('resultsCount');
+    const scrollTopBtn    = document.getElementById('scrollTop');
+
+    /* ----------------------------------------------------------
+       FETCH DATA
+       ---------------------------------------------------------- */
+    fetch('data/dataverse.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            allData = data;
+            items = data.items || [];
+            categories = data.categories || [];
+            init();
+        })
+        .catch(function(err) {
+            cardGrid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#9888;</div><h3>Failed to load data</h3><p>' + err.message + '</p></div>';
+        });
+
+    /* ----------------------------------------------------------
+       INIT
+       ---------------------------------------------------------- */
+    function init() {
+        populateStats();
+        renderTypeFilter();
+        renderCategoryPills();
+        renderCards(items);
+        bindEvents();
+    }
+
+    /* ----------------------------------------------------------
+       STATS
+       ---------------------------------------------------------- */
+    function populateStats() {
+        document.getElementById('statTotal').textContent = items.length;
+        document.getElementById('statFree').textContent = items.filter(function(i) { return i.free; }).length;
+        document.getElementById('statCategories').textContent = categories.length;
+        var types = new Set(items.map(function(i) { return i.type; }));
+        document.getElementById('statTypes').textContent = types.size;
+    }
+
+    /* ----------------------------------------------------------
+       TYPE FILTER
+       ---------------------------------------------------------- */
+    function renderTypeFilter() {
+        var types = [];
+        var seen = {};
+        items.forEach(function(item) {
+            if (!seen[item.type]) {
+                seen[item.type] = true;
+                types.push(item.type);
+            }
+        });
+        types.sort();
+
+        var html = '<span class="type-filter-label">Type:</span>';
+        html += '<button class="type-btn active" data-type="all"><span class="type-emoji">&#9776;</span> All</button>';
+        types.forEach(function(t) {
+            var emoji = TYPE_EMOJIS[t] || '&#128196;';
+            html += '<button class="type-btn" data-type="' + t + '"><span class="type-emoji">' + emoji + '</span> ' + t + '</button>';
+        });
+        typeFilterEl.innerHTML = html;
+    }
+
+    /* ----------------------------------------------------------
+       CATEGORY PILLS
+       ---------------------------------------------------------- */
+    function renderCategoryPills() {
+        var html = '<button class="cat-pill active" data-cat="all" style="background:var(--earth-brown);color:#FFF;">All Categories</button>';
+        categories.forEach(function(cat) {
+            html += '<button class="cat-pill" data-cat="' + cat.id + '" data-color="' + cat.color + '">' + cat.icon + ' ' + cat.name + '</button>';
+        });
+        categoryFilters.innerHTML = html;
+    }
+
+    /* ----------------------------------------------------------
+       FILTER LOGIC
+       ---------------------------------------------------------- */
+    function getFilteredItems() {
+        return items.filter(function(item) {
+            // Category filter
+            if (activeCategory && activeCategory !== 'all') {
+                if (item.categories.indexOf(activeCategory) === -1) return false;
+            }
+            // Type filter
+            if (activeType && activeType !== 'all') {
+                if (item.type !== activeType) return false;
+            }
+            // Search
+            if (searchQuery) {
+                var q = searchQuery.toLowerCase();
+                var haystack = (item.name + ' ' + item.description + ' ' + item.tags.join(' ')).toLowerCase();
+                if (haystack.indexOf(q) === -1) return false;
+            }
+            return true;
+        });
+    }
+
+    function applyFilters() {
+        var filtered = getFilteredItems();
+        renderCards(filtered);
+        updateResultsCount(filtered.length);
+    }
+
+    function updateResultsCount(count) {
+        var totalLabel = items.length;
+        if (count === totalLabel && !searchQuery && (!activeCategory || activeCategory === 'all') && (!activeType || activeType === 'all')) {
+            resultsCount.innerHTML = 'Showing all <strong>' + totalLabel + '</strong> resources';
+        } else {
+            resultsCount.innerHTML = 'Showing <strong>' + count + '</strong> of ' + totalLabel + ' resources';
+        }
+    }
+
+    /* ----------------------------------------------------------
+       RENDER CARDS
+       ---------------------------------------------------------- */
+    function renderCards(list) {
+        if (list.length === 0) {
+            cardGrid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128270;</div><h3>No resources found</h3><p>Try adjusting your search or filters.</p></div>';
+            return;
+        }
+
+        var html = '';
+        list.forEach(function(item, idx) {
+            var typeColor = TYPE_COLORS[item.type] || { bg: 'rgba(0,0,0,0.06)', text: '#666' };
+            var emoji = TYPE_EMOJIS[item.type] || '&#128196;';
+            var delay = Math.min(idx * 0.04, 0.8);
+
+            // Status badge
+            var statusClass = 'badge-status--' + item.status;
+            var statusText = item.status === 'coming-soon' ? 'Coming Soon' : item.status.charAt(0).toUpperCase() + item.status.slice(1);
+
+            // Category dots
+            var catDots = '';
+            var catMap = {};
+            categories.forEach(function(c) { catMap[c.id] = c.color; });
+            item.categories.forEach(function(catId) {
+                var color = catMap[catId] || '#999';
+                catDots += '<span class="card-cat-dot" style="background:' + color + ';" title="' + catId + '"></span>';
+            });
+
+            // Tags
+            var tags = '';
+            item.tags.forEach(function(tag) {
+                tags += '<span class="card-tag">' + tag + '</span>';
+            });
+
+            // Link
+            var linkClass = (item.url === '#' || item.status === 'coming-soon') ? 'card-link card-link--disabled' : 'card-link';
+            var linkTarget = item.url.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
+
+            // Find the first matching category color for the top bar
+            var barColor = typeColor.text;
+            if (item.categories.length > 0 && catMap[item.categories[0]]) {
+                barColor = catMap[item.categories[0]];
+            }
+
+            html += '<article class="dv-card" style="animation-delay:' + delay + 's;--bar-color:' + barColor + ';">';
+            html += '<style>.dv-card[style*="--bar-color:' + barColor + '"]::before{background:' + barColor + ';}</style>';
+
+            // Header
+            html += '<div class="card-header">';
+            html += '<div class="card-type-icon" style="background:' + typeColor.bg + ';">' + emoji + '</div>';
+            html += '<div class="card-header-text">';
+            html += '<div class="card-name">' + item.name + '</div>';
+            html += '<div class="card-type-label" style="color:' + typeColor.text + ';">' + item.type + '</div>';
+            html += '</div>';
+            html += '<div class="card-badges">';
+            if (item.featured) html += '<span class="badge-featured" title="Featured"></span>';
+            if (item.free) html += '<span class="badge-free">Free</span>';
+            html += '<span class="badge-status ' + statusClass + '">' + statusText + '</span>';
+            html += '</div>';
+            html += '</div>';
+
+            // Description
+            html += '<p class="card-desc">' + item.description + '</p>';
+
+            // Tags
+            html += '<div class="card-tags">' + tags + '</div>';
+
+            // Footer
+            html += '<div class="card-footer">';
+            html += '<div class="card-cats">' + catDots + '</div>';
+            html += '<a href="' + item.url + '" class="' + linkClass + '"' + linkTarget + '>Explore &#8594;</a>';
+            html += '</div>';
+
+            html += '</article>';
+        });
+
+        cardGrid.innerHTML = html;
+    }
+
+    /* ----------------------------------------------------------
+       EVENT BINDINGS
+       ---------------------------------------------------------- */
+    function bindEvents() {
+        // Search
+        searchInput.addEventListener('input', function() {
+            searchQuery = this.value.trim();
+            searchClear.classList.toggle('visible', searchQuery.length > 0);
+            applyFilters();
+        });
+
+        searchClear.addEventListener('click', function() {
+            searchInput.value = '';
+            searchQuery = '';
+            searchClear.classList.remove('visible');
+            applyFilters();
+            searchInput.focus();
+        });
+
+        // Type filter
+        typeFilterEl.addEventListener('click', function(e) {
+            var btn = e.target.closest('.type-btn');
+            if (!btn) return;
+            typeFilterEl.querySelectorAll('.type-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            activeType = btn.dataset.type;
+            applyFilters();
+        });
+
+        // Category filter
+        categoryFilters.addEventListener('click', function(e) {
+            var pill = e.target.closest('.cat-pill');
+            if (!pill) return;
+
+            // Deactivate all
+            categoryFilters.querySelectorAll('.cat-pill').forEach(function(p) {
+                p.classList.remove('active');
+                p.style.background = '';
+                p.style.color = '';
+            });
+
+            pill.classList.add('active');
+            var catId = pill.dataset.cat;
+
+            if (catId === 'all') {
+                pill.style.background = 'var(--earth-brown)';
+                pill.style.color = '#FFF';
+            } else {
+                pill.style.background = pill.dataset.color;
+                pill.style.color = '#FFF';
+            }
+
+            activeCategory = catId;
+            applyFilters();
+        });
+
+        // Scroll to top
+        window.addEventListener('scroll', function() {
+            scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Initial count
+        updateResultsCount(items.length);
+    }
+
+})();
+</script>
+</body>
+</html>
