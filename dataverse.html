@@ -625,6 +625,7 @@ img { max-width: 100%; display: block; }
     flex-direction: column;
     transition: all var(--transition);
     position: relative;
+    cursor: pointer;
 }
 .card::before {
     content: '';
@@ -909,6 +910,178 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================================
+   DETAIL MODAL
+   ============================================================ */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+.modal-overlay.active {
+    display: flex;
+}
+.modal-container {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    max-width: 640px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+}
+.modal-top-bar {
+    height: 4px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition);
+    z-index: 1;
+}
+.modal-close:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-color);
+}
+.modal-body {
+    padding: 32px;
+}
+.modal-header-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+.modal-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.modal-icon img {
+    width: 26px;
+    height: 26px;
+    filter: brightness(0) invert(1);
+}
+.modal-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+.modal-type-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+.modal-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+.modal-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 24px;
+}
+.modal-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+@media (max-width: 500px) {
+    .modal-meta { grid-template-columns: 1fr; }
+}
+.modal-meta-item {
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+}
+.modal-meta-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+.modal-meta-value {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+.modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 24px;
+}
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.modal-visit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    transition: all var(--transition);
+}
+.modal-visit-btn:hover {
+    background: var(--accent-hover);
+    color: #fff;
+}
+.modal-visit-btn img {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1);
+}
+.modal-visit-btn.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 .footer {
@@ -1174,6 +1347,30 @@ img { max-width: 100%; display: block; }
     </div>
 
 </main>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-container">
+        <div class="modal-top-bar" id="modalTopBar"></div>
+        <button class="modal-close" id="modalClose" aria-label="Close detail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div class="modal-body">
+            <div class="modal-header-row">
+                <div class="modal-icon" id="modalIcon"></div>
+                <div>
+                    <div class="modal-title" id="modalTitle"></div>
+                    <div class="modal-type-label" id="modalTypeLabel"></div>
+                </div>
+            </div>
+            <div class="modal-badges" id="modalBadges"></div>
+            <div class="modal-description" id="modalDesc"></div>
+            <div class="modal-meta" id="modalMeta"></div>
+            <div class="modal-tags" id="modalTags"></div>
+            <div class="modal-actions" id="modalActions"></div>
+        </div>
+    </div>
+</div>
 
 <!-- Scroll to top -->
 <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
@@ -1505,7 +1702,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fun
             var catColor = item._categoryColor || '#64748B';
             var isComingSoon = item.status === 'coming-soon';
 
-            html += '<article class="card" style="--cat-color:' + catColor + ';">';
+            html += '<article class="card" data-item-id="' + escapeHtml(item.id) + '" style="--cat-color:' + catColor + ';">';
             html += '<div class="card-body">';
 
             /* Header: icon + title */
@@ -1565,7 +1762,101 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fun
         });
 
         grid.innerHTML = html;
+
+        /* Bind card clicks */
+        grid.addEventListener('click', function(e) {
+            /* Don't open modal if user clicked on the Visit link */
+            if (e.target.closest('.card-visit-btn')) return;
+            var card = e.target.closest('.card');
+            if (!card) return;
+            var itemId = card.getAttribute('data-item-id');
+            var item = items.find(function(i) { return i.id === itemId; });
+            if (item) openDetailModal(item);
+        });
     }
+
+    /* ---- Detail Modal ---- */
+    var modal = document.getElementById('detailModal');
+    var modalClose = document.getElementById('modalClose');
+
+    function openDetailModal(item) {
+        var tc = typeConfig[item.type] || { icon: 'si_File_download', label: item.type };
+        var sc = statusConfig[item.status] || statusConfig['live'];
+        var catColor = item._categoryColor || '#64748B';
+
+        /* Top bar color */
+        document.getElementById('modalTopBar').style.background = catColor;
+
+        /* Icon */
+        var iconEl = document.getElementById('modalIcon');
+        iconEl.style.background = catColor;
+        iconEl.innerHTML = '<img src="' + sargamUrl(tc.icon) + '" alt="">';
+
+        /* Title & type */
+        document.getElementById('modalTitle').textContent = item.name;
+        document.getElementById('modalTypeLabel').textContent = tc.label;
+
+        /* Badges */
+        var badgesHtml = '';
+        if (item.source) {
+            badgesHtml += '<span class="badge badge-source">' + escapeHtml(item.source) + '</span>';
+        }
+        if (item.free) {
+            badgesHtml += '<span class="badge badge-free">Free</span>';
+        }
+        badgesHtml += '<span class="badge ' + sc.cssClass + '">' + sc.label + '</span>';
+        document.getElementById('modalBadges').innerHTML = badgesHtml;
+
+        /* Description */
+        document.getElementById('modalDesc').textContent = item.description;
+
+        /* Meta grid */
+        var metaHtml = '';
+        metaHtml += '<div class="modal-meta-item"><div class="modal-meta-label">Type</div><div class="modal-meta-value">' + escapeHtml(tc.label) + '</div></div>';
+        metaHtml += '<div class="modal-meta-item"><div class="modal-meta-label">Category</div><div class="modal-meta-value">' + escapeHtml(item._categoryName) + '</div></div>';
+        if (item.source) {
+            metaHtml += '<div class="modal-meta-item"><div class="modal-meta-label">Source</div><div class="modal-meta-value">' + escapeHtml(item.source) + '</div></div>';
+        }
+        metaHtml += '<div class="modal-meta-item"><div class="modal-meta-label">Status</div><div class="modal-meta-value">' + sc.label + '</div></div>';
+        document.getElementById('modalMeta').innerHTML = metaHtml;
+
+        /* Tags */
+        var tagsHtml = '';
+        if (item.tags && item.tags.length > 0) {
+            item.tags.forEach(function(tag) {
+                tagsHtml += '<span class="tag">' + escapeHtml(tag) + '</span>';
+            });
+        }
+        document.getElementById('modalTags').innerHTML = tagsHtml;
+
+        /* Actions */
+        var actionsHtml = '';
+        if (item.status === 'coming-soon') {
+            actionsHtml += '<span class="modal-visit-btn disabled">Coming Soon</span>';
+        } else if (item.url) {
+            actionsHtml += '<a href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener noreferrer" class="modal-visit-btn">';
+            actionsHtml += 'Visit Resource';
+            actionsHtml += '<img src="' + sargamUrl('si_Arrow_right') + '" alt="">';
+            actionsHtml += '</a>';
+        }
+        document.getElementById('modalActions').innerHTML = actionsHtml;
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDetailModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeDetailModal);
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeDetailModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeDetailModal();
+    });
 
 })();
 </script>
