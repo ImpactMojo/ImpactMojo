@@ -220,25 +220,41 @@ img { max-width: 100%; display: block; }
     flex-shrink: 0;
 }
 
-.theme-toggle-btn {
+.theme-selector {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
+    gap: 4px;
     background: var(--hover-bg);
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-pill);
+    border-radius: 10px;
+    padding: 4px;
+}
+.theme-btn {
+    background: transparent;
+    border: none;
     color: var(--text-secondary);
+    padding: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 0.82rem;
-    font-family: inherit;
-    transition: all var(--transition);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
 }
-.theme-toggle-btn:hover {
+.theme-btn:hover {
+    background: var(--hover-bg);
     color: var(--text-primary);
-    border-color: var(--accent-color);
 }
-.theme-label { white-space: nowrap; }
+.theme-btn.active {
+    background: var(--accent-color);
+    color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.theme-btn svg {
+    width: 18px;
+    height: 18px;
+}
 
 .mobile-menu-toggle {
     display: none;
@@ -367,6 +383,105 @@ img { max-width: 100%; display: block; }
 @media (max-width: 500px) {
     .stats-bar { gap: 20px; }
     .stat-value { font-size: 1.4rem; }
+}
+
+/* ============================================================
+   USAGE GUIDES
+   ============================================================ */
+.guides-section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px 32px;
+}
+.guides-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.guides-header h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+.guides-header p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+.guides-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+@media (max-width: 900px) {
+    .guides-grid { grid-template-columns: 1fr; }
+}
+.guide-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.guide-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-md);
+}
+.guide-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    font-size: 1.4rem;
+}
+.guide-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+.guide-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+.guide-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.guide-steps li {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+}
+.guide-steps li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    opacity: 0.6;
+}
+.guide-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 8px;
 }
 
 /* ============================================================
@@ -898,15 +1013,22 @@ img { max-width: 100%; display: block; }
             <a href="/" class="nav-link">Home</a>
             <a href="/catalog" class="nav-link">Catalog</a>
             <a href="/handouts" class="nav-link">Handouts</a>
-            <a href="/bct-repository" class="nav-link">BCT Repository</a>
+            <a href="/bct-repository" class="nav-link">NudgeKit</a>
             <a href="/dataverse" class="nav-link active">Dataverse</a>
             <a href="/blog" class="nav-link">Blog</a>
         </div>
         <div class="nav-actions">
-            <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">
-                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" style="width:18px;height:18px;" class="sargam-icon">
-                <span class="theme-label">Light mode</span>
-            </button>
+            <div class="theme-selector" aria-label="Theme selection">
+                <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
         </div>
         <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -923,13 +1045,20 @@ img { max-width: 100%; display: block; }
     <a href="/" class="nav-link">Home</a>
     <a href="/catalog" class="nav-link">Catalog</a>
     <a href="/handouts" class="nav-link">Handouts</a>
-    <a href="/bct-repository" class="nav-link">BCT Repository</a>
+    <a href="/bct-repository" class="nav-link">NudgeKit</a>
     <a href="/dataverse" class="nav-link active">Dataverse</a>
     <a href="/blog" class="nav-link">Blog</a>
-    <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme" style="margin-top:16px;">
-        <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" style="width:18px;height:18px;" class="sargam-icon">
-        <span class="theme-label">Light mode</span>
-    </button>
+    <div class="theme-selector" aria-label="Theme selection" style="margin-top:16px;">
+        <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </button>
+        <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </div>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -959,6 +1088,61 @@ img { max-width: 100%; display: block; }
         <div class="stat-item">
             <div class="stat-value" id="statTypes">--</div>
             <div class="stat-label">Types</div>
+        </div>
+    </section>
+
+    <!-- Usage Guides -->
+    <section class="guides-section" aria-label="How to use Dataverse resources">
+        <div class="guides-header">
+            <h2>How to Use These Resources</h2>
+            <p>Dataverse includes APIs, MCP servers, and downloadable datasets. Here's how each type works.</p>
+        </div>
+        <div class="guides-grid">
+            <!-- API Guide -->
+            <div class="guide-card">
+                <div class="guide-card-icon" style="background: rgba(14, 165, 233, 0.1); color: #0EA5E9;">
+                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Lightning.svg" alt="" width="24" height="24" class="sargam-icon">
+                </div>
+                <h3>Using APIs</h3>
+                <p>APIs let you fetch live data programmatically. Use them to pull indicators, survey data, or statistics directly into your analysis pipeline.</p>
+                <ul class="guide-steps">
+                    <li>Check the API documentation for available endpoints and rate limits</li>
+                    <li>Register for an API key if required (most are free for research use)</li>
+                    <li>Make HTTP requests using Python <code>requests</code>, R <code>httr</code>, or <code>curl</code></li>
+                    <li>Parse JSON/XML responses and integrate into your workflow</li>
+                </ul>
+                <span class="guide-tag" style="background: rgba(14, 165, 233, 0.1); color: #0EA5E9;">Programmatic Access</span>
+            </div>
+            <!-- MCP Server Guide -->
+            <div class="guide-card">
+                <div class="guide-card-icon" style="background: rgba(99, 102, 241, 0.1); color: #6366F1;">
+                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="" width="24" height="24" class="sargam-icon">
+                </div>
+                <h3>Using MCP Servers</h3>
+                <p>MCP (Model Context Protocol) servers let AI assistants like Claude access live data sources. Connect them to your AI tools for real-time analysis.</p>
+                <ul class="guide-steps">
+                    <li>Install the MCP server package via <code>npm</code> or <code>pip</code></li>
+                    <li>Add the server config to your Claude Desktop or IDE MCP settings</li>
+                    <li>Ask your AI assistant to query the data source naturally in conversation</li>
+                    <li>The AI fetches live data and provides analysis without manual API calls</li>
+                </ul>
+                <span class="guide-tag" style="background: rgba(99, 102, 241, 0.1); color: #6366F1;">AI-Powered Access</span>
+            </div>
+            <!-- Dataset Guide -->
+            <div class="guide-card">
+                <div class="guide-card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">
+                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Bar_chart.svg" alt="" width="24" height="24" class="sargam-icon">
+                </div>
+                <h3>Using Datasets</h3>
+                <p>Downloadable datasets provide bulk data for offline analysis. Ideal for research papers, baselines, and large-scale studies.</p>
+                <ul class="guide-steps">
+                    <li>Download the dataset in CSV, Excel, or other available formats</li>
+                    <li>Review the codebook or data dictionary for variable definitions</li>
+                    <li>Load into Stata, R, Python (pandas), or Excel for analysis</li>
+                    <li>Cite the source using the provided reference in your publications</li>
+                </ul>
+                <span class="guide-tag" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">Bulk Download</span>
+            </div>
         </div>
     </section>
 
@@ -1034,7 +1218,7 @@ img { max-width: 100%; display: block; }
                 <h4>Resources</h4>
                 <ul>
                     <li><a href="/handouts">Handouts</a></li>
-                    <li><a href="/bct-repository">BCT Repository</a></li>
+                    <li><a href="/bct-repository">NudgeKit</a></li>
                     <li><a href="/dataverse">Dataverse</a></li>
                     <li><a href="/blog">Blog</a></li>
                     <li><a href="/podcast">Podcast</a></li>
@@ -1056,26 +1240,35 @@ img { max-width: 100%; display: block; }
    THEME
    ============================================================ */
 function getPreferredTheme() {
-    const saved = localStorage.getItem('impactmojo-theme');
-    if (saved) return saved;
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-    return 'light';
+    return localStorage.getItem('impactmojo-theme') || 'system';
 }
 
-function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
+function applyTheme(theme) {
+    var resolved = theme;
+    if (theme === 'system') {
+        resolved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', resolved);
     localStorage.setItem('impactmojo-theme', theme);
-    document.querySelectorAll('.theme-label').forEach(function(el) {
-        el.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
     });
 }
 
-function toggleTheme() {
-    var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-}
+// Initialize theme
+applyTheme(getPreferredTheme());
 
-setTheme(getPreferredTheme());
+// Bind theme buttons
+document.querySelectorAll('.theme-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        applyTheme(btn.getAttribute('data-theme'));
+    });
+});
+
+// Listen for system theme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (getPreferredTheme() === 'system') applyTheme('system');
+});
 
 /* ============================================================
    MOBILE MENU
