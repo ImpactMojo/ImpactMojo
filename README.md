@@ -6,6 +6,16 @@
 [![GitHub Issues](https://img.shields.io/github/issues/Varnasr/ImpactMojo)](https://github.com/Varnasr/ImpactMojo/issues)
 [![GitHub Wiki](https://img.shields.io/badge/docs-Wiki-blue)](https://github.com/Varnasr/ImpactMojo/wiki)
 
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Deno](https://img.shields.io/badge/Deno-000000?logo=deno&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?logo=supabase&logoColor=white)
+![Netlify](https://img.shields.io/badge/Netlify-00C7B7?logo=netlify&logoColor=white)
+![Google Translate](https://img.shields.io/badge/Google_Translate-4285F4?logo=googletranslate&logoColor=white)
+
 **Free Development Education for Social Impact**
 
 ImpactMojo is a free learning platform providing rigorous, practical educational content on MEAL, Theory of Change, research methods, gender studies, and development economics for NGOs, impact practitioners, and students across South Asia.
