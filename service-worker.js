@@ -98,6 +98,7 @@ self.addEventListener('fetch', event => {
     );
   } else {
     // Stale-while-revalidate for assets (JS, CSS, images, fonts)
+    // Also check course caches for offline asset serving
     event.respondWith(
       caches.match(event.request).then(cached => {
         const fetchPromise = fetch(event.request).then(response => {
@@ -106,10 +107,149 @@ self.addEventListener('fetch', event => {
             caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
           }
           return response;
-        }).catch(() => cached);
+        }).catch(() => {
+          if (cached) return cached;
+          // Check course caches as fallback for assets
+          return caches.keys().then(names => {
+            const courseCaches = names.filter(n => n.startsWith(COURSE_CACHE_PREFIX));
+            return courseCaches.reduce((promise, cacheName) =>
+              promise.then(result => result || caches.open(cacheName).then(c => c.match(event.request))),
+              Promise.resolve(null)
+            );
+          });
+        });
 
         return cached || fetchPromise;
       })
     );
+  }
+});
+
+// ─── Message listener: "Download for Offline" flow ───
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'CACHE_COURSE') {
+    const courseId = event.data.courseId;
+    if (!FLAGSHIP_COURSES.includes(courseId)) {
+      notifyClients({ type: 'COURSE_CACHE_ERROR', courseId, error: 'Unknown course ID' });
+      return;
+    }
+    event.waitUntil(cacheCourse(courseId));
+  }
+
+  if (event.data && event.data.type === 'CHECK_COURSE_CACHED') {
+    const courseId = event.data.courseId;
+    event.waitUntil(
+      caches.has(getCourseCacheName(courseId)).then(exists => {
+        notifyClients({ type: 'COURSE_CACHE_STATUS', courseId, cached: exists });
+      })
+    );
+  }
+});
+
+// Cache all assets for a course
+async function cacheCourse(courseId) {
+  const cacheName = getCourseCacheName(courseId);
+  const urls = getCourseURLs(courseId);
+  const total = urls.length;
+  let completed = 0;
+
+  try {
+    const cache = await caches.open(cacheName);
+
+    for (const url of urls) {
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          await cache.put(url, response);
+        }
+      } catch (err) {
+        console.warn(`SW: Failed to cache ${url}:`, err.message);
+      }
+      completed++;
+      notifyClients({
+        type: 'COURSE_CACHE_PROGRESS',
+        courseId,
+        progress: Math.round((completed / total) * 100),
+        completed,
+        total
+      });
+    }
+
+    notifyClients({ type: 'COURSE_CACHE_COMPLETE', courseId });
+  } catch (err) {
+    console.error('SW: Course cache failed:', err);
+    notifyClients({ type: 'COURSE_CACHE_ERROR', courseId, error: err.message });
+  }
+}
+
+// ─── Background sync: retry queued progress data ───
+self.addEventListener('sync', event => {
+  if (event.tag === 'sync-progress') {
+    event.waitUntil(syncProgress());
+  }
+});
+
+async function syncProgress() {
+  try {
+    // Open IndexedDB to check for queued progress data
+    const db = await openDB();
+    const tx = db.transaction('pendingSync', 'readwrite');
+    const store = tx.objectStore('pendingSync');
+    const request = store.getAll();
+
+    return new Promise((resolve, reject) => {
+      request.onsuccess = async () => {
+        const items = request.result || [];
+        for (const item of items) {
+          try {
+            await fetch(item.url, {
+              method: item.method || 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(item.data)
+            });
+            store.delete(item.id);
+          } catch (err) {
+            console.warn('SW: Sync retry failed for', item.id);
+          }
+        }
+        resolve();
+      };
+      request.onerror = () => resolve(); // Don't block on DB errors
+    });
+  } catch (err) {
+    // IndexedDB not available or no pending data — that's fine
+    console.log('SW: No pending sync data');
+  }
+}
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('ImpactMojoOffline', 1);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains('pendingSync')) {
+        db.createObjectStore('pendingSync', { keyPath: 'id', autoIncrement: true });
+      }
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+// ─── Offline indicator: notify clients of connectivity changes ───
+function notifyClients(message) {
+  self.clients.matchAll({ type: 'window', includeUncontrolled: false }).then(clients => {
+    clients.forEach(client => client.postMessage(message));
+  });
+}
+
+// Detect offline during fetch failures and notify clients
+self.addEventListener('fetch', function offlineDetector(event) {
+  // This is a secondary listener just for offline detection — does not respondWith
+  if (event.request.method === 'GET' && new URL(event.request.url).origin === self.location.origin) {
+    event.request.clone(); // keep original intact
+    fetch(event.request.clone()).catch(() => {
+      notifyClients({ type: 'OFFLINE_DETECTED' });
+    });
   }
 });

@@ -2087,6 +2087,82 @@ h1, h2, h3, h4, h5, h6 {
                 </div>
             </div>
 
+            <!-- Learning Activity & Gamification Card -->
+            <style>
+                .gamification-streak { display: flex; align-items: center; gap: 1.5rem; padding: 1rem; background: var(--hover-bg); border-radius: 10px; margin-bottom: 1rem; }
+                .gamification-streak .streak-fire { display: flex; align-items: center; gap: 0.5rem; }
+                .gamification-streak .streak-number { font-size: 2rem; font-weight: 700; color: var(--text-primary); line-height: 1; }
+                .gamification-streak .streak-label { font-size: 0.8rem; color: var(--text-secondary); }
+                .gamification-streak .streak-fire svg { width: 28px; height: 28px; }
+                .gamification-streak .streak-fire.active svg { color: #F59E0B; filter: drop-shadow(0 0 4px rgba(245,158,11,0.5)); }
+                .gamification-streak .streak-fire.inactive svg { color: var(--text-secondary); opacity: 0.4; }
+                .gamification-streak .streak-best { text-align: center; padding-left: 1.5rem; border-left: 1px solid var(--border-color); }
+                .gamification-streak .streak-best .best-num { font-size: 1.4rem; font-weight: 600; color: var(--accent-color); }
+                .gamification-heatmap { margin-bottom: 1.25rem; }
+                .gamification-heatmap h4 { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500; }
+                .heatmap-grid { display: grid; grid-template-rows: repeat(7, 1fr); grid-auto-flow: column; gap: 2px; }
+                .heatmap-cell { width: 12px; height: 12px; border-radius: 2px; background: var(--hover-bg); }
+                .heatmap-cell[data-level="1"] { background: rgba(34,197,94,0.25); }
+                .heatmap-cell[data-level="2"] { background: rgba(34,197,94,0.50); }
+                .heatmap-cell[data-level="3"] { background: rgba(34,197,94,0.75); }
+                .heatmap-cell[data-level="4"] { background: rgba(34,197,94,1); }
+                .heatmap-labels { display: flex; justify-content: space-between; margin-top: 4px; font-size: 0.65rem; color: var(--text-secondary); }
+                .heatmap-legend { display: flex; align-items: center; gap: 3px; margin-top: 6px; justify-content: flex-end; font-size: 0.65rem; color: var(--text-secondary); }
+                .heatmap-legend .heatmap-cell { width: 10px; height: 10px; }
+                .gamification-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+                .gamification-badges h4 { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500; width: 100%; }
+                .badge-item { display: flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.65rem; border-radius: 20px; font-size: 0.75rem; font-weight: 500; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-secondary); }
+                .badge-item.earned { border-color: var(--accent-color); background: rgba(99,102,241,0.08); color: var(--accent-color); }
+                .badge-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+                .gamification-points { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem; background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(245,158,11,0.08)); border-radius: 10px; border: 1px solid var(--border-color); }
+                .gamification-points .points-total { font-size: 1.5rem; font-weight: 700; color: var(--accent-color); }
+                .gamification-points .points-label { font-size: 0.8rem; color: var(--text-secondary); }
+                .gamification-points .points-breakdown { display: flex; gap: 1rem; margin-left: auto; flex-wrap: wrap; }
+                .gamification-points .points-breakdown span { font-size: 0.7rem; color: var(--text-secondary); white-space: nowrap; }
+            </style>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+                        Learning Activity
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <!-- Streak Display -->
+                    <div class="gamification-streak">
+                        <div class="streak-fire inactive" id="gamifStreak">
+                            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 23c-3.866 0-7-3.134-7-7 0-3.107 2.476-6.236 4.5-8.3A16.85 16.85 0 0 1 12 5.3a16.85 16.85 0 0 1 2.5 2.4C16.524 9.764 19 12.893 19 16c0 3.866-3.134 7-7 7zm0-13.54C10.408 11.2 8 13.678 8 16a4 4 0 0 0 8 0c0-2.322-2.408-4.8-4-6.54z"/></svg>
+                            <div>
+                                <div class="streak-number" id="gamifStreakNum">0</div>
+                                <div class="streak-label">day streak</div>
+                            </div>
+                        </div>
+                        <div class="streak-best">
+                            <div class="best-num" id="gamifBestStreak">0</div>
+                            <div class="streak-label">longest</div>
+                        </div>
+                    </div>
+                    <!-- Activity Heatmap -->
+                    <div class="gamification-heatmap">
+                        <h4>Activity (last 12 weeks)</h4>
+                        <div class="heatmap-grid" id="gamifHeatmap"></div>
+                        <div class="heatmap-legend">Less <div class="heatmap-cell"></div><div class="heatmap-cell" data-level="1"></div><div class="heatmap-cell" data-level="2"></div><div class="heatmap-cell" data-level="3"></div><div class="heatmap-cell" data-level="4"></div> More</div>
+                    </div>
+                    <!-- Milestone Badges -->
+                    <div class="gamification-badges" id="gamifBadges">
+                        <h4>Milestones</h4>
+                    </div>
+                    <!-- Points Display -->
+                    <div class="gamification-points" id="gamifPoints">
+                        <div>
+                            <div class="points-total" id="gamifPointsTotal">0</div>
+                            <div class="points-label">points</div>
+                        </div>
+                        <div class="points-breakdown" id="gamifPointsBreakdown"></div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Saved Items Card -->
             <div class="card">
                 <div class="card-header">
@@ -2512,19 +2588,127 @@ function getLocalStreak() {
     } catch { return { current: 0, lastDate: null }; }
 }
 
+// Gamification Card Update
+function updateGamificationCard() {
+    const streak = getLocalStreak();
+    const bookmarks = getLocalBookmarks();
+    const progress = getLocalProgress();
+    let analytics = {};
+    try { analytics = JSON.parse(localStorage.getItem('impactmojo_analytics') || '{}'); } catch {}
+
+    // --- Streak display ---
+    const currentStreak = streak.current || 0;
+    const longestStreak = streak.longest || streak.current || 0;
+    document.getElementById('gamifStreakNum').textContent = currentStreak;
+    document.getElementById('gamifBestStreak').textContent = longestStreak;
+    const streakEl = document.getElementById('gamifStreak');
+    if (currentStreak > 0) {
+        streakEl.classList.remove('inactive');
+        streakEl.classList.add('active');
+    } else {
+        streakEl.classList.remove('active');
+        streakEl.classList.add('inactive');
+    }
+
+    // --- Activity Heatmap (last 84 days / 12 weeks) ---
+    const heatmapEl = document.getElementById('gamifHeatmap');
+    heatmapEl.innerHTML = '';
+    const viewsByItem = (analytics && analytics.viewsByItem) ? analytics.viewsByItem : {};
+    // Build a day->count map from viewsByItem lastViewed timestamps
+    const dayCounts = {};
+    Object.values(viewsByItem).forEach(item => {
+        if (item.lastViewed) {
+            const dayKey = item.lastViewed.slice(0, 10);
+            dayCounts[dayKey] = (dayCounts[dayKey] || 0) + (item.views || 1);
+        }
+    });
+    // Also use recentItems for more granular data
+    if (analytics.recentItems && Array.isArray(analytics.recentItems)) {
+        analytics.recentItems.forEach(ri => {
+            if (ri.time) {
+                const dayKey = ri.time.slice(0, 10);
+                dayCounts[dayKey] = (dayCounts[dayKey] || 0) + 1;
+            }
+        });
+    }
+    const today = new Date();
+    // Start from 83 days ago, aligned to start of week (Sunday)
+    const startDate = new Date(today);
+    startDate.setDate(startDate.getDate() - 83);
+    // Adjust to nearest Sunday (start of week)
+    startDate.setDate(startDate.getDate() - startDate.getDay());
+    const totalDays = 7 * 12; // 84 cells
+    for (let i = 0; i < totalDays; i++) {
+        const d = new Date(startDate);
+        d.setDate(d.getDate() + i);
+        const key = d.toISOString().slice(0, 10);
+        const count = dayCounts[key] || 0;
+        const cell = document.createElement('div');
+        cell.className = 'heatmap-cell';
+        cell.title = key + ': ' + count + ' activities';
+        if (d > today) { cell.style.opacity = '0.3'; }
+        else if (count >= 5) cell.setAttribute('data-level', '4');
+        else if (count >= 3) cell.setAttribute('data-level', '3');
+        else if (count >= 2) cell.setAttribute('data-level', '2');
+        else if (count >= 1) cell.setAttribute('data-level', '1');
+        heatmapEl.appendChild(cell);
+    }
+
+    // --- Milestone Badges ---
+    const badgesEl = document.getElementById('gamifBadges');
+    const completedCourses = Object.keys(progress).filter(k => progress[k] === 100).length;
+    const bookmarkCount = bookmarks.length;
+    const totalViews = analytics.totalViews || 0;
+    const labGameCount = Object.values(viewsByItem).filter(v => v.type === 'lab' || v.type === 'game').length;
+
+    const milestones = [
+        { id: '7streak', label: '7-Day Streak', earned: currentStreak >= 7 || longestStreak >= 7, icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>' },
+        { id: '30streak', label: '30-Day Streak', earned: currentStreak >= 30 || longestStreak >= 30, icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 23c-3.866 0-7-3.134-7-7 0-3.107 2.476-6.236 4.5-8.3A16.85 16.85 0 0 1 12 5.3a16.85 16.85 0 0 1 2.5 2.4C16.524 9.764 19 12.893 19 16c0 3.866-3.134 7-7 7z"/></svg>' },
+        { id: '100streak', label: '100-Day Streak', earned: currentStreak >= 100 || longestStreak >= 100, icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>' },
+        { id: '5courses', label: '5 Courses Done', earned: completedCourses >= 5, icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' },
+        { id: '10bookmarks', label: '10 Bookmarks', earned: bookmarkCount >= 10, icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>' },
+        { id: 'labexplorer', label: 'Lab Explorer', earned: labGameCount >= 3, icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v7l4 8H5l4-8V3z"/><line x1="9" y1="3" x2="15" y2="3"/></svg>' },
+        { id: '50views', label: '50 Views', earned: totalViews >= 50, icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' }
+    ];
+    // Keep the h4 heading, clear badges after it
+    badgesEl.innerHTML = '<h4>Milestones</h4>';
+    milestones.forEach(m => {
+        const el = document.createElement('span');
+        el.className = 'badge-item' + (m.earned ? ' earned' : '');
+        el.innerHTML = m.icon + ' ' + m.label;
+        badgesEl.appendChild(el);
+    });
+
+    // --- Points Display ---
+    const moduleViews = totalViews; // 10 pts each
+    const ptsModules = moduleViews * 10;
+    const ptsCourses = completedCourses * 50;
+    const ptsBookmarks = bookmarkCount * 5;
+    const ptsLabs = labGameCount * 25;
+    const totalPoints = ptsModules + ptsCourses + ptsBookmarks + ptsLabs;
+    document.getElementById('gamifPointsTotal').textContent = totalPoints.toLocaleString();
+    document.getElementById('gamifPointsBreakdown').innerHTML =
+        '<span>' + ptsModules + ' views</span>' +
+        '<span>' + ptsCourses + ' courses</span>' +
+        '<span>' + ptsBookmarks + ' bookmarks</span>' +
+        '<span>' + ptsLabs + ' labs</span>';
+}
+
 // Update Saved Items Display
 function updateSavedItemsDisplay() {
     const bookmarks = getLocalBookmarks();
     const notes = getLocalNotes();
     const progress = getLocalProgress();
     const streak = getLocalStreak();
-    
+
     document.getElementById('bookmarkCount').textContent = bookmarks.length;
     document.getElementById('notesCount').textContent = Object.keys(notes).length;
     document.getElementById('progressCount').textContent = Object.keys(progress).filter(k => progress[k] > 0 && progress[k] < 100).length;
     document.getElementById('totalBookmarks').textContent = bookmarks.length;
     document.getElementById('streakDays').textContent = streak.current || 0;
     document.getElementById('coursesCompleted').textContent = Object.keys(progress).filter(k => progress[k] === 100).length;
+
+    updateGamificationCard();
 }
 
 // Community Access Update
