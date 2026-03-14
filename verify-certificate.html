@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+function toggleMobileMenu() {
+    var navLinks = document.getElementById('navLinks');
+    var toggle = document.getElementById('mobile-menu-btn');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    if (!navLinks) return;
+    var isOpen = navLinks.classList.contains('active');
+    if (isOpen) {
+        navLinks.classList.remove('active');
+        if (toggle) toggle.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        document.body.style.overflow = '';
+    } else {
+        navLinks.classList.add('active');
+        if (toggle) toggle.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        document.body.classList.add('menu-open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+function closeMobileMenu() {
+    var navLinks = document.getElementById('navLinks');
+    var toggle = document.getElementById('mobile-menu-btn');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    if (navLinks) navLinks.classList.remove('active');
+    if (toggle) toggle.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    document.body.classList.remove('menu-open');
+    document.body.style.overflow = '';
+}
+function toggleMobileDropdown(event, element) {
+    event.preventDefault();
+    event.stopPropagation();
+    var li = element.closest('li.has-dropdown');
+    if (!li) return;
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+            if (item !== li) item.classList.remove('open');
+        });
+        li.classList.toggle('open');
+    }
+}
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+
+<meta name="description" content="Verify an ImpactMojo course completion certificate. Enter a certificate number to confirm its authenticity.">
+<meta property="og:title" content="Verify Certificate | ImpactMojo">
+<meta property="og:description" content="Verify an ImpactMojo course completion certificate.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.impactmojo.in/verify-certificate.html">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png">
+
+<title>Verify Certificate | ImpactMojo</title>
+
+<link href="assets/images/favicon.png" rel="icon" type="image/png">
+<link href="assets/images/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+<link href="assets/images/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+<link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="manifest.json" rel="manifest">
+<meta name="theme-color" content="#0EA5E9">
+
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --accent-color: #0EA5E9;
+    --accent-hover: #0284C7;
+    --secondary-accent: #6366F1;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --gradient-accent: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+    --nav-bg: rgba(15, 23, 42, 0.95);
+    --nav-text: #F1F5F9;
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode {
+    --primary-bg: #F8FAFC;
+    --secondary-bg: #FFFFFF;
+    --accent-color: #0284C7;
+    --accent-hover: #0369A1;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --nav-bg: rgba(248, 250, 252, 0.95);
+    --nav-text: #0F172A;
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+a { color: var(--accent-color); text-decoration: none; }
+h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 700; }
+
+/* Nav */
+.header { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
+.nav-container { max-width: 1200px; margin: 0 auto; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+.logo-container { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.logo-svg img { width: 40px; height: 40px; }
+.logo-main { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.25rem; color: var(--text-primary); }
+.logo-tagline { font-size: 0.7rem; color: var(--text-muted); }
+.nav-links { display: flex; list-style: none; gap: 0.25rem; align-items: center; }
+.nav-links a { color: var(--nav-text); padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
+.nav-links a:hover { background: var(--hover-bg); }
+.has-dropdown { position: relative; }
+.dropdown-arrow { width: 14px; height: 14px; stroke: currentColor; fill: none; transition: transform 0.2s; }
+.dropdown-menu { position: absolute; top: 100%; left: 0; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 0.5rem; min-width: 180px; opacity: 0; visibility: hidden; transform: translateY(8px); transition: all 0.2s; box-shadow: var(--shadow-lg); list-style: none; z-index: 100; }
+.has-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.dropdown-menu a { display: block; padding: 0.5rem 0.75rem; border-radius: 8px; white-space: nowrap; }
+.dropdown-divider { height: 1px; background: var(--border-color); margin: 0.25rem 0; }
+.nav-buttons { display: flex; align-items: center; gap: 0.5rem; }
+.theme-toggle { background: none; border: none; cursor: pointer; padding: 0.5rem; border-radius: 8px; color: var(--text-secondary); }
+.theme-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+.icon-moon { display: none; }
+body.light-mode .icon-sun { display: none; }
+body.light-mode .icon-moon { display: block; }
+.mobile-menu-toggle { display: none; }
+.v3-inline-icon { width: 16px; height: 16px; vertical-align: middle; filter: invert(1); opacity: 0.7; }
+body.light-mode .v3-inline-icon { filter: none; }
+.mobile-auth-section { display: none; }
+
+/* Page Content */
+.page-content { flex: 1; position: relative; z-index: 1; }
+.page-hero {
+    text-align: center;
+    padding: 3rem 1.5rem 2rem;
+    background: linear-gradient(180deg, rgba(14, 165, 233, 0.08) 0%, transparent 100%);
+}
+.page-hero h1 { font-size: 2.25rem; margin-bottom: 0.5rem; }
+.page-hero p { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+.container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+/* Verify Form */
+.verify-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+.verify-form { display: flex; gap: 0.75rem; }
+.verify-input {
+    flex: 1;
+    padding: 0.875rem 1rem;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: 'Inter', monospace;
+    letter-spacing: 0.5px;
+    transition: border-color 0.2s;
+}
+.verify-input:focus { outline: none; border-color: var(--accent-color); }
+.verify-input::placeholder { color: var(--text-muted); }
+.verify-btn {
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    border: none;
+    background: var(--gradient-primary);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.verify-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.verify-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* Result States */
+.verify-result { display: none; margin-top: 1.5rem; }
+.verify-result.visible { display: block; }
+
+/* Certificate Display */
+.certificate-display {
+    background: var(--card-bg);
+    border: 2px solid var(--success-color);
+    border-radius: 16px;
+    overflow: hidden;
+}
+.cert-status-bar {
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+.cert-status-bar svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.5; flex-shrink: 0; }
+.cert-body { padding: 2rem; }
+.cert-header {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+.cert-logo { width: 56px; height: 56px; margin: 0 auto 0.75rem; }
+.cert-title { font-size: 1.1rem; color: var(--text-secondary); font-weight: 500; margin-bottom: 0.25rem; }
+.cert-course { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 0.25rem; }
+.cert-details { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.cert-field label { display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem; font-weight: 600; }
+.cert-field span { font-size: 0.95rem; color: var(--text-primary); }
+.cert-field.full-width { grid-column: 1 / -1; }
+
+/* Not Found */
+.not-found-card {
+    background: var(--card-bg);
+    border: 2px solid var(--danger-color);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+}
+.not-found-icon { width: 48px; height: 48px; color: var(--danger-color); margin: 0 auto 1rem; }
+.not-found-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; }
+.not-found-card h3 { color: var(--danger-color); margin-bottom: 0.5rem; }
+.not-found-card p { color: var(--text-secondary); }
+
+/* Error */
+.error-card {
+    background: var(--card-bg);
+    border: 2px solid var(--warning-color);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+}
+.error-card h3 { color: var(--warning-color); margin-bottom: 0.5rem; }
+.error-card p { color: var(--text-secondary); }
+
+/* Loading */
+.verify-loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+.spinner-ring {
+    width: 40px; height: 40px; margin: 0 auto 1rem;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Info section */
+.info-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+}
+.info-section h3 { margin-bottom: 1rem; font-size: 1.1rem; }
+.info-list { list-style: none; }
+.info-list li { padding: 0.5rem 0; color: var(--text-secondary); display: flex; align-items: flex-start; gap: 0.5rem; }
+.info-list li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; stroke: var(--accent-color); fill: none; stroke-width: 2; }
+
+/* Print */
+@media print {
+    .header, .footer, .page-hero, .verify-card, .info-section, .cert-status-bar { display: none !important; }
+    body { background: white !important; color: black !important; }
+    .certificate-display { border: 2px solid #333 !important; }
+    .cert-body { padding: 3rem !important; }
+}
+
+/* Footer */
+.footer { background: var(--secondary-bg); border-top: 1px solid var(--border-color); padding: 3rem 1.5rem 1.5rem; margin-top: auto; }
+.footer-content { max-width: 1200px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-bottom: 2rem; }
+.footer-section h4 { color: var(--text-primary); margin-bottom: 0.75rem; font-size: 0.9rem; }
+.footer-section ul { list-style: none; }
+.footer-section li { margin-bottom: 0.5rem; }
+.footer-section a { color: var(--text-secondary); font-size: 0.85rem; }
+.footer-section a:hover { color: var(--accent-color); }
+.footer-bottom { border-top: 1px solid var(--border-color); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-copyright { color: var(--text-muted); font-size: 0.8rem; }
+.footer-social { display: flex; gap: 1rem; }
+.footer-social a { color: var(--text-muted); }
+.footer-social svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+/* Mobile */
+@media (max-width: 768px) {
+    .mobile-menu-toggle { display: flex; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001; }
+    .hamburger-line { width: 24px; height: 2px; background: var(--text-primary); transition: all 0.3s; }
+    .nav-links { display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: var(--card-bg); flex-direction: column; padding: 1rem; overflow-y: auto; z-index: 999; }
+    .nav-links.active { display: flex; }
+    .nav-buttons { display: none; }
+    .mobile-menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 998; }
+    .mobile-menu-overlay.active { display: block; }
+    .dropdown-menu { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: none; padding-left: 1rem; display: none; }
+    .has-dropdown.open .dropdown-menu { display: block; }
+    .page-hero h1 { font-size: 1.75rem; }
+    .verify-form { flex-direction: column; }
+    .cert-details { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    .mobile-auth-section { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; background: var(--card-bg); border-top: 1px solid var(--border-color); padding: 0.75rem 1rem; gap: 0.5rem; }
+    .mobile-auth-section.active { display: flex; }
+    .mobile-auth-btn { flex: 1; padding: 0.625rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.375rem; }
+    .mobile-auth-login { background: var(--hover-bg); color: var(--text-primary); }
+    .mobile-auth-signup { background: var(--gradient-primary); color: white; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <nav class="nav-container">
+        <a class="logo-container" href="index.html">
+            <div class="logo-svg">
+                <img alt="ImpactMojo logo" src="assets/images/ImpactMojo%20Logo.png" width="40" height="40" loading="lazy">
+            </div>
+            <div class="logo-text">
+                <div class="logo-main">ImpactMojo</div>
+                <div class="logo-tagline">Development Know-How</div>
+            </div>
+        </a>
+
+        <button class="mobile-menu-toggle" id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu" type="button">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
+        <div class="mobile-auth-section" id="mobileAuthSection">
+            <a href="login.html" class="mobile-auth-btn mobile-auth-login" onclick="closeMobileMenu()">Log In</a>
+            <a href="signup.html" class="mobile-auth-btn mobile-auth-signup" onclick="closeMobileMenu()">Sign Up</a>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">Learn
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="catalog.html">Catalog</a></li>
+                    <li><a href="handouts.html">Resources</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="premium.html">Premium</a></li>
+                </ul>
+            </li>
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">Services
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="coaching.html">Coaching</a></li>
+                    <li><a href="workshops.html">Workshops</a></li>
+                </ul>
+            </li>
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">About Us
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="about.html">About ImpactMojo</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="community/community.html">Community</a></li>
+                </ul>
+            </li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="podcast.html">Podcast</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+
+<!-- Page Content -->
+<main class="page-content">
+    <section class="page-hero">
+        <h1>Verify Certificate</h1>
+        <p>Enter a certificate number to verify its authenticity</p>
+    </section>
+
+    <div class="container">
+        <!-- Search -->
+        <div class="verify-card">
+            <form class="verify-form" onsubmit="verifyCertificate(event)">
+                <input type="text" class="verify-input" id="certInput" placeholder="e.g. IM-DEVECON-2026-A3F7B2" autocomplete="off" spellcheck="false">
+                <button type="submit" class="verify-btn" id="verifyBtn">Verify</button>
+            </form>
+        </div>
+
+        <!-- Loading -->
+        <div class="verify-result" id="loadingState">
+            <div class="verify-loading">
+                <div class="spinner-ring"></div>
+                <p>Looking up certificate...</p>
+            </div>
+        </div>
+
+        <!-- Found -->
+        <div class="verify-result" id="foundState">
+            <div class="certificate-display">
+                <div class="cert-status-bar">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>Certificate Verified</span>
+                </div>
+                <div class="cert-body">
+                    <div class="cert-header">
+                        <img class="cert-logo" src="assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo">
+                        <div class="cert-title">Certificate of Completion</div>
+                        <h2 class="cert-course" id="certCourse"></h2>
+                    </div>
+                    <div class="cert-details">
+                        <div class="cert-field">
+                            <label>Recipient</label>
+                            <span id="certRecipient"></span>
+                        </div>
+                        <div class="cert-field">
+                            <label>Certificate Number</label>
+                            <span id="certNumber"></span>
+                        </div>
+                        <div class="cert-field">
+                            <label>Issue Date</label>
+                            <span id="certDate"></span>
+                        </div>
+                        <div class="cert-field">
+                            <label>Issued By</label>
+                            <span>ImpactMojo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Not Found -->
+        <div class="verify-result" id="notFoundState">
+            <div class="not-found-card">
+                <div class="not-found-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                </div>
+                <h3>Certificate Not Found</h3>
+                <p>No certificate matches this number. Please double-check the certificate number and try again.</p>
+            </div>
+        </div>
+
+        <!-- Error -->
+        <div class="verify-result" id="errorState">
+            <div class="error-card">
+                <h3>Verification Unavailable</h3>
+                <p>We couldn't connect to the verification service. Please try again in a moment.</p>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="info-section" style="margin-top: 2rem;">
+            <h3>About ImpactMojo Certificates</h3>
+            <ul class="info-list">
+                <li>
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    Certificates are automatically issued when a learner completes 100% of a course
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    Each certificate has a unique number in the format IM-COURSE-YEAR-XXXXXX
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    Certificates cover our 9 flagship development courses
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    All certificates are stored securely and can be verified any time on this page
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="about.html">About ImpactMojo</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="community/community.html">Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal & IT Act</h4>
+                <ul>
+                    <li><a href="/terms-of-service">Terms of Service</a></li>
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/refund-policy">Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="catalog.html">Course Catalog</a></li>
+                    <li><a href="premium.html">Premium Access</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="podcast.html">Podcast</a></li>
+                    <li><a href="handouts.html">Handouts</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copyright">&copy; 2024-2025 ImpactMojo. All rights reserved. Made with &lt;3 in India.</p>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/company/impactmojo" target="_blank" rel="noopener" title="LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://www.instagram.com/impactmojo" target="_blank" rel="noopener" title="Instagram">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Theme
+function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+}
+(function() {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || (!t && !window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.classList.add('light-mode');
+    }
+})();
+
+// Supabase config (anon key — public, read-only for certificates)
+var SUPABASE_URL = 'https://ddyszmfffyedolkcugld.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkeXN6bWZmZnllZG9sa2N1Z2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzMTI0MTcsImV4cCI6MjA1MTg4ODQxN30.gSXJxBaeuHChjGCkVc6TgjhOB4bHBXE9OTPqxMNLxHo';
+
+function showState(stateId) {
+    ['loadingState', 'foundState', 'notFoundState', 'errorState'].forEach(function(id) {
+        document.getElementById(id).classList.remove('visible');
+    });
+    if (stateId) document.getElementById(stateId).classList.add('visible');
+}
+
+async function verifyCertificate(e) {
+    e.preventDefault();
+    var certNum = document.getElementById('certInput').value.trim().toUpperCase();
+    if (!certNum) return;
+
+    var btn = document.getElementById('verifyBtn');
+    btn.disabled = true;
+    btn.textContent = 'Verifying...';
+    showState('loadingState');
+
+    try {
+        // Query certificates table via Supabase REST API
+        var url = SUPABASE_URL + '/rest/v1/certificates?certificate_number=eq.' + encodeURIComponent(certNum) + '&select=*';
+        var resp = await fetch(url, {
+            headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!resp.ok) throw new Error('API error');
+
+        var data = await resp.json();
+
+        if (data.length === 0) {
+            showState('notFoundState');
+        } else {
+            var cert = data[0];
+
+            // Try to get the user's display name
+            var recipientName = 'Verified Learner';
+            try {
+                var profileUrl = SUPABASE_URL + '/rest/v1/profiles?id=eq.' + cert.user_id + '&select=full_name,display_name';
+                var profileResp = await fetch(profileUrl, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (profileResp.ok) {
+                    var profiles = await profileResp.json();
+                    if (profiles.length > 0) {
+                        recipientName = profiles[0].full_name || profiles[0].display_name || 'Verified Learner';
+                    }
+                }
+            } catch (_) { /* profile lookup is best-effort */ }
+
+            document.getElementById('certCourse').textContent = cert.course_name;
+            document.getElementById('certRecipient').textContent = recipientName;
+            document.getElementById('certNumber').textContent = cert.certificate_number;
+            document.getElementById('certDate').textContent = new Date(cert.issued_at).toLocaleDateString('en-IN', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            });
+            showState('foundState');
+        }
+    } catch (err) {
+        console.error('Verification error:', err);
+        showState('errorState');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Verify';
+    }
+}
+
+// Auto-verify if cert param in URL
+document.addEventListener('DOMContentLoaded', function() {
+    var params = new URLSearchParams(window.location.search);
+    var cert = params.get('cert');
+    if (cert) {
+        document.getElementById('certInput').value = cert;
+        verifyCertificate(new Event('submit'));
+    }
+});
+</script>
+
+</body>
+</html>
