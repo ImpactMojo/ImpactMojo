@@ -13,20 +13,33 @@
             }
         });
         
-        // Close mobile menu on scroll
+        // Close mobile menu on scroll (150px threshold to avoid accidental close on small swipes)
         let lastScrollTop = 0;
         window.addEventListener('scroll', function() {
             const navLinks = document.getElementById('navLinks');
-            
+
             if (navLinks && navLinks.classList.contains('active')) {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                // Close menu if scrolled more than 50px
-                if (Math.abs(scrollTop - lastScrollTop) > 50) {
+                if (Math.abs(scrollTop - lastScrollTop) > 150) {
                     closeMobileMenu();
                 }
             }
             lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
         }, { passive: true });
+
+        // Close mobile menu and dropdowns on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const navLinks = document.getElementById('navLinks');
+                if (navLinks && navLinks.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+                // Close any open dropdowns
+                document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) {
+                    item.classList.remove('open');
+                });
+            }
+        });
 
         // Mobile dropdown toggle (click to expand on mobile)
         document.addEventListener('DOMContentLoaded', function() {
@@ -456,29 +469,15 @@
             }, 30 * 60 * 1000); // 30 minutes
         })();
 
-        // Service Worker - DISABLED for now to fix caching issues
-        // Unregister any existing service workers to ensure fresh content
+        // Service Worker - v3 with network-first HTML, stale-while-revalidate assets
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for (let registration of registrations) {
-                    registration.unregister().then(function() {
-                    });
-                }
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(function(registration) {
+                        console.log('SW registered, scope:', registration.scope);
+                        // Check for updates every 30 minutes
+                        setInterval(function() { registration.update(); }, 30 * 60 * 1000);
+                    })
+                    .catch(function(err) { console.log('SW registration failed:', err); });
             });
-            // Clear all caches
-            if ('caches' in window) {
-                caches.keys().then(function(names) {
-                    names.forEach(function(name) {
-                        caches.delete(name);
-                    });
-                });
-            }
         }
-        // Original SW registration - COMMENTED OUT
-        // if ('serviceWorker' in navigator) {
-        //     window.addEventListener('load', () => {
-        //         navigator.serviceWorker.register('service-worker.js')
-        //             .then(registration => console.log('ServiceWorker registration successful'))
-        //             .catch(err => console.log('ServiceWorker registration failed: ', err));
-        //     });
-        // }
