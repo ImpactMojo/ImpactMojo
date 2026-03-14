@@ -517,6 +517,234 @@ body.modal-open { overflow: hidden; }
     .technique-card { break-inside: avoid; border: 1px solid #ddd !important; box-shadow: none !important; }
     body { background: #fff; color: #000; }
 }
+
+/* ============================================================
+   BOOKMARK & COMPARE CARD CONTROLS
+   ============================================================ */
+.technique-card-actions {
+    position: absolute; top: 12px; right: 12px;
+    display: flex; align-items: center; gap: 6px; z-index: 2;
+}
+.bct-bookmark-btn, .bct-compare-btn {
+    width: 32px; height: 32px; border-radius: 8px;
+    border: 1px solid var(--border-color); background: var(--card-bg);
+    color: var(--text-muted); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; opacity: 0;
+}
+.technique-card:hover .bct-bookmark-btn,
+.technique-card:hover .bct-compare-btn,
+.bct-bookmark-btn.active,
+.bct-compare-btn.active { opacity: 1; }
+.bct-bookmark-btn svg, .bct-compare-btn svg {
+    width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;
+}
+.bct-bookmark-btn:hover { border-color: var(--warning-color); color: var(--warning-color); background: rgba(245, 158, 11, 0.1); }
+.bct-bookmark-btn.active { border-color: var(--warning-color); color: var(--warning-color); background: rgba(245, 158, 11, 0.15); }
+.bct-bookmark-btn.active svg { fill: var(--warning-color); }
+.bct-compare-btn:hover { border-color: var(--secondary-accent); color: var(--secondary-accent); background: rgba(99, 102, 241, 0.1); }
+.bct-compare-btn.active { border-color: var(--secondary-accent); color: var(--secondary-accent); background: rgba(99, 102, 241, 0.15); }
+.bct-compare-btn.active svg { fill: var(--secondary-accent); }
+
+/* ============================================================
+   VIEW TABS (All Techniques / My Collection)
+   ============================================================ */
+.view-tabs {
+    display: flex; gap: 4px; margin-bottom: 16px;
+    background: var(--secondary-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); padding: 4px; width: fit-content;
+}
+.view-tab {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 8px; border: none;
+    background: transparent; color: var(--text-secondary);
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+    font-family: inherit; transition: all 0.2s; white-space: nowrap;
+}
+.view-tab:hover { color: var(--text-primary); background: var(--hover-bg); }
+.view-tab.active { background: var(--accent-color); color: #fff; }
+.view-tab svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+.view-tab .tab-count {
+    background: rgba(255,255,255,0.2); padding: 1px 7px; border-radius: 10px;
+    font-size: 0.72rem; font-weight: 700;
+}
+.view-tab.active .tab-count { background: rgba(255,255,255,0.25); }
+
+/* Collection toolbar */
+.collection-toolbar {
+    display: none; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center;
+}
+.collection-toolbar.visible { display: flex; }
+.collection-toolbar .export-btn { font-size: 0.82rem; padding: 8px 14px; }
+
+/* Collection empty state */
+.collection-empty {
+    text-align: center; padding: 48px 20px; color: var(--text-secondary);
+}
+.collection-empty svg { width: 48px; height: 48px; stroke: var(--text-muted); fill: none; stroke-width: 1.5; margin-bottom: 12px; }
+.collection-empty p { font-size: 0.92rem; margin-bottom: 4px; }
+.collection-empty small { font-size: 0.82rem; color: var(--text-muted); }
+
+/* Notes in card (collection view) */
+.collection-note-preview {
+    font-size: 0.8rem; color: var(--text-muted); font-style: italic;
+    margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-color);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ============================================================
+   MODAL NOTES SECTION
+   ============================================================ */
+.modal-notes-section {
+    margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);
+}
+.modal-notes-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.modal-notes-header svg { width: 18px; height: 18px; stroke: var(--accent-color); fill: none; stroke-width: 2; }
+.modal-notes-title {
+    font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.5px;
+}
+.modal-notes-textarea {
+    width: 100%; min-height: 90px; padding: 12px 14px;
+    background: var(--primary-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md);
+    color: var(--text-primary); font-size: 0.88rem; font-family: inherit; line-height: 1.6;
+    resize: vertical; transition: border-color 0.2s;
+}
+.modal-notes-textarea::placeholder { color: var(--text-muted); }
+.modal-notes-textarea:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15); }
+.modal-notes-saved {
+    font-size: 0.78rem; color: var(--success-color); margin-top: 6px;
+    opacity: 0; transition: opacity 0.3s;
+}
+.modal-notes-saved.show { opacity: 1; }
+
+/* Modal bookmark button */
+.modal-bookmark-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 10px;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    font-family: inherit; transition: all 0.2s;
+    border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-secondary);
+}
+.modal-bookmark-btn:hover { border-color: var(--warning-color); color: var(--warning-color); }
+.modal-bookmark-btn.active { border-color: var(--warning-color); color: var(--warning-color); background: rgba(245, 158, 11, 0.1); }
+.modal-bookmark-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+.modal-bookmark-btn.active svg { fill: var(--warning-color); }
+
+/* ============================================================
+   FLOATING COMPARISON BAR
+   ============================================================ */
+.compare-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+    background: var(--secondary-bg); border-top: 2px solid var(--secondary-accent);
+    padding: 12px 24px; transform: translateY(100%); transition: transform 0.3s;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+.compare-bar.visible { transform: translateY(0); }
+.compare-bar-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.compare-bar-label {
+    font-size: 0.82rem; font-weight: 700; color: var(--secondary-accent);
+    text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
+}
+.compare-bar-items { display: flex; gap: 8px; flex: 1; flex-wrap: wrap; }
+.compare-bar-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 8px;
+    background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3);
+    color: var(--text-primary); font-size: 0.82rem; font-weight: 500;
+}
+.compare-bar-chip-remove {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: none; background: rgba(239, 68, 68, 0.2); color: var(--danger-color);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 700; transition: all 0.2s; line-height: 1;
+}
+.compare-bar-chip-remove:hover { background: var(--danger-color); color: #fff; }
+.compare-bar-chip-remove svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 3; }
+.compare-bar-actions { display: flex; gap: 8px; }
+.compare-bar-btn {
+    padding: 8px 16px; border-radius: 8px; border: none;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    font-family: inherit; transition: all 0.2s;
+}
+.compare-bar-btn-primary { background: var(--gradient-primary); color: #fff; }
+.compare-bar-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
+.compare-bar-btn-clear { background: var(--hover-bg); color: var(--text-secondary); border: 1px solid var(--border-color); }
+.compare-bar-btn-clear:hover { color: var(--danger-color); border-color: var(--danger-color); }
+
+/* ============================================================
+   COMPARISON MODAL
+   ============================================================ */
+.compare-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px);
+    z-index: 1100; display: flex; align-items: center; justify-content: center;
+    padding: 24px; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+}
+.compare-modal-overlay.active { opacity: 1; visibility: visible; }
+.compare-modal {
+    background: var(--card-bg); border-radius: 20px;
+    width: 100%; max-width: 1100px; max-height: calc(100vh - 48px);
+    overflow: hidden; display: flex; flex-direction: column;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    transform: translateY(20px); transition: transform 0.3s;
+}
+.compare-modal-overlay.active .compare-modal { transform: translateY(0); }
+.compare-modal-header {
+    padding: 20px 24px; border-bottom: 1px solid var(--border-color);
+    display: flex; align-items: center; justify-content: space-between;
+}
+.compare-modal-title {
+    font-family: 'Poppins', sans-serif; font-size: 1.2rem; font-weight: 700;
+    color: var(--text-primary); display: flex; align-items: center; gap: 10px;
+}
+.compare-modal-title svg { width: 22px; height: 22px; stroke: var(--secondary-accent); fill: none; stroke-width: 2; }
+.compare-modal-header-actions { display: flex; gap: 8px; }
+.compare-modal-body { overflow-y: auto; padding: 24px; flex: 1; }
+.compare-columns {
+    display: grid; gap: 16px;
+}
+.compare-columns[data-cols="2"] { grid-template-columns: 1fr 1fr; }
+.compare-columns[data-cols="3"] { grid-template-columns: 1fr 1fr 1fr; }
+.compare-column {
+    background: var(--primary-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg); overflow: hidden;
+}
+.compare-col-header {
+    padding: 16px; border-bottom: 1px solid var(--border-color); text-align: center;
+}
+.compare-col-name {
+    font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 4px;
+}
+.compare-col-id { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+.compare-row {
+    padding: 14px 16px; border-bottom: 1px solid var(--border-color);
+}
+.compare-row:last-child { border-bottom: none; }
+.compare-row-label {
+    font-size: 0.72rem; font-weight: 700; color: var(--accent-color);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+}
+.compare-row-value {
+    font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
+}
+.compare-row-value .sector-pill { margin: 2px 4px 2px 0; }
+
+@media (max-width: 768px) {
+    .compare-columns[data-cols="2"],
+    .compare-columns[data-cols="3"] { grid-template-columns: 1fr; }
+    .compare-bar-inner { flex-direction: column; align-items: stretch; }
+    .compare-bar-actions { justify-content: flex-end; }
+}
+
+/* Hidden file input */
+.hidden-file-input { display: none; }
 </style>
 </head>
 <body>
@@ -694,6 +922,31 @@ body.modal-open { overflow: hidden; }
             </button>
         </div>
 
+        <!-- View Tabs: All Techniques / My Collection -->
+        <div class="view-tabs" id="viewTabs">
+            <button class="view-tab active" data-view="all" aria-pressed="true">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                All Techniques
+            </button>
+            <button class="view-tab" data-view="collection" aria-pressed="false">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                My Collection <span class="tab-count" id="collectionCount">0</span>
+            </button>
+        </div>
+
+        <!-- Collection toolbar (visible when My Collection tab is active) -->
+        <div class="collection-toolbar" id="collectionToolbar">
+            <button class="export-btn" onclick="exportBCTCollection()" aria-label="Export collection as JSON">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export Collection
+            </button>
+            <button class="export-btn" onclick="document.getElementById('importFileInput').click()" aria-label="Import collection from JSON">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Import Collection
+            </button>
+            <input type="file" id="importFileInput" class="hidden-file-input" accept=".json" onchange="importBCTCollection(event)">
+        </div>
+
         <nav class="category-nav" id="categoryNav" aria-label="Category filter"></nav>
 
         <div class="results-info" id="resultsInfo" aria-live="polite"></div>
@@ -733,6 +986,10 @@ body.modal-open { overflow: hidden; }
             <button class="modal-nav-btn" id="modalPrevBtn" onclick="navigateModal(-1)" aria-label="Previous">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Previous
             </button>
+            <button class="modal-bookmark-btn" id="modalBookmarkBtn" onclick="toggleModalBookmark()" aria-label="Bookmark">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                <span id="modalBookmarkLabel">Bookmark</span>
+            </button>
             <button class="modal-share-btn" onclick="shareTechnique()" aria-label="Copy link">
                 <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                 Copy Link
@@ -741,6 +998,43 @@ body.modal-open { overflow: hidden; }
                 Next <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
         </nav>
+    </div>
+</div>
+
+<!-- Floating Comparison Bar -->
+<div class="compare-bar" id="compareBar" aria-label="Comparison selection">
+    <div class="compare-bar-inner">
+        <div class="compare-bar-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Compare (<span id="compareCount">0</span>/3)
+        </div>
+        <div class="compare-bar-items" id="compareBarItems"></div>
+        <div class="compare-bar-actions">
+            <button class="compare-bar-btn compare-bar-btn-primary" onclick="openCompareModal()" id="compareNowBtn" disabled>Compare Now</button>
+            <button class="compare-bar-btn compare-bar-btn-clear" onclick="clearAllCompare()">Clear All</button>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison Modal -->
+<div class="compare-modal-overlay" id="compareModalOverlay">
+    <div class="compare-modal">
+        <div class="compare-modal-header">
+            <div class="compare-modal-title">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Side-by-Side Comparison
+            </div>
+            <div class="compare-modal-header-actions">
+                <button class="export-btn" onclick="exportCompareCSV()" aria-label="Export comparison as CSV">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Export CSV
+                </button>
+                <button class="modal-close-btn" onclick="closeCompareModal()" aria-label="Close comparison">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="compare-modal-body" id="compareModalBody"></div>
     </div>
 </div>
 
@@ -863,6 +1157,18 @@ var allSectors = {};
 var flatTechniques = [];
 var currentModalIndex = -1;
 var lastFocusedElement = null;
+var currentView = 'all'; /* 'all' or 'collection' */
+
+/* ============================================================
+   BOOKMARKS, NOTES, COMPARE — localStorage
+   ============================================================ */
+var bctBookmarks = JSON.parse(localStorage.getItem('impactmojo_bct_bookmarks') || '[]');
+var bctNotes     = JSON.parse(localStorage.getItem('impactmojo_bct_notes') || '{}');
+var bctCompare   = JSON.parse(localStorage.getItem('impactmojo_bct_compare') || '[]');
+
+function saveBCTBookmarks() { localStorage.setItem('impactmojo_bct_bookmarks', JSON.stringify(bctBookmarks)); }
+function saveBCTNotes()     { localStorage.setItem('impactmojo_bct_notes', JSON.stringify(bctNotes)); }
+function saveBCTCompare()   { localStorage.setItem('impactmojo_bct_compare', JSON.stringify(bctCompare)); }
 
 function escapeHTML(str) {
     var map = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'};
@@ -1017,10 +1323,20 @@ function renderTechniques() {
     container.innerHTML = html;
 }
 
-function renderCard(t, catColor) {
+function renderCard(t, catColor, showNote) {
     var evClass = 'evidence-' + (t.evidenceLevel || 'emerging').toLowerCase();
     var sectors = t.sectors || [];
+    var isBookmarked = bctBookmarks.indexOf(t.id) !== -1;
+    var isCompared = bctCompare.indexOf(t.id) !== -1;
     var html = '<article class="technique-card" tabindex="0" onclick="openModal(\'' + escapeHTML(t.id) + '\')" onkeydown="if(event.key===\'Enter\')openModal(\'' + escapeHTML(t.id) + '\')" aria-label="' + escapeHTML(t.name) + '">';
+    html += '<div class="technique-card-actions">';
+    html += '<button class="bct-bookmark-btn' + (isBookmarked ? ' active' : '') + '" onclick="event.stopPropagation();toggleBCTBookmark(\'' + escapeHTML(t.id) + '\',this)" aria-label="' + (isBookmarked ? 'Remove bookmark' : 'Bookmark') + '" title="' + (isBookmarked ? 'Remove bookmark' : 'Bookmark this technique') + '">';
+    html += '<svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
+    html += '</button>';
+    html += '<button class="bct-compare-btn' + (isCompared ? ' active' : '') + '" onclick="event.stopPropagation();toggleBCTCompare(\'' + escapeHTML(t.id) + '\',this)" aria-label="' + (isCompared ? 'Remove from compare' : 'Add to compare') + '" title="' + (isCompared ? 'Remove from comparison' : 'Add to comparison (max 3)') + '">';
+    html += '<svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>';
+    html += '</button>';
+    html += '</div>';
     html += '<div class="technique-card-bar" style="background:' + escapeHTML(catColor) + ';"></div>';
     html += '<div class="technique-card-inner">';
     html += '<div class="technique-card-top">';
@@ -1029,6 +1345,9 @@ function renderCard(t, catColor) {
     html += '</div>';
     html += '<h3 class="technique-name">' + escapeHTML(t.name) + '</h3>';
     html += '<p class="technique-definition">' + escapeHTML(t.definition) + '</p>';
+    if (showNote && bctNotes[t.id]) {
+        html += '<div class="collection-note-preview">' + escapeHTML(bctNotes[t.id]) + '</div>';
+    }
     html += '<div class="technique-card-footer">';
     sectors.slice(0, 3).forEach(function(s) { html += '<span class="sector-pill">' + escapeHTML(s) + '</span>'; });
     if (sectors.length > 3) html += '<span class="sector-pill sector-pill-more">+' + (sectors.length - 3) + '</span>';
@@ -1055,6 +1374,7 @@ function openModal(id) {
     currentModalIndex = -1;
     for (var i = 0; i < flatTechniques.length; i++) { if (flatTechniques[i].id === id) { currentModalIndex = i; break; } }
     renderModalContent(t);
+    updateModalBookmarkBtn(id);
     document.getElementById('modalOverlay').classList.add('active');
     document.body.classList.add('modal-open');
     document.getElementById('modalPrevBtn').disabled = currentModalIndex <= 0;
@@ -1102,6 +1422,18 @@ function renderModalContent(t) {
         });
         body += '</div></div>';
     }
+
+    /* Notes section */
+    var noteVal = bctNotes[t.id] || '';
+    body += '<div class="modal-notes-section">';
+    body += '<div class="modal-notes-header">';
+    body += '<svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+    body += '<div class="modal-notes-title">My Notes</div>';
+    body += '</div>';
+    body += '<textarea class="modal-notes-textarea" id="modalNotesTextarea" data-technique-id="' + escapeHTML(t.id) + '" placeholder="Add your notes about this technique..." oninput="saveBCTNote(this)">' + escapeHTML(noteVal) + '</textarea>';
+    body += '<div class="modal-notes-saved" id="modalNotesSaved">Notes saved</div>';
+    body += '</div>';
+
     document.getElementById('modalBody').innerHTML = body;
 }
 
@@ -1126,6 +1458,7 @@ function navigateModal(dir) {
     if (idx < 0 || idx >= flatTechniques.length) return;
     currentModalIndex = idx;
     renderModalContent(flatTechniques[idx]);
+    updateModalBookmarkBtn(flatTechniques[idx].id);
     document.getElementById('modalPrevBtn').disabled = idx <= 0;
     document.getElementById('modalNextBtn').disabled = idx >= flatTechniques.length - 1;
     document.getElementById('modalBody').scrollTop = 0;
@@ -1167,6 +1500,303 @@ function exportCSV() {
     var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a'); a.href = url; a.download = 'bct-repository-impactmojo.csv'; a.click();
+    URL.revokeObjectURL(url);
+}
+
+/* ============================================================
+   BOOKMARK FUNCTIONS
+   ============================================================ */
+function toggleBCTBookmark(id, btnEl) {
+    var idx = bctBookmarks.indexOf(id);
+    if (idx === -1) {
+        bctBookmarks.push(id);
+    } else {
+        bctBookmarks.splice(idx, 1);
+    }
+    saveBCTBookmarks();
+    if (btnEl) {
+        var isNowBookmarked = bctBookmarks.indexOf(id) !== -1;
+        btnEl.classList.toggle('active', isNowBookmarked);
+        btnEl.setAttribute('aria-label', isNowBookmarked ? 'Remove bookmark' : 'Bookmark');
+        btnEl.setAttribute('title', isNowBookmarked ? 'Remove bookmark' : 'Bookmark this technique');
+    }
+    updateCollectionCount();
+    if (currentView === 'collection') renderTechniques();
+}
+
+function updateModalBookmarkBtn(id) {
+    var btn = document.getElementById('modalBookmarkBtn');
+    var label = document.getElementById('modalBookmarkLabel');
+    if (!btn || !label) return;
+    var isBookmarked = bctBookmarks.indexOf(id) !== -1;
+    btn.classList.toggle('active', isBookmarked);
+    label.textContent = isBookmarked ? 'Bookmarked' : 'Bookmark';
+}
+
+function toggleModalBookmark() {
+    var t = flatTechniques[currentModalIndex];
+    if (!t) return;
+    toggleBCTBookmark(t.id, null);
+    updateModalBookmarkBtn(t.id);
+}
+
+function updateCollectionCount() {
+    var countEl = document.getElementById('collectionCount');
+    if (countEl) countEl.textContent = bctBookmarks.length;
+}
+
+/* ============================================================
+   NOTES FUNCTIONS
+   ============================================================ */
+var notesSaveTimeout;
+function saveBCTNote(textarea) {
+    var id = textarea.getAttribute('data-technique-id');
+    var val = textarea.value.trim();
+    if (val) {
+        bctNotes[id] = val;
+    } else {
+        delete bctNotes[id];
+    }
+    clearTimeout(notesSaveTimeout);
+    notesSaveTimeout = setTimeout(function() {
+        saveBCTNotes();
+        var saved = document.getElementById('modalNotesSaved');
+        if (saved) {
+            saved.classList.add('show');
+            setTimeout(function() { saved.classList.remove('show'); }, 1500);
+        }
+    }, 500);
+}
+
+/* ============================================================
+   COLLECTION EXPORT / IMPORT
+   ============================================================ */
+function exportBCTCollection() {
+    var data = {
+        version: '1.0',
+        exportedAt: new Date().toISOString(),
+        bookmarks: bctBookmarks,
+        notes: bctNotes
+    };
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'nudgekit-collection.json'; a.click();
+    URL.revokeObjectURL(url);
+}
+
+function importBCTCollection(event) {
+    var file = event.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            var data = JSON.parse(e.target.result);
+            if (!data.bookmarks || !Array.isArray(data.bookmarks)) throw new Error('Invalid format');
+            /* Merge imported data */
+            data.bookmarks.forEach(function(id) {
+                if (bctBookmarks.indexOf(id) === -1) bctBookmarks.push(id);
+            });
+            if (data.notes && typeof data.notes === 'object') {
+                Object.keys(data.notes).forEach(function(id) {
+                    if (!bctNotes[id]) bctNotes[id] = data.notes[id];
+                });
+            }
+            saveBCTBookmarks();
+            saveBCTNotes();
+            updateCollectionCount();
+            renderTechniques();
+            showToast('Collection imported successfully!');
+        } catch (err) {
+            showToast('Invalid collection file. Please check the format.');
+        }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+}
+
+function showToast(msg) {
+    var toast = document.getElementById('copyToast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); toast.textContent = 'Link copied to clipboard!'; }, 2500);
+}
+
+/* ============================================================
+   VIEW TABS (All / Collection)
+   ============================================================ */
+function switchView(view) {
+    currentView = view;
+    document.querySelectorAll('.view-tab').forEach(function(tab) {
+        var isActive = tab.dataset.view === view;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+    var toolbar = document.getElementById('collectionToolbar');
+    var catNav = document.getElementById('categoryNav');
+    var controlsRow = document.querySelector('.controls-row');
+    if (view === 'collection') {
+        toolbar.classList.add('visible');
+        catNav.style.display = 'none';
+        if (controlsRow) controlsRow.style.display = 'none';
+    } else {
+        toolbar.classList.remove('visible');
+        catNav.style.display = '';
+        if (controlsRow) controlsRow.style.display = '';
+    }
+    renderTechniques();
+}
+
+/* ============================================================
+   COMPARE FUNCTIONS
+   ============================================================ */
+function toggleBCTCompare(id, btnEl) {
+    var idx = bctCompare.indexOf(id);
+    if (idx === -1) {
+        if (bctCompare.length >= 3) {
+            showToast('Maximum 3 techniques can be compared at once.');
+            return;
+        }
+        bctCompare.push(id);
+    } else {
+        bctCompare.splice(idx, 1);
+    }
+    saveBCTCompare();
+    if (btnEl) {
+        var isNowCompared = bctCompare.indexOf(id) !== -1;
+        btnEl.classList.toggle('active', isNowCompared);
+        btnEl.setAttribute('aria-label', isNowCompared ? 'Remove from compare' : 'Add to compare');
+    }
+    updateCompareBar();
+}
+
+function removeFromCompare(id) {
+    var idx = bctCompare.indexOf(id);
+    if (idx !== -1) bctCompare.splice(idx, 1);
+    saveBCTCompare();
+    updateCompareBar();
+    /* Update card button states */
+    document.querySelectorAll('.bct-compare-btn').forEach(function(btn) {
+        /* Re-render to fix states */
+    });
+    renderTechniques();
+}
+
+function clearAllCompare() {
+    bctCompare = [];
+    saveBCTCompare();
+    updateCompareBar();
+    renderTechniques();
+}
+
+function updateCompareBar() {
+    var bar = document.getElementById('compareBar');
+    var countEl = document.getElementById('compareCount');
+    var itemsEl = document.getElementById('compareBarItems');
+    var compareBtn = document.getElementById('compareNowBtn');
+
+    countEl.textContent = bctCompare.length;
+
+    if (bctCompare.length === 0) {
+        bar.classList.remove('visible');
+        return;
+    }
+    bar.classList.add('visible');
+    compareBtn.disabled = bctCompare.length < 2;
+
+    var html = '';
+    bctCompare.forEach(function(id) {
+        var t = findTechniqueById(id);
+        var name = t ? t.name : id;
+        html += '<div class="compare-bar-chip">';
+        html += '<span>' + escapeHTML(id) + ' — ' + escapeHTML(name) + '</span>';
+        html += '<button class="compare-bar-chip-remove" onclick="removeFromCompare(\'' + escapeHTML(id) + '\')" aria-label="Remove ' + escapeHTML(name) + '">';
+        html += '<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+        html += '</button></div>';
+    });
+    itemsEl.innerHTML = html;
+}
+
+function openCompareModal() {
+    if (bctCompare.length < 2) return;
+    var techniques = bctCompare.map(function(id) { return findTechniqueById(id); }).filter(Boolean);
+    if (techniques.length < 2) return;
+
+    var cols = techniques.length;
+    var html = '<div class="compare-columns" data-cols="' + cols + '">';
+
+    techniques.forEach(function(t) {
+        var evClass = 'evidence-' + (t.evidenceLevel || 'emerging').toLowerCase();
+        html += '<div class="compare-column">';
+        html += '<div class="compare-col-header" style="border-top:4px solid ' + escapeHTML(t._categoryColor || '#0EA5E9') + ';">';
+        html += '<div class="compare-col-name">' + escapeHTML(t.name) + '</div>';
+        html += '<div class="compare-col-id">' + escapeHTML(t.id) + ' — ' + escapeHTML(t._categoryName || '') + '</div>';
+        html += '</div>';
+
+        html += '<div class="compare-row"><div class="compare-row-label">Definition</div>';
+        html += '<div class="compare-row-value">' + escapeHTML(t.definition) + '</div></div>';
+
+        html += '<div class="compare-row"><div class="compare-row-label">Evidence Level</div>';
+        html += '<div class="compare-row-value"><span class="technique-evidence-badge ' + evClass + '">' + escapeHTML(t.evidenceLevel || 'Emerging') + '</span></div></div>';
+
+        html += '<div class="compare-row"><div class="compare-row-label">Sectors</div>';
+        html += '<div class="compare-row-value">';
+        (t.sectors || []).forEach(function(s) { html += '<span class="sector-pill">' + escapeHTML(s) + '</span> '; });
+        html += '</div></div>';
+
+        html += '<div class="compare-row"><div class="compare-row-label">Implementation Tips</div>';
+        html += '<div class="compare-row-value">';
+        if (t.implementationTips && t.implementationTips.length) {
+            html += '<ul style="list-style:disc;padding-left:18px;margin:0;">';
+            t.implementationTips.forEach(function(tip) { html += '<li style="margin-bottom:4px;">' + escapeHTML(tip) + '</li>'; });
+            html += '</ul>';
+        } else { html += '<em>No tips available</em>'; }
+        html += '</div></div>';
+
+        html += '<div class="compare-row"><div class="compare-row-label">South Asian Context</div>';
+        html += '<div class="compare-row-value">' + escapeHTML(t.southAsianContext || 'Not available') + '</div></div>';
+
+        html += '</div>'; /* close compare-column */
+    });
+
+    html += '</div>';
+    document.getElementById('compareModalBody').innerHTML = html;
+    document.getElementById('compareModalOverlay').classList.add('active');
+    document.body.classList.add('modal-open');
+}
+
+function closeCompareModal() {
+    document.getElementById('compareModalOverlay').classList.remove('active');
+    document.body.classList.remove('modal-open');
+}
+
+document.getElementById('compareModalOverlay').addEventListener('click', function(e) { if (e.target === this) closeCompareModal(); });
+
+function exportCompareCSV() {
+    var techniques = bctCompare.map(function(id) { return findTechniqueById(id); }).filter(Boolean);
+    if (!techniques.length) return;
+    var rows = [['Field'].concat(techniques.map(function(t) { return t.id + ' - ' + t.name; }))];
+    var fields = [
+        { key: 'definition', label: 'Definition' },
+        { key: 'evidenceLevel', label: 'Evidence Level' },
+        { key: 'sectors', label: 'Sectors', join: true },
+        { key: 'implementationTips', label: 'Implementation Tips', join: true },
+        { key: 'southAsianContext', label: 'South Asian Context' },
+        { key: 'example', label: 'Field Example' }
+    ];
+    fields.forEach(function(f) {
+        var row = [f.label];
+        techniques.forEach(function(t) {
+            var val = t[f.key] || '';
+            if (f.join && Array.isArray(val)) val = val.join('; ');
+            row.push(val);
+        });
+        rows.push(row);
+    });
+    var csv = rows.map(function(row) { return row.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+    var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'bct-comparison.csv'; a.click();
     URL.revokeObjectURL(url);
 }
 
