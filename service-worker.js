@@ -81,8 +81,9 @@ self.addEventListener('fetch', event => {
           }
           return response;
         })
-        .catch(() =>
-          caches.match(event.request)
+        .catch(() => {
+          notifyClients({ type: 'OFFLINE_DETECTED' });
+          return caches.match(event.request)
             .then(cached => {
               if (cached) return cached;
               // Check course caches as fallback
@@ -93,8 +94,8 @@ self.addEventListener('fetch', event => {
                   Promise.resolve(null)
                 );
               }).then(result => result || caches.match('/index.html'));
-            })
-        )
+            });
+        })
     );
   } else {
     // Stale-while-revalidate for assets (JS, CSS, images, fonts)
@@ -243,13 +244,6 @@ function notifyClients(message) {
   });
 }
 
-// Detect offline during fetch failures and notify clients
-self.addEventListener('fetch', function offlineDetector(event) {
-  // This is a secondary listener just for offline detection — does not respondWith
-  if (event.request.method === 'GET' && new URL(event.request.url).origin === self.location.origin) {
-    event.request.clone(); // keep original intact
-    fetch(event.request.clone()).catch(() => {
-      notifyClients({ type: 'OFFLINE_DETECTED' });
-    });
-  }
-});
+// Periodic offline check — notify clients when a navigation fetch fails
+// (Integrated into the main fetch handler's .catch paths above rather than
+//  duplicating requests. Client-side navigator.onLine events handle the rest.)
