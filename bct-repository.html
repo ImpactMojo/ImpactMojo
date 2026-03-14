@@ -986,6 +986,10 @@ body.modal-open { overflow: hidden; }
             <button class="modal-nav-btn" id="modalPrevBtn" onclick="navigateModal(-1)" aria-label="Previous">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Previous
             </button>
+            <button class="modal-bookmark-btn" id="modalBookmarkBtn" onclick="toggleModalBookmark()" aria-label="Bookmark">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                <span id="modalBookmarkLabel">Bookmark</span>
+            </button>
             <button class="modal-share-btn" onclick="shareTechnique()" aria-label="Copy link">
                 <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                 Copy Link
@@ -1358,6 +1362,7 @@ function openModal(id) {
     currentModalIndex = -1;
     for (var i = 0; i < flatTechniques.length; i++) { if (flatTechniques[i].id === id) { currentModalIndex = i; break; } }
     renderModalContent(t);
+    updateModalBookmarkBtn(id);
     document.getElementById('modalOverlay').classList.add('active');
     document.body.classList.add('modal-open');
     document.getElementById('modalPrevBtn').disabled = currentModalIndex <= 0;
@@ -1441,6 +1446,7 @@ function navigateModal(dir) {
     if (idx < 0 || idx >= flatTechniques.length) return;
     currentModalIndex = idx;
     renderModalContent(flatTechniques[idx]);
+    updateModalBookmarkBtn(flatTechniques[idx].id);
     document.getElementById('modalPrevBtn').disabled = idx <= 0;
     document.getElementById('modalNextBtn').disabled = idx >= flatTechniques.length - 1;
     document.getElementById('modalBody').scrollTop = 0;
