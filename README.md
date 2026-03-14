@@ -182,7 +182,7 @@ Economics simulations and behavioral experiments:
 
 ### Multilingual Support
 
-Content available in 6 languages: English, Hindi, Tamil, Bengali, Telugu, Marathi
+All pages available in 5 languages via built-in translation: English, Hindi (हिन्दी), Tamil (தமிழ்), Bengali (বাংলা), Marathi (मराठी). Powered by Google Translate with a custom language selector UI.
 
 ---
 
@@ -193,7 +193,8 @@ Content available in 6 languages: English, Hindi, Tamil, Bengali, Telugu, Marath
 - **Progress Tracking** — Monitor your learning journey
 - **Reading Lists** — Curated resource collections
 - **Course Comparison** — Compare courses side-by-side
-- **Certificate Generation** — Practitioner tier and above
+- **Certificate Generation** — Auto-issued on course completion with public verification
+- **Portfolio Builder** — Premium feature: curate certificates, projects & case studies with PDF export
 
 ### Account System
 
@@ -209,8 +210,11 @@ Content available in 6 languages: English, Hindi, Tamil, Bengali, Telugu, Marath
 | Technology | Purpose |
 |------------|---------|
 | **HTML/CSS/JS** | Core frontend (no frameworks) |
+| **TypeScript/Deno** | Supabase Edge Functions (auth, certificates, tokens) |
+| **SQL (PostgreSQL)** | Database schema, triggers, RLS policies |
 | **Supabase** | Authentication, database, Edge Functions |
 | **Netlify** | Hosting, deployment, Edge Functions (auth-gate) |
+| **Google Translate** | Multilingual support (Hindi, Tamil, Bengali, Marathi) |
 | **Google Analytics** | Usage analytics |
 | **Formspree** | Contact form handling |
 | **UserWay** | Accessibility widget |
@@ -273,12 +277,15 @@ ImpactMojo/
 │   ├── router.js           # Clean URL section router
 │   ├── resource-launch.js  # JWT-based premium resource launcher
 │   ├── token-gate.js       # Client-side token verification
-│   └── premium.js          # Premium tier UI logic
+│   ├── premium.js          # Premium tier UI logic
+│   └── translate.js        # Multilingual translation (Google Translate)
 │
 ├── login.html              # User login
 ├── signup.html             # User registration
 ├── account.html            # User dashboard
 ├── premium.html            # Premium features & registration
+├── portfolio.html          # Premium portfolio builder
+├── verify-certificate.html # Public certificate verification
 │
 ├── workshops.html          # Workshop booking & info
 ├── coaching.html           # 1-on-1 coaching services
@@ -297,8 +304,10 @@ ImpactMojo/
 │   └── index.html          # ImpactLex dictionary (PWA)
 │
 ├── supabase/
-│   └── functions/
-│       └── mint-resource-token/  # JWT minting Edge Function
+│   ├── functions/
+│   │   ├── mint-resource-token/  # JWT minting Edge Function
+│   │   └── issue-certificate/    # Certificate issuance Edge Function
+│   └── migrations/               # Database migration scripts
 │
 ├── netlify-resource-template/    # Auth-gate template for resource sites
 │   ├── netlify.toml
