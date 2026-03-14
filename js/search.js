@@ -16,13 +16,18 @@
   var selectedIndex = -1;
   var visible = false;
 
+  var SARGAM_CDN = 'https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/';
+  function sargamImg(name) {
+    return '<img src="' + SARGAM_CDN + name + '.svg" alt="" style="width:18px;height:18px;filter:brightness(0) invert(1);" loading="lazy">';
+  }
+
   var TYPE_META = {
-    bct:       { icon: '🧠', label: 'BCT Technique', color: '#EC4899' },
-    dataverse: { icon: '📊', label: 'Dataverse',     color: '#6366F1' },
-    course:    { icon: '🎓', label: 'Course',        color: '#0EA5E9' },
-    game:      { icon: '🎮', label: 'Game',          color: '#F59E0B' },
-    lab:       { icon: '🔬', label: 'Lab',           color: '#10B981' },
-    page:      { icon: '📄', label: 'Page',          color: '#8B5CF6' }
+    bct:       { icon: sargamImg('si_Fact_check'),  label: 'BCT Technique', color: '#EC4899' },
+    dataverse: { icon: sargamImg('si_Bar_chart'),   label: 'Dataverse',     color: '#6366F1' },
+    course:    { icon: sargamImg('si_Book'),         label: 'Course',        color: '#0EA5E9' },
+    game:      { icon: sargamImg('si_Activity'),     label: 'Game',          color: '#F59E0B' },
+    lab:       { icon: sargamImg('si_Tool'),          label: 'Lab',           color: '#10B981' },
+    page:      { icon: sargamImg('si_Article'),      label: 'Page',          color: '#8B5CF6' }
   };
 
   /* ---- Load Fuse.js ---- */
@@ -167,7 +172,7 @@
     var html = '';
     results.forEach(function (r, i) {
       var item = r.item;
-      var meta = TYPE_META[item.type] || { icon: '📄', label: item.type, color: '#64748b' };
+      var meta = TYPE_META[item.type] || { icon: sargamImg('si_Article'), label: item.type, color: '#64748b' };
       html +=
         '<a class="ims-result' + (i === 0 ? ' ims-active' : '') + '" href="' + escapeHTML(item.url) + '" data-idx="' + i + '"' +
         (item.url.indexOf('http') === 0 ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' +
