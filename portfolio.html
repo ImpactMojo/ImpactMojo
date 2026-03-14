@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<!--
+    +==============================================================================+
+    |  IMPACTMOJO - PORTFOLIO BUILDER                                              |
+    |  Version: 1.0.0 - March 2026                                                |
+    |  Premium feature: Practitioner tier and above                                |
+    |  Based on PAGE-TEMPLATE v3.0.0                                              |
+    +==============================================================================+
+-->
+<html lang="en">
+<head>
+<!-- Early Mobile Menu Functions - Must load before DOM -->
+<script>
+function toggleMobileMenu() {
+    var navLinks = document.getElementById('navLinks');
+    var toggle = document.getElementById('mobile-menu-btn');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    var authSection = document.getElementById('mobileAuthSection');
+    if (!navLinks) return;
+    var isOpen = navLinks.classList.contains('active');
+    if (isOpen) {
+        navLinks.classList.remove('active');
+        if (toggle) toggle.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        if (authSection) authSection.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        document.body.style.overflow = '';
+        document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) { item.classList.remove('open'); });
+    } else {
+        navLinks.classList.add('active');
+        if (toggle) toggle.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        if (authSection) authSection.classList.add('active');
+        document.body.classList.add('menu-open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+function closeMobileMenu() {
+    var navLinks = document.getElementById('navLinks');
+    var toggle = document.getElementById('mobile-menu-btn');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    var authSection = document.getElementById('mobileAuthSection');
+    if (navLinks) navLinks.classList.remove('active');
+    if (toggle) toggle.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    if (authSection) authSection.classList.remove('active');
+    document.body.classList.remove('menu-open');
+    document.body.style.overflow = '';
+    document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) { item.classList.remove('open'); });
+}
+function toggleMobileDropdown(event, element) {
+    event.preventDefault();
+    event.stopPropagation();
+    var li = element.closest('li.has-dropdown');
+    if (!li) return;
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.nav-links > li.has-dropdown.open').forEach(function(item) { if (item !== li) item.classList.remove('open'); });
+        li.classList.toggle('open');
+    }
+}
+</script>
+
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<meta name="version" content="1.0.0.20260314">
+
+<script>
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) { window.location.reload(); }
+});
+</script>
+
+<meta name="description" content="Build and curate your professional development portfolio. Showcase certificates, projects, and case studies. Premium feature for ImpactMojo subscribers.">
+<meta property="og:title" content="My Portfolio | ImpactMojo">
+<meta property="og:description" content="Build and curate your professional development portfolio on ImpactMojo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.impactmojo.in/portfolio">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<title>My Portfolio | ImpactMojo</title>
+
+<link href="assets/images/favicon.png" rel="icon" type="image/png">
+<link href="assets/images/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+<link href="assets/images/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+<link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="manifest.json" rel="manifest">
+<meta name="theme-color" content="#0EA5E9">
+
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --accent-color: #0EA5E9;
+    --accent-hover: #0284C7;
+    --secondary-accent: #6366F1;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --gradient-accent: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+    --gradient-hero: linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+    --nav-bg: rgba(15, 23, 42, 0.95);
+    --nav-text: #F1F5F9;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"], body.light-mode {
+    --primary-bg: #F8FAFC; --secondary-bg: #FFFFFF; --accent-color: #0284C7; --accent-hover: #0369A1;
+    --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #64748B;
+    --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
+    --nav-bg: rgba(248, 250, 252, 0.95); --nav-text: #0F172A;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.03); --shadow-md: 0 4px 6px rgba(0,0,0,0.05); --shadow-lg: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--primary-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+a { color: var(--accent-color); text-decoration: none; transition: color 0.2s ease; }
+a:hover { color: var(--accent-hover); }
+h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1.3; }
+
+/* V3 Decorations */
+.v3-decoration-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+.v3-paper-plane { position: absolute; opacity: 0.15; animation: floatPlane 20s ease-in-out infinite; }
+.v3-paper-plane svg { width: 100%; height: 100%; fill: var(--accent-color); }
+.v3-paper-plane-1 { top: 15%; left: 5%; width: 120px; height: 120px; }
+.v3-paper-plane-2 { top: 60%; right: 8%; width: 80px; height: 80px; animation-delay: -7s; transform: rotate(45deg); }
+@keyframes floatPlane { 0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.15; } 25% { transform: translateY(-20px) rotate(5deg); opacity: 0.2; } 50% { transform: translateY(-10px) rotate(-3deg); opacity: 0.15; } 75% { transform: translateY(-25px) rotate(3deg); opacity: 0.18; } }
+.v3-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: pulseBlob 15s ease-in-out infinite; }
+.v3-blob-1 { top: 10%; right: 10%; width: 400px; height: 400px; background: var(--accent-color); }
+.v3-blob-2 { bottom: 20%; left: 5%; width: 300px; height: 300px; background: var(--secondary-accent); animation-delay: -5s; }
+@keyframes pulseBlob { 0%, 100% { transform: scale(1); opacity: 0.15; } 50% { transform: scale(1.1); opacity: 0.2; } }
+
+/* Header & Nav */
+.header { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
+.nav-container { max-width: 1400px; margin: 0 auto; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+.logo-container { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.logo-svg img { width: 48px; height: 48px; border-radius: 10px; object-fit: contain; }
+.logo-text { display: flex; flex-direction: column; }
+.logo-main { font-family: 'Poppins', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
+.logo-tagline { font-size: 0.7rem; color: var(--accent-color); font-weight: 500; letter-spacing: 0.5px; }
+.mobile-menu-toggle { display: none; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; cursor: pointer; width: 48px; height: 48px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; padding: 10px; z-index: 9999; }
+.mobile-menu-toggle .hamburger-line { width: 22px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: all 0.3s ease; display: block; }
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) { opacity: 0; }
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+.nav-links > li > a { padding: 0.6rem 1rem; color: var(--nav-text); font-weight: 500; font-size: 0.95rem; border-radius: 8px; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; }
+.nav-links > li > a:hover { background: var(--hover-bg); color: var(--accent-color); }
+.has-dropdown { position: relative; }
+.dropdown-arrow { width: 14px; height: 14px; transition: transform 0.3s ease; }
+.has-dropdown:hover .dropdown-arrow { transform: rotate(180deg); }
+.dropdown-menu { position: absolute; top: 100%; left: 0; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 0.5rem; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; box-shadow: var(--shadow-lg); z-index: 100; list-style: none; }
+.has-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.dropdown-menu a { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: var(--text-primary); border-radius: 8px; transition: all 0.2s ease; }
+.dropdown-menu a:hover { background: var(--hover-bg); color: var(--accent-color); padding-left: 1.25rem; }
+.dropdown-divider { height: 1px; background: var(--border-color); margin: 0.5rem 0; }
+.nav-buttons { display: flex; align-items: center; gap: 0.5rem; }
+.theme-toggle { width: 44px; height: 44px; border-radius: 10px; background: var(--card-bg); border: 1px solid var(--border-color); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+.theme-toggle:hover { background: var(--hover-bg); border-color: var(--accent-color); }
+.theme-toggle svg { width: 20px; height: 20px; stroke: var(--text-primary); fill: none; stroke-width: 2; }
+.theme-toggle .icon-moon { display: none; }
+.light-mode .theme-toggle .icon-sun { display: none; }
+.light-mode .theme-toggle .icon-moon { display: block; }
+.mobile-menu-overlay, .mobile-auth-section { display: none; }
+.v3-inline-icon { width: 16px; height: 16px; opacity: 0.7; vertical-align: middle; }
+
+/* Page Content */
+.page-content { flex: 1; position: relative; z-index: 1; }
+.page-hero { padding: 3rem 2rem 1.5rem; text-align: center; background: var(--gradient-hero); position: relative; }
+.page-hero h1 { font-size: 2.25rem; margin-bottom: 0.5rem; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.page-hero p { font-size: 1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+.container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+
+/* Premium Gate Overlay */
+.premium-gate { text-align: center; padding: 4rem 2rem; }
+.premium-gate-icon { width: 80px; height: 80px; margin: 0 auto 1.5rem; background: var(--hover-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.premium-gate-icon svg { width: 40px; height: 40px; stroke: var(--accent-color); fill: none; stroke-width: 1.5; }
+.premium-gate h2 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.premium-gate p { color: var(--text-secondary); margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto; }
+.premium-gate .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.5rem; background: var(--gradient-primary); color: white; font-weight: 600; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; }
+
+/* Auth Gate */
+.auth-gate { text-align: center; padding: 4rem 2rem; }
+.auth-gate h2 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.auth-gate p { color: var(--text-secondary); margin-bottom: 1.5rem; }
+
+/* Portfolio Profile Header */
+.portfolio-profile { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
+.profile-top { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+.profile-avatar-lg { width: 80px; height: 80px; border-radius: 50%; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.profile-avatar-lg svg { width: 40px; height: 40px; stroke: white; fill: none; stroke-width: 1.5; }
+.profile-avatar-lg img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
+.profile-details h2 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+.profile-details .profile-org { color: var(--text-secondary); font-size: 0.95rem; }
+.profile-details .profile-location { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem; }
+.profile-headline-wrap { margin-bottom: 1rem; }
+.profile-headline-wrap label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.headline-input { width: 100%; padding: 0.75rem 1rem; background: var(--primary-bg); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); font-size: 0.95rem; font-family: inherit; resize: none; transition: border-color 0.2s; }
+.headline-input:focus { outline: none; border-color: var(--accent-color); }
+.profile-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.profile-link-badge { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.75rem; background: var(--hover-bg); border-radius: 8px; font-size: 0.8rem; color: var(--text-secondary); }
+.profile-link-badge svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+/* Action Bar */
+.action-bar { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.btn-add { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; background: var(--gradient-primary); color: white; font-weight: 600; border-radius: 10px; border: none; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
+.btn-add:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3); }
+.btn-add svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+.btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; background: var(--card-bg); color: var(--text-primary); font-weight: 500; border-radius: 10px; border: 1px solid var(--border-color); cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
+.btn-outline:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.btn-outline svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+.btn-outline.btn-danger:hover { border-color: var(--danger-color); color: var(--danger-color); }
+
+/* Portfolio Grid */
+.portfolio-grid { display: flex; flex-direction: column; gap: 1rem; }
+
+/* Portfolio Item Card */
+.portfolio-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.25rem 1.5rem; display: flex; align-items: flex-start; gap: 1rem; transition: all 0.2s; position: relative; }
+.portfolio-item:hover { border-color: var(--accent-color); box-shadow: var(--shadow-md); }
+.portfolio-item.hidden-item { opacity: 0.5; }
+.item-drag { cursor: grab; color: var(--text-muted); flex-shrink: 0; padding-top: 0.15rem; }
+.item-drag svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+.item-body { flex: 1; min-width: 0; }
+.item-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+.item-type-badge { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge-certificate { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+.badge-project { background: rgba(99, 102, 241, 0.15); color: #6366F1; }
+.badge-case-study { background: rgba(245, 158, 11, 0.15); color: #F59E0B; }
+.badge-custom { background: rgba(14, 165, 233, 0.15); color: #0EA5E9; }
+.item-title { font-weight: 600; font-size: 1rem; }
+.item-description { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; }
+.item-description-input { width: 100%; padding: 0.5rem 0.75rem; background: var(--primary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; font-family: inherit; resize: vertical; min-height: 40px; max-height: 120px; }
+.item-description-input:focus { outline: none; border-color: var(--accent-color); }
+.item-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.item-tag { font-size: 0.7rem; padding: 0.15rem 0.5rem; background: var(--hover-bg); border-radius: 4px; color: var(--text-muted); }
+.item-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+.item-btn { width: 32px; height: 32px; border-radius: 8px; background: var(--hover-bg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; color: var(--text-muted); }
+.item-btn:hover { background: var(--accent-color); color: white; }
+.item-btn.btn-hide:hover { background: var(--warning-color); }
+.item-btn.btn-delete:hover { background: var(--danger-color); }
+.item-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+/* Empty State */
+.empty-state { text-align: center; padding: 4rem 2rem; background: var(--card-bg); border: 2px dashed var(--border-color); border-radius: 16px; }
+.empty-state-icon { width: 64px; height: 64px; margin: 0 auto 1rem; background: var(--hover-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.empty-state-icon svg { width: 32px; height: 32px; stroke: var(--text-muted); fill: none; stroke-width: 1.5; }
+.empty-state h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.empty-state p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
+
+/* Add Item Modal */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-xl); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); }
+.modal-header h3 { font-size: 1.1rem; }
+.modal-close { width: 36px; height: 36px; border-radius: 8px; background: var(--hover-bg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+.modal-close:hover { background: var(--danger-color); color: white; }
+.modal-close svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+.modal-body { padding: 1.5rem; }
+.modal-section { margin-bottom: 1.25rem; }
+.modal-section label { display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500; }
+.modal-section select, .modal-section input, .modal-section textarea { width: 100%; padding: 0.75rem 1rem; background: var(--primary-bg); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); font-size: 0.9rem; font-family: inherit; }
+.modal-section select:focus, .modal-section input:focus, .modal-section textarea:focus { outline: none; border-color: var(--accent-color); }
+.modal-section textarea { resize: vertical; min-height: 80px; }
+.modal-section select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+.modal-section .tag-input-wrap { display: flex; gap: 0.5rem; }
+.modal-section .tag-input-wrap input { flex: 1; }
+.modal-section .tag-input-wrap button { padding: 0.75rem 1rem; background: var(--accent-color); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 500; white-space: nowrap; }
+.modal-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.modal-tag { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; padding: 0.2rem 0.5rem; background: var(--hover-bg); border-radius: 4px; color: var(--text-secondary); }
+.modal-tag button { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; line-height: 1; padding: 0; }
+
+/* Import Section */
+.import-section { margin-bottom: 1.5rem; }
+.import-section h4 { font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+.import-list { display: flex; flex-direction: column; gap: 0.5rem; max-height: 200px; overflow-y: auto; }
+.import-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: var(--hover-bg); border-radius: 10px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
+.import-item:hover { border-color: var(--accent-color); }
+.import-item.selected { border-color: var(--accent-color); background: rgba(14, 165, 233, 0.1); }
+.import-item input[type="checkbox"] { accent-color: var(--accent-color); width: 16px; height: 16px; }
+.import-item-info { flex: 1; }
+.import-item-title { font-weight: 500; font-size: 0.9rem; }
+.import-item-meta { font-size: 0.75rem; color: var(--text-muted); }
+.import-empty { text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.85rem; }
+
+.modal-footer { display: flex; gap: 0.75rem; justify-content: flex-end; padding: 1rem 1.5rem; border-top: 1px solid var(--border-color); }
+.modal-footer .btn-cancel { padding: 0.75rem 1.25rem; background: var(--hover-bg); color: var(--text-primary); border: none; border-radius: 10px; cursor: pointer; font-weight: 500; font-size: 0.9rem; }
+.modal-footer .btn-save { padding: 0.75rem 1.25rem; background: var(--gradient-primary); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+
+/* Status Messages */
+.status-msg { padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; font-size: 0.9rem; display: none; }
+.status-msg.success { display: block; background: rgba(16, 185, 129, 0.1); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.2); }
+.status-msg.error { display: block; background: rgba(239, 68, 68, 0.1); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+/* Footer */
+.footer { background: var(--secondary-bg); border-top: 1px solid var(--border-color); padding: 3rem 2rem 1.5rem; position: relative; z-index: 1; }
+.footer-content { max-width: 1200px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+.footer-section h4 { color: var(--text-primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.footer-section ul { list-style: none; }
+.footer-section li { margin-bottom: 0.5rem; }
+.footer-section a { color: var(--text-secondary); font-size: 0.9rem; }
+.footer-section a:hover { color: var(--accent-color); }
+.footer-bottom { padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; }
+.footer-copyright { color: var(--text-muted); font-size: 0.85rem; }
+.footer-social { display: flex; gap: 1rem; }
+.footer-social a { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-secondary); transition: all 0.2s; }
+.footer-social a:hover { background: var(--accent-color); border-color: var(--accent-color); color: white; }
+.footer-social svg { width: 18px; height: 18px; fill: currentColor; }
+
+/* Print Styles */
+@media print {
+    .header, .footer, .action-bar, .item-actions, .item-drag, .v3-decoration-container,
+    .mobile-menu-overlay, .mobile-auth-section, .feedback-fab, .chatbot-modal,
+    .modal-overlay, .nav-buttons, .btn-add, .btn-outline, .status-msg, .headline-input,
+    .profile-headline-wrap label { display: none !important; }
+    
+    body { background: white !important; color: #1a1a1a !important; font-size: 11pt; }
+    .page-content { padding: 0; }
+    .page-hero { padding: 1.5rem 0 0.5rem; background: none !important; }
+    .page-hero h1 { font-size: 1.5rem; color: #1a1a1a !important; -webkit-text-fill-color: #1a1a1a !important; background: none !important; }
+    .page-hero p { color: #666 !important; }
+    .container { max-width: 100%; padding: 0 1rem; }
+
+    .portfolio-profile { border: 1px solid #ddd; padding: 1.25rem; page-break-inside: avoid; background: white !important; }
+    .profile-avatar-lg { background: #0EA5E9 !important; width: 50px; height: 50px; }
+    .profile-avatar-lg svg { width: 24px; height: 24px; }
+    .profile-details h2 { font-size: 1.2rem; color: #1a1a1a; }
+    .profile-details .profile-org { color: #555; }
+    .headline-input { border: none; padding: 0; background: none !important; color: #333 !important; font-style: italic; }
+    .profile-link-badge { background: #f0f0f0 !important; color: #555 !important; }
+
+    .portfolio-item { border: 1px solid #ddd; padding: 1rem; page-break-inside: avoid; background: white !important; }
+    .portfolio-item.hidden-item { display: none !important; }
+    .item-type-badge { border: 1px solid currentColor; background: none !important; }
+    .item-title { color: #1a1a1a; }
+    .item-description, .item-description-input { color: #555 !important; border: none; padding: 0; background: none !important; }
+    .item-tag { background: #f0f0f0 !important; color: #555 !important; }
+
+    /* Print header/footer branding */
+    .page-hero::after { content: "Generated from ImpactMojo Portfolio — impactmojo.in"; display: block; font-size: 9pt; color: #999; margin-top: 0.5rem; }
+    @page { margin: 1.5cm; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .mobile-menu-toggle { display: flex !important; }
+    .logo-tagline { display: none; }
+    .nav-links { display: none; position: fixed; top: 70px; left: 0; right: 0; width: 100%; background: var(--card-bg); flex-direction: column; padding: 1rem; border-top: 1px solid var(--border-color); box-shadow: var(--shadow-lg); z-index: 9998; max-height: calc(100vh - 70px); overflow-y: auto; }
+    .nav-links.active { display: flex; }
+    .nav-links > li { width: 100%; border-bottom: 1px solid var(--border-color); }
+    .nav-links > li > a { padding: 1rem; justify-content: space-between; }
+    .dropdown-menu { position: static; opacity: 1; visibility: visible; transform: none; max-height: 0; overflow: hidden; padding: 0; border: none; box-shadow: none; background: var(--secondary-bg); transition: max-height 0.3s ease; }
+    .has-dropdown.open .dropdown-menu { max-height: 500px; padding: 0.5rem 0; }
+    .has-dropdown.open .dropdown-arrow { transform: rotate(180deg); }
+    .mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9997; }
+    .mobile-menu-overlay.active { display: block; }
+    .mobile-auth-section { display: none; position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem; background: var(--secondary-bg); border-top: 1px solid var(--border-color); z-index: 9999; gap: 0.75rem; }
+    .mobile-auth-section.active { display: flex; }
+    .mobile-auth-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.875rem; border-radius: 10px; font-weight: 600; text-decoration: none; }
+    .mobile-auth-login { background: var(--card-bg); color: var(--text-primary); border: 1px solid var(--border-color); }
+    .mobile-auth-signup { background: var(--gradient-primary); color: white; }
+    body.menu-open { overflow: hidden; }
+    .nav-buttons .auth-btn { display: none; }
+
+    .page-hero { padding: 2rem 1.25rem 1rem; }
+    .page-hero h1 { font-size: 1.5rem; }
+    .container { padding: 1.5rem 1.25rem; }
+    .profile-top { flex-direction: column; text-align: center; }
+    .profile-avatar-lg { width: 64px; height: 64px; }
+    .profile-links { justify-content: center; }
+    .action-bar { flex-direction: column; }
+    .btn-add, .btn-outline { justify-content: center; }
+    .portfolio-item { flex-direction: column; }
+    .item-actions { align-self: flex-end; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .v3-paper-plane { opacity: 0.08; transform: scale(0.6); }
+    .v3-blob { display: none; }
+}
+@media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .page-hero h1 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- V3 Decorative Elements -->
+<div class="v3-decoration-container">
+    <div class="v3-paper-plane v3-paper-plane-1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></div>
+    <div class="v3-paper-plane v3-paper-plane-2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></div>
+    <div class="v3-blob v3-blob-1"></div>
+    <div class="v3-blob v3-blob-2"></div>
+</div>
+
+<!-- Header -->
+<header class="header">
+    <nav class="nav-container">
+        <a class="logo-container" href="index.html">
+            <div class="logo-svg"><img alt="ImpactMojo logo" src="assets/images/ImpactMojo%20Logo.png" width="48" height="48" loading="lazy"></div>
+            <div class="logo-text">
+                <div class="logo-main">ImpactMojo</div>
+                <div class="logo-tagline">Development Know-How</div>
+            </div>
+        </a>
+        <button class="mobile-menu-toggle" id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu" type="button">
+            <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+        </button>
+        <div class="mobile-auth-section" id="mobileAuthSection">
+            <a href="login.html" class="mobile-auth-btn mobile-auth-login" onclick="closeMobileMenu()">Log In</a>
+            <a href="signup.html" class="mobile-auth-btn mobile-auth-signup" onclick="closeMobileMenu()">Sign Up</a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">Learn <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="catalog.html">Catalog</a></li>
+                    <li><a href="handouts.html">Handouts</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="premium.html">Premium</a></li>
+                </ul>
+            </li>
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">Services <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="coaching.html">Coaching</a></li>
+                    <li><a href="workshops.html">Workshops</a></li>
+                </ul>
+            </li>
+            <li class="has-dropdown">
+                <a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)">About Us <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <ul class="dropdown-menu">
+                    <li><a href="about.html">About ImpactMojo</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li><a href="community/community.html">Community</a></li>
+                </ul>
+            </li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="podcast.html">Podcast</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+    </nav>
+</header>
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+
+<!-- Page Content -->
+<main class="page-content">
+    <section class="page-hero">
+        <h1>My Portfolio</h1>
+        <p>Curate your development work into a professional portfolio</p>
+    </section>
+
+    <div class="container">
+        <!-- Auth Gate - shown when not logged in -->
+        <div id="authGate" class="auth-gate" style="display:none;">
+            <div class="premium-gate-icon">
+                <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            </div>
+            <h2>Sign in to access your portfolio</h2>
+            <p>Log in or create an account to start building your professional development portfolio.</p>
+            <a href="login.html" class="btn-primary">Log In</a>
+        </div>
+
+        <!-- Premium Gate - shown for free tier users -->
+        <div id="premiumGate" class="premium-gate" style="display:none;">
+            <div class="premium-gate-icon">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h2>Portfolio is a Premium Feature</h2>
+            <p>Upgrade to Practitioner or above to build and share your professional development portfolio with PDF export.</p>
+            <a href="premium.html" class="btn-primary">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Upgrade from &#8377;399/month
+            </a>
+        </div>
+
+        <!-- Portfolio Builder - shown for premium users -->
+        <div id="portfolioBuilder" style="display:none;">
+            <div id="statusMsg" class="status-msg"></div>
+
+            <!-- Profile Header -->
+            <div class="portfolio-profile">
+                <div class="profile-top">
+                    <div class="profile-avatar-lg" id="portfolioAvatar">
+                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="profile-details">
+                        <h2 id="portfolioName">Loading...</h2>
+                        <div class="profile-org" id="portfolioOrg"></div>
+                        <div class="profile-location" id="portfolioLocation"></div>
+                    </div>
+                </div>
+                <div class="profile-headline-wrap">
+                    <label for="headlineInput">Portfolio Headline</label>
+                    <textarea class="headline-input" id="headlineInput" placeholder="e.g. MEAL Specialist | Rural Livelihoods | Data for Development" maxlength="200" rows="2"></textarea>
+                </div>
+                <div class="profile-links" id="profileLinks"></div>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="action-bar">
+                <button class="btn-add" onclick="openAddModal()">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add Item
+                </button>
+                <button class="btn-outline" onclick="window.print()">
+                    <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Export PDF
+                </button>
+                <button class="btn-outline" onclick="savePortfolio()">
+                    <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    Save
+                </button>
+            </div>
+
+            <!-- Portfolio Items Grid -->
+            <div class="portfolio-grid" id="portfolioGrid">
+                <!-- Items inserted here by JS -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-state-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <h3>Your portfolio is empty</h3>
+                <p>Add certificates, projects, and case studies to build your professional development portfolio.</p>
+                <button class="btn-add" onclick="openAddModal()">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add Your First Item
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Add Item Modal -->
+<div class="modal-overlay" id="addModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Add Portfolio Item</h3>
+            <button class="modal-close" onclick="closeAddModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="modal-body">
+            <!-- Import from existing data -->
+            <div class="import-section" id="importSection">
+                <h4>Import from your learning</h4>
+                <div class="import-list" id="importList">
+                    <div class="import-empty">Loading your certificates and courses...</div>
+                </div>
+            </div>
+
+            <div style="text-align:center; color:var(--text-muted); font-size:0.85rem; margin:1rem 0; position:relative;">
+                <span style="background:var(--card-bg); padding:0 0.75rem; position:relative; z-index:1;">or add manually</span>
+                <div style="position:absolute; top:50%; left:0; right:0; height:1px; background:var(--border-color);"></div>
+            </div>
+
+            <div class="modal-section">
+                <label for="itemType">Type</label>
+                <select id="itemType">
+                    <option value="certificate">Certificate</option>
+                    <option value="project">Project</option>
+                    <option value="case_study">Case Study</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+            <div class="modal-section">
+                <label for="itemTitle">Title</label>
+                <input type="text" id="itemTitle" placeholder="e.g. MEAL for Development — Flagship Course Certificate">
+            </div>
+            <div class="modal-section">
+                <label for="itemDesc">Description</label>
+                <textarea id="itemDesc" placeholder="Brief description of this achievement or work (max 200 characters)" maxlength="200"></textarea>
+            </div>
+            <div class="modal-section">
+                <label>Tags</label>
+                <div class="tag-input-wrap">
+                    <input type="text" id="tagInput" placeholder="e.g. MEAL, evaluation">
+                    <button onclick="addTag()">Add</button>
+                </div>
+                <div class="modal-tags" id="modalTags"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" onclick="closeAddModal()">Cancel</button>
+            <button class="btn-save" onclick="addItem()">Add to Portfolio</button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section"><h4>About</h4><ul><li><a href="about.html">About ImpactMojo</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="community/community.html">Community</a></li></ul></div>
+            <div class="footer-section"><h4>Legal & IT Act</h4><ul><li><a href="/terms-of-service">Terms of Service</a></li><li><a href="/privacy-policy">Privacy Policy</a></li><li><a href="/refund-policy">Refund Policy</a></li></ul></div>
+            <div class="footer-section"><h4>Quick Links</h4><ul><li><a href="catalog.html">Course Catalog</a></li><li><a href="premium.html">Premium Access</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+            <div class="footer-section"><h4>Resources</h4><ul><li><a href="blog.html">Blog</a></li><li><a href="podcast.html">Podcast</a></li><li><a href="handouts.html">Handouts</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copyright">&copy; 2024-2026 ImpactMojo. All rights reserved. Made with &lt;3 in India.</p>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/company/impactmojo" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+                <a href="https://www.instagram.com/impactmojo" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a href="https://twitter.com/impactmojo" target="_blank" rel="noopener" title="X (Twitter)"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Auth & Premium Scripts -->
+<script src="js/auth.js"></script>
+<script>
+// ========================================
+// Portfolio Builder Logic
+// ========================================
+
+var portfolioItems = [];
+var currentTags = [];
+var STORAGE_KEY = 'impactmojo_portfolio';
+
+// Theme
+function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+    var isLight = document.body.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+(function initTheme() {
+    var savedTheme = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+        document.body.classList.add('light-mode');
+    }
+})();
+
+// Auth & Premium Check
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait for auth to be ready
+    var checkAuth = setInterval(function() {
+        if (typeof ImpactMojoAuth === 'undefined') return;
+        if (!ImpactMojoAuth.isAuthReady) return;
+        clearInterval(checkAuth);
+        initPortfolio();
+    }, 200);
+
+    // Timeout after 5s - show login
+    setTimeout(function() {
+        if (document.getElementById('portfolioBuilder').style.display === 'none' &&
+            document.getElementById('premiumGate').style.display === 'none') {
+            document.getElementById('authGate').style.display = 'block';
+        }
+    }, 5000);
+});
+
+function initPortfolio() {
+    var user = ImpactMojoAuth.user;
+    var profile = ImpactMojoAuth.profile;
+
+    if (!user) {
+        document.getElementById('authGate').style.display = 'block';
+        return;
+    }
+
+    // Check premium tier
+    var tier = (profile && profile.subscription_tier) || 'explorer';
+    var premiumTiers = ['practitioner', 'professional', 'organization'];
+
+    if (premiumTiers.indexOf(tier) === -1) {
+        document.getElementById('premiumGate').style.display = 'block';
+        return;
+    }
+
+    // Show portfolio builder
+    document.getElementById('portfolioBuilder').style.display = 'block';
+    populateProfile(profile);
+    loadPortfolioItems(user.id);
+    loadImportableItems(user.id);
+}
+
+function populateProfile(profile) {
+    if (!profile) return;
+    
+    document.getElementById('portfolioName').textContent = profile.full_name || profile.display_name || 'Your Name';
+    
+    if (profile.organization) {
+        document.getElementById('portfolioOrg').textContent = profile.organization;
+    }
+    
+    var location = [profile.city, profile.country].filter(Boolean).join(', ');
+    if (location) {
+        document.getElementById('portfolioLocation').textContent = location;
+    }
+
+    if (profile.avatar_url) {
+        document.getElementById('portfolioAvatar').innerHTML = '<img src="' + profile.avatar_url + '" alt="Profile">';
+    }
+
+    // Profile links
+    var linksHtml = '';
+    if (profile.linkedin_url) {
+        linksHtml += '<a class="profile-link-badge" href="' + profile.linkedin_url + '" target="_blank"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn</a>';
+    }
+    if (profile.email) {
+        linksHtml += '<span class="profile-link-badge"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> ' + profile.email + '</span>';
+    }
+    document.getElementById('profileLinks').innerHTML = linksHtml;
+
+    // Load saved headline
+    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    if (saved.headline) {
+        document.getElementById('headlineInput').value = saved.headline;
+    }
+}
+
+// Portfolio Items Management
+function loadPortfolioItems(userId) {
+    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    portfolioItems = saved.items || [];
+    renderItems();
+
+    // Also try to load from Supabase
+    if (typeof supabaseClient !== 'undefined') {
+        supabaseClient.from('portfolio_items')
+            .select('*')
+            .eq('user_id', userId)
+            .order('display_order', { ascending: true })
+            .then(function(result) {
+                if (result.data && result.data.length > 0) {
+                    // Merge: cloud wins if newer
+                    portfolioItems = result.data.map(function(item) {
+                        return {
+                            id: item.id,
+                            type: item.item_type,
+                            title: item.title,
+                            description: item.description || '',
+                            course_id: item.course_id || '',
+                            tags: item.tags || [],
+                            order: item.display_order,
+                            visible: item.is_visible
+                        };
+                    });
+                    saveLocal();
+                    renderItems();
+                }
+            });
+    }
+}
+
+function renderItems() {
+    var grid = document.getElementById('portfolioGrid');
+    var empty = document.getElementById('emptyState');
+
+    if (portfolioItems.length === 0) {
+        grid.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+
+    empty.style.display = 'none';
+    
+    var html = '';
+    portfolioItems.forEach(function(item, index) {
+        var badgeClass = 'badge-' + item.type.replace('_', '-');
+        var typeName = item.type.replace('_', ' ');
+        typeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
+        var hiddenClass = item.visible === false ? ' hidden-item' : '';
+        var eyeIcon = item.visible === false
+            ? '<line x1="1" y1="1" x2="23" y2="23"/><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>'
+            : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+
+        var tagsHtml = '';
+        if (item.tags && item.tags.length) {
+            item.tags.forEach(function(tag) {
+                tagsHtml += '<span class="item-tag">' + escapeHtml(tag) + '</span>';
+            });
+        }
+
+        html += '<div class="portfolio-item' + hiddenClass + '" data-index="' + index + '">' +
+            '<div class="item-drag"><svg viewBox="0 0 24 24"><circle cx="9" cy="5" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>' +
+            '<div class="item-body">' +
+                '<div class="item-header">' +
+                    '<span class="item-type-badge ' + badgeClass + '">' + typeName + '</span>' +
+                    '<span class="item-title">' + escapeHtml(item.title) + '</span>' +
+                '</div>' +
+                '<textarea class="item-description-input" placeholder="Add a description..." maxlength="200" onchange="updateDescription(' + index + ', this.value)">' + escapeHtml(item.description || '') + '</textarea>' +
+                '<div class="item-tags">' + tagsHtml + '</div>' +
+            '</div>' +
+            '<div class="item-actions">' +
+                '<button class="item-btn btn-hide" title="Toggle visibility" onclick="toggleVisibility(' + index + ')"><svg viewBox="0 0 24 24">' + eyeIcon + '</svg></button>' +
+                '<button class="item-btn" title="Move up" onclick="moveItem(' + index + ', -1)"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></button>' +
+                '<button class="item-btn" title="Move down" onclick="moveItem(' + index + ', 1)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>' +
+                '<button class="item-btn btn-delete" title="Remove" onclick="removeItem(' + index + ')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>' +
+            '</div>' +
+        '</div>';
+    });
+
+    grid.innerHTML = html;
+}
+
+function updateDescription(index, value) {
+    portfolioItems[index].description = value;
+    saveLocal();
+}
+
+function toggleVisibility(index) {
+    portfolioItems[index].visible = portfolioItems[index].visible === false ? true : false;
+    renderItems();
+    saveLocal();
+}
+
+function moveItem(index, direction) {
+    var newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= portfolioItems.length) return;
+    var temp = portfolioItems[index];
+    portfolioItems[index] = portfolioItems[newIndex];
+    portfolioItems[newIndex] = temp;
+    renderItems();
+    saveLocal();
+}
+
+function removeItem(index) {
+    if (!confirm('Remove this item from your portfolio?')) return;
+    portfolioItems.splice(index, 1);
+    renderItems();
+    saveLocal();
+}
+
+function saveLocal() {
+    var data = {
+        headline: document.getElementById('headlineInput').value,
+        items: portfolioItems,
+        updatedAt: new Date().toISOString()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function savePortfolio() {
+    saveLocal();
+
+    // Save to Supabase if available
+    if (typeof supabaseClient !== 'undefined' && ImpactMojoAuth.user) {
+        var userId = ImpactMojoAuth.user.id;
+        var headline = document.getElementById('headlineInput').value;
+
+        // Update profile headline
+        supabaseClient.from('profiles')
+            .update({ portfolio_headline: headline })
+            .eq('id', userId)
+            .then(function() {});
+
+        // Upsert portfolio items
+        if (portfolioItems.length > 0) {
+            var rows = portfolioItems.map(function(item, i) {
+                return {
+                    id: item.id || undefined,
+                    user_id: userId,
+                    item_type: item.type,
+                    title: item.title,
+                    description: item.description || '',
+                    course_id: item.course_id || null,
+                    tags: item.tags || [],
+                    display_order: i,
+                    is_visible: item.visible !== false
+                };
+            });
+            supabaseClient.from('portfolio_items')
+                .upsert(rows, { onConflict: 'id' })
+                .then(function(result) {
+                    if (result.error) {
+                        showStatus('Error saving to cloud: ' + result.error.message, 'error');
+                    } else {
+                        showStatus('Portfolio saved successfully!', 'success');
+                    }
+                });
+        } else {
+            showStatus('Portfolio saved!', 'success');
+        }
+    } else {
+        showStatus('Portfolio saved locally!', 'success');
+    }
+}
+
+function showStatus(msg, type) {
+    var el = document.getElementById('statusMsg');
+    el.textContent = msg;
+    el.className = 'status-msg ' + type;
+    setTimeout(function() { el.className = 'status-msg'; }, 3000);
+}
+
+// Add Item Modal
+function openAddModal() {
+    document.getElementById('addModal').classList.add('open');
+    document.getElementById('itemTitle').value = '';
+    document.getElementById('itemDesc').value = '';
+    document.getElementById('itemType').value = 'certificate';
+    currentTags = [];
+    renderModalTags();
+}
+
+function closeAddModal() {
+    document.getElementById('addModal').classList.remove('open');
+}
+
+function addTag() {
+    var input = document.getElementById('tagInput');
+    var tag = input.value.trim();
+    if (tag && currentTags.indexOf(tag) === -1) {
+        currentTags.push(tag);
+        renderModalTags();
+    }
+    input.value = '';
+}
+
+function removeTag(index) {
+    currentTags.splice(index, 1);
+    renderModalTags();
+}
+
+function renderModalTags() {
+    var html = '';
+    currentTags.forEach(function(tag, i) {
+        html += '<span class="modal-tag">' + escapeHtml(tag) + ' <button onclick="removeTag(' + i + ')">&times;</button></span>';
+    });
+    document.getElementById('modalTags').innerHTML = html;
+}
+
+function addItem() {
+    var title = document.getElementById('itemTitle').value.trim();
+    if (!title) {
+        alert('Please enter a title.');
+        return;
+    }
+
+    var item = {
+        id: generateId(),
+        type: document.getElementById('itemType').value,
+        title: title,
+        description: document.getElementById('itemDesc').value.trim(),
+        tags: currentTags.slice(),
+        order: portfolioItems.length,
+        visible: true
+    };
+
+    portfolioItems.push(item);
+    renderItems();
+    saveLocal();
+    closeAddModal();
+    showStatus('Item added to portfolio!', 'success');
+}
+
+function addImportedItem(title, type, courseId) {
+    // Check if already added
+    var exists = portfolioItems.some(function(item) {
+        return item.title === title && item.type === type;
+    });
+    if (exists) {
+        showStatus('This item is already in your portfolio.', 'error');
+        return;
+    }
+
+    var item = {
+        id: generateId(),
+        type: type,
+        title: title,
+        description: '',
+        course_id: courseId || '',
+        tags: [],
+        order: portfolioItems.length,
+        visible: true
+    };
+    portfolioItems.push(item);
+    renderItems();
+    saveLocal();
+    closeAddModal();
+    showStatus('Imported to portfolio!', 'success');
+}
+
+// Load importable items (certificates + completed courses)
+function loadImportableItems(userId) {
+    var importList = document.getElementById('importList');
+
+    if (typeof supabaseClient === 'undefined') {
+        importList.innerHTML = '<div class="import-empty">Connect to cloud to import certificates and courses.</div>';
+        return;
+    }
+
+    Promise.all([
+        supabaseClient.from('certificates').select('*').eq('user_id', userId),
+        supabaseClient.from('user_progress').select('*').eq('user_id', userId).not('completed_at', 'is', null)
+    ]).then(function(results) {
+        var certs = (results[0].data || []);
+        var completed = (results[1].data || []);
+        var html = '';
+
+        certs.forEach(function(cert) {
+            html += '<div class="import-item" onclick="addImportedItem(\'' + escapeAttr(cert.course_name + ' Certificate') + '\', \'certificate\', \'' + escapeAttr(cert.course_id) + '\')">' +
+                '<div class="import-item-info">' +
+                    '<div class="import-item-title">' + escapeHtml(cert.course_name) + ' Certificate</div>' +
+                    '<div class="import-item-meta">Issued ' + new Date(cert.issued_at).toLocaleDateString() + '</div>' +
+                '</div>' +
+            '</div>';
+        });
+
+        completed.forEach(function(prog) {
+            html += '<div class="import-item" onclick="addImportedItem(\'' + escapeAttr(prog.course_name + ' — Completed') + '\', \'project\', \'' + escapeAttr(prog.course_id) + '\')">' +
+                '<div class="import-item-info">' +
+                    '<div class="import-item-title">' + escapeHtml(prog.course_name) + '</div>' +
+                    '<div class="import-item-meta">Completed ' + new Date(prog.completed_at).toLocaleDateString() + '</div>' +
+                '</div>' +
+            '</div>';
+        });
+
+        if (!html) {
+            html = '<div class="import-empty">No certificates or completed courses yet. Complete a flagship course to see items here.</div>';
+        }
+
+        importList.innerHTML = html;
+    });
+}
+
+// Utility
+function generateId() {
+    return 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function escapeAttr(str) {
+    if (!str) return '';
+    return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+// Close modal on Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeAddModal();
+});
+
+// Close modal on overlay click
+document.getElementById('addModal').addEventListener('click', function(e) {
+    if (e.target === this) closeAddModal();
+});
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.has-dropdown') && window.innerWidth <= 768) {
+        document.querySelectorAll('.has-dropdown.open').forEach(function(el) { el.classList.remove('open'); });
+    }
+});
+
+// Tag input enter key
+document.getElementById('tagInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); addTag(); }
+});
+
+// Auto-save headline on change
+document.getElementById('headlineInput').addEventListener('input', function() {
+    saveLocal();
+});
+</script>
+
+</body>
+</html>
