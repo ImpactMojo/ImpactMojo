@@ -110,28 +110,38 @@
     }
 
     // Wait for IMX object to be available, then execute callback
-    function waitForIMX(callback, maxAttempts = 50) {
-        let attempts = 0;
-        
-        function check() {
-            attempts++;
-            
-            // Check if IMX and required methods exist
-            if (typeof window.IMX !== 'undefined' && 
-                typeof window.IMX.SpeedDial !== 'undefined') {
-                console.log('Router: IMX ready after ' + attempts + ' attempts');
-                callback();
-                return;
-            }
-            
-            if (attempts < maxAttempts) {
-                setTimeout(check, 100); // Check every 100ms
-            } else {
-                console.warn('Router: IMX not available after ' + maxAttempts + ' attempts');
-            }
+    function waitForIMX(callback) {
+        // If already available, run immediately
+        if (typeof window.IMX !== 'undefined' &&
+            typeof window.IMX.SpeedDial !== 'undefined') {
+            callback();
+            return;
         }
-        
-        check();
+
+        // Listen for custom event dispatched when IMX initializes
+        function onReady() {
+            window.removeEventListener('imx:ready', onReady);
+            callback();
+        }
+        window.addEventListener('imx:ready', onReady);
+
+        // Fallback: use MutationObserver to detect when IMX appears on window
+        // (in case imx:ready was already fired or isn't dispatched)
+        var fallbackTimer = setTimeout(function() {
+            if (typeof window.IMX !== 'undefined' &&
+                typeof window.IMX.SpeedDial !== 'undefined') {
+                window.removeEventListener('imx:ready', onReady);
+                callback();
+            } else {
+                console.warn('Router: IMX not available after 5s timeout');
+            }
+        }, 5000);
+
+        // If the event fires, clear the fallback
+        window.addEventListener('imx:ready', function cleanup() {
+            clearTimeout(fallbackTimer);
+            window.removeEventListener('imx:ready', cleanup);
+        });
     }
 
     // Handle feature functions (speed dial items)

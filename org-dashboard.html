@@ -507,13 +507,57 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
 
     <!-- Progress Tab -->
     <div class="tab-content" id="tab-progress">
-        <div class="empty-state">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
-                <line x1="6" y1="20" x2="6" y2="14"/>
+        <div id="progressLoading" class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite">
+                <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+                <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+                <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
             </svg>
-            <h3>Team Progress Analytics</h3>
-            <p>Track completion rates, quiz scores, time-on-task, and engagement metrics across your team. Reports will populate as your team begins their learning journeys.</p>
+            <h3>Loading Team Analytics...</h3>
+        </div>
+        <div id="progressContent" style="display:none;">
+            <!-- Summary Row -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-bottom:2rem;">
+                <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:1.25rem; text-align:center;">
+                    <div style="font-size:2rem; font-weight:700; color:var(--accent-color);" id="analyticsAvgCompletion">0%</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary);">Avg Completion</div>
+                </div>
+                <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:1.25rem; text-align:center;">
+                    <div style="font-size:2rem; font-weight:700; color:var(--success-color);" id="analyticsCertificates">0</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary);">Certificates Earned</div>
+                </div>
+                <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:1.25rem; text-align:center;">
+                    <div style="font-size:2rem; font-weight:700; color:#8B5CF6;" id="analyticsActiveLearners">0</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary);">Active Learners (30d)</div>
+                </div>
+                <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:1.25rem; text-align:center;">
+                    <div style="font-size:2rem; font-weight:700; color:#0EA5E9;" id="analyticsTopCourse">-</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary);">Most Popular Course</div>
+                </div>
+            </div>
+
+            <!-- Course Breakdown -->
+            <h3 style="font-family:'Poppins',sans-serif; font-size:1.1rem; margin-bottom:1rem;">Course Progress Breakdown</h3>
+            <div id="courseBreakdown" style="display:grid; gap:0.75rem; margin-bottom:2rem;"></div>
+
+            <!-- Member Leaderboard -->
+            <h3 style="font-family:'Poppins',sans-serif; font-size:1.1rem; margin-bottom:1rem;">Team Leaderboard</h3>
+            <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; overflow:hidden;">
+                <table class="members-table" style="width:100%;">
+                    <thead><tr>
+                        <th>Rank</th><th>Member</th><th>Courses Completed</th><th>Certificates</th><th>Last Active</th>
+                    </tr></thead>
+                    <tbody id="leaderboardBody"></tbody>
+                </table>
+            </div>
+
+            <!-- Export -->
+            <div style="margin-top:1.5rem; text-align:right;">
+                <button class="btn btn-primary" onclick="exportProgressCSV()" style="background:var(--accent-color); color:white; border:none; padding:0.6rem 1.25rem; border-radius:8px; cursor:pointer; font-size:0.85rem;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Export CSV
+                </button>
+            </div>
         </div>
     </div>
 
@@ -893,6 +937,152 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
         document.getElementById('orgName').textContent = orgData.name;
         alert('Settings saved!');
     };
+
+    // ========== Team Analytics ==========
+    var COURSE_NAMES = {
+        devecon: 'Dev Economics', mel: 'MEL', dataviz: 'Data Viz',
+        devai: 'AI for Impact', gandhi: 'Gandhi', poa: 'Politics of Aspiration',
+        media: 'Media', law: 'Constitution & Law', sel: 'SEL'
+    };
+
+    async function loadAnalytics() {
+        if (!orgData || !members.length) {
+            document.getElementById('progressLoading').innerHTML =
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' +
+                '<h3>Team Progress Analytics</h3><p>Add team members to start tracking progress.</p>';
+            return;
+        }
+
+        var memberIds = members.filter(function(m) { return m.status === 'active'; }).map(function(m) { return m.user_id; });
+        if (!memberIds.length) return;
+
+        // Fetch progress for all team members
+        var { data: progress } = await supabaseClient
+            .from('user_progress')
+            .select('user_id, course_id, completed, score, updated_at')
+            .in('user_id', memberIds);
+
+        progress = progress || [];
+
+        // Fetch certificates
+        var { data: certs } = await supabaseClient
+            .from('certificates')
+            .select('user_id, course_id, issued_at')
+            .in('user_id', memberIds);
+
+        certs = certs || [];
+
+        // Compute analytics
+        var totalCerts = certs.length;
+        var thirtyDaysAgo = new Date(Date.now() - 30 * 86400000).toISOString();
+        var activeLearners = new Set(progress.filter(function(p) { return p.updated_at > thirtyDaysAgo; }).map(function(p) { return p.user_id; })).size;
+
+        // Per-course stats
+        var courseStats = {};
+        Object.keys(COURSE_NAMES).forEach(function(c) { courseStats[c] = { enrolled: 0, completed: 0, totalScore: 0, scores: 0 }; });
+        progress.forEach(function(p) {
+            if (courseStats[p.course_id]) {
+                courseStats[p.course_id].enrolled++;
+                if (p.completed) courseStats[p.course_id].completed++;
+                if (p.score != null) { courseStats[p.course_id].totalScore += p.score; courseStats[p.course_id].scores++; }
+            }
+        });
+
+        // Average completion
+        var totalCompleted = progress.filter(function(p) { return p.completed; }).length;
+        var totalEnrolled = progress.length || 1;
+        var avgCompletion = Math.round((totalCompleted / totalEnrolled) * 100);
+
+        // Most popular course
+        var topCourse = '-';
+        var topCount = 0;
+        Object.keys(courseStats).forEach(function(c) {
+            if (courseStats[c].enrolled > topCount) { topCount = courseStats[c].enrolled; topCourse = c; }
+        });
+
+        // Update summary cards
+        document.getElementById('analyticsAvgCompletion').textContent = avgCompletion + '%';
+        document.getElementById('analyticsCertificates').textContent = totalCerts;
+        document.getElementById('analyticsActiveLearners').textContent = activeLearners;
+        document.getElementById('analyticsTopCourse').textContent = topCount > 0 ? COURSE_NAMES[topCourse] : '-';
+
+        // Course breakdown bars
+        var breakdownHtml = '';
+        Object.keys(COURSE_NAMES).forEach(function(c) {
+            var s = courseStats[c];
+            var pct = s.enrolled > 0 ? Math.round((s.completed / s.enrolled) * 100) : 0;
+            var avgScore = s.scores > 0 ? Math.round(s.totalScore / s.scores) : '-';
+            breakdownHtml += '<div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:10px; padding:1rem;">' +
+                '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">' +
+                '<span style="font-weight:600; font-size:0.9rem;">' + COURSE_NAMES[c] + '</span>' +
+                '<span style="font-size:0.8rem; color:var(--text-secondary);">' + s.enrolled + ' enrolled &middot; ' + s.completed + ' completed &middot; Avg score: ' + avgScore + '</span></div>' +
+                '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%; background:' + (pct >= 75 ? 'var(--success-color)' : pct >= 40 ? 'var(--warning-color)' : 'var(--danger-color)') + '"></div></div></div>';
+        });
+        document.getElementById('courseBreakdown').innerHTML = breakdownHtml;
+
+        // Leaderboard
+        var memberMap = {};
+        members.forEach(function(m) {
+            memberMap[m.user_id] = m.profiles?.display_name || m.profiles?.full_name || 'Team Member';
+        });
+        var memberProgress = {};
+        memberIds.forEach(function(id) { memberProgress[id] = { completed: 0, certs: 0, lastActive: null }; });
+        progress.forEach(function(p) {
+            if (memberProgress[p.user_id]) {
+                if (p.completed) memberProgress[p.user_id].completed++;
+                if (!memberProgress[p.user_id].lastActive || p.updated_at > memberProgress[p.user_id].lastActive) {
+                    memberProgress[p.user_id].lastActive = p.updated_at;
+                }
+            }
+        });
+        certs.forEach(function(c) {
+            if (memberProgress[c.user_id]) memberProgress[c.user_id].certs++;
+        });
+
+        var sorted = memberIds.map(function(id) { return { id: id, name: memberMap[id] || 'Member', data: memberProgress[id] }; })
+            .sort(function(a, b) { return b.data.completed - a.data.completed; });
+
+        var leaderHtml = sorted.map(function(m, i) {
+            var lastActive = m.data.lastActive ? new Date(m.data.lastActive).toLocaleDateString() : 'Never';
+            var medal = i === 0 ? ' style="color:#F59E0B;font-weight:700;"' : '';
+            return '<tr><td' + medal + '>' + (i + 1) + '</td><td>' + escHtml(m.name) + '</td><td>' + m.data.completed + ' / 9</td><td>' + m.data.certs + '</td><td style="color:var(--text-secondary);font-size:0.85rem;">' + lastActive + '</td></tr>';
+        }).join('');
+        document.getElementById('leaderboardBody').innerHTML = leaderHtml || '<tr><td colspan="5" style="text-align:center; padding:1rem; color:var(--text-muted);">No progress data yet.</td></tr>';
+
+        // Store for CSV export
+        window._orgAnalytics = { members: sorted, courseStats: courseStats, certs: totalCerts };
+
+        // Show content, hide loading
+        document.getElementById('progressLoading').style.display = 'none';
+        document.getElementById('progressContent').style.display = 'block';
+    }
+
+    window.exportProgressCSV = function() {
+        if (!window._orgAnalytics) return;
+        var rows = [['Name', 'Courses Completed', 'Certificates', 'Last Active']];
+        window._orgAnalytics.members.forEach(function(m) {
+            rows.push([m.name, m.data.completed, m.data.certs, m.data.lastActive || 'Never']);
+        });
+        var csv = rows.map(function(r) { return r.join(','); }).join('\n');
+        var blob = new Blob([csv], { type: 'text/csv' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'team-progress-' + new Date().toISOString().slice(0, 10) + '.csv';
+        a.click();
+    };
+
+    // Load analytics when Progress tab is clicked
+    var analyticsLoaded = false;
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.tab-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                if (btn.dataset.tab === 'progress' && !analyticsLoaded) {
+                    analyticsLoaded = true;
+                    loadAnalytics();
+                }
+            });
+        });
+    });
 
     // Initialize
     if (document.readyState === 'complete' || document.readyState === 'interactive') {

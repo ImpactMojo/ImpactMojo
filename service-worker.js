@@ -1,18 +1,8 @@
 // Service Worker for ImpactMojo PWA
-const CACHE_NAME = 'impactmojo-v2';
-const urlsToCache = [
-  '/',
-  '/index.html',
+// v3 - Network-first for HTML, stale-while-revalidate for assets
+const CACHE_NAME = 'impactmojo-v3';
+const STATIC_ASSETS = [
   '/manifest.json',
-  '/js/auth.js',
-  '/js/premium.js',
-  '/js/router.js',
-  '/js/resource-launch.js',
-  '/js/bookmarks-compare.js',
-  '/js/faq-bank.js',
-  '/js/mobile-ui.js',
-  '/js/learning-tracks.js',
-  '/js/cookie-ui.js',
   '/assets/images/favicon.ico',
   '/assets/images/favicon-16x16.png',
   '/assets/images/favicon-32x32.png',
@@ -20,57 +10,69 @@ const urlsToCache = [
   '/assets/images/varna-photo.jpg'
 ];
 
-// Install Service Worker
+// Install - cache only static assets (fonts, icons)
 self.addEventListener('install', event => {
+  self.skipWaiting(); // Activate immediately on update
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
-      .catch(err => console.log('Error caching files:', err))
+      .then(cache => cache.addAll(STATIC_ASSETS))
+      .catch(err => console.log('SW: cache error', err))
   );
 });
 
-// Fetch event - stale-while-revalidate for own assets, network-first for API
+// Activate - clean up old caches immediately
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(names =>
+      Promise.all(
+        names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n))
+      )
+    ).then(() => self.clients.claim()) // Take control of all pages
+  );
+});
+
+// Fetch strategy:
+// - HTML pages: network-first (fall back to cache only when offline)
+// - JS/CSS/images: stale-while-revalidate (fast + stays fresh)
+// - API/Supabase calls: network-only (never cache)
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // Skip non-GET and cross-origin API calls
+  // Skip non-GET, cross-origin, and Supabase/API calls
   if (event.request.method !== 'GET' || url.origin !== self.location.origin) {
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      // Fetch fresh copy in background
-      const fetchPromise = fetch(event.request).then(response => {
-        if (response && response.status === 200 && response.type === 'basic') {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-        }
-        return response;
-      }).catch(() => cached || caches.match('/index.html'));
+  const isHTML = event.request.headers.get('accept')?.includes('text/html') ||
+                 url.pathname.endsWith('.html') || url.pathname === '/';
 
-      // Return cached immediately if available, otherwise wait for network
-      return cached || fetchPromise;
-    })
-  );
-});
-
-// Activate Service Worker - Clean up old caches
-self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME];
-
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
+  if (isHTML) {
+    // Network-first for HTML — always get fresh content
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
           }
+          return response;
         })
-      );
-    })
-  );
+        .catch(() => caches.match(event.request) || caches.match('/index.html'))
+    );
+  } else {
+    // Stale-while-revalidate for assets (JS, CSS, images, fonts)
+    event.respondWith(
+      caches.match(event.request).then(cached => {
+        const fetchPromise = fetch(event.request).then(response => {
+          if (response && response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          }
+          return response;
+        }).catch(() => cached);
+
+        return cached || fetchPromise;
+      })
+    );
+  }
 });
