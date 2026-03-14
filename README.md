@@ -35,8 +35,8 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **Dev Case Studies** | 200 evidence-based case studies from 117 countries |
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
-| **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, and evidence ratings |
-| **Dataverse** | 215 curated tools, datasets, APIs, and platforms for social impact and policy research |
+| **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, and evidence ratings — dark mode, search, filters, CSV export |
+| **Dataverse** | 215 curated tools, datasets, APIs, and platforms for social impact and policy research — dark mode, category filters, responsive cards |
 | **400+ Handouts** | Downloadable resources across 6 learning tracks |
 | **Learning Loops Blog** | Articles, tutorials, and case studies on development practice |
 | **Between the Logframes** | Development podcast — honest conversations on MEAL and impact work |
@@ -174,8 +174,8 @@ Economics simulations and behavioral experiments:
 - **Dev Case Studies Library** — 200 evidence-based case studies from 117 countries
 - **DevDiscourses** — 500+ curated open-access research papers, books, and grey literature
 - **PolicyDhara** — Curated Indian public policy documents, government schemes, and legislative frameworks
-- **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings
-- **Dataverse** — 215 curated tools, datasets, APIs, and platforms for social impact research
+- **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings (flagship design system, dark/light mode, Sargam icons)
+- **Dataverse** — 215 curated tools, datasets, APIs, and platforms for social impact research (flagship design system, dark/light mode, Sargam icons)
 - **400+ Handouts** — Downloadable HTML resources across 6 learning tracks
 - **Learning Loops Blog** — Articles, tutorials, case studies, platform updates
 - **Between the Logframes Podcast** — Development conversations on MEAL, ToC, and impact work
@@ -485,7 +485,7 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 9.2.0
+**Version:** 9.3.0
 **Last Updated:** March 2026
 **License:** CC-BY-4.0
 **Hosting:** Netlify
