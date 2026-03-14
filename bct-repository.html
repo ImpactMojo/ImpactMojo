@@ -1307,10 +1307,20 @@ function renderTechniques() {
     container.innerHTML = html;
 }
 
-function renderCard(t, catColor) {
+function renderCard(t, catColor, showNote) {
     var evClass = 'evidence-' + (t.evidenceLevel || 'emerging').toLowerCase();
     var sectors = t.sectors || [];
+    var isBookmarked = bctBookmarks.indexOf(t.id) !== -1;
+    var isCompared = bctCompare.indexOf(t.id) !== -1;
     var html = '<article class="technique-card" tabindex="0" onclick="openModal(\'' + escapeHTML(t.id) + '\')" onkeydown="if(event.key===\'Enter\')openModal(\'' + escapeHTML(t.id) + '\')" aria-label="' + escapeHTML(t.name) + '">';
+    html += '<div class="technique-card-actions">';
+    html += '<button class="bct-bookmark-btn' + (isBookmarked ? ' active' : '') + '" onclick="event.stopPropagation();toggleBCTBookmark(\'' + escapeHTML(t.id) + '\',this)" aria-label="' + (isBookmarked ? 'Remove bookmark' : 'Bookmark') + '" title="' + (isBookmarked ? 'Remove bookmark' : 'Bookmark this technique') + '">';
+    html += '<svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
+    html += '</button>';
+    html += '<button class="bct-compare-btn' + (isCompared ? ' active' : '') + '" onclick="event.stopPropagation();toggleBCTCompare(\'' + escapeHTML(t.id) + '\',this)" aria-label="' + (isCompared ? 'Remove from compare' : 'Add to compare') + '" title="' + (isCompared ? 'Remove from comparison' : 'Add to comparison (max 3)') + '">';
+    html += '<svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>';
+    html += '</button>';
+    html += '</div>';
     html += '<div class="technique-card-bar" style="background:' + escapeHTML(catColor) + ';"></div>';
     html += '<div class="technique-card-inner">';
     html += '<div class="technique-card-top">';
@@ -1319,6 +1329,9 @@ function renderCard(t, catColor) {
     html += '</div>';
     html += '<h3 class="technique-name">' + escapeHTML(t.name) + '</h3>';
     html += '<p class="technique-definition">' + escapeHTML(t.definition) + '</p>';
+    if (showNote && bctNotes[t.id]) {
+        html += '<div class="collection-note-preview">' + escapeHTML(bctNotes[t.id]) + '</div>';
+    }
     html += '<div class="technique-card-footer">';
     sectors.slice(0, 3).forEach(function(s) { html += '<span class="sector-pill">' + escapeHTML(s) + '</span>'; });
     if (sectors.length > 3) html += '<span class="sector-pill sector-pill-more">+' + (sectors.length - 3) + '</span>';
@@ -1392,6 +1405,18 @@ function renderModalContent(t) {
         });
         body += '</div></div>';
     }
+
+    /* Notes section */
+    var noteVal = bctNotes[t.id] || '';
+    body += '<div class="modal-notes-section">';
+    body += '<div class="modal-notes-header">';
+    body += '<svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+    body += '<div class="modal-notes-title">My Notes</div>';
+    body += '</div>';
+    body += '<textarea class="modal-notes-textarea" id="modalNotesTextarea" data-technique-id="' + escapeHTML(t.id) + '" placeholder="Add your notes about this technique..." oninput="saveBCTNote(this)">' + escapeHTML(noteVal) + '</textarea>';
+    body += '<div class="modal-notes-saved" id="modalNotesSaved">Notes saved</div>';
+    body += '</div>';
+
     document.getElementById('modalBody').innerHTML = body;
 }
 
