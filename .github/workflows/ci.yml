@@ -39,7 +39,7 @@ jobs:
           path: ./lychee/out.md
 
   accessibility:
-    name: Accessibility audit
+    name: Accessibility audit (pa11y-ci)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,8 +49,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install axe-core CLI
-        run: npm install -g @axe-core/cli http-server
+      - name: Install pa11y-ci and http-server
+        run: npm install -g pa11y-ci http-server
 
       - name: Start local server
         run: npx http-server -p 8080 -s &
@@ -58,17 +58,75 @@ jobs:
       - name: Wait for server
         run: sleep 3
 
-      - name: Run accessibility audit on index.html
+      - name: Run pa11y-ci accessibility audit
+        id: pa11y
         run: |
-          axe http://localhost:8080/index.html \
-            --tags wcag2a,wcag2aa \
-            --exit || true
+          set +e
+          pa11y-ci --config .pa11yci --json 2>&1 | tee pa11y-results.json
+          PA11Y_EXIT=$?
+          # Extract summary from JSON output for the report
+          node -e "
+            const fs = require('fs');
+            try {
+              const raw = fs.readFileSync('pa11y-results.json', 'utf8');
+              const jsonStart = raw.indexOf('{');
+              if (jsonStart === -1) {
+                fs.writeFileSync('pa11y-report.md', '## Accessibility Audit Results\n\nNo JSON output produced. Check workflow logs.\n');
+                process.exit(0);
+              }
+              const data = JSON.parse(raw.slice(jsonStart));
+              let md = '## Accessibility Audit Results (WCAG 2.1 AA)\n\n';
+              const total = data.total || 0;
+              const passes = data.passes || 0;
+              const errors = data.errors || 0;
+              md += '| Metric | Count |\n|--------|-------|\n';
+              md += '| Pages tested | ' + total + ' |\n';
+              md += '| Pages passed | ' + passes + ' |\n';
+              md += '| Pages with errors | ' + errors + ' |\n\n';
+              if (data.results) {
+                for (const [url, issues] of Object.entries(data.results)) {
+                  if (issues.length > 0) {
+                    const page = url.replace('http://localhost:8080/', '');
+                    md += '<details><summary>' + page + ' (' + issues.length + ' issues)</summary>\n\n';
+                    issues.forEach(i => {
+                      md += '- **' + i.type + '**: ' + i.message + '\n';
+                      if (i.selector) md += '  - Selector: \`' + i.selector + '\`\n';
+                    });
+                    md += '\n</details>\n\n';
+                  }
+                }
+              }
+              if (errors > 0) {
+                md += '> **Note:** Critical WCAG 2.1 AA violations detected. Please fix before merging.\n';
+              } else {
+                md += '> All pages passed accessibility checks.\n';
+              }
+              fs.writeFileSync('pa11y-report.md', md);
+            } catch(e) {
+              fs.writeFileSync('pa11y-report.md', '## Accessibility Audit Results\n\nFailed to parse results. See workflow logs for details.\n');
+            }
+          "
+          echo "exit_code=$PA11Y_EXIT" >> "$GITHUB_OUTPUT"
 
-      - name: Run accessibility audit on login.html
+      - name: Upload accessibility report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-report
+          path: pa11y-report.md
+
+      - name: Comment on PR with accessibility results
+        if: always() && github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: accessibility-audit
+          path: pa11y-report.md
+
+      - name: Fail on critical violations
+        if: steps.pa11y.outputs.exit_code != '0'
         run: |
-          axe http://localhost:8080/login.html \
-            --tags wcag2a,wcag2aa \
-            --exit || true
+          echo "::error::Accessibility audit failed with critical WCAG 2.1 AA violations."
+          exit 1
 
   html-validate:
     name: Validate HTML
