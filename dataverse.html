@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,28 +8,40 @@
 <link rel="icon" href="assets/images/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
 <style>
 /* ============================================================
    DESIGN TOKENS
    ============================================================ */
 :root {
-    --accent: #4F46E5;
-    --accent-dark: #4338CA;
-    --accent-light: #6366F1;
-    --accent-subtle: #EEF2FF;
-    --accent-bg: rgba(79, 70, 229, 0.06);
-    --bg-primary: #FAFAF8;
-    --bg-card: #FFFFFF;
-    --bg-nav: #1C1917;
-    --text-primary: #1C1917;
-    --text-secondary: #57534E;
-    --text-muted: #A8A29E;
-    --border: #E7E5E4;
-    --border-hover: #D6D3D1;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-    --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --accent-color: #0EA5E9;
+    --accent-hover: #0284C7;
+    --secondary-accent: #6366F1;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -37,570 +49,583 @@
     --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+[data-theme="light"] {
+    --primary-bg: #FFFFFF;
+    --secondary-bg: #F8FAFC;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
 /* ============================================================
    RESET & BASE
    ============================================================ */
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-}
+html { scroll-behavior: smooth; }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--primary-bg);
     color: var(--text-primary);
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-a { color: inherit; text-decoration: none; }
-ul { list-style: none; }
+a { color: var(--accent-color); text-decoration: none; transition: color var(--transition); }
+a:hover { color: var(--accent-hover); }
 
-/* ============================================================
-   SKIP TO CONTENT
-   ============================================================ */
+img { max-width: 100%; display: block; }
+
+/* Skip to content */
 .skip-to-content {
     position: absolute;
     top: -100%;
-    left: 1rem;
-    background: var(--accent);
-    color: #FFF;
-    padding: 0.75rem 1.5rem;
+    left: 16px;
+    background: var(--accent-color);
+    color: #fff;
+    padding: 8px 16px;
     border-radius: var(--radius-sm);
-    z-index: 200;
+    z-index: 10000;
     font-weight: 600;
-    font-size: 0.9rem;
+    transition: top 0.2s;
+}
+.skip-to-content:focus {
+    top: 16px;
 }
 
-.skip-to-content:focus {
-    top: 1rem;
+/* Focus visible */
+*:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
 /* ============================================================
-   NAVIGATION
+   SARGAM ICONS
+   ============================================================ */
+.sargam-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) saturate(100%) invert(58%) sepia(89%) saturate(2108%) hue-rotate(176deg) brightness(98%) contrast(91%);
+}
+
+[data-theme="light"] .sargam-icon {
+    filter: brightness(0) saturate(100%) invert(44%) sepia(98%) saturate(1388%) hue-rotate(176deg) brightness(97%) contrast(92%);
+}
+
+.sargam-icon-white {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+[data-theme="light"] .sargam-icon-white {
+    filter: brightness(0) invert(1);
+}
+
+.sargam-icon-muted {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) saturate(100%) invert(50%) sepia(10%) saturate(400%) hue-rotate(180deg);
+}
+
+/* ============================================================
+   HEADER
    ============================================================ */
 .site-header {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: var(--bg-nav);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    z-index: 1000;
+    background: var(--primary-bg);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
 }
 
-.site-nav {
-    max-width: 1400px;
+.nav-container {
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 24px;
     height: 64px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    gap: 24px;
 }
 
-.nav-brand {
+.logo {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 10px;
     text-decoration: none;
-    color: #FFF;
+    color: var(--text-primary);
     flex-shrink: 0;
 }
-
-.nav-logo {
-    width: 36px;
+.logo-icon {
     height: 36px;
-    border-radius: 8px;
-    object-fit: contain;
+    width: auto;
 }
-
-.nav-brand-text {
+.logo-text-wrap {
     display: flex;
     flex-direction: column;
-    line-height: 1.15;
+    line-height: 1.1;
 }
-
-.nav-brand-name {
+.logo-text {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.1rem;
     font-weight: 700;
-    color: #FFF;
+    font-size: 1.15rem;
+    color: var(--text-primary);
 }
-
-.nav-brand-tagline {
+.logo-tagline {
     font-size: 0.7rem;
-    color: rgba(255,255,255,0.5);
-    font-weight: 500;
+    color: var(--text-muted);
+    font-weight: 400;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 8px;
 }
-
 .nav-link {
-    color: rgba(255,255,255,0.7);
-    padding: 0.45rem 0.9rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.88rem;
+    padding: 6px 14px;
+    font-size: 0.9rem;
     font-weight: 500;
-    transition: var(--transition);
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition);
+    white-space: nowrap;
 }
-
 .nav-link:hover {
-    color: #FFF;
-    background: rgba(255,255,255,0.08);
+    color: var(--text-primary);
+    background: var(--hover-bg);
+}
+.nav-link.active {
+    color: var(--accent-color);
+    background: rgba(14, 165, 233, 0.1);
 }
 
-.nav-link--active {
-    color: #FFF;
-    background: var(--accent);
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
 }
 
-.nav-mobile-toggle {
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-pill);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-family: inherit;
+    transition: all var(--transition);
+}
+.theme-toggle-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-color);
+}
+.theme-label { white-space: nowrap; }
+
+.mobile-menu-toggle {
     display: none;
     background: none;
     border: none;
-    color: #FFF;
+    color: var(--text-primary);
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 4px;
 }
 
-/* Mobile nav */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 64px;
-        left: 0;
-        right: 0;
-        background: var(--bg-nav);
-        flex-direction: column;
-        padding: 1rem;
-        gap: 0.25rem;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .nav-links.open { display: flex; }
-    .nav-link { width: 100%; text-align: center; }
-    .nav-mobile-toggle { display: block; }
+/* Mobile nav overlay */
+.mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+.mobile-nav-overlay.active { display: block; }
+
+.mobile-nav-panel {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 280px;
+    background: var(--primary-bg);
+    border-left: 1px solid var(--border-color);
+    z-index: 1001;
+    padding: 24px;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+}
+.mobile-nav-panel.active {
+    display: flex;
+}
+.mobile-nav-panel .nav-link {
+    display: block;
+    padding: 12px 16px;
+    font-size: 1rem;
+}
+.mobile-nav-close {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 4px;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+    .nav-links, .nav-actions { display: none; }
+    .mobile-menu-toggle { display: flex; }
 }
 
 /* ============================================================
    HERO SECTION
    ============================================================ */
 .hero {
-    background: linear-gradient(135deg, #312E81 0%, #4338CA 50%, #6366F1 100%);
-    padding: 4rem 1.5rem 3rem;
     text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.06) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.04) 0%, transparent 50%);
-    pointer-events: none;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 720px;
+    padding: 64px 24px 32px;
+    max-width: 800px;
     margin: 0 auto;
 }
-
-.hero h1 {
+.hero-title {
     font-family: 'Poppins', sans-serif;
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: 2.8rem;
     font-weight: 800;
-    color: #FFF;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
     line-height: 1.15;
-    margin-bottom: 1rem;
 }
-
-.hero h1 .hero-accent {
-    color: rgba(255,255,255,0.6);
-    font-weight: 600;
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 500;
 }
-
-.hero p {
-    font-size: 1.05rem;
-    color: rgba(255,255,255,0.75);
+.hero-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
     max-width: 600px;
     margin: 0 auto;
-    line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+    .hero { padding: 40px 16px 24px; }
+    .hero-title { font-size: 2rem; }
+    .hero-subtitle { font-size: 1rem; }
 }
 
 /* ============================================================
    STATS BAR
    ============================================================ */
 .stats-bar {
-    background: var(--bg-card);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 1.5rem;
-    box-shadow: var(--shadow-sm);
-}
-
-.stats-inner {
-    max-width: 1400px;
-    margin: 0 auto;
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 32px;
+    padding: 24px;
     flex-wrap: wrap;
 }
-
 .stat-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.88rem;
-    color: var(--text-secondary);
+    text-align: center;
 }
-
-.stat-number {
+.stat-value {
     font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
     font-weight: 700;
-    font-size: 1.3rem;
-    color: var(--accent);
+    color: var(--accent-color);
+    line-height: 1.2;
+}
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
 }
 
-.stat-label { font-weight: 500; }
-
-.stat-divider {
-    width: 1px;
-    height: 24px;
-    background: var(--border);
+@media (max-width: 500px) {
+    .stats-bar { gap: 20px; }
+    .stat-value { font-size: 1.4rem; }
 }
 
 /* ============================================================
-   CONTROLS SECTION
+   SEARCH & FILTERS
    ============================================================ */
 .controls-section {
-    max-width: 1400px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 1.5rem 1.5rem 0;
+    padding: 0 24px 24px;
 }
 
-/* Search Bar */
 .search-container {
     position: relative;
     max-width: 600px;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 24px;
 }
-
-.search-icon-wrap {
+.search-icon {
     position: absolute;
-    left: 1.25rem;
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-muted);
+    width: 20px;
+    height: 20px;
     pointer-events: none;
-    display: flex;
-    align-items: center;
 }
-
 .search-input {
     width: 100%;
-    padding: 0.85rem 3rem 0.85rem 3.25rem;
-    border: 2px solid var(--border);
+    padding: 14px 16px 14px 48px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-pill);
+    color: var(--text-primary);
     font-size: 0.95rem;
     font-family: inherit;
-    background: var(--bg-card);
-    color: var(--text-primary);
-    transition: var(--transition);
-    outline: none;
+    transition: all var(--transition);
 }
-
+.search-input::placeholder { color: var(--text-muted); }
 .search-input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(79,70,229,0.1);
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
 }
 
-.search-input::placeholder {
-    color: var(--text-muted);
+.filter-group {
+    margin-bottom: 16px;
 }
-
-.search-clear {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-muted);
-    display: none;
-    padding: 0.25rem;
-    line-height: 1;
-}
-
-.search-clear svg { display: block; }
-
-.search-clear.visible { display: flex; align-items: center; }
-
-/* Type Filter */
-.type-filter {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.type-filter-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    margin-right: 0.25rem;
-}
-
-.type-btn {
-    padding: 0.4rem 0.85rem;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-pill);
-    background: var(--bg-card);
-    color: var(--text-secondary);
+.filter-label {
     font-size: 0.8rem;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+    display: block;
 }
-
-.type-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
-
-.type-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: var(--accent-subtle);
-}
-
-.type-btn.active {
-    background: var(--accent);
-    color: #FFF;
-    border-color: var(--accent);
-}
-
-.type-btn.active svg { color: #FFF; }
-
-/* Category Filters */
-.category-filters {
+.filter-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    padding-bottom: 1.5rem;
+    gap: 8px;
 }
-
-.cat-pill {
-    padding: 0.4rem 0.85rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.78rem;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    transition: var(--transition);
-    border: 2px solid transparent;
+.filter-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    background: rgba(0,0,0,0.05);
+    gap: 6px;
+    padding: 7px 16px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-pill);
     color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--transition);
+    white-space: nowrap;
+}
+.filter-pill:hover {
+    border-color: var(--accent-color);
+    color: var(--text-primary);
+}
+.filter-pill.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+}
+.filter-pill .pill-icon {
+    width: 16px;
+    height: 16px;
+}
+.filter-pill.active .pill-icon {
+    filter: brightness(0) invert(1);
+}
+.filter-pill .cat-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
 }
 
-.cat-pill svg { width: 14px; height: 14px; flex-shrink: 0; }
-
-.cat-pill:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.cat-pill.active {
-    color: #FFF;
-    transform: translateY(-1px);
-    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
-}
-
-/* ============================================================
-   RESULTS INFO
-   ============================================================ */
+/* Results count */
 .results-info {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1.5rem 1rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-.results-count {
+    justify-content: space-between;
+    padding: 12px 0;
     font-size: 0.9rem;
     color: var(--text-muted);
-    font-weight: 500;
 }
-
-.results-count strong {
-    color: var(--accent);
-}
+.results-count { font-weight: 500; }
+.results-count strong { color: var(--text-primary); }
 
 /* ============================================================
    CARD GRID
    ============================================================ */
 .card-grid {
-    max-width: 1400px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 1.5rem 3rem;
+    padding: 0 24px 48px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+}
+
+@media (max-width: 400px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        padding: 0 16px 32px;
+    }
 }
 
 /* ============================================================
-   INDIVIDUAL CARD
+   CARD
    ============================================================ */
-.dv-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1.5rem;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    transition: var(--transition);
+    transition: all var(--transition);
     position: relative;
-    overflow: hidden;
 }
-
-.dv-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--border-hover);
-}
-
-.dv-card::before {
+.card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--card-bar-color, var(--accent));
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    background: var(--cat-color, var(--accent-color));
     opacity: 0;
-    transition: var(--transition);
+    transition: opacity var(--transition);
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+}
+.card:hover::before {
+    opacity: 1;
 }
 
-.dv-card:hover::before {
-    opacity: 1;
+.card-body {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-header {
     display: flex;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 12px;
+    margin-bottom: 12px;
 }
 
 .card-type-icon {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
 }
-
-.card-type-icon svg {
-    width: 20px;
-    height: 20px;
+.card-type-icon img {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) invert(1);
 }
 
-.card-header-text {
+.card-title-block {
     flex: 1;
     min-width: 0;
 }
-
-.card-name {
+.card-title {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.02rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--text-primary);
     line-height: 1.3;
-    margin-bottom: 0.15rem;
+    margin-bottom: 2px;
 }
-
 .card-type-label {
-    font-size: 0.72rem;
-    font-weight: 600;
+    font-size: 0.75rem;
+    color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.04em;
+    font-weight: 500;
 }
 
 .card-badges {
     display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    flex-shrink: 0;
+    gap: 6px;
     flex-wrap: wrap;
+    margin-bottom: 10px;
 }
-
-.badge-free {
-    padding: 0.2rem 0.55rem;
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
     border-radius: var(--radius-pill);
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    background: rgba(34,197,94,0.1);
-    color: #16A34A;
-    border: 1px solid rgba(34,197,94,0.2);
-}
-
-.badge-status {
-    padding: 0.2rem 0.55rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.03em;
+}
+.badge-free {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--success-color);
+}
+.badge-status-live {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--success-color);
+}
+.badge-status-beta {
+    background: rgba(14, 165, 233, 0.12);
+    color: var(--accent-color);
+}
+.badge-status-coming-soon {
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--warning-color);
+}
+.badge-source {
+    background: var(--hover-bg);
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
 }
 
-.badge-status--live {
-    background: rgba(34,197,94,0.08);
-    color: #16A34A;
-}
-
-.badge-status--beta {
-    background: rgba(79,70,229,0.08);
-    color: var(--accent);
-}
-
-.badge-status--coming-soon {
-    background: rgba(245,158,11,0.1);
-    color: #D97706;
-}
-
-.card-desc {
+.card-description {
     font-size: 0.88rem;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.55;
+    margin-bottom: 14px;
     flex: 1;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -608,76 +633,81 @@ ul { list-style: none; }
     overflow: hidden;
 }
 
-.card-source {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
 .card-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
+    gap: 6px;
+    margin-bottom: 14px;
 }
-
-.card-tag {
-    padding: 0.2rem 0.55rem;
+.tag {
+    padding: 2px 10px;
+    background: var(--hover-bg);
     border-radius: var(--radius-pill);
-    font-size: 0.7rem;
-    font-weight: 500;
-    background: var(--accent-bg);
+    font-size: 0.72rem;
     color: var(--text-muted);
+    font-weight: 500;
 }
 
 .card-footer {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--border);
-    margin-top: auto;
+    padding: 14px 20px;
+    border-top: 1px solid var(--border-color);
 }
 
-.card-cats {
+.card-category {
     display: flex;
-    gap: 0.3rem;
-    flex-wrap: wrap;
-    flex: 1;
     align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 60%;
 }
-
-.card-cat-dot {
+.card-category .cat-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
 }
 
-.card-link {
+.card-visit-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    padding: 0.4rem 0.9rem;
+    gap: 5px;
+    padding: 6px 16px;
+    background: var(--accent-color);
+    color: #fff;
     border-radius: var(--radius-pill);
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 600;
+    transition: all var(--transition);
     text-decoration: none;
-    color: var(--accent);
-    background: var(--accent-subtle);
-    transition: var(--transition);
-    flex-shrink: 0;
+    white-space: nowrap;
 }
-
-.card-link svg { width: 14px; height: 14px; }
-
-.card-link:hover {
-    background: var(--accent);
-    color: #FFF;
+.card-visit-btn:hover {
+    background: var(--accent-hover);
+    color: #fff;
+    transform: translateY(-1px);
 }
-
-.card-link--disabled {
-    opacity: 0.4;
+.card-visit-btn.disabled {
+    background: var(--hover-bg);
+    color: var(--text-muted);
     pointer-events: none;
+    cursor: not-allowed;
+}
+.card-visit-btn img {
+    width: 14px;
+    height: 14px;
+    filter: brightness(0) invert(1);
+}
+.card-visit-btn.disabled img {
+    opacity: 0.4;
 }
 
 /* ============================================================
@@ -686,301 +716,292 @@ ul { list-style: none; }
 .empty-state {
     grid-column: 1 / -1;
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 64px 24px;
 }
-
-.empty-state svg {
+.empty-state-icon {
     width: 48px;
     height: 48px;
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-    opacity: 0.5;
+    margin: 0 auto 16px;
+    opacity: 0.4;
 }
-
-.empty-state h3 {
+.empty-state-title {
     font-family: 'Poppins', sans-serif;
     font-size: 1.3rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+.empty-state-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+.empty-state-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 24px;
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--transition);
+}
+.empty-state-btn:hover {
+    background: var(--accent-hover);
 }
 
-.empty-state p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
+/* ============================================================
+   SCROLL TO TOP
+   ============================================================ */
+.scroll-top-btn {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    background: var(--accent-color);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 50;
+}
+.scroll-top-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+.scroll-top-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
+.scroll-top-btn img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+    transform: rotate(180deg);
 }
 
 /* ============================================================
    FOOTER
    ============================================================ */
-.site-footer {
-    background: var(--bg-nav);
-    color: rgba(255,255,255,0.7);
-    padding: 0;
+.footer {
+    margin-top: auto;
+    background: var(--secondary-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 48px 24px 24px;
 }
-
-.footer-inner {
-    max-width: 1400px;
+.footer-content {
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 3rem 1.5rem 2rem;
 }
-
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    margin-bottom: 2.5rem;
+    gap: 32px;
+    margin-bottom: 32px;
 }
-
-.footer-col h4 {
+.footer-section h4 {
     font-family: 'Poppins', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #FFF;
-    margin-bottom: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 12px;
 }
-
-.footer-col ul { display: flex; flex-direction: column; gap: 0.5rem; }
-
-.footer-col a {
-    color: rgba(255,255,255,0.55);
+.footer-section ul {
+    list-style: none;
+}
+.footer-section li {
+    margin-bottom: 8px;
+}
+.footer-section a {
     font-size: 0.88rem;
-    transition: var(--transition);
+    color: var(--text-secondary);
+    transition: color var(--transition);
 }
-
-.footer-col a:hover { color: #FFF; }
-
+.footer-section a:hover {
+    color: var(--accent-color);
+}
 .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 24px;
     text-align: center;
 }
-
 .footer-bottom p {
     font-size: 0.82rem;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 0.35rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
 }
-
 .footer-bottom a {
-    color: rgba(255,255,255,0.55);
-    text-decoration: none;
-    transition: var(--transition);
+    color: var(--accent-color);
 }
 
-.footer-bottom a:hover { color: #FFF; }
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+}
+@media (max-width: 480px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
 /* ============================================================
-   SCROLL TO TOP
+   LOADING STATE
    ============================================================ */
-.scroll-top {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #FFF;
-    border: none;
-    cursor: pointer;
+.loading-spinner {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 16px rgba(79,70,229,0.3);
-    transition: var(--transition);
-    opacity: 0;
-    visibility: hidden;
-    z-index: 50;
+    padding: 80px 24px;
+    grid-column: 1 / -1;
 }
-
-.scroll-top svg { width: 20px; height: 20px; }
-
-.scroll-top.visible {
-    opacity: 1;
-    visibility: visible;
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
 }
-
-.scroll-top:hover {
-    background: var(--accent-dark);
-    transform: translateY(-2px);
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 768px) {
-    .hero { padding: 3rem 1rem 2rem; }
-    .hero p { font-size: 0.95rem; }
-    .stats-inner { gap: 1rem; }
-    .stat-divider { display: none; }
-    .stat-item { font-size: 0.8rem; }
-    .stat-number { font-size: 1.1rem; }
-    .card-grid {
-        grid-template-columns: 1fr;
-        padding: 0 1rem 2rem;
-    }
-    .controls-section { padding: 1rem 1rem 0; }
-    .results-info { padding: 0 1rem 0.75rem; }
-    .category-filters { gap: 0.4rem; }
-    .cat-pill { font-size: 0.72rem; padding: 0.35rem 0.7rem; }
-    .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero h1 { font-size: 1.75rem; }
-    .type-filter { gap: 0.35rem; }
-    .type-btn { padding: 0.35rem 0.65rem; font-size: 0.75rem; }
-    .footer-grid { grid-template-columns: 1fr; }
-}
-
-@media (min-width: 1200px) {
-    .card-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
-<!-- SVG Sprite Sheet -->
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
-<!-- Category icons -->
-<symbol id="si_Flag" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M4 15V4l17 6zm0 0v5"/></symbol>
-<symbol id="si_Globe_detailed" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M22 12c0 5.523-4.477 10-10 10m10-10c0-5.523-4.477-10-10-10m10 10H2m10 10C6.477 22 2 17.523 2 12m10 10 .66-.31c2.1-2.71 3.34-6.14 3.34-9.78s-1.22-7-3.27-9.69L12 2m0 20-.73-.31A15.94 15.94 0 0 1 8 12c0-3.64 1.24-7.07 3.34-9.78L12 2M2 12C2 6.477 6.477 2 12 2m7.14 17c-1.82-1.85-4.34-3-7.14-3s-5.33 1.15-7.14 3M19.14 5C17.33 6.85 14.8 8 12 8S6.68 6.85 4.86 5"/></symbol>
-<symbol id="si_Heart" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.696 3C14.652 3 12.887 4.197 12 5.943 11.113 4.197 9.348 3 7.304 3 4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/></symbol>
-<symbol id="si_Book" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 7.333C12 5.5 10.5 4 8.667 4H2v12h6.708C12 16 12 19.334 12 19.334m0-12C12 5.5 13.5 4 15.333 4H22v12h-6.667C12 16 12 19.334 12 19.334m0-12v12m1.875 1.124A2.58 2.58 0 0 1 16.167 19H21m-10.875 1.458A2.54 2.54 0 0 0 7.833 19H3"/></symbol>
-<symbol id="si_Bar_chart" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M2 22h20M9 8.6A1.6 1.6 0 0 0 7.4 7H4.6A1.6 1.6 0 0 0 3 8.6V22m6 0V3.6A1.6 1.6 0 0 1 10.6 2h2.8A1.6 1.6 0 0 1 15 3.6V22m6 0v-8.4a1.6 1.6 0 0 0-1.6-1.6h-2.8a1.6 1.6 0 0 0-1.6 1.6"/></symbol>
-<symbol id="si_Article" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 12h8m-8 3h4M8 9h8M4.4 4h15.2A2.4 2.4 0 0 1 22 6.4v11.2a2.4 2.4 0 0 1-2.4 2.4H4.4A2.4 2.4 0 0 1 2 17.6V6.4A2.4 2.4 0 0 1 4.4 4"/></symbol>
-<symbol id="si_Activity" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M1 12h4l4 9 7-18 3 9h4"/></symbol>
-<symbol id="si_Target" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z"/><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></symbol>
-<symbol id="si_Direction_alt" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m3 3 18 7.92-7.987 2.093L10.92 21z"/></symbol>
-<symbol id="si_Leaf" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21C7 21 3 16 3 12c0-5 4-9 9-9 3 0 6 1.5 8 4-2 0-5 1-6 3s-1 5 0 7c-1 .5-2 1-3 1 0 0 1-3 1-6"/></symbol>
-<symbol id="si_File_download" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol>
-<symbol id="si_Settings" viewBox="0 0 24 24"><g stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"><path d="M21 10h-2.29a7.454 7.454 0 0 0-.54-1.32l1.62-1.62c.78-.78.78-2.05 0-2.83s-2.05-.78-2.83 0l-1.62 1.62c-.21-.11-.42-.21-.64-.3h-.01c-.22-.09-.44-.17-.67-.24V3c0-1.1-.9-2-2-2s-2 .9-2 2v2.29c-.23.07-.45.15-.67.24h-.01c-.22.09-.43.19-.64.3L7.08 4.21c-.78-.78-2.05-.78-2.83 0s-.78 2.05 0 2.83l1.62 1.62a7.5 7.5 0 0 0-.54 1.32H3c-1.1 0-2 .9-2 2s.9 2 2 2h2.29c.07.23.15.46.24.68s.19.44.31.65l-1.62 1.62c-.78.78-.78 2.05 0 2.83s2.05.78 2.83 0l1.62-1.62c.21.11.43.21.65.31.22.09.45.17.68.24v2.29c0 1.1.9 2 2 2s2-.9 2-2v-2.29c.23-.07.46-.15.68-.24s.44-.19.65-.31l1.62 1.62c.78.78 2.05.78 2.83 0s.78-2.05 0-2.83l-1.62-1.62c.11-.21.21-.43.31-.65.09-.22.17-.45.24-.68H21c1.1 0 2-.9 2-2s-.9-2-2-2z"/><path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></g></symbol>
-<symbol id="si_Lightning" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m12.667 10.5 1.25-7.5L6 13h5l-1.25 7.5 7.917-10z" clip-rule="evenodd"/></symbol>
-<symbol id="si_Crosshair_detailed" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M2 12h4m12 0h4M12 22v-4m0-12V2m8 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0m-5 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/></symbol>
-<symbol id="si_Chat" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M19 16h-2.525a.99.99 0 0 0-.775.375l-2.925 3.65c-.4.5-1.162.5-1.562 0l-2.925-3.65A.99.99 0 0 0 7.512 16H5c-1.662 0-3-1.338-3-3V6c0-1.662 1.338-3 3-3h14c1.663 0 3 1.338 3 3v7c0 1.662-1.337 3-3 3Z"/></symbol>
-<symbol id="si_Briefcase" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M15 21V4.8a.8.8 0 0 0-.8-.8H9.8a.8.8 0 0 0-.8.8V21M4.4 7h15.2A2.4 2.4 0 0 1 22 9.4v9.2a2.4 2.4 0 0 1-2.4 2.4H4.4A2.4 2.4 0 0 1 2 18.6V9.4A2.4 2.4 0 0 1 4.4 7"/></symbol>
-<symbol id="si_Search" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m21 21-4-4m2-6a8 8 0 1 1-16 0 8 8 0 0 1 16 0"/></symbol>
-<symbol id="si_Arrow_right" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m14 16 4-4m0 0-4-4m4 4H6"/></symbol>
+<a href="#main-content" class="skip-to-content">Skip to content</a>
 
-<!-- Type icons -->
-<symbol id="type-dataset" viewBox="0 0 24 24" fill="none"><rect x="3" y="14" width="4" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="9" width="4" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="17" y="3" width="4" height="18" rx="1" stroke="currentColor" stroke-width="1.5"/></symbol>
-<symbol id="type-tool" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94L14.7 6.3Z"/></symbol>
-<symbol id="type-platform" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path stroke="currentColor" stroke-width="1.5" d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2Z"/></symbol>
-<symbol id="type-api" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
-<symbol id="type-mcp-server" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="14" width="20" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="6.5" r="1" fill="currentColor"/><circle cx="6" cy="17.5" r="1" fill="currentColor"/><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M10 6.5h6m-6 11h6"/></symbol>
-<symbol id="type-resource" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></symbol>
-<symbol id="type-skill" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m12.667 10.5 1.25-7.5L6 13h5l-1.25 7.5 7.917-10z"/></symbol>
-
-<!-- Utility icons -->
-<symbol id="icon-chevron-up" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m18 15-6-6-6 6"/></symbol>
-<symbol id="icon-x" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6 6 18M6 6l12 12"/></symbol>
-<symbol id="icon-grid" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h7v7H3zm11 0h7v7h-7zM3 14h7v7H3zm11 0h7v7h-7z"/></symbol>
-</svg>
-
-<!-- Skip to Content -->
-<a href="#main-content" class="skip-to-content">Skip to main content</a>
-
-<!-- Navigation -->
+<!-- HEADER -->
 <header class="site-header">
-    <nav class="site-nav" role="navigation" aria-label="Main navigation">
-        <a href="/" class="nav-brand">
-            <img src="/assets/images/ImpactMojo Logo.png" alt="ImpactMojo" class="nav-logo">
-            <div class="nav-brand-text">
-                <span class="nav-brand-name">ImpactMojo</span>
-                <span class="nav-brand-tagline">Learn for Impact</span>
+    <nav class="nav-container">
+        <a href="/" class="logo">
+            <img src="/assets/images/ImpactMojo Logo.png" alt="ImpactMojo" class="logo-icon">
+            <div class="logo-text-wrap">
+                <span class="logo-text">ImpactMojo</span>
+                <span class="logo-tagline">Learn for Impact</span>
             </div>
         </a>
-        <div class="nav-links" id="navLinks">
+        <div class="nav-links">
             <a href="/" class="nav-link">Home</a>
             <a href="/catalog" class="nav-link">Catalog</a>
             <a href="/handouts" class="nav-link">Handouts</a>
             <a href="/bct-repository" class="nav-link">BCT Repository</a>
-            <a href="/dataverse" class="nav-link nav-link--active">Dataverse</a>
+            <a href="/dataverse" class="nav-link active">Dataverse</a>
             <a href="/blog" class="nav-link">Blog</a>
         </div>
-        <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+        <div class="nav-actions">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" style="width:18px;height:18px;" class="sargam-icon">
+                <span class="theme-label">Light mode</span>
+            </button>
+        </div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
     </nav>
 </header>
 
-<!-- Hero Section -->
-<section class="hero" aria-label="Page introduction">
-    <div class="hero-content">
-        <h1>ImpactMojo <span class="hero-accent">Dataverse</span></h1>
-        <p>A curated collection of 215+ tools, datasets, APIs, and platforms powering social impact work across South Asia and beyond. Discover resources for development economics, policy research, and evidence-based practice.</p>
-    </div>
-</section>
-
-<!-- Stats Bar -->
-<div class="stats-bar" aria-label="Resource statistics">
-    <div class="stats-inner">
-        <div class="stat-item">
-            <span class="stat-number" id="statTotal">--</span>
-            <span class="stat-label">Resources</span>
-        </div>
-        <div class="stat-divider" aria-hidden="true"></div>
-        <div class="stat-item">
-            <span class="stat-number" id="statFree">--</span>
-            <span class="stat-label">Free</span>
-        </div>
-        <div class="stat-divider" aria-hidden="true"></div>
-        <div class="stat-item">
-            <span class="stat-number" id="statCategories">--</span>
-            <span class="stat-label">Categories</span>
-        </div>
-        <div class="stat-divider" aria-hidden="true"></div>
-        <div class="stat-item">
-            <span class="stat-number" id="statTypes">--</span>
-            <span class="stat-label">Types</span>
-        </div>
-    </div>
+<!-- Mobile Nav -->
+<div class="mobile-nav-overlay" id="mobileOverlay"></div>
+<div class="mobile-nav-panel" id="mobilePanel">
+    <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <a href="/" class="nav-link">Home</a>
+    <a href="/catalog" class="nav-link">Catalog</a>
+    <a href="/handouts" class="nav-link">Handouts</a>
+    <a href="/bct-repository" class="nav-link">BCT Repository</a>
+    <a href="/dataverse" class="nav-link active">Dataverse</a>
+    <a href="/blog" class="nav-link">Blog</a>
+    <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme" style="margin-top:16px;">
+        <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" style="width:18px;height:18px;" class="sargam-icon">
+        <span class="theme-label">Light mode</span>
+    </button>
 </div>
 
-<!-- Controls -->
-<div class="controls-section" id="main-content">
-    <!-- Search -->
-    <div class="search-container">
-        <span class="search-icon-wrap" aria-hidden="true">
-            <svg width="18" height="18"><use href="#si_Search"/></svg>
-        </span>
-        <input type="text" class="search-input" id="searchInput" placeholder="Search tools, datasets, APIs, tags, sources..." autocomplete="off" aria-label="Search resources">
-        <button class="search-clear" id="searchClear" title="Clear search" aria-label="Clear search">
-            <svg width="18" height="18"><use href="#icon-x"/></svg>
-        </button>
+<!-- MAIN CONTENT -->
+<main id="main-content">
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1 class="hero-title">ImpactMojo Dataverse</h1>
+        <p class="hero-subtitle">Curated Tools & Data for Social Impact</p>
+        <p class="hero-desc">Discover 215+ datasets, APIs, tools, platforms, and MCP servers for development economics, policy research, and social impact work.</p>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar" aria-label="Statistics">
+        <div class="stat-item">
+            <div class="stat-value" id="statTotal">--</div>
+            <div class="stat-label">Resources</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="statFree">--</div>
+            <div class="stat-label">Free</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="statCategories">--</div>
+            <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="statTypes">--</div>
+            <div class="stat-label">Types</div>
+        </div>
+    </section>
+
+    <!-- Search & Filters -->
+    <section class="controls-section" aria-label="Search and filters">
+        <div class="search-container">
+            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Search.svg" alt="" class="search-icon sargam-icon">
+            <input type="search" id="searchInput" class="search-input" placeholder="Search resources by name, description, tag, or source..." aria-label="Search resources">
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">Type</span>
+            <div class="filter-pills" id="typeFilters" role="group" aria-label="Filter by type"></div>
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">Category</span>
+            <div class="filter-pills" id="categoryFilters" role="group" aria-label="Filter by category"></div>
+        </div>
+
+        <div class="results-info">
+            <span class="results-count" id="resultsCount"></span>
+        </div>
+    </section>
+
+    <!-- Card Grid -->
+    <div class="card-grid" id="cardGrid">
+        <div class="loading-spinner"><div class="spinner"></div></div>
     </div>
 
-    <!-- Type Filter -->
-    <div class="type-filter" id="typeFilter" role="group" aria-label="Filter by type"></div>
+</main>
 
-    <!-- Category Filters -->
-    <div class="category-filters" id="categoryFilters" role="group" aria-label="Filter by category"></div>
-</div>
-
-<!-- Results Info -->
-<div class="results-info">
-    <span class="results-count" id="resultsCount" aria-live="polite"></span>
-</div>
-
-<!-- Card Grid -->
-<div class="card-grid" id="cardGrid" role="list" aria-label="Resource cards"></div>
-
-<!-- Scroll to Top -->
-<button class="scroll-top" id="scrollTop" title="Back to top" aria-label="Scroll to top">
-    <svg width="20" height="20"><use href="#icon-chevron-up"/></svg>
+<!-- Scroll to top -->
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
+    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chevron_down.svg" alt="">
 </button>
 
-<!-- Footer -->
-<footer class="site-footer">
-    <div class="footer-inner">
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
         <div class="footer-grid">
-            <div class="footer-col">
-                <h4>About</h4>
+            <div class="footer-section">
+                <h4>About ImpactMojo</h4>
                 <ul>
                     <li><a href="/about">About Us</a></li>
                     <li><a href="/community/community">Community</a></li>
@@ -989,7 +1010,7 @@ ul { list-style: none; }
                     <li><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener">GitHub</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-section">
                 <h4>Legal</h4>
                 <ul>
                     <li><a href="/privacy-policy">Privacy Policy</a></li>
@@ -999,7 +1020,7 @@ ul { list-style: none; }
                     <li><a href="/refund-policy">Refund Policy</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-section">
                 <h4>Learn</h4>
                 <ul>
                     <li><a href="/catalog">All Courses</a></li>
@@ -1009,7 +1030,7 @@ ul { list-style: none; }
                     <li><a href="/workshops">Workshops</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-section">
                 <h4>Resources</h4>
                 <ul>
                     <li><a href="/handouts">Handouts</a></li>
@@ -1027,391 +1048,334 @@ ul { list-style: none; }
     </div>
 </footer>
 
-<!-- JavaScript -->
-<script>
-(function() {
-    'use strict';
+<!-- UserWay Accessibility Widget -->
+<script>(function(d){var s = d.createElement("script");s.setAttribute("data-account", "EksmhlPg9k");s.setAttribute("src", "https://cdn.userway.org/widget.js");(d.body || d.head).appendChild(s);})(document)</script>
 
-    /* ----------------------------------------------------------
-       STATE
-       ---------------------------------------------------------- */
-    var allItems = [];         // flattened items with category info attached
-    var categories = [];       // category objects (without items)
-    var activeCategory = null;
-    var activeType = null;
+<script>
+/* ============================================================
+   THEME
+   ============================================================ */
+function getPreferredTheme() {
+    const saved = localStorage.getItem('impactmojo-theme');
+    if (saved) return saved;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+    return 'light';
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('impactmojo-theme', theme);
+    document.querySelectorAll('.theme-label').forEach(function(el) {
+        el.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+    });
+}
+
+function toggleTheme() {
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+}
+
+setTheme(getPreferredTheme());
+
+/* ============================================================
+   MOBILE MENU
+   ============================================================ */
+(function() {
+    var toggle = document.getElementById('mobileMenuToggle');
+    var overlay = document.getElementById('mobileOverlay');
+    var panel = document.getElementById('mobilePanel');
+    var closeBtn = document.getElementById('mobileNavClose');
+
+    function openMenu() {
+        overlay.classList.add('active');
+        panel.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+        overlay.classList.remove('active');
+        panel.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', openMenu);
+    overlay.addEventListener('click', closeMenu);
+    closeBtn.addEventListener('click', closeMenu);
+})();
+
+/* ============================================================
+   SCROLL TO TOP
+   ============================================================ */
+(function() {
+    var btn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 400) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    });
+    btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+})();
+
+/* ============================================================
+   DATAVERSE APPLICATION
+   ============================================================ */
+(function() {
+    var categories = [];
+    var items = [];
+    var activeType = 'all';
+    var activeCategory = 'all';
     var searchQuery = '';
 
-    /* Type display config */
-    var TYPE_CONFIG = {
-        'dataset':    { label: 'Dataset',    icon: 'type-dataset',    color: '#16A34A', bg: 'rgba(22,163,74,0.1)' },
-        'tool':       { label: 'Tool',       icon: 'type-tool',       color: '#4682B4', bg: 'rgba(70,130,180,0.1)' },
-        'platform':   { label: 'Platform',   icon: 'type-platform',   color: '#D97706', bg: 'rgba(217,119,6,0.1)' },
-        'api':        { label: 'API',        icon: 'type-api',        color: '#7C3AED', bg: 'rgba(124,58,237,0.1)' },
-        'mcp-server': { label: 'MCP Server', icon: 'type-mcp-server', color: '#6366F1', bg: 'rgba(99,102,241,0.1)' },
-        'resource':   { label: 'Resource',   icon: 'type-resource',   color: '#0EA5E9', bg: 'rgba(14,165,233,0.1)' },
-        'skill':      { label: 'Skill',      icon: 'type-skill',      color: '#EC4899', bg: 'rgba(236,72,153,0.1)' }
+    /* Type config: maps type string to icon and display label */
+    var typeConfig = {
+        'dataset':    { icon: 'si_Bar_chart',            label: 'Dataset' },
+        'tool':       { icon: 'si_Settings',             label: 'Tool' },
+        'platform':   { icon: 'si_Globe_detailed',       label: 'Platform' },
+        'api':        { icon: 'si_Lightning',            label: 'API' },
+        'mcp-server': { icon: 'si_Crosshair_detailed',   label: 'MCP Server' },
+        'resource':   { icon: 'si_Article',              label: 'Resource' },
+        'skill':      { icon: 'si_Lightning',            label: 'Skill' }
     };
 
-    /* ----------------------------------------------------------
-       DOM REFS
-       ---------------------------------------------------------- */
-    var searchInput     = document.getElementById('searchInput');
-    var searchClear     = document.getElementById('searchClear');
-    var typeFilterEl    = document.getElementById('typeFilter');
-    var categoryFilters = document.getElementById('categoryFilters');
-    var cardGrid        = document.getElementById('cardGrid');
-    var resultsCount    = document.getElementById('resultsCount');
-    var scrollTopBtn    = document.getElementById('scrollTop');
-    var mobileToggle    = document.getElementById('mobileToggle');
-    var navLinks        = document.getElementById('navLinks');
+    var statusConfig = {
+        'live':         { label: 'Active',       cssClass: 'badge-status-live' },
+        'beta':         { label: 'Beta',         cssClass: 'badge-status-beta' },
+        'coming-soon':  { label: 'Coming Soon',  cssClass: 'badge-status-coming-soon' }
+    };
 
-    /* ----------------------------------------------------------
-       FETCH DATA — correctly parse nested categories[].items[]
-       ---------------------------------------------------------- */
-    fetch('data/dataverse.json')
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-            /* Flatten nested structure:
-               data.categories[] each has .items[]
-               We attach categoryId, categoryName, categoryColor to each item */
-            categories = [];
-            allItems = [];
+    function sargamUrl(iconId) {
+        return 'https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/' + iconId + '.svg';
+    }
 
-            var rawCategories = data.categories || [];
-            rawCategories.forEach(function(cat) {
-                /* Build a lightweight category record (no items) */
-                categories.push({
-                    id: cat.id,
-                    name: cat.name,
-                    icon: cat.icon,
-                    color: cat.color,
-                    description: cat.description
-                });
-
-                /* Flatten items, attaching category metadata */
-                var catItems = cat.items || [];
-                catItems.forEach(function(item) {
-                    /* Each item gets a categoryIds array so we can filter */
-                    /* Check if item already exists (shared across categories) */
-                    var existing = null;
-                    for (var i = 0; i < allItems.length; i++) {
-                        if (allItems[i].id === item.id) {
-                            existing = allItems[i];
-                            break;
-                        }
-                    }
-                    if (existing) {
-                        existing.categoryIds.push(cat.id);
-                        existing.categoryColors.push(cat.color);
-                    } else {
-                        allItems.push({
-                            id: item.id,
-                            name: item.name,
-                            description: item.description,
-                            type: item.type,
-                            status: item.status,
-                            url: item.url,
-                            source: item.source || '',
-                            tags: item.tags || [],
-                            free: !!item.free,
-                            featured: !!item.featured,
-                            categoryIds: [cat.id],
-                            categoryColors: [cat.color]
-                        });
-                    }
-                });
-            });
-
-            init();
-        })
-        .catch(function(err) {
-            cardGrid.innerHTML = '<div class="empty-state"><svg width="48" height="48"><use href="#si_Search"/></svg><h3>Failed to load data</h3><p>' + escapeHTML(err.message) + '</p></div>';
-        });
-
-    /* ----------------------------------------------------------
-       HELPERS
-       ---------------------------------------------------------- */
-    function escapeHTML(str) {
+    function escapeHtml(str) {
         var div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
     }
 
-    function svgUse(id, w, h) {
-        w = w || 16;
-        h = h || 16;
-        return '<svg width="' + w + '" height="' + h + '" fill="none"><use href="#' + id + '"/></svg>';
-    }
+    /* ---- Load data ---- */
+    fetch('data/dataverse.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            categories = data.categories || [];
+            items = [];
+            categories.forEach(function(cat) {
+                (cat.items || []).forEach(function(item) {
+                    item._categoryId = cat.id;
+                    item._categoryName = cat.name;
+                    item._categoryIcon = cat.icon;
+                    item._categoryColor = cat.color;
+                    items.push(item);
+                });
+            });
+            init();
+        })
+        .catch(function(err) {
+            console.error('Failed to load dataverse.json:', err);
+            document.getElementById('cardGrid').innerHTML =
+                '<div class="empty-state">' +
+                '<div class="empty-state-title">Failed to load data</div>' +
+                '<div class="empty-state-desc">Please check that data/dataverse.json exists and reload the page.</div>' +
+                '</div>';
+        });
 
-    /* ----------------------------------------------------------
-       INIT
-       ---------------------------------------------------------- */
     function init() {
-        populateStats();
-        renderTypeFilter();
-        renderCategoryPills();
-        renderCards(allItems);
-        updateResultsCount(allItems.length);
-        bindEvents();
+        updateStats();
+        buildTypeFilters();
+        buildCategoryFilters();
+        bindSearch();
+        renderCards();
     }
 
-    /* ----------------------------------------------------------
-       STATS
-       ---------------------------------------------------------- */
-    function populateStats() {
-        document.getElementById('statTotal').textContent = allItems.length;
-        document.getElementById('statFree').textContent = allItems.filter(function(i) { return i.free; }).length;
-        document.getElementById('statCategories').textContent = categories.length;
+    /* ---- Stats ---- */
+    function updateStats() {
+        document.getElementById('statTotal').textContent = items.length;
+        var freeCount = 0;
         var typeSet = {};
-        allItems.forEach(function(i) { typeSet[i.type] = true; });
+        items.forEach(function(item) {
+            if (item.free) freeCount++;
+            typeSet[item.type] = true;
+        });
+        document.getElementById('statFree').textContent = freeCount;
+        document.getElementById('statCategories').textContent = categories.length;
         document.getElementById('statTypes').textContent = Object.keys(typeSet).length;
     }
 
-    /* ----------------------------------------------------------
-       TYPE FILTER
-       ---------------------------------------------------------- */
-    function renderTypeFilter() {
-        var typeSet = {};
-        allItems.forEach(function(item) { typeSet[item.type] = true; });
-        var types = Object.keys(typeSet).sort();
-
-        var html = '<span class="type-filter-label">Type:</span>';
-        html += '<button class="type-btn active" data-type="all">' + svgUse('icon-grid', 14, 14) + ' All</button>';
-        types.forEach(function(t) {
-            var cfg = TYPE_CONFIG[t] || { label: t, icon: 'type-resource', color: '#666', bg: 'rgba(0,0,0,0.06)' };
-            html += '<button class="type-btn" data-type="' + t + '">' + svgUse(cfg.icon, 14, 14) + ' ' + cfg.label + '</button>';
+    /* ---- Type Filters ---- */
+    function buildTypeFilters() {
+        var container = document.getElementById('typeFilters');
+        var typeCounts = {};
+        items.forEach(function(item) {
+            typeCounts[item.type] = (typeCounts[item.type] || 0) + 1;
         });
-        typeFilterEl.innerHTML = html;
+
+        var html = '<button class="filter-pill active" data-type="all">All</button>';
+        var typeOrder = ['dataset', 'tool', 'platform', 'api', 'mcp-server', 'resource', 'skill'];
+        typeOrder.forEach(function(t) {
+            if (!typeCounts[t]) return;
+            var cfg = typeConfig[t] || { icon: 'si_File_download', label: t };
+            html += '<button class="filter-pill" data-type="' + t + '">' +
+                '<img src="' + sargamUrl(cfg.icon) + '" alt="" class="pill-icon sargam-icon">' +
+                cfg.label + ' (' + typeCounts[t] + ')' +
+                '</button>';
+        });
+        container.innerHTML = html;
+
+        container.addEventListener('click', function(e) {
+            var pill = e.target.closest('.filter-pill');
+            if (!pill) return;
+            container.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+            pill.classList.add('active');
+            activeType = pill.getAttribute('data-type');
+            renderCards();
+        });
     }
 
-    /* ----------------------------------------------------------
-       CATEGORY PILLS
-       ---------------------------------------------------------- */
-    function renderCategoryPills() {
-        var html = '<button class="cat-pill active" data-cat="all" style="background:var(--accent);color:#FFF;">' + svgUse('icon-grid', 14, 14) + ' All Categories</button>';
+    /* ---- Category Filters ---- */
+    function buildCategoryFilters() {
+        var container = document.getElementById('categoryFilters');
+        var html = '<button class="filter-pill active" data-cat="all">All Categories</button>';
         categories.forEach(function(cat) {
-            html += '<button class="cat-pill" data-cat="' + cat.id + '" data-color="' + cat.color + '">'
-                + svgUse(cat.icon, 14, 14) + ' ' + escapeHTML(cat.name) + '</button>';
+            var count = (cat.items || []).length;
+            html += '<button class="filter-pill" data-cat="' + cat.id + '">' +
+                '<span class="cat-dot" style="background:' + cat.color + ';"></span>' +
+                escapeHtml(cat.name) + ' (' + count + ')' +
+                '</button>';
         });
-        categoryFilters.innerHTML = html;
+        container.innerHTML = html;
+
+        container.addEventListener('click', function(e) {
+            var pill = e.target.closest('.filter-pill');
+            if (!pill) return;
+            container.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+            pill.classList.add('active');
+            activeCategory = pill.getAttribute('data-cat');
+            renderCards();
+        });
     }
 
-    /* ----------------------------------------------------------
-       FILTER LOGIC
-       ---------------------------------------------------------- */
+    /* ---- Search ---- */
+    function bindSearch() {
+        var input = document.getElementById('searchInput');
+        var debounceTimer;
+        input.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function() {
+                searchQuery = input.value.trim().toLowerCase();
+                renderCards();
+            }, 200);
+        });
+    }
+
+    /* ---- Filtering ---- */
     function getFilteredItems() {
-        return allItems.filter(function(item) {
-            /* Category filter */
-            if (activeCategory && activeCategory !== 'all') {
-                if (item.categoryIds.indexOf(activeCategory) === -1) return false;
-            }
-            /* Type filter */
-            if (activeType && activeType !== 'all') {
-                if (item.type !== activeType) return false;
-            }
-            /* Search */
+        return items.filter(function(item) {
+            if (activeType !== 'all' && item.type !== activeType) return false;
+            if (activeCategory !== 'all' && item._categoryId !== activeCategory) return false;
             if (searchQuery) {
-                var q = searchQuery.toLowerCase();
-                var haystack = (item.name + ' ' + item.description + ' ' + item.tags.join(' ') + ' ' + item.source).toLowerCase();
-                if (haystack.indexOf(q) === -1) return false;
+                var haystack = (
+                    item.name + ' ' +
+                    item.description + ' ' +
+                    (item.source || '') + ' ' +
+                    (item.tags || []).join(' ')
+                ).toLowerCase();
+                if (haystack.indexOf(searchQuery) === -1) return false;
             }
             return true;
         });
     }
 
-    function applyFilters() {
+    /* ---- Render Cards ---- */
+    function renderCards() {
         var filtered = getFilteredItems();
-        renderCards(filtered);
-        updateResultsCount(filtered.length);
-    }
+        var grid = document.getElementById('cardGrid');
+        var countEl = document.getElementById('resultsCount');
+        countEl.innerHTML = 'Showing <strong>' + filtered.length + '</strong> of <strong>' + items.length + '</strong> resources';
 
-    function updateResultsCount(count) {
-        var total = allItems.length;
-        if (count === total && !searchQuery && (!activeCategory || activeCategory === 'all') && (!activeType || activeType === 'all')) {
-            resultsCount.innerHTML = 'Showing all <strong>' + total + '</strong> resources';
-        } else {
-            resultsCount.innerHTML = 'Showing <strong>' + count + '</strong> of ' + total + ' resources';
-        }
-    }
-
-    /* ----------------------------------------------------------
-       RENDER CARDS
-       ---------------------------------------------------------- */
-    function renderCards(list) {
-        if (list.length === 0) {
-            cardGrid.innerHTML = '<div class="empty-state">'
-                + '<svg width="48" height="48" style="color:var(--text-muted);opacity:0.5;"><use href="#si_Search"/></svg>'
-                + '<h3>No resources found</h3>'
-                + '<p>Try adjusting your search or filters.</p></div>';
+        if (filtered.length === 0) {
+            grid.innerHTML =
+                '<div class="empty-state">' +
+                '<img src="' + sargamUrl('si_Search') + '" alt="" class="empty-state-icon sargam-icon">' +
+                '<div class="empty-state-title">No resources found</div>' +
+                '<div class="empty-state-desc">Try adjusting your search or filter criteria.</div>' +
+                '<button class="empty-state-btn" onclick="document.getElementById(\'searchInput\').value=\'\';document.getElementById(\'searchInput\').dispatchEvent(new Event(\'input\'));">Clear Search</button>' +
+                '</div>';
             return;
         }
 
-        /* Build category map for dot tooltips */
-        var catMap = {};
-        categories.forEach(function(c) { catMap[c.id] = c; });
-
         var html = '';
-        list.forEach(function(item) {
-            var cfg = TYPE_CONFIG[item.type] || { label: item.type, icon: 'type-resource', color: '#666', bg: 'rgba(0,0,0,0.06)' };
+        filtered.forEach(function(item) {
+            var tc = typeConfig[item.type] || { icon: 'si_File_download', label: item.type };
+            var sc = statusConfig[item.status] || statusConfig['live'];
+            var catColor = item._categoryColor || '#64748B';
+            var isComingSoon = item.status === 'coming-soon';
 
-            /* Status */
-            var statusClass = 'badge-status--' + item.status;
-            var statusText = item.status === 'coming-soon' ? 'Coming Soon'
-                : item.status === 'live' ? 'Active'
-                : item.status.charAt(0).toUpperCase() + item.status.slice(1);
+            html += '<article class="card" style="--cat-color:' + catColor + ';">';
+            html += '<div class="card-body">';
 
-            /* Category dots */
-            var catDots = '';
-            item.categoryIds.forEach(function(catId) {
-                var cat = catMap[catId];
-                var dotColor = cat ? cat.color : '#999';
-                var dotTitle = cat ? cat.name : catId;
-                catDots += '<span class="card-cat-dot" style="background:' + dotColor + ';" title="' + escapeHTML(dotTitle) + '"></span>';
-            });
-
-            /* Tags (show max 5) */
-            var tags = '';
-            var showTags = item.tags.slice(0, 5);
-            showTags.forEach(function(tag) {
-                tags += '<span class="card-tag">' + escapeHTML(tag) + '</span>';
-            });
-            if (item.tags.length > 5) {
-                tags += '<span class="card-tag">+' + (item.tags.length - 5) + '</span>';
-            }
-
-            /* Link */
-            var isDisabled = (item.url === '#' || item.status === 'coming-soon');
-            var linkClass = isDisabled ? 'card-link card-link--disabled' : 'card-link';
-            var linkTarget = (!isDisabled && item.url && item.url.indexOf('http') === 0) ? ' target="_blank" rel="noopener noreferrer"' : '';
-            var linkHref = isDisabled ? '#' : item.url;
-
-            /* Bar color from first category */
-            var barColor = item.categoryColors[0] || cfg.color;
-
-            html += '<article class="dv-card" role="listitem" style="--card-bar-color:' + barColor + ';">';
-
-            /* Header */
+            /* Header: icon + title */
             html += '<div class="card-header">';
-            html += '<div class="card-type-icon" style="background:' + cfg.bg + ';color:' + cfg.color + ';">' + svgUse(cfg.icon, 20, 20) + '</div>';
-            html += '<div class="card-header-text">';
-            html += '<div class="card-name">' + escapeHTML(item.name) + '</div>';
-            html += '<div class="card-type-label" style="color:' + cfg.color + ';">' + cfg.label + '</div>';
+            html += '<div class="card-type-icon" style="background:' + catColor + ';">';
+            html += '<img src="' + sargamUrl(tc.icon) + '" alt="">';
             html += '</div>';
+            html += '<div class="card-title-block">';
+            html += '<div class="card-title">' + escapeHtml(item.name) + '</div>';
+            html += '<div class="card-type-label">' + escapeHtml(tc.label) + '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            /* Badges */
             html += '<div class="card-badges">';
-            if (item.free) html += '<span class="badge-free">Free</span>';
-            html += '<span class="badge-status ' + statusClass + '">' + statusText + '</span>';
-            html += '</div>';
+            if (item.source) {
+                html += '<span class="badge badge-source">' + escapeHtml(item.source) + '</span>';
+            }
+            if (item.free) {
+                html += '<span class="badge badge-free">Free</span>';
+            }
+            html += '<span class="badge ' + sc.cssClass + '">' + sc.label + '</span>';
             html += '</div>';
 
             /* Description */
-            html += '<p class="card-desc">' + escapeHTML(item.description) + '</p>';
-
-            /* Source */
-            if (item.source) {
-                html += '<div class="card-source">Source: ' + escapeHTML(item.source) + '</div>';
-            }
+            html += '<div class="card-description">' + escapeHtml(item.description) + '</div>';
 
             /* Tags */
-            if (tags) {
-                html += '<div class="card-tags">' + tags + '</div>';
+            if (item.tags && item.tags.length > 0) {
+                html += '<div class="card-tags">';
+                item.tags.forEach(function(tag) {
+                    html += '<span class="tag">' + escapeHtml(tag) + '</span>';
+                });
+                html += '</div>';
             }
+
+            html += '</div>'; /* end card-body */
 
             /* Footer */
             html += '<div class="card-footer">';
-            html += '<div class="card-cats">' + catDots + '</div>';
-            html += '<a href="' + escapeHTML(linkHref) + '" class="' + linkClass + '"' + linkTarget + (isDisabled ? ' tabindex="-1" aria-disabled="true"' : '') + '>Visit ' + svgUse('si_Arrow_right', 14, 14) + '</a>';
+            html += '<div class="card-category">';
+            html += '<span class="cat-dot" style="background:' + catColor + ';"></span>';
+            html += escapeHtml(item._categoryName);
             html += '</div>';
 
+            if (isComingSoon) {
+                html += '<span class="card-visit-btn disabled">Coming Soon</span>';
+            } else if (item.url) {
+                html += '<a href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener noreferrer" class="card-visit-btn">';
+                html += 'Visit';
+                html += '<img src="' + sargamUrl('si_Arrow_right') + '" alt="">';
+                html += '</a>';
+            }
+
+            html += '</div>'; /* end card-footer */
             html += '</article>';
         });
 
-        cardGrid.innerHTML = html;
-    }
-
-    /* ----------------------------------------------------------
-       EVENT BINDINGS
-       ---------------------------------------------------------- */
-    function bindEvents() {
-        /* Search */
-        searchInput.addEventListener('input', function() {
-            searchQuery = this.value.trim();
-            searchClear.classList.toggle('visible', searchQuery.length > 0);
-            applyFilters();
-        });
-
-        searchClear.addEventListener('click', function() {
-            searchInput.value = '';
-            searchQuery = '';
-            searchClear.classList.remove('visible');
-            applyFilters();
-            searchInput.focus();
-        });
-
-        /* Type filter */
-        typeFilterEl.addEventListener('click', function(e) {
-            var btn = e.target.closest('.type-btn');
-            if (!btn) return;
-            typeFilterEl.querySelectorAll('.type-btn').forEach(function(b) { b.classList.remove('active'); });
-            btn.classList.add('active');
-            activeType = btn.dataset.type;
-            applyFilters();
-        });
-
-        /* Category filter */
-        categoryFilters.addEventListener('click', function(e) {
-            var pill = e.target.closest('.cat-pill');
-            if (!pill) return;
-
-            categoryFilters.querySelectorAll('.cat-pill').forEach(function(p) {
-                p.classList.remove('active');
-                p.style.background = '';
-                p.style.color = '';
-            });
-
-            pill.classList.add('active');
-            var catId = pill.dataset.cat;
-
-            if (catId === 'all') {
-                pill.style.background = 'var(--accent)';
-                pill.style.color = '#FFF';
-            } else {
-                pill.style.background = pill.dataset.color;
-                pill.style.color = '#FFF';
-            }
-
-            activeCategory = catId;
-            applyFilters();
-        });
-
-        /* Scroll to top */
-        window.addEventListener('scroll', function() {
-            scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-        }, { passive: true });
-
-        scrollTopBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        /* Mobile nav toggle */
-        mobileToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('open');
-        });
-
-        /* Keyboard: Escape to close mobile nav */
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                navLinks.classList.remove('open');
-                if (searchQuery) {
-                    searchInput.value = '';
-                    searchQuery = '';
-                    searchClear.classList.remove('visible');
-                    applyFilters();
-                }
-            }
-        });
+        grid.innerHTML = html;
     }
 
 })();
 </script>
+
 </body>
 </html>
