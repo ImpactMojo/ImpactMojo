@@ -29,7 +29,7 @@
 <meta name="twitter:description" content="200+ BCTs for South Asian development & BCC work. Free resource for practitioners.">
 <meta name="keywords" content="behavior change techniques, BCT taxonomy, BCC, behavior change communication, South Asia, development, SBCC, health communication, social behavior change">
 
-<title>Behavior Change Technique Repository | ImpactMojo</title>
+<title>NudgeKit — Behavior Change Technique Repository | ImpactMojo</title>
 
 <script type="application/ld+json">
 {
@@ -161,14 +161,18 @@ img { max-width: 100%; display: block; }
 .nav-link:hover { color: var(--text-primary); background: var(--hover-bg); text-decoration: none; }
 .nav-link.active { color: var(--accent-color); background: rgba(14, 165, 233, 0.1); }
 .nav-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-.theme-toggle-btn {
-    display: flex; align-items: center; gap: 6px;
-    padding: 6px 12px; background: var(--hover-bg);
-    border: 1px solid var(--border-color); border-radius: var(--radius-pill);
-    color: var(--text-secondary); cursor: pointer; font-size: 0.82rem; font-family: inherit; transition: all var(--transition);
+.theme-selector {
+    display: flex; gap: 4px; background: var(--hover-bg);
+    border: 1px solid var(--border-color); border-radius: 10px; padding: 4px;
 }
-.theme-toggle-btn:hover { color: var(--text-primary); border-color: var(--accent-color); }
-.theme-label { white-space: nowrap; }
+.theme-btn {
+    background: transparent; border: none; color: var(--text-secondary);
+    padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;
+    display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+}
+.theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+.theme-btn.active { background: var(--accent-color); color: white; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+.theme-btn svg { width: 18px; height: 18px; }
 .mobile-menu-toggle { display: none; background: none; border: none; color: var(--text-primary); cursor: pointer; padding: 4px; }
 .mobile-nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; }
 .mobile-nav-overlay.active { display: block; }
@@ -230,6 +234,43 @@ img { max-width: 100%; display: block; }
 .attribution-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
 .attribution-text strong { color: var(--text-primary); }
 .attribution-text a { color: var(--accent-color); }
+
+/* ============================================================
+   USAGE GUIDES
+   ============================================================ */
+.guides-section { max-width: 1280px; margin: 0 auto; padding: 0 24px 24px; }
+.guides-header { text-align: center; margin-bottom: 16px; }
+.guides-header h2 { font-family: 'Poppins', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.guides-header p { font-size: 0.85rem; color: var(--text-muted); }
+.guides-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .guides-grid { grid-template-columns: 1fr; } }
+.guide-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg); padding: 20px;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.guide-card:hover { border-color: var(--accent-color); box-shadow: var(--shadow-md); }
+.guide-card-icon {
+    width: 40px; height: 40px; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+}
+.guide-card h3 { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.guide-card p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
+.guide-steps { list-style: none; padding: 0; margin: 0; }
+.guide-steps li {
+    font-size: 0.8rem; color: var(--text-secondary); padding: 4px 0 4px 18px;
+    position: relative; line-height: 1.5;
+}
+.guide-steps li::before {
+    content: ''; position: absolute; left: 0; top: 10px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent-color); opacity: 0.6;
+}
+.guide-tag {
+    display: inline-block; font-size: 0.68rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 2px 8px; border-radius: 4px; margin-top: 6px;
+}
 
 /* ============================================================
    CONTROLS
@@ -496,15 +537,22 @@ body.modal-open { overflow: hidden; }
             <a href="/" class="nav-link" role="menuitem">Home</a>
             <a href="/catalog" class="nav-link" role="menuitem">Catalog</a>
             <a href="/handouts" class="nav-link" role="menuitem">Handouts</a>
-            <a href="/bct-repository" class="nav-link active" role="menuitem" aria-current="page">BCT Repository</a>
+            <a href="/bct-repository" class="nav-link active" role="menuitem" aria-current="page">NudgeKit</a>
             <a href="/dataverse" class="nav-link" role="menuitem">Dataverse</a>
             <a href="/blog" class="nav-link" role="menuitem">Blog</a>
         </div>
         <div class="nav-actions">
-            <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">
-                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" style="width:18px;height:18px;" class="sargam-icon">
-                <span class="theme-label">Light mode</span>
-            </button>
+            <div class="theme-selector" aria-label="Theme selection">
+                <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
         </div>
         <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -521,13 +569,20 @@ body.modal-open { overflow: hidden; }
     <a href="/" class="nav-link">Home</a>
     <a href="/catalog" class="nav-link">Catalog</a>
     <a href="/handouts" class="nav-link">Handouts</a>
-    <a href="/bct-repository" class="nav-link active">BCT Repository</a>
+    <a href="/bct-repository" class="nav-link active">NudgeKit</a>
     <a href="/dataverse" class="nav-link">Dataverse</a>
     <a href="/blog" class="nav-link">Blog</a>
-    <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme" style="margin-top:16px;">
-        <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" style="width:18px;height:18px;" class="sargam-icon">
-        <span class="theme-label">Light mode</span>
-    </button>
+    <div class="theme-selector" aria-label="Theme selection" style="margin-top:16px;">
+        <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </button>
+        <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </div>
 </div>
 
 <!-- MAIN -->
@@ -535,8 +590,8 @@ body.modal-open { overflow: hidden; }
 
     <!-- Hero -->
     <section class="hero" aria-label="Introduction">
-        <h1 class="hero-title">Behavior Change Technique Repository</h1>
-        <p class="hero-subtitle">Evidence-Based Techniques for South Asian Development</p>
+        <h1 class="hero-title">NudgeKit</h1>
+        <p class="hero-subtitle">Behavior Change Techniques for Development Practice</p>
         <p class="hero-desc">200+ evidence-based techniques for development practitioners, contextualized for South Asian BCC interventions across health, education, livelihoods, WASH, gender, and governance.</p>
         <p class="hero-credit">Built on the <strong>BCT Taxonomy v1</strong> (Michie et al., 2013). Inspired by <a href="https://www.aimforbehavior.com/" target="_blank" rel="noopener">AIM for Behavior</a>.</p>
     </section>
@@ -560,6 +615,58 @@ body.modal-open { overflow: hidden; }
             </div>
         </div>
     </div>
+
+    <!-- Usage Guides -->
+    <section class="guides-section" aria-label="How to use NudgeKit">
+        <div class="guides-header">
+            <h2>How to Use NudgeKit</h2>
+            <p>Three ways to apply behavior change techniques in your work.</p>
+        </div>
+        <div class="guides-grid">
+            <div class="guide-card">
+                <div class="guide-card-icon" style="background: rgba(14, 165, 233, 0.1); color: #0EA5E9;">
+                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Edit.svg" alt="" width="22" height="22" class="sargam-icon">
+                </div>
+                <h3>Program Design</h3>
+                <p>Search by sector (Health, WASH, Education) or evidence level to find techniques suited for your intervention context.</p>
+                <ul class="guide-steps">
+                    <li>Filter by your sector to see relevant techniques</li>
+                    <li>Prioritize techniques with "Strong Evidence" ratings</li>
+                    <li>Read the practical examples for implementation ideas</li>
+                    <li>Combine complementary techniques for multi-component interventions</li>
+                </ul>
+                <span class="guide-tag" style="background: rgba(14, 165, 233, 0.1); color: #0EA5E9;">Intervention Design</span>
+            </div>
+            <div class="guide-card">
+                <div class="guide-card-icon" style="background: rgba(99, 102, 241, 0.1); color: #6366F1;">
+                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Article.svg" alt="" width="22" height="22" class="sargam-icon">
+                </div>
+                <h3>Proposal Writing</h3>
+                <p>Reference BCT taxonomy IDs and evidence ratings to strengthen the theory of change in your funding proposals.</p>
+                <ul class="guide-steps">
+                    <li>Use the technique ID (e.g., BCT 1.1) for precise citations</li>
+                    <li>Copy technique definitions directly into your proposal</li>
+                    <li>Link techniques to your Theory of Change pathways</li>
+                    <li>Export selected techniques as CSV for documentation</li>
+                </ul>
+                <span class="guide-tag" style="background: rgba(99, 102, 241, 0.1); color: #6366F1;">Evidence-Based Proposals</span>
+            </div>
+            <div class="guide-card">
+                <div class="guide-card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">
+                    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Bar_chart.svg" alt="" width="22" height="22" class="sargam-icon">
+                </div>
+                <h3>M&E Frameworks</h3>
+                <p>Map techniques to measurable outcomes and build monitoring indicators for behavior change interventions.</p>
+                <ul class="guide-steps">
+                    <li>Identify techniques used in each program activity</li>
+                    <li>Define process indicators linked to each technique</li>
+                    <li>Track fidelity of implementation against the BCT definitions</li>
+                    <li>Use category groupings for structured reporting</li>
+                </ul>
+                <span class="guide-tag" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">Monitoring & Evaluation</span>
+            </div>
+        </div>
+    </section>
 
     <!-- Controls -->
     <section class="controls-section" aria-label="Search and filter">
@@ -677,7 +784,7 @@ body.modal-open { overflow: hidden; }
                 <h4>Resources</h4>
                 <ul>
                     <li><a href="/handouts">Handouts</a></li>
-                    <li><a href="/bct-repository">BCT Repository</a></li>
+                    <li><a href="/bct-repository">NudgeKit</a></li>
                     <li><a href="/dataverse">Dataverse</a></li>
                     <li><a href="/blog">Blog</a></li>
                     <li><a href="/podcast">Podcast</a></li>
@@ -699,23 +806,26 @@ body.modal-open { overflow: hidden; }
    THEME (matches flagship courses)
    ============================================================ */
 function getPreferredTheme() {
-    var saved = localStorage.getItem('impactmojo-theme');
-    if (saved) return saved;
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-    return 'light';
+    return localStorage.getItem('impactmojo-theme') || 'system';
 }
-function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
+function applyTheme(theme) {
+    var resolved = theme;
+    if (theme === 'system') {
+        resolved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', resolved);
     localStorage.setItem('impactmojo-theme', theme);
-    document.querySelectorAll('.theme-label').forEach(function(el) {
-        el.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
     });
 }
-function toggleTheme() {
-    var cur = document.documentElement.getAttribute('data-theme') || 'dark';
-    setTheme(cur === 'dark' ? 'light' : 'dark');
-}
-setTheme(getPreferredTheme());
+applyTheme(getPreferredTheme());
+document.querySelectorAll('.theme-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { applyTheme(btn.getAttribute('data-theme')); });
+});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (getPreferredTheme() === 'system') applyTheme('system');
+});
 
 /* ============================================================
    MOBILE MENU
