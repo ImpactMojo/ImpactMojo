@@ -1,11 +1,19 @@
 /**
  * ImpactMojo Course Progress Tracking System
- * Version 1.0.0 - March 2026
+ * Version 1.1.0 - March 2026
  *
  * Tracks quiz completion per module, persists progress to localStorage
  * and syncs to Supabase user_progress table for authenticated users.
  * When all modules are complete, progress_percentage hits 100% and
  * the existing DB trigger auto-issues a certificate.
+ *
+ * Auth-aware completion flow:
+ * - Anonymous users: prompted to sign up to claim certificate
+ * - Explorer (free): certificate auto-issued, web-viewable
+ * - Practitioner+: certificate + PDF download + portfolio display
+ *
+ * Progress migration: localStorage progress is synced to Supabase
+ * when a user logs in, so anonymous progress is preserved.
  *
  * Usage: Add to any course page:
  *   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -55,6 +63,8 @@
     let totalModules = 0;
     let supabaseClient = null;
     let syncTimeout = null;
+    let currentUser = null;      // cached auth user
+    let currentProfile = null;   // cached profile (for tier)
 
     // =========================================================
     // INIT SUPABASE (lazy, only if lib loaded)
@@ -65,6 +75,92 @@
             supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         }
         return supabaseClient;
+    }
+
+    // =========================================================
+    // AUTH HELPERS
+    // =========================================================
+    async function getAuthState() {
+        var sb = getSupabase();
+        if (!sb) return { user: null, profile: null };
+
+        try {
+            if (currentUser) return { user: currentUser, profile: currentProfile };
+
+            var { data: { user } } = await sb.auth.getUser();
+            if (!user) return { user: null, profile: null };
+
+            currentUser = user;
+
+            // Fetch profile for tier info
+            var { data: profile } = await sb.from('profiles')
+                .select('subscription_tier, display_name, full_name')
+                .eq('id', user.id)
+                .single();
+
+            currentProfile = profile;
+            return { user: user, profile: profile };
+        } catch (e) {
+            return { user: null, profile: null };
+        }
+    }
+
+    function isPaidTier(tier) {
+        return tier === 'practitioner' || tier === 'professional' || tier === 'organization';
+    }
+
+    // =========================================================
+    // PROGRESS MIGRATION (localStorage → Supabase on login)
+    // =========================================================
+    async function migrateProgressOnLogin() {
+        var sb = getSupabase();
+        if (!sb) return;
+
+        var { user } = await getAuthState();
+        if (!user) return;
+
+        // Check if we have local progress to migrate
+        if (completedModules.size === 0) return;
+
+        var percentage = totalModules > 0
+            ? Math.round((completedModules.size / totalModules) * 100) : 0;
+
+        // Check if cloud already has progress for this course
+        try {
+            var { data: existing } = await sb.from('user_progress')
+                .select('progress_percentage')
+                .eq('user_id', user.id)
+                .eq('course_id', courseId)
+                .single();
+
+            // Only migrate if local is ahead of cloud
+            if (existing && existing.progress_percentage >= percentage) return;
+
+            // Sync local progress to cloud
+            await syncToSupabase();
+        } catch (e) {
+            // No existing record — sync will create one
+            await syncToSupabase();
+        }
+    }
+
+    // Listen for auth state changes (user logs in while on course page)
+    function listenForAuthChanges() {
+        var sb = getSupabase();
+        if (!sb) return;
+
+        sb.auth.onAuthStateChange(function (event) {
+            if (event === 'SIGNED_IN') {
+                // Reset cached auth state
+                currentUser = null;
+                currentProfile = null;
+                // Migrate any localStorage progress to the new session
+                migrateProgressOnLogin();
+            } else if (event === 'SIGNED_OUT') {
+                currentUser = null;
+                currentProfile = null;
+            }
+        });
     }
 
     // =========================================================
@@ -286,23 +382,61 @@
     }
 
     // =========================================================
-    // UI: COMPLETION MODAL
+    // UI: COMPLETION MODAL (auth-aware)
     // =========================================================
-    function showCompletionModal() {
-        var overlay = document.createElement('div');
-        overlay.id = 'cpb-completion-overlay';
-        overlay.innerHTML =
-            '<div class="cpb-completion-modal">' +
-                '<div class="cpb-completion-icon">' +
-                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64" height="64">' +
-                        '<path d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>' +
-                    '</svg>' +
-                '</div>' +
+    async function showCompletionModal() {
+        var { user, profile } = await getAuthState();
+        var tier = profile ? profile.subscription_tier : null;
+        var name = profile ? (profile.display_name || profile.full_name || '') : '';
+
+        var iconSvg =
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64" height="64">' +
+                '<path d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>' +
+            '</svg>';
+
+        var body = '';
+
+        if (!user) {
+            // ── ANONYMOUS USER ──
+            body =
+                '<div class="cpb-completion-icon" style="color: #0EA5E9;">' + iconSvg + '</div>' +
                 '<h3>Course Complete!</h3>' +
                 '<p>Congratulations! You\'ve completed all modules in <strong>' + COURSE_NAMES[courseId] + '</strong>.</p>' +
-                '<p class="cpb-completion-sub">If you\'re logged in, your certificate will be issued automatically. Check your <a href="/account.html">account page</a> to view it.</p>' +
-                '<button class="cpb-completion-btn" onclick="this.closest(\'#cpb-completion-overlay\').remove()">Continue</button>' +
-            '</div>';
+                '<p class="cpb-completion-sub">Create a free account to claim your certificate. Your progress will be saved automatically.</p>' +
+                '<a href="/signup.html" class="cpb-completion-btn cpb-btn-signup">Sign Up to Claim Certificate</a>' +
+                '<button class="cpb-completion-btn cpb-btn-secondary" onclick="this.closest(\'#cpb-completion-overlay\').remove()">Maybe Later</button>' +
+                '<p class="cpb-completion-login">Already have an account? <a href="/login.html">Log in</a></p>';
+        } else if (isPaidTier(tier)) {
+            // ── PRACTITIONER / PROFESSIONAL / ORGANIZATION ──
+            body =
+                '<div class="cpb-completion-icon">' + iconSvg + '</div>' +
+                '<h3>Course Complete!</h3>' +
+                '<p>' + (name ? 'Well done, <strong>' + name + '</strong>! ' : 'Congratulations! ') +
+                    'You\'ve completed all modules in <strong>' + COURSE_NAMES[courseId] + '</strong>.</p>' +
+                '<p class="cpb-completion-sub">Your certificate is being issued now. You can download the PDF and add it to your portfolio from your account page.</p>' +
+                '<a href="/account.html" class="cpb-completion-btn">View Certificate</a>' +
+                '<a href="/portfolio.html" class="cpb-completion-btn cpb-btn-secondary">Add to Portfolio</a>';
+        } else {
+            // ── EXPLORER (free tier) ──
+            body =
+                '<div class="cpb-completion-icon">' + iconSvg + '</div>' +
+                '<h3>Course Complete!</h3>' +
+                '<p>' + (name ? 'Well done, <strong>' + name + '</strong>! ' : 'Congratulations! ') +
+                    'You\'ve completed all modules in <strong>' + COURSE_NAMES[courseId] + '</strong>.</p>' +
+                '<p class="cpb-completion-sub">Your certificate has been issued! View it on your account page.</p>' +
+                '<a href="/account.html" class="cpb-completion-btn">View Certificate</a>' +
+                '<p class="cpb-completion-upgrade">Upgrade to <strong>Practitioner</strong> for PDF download & portfolio display. ' +
+                    '<a href="/premium.html">Learn more</a></p>';
+        }
+
+        var overlay = document.createElement('div');
+        overlay.id = 'cpb-completion-overlay';
+        overlay.innerHTML = '<div class="cpb-completion-modal">' + body + '</div>';
+
+        // Close on overlay click (outside modal)
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) overlay.remove();
+        });
 
         document.body.appendChild(overlay);
         requestAnimationFrame(function () {
@@ -467,9 +601,29 @@
                 'cursor: pointer; transition: transform 0.2s ease;' +
             '}' +
             '.cpb-completion-btn:hover { transform: scale(1.05); }' +
+            '.cpb-btn-signup {' +
+                'background: linear-gradient(135deg, #10B981, #0EA5E9);' +
+                'display: inline-block; text-decoration: none;' +
+            '}' +
+            '.cpb-btn-secondary {' +
+                'background: transparent; border: 1px solid #334155;' +
+                'color: #94A3B8; margin-top: 8px; font-size: 0.85rem;' +
+            '}' +
+            '.cpb-btn-secondary:hover { border-color: #475569; color: #F1F5F9; transform: none; }' +
+            '.cpb-completion-login { font-size: 0.8rem; color: #64748B; margin-top: 16px; }' +
+            '.cpb-completion-login a { color: #0EA5E9; text-decoration: none; }' +
+            '.cpb-completion-upgrade {' +
+                'font-size: 0.8rem; color: #64748B; margin-top: 16px;' +
+                'padding-top: 16px; border-top: 1px solid #334155;' +
+            '}' +
+            '.cpb-completion-upgrade a { color: #F59E0B; text-decoration: none; font-weight: 500; }' +
+            'a.cpb-completion-btn { display: inline-block; text-decoration: none; text-align: center; }' +
             '[data-theme="light"] .cpb-completion-modal { background: #fff; border-color: #E2E8F0; }' +
             '[data-theme="light"] .cpb-completion-modal h3 { color: #1E293B; }' +
             '[data-theme="light"] .cpb-completion-modal p { color: #64748B; }' +
+            '[data-theme="light"] .cpb-btn-secondary { border-color: #E2E8F0; color: #64748B; }' +
+            '[data-theme="light"] .cpb-btn-secondary:hover { border-color: #CBD5E1; color: #1E293B; }' +
+            '[data-theme="light"] .cpb-completion-upgrade { border-top-color: #E2E8F0; }' +
 
             /* Offset main content for progress bar */
             '.main-content { padding-top: 48px !important; }' +
@@ -498,9 +652,10 @@
         updateSidebarChecks();
         restoreQuizState();
         enhanceCheckAnswer();
+        listenForAuthChanges();
 
-        // Sync on load for authenticated users
-        setTimeout(syncToSupabase, 2000);
+        // Migrate progress & sync for authenticated users
+        setTimeout(migrateProgressOnLogin, 2000);
     }
 
     // Run when DOM is ready
