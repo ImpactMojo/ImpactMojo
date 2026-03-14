@@ -4,40 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ImpactMojo Dataverse | Curated Tools & Data for Social Impact</title>
-<meta name="description" content="ImpactMojo Dataverse: A curated catalog of 60+ tools, datasets, APIs, and platforms for social impact, development economics, and policy research.">
+<meta name="description" content="ImpactMojo Dataverse: A curated catalog of 215+ tools, datasets, APIs, and platforms for social impact, development economics, and policy research.">
 <link rel="icon" href="assets/images/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   CSS CUSTOM PROPERTIES
+   DESIGN TOKENS
    ============================================================ */
 :root {
-    --earth-brown: #8B4513;
-    --earth-sienna: #D2691E;
-    --earth-tan: #DEB887;
-    --earth-wheat: #F5DEB3;
-    --earth-green: #2E8B57;
-    --earth-blue: #4682B4;
-    --earth-cream: #FFF8F0;
-    --earth-dark: #3E2723;
-    --earth-light: #FAEBD7;
-    --earth-red: #CD5C5C;
-    --text-primary: #2C1810;
-    --text-secondary: #5D4E37;
-    --text-muted: #8B7D6B;
-    --card-bg: #FFFFFF;
-    --card-border: #E8DDD0;
-    --card-shadow: 0 2px 12px rgba(139, 69, 19, 0.08);
-    --card-shadow-hover: 0 8px 32px rgba(139, 69, 19, 0.15);
-    --pill-bg: rgba(139, 69, 19, 0.08);
-    --hero-gradient: linear-gradient(135deg, #3E2723 0%, #5D4037 40%, #6D4C41 100%);
-    --radius-sm: 6px;
+    --accent: #4F46E5;
+    --accent-dark: #4338CA;
+    --accent-light: #6366F1;
+    --accent-subtle: #EEF2FF;
+    --accent-bg: rgba(79, 70, 229, 0.06);
+    --bg-primary: #FAFAF8;
+    --bg-card: #FFFFFF;
+    --bg-nav: #1C1917;
+    --text-primary: #1C1917;
+    --text-secondary: #57534E;
+    --text-muted: #A8A29E;
+    --border: #E7E5E4;
+    --border-hover: #D6D3D1;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+    --radius-sm: 8px;
     --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-pill: 50px;
-    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --radius-lg: 16px;
+    --radius-pill: 100px;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================================
@@ -56,35 +53,51 @@ html {
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--earth-cream);
+    background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
-    animation: fadeIn 0.5s ease-out;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* ============================================================
+   SKIP TO CONTENT
+   ============================================================ */
+.skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--accent);
+    color: #FFF;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-sm);
+    z-index: 200;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.skip-to-content:focus {
+    top: 1rem;
 }
 
 /* ============================================================
    NAVIGATION
    ============================================================ */
-.nav-header {
+.site-header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(62, 39, 35, 0.97);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+    background: var(--bg-nav);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.nav-inner {
+.site-nav {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0.85rem 1.5rem;
+    padding: 0 1.5rem;
+    height: 64px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -96,64 +109,93 @@ body {
     gap: 0.75rem;
     text-decoration: none;
     color: #FFF;
+    flex-shrink: 0;
 }
 
-.nav-brand-icon {
+.nav-logo {
     width: 36px;
     height: 36px;
-    background: linear-gradient(135deg, var(--earth-sienna), var(--earth-green));
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #FFF;
-    letter-spacing: -1px;
+    border-radius: 8px;
+    object-fit: contain;
 }
 
 .nav-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.nav-brand-name {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #FFF;
 }
 
-.nav-brand-text span {
-    color: var(--earth-tan);
+.nav-brand-tagline {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.25rem;
 }
 
 .nav-link {
-    color: rgba(255, 255, 255, 0.85);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
+    color: rgba(255,255,255,0.7);
+    padding: 0.45rem 0.9rem;
     border-radius: var(--radius-pill);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 500;
     transition: var(--transition);
 }
 
 .nav-link:hover {
     color: #FFF;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.08);
 }
 
 .nav-link--active {
     color: #FFF;
-    background: rgba(210, 105, 30, 0.3);
+    background: var(--accent);
+}
+
+.nav-mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #FFF;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* Mobile nav */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--bg-nav);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0.25rem;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-links.open { display: flex; }
+    .nav-link { width: 100%; text-align: center; }
+    .nav-mobile-toggle { display: block; }
 }
 
 /* ============================================================
    HERO SECTION
    ============================================================ */
 .hero {
-    background: var(--hero-gradient);
+    background: linear-gradient(135deg, #312E81 0%, #4338CA 50%, #6366F1 100%);
     padding: 4rem 1.5rem 3rem;
     text-align: center;
     position: relative;
@@ -163,57 +205,39 @@ body {
 .hero::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    inset: 0;
     background:
-        radial-gradient(circle at 20% 80%, rgba(46, 139, 87, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(70, 130, 180, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(210, 105, 30, 0.08) 0%, transparent 60%);
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.04) 0%, transparent 50%);
     pointer-events: none;
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 800px;
+    max-width: 720px;
     margin: 0 auto;
-}
-
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 0.4rem 1rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.8rem;
-    color: var(--earth-tan);
-    font-weight: 500;
-    margin-bottom: 1.5rem;
-    backdrop-filter: blur(10px);
 }
 
 .hero h1 {
     font-family: 'Poppins', sans-serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 800;
     color: #FFF;
     line-height: 1.15;
     margin-bottom: 1rem;
 }
 
-.hero h1 span {
-    background: linear-gradient(135deg, var(--earth-tan), var(--earth-wheat));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.hero h1 .hero-accent {
+    color: rgba(255,255,255,0.6);
+    font-weight: 600;
 }
 
 .hero p {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.75);
     max-width: 600px;
-    margin: 0 auto 2rem;
+    margin: 0 auto;
     line-height: 1.7;
 }
 
@@ -221,10 +245,10 @@ body {
    STATS BAR
    ============================================================ */
 .stats-bar {
-    background: var(--card-bg);
-    border-bottom: 1px solid var(--card-border);
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
     padding: 1rem 1.5rem;
-    box-shadow: 0 2px 8px rgba(139, 69, 19, 0.06);
+    box-shadow: var(--shadow-sm);
 }
 
 .stats-inner {
@@ -241,7 +265,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--text-secondary);
 }
 
@@ -249,17 +273,15 @@ body {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 1.3rem;
-    color: var(--earth-brown);
+    color: var(--accent);
 }
 
-.stat-label {
-    font-weight: 500;
-}
+.stat-label { font-weight: 500; }
 
 .stat-divider {
     width: 1px;
     height: 24px;
-    background: var(--card-border);
+    background: var(--border);
 }
 
 /* ============================================================
@@ -278,32 +300,33 @@ body {
     margin: 0 auto 1.5rem;
 }
 
-.search-icon {
+.search-icon-wrap {
     position: absolute;
     left: 1.25rem;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1.1rem;
     color: var(--text-muted);
     pointer-events: none;
+    display: flex;
+    align-items: center;
 }
 
 .search-input {
     width: 100%;
-    padding: 0.9rem 1rem 0.9rem 3rem;
-    border: 2px solid var(--card-border);
+    padding: 0.85rem 3rem 0.85rem 3.25rem;
+    border: 2px solid var(--border);
     border-radius: var(--radius-pill);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-family: inherit;
-    background: var(--card-bg);
+    background: var(--bg-card);
     color: var(--text-primary);
     transition: var(--transition);
     outline: none;
 }
 
 .search-input:focus {
-    border-color: var(--earth-sienna);
-    box-shadow: 0 0 0 4px rgba(210, 105, 30, 0.12);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(79,70,229,0.1);
 }
 
 .search-input::placeholder {
@@ -317,7 +340,6 @@ body {
     transform: translateY(-50%);
     background: none;
     border: none;
-    font-size: 1.2rem;
     cursor: pointer;
     color: var(--text-muted);
     display: none;
@@ -325,9 +347,9 @@ body {
     line-height: 1;
 }
 
-.search-clear.visible {
-    display: block;
-}
+.search-clear svg { display: block; }
+
+.search-clear.visible { display: flex; align-items: center; }
 
 /* Type Filter */
 .type-filter {
@@ -347,36 +369,36 @@ body {
 }
 
 .type-btn {
-    padding: 0.4rem 0.9rem;
-    border: 1.5px solid var(--card-border);
+    padding: 0.4rem 0.85rem;
+    border: 1.5px solid var(--border);
     border-radius: var(--radius-pill);
-    background: var(--card-bg);
+    background: var(--bg-card);
     color: var(--text-secondary);
     font-size: 0.8rem;
     font-weight: 500;
     font-family: inherit;
     cursor: pointer;
     transition: var(--transition);
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
 }
 
+.type-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
 .type-btn:hover {
-    border-color: var(--earth-sienna);
-    color: var(--earth-sienna);
-    background: rgba(210, 105, 30, 0.05);
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-subtle);
 }
 
 .type-btn.active {
-    background: var(--earth-brown);
+    background: var(--accent);
     color: #FFF;
-    border-color: var(--earth-brown);
+    border-color: var(--accent);
 }
 
-.type-emoji {
-    font-size: 0.9rem;
-}
+.type-btn.active svg { color: #FFF; }
 
 /* Category Filters */
 .category-filters {
@@ -396,22 +418,24 @@ body {
     cursor: pointer;
     transition: var(--transition);
     border: 2px solid transparent;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    background: rgba(0, 0, 0, 0.06);
+    gap: 0.4rem;
+    background: rgba(0,0,0,0.05);
     color: var(--text-secondary);
 }
 
+.cat-pill svg { width: 14px; height: 14px; flex-shrink: 0; }
+
 .cat-pill:hover {
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .cat-pill.active {
     color: #FFF;
     transform: translateY(-1px);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
 }
 
 /* ============================================================
@@ -433,7 +457,7 @@ body {
 }
 
 .results-count strong {
-    color: var(--earth-brown);
+    color: var(--accent);
 }
 
 /* ============================================================
@@ -452,8 +476,8 @@ body {
    INDIVIDUAL CARD
    ============================================================ */
 .dv-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 1.5rem;
     display: flex;
@@ -462,18 +486,12 @@ body {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
-    animation: cardIn 0.4s ease-out both;
-}
-
-@keyframes cardIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .dv-card:hover {
     transform: translateY(-3px);
-    box-shadow: var(--card-shadow-hover);
-    border-color: transparent;
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-hover);
 }
 
 .dv-card::before {
@@ -483,6 +501,7 @@ body {
     left: 0;
     right: 0;
     height: 3px;
+    background: var(--card-bar-color, var(--accent));
     border-radius: var(--radius-md) var(--radius-md) 0 0;
     opacity: 0;
     transition: var(--transition);
@@ -505,8 +524,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
     flex-shrink: 0;
+}
+
+.card-type-icon svg {
+    width: 20px;
+    height: 20px;
 }
 
 .card-header-text {
@@ -516,7 +539,7 @@ body {
 
 .card-name {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.05rem;
+    font-size: 1.02rem;
     font-weight: 700;
     color: var(--text-primary);
     line-height: 1.3;
@@ -528,7 +551,6 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: var(--text-muted);
 }
 
 .card-badges {
@@ -536,6 +558,7 @@ body {
     align-items: center;
     gap: 0.4rem;
     flex-shrink: 0;
+    flex-wrap: wrap;
 }
 
 .badge-free {
@@ -545,9 +568,9 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.3px;
-    background: rgba(46, 139, 87, 0.1);
-    color: var(--earth-green);
-    border: 1px solid rgba(46, 139, 87, 0.2);
+    background: rgba(34,197,94,0.1);
+    color: #16A34A;
+    border: 1px solid rgba(34,197,94,0.2);
 }
 
 .badge-status {
@@ -559,27 +582,19 @@ body {
     letter-spacing: 0.3px;
 }
 
-.badge-status--active {
-    background: rgba(46, 139, 87, 0.08);
-    color: #2E7D32;
+.badge-status--live {
+    background: rgba(34,197,94,0.08);
+    color: #16A34A;
 }
 
 .badge-status--beta {
-    background: rgba(70, 130, 180, 0.1);
-    color: var(--earth-blue);
+    background: rgba(79,70,229,0.08);
+    color: var(--accent);
 }
 
 .badge-status--coming-soon {
-    background: rgba(210, 105, 30, 0.1);
-    color: var(--earth-sienna);
-}
-
-.badge-featured {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--earth-sienna);
-    box-shadow: 0 0 6px rgba(210, 105, 30, 0.5);
+    background: rgba(245,158,11,0.1);
+    color: #D97706;
 }
 
 .card-desc {
@@ -587,6 +602,16 @@ body {
     color: var(--text-secondary);
     line-height: 1.6;
     flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-source {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
 }
 
 .card-tags {
@@ -600,7 +625,7 @@ body {
     border-radius: var(--radius-pill);
     font-size: 0.7rem;
     font-weight: 500;
-    background: var(--pill-bg);
+    background: var(--accent-bg);
     color: var(--text-muted);
 }
 
@@ -609,7 +634,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding-top: 0.5rem;
-    border-top: 1px solid var(--card-border);
+    border-top: 1px solid var(--border);
     margin-top: auto;
 }
 
@@ -618,6 +643,7 @@ body {
     gap: 0.3rem;
     flex-wrap: wrap;
     flex: 1;
+    align-items: center;
 }
 
 .card-cat-dot {
@@ -636,19 +662,21 @@ body {
     font-size: 0.8rem;
     font-weight: 600;
     text-decoration: none;
-    color: var(--earth-brown);
-    background: rgba(139, 69, 19, 0.08);
+    color: var(--accent);
+    background: var(--accent-subtle);
     transition: var(--transition);
     flex-shrink: 0;
 }
 
+.card-link svg { width: 14px; height: 14px; }
+
 .card-link:hover {
-    background: var(--earth-brown);
+    background: var(--accent);
     color: #FFF;
 }
 
 .card-link--disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     pointer-events: none;
 }
 
@@ -661,8 +689,10 @@ body {
     padding: 4rem 2rem;
 }
 
-.empty-state-icon {
-    font-size: 3rem;
+.empty-state svg {
+    width: 48px;
+    height: 48px;
+    color: var(--text-muted);
     margin-bottom: 1rem;
     opacity: 0.5;
 }
@@ -682,62 +712,62 @@ body {
 /* ============================================================
    FOOTER
    ============================================================ */
-.dv-footer {
-    background: var(--earth-dark);
-    padding: 2.5rem 1.5rem;
-    text-align: center;
+.site-footer {
+    background: var(--bg-nav);
+    color: rgba(255,255,255,0.7);
+    padding: 0;
 }
 
 .footer-inner {
     max-width: 1400px;
     margin: 0 auto;
+    padding: 3rem 1.5rem 2rem;
 }
 
-.footer-brand {
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.footer-col h4 {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: #FFF;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
-.footer-brand span {
-    color: var(--earth-tan);
-}
+.footer-col ul { display: flex; flex-direction: column; gap: 0.5rem; }
 
-.footer-links-row {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.25rem;
-}
-
-.footer-link {
-    color: rgba(255, 255, 255, 0.6);
-    text-decoration: none;
-    font-size: 0.85rem;
+.footer-col a {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.88rem;
     transition: var(--transition);
 }
 
-.footer-link:hover {
-    color: var(--earth-tan);
+.footer-col a:hover { color: #FFF; }
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.5rem;
+    text-align: center;
 }
 
-.footer-copy {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
+.footer-bottom p {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.35rem;
 }
 
-.footer-copy a {
-    color: rgba(255, 255, 255, 0.55);
+.footer-bottom a {
+    color: rgba(255,255,255,0.55);
     text-decoration: none;
+    transition: var(--transition);
 }
 
-.footer-copy a:hover {
-    color: var(--earth-tan);
-}
+.footer-bottom a:hover { color: #FFF; }
 
 /* ============================================================
    SCROLL TO TOP
@@ -749,20 +779,21 @@ body {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: var(--earth-brown);
+    background: var(--accent);
     color: #FFF;
     border: none;
     cursor: pointer;
-    font-size: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 16px rgba(139, 69, 19, 0.3);
+    box-shadow: 0 4px 16px rgba(79,70,229,0.3);
     transition: var(--transition);
     opacity: 0;
     visibility: hidden;
     z-index: 50;
 }
+
+.scroll-top svg { width: 20px; height: 20px; }
 
 .scroll-top.visible {
     opacity: 1;
@@ -770,7 +801,7 @@ body {
 }
 
 .scroll-top:hover {
-    background: var(--earth-sienna);
+    background: var(--accent-dark);
     transform: translateY(-2px);
 }
 
@@ -778,91 +809,31 @@ body {
    RESPONSIVE
    ============================================================ */
 @media (max-width: 768px) {
-    .hero {
-        padding: 3rem 1rem 2rem;
-    }
-
-    .hero p {
-        font-size: 0.95rem;
-    }
-
-    .stats-inner {
-        gap: 1rem;
-    }
-
-    .stat-divider {
-        display: none;
-    }
-
-    .stat-item {
-        font-size: 0.8rem;
-    }
-
-    .stat-number {
-        font-size: 1.1rem;
-    }
-
+    .hero { padding: 3rem 1rem 2rem; }
+    .hero p { font-size: 0.95rem; }
+    .stats-inner { gap: 1rem; }
+    .stat-divider { display: none; }
+    .stat-item { font-size: 0.8rem; }
+    .stat-number { font-size: 1.1rem; }
     .card-grid {
         grid-template-columns: 1fr;
         padding: 0 1rem 2rem;
     }
-
-    .controls-section {
-        padding: 1rem 1rem 0;
-    }
-
-    .results-info {
-        padding: 0 1rem 0.75rem;
-    }
-
-    .category-filters {
-        gap: 0.4rem;
-    }
-
-    .cat-pill {
-        font-size: 0.72rem;
-        padding: 0.35rem 0.7rem;
-    }
-
-    .nav-inner {
-        padding: 0.75rem 1rem;
-    }
-
-    .nav-links {
-        gap: 0.25rem;
-    }
-
-    .nav-link {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.8rem;
-    }
-
-    .dv-footer {
-        padding: 2rem 1rem;
-    }
-
-    .footer-links-row {
-        gap: 1rem;
+    .controls-section { padding: 1rem 1rem 0; }
+    .results-info { padding: 0 1rem 0.75rem; }
+    .category-filters { gap: 0.4rem; }
+    .cat-pill { font-size: 0.72rem; padding: 0.35rem 0.7rem; }
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
 }
 
 @media (max-width: 480px) {
-    .hero h1 {
-        font-size: 1.75rem;
-    }
-
-    .type-filter {
-        gap: 0.35rem;
-    }
-
-    .type-btn {
-        padding: 0.35rem 0.65rem;
-        font-size: 0.75rem;
-    }
-
-    .nav-brand-text {
-        font-size: 1rem;
-    }
+    .hero h1 { font-size: 1.75rem; }
+    .type-filter { gap: 0.35rem; }
+    .type-btn { padding: 0.35rem 0.65rem; font-size: 0.75rem; }
+    .footer-grid { grid-template-columns: 1fr; }
 }
 
 @media (min-width: 1200px) {
@@ -874,57 +845,96 @@ body {
 </head>
 <body>
 
-<!-- ============================================================
-     NAVIGATION
-     ============================================================ -->
-<header class="nav-header">
-    <nav class="nav-inner">
-        <a href="index.html" class="nav-brand">
-            <div class="nav-brand-icon">IM</div>
-            <div class="nav-brand-text">Impact<span>Mojo</span></div>
+<!-- SVG Sprite Sheet -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+<!-- Category icons -->
+<symbol id="si_Flag" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M4 15V4l17 6zm0 0v5"/></symbol>
+<symbol id="si_Globe_detailed" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M22 12c0 5.523-4.477 10-10 10m10-10c0-5.523-4.477-10-10-10m10 10H2m10 10C6.477 22 2 17.523 2 12m10 10 .66-.31c2.1-2.71 3.34-6.14 3.34-9.78s-1.22-7-3.27-9.69L12 2m0 20-.73-.31A15.94 15.94 0 0 1 8 12c0-3.64 1.24-7.07 3.34-9.78L12 2M2 12C2 6.477 6.477 2 12 2m7.14 17c-1.82-1.85-4.34-3-7.14-3s-5.33 1.15-7.14 3M19.14 5C17.33 6.85 14.8 8 12 8S6.68 6.85 4.86 5"/></symbol>
+<symbol id="si_Heart" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.696 3C14.652 3 12.887 4.197 12 5.943 11.113 4.197 9.348 3 7.304 3 4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/></symbol>
+<symbol id="si_Book" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 7.333C12 5.5 10.5 4 8.667 4H2v12h6.708C12 16 12 19.334 12 19.334m0-12C12 5.5 13.5 4 15.333 4H22v12h-6.667C12 16 12 19.334 12 19.334m0-12v12m1.875 1.124A2.58 2.58 0 0 1 16.167 19H21m-10.875 1.458A2.54 2.54 0 0 0 7.833 19H3"/></symbol>
+<symbol id="si_Bar_chart" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M2 22h20M9 8.6A1.6 1.6 0 0 0 7.4 7H4.6A1.6 1.6 0 0 0 3 8.6V22m6 0V3.6A1.6 1.6 0 0 1 10.6 2h2.8A1.6 1.6 0 0 1 15 3.6V22m6 0v-8.4a1.6 1.6 0 0 0-1.6-1.6h-2.8a1.6 1.6 0 0 0-1.6 1.6"/></symbol>
+<symbol id="si_Article" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 12h8m-8 3h4M8 9h8M4.4 4h15.2A2.4 2.4 0 0 1 22 6.4v11.2a2.4 2.4 0 0 1-2.4 2.4H4.4A2.4 2.4 0 0 1 2 17.6V6.4A2.4 2.4 0 0 1 4.4 4"/></symbol>
+<symbol id="si_Activity" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M1 12h4l4 9 7-18 3 9h4"/></symbol>
+<symbol id="si_Target" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z"/><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></symbol>
+<symbol id="si_Direction_alt" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m3 3 18 7.92-7.987 2.093L10.92 21z"/></symbol>
+<symbol id="si_Leaf" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21C7 21 3 16 3 12c0-5 4-9 9-9 3 0 6 1.5 8 4-2 0-5 1-6 3s-1 5 0 7c-1 .5-2 1-3 1 0 0 1-3 1-6"/></symbol>
+<symbol id="si_File_download" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol>
+<symbol id="si_Settings" viewBox="0 0 24 24"><g stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"><path d="M21 10h-2.29a7.454 7.454 0 0 0-.54-1.32l1.62-1.62c.78-.78.78-2.05 0-2.83s-2.05-.78-2.83 0l-1.62 1.62c-.21-.11-.42-.21-.64-.3h-.01c-.22-.09-.44-.17-.67-.24V3c0-1.1-.9-2-2-2s-2 .9-2 2v2.29c-.23.07-.45.15-.67.24h-.01c-.22.09-.43.19-.64.3L7.08 4.21c-.78-.78-2.05-.78-2.83 0s-.78 2.05 0 2.83l1.62 1.62a7.5 7.5 0 0 0-.54 1.32H3c-1.1 0-2 .9-2 2s.9 2 2 2h2.29c.07.23.15.46.24.68s.19.44.31.65l-1.62 1.62c-.78.78-.78 2.05 0 2.83s2.05.78 2.83 0l1.62-1.62c.21.11.43.21.65.31.22.09.45.17.68.24v2.29c0 1.1.9 2 2 2s2-.9 2-2v-2.29c.23-.07.46-.15.68-.24s.44-.19.65-.31l1.62 1.62c.78.78 2.05.78 2.83 0s.78-2.05 0-2.83l-1.62-1.62c.11-.21.21-.43.31-.65.09-.22.17-.45.24-.68H21c1.1 0 2-.9 2-2s-.9-2-2-2z"/><path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></g></symbol>
+<symbol id="si_Lightning" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m12.667 10.5 1.25-7.5L6 13h5l-1.25 7.5 7.917-10z" clip-rule="evenodd"/></symbol>
+<symbol id="si_Crosshair_detailed" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M2 12h4m12 0h4M12 22v-4m0-12V2m8 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0m-5 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/></symbol>
+<symbol id="si_Chat" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M19 16h-2.525a.99.99 0 0 0-.775.375l-2.925 3.65c-.4.5-1.162.5-1.562 0l-2.925-3.65A.99.99 0 0 0 7.512 16H5c-1.662 0-3-1.338-3-3V6c0-1.662 1.338-3 3-3h14c1.663 0 3 1.338 3 3v7c0 1.662-1.337 3-3 3Z"/></symbol>
+<symbol id="si_Briefcase" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M15 21V4.8a.8.8 0 0 0-.8-.8H9.8a.8.8 0 0 0-.8.8V21M4.4 7h15.2A2.4 2.4 0 0 1 22 9.4v9.2a2.4 2.4 0 0 1-2.4 2.4H4.4A2.4 2.4 0 0 1 2 18.6V9.4A2.4 2.4 0 0 1 4.4 7"/></symbol>
+<symbol id="si_Search" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m21 21-4-4m2-6a8 8 0 1 1-16 0 8 8 0 0 1 16 0"/></symbol>
+<symbol id="si_Arrow_right" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m14 16 4-4m0 0-4-4m4 4H6"/></symbol>
+
+<!-- Type icons -->
+<symbol id="type-dataset" viewBox="0 0 24 24" fill="none"><rect x="3" y="14" width="4" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="9" width="4" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="17" y="3" width="4" height="18" rx="1" stroke="currentColor" stroke-width="1.5"/></symbol>
+<symbol id="type-tool" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94L14.7 6.3Z"/></symbol>
+<symbol id="type-platform" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path stroke="currentColor" stroke-width="1.5" d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2Z"/></symbol>
+<symbol id="type-api" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+<symbol id="type-mcp-server" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="14" width="20" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="6.5" r="1" fill="currentColor"/><circle cx="6" cy="17.5" r="1" fill="currentColor"/><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M10 6.5h6m-6 11h6"/></symbol>
+<symbol id="type-resource" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></symbol>
+<symbol id="type-skill" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m12.667 10.5 1.25-7.5L6 13h5l-1.25 7.5 7.917-10z"/></symbol>
+
+<!-- Utility icons -->
+<symbol id="icon-chevron-up" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m18 15-6-6-6 6"/></symbol>
+<symbol id="icon-x" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="icon-grid" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h7v7H3zm11 0h7v7h-7zM3 14h7v7H3zm11 0h7v7h-7z"/></symbol>
+</svg>
+
+<!-- Skip to Content -->
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+<!-- Navigation -->
+<header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="Main navigation">
+        <a href="/" class="nav-brand">
+            <img src="/assets/images/ImpactMojo Logo.png" alt="ImpactMojo" class="nav-logo">
+            <div class="nav-brand-text">
+                <span class="nav-brand-name">ImpactMojo</span>
+                <span class="nav-brand-tagline">Learn for Impact</span>
+            </div>
         </a>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="index.html#courses" class="nav-link">Courses</a>
-            <a href="dataverse.html" class="nav-link nav-link--active">Dataverse</a>
-            <a href="index.html#contact" class="nav-link">Contact</a>
+        <div class="nav-links" id="navLinks">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/catalog" class="nav-link">Catalog</a>
+            <a href="/handouts" class="nav-link">Handouts</a>
+            <a href="/bct-repository" class="nav-link">BCT Repository</a>
+            <a href="/dataverse" class="nav-link nav-link--active">Dataverse</a>
+            <a href="/blog" class="nav-link">Blog</a>
         </div>
+        <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
     </nav>
 </header>
 
-<!-- ============================================================
-     HERO SECTION
-     ============================================================ -->
-<section class="hero">
+<!-- Hero Section -->
+<section class="hero" aria-label="Page introduction">
     <div class="hero-content">
-        <div class="hero-badge">
-            <span>&#9733;</span> Open Catalog
-        </div>
-        <h1>ImpactMojo <span>Dataverse</span></h1>
-        <p>A curated collection of tools, datasets, APIs, and platforms powering social impact work across South Asia and beyond. Discover resources for development economics, policy research, and evidence-based practice.</p>
+        <h1>ImpactMojo <span class="hero-accent">Dataverse</span></h1>
+        <p>A curated collection of 215+ tools, datasets, APIs, and platforms powering social impact work across South Asia and beyond. Discover resources for development economics, policy research, and evidence-based practice.</p>
     </div>
 </section>
 
-<!-- ============================================================
-     STATS BAR
-     ============================================================ -->
-<div class="stats-bar">
+<!-- Stats Bar -->
+<div class="stats-bar" aria-label="Resource statistics">
     <div class="stats-inner">
         <div class="stat-item">
             <span class="stat-number" id="statTotal">--</span>
             <span class="stat-label">Resources</span>
         </div>
-        <div class="stat-divider"></div>
+        <div class="stat-divider" aria-hidden="true"></div>
         <div class="stat-item">
             <span class="stat-number" id="statFree">--</span>
             <span class="stat-label">Free</span>
         </div>
-        <div class="stat-divider"></div>
+        <div class="stat-divider" aria-hidden="true"></div>
         <div class="stat-item">
             <span class="stat-number" id="statCategories">--</span>
             <span class="stat-label">Categories</span>
         </div>
-        <div class="stat-divider"></div>
+        <div class="stat-divider" aria-hidden="true"></div>
         <div class="stat-item">
             <span class="stat-number" id="statTypes">--</span>
             <span class="stat-label">Types</span>
@@ -932,63 +942,92 @@ body {
     </div>
 </div>
 
-<!-- ============================================================
-     CONTROLS
-     ============================================================ -->
-<div class="controls-section">
+<!-- Controls -->
+<div class="controls-section" id="main-content">
     <!-- Search -->
     <div class="search-container">
-        <span class="search-icon">&#128269;</span>
-        <input type="text" class="search-input" id="searchInput" placeholder="Search tools, datasets, APIs..." autocomplete="off">
-        <button class="search-clear" id="searchClear" title="Clear search">&times;</button>
+        <span class="search-icon-wrap" aria-hidden="true">
+            <svg width="18" height="18"><use href="#si_Search"/></svg>
+        </span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search tools, datasets, APIs, tags, sources..." autocomplete="off" aria-label="Search resources">
+        <button class="search-clear" id="searchClear" title="Clear search" aria-label="Clear search">
+            <svg width="18" height="18"><use href="#icon-x"/></svg>
+        </button>
     </div>
 
     <!-- Type Filter -->
-    <div class="type-filter" id="typeFilter"></div>
+    <div class="type-filter" id="typeFilter" role="group" aria-label="Filter by type"></div>
 
     <!-- Category Filters -->
-    <div class="category-filters" id="categoryFilters"></div>
+    <div class="category-filters" id="categoryFilters" role="group" aria-label="Filter by category"></div>
 </div>
 
-<!-- ============================================================
-     RESULTS INFO
-     ============================================================ -->
+<!-- Results Info -->
 <div class="results-info">
-    <span class="results-count" id="resultsCount"></span>
+    <span class="results-count" id="resultsCount" aria-live="polite"></span>
 </div>
 
-<!-- ============================================================
-     CARD GRID
-     ============================================================ -->
-<div class="card-grid" id="cardGrid"></div>
+<!-- Card Grid -->
+<div class="card-grid" id="cardGrid" role="list" aria-label="Resource cards"></div>
 
-<!-- ============================================================
-     SCROLL TO TOP
-     ============================================================ -->
-<button class="scroll-top" id="scrollTop" title="Back to top">&#8593;</button>
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scrollTop" title="Back to top" aria-label="Scroll to top">
+    <svg width="20" height="20"><use href="#icon-chevron-up"/></svg>
+</button>
 
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer class="dv-footer">
+<!-- Footer -->
+<footer class="site-footer">
     <div class="footer-inner">
-        <div class="footer-brand">Impact<span>Mojo</span> Dataverse</div>
-        <div class="footer-links-row">
-            <a href="index.html" class="footer-link">Home</a>
-            <a href="index.html#courses" class="footer-link">Courses</a>
-            <a href="/about" class="footer-link">About</a>
-            <a href="/community/community" class="footer-link">Community</a>
-            <a href="/privacy-policy" class="footer-link">Privacy</a>
-            <a href="/terms-of-service" class="footer-link">Terms</a>
-            <a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/community/community">Community</a></li>
+                    <li><a href="/#support-us">Support Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/terms-of-service">Terms of Service</a></li>
+                    <li><a href="/disclaimer">Disclaimer</a></li>
+                    <li><a href="/grievance">Grievance Redressal</a></li>
+                    <li><a href="/refund-policy">Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Learn</h4>
+                <ul>
+                    <li><a href="/catalog">All Courses</a></li>
+                    <li><a href="/#labs">Labs</a></li>
+                    <li><a href="/#games">Games</a></li>
+                    <li><a href="/premium">Premium</a></li>
+                    <li><a href="/workshops">Workshops</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="/handouts">Handouts</a></li>
+                    <li><a href="/bct-repository">BCT Repository</a></li>
+                    <li><a href="/dataverse">Dataverse</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/podcast">Podcast</a></li>
+                </ul>
+            </div>
         </div>
-        <p class="footer-copy">&copy; 2026 ImpactMojo. All content for educational purposes only. Made with care by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener noreferrer">PinPoint Ventures</a></p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+            <p>Released under MIT License. Supported by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener">PinPoint Ventures</a></p>
+        </div>
     </div>
 </footer>
 
-<!-- ============================================================
-     JAVASCRIPT
-     ============================================================ -->
+<!-- JavaScript -->
 <script>
 (function() {
     'use strict';
@@ -996,54 +1035,113 @@ body {
     /* ----------------------------------------------------------
        STATE
        ---------------------------------------------------------- */
-    let allData = null;       // full JSON response
-    let items = [];           // items array
-    let categories = [];      // categories array
-    let activeCategory = null;
-    let activeType = null;
-    let searchQuery = '';
+    var allItems = [];         // flattened items with category info attached
+    var categories = [];       // category objects (without items)
+    var activeCategory = null;
+    var activeType = null;
+    var searchQuery = '';
 
-    const TYPE_EMOJIS = {
-        'Dataset':    '&#128202;',
-        'Tool':       '&#128295;',
-        'Platform':   '&#127760;',
-        'API':        '&#128268;',
-        'MCP Server': '&#129302;'
-    };
-
-    const TYPE_COLORS = {
-        'Dataset':    { bg: 'rgba(46,139,87,0.1)', text: '#2E8B57' },
-        'Tool':       { bg: 'rgba(70,130,180,0.1)', text: '#4682B4' },
-        'Platform':   { bg: 'rgba(210,105,30,0.1)', text: '#D2691E' },
-        'API':        { bg: 'rgba(139,69,19,0.1)', text: '#8B4513' },
-        'MCP Server': { bg: 'rgba(106,90,205,0.1)', text: '#6A5ACD' }
+    /* Type display config */
+    var TYPE_CONFIG = {
+        'dataset':    { label: 'Dataset',    icon: 'type-dataset',    color: '#16A34A', bg: 'rgba(22,163,74,0.1)' },
+        'tool':       { label: 'Tool',       icon: 'type-tool',       color: '#4682B4', bg: 'rgba(70,130,180,0.1)' },
+        'platform':   { label: 'Platform',   icon: 'type-platform',   color: '#D97706', bg: 'rgba(217,119,6,0.1)' },
+        'api':        { label: 'API',        icon: 'type-api',        color: '#7C3AED', bg: 'rgba(124,58,237,0.1)' },
+        'mcp-server': { label: 'MCP Server', icon: 'type-mcp-server', color: '#6366F1', bg: 'rgba(99,102,241,0.1)' },
+        'resource':   { label: 'Resource',   icon: 'type-resource',   color: '#0EA5E9', bg: 'rgba(14,165,233,0.1)' },
+        'skill':      { label: 'Skill',      icon: 'type-skill',      color: '#EC4899', bg: 'rgba(236,72,153,0.1)' }
     };
 
     /* ----------------------------------------------------------
        DOM REFS
        ---------------------------------------------------------- */
-    const searchInput     = document.getElementById('searchInput');
-    const searchClear     = document.getElementById('searchClear');
-    const typeFilterEl    = document.getElementById('typeFilter');
-    const categoryFilters = document.getElementById('categoryFilters');
-    const cardGrid        = document.getElementById('cardGrid');
-    const resultsCount    = document.getElementById('resultsCount');
-    const scrollTopBtn    = document.getElementById('scrollTop');
+    var searchInput     = document.getElementById('searchInput');
+    var searchClear     = document.getElementById('searchClear');
+    var typeFilterEl    = document.getElementById('typeFilter');
+    var categoryFilters = document.getElementById('categoryFilters');
+    var cardGrid        = document.getElementById('cardGrid');
+    var resultsCount    = document.getElementById('resultsCount');
+    var scrollTopBtn    = document.getElementById('scrollTop');
+    var mobileToggle    = document.getElementById('mobileToggle');
+    var navLinks        = document.getElementById('navLinks');
 
     /* ----------------------------------------------------------
-       FETCH DATA
+       FETCH DATA — correctly parse nested categories[].items[]
        ---------------------------------------------------------- */
     fetch('data/dataverse.json')
         .then(function(r) { return r.json(); })
         .then(function(data) {
-            allData = data;
-            items = data.items || [];
-            categories = data.categories || [];
+            /* Flatten nested structure:
+               data.categories[] each has .items[]
+               We attach categoryId, categoryName, categoryColor to each item */
+            categories = [];
+            allItems = [];
+
+            var rawCategories = data.categories || [];
+            rawCategories.forEach(function(cat) {
+                /* Build a lightweight category record (no items) */
+                categories.push({
+                    id: cat.id,
+                    name: cat.name,
+                    icon: cat.icon,
+                    color: cat.color,
+                    description: cat.description
+                });
+
+                /* Flatten items, attaching category metadata */
+                var catItems = cat.items || [];
+                catItems.forEach(function(item) {
+                    /* Each item gets a categoryIds array so we can filter */
+                    /* Check if item already exists (shared across categories) */
+                    var existing = null;
+                    for (var i = 0; i < allItems.length; i++) {
+                        if (allItems[i].id === item.id) {
+                            existing = allItems[i];
+                            break;
+                        }
+                    }
+                    if (existing) {
+                        existing.categoryIds.push(cat.id);
+                        existing.categoryColors.push(cat.color);
+                    } else {
+                        allItems.push({
+                            id: item.id,
+                            name: item.name,
+                            description: item.description,
+                            type: item.type,
+                            status: item.status,
+                            url: item.url,
+                            source: item.source || '',
+                            tags: item.tags || [],
+                            free: !!item.free,
+                            featured: !!item.featured,
+                            categoryIds: [cat.id],
+                            categoryColors: [cat.color]
+                        });
+                    }
+                });
+            });
+
             init();
         })
         .catch(function(err) {
-            cardGrid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#9888;</div><h3>Failed to load data</h3><p>' + err.message + '</p></div>';
+            cardGrid.innerHTML = '<div class="empty-state"><svg width="48" height="48"><use href="#si_Search"/></svg><h3>Failed to load data</h3><p>' + escapeHTML(err.message) + '</p></div>';
         });
+
+    /* ----------------------------------------------------------
+       HELPERS
+       ---------------------------------------------------------- */
+    function escapeHTML(str) {
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function svgUse(id, w, h) {
+        w = w || 16;
+        h = h || 16;
+        return '<svg width="' + w + '" height="' + h + '" fill="none"><use href="#' + id + '"/></svg>';
+    }
 
     /* ----------------------------------------------------------
        INIT
@@ -1052,7 +1150,8 @@ body {
         populateStats();
         renderTypeFilter();
         renderCategoryPills();
-        renderCards(items);
+        renderCards(allItems);
+        updateResultsCount(allItems.length);
         bindEvents();
     }
 
@@ -1060,32 +1159,27 @@ body {
        STATS
        ---------------------------------------------------------- */
     function populateStats() {
-        document.getElementById('statTotal').textContent = items.length;
-        document.getElementById('statFree').textContent = items.filter(function(i) { return i.free; }).length;
+        document.getElementById('statTotal').textContent = allItems.length;
+        document.getElementById('statFree').textContent = allItems.filter(function(i) { return i.free; }).length;
         document.getElementById('statCategories').textContent = categories.length;
-        var types = new Set(items.map(function(i) { return i.type; }));
-        document.getElementById('statTypes').textContent = types.size;
+        var typeSet = {};
+        allItems.forEach(function(i) { typeSet[i.type] = true; });
+        document.getElementById('statTypes').textContent = Object.keys(typeSet).length;
     }
 
     /* ----------------------------------------------------------
        TYPE FILTER
        ---------------------------------------------------------- */
     function renderTypeFilter() {
-        var types = [];
-        var seen = {};
-        items.forEach(function(item) {
-            if (!seen[item.type]) {
-                seen[item.type] = true;
-                types.push(item.type);
-            }
-        });
-        types.sort();
+        var typeSet = {};
+        allItems.forEach(function(item) { typeSet[item.type] = true; });
+        var types = Object.keys(typeSet).sort();
 
         var html = '<span class="type-filter-label">Type:</span>';
-        html += '<button class="type-btn active" data-type="all"><span class="type-emoji">&#9776;</span> All</button>';
+        html += '<button class="type-btn active" data-type="all">' + svgUse('icon-grid', 14, 14) + ' All</button>';
         types.forEach(function(t) {
-            var emoji = TYPE_EMOJIS[t] || '&#128196;';
-            html += '<button class="type-btn" data-type="' + t + '"><span class="type-emoji">' + emoji + '</span> ' + t + '</button>';
+            var cfg = TYPE_CONFIG[t] || { label: t, icon: 'type-resource', color: '#666', bg: 'rgba(0,0,0,0.06)' };
+            html += '<button class="type-btn" data-type="' + t + '">' + svgUse(cfg.icon, 14, 14) + ' ' + cfg.label + '</button>';
         });
         typeFilterEl.innerHTML = html;
     }
@@ -1094,9 +1188,10 @@ body {
        CATEGORY PILLS
        ---------------------------------------------------------- */
     function renderCategoryPills() {
-        var html = '<button class="cat-pill active" data-cat="all" style="background:var(--earth-brown);color:#FFF;">All Categories</button>';
+        var html = '<button class="cat-pill active" data-cat="all" style="background:var(--accent);color:#FFF;">' + svgUse('icon-grid', 14, 14) + ' All Categories</button>';
         categories.forEach(function(cat) {
-            html += '<button class="cat-pill" data-cat="' + cat.id + '" data-color="' + cat.color + '">' + cat.icon + ' ' + cat.name + '</button>';
+            html += '<button class="cat-pill" data-cat="' + cat.id + '" data-color="' + cat.color + '">'
+                + svgUse(cat.icon, 14, 14) + ' ' + escapeHTML(cat.name) + '</button>';
         });
         categoryFilters.innerHTML = html;
     }
@@ -1105,19 +1200,19 @@ body {
        FILTER LOGIC
        ---------------------------------------------------------- */
     function getFilteredItems() {
-        return items.filter(function(item) {
-            // Category filter
+        return allItems.filter(function(item) {
+            /* Category filter */
             if (activeCategory && activeCategory !== 'all') {
-                if (item.categories.indexOf(activeCategory) === -1) return false;
+                if (item.categoryIds.indexOf(activeCategory) === -1) return false;
             }
-            // Type filter
+            /* Type filter */
             if (activeType && activeType !== 'all') {
                 if (item.type !== activeType) return false;
             }
-            // Search
+            /* Search */
             if (searchQuery) {
                 var q = searchQuery.toLowerCase();
-                var haystack = (item.name + ' ' + item.description + ' ' + item.tags.join(' ')).toLowerCase();
+                var haystack = (item.name + ' ' + item.description + ' ' + item.tags.join(' ') + ' ' + item.source).toLowerCase();
                 if (haystack.indexOf(q) === -1) return false;
             }
             return true;
@@ -1131,11 +1226,11 @@ body {
     }
 
     function updateResultsCount(count) {
-        var totalLabel = items.length;
-        if (count === totalLabel && !searchQuery && (!activeCategory || activeCategory === 'all') && (!activeType || activeType === 'all')) {
-            resultsCount.innerHTML = 'Showing all <strong>' + totalLabel + '</strong> resources';
+        var total = allItems.length;
+        if (count === total && !searchQuery && (!activeCategory || activeCategory === 'all') && (!activeType || activeType === 'all')) {
+            resultsCount.innerHTML = 'Showing all <strong>' + total + '</strong> resources';
         } else {
-            resultsCount.innerHTML = 'Showing <strong>' + count + '</strong> of ' + totalLabel + ' resources';
+            resultsCount.innerHTML = 'Showing <strong>' + count + '</strong> of ' + total + ' resources';
         }
     }
 
@@ -1144,72 +1239,87 @@ body {
        ---------------------------------------------------------- */
     function renderCards(list) {
         if (list.length === 0) {
-            cardGrid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128270;</div><h3>No resources found</h3><p>Try adjusting your search or filters.</p></div>';
+            cardGrid.innerHTML = '<div class="empty-state">'
+                + '<svg width="48" height="48" style="color:var(--text-muted);opacity:0.5;"><use href="#si_Search"/></svg>'
+                + '<h3>No resources found</h3>'
+                + '<p>Try adjusting your search or filters.</p></div>';
             return;
         }
 
+        /* Build category map for dot tooltips */
+        var catMap = {};
+        categories.forEach(function(c) { catMap[c.id] = c; });
+
         var html = '';
-        list.forEach(function(item, idx) {
-            var typeColor = TYPE_COLORS[item.type] || { bg: 'rgba(0,0,0,0.06)', text: '#666' };
-            var emoji = TYPE_EMOJIS[item.type] || '&#128196;';
-            var delay = Math.min(idx * 0.04, 0.8);
+        list.forEach(function(item) {
+            var cfg = TYPE_CONFIG[item.type] || { label: item.type, icon: 'type-resource', color: '#666', bg: 'rgba(0,0,0,0.06)' };
 
-            // Status badge
+            /* Status */
             var statusClass = 'badge-status--' + item.status;
-            var statusText = item.status === 'coming-soon' ? 'Coming Soon' : item.status.charAt(0).toUpperCase() + item.status.slice(1);
+            var statusText = item.status === 'coming-soon' ? 'Coming Soon'
+                : item.status === 'live' ? 'Active'
+                : item.status.charAt(0).toUpperCase() + item.status.slice(1);
 
-            // Category dots
+            /* Category dots */
             var catDots = '';
-            var catMap = {};
-            categories.forEach(function(c) { catMap[c.id] = c.color; });
-            item.categories.forEach(function(catId) {
-                var color = catMap[catId] || '#999';
-                catDots += '<span class="card-cat-dot" style="background:' + color + ';" title="' + catId + '"></span>';
+            item.categoryIds.forEach(function(catId) {
+                var cat = catMap[catId];
+                var dotColor = cat ? cat.color : '#999';
+                var dotTitle = cat ? cat.name : catId;
+                catDots += '<span class="card-cat-dot" style="background:' + dotColor + ';" title="' + escapeHTML(dotTitle) + '"></span>';
             });
 
-            // Tags
+            /* Tags (show max 5) */
             var tags = '';
-            item.tags.forEach(function(tag) {
-                tags += '<span class="card-tag">' + tag + '</span>';
+            var showTags = item.tags.slice(0, 5);
+            showTags.forEach(function(tag) {
+                tags += '<span class="card-tag">' + escapeHTML(tag) + '</span>';
             });
-
-            // Link
-            var linkClass = (item.url === '#' || item.status === 'coming-soon') ? 'card-link card-link--disabled' : 'card-link';
-            var linkTarget = item.url.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
-
-            // Find the first matching category color for the top bar
-            var barColor = typeColor.text;
-            if (item.categories.length > 0 && catMap[item.categories[0]]) {
-                barColor = catMap[item.categories[0]];
+            if (item.tags.length > 5) {
+                tags += '<span class="card-tag">+' + (item.tags.length - 5) + '</span>';
             }
 
-            html += '<article class="dv-card" style="animation-delay:' + delay + 's;--bar-color:' + barColor + ';">';
-            html += '<style>.dv-card[style*="--bar-color:' + barColor + '"]::before{background:' + barColor + ';}</style>';
+            /* Link */
+            var isDisabled = (item.url === '#' || item.status === 'coming-soon');
+            var linkClass = isDisabled ? 'card-link card-link--disabled' : 'card-link';
+            var linkTarget = (!isDisabled && item.url && item.url.indexOf('http') === 0) ? ' target="_blank" rel="noopener noreferrer"' : '';
+            var linkHref = isDisabled ? '#' : item.url;
 
-            // Header
+            /* Bar color from first category */
+            var barColor = item.categoryColors[0] || cfg.color;
+
+            html += '<article class="dv-card" role="listitem" style="--card-bar-color:' + barColor + ';">';
+
+            /* Header */
             html += '<div class="card-header">';
-            html += '<div class="card-type-icon" style="background:' + typeColor.bg + ';">' + emoji + '</div>';
+            html += '<div class="card-type-icon" style="background:' + cfg.bg + ';color:' + cfg.color + ';">' + svgUse(cfg.icon, 20, 20) + '</div>';
             html += '<div class="card-header-text">';
-            html += '<div class="card-name">' + item.name + '</div>';
-            html += '<div class="card-type-label" style="color:' + typeColor.text + ';">' + item.type + '</div>';
+            html += '<div class="card-name">' + escapeHTML(item.name) + '</div>';
+            html += '<div class="card-type-label" style="color:' + cfg.color + ';">' + cfg.label + '</div>';
             html += '</div>';
             html += '<div class="card-badges">';
-            if (item.featured) html += '<span class="badge-featured" title="Featured"></span>';
             if (item.free) html += '<span class="badge-free">Free</span>';
             html += '<span class="badge-status ' + statusClass + '">' + statusText + '</span>';
             html += '</div>';
             html += '</div>';
 
-            // Description
-            html += '<p class="card-desc">' + item.description + '</p>';
+            /* Description */
+            html += '<p class="card-desc">' + escapeHTML(item.description) + '</p>';
 
-            // Tags
-            html += '<div class="card-tags">' + tags + '</div>';
+            /* Source */
+            if (item.source) {
+                html += '<div class="card-source">Source: ' + escapeHTML(item.source) + '</div>';
+            }
 
-            // Footer
+            /* Tags */
+            if (tags) {
+                html += '<div class="card-tags">' + tags + '</div>';
+            }
+
+            /* Footer */
             html += '<div class="card-footer">';
             html += '<div class="card-cats">' + catDots + '</div>';
-            html += '<a href="' + item.url + '" class="' + linkClass + '"' + linkTarget + '>Explore &#8594;</a>';
+            html += '<a href="' + escapeHTML(linkHref) + '" class="' + linkClass + '"' + linkTarget + (isDisabled ? ' tabindex="-1" aria-disabled="true"' : '') + '>Visit ' + svgUse('si_Arrow_right', 14, 14) + '</a>';
             html += '</div>';
 
             html += '</article>';
@@ -1222,7 +1332,7 @@ body {
        EVENT BINDINGS
        ---------------------------------------------------------- */
     function bindEvents() {
-        // Search
+        /* Search */
         searchInput.addEventListener('input', function() {
             searchQuery = this.value.trim();
             searchClear.classList.toggle('visible', searchQuery.length > 0);
@@ -1237,7 +1347,7 @@ body {
             searchInput.focus();
         });
 
-        // Type filter
+        /* Type filter */
         typeFilterEl.addEventListener('click', function(e) {
             var btn = e.target.closest('.type-btn');
             if (!btn) return;
@@ -1247,12 +1357,11 @@ body {
             applyFilters();
         });
 
-        // Category filter
+        /* Category filter */
         categoryFilters.addEventListener('click', function(e) {
             var pill = e.target.closest('.cat-pill');
             if (!pill) return;
 
-            // Deactivate all
             categoryFilters.querySelectorAll('.cat-pill').forEach(function(p) {
                 p.classList.remove('active');
                 p.style.background = '';
@@ -1263,7 +1372,7 @@ body {
             var catId = pill.dataset.cat;
 
             if (catId === 'all') {
-                pill.style.background = 'var(--earth-brown)';
+                pill.style.background = 'var(--accent)';
                 pill.style.color = '#FFF';
             } else {
                 pill.style.background = pill.dataset.color;
@@ -1274,17 +1383,32 @@ body {
             applyFilters();
         });
 
-        // Scroll to top
+        /* Scroll to top */
         window.addEventListener('scroll', function() {
             scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-        });
+        }, { passive: true });
 
         scrollTopBtn.addEventListener('click', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Initial count
-        updateResultsCount(items.length);
+        /* Mobile nav toggle */
+        mobileToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('open');
+        });
+
+        /* Keyboard: Escape to close mobile nav */
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                navLinks.classList.remove('open');
+                if (searchQuery) {
+                    searchInput.value = '';
+                    searchQuery = '';
+                    searchClear.classList.remove('visible');
+                    applyFilters();
+                }
+            }
+        });
     }
 
 })();
