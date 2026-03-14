@@ -3,8 +3,7 @@
  * Uses Google Translate (free, no API key) with custom UI
  * Supports: English, Hindi, Tamil, Bengali, Marathi
  *
- * Replaces the previous Sarvam.ai integration.
- * The Google Translate widget is loaded invisibly and controlled
+ * The Google Translate widget is loaded off-screen and controlled
  * programmatically through our own language selector UI.
  */
 (function() {
@@ -19,6 +18,8 @@
     };
 
     var currentLang = localStorage.getItem('impactmojo_lang') || 'en';
+    var gtReady = false;
+    var pendingLang = null;
 
     // ===== UI: Language Selector =====
     function createSelector() {
@@ -85,11 +86,18 @@
             '.imx-lang-option.active { background: rgba(14, 165, 233, 0.15); color: #0EA5E9; font-weight: 600; }',
             '.imx-lang-native { font-weight: 500; }',
             '.imx-lang-english { color: var(--text-muted, #64748B); font-size: 0.75rem; }',
-            '/* Hide Google Translate widget elements */',
-            '.goog-te-banner-frame, .skiptranslate, #google_translate_element { display: none !important; }',
-            'body { top: 0 !important; }',
-            '/* Fix Google Translate font overrides */',
+            '',
+            '/* Hide Google Translate UI — off-screen, NOT display:none */',
+            '#google_translate_element { position: absolute; top: -9999px; left: -9999px; width: 0; height: 0; overflow: hidden; }',
+            '.goog-te-banner-frame { display: none !important; }',
+            '#goog-gt-tt, .goog-te-balloon-frame { display: none !important; }',
             '.goog-text-highlight { background: none !important; box-shadow: none !important; }',
+            '',
+            '/* Google Translate adds a top bar that pushes body down */',
+            'body { top: 0 !important; position: static !important; }',
+            '.skiptranslate { display: none !important; height: 0 !important; overflow: hidden !important; }',
+            '.skiptranslate iframe { display: none !important; }',
+            '',
             '@media (max-width: 768px) { .imx-lang-label { display: none; } .imx-lang-btn { padding: 0.4rem; } .imx-lang-dropdown { right: -1rem; } }'
         ].join('\n');
         document.head.appendChild(css);
@@ -98,55 +106,79 @@
     // ===== GOOGLE TRANSLATE ENGINE =====
 
     function loadGoogleTranslate() {
-        // Create hidden container for Google Translate widget
+        // Create the container Google Translate needs — positioned off-screen
         var gtDiv = document.createElement('div');
         gtDiv.id = 'google_translate_element';
-        gtDiv.style.display = 'none';
         document.body.appendChild(gtDiv);
 
         // Define the callback Google Translate expects
         window.googleTranslateElementInit = function() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
-                includedLanguages: 'en,hi,ta,bn,mr',
-                autoDisplay: false
+                includedLanguages: 'hi,ta,bn,mr',
+                autoDisplay: false,
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
 
-            // If user had a language selected, apply it after widget loads
-            if (currentLang !== 'en') {
-                setTimeout(function() { triggerGoogleTranslate(LANGUAGES[currentLang].gtCode); }, 1000);
-            }
+            // Poll for the combo box to appear (GT creates it async)
+            waitForCombo(0);
         };
 
         // Load Google Translate script
         var script = document.createElement('script');
         script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
         script.async = true;
+        script.onerror = function() {
+            console.warn('Google Translate failed to load');
+        };
         document.body.appendChild(script);
     }
 
-    function triggerGoogleTranslate(langCode) {
-        // Google Translate uses a cookie to track language selection
-        // Set the cookie and reload the translate frame
-        var gtCombo = document.querySelector('.goog-te-combo');
-        if (gtCombo) {
-            gtCombo.value = langCode;
-            gtCombo.dispatchEvent(new Event('change'));
-            return;
-        }
-
-        // Fallback: set the cookie directly
-        document.cookie = 'googtrans=/en/' + langCode + '; path=/; domain=' + window.location.hostname;
-        document.cookie = 'googtrans=/en/' + langCode + '; path=/';
-
-        // Retry after a delay (widget may still be loading)
-        setTimeout(function() {
-            var combo = document.querySelector('.goog-te-combo');
-            if (combo) {
-                combo.value = langCode;
-                combo.dispatchEvent(new Event('change'));
+    function waitForCombo(attempts) {
+        var combo = document.querySelector('.goog-te-combo');
+        if (combo) {
+            gtReady = true;
+            // If user had a non-English language saved, apply it now
+            if (pendingLang) {
+                doTranslate(pendingLang);
+                pendingLang = null;
+            } else if (currentLang !== 'en') {
+                doTranslate(LANGUAGES[currentLang].gtCode);
             }
-        }, 500);
+        } else if (attempts < 20) {
+            setTimeout(function() { waitForCombo(attempts + 1); }, 300);
+        }
+    }
+
+    function doTranslate(langCode) {
+        var combo = document.querySelector('.goog-te-combo');
+        if (!combo) return;
+
+        if (langCode === 'en') {
+            // To revert, select empty or trigger the "Show original" function
+            combo.value = '';
+            combo.dispatchEvent(new Event('change'));
+            // Also try the Google Translate restore function
+            if (window.google && google.translate && google.translate.TranslateElement) {
+                // Reset by selecting the page language
+                setTimeout(function() {
+                    var frame = document.querySelector('.goog-te-banner-frame');
+                    if (frame) {
+                        try {
+                            var btn = frame.contentDocument.querySelector('.goog-close-link');
+                            if (btn) btn.click();
+                        } catch(e) {}
+                    }
+                    // Fallback: set cookie and reload
+                    document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+                    document.cookie = 'googtrans=; path=/; domain=' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+                    document.cookie = 'googtrans=; path=/; domain=.' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+                }, 100);
+            }
+        } else {
+            combo.value = langCode;
+            combo.dispatchEvent(new Event('change'));
+        }
     }
 
     function selectLanguage(langKey) {
@@ -164,14 +196,13 @@
         var label = document.querySelector('.imx-lang-label');
         if (label) label.textContent = LANGUAGES[langKey].native;
 
-        if (langKey === 'en') {
-            // Restore to English
-            triggerGoogleTranslate('en');
-            // Also clear the cookie
-            document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-            document.cookie = 'googtrans=; path=/; domain=' + window.location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+        var gtLangCode = LANGUAGES[langKey].gtCode;
+
+        if (gtReady) {
+            doTranslate(gtLangCode);
         } else {
-            triggerGoogleTranslate(LANGUAGES[langKey].gtCode);
+            // Widget still loading, queue it
+            pendingLang = gtLangCode;
         }
     }
 
@@ -185,7 +216,6 @@
         if (navButtons) {
             navButtons.insertBefore(selector, navButtons.firstChild);
         } else {
-            // Fallback: insert into nav-container before mobile menu button
             var navContainer = document.querySelector('.nav-container');
             var hamburger = document.querySelector('.mobile-menu-toggle');
             if (navContainer && hamburger) {
@@ -195,7 +225,7 @@
             }
         }
 
-        // Load Google Translate
+        // Load Google Translate engine
         loadGoogleTranslate();
     }
 
