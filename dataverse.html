@@ -1,655 +1,713 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ImpactMojo Dataverse | Curated Tools & Data for Social Impact</title>
-<meta name="description" content="ImpactMojo Dataverse: A curated catalog of 60+ tools, datasets, APIs, and platforms for social impact, development economics, and policy research.">
+<meta name="description" content="ImpactMojo Dataverse: A curated catalog of 215+ tools, datasets, APIs, and platforms for social impact, development economics, and policy research.">
 <link rel="icon" href="assets/images/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
 <style>
 /* ============================================================
-   CSS CUSTOM PROPERTIES
+   DESIGN TOKENS
    ============================================================ */
 :root {
-    --earth-brown: #8B4513;
-    --earth-sienna: #D2691E;
-    --earth-tan: #DEB887;
-    --earth-wheat: #F5DEB3;
-    --earth-green: #2E8B57;
-    --earth-blue: #4682B4;
-    --earth-cream: #FFF8F0;
-    --earth-dark: #3E2723;
-    --earth-light: #FAEBD7;
-    --earth-red: #CD5C5C;
-    --text-primary: #2C1810;
-    --text-secondary: #5D4E37;
-    --text-muted: #8B7D6B;
-    --card-bg: #FFFFFF;
-    --card-border: #E8DDD0;
-    --card-shadow: 0 2px 12px rgba(139, 69, 19, 0.08);
-    --card-shadow-hover: 0 8px 32px rgba(139, 69, 19, 0.15);
-    --pill-bg: rgba(139, 69, 19, 0.08);
-    --hero-gradient: linear-gradient(135deg, #3E2723 0%, #5D4037 40%, #6D4C41 100%);
-    --radius-sm: 6px;
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --accent-color: #0EA5E9;
+    --accent-hover: #0284C7;
+    --secondary-accent: #6366F1;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
+    --radius-sm: 8px;
     --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-pill: 50px;
-    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --radius-lg: 16px;
+    --radius-pill: 100px;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="light"] {
+    --primary-bg: #FFFFFF;
+    --secondary-bg: #F8FAFC;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* ============================================================
    RESET & BASE
    ============================================================ */
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-}
+html { scroll-behavior: smooth; }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--earth-cream);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--primary-bg);
     color: var(--text-primary);
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
     min-height: 100vh;
-    animation: fadeIn 0.5s ease-out;
+    display: flex;
+    flex-direction: column;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+a { color: var(--accent-color); text-decoration: none; transition: color var(--transition); }
+a:hover { color: var(--accent-hover); }
+
+img { max-width: 100%; display: block; }
+
+/* Skip to content */
+.skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    background: var(--accent-color);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    z-index: 10000;
+    font-weight: 600;
+    transition: top 0.2s;
+}
+.skip-to-content:focus {
+    top: 16px;
+}
+
+/* Focus visible */
+*:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
 /* ============================================================
-   NAVIGATION
+   SARGAM ICONS
    ============================================================ */
-.nav-header {
+.sargam-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) saturate(100%) invert(58%) sepia(89%) saturate(2108%) hue-rotate(176deg) brightness(98%) contrast(91%);
+}
+
+[data-theme="light"] .sargam-icon {
+    filter: brightness(0) saturate(100%) invert(44%) sepia(98%) saturate(1388%) hue-rotate(176deg) brightness(97%) contrast(92%);
+}
+
+.sargam-icon-white {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+[data-theme="light"] .sargam-icon-white {
+    filter: brightness(0) invert(1);
+}
+
+.sargam-icon-muted {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) saturate(100%) invert(50%) sepia(10%) saturate(400%) hue-rotate(180deg);
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(62, 39, 35, 0.97);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    background: var(--primary-bg);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
 }
 
-.nav-inner {
-    max-width: 1400px;
+.nav-container {
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0.85rem 1.5rem;
+    padding: 0 24px;
+    height: 64px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
+    gap: 24px;
 }
 
-.nav-brand {
+.logo {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 10px;
     text-decoration: none;
-    color: #FFF;
+    color: var(--text-primary);
+    flex-shrink: 0;
 }
-
-.nav-brand-icon {
-    width: 36px;
+.logo-icon {
     height: 36px;
-    background: linear-gradient(135deg, var(--earth-sienna), var(--earth-green));
-    border-radius: 10px;
+    width: auto;
+}
+.logo-text-wrap {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #FFF;
-    letter-spacing: -1px;
+    flex-direction: column;
+    line-height: 1.1;
 }
-
-.nav-brand-text {
+.logo-text {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.15rem;
     font-weight: 700;
-    color: #FFF;
+    font-size: 1.15rem;
+    color: var(--text-primary);
 }
-
-.nav-brand-text span {
-    color: var(--earth-tan);
+.logo-tagline {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 400;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 8px;
 }
-
 .nav-link {
-    color: rgba(255, 255, 255, 0.85);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-pill);
+    padding: 6px 14px;
     font-size: 0.9rem;
     font-weight: 500;
-    transition: var(--transition);
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition);
+    white-space: nowrap;
 }
-
 .nav-link:hover {
-    color: #FFF;
-    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    background: var(--hover-bg);
+}
+.nav-link.active {
+    color: var(--accent-color);
+    background: rgba(14, 165, 233, 0.1);
 }
 
-.nav-link--active {
-    color: #FFF;
-    background: rgba(210, 105, 30, 0.3);
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-pill);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-family: inherit;
+    transition: all var(--transition);
+}
+.theme-toggle-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-color);
+}
+.theme-label { white-space: nowrap; }
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 4px;
+}
+
+/* Mobile nav overlay */
+.mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+.mobile-nav-overlay.active { display: block; }
+
+.mobile-nav-panel {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 280px;
+    background: var(--primary-bg);
+    border-left: 1px solid var(--border-color);
+    z-index: 1001;
+    padding: 24px;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+}
+.mobile-nav-panel.active {
+    display: flex;
+}
+.mobile-nav-panel .nav-link {
+    display: block;
+    padding: 12px 16px;
+    font-size: 1rem;
+}
+.mobile-nav-close {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 4px;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+    .nav-links, .nav-actions { display: none; }
+    .mobile-menu-toggle { display: flex; }
 }
 
 /* ============================================================
    HERO SECTION
    ============================================================ */
 .hero {
-    background: var(--hero-gradient);
-    padding: 4rem 1.5rem 3rem;
     text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background:
-        radial-gradient(circle at 20% 80%, rgba(46, 139, 87, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(70, 130, 180, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(210, 105, 30, 0.08) 0%, transparent 60%);
-    pointer-events: none;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
+    padding: 64px 24px 32px;
     max-width: 800px;
     margin: 0 auto;
 }
-
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 0.4rem 1rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.8rem;
-    color: var(--earth-tan);
-    font-weight: 500;
-    margin-bottom: 1.5rem;
-    backdrop-filter: blur(10px);
-}
-
-.hero h1 {
+.hero-title {
     font-family: 'Poppins', sans-serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-size: 2.8rem;
     font-weight: 800;
-    color: #FFF;
-    line-height: 1.15;
-    margin-bottom: 1rem;
-}
-
-.hero h1 span {
-    background: linear-gradient(135deg, var(--earth-tan), var(--earth-wheat));
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    margin-bottom: 12px;
+    line-height: 1.15;
+}
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+.hero-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.hero p {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.75);
-    max-width: 600px;
-    margin: 0 auto 2rem;
-    line-height: 1.7;
+@media (max-width: 600px) {
+    .hero { padding: 40px 16px 24px; }
+    .hero-title { font-size: 2rem; }
+    .hero-subtitle { font-size: 1rem; }
 }
 
 /* ============================================================
    STATS BAR
    ============================================================ */
 .stats-bar {
-    background: var(--card-bg);
-    border-bottom: 1px solid var(--card-border);
-    padding: 1rem 1.5rem;
-    box-shadow: 0 2px 8px rgba(139, 69, 19, 0.06);
-}
-
-.stats-inner {
-    max-width: 1400px;
-    margin: 0 auto;
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 32px;
+    padding: 24px;
     flex-wrap: wrap;
 }
-
 .stat-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    text-align: center;
 }
-
-.stat-number {
+.stat-value {
     font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
     font-weight: 700;
-    font-size: 1.3rem;
-    color: var(--earth-brown);
+    color: var(--accent-color);
+    line-height: 1.2;
 }
-
 .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     font-weight: 500;
 }
 
-.stat-divider {
-    width: 1px;
-    height: 24px;
-    background: var(--card-border);
+@media (max-width: 500px) {
+    .stats-bar { gap: 20px; }
+    .stat-value { font-size: 1.4rem; }
 }
 
 /* ============================================================
-   CONTROLS SECTION
+   SEARCH & FILTERS
    ============================================================ */
 .controls-section {
-    max-width: 1400px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 1.5rem 1.5rem 0;
+    padding: 0 24px 24px;
 }
 
-/* Search Bar */
 .search-container {
     position: relative;
     max-width: 600px;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 24px;
 }
-
 .search-icon {
     position: absolute;
-    left: 1.25rem;
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1.1rem;
-    color: var(--text-muted);
+    width: 20px;
+    height: 20px;
     pointer-events: none;
 }
-
 .search-input {
     width: 100%;
-    padding: 0.9rem 1rem 0.9rem 3rem;
-    border: 2px solid var(--card-border);
+    padding: 14px 16px 14px 48px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-pill);
-    font-size: 1rem;
-    font-family: inherit;
-    background: var(--card-bg);
     color: var(--text-primary);
-    transition: var(--transition);
-    outline: none;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all var(--transition);
 }
-
+.search-input::placeholder { color: var(--text-muted); }
 .search-input:focus {
-    border-color: var(--earth-sienna);
-    box-shadow: 0 0 0 4px rgba(210, 105, 30, 0.12);
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
 }
 
-.search-input::placeholder {
+.filter-group {
+    margin-bottom: 16px;
+}
+.filter-label {
+    font-size: 0.8rem;
+    font-weight: 600;
     color: var(--text-muted);
-}
-
-.search-clear {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    color: var(--text-muted);
-    display: none;
-    padding: 0.25rem;
-    line-height: 1;
-}
-
-.search-clear.visible {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
     display: block;
 }
-
-/* Type Filter */
-.type-filter {
+.filter-pills {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
     flex-wrap: wrap;
-    justify-content: center;
+    gap: 8px;
 }
-
-.type-filter-label {
+.filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-pill);
+    color: var(--text-secondary);
     font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    margin-right: 0.25rem;
-}
-
-.type-btn {
-    padding: 0.4rem 0.9rem;
-    border: 1.5px solid var(--card-border);
-    border-radius: var(--radius-pill);
-    background: var(--card-bg);
-    color: var(--text-secondary);
-    font-size: 0.8rem;
     font-weight: 500;
-    font-family: inherit;
     cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-}
-
-.type-btn:hover {
-    border-color: var(--earth-sienna);
-    color: var(--earth-sienna);
-    background: rgba(210, 105, 30, 0.05);
-}
-
-.type-btn.active {
-    background: var(--earth-brown);
-    color: #FFF;
-    border-color: var(--earth-brown);
-}
-
-.type-emoji {
-    font-size: 0.9rem;
-}
-
-/* Category Filters */
-.category-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    padding-bottom: 1.5rem;
-}
-
-.cat-pill {
-    padding: 0.4rem 0.85rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.78rem;
-    font-weight: 600;
     font-family: inherit;
-    cursor: pointer;
-    transition: var(--transition);
-    border: 2px solid transparent;
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    background: rgba(0, 0, 0, 0.06);
-    color: var(--text-secondary);
+    transition: all var(--transition);
+    white-space: nowrap;
+}
+.filter-pill:hover {
+    border-color: var(--accent-color);
+    color: var(--text-primary);
+}
+.filter-pill.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+}
+.filter-pill .pill-icon {
+    width: 16px;
+    height: 16px;
+}
+.filter-pill.active .pill-icon {
+    filter: brightness(0) invert(1);
+}
+.filter-pill .cat-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
 }
 
-.cat-pill:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.cat-pill.active {
-    color: #FFF;
-    transform: translateY(-1px);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* ============================================================
-   RESULTS INFO
-   ============================================================ */
+/* Results count */
 .results-info {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1.5rem 1rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-.results-count {
+    justify-content: space-between;
+    padding: 12px 0;
     font-size: 0.9rem;
     color: var(--text-muted);
-    font-weight: 500;
 }
-
-.results-count strong {
-    color: var(--earth-brown);
-}
+.results-count { font-weight: 500; }
+.results-count strong { color: var(--text-primary); }
 
 /* ============================================================
    CARD GRID
    ============================================================ */
 .card-grid {
-    max-width: 1400px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 1.5rem 3rem;
+    padding: 0 24px 48px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+}
+
+@media (max-width: 400px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        padding: 0 16px 32px;
+    }
 }
 
 /* ============================================================
-   INDIVIDUAL CARD
+   CARD
    ============================================================ */
-.dv-card {
+.card {
     background: var(--card-bg);
-    border: 1px solid var(--card-border);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1.5rem;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    transition: var(--transition);
+    transition: all var(--transition);
     position: relative;
-    overflow: hidden;
-    animation: cardIn 0.4s ease-out both;
 }
-
-@keyframes cardIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.dv-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--card-shadow-hover);
-    border-color: transparent;
-}
-
-.dv-card::before {
+.card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 3px;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    background: var(--cat-color, var(--accent-color));
     opacity: 0;
-    transition: var(--transition);
+    transition: opacity var(--transition);
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+}
+.card:hover::before {
+    opacity: 1;
 }
 
-.dv-card:hover::before {
-    opacity: 1;
+.card-body {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-header {
     display: flex;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 12px;
+    margin-bottom: 12px;
 }
 
 .card-type-icon {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
     flex-shrink: 0;
 }
+.card-type-icon img {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) invert(1);
+}
 
-.card-header-text {
+.card-title-block {
     flex: 1;
     min-width: 0;
 }
-
-.card-name {
+.card-title {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--text-primary);
     line-height: 1.3;
-    margin-bottom: 0.15rem;
+    margin-bottom: 2px;
 }
-
 .card-type-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-size: 0.75rem;
     color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 500;
 }
 
 .card-badges {
     display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.badge {
+    display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    flex-shrink: 0;
-}
-
-.badge-free {
-    padding: 0.2rem 0.55rem;
+    gap: 4px;
+    padding: 3px 10px;
     border-radius: var(--radius-pill);
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    background: rgba(46, 139, 87, 0.1);
-    color: var(--earth-green);
-    border: 1px solid rgba(46, 139, 87, 0.2);
-}
-
-.badge-status {
-    padding: 0.2rem 0.55rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.03em;
+}
+.badge-free {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--success-color);
+}
+.badge-status-live {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--success-color);
+}
+.badge-status-beta {
+    background: rgba(14, 165, 233, 0.12);
+    color: var(--accent-color);
+}
+.badge-status-coming-soon {
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--warning-color);
+}
+.badge-source {
+    background: var(--hover-bg);
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
 }
 
-.badge-status--active {
-    background: rgba(46, 139, 87, 0.08);
-    color: #2E7D32;
-}
-
-.badge-status--beta {
-    background: rgba(70, 130, 180, 0.1);
-    color: var(--earth-blue);
-}
-
-.badge-status--coming-soon {
-    background: rgba(210, 105, 30, 0.1);
-    color: var(--earth-sienna);
-}
-
-.badge-featured {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--earth-sienna);
-    box-shadow: 0 0 6px rgba(210, 105, 30, 0.5);
-}
-
-.card-desc {
+.card-description {
     font-size: 0.88rem;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.55;
+    margin-bottom: 14px;
     flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .card-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
+    gap: 6px;
+    margin-bottom: 14px;
 }
-
-.card-tag {
-    padding: 0.2rem 0.55rem;
+.tag {
+    padding: 2px 10px;
+    background: var(--hover-bg);
     border-radius: var(--radius-pill);
-    font-size: 0.7rem;
-    font-weight: 500;
-    background: var(--pill-bg);
+    font-size: 0.72rem;
     color: var(--text-muted);
+    font-weight: 500;
 }
 
 .card-footer {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--card-border);
-    margin-top: auto;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-top: 1px solid var(--border-color);
 }
 
-.card-cats {
+.card-category {
     display: flex;
-    gap: 0.3rem;
-    flex-wrap: wrap;
-    flex: 1;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 60%;
 }
-
-.card-cat-dot {
+.card-category .cat-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
 }
 
-.card-link {
+.card-visit-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    padding: 0.4rem 0.9rem;
+    gap: 5px;
+    padding: 6px 16px;
+    background: var(--accent-color);
+    color: #fff;
     border-radius: var(--radius-pill);
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 600;
+    transition: all var(--transition);
     text-decoration: none;
-    color: var(--earth-brown);
-    background: rgba(139, 69, 19, 0.08);
-    transition: var(--transition);
-    flex-shrink: 0;
+    white-space: nowrap;
 }
-
-.card-link:hover {
-    background: var(--earth-brown);
-    color: #FFF;
+.card-visit-btn:hover {
+    background: var(--accent-hover);
+    color: #fff;
+    transform: translateY(-1px);
 }
-
-.card-link--disabled {
-    opacity: 0.5;
+.card-visit-btn.disabled {
+    background: var(--hover-bg);
+    color: var(--text-muted);
     pointer-events: none;
+    cursor: not-allowed;
+}
+.card-visit-btn img {
+    width: 14px;
+    height: 14px;
+    filter: brightness(0) invert(1);
+}
+.card-visit-btn.disabled img {
+    opacity: 0.4;
 }
 
 /* ============================================================
@@ -658,636 +716,666 @@ body {
 .empty-state {
     grid-column: 1 / -1;
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 64px 24px;
 }
-
 .empty-state-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 16px;
+    opacity: 0.4;
 }
-
-.empty-state h3 {
+.empty-state-title {
     font-family: 'Poppins', sans-serif;
     font-size: 1.3rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-}
-
-.empty-state p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-.dv-footer {
-    background: var(--earth-dark);
-    padding: 2.5rem 1.5rem;
-    text-align: center;
-}
-
-.footer-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.footer-brand {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1rem;
     font-weight: 700;
-    color: #FFF;
-    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    margin-bottom: 8px;
 }
-
-.footer-brand span {
-    color: var(--earth-tan);
+.empty-state-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
 }
-
-.footer-links-row {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.25rem;
+.empty-state-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 24px;
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--transition);
 }
-
-.footer-link {
-    color: rgba(255, 255, 255, 0.6);
-    text-decoration: none;
-    font-size: 0.85rem;
-    transition: var(--transition);
-}
-
-.footer-link:hover {
-    color: var(--earth-tan);
-}
-
-.footer-copy {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-}
-
-.footer-copy a {
-    color: rgba(255, 255, 255, 0.55);
-    text-decoration: none;
-}
-
-.footer-copy a:hover {
-    color: var(--earth-tan);
+.empty-state-btn:hover {
+    background: var(--accent-hover);
 }
 
 /* ============================================================
    SCROLL TO TOP
    ============================================================ */
-.scroll-top {
+.scroll-top-btn {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
+    bottom: 32px;
+    right: 32px;
     width: 44px;
     height: 44px;
-    border-radius: 50%;
-    background: var(--earth-brown);
-    color: #FFF;
+    background: var(--accent-color);
     border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
+    border-radius: 50%;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 16px rgba(139, 69, 19, 0.3);
-    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition);
     opacity: 0;
-    visibility: hidden;
+    pointer-events: none;
     z-index: 50;
 }
-
-.scroll-top.visible {
+.scroll-top-btn.visible {
     opacity: 1;
-    visibility: visible;
+    pointer-events: auto;
 }
-
-.scroll-top:hover {
-    background: var(--earth-sienna);
+.scroll-top-btn:hover {
+    background: var(--accent-hover);
     transform: translateY(-2px);
+}
+.scroll-top-btn img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+    transform: rotate(180deg);
 }
 
 /* ============================================================
-   RESPONSIVE
+   FOOTER
    ============================================================ */
+.footer {
+    margin-top: auto;
+    background: var(--secondary-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 48px 24px 24px;
+}
+.footer-content {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-bottom: 32px;
+}
+.footer-section h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+.footer-section ul {
+    list-style: none;
+}
+.footer-section li {
+    margin-bottom: 8px;
+}
+.footer-section a {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    transition: color var(--transition);
+}
+.footer-section a:hover {
+    color: var(--accent-color);
+}
+.footer-bottom {
+    border-top: 1px solid var(--border-color);
+    padding-top: 24px;
+    text-align: center;
+}
+.footer-bottom p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+.footer-bottom a {
+    color: var(--accent-color);
+}
+
 @media (max-width: 768px) {
-    .hero {
-        padding: 3rem 1rem 2rem;
-    }
-
-    .hero p {
-        font-size: 0.95rem;
-    }
-
-    .stats-inner {
-        gap: 1rem;
-    }
-
-    .stat-divider {
-        display: none;
-    }
-
-    .stat-item {
-        font-size: 0.8rem;
-    }
-
-    .stat-number {
-        font-size: 1.1rem;
-    }
-
-    .card-grid {
-        grid-template-columns: 1fr;
-        padding: 0 1rem 2rem;
-    }
-
-    .controls-section {
-        padding: 1rem 1rem 0;
-    }
-
-    .results-info {
-        padding: 0 1rem 0.75rem;
-    }
-
-    .category-filters {
-        gap: 0.4rem;
-    }
-
-    .cat-pill {
-        font-size: 0.72rem;
-        padding: 0.35rem 0.7rem;
-    }
-
-    .nav-inner {
-        padding: 0.75rem 1rem;
-    }
-
-    .nav-links {
-        gap: 0.25rem;
-    }
-
-    .nav-link {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.8rem;
-    }
-
-    .dv-footer {
-        padding: 2rem 1rem;
-    }
-
-    .footer-links-row {
-        gap: 1rem;
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
     }
 }
-
 @media (max-width: 480px) {
-    .hero h1 {
-        font-size: 1.75rem;
-    }
-
-    .type-filter {
-        gap: 0.35rem;
-    }
-
-    .type-btn {
-        padding: 0.35rem 0.65rem;
-        font-size: 0.75rem;
-    }
-
-    .nav-brand-text {
-        font-size: 1rem;
+    .footer-grid {
+        grid-template-columns: 1fr;
     }
 }
 
-@media (min-width: 1200px) {
-    .card-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+/* ============================================================
+   LOADING STATE
+   ============================================================ */
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    grid-column: 1 / -1;
 }
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     NAVIGATION
-     ============================================================ -->
-<header class="nav-header">
-    <nav class="nav-inner">
-        <a href="index.html" class="nav-brand">
-            <div class="nav-brand-icon">IM</div>
-            <div class="nav-brand-text">Impact<span>Mojo</span></div>
+<a href="#main-content" class="skip-to-content">Skip to content</a>
+
+<!-- HEADER -->
+<header class="site-header">
+    <nav class="nav-container">
+        <a href="/" class="logo">
+            <img src="/assets/images/ImpactMojo Logo.png" alt="ImpactMojo" class="logo-icon">
+            <div class="logo-text-wrap">
+                <span class="logo-text">ImpactMojo</span>
+                <span class="logo-tagline">Learn for Impact</span>
+            </div>
         </a>
         <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="index.html#courses" class="nav-link">Courses</a>
-            <a href="dataverse.html" class="nav-link nav-link--active">Dataverse</a>
-            <a href="index.html#contact" class="nav-link">Contact</a>
+            <a href="/" class="nav-link">Home</a>
+            <a href="/catalog" class="nav-link">Catalog</a>
+            <a href="/handouts" class="nav-link">Handouts</a>
+            <a href="/bct-repository" class="nav-link">BCT Repository</a>
+            <a href="/dataverse" class="nav-link active">Dataverse</a>
+            <a href="/blog" class="nav-link">Blog</a>
         </div>
+        <div class="nav-actions">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" style="width:18px;height:18px;" class="sargam-icon">
+                <span class="theme-label">Light mode</span>
+            </button>
+        </div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
     </nav>
 </header>
 
-<!-- ============================================================
-     HERO SECTION
-     ============================================================ -->
-<section class="hero">
-    <div class="hero-content">
-        <div class="hero-badge">
-            <span>&#9733;</span> Open Catalog
-        </div>
-        <h1>ImpactMojo <span>Dataverse</span></h1>
-        <p>A curated collection of tools, datasets, APIs, and platforms powering social impact work across South Asia and beyond. Discover resources for development economics, policy research, and evidence-based practice.</p>
-    </div>
-</section>
-
-<!-- ============================================================
-     STATS BAR
-     ============================================================ -->
-<div class="stats-bar">
-    <div class="stats-inner">
-        <div class="stat-item">
-            <span class="stat-number" id="statTotal">--</span>
-            <span class="stat-label">Resources</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-            <span class="stat-number" id="statFree">--</span>
-            <span class="stat-label">Free</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-            <span class="stat-number" id="statCategories">--</span>
-            <span class="stat-label">Categories</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-            <span class="stat-number" id="statTypes">--</span>
-            <span class="stat-label">Types</span>
-        </div>
-    </div>
+<!-- Mobile Nav -->
+<div class="mobile-nav-overlay" id="mobileOverlay"></div>
+<div class="mobile-nav-panel" id="mobilePanel">
+    <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <a href="/" class="nav-link">Home</a>
+    <a href="/catalog" class="nav-link">Catalog</a>
+    <a href="/handouts" class="nav-link">Handouts</a>
+    <a href="/bct-repository" class="nav-link">BCT Repository</a>
+    <a href="/dataverse" class="nav-link active">Dataverse</a>
+    <a href="/blog" class="nav-link">Blog</a>
+    <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme" style="margin-top:16px;">
+        <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" style="width:18px;height:18px;" class="sargam-icon">
+        <span class="theme-label">Light mode</span>
+    </button>
 </div>
 
-<!-- ============================================================
-     CONTROLS
-     ============================================================ -->
-<div class="controls-section">
-    <!-- Search -->
-    <div class="search-container">
-        <span class="search-icon">&#128269;</span>
-        <input type="text" class="search-input" id="searchInput" placeholder="Search tools, datasets, APIs..." autocomplete="off">
-        <button class="search-clear" id="searchClear" title="Clear search">&times;</button>
+<!-- MAIN CONTENT -->
+<main id="main-content">
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1 class="hero-title">ImpactMojo Dataverse</h1>
+        <p class="hero-subtitle">Curated Tools & Data for Social Impact</p>
+        <p class="hero-desc">Discover 215+ datasets, APIs, tools, platforms, and MCP servers for development economics, policy research, and social impact work.</p>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar" aria-label="Statistics">
+        <div class="stat-item">
+            <div class="stat-value" id="statTotal">--</div>
+            <div class="stat-label">Resources</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="statFree">--</div>
+            <div class="stat-label">Free</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="statCategories">--</div>
+            <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="statTypes">--</div>
+            <div class="stat-label">Types</div>
+        </div>
+    </section>
+
+    <!-- Search & Filters -->
+    <section class="controls-section" aria-label="Search and filters">
+        <div class="search-container">
+            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Search.svg" alt="" class="search-icon sargam-icon">
+            <input type="search" id="searchInput" class="search-input" placeholder="Search resources by name, description, tag, or source..." aria-label="Search resources">
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">Type</span>
+            <div class="filter-pills" id="typeFilters" role="group" aria-label="Filter by type"></div>
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">Category</span>
+            <div class="filter-pills" id="categoryFilters" role="group" aria-label="Filter by category"></div>
+        </div>
+
+        <div class="results-info">
+            <span class="results-count" id="resultsCount"></span>
+        </div>
+    </section>
+
+    <!-- Card Grid -->
+    <div class="card-grid" id="cardGrid">
+        <div class="loading-spinner"><div class="spinner"></div></div>
     </div>
 
-    <!-- Type Filter -->
-    <div class="type-filter" id="typeFilter"></div>
+</main>
 
-    <!-- Category Filters -->
-    <div class="category-filters" id="categoryFilters"></div>
-</div>
+<!-- Scroll to top -->
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
+    <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chevron_down.svg" alt="">
+</button>
 
-<!-- ============================================================
-     RESULTS INFO
-     ============================================================ -->
-<div class="results-info">
-    <span class="results-count" id="resultsCount"></span>
-</div>
-
-<!-- ============================================================
-     CARD GRID
-     ============================================================ -->
-<div class="card-grid" id="cardGrid"></div>
-
-<!-- ============================================================
-     SCROLL TO TOP
-     ============================================================ -->
-<button class="scroll-top" id="scrollTop" title="Back to top">&#8593;</button>
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer class="dv-footer">
-    <div class="footer-inner">
-        <div class="footer-brand">Impact<span>Mojo</span> Dataverse</div>
-        <div class="footer-links-row">
-            <a href="index.html" class="footer-link">Home</a>
-            <a href="index.html#courses" class="footer-link">Courses</a>
-            <a href="/about" class="footer-link">About</a>
-            <a href="/community/community" class="footer-link">Community</a>
-            <a href="/privacy-policy" class="footer-link">Privacy</a>
-            <a href="/terms-of-service" class="footer-link">Terms</a>
-            <a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About ImpactMojo</h4>
+                <ul>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/community/community">Community</a></li>
+                    <li><a href="/#support-us">Support Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/terms-of-service">Terms of Service</a></li>
+                    <li><a href="/disclaimer">Disclaimer</a></li>
+                    <li><a href="/grievance">Grievance Redressal</a></li>
+                    <li><a href="/refund-policy">Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Learn</h4>
+                <ul>
+                    <li><a href="/catalog">All Courses</a></li>
+                    <li><a href="/#labs">Labs</a></li>
+                    <li><a href="/#games">Games</a></li>
+                    <li><a href="/premium">Premium</a></li>
+                    <li><a href="/workshops">Workshops</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="/handouts">Handouts</a></li>
+                    <li><a href="/bct-repository">BCT Repository</a></li>
+                    <li><a href="/dataverse">Dataverse</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/podcast">Podcast</a></li>
+                </ul>
+            </div>
         </div>
-        <p class="footer-copy">&copy; 2026 ImpactMojo. All content for educational purposes only. Made with care by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener noreferrer">PinPoint Ventures</a></p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+            <p>Released under MIT License. Supported by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener">PinPoint Ventures</a></p>
+        </div>
     </div>
 </footer>
 
-<!-- ============================================================
-     JAVASCRIPT
-     ============================================================ -->
+<!-- UserWay Accessibility Widget -->
+<script>(function(d){var s = d.createElement("script");s.setAttribute("data-account", "EksmhlPg9k");s.setAttribute("src", "https://cdn.userway.org/widget.js");(d.body || d.head).appendChild(s);})(document)</script>
+
 <script>
+/* ============================================================
+   THEME
+   ============================================================ */
+function getPreferredTheme() {
+    const saved = localStorage.getItem('impactmojo-theme');
+    if (saved) return saved;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+    return 'light';
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('impactmojo-theme', theme);
+    document.querySelectorAll('.theme-label').forEach(function(el) {
+        el.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+    });
+}
+
+function toggleTheme() {
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+}
+
+setTheme(getPreferredTheme());
+
+/* ============================================================
+   MOBILE MENU
+   ============================================================ */
 (function() {
-    'use strict';
+    var toggle = document.getElementById('mobileMenuToggle');
+    var overlay = document.getElementById('mobileOverlay');
+    var panel = document.getElementById('mobilePanel');
+    var closeBtn = document.getElementById('mobileNavClose');
 
-    /* ----------------------------------------------------------
-       STATE
-       ---------------------------------------------------------- */
-    let allData = null;       // full JSON response
-    let items = [];           // items array
-    let categories = [];      // categories array
-    let activeCategory = null;
-    let activeType = null;
-    let searchQuery = '';
+    function openMenu() {
+        overlay.classList.add('active');
+        panel.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+        overlay.classList.remove('active');
+        panel.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', openMenu);
+    overlay.addEventListener('click', closeMenu);
+    closeBtn.addEventListener('click', closeMenu);
+})();
 
-    const TYPE_EMOJIS = {
-        'Dataset':    '&#128202;',
-        'Tool':       '&#128295;',
-        'Platform':   '&#127760;',
-        'API':        '&#128268;',
-        'MCP Server': '&#129302;'
+/* ============================================================
+   SCROLL TO TOP
+   ============================================================ */
+(function() {
+    var btn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 400) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    });
+    btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+})();
+
+/* ============================================================
+   DATAVERSE APPLICATION
+   ============================================================ */
+(function() {
+    var categories = [];
+    var items = [];
+    var activeType = 'all';
+    var activeCategory = 'all';
+    var searchQuery = '';
+
+    /* Type config: maps type string to icon and display label */
+    var typeConfig = {
+        'dataset':    { icon: 'si_Bar_chart',            label: 'Dataset' },
+        'tool':       { icon: 'si_Settings',             label: 'Tool' },
+        'platform':   { icon: 'si_Globe_detailed',       label: 'Platform' },
+        'api':        { icon: 'si_Lightning',            label: 'API' },
+        'mcp-server': { icon: 'si_Crosshair_detailed',   label: 'MCP Server' },
+        'resource':   { icon: 'si_Article',              label: 'Resource' },
+        'skill':      { icon: 'si_Lightning',            label: 'Skill' }
     };
 
-    const TYPE_COLORS = {
-        'Dataset':    { bg: 'rgba(46,139,87,0.1)', text: '#2E8B57' },
-        'Tool':       { bg: 'rgba(70,130,180,0.1)', text: '#4682B4' },
-        'Platform':   { bg: 'rgba(210,105,30,0.1)', text: '#D2691E' },
-        'API':        { bg: 'rgba(139,69,19,0.1)', text: '#8B4513' },
-        'MCP Server': { bg: 'rgba(106,90,205,0.1)', text: '#6A5ACD' }
+    var statusConfig = {
+        'live':         { label: 'Active',       cssClass: 'badge-status-live' },
+        'beta':         { label: 'Beta',         cssClass: 'badge-status-beta' },
+        'coming-soon':  { label: 'Coming Soon',  cssClass: 'badge-status-coming-soon' }
     };
 
-    /* ----------------------------------------------------------
-       DOM REFS
-       ---------------------------------------------------------- */
-    const searchInput     = document.getElementById('searchInput');
-    const searchClear     = document.getElementById('searchClear');
-    const typeFilterEl    = document.getElementById('typeFilter');
-    const categoryFilters = document.getElementById('categoryFilters');
-    const cardGrid        = document.getElementById('cardGrid');
-    const resultsCount    = document.getElementById('resultsCount');
-    const scrollTopBtn    = document.getElementById('scrollTop');
+    function sargamUrl(iconId) {
+        return 'https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/' + iconId + '.svg';
+    }
 
-    /* ----------------------------------------------------------
-       FETCH DATA
-       ---------------------------------------------------------- */
+    function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    /* ---- Load data ---- */
     fetch('data/dataverse.json')
         .then(function(r) { return r.json(); })
         .then(function(data) {
-            allData = data;
-            items = data.items || [];
             categories = data.categories || [];
+            items = [];
+            categories.forEach(function(cat) {
+                (cat.items || []).forEach(function(item) {
+                    item._categoryId = cat.id;
+                    item._categoryName = cat.name;
+                    item._categoryIcon = cat.icon;
+                    item._categoryColor = cat.color;
+                    items.push(item);
+                });
+            });
             init();
         })
         .catch(function(err) {
-            cardGrid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#9888;</div><h3>Failed to load data</h3><p>' + err.message + '</p></div>';
+            console.error('Failed to load dataverse.json:', err);
+            document.getElementById('cardGrid').innerHTML =
+                '<div class="empty-state">' +
+                '<div class="empty-state-title">Failed to load data</div>' +
+                '<div class="empty-state-desc">Please check that data/dataverse.json exists and reload the page.</div>' +
+                '</div>';
         });
 
-    /* ----------------------------------------------------------
-       INIT
-       ---------------------------------------------------------- */
     function init() {
-        populateStats();
-        renderTypeFilter();
-        renderCategoryPills();
-        renderCards(items);
-        bindEvents();
+        updateStats();
+        buildTypeFilters();
+        buildCategoryFilters();
+        bindSearch();
+        renderCards();
     }
 
-    /* ----------------------------------------------------------
-       STATS
-       ---------------------------------------------------------- */
-    function populateStats() {
+    /* ---- Stats ---- */
+    function updateStats() {
         document.getElementById('statTotal').textContent = items.length;
-        document.getElementById('statFree').textContent = items.filter(function(i) { return i.free; }).length;
-        document.getElementById('statCategories').textContent = categories.length;
-        var types = new Set(items.map(function(i) { return i.type; }));
-        document.getElementById('statTypes').textContent = types.size;
-    }
-
-    /* ----------------------------------------------------------
-       TYPE FILTER
-       ---------------------------------------------------------- */
-    function renderTypeFilter() {
-        var types = [];
-        var seen = {};
+        var freeCount = 0;
+        var typeSet = {};
         items.forEach(function(item) {
-            if (!seen[item.type]) {
-                seen[item.type] = true;
-                types.push(item.type);
-            }
+            if (item.free) freeCount++;
+            typeSet[item.type] = true;
         });
-        types.sort();
-
-        var html = '<span class="type-filter-label">Type:</span>';
-        html += '<button class="type-btn active" data-type="all"><span class="type-emoji">&#9776;</span> All</button>';
-        types.forEach(function(t) {
-            var emoji = TYPE_EMOJIS[t] || '&#128196;';
-            html += '<button class="type-btn" data-type="' + t + '"><span class="type-emoji">' + emoji + '</span> ' + t + '</button>';
-        });
-        typeFilterEl.innerHTML = html;
+        document.getElementById('statFree').textContent = freeCount;
+        document.getElementById('statCategories').textContent = categories.length;
+        document.getElementById('statTypes').textContent = Object.keys(typeSet).length;
     }
 
-    /* ----------------------------------------------------------
-       CATEGORY PILLS
-       ---------------------------------------------------------- */
-    function renderCategoryPills() {
-        var html = '<button class="cat-pill active" data-cat="all" style="background:var(--earth-brown);color:#FFF;">All Categories</button>';
+    /* ---- Type Filters ---- */
+    function buildTypeFilters() {
+        var container = document.getElementById('typeFilters');
+        var typeCounts = {};
+        items.forEach(function(item) {
+            typeCounts[item.type] = (typeCounts[item.type] || 0) + 1;
+        });
+
+        var html = '<button class="filter-pill active" data-type="all">All</button>';
+        var typeOrder = ['dataset', 'tool', 'platform', 'api', 'mcp-server', 'resource', 'skill'];
+        typeOrder.forEach(function(t) {
+            if (!typeCounts[t]) return;
+            var cfg = typeConfig[t] || { icon: 'si_File_download', label: t };
+            html += '<button class="filter-pill" data-type="' + t + '">' +
+                '<img src="' + sargamUrl(cfg.icon) + '" alt="" class="pill-icon sargam-icon">' +
+                cfg.label + ' (' + typeCounts[t] + ')' +
+                '</button>';
+        });
+        container.innerHTML = html;
+
+        container.addEventListener('click', function(e) {
+            var pill = e.target.closest('.filter-pill');
+            if (!pill) return;
+            container.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+            pill.classList.add('active');
+            activeType = pill.getAttribute('data-type');
+            renderCards();
+        });
+    }
+
+    /* ---- Category Filters ---- */
+    function buildCategoryFilters() {
+        var container = document.getElementById('categoryFilters');
+        var html = '<button class="filter-pill active" data-cat="all">All Categories</button>';
         categories.forEach(function(cat) {
-            html += '<button class="cat-pill" data-cat="' + cat.id + '" data-color="' + cat.color + '">' + cat.icon + ' ' + cat.name + '</button>';
+            var count = (cat.items || []).length;
+            html += '<button class="filter-pill" data-cat="' + cat.id + '">' +
+                '<span class="cat-dot" style="background:' + cat.color + ';"></span>' +
+                escapeHtml(cat.name) + ' (' + count + ')' +
+                '</button>';
         });
-        categoryFilters.innerHTML = html;
+        container.innerHTML = html;
+
+        container.addEventListener('click', function(e) {
+            var pill = e.target.closest('.filter-pill');
+            if (!pill) return;
+            container.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+            pill.classList.add('active');
+            activeCategory = pill.getAttribute('data-cat');
+            renderCards();
+        });
     }
 
-    /* ----------------------------------------------------------
-       FILTER LOGIC
-       ---------------------------------------------------------- */
+    /* ---- Search ---- */
+    function bindSearch() {
+        var input = document.getElementById('searchInput');
+        var debounceTimer;
+        input.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function() {
+                searchQuery = input.value.trim().toLowerCase();
+                renderCards();
+            }, 200);
+        });
+    }
+
+    /* ---- Filtering ---- */
     function getFilteredItems() {
         return items.filter(function(item) {
-            // Category filter
-            if (activeCategory && activeCategory !== 'all') {
-                if (item.categories.indexOf(activeCategory) === -1) return false;
-            }
-            // Type filter
-            if (activeType && activeType !== 'all') {
-                if (item.type !== activeType) return false;
-            }
-            // Search
+            if (activeType !== 'all' && item.type !== activeType) return false;
+            if (activeCategory !== 'all' && item._categoryId !== activeCategory) return false;
             if (searchQuery) {
-                var q = searchQuery.toLowerCase();
-                var haystack = (item.name + ' ' + item.description + ' ' + item.tags.join(' ')).toLowerCase();
-                if (haystack.indexOf(q) === -1) return false;
+                var haystack = (
+                    item.name + ' ' +
+                    item.description + ' ' +
+                    (item.source || '') + ' ' +
+                    (item.tags || []).join(' ')
+                ).toLowerCase();
+                if (haystack.indexOf(searchQuery) === -1) return false;
             }
             return true;
         });
     }
 
-    function applyFilters() {
+    /* ---- Render Cards ---- */
+    function renderCards() {
         var filtered = getFilteredItems();
-        renderCards(filtered);
-        updateResultsCount(filtered.length);
-    }
+        var grid = document.getElementById('cardGrid');
+        var countEl = document.getElementById('resultsCount');
+        countEl.innerHTML = 'Showing <strong>' + filtered.length + '</strong> of <strong>' + items.length + '</strong> resources';
 
-    function updateResultsCount(count) {
-        var totalLabel = items.length;
-        if (count === totalLabel && !searchQuery && (!activeCategory || activeCategory === 'all') && (!activeType || activeType === 'all')) {
-            resultsCount.innerHTML = 'Showing all <strong>' + totalLabel + '</strong> resources';
-        } else {
-            resultsCount.innerHTML = 'Showing <strong>' + count + '</strong> of ' + totalLabel + ' resources';
-        }
-    }
-
-    /* ----------------------------------------------------------
-       RENDER CARDS
-       ---------------------------------------------------------- */
-    function renderCards(list) {
-        if (list.length === 0) {
-            cardGrid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128270;</div><h3>No resources found</h3><p>Try adjusting your search or filters.</p></div>';
+        if (filtered.length === 0) {
+            grid.innerHTML =
+                '<div class="empty-state">' +
+                '<img src="' + sargamUrl('si_Search') + '" alt="" class="empty-state-icon sargam-icon">' +
+                '<div class="empty-state-title">No resources found</div>' +
+                '<div class="empty-state-desc">Try adjusting your search or filter criteria.</div>' +
+                '<button class="empty-state-btn" onclick="document.getElementById(\'searchInput\').value=\'\';document.getElementById(\'searchInput\').dispatchEvent(new Event(\'input\'));">Clear Search</button>' +
+                '</div>';
             return;
         }
 
         var html = '';
-        list.forEach(function(item, idx) {
-            var typeColor = TYPE_COLORS[item.type] || { bg: 'rgba(0,0,0,0.06)', text: '#666' };
-            var emoji = TYPE_EMOJIS[item.type] || '&#128196;';
-            var delay = Math.min(idx * 0.04, 0.8);
+        filtered.forEach(function(item) {
+            var tc = typeConfig[item.type] || { icon: 'si_File_download', label: item.type };
+            var sc = statusConfig[item.status] || statusConfig['live'];
+            var catColor = item._categoryColor || '#64748B';
+            var isComingSoon = item.status === 'coming-soon';
 
-            // Status badge
-            var statusClass = 'badge-status--' + item.status;
-            var statusText = item.status === 'coming-soon' ? 'Coming Soon' : item.status.charAt(0).toUpperCase() + item.status.slice(1);
+            html += '<article class="card" style="--cat-color:' + catColor + ';">';
+            html += '<div class="card-body">';
 
-            // Category dots
-            var catDots = '';
-            var catMap = {};
-            categories.forEach(function(c) { catMap[c.id] = c.color; });
-            item.categories.forEach(function(catId) {
-                var color = catMap[catId] || '#999';
-                catDots += '<span class="card-cat-dot" style="background:' + color + ';" title="' + catId + '"></span>';
-            });
+            /* Header: icon + title */
+            html += '<div class="card-header">';
+            html += '<div class="card-type-icon" style="background:' + catColor + ';">';
+            html += '<img src="' + sargamUrl(tc.icon) + '" alt="">';
+            html += '</div>';
+            html += '<div class="card-title-block">';
+            html += '<div class="card-title">' + escapeHtml(item.name) + '</div>';
+            html += '<div class="card-type-label">' + escapeHtml(tc.label) + '</div>';
+            html += '</div>';
+            html += '</div>';
 
-            // Tags
-            var tags = '';
-            item.tags.forEach(function(tag) {
-                tags += '<span class="card-tag">' + tag + '</span>';
-            });
+            /* Badges */
+            html += '<div class="card-badges">';
+            if (item.source) {
+                html += '<span class="badge badge-source">' + escapeHtml(item.source) + '</span>';
+            }
+            if (item.free) {
+                html += '<span class="badge badge-free">Free</span>';
+            }
+            html += '<span class="badge ' + sc.cssClass + '">' + sc.label + '</span>';
+            html += '</div>';
 
-            // Link
-            var linkClass = (item.url === '#' || item.status === 'coming-soon') ? 'card-link card-link--disabled' : 'card-link';
-            var linkTarget = item.url.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
+            /* Description */
+            html += '<div class="card-description">' + escapeHtml(item.description) + '</div>';
 
-            // Find the first matching category color for the top bar
-            var barColor = typeColor.text;
-            if (item.categories.length > 0 && catMap[item.categories[0]]) {
-                barColor = catMap[item.categories[0]];
+            /* Tags */
+            if (item.tags && item.tags.length > 0) {
+                html += '<div class="card-tags">';
+                item.tags.forEach(function(tag) {
+                    html += '<span class="tag">' + escapeHtml(tag) + '</span>';
+                });
+                html += '</div>';
             }
 
-            html += '<article class="dv-card" style="animation-delay:' + delay + 's;--bar-color:' + barColor + ';">';
-            html += '<style>.dv-card[style*="--bar-color:' + barColor + '"]::before{background:' + barColor + ';}</style>';
+            html += '</div>'; /* end card-body */
 
-            // Header
-            html += '<div class="card-header">';
-            html += '<div class="card-type-icon" style="background:' + typeColor.bg + ';">' + emoji + '</div>';
-            html += '<div class="card-header-text">';
-            html += '<div class="card-name">' + item.name + '</div>';
-            html += '<div class="card-type-label" style="color:' + typeColor.text + ';">' + item.type + '</div>';
-            html += '</div>';
-            html += '<div class="card-badges">';
-            if (item.featured) html += '<span class="badge-featured" title="Featured"></span>';
-            if (item.free) html += '<span class="badge-free">Free</span>';
-            html += '<span class="badge-status ' + statusClass + '">' + statusText + '</span>';
-            html += '</div>';
-            html += '</div>';
-
-            // Description
-            html += '<p class="card-desc">' + item.description + '</p>';
-
-            // Tags
-            html += '<div class="card-tags">' + tags + '</div>';
-
-            // Footer
+            /* Footer */
             html += '<div class="card-footer">';
-            html += '<div class="card-cats">' + catDots + '</div>';
-            html += '<a href="' + item.url + '" class="' + linkClass + '"' + linkTarget + '>Explore &#8594;</a>';
+            html += '<div class="card-category">';
+            html += '<span class="cat-dot" style="background:' + catColor + ';"></span>';
+            html += escapeHtml(item._categoryName);
             html += '</div>';
 
+            if (isComingSoon) {
+                html += '<span class="card-visit-btn disabled">Coming Soon</span>';
+            } else if (item.url) {
+                html += '<a href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener noreferrer" class="card-visit-btn">';
+                html += 'Visit';
+                html += '<img src="' + sargamUrl('si_Arrow_right') + '" alt="">';
+                html += '</a>';
+            }
+
+            html += '</div>'; /* end card-footer */
             html += '</article>';
         });
 
-        cardGrid.innerHTML = html;
-    }
-
-    /* ----------------------------------------------------------
-       EVENT BINDINGS
-       ---------------------------------------------------------- */
-    function bindEvents() {
-        // Search
-        searchInput.addEventListener('input', function() {
-            searchQuery = this.value.trim();
-            searchClear.classList.toggle('visible', searchQuery.length > 0);
-            applyFilters();
-        });
-
-        searchClear.addEventListener('click', function() {
-            searchInput.value = '';
-            searchQuery = '';
-            searchClear.classList.remove('visible');
-            applyFilters();
-            searchInput.focus();
-        });
-
-        // Type filter
-        typeFilterEl.addEventListener('click', function(e) {
-            var btn = e.target.closest('.type-btn');
-            if (!btn) return;
-            typeFilterEl.querySelectorAll('.type-btn').forEach(function(b) { b.classList.remove('active'); });
-            btn.classList.add('active');
-            activeType = btn.dataset.type;
-            applyFilters();
-        });
-
-        // Category filter
-        categoryFilters.addEventListener('click', function(e) {
-            var pill = e.target.closest('.cat-pill');
-            if (!pill) return;
-
-            // Deactivate all
-            categoryFilters.querySelectorAll('.cat-pill').forEach(function(p) {
-                p.classList.remove('active');
-                p.style.background = '';
-                p.style.color = '';
-            });
-
-            pill.classList.add('active');
-            var catId = pill.dataset.cat;
-
-            if (catId === 'all') {
-                pill.style.background = 'var(--earth-brown)';
-                pill.style.color = '#FFF';
-            } else {
-                pill.style.background = pill.dataset.color;
-                pill.style.color = '#FFF';
-            }
-
-            activeCategory = catId;
-            applyFilters();
-        });
-
-        // Scroll to top
-        window.addEventListener('scroll', function() {
-            scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-        });
-
-        scrollTopBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Initial count
-        updateResultsCount(items.length);
+        grid.innerHTML = html;
     }
 
 })();
 </script>
+
 </body>
 </html>
