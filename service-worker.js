@@ -1,6 +1,7 @@
 // Service Worker for ImpactMojo PWA
-// v3 - Network-first for HTML, stale-while-revalidate for assets
-const CACHE_NAME = 'impactmojo-v3';
+// v4 - Offline course support, background sync, offline indicator
+const CACHE_NAME = 'impactmojo-v4';
+const COURSE_CACHE_PREFIX = 'impactmojo-course-';
 const STATIC_ASSETS = [
   '/manifest.json',
   '/assets/images/favicon.ico',
@@ -9,6 +10,27 @@ const STATIC_ASSETS = [
   '/assets/images/apple-touch-icon.png',
   '/assets/images/varna-photo.jpg'
 ];
+
+// Flagship course definitions
+const FLAGSHIP_COURSES = [
+  'gandhi', 'devecon', 'devai', 'dataviz',
+  'mel', 'poa', 'media', 'law', 'SEL'
+];
+
+// Get all URLs that need caching for a given course
+function getCourseURLs(courseId) {
+  const base = `/courses/${courseId}/`;
+  return [
+    base,
+    `${base}index.html`,
+    `${base}lexicon.html`
+  ];
+}
+
+// Get the cache name for a specific course
+function getCourseCacheName(courseId) {
+  return `${COURSE_CACHE_PREFIX}${courseId}`;
+}
 
 // Install - cache only static assets (fonts, icons)
 self.addEventListener('install', event => {
@@ -20,12 +42,14 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate - clean up old caches immediately
+// Activate - clean up old caches (preserve course caches)
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(names =>
       Promise.all(
-        names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n))
+        names
+          .filter(n => n !== CACHE_NAME && !n.startsWith(COURSE_CACHE_PREFIX))
+          .map(n => caches.delete(n))
       )
     ).then(() => self.clients.claim()) // Take control of all pages
   );
@@ -47,7 +71,7 @@ self.addEventListener('fetch', event => {
                  url.pathname.endsWith('.html') || url.pathname === '/';
 
   if (isHTML) {
-    // Network-first for HTML — always get fresh content
+    // Network-first for HTML — always get fresh content, fall back to course cache
     event.respondWith(
       fetch(event.request)
         .then(response => {
@@ -57,7 +81,20 @@ self.addEventListener('fetch', event => {
           }
           return response;
         })
-        .catch(() => caches.match(event.request) || caches.match('/index.html'))
+        .catch(() =>
+          caches.match(event.request)
+            .then(cached => {
+              if (cached) return cached;
+              // Check course caches as fallback
+              return caches.keys().then(names => {
+                const courseCaches = names.filter(n => n.startsWith(COURSE_CACHE_PREFIX));
+                return courseCaches.reduce((promise, cacheName) =>
+                  promise.then(result => result || caches.open(cacheName).then(c => c.match(event.request))),
+                  Promise.resolve(null)
+                );
+              }).then(result => result || caches.match('/index.html'));
+            })
+        )
     );
   } else {
     // Stale-while-revalidate for assets (JS, CSS, images, fonts)
