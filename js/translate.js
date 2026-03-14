@@ -88,19 +88,89 @@
             '.imx-lang-english { color: var(--text-muted, #64748B); font-size: 0.75rem; }',
             '',
             '/* Hide Google Translate UI — off-screen, NOT display:none */',
-            '#google_translate_element { position: absolute; top: -9999px; left: -9999px; width: 0; height: 0; overflow: hidden; }',
+            '#google_translate_element { position: absolute; top: -9999px; left: -9999px; width: 1px; height: 1px; overflow: hidden; }',
             '.goog-te-banner-frame { display: none !important; }',
             '#goog-gt-tt, .goog-te-balloon-frame { display: none !important; }',
             '.goog-text-highlight { background: none !important; box-shadow: none !important; }',
             '',
-            '/* Google Translate adds a top bar that pushes body down */',
+            '/* Google Translate top bar fix */',
             'body { top: 0 !important; position: static !important; }',
             '.skiptranslate { display: none !important; height: 0 !important; overflow: hidden !important; }',
             '.skiptranslate iframe { display: none !important; }',
             '',
-            '@media (max-width: 768px) { .imx-lang-label { display: none; } .imx-lang-btn { padding: 0.4rem; } .imx-lang-dropdown { right: -1rem; } }'
+            '/* ============================================ */',
+            '/* Indic script font adjustments               */',
+            '/* Hindi, Tamil, Bengali, Marathi need smaller  */',
+            '/* fonts and more line-height to avoid cutoff   */',
+            '/* ============================================ */',
+            '',
+            '/* When translated to any Indic language */',
+            '.imx-translated-indic { font-size: 0.92em; line-height: 1.8; }',
+            '.imx-translated-indic h1 { font-size: 1.8rem !important; line-height: 1.4 !important; }',
+            '.imx-translated-indic h2 { font-size: 1.5rem !important; line-height: 1.4 !important; }',
+            '.imx-translated-indic h3 { font-size: 1.2rem !important; line-height: 1.4 !important; }',
+            '.imx-translated-indic p, .imx-translated-indic li, .imx-translated-indic span, .imx-translated-indic a { line-height: 1.8 !important; }',
+            '',
+            '/* Card titles and descriptions */',
+            '.imx-translated-indic .imx-card-title { font-size: 1.05rem !important; line-height: 1.5 !important; }',
+            '.imx-translated-indic .imx-card-desc { font-size: 0.82rem !important; line-height: 1.7 !important; }',
+            '.imx-translated-indic .imx-card-subtitle { font-size: 0.8rem !important; line-height: 1.5 !important; }',
+            '.imx-translated-indic .imx-resource-title { font-size: 0.95rem !important; line-height: 1.5 !important; }',
+            '.imx-translated-indic .imx-resource-desc { font-size: 0.8rem !important; line-height: 1.7 !important; }',
+            '',
+            '/* Section headings */',
+            '.imx-translated-indic .section-title { font-size: 1.6rem !important; line-height: 1.4 !important; }',
+            '.imx-translated-indic .section-subtitle { font-size: 0.95rem !important; line-height: 1.6 !important; }',
+            '',
+            '/* Hero text */',
+            '.imx-translated-indic .hero-title { font-size: 2rem !important; line-height: 1.3 !important; }',
+            '.imx-translated-indic .hero-subtitle { font-size: 1rem !important; line-height: 1.6 !important; }',
+            '.imx-translated-indic .page-hero h1 { font-size: 1.8rem !important; line-height: 1.3 !important; }',
+            '.imx-translated-indic .page-hero p { font-size: 0.95rem !important; line-height: 1.6 !important; }',
+            '',
+            '/* Navigation */',
+            '.imx-translated-indic .nav-links a { font-size: 0.82rem !important; }',
+            '.imx-translated-indic .dropdown-menu a { font-size: 0.82rem !important; }',
+            '',
+            '/* Buttons and tags */',
+            '.imx-translated-indic .imx-tag-green, .imx-translated-indic .imx-tag-blue { font-size: 0.7rem !important; }',
+            '.imx-translated-indic .imx-card-modules { font-size: 0.7rem !important; }',
+            '',
+            '/* Footer */',
+            '.imx-translated-indic .footer-section a { font-size: 0.8rem !important; line-height: 1.7 !important; }',
+            '',
+            '/* Course pages */',
+            '.imx-translated-indic .module-title { font-size: 1.1rem !important; line-height: 1.5 !important; }',
+            '.imx-translated-indic .lesson-content p { font-size: 0.9rem !important; line-height: 1.8 !important; }',
+            '',
+            '/* Tamil-specific: Tamil script is wider */',
+            '.imx-translated-ta h1 { font-size: 1.6rem !important; }',
+            '.imx-translated-ta h2 { font-size: 1.3rem !important; }',
+            '.imx-translated-ta .imx-card-title { font-size: 0.95rem !important; }',
+            '',
+            '@media (max-width: 768px) {',
+            '  .imx-lang-label { display: none; }',
+            '  .imx-lang-btn { padding: 0.4rem; }',
+            '  .imx-lang-dropdown { right: -1rem; }',
+            '  .imx-translated-indic h1 { font-size: 1.4rem !important; }',
+            '  .imx-translated-indic h2 { font-size: 1.2rem !important; }',
+            '  .imx-translated-indic h3 { font-size: 1rem !important; }',
+            '}'
         ].join('\n');
         document.head.appendChild(css);
+    }
+
+    // ===== INDIC FONT CLASS MANAGEMENT =====
+
+    function applyIndicClass(langKey) {
+        var body = document.body;
+        // Remove all translated classes
+        body.classList.remove('imx-translated-indic', 'imx-translated-hi', 'imx-translated-ta', 'imx-translated-bn', 'imx-translated-mr');
+
+        if (langKey && langKey !== 'en') {
+            body.classList.add('imx-translated-indic');
+            body.classList.add('imx-translated-' + langKey);
+        }
     }
 
     // ===== GOOGLE TRANSLATE ENGINE =====
@@ -145,7 +215,8 @@
             } else if (currentLang !== 'en') {
                 doTranslate(LANGUAGES[currentLang].gtCode);
             }
-        } else if (attempts < 20) {
+        } else if (attempts < 30) {
+            // Poll up to ~9 seconds
             setTimeout(function() { waitForCombo(attempts + 1); }, 300);
         }
     }
@@ -155,29 +226,44 @@
         if (!combo) return;
 
         if (langCode === 'en') {
-            // To revert, select empty or trigger the "Show original" function
+            // Revert to English
             combo.value = '';
             combo.dispatchEvent(new Event('change'));
-            // Also try the Google Translate restore function
-            if (window.google && google.translate && google.translate.TranslateElement) {
-                // Reset by selecting the page language
-                setTimeout(function() {
+
+            // Clear cookies to fully reset
+            setTimeout(function() {
+                document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+                document.cookie = 'googtrans=; path=/; domain=' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+                document.cookie = 'googtrans=; path=/; domain=.' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+
+                // Try clicking "Show original" in banner frame
+                try {
                     var frame = document.querySelector('.goog-te-banner-frame');
-                    if (frame) {
-                        try {
-                            var btn = frame.contentDocument.querySelector('.goog-close-link');
-                            if (btn) btn.click();
-                        } catch(e) {}
+                    if (frame && frame.contentDocument) {
+                        var btn = frame.contentDocument.querySelector('.goog-close-link');
+                        if (btn) btn.click();
                     }
-                    // Fallback: set cookie and reload
-                    document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-                    document.cookie = 'googtrans=; path=/; domain=' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-                    document.cookie = 'googtrans=; path=/; domain=.' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-                }, 100);
-            }
+                } catch(e) {}
+            }, 200);
+
+            applyIndicClass('en');
         } else {
+            // Set cookie first for reliability
+            document.cookie = 'googtrans=/en/' + langCode + '; path=/';
+            document.cookie = 'googtrans=/en/' + langCode + '; path=/; domain=' + location.hostname;
+
             combo.value = langCode;
             combo.dispatchEvent(new Event('change'));
+
+            // Google Translate sometimes misses deeply nested elements
+            // Re-trigger after a short delay to catch stragglers
+            setTimeout(function() {
+                combo.value = langCode;
+                combo.dispatchEvent(new Event('change'));
+            }, 1500);
+
+            // Apply Indic font adjustments
+            applyIndicClass(langCode);
         }
     }
 
@@ -201,14 +287,19 @@
         if (gtReady) {
             doTranslate(gtLangCode);
         } else {
-            // Widget still loading, queue it
             pendingLang = gtLangCode;
+            applyIndicClass(langKey);
         }
     }
 
     // ===== INIT =====
     function init() {
         injectStyles();
+
+        // If returning with a non-English language, apply Indic font classes immediately
+        if (currentLang !== 'en') {
+            applyIndicClass(currentLang);
+        }
 
         // Insert language selector into the nav
         var selector = createSelector();
