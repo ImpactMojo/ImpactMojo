@@ -1291,6 +1291,12 @@ function renderTechniques() {
     var container = document.getElementById('techniquesContainer');
     var emptyState = document.getElementById('emptyState');
     var resultsInfo = document.getElementById('resultsInfo');
+
+    if (currentView === 'collection') {
+        renderCollectionView(container, emptyState, resultsInfo);
+        return;
+    }
+
     var filtered = getFilteredCategories();
 
     flatTechniques = [];
@@ -1317,9 +1323,52 @@ function renderTechniques() {
         html += '<div class="cat-section-count">' + cat.techniques.length + ' technique' + (cat.techniques.length !== 1 ? 's' : '') + '</div>';
         html += '</div>';
         html += '<div class="techniques-grid">';
-        cat.techniques.forEach(function(t) { html += renderCard(t, cat.color); });
+        cat.techniques.forEach(function(t) { html += renderCard(t, cat.color, false); });
         html += '</div></section>';
     });
+    container.innerHTML = html;
+}
+
+function renderCollectionView(container, emptyState, resultsInfo) {
+    if (bctBookmarks.length === 0) {
+        resultsInfo.innerHTML = '';
+        emptyState.style.display = 'none';
+        container.innerHTML = '<div class="collection-empty">' +
+            '<svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>' +
+            '<p>No bookmarked techniques yet</p>' +
+            '<small>Click the bookmark icon on any technique card to add it to your collection.</small></div>';
+        flatTechniques = [];
+        return;
+    }
+
+    var searchTerm = (document.getElementById('searchBox').value || '').trim().toLowerCase();
+    var bookmarkedTechniques = [];
+    bctBookmarks.forEach(function(id) {
+        var t = findTechniqueById(id);
+        if (t) {
+            if (searchTerm) {
+                var haystack = [t.name, t.definition, t.id].concat(t.sectors || []).join(' ').toLowerCase();
+                if (haystack.indexOf(searchTerm) === -1) return;
+            }
+            bookmarkedTechniques.push(t);
+        }
+    });
+
+    flatTechniques = bookmarkedTechniques;
+    resultsInfo.innerHTML = 'Showing <strong>' + bookmarkedTechniques.length + '</strong> bookmarked technique' + (bookmarkedTechniques.length !== 1 ? 's' : '');
+
+    if (bookmarkedTechniques.length === 0) {
+        emptyState.style.display = 'block';
+        container.innerHTML = '';
+        return;
+    }
+    emptyState.style.display = 'none';
+
+    var html = '<div class="techniques-grid">';
+    bookmarkedTechniques.forEach(function(t) {
+        html += renderCard(t, t._categoryColor || '#0EA5E9', true);
+    });
+    html += '</div>';
     container.innerHTML = html;
 }
 
@@ -1819,6 +1868,24 @@ document.getElementById('categoryFilter').addEventListener('change', function() 
 });
 document.getElementById('sectorFilter').addEventListener('change', renderTechniques);
 document.getElementById('evidenceFilter').addEventListener('change', renderTechniques);
+
+/* View tab clicks */
+document.getElementById('viewTabs').addEventListener('click', function(e) {
+    var tab = e.target.closest('.view-tab');
+    if (!tab) return;
+    switchView(tab.dataset.view);
+});
+
+/* Init compare bar & collection count on load */
+updateCompareBar();
+updateCollectionCount();
+
+/* Close compare modal on Escape */
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('compareModalOverlay').classList.contains('active')) {
+        closeCompareModal();
+    }
+});
 
 function handleHash() {
     var hash = window.location.hash.replace('#', '');
