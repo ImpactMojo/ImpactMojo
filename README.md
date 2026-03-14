@@ -35,6 +35,8 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **Dev Case Studies** | 200 evidence-based case studies from 117 countries |
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
+| **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, and evidence ratings |
+| **Dataverse** | 215 curated tools, datasets, APIs, and platforms for social impact and policy research |
 | **400+ Handouts** | Downloadable resources across 6 learning tracks |
 | **Learning Loops Blog** | Articles, tutorials, and case studies on development practice |
 | **Between the Logframes** | Development podcast — honest conversations on MEAL and impact work |
@@ -172,6 +174,8 @@ Economics simulations and behavioral experiments:
 - **Dev Case Studies Library** — 200 evidence-based case studies from 117 countries
 - **DevDiscourses** — 500+ curated open-access research papers, books, and grey literature
 - **PolicyDhara** — Curated Indian public policy documents, government schemes, and legislative frameworks
+- **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings
+- **Dataverse** — 215 curated tools, datasets, APIs, and platforms for social impact research
 - **400+ Handouts** — Downloadable HTML resources across 6 learning tracks
 - **Learning Loops Blog** — Articles, tutorials, case studies, platform updates
 - **Between the Logframes Podcast** — Development conversations on MEAL, ToC, and impact work
@@ -280,6 +284,8 @@ ImpactMojo/
 ├── coaching.html           # 1-on-1 coaching services
 ├── dojos.html              # Practice-based skill sessions
 ├── catalog.html            # Complete learning catalog
+├── bct-repository.html     # BCT Repository (203 techniques)
+├── dataverse.html          # Dataverse (215 tools & datasets)
 ├── blog.html               # Learning Loops blog
 ├── podcast.html            # Between the Logframes podcast
 ├── handouts.html           # 400+ downloadable resources
@@ -298,6 +304,10 @@ ImpactMojo/
 │   ├── netlify.toml
 │   └── netlify/edge-functions/
 │       └── auth-gate.ts
+│
+├── data/
+│   ├── bct-repository.json # BCT technique data (203 entries)
+│   └── dataverse.json      # Dataverse catalog data (215 entries)
 │
 ├── assets/
 │   ├── images/             # Logos, icons, illustrations
@@ -475,7 +485,7 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 9.1.0
+**Version:** 9.2.0
 **Last Updated:** March 2026
 **License:** CC-BY-4.0
 **Hosting:** Netlify
