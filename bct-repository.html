@@ -1504,6 +1504,303 @@ function exportCSV() {
 }
 
 /* ============================================================
+   BOOKMARK FUNCTIONS
+   ============================================================ */
+function toggleBCTBookmark(id, btnEl) {
+    var idx = bctBookmarks.indexOf(id);
+    if (idx === -1) {
+        bctBookmarks.push(id);
+    } else {
+        bctBookmarks.splice(idx, 1);
+    }
+    saveBCTBookmarks();
+    if (btnEl) {
+        var isNowBookmarked = bctBookmarks.indexOf(id) !== -1;
+        btnEl.classList.toggle('active', isNowBookmarked);
+        btnEl.setAttribute('aria-label', isNowBookmarked ? 'Remove bookmark' : 'Bookmark');
+        btnEl.setAttribute('title', isNowBookmarked ? 'Remove bookmark' : 'Bookmark this technique');
+    }
+    updateCollectionCount();
+    if (currentView === 'collection') renderTechniques();
+}
+
+function updateModalBookmarkBtn(id) {
+    var btn = document.getElementById('modalBookmarkBtn');
+    var label = document.getElementById('modalBookmarkLabel');
+    if (!btn || !label) return;
+    var isBookmarked = bctBookmarks.indexOf(id) !== -1;
+    btn.classList.toggle('active', isBookmarked);
+    label.textContent = isBookmarked ? 'Bookmarked' : 'Bookmark';
+}
+
+function toggleModalBookmark() {
+    var t = flatTechniques[currentModalIndex];
+    if (!t) return;
+    toggleBCTBookmark(t.id, null);
+    updateModalBookmarkBtn(t.id);
+}
+
+function updateCollectionCount() {
+    var countEl = document.getElementById('collectionCount');
+    if (countEl) countEl.textContent = bctBookmarks.length;
+}
+
+/* ============================================================
+   NOTES FUNCTIONS
+   ============================================================ */
+var notesSaveTimeout;
+function saveBCTNote(textarea) {
+    var id = textarea.getAttribute('data-technique-id');
+    var val = textarea.value.trim();
+    if (val) {
+        bctNotes[id] = val;
+    } else {
+        delete bctNotes[id];
+    }
+    clearTimeout(notesSaveTimeout);
+    notesSaveTimeout = setTimeout(function() {
+        saveBCTNotes();
+        var saved = document.getElementById('modalNotesSaved');
+        if (saved) {
+            saved.classList.add('show');
+            setTimeout(function() { saved.classList.remove('show'); }, 1500);
+        }
+    }, 500);
+}
+
+/* ============================================================
+   COLLECTION EXPORT / IMPORT
+   ============================================================ */
+function exportBCTCollection() {
+    var data = {
+        version: '1.0',
+        exportedAt: new Date().toISOString(),
+        bookmarks: bctBookmarks,
+        notes: bctNotes
+    };
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'nudgekit-collection.json'; a.click();
+    URL.revokeObjectURL(url);
+}
+
+function importBCTCollection(event) {
+    var file = event.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            var data = JSON.parse(e.target.result);
+            if (!data.bookmarks || !Array.isArray(data.bookmarks)) throw new Error('Invalid format');
+            /* Merge imported data */
+            data.bookmarks.forEach(function(id) {
+                if (bctBookmarks.indexOf(id) === -1) bctBookmarks.push(id);
+            });
+            if (data.notes && typeof data.notes === 'object') {
+                Object.keys(data.notes).forEach(function(id) {
+                    if (!bctNotes[id]) bctNotes[id] = data.notes[id];
+                });
+            }
+            saveBCTBookmarks();
+            saveBCTNotes();
+            updateCollectionCount();
+            renderTechniques();
+            showToast('Collection imported successfully!');
+        } catch (err) {
+            showToast('Invalid collection file. Please check the format.');
+        }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+}
+
+function showToast(msg) {
+    var toast = document.getElementById('copyToast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); toast.textContent = 'Link copied to clipboard!'; }, 2500);
+}
+
+/* ============================================================
+   VIEW TABS (All / Collection)
+   ============================================================ */
+function switchView(view) {
+    currentView = view;
+    document.querySelectorAll('.view-tab').forEach(function(tab) {
+        var isActive = tab.dataset.view === view;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+    var toolbar = document.getElementById('collectionToolbar');
+    var catNav = document.getElementById('categoryNav');
+    var controlsRow = document.querySelector('.controls-row');
+    if (view === 'collection') {
+        toolbar.classList.add('visible');
+        catNav.style.display = 'none';
+        if (controlsRow) controlsRow.style.display = 'none';
+    } else {
+        toolbar.classList.remove('visible');
+        catNav.style.display = '';
+        if (controlsRow) controlsRow.style.display = '';
+    }
+    renderTechniques();
+}
+
+/* ============================================================
+   COMPARE FUNCTIONS
+   ============================================================ */
+function toggleBCTCompare(id, btnEl) {
+    var idx = bctCompare.indexOf(id);
+    if (idx === -1) {
+        if (bctCompare.length >= 3) {
+            showToast('Maximum 3 techniques can be compared at once.');
+            return;
+        }
+        bctCompare.push(id);
+    } else {
+        bctCompare.splice(idx, 1);
+    }
+    saveBCTCompare();
+    if (btnEl) {
+        var isNowCompared = bctCompare.indexOf(id) !== -1;
+        btnEl.classList.toggle('active', isNowCompared);
+        btnEl.setAttribute('aria-label', isNowCompared ? 'Remove from compare' : 'Add to compare');
+    }
+    updateCompareBar();
+}
+
+function removeFromCompare(id) {
+    var idx = bctCompare.indexOf(id);
+    if (idx !== -1) bctCompare.splice(idx, 1);
+    saveBCTCompare();
+    updateCompareBar();
+    /* Update card button states */
+    document.querySelectorAll('.bct-compare-btn').forEach(function(btn) {
+        /* Re-render to fix states */
+    });
+    renderTechniques();
+}
+
+function clearAllCompare() {
+    bctCompare = [];
+    saveBCTCompare();
+    updateCompareBar();
+    renderTechniques();
+}
+
+function updateCompareBar() {
+    var bar = document.getElementById('compareBar');
+    var countEl = document.getElementById('compareCount');
+    var itemsEl = document.getElementById('compareBarItems');
+    var compareBtn = document.getElementById('compareNowBtn');
+
+    countEl.textContent = bctCompare.length;
+
+    if (bctCompare.length === 0) {
+        bar.classList.remove('visible');
+        return;
+    }
+    bar.classList.add('visible');
+    compareBtn.disabled = bctCompare.length < 2;
+
+    var html = '';
+    bctCompare.forEach(function(id) {
+        var t = findTechniqueById(id);
+        var name = t ? t.name : id;
+        html += '<div class="compare-bar-chip">';
+        html += '<span>' + escapeHTML(id) + ' — ' + escapeHTML(name) + '</span>';
+        html += '<button class="compare-bar-chip-remove" onclick="removeFromCompare(\'' + escapeHTML(id) + '\')" aria-label="Remove ' + escapeHTML(name) + '">';
+        html += '<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+        html += '</button></div>';
+    });
+    itemsEl.innerHTML = html;
+}
+
+function openCompareModal() {
+    if (bctCompare.length < 2) return;
+    var techniques = bctCompare.map(function(id) { return findTechniqueById(id); }).filter(Boolean);
+    if (techniques.length < 2) return;
+
+    var cols = techniques.length;
+    var html = '<div class="compare-columns" data-cols="' + cols + '">';
+
+    techniques.forEach(function(t) {
+        var evClass = 'evidence-' + (t.evidenceLevel || 'emerging').toLowerCase();
+        html += '<div class="compare-column">';
+        html += '<div class="compare-col-header" style="border-top:4px solid ' + escapeHTML(t._categoryColor || '#0EA5E9') + ';">';
+        html += '<div class="compare-col-name">' + escapeHTML(t.name) + '</div>';
+        html += '<div class="compare-col-id">' + escapeHTML(t.id) + ' — ' + escapeHTML(t._categoryName || '') + '</div>';
+        html += '</div>';
+
+        html += '<div class="compare-row"><div class="compare-row-label">Definition</div>';
+        html += '<div class="compare-row-value">' + escapeHTML(t.definition) + '</div></div>';
+
+        html += '<div class="compare-row"><div class="compare-row-label">Evidence Level</div>';
+        html += '<div class="compare-row-value"><span class="technique-evidence-badge ' + evClass + '">' + escapeHTML(t.evidenceLevel || 'Emerging') + '</span></div></div>';
+
+        html += '<div class="compare-row"><div class="compare-row-label">Sectors</div>';
+        html += '<div class="compare-row-value">';
+        (t.sectors || []).forEach(function(s) { html += '<span class="sector-pill">' + escapeHTML(s) + '</span> '; });
+        html += '</div></div>';
+
+        html += '<div class="compare-row"><div class="compare-row-label">Implementation Tips</div>';
+        html += '<div class="compare-row-value">';
+        if (t.implementationTips && t.implementationTips.length) {
+            html += '<ul style="list-style:disc;padding-left:18px;margin:0;">';
+            t.implementationTips.forEach(function(tip) { html += '<li style="margin-bottom:4px;">' + escapeHTML(tip) + '</li>'; });
+            html += '</ul>';
+        } else { html += '<em>No tips available</em>'; }
+        html += '</div></div>';
+
+        html += '<div class="compare-row"><div class="compare-row-label">South Asian Context</div>';
+        html += '<div class="compare-row-value">' + escapeHTML(t.southAsianContext || 'Not available') + '</div></div>';
+
+        html += '</div>'; /* close compare-column */
+    });
+
+    html += '</div>';
+    document.getElementById('compareModalBody').innerHTML = html;
+    document.getElementById('compareModalOverlay').classList.add('active');
+    document.body.classList.add('modal-open');
+}
+
+function closeCompareModal() {
+    document.getElementById('compareModalOverlay').classList.remove('active');
+    document.body.classList.remove('modal-open');
+}
+
+document.getElementById('compareModalOverlay').addEventListener('click', function(e) { if (e.target === this) closeCompareModal(); });
+
+function exportCompareCSV() {
+    var techniques = bctCompare.map(function(id) { return findTechniqueById(id); }).filter(Boolean);
+    if (!techniques.length) return;
+    var rows = [['Field'].concat(techniques.map(function(t) { return t.id + ' - ' + t.name; }))];
+    var fields = [
+        { key: 'definition', label: 'Definition' },
+        { key: 'evidenceLevel', label: 'Evidence Level' },
+        { key: 'sectors', label: 'Sectors', join: true },
+        { key: 'implementationTips', label: 'Implementation Tips', join: true },
+        { key: 'southAsianContext', label: 'South Asian Context' },
+        { key: 'example', label: 'Field Example' }
+    ];
+    fields.forEach(function(f) {
+        var row = [f.label];
+        techniques.forEach(function(t) {
+            var val = t[f.key] || '';
+            if (f.join && Array.isArray(val)) val = val.join('; ');
+            row.push(val);
+        });
+        rows.push(row);
+    });
+    var csv = rows.map(function(row) { return row.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+    var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'bct-comparison.csv'; a.click();
+    URL.revokeObjectURL(url);
+}
+
+/* ============================================================
    EVENT LISTENERS
    ============================================================ */
 var searchTimeout;
