@@ -212,6 +212,28 @@ CREATE TABLE IF NOT EXISTS public.learning_path_assignments (
 );
 
 -- =====================================================
+-- 12. PORTFOLIO ITEMS TABLE
+-- User-curated portfolio entries (Premium feature)
+-- =====================================================
+CREATE TABLE IF NOT EXISTS public.portfolio_items (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    item_type TEXT NOT NULL, -- certificate, project, case_study, custom
+    title TEXT NOT NULL,
+    description TEXT,
+    course_id TEXT,
+    tags TEXT[],
+    display_order INTEGER DEFAULT 0,
+    is_visible BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Add portfolio fields to profiles
+-- ALTER TABLE profiles ADD COLUMN IF NOT EXISTS portfolio_headline TEXT;
+-- ALTER TABLE profiles ADD COLUMN IF NOT EXISTS portfolio_public BOOLEAN DEFAULT false;
+
+-- =====================================================
 -- ROW LEVEL SECURITY (RLS) POLICIES
 -- Ensures users can only access their own data
 -- =====================================================
@@ -257,6 +279,11 @@ CREATE POLICY "Users can view own payments" ON public.payments
 
 -- Coaching Bookings: Users can manage their own bookings
 CREATE POLICY "Users can manage own bookings" ON public.coaching_bookings
+    FOR ALL USING (auth.uid() = user_id);
+
+-- Portfolio Items: Users can manage their own portfolio
+ALTER TABLE public.portfolio_items ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Users can manage own portfolio" ON public.portfolio_items
     FOR ALL USING (auth.uid() = user_id);
 
 -- Enable RLS on organization tables
@@ -365,6 +392,7 @@ CREATE INDEX IF NOT EXISTS idx_org_members_user_id ON public.organization_member
 CREATE INDEX IF NOT EXISTS idx_learning_paths_org_id ON public.learning_paths(org_id);
 CREATE INDEX IF NOT EXISTS idx_learning_path_assignments_user_id ON public.learning_path_assignments(user_id);
 CREATE INDEX IF NOT EXISTS idx_coaching_bookings_user_id ON public.coaching_bookings(user_id);
+CREATE INDEX IF NOT EXISTS idx_portfolio_items_user_id ON public.portfolio_items(user_id);
 
 -- =====================================================
 -- SUCCESS MESSAGE
