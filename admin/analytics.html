@@ -39,19 +39,27 @@
     --hover-bg: #334155;
     --border-color: #334155;
     --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 8px 30px rgba(0,0,0,0.4);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 100px;
     --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 [data-theme="light"] {
-    --primary-bg: #F8FAFC;
-    --secondary-bg: #FFFFFF;
-    --text-primary: #1E293B;
+    --primary-bg: #FFFFFF;
+    --secondary-bg: #F8FAFC;
+    --text-primary: #0F172A;
     --text-secondary: #475569;
     --text-muted: #94A3B8;
     --card-bg: #FFFFFF;
     --hover-bg: #F1F5F9;
     --border-color: #E2E8F0;
-    --shadow-lg: 0 8px 30px rgba(0,0,0,0.1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.15);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -63,44 +71,104 @@ body {
     min-height: 100vh;
 }
 
-/* Header */
-.admin-header {
+/* Site Header */
+.site-header {
     position: sticky; top: 0; z-index: 100;
     background: var(--primary-bg);
     border-bottom: 1px solid var(--border-color);
     backdrop-filter: blur(12px);
     padding: 0 24px;
 }
-.admin-header-inner {
+.nav-container {
     max-width: 1400px; margin: 0 auto; height: 64px;
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
 }
-.admin-logo {
-    display: flex; align-items: center; gap: 12px;
-    text-decoration: none; color: var(--text-primary);
+.logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text-primary); flex-shrink: 0;
 }
-.admin-logo img { height: 32px; }
-.admin-logo-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem; }
-.admin-badge {
-    background: var(--danger-color); color: white; font-size: 0.65rem;
-    font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-.admin-actions { display: flex; align-items: center; gap: 12px; }
-.admin-actions a {
-    color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;
+.logo-icon { height: 32px; }
+.logo-text-wrap { display: flex; flex-direction: column; line-height: 1.2; }
+.logo-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem; }
+.logo-tagline { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.05em; }
+.nav-links { display: flex; gap: 4px; align-items: center; }
+.nav-link {
+    color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 500;
     padding: 6px 12px; border-radius: 8px; transition: all var(--transition);
 }
-.admin-actions a:hover { color: var(--text-primary); background: var(--hover-bg); }
+.nav-link:hover { color: var(--text-primary); background: var(--hover-bg); }
+.nav-link.active { color: var(--accent-color); }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
 
-.theme-toggle {
-    background: var(--hover-bg); border: 1px solid var(--border-color);
-    color: var(--text-secondary); padding: 8px; border-radius: 8px;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: all var(--transition);
+/* 3-button theme selector */
+.theme-selector {
+    display: flex; gap: 4px; background: var(--hover-bg);
+    border: 1px solid var(--border-color); border-radius: 10px; padding: 4px;
 }
-.theme-toggle:hover { color: var(--text-primary); }
-.theme-toggle svg { width: 18px; height: 18px; }
+.theme-btn {
+    background: transparent; border: none; color: var(--text-secondary);
+    padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;
+    display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+}
+.theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+.theme-btn.active { background: var(--accent-color); color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.theme-btn svg { width: 18px; height: 18px; }
+
+/* Mobile menu */
+.mobile-menu-toggle {
+    display: none; background: none; border: none; color: var(--text-primary);
+    cursor: pointer; padding: 8px; align-items: center; justify-content: center;
+}
+.mobile-nav-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999;
+}
+.mobile-nav-overlay.active { display: block; }
+.mobile-nav-panel {
+    display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 280px;
+    background: var(--primary-bg); border-left: 1px solid var(--border-color);
+    z-index: 1001; padding: 24px; flex-direction: column; gap: 8px; overflow-y: auto;
+}
+.mobile-nav-panel.active { display: flex; }
+.mobile-nav-panel .nav-link { display: block; padding: 12px 16px; font-size: 1rem; }
+.mobile-nav-close {
+    align-self: flex-end; background: none; border: none; color: var(--text-primary);
+    cursor: pointer; padding: 4px; margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+    .nav-links, .nav-actions { display: none; }
+    .mobile-menu-toggle { display: flex; }
+}
+
+/* Footer */
+.footer {
+    border-top: 1px solid var(--border-color);
+    margin-top: 48px; padding: 48px 24px 24px;
+    background: var(--secondary-bg);
+}
+.footer-content { max-width: 1400px; margin: 0 auto; }
+.footer-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 32px;
+}
+.footer-section h4 {
+    font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700;
+    margin-bottom: 12px; color: var(--text-primary);
+}
+.footer-section ul { list-style: none; padding: 0; }
+.footer-section li { margin-bottom: 6px; }
+.footer-section a {
+    color: var(--text-secondary); text-decoration: none; font-size: 0.82rem;
+    transition: color var(--transition);
+}
+.footer-section a:hover { color: var(--accent-color); }
+.footer-bottom {
+    border-top: 1px solid var(--border-color); padding-top: 24px; text-align: center;
+}
+.footer-bottom p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px; }
+.footer-bottom a { color: var(--accent-color); text-decoration: none; }
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
 /* Main content */
 .admin-main {
@@ -285,21 +353,66 @@ body {
 <body>
 
 <!-- Header -->
-<header class="admin-header">
-    <div class="admin-header-inner">
-        <a href="/" class="admin-logo">
-            <img src="/assets/images/ImpactMojo Logo.png" alt="ImpactMojo">
-            <span class="admin-logo-text">ImpactMojo</span>
-            <span class="admin-badge" style="background: var(--secondary-accent);">Transparency</span>
+<header class="site-header">
+    <nav class="nav-container">
+        <a href="/" class="logo">
+            <img src="/assets/images/ImpactMojo Logo.png" alt="ImpactMojo" class="logo-icon">
+            <div class="logo-text-wrap">
+                <span class="logo-text">ImpactMojo</span>
+                <span class="logo-tagline">Learn for Impact</span>
+            </div>
         </a>
-        <div class="admin-actions">
-            <a href="/">Back to Site</a>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-            </button>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/catalog" class="nav-link">Catalog</a>
+            <a href="/handouts" class="nav-link">Handouts</a>
+            <a href="/dataverse" class="nav-link">Dataverse</a>
+            <a href="/challenges" class="nav-link">Challenges</a>
+            <a href="/blog" class="nav-link">Blog</a>
         </div>
-    </div>
+        <div class="nav-actions">
+            <div class="theme-selector" aria-label="Theme selection">
+                <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </nav>
 </header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav-overlay" id="mobileOverlay"></div>
+<div class="mobile-nav-panel" id="mobilePanel">
+    <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <a href="/" class="nav-link">Home</a>
+    <a href="/catalog" class="nav-link">Catalog</a>
+    <a href="/handouts" class="nav-link">Handouts</a>
+    <a href="/dataverse" class="nav-link">Dataverse</a>
+    <a href="/challenges" class="nav-link">Challenges</a>
+    <a href="/blog" class="nav-link">Blog</a>
+    <div class="theme-selector" aria-label="Theme selection" style="margin-top:16px;">
+        <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </button>
+        <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </div>
+</div>
 
 <main class="admin-main">
 
@@ -413,15 +526,60 @@ body {
         </div>
     </div>
 
-    <!-- Footer -->
-    <div style="text-align:center; padding:48px 24px 24px; border-top:1px solid var(--border-color); margin-top:48px;">
-        <p style="font-size:0.82rem; color:var(--text-muted);">&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">
-            Released under MIT License. <a href="/" style="color:var(--accent-color); text-decoration:none;">Back to ImpactMojo</a>
-            &middot; <a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener" style="color:var(--accent-color); text-decoration:none;">GitHub</a>
-        </p>
-    </div>
 </main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About ImpactMojo</h4>
+                <ul>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/community/community">Community</a></li>
+                    <li><a href="/#support-us">Support Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="/admin/analytics">Transparency</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/terms-of-service">Terms of Service</a></li>
+                    <li><a href="/disclaimer">Disclaimer</a></li>
+                    <li><a href="/grievance">Grievance Redressal</a></li>
+                    <li><a href="/refund-policy">Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Learn</h4>
+                <ul>
+                    <li><a href="/catalog">All Courses</a></li>
+                    <li><a href="/#labs">Labs</a></li>
+                    <li><a href="/#games">Games</a></li>
+                    <li><a href="/premium">Premium</a></li>
+                    <li><a href="/workshops">Workshops</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="/handouts">Handouts</a></li>
+                    <li><a href="/bct-repository">NudgeKit</a></li>
+                    <li><a href="/dataverse">Dataverse</a></li>
+                    <li><a href="/challenges">Challenges</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+            <p>Released under MIT License. Supported by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener">PinPoint Ventures</a></p>
+        </div>
+    </div>
+</footer>
 
 <script>
 // ============================================================
@@ -927,18 +1085,59 @@ function formatNum(n) {
     return n.toString();
 }
 
-// Theme toggle
-document.getElementById('themeToggle').addEventListener('click', function() {
-    var current = document.documentElement.getAttribute('data-theme');
-    var next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('impactmojo-theme', next);
+// ============================================================
+// THEME (3-button: system / light / dark)
+// ============================================================
+function getPreferredTheme() {
+    return localStorage.getItem('impactmojo-theme') || 'system';
+}
+
+function applyTheme(theme) {
+    var resolved = theme;
+    if (theme === 'system') {
+        resolved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', resolved);
+    localStorage.setItem('impactmojo-theme', theme);
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+    });
+}
+
+applyTheme(getPreferredTheme());
+
+document.querySelectorAll('.theme-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        applyTheme(btn.getAttribute('data-theme'));
+    });
 });
 
-// Apply saved theme
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (getPreferredTheme() === 'system') applyTheme('system');
+});
+
+// ============================================================
+// MOBILE MENU
+// ============================================================
 (function() {
-    var saved = localStorage.getItem('impactmojo-theme');
-    if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    var toggle = document.getElementById('mobileMenuToggle');
+    var overlay = document.getElementById('mobileOverlay');
+    var panel = document.getElementById('mobilePanel');
+    var closeBtn = document.getElementById('mobileNavClose');
+
+    function openMenu() {
+        overlay.classList.add('active');
+        panel.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+        overlay.classList.remove('active');
+        panel.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', openMenu);
+    overlay.addEventListener('click', closeMenu);
+    closeBtn.addEventListener('click', closeMenu);
 })();
 
 // Show admin controls if ?admin in URL
