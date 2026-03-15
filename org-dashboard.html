@@ -257,6 +257,96 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
     .members-table th:nth-child(4), .members-table td:nth-child(4),
     .members-table th:nth-child(5), .members-table td:nth-child(5) { display: none; }
 }
+
+/* Training Tab Styles */
+.training-sub-btn {
+    padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border-color);
+    background: var(--primary-bg); color: var(--text-secondary); font-size: 0.85rem;
+    font-weight: 500; cursor: pointer; transition: all 0.2s;
+}
+.training-sub-btn.active {
+    background: var(--accent-color); color: white; border-color: var(--accent-color);
+}
+.training-sub-btn:hover:not(.active) {
+    border-color: var(--accent-color); color: var(--text-primary);
+}
+.training-section { display: none; }
+.training-section.active { display: block; }
+
+.training-package-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 14px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+}
+.training-package-card:hover {
+    transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.training-package-header {
+    padding: 1.25rem; display: flex; align-items: center; gap: 1rem;
+}
+.training-package-icon {
+    width: 48px; height: 48px; border-radius: 12px; background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.training-package-body { padding: 1.25rem; }
+.training-package-courses { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.guide-card {
+    background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;
+    padding: 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s;
+}
+.guide-card:hover { border-color: var(--accent-color); }
+.guide-card-icon {
+    width: 44px; height: 44px; border-radius: 10px; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+}
+.guide-card-body { flex: 1; min-width: 0; }
+.guide-card-body h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem; }
+.guide-card-body p { font-size: 0.78rem; color: var(--text-secondary); }
+.guide-tag {
+    font-size: 0.65rem; padding: 1px 6px; border-radius: 4px;
+    background: var(--hover-bg); color: var(--text-secondary); font-weight: 500;
+}
+.btn-sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap; }
+
+.rubric-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 12px; padding: 1.25rem;
+}
+.rubric-criteria {
+    display: flex; gap: 1.5rem; margin-top: 0.75rem; flex-wrap: wrap;
+}
+.rubric-level {
+    display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--text-secondary);
+}
+.rubric-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.rubric-table {
+    width: 100%; border-collapse: collapse; margin-top: 0.75rem; font-size: 0.82rem;
+}
+.rubric-table th, .rubric-table td {
+    padding: 0.6rem 0.75rem; text-align: left; border: 1px solid var(--border-color);
+}
+.rubric-table th {
+    background: var(--hover-bg); font-weight: 600; font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.03em;
+}
+.rubric-table td { color: var(--text-secondary); }
+
+.cohort-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem;
+}
+.cohort-header {
+    display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;
+}
+.cohort-meta { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.82rem; color: var(--text-secondary); }
+.cohort-meta-item { display: flex; align-items: center; gap: 0.3rem; }
+.cohort-members { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+.cohort-member-chip {
+    font-size: 0.75rem; padding: 2px 8px; border-radius: 6px;
+    background: var(--hover-bg); color: var(--text-secondary);
+}
 </style>
 </head>
 <body>
@@ -425,23 +515,16 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
         </div>
     </div>
 
-    <!-- Coming Soon for Teams -->
+    <!-- Feature Status for Teams -->
     <div style="max-width:1200px; margin:0 auto 2rem; padding:0 2rem;">
-        <h3 style="font-family:'Poppins',sans-serif; font-size:1.15rem; margin-bottom:1rem;">Coming Soon for Teams</h3>
+        <h3 style="font-family:'Poppins',sans-serif; font-size:1.15rem; margin-bottom:1rem;">Team Features</h3>
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
-            <div style="background:var(--card-bg); border:1px dashed var(--border-color); border-radius:12px; padding:1.25rem; opacity:0.85;">
+            <div style="background:var(--card-bg); border:1px solid var(--accent-color); border-radius:12px; padding:1.25rem;">
                 <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
-                    <span style="font-size:0.65rem; background:rgba(245,158,11,0.15); color:#D97706; padding:2px 8px; border-radius:4px; font-weight:600;">ROADMAP</span>
+                    <span style="font-size:0.65rem; background:rgba(16,185,129,0.15); color:#059669; padding:2px 8px; border-radius:4px; font-weight:600;">LIVE</span>
                     <h4 style="font-size:0.95rem; font-weight:600;">Team Training Packages</h4>
                 </div>
-                <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">Custom organizational training combining ImpactMojo courses with facilitator guides, assessment rubrics, and cohort management tools.</p>
-            </div>
-            <div style="background:var(--card-bg); border:1px dashed var(--border-color); border-radius:12px; padding:1.25rem; opacity:0.85;">
-                <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
-                    <span style="font-size:0.65rem; background:rgba(245,158,11,0.15); color:#D97706; padding:2px 8px; border-radius:4px; font-weight:600;">ROADMAP</span>
-                    <h4 style="font-size:0.95rem; font-weight:600;">Interactive Assessments</h4>
-                </div>
-                <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">Auto-graded quizzes, portfolio submissions, and peer review for flagship courses. Track your team's mastery.</p>
+                <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">Pre-built training paths, facilitator guides, assessment rubrics, and cohort management. Go to the <strong>Training</strong> tab below.</p>
             </div>
             <div style="background:var(--card-bg); border:1px dashed var(--border-color); border-radius:12px; padding:1.25rem; opacity:0.85;">
                 <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
@@ -463,6 +546,7 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
     <!-- Tabs -->
     <div class="tab-nav">
         <button class="tab-btn active" data-tab="members">Team Members</button>
+        <button class="tab-btn" data-tab="training">Training</button>
         <button class="tab-btn" data-tab="paths">Learning Paths</button>
         <button class="tab-btn" data-tab="progress">Progress & Reports</button>
         <button class="tab-btn" data-tab="settings">Settings</button>
@@ -492,6 +576,312 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
                 <tr><td colspan="6" class="empty-state"><p>No team members yet. Invite your first member above.</p></td></tr>
             </tbody>
         </table>
+    </div>
+
+    <!-- Training Tab -->
+    <div class="tab-content" id="tab-training">
+        <!-- Sub-navigation for training sections -->
+        <div style="display:flex; gap:0.5rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+            <button class="training-sub-btn active" data-section="packages" onclick="switchTrainingSection('packages', this)">Training Packages</button>
+            <button class="training-sub-btn" data-section="cohorts" onclick="switchTrainingSection('cohorts', this)">Cohort Management</button>
+            <button class="training-sub-btn" data-section="guides" onclick="switchTrainingSection('guides', this)">Facilitator Guides</button>
+            <button class="training-sub-btn" data-section="rubrics" onclick="switchTrainingSection('rubrics', this)">Assessment Rubrics</button>
+        </div>
+
+        <!-- Pre-built Training Packages -->
+        <div class="training-section active" id="training-packages">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                <div>
+                    <h3 style="font-family:'Poppins',sans-serif; font-size:1.1rem;">Pre-built Training Packages</h3>
+                    <p style="font-size:0.82rem; color:var(--text-secondary); margin-top:0.25rem;">Curated course sequences for common development roles. Deploy to your team in one click.</p>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1rem;">
+                <!-- MEL Officer Package -->
+                <div class="training-package-card">
+                    <div class="training-package-header" style="background:linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);">
+                        <span class="training-package-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        </span>
+                        <div>
+                            <h4 style="color:white; font-size:1rem; font-weight:700;">MEL Officer</h4>
+                            <p style="color:rgba(255,255,255,0.85); font-size:0.75rem;">5 courses &middot; 12 weeks</p>
+                        </div>
+                    </div>
+                    <div class="training-package-body">
+                        <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:0.75rem;">Build core MEL competencies: theory of change, indicator design, data collection, analysis, and reporting for development programs.</p>
+                        <div class="training-package-courses">
+                            <span class="path-course-tag">MEL</span>
+                            <span class="path-course-tag">Data Visualization</span>
+                            <span class="path-course-tag">Dev Economics</span>
+                            <span class="path-course-tag">AI for Impact</span>
+                            <span class="path-course-tag">SEL</span>
+                        </div>
+                        <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+                            <button class="btn btn-primary" style="flex:1;" onclick="deployPackage('mel-officer', ['mel','dataviz','devecon','devai','sel'], 'MEL Officer Training')">Deploy to Team</button>
+                            <button class="btn btn-outline" onclick="viewPackageDetails('mel-officer')">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program Manager Package -->
+                <div class="training-package-card">
+                    <div class="training-package-header" style="background:linear-gradient(135deg, #10B981 0%, #0EA5E9 100%);">
+                        <span class="training-package-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </span>
+                        <div>
+                            <h4 style="color:white; font-size:1rem; font-weight:700;">Program Manager</h4>
+                            <p style="color:rgba(255,255,255,0.85); font-size:0.75rem;">4 courses &middot; 10 weeks</p>
+                        </div>
+                    </div>
+                    <div class="training-package-body">
+                        <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:0.75rem;">Develop program design, stakeholder management, and evidence-based decision-making skills for mid-level program staff.</p>
+                        <div class="training-package-courses">
+                            <span class="path-course-tag">Dev Economics</span>
+                            <span class="path-course-tag">MEL</span>
+                            <span class="path-course-tag">Data Visualization</span>
+                            <span class="path-course-tag">Media for Development</span>
+                        </div>
+                        <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+                            <button class="btn btn-primary" style="flex:1;" onclick="deployPackage('program-manager', ['devecon','mel','dataviz','media'], 'Program Manager Training')">Deploy to Team</button>
+                            <button class="btn btn-outline" onclick="viewPackageDetails('program-manager')">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Field Staff Package -->
+                <div class="training-package-card">
+                    <div class="training-package-header" style="background:linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);">
+                        <span class="training-package-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </span>
+                        <div>
+                            <h4 style="color:white; font-size:1rem; font-weight:700;">Field Staff</h4>
+                            <p style="color:rgba(255,255,255,0.85); font-size:0.75rem;">3 courses &middot; 6 weeks</p>
+                        </div>
+                    </div>
+                    <div class="training-package-body">
+                        <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:0.75rem;">Essential data collection, community engagement, and social-emotional skills for frontline development workers.</p>
+                        <div class="training-package-courses">
+                            <span class="path-course-tag">MEL</span>
+                            <span class="path-course-tag">SEL</span>
+                            <span class="path-course-tag">Media for Development</span>
+                        </div>
+                        <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+                            <button class="btn btn-primary" style="flex:1;" onclick="deployPackage('field-staff', ['mel','sel','media'], 'Field Staff Training')">Deploy to Team</button>
+                            <button class="btn btn-outline" onclick="viewPackageDetails('field-staff')">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Governance & Policy Package -->
+                <div class="training-package-card">
+                    <div class="training-package-header" style="background:linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);">
+                        <span class="training-package-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        </span>
+                        <div>
+                            <h4 style="color:white; font-size:1rem; font-weight:700;">Governance & Policy</h4>
+                            <p style="color:rgba(255,255,255,0.85); font-size:0.75rem;">4 courses &middot; 10 weeks</p>
+                        </div>
+                    </div>
+                    <div class="training-package-body">
+                        <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:0.75rem;">Comprehensive policy analysis, constitutional literacy, and accountability frameworks for governance professionals.</p>
+                        <div class="training-package-courses">
+                            <span class="path-course-tag">Constitution & Law</span>
+                            <span class="path-course-tag">Gandhian Philosophy</span>
+                            <span class="path-course-tag">Politics of Aspiration</span>
+                            <span class="path-course-tag">Dev Economics</span>
+                        </div>
+                        <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+                            <button class="btn btn-primary" style="flex:1;" onclick="deployPackage('governance', ['law','gandhi','poa','devecon'], 'Governance & Policy Training')">Deploy to Team</button>
+                            <button class="btn btn-outline" onclick="viewPackageDetails('governance')">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cohort Management -->
+        <div class="training-section" id="training-cohorts">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                <div>
+                    <h3 style="font-family:'Poppins',sans-serif; font-size:1.1rem;">Cohort Management</h3>
+                    <p style="font-size:0.82rem; color:var(--text-secondary); margin-top:0.25rem;">Schedule training cohorts, set deadlines, and track group progress.</p>
+                </div>
+                <button class="btn btn-primary" onclick="openCohortModal()">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Create Cohort
+                </button>
+            </div>
+            <div id="cohortsList">
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    <h3>No Cohorts Yet</h3>
+                    <p>Create a training cohort to schedule group learning with deadlines and milestones.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Facilitator Guides -->
+        <div class="training-section" id="training-guides">
+            <div style="margin-bottom:1rem;">
+                <h3 style="font-family:'Poppins',sans-serif; font-size:1.1rem;">Facilitator Guides</h3>
+                <p style="font-size:0.82rem; color:var(--text-secondary); margin-top:0.25rem;">Downloadable session plans for team leads running group training. Each guide includes learning objectives, discussion prompts, activities, and time estimates.</p>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
+                <div class="guide-card">
+                    <div class="guide-card-icon" style="background:linear-gradient(135deg, #0EA5E9, #6366F1);">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <div class="guide-card-body">
+                        <h4>MEL Foundations</h4>
+                        <p>8 sessions &middot; 16 hours total</p>
+                        <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                            <span class="guide-tag">Theory of Change</span>
+                            <span class="guide-tag">Indicators</span>
+                            <span class="guide-tag">Data Collection</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="downloadGuide('mel')">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        PDF
+                    </button>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-card-icon" style="background:linear-gradient(135deg, #10B981, #0EA5E9);">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <div class="guide-card-body">
+                        <h4>Data Visualization</h4>
+                        <p>6 sessions &middot; 12 hours total</p>
+                        <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                            <span class="guide-tag">Chart Design</span>
+                            <span class="guide-tag">Dashboards</span>
+                            <span class="guide-tag">Storytelling</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="downloadGuide('dataviz')">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        PDF
+                    </button>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-card-icon" style="background:linear-gradient(135deg, #F59E0B, #EF4444);">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <div class="guide-card-body">
+                        <h4>Development Economics</h4>
+                        <p>10 sessions &middot; 20 hours total</p>
+                        <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                            <span class="guide-tag">Market Failures</span>
+                            <span class="guide-tag">RCTs</span>
+                            <span class="guide-tag">Impact Eval</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="downloadGuide('devecon')">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        PDF
+                    </button>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-card-icon" style="background:linear-gradient(135deg, #8B5CF6, #EC4899);">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <div class="guide-card-body">
+                        <h4>AI for Impact</h4>
+                        <p>6 sessions &middot; 12 hours total</p>
+                        <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                            <span class="guide-tag">Prompt Design</span>
+                            <span class="guide-tag">Ethics</span>
+                            <span class="guide-tag">Use Cases</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="downloadGuide('devai')">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        PDF
+                    </button>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-card-icon" style="background:linear-gradient(135deg, #EC4899, #F59E0B);">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <div class="guide-card-body">
+                        <h4>Social-Emotional Learning</h4>
+                        <p>6 sessions &middot; 12 hours total</p>
+                        <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                            <span class="guide-tag">Self-Awareness</span>
+                            <span class="guide-tag">Empathy</span>
+                            <span class="guide-tag">Resilience</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="downloadGuide('sel')">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assessment Rubrics -->
+        <div class="training-section" id="training-rubrics">
+            <div style="margin-bottom:1rem;">
+                <h3 style="font-family:'Poppins',sans-serif; font-size:1.1rem;">Assessment Rubrics</h3>
+                <p style="font-size:0.82rem; color:var(--text-secondary); margin-top:0.25rem;">Standardized scoring criteria for evaluating team members' course work, portfolio submissions, and peer reviews.</p>
+            </div>
+            <div style="display:grid; gap:1rem;">
+                <div class="rubric-card">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.25rem;">Course Quiz Performance</h4>
+                            <p style="font-size:0.82rem; color:var(--text-secondary);">Evaluate quiz scores across courses. Includes proficiency thresholds and competency mapping.</p>
+                        </div>
+                        <span style="font-size:0.7rem; background:rgba(14,165,233,0.12); color:var(--accent-color); padding:2px 8px; border-radius:4px; font-weight:600; white-space:nowrap;">AUTO-SCORED</span>
+                    </div>
+                    <div class="rubric-criteria">
+                        <div class="rubric-level"><span class="rubric-dot" style="background:#EF4444;"></span><strong>Developing</strong> &lt; 50%</div>
+                        <div class="rubric-level"><span class="rubric-dot" style="background:#F59E0B;"></span><strong>Proficient</strong> 50–79%</div>
+                        <div class="rubric-level"><span class="rubric-dot" style="background:#10B981;"></span><strong>Mastery</strong> &ge; 80%</div>
+                    </div>
+                </div>
+                <div class="rubric-card">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.25rem;">Portfolio Submission Rubric</h4>
+                            <p style="font-size:0.82rem; color:var(--text-secondary);">For evaluating applied work products — theory of change diagrams, data dashboards, evaluation plans.</p>
+                        </div>
+                        <span style="font-size:0.7rem; background:rgba(139,92,246,0.12); color:#8B5CF6; padding:2px 8px; border-radius:4px; font-weight:600; white-space:nowrap;">MANAGER-SCORED</span>
+                    </div>
+                    <table class="rubric-table">
+                        <thead>
+                            <tr><th>Criterion</th><th>Developing (1)</th><th>Proficient (2)</th><th>Mastery (3)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Technical Accuracy</strong></td><td>Major errors or omissions</td><td>Generally correct with minor gaps</td><td>Accurate and comprehensive</td></tr>
+                            <tr><td><strong>Practical Application</strong></td><td>Theoretical only, no context</td><td>Some real-world application</td><td>Clearly applied to org context</td></tr>
+                            <tr><td><strong>Communication</strong></td><td>Unclear or poorly structured</td><td>Adequate presentation</td><td>Clear, concise, and actionable</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="rubric-card">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.25rem;">Peer Review Rubric</h4>
+                            <p style="font-size:0.82rem; color:var(--text-secondary);">Guidelines for team members reviewing each other's work. Encourages constructive feedback and collaborative learning.</p>
+                        </div>
+                        <span style="font-size:0.7rem; background:rgba(16,185,129,0.12); color:#059669; padding:2px 8px; border-radius:4px; font-weight:600; white-space:nowrap;">PEER-SCORED</span>
+                    </div>
+                    <div class="rubric-criteria">
+                        <div class="rubric-level"><span class="rubric-dot" style="background:var(--accent-color);"></span><strong>Strengths</strong> — What was done well?</div>
+                        <div class="rubric-level"><span class="rubric-dot" style="background:#F59E0B;"></span><strong>Suggestions</strong> — What could improve?</div>
+                        <div class="rubric-level"><span class="rubric-dot" style="background:#10B981;"></span><strong>Actionable Next Steps</strong> — Specific recommendations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Learning Paths Tab -->
@@ -630,6 +1020,46 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
         <div class="modal-actions">
             <button class="btn btn-outline" onclick="closeModal('pathModal')">Cancel</button>
             <button class="btn btn-primary" onclick="createPath()">Create Path</button>
+        </div>
+    </div>
+</div>
+
+<!-- Create Cohort Modal -->
+<div class="modal-overlay" id="cohortModal">
+    <div class="modal">
+        <h3>Create Training Cohort</h3>
+        <label>Cohort Name</label>
+        <input type="text" id="cohortName" placeholder="e.g., Q2 2026 MEL Batch">
+        <label>Training Package</label>
+        <select id="cohortPackage">
+            <option value="mel-officer">MEL Officer (5 courses, 12 weeks)</option>
+            <option value="program-manager">Program Manager (4 courses, 10 weeks)</option>
+            <option value="field-staff">Field Staff (3 courses, 6 weeks)</option>
+            <option value="governance">Governance & Policy (4 courses, 10 weeks)</option>
+            <option value="custom">Custom Learning Path</option>
+        </select>
+        <label>Start Date</label>
+        <input type="date" id="cohortStartDate">
+        <label>End Date</label>
+        <input type="date" id="cohortEndDate">
+        <label>Assign Members</label>
+        <div id="cohortMemberSelector" style="max-height:150px; overflow-y:auto; border:1px solid var(--border-color); border-radius:8px; padding:0.5rem; margin-bottom:1rem;">
+            <p style="font-size:0.82rem; color:var(--text-muted); padding:0.5rem;">Add team members first to assign them to cohorts.</p>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-outline" onclick="closeModal('cohortModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="createCohort()">Create Cohort</button>
+        </div>
+    </div>
+</div>
+
+<!-- Package Details Modal -->
+<div class="modal-overlay" id="packageDetailModal">
+    <div class="modal" style="max-width:560px;">
+        <h3 id="packageDetailTitle">Training Package</h3>
+        <div id="packageDetailContent"></div>
+        <div class="modal-actions">
+            <button class="btn btn-outline" onclick="closeModal('packageDetailModal')">Close</button>
         </div>
     </div>
 </div>
@@ -1088,6 +1518,225 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
                 if (btn.dataset.tab === 'progress' && !analyticsLoaded) {
                     analyticsLoaded = true;
                     loadAnalytics();
+                }
+            });
+        });
+    });
+
+    // ========== Training Tab ==========
+    var PACKAGE_DETAILS = {
+        'mel-officer': {
+            title: 'MEL Officer Training',
+            duration: '12 weeks',
+            courses: ['mel', 'dataviz', 'devecon', 'devai', 'sel'],
+            description: 'A comprehensive program to build core Monitoring, Evaluation & Learning competencies.',
+            weeks: [
+                { week: '1–3', focus: 'MEL Foundations', activities: 'Theory of Change, Logframes, Indicator Design' },
+                { week: '4–5', focus: 'Data Visualization', activities: 'Chart Selection, Dashboard Design, Data Storytelling' },
+                { week: '6–8', focus: 'Development Economics', activities: 'Market Analysis, RCT Design, Cost-Benefit Analysis' },
+                { week: '9–10', focus: 'AI for Impact', activities: 'Prompt Engineering, Ethical AI, Survey Analysis' },
+                { week: '11–12', focus: 'SEL & Capstone', activities: 'Team Dynamics, Portfolio Presentation, Peer Review' }
+            ]
+        },
+        'program-manager': {
+            title: 'Program Manager Training',
+            duration: '10 weeks',
+            courses: ['devecon', 'mel', 'dataviz', 'media'],
+            description: 'Develop program design, evidence-based decision-making, and stakeholder communication skills.',
+            weeks: [
+                { week: '1–3', focus: 'Development Economics', activities: 'Program Theory, Market Failures, Impact Evaluation' },
+                { week: '4–6', focus: 'MEL Essentials', activities: 'Results Frameworks, Data Collection, Reporting' },
+                { week: '7–8', focus: 'Data Visualization', activities: 'Program Dashboards, Donor Reporting' },
+                { week: '9–10', focus: 'Media & Comms', activities: 'Stakeholder Communication, Impact Stories' }
+            ]
+        },
+        'field-staff': {
+            title: 'Field Staff Training',
+            duration: '6 weeks',
+            courses: ['mel', 'sel', 'media'],
+            description: 'Essential skills for frontline development workers: data collection, community engagement, and emotional resilience.',
+            weeks: [
+                { week: '1–2', focus: 'MEL Basics', activities: 'Data Collection, Survey Methods, Quality Checks' },
+                { week: '3–4', focus: 'Social-Emotional Learning', activities: 'Self-Awareness, Empathy, Community Rapport' },
+                { week: '5–6', focus: 'Media & Communication', activities: 'Beneficiary Documentation, Photo/Video, Reporting' }
+            ]
+        },
+        'governance': {
+            title: 'Governance & Policy Training',
+            duration: '10 weeks',
+            courses: ['law', 'gandhi', 'poa', 'devecon'],
+            description: 'Policy analysis, constitutional literacy, and accountability frameworks for governance professionals.',
+            weeks: [
+                { week: '1–3', focus: 'Constitution & Law', activities: 'Fundamental Rights, Judiciary, Policy Analysis' },
+                { week: '4–5', focus: 'Gandhian Philosophy', activities: 'Swaraj, Sarvodaya, Applied Non-Violence' },
+                { week: '6–8', focus: 'Politics of Aspiration', activities: 'Accountability, Decentralization, Citizen Voice' },
+                { week: '9–10', focus: 'Development Economics', activities: 'Public Finance, Welfare Programs, Evaluation' }
+            ]
+        }
+    };
+
+    window.switchTrainingSection = function(section, btn) {
+        document.querySelectorAll('.training-section').forEach(function(s) { s.classList.remove('active'); });
+        document.querySelectorAll('.training-sub-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.getElementById('training-' + section).classList.add('active');
+        btn.classList.add('active');
+    };
+
+    window.deployPackage = async function(packageId, courseIds, title) {
+        if (!orgData) { alert('Organization data not loaded.'); return; }
+        if (!confirm('Deploy "' + title + '" as a learning path for your team?')) return;
+
+        var { error } = await supabaseClient
+            .from('learning_paths')
+            .insert({
+                org_id: orgData.id,
+                title: title,
+                description: PACKAGE_DETAILS[packageId].description,
+                course_ids: courseIds,
+                created_by: ImpactMojoAuth.getUser().id
+            });
+
+        if (error) { alert('Error: ' + error.message); return; }
+        alert(title + ' has been deployed! View it in the Learning Paths tab.');
+        await loadPaths();
+        updateStats();
+    };
+
+    window.viewPackageDetails = function(packageId) {
+        var pkg = PACKAGE_DETAILS[packageId];
+        if (!pkg) return;
+        document.getElementById('packageDetailTitle').textContent = pkg.title;
+        var html = '<p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">' + pkg.description + '</p>';
+        html += '<p style="font-size:0.82rem; margin-bottom:0.75rem;"><strong>Duration:</strong> ' + pkg.duration + ' &middot; <strong>Courses:</strong> ' + pkg.courses.length + '</p>';
+        html += '<h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem;">Weekly Schedule</h4>';
+        html += '<table class="rubric-table"><thead><tr><th>Week</th><th>Focus Area</th><th>Key Activities</th></tr></thead><tbody>';
+        pkg.weeks.forEach(function(w) {
+            html += '<tr><td><strong>' + w.week + '</strong></td><td>' + w.focus + '</td><td>' + w.activities + '</td></tr>';
+        });
+        html += '</tbody></table>';
+        document.getElementById('packageDetailContent').innerHTML = html;
+        document.getElementById('packageDetailModal').classList.add('active');
+    };
+
+    window.downloadGuide = function(courseId) {
+        var guideNames = {
+            mel: 'MEL Foundations Facilitator Guide',
+            dataviz: 'Data Visualization Facilitator Guide',
+            devecon: 'Development Economics Facilitator Guide',
+            devai: 'AI for Impact Facilitator Guide',
+            sel: 'Social-Emotional Learning Facilitator Guide'
+        };
+        alert('Downloading: ' + (guideNames[courseId] || courseId) + '\n\nFacilitator guides are being prepared and will be available as downloadable PDFs. Contact hello@impactmojo.in for early access.');
+    };
+
+    // Cohort Management
+    var cohorts = [];
+
+    async function loadCohorts() {
+        if (!orgData) return;
+        var stored = localStorage.getItem('impactmojo_cohorts_' + orgData.id);
+        cohorts = stored ? JSON.parse(stored) : [];
+        renderCohorts();
+    }
+
+    function saveCohorts() {
+        if (!orgData) return;
+        localStorage.setItem('impactmojo_cohorts_' + orgData.id, JSON.stringify(cohorts));
+    }
+
+    function renderCohorts() {
+        var container = document.getElementById('cohortsList');
+        if (!cohorts.length) {
+            container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><h3>No Cohorts Yet</h3><p>Create a training cohort to schedule group learning with deadlines and milestones.</p></div>';
+            return;
+        }
+        var packageNames = { 'mel-officer': 'MEL Officer', 'program-manager': 'Program Manager', 'field-staff': 'Field Staff', 'governance': 'Governance & Policy', 'custom': 'Custom Path' };
+        container.innerHTML = cohorts.map(function(c, idx) {
+            var now = new Date();
+            var start = new Date(c.startDate);
+            var end = new Date(c.endDate);
+            var status = now < start ? 'Upcoming' : now > end ? 'Completed' : 'Active';
+            var statusColor = status === 'Active' ? '#10B981' : status === 'Upcoming' ? '#F59E0B' : 'var(--text-muted)';
+            var memberChips = (c.memberNames || []).map(function(n) { return '<span class="cohort-member-chip">' + escHtml(n) + '</span>'; }).join('');
+            return '<div class="cohort-card">' +
+                '<div class="cohort-header"><div>' +
+                '<h4 style="font-size:1rem; font-weight:600;">' + escHtml(c.name) + '</h4>' +
+                '<span style="font-size:0.75rem; color:' + statusColor + '; font-weight:600;">' + status + '</span>' +
+                '</div><button class="btn btn-outline btn-sm" onclick="deleteCohort(' + idx + ')">Remove</button></div>' +
+                '<div class="cohort-meta">' +
+                '<div class="cohort-meta-item"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>' + c.startDate + ' → ' + c.endDate + '</div>' +
+                '<div class="cohort-meta-item"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>' + (c.memberNames || []).length + ' members</div>' +
+                '<div class="cohort-meta-item">' + (packageNames[c.packageId] || c.packageId) + '</div>' +
+                '</div>' +
+                (memberChips ? '<div class="cohort-members">' + memberChips + '</div>' : '') +
+                '</div>';
+        }).join('');
+    }
+
+    window.openCohortModal = function() {
+        // Populate member checkboxes
+        var selector = document.getElementById('cohortMemberSelector');
+        if (members.length === 0) {
+            selector.innerHTML = '<p style="font-size:0.82rem; color:var(--text-muted); padding:0.5rem;">Add team members first to assign them to cohorts.</p>';
+        } else {
+            selector.innerHTML = members.filter(function(m) { return m.status === 'active'; }).map(function(m) {
+                var name = m.profiles?.display_name || m.profiles?.full_name || m.profiles?.email || 'Member';
+                return '<label style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; cursor:pointer; font-size:0.85rem;"><input type="checkbox" value="' + m.user_id + '" data-name="' + escHtml(name) + '"> ' + escHtml(name) + '</label>';
+            }).join('');
+        }
+        // Set default dates
+        var today = new Date();
+        document.getElementById('cohortStartDate').value = today.toISOString().slice(0, 10);
+        var endDate = new Date(today.getTime() + 84 * 86400000); // 12 weeks
+        document.getElementById('cohortEndDate').value = endDate.toISOString().slice(0, 10);
+        document.getElementById('cohortModal').classList.add('active');
+    };
+
+    window.createCohort = function() {
+        var name = document.getElementById('cohortName').value.trim();
+        var packageId = document.getElementById('cohortPackage').value;
+        var startDate = document.getElementById('cohortStartDate').value;
+        var endDate = document.getElementById('cohortEndDate').value;
+        if (!name) { alert('Please enter a cohort name.'); return; }
+        if (!startDate || !endDate) { alert('Please set start and end dates.'); return; }
+
+        var selectedMembers = [];
+        var selectedNames = [];
+        document.querySelectorAll('#cohortMemberSelector input:checked').forEach(function(cb) {
+            selectedMembers.push(cb.value);
+            selectedNames.push(cb.dataset.name);
+        });
+
+        cohorts.push({
+            name: name,
+            packageId: packageId,
+            startDate: startDate,
+            endDate: endDate,
+            memberIds: selectedMembers,
+            memberNames: selectedNames,
+            createdAt: new Date().toISOString()
+        });
+        saveCohorts();
+        renderCohorts();
+        closeModal('cohortModal');
+        document.getElementById('cohortName').value = '';
+    };
+
+    window.deleteCohort = function(idx) {
+        if (!confirm('Remove this cohort?')) return;
+        cohorts.splice(idx, 1);
+        saveCohorts();
+        renderCohorts();
+    };
+
+    // Load cohorts when training tab is shown
+    var cohortsLoaded = false;
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.tab-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                if (btn.dataset.tab === 'training' && !cohortsLoaded) {
+                    cohortsLoaded = true;
+                    loadCohorts();
                 }
             });
         });
