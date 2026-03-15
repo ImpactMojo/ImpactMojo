@@ -127,6 +127,18 @@ const ImpactMojoAuth = {
 
             this.isInitialized = true;
 
+            // Re-fetch profile when page becomes visible again (back/forward navigation)
+            // This fixes stale tier state when navigating back from org-dashboard
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible' && this.user) {
+                    this.fetchProfile().then(() => {
+                        this.updateUI();
+                    }).catch(e => {
+                        console.error('Profile re-fetch on visibility change failed:', e);
+                    });
+                }
+            });
+
         } catch (err) {
             console.error('Auth initialization failed:', err);
             // Ensure auth ready resolves even on error
