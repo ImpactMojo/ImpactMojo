@@ -1106,56 +1106,75 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
     var paths = [];
 
     async function init() {
-        await ImpactMojoAuth.init();
-        await ImpactMojoAuth.waitForAuthReady();
+        // Safety timeout: if init takes too long, show auth gate so page isn't blank
+        var safetyTimer = setTimeout(function() {
+            var dc = document.getElementById('dashboardContent');
+            var ag = document.getElementById('authGate');
+            if (dc.style.display === 'none' && ag.style.display === 'none') {
+                ag.style.display = 'block';
+            }
+        }, 15000);
 
-        if (!ImpactMojoAuth.isLoggedIn()) {
-            document.getElementById('authGate').style.display = 'block';
-            return;
-        }
+        try {
+            await ImpactMojoAuth.init();
+            await ImpactMojoAuth.waitForAuthReady();
 
-        var profile = ImpactMojoAuth.getProfile();
-        if (!profile || profile.subscription_tier !== 'organization') {
-            document.getElementById('authGate').style.display = 'block';
-            return;
-        }
+            if (!ImpactMojoAuth.isLoggedIn()) {
+                document.getElementById('authGate').style.display = 'block';
+                clearTimeout(safetyTimer);
+                return;
+            }
 
-        // Load org data
-        var { data: org } = await supabaseClient
-            .from('organizations')
-            .select('*')
-            .eq('admin_id', profile.id)
-            .single();
+            var profile = ImpactMojoAuth.getProfile();
+            if (!profile || profile.subscription_tier !== 'organization') {
+                document.getElementById('authGate').style.display = 'block';
+                clearTimeout(safetyTimer);
+                return;
+            }
 
-        if (!org) {
-            // Create org for first-time admin
-            var { data: newOrg } = await supabaseClient
+            // Load org data
+            var { data: org } = await supabaseClient
                 .from('organizations')
-                .insert({
-                    name: profile.organization || 'My Organization',
-                    admin_id: profile.id,
-                    billing_email: ImpactMojoAuth.getUser().email
-                })
-                .select()
+                .select('*')
+                .eq('admin_id', profile.id)
                 .single();
-            org = newOrg;
-        }
 
-        if (!org) {
+            if (!org) {
+                // Create org for first-time admin
+                var { data: newOrg } = await supabaseClient
+                    .from('organizations')
+                    .insert({
+                        name: profile.organization || 'My Organization',
+                        admin_id: profile.id,
+                        billing_email: ImpactMojoAuth.getUser().email
+                    })
+                    .select()
+                    .single();
+                org = newOrg;
+            }
+
+            if (!org) {
+                document.getElementById('authGate').style.display = 'block';
+                clearTimeout(safetyTimer);
+                return;
+            }
+
+            orgData = org;
+            document.getElementById('dashboardContent').style.display = 'block';
+            document.getElementById('orgName').textContent = org.name;
+            document.getElementById('settingsOrgName').value = org.name || '';
+            document.getElementById('settingsBillingEmail').value = org.billing_email || '';
+            document.getElementById('settingsBillingAddress').value = org.billing_address || '';
+
+            // Load members and paths in parallel for faster dashboard load
+            await Promise.all([loadMembers(), loadPaths()]);
+            updateStats();
+        } catch (err) {
+            console.error('Org dashboard init failed:', err);
             document.getElementById('authGate').style.display = 'block';
-            return;
+        } finally {
+            clearTimeout(safetyTimer);
         }
-
-        orgData = org;
-        document.getElementById('dashboardContent').style.display = 'block';
-        document.getElementById('orgName').textContent = org.name;
-        document.getElementById('settingsOrgName').value = org.name || '';
-        document.getElementById('settingsBillingEmail').value = org.billing_email || '';
-        document.getElementById('settingsBillingAddress').value = org.billing_address || '';
-
-        // Load members and paths in parallel for faster dashboard load
-        await Promise.all([loadMembers(), loadPaths()]);
-        updateStats();
     }
 
     async function loadMembers() {

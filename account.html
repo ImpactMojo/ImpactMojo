@@ -3013,6 +3013,19 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     const loadingOverlay = document.getElementById('loadingOverlay');
 
+    // Safety timeout in case auth never resolves — must be registered BEFORE await
+    setTimeout(function() {
+        if (loadingOverlay.style.display !== 'none') {
+            loadingOverlay.style.display = 'none';
+            if (!ImpactMojoAuth.isLoggedIn()) {
+                window.location.href = 'login.html';
+            } else {
+                updatePageData();
+                updateSavedItemsDisplay();
+            }
+        }
+    }, 10000);
+
     // Wait for auth to fully initialize (handles OAuth callback tokens in URL)
     try {
         await ImpactMojoAuth.waitForAuthReady();
@@ -3029,16 +3042,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Only redirect to login if auth is ready and user is truly not logged in
         window.location.href = 'login.html';
     }
-
-    // Safety timeout in case auth never resolves
-    setTimeout(function() {
-        if (loadingOverlay.style.display !== 'none') {
-            loadingOverlay.style.display = 'none';
-            if (!ImpactMojoAuth.isLoggedIn()) {
-                window.location.href = 'login.html';
-            }
-        }
-    }, 10000);
 });
 
 // Close dropdowns when clicking outside
