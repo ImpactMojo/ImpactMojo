@@ -513,11 +513,143 @@ body.modal-open { overflow: hidden; }
 }
 .copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 @media print {
-    .site-header, .category-nav, .controls-section, .footer, .modal-overlay, .export-btn,
+    .site-header, .category-nav, .controls-section, .footer, .export-btn,
     .compare-bar, .compare-modal-overlay, .technique-card-actions, .view-tabs, .collection-toolbar { display: none !important; }
     .technique-card { break-inside: avoid; border: 1px solid #ddd !important; box-shadow: none !important; }
-    body { background: #fff; color: #000; }
+    body { background: #fff !important; color: #000 !important; }
 }
+
+/* Print styles for individual technique card from modal */
+body.printing-technique .site-header,
+body.printing-technique .category-nav,
+body.printing-technique .controls-section,
+body.printing-technique .footer,
+body.printing-technique .export-btn,
+body.printing-technique .compare-bar,
+body.printing-technique .compare-modal-overlay,
+body.printing-technique .technique-card-actions,
+body.printing-technique .view-tabs,
+body.printing-technique .collection-toolbar,
+body.printing-technique .main-content,
+body.printing-technique .copy-toast { display: none !important; }
+
+@media print {
+    body.printing-technique {
+        background: #fff !important;
+        color: #222 !important;
+        overflow: visible !important;
+    }
+    body.printing-technique .modal-overlay {
+        position: static !important;
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: none !important;
+        backdrop-filter: none !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+    body.printing-technique .modal-container {
+        position: static !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        width: 100% !important;
+        overflow: visible !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        transform: none !important;
+        background: #fff !important;
+    }
+    body.printing-technique .modal-header {
+        border-bottom: 2px solid #333 !important;
+        padding: 0 0 16px 0 !important;
+        margin-bottom: 8px;
+    }
+    body.printing-technique .modal-close-btn { display: none !important; }
+    body.printing-technique .modal-category-label {
+        background: none !important;
+        padding: 0 !important;
+        font-size: 0.9rem !important;
+        color: #555 !important;
+    }
+    body.printing-technique .modal-category-label img { filter: none !important; }
+    body.printing-technique .modal-technique-title {
+        color: #111 !important;
+        font-size: 1.6rem !important;
+    }
+    body.printing-technique .modal-technique-id {
+        color: #555 !important;
+        font-size: 0.85rem !important;
+    }
+    body.printing-technique .modal-body {
+        padding: 16px 0 !important;
+        overflow: visible !important;
+    }
+    body.printing-technique .modal-tags-row {
+        gap: 6px !important;
+    }
+    body.printing-technique .modal-tag {
+        border: 1px solid #999 !important;
+        background: none !important;
+        color: #333 !important;
+        font-size: 0.8rem !important;
+    }
+    body.printing-technique .modal-section {
+        margin-bottom: 20px !important;
+        break-inside: avoid;
+    }
+    body.printing-technique .modal-section-icon {
+        background: #eee !important;
+    }
+    body.printing-technique .modal-section-icon img {
+        filter: none !important;
+    }
+    body.printing-technique .modal-section-title {
+        color: #111 !important;
+    }
+    body.printing-technique .modal-section-body {
+        color: #333 !important;
+        padding-left: 40px !important;
+    }
+    body.printing-technique .modal-section-body ul li::before {
+        background: #333 !important;
+    }
+    body.printing-technique .related-chip {
+        border: 1px solid #999 !important;
+        background: #f5f5f5 !important;
+        color: #333 !important;
+    }
+    body.printing-technique .modal-notes-section { display: none !important; }
+    body.printing-technique .modal-footer { display: none !important; }
+    body.printing-technique .print-technique-watermark {
+        display: block !important;
+        text-align: center;
+        margin-top: 32px;
+        padding-top: 16px;
+        border-top: 1px solid #ccc;
+        font-size: 0.75rem;
+        color: #999;
+    }
+
+    @page {
+        size: A4;
+        margin: 20mm 15mm;
+    }
+}
+
+/* Print watermark - hidden on screen */
+.print-technique-watermark { display: none; }
+
+/* Print button in modal footer */
+.modal-print-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 10px;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    font-family: inherit; transition: all 0.2s;
+    border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-secondary);
+}
+.modal-print-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.modal-print-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
 
 /* ============================================================
    BOOKMARK & COMPARE CARD CONTROLS
@@ -983,6 +1115,7 @@ body.modal-open { overflow: hidden; }
             </button>
         </div>
         <div class="modal-body" id="modalBody"></div>
+        <div class="print-technique-watermark">NudgeKit BCT Repository &mdash; ImpactMojo &bull; impactmojo.in</div>
         <nav class="modal-footer" aria-label="Navigation">
             <button class="modal-nav-btn" id="modalPrevBtn" onclick="navigateModal(-1)" aria-label="Previous">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Previous
@@ -990,6 +1123,10 @@ body.modal-open { overflow: hidden; }
             <button class="modal-bookmark-btn" id="modalBookmarkBtn" onclick="toggleModalBookmark()" aria-label="Bookmark">
                 <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
                 <span id="modalBookmarkLabel">Bookmark</span>
+            </button>
+            <button class="modal-print-btn" onclick="printTechnique()" aria-label="Print / Save as PDF">
+                <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Print / Save as PDF
             </button>
             <button class="modal-share-btn" onclick="shareTechnique()" aria-label="Copy link">
                 <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
@@ -1260,6 +1397,111 @@ function buildCategoryNav() {
 }
 
 /* ============================================================
+   FUZZY SEARCH UTILITIES
+   ============================================================ */
+/**
+ * Compute Levenshtein distance between two strings.
+ * Uses a single-row DP approach for memory efficiency.
+ */
+function levenshteinDistance(a, b) {
+    if (a === b) return 0;
+    if (!a.length) return b.length;
+    if (!b.length) return a.length;
+    var prev = [], curr = [], i, j;
+    for (j = 0; j <= b.length; j++) prev[j] = j;
+    for (i = 1; i <= a.length; i++) {
+        curr[0] = i;
+        for (j = 1; j <= b.length; j++) {
+            curr[j] = a[i - 1] === b[j - 1]
+                ? prev[j - 1]
+                : 1 + Math.min(prev[j - 1], prev[j], curr[j - 1]);
+        }
+        var tmp = prev; prev = curr; curr = tmp;
+    }
+    return prev[b.length];
+}
+
+/**
+ * Compute the best (minimum) Levenshtein distance between the query and
+ * any substring of `text` of the same length as `query`.
+ * Returns 0 for exact substring match, or the minimum edit distance found.
+ */
+function fuzzySubstringDistance(query, text) {
+    if (!query || !text) return query ? query.length : 0;
+    if (text.indexOf(query) !== -1) return 0;
+    var qLen = query.length;
+    if (qLen > text.length) return levenshteinDistance(query, text);
+    var best = qLen; // worst case: all characters differ
+    // Slide a window over text, checking each position
+    for (var i = 0; i <= text.length - qLen; i++) {
+        var chunk = text.substring(i, i + qLen);
+        var d = levenshteinDistance(query, chunk);
+        if (d < best) {
+            best = d;
+            if (best === 0) return 0;
+        }
+        // Also check a window one char longer (handles insertions)
+        if (i + qLen + 1 <= text.length) {
+            var chunkPlus = text.substring(i, i + qLen + 1);
+            var d2 = levenshteinDistance(query, chunkPlus);
+            if (d2 < best) {
+                best = d2;
+                if (best === 0) return 0;
+            }
+        }
+    }
+    return best;
+}
+
+/**
+ * Score a search query against a haystack string.
+ * Returns a numeric score where lower is better, or -1 if no match.
+ *   0   = exact substring match
+ *   1   = fuzzy match with distance 1
+ *   2   = fuzzy match with distance 2
+ *  -1   = no match (distance > maxTypos)
+ *
+ * maxTypos is adaptive: allows 1 typo for short queries (3-5 chars),
+ * and 2 typos for longer queries (6+ chars). Queries under 3 chars
+ * use exact match only.
+ */
+function fuzzySearchScore(query, haystack) {
+    if (!query) return 0; // empty query matches everything
+    // Exact/partial substring match — best score
+    if (haystack.indexOf(query) !== -1) return 0;
+
+    // For very short queries, only allow exact matches
+    if (query.length < 3) return -1;
+
+    // Determine max allowed typos based on query length
+    var maxTypos = query.length <= 5 ? 1 : 2;
+
+    // Split query into words for multi-word search
+    var queryWords = query.split(/\s+/).filter(function(w) { return w.length > 0; });
+
+    if (queryWords.length > 1) {
+        // For multi-word queries, each word must match (exact or fuzzy)
+        var worstScore = 0;
+        for (var w = 0; w < queryWords.length; w++) {
+            var wordMaxTypos = queryWords[w].length <= 5 ? 1 : 2;
+            if (queryWords[w].length < 3) {
+                // Short words: exact only
+                if (haystack.indexOf(queryWords[w]) === -1) return -1;
+            } else {
+                var d = fuzzySubstringDistance(queryWords[w], haystack);
+                if (d > wordMaxTypos) return -1;
+                if (d > worstScore) worstScore = d;
+            }
+        }
+        return worstScore;
+    }
+
+    // Single word query: fuzzy substring match
+    var dist = fuzzySubstringDistance(query, haystack);
+    return dist <= maxTypos ? dist : -1;
+}
+
+/* ============================================================
    FILTERING
    ============================================================ */
 function getFilteredCategories() {
@@ -1276,10 +1518,18 @@ function getFilteredCategories() {
             if (evFilter && t.evidenceLevel !== evFilter) return false;
             if (searchTerm) {
                 var haystack = [t.name, t.definition, t.example, t.southAsianContext].concat(t.sectors || []).concat(t.implementationTips || []).concat([t.id]).join(' ').toLowerCase();
-                return haystack.indexOf(searchTerm) !== -1;
+                var score = fuzzySearchScore(searchTerm, haystack);
+                if (score === -1) return false;
+                t._searchScore = score;
+                return true;
             }
+            t._searchScore = 0;
             return true;
         });
+        // Sort by search relevance: exact matches first, then fuzzy
+        if (searchTerm) {
+            filtered.sort(function(a, b) { return (a._searchScore || 0) - (b._searchScore || 0); });
+        }
         if (filtered.length === 0) return null;
         return { id: cat.id, name: cat.name, description: cat.description, icon: cat.icon, color: cat.color, techniques: filtered };
     }).filter(Boolean);
@@ -1349,11 +1599,19 @@ function renderCollectionView(container, emptyState, resultsInfo) {
         if (t) {
             if (searchTerm) {
                 var haystack = [t.name, t.definition, t.id].concat(t.sectors || []).join(' ').toLowerCase();
-                if (haystack.indexOf(searchTerm) === -1) return;
+                var score = fuzzySearchScore(searchTerm, haystack);
+                if (score === -1) return;
+                t._searchScore = score;
+            } else {
+                t._searchScore = 0;
             }
             bookmarkedTechniques.push(t);
         }
     });
+    // Sort by search relevance: exact matches first, then fuzzy
+    if (searchTerm) {
+        bookmarkedTechniques.sort(function(a, b) { return (a._searchScore || 0) - (b._searchScore || 0); });
+    }
 
     flatTechniques = bookmarkedTechniques;
     resultsInfo.innerHTML = 'Showing <strong>' + bookmarkedTechniques.length + '</strong> bookmarked technique' + (bookmarkedTechniques.length !== 1 ? 's' : '');
@@ -1524,6 +1782,12 @@ function shareTechnique() {
         toast.classList.add('show');
         setTimeout(function() { toast.classList.remove('show'); }, 2000);
     }).catch(function() { prompt('Copy this link:', url); });
+}
+
+function printTechnique() {
+    document.body.classList.add('printing-technique');
+    window.print();
+    document.body.classList.remove('printing-technique');
 }
 
 document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
