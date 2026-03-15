@@ -1,7 +1,8 @@
 # ImpactMojo
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f9e879bf-4792-42aa-96ea-c3a3b396f8b8/deploy-status)](https://app.netlify.com/sites/impactmojo/deploys)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Code License: MIT](https://img.shields.io/badge/Code-MIT-green.svg)](LICENSE)
+[![Content License: CC BY-NC-ND 4.0](https://img.shields.io/badge/Content-CC_BY--NC--ND_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![GitHub Issues](https://img.shields.io/github/issues/Varnasr/ImpactMojo)](https://github.com/Varnasr/ImpactMojo/issues)
 [![GitHub Wiki](https://img.shields.io/badge/docs-Wiki-blue)](https://github.com/Varnasr/ImpactMojo/wiki)
@@ -535,9 +536,18 @@ ImpactMojo operates on a "pay what you think is fair" model.
 
 ## License
 
-This project is released under the **Creative Commons Attribution 4.0 International (CC-BY-4.0)** license.
+This repository uses a **dual license**:
 
-Educational content is available for educational and non-commercial use. Educators are encouraged to adapt materials with appropriate attribution.
+| Component | License | What it covers |
+|-----------|---------|----------------|
+| **Source code** | MIT | All `.js`, `.css`, build scripts, Supabase functions, infrastructure code |
+| **Educational content** | CC BY-NC-ND 4.0 | Courses, handouts, assessments, case studies, blog posts, images |
+
+**You are welcome to** fork and reuse the technical architecture (code) for your own projects.
+
+**You may not** redistribute, mirror, or republish the educational content — especially premium-gated materials — without written permission. Violations may result in a DMCA takedown.
+
+See [LICENSE](LICENSE) for full terms.
 
 ---
 
