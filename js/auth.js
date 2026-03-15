@@ -493,9 +493,11 @@ const ImpactMojoAuth = {
 
             this.user = data.user;
             await this.fetchProfile();
-            
-            // Sync data after login
-            await this.syncAll();
+
+            // Sync data after login (non-blocking — don't delay redirect)
+            this.syncAll().catch(function (e) {
+                console.error('Post-login sync failed:', e);
+            });
 
             return {
                 success: true,

@@ -2942,6 +2942,10 @@ async function signOut() {
 }
 
 // Auth State Listener - only act on auth changes AFTER initial auth is ready
+// NOTE: This listener only updates UI. Redirect to login is handled solely
+// by the DOMContentLoaded handler below, to avoid redirect loops caused by
+// transient SIGNED_OUT events during token refresh.
+var _accountPageReady = false;
 window.addEventListener('authStateChanged', (e) => {
     // Ignore early events before auth is fully ready (prevents OAuth redirect race)
     if (!ImpactMojoAuth.isAuthReady) return;
@@ -2949,6 +2953,7 @@ window.addEventListener('authStateChanged', (e) => {
     const loadingOverlay = document.getElementById('loadingOverlay');
 
     if (e.detail.isLoggedIn) {
+        _accountPageReady = true;
         loadingOverlay.style.display = 'none';
         // Check for signup extras stored during registration
         var signupExtras = sessionStorage.getItem('impactmojo_signup_extras');
@@ -2965,9 +2970,10 @@ window.addEventListener('authStateChanged', (e) => {
         }
         updatePageData();
         updateSavedItemsDisplay();
-    } else {
-        window.location.href = 'login.html';
     }
+    // If not logged in, do NOT redirect here — the DOMContentLoaded handler
+    // performs the one-time auth gate. Redirecting from this listener causes
+    // loops when Supabase fires transient SIGNED_OUT during token refresh.
 });
 
 // Re-fetch profile and update display when navigating back to this page
@@ -2991,11 +2997,12 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Safety timeout in case auth never resolves — must be registered BEFORE await
     setTimeout(function() {
-        if (loadingOverlay.style.display !== 'none') {
+        if (loadingOverlay.style.display !== 'none' && !_accountPageReady) {
             loadingOverlay.style.display = 'none';
             if (!ImpactMojoAuth.isLoggedIn()) {
                 window.location.href = 'login.html';
             } else {
+                _accountPageReady = true;
                 updatePageData();
                 updateSavedItemsDisplay();
             }
@@ -3010,8 +3017,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.error('Auth ready wait failed:', e);
     }
 
+    // If the authStateChanged listener already showed the page, skip
+    if (_accountPageReady) return;
+
     // Now we know the true auth state
     if (ImpactMojoAuth.isLoggedIn()) {
+        _accountPageReady = true;
         loadingOverlay.style.display = 'none';
         updatePageData();
         updateSavedItemsDisplay();
