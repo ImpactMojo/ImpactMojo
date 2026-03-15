@@ -149,7 +149,13 @@
                 this.createUpgradeModal();
                 this.applyGating();
                 this.setupEventListeners();
-                
+
+                // Verify tier server-side after initial render (catches client tampering)
+                this.verifyTierServerSide();
+
+                // Re-verify every 5 minutes to catch DevTools manipulation
+                setInterval(() => this.verifyTierServerSide(), 5 * 60 * 1000);
+
                 if (CONFIG.DEBUG) console.log('[Premium] Initialized. User tier:', this.currentTier);
             });
         },
@@ -618,6 +624,43 @@
             if (badge) badge.remove();
         },
         
+        /**
+         * Verify tier server-side to prevent client-side tampering.
+         * Re-fetches the profile from Supabase and re-applies gating
+         * if the tier doesn't match what was cached locally.
+         */
+        async verifyTierServerSide() {
+            if (!this.isAuthenticated) return;
+            try {
+                var cfg = window.ImpactMojoConfig || {};
+                if (!cfg.SUPABASE_URL || !cfg.SUPABASE_ANON_KEY) return;
+                if (!window.supabaseClient) return;
+
+                var session = (await window.supabaseClient.auth.getSession()).data.session;
+                if (!session) return;
+
+                var res = await window.supabaseClient
+                    .from('profiles')
+                    .select('subscription_tier, subscription_status')
+                    .eq('id', session.user.id)
+                    .single();
+
+                if (res.error || !res.data) return;
+
+                var serverTier = res.data.subscription_tier || 'explorer';
+                var serverStatus = res.data.subscription_status;
+
+                // If subscription is not active, force explorer
+                if (serverStatus !== 'active') serverTier = 'explorer';
+
+                if (serverTier !== this.currentTier) {
+                    if (CONFIG.DEBUG) console.log('[Premium] Tier mismatch — server:', serverTier, 'client:', this.currentTier);
+                    this.currentTier = serverTier;
+                    this.applyGating();
+                }
+            } catch (_) { /* silent — gating stays as-is */ }
+        },
+
         /**
          * Refresh gating (call after tier change or page update)
          */
