@@ -376,6 +376,7 @@ img { max-width: 100%; display: block; }
     background: rgba(14, 165, 233, 0.08); color: var(--accent-color); border: 1px solid rgba(14, 165, 233, 0.15);
 }
 .sector-pill-more { background: var(--hover-bg); color: var(--text-muted); border-color: var(--border-color); }
+.sector-pill-case-study { background: rgba(139, 92, 246, 0.1); color: #8B5CF6; border-color: rgba(139, 92, 246, 0.2); }
 
 @media (max-width: 768px) { .techniques-grid { grid-template-columns: 1fr; } }
 
@@ -440,6 +441,29 @@ img { max-width: 100%; display: block; }
     font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
 }
 .related-chip:hover { background: rgba(14, 165, 233, 0.1); border-color: var(--accent-color); }
+
+/* Case Studies */
+.case-studies-list { display: flex; flex-direction: column; gap: 16px; padding-left: 40px; }
+.case-study-card {
+    background: var(--secondary-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm); padding: 16px; transition: border-color var(--transition);
+}
+.case-study-card:hover { border-color: var(--accent-color); }
+.case-study-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.case-study-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); line-height: 1.4; }
+.case-study-badge {
+    display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+    border-radius: 12px; font-size: 0.7rem; font-weight: 600; white-space: nowrap;
+}
+.case-study-badge-wash { background: rgba(16, 185, 129, 0.12); color: #10B981; }
+.case-study-badge-nutrition { background: rgba(245, 158, 11, 0.12); color: #F59E0B; }
+.case-study-badge-country { background: rgba(99, 102, 241, 0.12); color: #6366F1; }
+.case-study-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 8px; }
+.case-study-outcome { font-size: 0.82rem; color: var(--success-color); line-height: 1.5; margin-bottom: 6px; }
+.case-study-outcome strong { color: var(--success-color); }
+.case-study-source { font-size: 0.72rem; color: var(--text-muted); font-style: italic; }
+@media (max-width: 768px) { .case-studies-list { padding-left: 0; } }
+
 .modal-footer {
     padding: 14px 28px; border-top: 1px solid var(--border-color);
     display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; background: var(--secondary-bg);
@@ -1517,7 +1541,8 @@ function getFilteredCategories() {
             if (secFilter && (t.sectors || []).indexOf(secFilter) === -1) return false;
             if (evFilter && t.evidenceLevel !== evFilter) return false;
             if (searchTerm) {
-                var haystack = [t.name, t.definition, t.example, t.southAsianContext].concat(t.sectors || []).concat(t.implementationTips || []).concat([t.id]).join(' ').toLowerCase();
+                var caseStudyText = (t.caseStudies || []).map(function(cs) { return [cs.title, cs.sector, cs.country, cs.description, cs.outcome].join(' '); }).join(' ');
+                var haystack = [t.name, t.definition, t.example, t.southAsianContext, caseStudyText].concat(t.sectors || []).concat(t.implementationTips || []).concat([t.id]).join(' ').toLowerCase();
                 var score = fuzzySearchScore(searchTerm, haystack);
                 if (score === -1) return false;
                 t._searchScore = score;
@@ -1659,6 +1684,7 @@ function renderCard(t, catColor, showNote) {
     html += '<div class="technique-card-footer">';
     sectors.slice(0, 3).forEach(function(s) { html += '<span class="sector-pill">' + escapeHTML(s) + '</span>'; });
     if (sectors.length > 3) html += '<span class="sector-pill sector-pill-more">+' + (sectors.length - 3) + '</span>';
+    if (t.caseStudies && t.caseStudies.length) html += '<span class="sector-pill sector-pill-case-study" title="Has ' + t.caseStudies.length + ' case ' + (t.caseStudies.length === 1 ? 'study' : 'studies') + '">' + t.caseStudies.length + ' case ' + (t.caseStudies.length === 1 ? 'study' : 'studies') + '</span>';
     html += '</div></div></article>';
     return html;
 }
@@ -1716,6 +1742,24 @@ function renderModalContent(t) {
         t.implementationTips.forEach(function(tip) { tips += '<li>' + escapeHTML(tip) + '</li>'; });
         tips += '</ul>';
         body += modalSection('si_Check_circle', '#0EA5E9', 'Implementation Tips', tips);
+    }
+    if (t.caseStudies && t.caseStudies.length) {
+        var csContent = '<div class="case-studies-list">';
+        t.caseStudies.forEach(function(cs) {
+            var sectorClass = cs.sector === 'WASH' ? 'case-study-badge-wash' : 'case-study-badge-nutrition';
+            csContent += '<div class="case-study-card">';
+            csContent += '<div class="case-study-header">';
+            csContent += '<span class="case-study-badge ' + sectorClass + '">' + escapeHTML(cs.sector) + '</span>';
+            csContent += '<span class="case-study-badge case-study-badge-country">' + escapeHTML(cs.country) + '</span>';
+            csContent += '</div>';
+            csContent += '<div class="case-study-title">' + escapeHTML(cs.title) + '</div>';
+            csContent += '<div class="case-study-desc">' + escapeHTML(cs.description) + '</div>';
+            csContent += '<div class="case-study-outcome"><strong>Outcome:</strong> ' + escapeHTML(cs.outcome) + '</div>';
+            csContent += '<div class="case-study-source">' + escapeHTML(cs.source) + '</div>';
+            csContent += '</div>';
+        });
+        csContent += '</div>';
+        body += modalSection('si_Globe_detailed', '#8B5CF6', 'Case Studies — WASH &amp; Nutrition', csContent);
     }
     if (t.relatedTechniques && t.relatedTechniques.length) {
         body += '<div class="modal-section"><div class="modal-section-header">';
@@ -1808,10 +1852,11 @@ document.addEventListener('keydown', function(e) {
 function exportCSV() {
     var filtered = getFilteredCategories();
     if (!filtered.length) return;
-    var rows = [['ID', 'Name', 'Category', 'Definition', 'Example', 'South Asian Context', 'Evidence Level', 'Sectors', 'Implementation Tips']];
+    var rows = [['ID', 'Name', 'Category', 'Definition', 'Example', 'South Asian Context', 'Evidence Level', 'Sectors', 'Implementation Tips', 'Case Studies']];
     filtered.forEach(function(cat) {
         cat.techniques.forEach(function(t) {
-            rows.push([t.id, t.name, cat.name, t.definition, t.example || '', t.southAsianContext || '', t.evidenceLevel || '', (t.sectors || []).join('; '), (t.implementationTips || []).join('; ')]);
+            var csSummary = (t.caseStudies || []).map(function(cs) { return '[' + cs.sector + ', ' + cs.country + '] ' + cs.title + ': ' + cs.outcome; }).join(' | ');
+            rows.push([t.id, t.name, cat.name, t.definition, t.example || '', t.southAsianContext || '', t.evidenceLevel || '', (t.sectors || []).join('; '), (t.implementationTips || []).join('; '), csSummary]);
         });
     });
     var csv = rows.map(function(row) { return row.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
