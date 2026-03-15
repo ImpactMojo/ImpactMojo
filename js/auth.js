@@ -75,14 +75,23 @@ const ImpactMojoAuth = {
                     // Initial session check complete - set user if session exists
                     if (session?.user) {
                         this.user = session.user;
-                        await this.fetchProfile();
-                        await this.syncFromCloud();
+                        try {
+                            await this.fetchProfile();
+                        } catch (e) {
+                            console.error('Profile fetch failed during init:', e);
+                        }
                         this._initialSessionHadUser = true;
                     }
-                    // Mark auth as ready - we now know the true auth state
+                    // Mark auth as ready BEFORE sync — sync is non-blocking
                     this.isAuthReady = true;
                     if (this._authReadyResolve) this._authReadyResolve();
                     this.updateUI();
+                    // Sync from cloud in background (non-blocking)
+                    if (session?.user) {
+                        this.syncFromCloud().catch(function (e) {
+                            console.error('Background sync failed:', e);
+                        });
+                    }
                 } else if (event === 'SIGNED_IN' && session?.user) {
                     // Skip redundant work if INITIAL_SESSION already handled this user
                     // (happens on OAuth redirects where both events fire)
@@ -90,15 +99,21 @@ const ImpactMojoAuth = {
                         return;
                     }
                     this.user = session.user;
-                    await this.fetchProfile();
-                    // Sync data when user signs in
-                    await this.syncAll();
+                    try {
+                        await this.fetchProfile();
+                    } catch (e) {
+                        console.error('Profile fetch failed during sign-in:', e);
+                    }
                     // If auth wasn't ready yet (OAuth callback), mark it ready now
                     if (!this.isAuthReady) {
                         this.isAuthReady = true;
                         if (this._authReadyResolve) this._authReadyResolve();
                     }
                     this.updateUI();
+                    // Sync data in background (non-blocking)
+                    this.syncAll().catch(function (e) {
+                        console.error('Background sync failed:', e);
+                    });
                 } else if (event === 'SIGNED_OUT') {
                     this.user = null;
                     this.profile = null;
