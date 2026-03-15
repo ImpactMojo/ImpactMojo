@@ -45,7 +45,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **Dev Case Studies** | 200 evidence-based case studies from 117 countries |
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
-| **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, and evidence ratings — dark mode, search, filters, CSV export |
+| **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export — dark mode, filters, CSV export |
 | **Dataverse** | 215 curated tools, datasets, APIs, and platforms for social impact and policy research — dark mode, category filters, responsive cards |
 | **400+ Handouts** | Downloadable resources across 6 learning tracks |
 | **Learning Loops Blog** | Articles, tutorials, and case studies on development practice |
@@ -203,6 +203,8 @@ All pages available in 5 languages via built-in translation: English, Hindi (ह
 - **Progress Tracking** — Monitor your learning journey
 - **Reading Lists** — Curated resource collections
 - **Course Comparison** — Compare courses side-by-side
+- **Interactive Assessments** — MCQ, multi-select, and T/F quizzes for MEL, DataViz, and DevAI courses with scoring, feedback, and localStorage persistence
+- **Offline PWA Support** — Service worker caches all 9 flagship courses for offline access with automatic background updates
 - **Certificate Generation** — Auto-issued on course completion with public verification
 - **Portfolio Builder** — Premium feature: curate certificates, projects & case studies with PDF export
 
@@ -228,6 +230,7 @@ All pages available in 5 languages via built-in translation: English, Hindi (ह
 | **Google Analytics** | Usage analytics |
 | **Formspree** | Contact form handling |
 | **UserWay** | Accessibility widget |
+| **axe-core + Puppeteer** | Automated WCAG 2.1 AA accessibility testing |
 | **Google Fonts** | Inter & Poppins typography |
 
 ### Architecture
@@ -281,6 +284,9 @@ ImpactMojo/
 ├── mobile-index.html       # Mobile-optimized version
 ├── _redirects              # Netlify clean URL routing
 ├── manifest.json           # PWA manifest
+├── service-worker.js       # Offline PWA service worker (cache-first for courses)
+├── offline.html            # Offline fallback page
+├── package.json            # Node.js deps for accessibility testing
 │
 ├── js/
 │   ├── auth.js             # Supabase authentication
@@ -288,7 +294,10 @@ ImpactMojo/
 │   ├── resource-launch.js  # JWT-based premium resource launcher
 │   ├── token-gate.js       # Client-side token verification
 │   ├── premium.js          # Premium tier UI logic
-│   └── translate.js        # Multilingual translation (Google Translate)
+│   ├── translate.js        # Multilingual translation (Google Translate, lazy-loaded)
+│   ├── pwa.js              # Service worker registration & update checks
+│   ├── assessments.js      # Interactive assessment component (MCQ/T-F/multi-select)
+│   └── assessment-data.js  # Question banks for MEL, DataViz, DevAI courses
 │
 ├── login.html              # User login
 ├── signup.html             # User registration
@@ -301,7 +310,7 @@ ImpactMojo/
 ├── coaching.html           # 1-on-1 coaching services
 ├── dojos.html              # Practice-based skill sessions
 ├── catalog.html            # Complete learning catalog
-├── bct-repository.html     # BCT Repository (203 techniques)
+├── bct-repository.html     # BCT Repository (203 techniques, fuzzy search, bookmarks, comparison, PDF export)
 ├── dataverse.html          # Dataverse (215 tools & datasets)
 ├── blog.html               # Learning Loops blog
 ├── podcast.html            # Between the Logframes podcast
@@ -331,6 +340,9 @@ ImpactMojo/
 ├── assets/
 │   ├── images/             # Logos, icons, illustrations
 │   └── fonts/              # Custom fonts
+│
+├── tests/
+│   └── axe-accessibility.js # Automated WCAG 2.1 AA accessibility testing (axe-core + Puppeteer)
 │
 ├── LICENSE                 # CC-BY-4.0 license
 ├── CONTRIBUTING.md         # Contribution guidelines
@@ -504,7 +516,7 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 9.3.0
+**Version:** 9.4.0
 **Last Updated:** March 2026
 **License:** CC-BY-4.0
 **Hosting:** Netlify
