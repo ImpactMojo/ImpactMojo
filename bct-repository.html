@@ -1786,8 +1786,12 @@ function shareTechnique() {
 
 function printTechnique() {
     document.body.classList.add('printing-technique');
+    var cleanup = function() {
+        document.body.classList.remove('printing-technique');
+        window.removeEventListener('afterprint', cleanup);
+    };
+    window.addEventListener('afterprint', cleanup);
     window.print();
-    document.body.classList.remove('printing-technique');
 }
 
 document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
