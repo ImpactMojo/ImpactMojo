@@ -301,6 +301,8 @@
     }
 
     // ---- Submit ----
+    var FORMSPREE_URL = 'https://formspree.io/f/xpwdvgzp';
+
     function submitChallenge(challengeId) {
         var textarea = document.getElementById('challengeResponse');
         if (!textarea) return;
@@ -311,6 +313,7 @@
             return;
         }
 
+        var ch = challenges.find(function (c) { return c.id === challengeId; });
         var btn = document.getElementById('submitChallengeBtn');
         if (btn) {
             btn.disabled = true;
@@ -329,7 +332,23 @@
         delete drafts[challengeId];
         saveDrafts();
 
-        // Try Supabase sync
+        // Submit to Formspree (email notification)
+        var formData = new FormData();
+        formData.append('_subject', 'Challenge Submission: ' + (ch ? ch.title : challengeId));
+        formData.append('challenge_id', challengeId);
+        formData.append('challenge_title', ch ? ch.title : '');
+        formData.append('challenge_track', ch ? ch.trackLabel : '');
+        formData.append('challenge_difficulty', ch ? ch.difficulty : '');
+        formData.append('submission_text', text);
+        formData.append('submitted_at', new Date().toISOString());
+
+        fetch(FORMSPREE_URL, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        }).catch(function () { /* silent — localStorage is primary fallback */ });
+
+        // Sync to Supabase (DB record)
         syncSubmission(challengeId, text);
 
         // Show success
