@@ -2970,6 +2970,18 @@ window.addEventListener('authStateChanged', (e) => {
     }
 });
 
+// Re-fetch profile and update display when navigating back to this page
+document.addEventListener('visibilitychange', async function() {
+    if (document.visibilityState === 'visible' && ImpactMojoAuth.isLoggedIn()) {
+        try {
+            await ImpactMojoAuth.fetchProfile();
+            updatePageData();
+        } catch (e) {
+            console.error('Profile re-fetch on return failed:', e);
+        }
+    }
+});
+
 // Initialization
 document.addEventListener('DOMContentLoaded', async function() {
     initTheme();

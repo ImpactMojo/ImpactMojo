@@ -98,6 +98,15 @@
         // Modal functions
         function openModal(modalId) {
             document.getElementById(modalId).style.display = "block";
+
+            // Dynamically update labs count in modal header
+            if (modalId === 'labsModal') {
+                var labsCountEl = document.getElementById('labsCount');
+                if (labsCountEl) {
+                    var count = document.querySelectorAll('#labsModal .modal-item').length;
+                    labsCountEl.textContent = '(' + count + ')';
+                }
+            }
             
             // Load Google Calendar buttons when coaching modal opens
             if (modalId === 'coachingModal' && window.calendar && window.calendar.schedulingButton) {

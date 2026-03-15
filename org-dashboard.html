@@ -347,9 +347,37 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
     font-size: 0.75rem; padding: 2px 8px; border-radius: 6px;
     background: var(--hover-bg); color: var(--text-secondary);
 }
+
+/* V3 Floating Paper Plane */
+.v3-paper-plane {
+    position: fixed; top: 15%; right: 8%; width: 140px; height: 140px;
+    opacity: 0.25; z-index: 0; pointer-events: none;
+    animation: v3-float-plane 25s ease-in-out infinite;
+}
+body.dark-mode .v3-paper-plane { opacity: 0.10; }
+@keyframes v3-float-plane {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(-60px, 40px) rotate(10deg); }
+    40% { transform: translate(120px, 30px) rotate(-8deg); }
+    60% { transform: translate(40px, 60px) rotate(15deg); }
+    80% { transform: translate(-30px, 20px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+@media (max-width: 768px) { .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; } }
+@media (prefers-reduced-motion: reduce) { .v3-paper-plane { animation: none !important; } }
+@media print { .v3-paper-plane { display: none !important; } }
 </style>
 </head>
 <body>
+<!-- V3 Floating Paper Plane -->
+<svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
 
 <!-- Header -->
 <header class="header">
@@ -675,19 +703,19 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
                     </div>
                 </div>
 
-                <!-- Governance & Policy Package -->
+                <!-- Policy & Governance Officer Package -->
                 <div class="training-package-card">
                     <div class="training-package-header" style="background:linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);">
                         <span class="training-package-icon">
                             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                         </span>
                         <div>
-                            <h4 style="color:white; font-size:1rem; font-weight:700;">Governance & Policy</h4>
+                            <h4 style="color:white; font-size:1rem; font-weight:700;">Policy & Governance Officer</h4>
                             <p style="color:rgba(255,255,255,0.85); font-size:0.75rem;">4 courses &middot; 10 weeks</p>
                         </div>
                     </div>
                     <div class="training-package-body">
-                        <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:0.75rem;">Comprehensive policy analysis, constitutional literacy, and accountability frameworks for governance professionals.</p>
+                        <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:0.75rem;">Policy analysis, constitutional literacy, and accountability frameworks for governance and policy officers.</p>
                         <div class="training-package-courses">
                             <span class="path-course-tag">Constitution & Law</span>
                             <span class="path-course-tag">Gandhian Philosophy</span>
@@ -695,7 +723,7 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
                             <span class="path-course-tag">Dev Economics</span>
                         </div>
                         <div style="display:flex; gap:0.5rem; margin-top:1rem;">
-                            <button class="btn btn-primary" style="flex:1;" onclick="deployPackage('governance', ['law','gandhi','poa','devecon'], 'Governance & Policy Training')">Deploy to Team</button>
+                            <button class="btn btn-primary" style="flex:1;" onclick="deployPackage('governance', ['law','gandhi','poa','devecon'], 'Policy & Governance Officer Training')">Deploy to Team</button>
                             <button class="btn btn-outline" onclick="viewPackageDetails('governance')">Details</button>
                         </div>
                     </div>
@@ -1035,7 +1063,7 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
             <option value="mel-officer">MEL Officer (5 courses, 12 weeks)</option>
             <option value="program-manager">Program Manager (4 courses, 10 weeks)</option>
             <option value="field-staff">Field Staff (3 courses, 6 weeks)</option>
-            <option value="governance">Governance & Policy (4 courses, 10 weeks)</option>
+            <option value="governance">Policy & Governance Officer (4 courses, 10 weeks)</option>
             <option value="custom">Custom Learning Path</option>
         </select>
         <label>Start Date</label>
@@ -1588,10 +1616,10 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
             ]
         },
         'governance': {
-            title: 'Governance & Policy Training',
+            title: 'Policy & Governance Officer Training',
             duration: '10 weeks',
             courses: ['law', 'gandhi', 'poa', 'devecon'],
-            description: 'Policy analysis, constitutional literacy, and accountability frameworks for governance professionals.',
+            description: 'Policy analysis, constitutional literacy, and accountability frameworks for policy and governance officers.',
             weeks: [
                 { week: '1–3', focus: 'Constitution & Law', activities: 'Fundamental Rights, Judiciary, Policy Analysis' },
                 { week: '4–5', focus: 'Gandhian Philosophy', activities: 'Swaraj, Sarvodaya, Applied Non-Violence' },
@@ -1676,7 +1704,7 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
             container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><h3>No Cohorts Yet</h3><p>Create a training cohort to schedule group learning with deadlines and milestones.</p></div>';
             return;
         }
-        var packageNames = { 'mel-officer': 'MEL Officer', 'program-manager': 'Program Manager', 'field-staff': 'Field Staff', 'governance': 'Governance & Policy', 'custom': 'Custom Path' };
+        var packageNames = { 'mel-officer': 'MEL Officer', 'program-manager': 'Program Manager', 'field-staff': 'Field Staff', 'governance': 'Policy & Governance Officer', 'custom': 'Custom Path' };
         container.innerHTML = cohorts.map(function(c, idx) {
             var now = new Date();
             var start = new Date(c.startDate);

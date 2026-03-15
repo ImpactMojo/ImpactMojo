@@ -328,16 +328,16 @@ body.dark-mode .header {
 }
 
 .pricing-card.org-tier {
-    border-color: #F59E0B;
+    border-color: #0EA5E9;
 }
 
 .pricing-card.org-tier::before {
-    content: 'Teams';
+    content: 'For Teams';
     position: absolute;
     top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--gradient-premium);
+    background: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
     color: white;
     padding: 0.25rem 1rem;
     border-radius: 50px;
@@ -1151,9 +1151,49 @@ body.user-authenticated .auth-logged-out { display: none !important; }
     color: var(--text-secondary);
     font-size: 0.9rem;
 }
+
+/* V3 Floating Paper Plane */
+.v3-paper-plane {
+    position: fixed;
+    top: 15%;
+    right: 8%;
+    width: 140px;
+    height: 140px;
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+    animation: v3-float-plane 25s ease-in-out infinite;
+}
+body.dark-mode .v3-paper-plane { opacity: 0.10; }
+@keyframes v3-float-plane {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(-60px, 40px) rotate(10deg); }
+    40% { transform: translate(120px, 30px) rotate(-8deg); }
+    60% { transform: translate(40px, 60px) rotate(15deg); }
+    80% { transform: translate(-30px, 20px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+@media (max-width: 768px) {
+    .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .v3-paper-plane { animation: none !important; }
+}
+@media print {
+    .v3-paper-plane { display: none !important; }
+}
 </style>
 </head>
 <body>
+<!-- V3 Floating Paper Plane -->
+<svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
 <a href="#main-content" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;padding:8px 16px;background:#F59E0B;color:#0F172A;font-weight:600;font-size:0.9rem;text-decoration:none;border-radius:0 0 8px 0;" onfocus="this.style.cssText='position:fixed;left:0;top:0;z-index:9999;padding:8px 16px;background:#F59E0B;color:#0F172A;font-weight:600;font-size:0.9rem;text-decoration:none;border-radius:0 0 8px 0;'" onblur="this.style.cssText='position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;'">Skip to content</a>
 
 <!-- Header -->
@@ -1312,8 +1352,8 @@ body.user-authenticated .auth-logged-out { display: none !important; }
                     <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
                 </svg>
             </div>
-            <div class="tier-name">Organization</div>
-            <div class="tier-desc">Team dashboards, learning paths & support</div>
+            <div class="tier-name">Team Plan</div>
+            <div class="tier-desc">Everything in Professional for your whole team, plus dashboards, custom learning paths & dedicated support</div>
             <div class="tier-price">
                 <span class="price-currency">₹</span><span class="price-amount">1,499</span>
                 <span class="price-period">/user/month</span>
@@ -1469,11 +1509,11 @@ body.user-authenticated .auth-logged-out { display: none !important; }
     <!-- ORGANIZATION DETAIL -->
     <div class="tier-detail-card" id="detail-organization">
         <div class="tier-detail-header organization-header">
-            <div class="tier-detail-label">Organization</div>
+            <div class="tier-detail-label">Team Plan</div>
             <div class="tier-detail-price">₹1,499/user/month &middot; Custom annual pricing</div>
         </div>
         <div class="tier-detail-body">
-            <p class="detail-includes">Includes everything in Professional for every team member, plus:</p>
+            <p class="detail-includes">Every team member gets full Professional-tier access. The Team Plan adds:</p>
             <div class="detail-item">
                 <h4>Team Dashboard</h4>
                 <p>Track completion rates, quiz scores, time-on-task, and engagement metrics across your staff. Identify skill gaps, monitor onboarding progress, and generate reports for donors or HR. Filterable by team, project, or individual.</p>
