@@ -1,0 +1,73 @@
+# Dedicated accessibility testing workflow using axe-core
+# Runs on push/PR to main and can be triggered manually
+name: Accessibility Tests (axe-core)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  axe-accessibility:
+    name: axe-core WCAG 2.1 AA audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start local server
+        run: npx http-server -p 8080 -s &
+
+      - name: Wait for server
+        run: sleep 3
+
+      - name: Run axe-core accessibility tests
+        id: axe
+        run: |
+          set +e
+          npm run test:a11y 2>&1 | tee axe-results.txt
+          AXE_EXIT=$?
+          echo "exit_code=$AXE_EXIT" >> "$GITHUB_OUTPUT"
+
+          # Build a markdown report from the output
+          node -e "
+            const fs = require('fs');
+            const raw = fs.readFileSync('axe-results.txt', 'utf8');
+            let md = '## axe-core Accessibility Audit Results\n\n';
+            md += '\`\`\`\n' + raw.replace(/\x1b\[[0-9;]*m/g, '') + '\n\`\`\`\n';
+            if ($AXE_EXIT !== 0) {
+              md += '\n> **Note:** axe-core detected serious WCAG 2.1 AA violations. Please fix before merging.\n';
+            } else {
+              md += '\n> All pages passed axe-core accessibility checks.\n';
+            }
+            fs.writeFileSync('axe-report.md', md);
+          "
+
+      - name: Upload axe-core report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: axe-accessibility-report
+          path: axe-report.md
+
+      - name: Comment on PR with axe-core results
+        if: always() && github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: axe-accessibility-audit
+          path: axe-report.md
+
+      - name: Fail on violations
+        if: steps.axe.outputs.exit_code != '0'
+        run: |
+          echo "::error::axe-core accessibility audit failed with WCAG 2.1 AA violations."
+          exit 1
