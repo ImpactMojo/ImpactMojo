@@ -1,10 +1,9 @@
 /**
  * ImpactMojo Translation Widget
- * Uses Google Translate (free, no API key) with custom UI
+ * Two-tier translation system:
+ *   1. Curated translations (i18n/*.json) applied to [data-i18n] elements
+ *   2. Google Translate fallback for remaining content
  * Supports: English, Hindi, Tamil, Bengali, Marathi
- *
- * The Google Translate widget is loaded off-screen and controlled
- * programmatically through our own language selector UI.
  */
 (function() {
     'use strict';
@@ -21,6 +20,110 @@
     var gtReady = false;
     var gtLoading = false;
     var pendingLang = null;
+
+    // ===== CURATED TRANSLATION ENGINE =====
+    // Loads hand-crafted translations from i18n/*.json and applies them
+    // to elements with data-i18n attributes. These are higher quality
+    // than machine translation and take priority.
+    var curatedTranslations = {};  // { langCode: { key: value, ... } }
+    var englishOriginals = {};     // { elementId: originalText } for reverting
+
+    function resolveKey(obj, keyPath) {
+        var parts = keyPath.split('.');
+        var val = obj;
+        for (var i = 0; i < parts.length; i++) {
+            if (val == null) return undefined;
+            val = val[parts[i]];
+        }
+        return val;
+    }
+
+    function loadCuratedTranslations(langCode) {
+        if (curatedTranslations[langCode]) {
+            applyCuratedTranslations(langCode);
+            return;
+        }
+
+        // Determine base path — works from any page depth
+        var basePath = '';
+        var scripts = document.querySelectorAll('script[src*="translate.js"]');
+        if (scripts.length > 0) {
+            var src = scripts[0].getAttribute('src');
+            // src is like "js/translate.js" or "../js/translate.js"
+            basePath = src.replace(/js\/translate\.js.*$/, '');
+        }
+
+        var url = basePath + 'i18n/' + langCode + '.json';
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                try {
+                    curatedTranslations[langCode] = JSON.parse(xhr.responseText);
+                    applyCuratedTranslations(langCode);
+                } catch (e) {
+                    console.warn('Failed to parse curated translations for ' + langCode);
+                }
+            }
+        };
+        xhr.onerror = function() {
+            console.warn('Could not load curated translations for ' + langCode);
+        };
+        xhr.send();
+    }
+
+    function applyCuratedTranslations(langCode) {
+        var dict = curatedTranslations[langCode];
+        if (!dict) return;
+
+        var elements = document.querySelectorAll('[data-i18n]');
+        elements.forEach(function(el) {
+            var key = el.getAttribute('data-i18n');
+            var translation = resolveKey(dict, key);
+            if (translation) {
+                // Store original English text for reverting
+                if (!el.id) el.id = 'i18n_' + Math.random().toString(36).substr(2, 8);
+                if (!englishOriginals[el.id]) {
+                    englishOriginals[el.id] = el.textContent;
+                }
+                el.textContent = translation;
+                // Mark as curated so Google Translate skips it
+                el.classList.add('notranslate');
+                el.setAttribute('translate', 'no');
+            }
+        });
+
+        // Also handle data-i18n-placeholder for inputs
+        var inputs = document.querySelectorAll('[data-i18n-placeholder]');
+        inputs.forEach(function(el) {
+            var key = el.getAttribute('data-i18n-placeholder');
+            var translation = resolveKey(dict, key);
+            if (translation) {
+                el.setAttribute('placeholder', translation);
+            }
+        });
+
+        // Handle data-i18n-title for title attributes
+        var titled = document.querySelectorAll('[data-i18n-title]');
+        titled.forEach(function(el) {
+            var key = el.getAttribute('data-i18n-title');
+            var translation = resolveKey(dict, key);
+            if (translation) {
+                el.setAttribute('title', translation);
+            }
+        });
+    }
+
+    function revertCuratedTranslations() {
+        var elements = document.querySelectorAll('[data-i18n]');
+        elements.forEach(function(el) {
+            if (el.id && englishOriginals[el.id]) {
+                el.textContent = englishOriginals[el.id];
+                el.classList.remove('notranslate');
+                el.removeAttribute('translate');
+            }
+        });
+    }
 
     // ===== COOKIE CLEANUP =====
     function clearGoogTransCookies() {
@@ -315,8 +418,10 @@
         var gtLangCode = LANGUAGES[langKey].gtCode;
 
         if (langKey === 'en') {
-            // Switching back to English — revert if GT is loaded, or just
-            // clear cookies and reload to get a clean English page
+            // Switching back to English — revert curated translations
+            revertCuratedTranslations();
+
+            // Revert GT if loaded, or clear cookies and reload
             if (gtReady) {
                 doTranslate('en');
             } else {
@@ -326,13 +431,16 @@
             return;
         }
 
-        // Non-English: load GT if needed, then translate
+        // Non-English: apply curated translations first (higher quality)
+        loadCuratedTranslations(langKey);
         applyIndicClass(langKey);
+
+        // Then load GT for remaining uncurated content
         if (gtReady) {
             doTranslate(gtLangCode);
         } else {
             pendingLang = gtLangCode;
-            loadGoogleTranslate(); // Lazy-load GT on first non-English selection
+            loadGoogleTranslate();
         }
     }
 
@@ -372,10 +480,10 @@
             }
         }
 
-        // Only load Google Translate if the user previously chose a non-English
-        // language. For English users, GT is never loaded — this prevents GT from
-        // auto-translating based on browser language detection.
+        // For non-English users: apply curated translations immediately,
+        // then load Google Translate for remaining content
         if (currentLang !== 'en') {
+            loadCuratedTranslations(currentLang);
             loadGoogleTranslate();
         }
     }
