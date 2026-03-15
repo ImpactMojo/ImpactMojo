@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToC Workbench — ImpactMojo</title>
+<style>
+:root{--bg:#f8fafc;--card-bg:#fff;--border:#e2e8f0;--text:#1e293b;--text-muted:#94a3b8;--accent:#0EA5E9;--hover:#f1f5f9}
+@media(prefers-color-scheme:dark){:root{--bg:#0f172a;--card-bg:#1e293b;--border:#334155;--text:#e2e8f0;--text-muted:#64748b;--accent:#38bdf8;--hover:#1e293b}}
+*{box-sizing:border-box;margin:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;height:100vh;overflow:hidden}
+/* Toolbar */
+.toc-toolbar{display:flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:var(--card-bg);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
+.toc-toolbar h1{font-size:1rem;font-weight:700;margin-right:auto}
+.toc-toolbar a{color:var(--accent);text-decoration:none;font-size:0.8rem}
+.toc-btn{padding:0.35rem 0.75rem;border-radius:6px;border:1px solid var(--border);background:var(--card-bg);color:var(--text);font-size:0.78rem;font-weight:600;cursor:pointer}
+.toc-btn:hover{border-color:var(--accent)}
+.toc-btn-primary{background:var(--accent);color:white;border-color:var(--accent)}
+select.toc-btn{appearance:auto}
+/* Layout */
+.toc-layout{display:flex;flex:1;overflow:hidden}
+/* Sidebar — BCT Techniques */
+.toc-sidebar{width:280px;background:var(--card-bg);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+.toc-sidebar-header{padding:0.75rem;border-bottom:1px solid var(--border)}
+.toc-sidebar-header input{width:100%;padding:0.4rem 0.6rem;border:1px solid var(--border);border-radius:6px;font-size:0.8rem;background:var(--bg);color:var(--text)}
+.toc-sidebar-list{flex:1;overflow-y:auto;padding:0.5rem}
+.toc-bct-category{margin-bottom:0.5rem}
+.toc-bct-cat-header{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);padding:0.3rem 0.4rem;cursor:pointer;display:flex;align-items:center;gap:0.3rem}
+.toc-bct-cat-header:hover{color:var(--text)}
+.toc-bct-cat-list{display:none}
+.toc-bct-cat-list.open{display:block}
+.toc-bct-item{padding:0.35rem 0.5rem;font-size:0.78rem;border-radius:6px;cursor:grab;margin-bottom:2px;border:1px solid transparent;display:flex;align-items:center;gap:0.4rem;user-select:none}
+.toc-bct-item:hover{background:var(--hover);border-color:var(--border)}
+.toc-bct-item .bct-evidence{font-size:0.6rem;padding:0.1rem 0.3rem;border-radius:4px;font-weight:600}
+.bct-strong{background:#dcfce7;color:#16a34a}
+.bct-moderate{background:#fef3c7;color:#d97706}
+/* Canvas */
+.toc-canvas-wrap{flex:1;position:relative;overflow:auto;background:var(--bg);background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);background-size:24px 24px}
+.toc-canvas{position:relative;width:3000px;height:2000px;min-width:100%;min-height:100%}
+/* Nodes */
+.toc-node{position:absolute;background:var(--card-bg);border:2px solid var(--border);border-radius:10px;min-width:160px;max-width:240px;cursor:move;user-select:none;z-index:2}
+.toc-node:hover{border-color:var(--accent);box-shadow:0 2px 12px rgba(14,165,233,0.15)}
+.toc-node.selected{border-color:var(--accent);box-shadow:0 0 0 2px rgba(14,165,233,0.3)}
+.toc-node-header{padding:0.4rem 0.6rem;border-bottom:1px solid var(--border);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0}
+.toc-node-body{padding:0.5rem 0.6rem}
+.toc-node-title{font-size:0.85rem;font-weight:600;outline:none;min-height:1.2em}
+.toc-node-desc{font-size:0.72rem;color:var(--text-muted);margin-top:0.25rem;outline:none;min-height:1em}
+.toc-node-bcts{display:flex;flex-wrap:wrap;gap:0.2rem;margin-top:0.4rem}
+.toc-node-bct-tag{font-size:0.6rem;padding:0.1rem 0.35rem;border-radius:8px;background:rgba(14,165,233,0.1);color:var(--accent);font-weight:600;cursor:pointer}
+.toc-node-bct-tag:hover{text-decoration:line-through;opacity:0.6}
+.toc-node-indicator{font-size:0.65rem;color:var(--text-muted);margin-top:0.3rem;padding-top:0.3rem;border-top:1px dashed var(--border);outline:none;min-height:0.8em}
+.toc-node-delete{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1rem;padding:0;line-height:1}
+.toc-node-delete:hover{color:#ef4444}
+/* Node type colors */
+.toc-node[data-type="input"] .toc-node-header{background:rgba(14,165,233,0.1);color:#0EA5E9}
+.toc-node[data-type="activity"] .toc-node-header{background:rgba(99,102,241,0.1);color:#6366F1}
+.toc-node[data-type="output"] .toc-node-header{background:rgba(245,158,11,0.1);color:#F59E0B}
+.toc-node[data-type="outcome"] .toc-node-header{background:rgba(16,185,129,0.1);color:#10B981}
+.toc-node[data-type="impact"] .toc-node-header{background:rgba(236,72,153,0.1);color:#EC4899}
+.toc-node[data-type="assumption"] .toc-node-header{background:rgba(148,163,184,0.1);color:#64748b}
+/* Connections (SVG) */
+.toc-connections{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.toc-connections line{stroke:var(--border);stroke-width:2;marker-end:url(#arrowhead)}
+.toc-connections line:hover{stroke:var(--accent)}
+/* Connect handles */
+.toc-connect-handle{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:var(--accent);border-radius:50%;cursor:crosshair;z-index:3;opacity:0;transition:opacity 0.15s}
+.toc-node:hover .toc-connect-handle{opacity:1}
+/* Right panel — resources, coaching, dojos */
+.toc-right-panel{width:260px;background:var(--card-bg);border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.toc-right-panel-section{padding:0.75rem;border-bottom:1px solid var(--border)}
+.toc-right-panel-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:0.5rem}
+.toc-resource-card{padding:0.5rem;background:var(--hover);border-radius:8px;margin-bottom:0.4rem;font-size:0.78rem}
+.toc-resource-card h4{font-size:0.82rem;font-weight:600;margin:0 0 0.2rem 0}
+.toc-resource-card p{margin:0;font-size:0.7rem;color:var(--text-muted);line-height:1.4}
+.toc-resource-card a{display:inline-block;margin-top:0.3rem;font-size:0.7rem;color:var(--accent);text-decoration:none;font-weight:600}
+.toc-resource-card a:hover{text-decoration:underline}
+.toc-cta-card{padding:0.75rem;border-radius:10px;margin-bottom:0.5rem;text-align:center}
+.toc-cta-card h4{font-size:0.85rem;margin:0 0 0.25rem 0}
+.toc-cta-card p{font-size:0.72rem;margin:0 0 0.4rem 0;line-height:1.4}
+.toc-cta-btn{display:inline-block;padding:0.3rem 0.7rem;border-radius:6px;font-size:0.72rem;font-weight:600;text-decoration:none;color:white}
+/* Sidebar tabs */
+.toc-sidebar-tabs{display:flex;border-bottom:1px solid var(--border)}
+.toc-sidebar-tab{flex:1;padding:0.5rem;text-align:center;font-size:0.7rem;font-weight:600;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent}
+.toc-sidebar-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.toc-sidebar-panel{display:none}
+.toc-sidebar-panel.active{display:block}
+/* MEL framework items */
+.toc-framework-item{padding:0.4rem 0.5rem;font-size:0.78rem;border-radius:6px;cursor:grab;margin-bottom:3px;border:1px solid transparent;user-select:none}
+.toc-framework-item:hover{background:var(--hover);border-color:var(--border)}
+.toc-framework-item .fw-type{font-size:0.6rem;padding:0.1rem 0.3rem;border-radius:4px;font-weight:600;background:rgba(99,102,241,0.1);color:#6366F1}
+/* Mobile */
+@media(max-width:768px){.toc-sidebar{position:absolute;left:-280px;z-index:10;height:100%;transition:left 0.2s}.toc-sidebar.open{left:0;box-shadow:4px 0 20px rgba(0,0,0,0.1)}.toc-right-panel{display:none}}
+/* Save indicator */
+.toc-save-indicator{font-size:0.7rem;color:var(--text-muted)}
+</style>
+</head>
+<body>
+
+<div class="toc-toolbar">
+  <h1>ToC Workbench</h1>
+  <a href="/">&larr; ImpactMojo</a>
+  <select class="toc-btn" id="templateSelect">
+    <option value="">Load Template...</option>
+    <option value="health">Health Program</option>
+    <option value="education">Education Program</option>
+    <option value="wash">WASH Program</option>
+    <option value="livelihoods">Livelihoods Program</option>
+    <option value="blank">Blank Canvas</option>
+  </select>
+  <button class="toc-btn" id="addNodeBtn">+ Add Node</button>
+  <select class="toc-btn" id="nodeTypeSelect">
+    <option value="input">Input</option>
+    <option value="activity">Activity</option>
+    <option value="output">Output</option>
+    <option value="outcome">Outcome</option>
+    <option value="impact">Impact</option>
+    <option value="assumption">Assumption</option>
+  </select>
+  <button class="toc-btn" id="toggleSidebar">Techniques</button>
+  <button class="toc-btn" id="toggleRightPanel">Resources</button>
+  <button class="toc-btn" id="saveBtn">Save</button>
+  <button class="toc-btn" id="loadBtn">Load</button>
+  <button class="toc-btn toc-btn-primary" id="exportBtn">Export PNG</button>
+  <span class="toc-save-indicator" id="saveIndicator"></span>
+</div>
+
+<div class="toc-layout">
+  <!-- Left Sidebar — Techniques -->
+  <div class="toc-sidebar" id="bctSidebar">
+    <div class="toc-sidebar-tabs">
+      <div class="toc-sidebar-tab active" data-panel="bct">BCT (229)</div>
+      <div class="toc-sidebar-tab" data-panel="frameworks">Frameworks</div>
+      <div class="toc-sidebar-tab" data-panel="crosscut">Cross-cutting</div>
+    </div>
+    <div class="toc-sidebar-header">
+      <input type="search" id="bctSearch" placeholder="Search techniques...">
+    </div>
+    <!-- BCT Panel -->
+    <div class="toc-sidebar-panel active" id="panelBct">
+      <div class="toc-sidebar-list" id="bctList">
+        <p style="padding:1rem;color:var(--text-muted);font-size:0.8rem;">Loading BCT techniques...</p>
+      </div>
+    </div>
+    <!-- MEL Frameworks Panel -->
+    <div class="toc-sidebar-panel" id="panelFrameworks">
+      <div class="toc-sidebar-list" id="frameworksList"></div>
+    </div>
+    <!-- Cross-cutting Panel -->
+    <div class="toc-sidebar-panel" id="panelCrosscut">
+      <div class="toc-sidebar-list" id="crosscutList"></div>
+    </div>
+  </div>
+
+  <!-- Canvas -->
+  <div class="toc-canvas-wrap" id="canvasWrap">
+    <svg class="toc-connections" id="connections">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="var(--text-muted)"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="toc-canvas" id="canvas"></div>
+  </div>
+
+  <!-- Right Panel — Resources, Coaching, Dojos -->
+  <div class="toc-right-panel" id="rightPanel">
+    <div class="toc-right-panel-section">
+      <div class="toc-right-panel-title">Need Help?</div>
+      <div class="toc-cta-card" style="background:linear-gradient(135deg,rgba(14,165,233,0.1),rgba(99,102,241,0.1));">
+        <h4 style="color:#6366F1;">ToC Coaching Call</h4>
+        <p style="color:var(--text-secondary);">Book a 1-on-1 session with an expert to review your Theory of Change and get actionable feedback.</p>
+        <a href="/coaching" class="toc-cta-btn" style="background:#6366F1;">Book Coaching</a>
+      </div>
+      <div class="toc-cta-card" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(14,165,233,0.1));">
+        <h4 style="color:#10B981;">ToC Design Dojo</h4>
+        <p style="color:var(--text-secondary);">Join a live group session where teams collaboratively build and critique Theories of Change with peer feedback.</p>
+        <a href="/dojos" class="toc-cta-btn" style="background:#10B981;">Join a Dojo</a>
+      </div>
+    </div>
+
+    <div class="toc-right-panel-section">
+      <div class="toc-right-panel-title">Related Courses</div>
+      <div class="toc-resource-card">
+        <h4>MEL Flagship Course</h4>
+        <p>Learn ToC construction, logical frameworks, and MEL planning in depth.</p>
+        <a href="/courses/mel/">Start Course &rarr;</a>
+      </div>
+      <div class="toc-resource-card">
+        <h4>Development Economics</h4>
+        <p>Understand causal pathways and impact evaluation methods.</p>
+        <a href="/courses/devecon/">Start Course &rarr;</a>
+      </div>
+    </div>
+
+    <div class="toc-right-panel-section">
+      <div class="toc-right-panel-title">Related Labs</div>
+      <div class="toc-resource-card">
+        <h4>TOC Lab</h4>
+        <p>Guided exercise: build a ToC for a real-world WASH program.</p>
+        <a href="https://101.impactmojo.in/toc-lab" target="_blank">Open Lab &rarr;</a>
+      </div>
+      <div class="toc-resource-card">
+        <h4>MEL Planning Lab</h4>
+        <p>Design indicators, data collection tools, and MEL matrices.</p>
+        <a href="https://101.impactmojo.in/mel-planning-lab" target="_blank">Open Lab &rarr;</a>
+      </div>
+    </div>
+
+    <div class="toc-right-panel-section">
+      <div class="toc-right-panel-title">Quick Reference</div>
+      <div class="toc-resource-card">
+        <h4>5 Common ToC Pitfalls</h4>
+        <p>Avoid the most frequent mistakes in Theory of Change design.</p>
+        <a href="/blog/theory-of-change-pitfalls.html">Read Article &rarr;</a>
+      </div>
+      <div class="toc-resource-card">
+        <h4>BCT Repository</h4>
+        <p>Browse all 229 Behavior Change Techniques with South Asian context.</p>
+        <a href="/bct-repository">Browse BCTs &rarr;</a>
+      </div>
+      <div class="toc-resource-card">
+        <h4>Handouts Library</h4>
+        <p>400+ development resources organized by learning track.</p>
+        <a href="/handouts">Browse Handouts &rarr;</a>
+      </div>
+    </div>
+
+    <div class="toc-right-panel-section">
+      <div class="toc-right-panel-title">Workshops</div>
+      <div class="toc-cta-card" style="background:rgba(245,158,11,0.08);">
+        <h4 style="color:#F59E0B;">Custom ToC Workshop</h4>
+        <p style="color:var(--text-secondary);">Bring your team for a facilitated ToC design workshop tailored to your program context.</p>
+        <a href="/workshops" class="toc-cta-btn" style="background:#F59E0B;">Request Workshop</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+var STORAGE_KEY = 'impactmojo_toc_builder';
+var canvas = document.getElementById('canvas');
+var svgConnections = document.getElementById('connections');
+var nodes = [];
+var connections = [];
+var nodeIdCounter = 0;
+var selectedNode = null;
+var connectingFrom = null;
+
+// ── BCT Data Loading ────────────────────────────────────────────────
+var bctData = null;
+fetch('data/bct-repository.json')
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    bctData = data;
+    renderBctPanel(data);
+  })
+  .catch(function(){ document.getElementById('bctList').innerHTML = '<p style="padding:1rem;color:#ef4444;font-size:0.8rem;">Failed to load BCT data.</p>'; });
+
+function renderBctPanel(data){
+  var list = document.getElementById('bctList');
+  var html = '';
+  data.categories.forEach(function(cat){
+    html += '<div class="toc-bct-category">';
+    html += '<div class="toc-bct-cat-header" data-cat="' + cat.id + '" style="color:' + cat.color + '">&#x25B6; ' + cat.name + ' (' + cat.techniques.length + ')</div>';
+    html += '<div class="toc-bct-cat-list" data-cat-list="' + cat.id + '">';
+    cat.techniques.forEach(function(t){
+      var evCls = t.evidenceLevel === 'Strong' ? 'bct-strong' : 'bct-moderate';
+      html += '<div class="toc-bct-item" draggable="true" data-bct-id="' + t.id + '" data-bct-name="' + t.name.replace(/"/g,'&quot;') + '">';
+      html += '<span>' + t.name + '</span>';
+      html += '<span class="bct-evidence ' + evCls + '">' + t.evidenceLevel + '</span>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+  list.innerHTML = html;
+
+  // Toggle categories
+  list.querySelectorAll('.toc-bct-cat-header').forEach(function(h){
+    h.addEventListener('click', function(){
+      var catList = list.querySelector('[data-cat-list="' + h.dataset.cat + '"]');
+      catList.classList.toggle('open');
+      h.innerHTML = (catList.classList.contains('open') ? '&#x25BC; ' : '&#x25B6; ') + h.textContent.replace(/^[▶▼]\s*/, '');
+    });
+  });
+
+  // Drag BCT items
+  list.querySelectorAll('.toc-bct-item').forEach(function(item){
+    item.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', JSON.stringify({type:'bct', id: item.dataset.bctId, name: item.dataset.bctName}));
+    });
+  });
+}
+
+// BCT search
+document.getElementById('bctSearch').addEventListener('input', function(e){
+  var q = e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.toc-bct-item').forEach(function(item){
+    var match = !q || item.textContent.toLowerCase().indexOf(q) !== -1;
+    item.style.display = match ? '' : 'none';
+  });
+  if (q) {
+    document.querySelectorAll('.toc-bct-cat-list').forEach(function(cl){ cl.classList.add('open'); });
+  }
+});
+
+// ── Node Management ─────────────────────────────────────────────────
+function createNode(type, x, y, title, desc, indicator){
+  var id = 'node_' + (++nodeIdCounter);
+  var labels = {input:'Input',activity:'Activity',output:'Output',outcome:'Outcome',impact:'Impact',assumption:'Assumption'};
+
+  var el = document.createElement('div');
+  el.className = 'toc-node';
+  el.dataset.type = type;
+  el.dataset.id = id;
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+
+  el.innerHTML =
+    '<div class="toc-node-header"><span>' + (labels[type]||type) + '</span><button class="toc-node-delete">&times;</button></div>' +
+    '<div class="toc-node-body">' +
+      '<div class="toc-node-title" contenteditable="true" data-placeholder="Enter title...">' + (title||'') + '</div>' +
+      '<div class="toc-node-desc" contenteditable="true" data-placeholder="Description...">' + (desc||'') + '</div>' +
+      '<div class="toc-node-bcts"></div>' +
+      '<div class="toc-node-indicator" contenteditable="true" data-placeholder="Indicator...">' + (indicator||'') + '</div>' +
+    '</div>' +
+    '<div class="toc-connect-handle" title="Drag to connect"></div>';
+
+  canvas.appendChild(el);
+
+  var node = {id:id, el:el, type:type, bcts:[]};
+  nodes.push(node);
+
+  // Drag node
+  makeDraggable(el, node);
+
+  // Delete node
+  el.querySelector('.toc-node-delete').addEventListener('click', function(){
+    removeNode(id);
+  });
+
+  // Select node
+  el.addEventListener('click', function(e){
+    if (e.target.closest('.toc-node-delete') || e.target.closest('.toc-connect-handle') || e.target.isContentEditable) return;
+    selectNode(id);
+  });
+
+  // Connect handle
+  var handle = el.querySelector('.toc-connect-handle');
+  handle.addEventListener('mousedown', function(e){
+    e.stopPropagation();
+    connectingFrom = id;
+    document.body.style.cursor = 'crosshair';
+  });
+
+  // Drop BCT on node
+  el.addEventListener('dragover', function(e){ e.preventDefault(); el.classList.add('selected'); });
+  el.addEventListener('dragleave', function(){ el.classList.remove('selected'); });
+  el.addEventListener('drop', function(e){
+    e.preventDefault();
+    el.classList.remove('selected');
+    try {
+      var data = JSON.parse(e.dataTransfer.getData('text/plain'));
+      if (data.type === 'bct') addBctToNode(id, data.id, data.name);
+    } catch(err){}
+  });
+
+  autoSave();
+  return node;
+}
+
+function makeDraggable(el, node){
+  var startX, startY, origX, origY;
+  el.addEventListener('mousedown', function(e){
+    if (e.target.isContentEditable || e.target.closest('.toc-node-delete') || e.target.closest('.toc-connect-handle') || e.target.closest('.toc-node-bct-tag')) return;
+    startX = e.clientX; startY = e.clientY;
+    origX = parseInt(el.style.left)||0; origY = parseInt(el.style.top)||0;
+    function onMove(ev){
+      el.style.left = (origX + ev.clientX - startX) + 'px';
+      el.style.top = (origY + ev.clientY - startY) + 'px';
+      drawConnections();
+    }
+    function onUp(){
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      autoSave();
+    }
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
+}
+
+function removeNode(id){
+  var idx = nodes.findIndex(function(n){ return n.id === id; });
+  if (idx === -1) return;
+  nodes[idx].el.remove();
+  nodes.splice(idx, 1);
+  connections = connections.filter(function(c){ return c.from !== id && c.to !== id; });
+  drawConnections();
+  autoSave();
+}
+
+function selectNode(id){
+  document.querySelectorAll('.toc-node.selected').forEach(function(n){ n.classList.remove('selected'); });
+  var node = nodes.find(function(n){ return n.id === id; });
+  if (node) { node.el.classList.add('selected'); selectedNode = id; }
+}
+
+function addBctToNode(nodeId, bctId, bctName){
+  var node = nodes.find(function(n){ return n.id === nodeId; });
+  if (!node || node.bcts.indexOf(bctId) !== -1) return;
+  node.bcts.push(bctId);
+  var container = node.el.querySelector('.toc-node-bcts');
+  var tag = document.createElement('span');
+  tag.className = 'toc-node-bct-tag';
+  tag.textContent = bctName;
+  tag.title = 'Click to remove';
+  tag.addEventListener('click', function(){
+    node.bcts = node.bcts.filter(function(b){ return b !== bctId; });
+    tag.remove();
+    autoSave();
+  });
+  container.appendChild(tag);
+  autoSave();
+}
+
+// ── Connections ──────────────────────────────────────────────────────
+document.addEventListener('mouseup', function(e){
+  if (!connectingFrom) return;
+  document.body.style.cursor = '';
+  var target = e.target.closest('.toc-node');
+  if (target && target.dataset.id !== connectingFrom){
+    var exists = connections.some(function(c){ return c.from === connectingFrom && c.to === target.dataset.id; });
+    if (!exists){
+      connections.push({from: connectingFrom, to: target.dataset.id});
+      drawConnections();
+      autoSave();
+    }
+  }
+  connectingFrom = null;
+});
+
+function drawConnections(){
+  var lines = svgConnections.querySelectorAll('line');
+  lines.forEach(function(l){ l.remove(); });
+
+  connections.forEach(function(conn){
+    var fromNode = nodes.find(function(n){ return n.id === conn.from; });
+    var toNode = nodes.find(function(n){ return n.id === conn.to; });
+    if (!fromNode || !toNode) return;
+
+    var fromEl = fromNode.el;
+    var toEl = toNode.el;
+    var x1 = parseInt(fromEl.style.left) + fromEl.offsetWidth / 2;
+    var y1 = parseInt(fromEl.style.top) + fromEl.offsetHeight;
+    var x2 = parseInt(toEl.style.left) + toEl.offsetWidth / 2;
+    var y2 = parseInt(toEl.style.top);
+
+    var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+    line.style.pointerEvents = 'auto';
+    line.style.cursor = 'pointer';
+    line.addEventListener('dblclick', function(){
+      connections = connections.filter(function(c){ return c.from !== conn.from || c.to !== conn.to; });
+      drawConnections();
+      autoSave();
+    });
+    svgConnections.appendChild(line);
+  });
+}
+
+// ── Canvas drop (for BCT items dragged to empty space → creates node) ─
+document.getElementById('canvasWrap').addEventListener('dragover', function(e){ e.preventDefault(); });
+document.getElementById('canvasWrap').addEventListener('drop', function(e){
+  if (e.target.closest('.toc-node')) return; // handled by node drop
+  e.preventDefault();
+  try {
+    var data = JSON.parse(e.dataTransfer.getData('text/plain'));
+    if (data.type === 'bct'){
+      var wrap = document.getElementById('canvasWrap');
+      var rect = wrap.getBoundingClientRect();
+      var x = e.clientX - rect.left + wrap.scrollLeft;
+      var y = e.clientY - rect.top + wrap.scrollTop;
+      var node = createNode('activity', x, y, data.name, '');
+      addBctToNode(node.id, data.id, data.name);
+    }
+  } catch(err){}
+});
+
+// ── Templates ───────────────────────────────────────────────────────
+var TEMPLATES = {
+  health: {
+    name: 'Health Program',
+    nodes: [
+      {type:'input', x:50, y:50, title:'Funding & Staff', desc:'Program budget, CHW recruitment'},
+      {type:'input', x:50, y:200, title:'Training Materials', desc:'BCC materials, clinical protocols'},
+      {type:'activity', x:300, y:50, title:'Community Health Sessions', desc:'Weekly health education sessions in villages'},
+      {type:'activity', x:300, y:200, title:'Home Visits', desc:'ASHA/CHW home visits for counseling'},
+      {type:'output', x:550, y:50, title:'# Sessions Conducted', desc:'Target: 200 sessions/quarter'},
+      {type:'output', x:550, y:200, title:'# Families Reached', desc:'Target: 5000 HH/year'},
+      {type:'outcome', x:800, y:80, title:'Improved Health Knowledge', desc:'Knowledge of nutrition, hygiene, MCH'},
+      {type:'outcome', x:800, y:230, title:'Behavior Change', desc:'Handwashing, ANC attendance, dietary diversity'},
+      {type:'impact', x:1050, y:150, title:'Reduced Maternal & Child Mortality', desc:'Contribution to SDG 3'},
+      {type:'assumption', x:550, y:380, title:'Key Assumptions', desc:'CHWs are trusted; families are reachable; cultural barriers addressed'}
+    ],
+    connections: [[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,8],[7,8]]
+  },
+  education: {
+    name: 'Education Program',
+    nodes: [
+      {type:'input', x:50, y:50, title:'Teacher Training', desc:'Pedagogy, SEL, inclusive education'},
+      {type:'input', x:50, y:200, title:'Learning Materials', desc:'Textbooks, digital content, labs'},
+      {type:'activity', x:300, y:50, title:'Classroom Instruction', desc:'Activity-based, student-centered'},
+      {type:'activity', x:300, y:200, title:'Remedial Support', desc:'After-school tutoring for struggling learners'},
+      {type:'output', x:550, y:50, title:'# Teachers Trained', desc:'200 teachers across 50 schools'},
+      {type:'output', x:550, y:200, title:'# Students Enrolled', desc:'5000 students in remedial program'},
+      {type:'outcome', x:800, y:80, title:'Improved Learning Outcomes', desc:'Reading, numeracy, foundational skills'},
+      {type:'outcome', x:800, y:230, title:'Reduced Dropout Rates', desc:'Especially for girls and marginalized'},
+      {type:'impact', x:1050, y:150, title:'Equitable Quality Education', desc:'Contribution to SDG 4'},
+      {type:'assumption', x:550, y:380, title:'Assumptions', desc:'Teachers are motivated; parents support education; infrastructure adequate'}
+    ],
+    connections: [[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,8],[7,8]]
+  },
+  wash: {
+    name: 'WASH Program',
+    nodes: [
+      {type:'input', x:50, y:50, title:'Infrastructure Funding', desc:'Wells, latrines, water treatment'},
+      {type:'input', x:50, y:200, title:'CLTS Facilitators', desc:'Community-Led Total Sanitation team'},
+      {type:'activity', x:300, y:50, title:'Water Point Construction', desc:'Install handpumps, piped water'},
+      {type:'activity', x:300, y:200, title:'Hygiene Campaigns', desc:'Handwashing, menstrual hygiene, water treatment'},
+      {type:'output', x:550, y:50, title:'# Water Points Built', desc:'100 water points serving 10,000 people'},
+      {type:'output', x:550, y:200, title:'# ODF Villages', desc:'50 villages declared Open Defecation Free'},
+      {type:'outcome', x:800, y:80, title:'Access to Clean Water', desc:'< 30 min round trip to safe water'},
+      {type:'outcome', x:800, y:230, title:'Sanitation Behavior Change', desc:'Latrine use, handwashing at critical times'},
+      {type:'impact', x:1050, y:150, title:'Reduced Waterborne Disease', desc:'Contribution to SDG 6'},
+      {type:'assumption', x:550, y:380, title:'Assumptions', desc:'Water table adequate; community ownership; supply chain for spare parts'}
+    ],
+    connections: [[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,8],[7,8]]
+  },
+  livelihoods: {
+    name: 'Livelihoods Program',
+    nodes: [
+      {type:'input', x:50, y:50, title:'Seed Capital & Training', desc:'SHG formation, enterprise skills'},
+      {type:'input', x:50, y:200, title:'Market Linkages', desc:'Value chain analysis, buyer connects'},
+      {type:'activity', x:300, y:50, title:'SHG Formation & Training', desc:'Financial literacy, business planning'},
+      {type:'activity', x:300, y:200, title:'Enterprise Development', desc:'Product development, quality control'},
+      {type:'output', x:550, y:50, title:'# SHGs Formed', desc:'200 SHGs with 2000+ members'},
+      {type:'output', x:550, y:200, title:'# Enterprises Launched', desc:'500 micro-enterprises'},
+      {type:'outcome', x:800, y:80, title:'Increased Income', desc:'30% increase in household income'},
+      {type:'outcome', x:800, y:230, title:'Women\'s Economic Empowerment', desc:'Asset ownership, financial decision-making'},
+      {type:'impact', x:1050, y:150, title:'Poverty Reduction', desc:'Contribution to SDG 1 & 5'},
+      {type:'assumption', x:550, y:380, title:'Assumptions', desc:'Markets accessible; women have time; social norms supportive'}
+    ],
+    connections: [[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,8],[7,8]]
+  },
+  blank: {name:'Blank Canvas', nodes:[], connections:[]}
+};
+
+document.getElementById('templateSelect').addEventListener('change', function(){
+  var key = this.value;
+  if (!key) return;
+  var tmpl = TEMPLATES[key];
+  if (!tmpl) return;
+  if (nodes.length && !confirm('This will replace your current ToC. Continue?')) { this.value = ''; return; }
+  clearCanvas();
+  var nodeMap = [];
+  tmpl.nodes.forEach(function(n){
+    var node = createNode(n.type, n.x, n.y, n.title, n.desc);
+    nodeMap.push(node.id);
+  });
+  tmpl.connections.forEach(function(c){
+    connections.push({from: nodeMap[c[0]], to: nodeMap[c[1]]});
+  });
+  drawConnections();
+  this.value = '';
+  autoSave();
+});
+
+function clearCanvas(){
+  nodes.forEach(function(n){ n.el.remove(); });
+  nodes = [];
+  connections = [];
+  drawConnections();
+}
+
+// ── Add Node Button ──────────────────────────────────────────────────
+document.getElementById('addNodeBtn').addEventListener('click', function(){
+  var type = document.getElementById('nodeTypeSelect').value;
+  var wrap = document.getElementById('canvasWrap');
+  var x = wrap.scrollLeft + 100 + Math.random() * 200;
+  var y = wrap.scrollTop + 100 + Math.random() * 100;
+  createNode(type, x, y, '', '');
+});
+
+// ── Save / Load ──────────────────────────────────────────────────────
+function serialize(){
+  return {
+    nodes: nodes.map(function(n){
+      return {
+        id: n.id, type: n.type, bcts: n.bcts,
+        x: parseInt(n.el.style.left), y: parseInt(n.el.style.top),
+        title: n.el.querySelector('.toc-node-title').textContent,
+        desc: n.el.querySelector('.toc-node-desc').textContent,
+        indicator: n.el.querySelector('.toc-node-indicator').textContent
+      };
+    }),
+    connections: connections.slice(),
+    nodeIdCounter: nodeIdCounter
+  };
+}
+
+function deserialize(data){
+  clearCanvas();
+  nodeIdCounter = data.nodeIdCounter || 0;
+  var idMap = {};
+  (data.nodes||[]).forEach(function(n){
+    var node = createNode(n.type, n.x, n.y, n.title, n.desc, n.indicator);
+    idMap[n.id] = node.id;
+    (n.bcts||[]).forEach(function(bctId){
+      var bctName = bctId;
+      if (bctData){
+        bctData.categories.forEach(function(cat){
+          cat.techniques.forEach(function(t){ if(t.id === bctId) bctName = t.name; });
+        });
+      }
+      addBctToNode(node.id, bctId, bctName);
+    });
+  });
+  (data.connections||[]).forEach(function(c){
+    connections.push({from: idMap[c.from]||c.from, to: idMap[c.to]||c.to});
+  });
+  drawConnections();
+}
+
+var saveTimer = null;
+function autoSave(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(serialize()));
+    document.getElementById('saveIndicator').textContent = 'Saved ' + new Date().toLocaleTimeString();
+  }, 500);
+}
+
+document.getElementById('saveBtn').addEventListener('click', function(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(serialize()));
+  document.getElementById('saveIndicator').textContent = 'Saved!';
+});
+
+document.getElementById('loadBtn').addEventListener('click', function(){
+  var raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) { alert('No saved ToC found.'); return; }
+  deserialize(JSON.parse(raw));
+  document.getElementById('saveIndicator').textContent = 'Loaded!';
+});
+
+// Auto-load on page load
+document.addEventListener('DOMContentLoaded', function(){
+  var raw = localStorage.getItem(STORAGE_KEY);
+  if (raw) { try { deserialize(JSON.parse(raw)); } catch(e){} }
+});
+
+// ── Export as PNG ────────────────────────────────────────────────────
+document.getElementById('exportBtn').addEventListener('click', function(){
+  // Find bounding box of all nodes
+  var minX=Infinity, minY=Infinity, maxX=0, maxY=0;
+  nodes.forEach(function(n){
+    var x = parseInt(n.el.style.left), y = parseInt(n.el.style.top);
+    var w = n.el.offsetWidth, h = n.el.offsetHeight;
+    if(x < minX) minX = x;
+    if(y < minY) minY = y;
+    if(x+w > maxX) maxX = x+w;
+    if(y+h > maxY) maxY = y+h;
+  });
+  if (!nodes.length) { alert('Add some nodes first!'); return; }
+
+  var pad = 40;
+  var cw = maxX - minX + pad*2;
+  var ch = maxY - minY + pad*2;
+
+  var offCanvas = document.createElement('canvas');
+  offCanvas.width = cw * 2; offCanvas.height = ch * 2;
+  var ctx = offCanvas.getContext('2d');
+  ctx.scale(2, 2);
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, cw, ch);
+
+  // Draw connections
+  ctx.strokeStyle = '#94a3b8';
+  ctx.lineWidth = 2;
+  connections.forEach(function(conn){
+    var fromNode = nodes.find(function(n){ return n.id === conn.from; });
+    var toNode = nodes.find(function(n){ return n.id === conn.to; });
+    if(!fromNode || !toNode) return;
+    var x1 = parseInt(fromNode.el.style.left) + fromNode.el.offsetWidth/2 - minX + pad;
+    var y1 = parseInt(fromNode.el.style.top) + fromNode.el.offsetHeight - minY + pad;
+    var x2 = parseInt(toNode.el.style.left) + toNode.el.offsetWidth/2 - minX + pad;
+    var y2 = parseInt(toNode.el.style.top) - minY + pad;
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    // Arrow
+    var angle = Math.atan2(y2-y1, x2-x1);
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - 8*Math.cos(angle-0.5), y2 - 8*Math.sin(angle-0.5));
+    ctx.lineTo(x2 - 8*Math.cos(angle+0.5), y2 - 8*Math.sin(angle+0.5));
+    ctx.closePath(); ctx.fillStyle = '#94a3b8'; ctx.fill();
+  });
+
+  // Draw nodes
+  var typeColors = {input:'#0EA5E9',activity:'#6366F1',output:'#F59E0B',outcome:'#10B981',impact:'#EC4899',assumption:'#64748b'};
+  nodes.forEach(function(n){
+    var x = parseInt(n.el.style.left) - minX + pad;
+    var y = parseInt(n.el.style.top) - minY + pad;
+    var w = n.el.offsetWidth, h = n.el.offsetHeight;
+    var color = typeColors[n.type] || '#94a3b8';
+    // Card
+    ctx.fillStyle = '#ffffff';
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.roundRect(x,y,w,h,8); ctx.fill(); ctx.stroke();
+    // Header
+    ctx.fillStyle = color + '20';
+    ctx.beginPath(); ctx.roundRect(x,y,w,24,{upperLeft:8,upperRight:8,lowerLeft:0,lowerRight:0}); ctx.fill();
+    ctx.fillStyle = color;
+    ctx.font = '600 10px system-ui';
+    ctx.fillText(n.type.toUpperCase(), x+8, y+16);
+    // Title
+    var title = n.el.querySelector('.toc-node-title').textContent;
+    ctx.fillStyle = '#1e293b';
+    ctx.font = '600 12px system-ui';
+    ctx.fillText(title, x+8, y+40, w-16);
+    // Desc
+    var desc = n.el.querySelector('.toc-node-desc').textContent;
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px system-ui';
+    ctx.fillText(desc, x+8, y+56, w-16);
+  });
+
+  // Watermark
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '10px system-ui';
+  ctx.fillText('Built with ImpactMojo ToC Builder', pad, ch - 10);
+
+  offCanvas.toBlob(function(blob){
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'theory-of-change.png'; a.click();
+    URL.revokeObjectURL(url);
+  });
+});
+
+// ── Sidebar Toggle ──────────────────────────────────────────────────
+document.getElementById('toggleSidebar').addEventListener('click', function(){
+  document.getElementById('bctSidebar').classList.toggle('open');
+});
+
+// ── Right Panel Toggle ──────────────────────────────────────────────
+document.getElementById('toggleRightPanel').addEventListener('click', function(){
+  var panel = document.getElementById('rightPanel');
+  panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+});
+
+// ── Sidebar Tabs ────────────────────────────────────────────────────
+document.querySelectorAll('.toc-sidebar-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.toc-sidebar-tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.toc-sidebar-panel').forEach(function(p){ p.classList.remove('active'); });
+    tab.classList.add('active');
+    var panelId = 'panel' + tab.dataset.panel.charAt(0).toUpperCase() + tab.dataset.panel.slice(1);
+    var panel = document.getElementById(panelId);
+    if (panel) panel.classList.add('active');
+  });
+});
+
+// ── MEL Frameworks Data ─────────────────────────────────────────────
+var FRAMEWORKS = [
+  {category:'Logical Framework', items:[
+    {name:'Logframe Matrix', type:'Framework', desc:'Standard 4x4 matrix: objectives, indicators, MoV, assumptions'},
+    {name:'Results Chain', type:'Framework', desc:'Input → Activity → Output → Outcome → Impact'},
+    {name:'Results Framework', type:'Framework', desc:'Hierarchical structure of program objectives and indicators'},
+    {name:'SMART Indicators', type:'Tool', desc:'Specific, Measurable, Achievable, Relevant, Time-bound'}
+  ]},
+  {category:'Evaluation Methods', items:[
+    {name:'RCT Design', type:'Method', desc:'Randomized controlled trial with treatment and control groups'},
+    {name:'Difference-in-Differences', type:'Method', desc:'Compare changes over time between treatment and comparison'},
+    {name:'Propensity Score Matching', type:'Method', desc:'Match treated units with comparable untreated units'},
+    {name:'Regression Discontinuity', type:'Method', desc:'Exploit eligibility thresholds for causal identification'},
+    {name:'Most Significant Change', type:'Method', desc:'Participatory qualitative evaluation through storytelling'},
+    {name:'Outcome Harvesting', type:'Method', desc:'Identify and verify outcomes then work backward to contribution'},
+    {name:'Contribution Analysis', type:'Method', desc:'Assess whether an intervention contributed to observed outcomes'}
+  ]},
+  {category:'Data Collection', items:[
+    {name:'KII Guide Template', type:'Tool', desc:'Key Informant Interview semi-structured guide'},
+    {name:'FGD Protocol', type:'Tool', desc:'Focus Group Discussion facilitation protocol'},
+    {name:'Household Survey', type:'Tool', desc:'Structured questionnaire for household-level data'},
+    {name:'Observation Checklist', type:'Tool', desc:'Systematic observation tool for program monitoring'},
+    {name:'Participatory Mapping', type:'Tool', desc:'Community-led spatial and social mapping exercise'}
+  ]},
+  {category:'Quality & Ethics', items:[
+    {name:'Do No Harm Checklist', type:'Ethics', desc:'Conflict sensitivity and ethical safeguarding review'},
+    {name:'Data Quality Assessment', type:'Tool', desc:'Validity, reliability, timeliness, precision, integrity checks'},
+    {name:'Informed Consent Template', type:'Ethics', desc:'Template for obtaining ethical consent from participants'},
+    {name:'IRB Protocol', type:'Ethics', desc:'Institutional Review Board submission template'}
+  ]}
+];
+
+function renderFrameworks(){
+  var container = document.getElementById('frameworksList');
+  var html = '';
+  FRAMEWORKS.forEach(function(cat){
+    html += '<div class="toc-bct-category"><div class="toc-bct-cat-header" style="color:#6366F1">&#x25B6; ' + cat.category + ' (' + cat.items.length + ')</div>';
+    html += '<div class="toc-bct-cat-list">';
+    cat.items.forEach(function(item){
+      html += '<div class="toc-framework-item" draggable="true" data-fw-name="' + item.name.replace(/"/g,'&quot;') + '" data-fw-desc="' + item.desc.replace(/"/g,'&quot;') + '">';
+      html += '<span style="flex:1">' + item.name + '</span>';
+      html += '<span class="fw-type">' + item.type + '</span>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+
+  // Toggle categories
+  container.querySelectorAll('.toc-bct-cat-header').forEach(function(h){
+    h.addEventListener('click', function(){
+      var list = h.nextElementSibling;
+      list.classList.toggle('open');
+    });
+  });
+
+  // Drag framework items
+  container.querySelectorAll('.toc-framework-item').forEach(function(item){
+    item.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', JSON.stringify({type:'framework', name: item.dataset.fwName, desc: item.dataset.fwDesc}));
+    });
+  });
+}
+renderFrameworks();
+
+// ── Cross-cutting Techniques ────────────────────────────────────────
+var CROSSCUTTING = [
+  {category:'Gender & Inclusion', items:[
+    {name:'Gender Analysis', desc:'Assess differential impacts on women, men, and non-binary'},
+    {name:'Intersectional Lens', desc:'Consider overlapping inequalities (caste, class, gender, disability)'},
+    {name:'GESI Mainstreaming', desc:'Gender Equality and Social Inclusion integration checklist'},
+    {name:'Do No Harm — Gender', desc:'Gender-sensitive conflict and power analysis'},
+    {name:'Women\'s Participation Index', desc:'Measure meaningful participation in program decisions'}
+  ]},
+  {category:'Climate & Environment', items:[
+    {name:'Climate Risk Screening', desc:'Assess climate vulnerabilities in program design'},
+    {name:'Green ToC Lens', desc:'Map environmental co-benefits and risks in your ToC'},
+    {name:'Adaptation Pathways', desc:'Sequence of adaptation decisions under uncertainty'},
+    {name:'Carbon Footprint Assessment', desc:'Estimate program carbon impact for sustainability'}
+  ]},
+  {category:'Governance & Accountability', items:[
+    {name:'Social Accountability', desc:'Citizen engagement in monitoring public services'},
+    {name:'Grievance Redress Mechanism', desc:'Accessible complaint and feedback channels'},
+    {name:'Power Analysis', desc:'Map stakeholder power dynamics and influence'},
+    {name:'Rights-Based Approach', desc:'Frame outcomes as fulfillment of human rights'}
+  ]},
+  {category:'Digital & Innovation', items:[
+    {name:'Digital Readiness Assessment', desc:'Evaluate tech infrastructure and digital literacy'},
+    {name:'Data-Driven Decision Making', desc:'Use real-time data dashboards for adaptive management'},
+    {name:'Human-Centered Design', desc:'User research and prototyping for program design'},
+    {name:'Lean Impact Canvas', desc:'Rapid hypothesis testing for program assumptions'}
+  ]}
+];
+
+function renderCrosscutting(){
+  var container = document.getElementById('crosscutList');
+  var html = '';
+  CROSSCUTTING.forEach(function(cat){
+    html += '<div class="toc-bct-category"><div class="toc-bct-cat-header" style="color:#EC4899">&#x25B6; ' + cat.category + ' (' + cat.items.length + ')</div>';
+    html += '<div class="toc-bct-cat-list">';
+    cat.items.forEach(function(item){
+      html += '<div class="toc-framework-item" draggable="true" data-fw-name="' + item.name.replace(/"/g,'&quot;') + '" data-fw-desc="' + item.desc.replace(/"/g,'&quot;') + '">';
+      html += '<span style="flex:1">' + item.name + '</span>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+
+  container.querySelectorAll('.toc-bct-cat-header').forEach(function(h){
+    h.addEventListener('click', function(){ h.nextElementSibling.classList.toggle('open'); });
+  });
+
+  container.querySelectorAll('.toc-framework-item').forEach(function(item){
+    item.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', JSON.stringify({type:'framework', name: item.dataset.fwName, desc: item.dataset.fwDesc}));
+    });
+  });
+}
+renderCrosscutting();
+
+// ── Handle framework drops on canvas ────────────────────────────────
+var origCanvasDropHandler = document.getElementById('canvasWrap').ondrop;
+document.getElementById('canvasWrap').addEventListener('drop', function(e){
+  if (e.target.closest('.toc-node')) return;
+  try {
+    var data = JSON.parse(e.dataTransfer.getData('text/plain'));
+    if (data.type === 'framework'){
+      e.preventDefault();
+      var wrap = document.getElementById('canvasWrap');
+      var rect = wrap.getBoundingClientRect();
+      var x = e.clientX - rect.left + wrap.scrollLeft;
+      var y = e.clientY - rect.top + wrap.scrollTop;
+      createNode('activity', x, y, data.name, data.desc || '');
+    }
+  } catch(err){}
+}, true);
+
+// ── Keyboard shortcuts ──────────────────────────────────────────────
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Delete' && selectedNode && !e.target.isContentEditable){
+    removeNode(selectedNode);
+    selectedNode = null;
+  }
+});
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theory of Change Workbench — ImpactMojo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fafafa;--card-bg:#fff;--border:#e5e7eb;--text:#1e293b;--text-muted:#64748b;--accent:#0EA5E9;--accent-dark:#0284c7;--purple:#6366F1;--green:#10B981;--amber:#F59E0B;--pink:#EC4899;--indigo:#4F46E5;--section-bg:#f1f5f9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Navigation */
+.wb-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0.6rem 1.5rem;display:flex;align-items:center;gap:1rem}
+.wb-nav-logo{font-weight:800;font-size:0.95rem;color:var(--text)}
+.wb-nav-links{display:flex;gap:0.25rem;margin-left:auto;flex-wrap:wrap}
+.wb-nav-links a{font-size:0.78rem;font-weight:500;padding:0.3rem 0.6rem;border-radius:6px;color:var(--text-muted);white-space:nowrap}
+.wb-nav-links a:hover{background:var(--section-bg);color:var(--text);text-decoration:none}
+.wb-nav-links a.active{background:rgba(14,165,233,0.1);color:var(--accent)}
+.wb-builder-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 0.8rem;background:var(--accent);color:white;border-radius:8px;font-size:0.78rem;font-weight:600;border:none;cursor:pointer;white-space:nowrap}
+.wb-builder-btn:hover{background:var(--accent-dark);text-decoration:none;color:white}
+
+/* Hero */
+.wb-hero{padding:3rem 1.5rem 2rem;text-align:center;background:linear-gradient(135deg,rgba(14,165,233,0.05),rgba(99,102,241,0.05))}
+.wb-hero h1{font-size:2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.5rem}
+.wb-hero p{font-size:1rem;color:var(--text-muted);max-width:600px;margin:0 auto 1.5rem}
+
+/* Container */
+.wb-container{max-width:860px;margin:0 auto;padding:0 1.5rem}
+
+/* Section */
+.wb-section{padding:2.5rem 0}
+.wb-section-title{font-size:1.35rem;font-weight:800;letter-spacing:-0.01em;margin-bottom:0.4rem}
+.wb-section-subtitle{font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem}
+
+/* Cards */
+.wb-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.wb-card h3{font-size:1rem;font-weight:700;margin-bottom:0.4rem}
+.wb-card p{font-size:0.88rem;color:var(--text-muted);margin-bottom:0.5rem}
+
+/* CTA cards */
+.wb-cta{border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:1rem}
+.wb-cta h3{font-size:1.05rem;font-weight:700;margin-bottom:0.3rem}
+.wb-cta p{font-size:0.85rem;margin-bottom:0.75rem;line-height:1.5}
+.wb-cta-btn{display:inline-block;padding:0.5rem 1.2rem;border-radius:8px;font-size:0.82rem;font-weight:600;color:white}
+.wb-cta-btn:hover{opacity:0.9;text-decoration:none;color:white}
+
+/* Grid */
+.wb-grid{display:grid;gap:1rem}
+.wb-grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.wb-grid-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+
+/* Tables */
+.wb-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin:1rem 0}
+.wb-table th,.wb-table td{padding:0.5rem 0.75rem;border:1px solid var(--border);text-align:left}
+.wb-table th{background:var(--section-bg);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em}
+.wb-table tr:nth-child(even){background:rgba(241,245,249,0.5)}
+
+/* Tags */
+.wb-tag{display:inline-block;padding:0.15rem 0.5rem;border-radius:12px;font-size:0.68rem;font-weight:600;margin:0.1rem}
+.wb-tag-bct{background:rgba(14,165,233,0.1);color:var(--accent)}
+.wb-tag-method{background:rgba(99,102,241,0.1);color:var(--purple)}
+.wb-tag-tool{background:rgba(16,185,129,0.1);color:var(--green)}
+.wb-tag-sector{background:rgba(236,72,153,0.1);color:var(--pink)}
+.wb-tag-ethics{background:rgba(245,158,11,0.1);color:var(--amber)}
+
+/* Accordion / Toggles */
+.wb-toggle{border:1px solid var(--border);border-radius:10px;margin-bottom:0.5rem;overflow:hidden}
+.wb-toggle-header{padding:0.75rem 1rem;font-weight:600;font-size:0.88rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:var(--card-bg)}
+.wb-toggle-header:hover{background:var(--section-bg)}
+.wb-toggle-body{display:none;padding:1rem;font-size:0.85rem;border-top:1px solid var(--border);background:var(--card-bg)}
+.wb-toggle.open .wb-toggle-body{display:block}
+.wb-toggle-arrow{transition:transform 0.2s}
+.wb-toggle.open .wb-toggle-arrow{transform:rotate(90deg)}
+
+/* Checklist */
+.wb-checklist{list-style:none;padding:0}
+.wb-checklist li{padding:0.35rem 0;font-size:0.85rem;display:flex;align-items:flex-start;gap:0.5rem}
+.wb-checklist li::before{content:"☐";flex-shrink:0;color:var(--text-muted)}
+
+/* Divider */
+.wb-divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+
+/* Problem sets */
+.wb-problem{border-left:3px solid var(--purple);padding-left:1rem;margin-bottom:1.25rem}
+.wb-problem h4{font-size:0.9rem;font-weight:700;margin-bottom:0.25rem}
+.wb-problem p{font-size:0.83rem;color:var(--text-muted)}
+.wb-problem .wb-problem-status{font-size:0.7rem;font-weight:600;padding:0.15rem 0.5rem;border-radius:8px;display:inline-block;margin-top:0.3rem}
+.wb-problem .solved{background:rgba(16,185,129,0.1);color:var(--green)}
+.wb-problem .unsolved{background:rgba(245,158,11,0.1);color:var(--amber)}
+
+/* Case study boxes */
+.wb-case{background:linear-gradient(135deg,rgba(14,165,233,0.04),rgba(99,102,241,0.04));border:1px solid rgba(14,165,233,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.wb-case h4{font-size:0.95rem;font-weight:700;color:var(--accent-dark);margin-bottom:0.3rem}
+.wb-case p{font-size:0.83rem;color:var(--text-muted)}
+
+/* BCT highlight boxes */
+.wb-bct-box{background:rgba(14,165,233,0.04);border:1px solid rgba(14,165,233,0.12);border-radius:10px;padding:1rem;margin:0.75rem 0}
+.wb-bct-box h5{font-size:0.8rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.4rem}
+
+/* Responsive */
+@media(max-width:640px){
+  .wb-hero h1{font-size:1.4rem}
+  .wb-nav-links{display:none}
+  .wb-grid-2,.wb-grid-3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="wb-nav">
+  <a href="/" class="wb-nav-logo">ImpactMojo</a>
+  <div class="wb-nav-links">
+    <a href="#foundations">Foundations</a>
+    <a href="#bct">BCT Techniques</a>
+    <a href="#examples">Worked Examples</a>
+    <a href="#indicators">Indicators</a>
+    <a href="#problems">Problem Sets</a>
+    <a href="#sectors">Sector Guidance</a>
+    <a href="#crosscutting">Cross-cutting</a>
+    <a href="#tools">Tools</a>
+  </div>
+  <a href="/toc-builder.html" class="wb-builder-btn">&#9654; Interactive Builder</a>
+</nav>
+
+<!-- Hero -->
+<div class="wb-hero">
+  <div class="wb-container">
+    <h1>Theory of Change Workbench</h1>
+    <p>Master the art of building rigorous Theories of Change for development programs. Foundations, worked examples, BCT techniques, problem sets, and sector guidance — all in one place.</p>
+    <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap">
+      <a href="/toc-builder.html" class="wb-builder-btn" style="padding:0.6rem 1.5rem;font-size:0.9rem">&#9654; Open Interactive Builder</a>
+      <a href="#foundations" class="wb-builder-btn" style="padding:0.6rem 1.5rem;font-size:0.9rem;background:var(--purple)">&#128218; Start Learning</a>
+    </div>
+  </div>
+</div>
+
+<div class="wb-container">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- COACHING & DOJO CTAs -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section">
+  <div class="wb-grid wb-grid-3">
+    <div class="wb-cta" style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(14,165,233,0.08))">
+      <h3 style="color:var(--purple)">ToC Coaching Call</h3>
+      <p style="color:var(--text-muted)">Book a 1-on-1 session with an expert to review your Theory of Change and get actionable feedback.</p>
+      <a href="/coaching" class="wb-cta-btn" style="background:var(--purple)">Book Coaching</a>
+    </div>
+    <div class="wb-cta" style="background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(14,165,233,0.08))">
+      <h3 style="color:var(--green)">ToC Design Dojo</h3>
+      <p style="color:var(--text-muted)">Join a live group session where teams collaboratively build and critique Theories of Change with peer feedback.</p>
+      <a href="/dojos" class="wb-cta-btn" style="background:var(--green)">Join a Dojo</a>
+    </div>
+    <div class="wb-cta" style="background:rgba(245,158,11,0.08)">
+      <h3 style="color:var(--amber)">Custom Workshop</h3>
+      <p style="color:var(--text-muted)">Bring your team for a facilitated ToC design workshop tailored to your program context.</p>
+      <a href="/workshops" class="wb-cta-btn" style="background:var(--amber)">Request Workshop</a>
+    </div>
+  </div>
+</section>
+
+<hr class="wb-divider">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 1. FOUNDATIONS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section" id="foundations">
+  <h2 class="wb-section-title">Foundations</h2>
+  <p class="wb-section-subtitle">Core concepts for building rigorous Theories of Change</p>
+
+  <div class="wb-card">
+    <h3>What is a Theory of Change?</h3>
+    <p>A Theory of Change (ToC) is a comprehensive description and illustration of how and why a desired change is expected to happen in a particular context. It maps the causal logic from <strong>inputs</strong> through <strong>activities</strong>, <strong>outputs</strong>, <strong>outcomes</strong>, to long-term <strong>impact</strong> — making explicit the assumptions and evidence underlying each causal link.</p>
+    <p>Unlike a simple logical framework, a ToC explains <em>why</em> each step leads to the next, grounds causal claims in evidence, and surfaces the assumptions that must hold for the program to succeed.</p>
+  </div>
+
+  <div class="wb-grid wb-grid-2">
+    <div class="wb-card">
+      <h3>Results Chain</h3>
+      <p>The standard causal pathway:</p>
+      <p style="font-weight:600;color:var(--accent);font-size:0.9rem;margin-top:0.5rem">
+        Input &rarr; Activity &rarr; Output &rarr; Outcome &rarr; Impact
+      </p>
+      <p style="margin-top:0.5rem">Each link requires a <strong>causal mechanism</strong> (why does this lead to that?) and <strong>evidence</strong> (what tells us this mechanism works?).</p>
+    </div>
+    <div class="wb-card">
+      <h3>Key Components</h3>
+      <ul class="wb-checklist">
+        <li>Long-term change (impact statement)</li>
+        <li>Preconditions and pathways of change</li>
+        <li>Causal linkages with evidence</li>
+        <li>Assumptions at each level</li>
+        <li>Indicators for each outcome</li>
+        <li>Interventions mapped to the pathway</li>
+        <li>Context and stakeholder analysis</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wb-card">
+    <h3>ToC vs. Logframe</h3>
+    <table class="wb-table">
+      <thead>
+        <tr><th>Dimension</th><th>Theory of Change</th><th>Logical Framework</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Focus</td><td>Why and how change happens</td><td>What will be delivered and measured</td></tr>
+        <tr><td>Structure</td><td>Non-linear, multiple pathways</td><td>Linear hierarchy (4 levels)</td></tr>
+        <tr><td>Assumptions</td><td>Central, tested explicitly</td><td>Listed but often untested</td></tr>
+        <tr><td>Evidence</td><td>Underpins each causal link</td><td>Indicators verify achievement</td></tr>
+        <tr><td>Adaptability</td><td>Living document, updated regularly</td><td>Usually fixed at design stage</td></tr>
+        <tr><td>Best for</td><td>Complex, systemic programs</td><td>Straightforward, linear programs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="wb-card">
+    <h3>Common Pitfalls in ToC Design</h3>
+    <ol style="font-size:0.85rem;padding-left:1.2rem;color:var(--text-muted)">
+      <li style="margin-bottom:0.4rem"><strong>Confusion of outputs with outcomes</strong> — Counting workshops conducted (output) vs. actual skill adoption (outcome)</li>
+      <li style="margin-bottom:0.4rem"><strong>Missing assumptions</strong> — Failing to articulate what must hold true for each causal link</li>
+      <li style="margin-bottom:0.4rem"><strong>Overly linear thinking</strong> — Ignoring feedback loops, synergies, and unintended consequences</li>
+      <li style="margin-bottom:0.4rem"><strong>No evidence grounding</strong> — Causal claims based on hope rather than research evidence</li>
+      <li style="margin-bottom:0.4rem"><strong>Ignoring context</strong> — Transplanting a ToC from one setting without adaptation to local realities</li>
+    </ol>
+  </div>
+</section>
+
+<hr class="wb-divider">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 2. BCT TECHNIQUES FOR ToC -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section" id="bct">
+  <h2 class="wb-section-title">Behavior Change Techniques for ToC</h2>
+  <p class="wb-section-subtitle">Integrate evidence-based BCTs from the 229-technique taxonomy into your causal pathways. <a href="/toc-builder.html">Drag-and-drop BCTs in the Interactive Builder &rarr;</a></p>
+
+  <div class="wb-bct-box">
+    <h5>Why BCTs Matter for Theory of Change</h5>
+    <p style="font-size:0.85rem;color:var(--text-muted)">Behavior change is often the critical "black box" between program activities and outcomes. Specifying which BCTs you will deploy — and the evidence for their effectiveness — strengthens your causal logic and makes your ToC testable. The <a href="https://doi.org/10.1007/s12160-013-9486-6" target="_blank">BCT Taxonomy v1 (Michie et al., 2013)</a> provides a standardized vocabulary of 93 techniques, extended to 229 in the ImpactMojo repository with South Asian contextualizations.</p>
+  </div>
+
+  <p style="font-size:0.85rem;margin-bottom:1rem">Below are key BCT categories most relevant to ToC design. <strong>Browse all 229 techniques</strong> in the <a href="/toc-builder.html">Interactive Builder's BCT sidebar</a>.</p>
+
+  <div class="wb-toggle" id="bct-goals">
+    <div class="wb-toggle-header">Goals & Planning <span class="wb-tag wb-tag-bct">9 techniques</span> <span class="wb-toggle-arrow">&#x25B6;</span></div>
+    <div class="wb-toggle-body">
+      <p>Techniques for setting goals, action planning, and problem-solving. Critical for ToC activity-to-output links.</p>
+      <table class="wb-table">
+        <thead><tr><th>Technique</th><th>Example in ToC</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Goal setting (behavior)</td><td>SHG members set weekly savings targets</td><td>Strong</td></tr>
+          <tr><td>Action planning</td><td>Farmers create step-by-step plans for adopting new seeds</td><td>Strong</td></tr>
+          <tr><td>Problem solving</td><td>CHWs identify barriers to ANC attendance with mothers</td><td>Strong</td></tr>
+          <tr><td>Review behavior goals</td><td>Monthly SHG review of savings and loan targets</td><td>Moderate</td></tr>
+          <tr><td>Behavioral contract</td><td>Signed commitment to latrine construction by village leaders</td><td>Moderate</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="wb-toggle" id="bct-social">
+    <div class="wb-toggle-header">Social Support & Modeling <span class="wb-tag wb-tag-bct">12 techniques</span> <span class="wb-toggle-arrow">&#x25B6;</span></div>
+    <div class="wb-toggle-body">
+      <p>Leveraging social dynamics for behavior change — critical in South Asian community-based programs.</p>
+      <table class="wb-table">
+        <thead><tr><th>Technique</th><th>Example in ToC</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Social support (practical)</td><td>Peer support groups for new mothers practicing exclusive breastfeeding</td><td>Strong</td></tr>
+          <tr><td>Demonstration of behavior</td><td>Lead farmer demonstrates improved cultivation techniques</td><td>Strong</td></tr>
+          <tr><td>Social comparison</td><td>Village scorecard comparing ODF progress across hamlets</td><td>Moderate</td></tr>
+          <tr><td>Information from credible source</td><td>ASHA worker sharing health information during home visits</td><td>Strong</td></tr>
+          <tr><td>Restructuring social environment</td><td>Forming mothers' groups to shift norms around child nutrition</td><td>Moderate</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="wb-toggle" id="bct-feedback">
+    <div class="wb-toggle-header">Feedback & Monitoring <span class="wb-tag wb-tag-bct">7 techniques</span> <span class="wb-toggle-arrow">&#x25B6;</span></div>
+    <div class="wb-toggle-body">
+      <p>Essential for the output-to-outcome link — how do participants know they're making progress?</p>
+      <table class="wb-table">
+        <thead><tr><th>Technique</th><th>Example in ToC</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Self-monitoring of behavior</td><td>Growth monitoring cards tracked by mothers</td><td>Strong</td></tr>
+          <tr><td>Feedback on behavior</td><td>CHW gives feedback on handwashing practice during home visits</td><td>Strong</td></tr>
+          <tr><td>Self-monitoring of outcome</td><td>Farmers track crop yield improvements season over season</td><td>Moderate</td></tr>
+          <tr><td>Biofeedback</td><td>Water quality testing kits showing contamination levels</td><td>Moderate</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="wb-toggle" id="bct-reward">
+    <div class="wb-toggle-header">Reward & Incentives <span class="wb-tag wb-tag-bct">10 techniques</span> <span class="wb-toggle-arrow">&#x25B6;</span></div>
+    <div class="wb-toggle-body">
+      <p>Reinforcement mechanisms that sustain changed behavior over time.</p>
+      <table class="wb-table">
+        <thead><tr><th>Technique</th><th>Example in ToC</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Social reward</td><td>Public recognition of ODF villages at gram sabha</td><td>Strong</td></tr>
+          <tr><td>Material reward (behavior)</td><td>Token incentives for completing ANC visits</td><td>Moderate</td></tr>
+          <tr><td>Non-specific reward</td><td>Certificate of completion for SHG financial literacy training</td><td>Moderate</td></tr>
+          <tr><td>Self-reward</td><td>Encouraging mothers to celebrate immunization milestones</td><td>Moderate</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="wb-toggle" id="bct-environment">
+    <div class="wb-toggle-header">Environmental Restructuring <span class="wb-tag wb-tag-bct">6 techniques</span> <span class="wb-toggle-arrow">&#x25B6;</span></div>
+    <div class="wb-toggle-body">
+      <p>Changing the context to make desired behaviors easier — structural interventions in the ToC.</p>
+      <table class="wb-table">
+        <thead><tr><th>Technique</th><th>Example in ToC</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Adding objects to environment</td><td>Installing handwashing stations at school entrances</td><td>Strong</td></tr>
+          <tr><td>Prompts/cues</td><td>Reminder stickers on water storage containers for treatment</td><td>Strong</td></tr>
+          <tr><td>Restructuring physical environment</td><td>Improved cookstoves placed in existing kitchen areas</td><td>Moderate</td></tr>
+          <tr><td>Avoidance/reducing exposure to cues</td><td>Removing open defecation spots via CLTS triggering</td><td>Moderate</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:1.5rem">
+    <a href="/toc-builder.html" class="wb-builder-btn" style="padding:0.6rem 1.5rem;font-size:0.88rem">Browse All 229 BCTs in the Interactive Builder &rarr;</a>
+  </div>
+</section>
+
+<hr class="wb-divider">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 3. WORKED EXAMPLES -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section" id="examples">
+  <h2 class="wb-section-title">Worked Examples</h2>
+  <p class="wb-section-subtitle">Full Theory of Change case studies with BCT annotations and indicator mapping</p>
+
+  <!-- Example 1: SHGs Bihar -->
+  <div class="wb-case">
+    <h4>Case Study 1: Self-Help Groups for Women's Empowerment — Bihar</h4>
+    <p>A livelihoods program forming SHGs in rural Bihar to improve household income and women's decision-making power.</p>
+  </div>
+
+  <div class="wb-card">
+    <h3>Impact Statement</h3>
+    <p>Women in target communities exercise greater economic agency and household decision-making power, contributing to poverty reduction (SDG 1) and gender equality (SDG 5).</p>
+
+    <h3 style="margin-top:1rem">Causal Pathway</h3>
+    <table class="wb-table">
+      <thead><tr><th>Level</th><th>Statement</th><th>BCTs Applied</th><th>Indicator</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="wb-tag wb-tag-bct">Input</span></td>
+          <td>Trained community mobilizers and seed capital for SHG formation</td>
+          <td>—</td>
+          <td># mobilizers trained; seed capital disbursed</td>
+        </tr>
+        <tr>
+          <td><span class="wb-tag wb-tag-method">Activity</span></td>
+          <td>Weekly SHG meetings with savings, credit, and financial literacy</td>
+          <td>
+            <span class="wb-tag wb-tag-bct">Goal setting</span>
+            <span class="wb-tag wb-tag-bct">Action planning</span>
+            <span class="wb-tag wb-tag-bct">Social support (practical)</span>
+          </td>
+          <td># meetings held; attendance rate</td>
+        </tr>
+        <tr>
+          <td><span class="wb-tag wb-tag-tool">Output</span></td>
+          <td>200 SHGs formed with 2,400 members; ₹12L cumulative savings</td>
+          <td>
+            <span class="wb-tag wb-tag-bct">Self-monitoring of behavior</span>
+            <span class="wb-tag wb-tag-bct">Social comparison</span>
+          </td>
+          <td># SHGs formed; total savings; repayment rate</td>
+        </tr>
+        <tr>
+          <td><span class="wb-tag wb-tag-sector">Outcome</span></td>
+          <td>Increased household income; women make financial decisions</td>
+          <td>
+            <span class="wb-tag wb-tag-bct">Behavioral contract</span>
+            <span class="wb-tag wb-tag-bct">Social reward</span>
+          </td>
+          <td>% income increase; women's decision-making index</td>
+        </tr>
+        <tr>
+          <td><span class="wb-tag wb-tag-ethics">Impact</span></td>
+          <td>Reduced poverty; improved gender equity in target villages</td>
+          <td>—</td>
+          <td>Poverty headcount ratio; GDI change</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:1rem">Key Assumptions</h3>
+    <ul class="wb-checklist">
+      <li>Women have time and social permission to attend weekly meetings</li>
+      <li>Local money lenders don't actively undermine SHG credit operations</li>
+      <li>Bank linkage (SHG-Bank Linkage Programme) is accessible and functional</li>
+      <li>Male family members are supportive or at minimum non-obstructive</li>
+    </ul>
+
+    <div class="wb-bct-box" style="margin-top:1rem">
+      <h5>BCT Design Note</h5>
+      <p style="font-size:0.83rem;color:var(--text-muted)">The <strong>Social support (practical)</strong> BCT is the backbone of SHG models — peer savings pressure, collective credit decisions, and social accountability. Combined with <strong>Goal setting</strong> (weekly savings targets) and <strong>Self-monitoring</strong> (passbook records), these three BCTs create a powerful feedback loop. Evidence from NABARD evaluations shows this combination yields 23% higher repayment rates than credit-only programs.</p>
+    </div>
+  </div>
+
+  <!-- Example 2: Digital Education Jharkhand -->
+  <div class="wb-case">
+    <h4>Case Study 2: Digital Education for Foundational Literacy — Jharkhand</h4>
+    <p>A technology-enabled education program using tablets and adaptive learning software to improve reading outcomes in government primary schools.</p>
+  </div>
+
+  <div class="wb-card">
+    <h3>Impact Statement</h3>
+    <p>Children in Grades 1-3 in target schools achieve grade-level foundational literacy and numeracy (FLN), contributing to equitable quality education (SDG 4).</p>
+
+    <h3 style="margin-top:1rem">Causal Pathway</h3>
+    <table class="wb-table">
+      <thead><tr><th>Level</th><th>Statement</th><th>BCTs Applied</th><th>Indicator</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="wb-tag wb-tag-bct">Input</span></td>
+          <td>Tablets with adaptive learning software; teacher training on blended pedagogy</td>
+          <td>—</td>
+          <td># tablets procured; # teachers trained</td>
+        </tr>
+        <tr>
+          <td><span class="wb-tag wb-tag-method">Activity</span></td>
+          <td>Daily 45-min tablet sessions with adaptive content; weekly teacher review of dashboards</td>
+          <td>
+            <span class="wb-tag wb-tag-bct">Graded tasks</span>
+            <span class="wb-tag wb-tag-bct">Feedback on behavior</span>
+            <span class="wb-tag wb-tag-bct">Prompts/cues</span>
+          </td>
+          <td>Avg. minutes/student/day; teacher dashboard logins</td>
+        </tr>
+        <tr>
+          <td><span class="wb-tag wb-tag-tool">Output</span></td>
+          <td>5,000 students completing 80%+ of learning modules</td>
+          <td>
+            <span class="wb-tag wb-tag-bct">Self-monitoring of outcome</span>
+            <span class="wb-tag wb-tag-bct">Non-specific reward</span>
+          </td>
+          <td>Module completion rate; quiz pass rates</td>
+        </tr>
+        <tr>
+          <td><span class="wb-tag wb-tag-sector">Outcome</span></td>
+          <td>Students read at grade level; improved numeracy scores</td>
+          <td>
+            <span class="wb-tag wb-tag-bct">Demonstration of behavior</span>
+          </td>
+          <td>ASER reading level; NAS numeracy scores</td>
+        </tr>
+        <tr>
+          <td><span class="wb-tag wb-tag-ethics">Impact</span></td>
+          <td>Grade-level FLN achievement in target schools</td>
+          <td>—</td>
+          <td>% students at grade-level FLN (endline vs. baseline)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:1rem">Key Assumptions</h3>
+    <ul class="wb-checklist">
+      <li>Electricity and charging infrastructure available in schools</li>
+      <li>Teachers have sufficient digital literacy and motivation</li>
+      <li>Children attend school regularly enough for dosage effect</li>
+      <li>Adaptive software content is culturally and linguistically appropriate</li>
+    </ul>
+
+    <div class="wb-bct-box" style="margin-top:1rem">
+      <h5>BCT Design Note</h5>
+      <p style="font-size:0.83rem;color:var(--text-muted)">The <strong>Graded tasks</strong> BCT (adaptive difficulty) is the core mechanism of edtech interventions — keeping learners in their zone of proximal development. Combined with <strong>Feedback on behavior</strong> (immediate quiz feedback) and <strong>Self-monitoring of outcome</strong> (progress dashboards), these BCTs create a self-reinforcing learning loop. RCT evidence from Mindspark (Muralidharan et al., 2019) shows 0.37σ improvement in math when this BCT combination is deployed.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="wb-divider">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 4. INDICATOR DEVELOPMENT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section" id="indicators">
+  <h2 class="wb-section-title">Indicator Development</h2>
+  <p class="wb-section-subtitle">How to build measurable, meaningful indicators for each level of your ToC</p>
+
+  <div class="wb-card">
+    <h3>SMART Indicator Framework</h3>
+    <table class="wb-table">
+      <thead><tr><th>Criterion</th><th>Question</th><th>Common Pitfall</th></tr></thead>
+      <tbody>
+        <tr><td><strong>S</strong>pecific</td><td>Does it clearly describe what is being measured?</td><td>Vague indicators like "improved awareness"</td></tr>
+        <tr><td><strong>M</strong>easurable</td><td>Can it be quantified or verified objectively?</td><td>Subjective assessments without validated scales</td></tr>
+        <tr><td><strong>A</strong>chievable</td><td>Is the target realistic given resources and timeline?</td><td>Aspirational targets with no basis in evidence</td></tr>
+        <tr><td><strong>R</strong>elevant</td><td>Does it actually measure the stated outcome?</td><td>Proxy indicators too distant from actual change</td></tr>
+        <tr><td><strong>T</strong>ime-bound</td><td>By when should the target be achieved?</td><td>No timeline specified for target achievement</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="wb-card">
+    <h3>Indicator Mapping by ToC Level</h3>
+    <table class="wb-table">
+      <thead><tr><th>ToC Level</th><th>Indicator Type</th><th>Data Source</th><th>Frequency</th></tr></thead>
+      <tbody>
+        <tr><td>Input</td><td>Resource tracking (budget spent, staff deployed)</td><td>Financial MIS, HR records</td><td>Monthly</td></tr>
+        <tr><td>Activity</td><td>Process monitoring (sessions conducted, reach)</td><td>Activity registers, digital tracking</td><td>Weekly/Monthly</td></tr>
+        <tr><td>Output</td><td>Immediate deliverables (# trained, # built)</td><td>Program MIS, registers</td><td>Quarterly</td></tr>
+        <tr><td>Outcome</td><td>Behavior/practice change (adoption rates, knowledge scores)</td><td>Surveys, assessments, observations</td><td>Semi-annual</td></tr>
+        <tr><td>Impact</td><td>Long-term population-level change</td><td>NFHS, Census, panel surveys</td><td>Endline/2-3 years</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="wb-card">
+    <h3>Exercise: Write Your Indicators</h3>
+    <p>For each outcome in your ToC, complete this template:</p>
+    <div style="background:var(--section-bg);padding:1rem;border-radius:8px;font-size:0.83rem;margin-top:0.5rem">
+      <p><strong>Outcome:</strong> [Your outcome statement]</p>
+      <p><strong>Indicator:</strong> [What exactly will you measure?]</p>
+      <p><strong>Baseline:</strong> [Current value] &rarr; <strong>Target:</strong> [Expected value by when]</p>
+      <p><strong>Data source:</strong> [Survey / MIS / admin data / observation]</p>
+      <p><strong>Collection frequency:</strong> [Monthly / Quarterly / Annual]</p>
+      <p><strong>Disaggregation:</strong> [Gender / age / caste / geography / disability]</p>
+    </div>
+  </div>
+</section>
+
+<hr class="wb-divider">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 5. PROBLEM SETS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section" id="problems">
+  <h2 class="wb-section-title">Problem Sets</h2>
+  <p class="wb-section-subtitle">Practice building and critiquing Theories of Change. Try them in the <a href="/toc-builder.html">Interactive Builder</a>.</p>
+
+  <div class="wb-problem">
+    <h4>Problem 1: Maternal Health — Uttarakhand</h4>
+    <p>A mountain-district health program aims to increase institutional deliveries from 35% to 70%. Design a ToC identifying at least 3 BCTs that address supply-side and demand-side barriers. Consider terrain, distance to facilities, and cultural practices around childbirth.</p>
+    <span class="wb-problem-status solved">Solved example available</span>
+  </div>
+
+  <div class="wb-problem">
+    <h4>Problem 2: Farmer Producer Organizations — Maharashtra</h4>
+    <p>An FPO program wants to improve smallholder farmers' price realization by 25%. Build a ToC that maps from FPO formation through collective bargaining to market linkages. Include assumptions about market access and social capital.</p>
+    <span class="wb-problem-status solved">Solved example available</span>
+  </div>
+
+  <div class="wb-problem">
+    <h4>Problem 3: Adolescent SRH — Rajasthan</h4>
+    <p>Design a ToC for an adolescent sexual and reproductive health program in a conservative setting. Identify BCTs for behavior change, address social norm barriers, and specify how you'd measure outcomes while maintaining ethical safeguards.</p>
+    <span class="wb-problem-status unsolved">Unsolved — try it yourself</span>
+  </div>
+
+  <div class="wb-problem">
+    <h4>Problem 4: Urban WASH — Informal Settlements, Bengaluru</h4>
+    <p>Build a ToC for improving sanitation in urban informal settlements. Consider tenure insecurity, shared facilities, municipal coordination, and community-level collective action.</p>
+    <span class="wb-problem-status unsolved">Unsolved — try it yourself</span>
+  </div>
+
+  <div class="wb-problem">
+    <h4>Problem 5: Digital Financial Inclusion — North-East India</h4>
+    <p>A fintech-NGO partnership aims to increase digital payment adoption among rural women. Design a ToC that addresses digital literacy, trust barriers, and infrastructure constraints. Identify which BCTs can overcome initial resistance to technology adoption.</p>
+    <span class="wb-problem-status unsolved">Unsolved — try it yourself</span>
+  </div>
+
+  <div class="wb-problem">
+    <h4>Problem 6: Climate-Resilient Agriculture — Odisha</h4>
+    <p>Develop a ToC for promoting climate-smart agricultural practices among marginal farmers in cyclone-prone coastal Odisha. Map the pathway from training through adoption to resilience outcomes. Include environmental and gender cross-cutting considerations.</p>
+    <span class="wb-problem-status unsolved">Unsolved — try it yourself</span>
+  </div>
+
+  <div class="wb-problem">
+    <h4>Problem 7: School Dropout Prevention — Telangana</h4>
+    <p>A state government program aims to reduce secondary school dropouts by 40%, especially among SC/ST girls. Build a ToC spanning community engagement, school-level interventions, and social protection. Specify 4+ BCTs and identify the weakest assumption in your chain.</p>
+    <span class="wb-problem-status solved">Solved example available</span>
+  </div>
+
+  <div class="wb-problem">
+    <h4>Problem 8: Mental Health in Conflict-Affected Areas — J&K</h4>
+    <p>Design a ToC for a community mental health program in a conflict-affected region. Address stigma, limited clinical workforce, cultural idioms of distress, and the Do No Harm framework. Specify BCTs for help-seeking behavior change.</p>
+    <span class="wb-problem-status unsolved">Unsolved — try it yourself</span>
+  </div>
+
+  <div style="text-align:center;margin-top:1.5rem">
+    <a href="/toc-builder.html" class="wb-builder-btn" style="padding:0.6rem 1.5rem;font-size:0.88rem">Build Your Solution in the Interactive Builder &rarr;</a>
+  </div>
+</section>
+
+<hr class="wb-divider">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 6. SECTOR GUIDANCE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section" id="sectors">
+  <h2 class="wb-section-title">Sector Guidance</h2>
+  <p class="wb-section-subtitle">Sector-specific tips, frameworks, and BCTs for Theory of Change design</p>
+
+  <div class="wb-grid wb-grid-2">
+
+    <div class="wb-card">
+      <h3>Gender & Women's Economic Empowerment</h3>
+      <p>Apply a gender lens throughout the causal chain, not just as a cross-cutting afterthought.</p>
+      <ul class="wb-checklist">
+        <li>Conduct gender analysis before ToC design</li>
+        <li>Map gendered barriers at each pathway level</li>
+        <li>Include women's agency as an intermediate outcome</li>
+        <li>Use GESI-sensitive indicators (decision-making, mobility, asset ownership)</li>
+        <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Social support</span> <span class="wb-tag wb-tag-bct">Restructuring social environment</span></li>
+      </ul>
+    </div>
+
+    <div class="wb-card">
+      <h3>Health & Nutrition</h3>
+      <p>Health ToCs often need both supply-side (service delivery) and demand-side (behavior change) pathways.</p>
+      <ul class="wb-checklist">
+        <li>Map the health system pathway: facility → CHW → household</li>
+        <li>Specify BCTs for each behavior change objective</li>
+        <li>Include service quality as an intermediate outcome</li>
+        <li>Use WHO/UNICEF standard indicators where possible</li>
+        <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Information from credible source</span> <span class="wb-tag wb-tag-bct">Prompts/cues</span></li>
+      </ul>
+    </div>
+
+    <div class="wb-card">
+      <h3>Education & FLN</h3>
+      <p>Education ToCs must distinguish between access, enrollment, attendance, and learning outcomes.</p>
+      <ul class="wb-checklist">
+        <li>Don't conflate enrollment with learning</li>
+        <li>Map teacher behavior change as a separate pathway</li>
+        <li>Include household demand-side factors</li>
+        <li>Use ASER/NAS-aligned measurement frameworks</li>
+        <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Graded tasks</span> <span class="wb-tag wb-tag-bct">Feedback on behavior</span></li>
+      </ul>
+    </div>
+
+    <div class="wb-card">
+      <h3>Livelihoods & Market Systems</h3>
+      <p>Market systems ToCs require understanding of supply chains, value addition, and systemic change.</p>
+      <ul class="wb-checklist">
+        <li>Map the market system (input supply → production → aggregation → market)</li>
+        <li>Distinguish individual vs. systemic change outcomes</li>
+        <li>Include sustainability beyond project period</li>
+        <li>Address power dynamics in value chains</li>
+        <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Goal setting</span> <span class="wb-tag wb-tag-bct">Action planning</span></li>
+      </ul>
+    </div>
+
+    <div class="wb-card">
+      <h3>WASH & Environmental Health</h3>
+      <p>WASH ToCs combine infrastructure (hardware) with behavior change (software) pathways.</p>
+      <ul class="wb-checklist">
+        <li>Map hardware (infrastructure) and software (behavior) separately</li>
+        <li>Include O&M sustainability as a key outcome</li>
+        <li>Use CLTS community-level indicators alongside household</li>
+        <li>Address equity in access (women, disabled, elderly)</li>
+        <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Adding objects to environment</span> <span class="wb-tag wb-tag-bct">Social comparison</span></li>
+      </ul>
+    </div>
+
+    <div class="wb-card">
+      <h3>Climate & Resilience</h3>
+      <p>Climate ToCs must account for uncertainty, adaptive pathways, and systems-level change.</p>
+      <ul class="wb-checklist">
+        <li>Include climate scenarios in assumptions</li>
+        <li>Map both mitigation and adaptation pathways</li>
+        <li>Use adaptive management as a design principle</li>
+        <li>Include ecosystem health as an outcome</li>
+        <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Problem solving</span> <span class="wb-tag wb-tag-bct">Information about consequences</span></li>
+      </ul>
+    </div>
+
+    <div class="wb-card">
+      <h3>Governance & Social Accountability</h3>
+      <p>Governance ToCs must navigate complex political economy and power dynamics.</p>
+      <ul class="wb-checklist">
+        <li>Conduct political economy analysis before design</li>
+        <li>Map both citizen engagement and state responsiveness pathways</li>
+        <li>Include accountability mechanisms as outcomes, not just activities</li>
+        <li>Address sustainability of governance reforms</li>
+        <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Social support (practical)</span> <span class="wb-tag wb-tag-bct">Restructuring social environment</span></li>
+      </ul>
+    </div>
+
+    <div class="wb-card">
+      <h3>SRHR & Adolescent Health</h3>
+      <p>Sensitive programs requiring careful ethical design and social norm navigation.</p>
+      <ul class="wb-checklist">
+        <li>Apply Do No Harm throughout the ToC</li>
+        <li>Map social norms as both barriers and levers</li>
+        <li>Include privacy and confidentiality in service delivery pathway</li>
+        <li>Distinguish knowledge, attitudes, and practices as separate outcomes</li>
+        <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Social support</span> <span class="wb-tag wb-tag-bct">Information from credible source</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="wb-divider">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 7. CROSS-CUTTING CONSIDERATIONS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section" id="crosscutting">
+  <h2 class="wb-section-title">Cross-cutting Considerations</h2>
+  <p class="wb-section-subtitle">Lenses to apply across your entire Theory of Change</p>
+
+  <div class="wb-grid wb-grid-2">
+    <div class="wb-card">
+      <h3>Gender Equality & Social Inclusion (GESI)</h3>
+      <p>Apply at every ToC level — not just as a tag-on.</p>
+      <ul class="wb-checklist">
+        <li>Gender analysis of barriers and enablers at each level</li>
+        <li>Intersectional lens (gender × caste × class × disability)</li>
+        <li>GESI-specific outcomes and indicators</li>
+        <li>Meaningful participation in design and monitoring</li>
+        <li>Women's agency as a pathway, not just a target</li>
+      </ul>
+    </div>
+
+    <div class="wb-card">
+      <h3>Climate & Environmental Sustainability</h3>
+      <p>Screen your ToC for climate risks and environmental co-benefits.</p>
+      <ul class="wb-checklist">
+        <li>Climate risk screening for each assumption</li>
+        <li>Environmental co-benefits and risks mapped</li>
+        <li>Adaptation pathways for climate-sensitive outcomes</li>
+        <li>Carbon footprint of program activities</li>
+        <li>Green transition as a cross-cutting outcome</li>
+      </ul>
+    </div>
+
+    <div class="wb-card">
+      <h3>Do No Harm & Ethics</h3>
+      <p>Ensure your program doesn't inadvertently cause harm.</p>
+      <ul class="wb-checklist">
+        <li>Conflict sensitivity analysis at design stage</li>
+        <li>Power dynamics and unintended consequences mapped</li>
+        <li>Safeguarding policies for vulnerable populations</li>
+        <li>Informed consent protocols for data collection</li>
+        <li>Grievance redress mechanisms in place</li>
+      </ul>
+    </div>
+
+    <div class="wb-card">
+      <h3>Digital & Innovation</h3>
+      <p>Leverage technology thoughtfully, not as a silver bullet.</p>
+      <ul class="wb-checklist">
+        <li>Digital readiness assessment before tech-based interventions</li>
+        <li>Data protection and privacy safeguards</li>
+        <li>Digital divide considerations (gender, age, location)</li>
+        <li>Human-centered design for technology adoption</li>
+        <li>Sustainability of digital infrastructure post-project</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="wb-divider">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 8. MEASUREMENT DESIGN -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section" id="measurement">
+  <h2 class="wb-section-title">Measurement Design</h2>
+  <p class="wb-section-subtitle">Designing rigorous evaluation strategies that test your ToC</p>
+
+  <div class="wb-card">
+    <h3>Evaluation Methods Mapped to ToC</h3>
+    <table class="wb-table">
+      <thead><tr><th>Method</th><th>Best For</th><th>Limitation</th><th>ToC Application</th></tr></thead>
+      <tbody>
+        <tr><td>RCT</td><td>Causal attribution of impact</td><td>Expensive; ethical constraints; external validity</td><td>Testing the overall impact pathway</td></tr>
+        <tr><td>Difference-in-Differences</td><td>Quasi-experimental comparison</td><td>Parallel trends assumption</td><td>Evaluating outcome-level change</td></tr>
+        <tr><td>Most Significant Change</td><td>Understanding qualitative pathways</td><td>Subjective; not generalizable</td><td>Unpacking HOW change happened</td></tr>
+        <tr><td>Contribution Analysis</td><td>Complex, multi-actor programs</td><td>Weaker causal claims</td><td>Verifying contribution, not attribution</td></tr>
+        <tr><td>Outcome Harvesting</td><td>Emergent, non-linear change</td><td>Resource-intensive</td><td>Identifying unexpected outcomes and pathways</td></tr>
+        <tr><td>Process Tracing</td><td>Tracing causal mechanisms</td><td>Case-specific; limited generalizability</td><td>Testing specific causal links in the ToC</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="wb-card">
+    <h3>Data Collection Toolkit</h3>
+    <div class="wb-grid wb-grid-3" style="margin-top:0.5rem">
+      <div style="padding:0.5rem">
+        <p style="font-weight:600;font-size:0.85rem">Quantitative</p>
+        <ul style="font-size:0.8rem;color:var(--text-muted);padding-left:1rem">
+          <li>Household surveys</li>
+          <li>Facility assessments</li>
+          <li>Administrative data (MIS)</li>
+          <li>Digital trace data</li>
+        </ul>
+      </div>
+      <div style="padding:0.5rem">
+        <p style="font-weight:600;font-size:0.85rem">Qualitative</p>
+        <ul style="font-size:0.8rem;color:var(--text-muted);padding-left:1rem">
+          <li>Key Informant Interviews</li>
+          <li>Focus Group Discussions</li>
+          <li>Case studies</li>
+          <li>Participatory methods (PRA)</li>
+        </ul>
+      </div>
+      <div style="padding:0.5rem">
+        <p style="font-weight:600;font-size:0.85rem">Mixed</p>
+        <ul style="font-size:0.8rem;color:var(--text-muted);padding-left:1rem">
+          <li>Sequential explanatory</li>
+          <li>Concurrent triangulation</li>
+          <li>Embedded design</li>
+          <li>Participatory statistics</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="wb-divider">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 9. ADAPTIVE ToC -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section" id="adaptive">
+  <h2 class="wb-section-title">Adaptive Theory of Change</h2>
+  <p class="wb-section-subtitle">Your ToC is a living document — here's how to keep it alive</p>
+
+  <div class="wb-card">
+    <h3>When to Update Your ToC</h3>
+    <ul class="wb-checklist">
+      <li><strong>Monitoring data</strong> shows an assumption isn't holding</li>
+      <li><strong>Midterm review</strong> reveals unexpected pathways or barriers</li>
+      <li><strong>Context shifts</strong> — policy change, COVID, climate event, conflict</li>
+      <li><strong>New evidence</strong> — published research changes your causal logic</li>
+      <li><strong>Stakeholder feedback</strong> — communities identify missing pathways</li>
+      <li><strong>Annually</strong> — as a minimum, conduct annual ToC review</li>
+    </ul>
+  </div>
+
+  <div class="wb-card">
+    <h3>Adaptive Management Cycle</h3>
+    <p style="font-size:0.88rem;text-align:center;font-weight:600;color:var(--accent);margin:1rem 0">
+      Plan (ToC) &rarr; Do (Implement) &rarr; Study (Monitor & Learn) &rarr; Act (Adapt ToC) &rarr; Repeat
+    </p>
+    <p>Each cycle should revisit and potentially revise: causal assumptions, BCT selection, indicator targets, and implementation strategy. Use the <a href="/toc-builder.html">Interactive Builder</a> to version your ToC over time.</p>
+  </div>
+</section>
+
+<hr class="wb-divider">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 10. TOOLS & TEMPLATES -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="wb-section" id="tools">
+  <h2 class="wb-section-title">Tools & Templates</h2>
+  <p class="wb-section-subtitle">Resources to build your Theory of Change</p>
+
+  <div class="wb-grid wb-grid-2">
+    <div class="wb-card">
+      <h3>Interactive ToC Builder</h3>
+      <p>Drag-and-drop canvas with 229 BCT techniques, MEL frameworks, cross-cutting lenses, and export to PNG.</p>
+      <a href="/toc-builder.html" class="wb-builder-btn" style="margin-top:0.5rem;display:inline-flex">Open Builder &rarr;</a>
+    </div>
+    <div class="wb-card">
+      <h3>ToC Lab</h3>
+      <p>Guided exercise: build a Theory of Change for a real-world WASH program step-by-step.</p>
+      <a href="https://101.impactmojo.in/toc-lab" target="_blank" style="font-weight:600;font-size:0.85rem">Open Lab &rarr;</a>
+    </div>
+    <div class="wb-card">
+      <h3>MEL Flagship Course</h3>
+      <p>Comprehensive course covering ToC construction, logical frameworks, and MEL planning in depth.</p>
+      <a href="/courses/mel/" style="font-weight:600;font-size:0.85rem">Start Course &rarr;</a>
+    </div>
+    <div class="wb-card">
+      <h3>BCT Repository</h3>
+      <p>Browse all 229 Behavior Change Techniques with South Asian contextualizations and evidence ratings.</p>
+      <a href="/toc-builder.html" style="font-weight:600;font-size:0.85rem">Browse in Builder &rarr;</a>
+    </div>
+    <div class="wb-card">
+      <h3>Handouts Library</h3>
+      <p>400+ development resources organized by learning track — sector guidance, case studies, and frameworks.</p>
+      <a href="/Handouts/" style="font-weight:600;font-size:0.85rem">Browse Handouts &rarr;</a>
+    </div>
+    <div class="wb-card">
+      <h3>Development Economics Course</h3>
+      <p>Understand causal pathways, impact evaluation methods, and cost-effectiveness analysis.</p>
+      <a href="/courses/devecon/" style="font-weight:600;font-size:0.85rem">Start Course &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="wb-section" style="text-align:center;padding-bottom:3rem">
+  <h2 class="wb-section-title">Ready to Build Your Theory of Change?</h2>
+  <p class="wb-section-subtitle">Use the interactive builder or book a coaching session for expert guidance.</p>
+  <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem">
+    <a href="/toc-builder.html" class="wb-builder-btn" style="padding:0.7rem 2rem;font-size:0.95rem">&#9654; Open Interactive Builder</a>
+    <a href="/coaching" class="wb-builder-btn" style="padding:0.7rem 2rem;font-size:0.95rem;background:var(--purple)">Book Coaching</a>
+    <a href="/dojos" class="wb-builder-btn" style="padding:0.7rem 2rem;font-size:0.95rem;background:var(--green)">Join a Dojo</a>
+  </div>
+</section>
+
+</div>
+
+<!-- Accordion toggle script -->
+<script>
+document.querySelectorAll('.wb-toggle-header').forEach(function(header){
+  header.addEventListener('click', function(){
+    header.parentElement.classList.toggle('open');
+  });
+});
+
+// Sticky nav active states
+var sections = document.querySelectorAll('.wb-section[id]');
+var navLinks = document.querySelectorAll('.wb-nav-links a');
+window.addEventListener('scroll', function(){
+  var scrollY = window.scrollY + 100;
+  sections.forEach(function(sec){
+    if (sec.offsetTop <= scrollY && sec.offsetTop + sec.offsetHeight > scrollY){
+      navLinks.forEach(function(l){ l.classList.remove('active'); });
+      var active = document.querySelector('.wb-nav-links a[href="#' + sec.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
