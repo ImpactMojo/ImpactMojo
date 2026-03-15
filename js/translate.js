@@ -19,6 +19,7 @@
 
     var currentLang = localStorage.getItem('impactmojo_lang') || 'en';
     var gtReady = false;
+    var gtLoading = false;
     var pendingLang = null;
 
     // ===== COOKIE CLEANUP =====
@@ -200,6 +201,9 @@
     // ===== GOOGLE TRANSLATE ENGINE =====
 
     function loadGoogleTranslate() {
+        if (gtLoading || gtReady) return; // Already loaded or loading
+        gtLoading = true;
+
         // Create the container Google Translate needs — positioned off-screen
         var gtDiv = document.createElement('div');
         gtDiv.id = 'google_translate_element';
@@ -223,6 +227,7 @@
         script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
         script.async = true;
         script.onerror = function() {
+            gtLoading = false;
             console.warn('Google Translate failed to load');
         };
         document.body.appendChild(script);
@@ -232,17 +237,13 @@
         var combo = document.querySelector('.goog-te-combo');
         if (combo) {
             gtReady = true;
-            // If user had a non-English language saved, apply it now
+            gtLoading = false;
+            // Apply the pending language (the one user selected that triggered GT load)
             if (pendingLang) {
                 doTranslate(pendingLang);
                 pendingLang = null;
             } else if (currentLang !== 'en') {
                 doTranslate(LANGUAGES[currentLang].gtCode);
-            } else {
-                // Language is English — force-revert any auto-translation
-                // that Google Translate may have applied despite our cookie
-                // cleanup (e.g., based on browser language detection).
-                doTranslate('en');
             }
         } else if (attempts < 30) {
             // Poll up to ~9 seconds
@@ -313,11 +314,25 @@
 
         var gtLangCode = LANGUAGES[langKey].gtCode;
 
+        if (langKey === 'en') {
+            // Switching back to English — revert if GT is loaded, or just
+            // clear cookies and reload to get a clean English page
+            if (gtReady) {
+                doTranslate('en');
+            } else {
+                clearGoogTransCookies();
+                location.reload();
+            }
+            return;
+        }
+
+        // Non-English: load GT if needed, then translate
+        applyIndicClass(langKey);
         if (gtReady) {
             doTranslate(gtLangCode);
         } else {
             pendingLang = gtLangCode;
-            applyIndicClass(langKey);
+            loadGoogleTranslate(); // Lazy-load GT on first non-English selection
         }
     }
 
@@ -357,8 +372,12 @@
             }
         }
 
-        // Load Google Translate engine
-        loadGoogleTranslate();
+        // Only load Google Translate if the user previously chose a non-English
+        // language. For English users, GT is never loaded — this prevents GT from
+        // auto-translating based on browser language detection.
+        if (currentLang !== 'en') {
+            loadGoogleTranslate();
+        }
     }
 
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
