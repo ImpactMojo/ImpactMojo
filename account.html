@@ -267,60 +267,32 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .v3-paper-plane {
-    position: absolute;
-    opacity: 0.15;
-    animation: floatPlane 20s ease-in-out infinite;
-}
-
-.v3-paper-plane svg {
-    width: 100%;
-    height: 100%;
-    fill: var(--accent-color);
-}
-
-.v3-paper-plane-1 {
+    position: fixed;
     top: 15%;
-    left: 5%;
-    width: 120px;
-    height: 120px;
-    animation-delay: 0s;
-}
-
-.v3-paper-plane-2 {
-    top: 60%;
     right: 8%;
-    width: 80px;
-    height: 80px;
-    animation-delay: -7s;
-    transform: rotate(45deg);
+    width: 140px;
+    height: 140px;
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+    animation: v3-float-plane 25s ease-in-out infinite;
 }
 
-.v3-paper-plane-3 {
-    bottom: 20%;
-    left: 15%;
-    width: 60px;
-    height: 60px;
-    animation-delay: -14s;
-    transform: rotate(-30deg);
+@keyframes v3-float-plane {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(-60px, 40px) rotate(10deg); }
+    40% { transform: translate(120px, 30px) rotate(-8deg); }
+    60% { transform: translate(40px, 60px) rotate(15deg); }
+    80% { transform: translate(-30px, 20px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
 }
 
-@keyframes floatPlane {
-    0%, 100% { 
-        transform: translateY(0px) rotate(0deg); 
-        opacity: 0.15;
-    }
-    25% { 
-        transform: translateY(-20px) rotate(5deg); 
-        opacity: 0.2;
-    }
-    50% { 
-        transform: translateY(-10px) rotate(-3deg); 
-        opacity: 0.15;
-    }
-    75% { 
-        transform: translateY(-25px) rotate(3deg); 
-        opacity: 0.18;
-    }
+@media (max-width: 768px) {
+    .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .v3-paper-plane { animation: none !important; }
 }
 
 .v3-blob {
@@ -1772,8 +1744,9 @@ h1, h2, h3, h4, h5, h6 {
     
     /* Decorative elements mobile */
     .v3-paper-plane {
-        opacity: 0.08;
-        transform: scale(0.6);
+        opacity: 0.12;
+        width: 100px;
+        height: 100px;
     }
     
     .v3-blob {
