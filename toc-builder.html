@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Theory of Change Builder — ImpactMojo</title>
+<title>ToC Workbench — ImpactMojo</title>
 <style>
 :root{--bg:#f8fafc;--card-bg:#fff;--border:#e2e8f0;--text:#1e293b;--text-muted:#94a3b8;--accent:#0EA5E9;--hover:#f1f5f9}
 @media(prefers-color-scheme:dark){:root{--bg:#0f172a;--card-bg:#1e293b;--border:#334155;--text:#e2e8f0;--text-muted:#64748b;--accent:#38bdf8;--hover:#1e293b}}
@@ -65,8 +65,31 @@ select.toc-btn{appearance:auto}
 /* Connect handles */
 .toc-connect-handle{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:var(--accent);border-radius:50%;cursor:crosshair;z-index:3;opacity:0;transition:opacity 0.15s}
 .toc-node:hover .toc-connect-handle{opacity:1}
+/* Right panel — resources, coaching, dojos */
+.toc-right-panel{width:260px;background:var(--card-bg);border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.toc-right-panel-section{padding:0.75rem;border-bottom:1px solid var(--border)}
+.toc-right-panel-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:0.5rem}
+.toc-resource-card{padding:0.5rem;background:var(--hover);border-radius:8px;margin-bottom:0.4rem;font-size:0.78rem}
+.toc-resource-card h4{font-size:0.82rem;font-weight:600;margin:0 0 0.2rem 0}
+.toc-resource-card p{margin:0;font-size:0.7rem;color:var(--text-muted);line-height:1.4}
+.toc-resource-card a{display:inline-block;margin-top:0.3rem;font-size:0.7rem;color:var(--accent);text-decoration:none;font-weight:600}
+.toc-resource-card a:hover{text-decoration:underline}
+.toc-cta-card{padding:0.75rem;border-radius:10px;margin-bottom:0.5rem;text-align:center}
+.toc-cta-card h4{font-size:0.85rem;margin:0 0 0.25rem 0}
+.toc-cta-card p{font-size:0.72rem;margin:0 0 0.4rem 0;line-height:1.4}
+.toc-cta-btn{display:inline-block;padding:0.3rem 0.7rem;border-radius:6px;font-size:0.72rem;font-weight:600;text-decoration:none;color:white}
+/* Sidebar tabs */
+.toc-sidebar-tabs{display:flex;border-bottom:1px solid var(--border)}
+.toc-sidebar-tab{flex:1;padding:0.5rem;text-align:center;font-size:0.7rem;font-weight:600;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent}
+.toc-sidebar-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.toc-sidebar-panel{display:none}
+.toc-sidebar-panel.active{display:block}
+/* MEL framework items */
+.toc-framework-item{padding:0.4rem 0.5rem;font-size:0.78rem;border-radius:6px;cursor:grab;margin-bottom:3px;border:1px solid transparent;user-select:none}
+.toc-framework-item:hover{background:var(--hover);border-color:var(--border)}
+.toc-framework-item .fw-type{font-size:0.6rem;padding:0.1rem 0.3rem;border-radius:4px;font-weight:600;background:rgba(99,102,241,0.1);color:#6366F1}
 /* Mobile */
-@media(max-width:768px){.toc-sidebar{position:absolute;left:-280px;z-index:10;height:100%;transition:left 0.2s}.toc-sidebar.open{left:0;box-shadow:4px 0 20px rgba(0,0,0,0.1)}}
+@media(max-width:768px){.toc-sidebar{position:absolute;left:-280px;z-index:10;height:100%;transition:left 0.2s}.toc-sidebar.open{left:0;box-shadow:4px 0 20px rgba(0,0,0,0.1)}.toc-right-panel{display:none}}
 /* Save indicator */
 .toc-save-indicator{font-size:0.7rem;color:var(--text-muted)}
 </style>
@@ -74,7 +97,7 @@ select.toc-btn{appearance:auto}
 <body>
 
 <div class="toc-toolbar">
-  <h1>Theory of Change Builder</h1>
+  <h1>ToC Workbench</h1>
   <a href="/">&larr; ImpactMojo</a>
   <select class="toc-btn" id="templateSelect">
     <option value="">Load Template...</option>
@@ -93,7 +116,8 @@ select.toc-btn{appearance:auto}
     <option value="impact">Impact</option>
     <option value="assumption">Assumption</option>
   </select>
-  <button class="toc-btn" id="toggleSidebar">BCT Panel</button>
+  <button class="toc-btn" id="toggleSidebar">Techniques</button>
+  <button class="toc-btn" id="toggleRightPanel">Resources</button>
   <button class="toc-btn" id="saveBtn">Save</button>
   <button class="toc-btn" id="loadBtn">Load</button>
   <button class="toc-btn toc-btn-primary" id="exportBtn">Export PNG</button>
@@ -101,13 +125,29 @@ select.toc-btn{appearance:auto}
 </div>
 
 <div class="toc-layout">
-  <!-- BCT Sidebar -->
+  <!-- Left Sidebar — Techniques -->
   <div class="toc-sidebar" id="bctSidebar">
-    <div class="toc-sidebar-header">
-      <input type="search" id="bctSearch" placeholder="Search BCT techniques...">
+    <div class="toc-sidebar-tabs">
+      <div class="toc-sidebar-tab active" data-panel="bct">BCT (229)</div>
+      <div class="toc-sidebar-tab" data-panel="frameworks">Frameworks</div>
+      <div class="toc-sidebar-tab" data-panel="crosscut">Cross-cutting</div>
     </div>
-    <div class="toc-sidebar-list" id="bctList">
-      <p style="padding:1rem;color:var(--text-muted);font-size:0.8rem;">Loading BCT techniques...</p>
+    <div class="toc-sidebar-header">
+      <input type="search" id="bctSearch" placeholder="Search techniques...">
+    </div>
+    <!-- BCT Panel -->
+    <div class="toc-sidebar-panel active" id="panelBct">
+      <div class="toc-sidebar-list" id="bctList">
+        <p style="padding:1rem;color:var(--text-muted);font-size:0.8rem;">Loading BCT techniques...</p>
+      </div>
+    </div>
+    <!-- MEL Frameworks Panel -->
+    <div class="toc-sidebar-panel" id="panelFrameworks">
+      <div class="toc-sidebar-list" id="frameworksList"></div>
+    </div>
+    <!-- Cross-cutting Panel -->
+    <div class="toc-sidebar-panel" id="panelCrosscut">
+      <div class="toc-sidebar-list" id="crosscutList"></div>
     </div>
   </div>
 
@@ -121,6 +161,79 @@ select.toc-btn{appearance:auto}
       </defs>
     </svg>
     <div class="toc-canvas" id="canvas"></div>
+  </div>
+
+  <!-- Right Panel — Resources, Coaching, Dojos -->
+  <div class="toc-right-panel" id="rightPanel">
+    <div class="toc-right-panel-section">
+      <div class="toc-right-panel-title">Need Help?</div>
+      <div class="toc-cta-card" style="background:linear-gradient(135deg,rgba(14,165,233,0.1),rgba(99,102,241,0.1));">
+        <h4 style="color:#6366F1;">ToC Coaching Call</h4>
+        <p style="color:var(--text-secondary);">Book a 1-on-1 session with an expert to review your Theory of Change and get actionable feedback.</p>
+        <a href="/coaching" class="toc-cta-btn" style="background:#6366F1;">Book Coaching</a>
+      </div>
+      <div class="toc-cta-card" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(14,165,233,0.1));">
+        <h4 style="color:#10B981;">ToC Design Dojo</h4>
+        <p style="color:var(--text-secondary);">Join a live group session where teams collaboratively build and critique Theories of Change with peer feedback.</p>
+        <a href="/dojos" class="toc-cta-btn" style="background:#10B981;">Join a Dojo</a>
+      </div>
+    </div>
+
+    <div class="toc-right-panel-section">
+      <div class="toc-right-panel-title">Related Courses</div>
+      <div class="toc-resource-card">
+        <h4>MEL Flagship Course</h4>
+        <p>Learn ToC construction, logical frameworks, and MEL planning in depth.</p>
+        <a href="/courses/mel/">Start Course &rarr;</a>
+      </div>
+      <div class="toc-resource-card">
+        <h4>Development Economics</h4>
+        <p>Understand causal pathways and impact evaluation methods.</p>
+        <a href="/courses/devecon/">Start Course &rarr;</a>
+      </div>
+    </div>
+
+    <div class="toc-right-panel-section">
+      <div class="toc-right-panel-title">Related Labs</div>
+      <div class="toc-resource-card">
+        <h4>TOC Lab</h4>
+        <p>Guided exercise: build a ToC for a real-world WASH program.</p>
+        <a href="https://101.impactmojo.in/toc-lab" target="_blank">Open Lab &rarr;</a>
+      </div>
+      <div class="toc-resource-card">
+        <h4>MEL Planning Lab</h4>
+        <p>Design indicators, data collection tools, and MEL matrices.</p>
+        <a href="https://101.impactmojo.in/mel-planning-lab" target="_blank">Open Lab &rarr;</a>
+      </div>
+    </div>
+
+    <div class="toc-right-panel-section">
+      <div class="toc-right-panel-title">Quick Reference</div>
+      <div class="toc-resource-card">
+        <h4>5 Common ToC Pitfalls</h4>
+        <p>Avoid the most frequent mistakes in Theory of Change design.</p>
+        <a href="/blog/theory-of-change-pitfalls.html">Read Article &rarr;</a>
+      </div>
+      <div class="toc-resource-card">
+        <h4>BCT Repository</h4>
+        <p>Browse all 229 Behavior Change Techniques with South Asian context.</p>
+        <a href="/bct-repository">Browse BCTs &rarr;</a>
+      </div>
+      <div class="toc-resource-card">
+        <h4>Handouts Library</h4>
+        <p>400+ development resources organized by learning track.</p>
+        <a href="/handouts">Browse Handouts &rarr;</a>
+      </div>
+    </div>
+
+    <div class="toc-right-panel-section">
+      <div class="toc-right-panel-title">Workshops</div>
+      <div class="toc-cta-card" style="background:rgba(245,158,11,0.08);">
+        <h4 style="color:#F59E0B;">Custom ToC Workshop</h4>
+        <p style="color:var(--text-secondary);">Bring your team for a facilitated ToC design workshop tailored to your program context.</p>
+        <a href="/workshops" class="toc-cta-btn" style="background:#F59E0B;">Request Workshop</a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -643,6 +756,162 @@ document.getElementById('exportBtn').addEventListener('click', function(){
 document.getElementById('toggleSidebar').addEventListener('click', function(){
   document.getElementById('bctSidebar').classList.toggle('open');
 });
+
+// ── Right Panel Toggle ──────────────────────────────────────────────
+document.getElementById('toggleRightPanel').addEventListener('click', function(){
+  var panel = document.getElementById('rightPanel');
+  panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+});
+
+// ── Sidebar Tabs ────────────────────────────────────────────────────
+document.querySelectorAll('.toc-sidebar-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.toc-sidebar-tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.toc-sidebar-panel').forEach(function(p){ p.classList.remove('active'); });
+    tab.classList.add('active');
+    var panelId = 'panel' + tab.dataset.panel.charAt(0).toUpperCase() + tab.dataset.panel.slice(1);
+    var panel = document.getElementById(panelId);
+    if (panel) panel.classList.add('active');
+  });
+});
+
+// ── MEL Frameworks Data ─────────────────────────────────────────────
+var FRAMEWORKS = [
+  {category:'Logical Framework', items:[
+    {name:'Logframe Matrix', type:'Framework', desc:'Standard 4x4 matrix: objectives, indicators, MoV, assumptions'},
+    {name:'Results Chain', type:'Framework', desc:'Input → Activity → Output → Outcome → Impact'},
+    {name:'Results Framework', type:'Framework', desc:'Hierarchical structure of program objectives and indicators'},
+    {name:'SMART Indicators', type:'Tool', desc:'Specific, Measurable, Achievable, Relevant, Time-bound'}
+  ]},
+  {category:'Evaluation Methods', items:[
+    {name:'RCT Design', type:'Method', desc:'Randomized controlled trial with treatment and control groups'},
+    {name:'Difference-in-Differences', type:'Method', desc:'Compare changes over time between treatment and comparison'},
+    {name:'Propensity Score Matching', type:'Method', desc:'Match treated units with comparable untreated units'},
+    {name:'Regression Discontinuity', type:'Method', desc:'Exploit eligibility thresholds for causal identification'},
+    {name:'Most Significant Change', type:'Method', desc:'Participatory qualitative evaluation through storytelling'},
+    {name:'Outcome Harvesting', type:'Method', desc:'Identify and verify outcomes then work backward to contribution'},
+    {name:'Contribution Analysis', type:'Method', desc:'Assess whether an intervention contributed to observed outcomes'}
+  ]},
+  {category:'Data Collection', items:[
+    {name:'KII Guide Template', type:'Tool', desc:'Key Informant Interview semi-structured guide'},
+    {name:'FGD Protocol', type:'Tool', desc:'Focus Group Discussion facilitation protocol'},
+    {name:'Household Survey', type:'Tool', desc:'Structured questionnaire for household-level data'},
+    {name:'Observation Checklist', type:'Tool', desc:'Systematic observation tool for program monitoring'},
+    {name:'Participatory Mapping', type:'Tool', desc:'Community-led spatial and social mapping exercise'}
+  ]},
+  {category:'Quality & Ethics', items:[
+    {name:'Do No Harm Checklist', type:'Ethics', desc:'Conflict sensitivity and ethical safeguarding review'},
+    {name:'Data Quality Assessment', type:'Tool', desc:'Validity, reliability, timeliness, precision, integrity checks'},
+    {name:'Informed Consent Template', type:'Ethics', desc:'Template for obtaining ethical consent from participants'},
+    {name:'IRB Protocol', type:'Ethics', desc:'Institutional Review Board submission template'}
+  ]}
+];
+
+function renderFrameworks(){
+  var container = document.getElementById('frameworksList');
+  var html = '';
+  FRAMEWORKS.forEach(function(cat){
+    html += '<div class="toc-bct-category"><div class="toc-bct-cat-header" style="color:#6366F1">&#x25B6; ' + cat.category + ' (' + cat.items.length + ')</div>';
+    html += '<div class="toc-bct-cat-list">';
+    cat.items.forEach(function(item){
+      html += '<div class="toc-framework-item" draggable="true" data-fw-name="' + item.name.replace(/"/g,'&quot;') + '" data-fw-desc="' + item.desc.replace(/"/g,'&quot;') + '">';
+      html += '<span style="flex:1">' + item.name + '</span>';
+      html += '<span class="fw-type">' + item.type + '</span>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+
+  // Toggle categories
+  container.querySelectorAll('.toc-bct-cat-header').forEach(function(h){
+    h.addEventListener('click', function(){
+      var list = h.nextElementSibling;
+      list.classList.toggle('open');
+    });
+  });
+
+  // Drag framework items
+  container.querySelectorAll('.toc-framework-item').forEach(function(item){
+    item.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', JSON.stringify({type:'framework', name: item.dataset.fwName, desc: item.dataset.fwDesc}));
+    });
+  });
+}
+renderFrameworks();
+
+// ── Cross-cutting Techniques ────────────────────────────────────────
+var CROSSCUTTING = [
+  {category:'Gender & Inclusion', items:[
+    {name:'Gender Analysis', desc:'Assess differential impacts on women, men, and non-binary'},
+    {name:'Intersectional Lens', desc:'Consider overlapping inequalities (caste, class, gender, disability)'},
+    {name:'GESI Mainstreaming', desc:'Gender Equality and Social Inclusion integration checklist'},
+    {name:'Do No Harm — Gender', desc:'Gender-sensitive conflict and power analysis'},
+    {name:'Women\'s Participation Index', desc:'Measure meaningful participation in program decisions'}
+  ]},
+  {category:'Climate & Environment', items:[
+    {name:'Climate Risk Screening', desc:'Assess climate vulnerabilities in program design'},
+    {name:'Green ToC Lens', desc:'Map environmental co-benefits and risks in your ToC'},
+    {name:'Adaptation Pathways', desc:'Sequence of adaptation decisions under uncertainty'},
+    {name:'Carbon Footprint Assessment', desc:'Estimate program carbon impact for sustainability'}
+  ]},
+  {category:'Governance & Accountability', items:[
+    {name:'Social Accountability', desc:'Citizen engagement in monitoring public services'},
+    {name:'Grievance Redress Mechanism', desc:'Accessible complaint and feedback channels'},
+    {name:'Power Analysis', desc:'Map stakeholder power dynamics and influence'},
+    {name:'Rights-Based Approach', desc:'Frame outcomes as fulfillment of human rights'}
+  ]},
+  {category:'Digital & Innovation', items:[
+    {name:'Digital Readiness Assessment', desc:'Evaluate tech infrastructure and digital literacy'},
+    {name:'Data-Driven Decision Making', desc:'Use real-time data dashboards for adaptive management'},
+    {name:'Human-Centered Design', desc:'User research and prototyping for program design'},
+    {name:'Lean Impact Canvas', desc:'Rapid hypothesis testing for program assumptions'}
+  ]}
+];
+
+function renderCrosscutting(){
+  var container = document.getElementById('crosscutList');
+  var html = '';
+  CROSSCUTTING.forEach(function(cat){
+    html += '<div class="toc-bct-category"><div class="toc-bct-cat-header" style="color:#EC4899">&#x25B6; ' + cat.category + ' (' + cat.items.length + ')</div>';
+    html += '<div class="toc-bct-cat-list">';
+    cat.items.forEach(function(item){
+      html += '<div class="toc-framework-item" draggable="true" data-fw-name="' + item.name.replace(/"/g,'&quot;') + '" data-fw-desc="' + item.desc.replace(/"/g,'&quot;') + '">';
+      html += '<span style="flex:1">' + item.name + '</span>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+
+  container.querySelectorAll('.toc-bct-cat-header').forEach(function(h){
+    h.addEventListener('click', function(){ h.nextElementSibling.classList.toggle('open'); });
+  });
+
+  container.querySelectorAll('.toc-framework-item').forEach(function(item){
+    item.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', JSON.stringify({type:'framework', name: item.dataset.fwName, desc: item.dataset.fwDesc}));
+    });
+  });
+}
+renderCrosscutting();
+
+// ── Handle framework drops on canvas ────────────────────────────────
+var origCanvasDropHandler = document.getElementById('canvasWrap').ondrop;
+document.getElementById('canvasWrap').addEventListener('drop', function(e){
+  if (e.target.closest('.toc-node')) return;
+  try {
+    var data = JSON.parse(e.dataTransfer.getData('text/plain'));
+    if (data.type === 'framework'){
+      e.preventDefault();
+      var wrap = document.getElementById('canvasWrap');
+      var rect = wrap.getBoundingClientRect();
+      var x = e.clientX - rect.left + wrap.scrollLeft;
+      var y = e.clientY - rect.top + wrap.scrollTop;
+      createNode('activity', x, y, data.name, data.desc || '');
+    }
+  } catch(err){}
+}, true);
 
 // ── Keyboard shortcuts ──────────────────────────────────────────────
 document.addEventListener('keydown', function(e){
