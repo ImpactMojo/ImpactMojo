@@ -19,6 +19,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+<!-- Google Identity Services for OAuth -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
 <style>
 :root {
     --primary-bg: #0F172A;
@@ -252,12 +255,30 @@ body {
 .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
 .empty-state p { font-size: 0.9rem; max-width: 500px; margin: 0 auto; }
 
+/* GA4 Sign-in */
+.ga4-bar {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+    padding: 16px; background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 12px; flex-wrap: wrap;
+}
+.ga4-bar p { font-size: 0.85rem; color: var(--text-secondary); flex: 1; min-width: 200px; }
+.ga4-status { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+.btn-google {
+    padding: 8px 20px; border-radius: 8px; border: 1px solid var(--border-color);
+    background: var(--hover-bg); color: var(--text-primary); font-weight: 600;
+    font-size: 0.85rem; cursor: pointer; font-family: inherit;
+    transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-google:hover { border-color: var(--accent-color); }
+.btn-google svg { width: 18px; height: 18px; }
+
 /* Responsive */
 @media (max-width: 768px) {
     .kpi-grid { grid-template-columns: repeat(2, 1fr); }
     .bar-label { width: 100px; font-size: 0.7rem; }
     .data-source-bar { flex-direction: column; align-items: stretch; }
     .data-source-bar input { min-width: unset; }
+    .ga4-bar { flex-direction: column; text-align: center; }
 }
 </style>
 </head>
@@ -290,12 +311,22 @@ body {
         </p>
     </div>
 
+    <!-- GA4 Live Data Connection -->
+    <div class="ga4-bar" id="ga4Bar">
+        <p id="ga4Message">Live analytics available for admins. Sign in with your Google account to load real-time GA4 data.</p>
+        <span class="ga4-status" id="ga4Status"><span class="status-dot offline"></span> Not connected</span>
+        <button class="btn-google" id="ga4SignIn" onclick="signInWithGoogle()">
+            <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Sign in with Google
+        </button>
+    </div>
+
     <!-- Admin Controls (hidden by default, toggle with ?admin) -->
     <div class="data-source-bar" id="adminControls" style="display:none;">
         <label>Data Source:</label>
-        <input type="text" id="webAppUrl" placeholder="Apps Script Web App URL">
-        <button class="btn btn-primary" onclick="fetchFromWebApp()">Fetch Live Data</button>
-        <span id="dataStatus"><span class="status-dot live"></span> Legacy data loaded</span>
+        <input type="text" id="webAppUrl" placeholder="Apps Script Web App URL (alternative)">
+        <button class="btn btn-primary" onclick="fetchFromWebApp()">Fetch from URL</button>
+        <span id="dataStatus"></span>
     </div>
 
     <!-- KPI Cards -->
@@ -510,6 +541,16 @@ var LEGACY = {
 var ga4Data = null;
 
 // ============================================================
+// CONFIG — Update these after Google Cloud setup
+// ============================================================
+var GA4_CONFIG = {
+    CLIENT_ID: '',  // Your OAuth Client ID (e.g., '123456789.apps.googleusercontent.com')
+    PROPERTY_ID: '',  // Your GA4 numeric Property ID (e.g., '123456789')
+    CACHE_KEY: 'impactmojo_ga4_cache',
+    CACHE_HOURS: 24  // Auto-refresh after this many hours
+};
+
+// ============================================================
 // RENDERING
 // ============================================================
 
@@ -568,7 +609,10 @@ function renderPlatformTable() {
 function renderGA4Overview() {
     var tbody = document.querySelector('#ga4OverviewTable tbody');
     if (!ga4Data || !ga4Data.overview) {
-        tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; color:var(--text-muted); padding:24px;">No GA4 data loaded. Paste JSON or connect Web App above.</td></tr>';
+        var msg = GA4_CONFIG.CLIENT_ID
+            ? 'Sign in with Google above to load live data.'
+            : 'GA4 not configured yet. Cached data will appear here once an admin connects GA4.';
+        tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; color:var(--text-muted); padding:24px;">' + msg + '</td></tr>';
         return;
     }
     var rows = Object.keys(ga4Data.overview).map(function(key) {
@@ -622,14 +666,199 @@ function renderGeo() {
 }
 
 // ============================================================
-// DATA LOADING
+// GA4 DIRECT API INTEGRATION
 // ============================================================
 
-function loadLegacyOnly() {
-    ga4Data = null;
-    render();
-    document.getElementById('dataStatus').innerHTML = '<span class="status-dot offline"></span> Legacy data only';
+function signInWithGoogle() {
+    if (!GA4_CONFIG.CLIENT_ID) {
+        alert('GA4 not configured yet.\n\nTo set up:\n1. Go to console.cloud.google.com\n2. Enable "Google Analytics Data API"\n3. Create OAuth Client ID (Web app type)\n4. Add impactmojo.in as authorized origin\n5. Add the Client ID and GA4 Property ID to GA4_CONFIG in this file');
+        return;
+    }
+
+    var tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: GA4_CONFIG.CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/analytics.readonly',
+        callback: function(response) {
+            if (response.access_token) {
+                fetchGA4Data(response.access_token);
+            }
+        }
+    });
+    tokenClient.requestAccessToken();
 }
+
+function fetchGA4Data(accessToken) {
+    updateGA4Status('loading', 'Fetching GA4 data...');
+
+    var property = 'properties/' + GA4_CONFIG.PROPERTY_ID;
+    var baseUrl = 'https://analyticsdata.googleapis.com/v1beta/' + property + ':runReport';
+    var headers = { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' };
+
+    var result = { overview: {}, geography: [], topPages: [], devices: [], channels: [] };
+
+    // Run all API calls in parallel
+    Promise.all([
+        // Overview metrics
+        fetch(baseUrl, {
+            method: 'POST', headers: headers,
+            body: JSON.stringify({
+                dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
+                metrics: [
+                    { name: 'totalUsers' }, { name: 'newUsers' }, { name: 'sessions' },
+                    { name: 'screenPageViews' }, { name: 'averageSessionDuration' },
+                    { name: 'bounceRate' }, { name: 'engagedSessions' }
+                ]
+            })
+        }).then(function(r) { return r.json(); }),
+
+        // Geography
+        fetch(baseUrl, {
+            method: 'POST', headers: headers,
+            body: JSON.stringify({
+                dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
+                dimensions: [{ name: 'country' }],
+                metrics: [{ name: 'totalUsers' }, { name: 'sessions' }, { name: 'screenPageViews' }],
+                orderBys: [{ metric: { metricName: 'totalUsers' }, desc: true }],
+                limit: 30
+            })
+        }).then(function(r) { return r.json(); }),
+
+        // Top pages
+        fetch(baseUrl, {
+            method: 'POST', headers: headers,
+            body: JSON.stringify({
+                dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
+                dimensions: [{ name: 'pagePath' }],
+                metrics: [{ name: 'screenPageViews' }, { name: 'averageSessionDuration' }],
+                orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
+                limit: 30
+            })
+        }).then(function(r) { return r.json(); }),
+
+        // Devices
+        fetch(baseUrl, {
+            method: 'POST', headers: headers,
+            body: JSON.stringify({
+                dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
+                dimensions: [{ name: 'deviceCategory' }],
+                metrics: [{ name: 'totalUsers' }, { name: 'sessions' }]
+            })
+        }).then(function(r) { return r.json(); }),
+
+        // Channels
+        fetch(baseUrl, {
+            method: 'POST', headers: headers,
+            body: JSON.stringify({
+                dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
+                dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+                metrics: [{ name: 'totalUsers' }, { name: 'sessions' }],
+                orderBys: [{ metric: { metricName: 'totalUsers' }, desc: true }]
+            })
+        }).then(function(r) { return r.json(); })
+
+    ]).then(function(responses) {
+        var overview = responses[0];
+        var geo = responses[1];
+        var pages = responses[2];
+        var devices = responses[3];
+        var channels = responses[4];
+
+        // Parse overview
+        if (overview.rows && overview.rows[0]) {
+            var metricNames = ['Total Users', 'New Users', 'Sessions', 'Pageviews', 'Avg Session Duration', 'Bounce Rate', 'Engaged Sessions'];
+            overview.rows[0].metricValues.forEach(function(v, i) {
+                result.overview[metricNames[i]] = parseFloat(v.value);
+            });
+        }
+
+        // Parse geography
+        if (geo.rows) {
+            result.geography = geo.rows.map(function(row) {
+                return {
+                    country: row.dimensionValues[0].value,
+                    users: parseFloat(row.metricValues[0].value),
+                    sessions: parseFloat(row.metricValues[1].value)
+                };
+            });
+        }
+
+        // Parse top pages
+        if (pages.rows) {
+            result.topPages = pages.rows.map(function(row) {
+                return {
+                    path: row.dimensionValues[0].value,
+                    views: parseFloat(row.metricValues[0].value),
+                    avgDuration: parseFloat(row.metricValues[1].value)
+                };
+            });
+        }
+
+        // Parse devices
+        if (devices.rows) {
+            result.devices = devices.rows.map(function(row) {
+                return { device: row.dimensionValues[0].value, users: parseFloat(row.metricValues[0].value) };
+            });
+        }
+
+        // Parse channels
+        if (channels.rows) {
+            result.channels = channels.rows.map(function(row) {
+                return { channel: row.dimensionValues[0].value, users: parseFloat(row.metricValues[0].value) };
+            });
+        }
+
+        // Cache in localStorage
+        var cacheData = { data: result, timestamp: Date.now() };
+        try { localStorage.setItem(GA4_CONFIG.CACHE_KEY, JSON.stringify(cacheData)); } catch(e) {}
+
+        // Apply and render
+        ga4Data = result;
+        render();
+        updateGA4Status('live', 'Live data loaded just now');
+
+        // Hide sign-in button, show refresh
+        document.getElementById('ga4SignIn').textContent = 'Refresh Data';
+
+    }).catch(function(e) {
+        console.error('GA4 API error:', e);
+        updateGA4Status('error', 'Error: ' + e.message);
+    });
+}
+
+function updateGA4Status(state, message) {
+    var el = document.getElementById('ga4Status');
+    var dotClass = state === 'live' ? 'live' : (state === 'loading' ? 'live' : 'offline');
+    el.innerHTML = '<span class="status-dot ' + dotClass + '"></span> ' + message;
+}
+
+// ============================================================
+// CACHE MANAGEMENT
+// ============================================================
+
+function loadCachedGA4Data() {
+    try {
+        var cached = localStorage.getItem(GA4_CONFIG.CACHE_KEY);
+        if (!cached) return false;
+
+        var parsed = JSON.parse(cached);
+        var ageHours = (Date.now() - parsed.timestamp) / (1000 * 60 * 60);
+        var ageStr = ageHours < 1 ? Math.round(ageHours * 60) + ' min ago' :
+                     ageHours < 24 ? Math.round(ageHours) + 'h ago' :
+                     Math.round(ageHours / 24) + 'd ago';
+
+        ga4Data = parsed.data;
+        updateGA4Status('live', 'Cached data (' + ageStr + ')');
+        document.getElementById('ga4Message').textContent = 'Showing cached GA4 data from ' + ageStr + '. Sign in to refresh.';
+
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// ============================================================
+// LEGACY DATA LOADING (from JSON paste / Web App URL)
+// ============================================================
 
 function loadFromPaste() {
     var text = document.getElementById('jsonPaste').value.trim();
@@ -643,17 +872,16 @@ function loadFromPaste() {
                 channels: data.ga4.channels || [],
                 devices: data.ga4.devices || []
             };
+            // Cache it
+            try { localStorage.setItem(GA4_CONFIG.CACHE_KEY, JSON.stringify({ data: ga4Data, timestamp: Date.now() })); } catch(e) {}
         }
-        // Merge legacy data if present in JSON
         if (data.legacy && data.legacy.courseUsers) {
             Object.keys(data.legacy.courseUsers).forEach(function(k) {
                 LEGACY.courseUsers[k] = data.legacy.courseUsers[k];
             });
         }
         render();
-        document.getElementById('dataStatus').innerHTML =
-            '<span class="status-dot live"></span> Live data loaded (' +
-            (data.exportDate ? new Date(data.exportDate).toLocaleDateString() : 'unknown date') + ')';
+        updateGA4Status('live', 'Data loaded from paste');
     } catch (e) {
         alert('Invalid JSON: ' + e.message);
     }
@@ -663,17 +891,23 @@ function fetchFromWebApp() {
     var url = document.getElementById('webAppUrl').value.trim();
     if (!url) { alert('Please enter your Apps Script Web App URL.'); return; }
 
-    document.getElementById('dataStatus').innerHTML = '<span class="status-dot offline"></span> Fetching...';
-
+    updateGA4Status('loading', 'Fetching...');
     fetch(url)
         .then(function(r) { return r.json(); })
         .then(function(data) {
-            document.getElementById('jsonPaste').value = JSON.stringify(data, null, 2);
-            loadFromPaste();
+            if (document.getElementById('jsonPaste')) {
+                document.getElementById('jsonPaste').value = JSON.stringify(data, null, 2);
+            }
+            if (data.ga4) {
+                ga4Data = { overview: data.ga4.overview || {}, geography: data.ga4.geography || [], channels: data.ga4.channels || [], devices: data.ga4.devices || [] };
+                try { localStorage.setItem(GA4_CONFIG.CACHE_KEY, JSON.stringify({ data: ga4Data, timestamp: Date.now() })); } catch(e) {}
+            }
+            render();
+            updateGA4Status('live', 'Data loaded from Web App');
         })
         .catch(function(e) {
-            alert('Error fetching data: ' + e.message + '\n\nMake sure the Web App is deployed with "Anyone" access.');
-            document.getElementById('dataStatus').innerHTML = '<span class="status-dot offline"></span> Fetch failed';
+            alert('Error: ' + e.message);
+            updateGA4Status('error', 'Fetch failed');
         });
 }
 
@@ -713,7 +947,8 @@ if (window.location.search.indexOf('admin') > -1) {
     document.getElementById('jsonPasteSection').style.display = '';
 }
 
-// Initial render with legacy data
+// Load cached GA4 data, then render
+loadCachedGA4Data();
 render();
 </script>
 </body>
