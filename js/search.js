@@ -43,10 +43,13 @@
   /* ---- Load search index ---- */
   function loadIndex(cb) {
     if (searchData) return cb(searchData);
-    fetch(INDEX_URL)
+    var controller = window.AbortController ? new AbortController() : null;
+    var timeoutId = controller ? setTimeout(function () { controller.abort(); }, 10000) : null;
+    fetch(INDEX_URL, controller ? { signal: controller.signal } : {})
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (data) { searchData = data; cb(data); })
-      .catch(function (e) { console.warn('ImpactMojo Search: Failed to load index', e); });
+      .catch(function (e) { console.warn('ImpactMojo Search: Failed to load index', e); })
+      .finally(function () { if (timeoutId) clearTimeout(timeoutId); });
   }
 
   /* ---- Initialize Fuse instance ---- */

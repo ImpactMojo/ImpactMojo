@@ -26,7 +26,6 @@
     // to elements with data-i18n attributes. These are higher quality
     // than machine translation and take priority.
     var curatedTranslations = {};  // { langCode: { key: value, ... } }
-    var englishOriginals = {};     // { elementId: originalText } for reverting
 
     function resolveKey(obj, keyPath) {
         var parts = keyPath.split('.');
@@ -56,19 +55,16 @@
         var url = basePath + 'i18n/' + langCode + '.json';
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
+        xhr.timeout = 8000;
         xhr.onload = function() {
             if (xhr.status === 200) {
                 try {
                     curatedTranslations[langCode] = JSON.parse(xhr.responseText);
                     applyCuratedTranslations(langCode);
-                } catch (e) {
-                    console.warn('Failed to parse curated translations for ' + langCode);
-                }
+                } catch (e) { /* invalid JSON — fall through to GT */ }
             }
         };
-        xhr.onerror = function() {
-            console.warn('Could not load curated translations for ' + langCode);
-        };
+        xhr.onerror = xhr.ontimeout = function() { /* silent — GT handles it */ };
         xhr.send();
     }
 
@@ -81,13 +77,11 @@
             var key = el.getAttribute('data-i18n');
             var translation = resolveKey(dict, key);
             if (translation) {
-                // Store original English text for reverting
-                if (!el.id) el.id = 'i18n_' + Math.random().toString(36).substr(2, 8);
-                if (!englishOriginals[el.id]) {
-                    englishOriginals[el.id] = el.textContent;
+                // Store original English text for reverting (use the key itself as identifier)
+                if (!el.getAttribute('data-i18n-orig')) {
+                    el.setAttribute('data-i18n-orig', el.textContent);
                 }
                 el.textContent = translation;
-                // Mark as curated so Google Translate skips it
                 el.classList.add('notranslate');
                 el.setAttribute('translate', 'no');
             }
@@ -117,8 +111,9 @@
     function revertCuratedTranslations() {
         var elements = document.querySelectorAll('[data-i18n]');
         elements.forEach(function(el) {
-            if (el.id && englishOriginals[el.id]) {
-                el.textContent = englishOriginals[el.id];
+            var orig = el.getAttribute('data-i18n-orig');
+            if (orig) {
+                el.textContent = orig;
                 el.classList.remove('notranslate');
                 el.removeAttribute('translate');
             }
