@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,72 +18,161 @@
   gtag('js', new Date());
   gtag('config', 'G-JRCMEB9TBW');
 </script>
-<link rel="icon" href="/assets/images/ImpactMojo%20Logo.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<!-- Favicons -->
+<link href="assets/images/favicon.png" rel="icon" type="image/png">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 :root {
-    --primary-bg: #FFFFFF;
-    --secondary-bg: #F8FAFC;
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
     --accent-color: #0EA5E9;
     --accent-hover: #0284C7;
     --secondary-accent: #6366F1;
     --success-color: #10B981;
     --warning-color: #F59E0B;
-    --text-primary: #0F172A;
-    --text-secondary: #475569;
-    --text-muted: #94A3B8;
-    --card-bg: #FFFFFF;
-    --hover-bg: #F1F5F9;
-    --border-color: #E2E8F0;
-    --nav-bg: rgba(255, 255, 255, 0.95);
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
-}
-body.dark-mode {
-    --primary-bg: #0F172A;
-    --secondary-bg: #1E293B;
     --text-primary: #F1F5F9;
     --text-secondary: #94A3B8;
     --text-muted: #64748B;
     --card-bg: #1E293B;
     --hover-bg: #334155;
     --border-color: #334155;
-    --nav-bg: rgba(15, 23, 42, 0.95);
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
 }
+
+[data-theme="light"] {
+    --primary-bg: #F8FAFC;
+    --secondary-bg: #FFFFFF;
+    --text-primary: #1E293B;
+    --text-secondary: #64748B;
+    --text-muted: #94A3B8;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+}
+
 html { scroll-behavior: smooth; }
-* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--primary-bg);
     color: var(--text-primary);
     line-height: 1.6;
-    transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+a { color: var(--accent-color); text-decoration: none; transition: color 0.25s; }
+a:hover { color: var(--accent-hover); }
+
+/* ---- Site Header ---- */
+.site-header {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--primary-bg);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
+}
+.nav-container {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    height: 64px; display: flex; align-items: center;
+    justify-content: space-between; gap: 24px;
+}
+.logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text-primary); flex-shrink: 0;
+}
+.logo-icon { height: 36px; width: auto; }
+.logo-text-wrap { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.15rem; color: var(--text-primary); }
+.logo-tagline { font-size: 0.7rem; color: var(--text-muted); font-weight: 400; }
+
+.nav-links { display: flex; align-items: center; gap: 8px; }
+.nav-link {
+    padding: 6px 14px; font-size: 0.9rem; font-weight: 500;
+    color: var(--text-secondary); border-radius: 8px;
+    transition: all 0.25s; white-space: nowrap; text-decoration: none;
+}
+.nav-link:hover { color: var(--text-primary); background: var(--hover-bg); }
+.nav-link.active { color: var(--accent-color); background: rgba(14, 165, 233, 0.1); }
+
+.nav-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+.theme-selector {
+    display: flex; gap: 4px; background: var(--hover-bg);
+    border: 1px solid var(--border-color); border-radius: 10px; padding: 4px;
+}
+.theme-btn {
+    background: transparent; border: none; color: var(--text-secondary);
+    padding: 8px; border-radius: 6px; cursor: pointer;
+    transition: all 0.2s ease; display: flex; align-items: center;
+    justify-content: center; width: 36px; height: 36px;
+}
+.theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+.theme-btn.active { background: var(--accent-color); color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.theme-btn svg { width: 18px; height: 18px; }
+
+.mobile-menu-toggle {
+    display: none; background: none; border: none;
+    color: var(--text-primary); cursor: pointer; padding: 4px;
+}
+.mobile-nav-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5); z-index: 999;
+}
+.mobile-nav-overlay.active { display: block; }
+.mobile-nav-panel {
+    display: none; position: fixed; top: 0; right: 0; bottom: 0;
+    width: 280px; background: var(--primary-bg);
+    border-left: 1px solid var(--border-color); z-index: 1001;
+    padding: 24px; flex-direction: column; gap: 8px; overflow-y: auto;
+}
+.mobile-nav-panel.active { display: flex; }
+.mobile-nav-panel .nav-link { display: block; padding: 12px 16px; font-size: 1rem; }
+.mobile-nav-close {
+    align-self: flex-end; background: none; border: none;
+    color: var(--text-primary); cursor: pointer; padding: 4px; margin-bottom: 16px;
 }
 
-/* Nav */
-.nav {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--nav-bg);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-color);
-    padding: 0.75rem 2rem;
-    display: flex; align-items: center; justify-content: space-between;
+@media (max-width: 900px) {
+    .nav-links, .nav-actions { display: none; }
+    .mobile-menu-toggle { display: flex; }
 }
-.nav-left { display: flex; align-items: center; gap: 0.75rem; }
-.nav-left a.logo-container { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; transition: transform 0.3s; }
-.nav-left a.logo-container:hover { transform: translateY(-2px); }
-.nav-right { display: flex; align-items: center; gap: 1rem; }
-.nav-link { text-decoration: none; color: var(--text-secondary); font-size: 0.85rem; font-weight: 500; transition: color 0.15s; }
-.nav-link:hover { color: var(--accent-color); }
-.theme-toggle {
-    background: none; border: 1px solid var(--border-color); border-radius: 8px;
-    padding: 0.4rem; cursor: pointer; color: var(--text-secondary);
-    display: flex; align-items: center; justify-content: center;
+
+/* ---- Footer ---- */
+.footer {
+    margin-top: auto; background: var(--secondary-bg);
+    border-top: 1px solid var(--border-color); padding: 48px 24px 24px;
 }
-.theme-toggle:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.footer-content { max-width: 1280px; margin: 0 auto; }
+.footer-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 32px; margin-bottom: 32px;
+}
+.footer-section h4 {
+    font-family: 'Poppins', sans-serif; font-size: 0.95rem;
+    font-weight: 700; color: var(--text-primary); margin-bottom: 12px;
+}
+.footer-section ul { list-style: none; }
+.footer-section li { margin-bottom: 8px; }
+.footer-section a { font-size: 0.88rem; color: var(--text-secondary); transition: color 0.25s; text-decoration: none; }
+.footer-section a:hover { color: var(--accent-color); }
+.footer-bottom { border-top: 1px solid var(--border-color); padding-top: 24px; text-align: center; }
+.footer-bottom p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px; }
+.footer-bottom a { color: var(--accent-color); text-decoration: none; }
+
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+}
+@media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+}
 
 /* Page Header */
 .page-header {
@@ -205,16 +294,6 @@ body {
 }
 .stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
 
-/* Footer */
-.page-footer {
-    border-top: 1px solid var(--border-color);
-    padding: 2rem;
-    text-align: center;
-    font-size: 0.82rem;
-    color: var(--text-muted);
-}
-.page-footer a { color: var(--accent-color); text-decoration: none; }
-.page-footer a:hover { text-decoration: underline; }
 /* Paper Plane */
 .v3-paper-plane {
     position: fixed;
@@ -235,7 +314,7 @@ body {
     80% { transform: translate(-30px, 20px) rotate(-5deg); }
 }
 body.dark-mode .v3-paper-plane { opacity: 0.10; }
-@media (max-width: 768px) { .logo-tagline { display: none; } .logo-main { font-size: 1.1rem; } .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; } }
+@media (max-width: 768px) { .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; } }
 @media (prefers-reduced-motion: reduce) { .v3-paper-plane, .v3-blob { animation: none !important; } }
 @media print { .v3-paper-plane, .v3-organic-bg { display: none !important; } }
 
@@ -278,24 +357,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
     75% { transform: translate(25px, 15px) rotate(4deg) scale(1.02); border-radius: 48% 52% 55% 45% / 38% 62% 38% 62%; }
 }
 
-/* Logo */
-.logo-container {
-    display: flex; align-items: center; gap: 0.6rem;
-    text-decoration: none; transition: transform 0.3s;
-}
-.logo-container:hover { transform: translateY(-2px); }
-.logo-svg { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
-.logo-text { display: flex; flex-direction: column; }
-.logo-main {
-    font-family: 'Poppins', sans-serif; font-size: 1.35rem; font-weight: 800;
-    background: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    letter-spacing: -0.5px; line-height: 1;
-}
-.logo-tagline {
-    font-size: 0.65rem; color: var(--text-secondary); font-weight: 500;
-    margin-top: 2px; letter-spacing: 0.5px; text-transform: uppercase;
-}
+@media (max-width: 768px) { .logo-tagline { display: none; } }
 
 </style>
 </head>
@@ -319,29 +381,67 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
     <div class="v3-blob v3-blob-4"></div>
 </div>
 
-<!-- Nav -->
-<nav class="nav">
-    <div class="nav-left">
-        <a href="/" class="logo-container">
-            <div class="logo-svg">
-                <img alt="ImpactMojo logo" src="/assets/images/ImpactMojo%20Logo.png" width="40" height="40" style="border-radius:8px;object-fit:contain;display:block;">
-            </div>
-            <div class="logo-text">
-                <div class="logo-main">ImpactMojo</div>
-                <div class="logo-tagline">Development Know-How</div>
+<!-- Site Header -->
+<header class="site-header">
+    <nav class="nav-container">
+        <a href="/" class="logo">
+            <img src="/assets/images/ImpactMojo Logo.png" alt="ImpactMojo" class="logo-icon">
+            <div class="logo-text-wrap">
+                <span class="logo-text">ImpactMojo</span>
+                <span class="logo-tagline">Learn for Impact</span>
             </div>
         </a>
-    </div>
-    <div class="nav-right">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/handouts" class="nav-link">Resources</a>
-        <a href="/catalog" class="nav-link">Catalog</a>
-        <a href="/updates" class="nav-link">Updates</a>
-        <button class="theme-toggle" onclick="document.body.classList.toggle('dark-mode'); localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');" aria-label="Toggle theme">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/catalog" class="nav-link">Catalog</a>
+            <a href="/handouts" class="nav-link">Handouts</a>
+            <a href="/dataverse" class="nav-link">Dataverse</a>
+            <a href="/challenges" class="nav-link">Challenges</a>
+            <a href="/blog" class="nav-link">Blog</a>
+        </div>
+        <div class="nav-actions">
+            <div class="theme-selector" aria-label="Theme selection">
+                <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </nav>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav-overlay" id="mobileOverlay"></div>
+<div class="mobile-nav-panel" id="mobilePanel">
+    <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <a href="/" class="nav-link">Home</a>
+    <a href="/catalog" class="nav-link">Catalog</a>
+    <a href="/handouts" class="nav-link">Handouts</a>
+    <a href="/dataverse" class="nav-link">Dataverse</a>
+    <a href="/challenges" class="nav-link">Challenges</a>
+    <a href="/blog" class="nav-link">Blog</a>
+    <div class="theme-selector" aria-label="Theme selection" style="margin-top:16px;">
+        <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </button>
+        <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         </button>
     </div>
-</nav>
+</div>
 
 <!-- Header -->
 <div class="page-header">
@@ -476,74 +576,82 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 </div>
 
 <!-- Footer -->
-<footer class="page-footer" style="border-top: 1px solid var(--border-color); padding: 3rem 2rem 2rem; margin-top: 4rem;">
-    <p style="text-align: center; margin-bottom: 2rem; color: var(--text-muted); font-size: 0.95rem;">
-        Made with &#10084;&#65039; by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color);">PinPoint Ventures</a>
-    </p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto 2rem;">
-        <div>
-            <h4 style="font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-primary);">About ImpactMojo</h4>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="margin-bottom: 0.4rem;"><a href="/about" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">About Us</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/community/community" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Community</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/#support-us" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Support Us</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/contact" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Contact</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener noreferrer" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">GitHub (Open Source)</a></li>
-                <li><a href="/admin/analytics">Transparency</a></li>
-            </ul>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About ImpactMojo</h4>
+                <ul>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/community/community">Community</a></li>
+                    <li><a href="/#support-us">Support Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="/admin/analytics">Transparency</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/terms-of-service">Terms of Service</a></li>
+                    <li><a href="/disclaimer">Disclaimer</a></li>
+                    <li><a href="/grievance">Grievance Redressal</a></li>
+                    <li><a href="/refund-policy">Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Learn</h4>
+                <ul>
+                    <li><a href="/catalog">All Courses</a></li>
+                    <li><a href="/#labs">Labs</a></li>
+                    <li><a href="/#games">Games</a></li>
+                    <li><a href="/premium">Premium</a></li>
+                    <li><a href="/workshops">Workshops</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="/handouts">Handouts</a></li>
+                    <li><a href="/bct-repository">NudgeKit</a></li>
+                    <li><a href="/dataverse">Dataverse</a></li>
+                    <li><a href="/challenges">Challenges</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                </ul>
+            </div>
         </div>
-        <div>
-            <h4 style="font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-primary);">Legal (IT Act Compliance)</h4>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="margin-bottom: 0.4rem;"><a href="/privacy-policy" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Privacy Policy</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/terms-of-service" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Terms of Service</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/disclaimer" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Disclaimer</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/grievance" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Grievance Redressal</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/refund-policy" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Refund Policy</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/data-protection" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Data Protection</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/ai-policy" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">AI Policy</a></li>
-            </ul>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+            <p>Released under MIT License. Supported by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener">PinPoint Ventures</a></p>
         </div>
-        <div>
-            <h4 style="font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-primary);">Quick Links</h4>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="margin-bottom: 0.4rem;"><a href="/catalog" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">All Courses</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/#labs" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">All Labs</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/#games" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">All Games</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/premium" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Premium Content</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/coaching" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Coaching Services</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4 style="font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-primary);">Resources</h4>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="margin-bottom: 0.4rem;"><a href="/handouts" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Educational Handouts</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/blog" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Learning Loops Blog</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/podcast" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Between the Logframes</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="https://varna.substack.com" target="_blank" rel="noopener noreferrer" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Research Newsletter</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/faq" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">FAQ</a></li>
-                <li style="margin-bottom: 0.4rem;"><a href="/sitemap" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Sitemap</a></li>
-            </ul>
-        </div>
-    </div>
-    <div style="text-align: center; padding-top: 1.5rem; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.8rem;">
-        <p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
-        <p style="margin-top: 0.5rem;"><strong>DISCLAIMER:</strong> ImpactMojo is an educational resource platform focused on learning, not credentialing. We do not provide certificates, degrees, or formal credentials.</p>
-        <p style="margin-top: 0.5rem;">Released under <strong>MIT License</strong> &mdash; Free and Open Source | Supported by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); text-decoration: none;">PinPoint Ventures</a></p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.8;">Registered in India | Compliant with Information Technology Act, 2000 and IT Rules, 2011</p>
     </div>
 </footer>
 
+<!-- Theme & Mobile Menu -->
 <script>
-// Theme - respect saved preference or system preference
-var _t = localStorage.getItem('theme');
-if (_t === 'dark' || (!_t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('dark-mode');
+function getPreferredTheme(){return localStorage.getItem('impactmojo-theme')||'system'}
+function applyTheme(theme){var resolved=theme;if(theme==='system'){resolved=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}document.documentElement.setAttribute('data-theme',resolved);localStorage.setItem('impactmojo-theme',theme);document.querySelectorAll('.theme-btn').forEach(function(btn){btn.classList.toggle('active',btn.getAttribute('data-theme')===theme)})}
+applyTheme(getPreferredTheme());
+document.querySelectorAll('.theme-btn').forEach(function(btn){btn.addEventListener('click',function(){applyTheme(btn.getAttribute('data-theme'))})});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){if(getPreferredTheme()==='system')applyTheme('system')});
+
+(function(){
+    var toggle=document.getElementById('mobileMenuToggle');
+    var overlay=document.getElementById('mobileOverlay');
+    var panel=document.getElementById('mobilePanel');
+    var closeBtn=document.getElementById('mobileNavClose');
+    function openMenu(){overlay.classList.add('active');panel.classList.add('active')}
+    function closeMenu(){overlay.classList.remove('active');panel.classList.remove('active')}
+    if(toggle)toggle.addEventListener('click',openMenu);
+    if(closeBtn)closeBtn.addEventListener('click',closeMenu);
+    if(overlay)overlay.addEventListener('click',closeMenu);
+})();
 
 // Language filter
 function filterLang(lang) {
     document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
     event.target.classList.add('active');
-
     document.querySelectorAll('.testimonial-card').forEach(function(card) {
         if (lang === 'all' || card.dataset.lang === lang) {
             card.style.display = '';
@@ -554,7 +662,6 @@ function filterLang(lang) {
 }
 </script>
 
-<!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
 <script defer src="js/translate.js"></script>
 <script src="/js/search.js" defer></script>
 </body>
