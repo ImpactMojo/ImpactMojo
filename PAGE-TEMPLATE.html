@@ -281,60 +281,29 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .v3-paper-plane {
-    position: absolute;
-    opacity: 0.15;
-    animation: floatPlane 20s ease-in-out infinite;
-}
-
-.v3-paper-plane svg {
-    width: 100%;
-    height: 100%;
-    fill: var(--accent-color);
-}
-
-.v3-paper-plane-1 {
+    position: fixed;
     top: 15%;
-    left: 5%;
-    width: 120px;
-    height: 120px;
-    animation-delay: 0s;
-}
-
-.v3-paper-plane-2 {
-    top: 60%;
     right: 8%;
-    width: 80px;
-    height: 80px;
-    animation-delay: -7s;
-    transform: rotate(45deg);
+    width: 140px;
+    height: 140px;
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+    animation: v3-float-plane 25s ease-in-out infinite;
 }
-
-.v3-paper-plane-3 {
-    bottom: 20%;
-    left: 15%;
-    width: 60px;
-    height: 60px;
-    animation-delay: -14s;
-    transform: rotate(-30deg);
+@keyframes v3-float-plane {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(-60px, 40px) rotate(10deg); }
+    40% { transform: translate(120px, 30px) rotate(-8deg); }
+    60% { transform: translate(40px, 60px) rotate(15deg); }
+    80% { transform: translate(-30px, 20px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
 }
-
-@keyframes floatPlane {
-    0%, 100% { 
-        transform: translateY(0px) rotate(0deg); 
-        opacity: 0.15;
-    }
-    25% { 
-        transform: translateY(-20px) rotate(5deg); 
-        opacity: 0.2;
-    }
-    50% { 
-        transform: translateY(-10px) rotate(-3deg); 
-        opacity: 0.15;
-    }
-    75% { 
-        transform: translateY(-25px) rotate(3deg); 
-        opacity: 0.18;
-    }
+@media (max-width: 768px) {
+    .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .v3-paper-plane { animation: none !important; }
 }
 
 .v3-blob {
@@ -1229,8 +1198,11 @@ h1, h2, h3, h4, h5, h6 {
     /* Cookie consent mobile */
     /* Decorative elements mobile */
     .v3-paper-plane {
-        opacity: 0.08;
-        transform: scale(0.6);
+        width: 100px;
+        height: 100px;
+        top: 10%;
+        right: 5%;
+        opacity: 0.15;
     }
     
     .v3-blob {
@@ -1253,27 +1225,18 @@ h1, h2, h3, h4, h5, h6 {
 
 <!-- V3 Decorative Elements - Paper Planes & Blobs -->
 <div class="v3-decoration-container">
-    <!-- Paper Planes -->
-    <div class="v3-paper-plane v3-paper-plane-1">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-        </svg>
-    </div>
-    <div class="v3-paper-plane v3-paper-plane-2">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-        </svg>
-    </div>
-    <div class="v3-paper-plane v3-paper-plane-3">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-        </svg>
-    </div>
-    
     <!-- Gradient Blobs -->
     <div class="v3-blob v3-blob-1"></div>
     <div class="v3-blob v3-blob-2"></div>
 </div>
+<svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
 
 <!-- Header -->
 <header class="header">
