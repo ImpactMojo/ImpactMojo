@@ -561,12 +561,12 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 </div>
                 <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">W3C-standard verifiable digital credentials shareable on LinkedIn, proving your team's mastery of development competencies.</p>
             </div>
-            <div style="background:var(--card-bg); border:1px dashed var(--border-color); border-radius:12px; padding:1.25rem; opacity:0.85;">
+            <div style="background:var(--card-bg); border:1px solid var(--accent-color); border-radius:12px; padding:1.25rem;">
                 <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
-                    <span style="font-size:0.65rem; background:rgba(245,158,11,0.15); color:#D97706; padding:2px 8px; border-radius:4px; font-weight:600;">ROADMAP</span>
-                    <h4 style="font-size:0.95rem; font-weight:600;">Live Case Challenges</h4>
+                    <span style="font-size:0.65rem; background:rgba(14,165,233,0.15); color:#0EA5E9; padding:2px 8px; border-radius:4px; font-weight:600;">LIVE</span>
+                    <h4 style="font-size:0.95rem; font-weight:600;">Team Challenges</h4>
                 </div>
-                <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">Real development problems from partner NGOs for your team to solve collaboratively with expert feedback.</p>
+                <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">Unlimited access to all Live Case Challenges for every team member, plus request custom challenges tailored to your organisation's programs. Go to the <strong>Team Challenges</strong> tab below.</p>
             </div>
         </div>
     </div>
@@ -577,6 +577,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         <button class="tab-btn" data-tab="training">Training</button>
         <button class="tab-btn" data-tab="paths">Learning Paths</button>
         <button class="tab-btn" data-tab="progress">Progress & Reports</button>
+        <button class="tab-btn" data-tab="challenges">Team Challenges</button>
         <button class="tab-btn" data-tab="settings">Settings</button>
     </div>
 
@@ -984,6 +985,80 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     Export CSV
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Challenges Tab -->
+    <div class="tab-content" id="tab-challenges">
+        <div class="path-card">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem;">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--accent-color)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <div>
+                    <h3 style="margin:0;">Team Challenges</h3>
+                    <p style="margin:0; font-size:0.82rem; color:var(--text-secondary);">Your team gets unlimited access to all 9 Live Case Challenges plus the ability to request custom challenges tailored to your organisation's work.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Existing Challenges Overview -->
+        <div class="path-card" style="margin-top:1rem;">
+            <h4 style="margin-bottom:0.75rem;">Available Challenges</h4>
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">All team members have full access to every challenge (including Practitioner-tier challenges) at no extra cost.</p>
+            <div id="teamChallengesList" style="display:grid; gap:0.75rem;">
+                <div style="text-align:center; padding:1rem; color:var(--text-secondary); font-size:0.85rem;">Loading challenges...</div>
+            </div>
+        </div>
+
+        <!-- Request Custom Challenge Form -->
+        <div class="path-card" style="margin-top:1rem;">
+            <h4 style="margin-bottom:0.5rem;">Request a Custom Challenge</h4>
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">Need a challenge based on your organisation's real programs or sector? Describe what you need and we'll design a custom case challenge with rubrics, resources, and expert review for your team.</p>
+            <form id="customChallengeForm" onsubmit="submitChallengeRequest(event)">
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;">Challenge Topic / Focus Area</label>
+                <input type="text" id="challengeTopic" required placeholder="e.g., WASH program M&E in tribal districts" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;">Learning Track</label>
+                <select id="challengeTrack" required style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <option value="">Select a track</option>
+                    <option value="mel">Monitoring, Evaluation & Learning</option>
+                    <option value="data-tech">Data & Technology</option>
+                    <option value="policy-econ">Policy & Economics</option>
+                    <option value="governance">Philosophy, Law & Governance</option>
+                    <option value="health-comms">Health, Communication & Wellbeing</option>
+                    <option value="gender">Gender Equity & Inclusion</option>
+                </select>
+
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;">Describe what your team should learn from this challenge</label>
+                <textarea id="challengeDescription" required placeholder="What real-world scenario should the challenge simulate? What skills should it test? Any specific programs, geographies, or datasets to reference?" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; min-height:120px; resize:vertical; margin-bottom:1rem;"></textarea>
+
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;">Number of team members who will participate</label>
+                <input type="number" id="challengeParticipants" min="1" max="100" placeholder="e.g., 8" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;">Preferred difficulty level</label>
+                <select id="challengeDifficulty" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate" selected>Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary" id="challengeSubmitBtn" style="width:100%;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    Submit Challenge Request
+                </button>
+            </form>
+            <div id="challengeRequestSuccess" style="display:none; text-align:center; padding:1.5rem;">
+                <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#10B981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <h4 style="margin:0.75rem 0 0.25rem;">Request Submitted</h4>
+                <p style="color:var(--text-secondary); font-size:0.85rem;">We'll design your custom challenge and notify you when it's ready. Typical turnaround is 5-7 working days.</p>
+            </div>
+        </div>
+
+        <!-- Previous Requests -->
+        <div class="path-card" style="margin-top:1rem;">
+            <h4 style="margin-bottom:0.75rem;">Your Challenge Requests</h4>
+            <div id="challengeRequestsList">
+                <p style="color:var(--text-secondary); font-size:0.85rem; text-align:center; padding:1rem;">No custom challenge requests yet.</p>
             </div>
         </div>
     </div>
@@ -1791,6 +1866,128 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 if (btn.dataset.tab === 'training' && !cohortsLoaded) {
                     cohortsLoaded = true;
                     loadCohorts();
+                }
+            });
+        });
+    });
+
+    // ========== Team Challenges Tab ==========
+    var challengesLoaded = false;
+
+    async function loadTeamChallenges() {
+        try {
+            var resp = await fetch('data/challenges.json');
+            var challenges = await resp.json();
+            var container = document.getElementById('teamChallengesList');
+            if (!challenges || !challenges.length) {
+                container.innerHTML = '<p style="color:var(--text-secondary); font-size:0.85rem; text-align:center;">No challenges available.</p>';
+                return;
+            }
+            container.innerHTML = challenges.map(function(ch) {
+                var diffColor = ch.difficulty === 'Beginner' ? '#10B981' : ch.difficulty === 'Intermediate' ? '#F59E0B' : '#EF4444';
+                return '<div style="display:flex; align-items:center; gap:1rem; padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg);">' +
+                    '<div style="flex:1;">' +
+                        '<div style="font-weight:600; font-size:0.9rem;">' + escHtml(ch.title) + '</div>' +
+                        '<div style="display:flex; gap:0.5rem; margin-top:0.35rem; flex-wrap:wrap;">' +
+                            '<span style="font-size:0.7rem; padding:2px 8px; border-radius:4px; background:rgba(14,165,233,0.1); color:#0EA5E9;">' + escHtml(ch.trackLabel || ch.track) + '</span>' +
+                            '<span style="font-size:0.7rem; padding:2px 8px; border-radius:4px; background:rgba(' + (ch.difficulty === 'Beginner' ? '16,185,129' : ch.difficulty === 'Intermediate' ? '245,158,11' : '239,68,68') + ',0.1); color:' + diffColor + ';">' + ch.difficulty + '</span>' +
+                            '<span style="font-size:0.7rem; padding:2px 8px; border-radius:4px; background:rgba(16,185,129,0.1); color:#10B981;">Included</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<a href="challenges.html#' + ch.id + '" class="btn btn-outline" style="font-size:0.75rem; padding:0.35rem 0.75rem; white-space:nowrap;">Open</a>' +
+                '</div>';
+            }).join('');
+        } catch (e) {
+            console.error('Failed to load challenges:', e);
+            document.getElementById('teamChallengesList').innerHTML = '<p style="color:var(--text-secondary); font-size:0.85rem;">Could not load challenges.</p>';
+        }
+    }
+
+    async function loadChallengeRequests() {
+        if (!orgData || !ImpactMojoAuth.getUser()) return;
+        try {
+            var sb = window.supabaseClient;
+            var { data, error } = await sb.from('challenge_requests')
+                .select('*')
+                .eq('org_id', orgData.id)
+                .order('created_at', { ascending: false });
+
+            var container = document.getElementById('challengeRequestsList');
+            if (error || !data || !data.length) {
+                container.innerHTML = '<p style="color:var(--text-secondary); font-size:0.85rem; text-align:center; padding:1rem;">No custom challenge requests yet.</p>';
+                return;
+            }
+            container.innerHTML = data.map(function(r) {
+                var statusColor = r.status === 'pending' ? '#F59E0B' : r.status === 'in_progress' ? '#0EA5E9' : r.status === 'completed' ? '#10B981' : 'var(--text-muted)';
+                var statusLabel = r.status === 'pending' ? 'Pending' : r.status === 'in_progress' ? 'In Progress' : r.status === 'completed' ? 'Ready' : r.status;
+                return '<div style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; margin-bottom:0.5rem;">' +
+                    '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+                        '<strong style="font-size:0.9rem;">' + escHtml(r.topic) + '</strong>' +
+                        '<span style="font-size:0.7rem; padding:2px 8px; border-radius:4px; background:rgba(' + (r.status === 'pending' ? '245,158,11' : r.status === 'in_progress' ? '14,165,233' : '16,185,129') + ',0.15); color:' + statusColor + '; font-weight:600;">' + statusLabel + '</span>' +
+                    '</div>' +
+                    '<p style="font-size:0.8rem; color:var(--text-secondary); margin:0.35rem 0 0;">' + escHtml(r.track) + ' &middot; ' + escHtml(r.difficulty) + ' &middot; ' + new Date(r.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) + '</p>' +
+                '</div>';
+            }).join('');
+        } catch (e) {
+            console.error('Failed to load challenge requests:', e);
+        }
+    }
+
+    window.submitChallengeRequest = async function(e) {
+        e.preventDefault();
+        var btn = document.getElementById('challengeSubmitBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span style="animation:spin 1s linear infinite; display:inline-block;">&#8987;</span> Submitting...';
+
+        var topic = document.getElementById('challengeTopic').value.trim();
+        var track = document.getElementById('challengeTrack').value;
+        var description = document.getElementById('challengeDescription').value.trim();
+        var participants = document.getElementById('challengeParticipants').value;
+        var difficulty = document.getElementById('challengeDifficulty').value;
+
+        if (!topic || !track || !description) {
+            alert('Please fill in all required fields.');
+            btn.disabled = false;
+            btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Submit Challenge Request';
+            return;
+        }
+
+        try {
+            var user = ImpactMojoAuth.getUser();
+            var sb = window.supabaseClient;
+
+            var { error } = await sb.from('challenge_requests').insert({
+                org_id: orgData.id,
+                requested_by: user.id,
+                topic: topic,
+                track: track,
+                description: description,
+                participants: parseInt(participants) || null,
+                difficulty: difficulty,
+                status: 'pending'
+            });
+
+            if (error) throw error;
+
+            document.getElementById('customChallengeForm').style.display = 'none';
+            document.getElementById('challengeRequestSuccess').style.display = 'block';
+            loadChallengeRequests();
+        } catch (err) {
+            console.error('Challenge request failed:', err);
+            alert('Failed to submit request. Please try again or email hello@impactmojo.in.');
+            btn.disabled = false;
+            btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Submit Challenge Request';
+        }
+    };
+
+    // Load challenges when tab is activated
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.tab-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                if (btn.dataset.tab === 'challenges' && !challengesLoaded) {
+                    challengesLoaded = true;
+                    loadTeamChallenges();
+                    loadChallengeRequests();
                 }
             });
         });
