@@ -3026,8 +3026,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }, 10000);
 
-    // Wait for auth to fully initialize (handles OAuth callback tokens in URL)
+    // Initialize auth and wait for it to fully resolve (handles OAuth callback tokens in URL)
     try {
+        await ImpactMojoAuth.init();
         await ImpactMojoAuth.waitForAuthReady();
     } catch (e) {
         console.error('Auth ready wait failed:', e);

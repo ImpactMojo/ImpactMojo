@@ -1125,7 +1125,8 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
                 return;
             }
 
-            var profile = ImpactMojoAuth.getProfile();
+            // Always fetch a fresh profile to get the latest subscription_tier from Supabase
+            var profile = await ImpactMojoAuth.fetchProfile();
             if (!profile || profile.subscription_tier !== 'organization') {
                 document.getElementById('authGate').style.display = 'block';
                 clearTimeout(safetyTimer);
