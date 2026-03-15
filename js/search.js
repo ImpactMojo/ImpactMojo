@@ -284,9 +284,6 @@
 
   /* ---- Inject nav button ---- */
   function injectNavButton() {
-    var nav = document.querySelector('.nav-links') || document.querySelector('.nav-container');
-    if (!nav) return;
-
     var btn = document.createElement('button');
     btn.className = 'ims-nav-btn';
     btn.setAttribute('aria-label', 'Search (Ctrl+K)');
@@ -299,11 +296,24 @@
       openSearch();
     });
 
-    var container = document.querySelector('.nav-with-badge') || nav.parentElement;
-    if (container) {
-      container.style.display = 'flex';
-      container.style.alignItems = 'center';
-      container.appendChild(btn);
+    /* Place in nav-buttons area (next to theme selector / auth buttons) for prominence */
+    var navButtons = document.querySelector('.nav-buttons');
+    if (navButtons) {
+      var themeSelector = navButtons.querySelector('.theme-selector');
+      if (themeSelector) {
+        navButtons.insertBefore(btn, themeSelector);
+      } else {
+        navButtons.insertBefore(btn, navButtons.firstChild);
+      }
+      return;
+    }
+
+    /* Fallback: append to nav container */
+    var nav = document.querySelector('.nav-with-badge') || document.querySelector('.nav-container');
+    if (nav) {
+      nav.style.display = 'flex';
+      nav.style.alignItems = 'center';
+      nav.appendChild(btn);
     }
   }
 
