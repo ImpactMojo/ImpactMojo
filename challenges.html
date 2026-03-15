@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Case Challenges | ImpactMojo</title>
+<meta name="description" content="Solve real development problems from partner organizations. Practice MEL, data analysis, policy design, and more with expert feedback and peer review.">
+
+<!-- Favicons -->
+<link href="assets/images/favicon.png" rel="icon" type="image/png">
+<link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" as="style">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet"></noscript>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --accent-color: #0EA5E9;
+    --accent-hover: #0284C7;
+    --secondary-accent: #6366F1;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] {
+    --primary-bg: #F8FAFC;
+    --secondary-bg: #FFFFFF;
+    --text-primary: #1E293B;
+    --text-secondary: #64748B;
+    --text-muted: #94A3B8;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ---- Header ---- */
+.ch-header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; gap: 1rem;
+}
+[data-theme="light"] .ch-header { background: rgba(255,255,255,0.95); }
+
+.ch-header-logo {
+    display: flex; align-items: center; gap: 0.5rem;
+    text-decoration: none; color: var(--text-primary);
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem;
+}
+.ch-header-logo img { width: 32px; height: 32px; border-radius: 6px; }
+
+.ch-header-nav { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
+.ch-header-nav a {
+    color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;
+    font-weight: 500; transition: color 0.2s;
+}
+.ch-header-nav a:hover { color: var(--accent-color); }
+
+.ch-back-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;
+    padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+.ch-back-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+/* ---- Hero ---- */
+.ch-hero {
+    text-align: center; padding: 3rem 2rem 2rem;
+    background: linear-gradient(180deg, rgba(14,165,233,0.08) 0%, transparent 100%);
+}
+.ch-hero-eyebrow {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-color); margin-bottom: 0.75rem;
+}
+.ch-hero h1 {
+    font-family: 'Poppins', sans-serif; font-size: 2.2rem; font-weight: 700;
+    margin-bottom: 0.75rem;
+    background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.ch-hero-sub {
+    font-size: 1rem; color: var(--text-secondary); max-width: 640px; margin: 0 auto 1.5rem;
+    line-height: 1.7;
+}
+.ch-hero-stats {
+    display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+}
+.ch-stat { text-align: center; }
+.ch-stat-num { font-size: 1.5rem; font-weight: 700; color: var(--accent-color); font-family: 'Poppins', sans-serif; }
+.ch-stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ---- Filters ---- */
+.ch-filters {
+    display: flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem;
+    max-width: 1200px; margin: 0 auto; flex-wrap: wrap;
+}
+.ch-filter-btn {
+    padding: 0.4rem 1rem; border-radius: 20px; border: 1px solid var(--border-color);
+    background: transparent; color: var(--text-secondary); font-size: 0.8rem;
+    font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.ch-filter-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.ch-filter-btn.active {
+    background: var(--accent-color); color: #fff; border-color: var(--accent-color);
+}
+.ch-filter-sep { width: 1px; height: 20px; background: var(--border-color); margin: 0 0.25rem; }
+
+/* ---- Challenge Grid ---- */
+.ch-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.25rem; padding: 1rem 2rem 3rem; max-width: 1200px; margin: 0 auto;
+}
+
+/* ---- Challenge Card ---- */
+.ch-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 16px; padding: 1.5rem; position: relative;
+    transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
+}
+.ch-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+.ch-card-header { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; }
+.ch-card-icon {
+    width: 40px; height: 40px; border-radius: 10px; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+    font-size: 1.1rem; color: #fff;
+}
+.ch-card-title {
+    font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600;
+    line-height: 1.4; flex: 1;
+}
+
+.ch-card-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.ch-badge {
+    font-size: 0.65rem; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.03em;
+}
+.ch-badge-track { background: rgba(99,102,241,0.15); color: #818CF8; }
+.ch-badge-beginner { background: rgba(16,185,129,0.15); color: #10B981; }
+.ch-badge-intermediate { background: rgba(245,158,11,0.15); color: #F59E0B; }
+.ch-badge-advanced { background: rgba(239,68,68,0.15); color: #EF4444; }
+.ch-badge-free { background: rgba(16,185,129,0.15); color: #10B981; }
+.ch-badge-practitioner { background: rgba(14,165,233,0.15); color: #0EA5E9; }
+
+.ch-card-desc {
+    font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
+    margin-bottom: 1rem;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.ch-card-meta {
+    display: flex; align-items: center; gap: 1rem; font-size: 0.75rem; color: var(--text-muted);
+    padding-top: 0.75rem; border-top: 1px solid var(--border-color);
+}
+.ch-card-meta svg { width: 14px; height: 14px; flex-shrink: 0; }
+.ch-card-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+.ch-card-partner {
+    font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic;
+}
+
+.ch-card-lock {
+    position: absolute; top: 1rem; right: 1rem;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(245,158,11,0.15); display: flex;
+    align-items: center; justify-content: center;
+}
+.ch-card-lock svg { width: 14px; height: 14px; color: #F59E0B; }
+
+/* ---- Detail View (overlay) ---- */
+.ch-detail-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 2rem; overflow-y: auto;
+}
+.ch-detail-overlay.open { display: flex; }
+
+.ch-detail {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 20px; max-width: 800px; width: 100%;
+    margin-top: 2rem; margin-bottom: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.ch-detail-header {
+    padding: 2rem 2rem 1.5rem; border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+.ch-detail-close {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    background: none; border: none; color: var(--text-muted);
+    cursor: pointer; padding: 0.25rem; font-size: 1.5rem; line-height: 1;
+}
+.ch-detail-close:hover { color: var(--text-primary); }
+
+.ch-detail-title {
+    font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700;
+    margin-bottom: 0.5rem; padding-right: 2rem;
+}
+
+.ch-detail-body { padding: 2rem; }
+
+.ch-detail-section { margin-bottom: 2rem; }
+.ch-detail-section h3 {
+    font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600;
+    color: var(--accent-color); margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+}
+.ch-detail-section h3 svg { width: 18px; height: 18px; }
+
+.ch-detail-context {
+    font-size: 0.9rem; line-height: 1.8; color: var(--text-secondary);
+    white-space: pre-line;
+}
+
+.ch-detail-outcomes {
+    list-style: none; padding: 0;
+}
+.ch-detail-outcomes li {
+    font-size: 0.85rem; color: var(--text-secondary); padding: 0.4rem 0;
+    padding-left: 1.5rem; position: relative;
+}
+.ch-detail-outcomes li::before {
+    content: ''; position: absolute; left: 0; top: 0.7rem;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent-color);
+}
+
+.ch-rubric-table {
+    width: 100%; border-collapse: collapse; font-size: 0.85rem;
+}
+.ch-rubric-table th {
+    text-align: left; padding: 0.5rem 0.75rem; font-weight: 600;
+    border-bottom: 2px solid var(--border-color); color: var(--text-muted);
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.ch-rubric-table td {
+    padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+.ch-rubric-weight {
+    font-weight: 600; color: var(--accent-color); font-family: 'JetBrains Mono', monospace;
+}
+
+.ch-resources-list { list-style: none; padding: 0; }
+.ch-resources-list li { margin-bottom: 0.5rem; }
+.ch-resources-list a {
+    color: var(--accent-color); text-decoration: none; font-size: 0.85rem;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.ch-resources-list a:hover { text-decoration: underline; }
+.ch-resources-list a svg { width: 14px; height: 14px; }
+
+/* ---- Submission Form ---- */
+.ch-submit-section {
+    background: rgba(14,165,233,0.05); border: 1px solid rgba(14,165,233,0.15);
+    border-radius: 12px; padding: 1.5rem; margin-top: 1rem;
+}
+.ch-submit-section h3 { color: var(--success-color); }
+
+.ch-textarea {
+    width: 100%; min-height: 300px; padding: 1rem; border-radius: 10px;
+    border: 1px solid var(--border-color); background: var(--primary-bg);
+    color: var(--text-primary); font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85rem; line-height: 1.7; resize: vertical;
+    margin-bottom: 1rem;
+}
+.ch-textarea:focus { outline: none; border-color: var(--accent-color); }
+.ch-textarea::placeholder { color: var(--text-muted); }
+
+.ch-char-count { font-size: 0.75rem; color: var(--text-muted); text-align: right; margin-top: -0.75rem; margin-bottom: 0.75rem; }
+
+.ch-submit-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+
+.ch-btn {
+    padding: 0.6rem 1.5rem; border-radius: 10px; border: none;
+    font-weight: 600; font-size: 0.9rem; cursor: pointer;
+    font-family: inherit; transition: all 0.2s; display: inline-flex;
+    align-items: center; gap: 0.5rem;
+}
+.ch-btn-primary {
+    background: var(--gradient-primary); color: #fff;
+}
+.ch-btn-primary:hover { transform: scale(1.03); }
+.ch-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.ch-btn-secondary {
+    background: transparent; border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+.ch-btn-secondary:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+.ch-btn-upgrade {
+    background: linear-gradient(135deg, #F59E0B, #EF4444); color: #fff;
+}
+
+.ch-login-prompt {
+    text-align: center; padding: 2rem 1rem;
+    color: var(--text-secondary); font-size: 0.9rem;
+}
+.ch-login-prompt a { color: var(--accent-color); text-decoration: none; font-weight: 600; }
+
+/* ---- Tier Gate Message ---- */
+.ch-tier-gate {
+    text-align: center; padding: 2rem; border: 1px dashed var(--border-color);
+    border-radius: 12px; margin-top: 1rem;
+}
+.ch-tier-gate p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; }
+
+/* ---- Submitted State ---- */
+.ch-submitted-state {
+    text-align: center; padding: 2rem; border-radius: 12px;
+    background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);
+}
+.ch-submitted-state svg { width: 48px; height: 48px; color: var(--success-color); margin-bottom: 0.75rem; }
+.ch-submitted-state h4 { font-family: 'Poppins', sans-serif; margin-bottom: 0.5rem; }
+.ch-submitted-state p { color: var(--text-secondary); font-size: 0.85rem; }
+
+/* ---- Empty State ---- */
+.ch-empty {
+    text-align: center; padding: 4rem 2rem; color: var(--text-muted);
+    grid-column: 1 / -1;
+}
+.ch-empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+.ch-empty-text { font-size: 1rem; }
+
+/* ---- Footer ---- */
+.ch-footer {
+    text-align: center; padding: 2rem; border-top: 1px solid var(--border-color);
+    color: var(--text-muted); font-size: 0.8rem;
+}
+.ch-footer a { color: var(--accent-color); text-decoration: none; }
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+    .ch-hero h1 { font-size: 1.6rem; }
+    .ch-grid { grid-template-columns: 1fr; padding: 1rem; }
+    .ch-detail { margin-top: 0; border-radius: 16px 16px 0 0; }
+    .ch-detail-overlay { padding: 0; align-items: flex-end; }
+    .ch-filters { padding: 0.75rem 1rem; }
+    .ch-header { padding: 0.75rem 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="ch-header">
+    <a href="index.html" class="ch-header-logo">
+        <img src="assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="32" height="32">
+        <span>ImpactMojo</span>
+    </a>
+    <nav class="ch-header-nav">
+        <a href="index.html" class="ch-back-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
+            Back to Home
+        </a>
+    </nav>
+</header>
+
+<!-- Hero -->
+<section class="ch-hero">
+    <div class="ch-hero-eyebrow" data-i18n="challenges.eyebrow">Live Case Challenges</div>
+    <h1 data-i18n="challenges.title">Solve Real Development Problems</h1>
+    <p class="ch-hero-sub" data-i18n="challenges.subtitle">Practice with authentic case studies from partner organizations. Get peer feedback, earn badges, and build your portfolio with real-world work products.</p>
+    <div class="ch-hero-stats">
+        <div class="ch-stat">
+            <div class="ch-stat-num" id="totalChallenges">9</div>
+            <div class="ch-stat-label">Challenges</div>
+        </div>
+        <div class="ch-stat">
+            <div class="ch-stat-num">6</div>
+            <div class="ch-stat-label">Learning Tracks</div>
+        </div>
+        <div class="ch-stat">
+            <div class="ch-stat-num">3</div>
+            <div class="ch-stat-label">Difficulty Levels</div>
+        </div>
+    </div>
+</section>
+
+<!-- Filters -->
+<div class="ch-filters" id="challengeFilters">
+    <button class="ch-filter-btn active" data-filter="all">All</button>
+    <button class="ch-filter-btn" data-filter="beginner">Beginner</button>
+    <button class="ch-filter-btn" data-filter="intermediate">Intermediate</button>
+    <button class="ch-filter-btn" data-filter="advanced">Advanced</button>
+    <div class="ch-filter-sep"></div>
+    <button class="ch-filter-btn" data-filter="explorer">Free</button>
+    <button class="ch-filter-btn" data-filter="practitioner">Practitioner+</button>
+    <div class="ch-filter-sep"></div>
+    <button class="ch-filter-btn" data-filter="mel">MEL</button>
+    <button class="ch-filter-btn" data-filter="data_technology">Data & Tech</button>
+    <button class="ch-filter-btn" data-filter="gender_equity">Gender</button>
+    <button class="ch-filter-btn" data-filter="policy_economics">Policy</button>
+    <button class="ch-filter-btn" data-filter="philosophy_law">Law & Governance</button>
+    <button class="ch-filter-btn" data-filter="health_comm">Health & Comm</button>
+</div>
+
+<!-- Challenge Grid -->
+<div class="ch-grid" id="challengeGrid">
+    <!-- Rendered by JS -->
+</div>
+
+<!-- Detail Overlay -->
+<div class="ch-detail-overlay" id="challengeDetail">
+    <div class="ch-detail" id="challengeDetailContent">
+        <!-- Rendered by JS -->
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="ch-footer">
+    <p>Have a real case problem your organization wants learners to solve? <a href="mailto:hello@impactmojo.in">Submit a challenge</a></p>
+    <p style="margin-top: 0.5rem;">© ImpactMojo. All rights reserved. <a href="index.html">Back to Home</a></p>
+</footer>
+
+<!-- Supabase (optional — for cloud submissions) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="js/challenges.js" defer></script>
+<script defer src="js/translate.js"></script>
+</body>
+</html>
