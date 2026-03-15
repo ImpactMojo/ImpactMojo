@@ -1,7 +1,61 @@
 (function(){
   'use strict';
 
-  var TRACKS = {"Data & Methods": {"courses": ["Excel for M&E", "R Programming", "Python Data Analysis", "EDA", "Bivariate Analysis", "Multivariate Analysis", "Data Visualization", "Stata Basics", "Survey Data Analysis"], "labs": ["Excel Lab", "R Lab", "Python Lab", "Visualization Lab"], "games": ["Lorenz Curve Game", "Sampling Strategy Game"], "resources": ["Handouts Library", "Method Guides"]}, "Economics & Policy": {"courses": ["Development Economics", "Cost-Effectiveness Analysis", "Impact Evaluation", "Program Evaluation", "Public Finance", "Poverty & Inequality", "Economic Policy Analysis", "Labor Markets"], "labs": ["CEA Lab", "Impact Evaluation Lab", "Policy Simulation Lab"], "games": ["Budget Trade-offs Game", "Targeting Game"], "resources": ["Policy Briefs", "Cost-Effectiveness Notes"]}, "Gender & Social Justice": {"courses": ["Gender & Development", "Women's Empowerment", "Gender Analysis Frameworks", "Data Feminism", "WEE", "Gender & Health", "Gender & Education", "Gandhi's Political Thought"], "labs": ["Gender Budgeting Lab", "Inclusive Survey Design Lab"], "games": ["Equity Trade-offs Game", "Bias Awareness Game"], "resources": ["Gender Analysis Sheets", "WEE Metrics Pack"]}, "Public Health & Climate": {"courses": ["Public Health 101", "Epidemiology 101", "Health Systems", "Nutrition & Food Systems", "WASH", "Climate & Health", "Adaptation & Resilience"], "labs": ["Epidemiology Lab", "Health Systems Lab", "Risk Mapping Lab"], "games": ["Outbreak Simulation Game", "Resource Allocation Game"], "resources": ["Health Indicators Pack", "Climate Resilience Toolkit"]}, "Political Philosophy & History": {"courses": ["Gandhi's Political Thought", "Political Economy 101", "Law and Constitution 101", "Caste 101", "Environmental Justice 101"], "labs": ["Policy and Advocacy Lab"], "games": [], "resources": ["Political Philosophy Reading List"]}};
+  // Map track names to their handouts page anchors
+  var TRACK_ANCHORS = {
+    "Data & Technology": "/handouts#data-technology",
+    "Gender, Equity & Inclusion": "/handouts#gender-equity-inclusion",
+    "Policy & Economics": "/handouts#policy-economics",
+    "Monitoring, Evaluation & Learning": "/handouts#monitoring-evaluation-learning",
+    "Philosophy, Law & Governance": "/handouts#philosophy-law-governance",
+    "Health, Communication & Wellbeing": "/handouts#health-communication-wellbeing"
+  };
+
+  // Track names match the homepage track cards' data-track attributes
+  var TRACKS = {
+    "Data & Technology": {
+      "courses": ["Data Visualization", "AI for Development", "Excel for M&E", "R Programming", "Python Data Analysis", "EDA", "Bivariate Analysis", "Multivariate Analysis", "Stata Basics", "Survey Data Analysis"],
+      "labs": ["Excel Lab", "R Lab", "Python Lab", "Visualization Lab"],
+      "games": ["Lorenz Curve Game", "Sampling Strategy Game"],
+      "resources": ["Handouts Library", "Method Guides"],
+      "courseIds": ["dataviz", "devai"]
+    },
+    "Gender, Equity & Inclusion": {
+      "courses": ["Gender & Development", "Women's Empowerment", "Gender Analysis Frameworks", "Data Feminism", "WEE", "Gender & Health", "Gender & Education"],
+      "labs": ["Gender Budgeting Lab", "Inclusive Survey Design Lab"],
+      "games": ["Equity Trade-offs Game", "Bias Awareness Game"],
+      "resources": ["Gender Analysis Sheets", "WEE Metrics Pack"],
+      "courseIds": []
+    },
+    "Policy & Economics": {
+      "courses": ["Development Economics", "Politics of Aspiration", "Cost-Effectiveness Analysis", "Impact Evaluation", "Program Evaluation", "Public Finance", "Poverty & Inequality", "Economic Policy Analysis", "Labor Markets"],
+      "labs": ["CEA Lab", "Impact Evaluation Lab", "Policy Simulation Lab"],
+      "games": ["Budget Trade-offs Game", "Targeting Game"],
+      "resources": ["Policy Briefs", "Cost-Effectiveness Notes"],
+      "courseIds": ["devecon", "poa"]
+    },
+    "Monitoring, Evaluation & Learning": {
+      "courses": ["Monitoring, Evaluation & Learning"],
+      "labs": ["TOC Lab", "MLE Lab", "MEL Planning Lab", "Survey Design Lab"],
+      "games": [],
+      "resources": ["MEL Frameworks Pack", "Qualitative Methods Guide"],
+      "courseIds": ["mel"]
+    },
+    "Philosophy, Law & Governance": {
+      "courses": ["Gandhi's Political Thought", "Law & Development", "Political Economy 101", "Caste 101", "Environmental Justice 101"],
+      "labs": ["Policy and Advocacy Lab"],
+      "games": [],
+      "resources": ["Political Philosophy Reading List"],
+      "courseIds": ["gandhi", "law"]
+    },
+    "Health, Communication & Wellbeing": {
+      "courses": ["Social & Emotional Learning", "Media, Communication & Development", "Public Health 101", "Epidemiology 101", "Health Systems", "SRHR", "Climate & Health"],
+      "labs": ["Epidemiology Lab", "Health Systems Lab", "Risk Mapping Lab"],
+      "games": ["Outbreak Simulation Game", "Resource Allocation Game"],
+      "resources": ["Health Indicators Pack", "Climate Resilience Toolkit"],
+      "courseIds": ["SEL", "media"]
+    }
+  };
 
   // Normalize text -> key
   function keyize(s){
@@ -102,6 +156,44 @@
     return frag;
   }
 
+  // Read aggregate progress for a track from localStorage
+  function getTrackProgress(trackData){
+    var ids = trackData.courseIds || [];
+    if (!ids.length) return null;
+    var total = 0, sum = 0;
+    ids.forEach(function(id){
+      var raw = localStorage.getItem('impactmojo_course_progress_' + id);
+      if (raw){
+        try {
+          var p = JSON.parse(raw);
+          sum += (p.percentage || 0);
+          total++;
+        } catch(e){}
+      }
+    });
+    if (!total) return null;
+    return Math.round(sum / ids.length);
+  }
+
+  // Inject progress bars on homepage track cards
+  function renderTrackProgress(){
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.imx-track-card[data-track]'));
+    cards.forEach(function(card){
+      var trackName = card.getAttribute('data-track');
+      var d = TRACKS[trackName];
+      if (!d) return;
+      var pct = getTrackProgress(d);
+      if (pct === null || pct === 0) return;
+      // Don't double-inject
+      if (card.querySelector('.imx-track-progress')) return;
+      var bar = document.createElement('div');
+      bar.className = 'imx-track-progress';
+      bar.innerHTML = '<div class="imx-track-progress-bar"><div class="imx-track-progress-fill" style="width:' + pct + '%"></div></div>'
+        + '<span class="imx-track-progress-label">' + pct + '% complete</span>';
+      card.appendChild(bar);
+    });
+  }
+
   function openTrackModal(trackName){
     var d = TRACKS[trackName]; if (!d) return;
     document.getElementById('imxTrackTitle').textContent = trackName;
@@ -110,13 +202,35 @@
     var l=document.getElementById('imxRowLabs');     l.innerHTML=''; l.appendChild(chips(d.labs, idx));
     var g=document.getElementById('imxRowGames');    g.innerHTML=''; g.appendChild(chips(d.games, idx));
     var r=document.getElementById('imxRowResources');r.innerHTML=''; r.appendChild(chips(d.resources, idx));
+
+    // Show progress summary in modal
+    var pct = getTrackProgress(d);
+    var titleEl = document.getElementById('imxTrackTitle');
+    var existingBadge = titleEl.parentNode.querySelector('.imx-track-modal-progress');
+    if (existingBadge) existingBadge.remove();
+    if (pct !== null && pct > 0){
+      var badge = document.createElement('span');
+      badge.className = 'imx-track-modal-progress';
+      badge.textContent = pct + '% complete';
+      if (pct === 100) badge.classList.add('imx-complete');
+      titleEl.parentNode.appendChild(badge);
+    }
+
+    // Set handouts link for this track
+    var handoutsLink = document.getElementById('imxTrackHandoutsLink');
+    if (handoutsLink) handoutsLink.href = TRACK_ANCHORS[trackName] || '/handouts';
+
     document.getElementById('imxTrackModal').style.display='block';
   }
 
   document.addEventListener('DOMContentLoaded', function(){
-    Array.prototype.slice.call(document.querySelectorAll('.imx-track-card')).forEach(function(card){
-      card.addEventListener('click', function(){ openTrackModal(card.getAttribute('data-track')); });
+    Array.prototype.slice.call(document.querySelectorAll('.imx-track-card[data-track]')).forEach(function(card){
+      card.addEventListener('click', function(e){
+        e.preventDefault();
+        openTrackModal(card.getAttribute('data-track'));
+      });
     });
+    renderTrackProgress();
   });
 
   window.addEventListener('click', function(e){
