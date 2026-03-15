@@ -21,6 +21,22 @@
     var gtReady = false;
     var pendingLang = null;
 
+    // ===== COOKIE CLEANUP =====
+    // Clear stale googtrans cookies when language should be English.
+    // Without this, Google Translate auto-translates on page load based on
+    // lingering cookies even when the user hasn't chosen a language.
+    function clearGoogTransCookies() {
+        document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+        document.cookie = 'googtrans=; path=/; domain=' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+        document.cookie = 'googtrans=; path=/; domain=.' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+    }
+
+    // If English is the current language, pre-emptively clear any stale cookies
+    // BEFORE Google Translate script loads, so it won't auto-translate.
+    if (currentLang === 'en') {
+        clearGoogTransCookies();
+    }
+
     // ===== UI: Language Selector =====
     function createSelector() {
         var container = document.createElement('div');
@@ -313,6 +329,18 @@
                 navContainer.insertBefore(selector, hamburger);
             } else if (navContainer) {
                 navContainer.appendChild(selector);
+            } else {
+                // Flagship course pages use .mobile-header instead of .nav-container
+                var mobileHeader = document.querySelector('.mobile-header');
+                if (mobileHeader) {
+                    // Insert before the theme toggle (last child) in the mobile header
+                    var themeToggle = mobileHeader.querySelector('#theme-toggle-mobile');
+                    if (themeToggle) {
+                        mobileHeader.insertBefore(selector, themeToggle);
+                    } else {
+                        mobileHeader.appendChild(selector);
+                    }
+                }
             }
         }
 
