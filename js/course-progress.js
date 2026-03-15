@@ -26,8 +26,8 @@
     // =========================================================
     // CONFIGURATION
     // =========================================================
-    const SUPABASE_URL = 'https://ddyszmfffyedolkcugld.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkeXN6bWZmZnllZG9sa2N1Z2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3MzMxMzEsImV4cCI6MjA4MDMwOTEzMX0.vPLlFkC3pqOBtofZ8B6_FBLbRfOKwlyv3DzLvJBS16w';
+    const SUPABASE_URL = window.ImpactMojoConfig.SUPABASE_URL;
+    const SUPABASE_ANON_KEY = window.ImpactMojoConfig.SUPABASE_ANON_KEY;
 
     const COURSE_NAMES = {
         mel: 'Monitoring, Evaluation & Learning',

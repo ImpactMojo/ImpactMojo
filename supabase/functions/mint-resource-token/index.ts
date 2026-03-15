@@ -40,17 +40,63 @@ const TIER_RESOURCES: Record<string, string[]> = {
   ],
 };
 
-// ── CORS headers (allow the main site) ───────────────────────────────
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "https://www.impactmojo.in",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
+// ── Allowed origins ─────────────────────────────────────────────────
+const ALLOWED_ORIGINS = [
+  "https://www.impactmojo.in",
+  "https://impactmojo.in",
+];
+
+function corsHeaders(req: Request): Record<string, string> {
+  const origin = req.headers.get("Origin") || "";
+  const allowed = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    "Access-Control-Allow-Origin": allowed,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Vary": "Origin",
+  };
+}
+
+// ── In-memory rate limiter (per-user, per edge instance) ────────────
+// Limits each user to 10 token mints per minute.
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX = 10;
+const rateMap = new Map<string, { count: number; resetAt: number }>();
+
+function isRateLimited(userId: string): boolean {
+  const now = Date.now();
+  const entry = rateMap.get(userId);
+  if (!entry || now > entry.resetAt) {
+    rateMap.set(userId, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_MAX;
+}
 
 serve(async (req: Request) => {
+  const cors = corsHeaders(req);
+
   // Pre-flight
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: CORS_HEADERS });
+    return new Response("ok", { headers: cors });
+  }
+
+  // Reject non-POST methods
+  if (req.method !== "POST") {
+    return new Response(
+      JSON.stringify({ error: "Method not allowed" }),
+      { status: 405, headers: { ...cors, "Content-Type": "application/json" } },
+    );
+  }
+
+  // Reject requests from disallowed origins
+  const origin = req.headers.get("Origin") || "";
+  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+    return new Response(
+      JSON.stringify({ error: "Origin not allowed" }),
+      { status: 403, headers: { ...cors, "Content-Type": "application/json" } },
+    );
   }
 
   try {
@@ -59,7 +105,7 @@ serve(async (req: Request) => {
     if (!authHeader?.startsWith("Bearer ")) {
       return new Response(
         JSON.stringify({ error: "Missing or malformed Authorization header" }),
-        { status: 401, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } },
+        { status: 401, headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
     const accessToken = authHeader.replace("Bearer ", "");
@@ -69,7 +115,16 @@ serve(async (req: Request) => {
     if (!resource || typeof resource !== "string") {
       return new Response(
         JSON.stringify({ error: "Missing resource id in request body" }),
-        { status: 400, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } },
+        { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
+      );
+    }
+
+    // Validate resource ID against known values
+    const knownResources = new Set(Object.values(TIER_RESOURCES).flat());
+    if (!knownResources.has(resource)) {
+      return new Response(
+        JSON.stringify({ error: "Unknown resource" }),
+        { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
 
@@ -83,11 +138,26 @@ serve(async (req: Request) => {
     if (userError || !user) {
       return new Response(
         JSON.stringify({ error: "Invalid session" }),
-        { status: 401, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } },
+        { status: 401, headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
 
-    // 4. Fetch the user's subscription tier (use service role to bypass RLS)
+    // 4. Rate limit per user
+    if (isRateLimited(user.id)) {
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please wait a moment." }),
+        {
+          status: 429,
+          headers: {
+            ...cors,
+            "Content-Type": "application/json",
+            "Retry-After": "60",
+          },
+        },
+      );
+    }
+
+    // 5. Fetch the user's subscription tier (use service role to bypass RLS)
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const adminClient = createClient(supabaseUrl, serviceRoleKey);
     const { data: profile, error: profileError } = await adminClient
@@ -99,35 +169,35 @@ serve(async (req: Request) => {
     if (profileError || !profile) {
       return new Response(
         JSON.stringify({ error: "Profile not found" }),
-        { status: 404, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } },
+        { status: 404, headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
 
-    // 5. Check subscription is active
+    // 6. Check subscription is active
     if (profile.subscription_status !== "active") {
       return new Response(
         JSON.stringify({ error: "Subscription inactive", code: "INACTIVE" }),
-        { status: 403, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } },
+        { status: 403, headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
 
-    // 6. Check tier permits the requested resource
+    // 7. Check tier permits the requested resource
     const tier = (profile.subscription_tier || "explorer").toLowerCase();
     const allowed = TIER_RESOURCES[tier] ?? [];
     if (!allowed.includes(resource)) {
       return new Response(
         JSON.stringify({ error: "Your plan does not include this resource", code: "TIER" }),
-        { status: 403, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } },
+        { status: 403, headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
 
-    // 7. Mint a short-lived JWT (5 min TTL)
+    // 8. Mint a short-lived JWT (5 min TTL)
     const secret = Deno.env.get("RESOURCE_TOKEN_SECRET");
     if (!secret) {
       console.error("RESOURCE_TOKEN_SECRET is not set");
       return new Response(
         JSON.stringify({ error: "Server configuration error" }),
-        { status: 500, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } },
+        { status: 500, headers: { ...cors, "Content-Type": "application/json" } },
       );
     }
 
@@ -156,13 +226,13 @@ serve(async (req: Request) => {
 
     return new Response(
       JSON.stringify({ token }),
-      { status: 200, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } },
+      { status: 200, headers: { ...cors, "Content-Type": "application/json" } },
     );
   } catch (err) {
     console.error("mint-resource-token error:", err);
     return new Response(
       JSON.stringify({ error: "Internal server error" }),
-      { status: 500, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } },
+      { status: 500, headers: { ...cors, "Content-Type": "application/json" } },
     );
   }
 });

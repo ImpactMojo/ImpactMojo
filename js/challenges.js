@@ -7,8 +7,8 @@
 (function () {
     'use strict';
 
-    var SUPABASE_URL = 'https://ddyszmfffyedolkcugld.supabase.co';
-    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkeXN6bWZmZnllZG9sa2N1Z2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3MzMxMzEsImV4cCI6MjA4MDMwOTEzMX0.vPLlFkC3pqOBtofZ8B6_FBLbRfOKwlyv3DzLvJBS16w';
+    var SUPABASE_URL = window.ImpactMojoConfig.SUPABASE_URL;
+    var SUPABASE_ANON_KEY = window.ImpactMojoConfig.SUPABASE_ANON_KEY;
     var STORAGE_KEY = 'impactmojo_challenge_submissions';
     var DRAFT_KEY = 'impactmojo_challenge_drafts';
 
