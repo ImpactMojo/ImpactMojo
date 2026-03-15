@@ -479,6 +479,32 @@ body.light-mode .v3-inline-icon { filter: none; }
                             <span>ImpactMojo</span>
                         </div>
                     </div>
+                    <!-- Open Badge Visual & Actions -->
+                    <div id="badgeSection" style="display:none; margin-top:1.5rem; padding-top:1.5rem; border-top:2px solid #f0f0f0;">
+                        <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; justify-content:center;">
+                            <div id="badgeSvgContainer" style="flex-shrink:0;"></div>
+                            <div style="flex:1; min-width:200px;">
+                                <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:#94A3B8; font-weight:600; margin-bottom:0.3rem;">Open Badge 3.0 Credential</div>
+                                <div id="badgeCompetencies" style="display:flex; flex-wrap:wrap; gap:0.3rem; margin-bottom:0.75rem;"></div>
+                                <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+                                    <a id="badgeLinkedIn" href="#" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:0.3rem; padding:0.4rem 0.8rem; background:#0A66C2; color:white; border-radius:6px; font-size:0.8rem; font-weight:600; text-decoration:none;">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                                        Add to LinkedIn
+                                    </a>
+                                    <button id="badgeJsonBtn" style="display:inline-flex; align-items:center; gap:0.3rem; padding:0.4rem 0.8rem; background:var(--hover-bg,#f1f5f9); color:var(--text-primary,#334155); border:1px solid var(--border-color,#e2e8f0); border-radius:6px; font-size:0.8rem; font-weight:500; cursor:pointer;">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                        View JSON-LD
+                                    </button>
+                                    <button id="badgeDownloadBtn" style="display:inline-flex; align-items:center; gap:0.3rem; padding:0.4rem 0.8rem; background:var(--hover-bg,#f1f5f9); color:var(--text-primary,#334155); border:1px solid var(--border-color,#e2e8f0); border-radius:6px; font-size:0.8rem; font-weight:500; cursor:pointer;">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                        Download Badge
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- JSON-LD Script Tag (machine-readable) -->
+                    <script type="application/ld+json" id="badgeJsonLd"></script>
                 </div>
             </div>
         </div>
@@ -658,6 +684,40 @@ async function verifyCertificate(e) {
                 year: 'numeric', month: 'long', day: 'numeric'
             });
             showState('foundState');
+
+            // Populate Open Badge data
+            var badges = window.IMPACTMOJO && window.IMPACTMOJO.badges;
+            if (badges) {
+                var bc = badges.BADGE_CLASSES[cert.course_id];
+                if (bc) {
+                    document.getElementById('badgeSection').style.display = 'block';
+                    document.getElementById('badgeSvgContainer').innerHTML = badges.generateBadgeSVG(cert.course_id, recipientName, cert.certificate_number, 160);
+                    document.getElementById('badgeCompetencies').innerHTML = bc.competencies.map(function(c) {
+                        return '<span style="display:inline-block;padding:0.2rem 0.5rem;background:' + bc.color + '15;color:' + bc.color + ';border-radius:12px;font-size:0.7rem;font-weight:600;">' + c + '</span>';
+                    }).join('');
+                    var linkedInUrl = badges.getLinkedInShareUrl(cert);
+                    if (linkedInUrl) document.getElementById('badgeLinkedIn').href = linkedInUrl;
+                    var credential = badges.buildCredential(cert, recipientName);
+                    if (credential) {
+                        document.getElementById('badgeJsonLd').textContent = JSON.stringify(credential);
+                        document.getElementById('badgeJsonBtn').addEventListener('click', function() {
+                            var jsonStr = JSON.stringify(credential, null, 2);
+                            var w = window.open('', '_blank');
+                            w.document.write('<pre style="font-family:monospace;padding:2rem;">' + jsonStr.replace(/</g,'&lt;') + '</pre>');
+                        });
+                    }
+                    document.getElementById('badgeDownloadBtn').addEventListener('click', function() {
+                        var svg = badges.generateBadgeSVG(cert.course_id, recipientName, cert.certificate_number, 400);
+                        var blob = new Blob([svg], {type: 'image/svg+xml'});
+                        var url = URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url; a.download = 'impactmojo-badge-' + cert.course_id + '.svg'; a.click();
+                        URL.revokeObjectURL(url);
+                    });
+                } else {
+                    document.getElementById('badgeSection').style.display = 'none';
+                }
+            }
         }
     } catch (err) {
         console.error('Verification error:', err);
@@ -680,6 +740,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
+<script src="js/open-badges.js"></script>
 <!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
 <script defer src="js/translate.js"></script>
 <script src="/js/search.js" defer></script>
