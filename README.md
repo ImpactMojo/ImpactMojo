@@ -97,7 +97,7 @@ Example skills: pre-mortems, reading RCTs, cost-effectiveness analysis, stakehol
 | **Explorer** | Free | All courses, games, labs, DevDiscourses, Telegram channel |
 | **Practitioner** | ₹399/mo · ₹3,990/yr | Advanced ToC Lab, PDF/PNG export, certificates, full community |
 | **Professional** | ₹999/mo · ₹9,990/yr | + Qual Lab, VaniScribe AI, DevData Practice, DevEconomics Toolkit, Code Converter, priority coaching |
-| **Organization** | ₹1,499/user/mo | + Team dashboards, bulk licensing, dedicated support, custom training |
+| **Organization** | ₹1,499/user/mo | + Team dashboards, bulk licensing, dedicated support, team training packages, cohort management |
 
 #### Premium Tools
 
@@ -241,12 +241,14 @@ Comprehensive ToC learning and building toolkit:
 - **Certificate Generation** — Auto-issued on course completion with public verification and Open Badges 3.0 metadata
 - **Badge Wallet** — View, download, and share W3C verifiable credential badges
 - **Portfolio Builder** — Premium feature: curate certificates, projects & case studies with PDF export
+- **Full-Text Search** — Ctrl+K / Cmd+K fuzzy search across all courses, labs, games, and resources via Fuse.js
 
 ### Account System
 
 - **Secure Authentication** — Powered by Supabase (Email, Google OAuth, Magic Links)
 - **User Profiles** — Track progress and preferences
 - **Tiered Access** — Explorer (free), Practitioner, Professional, Organization
+- **Team Training Packages** — Organization tier: pre-built training paths (MEL Officer, Program Manager, Field Staff, Governance), facilitator guides, assessment rubrics, cohort management
 - **Community Access** — WhatsApp PLC, Discord, Telegram
 
 ---
@@ -336,7 +338,9 @@ ImpactMojo/
 │   ├── learning-tracks.js  # Track data, modal handler, progress tracking
 │   ├── pwa.js              # Service worker registration & update checks
 │   ├── assessments.js      # Interactive assessment component (MCQ/T-F/multi-select)
-│   └── assessment-data.js  # Question banks for MEL, DataViz, DevAI courses
+│   ├── assessment-data.js  # Question banks for MEL, DataViz, DevAI courses
+│   ├── search.js           # Full-text fuzzy search (Fuse.js) with Ctrl+K shortcut
+│   └── course-progress.js  # Course progress tracking with Supabase sync
 │
 ├── login.html              # User login
 ├── signup.html             # User registration
@@ -346,6 +350,7 @@ ImpactMojo/
 ├── verify-certificate.html # Public certificate verification + Open Badge display
 ├── toc-workbench.html      # Theory of Change educational workbench
 ├── toc-builder.html        # Interactive drag-and-drop ToC builder with BCT
+├── org-dashboard.html      # Organization dashboard with team training, cohorts, analytics
 │
 ├── i18n/
 │   ├── hi.json             # Hindi curated translations (200+ strings)
@@ -563,7 +568,7 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 9.4.0
+**Version:** 9.5.0
 **Last Updated:** March 2026
 **License:** CC-BY-4.0
 **Hosting:** Netlify
