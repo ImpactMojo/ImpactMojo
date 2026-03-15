@@ -192,7 +192,40 @@ Economics simulations and behavioral experiments:
 
 ### Multilingual Support
 
-All pages available in 5 languages via built-in translation: English, Hindi (हिन्दी), Tamil (தமிழ்), Bengali (বাংলা), Marathi (मराठी). Powered by Google Translate with a custom language selector UI.
+Two-tier translation system for highest quality:
+
+1. **Curated translations** (`i18n/*.json`) — Hand-crafted translations for 200+ key UI strings in Hindi (हिन्दी), Tamil (தமிழ்), Bengali (বাংলা), Marathi (मराठी)
+2. **Google Translate fallback** — Covers remaining content automatically
+
+Elements marked with `data-i18n` attributes receive curated translations first; Google Translate handles the rest. Language preference persists via localStorage.
+
+### Open Badges & Micro-credentials
+
+W3C Open Badges 3.0 verifiable credentials system:
+
+- **9 course badges** with competency mapping, track assignment, and SVG generation
+- **Track-level credentials** earned by completing all courses in a track
+- **Badge wallet** on account page with download, JSON-LD viewer, and LinkedIn share
+- **Verification page** at `/verify-certificate.html` with machine-readable `<script type="application/ld+json">`
+- **Auto-issuance** via Supabase trigger on course completion (100% progress)
+
+### Learning Pathways
+
+Structured credential tracks with milestone progression:
+
+- **5 pathways**: MEL Practitioner, Data Analyst, Development Economist, Governance Scholar, Health & Communications
+- Ordered steps combining courses, labs, and games
+- Progress tracking connected to existing localStorage course progress
+- Milestone badges at key checkpoints
+- Pathway recommendation engine (prioritizes in-progress pathways)
+
+### Theory of Change Workbench
+
+Comprehensive ToC learning and building toolkit:
+
+- **Educational workbench** (`toc-workbench.html`) — Foundations, worked examples with BCT annotations, indicator development, 8 problem sets, sector guidance (8 sectors), cross-cutting frameworks, measurement design
+- **Interactive builder** (`toc-builder.html`) — Drag-and-drop canvas with 229 BCT techniques, MEL frameworks, cross-cutting lenses, 4 sector templates, connection drawing, PNG export
+- **Coaching/Dojo CTAs** integrated throughout as marketing touchpoints
 
 ---
 
@@ -205,7 +238,8 @@ All pages available in 5 languages via built-in translation: English, Hindi (ह
 - **Course Comparison** — Compare courses side-by-side
 - **Interactive Assessments** — MCQ, multi-select, and T/F quizzes for MEL, DataViz, and DevAI courses with scoring, feedback, and localStorage persistence
 - **Offline PWA Support** — Service worker caches all 9 flagship courses for offline access with automatic background updates
-- **Certificate Generation** — Auto-issued on course completion with public verification
+- **Certificate Generation** — Auto-issued on course completion with public verification and Open Badges 3.0 metadata
+- **Badge Wallet** — View, download, and share W3C verifiable credential badges
 - **Portfolio Builder** — Premium feature: curate certificates, projects & case studies with PDF export
 
 ### Account System
@@ -226,7 +260,9 @@ All pages available in 5 languages via built-in translation: English, Hindi (ह
 | **SQL (PostgreSQL)** | Database schema, triggers, RLS policies |
 | **Supabase** | Authentication, database, Edge Functions |
 | **Netlify** | Hosting, deployment, Edge Functions (auth-gate) |
-| **Google Translate** | Multilingual support (Hindi, Tamil, Bengali, Marathi) |
+| **Google Translate** | Multilingual fallback (Hindi, Tamil, Bengali, Marathi) |
+| **Curated i18n** | Hand-crafted translations (`i18n/*.json`) for key UI strings |
+| **Open Badges 3.0** | W3C Verifiable Credentials for course completion badges |
 | **Google Analytics** | Usage analytics |
 | **Formspree** | Contact form handling |
 | **UserWay** | Accessibility widget |
@@ -294,7 +330,10 @@ ImpactMojo/
 │   ├── resource-launch.js  # JWT-based premium resource launcher
 │   ├── token-gate.js       # Client-side token verification
 │   ├── premium.js          # Premium tier UI logic
-│   ├── translate.js        # Multilingual translation (Google Translate, lazy-loaded)
+│   ├── translate.js        # Two-tier i18n: curated translations + Google Translate fallback
+│   ├── open-badges.js      # W3C Open Badges 3.0 credential system
+│   ├── learning-pathways.js # Structured credential tracks with milestones
+│   ├── learning-tracks.js  # Track data, modal handler, progress tracking
 │   ├── pwa.js              # Service worker registration & update checks
 │   ├── assessments.js      # Interactive assessment component (MCQ/T-F/multi-select)
 │   └── assessment-data.js  # Question banks for MEL, DataViz, DevAI courses
@@ -304,7 +343,15 @@ ImpactMojo/
 ├── account.html            # User dashboard
 ├── premium.html            # Premium features & registration
 ├── portfolio.html          # Premium portfolio builder
-├── verify-certificate.html # Public certificate verification
+├── verify-certificate.html # Public certificate verification + Open Badge display
+├── toc-workbench.html      # Theory of Change educational workbench
+├── toc-builder.html        # Interactive drag-and-drop ToC builder with BCT
+│
+├── i18n/
+│   ├── hi.json             # Hindi curated translations (200+ strings)
+│   ├── ta.json             # Tamil curated translations
+│   ├── bn.json             # Bengali curated translations
+│   └── mr.json             # Marathi curated translations
 │
 ├── workshops.html          # Workshop booking & info
 ├── coaching.html           # 1-on-1 coaching services
