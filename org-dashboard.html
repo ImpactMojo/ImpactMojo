@@ -1128,22 +1128,26 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
 
             // Always fetch a fresh profile to get the latest subscription_tier from Supabase
             var profile = await ImpactMojoAuth.fetchProfile();
+            console.log('[OrgDash] Profile:', profile ? { id: profile.id, tier: profile.subscription_tier } : null);
             if (!profile || profile.subscription_tier !== 'organization') {
+                console.warn('[OrgDash] Access denied: tier is', profile ? profile.subscription_tier : 'no profile');
                 document.getElementById('authGate').style.display = 'block';
                 clearTimeout(safetyTimer);
                 return;
             }
 
             // Load org data
-            var { data: org } = await supabaseClient
+            var { data: org, error: orgError } = await supabaseClient
                 .from('organizations')
                 .select('*')
                 .eq('admin_id', profile.id)
                 .single();
 
+            console.log('[OrgDash] Org query result:', { org: org, error: orgError });
+
             if (!org) {
                 // Create org for first-time admin
-                var { data: newOrg } = await supabaseClient
+                var { data: newOrg, error: insertError } = await supabaseClient
                     .from('organizations')
                     .insert({
                         name: profile.organization || 'My Organization',
@@ -1152,6 +1156,7 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
                     })
                     .select()
                     .single();
+                console.log('[OrgDash] Org insert result:', { newOrg: newOrg, error: insertError });
                 org = newOrg;
             }
 
