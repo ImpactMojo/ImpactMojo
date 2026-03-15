@@ -3,9 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Analytics Dashboard | ImpactMojo Admin</title>
-<meta name="robots" content="noindex, nofollow">
+<title>Transparency & Impact Data | ImpactMojo</title>
+<meta name="description" content="ImpactMojo's open transparency dashboard. Explore our reach, content metrics, feature adoption, and platform growth data.">
 <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -260,7 +269,7 @@ body {
         <a href="/" class="admin-logo">
             <img src="/assets/images/ImpactMojo Logo.png" alt="ImpactMojo">
             <span class="admin-logo-text">ImpactMojo</span>
-            <span class="admin-badge">Admin</span>
+            <span class="admin-badge" style="background: var(--secondary-accent);">Transparency</span>
         </a>
         <div class="admin-actions">
             <a href="/">Back to Site</a>
@@ -273,13 +282,20 @@ body {
 
 <main class="admin-main">
 
-    <!-- Data Source -->
-    <div class="data-source-bar">
+    <!-- Transparency Intro -->
+    <div style="text-align:center; padding:32px 24px 8px; max-width:720px; margin:0 auto;">
+        <h1 style="font-family:'Poppins',sans-serif; font-size:1.8rem; font-weight:700; margin-bottom:8px; background:var(--gradient-primary); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Transparency & Impact Data</h1>
+        <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.7;">
+            ImpactMojo is built in the open. This page shares our platform metrics, content reach, and feature adoption data. All legacy data is reconstructed from our website; live analytics are pulled from Google Analytics 4 when connected.
+        </p>
+    </div>
+
+    <!-- Admin Controls (hidden by default, toggle with ?admin) -->
+    <div class="data-source-bar" id="adminControls" style="display:none;">
         <label>Data Source:</label>
-        <input type="text" id="webAppUrl" placeholder="Paste your Apps Script Web App URL here (or paste JSON below)">
+        <input type="text" id="webAppUrl" placeholder="Apps Script Web App URL">
         <button class="btn btn-primary" onclick="fetchFromWebApp()">Fetch Live Data</button>
-        <button class="btn btn-secondary" onclick="loadLegacyOnly()">Load Legacy Only</button>
-        <span id="dataStatus"><span class="status-dot offline"></span> No data loaded</span>
+        <span id="dataStatus"><span class="status-dot live"></span> Legacy data loaded</span>
     </div>
 
     <!-- KPI Cards -->
@@ -352,16 +368,27 @@ body {
         </table>
     </div>
 
-    <!-- JSON Paste Area -->
-    <div class="section-header">
-        <h2 class="section-title"><span class="icon">&#x1f4cb;</span> Manual Data Import</h2>
+    <!-- Admin: JSON Paste Area (hidden unless ?admin) -->
+    <div id="jsonPasteSection" style="display:none;">
+        <div class="section-header">
+            <h2 class="section-title"><span class="icon">&#x1f4cb;</span> Manual Data Import</h2>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:12px;">
+            Paste the JSON export from your Google Sheet (Apps Script > Export Summary as JSON) to load live GA4 data.
+        </p>
+        <textarea class="json-paste" id="jsonPaste" placeholder='Paste JSON from Apps Script "Export Summary as JSON" here...'></textarea>
+        <div style="margin-top:8px;">
+            <button class="btn btn-primary" onclick="loadFromPaste()">Load Pasted Data</button>
+        </div>
     </div>
-    <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:12px;">
-        Paste the JSON export from your Google Sheet (Apps Script > Export Summary as JSON) to load live GA4 data.
-    </p>
-    <textarea class="json-paste" id="jsonPaste" placeholder='Paste JSON from Apps Script "Export Summary as JSON" here...'></textarea>
-    <div style="margin-top:8px;">
-        <button class="btn btn-primary" onclick="loadFromPaste()">Load Pasted Data</button>
+
+    <!-- Footer -->
+    <div style="text-align:center; padding:48px 24px 24px; border-top:1px solid var(--border-color); margin-top:48px;">
+        <p style="font-size:0.82rem; color:var(--text-muted);">&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">
+            Released under MIT License. <a href="/" style="color:var(--accent-color); text-decoration:none;">Back to ImpactMojo</a>
+            &middot; <a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener" style="color:var(--accent-color); text-decoration:none;">GitHub</a>
+        </p>
     </div>
 </main>
 
@@ -679,6 +706,12 @@ document.getElementById('themeToggle').addEventListener('click', function() {
     var saved = localStorage.getItem('impactmojo-theme');
     if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
 })();
+
+// Show admin controls if ?admin in URL
+if (window.location.search.indexOf('admin') > -1) {
+    document.getElementById('adminControls').style.display = '';
+    document.getElementById('jsonPasteSection').style.display = '';
+}
 
 // Initial render with legacy data
 render();
