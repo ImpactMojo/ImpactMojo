@@ -22,19 +22,27 @@
     var pendingLang = null;
 
     // ===== COOKIE CLEANUP =====
-    // Clear stale googtrans cookies when language should be English.
-    // Without this, Google Translate auto-translates on page load based on
-    // lingering cookies even when the user hasn't chosen a language.
     function clearGoogTransCookies() {
         document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
         document.cookie = 'googtrans=; path=/; domain=' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
         document.cookie = 'googtrans=; path=/; domain=.' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
     }
 
-    // If English is the current language, pre-emptively clear any stale cookies
-    // BEFORE Google Translate script loads, so it won't auto-translate.
-    if (currentLang === 'en') {
-        clearGoogTransCookies();
+    // ALWAYS clear googtrans cookies on every page load FIRST.
+    // We will re-set them only if the user explicitly chose a non-English
+    // language via our UI (stored in localStorage). This prevents Google
+    // Translate from auto-translating based on stale cookies or browser
+    // language detection.
+    clearGoogTransCookies();
+
+    // Prevent Chrome's built-in page translation from interfering.
+    // This stops the "Translate this page?" prompt and auto-translation
+    // based on browser language settings.
+    if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
+        var noTransMeta = document.createElement('meta');
+        noTransMeta.name = 'google';
+        noTransMeta.content = 'notranslate';
+        document.head.appendChild(noTransMeta);
     }
 
     // ===== UI: Language Selector =====
@@ -230,6 +238,11 @@
                 pendingLang = null;
             } else if (currentLang !== 'en') {
                 doTranslate(LANGUAGES[currentLang].gtCode);
+            } else {
+                // Language is English — force-revert any auto-translation
+                // that Google Translate may have applied despite our cookie
+                // cleanup (e.g., based on browser language detection).
+                doTranslate('en');
             }
         } else if (attempts < 30) {
             // Poll up to ~9 seconds
