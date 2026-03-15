@@ -1,14 +1,35 @@
 // Service Worker for ImpactMojo PWA
-// v4 - Offline course support, background sync, offline indicator
-const CACHE_NAME = 'impactmojo-v4';
+// v5 - Offline PWA support for flagship courses, shell caching, offline fallback
+const CACHE_NAME = 'impactmojo-v5';
 const COURSE_CACHE_PREFIX = 'impactmojo-course-';
-const STATIC_ASSETS = [
+
+// App shell: core assets cached on install
+const SHELL_ASSETS = [
+  '/',
+  '/index.html',
+  '/offline.html',
   '/manifest.json',
+  '/js/pwa.js',
+  '/js/offline.js',
+  '/js/auth.js',
+  '/js/router.js',
+  '/js/search.js',
+  '/js/cookie-ui.js',
+  '/js/learning-tracks.js',
+  '/js/faq-bank.js',
+  '/js/bookmarks-compare.js',
+  '/js/premium.js',
+  '/js/translate.js',
+  '/js/resource-launch.js',
+  '/js/mobile-ui.js',
+  '/js/course-progress.js',
   '/assets/images/favicon.ico',
+  '/assets/images/favicon.png',
   '/assets/images/favicon-16x16.png',
   '/assets/images/favicon-32x32.png',
   '/assets/images/apple-touch-icon.png',
-  '/assets/images/varna-photo.jpg'
+  '/assets/images/android-chrome-192x192.png',
+  '/assets/images/android-chrome-512x512.png'
 ];
 
 // Flagship course definitions
@@ -17,7 +38,10 @@ const FLAGSHIP_COURSES = [
   'mel', 'poa', 'media', 'law', 'SEL'
 ];
 
-// Get all URLs that need caching for a given course
+// Course page URLs to pre-cache
+const COURSE_PAGES = FLAGSHIP_COURSES.map(id => `/courses/${id}/index.html`);
+
+// Get all URLs that need caching for a given course (on-demand download)
 function getCourseURLs(courseId) {
   const base = `/courses/${courseId}/`;
   return [
@@ -32,17 +56,27 @@ function getCourseCacheName(courseId) {
   return `${COURSE_CACHE_PREFIX}${courseId}`;
 }
 
-// Install - cache only static assets (fonts, icons)
+// Install - cache app shell + flagship course pages
 self.addEventListener('install', event => {
-  self.skipWaiting(); // Activate immediately on update
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(STATIC_ASSETS))
-      .catch(err => console.log('SW: cache error', err))
+    caches.open(CACHE_NAME).then(cache => {
+      // Cache shell assets first, then course pages (non-blocking failures)
+      return cache.addAll(SHELL_ASSETS).then(() => {
+        // Cache course pages individually so one failure doesn't break install
+        return Promise.allSettled(
+          COURSE_PAGES.map(url =>
+            fetch(url).then(resp => {
+              if (resp.ok) return cache.put(url, resp);
+            }).catch(() => {})
+          )
+        );
+      });
+    }).catch(err => console.log('SW: install cache error', err))
   );
 });
 
-// Activate - clean up old caches (preserve course caches)
+// Activate - clean up old caches (preserve individual course download caches)
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(names =>
@@ -51,13 +85,14 @@ self.addEventListener('activate', event => {
           .filter(n => n !== CACHE_NAME && !n.startsWith(COURSE_CACHE_PREFIX))
           .map(n => caches.delete(n))
       )
-    ).then(() => self.clients.claim()) // Take control of all pages
+    ).then(() => self.clients.claim())
   );
 });
 
 // Fetch strategy:
-// - HTML pages: network-first (fall back to cache only when offline)
-// - JS/CSS/images: stale-while-revalidate (fast + stays fresh)
+// - Cached shell/course assets: cache-first (fast offline)
+// - Other HTML pages: network-first (fresh content, fallback to cache/offline.html)
+// - Other JS/CSS/images: stale-while-revalidate
 // - API/Supabase calls: network-only (never cache)
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
@@ -67,11 +102,44 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  const pathname = url.pathname;
   const isHTML = event.request.headers.get('accept')?.includes('text/html') ||
-                 url.pathname.endsWith('.html') || url.pathname === '/';
+                 pathname.endsWith('.html') || pathname === '/';
 
-  if (isHTML) {
-    // Network-first for HTML — always get fresh content, fall back to course cache
+  // Check if this URL is part of the pre-cached shell or course pages
+  const isShellAsset = SHELL_ASSETS.includes(pathname);
+  const isCoursePage = COURSE_PAGES.includes(pathname) ||
+                       FLAGSHIP_COURSES.some(id => pathname === `/courses/${id}/`);
+
+  if (isShellAsset || isCoursePage) {
+    // Cache-first for shell assets and pre-cached course pages
+    event.respondWith(
+      caches.match(event.request).then(cached => {
+        if (cached) {
+          // Return cache immediately, update in background
+          const fetchPromise = fetch(event.request).then(response => {
+            if (response.ok) {
+              caches.open(CACHE_NAME).then(cache => cache.put(event.request, response));
+            }
+          }).catch(() => {});
+          fetchPromise; // fire-and-forget
+          return cached;
+        }
+        // Not in cache yet - fetch and cache
+        return fetch(event.request).then(response => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          }
+          return response;
+        }).catch(() => {
+          if (isHTML) return caches.match('/offline.html');
+          return new Response('', { status: 503 });
+        });
+      })
+    );
+  } else if (isHTML) {
+    // Network-first for other HTML pages
     event.respondWith(
       fetch(event.request)
         .then(response => {
@@ -86,20 +154,19 @@ self.addEventListener('fetch', event => {
           return caches.match(event.request)
             .then(cached => {
               if (cached) return cached;
-              // Check course caches as fallback
+              // Check course download caches as fallback
               return caches.keys().then(names => {
                 const courseCaches = names.filter(n => n.startsWith(COURSE_CACHE_PREFIX));
                 return courseCaches.reduce((promise, cacheName) =>
                   promise.then(result => result || caches.open(cacheName).then(c => c.match(event.request))),
                   Promise.resolve(null)
                 );
-              }).then(result => result || caches.match('/index.html'));
+              }).then(result => result || caches.match('/offline.html'));
             });
         })
     );
   } else {
-    // Stale-while-revalidate for assets (JS, CSS, images, fonts)
-    // Also check course caches for offline asset serving
+    // Stale-while-revalidate for other assets (JS, CSS, images, fonts)
     event.respondWith(
       caches.match(event.request).then(cached => {
         const fetchPromise = fetch(event.request).then(response => {
@@ -147,7 +214,7 @@ self.addEventListener('message', event => {
   }
 });
 
-// Cache all assets for a course
+// Cache all assets for a course (on-demand download)
 async function cacheCourse(courseId) {
   const cacheName = getCourseCacheName(courseId);
   const urls = getCourseURLs(courseId);
@@ -192,7 +259,6 @@ self.addEventListener('sync', event => {
 
 async function syncProgress() {
   try {
-    // Open IndexedDB to check for queued progress data
     const db = await openDB();
     const tx = db.transaction('pendingSync', 'readwrite');
     const store = tx.objectStore('pendingSync');
@@ -215,10 +281,9 @@ async function syncProgress() {
         }
         resolve();
       };
-      request.onerror = () => resolve(); // Don't block on DB errors
+      request.onerror = () => resolve();
     });
   } catch (err) {
-    // IndexedDB not available or no pending data — that's fine
     console.log('SW: No pending sync data');
   }
 }
@@ -237,13 +302,9 @@ function openDB() {
   });
 }
 
-// ─── Offline indicator: notify clients of connectivity changes ───
+// ─── Notify all clients ───
 function notifyClients(message) {
   self.clients.matchAll({ type: 'window', includeUncontrolled: false }).then(clients => {
     clients.forEach(client => client.postMessage(message));
   });
 }
-
-// Periodic offline check — notify clients when a navigation fetch fails
-// (Integrated into the main fetch handler's .catch paths above rather than
-//  duplicating requests. Client-side navigator.onLine events handle the rest.)
