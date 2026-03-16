@@ -17,6 +17,8 @@
 
 * [Memberships & Services](premium.md)
 * [Content Guide](content-guide.md)
+* [Content Catalog](content-catalog.md)
+* [Why ImpactMojo](why-impactmojo.md)
 * [Glossary](glossary.md)
 * [Roadmap](roadmap.md)
 * [Changelog](changelog.md)
