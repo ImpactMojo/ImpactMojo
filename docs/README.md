@@ -1,41 +1,42 @@
 # ImpactMojo Documentation
 
-Welcome to the ImpactMojo documentation — the central knowledge base for contributors, developers, and educators.
+Welcome to the ImpactMojo knowledge base — for educators, practitioners, contributors, and developers.
 
-**Live site:** [impactmojo.in](https://www.impactmojo.in) | **Version:** 10.0.0
+**Live site:** [impactmojo.in](https://www.impactmojo.in) | **Version:** 10.1.0
 
 ## What is ImpactMojo?
 
-ImpactMojo is a free learning platform providing rigorous, practical educational content on MEAL, Theory of Change, research methods, gender studies, and development economics for NGOs, impact practitioners, and students across South Asia.
+ImpactMojo is a free learning platform for people working in international development, social impact, and public policy. It provides rigorous, practical educational content — courses, games, labs, handouts, case studies, and data tools — designed specifically for NGOs, impact practitioners, researchers, and students across South Asia.
 
-## Quick Start
+Everything on the platform is free to use. No login required, no paywall, no trial period. Premium tools and professional services exist for those who need advanced capabilities.
 
-```bash
-git clone https://github.com/Varnasr/ImpactMojo.git
-cd ImpactMojo
-python -m http.server 8000
-# Open http://localhost:8000
-```
+## Start Here
 
-## Documentation Sections
+**If you're an educator or practitioner:**
+- [Platform Overview](platform-overview.md) — Everything ImpactMojo offers, explained
+- [Getting Started](getting-started.md) — How to use the platform, step by step
+- [Workshops & Facilitation](workshops-and-facilitation.md) — Run workshops using ImpactMojo content
+- [Handouts Guide](handouts-guide.md) — How to find, use, and print 400+ handouts
+- [Dataverse Guide](dataverse-guide.md) — 215+ data tools and datasets, explained
+- [FAQ](faq.md) — Common questions answered
 
-- [Architecture](architecture.md) — System design, JWT auth flow, tech stack
-- [Content Guide](content-guide.md) — How courses, labs, games, and resources are structured
-- [Premium & Business Models](premium.md) — Tiers, workshops, coaching, dojos
-- [Deployment Guide](deployment.md) — Netlify setup, Supabase config, environment variables
-- [Contributing](contributing.md) — How to contribute code, content, and translations
-- [Roadmap](roadmap.md) — Planned features and improvements
-- [Changelog](changelog.md) — Release history and recent updates
-- [Typography](typography.md) — Font system and design tokens
-- [API Reference](api-reference.md) — Supabase schema, Edge Functions, JWT flow
+**If you want to contribute:**
+- [How to Contribute](contributing.md) — Code, content, translations, or ideas
 
-## Links
+**If you're a developer:**
+- [Architecture](architecture.md) — System design and technical decisions
+- [API Reference](api-reference.md) — Database schema and auth flows
+- [Deployment Guide](deployment.md) — Netlify and Supabase setup
+
+## Quick Links
 
 - [GitHub Repository](https://github.com/Varnasr/ImpactMojo)
 - [Issue Tracker](https://github.com/Varnasr/ImpactMojo/issues)
 - [Discussions](https://github.com/Varnasr/ImpactMojo/discussions)
-- [Releases](https://github.com/Varnasr/ImpactMojo/releases)
+- [Roadmap](roadmap.md) — What's coming next
+- [Changelog](changelog.md) — What's changed recently
+- [Glossary](glossary.md) — Technical terms explained in plain language
 
 ## License
 
-Dual license: **MIT** for source code, **CC BY-NC-ND 4.0** for educational content.
+Dual license: **MIT** for source code, **CC BY-NC-ND 4.0** for educational content. This means you can freely use, share, and reference ImpactMojo content — just credit the source, don't sell it, and don't modify the original materials.
