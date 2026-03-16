@@ -131,7 +131,7 @@
     padding-right: 2rem;
 }
 .assessment-header h2 {
-    font-family: var(--font-heading, 'Poppins', sans-serif);
+    font-family: var(--font-heading, 'Inter', sans-serif);
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-primary, #F1F5F9);
@@ -318,7 +318,7 @@
     flex-wrap: wrap;
 }
 .assessment-btn {
-    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-family: var(--font-sans, 'Amaranth', sans-serif);
     font-size: 0.9rem;
     font-weight: 600;
     padding: 0.7rem 1.5rem;
@@ -381,11 +381,11 @@
     justify-content: center;
     font-size: 2rem;
     font-weight: 800;
-    font-family: var(--font-heading, 'Poppins', sans-serif);
+    font-family: var(--font-heading, 'Inter', sans-serif);
     color: var(--text-primary, #F1F5F9);
 }
 .assessment-summary h3 {
-    font-family: var(--font-heading, 'Poppins', sans-serif);
+    font-family: var(--font-heading, 'Inter', sans-serif);
     font-size: 1.35rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
@@ -409,7 +409,7 @@
 .assessment-stat-value {
     font-size: 1.5rem;
     font-weight: 700;
-    font-family: var(--font-heading, 'Poppins', sans-serif);
+    font-family: var(--font-heading, 'Inter', sans-serif);
 }
 .assessment-stat-value.stat-correct { color: #10B981; }
 .assessment-stat-value.stat-incorrect { color: #EF4444; }
@@ -427,7 +427,7 @@
     text-align: center;
 }
 .assessment-cta h3 {
-    font-family: var(--font-heading, 'Poppins', sans-serif);
+    font-family: var(--font-heading, 'Inter', sans-serif);
     font-size: 1.35rem;
     font-weight: 700;
     color: var(--text-primary, #F1F5F9);
@@ -444,7 +444,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-family: var(--font-sans, 'Amaranth', sans-serif);
     font-size: 1rem;
     font-weight: 600;
     padding: 0.85rem 2rem;
