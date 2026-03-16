@@ -90,7 +90,7 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 | **Statistical Analysis Assistant** | Statistical toolkit for development research | Professional |
 | **RQ Builder Pro** | Research question formulation framework | Practitioner+ |
 | **Code Converter Pro** | Translate code between R, Stata, SPSS, and Python | Professional |
-| **Field Notes from a Dev Economist** | In-depth practitioner analysis and reflections | Free |
+| **Field Notes from a Dev Economist** ([The Margin Muse](https://marginmuse.space/themarginmuse)) | Practical field observations from development work — not a blog, but grounded notes from real programme experiences | Free |
 
 ---
 

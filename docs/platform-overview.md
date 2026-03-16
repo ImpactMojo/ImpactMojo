@@ -27,7 +27,18 @@ Each flagship course includes:
 
 ### Foundational Courses (39 courses)
 
-Shorter, focused courses that cover a specific skill or concept. These are ideal when you need to learn one thing well, rather than survey an entire field.
+Comprehensive study decks that cover a specific skill or concept in depth. These are self-paced reading materials — thorough in their coverage but simpler in format than flagship courses.
+
+**What they include:**
+- Comprehensive topic coverage — each one covers its subject thoroughly
+- Self-study format — read at your own pace, no interactive components
+
+**What they don't include (yet):**
+- Interactive features, quizzes, or assessments
+- Projects or hands-on exercises
+- Interactive lexicons or AI study companions
+
+**Where we're headed:** The long-term plan is to upgrade foundational courses to the flagship standard with interactive elements, assessments, and projects. For now, they're excellent self-study and reference material.
 
 **Example foundational courses:**
 - *Survey Design Essentials* — designing questionnaires that actually produce useful data
@@ -35,7 +46,7 @@ Shorter, focused courses that cover a specific skill or concept. These are ideal
 - *Understanding WEE (Women's Economic Empowerment)* — frameworks, measurement, and programme design
 - *Data Visualization for Development* — turning your data into stories that decision-makers understand
 
-**How to use them:** Take one as a quick skill-builder before starting a new project. Assign them to new team members during onboarding. Pair them with a workshop for deeper learning.
+**How to use them:** Take one as a quick skill-builder before starting a new project. Assign them to new team members as self-study reading. Use them as pre-reading before a workshop. Pair them with a flagship course to go broader on a topic.
 
 ### Learning Tracks
 

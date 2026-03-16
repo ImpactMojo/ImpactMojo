@@ -21,18 +21,39 @@
 
 ## Tools & Resources
 
-* [Mojini (AI Assistant)](mojini-guide.md)
+* [Mojini (Platform Assistant)](mojini-guide.md)
 * [ImpactLex (Glossary)](impactlex-guide.md)
 * [FieldCases (Case Library)](fieldcases-guide.md)
 * [Development Discourses (Research Library)](devdiscourses-guide.md)
-* [Premium Tools (VaniScribe, DevData, DevEcon Toolkit)](premium-tools-guide.md)
+* [Premium Tools Overview](premium-tools-guide.md)
+* [VaniScribe Guide](vaniscribe-guide.md)
+* [DevData Practice Guide](devdata-practice-guide.md)
+* [DevEconomics Toolkit Guide](deveconomics-toolkit-guide.md)
+* [Visualization Cookbook Guide](visualization-cookbook-guide.md)
+* [Qual Insights Guide](qual-insights-guide.md)
+* [Code Converter Guide](code-converter-guide.md)
+
+## About
+
+* [Who We Are (Team & Founders)](team.md)
+* [Why ImpactMojo](why-impactmojo.md)
+* [Transparency & Commitments](transparency-and-commitments.md)
+* [The Transparency Page (Detailed Guide)](transparency-page-guide.md)
+
+## Policies (Plain Language)
+
+* [AI Policy](ai-policy-guide.md)
+* [Terms of Service](terms-guide.md)
+* [Privacy Policy](privacy-guide.md)
+* [Refund Policy](refund-guide.md)
+* [Data Protection](data-protection-guide.md)
+* [Disclaimer](disclaimer-guide.md)
 
 ## Reference
 
 * [Memberships & Services](premium.md)
 * [Content Guide](content-guide.md)
 * [Content Catalog](content-catalog.md)
-* [Why ImpactMojo](why-impactmojo.md)
 * [Glossary](glossary.md)
 * [Roadmap](roadmap.md)
 * [Changelog](changelog.md)

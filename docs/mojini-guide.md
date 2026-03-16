@@ -2,9 +2,11 @@
 
 ## What Is Mojini?
 
-Mojini is ImpactMojo's **AI-powered chatbot assistant** — available across the platform to answer questions about courses, labs, tools, pricing, and how to use ImpactMojo's resources.
+Mojini is ImpactMojo's **platform assistant** — a structured FAQ chatbot available across the site to answer questions about courses, labs, tools, pricing, and how to use ImpactMojo's resources.
 
-Think of Mojini as a knowledgeable guide who has read every page on the platform and can point you to exactly what you need. Ask about a specific course, a premium tool, how certificates work, or where to find a particular dataset — Mojini responds with accurate, contextual answers.
+Think of Mojini as a knowledgeable help desk that has been programmed with answers to the most common questions about the platform. Ask about a specific course, a premium tool, how certificates work, or where to find a particular dataset — Mojini responds with accurate, pre-written answers matched to your question.
+
+> **Note:** Mojini is not an AI or large language model. It works by matching your question to a structured knowledge base of 30+ topic patterns and returning the most relevant pre-written response. It does not generate new text, reason about novel questions, or learn from conversations.
 
 ---
 
@@ -23,9 +25,14 @@ Think of Mojini as a knowledgeable guide who has read every page on the platform
 
 ## How Mojini Works
 
-Mojini draws on a **structured FAQ knowledge base** covering 30+ topic patterns across the platform. Responses are grounded in actual platform content — Mojini doesn't generate speculative answers.
+Mojini works by **pattern-matching your question** against a structured knowledge base covering 30+ topic areas. When you type a question, Mojini identifies the closest matching topic and returns a pre-written response with links to the relevant page.
 
-The chatbot appears as a small widget on platform pages. Click it to open a conversation, type your question in natural language, and get an immediate response with links to relevant pages.
+This means:
+- **Mojini is fast and reliable** for questions it's been programmed to answer
+- **It won't hallucinate or make things up** — every response is written by the ImpactMojo team
+- **It has limits** — if your question doesn't match a known pattern, Mojini will say so rather than guessing
+
+The chatbot appears as a small widget on platform pages. Click it to open a conversation, type your question, and get an immediate response with links to relevant pages.
 
 ---
 
@@ -37,7 +44,7 @@ Point participants to Mojini when they have platform questions during a workshop
 
 ### For Resource Discovery
 
-Mojini knows about all 48 courses, 12 games, 10 labs, 200+ handouts, and premium tools. When participants need to find something specific, Mojini can direct them faster than browsing the catalog.
+Mojini knows about all 48 courses, 12 games, 10 labs, 400+ handouts, and premium tools. When participants need to find something specific, Mojini can direct them faster than browsing the catalog.
 
 ### As a Navigation Aid
 
