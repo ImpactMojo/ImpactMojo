@@ -47,7 +47,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
 | **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export — dark mode, filters, CSV export |
-| **Dataverse** | 215 curated tools, datasets, APIs, and platforms for social impact and policy research — dark mode, category filters, responsive cards |
+| **Dataverse** | 247 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories — dark mode, category filters, responsive cards |
 | **400+ Handouts** | Downloadable resources across 6 learning tracks |
 | **Learning Loops Blog** | Articles, tutorials, and case studies on development practice |
 | **Between the Logframes** | Development podcast — honest conversations on MEAL and impact work |
@@ -186,7 +186,7 @@ Economics simulations and behavioral experiments:
 - [**DevDiscourses**](https://github.com/Varnasr/development-discourses) — 500+ curated open-access research papers, books, and grey literature
 - [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) — Auto-updating tracker of Indian development policies across 22 sectors
 - **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings
-- **Dataverse** — 215 curated tools, datasets, APIs, and platforms for social impact research
+- **Dataverse** — 247 curated tools, datasets, APIs, MCP servers, and platforms for social impact research
 - **400+ Handouts** — Downloadable HTML resources across 6 learning tracks
 - **Learning Loops Blog** — Articles, tutorials, case studies, platform updates
 - **Between the Logframes Podcast** — Development conversations on MEAL, ToC, and impact work
@@ -364,7 +364,7 @@ ImpactMojo/
 ├── dojos.html              # Practice-based skill sessions
 ├── catalog.html            # Complete learning catalog
 ├── bct-repository.html     # BCT Repository (203 techniques, fuzzy search, bookmarks, comparison, PDF export)
-├── dataverse.html          # Dataverse (215 tools & datasets)
+├── dataverse.html          # Dataverse (247 tools & datasets across 22 categories)
 ├── blog.html               # Learning Loops blog
 ├── podcast.html            # Between the Logframes podcast
 ├── handouts.html           # 400+ downloadable resources
@@ -388,7 +388,7 @@ ImpactMojo/
 │
 ├── data/
 │   ├── bct-repository.json # BCT technique data (203 entries)
-│   └── dataverse.json      # Dataverse catalog data (215 entries)
+│   └── dataverse.json      # Dataverse catalog data (247 entries, 22 categories)
 │
 ├── assets/
 │   ├── images/             # Logos, icons, illustrations
@@ -397,7 +397,14 @@ ImpactMojo/
 ├── tests/
 │   └── axe-accessibility.js # Automated WCAG 2.1 AA accessibility testing (axe-core + Puppeteer)
 │
-├── LICENSE                 # CC-BY-4.0 license
+├── .gitattributes          # Line ending normalization & binary file handling
+├── .gitmessage             # Commit message template with prefix convention
+├── .editorconfig           # Editor formatting standards (UTF-8, LF, 2-space)
+├── .githooks/
+│   ├── pre-commit          # Blocks secrets, debugger, merge markers, large files
+│   └── commit-msg          # Enforces commit prefix convention
+│
+├── LICENSE                 # Dual license (MIT code + CC BY-NC-ND 4.0 content)
 ├── CONTRIBUTING.md         # Contribution guidelines
 ├── CODE_OF_CONDUCT.md      # Community code of conduct
 ├── SECURITY.md             # Security policy
@@ -487,6 +494,27 @@ The `_redirects` file enables clean URLs:
 - `/testimonials` → Scrolls to Wall of Love
 
 The `router.js` script handles client-side navigation after Netlify serves `index.html`.
+
+---
+
+## Development Standards
+
+This repo enforces consistent standards via git hooks and configuration files. These are shared across all ImpactMojo repositories.
+
+### Git Hooks (auto-activated on `npm install`)
+
+| Hook | What it does |
+|------|-------------|
+| **pre-commit** | Blocks `.env`/credentials/`.pem` files, catches `debugger` statements, detects merge conflict markers, warns on `console.log` and files >500KB |
+| **commit-msg** | Enforces commit prefix convention: `Add:`, `Fix:`, `Update:`, `Translate:`, `Docs:`, `Refactor:`, `Test:`, `CI:`, `Chore:` |
+
+### Automated Maintenance
+
+| Tool | Purpose |
+|------|---------|
+| **Dependabot** | Weekly dependency updates (npm + GitHub Actions) |
+| **CODEOWNERS** | Auto-assigns reviewers on PRs |
+| **CI Workflows** | Broken link checks, WCAG 2.1 AA accessibility audits, HTML validation |
 
 ---
 
@@ -594,8 +622,8 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 10.0.0
+**Version:** 10.1.0
 **Last Updated:** March 2026
-**License:** CC-BY-4.0
+**License:** MIT (code) + CC BY-NC-ND 4.0 (content)
 **Hosting:** Netlify
 

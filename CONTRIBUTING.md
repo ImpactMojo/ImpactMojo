@@ -19,32 +19,39 @@ Thank you for your interest in contributing to ImpactMojo! Whether you're fixing
    git clone https://github.com/<your-username>/ImpactMojo.git
    cd ImpactMojo
    ```
-3. **Start a local server** (required for auth and routing):
+3. **Install dependencies** (this also activates git hooks):
    ```bash
-   python -m http.server 8000
-   # or
-   npx http-server
+   npm install
    ```
-4. **Create a feature branch**:
+4. **Start a local server** (required for auth and routing):
+   ```bash
+   npm run serve
+   # or: python -m http.server 8000
+   ```
+5. **Create a feature branch**:
    ```bash
    git checkout -b feature/your-feature-name
    ```
-5. **Make your changes** and test locally
-6. **Commit** with a clear message:
+6. **Make your changes** and test locally
+7. **Commit** with a clear message:
    ```bash
    git commit -m "Add: descriptive summary of your change"
    ```
-7. **Push** and open a Pull Request
+8. **Push** and open a Pull Request
 
 ## Commit Message Style
 
-Use a short prefix to categorize your change:
+Git hooks enforce commit message prefixes automatically. Use a short prefix to categorize your change:
 
 - `Add:` — New feature, course, or tool
 - `Fix:` — Bug fix or broken link
 - `Update:` — Improvement to existing content or code
+- `Refactor:` — Code restructuring (no behaviour change)
 - `Translate:` — Translation work
 - `Docs:` — Documentation changes
+- `Test:` — Adding or updating tests
+- `CI:` — CI/CD pipeline changes
+- `Chore:` — Maintenance (deps, configs, tooling)
 
 ## Pull Request Guidelines
 
@@ -58,9 +65,19 @@ Use a short prefix to categorize your change:
 This is a vanilla HTML/CSS/JS project. No build step required.
 
 - Use semantic HTML where possible
-- Keep CSS in `<style>` blocks within each page (existing pattern) or in external files under `js/`
+- Keep CSS in `<style>` blocks within each page (existing pattern) or in external files under `css/`
 - Use `const`/`let` over `var`
 - Prefer readable code over clever code
+- Remove `console.log`/`debugger` before committing (the pre-commit hook will warn)
+
+## Git Hooks
+
+After `npm install`, git hooks are automatically active:
+
+- **pre-commit** — Blocks `.env`/credentials, catches `debugger` statements, detects merge conflict markers, warns on large files
+- **commit-msg** — Rejects commits without a valid prefix (see above)
+
+To bypass hooks in emergencies: `git commit --no-verify` (use sparingly)
 
 ## Reporting Issues
 
