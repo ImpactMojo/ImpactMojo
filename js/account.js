@@ -592,7 +592,7 @@
       onReady: function (user, profile) {
         updatePageData();
         updateSavedItemsDisplay();
-        if (typeof DashboardTabs !== 'undefined') DashboardTabs.init('account');
+        if (typeof DashboardTabs !== 'undefined') DashboardTabs.init('account', profile);
       }
     });
   });
