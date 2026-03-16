@@ -95,8 +95,8 @@ Coaching is ideal if you're designing a study, stuck on data analysis, or naviga
 90-minute practice-based skill sessions. Learn by doing, not by listening.
 
 - **Price:** ₹1,500 per person per session
-- **35+ skills** across four domains: Thinking, Evidence, Action, Communication
-- **Structured series** available (6–8 weeks for deep skill building)
+- **56 sessions** across six skill series: Thinking Clearly, Evidence Reasoning, Political Economy & Implementation, Methods That Actually Work, Epistemic Hygiene, and Gender, Power & Data
+- **Structured series** available (6–16 sessions per series for deep skill building)
 - **Locations:** Delhi, Bangalore, and Online
 
 ## Pay What You Think Is Fair
