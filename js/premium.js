@@ -695,8 +695,9 @@
             
             // Track in localStorage for analytics
             try {
-                const key = 'impactmojo_upgrade_prompts';
-                const prompts = JSON.parse(localStorage.getItem(key) || '[]');
+                var prompts = (typeof window.IMState !== 'undefined')
+                    ? window.IMState.upgradePrompts.get()
+                    : JSON.parse(localStorage.getItem('impactmojo_upgrade_prompts') || '[]');
                 prompts.push({
                     required: requiredTier,
                     current: this.currentTier,
@@ -704,7 +705,11 @@
                 });
                 // Keep last 50 prompts
                 if (prompts.length > 50) prompts.shift();
-                localStorage.setItem(key, JSON.stringify(prompts));
+                if (typeof window.IMState !== 'undefined') {
+                    window.IMState.upgradePrompts.set(prompts);
+                } else {
+                    localStorage.setItem('impactmojo_upgrade_prompts', JSON.stringify(prompts));
+                }
             } catch (e) {
                 // Ignore storage errors
             }

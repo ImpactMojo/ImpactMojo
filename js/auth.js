@@ -31,16 +31,21 @@ const SUPABASE_ANON_KEY = window.ImpactMojoConfig.SUPABASE_ANON_KEY;
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // =====================================================
-// LOCALSTORAGE KEYS (MUST match index.html exactly!)
+// LOCALSTORAGE KEYS
+// Prefer using IMState (state-manager.js) when available.
+// These constants remain as a fallback if state-manager.js
+// hasn't loaded yet (e.g. on pages that don't include it).
 // =====================================================
-const STORAGE_KEYS = {
-    BOOKMARKS: 'impactmojo_bookmarks',      // Matches IMX.saveBookmarks
-    NOTES: 'impactmojo_notes',              // Matches IMX.Notes.STORAGE_KEY
-    COMPARE: 'impactmojo_compare',          // Matches IMX.saveCompareItems
-    STREAK: 'impactmojo_streak',            // Matches IMX.Streak.STORAGE_KEY
-    ANALYTICS: 'impactmojo_analytics',      // Matches IMX.Analytics.STORAGE_KEY
-    LAST_SYNC: 'impactmojo_last_sync'
-};
+const STORAGE_KEYS = (typeof window.IMState !== 'undefined')
+    ? window.IMState.KEYS
+    : {
+        BOOKMARKS:  'impactmojo_bookmarks',
+        NOTES:      'impactmojo_notes',
+        COMPARE:    'impactmojo_compare',
+        STREAK:     'impactmojo_streak',
+        ANALYTICS:  'impactmojo_analytics',
+        LAST_SYNC:  'impactmojo_last_sync'
+      };
 
 // =====================================================
 // AUTH STATE MANAGEMENT
@@ -209,8 +214,12 @@ const ImpactMojoAuth = {
     // DATA SYNC METHODS
     // =====================================================
 
-    // Get data from localStorage (using correct keys from index.html)
+    // Get data from localStorage
+    // Uses IMState (state-manager.js) when available for canonical key access
     getLocalData() {
+        if (typeof window.IMState !== 'undefined') {
+            return window.IMState.getSyncableData();
+        }
         return {
             bookmarks: JSON.parse(localStorage.getItem(STORAGE_KEYS.BOOKMARKS) || '[]'),
             notes: JSON.parse(localStorage.getItem(STORAGE_KEYS.NOTES) || '[]'),
@@ -220,8 +229,12 @@ const ImpactMojoAuth = {
         };
     },
 
-    // Save data to localStorage (using correct keys from index.html)
+    // Save data to localStorage
     setLocalData(data) {
+        if (typeof window.IMState !== 'undefined') {
+            window.IMState.setSyncableData(data);
+            return;
+        }
         if (data.bookmarks !== undefined) {
             localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(data.bookmarks));
         }
