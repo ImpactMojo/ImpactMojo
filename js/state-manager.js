@@ -70,7 +70,10 @@
     COHORTS_PREFIX:  'impactmojo_cohorts_',
 
     // Quiz tracking
-    TRACK_QUIZ:      'impactmojoTrackQuiz'
+    TRACK_QUIZ:      'impactmojoTrackQuiz',
+
+    // Cached auth profile (persists across page navigations)
+    CACHED_PROFILE:  'impactmojo_cached_profile'
   });
 
   // =========================================================================
@@ -296,6 +299,30 @@
       set: function (arr) { return safeSet(KEYS.UPGRADE_PROMPTS, arr); }
     },
 
+    // ------- Cached auth profile -------
+    // Persists profile across page navigations so tier is available
+    // immediately while a fresh fetchProfile() runs in background.
+
+    cachedProfile: {
+      get: function () { return safeGet(KEYS.CACHED_PROFILE, null); },
+      set: function (profile) {
+        if (!profile) return;
+        // Only cache fields needed for instant UI (not sensitive data)
+        return safeSet(KEYS.CACHED_PROFILE, {
+          id: profile.id,
+          display_name: profile.display_name || null,
+          full_name: profile.full_name || null,
+          email: profile.email || null,
+          avatar_url: profile.avatar_url || null,
+          subscription_tier: profile.subscription_tier || 'explorer',
+          subscription_status: profile.subscription_status || null,
+          organization: profile.organization || null,
+          cachedAt: new Date().toISOString()
+        });
+      },
+      clear: function () { safeRemove(KEYS.CACHED_PROFILE); }
+    },
+
     // ------- Bulk helpers (used by auth sync) -------
 
     /**
@@ -354,6 +381,7 @@
   Object.freeze(IMState.tourCompleted);
   Object.freeze(IMState.cookieConsent);
   Object.freeze(IMState.upgradePrompts);
+  Object.freeze(IMState.cachedProfile);
 
   window.IMState = IMState;
 })();
