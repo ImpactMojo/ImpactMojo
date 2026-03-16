@@ -7632,26 +7632,11 @@ body.dark-mode .v3-dot {
     pointer-events: auto;
 }
 
-/* HIDE all dropdown menus during tour to prevent random menu popups */
-body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown .dropdown-menu,
-body:has(.imx-tour-overlay.active) .dropdown-menu,
-.imx-tour-overlay.active ~ * .dropdown-menu {
-    display: none !important;
+/* During Intro.js tour: suppress hover-triggered dropdowns unless tour-opened */
+body.introjs-active-tour .nav-links > li.has-dropdown:not(.tour-dropdown-open):hover .dropdown-menu {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
-}
-
-/* Suppress hover-triggered dropdowns during tour */
-body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown:hover .dropdown-menu {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-}
-
-/* Suppress open class dropdowns during tour */
-body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown.open .dropdown-menu {
-    display: none !important;
 }
 
 .imx-tour-spotlight {
@@ -13083,14 +13068,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- BEGIN imx: scripts -->
 <script defer src="js/learning-tracks.js"></script>
-<script defer src="js/learning-pathways.js"></script>
 <!-- END imx: scripts -->
 
 
 <!-- hotfix-tracks removed: learning-tracks.js now handles track card clicks with proper data-track attributes -->
 
- 
-<script defer src="js/faq-bank.js"></script>
+
 <!-- ===================== ImpactMojo Add-ons =====================
 PASTE THIS ENTIRE BLOCK JUST BEFORE 
 <!-- Link Fallback Handler -->
@@ -14308,10 +14291,32 @@ document.addEventListener('click', function(e) {
 });
 </script>
 <script src="/js/search.js" defer></script>
-<script src="/js/pwa.js" defer></script>
-<script src="/js/offline.js" defer></script>
 <script defer src="js/auto-refresh.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/8.3.2/intro.min.js" defer></script>
-<script src="/js/tours.js" defer></script>
+<!-- Non-critical: load on idle / after first interaction -->
+<script>
+(function(){
+  var idle = [
+    'js/learning-pathways.js',
+    'js/faq-bank.js',
+    '/js/pwa.js',
+    '/js/offline.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/intro.js/8.3.2/intro.min.js',
+    '/js/tours.js'
+  ];
+  function loadScripts() {
+    idle.forEach(function(src) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.defer = true;
+      document.body.appendChild(s);
+    });
+  }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(loadScripts, { timeout: 3000 });
+  } else {
+    setTimeout(loadScripts, 2000);
+  }
+})();
+</script>
 </body>
 </html>

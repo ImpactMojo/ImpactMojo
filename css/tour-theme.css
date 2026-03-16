@@ -186,6 +186,36 @@
   pointer-events: none !important;
 }
 
+/* ── Tour dropdown helper ──────────────────────────────────────────
+   When the tour highlights an item inside a dropdown menu,
+   .tour-dropdown-open is added to the parent <li.has-dropdown>.
+   This forces the dropdown visible so Intro.js can target it. */
+
+.tour-dropdown-open > .dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  pointer-events: auto !important;
+  margin-top: 0.25rem !important;
+  z-index: 10000001 !important;
+}
+
+/* Override any old tour-blocking CSS */
+body.introjs-active-tour .tour-dropdown-open > .dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Ensure dropdown items targeted by Intro.js stay above the overlay */
+.introjs-showElement {
+  z-index: 10000000 !important;
+}
+
+.introjs-showElement .dropdown-menu {
+  z-index: 10000001 !important;
+}
+
 /* Mobile adjustments */
 @media (max-width: 600px) {
   .introjs-tooltip {

@@ -1142,7 +1142,12 @@ window.addEventListener('resize', function() {
     }, 150);
 });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/8.3.2/intro.min.js" defer></script>
-<script src="/js/tours.js" defer></script>
+<script>
+(function(){
+  var idle = ['https://cdnjs.cloudflare.com/ajax/libs/intro.js/8.3.2/intro.min.js', '/js/tours.js'];
+  function load() { idle.forEach(function(s){ var el=document.createElement('script'); el.src=s; document.body.appendChild(el); }); }
+  'requestIdleCallback' in window ? requestIdleCallback(load, {timeout:3000}) : setTimeout(load, 2000);
+})();
+</script>
 </body>
 </html>
