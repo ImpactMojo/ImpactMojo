@@ -184,10 +184,10 @@
     var pct = progress.percentage;
     var earnedMilestones = progress.milestones.filter(function (m) { return m.earned; }).length;
 
-    var stepIcons = { course: '\uD83D\uDCD6', lab: '\uD83D\uDD2C', game: '\uD83C\uDFAE' };
+    var stepIcons = { course: '📖', lab: '🔬', game: '🎮' };
 
     var stepsHtml = progress.steps.map(function (s, i) {
-      var icon = stepIcons[s.type] || '\u2022';
+      var icon = stepIcons[s.type] || '•';
       var cls = s.done ? 'imx-pw-step-done' : 'imx-pw-step-pending';
       return '<div class="imx-pw-step ' + cls + '">' +
         '<span class="imx-pw-step-num">' + (i + 1) + '</span>' +
@@ -200,7 +200,7 @@
     var milestonesHtml = progress.milestones.map(function (m) {
       var cls = m.earned ? 'imx-pw-milestone-earned' : 'imx-pw-milestone-locked';
       return '<span class="imx-pw-milestone ' + cls + '">' +
-        (m.earned ? '\u2605 ' : '\u2606 ') + m.label +
+        (m.earned ? '★ ' : '☆ ') + m.label +
         (m.credential ? ' (Credential)' : '') +
       '</span>';
     }).join('');
@@ -213,10 +213,10 @@
       '<p class="imx-pw-card-desc">' + pw.description + '</p>' +
       '<div class="imx-pw-card-audience"><strong>For:</strong> ' + pw.audience + '</div>' +
       '<div class="imx-pw-progress-bar"><div class="imx-pw-progress-fill" style="width:' + pct + '%;background:' + pw.color + ';"></div></div>' +
-      '<div class="imx-pw-progress-label">' + pct + '% complete \u00B7 ' + progress.completed + '/' + progress.total + ' steps \u00B7 ' + earnedMilestones + ' milestones</div>' +
+      '<div class="imx-pw-progress-label">' + pct + '% complete · ' + progress.completed + '/' + progress.total + ' steps · ' + earnedMilestones + ' milestones</div>' +
       '<div class="imx-pw-steps">' + stepsHtml + '</div>' +
       '<div class="imx-pw-milestones">' + milestonesHtml + '</div>' +
-      (progress.currentStep ? '<div class="imx-pw-next"><strong>Next:</strong> ' + progress.currentStep.title + '</div>' : '<div class="imx-pw-complete-badge" style="color:' + pw.color + ';">\u2714 Pathway Complete!</div>') +
+      (progress.currentStep ? '<div class="imx-pw-next"><strong>Next:</strong> ' + progress.currentStep.title + '</div>' : '<div class="imx-pw-complete-badge" style="color:' + pw.color + ';">✔ Pathway Complete!</div>') +
     '</div>';
   }
 
@@ -300,7 +300,7 @@
           '<div style="height:3px;background:var(--border-color);border-radius:2px;margin-top:0.5rem;"><div style="height:100%;border-radius:2px;background:' + pw.color + ';width:' + p.percentage + '%;transition:width 0.3s;"></div></div>' +
           '<div style="display:flex;gap:0.3rem;flex-wrap:wrap;margin-top:0.5rem;">' +
             p.milestones.map(function (m) {
-              return '<span style="font-size:0.65rem;padding:0.15rem 0.4rem;border-radius:10px;background:' + (m.earned ? pw.color + '20' : 'var(--hover-bg)') + ';color:' + (m.earned ? pw.color : 'var(--text-muted)') + ';font-weight:600;">' + (m.earned ? '\u2605 ' : '\u2606 ') + m.label + '</span>';
+              return '<span style="font-size:0.65rem;padding:0.15rem 0.4rem;border-radius:10px;background:' + (m.earned ? pw.color + '20' : 'var(--hover-bg)') + ';color:' + (m.earned ? pw.color : 'var(--text-muted)') + ';font-weight:600;">' + (m.earned ? '★ ' : '☆ ') + m.label + '</span>';
             }).join('') +
           '</div>' +
         '</div>';
@@ -338,7 +338,7 @@
       mini.innerHTML = '<div style="font-size:0.7rem;font-weight:600;color:' + pw.color + ';">' + pw.name + '</div>' +
         '<div style="display:flex;gap:0.3rem;margin-top:0.25rem;">' +
         p.milestones.map(function (m) {
-          return '<span style="font-size:0.6rem;color:' + (m.earned ? pw.color : 'var(--text-muted)') + ';">' + (m.earned ? '\u2605' : '\u2606') + '</span>';
+          return '<span style="font-size:0.6rem;color:' + (m.earned ? pw.color : 'var(--text-muted)') + ';">' + (m.earned ? '★' : '☆') + '</span>';
         }).join('') +
         '</div>';
       card.appendChild(mini);
