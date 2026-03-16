@@ -181,12 +181,12 @@ Economics simulations and behavioral experiments:
 
 ### Other Resources
 
-- **ImpactLex** — 500+ development terms with contextual definitions (PWA)
-- **Dev Case Studies Library** — 200 evidence-based case studies from 117 countries
-- **DevDiscourses** — 500+ curated open-access research papers, books, and grey literature
-- **PolicyDhara** — Curated Indian public policy documents, government schemes, and legislative frameworks
-- **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings (flagship design system, dark/light mode, Sargam icons)
-- **Dataverse** — 215 curated tools, datasets, APIs, and platforms for social impact research (flagship design system, dark/light mode, Sargam icons)
+- [**ImpactLex**](https://github.com/Varnasr/ImpactLex) — 500+ development terms with contextual definitions (PWA)
+- [**Dev Case Studies Library**](https://github.com/Varnasr/dev-case-studies) — 200 evidence-based case studies from 117 countries
+- [**DevDiscourses**](https://github.com/Varnasr/development-discourses) — 500+ curated open-access research papers, books, and grey literature
+- [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) — Auto-updating tracker of Indian development policies across 22 sectors
+- **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings
+- **Dataverse** — 215 curated tools, datasets, APIs, and platforms for social impact research
 - **400+ Handouts** — Downloadable HTML resources across 6 learning tracks
 - **Learning Loops Blog** — Articles, tutorials, case studies, platform updates
 - **Between the Logframes Podcast** — Development conversations on MEAL, ToC, and impact work
@@ -531,8 +531,24 @@ We welcome contributions! Whether improving content, fixing bugs, enhancing acce
 ImpactMojo operates on a "pay what you think is fair" model.
 
 **UPI:** `impactmojo@ibl`
-
 ---
+
+## ImpactMojo Ecosystem
+
+This platform is supported by a family of open-source repositories:
+
+| Repository | Description |
+|---|---|
+| [**ImpactMojo**](https://github.com/Varnasr/ImpactMojo) | Main platform — courses, games, labs, case challenges |
+| [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) | Auto-updating Indian development policy tracker (Astro + Python) |
+| [**development-discourses**](https://github.com/Varnasr/development-discourses) | 500+ curated research papers and grey literature |
+| [**dev-case-studies**](https://github.com/Varnasr/dev-case-studies) | 200 development case studies from 117 countries |
+| [**devdata-practice**](https://github.com/Varnasr/devdata-practice) | 10 realistic dataset generators for development economics |
+| [**deveconomics-toolkit**](https://github.com/Varnasr/deveconomics-toolkit) | 11 interactive Shiny apps (R + Python) |
+| [**ImpactLex**](https://github.com/Varnasr/ImpactLex) | Offline PWA glossary of development terminology |
+| [**The-Real-Middle**](https://github.com/Varnasr/The-Real-Middle) | Interactive income inequality explorer for India |
+
+All repos share consistent governance (Code of Conduct, Security Policy, Contributing Guidelines) and are tracked in [STACK_GROUPS.md](.github/STACK_GROUPS.md).
 
 ## License
 
@@ -582,3 +598,4 @@ The platform is shaped by contributions from educators, practitioners, designers
 **Last Updated:** March 2026
 **License:** CC-BY-4.0
 **Hosting:** Netlify
+
