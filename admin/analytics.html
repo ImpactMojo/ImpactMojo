@@ -529,6 +529,60 @@ body {
                 </p>
             </div>
         </div>
+
+        <!-- Key Metrics Definitions -->
+        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:28px; margin-bottom:20px;">
+            <h2 style="font-family:'Poppins',sans-serif; font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+                <span style="font-size:1.2rem;">&#x1f4d6;</span> Key Metrics Definitions
+            </h2>
+            <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
+                <p style="margin-bottom:16px;">
+                    The GA4 Live panel reports these standard Google Analytics 4 metrics. Here is how each one is calculated:
+                </p>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px;">
+                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
+                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Total Users</h4>
+                        <p>The number of distinct users who visited the site during the reporting period (last 30 days). A user is identified by a unique browser cookie or device identifier.</p>
+                    </div>
+                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
+                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">New Users</h4>
+                        <p>Users who interacted with the site for the first time during the reporting period. Measured by the <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">first_visit</code> event in GA4.</p>
+                    </div>
+                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
+                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Sessions</h4>
+                        <p>A session begins when a user opens the site and ends after 30 minutes of inactivity or at midnight. A single user can generate multiple sessions.</p>
+                    </div>
+                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
+                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Pageviews</h4>
+                        <p>The total number of pages viewed. Repeated views of the same page are counted. This is the GA4 metric <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">screenPageViews</code>.</p>
+                    </div>
+                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
+                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Avg Session Duration</h4>
+                        <p>The average length of a session in seconds. Calculated as total session duration divided by the number of sessions. Indicates how long users typically spend on the site per visit.</p>
+                    </div>
+                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
+                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Bounce Rate</h4>
+                        <p>The percentage of sessions that were <strong>not</strong> engaged. A session is considered "bounced" if it lasted less than 10 seconds, had zero <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">key_events</code>, and had fewer than 2 pageviews. <em>Bounce Rate = 1 &minus; Engagement Rate.</em></p>
+                    </div>
+                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
+                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--success-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Engaged Sessions</h4>
+                        <p>The count of sessions that met <strong>any</strong> of these criteria: lasted <strong>10 seconds or longer</strong>, included <strong>1 or more key events</strong> (e.g. form submissions, outbound clicks), or included <strong>2 or more pageviews</strong>. This is GA4's primary quality-of-visit signal.</p>
+                    </div>
+                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
+                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--success-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Engagement Rate</h4>
+                        <p>The percentage of sessions that were engaged. <em>Engagement Rate = Engaged Sessions &divide; Total Sessions.</em> A higher engagement rate indicates users are finding value in the content. This is the inverse of Bounce Rate.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top:20px; padding:16px; background:var(--hover-bg); border-radius:var(--radius-sm); border-left:3px solid var(--success-color);">
+                    <h4 style="font-size:0.82rem; font-weight:700; color:var(--text-primary); margin-bottom:6px;">What counts as "Engaged"?</h4>
+                    <p>
+                        In GA4, a session is <strong>engaged</strong> if the user stayed for at least 10 seconds, triggered a key event, or viewed 2+ pages. This replaces the older Universal Analytics "bounce" model and provides a more meaningful measure of user interest. For ImpactMojo, engaged sessions typically mean a user explored a course, played a game, or used a tool rather than landing and immediately leaving.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- GA4 Live Data Connection -->
@@ -887,6 +941,13 @@ function renderGA4Overview() {
         else val = formatNum(val);
         return '<tr><td>' + key + '</td><td class="num">' + val + '</td></tr>';
     });
+    // Add computed Engagement Rate if we have the source data
+    var engaged = ga4Data.overview['Engaged Sessions'];
+    var sessions = ga4Data.overview['Sessions'];
+    if (engaged && sessions && sessions > 0) {
+        var engagementRate = ((engaged / sessions) * 100).toFixed(1) + '%';
+        rows.push('<tr><td>Engagement Rate</td><td class="num">' + engagementRate + '</td></tr>');
+    }
     tbody.innerHTML = rows.join('');
 }
 
