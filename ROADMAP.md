@@ -17,6 +17,8 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 - [x] Font standardization (Amaranth + Inter + JetBrains Mono)
 - [x] Mobile nav fixes across all pages
 - [x] 4 new flagship courses (Politics of Aspiration, Media for Development, Constitution & Law, SEL)
+- [x] Git best-practice standards propagated across all 29 repos (hooks, templates, dependabot, CODEOWNERS, SECURITY)
+- [x] GitBook docs sidebar link fix (`/impactmojo/*` → `/docs/*` redirects)
 
 ## Q2 2026 (Apr-Jun) — Planned
 

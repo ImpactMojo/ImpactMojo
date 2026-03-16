@@ -2,6 +2,17 @@
 
 See the full [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.1.0 — March 16, 2026
+
+### Git Standards (29 repos)
+- Propagated `.gitattributes`, `.editorconfig`, `.githooks/`, `.gitmessage`, `CODEOWNERS`, `SECURITY.md`, `dependabot.yml`, PR & issue templates across all 29 Varnasr repos
+- Pre-commit hook blocks secrets, debugger, conflict markers; warns on console.log and large files
+- Commit-msg hook enforces prefix convention (Add/Fix/Update/Translate/Docs/Refactor/Test/CI/Chore)
+- Dependabot auto-configured per ecosystem (npm, pip, github-actions)
+
+### GitBook Docs Fix
+- Fixed broken sidebar links — added `/impactmojo/*` → `/docs/*` Netlify redirects
+
 ## v10.0.0 — March 16, 2026
 
 ### Typography Overhaul (80 files)
