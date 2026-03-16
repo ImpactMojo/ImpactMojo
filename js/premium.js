@@ -165,15 +165,23 @@
          */
         waitForAuth(callback, maxAttempts = 50) {
             let attempts = 0;
-            
+
             const check = () => {
                 attempts++;
-                
-                if (typeof window.ImpactMojoAuth !== 'undefined') {
+
+                // Wait until ImpactMojoAuth exists AND isAuthReady is true
+                // (profile is loaded at that point so we get the correct tier)
+                if (typeof window.ImpactMojoAuth !== 'undefined' && window.ImpactMojoAuth.isAuthReady) {
                     callback();
                     return;
                 }
-                
+
+                // If ImpactMojoAuth exists but not ready yet, use its promise
+                if (typeof window.ImpactMojoAuth !== 'undefined' && typeof window.ImpactMojoAuth.waitForAuthReady === 'function' && attempts >= 5) {
+                    window.ImpactMojoAuth.waitForAuthReady().then(callback);
+                    return;
+                }
+
                 if (attempts < maxAttempts) {
                     setTimeout(check, 100);
                 } else {
@@ -182,7 +190,7 @@
                     callback();
                 }
             };
-            
+
             check();
         },
         
@@ -650,8 +658,11 @@
                 var serverTier = res.data.subscription_tier || 'explorer';
                 var serverStatus = res.data.subscription_status;
 
-                // If subscription is not active, force explorer
-                if (serverStatus !== 'active') serverTier = 'explorer';
+                // Only force explorer if subscription is explicitly cancelled/expired.
+                // null/undefined status means the field was never set — trust the tier.
+                if (serverStatus && serverStatus !== 'active' && serverStatus !== 'trialing') {
+                    serverTier = 'explorer';
+                }
 
                 if (serverTier !== this.currentTier) {
                     if (CONFIG.DEBUG) console.log('[Premium] Tier mismatch — server:', serverTier, 'client:', this.currentTier);
@@ -684,8 +695,9 @@
             
             // Track in localStorage for analytics
             try {
-                const key = 'impactmojo_upgrade_prompts';
-                const prompts = JSON.parse(localStorage.getItem(key) || '[]');
+                var prompts = (typeof window.IMState !== 'undefined')
+                    ? window.IMState.upgradePrompts.get()
+                    : JSON.parse(localStorage.getItem('impactmojo_upgrade_prompts') || '[]');
                 prompts.push({
                     required: requiredTier,
                     current: this.currentTier,
@@ -693,7 +705,11 @@
                 });
                 // Keep last 50 prompts
                 if (prompts.length > 50) prompts.shift();
-                localStorage.setItem(key, JSON.stringify(prompts));
+                if (typeof window.IMState !== 'undefined') {
+                    window.IMState.upgradePrompts.set(prompts);
+                } else {
+                    localStorage.setItem('impactmojo_upgrade_prompts', JSON.stringify(prompts));
+                }
             } catch (e) {
                 // Ignore storage errors
             }
