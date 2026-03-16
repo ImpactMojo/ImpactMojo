@@ -229,6 +229,12 @@
   // =========================================================================
 
   function updateSavedItemsDisplay() {
+    try { _updateSavedItemsInner(); } catch (e) {
+      console.error('[Account] updateSavedItemsDisplay error:', e);
+    }
+  }
+
+  function _updateSavedItemsInner() {
     var bookmarks = IMState.bookmarks.get();
     var notes     = IMState.notes.get();
     var progress  = IMState.courseProgress.getAllPercentages();
@@ -265,6 +271,12 @@
   // =========================================================================
 
   function updatePageData() {
+    try { _updatePageDataInner(); } catch (e) {
+      console.error('[Account] updatePageData error:', e);
+    }
+  }
+
+  function _updatePageDataInner() {
     var profile = ImpactMojoAuth.profile || {};
     var user    = ImpactMojoAuth.user || {};
 
