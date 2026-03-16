@@ -100,78 +100,8 @@ function toggleMobileDropdown(event, element) {
     li.classList.toggle('open');
 }
 
-/* Skip tour on mobile devices - FIXED VERSION */
-(function() {
-    var isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    // Set global flag that can be checked anywhere
-    window.IMPACTMOJO_IS_MOBILE = isMobile;
-    
-    if (isMobile) {
-        
-        // Set ALL disable flags
-        window.shepherdTourDisabled = true;
-        window.tourDisabled = true;
-        window.imxTourDisabled = true;
-        
-        // Hide any tour elements via CSS
-        var style = document.createElement('style');
-        style.id = 'mobile-tour-disable-css';
-        style.textContent = '.shepherd-modal-overlay-container, .shepherd-element, #shepherd-toast, .tour-guide, .imx-tour-overlay, .imx-tour-welcome, .imx-tour-tooltip, .imx-tour-spotlight, .imx-tour-arrow { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }';
-        document.head.appendChild(style);
-        
-        // Hide tour toggle button
-        var style2 = document.createElement('style');
-        style2.textContent = '.tour-toggle { display: none !important; }';
-        document.head.appendChild(style2);
-        
-        // Override Shepherd tour if it exists
-        window.startTour = function() {};
-        if (window.Shepherd) {
-            window.Shepherd.Tour.prototype.start = function() {};
-        }
-        
-        // Override IMX.Tour BEFORE it's created - using defineProperty
-        // This intercepts when IMX.Tour is assigned and disables it
-        var _IMX = window.IMX || {};
-        Object.defineProperty(window, 'IMX', {
-            get: function() { return _IMX; },
-            set: function(val) {
-                _IMX = val;
-                // Immediately disable tour functions when IMX is set
-                if (_IMX && _IMX.Tour) {
-                    _IMX.Tour.showWelcome = function() {};
-                    _IMX.Tour.start = function() {};
-                    _IMX.Tour.restart = function() {};
-                    _IMX.Tour.show = function() {};
-                }
-            },
-            configurable: true
-        });
-        
-        // Also override after DOMContentLoaded as a backup
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.IMX && window.IMX.Tour) {
-                window.IMX.Tour.showWelcome = function() {};
-                window.IMX.Tour.start = function() {};
-                window.IMX.Tour.restart = function() {};
-            }
-        });
-        
-        // And override after load event as another backup
-        window.addEventListener('load', function() {
-            if (window.IMX && window.IMX.Tour) {
-                window.IMX.Tour.showWelcome = function() {};
-                window.IMX.Tour.start = function() {};
-                window.IMX.Tour.restart = function() {};
-            }
-            // Remove any tour elements that might have been created
-            document.querySelectorAll('.imx-tour-overlay, .imx-tour-welcome, .imx-tour-tooltip').forEach(function(el) {
-                el.remove();
-            });
-        });
-    }
-})();
+/* Mobile detection flag */
+window.IMPACTMOJO_IS_MOBILE = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 </script>
 
 
@@ -8567,7 +8497,7 @@ body:has(.imx-tour-overlay.active) .nav-links > li.has-dropdown.open .dropdown-m
 <span class="auth-user-name">Account</span>
 <span class="auth-premium-badge">PRO</span>
 </a>
-<button class="tour-toggle" onclick="IMX.Tour.restart()" title="Take a Tour">
+<button class="tour-toggle" onclick="ImpactMojoTour.start('index')" title="Take a Tour">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
 <circle cx="12" cy="12" r="10"></circle>
 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
