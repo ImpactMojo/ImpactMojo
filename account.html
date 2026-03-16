@@ -670,6 +670,11 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1.5rem;
 }
 
+.profile-avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
 .profile-avatar {
     width: 80px;
     height: 80px;
@@ -682,6 +687,99 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     font-size: 2rem;
     color: var(--accent-color);
+    overflow: hidden;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-upload-btn {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    border: 2px solid var(--card-bg);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.avatar-upload-btn:hover {
+    background: var(--accent-hover);
+}
+
+.avatar-upload-btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: white;
+    fill: none;
+}
+
+.avatar-upload-btn input {
+    display: none;
+}
+
+/* Profile details grid */
+.profile-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.profile-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding: 0.35rem 0;
+}
+
+.profile-detail-item svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    stroke: var(--text-muted);
+    fill: none;
+}
+
+.profile-detail-item a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.profile-detail-item a:hover {
+    text-decoration: underline;
+}
+
+.profile-interests {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.25rem;
+}
+
+.interest-tag {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(14, 165, 233, 0.1);
+    color: var(--accent-color);
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
 }
 
 .profile-info h3 {
@@ -1928,8 +2026,14 @@ h1, h2, h3, h4, h5, h6 {
                 </div>
                 <div class="card-body">
                     <div class="profile-header">
-                        <div class="profile-avatar" id="profileAvatar">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <div class="profile-avatar-wrap">
+                            <div class="profile-avatar" id="profileAvatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </div>
+                            <label class="avatar-upload-btn" title="Change profile picture">
+                                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                <input type="file" id="avatarUpload" accept="image/*" onchange="handleAvatarUpload(this)">
+                            </label>
                         </div>
                         <div class="profile-info">
                             <h3 id="profileName">Loading...</h3>
@@ -1949,6 +2053,29 @@ h1, h2, h3, h4, h5, h6 {
                         <div class="stat-item">
                             <div class="stat-value" id="totalBookmarks">0</div>
                             <div class="stat-label">Bookmarks</div>
+                        </div>
+                    </div>
+                    <!-- Profile Details -->
+                    <div class="profile-details" id="profileDetails">
+                        <div class="profile-detail-item" id="detailPhone" style="display:none;">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <span id="detailPhoneText"></span>
+                        </div>
+                        <div class="profile-detail-item" id="detailAddress" style="display:none;">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span id="detailAddressText"></span>
+                        </div>
+                        <div class="profile-detail-item" id="detailLinkedin" style="display:none;">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                            <a id="detailLinkedinLink" href="#" target="_blank" rel="noopener"></a>
+                        </div>
+                        <div class="profile-detail-item" id="detailBio" style="display:none; grid-column: 1 / -1;">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                            <span id="detailBioText" style="font-style:italic;"></span>
+                        </div>
+                        <div class="profile-detail-item" id="detailInterests" style="display:none; grid-column: 1 / -1;">
+                            <svg viewBox="0 0 24 24" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <div class="profile-interests" id="detailInterestsTags"></div>
                         </div>
                     </div>
                 </div>
@@ -2209,6 +2336,16 @@ h1, h2, h3, h4, h5, h6 {
                         </div>
                         <div class="form-row">
                             <div class="form-group">
+                                <label class="form-label" for="editPhone">Phone</label>
+                                <input type="tel" class="form-input" id="editPhone" placeholder="+91 98765 43210">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="editAddress">Address</label>
+                                <input type="text" class="form-input" id="editAddress" placeholder="Street, District, State">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
                                 <label class="form-label" for="editCity">City</label>
                                 <input type="text" class="form-input" id="editCity" placeholder="Your city">
                             </div>
@@ -2216,6 +2353,10 @@ h1, h2, h3, h4, h5, h6 {
                                 <label class="form-label" for="editCountry">Country</label>
                                 <input type="text" class="form-input" id="editCountry" placeholder="Your country">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="editInterests">Interests</label>
+                            <input type="text" class="form-input" id="editInterests" placeholder="e.g. MEAL, Gender Studies, Climate Policy (comma-separated)">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="editBio">Bio</label>

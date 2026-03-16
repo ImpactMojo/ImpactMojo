@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="0; url=/transparency.html">
-<title>Redirecting... | ImpactMojo</title>
-<meta name="description" content="ImpactMojo's open transparency dashboard. Explore our reach, content metrics, feature adoption, and platform growth data.">
+<title>Transparency & Impact Data | ImpactMojo</title>
+<meta name="description" content="ImpactMojo's open transparency page. Explore our reach, content metrics, methodology, and platform growth data.">
 <link rel="icon" href="/assets/images/favicon.png" type="image/png">
 
 <!-- Google Analytics -->
@@ -19,9 +18,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<!-- Google Identity Services for OAuth -->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <style>
 :root {
@@ -176,29 +172,6 @@ body {
     max-width: 1400px; margin: 0 auto; padding: 24px;
 }
 
-/* Data source config */
-.data-source-bar {
-    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
-    padding: 16px; background: var(--card-bg); border: 1px solid var(--border-color);
-    border-radius: 12px; flex-wrap: wrap;
-}
-.data-source-bar label { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
-.data-source-bar input {
-    flex: 1; min-width: 300px; padding: 8px 12px; border-radius: 8px;
-    border: 1px solid var(--border-color); background: var(--primary-bg);
-    color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
-}
-.data-source-bar input:focus { outline: none; border-color: var(--accent-color); }
-.btn {
-    padding: 8px 16px; border-radius: 8px; border: none; font-weight: 600;
-    font-size: 0.85rem; cursor: pointer; font-family: inherit;
-    transition: all var(--transition); display: inline-flex; align-items: center; gap: 6px;
-}
-.btn-primary { background: var(--accent-color); color: white; }
-.btn-primary:hover { background: var(--accent-hover); }
-.btn-secondary { background: var(--hover-bg); color: var(--text-secondary); border: 1px solid var(--border-color); }
-.btn-secondary:hover { color: var(--text-primary); border-color: var(--accent-color); }
-
 /* Status indicator */
 .status-dot {
     width: 8px; height: 8px; border-radius: 50%; display: inline-block;
@@ -248,8 +221,7 @@ body {
     text-transform: uppercase; letter-spacing: 0.03em;
 }
 .badge-legacy { background: rgba(99,102,241,0.15); color: #818CF8; }
-.badge-live { background: rgba(16,185,129,0.15); color: #10B981; }
-.badge-reconciled { background: rgba(14,165,233,0.15); color: #0EA5E9; }
+.badge-static { background: rgba(14,165,233,0.15); color: #0EA5E9; }
 
 /* Tables */
 .data-table-wrap {
@@ -324,46 +296,10 @@ body {
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
 @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
 
-/* JSON paste area */
-.json-paste {
-    width: 100%; min-height: 120px; padding: 12px; border-radius: 8px;
-    border: 1px dashed var(--border-color); background: var(--primary-bg);
-    color: var(--text-primary); font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem; resize: vertical;
-}
-.json-paste:focus { outline: none; border-color: var(--accent-color); }
-
-/* Empty state */
-.empty-state {
-    text-align: center; padding: 48px 24px; color: var(--text-muted);
-}
-.empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
-.empty-state p { font-size: 0.9rem; max-width: 500px; margin: 0 auto; }
-
-/* GA4 Sign-in */
-.ga4-bar {
-    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
-    padding: 16px; background: var(--card-bg); border: 1px solid var(--border-color);
-    border-radius: 12px; flex-wrap: wrap;
-}
-.ga4-bar p { font-size: 0.85rem; color: var(--text-secondary); flex: 1; min-width: 200px; }
-.ga4-status { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
-.btn-google {
-    padding: 8px 20px; border-radius: 8px; border: 1px solid var(--border-color);
-    background: var(--hover-bg); color: var(--text-primary); font-weight: 600;
-    font-size: 0.85rem; cursor: pointer; font-family: inherit;
-    transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px;
-}
-.btn-google:hover { border-color: var(--accent-color); }
-.btn-google svg { width: 18px; height: 18px; }
-
 /* Responsive */
 @media (max-width: 768px) {
     .kpi-grid { grid-template-columns: repeat(2, 1fr); }
     .bar-label { width: 100px; font-size: 0.7rem; }
-    .data-source-bar { flex-direction: column; align-items: stretch; }
-    .data-source-bar input { min-width: unset; }
-    .ga4-bar { flex-direction: column; text-align: center; }
 }
 </style>
 </head>
@@ -395,7 +331,6 @@ body {
             <a href="/dataverse" class="nav-link">Dataverse</a>
             <a href="/challenges" class="nav-link">Challenges</a>
             <a href="/blog" class="nav-link">Blog</a>
-            <a href="/admin/" class="nav-link" id="adminNavLink" style="display:none;">Admin</a>
         </div>
         <div class="nav-actions">
             <div class="theme-selector" aria-label="Theme selection">
@@ -443,14 +378,11 @@ body {
 
 <main class="admin-main">
 
-    <!-- Unified Dashboard Tabs -->
-    <div id="dashboardTabs"></div>
-
     <!-- Transparency Intro -->
     <div style="text-align:center; padding:20px 24px 8px; max-width:720px; margin:0 auto;">
         <h1 style="font-family:'Poppins',sans-serif; font-size:1.8rem; font-weight:700; margin-bottom:8px; background:var(--gradient-primary); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Transparency & Impact Data</h1>
         <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.7;">
-            ImpactMojo is built in the open. This page shares our platform metrics, content reach, and feature adoption data. All legacy data is reconstructed from our website; live analytics are pulled from Google Analytics 4 when connected.
+            ImpactMojo is built in the open. This page shares our platform metrics, content reach, and feature adoption data. All numbers shown here are static legacy data reconstructed from our codebase audit and historical Google Sheets records.
         </p>
     </div>
 
@@ -472,15 +404,15 @@ body {
                         <p>Content inventory counts (courses, labs, games, handouts, tools) are derived from a manual audit of the codebase. User counts for courses and games come from historical Google Sheets records maintained since launch. These figures represent cumulative totals and are updated periodically.</p>
                     </div>
                     <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">GA4 Live Data (Real-time)</h4>
-                        <p>When an admin signs in with Google OAuth, the dashboard pulls live metrics from the GA4 Reporting API (property <code style="font-family:'JetBrains Mono',monospace; font-size:0.82rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">G-JRCMEB9TBW</code>). This includes active users, sessions, page views, geographic distribution, and engagement metrics for the last 30 days.</p>
+                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Historical Google Sheets</h4>
+                        <p>User interaction counts per course, game, and tool are sourced from Google Sheets maintained by the ImpactMojo team since the platform's inception. These spreadsheets track form submissions, enrolment records, and usage logs across all content types.</p>
                     </div>
                 </div>
                 <p style="margin-bottom:12px;">
-                    <strong style="color:var(--text-primary);">Reconciliation:</strong> The "Reconciled Overview" table merges both sources. Legacy content counts are always shown as the baseline. When GA4 is connected, live user/session metrics overlay the legacy data, and a <span style="display:inline-block; padding:1px 8px; border-radius:100px; font-size:0.72rem; font-weight:600; background:rgba(16,185,129,0.15); color:#10B981;">GA4 Live</span> badge appears next to real-time figures.
+                    <strong style="color:var(--text-primary);">Reconciliation:</strong> The data shown on this page merges both sources. Content counts come from the codebase audit, while user interaction numbers come from historical Google Sheets. All figures are cumulative totals up to the last manual update.
                 </p>
                 <p>
-                    <strong style="color:var(--text-primary);">Limitations:</strong> Legacy user numbers are approximate (based on Google Forms submissions and manual tracking). GA4 data is subject to Google's data sampling and processing delays (up to 48 hours). No personally identifiable information (PII) is collected or displayed on this page.
+                    <strong style="color:var(--text-primary);">Limitations:</strong> Legacy user numbers are approximate (based on Google Forms submissions and manual tracking). No personally identifiable information (PII) is collected or displayed on this page. This page does not include any live GA4 analytics data.
                 </p>
             </div>
         </div>
@@ -492,7 +424,7 @@ body {
             </h2>
             <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
                 <p style="margin-bottom:16px;">
-                    The transparency dashboard is structured around four entity types, each with specific metrics:
+                    The transparency page is structured around four entity types, each with specific metrics:
                 </p>
 
                 <div style="overflow-x:auto;">
@@ -524,12 +456,6 @@ body {
                                 <td style="padding:10px 12px;">Legacy (codebase inventory)</td>
                                 <td style="padding:10px 12px;">On content release</td>
                             </tr>
-                            <tr style="border-bottom:1px solid var(--border-color);">
-                                <td style="padding:10px 12px; font-weight:600; color:var(--text-primary);">Platform Engagement</td>
-                                <td style="padding:10px 12px;">Active users, sessions, pageviews, avg. engagement time, bounce rate, geography (country-level)</td>
-                                <td style="padding:10px 12px;">GA4 API (live)</td>
-                                <td style="padding:10px 12px;">Real-time (when connected)</td>
-                            </tr>
                             <tr>
                                 <td style="padding:10px 12px; font-weight:600; color:var(--text-primary);">Feature Adoption</td>
                                 <td style="padding:10px 12px;">Feature name, type (tool/game/lab), legacy user count, active/sunset status</td>
@@ -539,24 +465,6 @@ body {
                         </tbody>
                     </table>
                 </div>
-
-                <div style="margin-top:20px; padding:16px; background:var(--hover-bg); border-radius:var(--radius-sm); border-left:3px solid var(--accent-color);">
-                    <h4 style="font-size:0.82rem; font-weight:700; color:var(--text-primary); margin-bottom:6px;">Data Flow</h4>
-                    <p>
-                        <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Codebase audit</code> &#x2192;
-                        <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">LEGACY object (JS)</code> &#x2192;
-                        <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Render tables &amp; charts</code>
-                        <br>
-                        <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Google OAuth</code> &#x2192;
-                        <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">GA4 Data API v1</code> &#x2192;
-                        <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Merge with legacy</code> &#x2192;
-                        <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Update DOM</code>
-                    </p>
-                </div>
-
-                <p style="margin-top:16px;">
-                    <strong style="color:var(--text-primary);">Privacy:</strong> All data shown here is aggregate. No individual user data, session recordings, or personal identifiers are exposed. The GA4 property uses anonymised IP collection and complies with India's Information Technology Act, 2000.
-                </p>
             </div>
         </div>
 
@@ -567,13 +475,13 @@ body {
             </h2>
             <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
                 <p style="margin-bottom:16px;">
-                    The GA4 Live panel reports these standard Google Analytics 4 metrics. Here is how each one is calculated:
+                    These are the standard Google Analytics 4 metrics used by ImpactMojo for internal tracking. This public page shows only legacy/static data, but these definitions explain the metrics we track:
                 </p>
 
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px;">
                     <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
                         <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Total Users</h4>
-                        <p>The number of distinct users who visited the site during the reporting period (last 30 days). A user is identified by a unique browser cookie or device identifier.</p>
+                        <p>The number of distinct users who visited the site during the reporting period. A user is identified by a unique browser cookie or device identifier.</p>
                     </div>
                     <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
                         <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">New Users</h4>
@@ -615,52 +523,23 @@ body {
         </div>
     </div>
 
-    <!-- GA4 Live Data Connection -->
-    <div class="ga4-bar" id="ga4Bar">
-        <p id="ga4Message">Live analytics available for admins. Sign in with your Google account to load real-time GA4 data.</p>
-        <span class="ga4-status" id="ga4Status"><span class="status-dot offline"></span> Not connected</span>
-        <button class="btn-google" id="ga4SignIn" onclick="signInWithGoogle()">
-            <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-            Sign in with Google
-        </button>
-    </div>
-
-    <!-- Admin Controls (hidden by default, toggle with ?admin) -->
-    <div class="data-source-bar" id="adminControls" style="display:none;">
-        <label>Data Source:</label>
-        <input type="text" id="webAppUrl" placeholder="Apps Script Web App URL (alternative)">
-        <button class="btn btn-primary" onclick="fetchFromWebApp()">Fetch from URL</button>
-        <span id="dataStatus"></span>
-    </div>
-
     <!-- KPI Cards -->
+    <div class="section-header">
+        <h2 class="section-title"><span class="icon">&#x1f4c8;</span> Computed Numbers <span class="section-badge badge-legacy">Legacy Data</span></h2>
+    </div>
     <div class="kpi-grid" id="kpiGrid">
         <!-- Populated by JS -->
     </div>
 
-    <!-- Reconciled Overview -->
+    <!-- Platform Content Table -->
     <div class="section-header">
-        <h2 class="section-title"><span class="icon">&#x1f4ca;</span> Reconciled Overview <span class="section-badge badge-reconciled">Legacy + GA4</span></h2>
+        <h2 class="section-title"><span class="icon">&#x1f4ca;</span> Platform Content <span class="section-badge badge-static">Static</span></h2>
     </div>
-    <div class="two-col">
-        <div>
-            <h3 style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em;">Platform Content</h3>
-            <div class="data-table-wrap">
-                <table class="data-table" id="platformTable">
-                    <thead><tr><th>Metric</th><th>Count</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-        <div>
-            <h3 style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em;">GA4 Live (30 days)</h3>
-            <div class="data-table-wrap">
-                <table class="data-table" id="ga4OverviewTable">
-                    <thead><tr><th>Metric</th><th>Value</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
+    <div class="data-table-wrap">
+        <table class="data-table" id="platformTable">
+            <thead><tr><th>Metric</th><th>Count</th></tr></thead>
+            <tbody></tbody>
+        </table>
     </div>
 
     <!-- Course Users -->
@@ -692,28 +571,82 @@ body {
         </table>
     </div>
 
-    <!-- Geography (GA4 only) -->
-    <div class="section-header" id="geoSection" style="display:none;">
-        <h2 class="section-title"><span class="icon">&#x1f30d;</span> Geography <span class="section-badge badge-live">GA4 Live</span></h2>
-    </div>
-    <div class="data-table-wrap" id="geoTableWrap" style="display:none;">
-        <table class="data-table" id="geoTable">
-            <thead><tr><th>Country</th><th>Users</th><th>Sessions</th></tr></thead>
-            <tbody></tbody>
-        </table>
+    <!-- Data Flow Diagram -->
+    <div style="max-width:960px; margin:32px auto 0; padding:0 24px;">
+        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:28px; margin-bottom:20px;">
+            <h2 style="font-family:'Poppins',sans-serif; font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+                <span style="font-size:1.2rem;">&#x1f504;</span> Data Flow
+            </h2>
+            <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
+                <div style="padding:16px; background:var(--hover-bg); border-radius:var(--radius-sm); border-left:3px solid var(--accent-color); margin-bottom:16px;">
+                    <h4 style="font-size:0.82rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">Legacy Data Pipeline</h4>
+                    <p style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; line-height:2;">
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Codebase Audit</code>
+                        &#x2192;
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Content Inventory (courses, games, labs, tools)</code>
+                        &#x2192;
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">LEGACY object (JS)</code>
+                        <br>
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Google Sheets</code>
+                        &#x2192;
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">User Counts (form submissions, enrolments)</code>
+                        &#x2192;
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">LEGACY object (JS)</code>
+                        <br>
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">LEGACY object</code>
+                        &#x2192;
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Render functions (KPIs, tables, bar charts)</code>
+                        &#x2192;
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">DOM (this page)</code>
+                    </p>
+                </div>
+                <div style="padding:16px; background:var(--hover-bg); border-radius:var(--radius-sm); border-left:3px solid var(--secondary-accent);">
+                    <h4 style="font-size:0.82rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">Live Analytics Pipeline (admin-only, not shown here)</h4>
+                    <p style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; line-height:2;">
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Google OAuth</code>
+                        &#x2192;
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">GA4 Data API v1</code>
+                        &#x2192;
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Merge with legacy</code>
+                        &#x2192;
+                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Update DOM</code>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Admin: JSON Paste Area (hidden unless ?admin) -->
-    <div id="jsonPasteSection" style="display:none;">
-        <div class="section-header">
-            <h2 class="section-title"><span class="icon">&#x1f4cb;</span> Manual Data Import</h2>
-        </div>
-        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:12px;">
-            Paste the JSON export from your Google Sheet (Apps Script > Export Summary as JSON) to load live GA4 data.
-        </p>
-        <textarea class="json-paste" id="jsonPaste" placeholder='Paste JSON from Apps Script "Export Summary as JSON" here...'></textarea>
-        <div style="margin-top:8px;">
-            <button class="btn btn-primary" onclick="loadFromPaste()">Load Pasted Data</button>
+    <!-- Legal & Compliance -->
+    <div style="max-width:960px; margin:12px auto 0; padding:0 24px;">
+        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:28px;">
+            <h2 style="font-family:'Poppins',sans-serif; font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+                <span style="font-size:1.2rem;">&#x1f512;</span> Legal & Compliance
+            </h2>
+            <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
+                <div style="padding:16px; background:var(--hover-bg); border-radius:var(--radius-sm); border-left:3px solid var(--success-color); margin-bottom:16px;">
+                    <h4 style="font-size:0.82rem; font-weight:700; color:var(--text-primary); margin-bottom:6px;">Privacy Notice</h4>
+                    <p>
+                        All data shown on this page is <strong>aggregate</strong>. No individual user data, session recordings, personal identifiers, or PII are collected, stored, or displayed. User counts represent cumulative totals from anonymised form submissions and manual tracking. The GA4 property (used internally) employs anonymised IP collection and complies with India's Information Technology Act, 2000.
+                    </p>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:12px;">
+                    <a href="/privacy-policy" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
+                        Privacy Policy &#x2192;
+                    </a>
+                    <a href="/terms-of-service" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
+                        Terms of Service &#x2192;
+                    </a>
+                    <a href="/disclaimer" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
+                        Disclaimer &#x2192;
+                    </a>
+                    <a href="/grievance" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
+                        Grievance Redressal &#x2192;
+                    </a>
+                    <a href="/refund-policy" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
+                        Refund Policy &#x2192;
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -731,7 +664,7 @@ body {
                     <li><a href="/#support-us">Support Us</a></li>
                     <li><a href="/contact">Contact</a></li>
                     <li><a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener">GitHub</a></li>
-                    <li><a href="/admin/analytics">Transparency</a></li>
+                    <li><a href="/transparency">Transparency</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -774,7 +707,7 @@ body {
 
 <script>
 // ============================================================
-// LEGACY DATA (hardcoded from website — always available)
+// LEGACY DATA (hardcoded from website — static only)
 // ============================================================
 var LEGACY = {
     platform: {
@@ -887,17 +820,21 @@ var LEGACY = {
     ]
 };
 
-var ga4Data = null;
+// ============================================================
+// UTILITIES
+// ============================================================
 
-// ============================================================
-// CONFIG — Update these after Google Cloud setup
-// ============================================================
-var GA4_CONFIG = {
-    CLIENT_ID: '904414464711-crf45sfa1neo3hf16ekbn5jv2qdjlhtr.apps.googleusercontent.com',
-    PROPERTY_ID: '514001382',
-    CACHE_KEY: 'impactmojo_ga4_cache',
-    CACHE_HOURS: 24  // Auto-refresh after this many hours
-};
+function sumValues(obj) {
+    return Object.values(obj).reduce(function(s, v) { return s + v; }, 0);
+}
+
+function formatNum(n) {
+    n = parseFloat(n);
+    if (isNaN(n)) return '-';
+    if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+    if (n >= 1000) return n.toLocaleString();
+    return n.toString();
+}
 
 // ============================================================
 // RENDERING
@@ -906,12 +843,10 @@ var GA4_CONFIG = {
 function render() {
     renderKPIs();
     renderPlatformTable();
-    renderGA4Overview();
     renderBarChart('courseChart', LEGACY.courseUsers, 'blue');
     renderBarChart('gameChart', LEGACY.gameUsers, 'green');
     renderBarChart('toolChart', LEGACY.toolUsers, 'purple');
     renderFeatureTable();
-    renderGeo();
 }
 
 function renderKPIs() {
@@ -922,20 +857,12 @@ function renderKPIs() {
     var totalLegacy = totalCourseUsers + totalGameUsers + totalToolUsers;
 
     var kpis = [
-        { label: 'Legacy Total Interactions', value: formatNum(totalLegacy), sub: 'Pre-transition period', source: 'Website data', color: 'blue' },
-        { label: 'Course Interactions', value: formatNum(totalCourseUsers), sub: '41 courses', source: 'catalog_data.json', color: 'purple' },
-        { label: 'Game Interactions', value: formatNum(totalGameUsers), sub: '11 games', source: 'index.html', color: 'green' },
-        { label: 'Tool Interactions', value: formatNum(totalToolUsers), sub: '15 tools & labs', source: 'catalog_data.json', color: 'amber' },
-        { label: 'Content Library', value: '1,715+', sub: 'Terms, papers, cases, datasets', source: 'Multiple pages', color: 'red' },
+        { label: 'Legacy Total Interactions', value: formatNum(totalLegacy), sub: 'Cumulative across all content', source: 'Codebase audit + Google Sheets', color: 'blue' },
+        { label: 'Course Interactions', value: formatNum(totalCourseUsers), sub: '41 courses', source: 'Google Sheets records', color: 'purple' },
+        { label: 'Game Interactions', value: formatNum(totalGameUsers), sub: '11 games', source: 'Google Sheets records', color: 'green' },
+        { label: 'Tool Interactions', value: formatNum(totalToolUsers), sub: '15 tools & labs', source: 'Google Sheets records', color: 'amber' },
+        { label: 'Content Library', value: '1,715+', sub: 'Terms, papers, cases, datasets', source: 'Codebase inventory', color: 'red' }
     ];
-
-    if (ga4Data && ga4Data.overview) {
-        kpis.push(
-            { label: 'GA4 Users (30d)', value: formatNum(ga4Data.overview['Total Users'] || 0), sub: 'Current GA4 property', source: 'GA4 Live', color: 'blue' },
-            { label: 'GA4 Sessions (30d)', value: formatNum(ga4Data.overview['Sessions'] || 0), sub: '', source: 'GA4 Live', color: 'green' },
-            { label: 'GA4 Pageviews (30d)', value: formatNum(ga4Data.overview['Pageviews'] || 0), sub: '', source: 'GA4 Live', color: 'purple' }
-        );
-    }
 
     grid.innerHTML = kpis.map(function(k) {
         return '<div class="kpi-card ' + k.color + '">' +
@@ -952,32 +879,6 @@ function renderPlatformTable() {
     var rows = Object.keys(LEGACY.platform).map(function(key) {
         return '<tr><td>' + key + '</td><td class="num">' + formatNum(LEGACY.platform[key]) + '</td></tr>';
     });
-    tbody.innerHTML = rows.join('');
-}
-
-function renderGA4Overview() {
-    var tbody = document.querySelector('#ga4OverviewTable tbody');
-    if (!ga4Data || !ga4Data.overview) {
-        var msg = GA4_CONFIG.CLIENT_ID
-            ? 'Sign in with Google above to load live data.'
-            : 'GA4 not configured yet. Cached data will appear here once an admin connects GA4.';
-        tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; color:var(--text-muted); padding:24px;">' + msg + '</td></tr>';
-        return;
-    }
-    var rows = Object.keys(ga4Data.overview).map(function(key) {
-        var val = ga4Data.overview[key];
-        if (key.indexOf('Duration') > -1) val = parseFloat(val).toFixed(1) + 's';
-        else if (key.indexOf('Rate') > -1) val = (parseFloat(val) * 100).toFixed(1) + '%';
-        else val = formatNum(val);
-        return '<tr><td>' + key + '</td><td class="num">' + val + '</td></tr>';
-    });
-    // Add computed Engagement Rate if we have the source data
-    var engaged = ga4Data.overview['Engaged Sessions'];
-    var sessions = ga4Data.overview['Sessions'];
-    if (engaged && sessions && sessions > 0) {
-        var engagementRate = ((engaged / sessions) * 100).toFixed(1) + '%';
-        rows.push('<tr><td>Engagement Rate</td><td class="num">' + engagementRate + '</td></tr>');
-    }
     tbody.innerHTML = rows.join('');
 }
 
@@ -1003,284 +904,6 @@ function renderFeatureTable() {
             '<td class="num">' + (f.users ? formatNum(f.users) : '-') + '</td>' +
             '<td style="' + statusClass + '; font-weight:600; font-size:0.8rem;">' + f.status + '</td></tr>';
     }).join('');
-}
-
-function renderGeo() {
-    if (!ga4Data || !ga4Data.geography || ga4Data.geography.length === 0) {
-        document.getElementById('geoSection').style.display = 'none';
-        document.getElementById('geoTableWrap').style.display = 'none';
-        return;
-    }
-    document.getElementById('geoSection').style.display = '';
-    document.getElementById('geoTableWrap').style.display = '';
-
-    var tbody = document.querySelector('#geoTable tbody');
-    tbody.innerHTML = ga4Data.geography.map(function(g) {
-        return '<tr><td>' + g.country + '</td><td class="num">' + formatNum(g.users) + '</td>' +
-            '<td class="num">' + (g.sessions ? formatNum(g.sessions) : '-') + '</td></tr>';
-    }).join('');
-}
-
-// ============================================================
-// GA4 DIRECT API INTEGRATION
-// ============================================================
-
-function signInWithGoogle() {
-    if (!GA4_CONFIG.CLIENT_ID) {
-        alert('GA4 not configured yet.\n\nTo set up:\n1. Go to console.cloud.google.com\n2. Enable "Google Analytics Data API"\n3. Create OAuth Client ID (Web app type)\n4. Add impactmojo.in as authorized origin\n5. Add the Client ID and GA4 Property ID to GA4_CONFIG in this file');
-        return;
-    }
-
-    var tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: GA4_CONFIG.CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/analytics.readonly',
-        callback: function(response) {
-            if (response.access_token) {
-                fetchGA4Data(response.access_token);
-            }
-        }
-    });
-    tokenClient.requestAccessToken();
-}
-
-function fetchGA4Data(accessToken) {
-    updateGA4Status('loading', 'Fetching GA4 data...');
-
-    var property = 'properties/' + GA4_CONFIG.PROPERTY_ID;
-    var baseUrl = 'https://analyticsdata.googleapis.com/v1beta/' + property + ':runReport';
-    var headers = { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' };
-
-    var result = { overview: {}, geography: [], topPages: [], devices: [], channels: [] };
-
-    // Run all API calls in parallel
-    Promise.all([
-        // Overview metrics
-        fetch(baseUrl, {
-            method: 'POST', headers: headers,
-            body: JSON.stringify({
-                dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
-                metrics: [
-                    { name: 'totalUsers' }, { name: 'newUsers' }, { name: 'sessions' },
-                    { name: 'screenPageViews' }, { name: 'averageSessionDuration' },
-                    { name: 'bounceRate' }, { name: 'engagedSessions' }
-                ]
-            })
-        }).then(function(r) { return r.json(); }),
-
-        // Geography
-        fetch(baseUrl, {
-            method: 'POST', headers: headers,
-            body: JSON.stringify({
-                dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
-                dimensions: [{ name: 'country' }],
-                metrics: [{ name: 'totalUsers' }, { name: 'sessions' }, { name: 'screenPageViews' }],
-                orderBys: [{ metric: { metricName: 'totalUsers' }, desc: true }],
-                limit: 30
-            })
-        }).then(function(r) { return r.json(); }),
-
-        // Top pages
-        fetch(baseUrl, {
-            method: 'POST', headers: headers,
-            body: JSON.stringify({
-                dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
-                dimensions: [{ name: 'pagePath' }],
-                metrics: [{ name: 'screenPageViews' }, { name: 'averageSessionDuration' }],
-                orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
-                limit: 30
-            })
-        }).then(function(r) { return r.json(); }),
-
-        // Devices
-        fetch(baseUrl, {
-            method: 'POST', headers: headers,
-            body: JSON.stringify({
-                dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
-                dimensions: [{ name: 'deviceCategory' }],
-                metrics: [{ name: 'totalUsers' }, { name: 'sessions' }]
-            })
-        }).then(function(r) { return r.json(); }),
-
-        // Channels
-        fetch(baseUrl, {
-            method: 'POST', headers: headers,
-            body: JSON.stringify({
-                dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
-                dimensions: [{ name: 'sessionDefaultChannelGroup' }],
-                metrics: [{ name: 'totalUsers' }, { name: 'sessions' }],
-                orderBys: [{ metric: { metricName: 'totalUsers' }, desc: true }]
-            })
-        }).then(function(r) { return r.json(); })
-
-    ]).then(function(responses) {
-        var overview = responses[0];
-        var geo = responses[1];
-        var pages = responses[2];
-        var devices = responses[3];
-        var channels = responses[4];
-
-        // Parse overview
-        if (overview.rows && overview.rows[0]) {
-            var metricNames = ['Total Users', 'New Users', 'Sessions', 'Pageviews', 'Avg Session Duration', 'Bounce Rate', 'Engaged Sessions'];
-            overview.rows[0].metricValues.forEach(function(v, i) {
-                result.overview[metricNames[i]] = parseFloat(v.value);
-            });
-        }
-
-        // Parse geography
-        if (geo.rows) {
-            result.geography = geo.rows.map(function(row) {
-                return {
-                    country: row.dimensionValues[0].value,
-                    users: parseFloat(row.metricValues[0].value),
-                    sessions: parseFloat(row.metricValues[1].value)
-                };
-            });
-        }
-
-        // Parse top pages
-        if (pages.rows) {
-            result.topPages = pages.rows.map(function(row) {
-                return {
-                    path: row.dimensionValues[0].value,
-                    views: parseFloat(row.metricValues[0].value),
-                    avgDuration: parseFloat(row.metricValues[1].value)
-                };
-            });
-        }
-
-        // Parse devices
-        if (devices.rows) {
-            result.devices = devices.rows.map(function(row) {
-                return { device: row.dimensionValues[0].value, users: parseFloat(row.metricValues[0].value) };
-            });
-        }
-
-        // Parse channels
-        if (channels.rows) {
-            result.channels = channels.rows.map(function(row) {
-                return { channel: row.dimensionValues[0].value, users: parseFloat(row.metricValues[0].value) };
-            });
-        }
-
-        // Cache in localStorage
-        var cacheData = { data: result, timestamp: Date.now() };
-        try { localStorage.setItem(GA4_CONFIG.CACHE_KEY, JSON.stringify(cacheData)); } catch(e) {}
-
-        // Apply and render
-        ga4Data = result;
-        render();
-        updateGA4Status('live', 'Live data loaded just now');
-
-        // Hide sign-in button, show refresh
-        document.getElementById('ga4SignIn').textContent = 'Refresh Data';
-
-    }).catch(function(e) {
-        console.error('GA4 API error:', e);
-        updateGA4Status('error', 'Error: ' + e.message);
-    });
-}
-
-function updateGA4Status(state, message) {
-    var el = document.getElementById('ga4Status');
-    var dotClass = state === 'live' ? 'live' : (state === 'loading' ? 'live' : 'offline');
-    el.innerHTML = '<span class="status-dot ' + dotClass + '"></span> ' + message;
-}
-
-// ============================================================
-// CACHE MANAGEMENT
-// ============================================================
-
-function loadCachedGA4Data() {
-    try {
-        var cached = localStorage.getItem(GA4_CONFIG.CACHE_KEY);
-        if (!cached) return false;
-
-        var parsed = JSON.parse(cached);
-        var ageHours = (Date.now() - parsed.timestamp) / (1000 * 60 * 60);
-        var ageStr = ageHours < 1 ? Math.round(ageHours * 60) + ' min ago' :
-                     ageHours < 24 ? Math.round(ageHours) + 'h ago' :
-                     Math.round(ageHours / 24) + 'd ago';
-
-        ga4Data = parsed.data;
-        updateGA4Status('live', 'Cached data (' + ageStr + ')');
-        document.getElementById('ga4Message').textContent = 'Showing cached GA4 data from ' + ageStr + '. Sign in to refresh.';
-
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-
-// ============================================================
-// LEGACY DATA LOADING (from JSON paste / Web App URL)
-// ============================================================
-
-function loadFromPaste() {
-    var text = document.getElementById('jsonPaste').value.trim();
-    if (!text) { alert('Please paste JSON data first.'); return; }
-    try {
-        var data = JSON.parse(text);
-        if (data.ga4) {
-            ga4Data = {
-                overview: data.ga4.overview || {},
-                geography: data.ga4.geography || [],
-                channels: data.ga4.channels || [],
-                devices: data.ga4.devices || []
-            };
-            // Cache it
-            try { localStorage.setItem(GA4_CONFIG.CACHE_KEY, JSON.stringify({ data: ga4Data, timestamp: Date.now() })); } catch(e) {}
-        }
-        if (data.legacy && data.legacy.courseUsers) {
-            Object.keys(data.legacy.courseUsers).forEach(function(k) {
-                LEGACY.courseUsers[k] = data.legacy.courseUsers[k];
-            });
-        }
-        render();
-        updateGA4Status('live', 'Data loaded from paste');
-    } catch (e) {
-        alert('Invalid JSON: ' + e.message);
-    }
-}
-
-function fetchFromWebApp() {
-    var url = document.getElementById('webAppUrl').value.trim();
-    if (!url) { alert('Please enter your Apps Script Web App URL.'); return; }
-
-    updateGA4Status('loading', 'Fetching...');
-    fetch(url)
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-            if (document.getElementById('jsonPaste')) {
-                document.getElementById('jsonPaste').value = JSON.stringify(data, null, 2);
-            }
-            if (data.ga4) {
-                ga4Data = { overview: data.ga4.overview || {}, geography: data.ga4.geography || [], channels: data.ga4.channels || [], devices: data.ga4.devices || [] };
-                try { localStorage.setItem(GA4_CONFIG.CACHE_KEY, JSON.stringify({ data: ga4Data, timestamp: Date.now() })); } catch(e) {}
-            }
-            render();
-            updateGA4Status('live', 'Data loaded from Web App');
-        })
-        .catch(function(e) {
-            alert('Error: ' + e.message);
-            updateGA4Status('error', 'Fetch failed');
-        });
-}
-
-// ============================================================
-// UTILITIES
-// ============================================================
-
-function sumValues(obj) {
-    return Object.values(obj).reduce(function(s, v) { return s + v; }, 0);
-}
-
-function formatNum(n) {
-    n = parseFloat(n);
-    if (isNaN(n)) return '-';
-    if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
-    if (n >= 1000) return n.toLocaleString();
-    return n.toString();
 }
 
 // ============================================================
@@ -1338,46 +961,8 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fun
     closeBtn.addEventListener('click', closeMenu);
 })();
 
-// Show admin controls if ?admin in URL
-if (window.location.search.indexOf('admin') > -1) {
-    document.getElementById('adminControls').style.display = '';
-    document.getElementById('jsonPasteSection').style.display = '';
-}
-
-// Load cached GA4 data, then render
-loadCachedGA4Data();
+// Render on load
 render();
-
-// Show admin nav link if user is an admin
-// (analytics is a public page, so we just show the link — not gate it)
-(function() {
-    var link = document.getElementById('adminNavLink');
-    if (!link) return;
-    // Check after a short delay to let auth initialize
-    setTimeout(function checkAdmin() {
-        if (typeof ImpactMojoAuth !== 'undefined' && ImpactMojoAuth.profile && ImpactMojoAuth.profile.role === 'admin') {
-            link.style.display = '';
-        }
-    }, 2000);
-    // Also listen for auth state changes
-    window.addEventListener('authStateChanged', function(e) {
-        if (e.detail && e.detail.profile && e.detail.profile.role === 'admin') {
-            link.style.display = '';
-        }
-    });
-})();
-</script>
-<script src="/js/dashboard-tabs.js"></script>
-<script>
-// Init dashboard tabs — analytics is public so auth may or may not be loaded
-(function() {
-    // Try immediately
-    if (typeof DashboardTabs !== 'undefined') DashboardTabs.init('analytics');
-    // Also refresh when auth state changes (profile becomes available)
-    window.addEventListener('authStateChanged', function() {
-        if (typeof DashboardTabs !== 'undefined') DashboardTabs.refresh('analytics');
-    });
-})();
 </script>
 </body>
 </html>

@@ -1,29 +1,27 @@
 /**
  * ImpactMojo Unified Dashboard Tabs
- * Version: 1.0.0
+ * Version: 2.0.0
  * Date: March 16, 2026
  *
  * Renders a shared top-level tab bar across all dashboard pages:
- *   - My Account   (always visible, requires login)
- *   - Organization  (visible if subscription_tier === 'organization')
- *   - Analytics     (visible if role === 'admin')
- *   - Admin         (visible if role === 'admin')
+ *   - My Dashboard    (always visible, requires login)
+ *   - Org Dashboard   (visible if subscription_tier === 'organization' OR admin)
+ *   - Admin Dashboard (visible if role === 'admin' — includes live analytics)
  *
  * USAGE:
  *   1. Add <div id="dashboardTabs"></div> where you want the bar
  *   2. Include this script after auth.js
  *   3. Call DashboardTabs.init('current-page-id') from your page
- *      where page-id is one of: 'account', 'organization', 'analytics', 'admin'
+ *      where page-id is one of: 'account', 'organization', 'admin'
  */
 
 (function () {
   'use strict';
 
   var TABS = [
-    { id: 'account',      label: 'My Account',    href: '/account.html',          icon: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>', access: 'all' },
-    { id: 'organization', label: 'Organization',   href: '/org-dashboard.html',    icon: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', access: 'org' },
-    { id: 'analytics',    label: 'Analytics',      href: '/admin/analytics.html',  icon: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>', access: 'admin' },
-    { id: 'admin',        label: 'Admin',          href: '/admin/',                icon: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>', access: 'admin' }
+    { id: 'account',      label: 'My Dashboard',     href: '/account.html',       icon: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>', access: 'all' },
+    { id: 'organization', label: 'Org Dashboard',     href: '/org-dashboard.html', icon: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', access: 'org' },
+    { id: 'admin',        label: 'Admin Dashboard',   href: '/admin/',             icon: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>', access: 'admin' }
   ];
 
   // CSS injected once
@@ -42,7 +40,7 @@
 
     /**
      * Initialize the dashboard tabs.
-     * @param {string} currentPage - one of 'account', 'organization', 'analytics', 'admin'
+     * @param {string} currentPage - one of 'account', 'organization', 'admin'
      */
     init: function (currentPage) {
       if (this._rendered) return;
