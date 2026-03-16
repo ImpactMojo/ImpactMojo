@@ -270,7 +270,7 @@ Comprehensive ToC learning and building toolkit:
 | **Formspree** | Contact form handling |
 | **UserWay** | Accessibility widget |
 | **axe-core + Puppeteer** | Automated WCAG 2.1 AA accessibility testing |
-| **Google Fonts** | Inter & Poppins typography |
+| **Google Fonts** | Amaranth (body) + Inter (headings) + JetBrains Mono (code) |
 
 ### Architecture
 
@@ -594,7 +594,7 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 9.5.0
+**Version:** 10.0.0
 **Last Updated:** March 2026
 **License:** CC-BY-4.0
 **Hosting:** Netlify
