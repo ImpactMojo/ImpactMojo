@@ -38,6 +38,7 @@
 * [Who We Are (Team & Founders)](team.md)
 * [Why ImpactMojo](why-impactmojo.md)
 * [Transparency & Commitments](transparency-and-commitments.md)
+* [The Transparency Page (Detailed Guide)](transparency-page-guide.md)
 
 ## Policies (Plain Language)
 
