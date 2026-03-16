@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | ImpactMojo</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/images/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ========================================
+   DESIGN SYSTEM (matches ImpactMojo V3)
+   ======================================== */
+:root {
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --accent-color: #0EA5E9;
+    --accent-hover: #0284C7;
+    --secondary-accent: #6366F1;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.4);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-theme="light"] {
+    --primary-bg: #FFFFFF;
+    --secondary-bg: #F8FAFC;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ========================================
+   LOADING OVERLAY
+   ======================================== */
+.loading-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--primary-bg);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+}
+.loading-spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ========================================
+   ACCESS DENIED
+   ======================================== */
+.access-denied {
+    display: none;
+    min-height: 100vh;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+    text-align: center; padding: 24px;
+}
+.access-denied h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    color: var(--danger-color);
+}
+.access-denied p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    max-width: 400px;
+}
+.access-denied .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px;
+    background: var(--accent-color);
+    color: white; border: none; border-radius: var(--radius-sm);
+    font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: background var(--transition);
+}
+.access-denied .btn:hover { background: var(--accent-hover); }
+
+/* ========================================
+   ADMIN HEADER
+   ======================================== */
+.admin-header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--primary-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 24px;
+}
+.admin-header-inner {
+    max-width: 1200px; margin: 0 auto; height: 64px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.admin-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text-primary);
+}
+.admin-logo img { height: 32px; }
+.admin-logo-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: 1rem;
+}
+.admin-logo-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--gradient-primary);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.admin-header-actions {
+    display: flex; align-items: center; gap: 12px;
+}
+.admin-user {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.85rem; color: var(--text-secondary);
+}
+.admin-user-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    object-fit: cover;
+}
+.theme-toggle {
+    background: none; border: 1px solid var(--border-color);
+    color: var(--text-secondary); cursor: pointer;
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition);
+}
+.theme-toggle:hover { color: var(--text-primary); background: var(--hover-bg); }
+.btn-sign-out {
+    padding: 6px 14px;
+    background: transparent; border: 1px solid var(--border-color);
+    color: var(--text-secondary); border-radius: var(--radius-sm);
+    font-size: 0.8rem; font-weight: 500;
+    cursor: pointer; transition: all var(--transition);
+}
+.btn-sign-out:hover { color: var(--danger-color); border-color: var(--danger-color); }
+
+/* ========================================
+   ADMIN CONTENT
+   ======================================== */
+.admin-content {
+    max-width: 1200px; margin: 0 auto;
+    padding: 32px 24px 64px;
+}
+.admin-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem; font-weight: 700;
+    margin-bottom: 8px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.admin-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+}
+
+/* ========================================
+   DASHBOARD GRID
+   ======================================== */
+.dash-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+.dash-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    transition: all var(--transition);
+    text-decoration: none;
+    color: inherit;
+    display: flex; flex-direction: column; gap: 12px;
+}
+.dash-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+.dash-card-icon {
+    width: 48px; height: 48px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+}
+.dash-card-icon.blue { background: rgba(14, 165, 233, 0.15); }
+.dash-card-icon.purple { background: rgba(99, 102, 241, 0.15); }
+.dash-card-icon.green { background: rgba(16, 185, 129, 0.15); }
+.dash-card-icon.amber { background: rgba(245, 158, 11, 0.15); }
+.dash-card-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: 1rem;
+}
+.dash-card-desc {
+    font-size: 0.85rem; color: var(--text-secondary);
+    line-height: 1.6;
+}
+.dash-card-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 0.7rem; font-weight: 600;
+    width: fit-content;
+}
+.dash-card-badge.live {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success-color);
+}
+.dash-card-badge.new {
+    background: rgba(14, 165, 233, 0.15);
+    color: var(--accent-color);
+}
+
+/* ========================================
+   SETUP INSTRUCTIONS
+   ======================================== */
+.setup-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    margin-top: 32px;
+}
+.setup-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+}
+.setup-card pre {
+    background: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    overflow-x: auto;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+.setup-card pre .kw { color: var(--accent-color); }
+.setup-card pre .str { color: var(--success-color); }
+.setup-card pre .cm { color: var(--text-muted); }
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 640px) {
+    .admin-content { padding: 20px 16px 48px; }
+    .admin-title { font-size: 1.3rem; }
+    .dash-grid { grid-template-columns: 1fr; }
+    .admin-user span { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <p style="color: var(--text-secondary); font-size: 0.85rem;">Verifying admin access...</p>
+</div>
+
+<!-- Access Denied -->
+<div class="access-denied" id="accessDenied">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--danger-color)" stroke-width="1.5">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+    <h1>Access Denied</h1>
+    <p>This page is restricted to ImpactMojo administrators. If you believe you should have access, contact the site admin.</p>
+    <a href="/" class="btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Back to Home
+    </a>
+</div>
+
+<!-- Admin Dashboard (hidden until auth passes) -->
+<div id="adminApp" style="display:none;">
+
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="admin-header-inner">
+            <a href="/admin/" class="admin-logo">
+                <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo">
+                <span class="admin-logo-text">ImpactMojo</span>
+                <span class="admin-logo-badge">Admin</span>
+            </a>
+            <div class="admin-header-actions">
+                <div class="admin-user">
+                    <img class="admin-user-avatar auth-user-avatar" src="" alt="">
+                    <span class="auth-user-name"></span>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <button class="btn-sign-out" onclick="handleSignOut()">Sign Out</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="admin-content">
+        <h1 class="admin-title">Admin Dashboard</h1>
+        <p class="admin-subtitle">Manage your site content, view analytics, and configure settings.</p>
+
+        <div class="dash-grid">
+            <!-- CMS -->
+            <a href="/admin/cms.html" class="dash-card">
+                <div class="dash-card-icon blue">&#x1f4dd;</div>
+                <div class="dash-card-title">Content Manager</div>
+                <div class="dash-card-desc">Edit homepage hero, courses, games, tools, testimonials, team, footer, and announcements — all via a visual JSON editor.</div>
+                <span class="dash-card-badge new">CMS</span>
+            </a>
+
+            <!-- Analytics -->
+            <a href="/admin/analytics" class="dash-card">
+                <div class="dash-card-icon purple">&#x1f4ca;</div>
+                <div class="dash-card-title">Analytics & Transparency</div>
+                <div class="dash-card-desc">View platform metrics, GA4 live data, course/game/tool usage, feature adoption, and geographic reach.</div>
+                <span class="dash-card-badge live">Live</span>
+            </a>
+
+            <!-- User Management (future) -->
+            <div class="dash-card" style="opacity:0.5; cursor:default;">
+                <div class="dash-card-icon green">&#x1f465;</div>
+                <div class="dash-card-title">User Management</div>
+                <div class="dash-card-desc">View registered users, manage roles, review subscriptions and org memberships.</div>
+                <span class="dash-card-badge" style="background:var(--hover-bg); color:var(--text-muted);">Coming Soon</span>
+            </div>
+
+            <!-- Settings (future) -->
+            <div class="dash-card" style="opacity:0.5; cursor:default;">
+                <div class="dash-card-icon amber">&#x2699;&#xFE0F;</div>
+                <div class="dash-card-title">Site Settings</div>
+                <div class="dash-card-desc">Configure site metadata, feature flags, maintenance mode, and integrations.</div>
+                <span class="dash-card-badge" style="background:var(--hover-bg); color:var(--text-muted);">Coming Soon</span>
+            </div>
+        </div>
+
+        <!-- Setup Instructions -->
+        <div class="setup-card" id="setupCard">
+            <h3>&#x1f6e0; Supabase Setup (one-time)</h3>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">
+                Run this SQL in your Supabase SQL Editor to create the required tables and policies:
+            </p>
+            <pre><span class="cm">-- 1. Add role column to profiles</span>
+<span class="kw">ALTER TABLE</span> profiles <span class="kw">ADD COLUMN IF NOT EXISTS</span> role <span class="kw">TEXT DEFAULT</span> <span class="str">'user'</span>;
+
+<span class="cm">-- 2. Set yourself as admin (replace with your email)</span>
+<span class="kw">UPDATE</span> profiles <span class="kw">SET</span> role = <span class="str">'admin'</span>
+<span class="kw">WHERE</span> id = (<span class="kw">SELECT</span> id <span class="kw">FROM</span> auth.users <span class="kw">WHERE</span> email = <span class="str">'your-email@example.com'</span>);
+
+<span class="cm">-- 3. Create site_content table</span>
+<span class="kw">CREATE TABLE IF NOT EXISTS</span> site_content (
+    id <span class="kw">UUID DEFAULT</span> gen_random_uuid() <span class="kw">PRIMARY KEY</span>,
+    section_key <span class="kw">TEXT UNIQUE NOT NULL</span>,
+    label <span class="kw">TEXT NOT NULL</span>,
+    content <span class="kw">JSONB NOT NULL DEFAULT</span> <span class="str">'{}'</span>,
+    schema <span class="kw">JSONB DEFAULT NULL</span>,
+    updated_at <span class="kw">TIMESTAMPTZ DEFAULT</span> now(),
+    updated_by <span class="kw">UUID REFERENCES</span> auth.users(id)
+);
+
+<span class="cm">-- 4. Enable RLS</span>
+<span class="kw">ALTER TABLE</span> site_content <span class="kw">ENABLE ROW LEVEL SECURITY</span>;
+
+<span class="cm">-- 5. Public read access (so site pages can fetch content)</span>
+<span class="kw">CREATE POLICY</span> <span class="str">"Public read"</span> <span class="kw">ON</span> site_content
+    <span class="kw">FOR SELECT USING</span> (<span class="kw">true</span>);
+
+<span class="cm">-- 6. Admin-only write access</span>
+<span class="kw">CREATE POLICY</span> <span class="str">"Admin write"</span> <span class="kw">ON</span> site_content
+    <span class="kw">FOR ALL USING</span> (
+        <span class="kw">EXISTS</span> (
+            <span class="kw">SELECT</span> 1 <span class="kw">FROM</span> profiles
+            <span class="kw">WHERE</span> profiles.id = auth.uid()
+            <span class="kw">AND</span> profiles.role = <span class="str">'admin'</span>
+        )
+    );</pre>
+        </div>
+    </main>
+</div>
+
+<!-- Scripts -->
+<script src="/js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin-gate.js"></script>
+
+<script>
+// Theme toggle
+function toggleTheme() {
+    var html = document.documentElement;
+    var current = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+    try { localStorage.setItem('impactmojo_admin_theme', html.getAttribute('data-theme')); } catch(e) {}
+}
+
+// Restore theme
+(function() {
+    try {
+        var saved = localStorage.getItem('impactmojo_admin_theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+    } catch(e) {}
+})();
+
+// Sign out
+async function handleSignOut() {
+    if (confirm('Sign out of admin panel?')) {
+        await ImpactMojoAuth.signOut();
+    }
+}
+
+// Admin Gate
+document.addEventListener('DOMContentLoaded', function() {
+    AdminGate.protect({
+        loadingEl: document.getElementById('loadingOverlay'),
+        timeoutMs: 8000,
+        onReady: function(user, profile) {
+            document.getElementById('adminApp').style.display = 'block';
+            ImpactMojoAuth.updateUI();
+        },
+        onDenied: function(reason) {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('accessDenied').style.display = 'flex';
+        }
+    });
+});
+</script>
+
+</body>
+</html>

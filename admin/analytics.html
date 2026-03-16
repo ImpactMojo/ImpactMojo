@@ -369,6 +369,7 @@ body {
             <a href="/dataverse" class="nav-link">Dataverse</a>
             <a href="/challenges" class="nav-link">Challenges</a>
             <a href="/blog" class="nav-link">Blog</a>
+            <a href="/admin/" class="nav-link" id="adminNavLink" style="display:none;">Admin</a>
         </div>
         <div class="nav-actions">
             <div class="theme-selector" aria-label="Theme selection">
@@ -1317,6 +1318,25 @@ if (window.location.search.indexOf('admin') > -1) {
 // Load cached GA4 data, then render
 loadCachedGA4Data();
 render();
+
+// Show admin nav link if user is an admin
+// (analytics is a public page, so we just show the link — not gate it)
+(function() {
+    var link = document.getElementById('adminNavLink');
+    if (!link) return;
+    // Check after a short delay to let auth initialize
+    setTimeout(function checkAdmin() {
+        if (typeof ImpactMojoAuth !== 'undefined' && ImpactMojoAuth.profile && ImpactMojoAuth.profile.role === 'admin') {
+            link.style.display = '';
+        }
+    }, 2000);
+    // Also listen for auth state changes
+    window.addEventListener('authStateChanged', function(e) {
+        if (e.detail && e.detail.profile && e.detail.profile.role === 'admin') {
+            link.style.display = '';
+        }
+    });
+})();
 </script>
 </body>
 </html>
