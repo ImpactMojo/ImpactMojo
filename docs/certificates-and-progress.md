@@ -46,6 +46,18 @@ Completion is tracked automatically — there is no "submit" button. The platfor
 
 When you complete a flagship course, you earn a digital certificate.
 
+> **Important: ImpactMojo is not a university, accredited institution, or government-recognised credentialing body.** Our certificates are **micro-credentials that certify course completion only**. They confirm that you worked through the modules and quizzes — nothing more.
+>
+> **What our certificates do NOT do:**
+>
+> - They do not guarantee employment, internships, or acquisition of skills.
+> - They are not equivalent to university degrees, diplomas, or academic credit.
+> - They cannot be stored, transferred, or counted as credits in any government digital credential system — including DigiLocker, APAAR, Aadhaar-linked systems, ABC (Academic Bank of Credits), or any national/international equivalents.
+> - They do not qualify as National Skills Qualifications Framework (NSQF) or National Skills Information Management (NSIM) credentials.
+> - They are not recognised by UGC, AICTE, or any regulatory body.
+>
+> Our certificates are a record of completion issued by a private ed-tech platform. They may be useful as evidence of self-directed learning on your CV or in a portfolio, but they carry no institutional or regulatory weight.
+
 **What the certificate includes:**
 
 - Your name
