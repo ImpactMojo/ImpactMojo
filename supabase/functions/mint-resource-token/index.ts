@@ -18,16 +18,16 @@ import { create, getNumericDate } from "https://deno.land/x/djwt@v3.0.2/mod.ts";
 const TIER_RESOURCES: Record<string, string[]> = {
   explorer: [],
   practitioner: [
-    "rq-builder",       // RQ Builder Pro (researchquestions.netlify.app)
+    "rq-builder",
   ],
   professional: [
     "rq-builder",
-    "code-convert-pro", // Code Converter Pro (stats-assist.netlify.app)
-    "qual-insights",    // Qual Insights Lab Pro (qual-lab.netlify.app)
-    "vaniscribe",       // VaniScribe AI (vaniscribe.netlify.app)
-    "devdata-practice", // DevData Practice (varnasr.github.io)
-    "viz-cookbook",      // Visualization Cookbook (varnasr.github.io)
-    "devecon-toolkit",  // DevEcon Toolkit (varnasr.github.io)
+    "code-convert-pro",
+    "qual-insights",
+    "vaniscribe",
+    "devdata-practice",
+    "viz-cookbook",
+    "devecon-toolkit",
   ],
   organization: [
     "rq-builder",

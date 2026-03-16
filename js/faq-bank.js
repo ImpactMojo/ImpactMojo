@@ -173,9 +173,9 @@
     { re: /\b(list|show).+lab(s)?\b|^\s*labs?\s*$/i,
       a: () => `Here are our labs:\n\n${listLabs()}` },
     { re: /\bTOC\b|\btheor(y|ies) of change\b/i,
-      a: () => `**TOC Workbench** helps you structure a Theory of Change quickly and clearly.\nhttps://toc-workbench.netlify.app/` },
+      a: () => `**TOC Workbench** helps you structure a Theory of Change quickly and clearly.\nhttps://101.impactmojo.in/toc-workbench` },
     { re: /MLE (framework|builder|workbench)/i,
-      a: () => `The **MLE Framework Workbench/Builder** help you design monitoring & learning frameworks.\nWorkbench: https://mle-frameworkdesign.netlify.app/\nBuilder:   https://mle-plan-lab.netlify.app/` },
+      a: () => `The **MLE Framework Workbench/Builder** help you design monitoring & learning frameworks.\nWorkbench: https://101.impactmojo.in/mel-design-lab\nBuilder:   https://101.impactmojo.in/mel-plan-lab` },
     { re: /how (to )?access.+lab|use.+lab/i,
       a: "Labs are web tools. Click a lab link and start; most open directly in your browser." },
 
