@@ -82,6 +82,13 @@ const ImpactMojoAuth = {
                     // Initial session check complete - set user if session exists
                     if (session?.user) {
                         this.user = session.user;
+                        // Immediately restore cached profile for instant UI
+                        if (typeof window.IMState !== 'undefined') {
+                            var cached = window.IMState.cachedProfile.get();
+                            if (cached && cached.id === session.user.id) {
+                                this.profile = cached;
+                            }
+                        }
                         try {
                             await this.fetchProfile();
                         } catch (e) {
@@ -150,6 +157,10 @@ const ImpactMojoAuth = {
 
                     this.user = null;
                     this.profile = null;
+                    // Clear cached profile on sign-out
+                    if (typeof window.IMState !== 'undefined') {
+                        window.IMState.cachedProfile.clear();
+                    }
                     if (!this.isAuthReady) {
                         this.isAuthReady = true;
                         if (this._authReadyResolve) this._authReadyResolve();
@@ -199,13 +210,33 @@ const ImpactMojoAuth = {
 
             if (error) {
                 console.error('Error fetching profile:', error);
+                // Fall back to cached profile if fetch fails
+                if (!this.profile && typeof window.IMState !== 'undefined') {
+                    var cached = window.IMState.cachedProfile.get();
+                    if (cached && cached.id === this.user.id) {
+                        this.profile = cached;
+                        return cached;
+                    }
+                }
                 return null;
             }
 
             this.profile = data;
+            // Cache profile in localStorage for cross-page persistence
+            if (typeof window.IMState !== 'undefined') {
+                window.IMState.cachedProfile.set(data);
+            }
             return data;
         } catch (err) {
             console.error('Profile fetch failed:', err);
+            // Fall back to cached profile on network failure
+            if (!this.profile && typeof window.IMState !== 'undefined') {
+                var cached = window.IMState.cachedProfile.get();
+                if (cached && cached.id === this.user.id) {
+                    this.profile = cached;
+                    return cached;
+                }
+            }
             return null;
         }
     },
@@ -679,6 +710,10 @@ const ImpactMojoAuth = {
 
             this.user = null;
             this.profile = null;
+            // Clear cached profile
+            if (typeof window.IMState !== 'undefined') {
+                window.IMState.cachedProfile.clear();
+            }
 
             // Redirect to home page
             window.location.href = '/';
