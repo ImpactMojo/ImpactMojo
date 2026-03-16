@@ -285,6 +285,37 @@
     document.getElementById('profileEmail').textContent = user.email || '';
     document.getElementById('profileOrg').textContent = profile.organization || '';
 
+    // Profile avatar
+    var avatarEl = document.getElementById('profileAvatar');
+    if (profile.avatar_url) {
+      avatarEl.innerHTML = '<img src="' + profile.avatar_url + '" alt="Profile picture">';
+    }
+
+    // Profile details display
+    _showDetailIf('detailPhone', 'detailPhoneText', profile.phone);
+    _showDetailIf('detailBio', 'detailBioText', profile.bio);
+
+    var locationParts = [profile.city, profile.country].filter(Boolean);
+    var addressParts = [profile.address].concat(locationParts).filter(Boolean);
+    _showDetailIf('detailAddress', 'detailAddressText', addressParts.join(', '));
+
+    if (profile.linkedin_url) {
+      document.getElementById('detailLinkedin').style.display = '';
+      var linkEl = document.getElementById('detailLinkedinLink');
+      linkEl.href = profile.linkedin_url;
+      linkEl.textContent = 'LinkedIn Profile';
+    }
+
+    if (profile.interests) {
+      var tags = profile.interests.split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+      if (tags.length > 0) {
+        document.getElementById('detailInterests').style.display = '';
+        document.getElementById('detailInterestsTags').innerHTML = tags.map(function(t) {
+          return '<span class="interest-tag">' + t + '</span>';
+        }).join('');
+      }
+    }
+
     // Form fields
     document.getElementById('editName').value        = profile.full_name || '';
     document.getElementById('editDisplayName').value  = profile.display_name || '';
@@ -293,6 +324,9 @@
     document.getElementById('editCountry').value      = profile.country || '';
     document.getElementById('editLinkedin').value     = profile.linkedin_url || '';
     document.getElementById('editBio').value          = profile.bio || '';
+    document.getElementById('editPhone').value        = profile.phone || '';
+    document.getElementById('editAddress').value      = profile.address || '';
+    document.getElementById('editInterests').value    = profile.interests || '';
 
     // Subscription display
     var tier      = profile.subscription_tier || 'explorer';
@@ -525,7 +559,10 @@
           city: document.getElementById('editCity').value.trim(),
           country: document.getElementById('editCountry').value.trim(),
           linkedin_url: document.getElementById('editLinkedin').value.trim(),
-          bio: document.getElementById('editBio').value.trim()
+          bio: document.getElementById('editBio').value.trim(),
+          phone: document.getElementById('editPhone').value.trim(),
+          address: document.getElementById('editAddress').value.trim(),
+          interests: document.getElementById('editInterests').value.trim()
         };
         var result = await ImpactMojoAuth.updateProfile(updates);
         if (result.success) { showAlert('Profile updated successfully!', 'success'); updatePageData(); }
@@ -561,6 +598,89 @@
   });
 
   // =========================================================================
+  // PROFILE HELPERS
+  // =========================================================================
+
+  function _showDetailIf(wrapperId, textId, value) {
+    var wrapper = document.getElementById(wrapperId);
+    var text = document.getElementById(textId);
+    if (value) {
+      wrapper.style.display = '';
+      text.textContent = value;
+    } else {
+      wrapper.style.display = 'none';
+    }
+  }
+
+  async function handleAvatarUpload(input) {
+    if (!input.files || !input.files[0]) return;
+    var file = input.files[0];
+
+    // Validate file
+    if (!file.type.startsWith('image/')) {
+      showAlert('Please select an image file.', 'error');
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      showAlert('Image must be under 2MB.', 'error');
+      return;
+    }
+
+    var user = ImpactMojoAuth.user;
+    if (!user) return;
+
+    // Read as data URL for immediate preview
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var avatarEl = document.getElementById('profileAvatar');
+      avatarEl.innerHTML = '<img src="' + e.target.result + '" alt="Profile picture">';
+    };
+    reader.readAsDataURL(file);
+
+    // Upload to Supabase Storage
+    try {
+      var supabase = window.supabase ? null : null; // Use the global client
+      var client = (typeof ImpactMojoAuth !== 'undefined' && ImpactMojoAuth._supabase) ? ImpactMojoAuth._supabase : null;
+      if (!client && window.ImpactMojoConfig) {
+        // Fall back: get the client from the global scope
+        client = window._supabaseClient || null;
+      }
+
+      if (client) {
+        var ext = file.name.split('.').pop();
+        var filePath = 'avatars/' + user.id + '.' + ext;
+
+        var uploadResult = await client.storage.from('avatars').upload(filePath, file, { upsert: true });
+        if (uploadResult.error) {
+          console.warn('[Account] Avatar upload failed:', uploadResult.error.message);
+          // Still save the data URL as fallback
+          var dataUrl = document.querySelector('#profileAvatar img');
+          if (dataUrl) {
+            await ImpactMojoAuth.updateProfile({ avatar_url: dataUrl.src });
+          }
+          return;
+        }
+
+        var publicUrl = client.storage.from('avatars').getPublicUrl(filePath);
+        if (publicUrl.data && publicUrl.data.publicUrl) {
+          await ImpactMojoAuth.updateProfile({ avatar_url: publicUrl.data.publicUrl });
+          showAlert('Profile picture updated!', 'success');
+        }
+      } else {
+        // No Supabase storage available — store as data URL in profile
+        var imgEl = document.querySelector('#profileAvatar img');
+        if (imgEl && imgEl.src.startsWith('data:')) {
+          await ImpactMojoAuth.updateProfile({ avatar_url: imgEl.src });
+          showAlert('Profile picture saved!', 'success');
+        }
+      }
+    } catch (err) {
+      console.error('[Account] Avatar upload error:', err);
+      showAlert('Could not upload picture. Changes saved locally.', 'info');
+    }
+  }
+
+  // =========================================================================
   // EXPOSE GLOBALS (required for onclick="" attributes in HTML)
   // =========================================================================
 
@@ -576,5 +696,6 @@
   window.clearLocalData    = clearLocalData;
   window.signOut           = signOut;
   window.showAlert         = showAlert;
+  window.handleAvatarUpload = handleAvatarUpload;
 
 })();
