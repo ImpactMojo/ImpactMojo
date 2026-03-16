@@ -5,6 +5,17 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.1.0] - 2026-03-16
+
+### Added
+- **Git best-practice standards** propagated across all 29 Varnasr repos: `.gitattributes`, `.editorconfig`, `.githooks/pre-commit`, `.githooks/commit-msg`, `.gitmessage`, `.github/CODEOWNERS`, `.github/SECURITY.md`, `.github/dependabot.yml`, `.github/pull_request_template.md`, `.github/ISSUE_TEMPLATE/` (bug report, feature request, content issue)
+- **Dependabot** configured per-repo (npm, pip, github-actions ecosystems auto-detected)
+- **Pre-commit hook** blocks secrets (.env, .pem, .key), debugger statements, merge conflict markers; warns on console.log and files >500KB
+- **Commit-msg hook** enforces prefix convention (Add/Fix/Update/Translate/Docs/Refactor/Test/CI/Chore)
+
+### Fixed
+- **Broken GitBook sidebar links**: Added `/impactmojo/*` → `/docs/*` Netlify redirects so sidebar navigation on impactmojo.in/docs works correctly
+
 ## [10.0.0] - 2026-03-16
 
 ### Added
@@ -119,6 +130,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dojos skill session page
 - Blog (Learning Loops) and podcast (Between the Logframes)
 
+[10.1.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.0.0...v10.1.0
 [10.0.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.5.0...v10.0.0
 [9.5.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.1.0...v9.5.0
 [9.1.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.0.0...v9.1.0
