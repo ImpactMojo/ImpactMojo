@@ -1,6 +1,6 @@
 // Service Worker for ImpactMojo PWA
 // v5 - Offline PWA support for flagship courses, shell caching, offline fallback
-const CACHE_NAME = 'impactmojo-v5';
+const CACHE_NAME = 'impactmojo-v6';
 const COURSE_CACHE_PREFIX = 'impactmojo-course-';
 
 // App shell: core assets cached on install
