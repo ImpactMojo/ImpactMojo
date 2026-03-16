@@ -2996,8 +2996,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     const loadingOverlay = document.getElementById('loadingOverlay');
 
     // Safety timeout in case auth never resolves — must be registered BEFORE await
-    setTimeout(function() {
+    setTimeout(async function() {
         if (loadingOverlay.style.display !== 'none' && !_accountPageReady) {
+            // Before giving up, check Supabase directly for a valid session
+            var timeoutSession = null;
+            try { timeoutSession = await ImpactMojoAuth.getSession(); } catch (_) {}
+            if (timeoutSession?.user) {
+                ImpactMojoAuth.user = timeoutSession.user;
+                try { await ImpactMojoAuth.fetchProfile(); } catch (_) {}
+            }
             loadingOverlay.style.display = 'none';
             if (!ImpactMojoAuth.isLoggedIn()) {
                 window.location.href = 'login.html';
@@ -3027,6 +3034,23 @@ document.addEventListener('DOMContentLoaded', async function() {
         updatePageData();
         updateSavedItemsDisplay();
     } else {
+        // Fallback: double-check with Supabase directly before giving up.
+        // This catches cases where onAuthStateChange missed a valid session
+        // (e.g. transient SIGNED_OUT during token refresh).
+        try {
+            var fallbackSession = await ImpactMojoAuth.getSession();
+            if (fallbackSession?.user) {
+                // Session exists — re-init auth state from this session
+                ImpactMojoAuth.user = fallbackSession.user;
+                try { await ImpactMojoAuth.fetchProfile(); } catch (_) {}
+                _accountPageReady = true;
+                loadingOverlay.style.display = 'none';
+                updatePageData();
+                updateSavedItemsDisplay();
+                ImpactMojoAuth.updateUI();
+                return;
+            }
+        } catch (_) { /* proceed with redirect */ }
         // Only redirect to login if auth is ready and user is truly not logged in
         window.location.href = 'login.html';
     }

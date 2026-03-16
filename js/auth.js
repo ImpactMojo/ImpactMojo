@@ -54,6 +54,7 @@ const ImpactMojoAuth = {
     _authReadyResolve: null,
     isSyncing: false,
     _initialSessionHadUser: false,
+    _processingAuthEvent: false,
 
     // Initialize auth and check session
     async init() {
@@ -72,6 +73,7 @@ const ImpactMojoAuth = {
                 console.log('Auth state changed:', event);
 
                 if (event === 'INITIAL_SESSION') {
+                    this._processingAuthEvent = true;
                     // Initial session check complete - set user if session exists
                     if (session?.user) {
                         this.user = session.user;
@@ -82,6 +84,7 @@ const ImpactMojoAuth = {
                         }
                         this._initialSessionHadUser = true;
                     }
+                    this._processingAuthEvent = false;
                     // Mark auth as ready BEFORE sync — sync is non-blocking
                     this.isAuthReady = true;
                     if (this._authReadyResolve) this._authReadyResolve();
@@ -98,12 +101,14 @@ const ImpactMojoAuth = {
                     if (this._initialSessionHadUser && this.user?.id === session.user.id) {
                         return;
                     }
+                    this._processingAuthEvent = true;
                     this.user = session.user;
                     try {
                         await this.fetchProfile();
                     } catch (e) {
                         console.error('Profile fetch failed during sign-in:', e);
                     }
+                    this._processingAuthEvent = false;
                     // If auth wasn't ready yet (OAuth callback), mark it ready now
                     if (!this.isAuthReady) {
                         this.isAuthReady = true;
@@ -114,7 +119,30 @@ const ImpactMojoAuth = {
                     this.syncAll().catch(function (e) {
                         console.error('Background sync failed:', e);
                     });
+                } else if (event === 'TOKEN_REFRESHED' && session?.user) {
+                    // Token was refreshed successfully — restore state if it was
+                    // cleared by a transient SIGNED_OUT during refresh
+                    this.user = session.user;
+                    this.updateUI();
                 } else if (event === 'SIGNED_OUT') {
+                    // Guard: ignore transient SIGNED_OUT fired while we are still
+                    // processing INITIAL_SESSION or SIGNED_IN (race during token refresh)
+                    if (this._processingAuthEvent) {
+                        console.warn('Ignoring transient SIGNED_OUT during auth processing');
+                        return;
+                    }
+                    // Double-check with Supabase before clearing state — avoids
+                    // reacting to stale events when a valid session still exists
+                    try {
+                        var check = await supabaseClient.auth.getSession();
+                        if (check?.data?.session?.user) {
+                            console.warn('SIGNED_OUT fired but session still valid — ignoring');
+                            this.user = check.data.session.user;
+                            this.updateUI();
+                            return;
+                        }
+                    } catch (_) { /* proceed with sign-out */ }
+
                     this.user = null;
                     this.profile = null;
                     if (!this.isAuthReady) {
@@ -783,6 +811,16 @@ const ImpactMojoAuth = {
     // =====================================================
     // UTILITY METHODS
     // =====================================================
+
+    // Check Supabase for a valid session (bypasses in-memory state)
+    async getSession() {
+        try {
+            var result = await supabaseClient.auth.getSession();
+            return result?.data?.session || null;
+        } catch (_) {
+            return null;
+        }
+    },
 
     // Check if user is logged in
     isLoggedIn() {
