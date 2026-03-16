@@ -233,8 +233,10 @@ const ImpactMojoAuth = {
 
             // Re-fetch profile when page becomes visible again (back/forward navigation)
             // This fixes stale tier state when navigating back from org-dashboard
+            // Throttled: only re-fetch if last fetch was >30 seconds ago
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'visible' && this.user) {
+                    if ((Date.now() - this._lastProfileFetchTime) < 30000) return;
                     this.fetchProfile().then(() => {
                         this.updateUI();
                     }).catch(e => {
@@ -257,9 +259,22 @@ const ImpactMojoAuth = {
         return this._authReadyPromise || Promise.resolve();
     },
 
-    // Fetch user profile from database (with 8-second timeout)
+    // Fetch user profile from database (with 5-second timeout)
+    // Deduplicates concurrent calls — multiple callers share one in-flight request
+    _profileFetchPromise: null,
+    _lastProfileFetchTime: 0,
+
     async fetchProfile() {
         if (!this.user) return null;
+
+        // If a fetch is already in flight, piggyback on it
+        if (this._profileFetchPromise) return this._profileFetchPromise;
+
+        // Skip if fetched very recently (within 2 seconds) — prevents redundant DB hits
+        var now = Date.now();
+        if (this.profile && (now - this._lastProfileFetchTime) < 2000) {
+            return this.profile;
+        }
 
         // Helper: fall back to cached profile if available
         var self = this;
@@ -274,35 +289,40 @@ const ImpactMojoAuth = {
             return null;
         }
 
-        try {
-            // Race the Supabase query against an 8-second timeout
-            var profilePromise = supabaseClient
-                .from('profiles')
-                .select('*')
-                .eq('id', this.user.id)
-                .single();
+        this._profileFetchPromise = (async () => {
+            try {
+                var profilePromise = supabaseClient
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', this.user.id)
+                    .single();
 
-            var timeoutPromise = new Promise(function (_, reject) {
-                setTimeout(function () { reject(new Error('Profile fetch timed out')); }, 8000);
-            });
+                var timeoutPromise = new Promise(function (_, reject) {
+                    setTimeout(function () { reject(new Error('Profile fetch timed out')); }, 5000);
+                });
 
-            const { data, error } = await Promise.race([profilePromise, timeoutPromise]);
+                const { data, error } = await Promise.race([profilePromise, timeoutPromise]);
 
-            if (error) {
-                console.error('Error fetching profile:', error);
+                if (error) {
+                    console.error('Error fetching profile:', error);
+                    return fallbackToCache();
+                }
+
+                this.profile = data;
+                this._lastProfileFetchTime = Date.now();
+                if (typeof window.IMState !== 'undefined') {
+                    window.IMState.cachedProfile.set(data);
+                }
+                return data;
+            } catch (err) {
+                console.error('Profile fetch failed:', err);
                 return fallbackToCache();
+            } finally {
+                this._profileFetchPromise = null;
             }
+        })();
 
-            this.profile = data;
-            // Cache profile in localStorage for cross-page persistence
-            if (typeof window.IMState !== 'undefined') {
-                window.IMState.cachedProfile.set(data);
-            }
-            return data;
-        } catch (err) {
-            console.error('Profile fetch failed:', err);
-            return fallbackToCache();
-        }
+        return this._profileFetchPromise;
     },
 
     // =====================================================

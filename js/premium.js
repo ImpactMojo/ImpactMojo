@@ -163,34 +163,40 @@
         /**
          * Wait for ImpactMojoAuth to be available
          */
-        waitForAuth(callback, maxAttempts = 50) {
-            let attempts = 0;
+        waitForAuth(callback, maxAttempts = 30) {
+            // Fast path: auth already ready
+            if (typeof window.ImpactMojoAuth !== 'undefined' && window.ImpactMojoAuth.isAuthReady) {
+                callback();
+                return;
+            }
 
+            // If ImpactMojoAuth exists, use its promise directly instead of polling
+            if (typeof window.ImpactMojoAuth !== 'undefined' && typeof window.ImpactMojoAuth.waitForAuthReady === 'function') {
+                window.ImpactMojoAuth.waitForAuthReady().then(callback);
+                return;
+            }
+
+            // Fallback: poll briefly until ImpactMojoAuth appears, then use its promise
+            let attempts = 0;
             const check = () => {
                 attempts++;
-
-                // Wait until ImpactMojoAuth exists AND isAuthReady is true
-                // (profile is loaded at that point so we get the correct tier)
-                if (typeof window.ImpactMojoAuth !== 'undefined' && window.ImpactMojoAuth.isAuthReady) {
-                    callback();
+                if (typeof window.ImpactMojoAuth !== 'undefined') {
+                    if (window.ImpactMojoAuth.isAuthReady) {
+                        callback();
+                    } else if (typeof window.ImpactMojoAuth.waitForAuthReady === 'function') {
+                        window.ImpactMojoAuth.waitForAuthReady().then(callback);
+                    } else {
+                        callback();
+                    }
                     return;
                 }
-
-                // If ImpactMojoAuth exists but not ready yet, use its promise
-                if (typeof window.ImpactMojoAuth !== 'undefined' && typeof window.ImpactMojoAuth.waitForAuthReady === 'function' && attempts >= 5) {
-                    window.ImpactMojoAuth.waitForAuthReady().then(callback);
-                    return;
-                }
-
                 if (attempts < maxAttempts) {
                     setTimeout(check, 100);
                 } else {
-                    // Auth not available, proceed with defaults
                     if (CONFIG.DEBUG) console.log('[Premium] Auth not available, using defaults');
                     callback();
                 }
             };
-
             check();
         },
         

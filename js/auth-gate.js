@@ -49,7 +49,7 @@
       var loadingEl   = opts.loadingEl || null;
       var redirectUrl = opts.redirectUrl || 'login.html';
       var requiredTier = opts.requiredTier || null;
-      var timeoutMs   = opts.timeoutMs || 10000;
+      var timeoutMs   = opts.timeoutMs || 5000;
       var onReady     = opts.onReady || function () {};
       var onDenied    = opts.onDenied || null;
       var pageReady   = false;
@@ -99,38 +99,33 @@
         succeed(user, profile);
       }
 
-      // ------- Hard max timeout -------
-      // Absolute last resort: hide overlay after 15s no matter what.
-      // Prevents infinite spinner even if all other mechanisms fail.
-      var hardTimeout = setTimeout(function () {
-        if (pageReady) return;
-        console.error('[AuthGate] Hard timeout reached — forcing page load');
-        // Try one last session check
-        if (ImpactMojoAuth.user) {
-          succeed(ImpactMojoAuth.user, ImpactMojoAuth.profile);
-        } else {
-          deny();
-        }
-      }, Math.min(timeoutMs + 6000, 15000));
-
       // ------- Safety timeout -------
-      // If auth never resolves, check Supabase directly before giving up
+      // Single timeout: if auth never resolves, check Supabase directly then give up.
+      // Uses the cached profile if available to avoid extra DB round-trip.
       var safetyTimer = setTimeout(async function () {
         if (pageReady) return;
+        console.warn('[AuthGate] Safety timeout reached — attempting fallback');
         try {
           var session = await ImpactMojoAuth.getSession();
           if (session && session.user) {
             ImpactMojoAuth.user = session.user;
-            try { await ImpactMojoAuth.fetchProfile(); } catch (_) {}
+            // Use cached profile instead of re-fetching (already in-flight from auth.js)
+            if (!ImpactMojoAuth.profile && typeof window.IMState !== 'undefined') {
+              var cached = window.IMState.cachedProfile.get();
+              if (cached && cached.id === session.user.id) {
+                ImpactMojoAuth.profile = cached;
+              }
+            }
             checkAndProceed(ImpactMojoAuth.user, ImpactMojoAuth.profile);
             ImpactMojoAuth.updateUI();
-            clearTimeout(hardTimeout);
             return;
           }
         } catch (_) { /* proceed with deny */ }
-        clearTimeout(hardTimeout);
         deny();
       }, timeoutMs);
+
+      // Hard timeout reference for cleanup (same timer, no separate one needed)
+      var hardTimeout = safetyTimer;
 
       // ------- Listen for auth state changes -------
       // If the auth event fires while we're waiting, handle it immediately

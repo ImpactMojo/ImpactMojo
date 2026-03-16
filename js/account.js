@@ -551,7 +551,7 @@
     AuthGate.protect({
       loadingEl: document.getElementById('loadingOverlay'),
       redirectUrl: 'login.html',
-      timeoutMs: 10000,
+      timeoutMs: 5000,
       onReady: function (user, profile) {
         updatePageData();
         updateSavedItemsDisplay();
