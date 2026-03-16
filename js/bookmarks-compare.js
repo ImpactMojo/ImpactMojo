@@ -1060,7 +1060,7 @@ IMX.renderReadingLists = function() {
             '<div class="imx-reading-list-name">' + list.name + '</div>' +
             '<div class="imx-reading-list-desc">' + list.description + '</div>' +
             '</div>' +
-            '<span class="imx-reading-list-toggle" id="toggle-' + list.id + '">&#9660;</span>' +
+            '<span class="imx-reading-list-toggle" id="toggle-' + list.id + '">▼</span>' +
             '</div>' +
             '<div class="imx-reading-list-items" id="items-' + list.id + '" style="display:none;">' +
             list.items.map(function(item) {
@@ -1080,10 +1080,10 @@ IMX.toggleReadingList = function(listId) {
     if (items && toggle) {
         if (items.style.display === 'none') {
             items.style.display = 'block';
-            toggle.innerHTML = '&#9650;';
+            toggle.innerHTML = '▲';
         } else {
             items.style.display = 'none';
-            toggle.innerHTML = '&#9660;';
+            toggle.innerHTML = '▼';
         }
     }
 };

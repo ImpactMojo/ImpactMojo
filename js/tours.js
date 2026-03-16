@@ -76,10 +76,10 @@
       disableInteraction: false,
       scrollToElement: true,
       scrollPadding: 80,
-      nextLabel: 'Next &rarr;',
-      prevLabel: '&larr; Back',
-      doneLabel: 'Done &#10003;',
-      skipLabel: '&times;',
+      nextLabel: 'Next →',
+      prevLabel: '← Back',
+      doneLabel: 'Done ✓',
+      skipLabel: '×',
       tooltipClass: 'impactmojo-tour',
       highlightClass: 'impactmojo-highlight'
     });
@@ -146,12 +146,12 @@
     premium: [
       { intro: '<strong>Premium Membership</strong><br>Unlock advanced AI tools, templates, and expert support.' },
       { element: '.pricing-grid', intro: '<strong>Choose Your Tier</strong><br>Compare what each membership level includes.' },
-      { element: '.pricing-card.featured', intro: '<strong>Most Popular</strong><br>The Practitioner tier unlocks RQ Builder Pro for just \u20B9399/month.' },
+      { element: '.pricing-card.featured', intro: '<strong>Most Popular</strong><br>The Practitioner tier unlocks RQ Builder Pro for just ₹399/month.' },
       { element: '.pricing-card.org-tier', intro: '<strong>Team Plan</strong><br>Organizations get all tools plus team management and analytics.' }
     ],
 
     transparency: [
-      { intro: '<strong>Transparency Dashboard</strong><br>See exactly how ImpactMojo is used \u2014 all numbers, all public.' },
+      { intro: '<strong>Transparency Dashboard</strong><br>See exactly how ImpactMojo is used — all numbers, all public.' },
       { element: '.tier-grid', intro: '<strong>Revenue Model</strong><br>Our free vs paid tier structure and pricing.' },
       { element: '#kpiGrid', intro: '<strong>Platform Numbers</strong><br>Cumulative users, sessions, and engagement across the platform.' },
       { element: '#courseChart', intro: '<strong>Course Engagement</strong><br>See how each course performs over time.' },
