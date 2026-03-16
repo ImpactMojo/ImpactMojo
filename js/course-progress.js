@@ -589,7 +589,7 @@
             '.cpb-overlay-show .cpb-completion-modal { transform: scale(1); }' +
             '.cpb-completion-icon { color: #F59E0B; margin-bottom: 16px; }' +
             '.cpb-completion-modal h3 {' +
-                'font-size: 1.5rem; color: #F1F5F9; margin: 0 0 12px; font-family: "Poppins", sans-serif;' +
+                'font-size: 1.5rem; color: #F1F5F9; margin: 0 0 12px; font-family: "Inter", sans-serif;' +
             '}' +
             '.cpb-completion-modal p { color: #94A3B8; line-height: 1.6; margin: 0 0 8px; }' +
             '.cpb-completion-sub { font-size: 0.85rem; color: #64748B; }' +

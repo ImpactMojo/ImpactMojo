@@ -110,7 +110,7 @@
   function injectStyles() {
     var css = document.createElement('style');
     css.textContent =
-      '#impactmojo-search-modal{display:none;position:fixed;inset:0;z-index:99999;font-family:"Inter","Poppins",system-ui,sans-serif}' +
+      '#impactmojo-search-modal{display:none;position:fixed;inset:0;z-index:99999;font-family:"Amaranth","Inter",system-ui,sans-serif}' +
       '#impactmojo-search-modal.ims-open{display:flex;align-items:flex-start;justify-content:center;padding-top:min(20vh,120px)}' +
       '.ims-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px)}' +
       '.ims-dialog{position:relative;width:min(640px,90vw);max-height:min(500px,70vh);background:var(--card-bg,#fff);border-radius:16px;box-shadow:0 25px 50px rgba(0,0,0,0.25);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--border-color,#e2e8f0)}' +
