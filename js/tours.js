@@ -76,10 +76,10 @@
       disableInteraction: false,
       scrollToElement: true,
       scrollPadding: 80,
-      nextLabel: 'Next &rarr;',
-      prevLabel: '&larr; Back',
-      doneLabel: 'Done &#10003;',
-      skipLabel: '&times;',
+      nextLabel: 'Next \u2192',
+      prevLabel: '\u2190 Back',
+      doneLabel: 'Done \u2713',
+      skipLabel: '\u00D7',
       tooltipClass: 'impactmojo-tour',
       highlightClass: 'impactmojo-highlight'
     });
