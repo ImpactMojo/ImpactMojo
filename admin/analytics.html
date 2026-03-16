@@ -442,6 +442,9 @@ body {
 
 <main class="admin-main">
 
+    <!-- Unified Dashboard Tabs -->
+    <div id="dashboardTabs"></div>
+
     <!-- Transparency Intro -->
     <div style="text-align:center; padding:20px 24px 8px; max-width:720px; margin:0 auto;">
         <h1 style="font-family:'Poppins',sans-serif; font-size:1.8rem; font-weight:700; margin-bottom:8px; background:var(--gradient-primary); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Transparency & Impact Data</h1>
@@ -1360,6 +1363,18 @@ render();
         if (e.detail && e.detail.profile && e.detail.profile.role === 'admin') {
             link.style.display = '';
         }
+    });
+})();
+</script>
+<script src="/js/dashboard-tabs.js"></script>
+<script>
+// Init dashboard tabs — analytics is public so auth may or may not be loaded
+(function() {
+    // Try immediately
+    if (typeof DashboardTabs !== 'undefined') DashboardTabs.init('analytics');
+    // Also refresh when auth state changes (profile becomes available)
+    window.addEventListener('authStateChanged', function() {
+        if (typeof DashboardTabs !== 'undefined') DashboardTabs.refresh('analytics');
     });
 })();
 </script>
