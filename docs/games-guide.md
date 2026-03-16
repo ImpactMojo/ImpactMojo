@@ -1,0 +1,93 @@
+# Games Guide
+
+## What Are the ImpactMojo Games?
+
+ImpactMojo offers **12 interactive economics games** that teach development-relevant concepts through strategic decision-making and simulation. Each game takes 10–20 minutes to play and covers a specific economic concept — from game theory to market failures to collective action.
+
+These aren't quizzes or flashcards. They're interactive simulations where your decisions have consequences, and the concepts become clear through play rather than lecture.
+
+All 12 games are **free, browser-based, and require no login**.
+
+---
+
+## The 12 Games
+
+### Collective Action & Cooperation
+
+| Game | Concept | What You Learn |
+|------|---------|---------------|
+| **Public Good Game** | Free-rider problem | Why people under-contribute to shared resources, and what mechanisms sustain cooperation |
+| **Commons Crisis Game** | Tragedy of the commons | How communication, monitoring, and sanctions help communities manage shared resources like water, forests, or fisheries |
+| **Cooperation Paradox** | Game theory | Why cooperation yields better outcomes but individual incentives push toward competition — Nash equilibrium and Pareto efficiency in action |
+| **Prisoners' Dilemma Game** | Strategic interdependence | How trust, reputation, and repeated interactions overcome cooperation failures |
+
+### Markets & Decision-Making
+
+| Game | Concept | What You Learn |
+|------|---------|---------------|
+| **Opportunity Cost Game** | Tradeoffs | How every choice has a cost — the next-best alternative you gave up — and how this shapes policy decisions |
+| **Risk & Reward Explorer** | Behavioural economics | Risk preferences, expected utility, prospect theory — why people make seemingly irrational choices under uncertainty |
+| **Bidding Wars Game** | Auction theory | How different auction formats affect prices, why winners sometimes overpay (winner's curse), and how procurement works |
+| **Information Asymmetry Game** | Asymmetric information | Adverse selection, moral hazard, and signalling — what happens when buyers and sellers know different things |
+
+### Systems & Scale
+
+| Game | Concept | What You Learn |
+|------|---------|---------------|
+| **Network Effects Game** | Network economics | How value multiplies as more people join, critical mass dynamics, and why some platforms dominate |
+| **Externality Game** | Market failures | Hidden social costs and benefits — pollution, education spillovers — and why markets alone don't solve them |
+| **The Real Middle** | Inequality dynamics | Wealth distribution, income mobility, and the precarity of middle-class status in India |
+| **Econ Concepts Puzzle** | Mixed economics | Economic reasoning through puzzles and brain-teasers covering supply/demand, game theory, and market structure |
+
+---
+
+## How Educators Can Use the Games
+
+### As Workshop Openers
+
+Play a game at the start of a session to introduce a concept experientially. Participants engage with the idea *before* you explain the theory — this creates curiosity and gives them a shared reference point for discussion.
+
+**Example flow:**
+1. Play the Public Good Game (10 minutes)
+2. Debrief: "What happened? Why did contributions drop?" (10 minutes)
+3. Introduce the formal concept of public goods and free-riding (15 minutes)
+4. Discuss real-world applications in their programmes (15 minutes)
+
+### As Classroom Activities
+
+Games work well projected on a screen for group play. Have the class vote on decisions together, or split into teams and compare outcomes.
+
+**Good pairings:**
+- Public Good Game + Commons Crisis = comprehensive view of collective action
+- Information Asymmetry + Externality = understanding market failures together
+- Prisoners' Dilemma + Cooperation Paradox = deep dive into strategic thinking
+
+### As Self-Study Assignments
+
+Assign 2–3 games as pre-work before a workshop. Ask participants to write a one-paragraph reflection: "What surprised you? How does this concept show up in your work?"
+
+### For Debrief Discussions
+
+After any game, these questions work well:
+- What strategy did you use? Did it change over rounds?
+- What surprised you about the outcome?
+- Where do you see this dynamic in your development work?
+- What mechanisms could change the outcome?
+
+---
+
+## Getting Started
+
+1. **Visit the Games section** on [impactmojo.in](https://www.impactmojo.in) — scroll to the Games showcase or find them in the catalog
+2. **Start with Public Good Game or Prisoners' Dilemma** — these are the most intuitive entry points
+3. **Play each game yourself first** before using it in a workshop, so you can anticipate participant questions
+4. **No login or download required** — games run in any modern browser on desktop or mobile
+
+---
+
+## Tips
+
+- **Games are designed for adults, not children.** The framing, language, and complexity are pitched at development practitioners and university students.
+- **Debrief is where learning happens.** The game itself creates the experience; the discussion afterward creates the understanding. Always budget time for debrief.
+- **Play multiple rounds.** Most games reveal deeper dynamics on second and third plays as participants adjust their strategies.
+- **Connect to real programmes.** After playing the Commons Crisis Game, ask: "Where in your WASH programme do you see a commons dilemma?" This transfer step is essential.

@@ -10,8 +10,22 @@
 * [Workshops & Facilitation](workshops-and-facilitation.md)
 * [Handouts Guide](handouts-guide.md)
 * [Dataverse Guide](dataverse-guide.md)
+* [BCT Repository Guide](bct-repository-guide.md)
+* [Games Guide](games-guide.md)
+* [Labs Guide](labs-guide.md)
+* [Live Case Challenges Guide](challenges-guide.md)
+* [Dojos Guide](dojos-guide.md)
+* [Podcast Guide](podcast-guide.md)
 * [Certificates & Progress](certificates-and-progress.md)
 * [FAQ](faq.md)
+
+## Tools & Resources
+
+* [Mojini (AI Assistant)](mojini-guide.md)
+* [ImpactLex (Glossary)](impactlex-guide.md)
+* [FieldCases (Case Library)](fieldcases-guide.md)
+* [Development Discourses (Research Library)](devdiscourses-guide.md)
+* [Premium Tools (VaniScribe, DevData, DevEcon Toolkit)](premium-tools-guide.md)
 
 ## Reference
 
