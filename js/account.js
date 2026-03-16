@@ -486,17 +486,9 @@
     }
   });
 
-  // Re-fetch profile on tab re-focus
-  document.addEventListener('visibilitychange', async function () {
-    if (document.visibilityState === 'visible' && ImpactMojoAuth.isLoggedIn()) {
-      try {
-        await ImpactMojoAuth.fetchProfile();
-        updatePageData();
-      } catch (e) {
-        console.error('Profile re-fetch on return failed:', e);
-      }
-    }
-  });
+  // Note: profile re-fetch on tab focus is handled by auth.js's
+  // visibilitychange listener, which dispatches authStateChanged.
+  // The authStateChanged listener above calls updatePageData().
 
   // =========================================================================
   // INITIALIZATION

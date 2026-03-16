@@ -1,18 +1,24 @@
 /**
  * ImpactMojo Authentication System
  * Powered by Supabase
- * Version 2.0.2 - January 15, 2026
- * 
+ * Version 2.1.0 - March 16, 2026
+ *
  * FEATURES:
  * - Cloud sync for bookmarks, notes, compare list, streak data
  * - Auto-sync on login/logout
  * - Manual sync function
  * - Intelligent data merging (newer/more complete wins)
- * 
+ *
+ * FIXED in v2.1.0:
+ * - TOKEN_REFRESHED now restores profile after transient SIGNED_OUT (fixes wrong tier)
+ * - SIGNED_OUT debounced 500ms to prevent false logouts during token refresh
+ * - signIn() deduped with SIGNED_IN handler to prevent double fetch/sync race
+ * - fetchProfile() now has 8-second timeout to prevent infinite spinner
+ *
  * FIXED in v2.0.2:
  * - Fixed "Identifier 'supabase' has already been declared" error
  * - Renamed client variable to avoid conflict with window.supabase library
- * 
+ *
  * FIXED in v2.0.1:
  * - Storage keys now match index.html (impactmojo_bookmarks, etc.)
  * 
@@ -60,6 +66,8 @@ const ImpactMojoAuth = {
     isSyncing: false,
     _initialSessionHadUser: false,
     _processingAuthEvent: false,
+    _signInProcessed: false,
+    _signOutDebounce: null,
 
     // Initialize auth and check session
     async init() {
@@ -113,6 +121,10 @@ const ImpactMojoAuth = {
                     if (this._initialSessionHadUser && this.user?.id === session.user.id) {
                         return;
                     }
+                    // Skip if signIn() method already processed this sign-in
+                    if (this._signInProcessed && this.user?.id === session.user.id) {
+                        return;
+                    }
                     this._processingAuthEvent = true;
                     this.user = session.user;
                     try {
@@ -134,7 +146,27 @@ const ImpactMojoAuth = {
                 } else if (event === 'TOKEN_REFRESHED' && session?.user) {
                     // Token was refreshed successfully — restore state if it was
                     // cleared by a transient SIGNED_OUT during refresh
+                    // Cancel any pending sign-out debounce
+                    if (this._signOutDebounce) {
+                        clearTimeout(this._signOutDebounce);
+                        this._signOutDebounce = null;
+                    }
                     this.user = session.user;
+                    // Restore profile if it was lost during a transient SIGNED_OUT
+                    if (!this.profile) {
+                        if (typeof window.IMState !== 'undefined') {
+                            var cached = window.IMState.cachedProfile.get();
+                            if (cached && cached.id === session.user.id) {
+                                this.profile = cached;
+                            }
+                        }
+                        // Re-fetch fresh profile in background
+                        this.fetchProfile().then(() => {
+                            this.updateUI();
+                        }).catch(function (e) {
+                            console.error('Profile re-fetch after token refresh failed:', e);
+                        });
+                    }
                     this.updateUI();
                 } else if (event === 'SIGNED_OUT') {
                     // Guard: ignore transient SIGNED_OUT fired while we are still
@@ -143,29 +175,57 @@ const ImpactMojoAuth = {
                         console.warn('Ignoring transient SIGNED_OUT during auth processing');
                         return;
                     }
-                    // Double-check with Supabase before clearing state — avoids
-                    // reacting to stale events when a valid session still exists
-                    try {
-                        var check = await supabaseClient.auth.getSession();
-                        if (check?.data?.session?.user) {
-                            console.warn('SIGNED_OUT fired but session still valid — ignoring');
-                            this.user = check.data.session.user;
-                            this.updateUI();
-                            return;
-                        }
-                    } catch (_) { /* proceed with sign-out */ }
 
-                    this.user = null;
-                    this.profile = null;
-                    // Clear cached profile on sign-out
-                    if (typeof window.IMState !== 'undefined') {
-                        window.IMState.cachedProfile.clear();
-                    }
+                    // If auth hasn't resolved yet (initial load, no session),
+                    // resolve immediately — no need to debounce
                     if (!this.isAuthReady) {
+                        this.user = null;
+                        this.profile = null;
                         this.isAuthReady = true;
                         if (this._authReadyResolve) this._authReadyResolve();
+                        this.updateUI();
+                        return;
                     }
-                    this.updateUI();
+
+                    // Debounce: wait 500ms before processing sign-out.
+                    // TOKEN_REFRESHED fires shortly after a transient SIGNED_OUT
+                    // during token refresh and will cancel this timer.
+                    var self = this;
+                    if (this._signOutDebounce) clearTimeout(this._signOutDebounce);
+                    this._signOutDebounce = setTimeout(async function () {
+                        self._signOutDebounce = null;
+                        // Double-check with Supabase before clearing state
+                        try {
+                            var check = await supabaseClient.auth.getSession();
+                            if (check?.data?.session?.user) {
+                                console.warn('SIGNED_OUT fired but session still valid — ignoring');
+                                self.user = check.data.session.user;
+                                // Restore profile if it was lost
+                                if (!self.profile) {
+                                    if (typeof window.IMState !== 'undefined') {
+                                        var cached = window.IMState.cachedProfile.get();
+                                        if (cached && cached.id === check.data.session.user.id) {
+                                            self.profile = cached;
+                                        }
+                                    }
+                                    self.fetchProfile().catch(function (e) {
+                                        console.error('Profile re-fetch after SIGNED_OUT recovery failed:', e);
+                                    });
+                                }
+                                self.updateUI();
+                                return;
+                            }
+                        } catch (_) { /* proceed with sign-out */ }
+
+                        self.user = null;
+                        self.profile = null;
+                        self._signInProcessed = false;
+                        // Clear cached profile on sign-out
+                        if (typeof window.IMState !== 'undefined') {
+                            window.IMState.cachedProfile.clear();
+                        }
+                        self.updateUI();
+                    }, 500);
                 }
             });
 
@@ -197,28 +257,40 @@ const ImpactMojoAuth = {
         return this._authReadyPromise || Promise.resolve();
     },
 
-    // Fetch user profile from database
+    // Fetch user profile from database (with 8-second timeout)
     async fetchProfile() {
         if (!this.user) return null;
 
+        // Helper: fall back to cached profile if available
+        var self = this;
+        function fallbackToCache() {
+            if (!self.profile && typeof window.IMState !== 'undefined') {
+                var cached = window.IMState.cachedProfile.get();
+                if (cached && cached.id === self.user.id) {
+                    self.profile = cached;
+                    return cached;
+                }
+            }
+            return null;
+        }
+
         try {
-            const { data, error } = await supabaseClient
+            // Race the Supabase query against an 8-second timeout
+            var profilePromise = supabaseClient
                 .from('profiles')
                 .select('*')
                 .eq('id', this.user.id)
                 .single();
 
+            var timeoutPromise = new Promise(function (_, reject) {
+                setTimeout(function () { reject(new Error('Profile fetch timed out')); }, 8000);
+            });
+
+            const { data, error } = await Promise.race([profilePromise, timeoutPromise]);
+
             if (error) {
                 console.error('Error fetching profile:', error);
-                // Fall back to cached profile if fetch fails
-                if (!this.profile && typeof window.IMState !== 'undefined') {
-                    var cached = window.IMState.cachedProfile.get();
-                    if (cached && cached.id === this.user.id) {
-                        this.profile = cached;
-                        return cached;
-                    }
-                }
-                return null;
+                return fallbackToCache();
             }
 
             this.profile = data;
@@ -229,15 +301,7 @@ const ImpactMojoAuth = {
             return data;
         } catch (err) {
             console.error('Profile fetch failed:', err);
-            // Fall back to cached profile on network failure
-            if (!this.profile && typeof window.IMState !== 'undefined') {
-                var cached = window.IMState.cachedProfile.get();
-                if (cached && cached.id === this.user.id) {
-                    this.profile = cached;
-                    return cached;
-                }
-            }
-            return null;
+            return fallbackToCache();
         }
     },
 
@@ -624,6 +688,7 @@ const ImpactMojoAuth = {
             if (error) throw error;
 
             this.user = data.user;
+            this._signInProcessed = true;
             await this.fetchProfile();
 
             // Sync data after login (non-blocking — don't delay redirect)
@@ -710,6 +775,7 @@ const ImpactMojoAuth = {
 
             this.user = null;
             this.profile = null;
+            this._signInProcessed = false;
             // Clear cached profile
             if (typeof window.IMState !== 'undefined') {
                 window.IMState.cachedProfile.clear();
