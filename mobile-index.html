@@ -1039,13 +1039,13 @@ body.dark-mode .mobile-plane {
     justify-content: center;
     width: 36px;
     height: 36px;
+    flex-shrink: 0;
     border-radius: 50%;
     background: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
     color: white;
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
-    margin-right: 12px;
     transition: all 0.2s ease;
 }
 
@@ -1064,8 +1064,8 @@ body.dark-mode .mobile-plane {
 /* Hide auth buttons based on state */
 .auth-logged-out { display: flex; }
 .auth-logged-in { display: none; }
-body.user-logged-in .auth-logged-out { display: none; }
-body.user-logged-in .auth-logged-in { display: flex; }
+body.user-authenticated .auth-logged-out { display: none !important; }
+body.user-authenticated .auth-logged-in { display: flex !important; }
 
 /* Menu auth section */
 .menu-auth-section {
@@ -2108,7 +2108,7 @@ body.user-logged-in .auth-logged-in { display: flex; }
         
         if (user) {
             // User is logged in
-            document.body.classList.add('user-logged-in');
+            document.body.classList.add('user-authenticated');
             
             // Update user info in menu
             const avatar = document.getElementById('menuUserAvatar');
@@ -2130,7 +2130,7 @@ body.user-logged-in .auth-logged-in { display: flex; }
             }
         } else {
             // User is logged out
-            document.body.classList.remove('user-logged-in');
+            document.body.classList.remove('user-authenticated');
         }
     }
     
