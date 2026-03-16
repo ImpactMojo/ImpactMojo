@@ -64,7 +64,7 @@ Content-Type: application/json
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIs...",
-  "url": "https://rq-builder.netlify.app/?token=eyJhbGciOiJIUzI1NiIs..."
+  "url": "https://<resource-site>/?token=eyJhbGciOiJIUzI1NiIs..."
 }
 ```
 

@@ -33,7 +33,7 @@ ImpactMojo is a static HTML/CSS/JS site with no build step, backed by Supabase f
            │ window.open(resourceUrl + '?token=...')
            ▼
 ┌──────────────────────────────────────────────────────────┐
-│        Resource Site (e.g., vaniscribe.netlify.app)       │
+│        Resource Site (private Netlify deployment)          │
 │        Netlify Edge Function: auth-gate.ts               │
 │                                                          │
 │  1. Check for resource_session cookie                     │

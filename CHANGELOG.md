@@ -81,7 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Broken Netlify deploy status badge in README
-- `RESOURCE_SECRET_TOKEN` typo on stats-assist.netlify.app (renamed to `RESOURCE_TOKEN_SECRET`)
+- `RESOURCE_SECRET_TOKEN` typo on premium resource site (renamed to `RESOURCE_TOKEN_SECRET`)
 
 ## [8.0.0] - 2026-02-28
 

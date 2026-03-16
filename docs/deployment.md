@@ -58,10 +58,10 @@ Each premium tool is a separate Netlify site with a JWT auth-gate edge function.
 
 | Site | RESOURCE_ID |
 |------|-------------|
-| researchquestions.netlify.app | `rq-builder` |
-| stats-assist.netlify.app | `code-convert-pro` |
-| qual-lab.netlify.app | `qual-insights` |
-| vaniscribe.netlify.app | `vaniscribe` |
+| *(private — see Netlify dashboard)* | `rq-builder` |
+| *(private — see Netlify dashboard)* | `code-convert-pro` |
+| *(private — see Netlify dashboard)* | `qual-insights` |
+| *(private — see Netlify dashboard)* | `vaniscribe` |
 
 ### Generating a New HMAC Secret
 
