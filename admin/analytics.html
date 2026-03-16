@@ -288,20 +288,36 @@ body {
     text-align: right; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .bar-track {
-    flex: 1; height: 28px; background: var(--secondary-bg);
-    border-radius: 6px; overflow: hidden; position: relative;
+    flex: 1; height: 32px; background: var(--secondary-bg);
+    border-radius: 8px; overflow: hidden; position: relative;
+    border: 1px solid var(--border-color);
 }
 .bar-fill {
-    height: 100%; border-radius: 6px; transition: width 0.8s ease;
-    display: flex; align-items: center; padding-left: 8px;
+    height: 100%; border-radius: 7px; transition: width 0.8s ease;
+    display: flex; align-items: center; padding-left: 10px;
     font-size: 0.75rem; font-weight: 600; color: white;
     font-family: 'JetBrains Mono', monospace;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
 }
-.bar-fill.blue { background: var(--accent-color); }
-.bar-fill.purple { background: var(--secondary-accent); }
-.bar-fill.green { background: var(--success-color); }
-.bar-fill.amber { background: var(--warning-color); }
-.bar-fill.red { background: var(--danger-color); }
+.bar-fill.blue { background: linear-gradient(90deg, var(--accent-color), #38BDF8); }
+.bar-fill.purple { background: linear-gradient(90deg, var(--secondary-accent), #A78BFA); }
+.bar-fill.green { background: linear-gradient(90deg, var(--success-color), #34D399); }
+.bar-fill.amber { background: linear-gradient(90deg, var(--warning-color), #FBBF24); }
+.bar-fill.red { background: linear-gradient(90deg, var(--danger-color), #F87171); }
+
+/* Paper plane */
+.paper-plane {
+    position: fixed; top: 12%; right: 6%; width: 140px; height: 140px;
+    opacity: 0.08; pointer-events: none; z-index: 0;
+    animation: float 12s ease-in-out infinite;
+}
+[data-theme="light"] .paper-plane { opacity: 0.06; }
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-15px, -20px) rotate(3deg); }
+    50% { transform: translate(10px, -10px) rotate(-2deg); }
+    75% { transform: translate(-20px, 15px) rotate(4deg); }
+}
 
 /* Two-column layout */
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
@@ -351,6 +367,15 @@ body {
 </style>
 </head>
 <body>
+
+<!-- Paper Plane -->
+<svg class="paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="140" r="1.5" fill="#10B981" opacity="0.4"/>
+</svg>
 
 <!-- Header -->
 <header class="site-header">
@@ -418,7 +443,7 @@ body {
 <main class="admin-main">
 
     <!-- Transparency Intro -->
-    <div style="text-align:center; padding:32px 24px 8px; max-width:720px; margin:0 auto;">
+    <div style="text-align:center; padding:20px 24px 8px; max-width:720px; margin:0 auto;">
         <h1 style="font-family:'Poppins',sans-serif; font-size:1.8rem; font-weight:700; margin-bottom:8px; background:var(--gradient-primary); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Transparency & Impact Data</h1>
         <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.7;">
             ImpactMojo is built in the open. This page shares our platform metrics, content reach, and feature adoption data. All legacy data is reconstructed from our website; live analytics are pulled from Google Analytics 4 when connected.

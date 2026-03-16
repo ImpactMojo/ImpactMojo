@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,9 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-/* ========================================
-   DESIGN SYSTEM (matches ImpactMojo V3)
-   ======================================== */
 :root {
     --primary-bg: #0F172A;
     --secondary-bg: #1E293B;
@@ -61,9 +58,7 @@ body {
     min-height: 100vh;
 }
 
-/* ========================================
-   LOADING OVERLAY
-   ======================================== */
+/* Loading & Access Denied */
 .loading-overlay {
     position: fixed; inset: 0; z-index: 9999;
     background: var(--primary-bg);
@@ -79,206 +74,279 @@ body {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ========================================
-   ACCESS DENIED
-   ======================================== */
 .access-denied {
-    display: none;
-    min-height: 100vh;
+    display: none; min-height: 100vh;
     align-items: center; justify-content: center;
     flex-direction: column; gap: 16px;
     text-align: center; padding: 24px;
 }
-.access-denied h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.5rem;
-    color: var(--danger-color);
-}
-.access-denied p {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    max-width: 400px;
-}
+.access-denied h1 { font-family: 'Poppins', sans-serif; font-size: 1.5rem; color: var(--danger-color); }
+.access-denied p { color: var(--text-secondary); font-size: 0.9rem; max-width: 400px; }
 .access-denied .btn {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 20px;
-    background: var(--accent-color);
+    padding: 10px 20px; background: var(--accent-color);
     color: white; border: none; border-radius: var(--radius-sm);
-    font-size: 0.85rem; font-weight: 600;
-    cursor: pointer; text-decoration: none;
-    transition: background var(--transition);
+    font-size: 0.85rem; font-weight: 600; cursor: pointer; text-decoration: none;
 }
-.access-denied .btn:hover { background: var(--accent-hover); }
 
-/* ========================================
-   ADMIN HEADER
-   ======================================== */
-.admin-header {
+/* Header */
+.site-header {
     position: sticky; top: 0; z-index: 100;
     background: var(--primary-bg);
     border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
     padding: 0 24px;
 }
-.admin-header-inner {
-    max-width: 1200px; margin: 0 auto; height: 64px;
+.nav-container {
+    max-width: 1400px; margin: 0 auto; height: 64px;
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
-.admin-logo {
+.logo {
     display: flex; align-items: center; gap: 10px;
-    text-decoration: none; color: var(--text-primary);
+    text-decoration: none; color: var(--text-primary); flex-shrink: 0;
 }
-.admin-logo img { height: 32px; }
-.admin-logo-text {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700; font-size: 1rem;
+.logo-icon { height: 32px; }
+.logo-text-wrap { display: flex; flex-direction: column; line-height: 1.2; }
+.logo-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem; }
+.logo-tagline { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.05em; }
+.admin-badge {
+    padding: 2px 8px; background: var(--gradient-primary); color: white;
+    font-size: 0.65rem; font-weight: 700; border-radius: 100px;
+    text-transform: uppercase; letter-spacing: 0.05em;
 }
-.admin-logo-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    background: var(--gradient-primary);
-    color: white;
-    font-size: 0.65rem;
-    font-weight: 700;
-    border-radius: 100px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+.nav-links { display: flex; gap: 4px; align-items: center; }
+.nav-link {
+    color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 500;
+    padding: 6px 12px; border-radius: 8px; transition: all var(--transition);
 }
-.admin-header-actions {
-    display: flex; align-items: center; gap: 12px;
+.nav-link:hover { color: var(--text-primary); background: var(--hover-bg); }
+.nav-link.active { color: var(--accent-color); }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+
+/* 3-button theme selector */
+.theme-selector {
+    display: flex; gap: 4px; background: var(--hover-bg);
+    border: 1px solid var(--border-color); border-radius: 10px; padding: 4px;
 }
-.admin-user {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 0.85rem; color: var(--text-secondary);
+.theme-btn {
+    background: transparent; border: none; color: var(--text-secondary);
+    padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;
+    display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;
 }
-.admin-user-avatar {
-    width: 32px; height: 32px; border-radius: 50%;
-    object-fit: cover;
-}
-.theme-toggle {
-    background: none; border: 1px solid var(--border-color);
-    color: var(--text-secondary); cursor: pointer;
-    width: 36px; height: 36px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all var(--transition);
-}
-.theme-toggle:hover { color: var(--text-primary); background: var(--hover-bg); }
+.theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+.theme-btn.active { background: var(--accent-color); color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.theme-btn svg { width: 18px; height: 18px; }
+
 .btn-sign-out {
-    padding: 6px 14px;
-    background: transparent; border: 1px solid var(--border-color);
+    padding: 6px 14px; background: transparent; border: 1px solid var(--border-color);
     color: var(--text-secondary); border-radius: var(--radius-sm);
-    font-size: 0.8rem; font-weight: 500;
-    cursor: pointer; transition: all var(--transition);
+    font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all var(--transition);
 }
 .btn-sign-out:hover { color: var(--danger-color); border-color: var(--danger-color); }
 
-/* ========================================
-   ADMIN CONTENT
-   ======================================== */
-.admin-content {
-    max-width: 1200px; margin: 0 auto;
-    padding: 32px 24px 64px;
+/* Paper plane */
+.paper-plane {
+    position: fixed; top: 12%; right: 6%; width: 140px; height: 140px;
+    opacity: 0.08; pointer-events: none; z-index: 0;
+    animation: float 12s ease-in-out infinite;
 }
-.admin-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.6rem; font-weight: 700;
-    margin-bottom: 8px;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-.admin-subtitle {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 32px;
+[data-theme="light"] .paper-plane { opacity: 0.06; }
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-15px, -20px) rotate(3deg); }
+    50% { transform: translate(10px, -10px) rotate(-2deg); }
+    75% { transform: translate(-20px, 15px) rotate(4deg); }
 }
 
-/* ========================================
-   DASHBOARD GRID
-   ======================================== */
+/* Content */
+.admin-main {
+    max-width: 1200px; margin: 0 auto; padding: 24px 24px 48px;
+    position: relative; z-index: 1;
+}
+
+/* Dashboard grid */
 .dash-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px; margin-bottom: 32px;
 }
 .dash-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 24px;
-    transition: all var(--transition);
-    text-decoration: none;
-    color: inherit;
-    display: flex; flex-direction: column; gap: 12px;
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); padding: 20px;
+    transition: all var(--transition); text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: 8px;
 }
 .dash-card:hover {
-    border-color: var(--accent-color);
-    box-shadow: var(--shadow-md);
+    border-color: var(--accent-color); box-shadow: var(--shadow-md);
     transform: translateY(-2px);
 }
 .dash-card-icon {
-    width: 48px; height: 48px;
-    border-radius: var(--radius-sm);
+    width: 40px; height: 40px; border-radius: var(--radius-sm);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem;
 }
-.dash-card-icon.blue { background: rgba(14, 165, 233, 0.15); }
-.dash-card-icon.purple { background: rgba(99, 102, 241, 0.15); }
-.dash-card-icon.green { background: rgba(16, 185, 129, 0.15); }
-.dash-card-icon.amber { background: rgba(245, 158, 11, 0.15); }
-.dash-card-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700; font-size: 1rem;
-}
-.dash-card-desc {
-    font-size: 0.85rem; color: var(--text-secondary);
-    line-height: 1.6;
-}
+.dash-card-icon svg { width: 20px; height: 20px; }
+.dash-card-icon.blue { background: rgba(14,165,233,0.15); color: var(--accent-color); }
+.dash-card-icon.purple { background: rgba(99,102,241,0.15); color: var(--secondary-accent); }
+.dash-card-icon.green { background: rgba(16,185,129,0.15); color: var(--success-color); }
+.dash-card-icon.amber { background: rgba(245,158,11,0.15); color: var(--warning-color); }
+.dash-card-icon.red { background: rgba(239,68,68,0.15); color: var(--danger-color); }
+.dash-card-title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem; }
+.dash-card-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
 .dash-card-badge {
     display: inline-flex; align-items: center; gap: 4px;
-    padding: 3px 10px;
-    border-radius: 100px;
-    font-size: 0.7rem; font-weight: 600;
-    width: fit-content;
+    padding: 2px 8px; border-radius: 100px; font-size: 0.65rem; font-weight: 600; width: fit-content;
 }
-.dash-card-badge.live {
-    background: rgba(16, 185, 129, 0.15);
-    color: var(--success-color);
-}
-.dash-card-badge.new {
-    background: rgba(14, 165, 233, 0.15);
-    color: var(--accent-color);
+.badge-live { background: rgba(16,185,129,0.15); color: var(--success-color); }
+.badge-cms { background: rgba(14,165,233,0.15); color: var(--accent-color); }
+.badge-soon { background: var(--hover-bg); color: var(--text-muted); }
+
+/* Section headers */
+.section-header {
+    font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
 }
 
-/* ========================================
-   FEATURE LIST INSIDE CARDS
-   ======================================== */
-.dash-card-features {
-    list-style: none; padding: 0; margin: 0;
-    display: flex; flex-direction: column; gap: 6px;
+/* Quick links grid */
+.quick-links {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px;
 }
-.dash-card-features li {
-    font-size: 0.82rem; color: var(--text-secondary);
-    display: flex; align-items: flex-start; gap: 8px;
-    line-height: 1.5;
+.quick-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color); background: var(--card-bg);
+    color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 500;
+    transition: all var(--transition);
 }
-.dash-card-features li::before {
-    content: '';
-    display: inline-block;
-    width: 5px; height: 5px;
-    background: var(--accent-color);
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 7px;
+.quick-link:hover { color: var(--accent-color); border-color: var(--accent-color); }
+.quick-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* Ideas Tracker */
+.ideas-section {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); padding: 20px; margin-bottom: 32px;
+}
+.ideas-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+}
+.ideas-header h3 {
+    font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+}
+.ideas-count {
+    font-size: 0.7rem; background: rgba(14,165,233,0.15); color: var(--accent-color);
+    padding: 2px 8px; border-radius: 100px; font-weight: 600;
+}
+.ideas-input-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.ideas-input {
+    flex: 1; padding: 10px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color); background: var(--primary-bg);
+    color: var(--text-primary); font-family: inherit; font-size: 0.85rem;
+}
+.ideas-input:focus { outline: none; border-color: var(--accent-color); }
+.ideas-input::placeholder { color: var(--text-muted); }
+.btn-add-idea {
+    padding: 10px 16px; border-radius: var(--radius-sm); border: none;
+    background: var(--accent-color); color: white; font-weight: 600;
+    font-size: 0.85rem; cursor: pointer; font-family: inherit;
+    transition: background var(--transition); white-space: nowrap;
+}
+.btn-add-idea:hover { background: var(--accent-hover); }
+.ideas-list { list-style: none; }
+.idea-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+.idea-item:last-child { border-bottom: none; }
+.idea-check {
+    width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border-color);
+    cursor: pointer; flex-shrink: 0; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s ease; color: transparent; background: transparent;
+}
+.idea-check:hover { border-color: var(--accent-color); }
+.idea-item.done .idea-check {
+    background: var(--success-color); border-color: var(--success-color); color: white;
+}
+.idea-item.done .idea-text { text-decoration: line-through; color: var(--text-muted); }
+.idea-text { flex: 1; color: var(--text-secondary); line-height: 1.5; }
+.idea-meta {
+    font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; margin-top: 2px;
+}
+.idea-delete {
+    background: none; border: none; color: var(--text-muted); cursor: pointer;
+    padding: 2px; opacity: 0; transition: opacity 0.15s ease;
+}
+.idea-item:hover .idea-delete { opacity: 1; }
+.idea-delete:hover { color: var(--danger-color); }
+.ideas-empty {
+    text-align: center; padding: 24px; color: var(--text-muted); font-size: 0.85rem;
 }
 
-/* ========================================
-   RESPONSIVE
-   ======================================== */
+/* Setup card (collapsible) */
+.setup-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); margin-bottom: 32px; overflow: hidden;
+}
+.setup-toggle {
+    width: 100%; padding: 16px 20px; background: none; border: none;
+    color: var(--text-primary); font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; gap: 8px; text-align: left;
+}
+.setup-toggle:hover { background: var(--hover-bg); }
+.setup-toggle svg { transition: transform 0.2s ease; }
+.setup-toggle.open svg { transform: rotate(90deg); }
+.setup-body { display: none; padding: 0 20px 20px; }
+.setup-body.open { display: block; }
+.setup-body pre {
+    background: var(--primary-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm); padding: 16px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+    color: var(--text-secondary); overflow-x: auto; line-height: 1.8; white-space: pre-wrap;
+}
+.setup-body pre .kw { color: var(--accent-color); }
+.setup-body pre .str { color: var(--success-color); }
+.setup-body pre .cm { color: var(--text-muted); }
+
+/* Footer */
+.footer {
+    border-top: 1px solid var(--border-color);
+    padding: 32px 24px 20px; background: var(--secondary-bg);
+}
+.footer-content { max-width: 1400px; margin: 0 auto; }
+.footer-bottom { text-align: center; }
+.footer-bottom p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px; }
+.footer-bottom a { color: var(--accent-color); text-decoration: none; }
+
+/* Mobile menu */
+.mobile-menu-toggle {
+    display: none; background: none; border: none; color: var(--text-primary);
+    cursor: pointer; padding: 8px;
+}
+.mobile-nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+.mobile-nav-overlay.active { display: block; }
+.mobile-nav-panel {
+    display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 280px;
+    background: var(--primary-bg); border-left: 1px solid var(--border-color);
+    z-index: 1001; padding: 24px; flex-direction: column; gap: 8px; overflow-y: auto;
+}
+.mobile-nav-panel.active { display: flex; }
+.mobile-nav-panel .nav-link { display: block; padding: 12px 16px; font-size: 1rem; }
+.mobile-nav-close {
+    align-self: flex-end; background: none; border: none; color: var(--text-primary);
+    cursor: pointer; padding: 4px; margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+    .nav-links, .nav-actions { display: none; }
+    .mobile-menu-toggle { display: flex; }
+}
 @media (max-width: 640px) {
-    .admin-content { padding: 20px 16px 48px; }
-    .admin-title { font-size: 1.3rem; }
+    .admin-main { padding: 16px 16px 32px; }
     .dash-grid { grid-template-columns: 1fr; }
-    .admin-user span { display: none; }
 }
 </style>
 </head>
@@ -299,108 +367,245 @@ body {
     </svg>
     <h1>Access Denied</h1>
     <p>This page is restricted to ImpactMojo administrators. If you believe you should have access, contact the site admin.</p>
-    <a href="/" class="btn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Back to Home
-    </a>
+    <a href="/" class="btn">Back to Home</a>
 </div>
 
-<!-- Admin Dashboard (hidden until auth passes) -->
+<!-- Admin Dashboard -->
 <div id="adminApp" style="display:none;">
 
+    <!-- Paper Plane -->
+    <svg class="paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+        <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+        <circle cx="35" cy="140" r="1.5" fill="#10B981" opacity="0.4"/>
+    </svg>
+
     <!-- Header -->
-    <header class="admin-header">
-        <div class="admin-header-inner">
-            <a href="/admin/" class="admin-logo">
-                <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo">
-                <span class="admin-logo-text">ImpactMojo</span>
-                <span class="admin-logo-badge">Admin</span>
-            </a>
-            <div class="admin-header-actions">
-                <div class="admin-user">
-                    <img class="admin-user-avatar auth-user-avatar" src="" alt="">
-                    <span class="auth-user-name"></span>
+    <header class="site-header">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                <img src="/assets/images/ImpactMojo Logo.png" alt="ImpactMojo" class="logo-icon">
+                <div class="logo-text-wrap">
+                    <span class="logo-text">ImpactMojo</span>
+                    <span class="logo-tagline">Learn for Impact</span>
                 </div>
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                </button>
+                <span class="admin-badge">Admin</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/admin/analytics" class="nav-link">Transparency</a>
+                <a href="/updates" class="nav-link">Updates</a>
+                <a href="/org-dashboard" class="nav-link">Org Dashboard</a>
+                <a href="/challenges" class="nav-link">Challenges</a>
+            </div>
+            <div class="nav-actions">
+                <div class="theme-selector" aria-label="Theme selection">
+                    <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </button>
+                    <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    </button>
+                    <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
                 <button class="btn-sign-out" onclick="handleSignOut()">Sign Out</button>
             </div>
-        </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </nav>
     </header>
 
+    <!-- Mobile Nav -->
+    <div class="mobile-nav-overlay" id="mobileOverlay"></div>
+    <div class="mobile-nav-panel" id="mobilePanel">
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-link">Home</a>
+        <a href="/admin/analytics" class="nav-link">Transparency</a>
+        <a href="/updates" class="nav-link">Updates</a>
+        <a href="/org-dashboard" class="nav-link">Org Dashboard</a>
+        <a href="/challenges" class="nav-link">Challenges</a>
+        <div class="theme-selector" style="margin-top:16px;">
+            <button class="theme-btn" data-theme="system" title="System theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="theme-btn" data-theme="light" title="Light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg></button>
+            <button class="theme-btn" data-theme="dark" title="Dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+
     <!-- Content -->
-    <main class="admin-content">
-        <h1 class="admin-title">Admin Dashboard</h1>
-        <p class="admin-subtitle">Manage your site content, view analytics, and configure settings.</p>
+    <main class="admin-main">
+        <div style="margin-bottom:24px;">
+            <h1 style="font-family:'Poppins',sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:4px; background:var(--gradient-primary); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Admin Dashboard</h1>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">Manage content, view analytics, and track ideas.</p>
+        </div>
 
-        <div class="dash-grid">
-            <!-- CMS -->
-            <a href="/admin/cms.html" class="dash-card">
-                <div class="dash-card-icon blue">&#x1f4dd;</div>
-                <div class="dash-card-title">Content Manager</div>
-                <ul class="dash-card-features">
-                    <li>Homepage hero — headline, subtext, CTA buttons</li>
-                    <li>Course catalog — add, edit, remove courses with type, track, level</li>
-                    <li>Games &amp; simulations — manage interactive content listings</li>
-                    <li>Tools &amp; labs — free and premium tool directory</li>
-                    <li>Testimonials — quotes, ratings, user details</li>
-                    <li>Team members — bios, roles, photos, LinkedIn links</li>
-                    <li>Footer links — site-wide navigation sections</li>
-                    <li>Announcements — site-wide banners with active/inactive toggle</li>
-                    <li>Form view and raw JSON editor with toggle</li>
-                    <li>All changes saved to Supabase with admin-only write access</li>
-                </ul>
-                <span class="dash-card-badge new">CMS</span>
+        <!-- Quick Links -->
+        <div class="section-header">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+            Quick Links
+        </div>
+        <div class="quick-links">
+            <a href="/admin/analytics" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Transparency
             </a>
-
-            <!-- Analytics -->
-            <a href="/admin/analytics" class="dash-card">
-                <div class="dash-card-icon purple">&#x1f4ca;</div>
-                <div class="dash-card-title">Analytics &amp; Transparency</div>
-                <ul class="dash-card-features">
-                    <li>Reconciled overview — legacy data merged with GA4 live metrics</li>
-                    <li>GA4 real-time data — users, sessions, pageviews, engagement rate</li>
-                    <li>Course user breakdown — enrolment numbers per course</li>
-                    <li>Game &amp; tool usage — interaction counts with bar charts</li>
-                    <li>Feature adoption table — type, user count, active/sunset status</li>
-                    <li>Geographic distribution — country-level user and session data</li>
-                    <li>Key metrics definitions — how each GA4 metric is calculated</li>
-                    <li>Data methodology &amp; model documentation</li>
-                    <li>24-hour client-side cache with manual refresh</li>
-                </ul>
-                <span class="dash-card-badge live">Live</span>
+            <a href="/updates" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Updates & Roadmap
             </a>
-
-            <!-- User Management -->
-            <a href="/admin/users.html" class="dash-card">
-                <div class="dash-card-icon green">&#x1f465;</div>
-                <div class="dash-card-title">User Management</div>
-                <ul class="dash-card-features">
-                    <li>View all registered users with profile details</li>
-                    <li>Assign and revoke admin roles</li>
-                    <li>Review subscription tiers — explorer, practitioner, professional, organization</li>
-                    <li>Organization memberships and team structures</li>
-                    <li>Certificate issuance history per user</li>
-                    <li>Learning progress and streak data</li>
-                </ul>
+            <a href="/org-dashboard" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                Org Dashboard
             </a>
-
-            <!-- Site Settings -->
-            <a href="/admin/settings.html" class="dash-card">
-                <div class="dash-card-icon amber">&#x2699;&#xFE0F;</div>
-                <div class="dash-card-title">Site Settings</div>
-                <ul class="dash-card-features">
-                    <li>Site metadata — title, description, OG tags</li>
-                    <li>Feature flags — enable/disable platform features</li>
-                    <li>Maintenance mode — take site offline with custom message</li>
-                    <li>Integration keys — GA4 property, Supabase project, Stripe</li>
-                    <li>Email templates — welcome, password reset, certificate notifications</li>
-                    <li>Audit log — track admin actions and content changes</li>
-                </ul>
+            <a href="/challenges" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                Challenges
+            </a>
+            <a href="/account" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Account
+            </a>
+            <a href="/privacy-policy" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Privacy Policy
+            </a>
+            <a href="https://github.com/Varnasr/ImpactMojo" target="_blank" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+                GitHub
             </a>
         </div>
+
+        <!-- Admin Tools Grid -->
+        <div class="section-header">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            Admin Tools
+        </div>
+        <div class="dash-grid">
+            <a href="/admin/cms.html" class="dash-card">
+                <div class="dash-card-icon blue">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
+                </div>
+                <div class="dash-card-title">Content Manager</div>
+                <div class="dash-card-desc">Edit hero, courses, games, tools, testimonials, announcements via visual JSON editor.</div>
+                <span class="dash-card-badge badge-cms">CMS</span>
+            </a>
+
+            <a href="/admin/analytics" class="dash-card">
+                <div class="dash-card-icon purple">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <div class="dash-card-title">Analytics & Transparency</div>
+                <div class="dash-card-desc">Platform metrics, GA4 live data, course usage, feature adoption, and geographic reach.</div>
+                <span class="dash-card-badge badge-live">Live</span>
+            </a>
+
+            <a href="/org-dashboard" class="dash-card">
+                <div class="dash-card-icon green">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                </div>
+                <div class="dash-card-title">Organization Dashboard</div>
+                <div class="dash-card-desc">Manage team members, learning paths, training packages, and cohorts.</div>
+                <span class="dash-card-badge badge-live">Live</span>
+            </a>
+
+            <a href="/updates" class="dash-card">
+                <div class="dash-card-icon amber">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+                </div>
+                <div class="dash-card-title">Updates & Roadmap</div>
+                <div class="dash-card-desc">View shipped features, changelog, and upcoming roadmap items.</div>
+                <span class="dash-card-badge badge-live">Public</span>
+            </a>
+
+            <div class="dash-card" style="opacity:0.5; cursor:default;">
+                <div class="dash-card-icon red">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div class="dash-card-title">User Management</div>
+                <div class="dash-card-desc">View registered users, manage roles, review subscriptions and memberships.</div>
+                <span class="dash-card-badge badge-soon">Coming Soon</span>
+            </div>
+
+            <div class="dash-card" style="opacity:0.5; cursor:default;">
+                <div class="dash-card-icon amber">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <div class="dash-card-title">Site Settings</div>
+                <div class="dash-card-desc">Feature flags, maintenance mode, integrations, and site metadata.</div>
+                <span class="dash-card-badge badge-soon">Coming Soon</span>
+            </div>
+        </div>
+
+        <!-- Ideas Tracker -->
+        <div class="ideas-section" id="ideasSection">
+            <div class="ideas-header">
+                <h3>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                    Ideas & Scratch Pad
+                    <span class="ideas-count" id="ideasCount">0</span>
+                </h3>
+            </div>
+            <div class="ideas-input-row">
+                <input type="text" class="ideas-input" id="ideaInput" placeholder="Jot down a feature idea, bug, or note..." onkeydown="if(event.key==='Enter')addIdea()">
+                <button class="btn-add-idea" onclick="addIdea()">Add</button>
+            </div>
+            <ul class="ideas-list" id="ideasList"></ul>
+            <div class="ideas-empty" id="ideasEmpty">No ideas yet. Start jotting things down!</div>
+        </div>
+
+        <!-- Supabase Setup (collapsible) -->
+        <div class="setup-card">
+            <button class="setup-toggle" id="setupToggle" onclick="toggleSetup()">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                Supabase Setup (one-time)
+            </button>
+            <div class="setup-body" id="setupBody">
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">
+                    Run this SQL in your Supabase SQL Editor to create the required tables and policies:
+                </p>
+                <pre><span class="cm">-- 1. Add role column to profiles</span>
+<span class="kw">ALTER TABLE</span> profiles <span class="kw">ADD COLUMN IF NOT EXISTS</span> role <span class="kw">TEXT DEFAULT</span> <span class="str">'user'</span>;
+
+<span class="cm">-- 2. Set yourself as admin (replace with your email)</span>
+<span class="kw">UPDATE</span> profiles <span class="kw">SET</span> role = <span class="str">'admin'</span>
+<span class="kw">WHERE</span> id = (<span class="kw">SELECT</span> id <span class="kw">FROM</span> auth.users <span class="kw">WHERE</span> email = <span class="str">'your-email@example.com'</span>);
+
+<span class="cm">-- 3. Create site_content table</span>
+<span class="kw">CREATE TABLE IF NOT EXISTS</span> site_content (
+    id <span class="kw">UUID DEFAULT</span> gen_random_uuid() <span class="kw">PRIMARY KEY</span>,
+    section_key <span class="kw">TEXT UNIQUE NOT NULL</span>,
+    label <span class="kw">TEXT NOT NULL</span>,
+    content <span class="kw">JSONB NOT NULL DEFAULT</span> <span class="str">'{}'</span>,
+    schema <span class="kw">JSONB DEFAULT NULL</span>,
+    updated_at <span class="kw">TIMESTAMPTZ DEFAULT</span> now(),
+    updated_by <span class="kw">UUID REFERENCES</span> auth.users(id)
+);
+
+<span class="cm">-- 4. Enable RLS & Policies</span>
+<span class="kw">ALTER TABLE</span> site_content <span class="kw">ENABLE ROW LEVEL SECURITY</span>;
+<span class="kw">CREATE POLICY</span> <span class="str">"Public read"</span> <span class="kw">ON</span> site_content <span class="kw">FOR SELECT USING</span> (<span class="kw">true</span>);
+<span class="kw">CREATE POLICY</span> <span class="str">"Admin write"</span> <span class="kw">ON</span> site_content <span class="kw">FOR ALL USING</span> (
+    <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> 1 <span class="kw">FROM</span> profiles <span class="kw">WHERE</span> profiles.id = auth.uid() <span class="kw">AND</span> profiles.role = <span class="str">'admin'</span>)
+);</pre>
+            </div>
+        </div>
     </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-bottom">
+                <p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+                <p>Released under MIT License. Supported by <a href="https://www.pinpointventures.in" target="_blank" rel="noopener">PinPoint Ventures</a></p>
+            </div>
+        </div>
+    </footer>
 </div>
 
 <!-- Scripts -->
@@ -410,31 +615,147 @@ body {
 <script src="/js/admin-gate.js"></script>
 
 <script>
-// Theme toggle
-function toggleTheme() {
-    var html = document.documentElement;
-    var current = html.getAttribute('data-theme');
-    html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
-    try { localStorage.setItem('impactmojo_admin_theme', html.getAttribute('data-theme')); } catch(e) {}
+// ============================================================
+// THEME (3-button: system / light / dark)
+// ============================================================
+function getPreferredTheme() {
+    return localStorage.getItem('impactmojo-theme') || 'system';
 }
+function applyTheme(theme) {
+    var resolved = theme;
+    if (theme === 'system') {
+        resolved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', resolved);
+    localStorage.setItem('impactmojo-theme', theme);
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+    });
+}
+applyTheme(getPreferredTheme());
+document.querySelectorAll('.theme-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { applyTheme(btn.getAttribute('data-theme')); });
+});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (getPreferredTheme() === 'system') applyTheme('system');
+});
 
-// Restore theme
+// ============================================================
+// MOBILE MENU
+// ============================================================
 (function() {
-    try {
-        var saved = localStorage.getItem('impactmojo_admin_theme');
-        if (saved) document.documentElement.setAttribute('data-theme', saved);
-    } catch(e) {}
+    var toggle = document.getElementById('mobileMenuToggle');
+    var overlay = document.getElementById('mobileOverlay');
+    var panel = document.getElementById('mobilePanel');
+    var closeBtn = document.getElementById('mobileNavClose');
+    function openMenu() { overlay.classList.add('active'); panel.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { overlay.classList.remove('active'); panel.classList.remove('active'); document.body.style.overflow = ''; }
+    toggle.addEventListener('click', openMenu);
+    overlay.addEventListener('click', closeMenu);
+    closeBtn.addEventListener('click', closeMenu);
 })();
 
-// Sign out
+// ============================================================
+// SETUP TOGGLE
+// ============================================================
+function toggleSetup() {
+    var toggle = document.getElementById('setupToggle');
+    var body = document.getElementById('setupBody');
+    toggle.classList.toggle('open');
+    body.classList.toggle('open');
+}
+
+// ============================================================
+// IDEAS TRACKER (localStorage)
+// ============================================================
+var IDEAS_KEY = 'impactmojo_admin_ideas';
+
+function loadIdeas() {
+    try { return JSON.parse(localStorage.getItem(IDEAS_KEY)) || []; }
+    catch(e) { return []; }
+}
+
+function saveIdeas(ideas) {
+    try { localStorage.setItem(IDEAS_KEY, JSON.stringify(ideas)); } catch(e) {}
+}
+
+function renderIdeas() {
+    var ideas = loadIdeas();
+    var list = document.getElementById('ideasList');
+    var empty = document.getElementById('ideasEmpty');
+    var count = document.getElementById('ideasCount');
+    var pending = ideas.filter(function(i) { return !i.done; }).length;
+    count.textContent = pending;
+
+    if (ideas.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+    list.innerHTML = ideas.map(function(idea, i) {
+        var d = new Date(idea.created);
+        var dateStr = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+        return '<li class="idea-item' + (idea.done ? ' done' : '') + '">' +
+            '<div class="idea-check" onclick="toggleIdea(' + i + ')">' +
+                (idea.done ? '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '') +
+            '</div>' +
+            '<span class="idea-text">' + escapeHtml(idea.text) + '</span>' +
+            '<span class="idea-meta">' + dateStr + '</span>' +
+            '<button class="idea-delete" onclick="deleteIdea(' + i + ')" title="Delete">' +
+                '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+            '</button>' +
+            '</li>';
+    }).join('');
+}
+
+function addIdea() {
+    var input = document.getElementById('ideaInput');
+    var text = input.value.trim();
+    if (!text) return;
+    var ideas = loadIdeas();
+    ideas.unshift({ text: text, done: false, created: new Date().toISOString() });
+    saveIdeas(ideas);
+    input.value = '';
+    renderIdeas();
+}
+
+function toggleIdea(index) {
+    var ideas = loadIdeas();
+    if (ideas[index]) {
+        ideas[index].done = !ideas[index].done;
+        saveIdeas(ideas);
+        renderIdeas();
+    }
+}
+
+function deleteIdea(index) {
+    var ideas = loadIdeas();
+    ideas.splice(index, 1);
+    saveIdeas(ideas);
+    renderIdeas();
+}
+
+function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+// ============================================================
+// SIGN OUT
+// ============================================================
 async function handleSignOut() {
     if (confirm('Sign out of admin panel?')) {
         await ImpactMojoAuth.signOut();
     }
 }
 
-// Admin Gate
+// ============================================================
+// ADMIN GATE
+// ============================================================
 document.addEventListener('DOMContentLoaded', function() {
+    renderIdeas();
     AdminGate.protect({
         loadingEl: document.getElementById('loadingOverlay'),
         timeoutMs: 8000,
@@ -449,6 +770,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
 </body>
 </html>
