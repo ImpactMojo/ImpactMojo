@@ -1,80 +1,111 @@
-# Premium & Business Models
+# Memberships, Workshops & Services
 
-ImpactMojo operates a hybrid model — free foundational content for all, with premium tools and professional services that sustain the platform.
+ImpactMojo's core belief is that high-quality development education should be free. All 48 courses, 12 games, 10 labs, 400+ handouts, and the entire Dataverse are free to use — no login required, no paywall, no trial period.
 
-## Revenue Streams
+Premium memberships and professional services exist to sustain the platform and offer advanced tools for practitioners who need them.
 
-### 1. Premium Memberships
+## What's Free (and Always Will Be)
 
-| Tier | Price | Target Audience |
+Everything you need to learn, teach, and facilitate:
+
+- **All courses** — 9 flagship + 39 foundational courses across 6 learning tracks
+- **All games** — 12 economics simulations, perfect for workshops
+- **All labs** — 10 interactive workbenches (Theory of Change builder, research design tools, etc.)
+- **All handouts** — 400+ downloadable reference sheets
+- **ImpactLex** — 500+ development terms dictionary
+- **Dev Case Studies** — 200 curated cases from 117 countries
+- **DevDiscourses** — 500+ curated research papers and books
+- **Dataverse** — 215+ data tools, APIs, and datasets
+- **Blog & Podcast** — Learning Loops and Between the Logframes
+- **Multilingual content** — English, Hindi, Tamil, Bengali, Telugu, Marathi
+
+## Membership Tiers
+
+### Explorer — Free Forever
+
+For students, curious learners, and anyone exploring development topics.
+
+**What you get:** Everything listed above, plus the Telegram community channel. No account required to browse content, but creating a free account unlocks progress tracking, bookmarks, and notes.
+
+### Practitioner — ₹399/month or ₹3,990/year
+
+For NGO staff and early-career professionals who want advanced tools and certificates.
+
+**What you get:** Everything in Explorer, plus:
+- Advanced Theory of Change Lab with export (PDF/PNG)
+- Completion certificates for courses
+- Full community access (WhatsApp PLC, Discord)
+
+**For educators:** If you're running workshops, the certificate feature lets your participants receive verifiable credentials. The advanced ToC Lab produces professional-quality outputs your team can use in proposals and reports.
+
+### Professional — ₹999/month or ₹9,990/year
+
+For researchers, M&E specialists, and consultants who need the full toolkit.
+
+**What you get:** Everything in Practitioner, plus:
+- Qual Insights Lab Pro — advanced qualitative analysis
+- VaniScribe AI — AI-assisted transcription and analysis
+- DevData Practice — data analysis workspace
+- DevEconomics Toolkit — econometrics tools
+- Code Convert Pro — convert between R, Python, Stata, and SPSS
+- Visualization Cookbook — ready-made chart templates
+- Priority coaching access
+
+**For educators:** The Professional tier is ideal if you're teaching data analysis or research methods. Your students can use real tools to practice skills they're learning in courses.
+
+### Organization — ₹1,499/user/month
+
+For NGOs, think tanks, and development agencies training teams.
+
+**What you get:** Everything in Professional, plus:
+- Team dashboard — track progress across your organization
+- Bulk licensing — one admin manages all seats
+- Dedicated support
+- Custom training packages
+
+**For educators:** If you're an L&D lead at an NGO or run a training programme, the Organization tier lets you assign learning paths to your team, monitor completion, and generate reports.
+
+## Workshops
+
+Intensive cohort-based training for teams, facilitated by Dr. Varna Sri Raman.
+
+| Plan | Price | What's included |
 |------|-------|-----------------|
-| **Explorer** | Free forever | Students, curious learners |
-| **Practitioner** | ₹399/mo · ₹3,990/yr | NGO staff, early-career professionals |
-| **Professional** | ₹999/mo · ₹9,990/yr | Researchers, M&E specialists, consultants |
-| **Organization** | ₹1,499/user/mo | NGOs, think tanks, development agencies |
+| **Standard** | ₹12,000 per cohort (up to 6 people) | 3 days, 19+ topics, hands-on exercises |
+| **Advanced** | ₹15,000 per cohort | Deeper content, software training, post-workshop mentoring |
 
-**What each tier unlocks:**
+**Sliding scale available** for grassroots organizations — no one is turned away for inability to pay.
 
-- **Explorer:** All courses, games, labs, DevDiscourses, Telegram channel
-- **Practitioner:** + Advanced ToC Lab, PDF/PNG export, certificates, full community access
-- **Professional:** + Qual Lab Pro, VaniScribe AI, DevData Practice, DevEconomics Toolkit, Code Converter, Visualization Cookbook, priority coaching
-- **Organization:** + Team dashboards, bulk licensing, dedicated support, custom training
+**Popular workshop topics:** MLE Essentials, Theory of Change, RCTs and Quasi-Experiments, Survey Design, Qualitative Methods, Gender Analysis & WEE, Data Analysis with R/Python, and custom combinations based on your team's needs.
 
-### 2. Workshops
-
-Intensive 3-day cohort-based training for entire NGO teams.
-
-| Plan | Price | Details |
-|------|-------|---------|
-| Standard | ₹12,000/cohort | Up to 6 participants, 3 days, 19+ topics |
-| Advanced | ₹15,000/cohort | Deeper content, software training, post-workshop mentoring |
-
-Sliding scale available for grassroots organizations.
-
-**Topics:** MLE Essentials, Theory of Change, RCTs, Survey Design, Qualitative Methods, Gender & WEE, Data Analysis, and custom combinations.
-
-### 3. Coaching
+## Coaching
 
 One-on-one expert guidance from Dr. Varna Sri Raman.
 
 | Service | Standard Price | Sliding Scale |
 |---------|---------------|---------------|
-| Career Coaching | ₹1,500/session | ₹400 – ₹2,000 |
-| Research Design | ₹2,500/session | ₹1,000 – ₹3,000 |
-| Data Analysis Support | ₹2,000/session | ₹800 – ₹2,500 |
+| Career Coaching | ₹1,500/session | ₹400–₹2,000 |
+| Research Design | ₹2,500/session | ₹1,000–₹3,000 |
+| Data Analysis Support | ₹2,000/session | ₹800–₹2,500 |
 
-### 4. Dojos
+Coaching is ideal if you're designing a study, stuck on data analysis, or navigating a career transition in the development sector.
 
-90-minute practice-based skill sessions. Learn by doing.
+## Dojos
+
+90-minute practice-based skill sessions. Learn by doing, not by listening.
 
 - **Price:** ₹1,500 per person per session
-- **35+ skills** across Thinking, Evidence, Action, Communication
-- **Structured series** available (6–8 weeks)
-- **Locations:** Delhi, Bangalore, Online
+- **35+ skills** across four domains: Thinking, Evidence, Action, Communication
+- **Structured series** available (6–8 weeks for deep skill building)
+- **Locations:** Delhi, Bangalore, and Online
 
-### 5. Pay What You Think Is Fair
+## Pay What You Think Is Fair
 
-For the free platform content. UPI: `impactmojo@ibl`
-
-## Premium Tools
-
-| Tool | RESOURCE_ID | Tier |
-|------|-------------|------|
-| RQ Builder Pro | `rq-builder` | Practitioner |
-| Code Convert Pro | `code-convert-pro` | Professional |
-| Qual Insights Lab Pro | `qual-insights` | Professional |
-| VaniScribe AI | `vaniscribe` | Professional |
-| DevData Practice | varnasr.github.io/devdata-practice | `devdata-practice` | Professional |
-| Visualization Cookbook | varnasr.github.io/devdata-practice/charts | `viz-cookbook` | Professional |
-| DevEconomics Toolkit | varnasr.github.io/deveconomics-toolkit | `devecon-toolkit` | Professional |
-
-## Payment Processing
-
-Currently using manual UPI payments (keeps 100% for platform development). Razorpay integration planned.
+If you find ImpactMojo's free content useful in your work, you can support the platform via UPI: `impactmojo@ibl`. Every contribution directly funds new content and tools.
 
 ## Pricing Philosophy
 
-- **Free tier is genuinely useful** — not a teaser. All 48 courses, 12 games, 10 labs are free.
-- **Sliding scale** for coaching and workshops — no one turned away for inability to pay.
-- **Annual discounts** — 2 months free on yearly plans.
-- **Cohort pricing** for workshops — flat rate per team, not per person.
+- **The free tier is genuinely useful** — it's not a teaser or a trial. Every course, game, and lab is fully accessible.
+- **Sliding scale** is always available — for coaching, workshops, and dojos. We believe in equitable access.
+- **Annual discounts** — save 2 months on yearly membership plans.
+- **Cohort pricing** for workshops — a flat rate per team, not per person, so small NGOs aren't penalized.
