@@ -37,8 +37,8 @@
       exitOnOverlayClick: true,
       disableInteraction: false,
       scrollToElement: true,
-      nextLabel: 'Next &rarr;',
-      prevLabel: '&larr; Back',
+      nextLabel: 'Next →',
+      prevLabel: '← Back',
       doneLabel: 'Got it!'
     });
 
