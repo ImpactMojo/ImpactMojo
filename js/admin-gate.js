@@ -100,10 +100,14 @@
       }, timeoutMs);
 
       // Listen for auth state changes
-      window.addEventListener('authStateChanged', function handler(e) {
+      window.addEventListener('authStateChanged', async function handler(e) {
         if (resolved) return;
         if (!ImpactMojoAuth.isAuthReady) return;
         if (e.detail && e.detail.isLoggedIn) {
+          // Ensure profile is loaded before checking admin role
+          if (!ImpactMojoAuth.profile || !ImpactMojoAuth.profile.role) {
+            try { await ImpactMojoAuth.fetchProfile(); } catch (_) {}
+          }
           checkAdmin(ImpactMojoAuth.user, ImpactMojoAuth.profile);
         }
       });

@@ -129,11 +129,15 @@
 
       // ------- Listen for auth state changes -------
       // If the auth event fires while we're waiting, handle it immediately
-      function onAuthChanged(e) {
+      async function onAuthChanged(e) {
         if (pageReady) return;
         if (!ImpactMojoAuth.isAuthReady) return;
         if (e.detail && e.detail.isLoggedIn) {
           clearTimeout(safetyTimer);
+          // Ensure profile is loaded before proceeding
+          if (!ImpactMojoAuth.profile) {
+            try { await ImpactMojoAuth.fetchProfile(); } catch (_) {}
+          }
           checkAndProceed(ImpactMojoAuth.user, ImpactMojoAuth.profile);
         }
         // Do NOT redirect on logout events here — the main flow handles it

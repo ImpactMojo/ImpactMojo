@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Transparency & Impact Data | ImpactMojo</title>
-<meta name="description" content="ImpactMojo's open transparency page. Explore our reach, content metrics, methodology, and platform growth data.">
+<title>Transparency | ImpactMojo</title>
+<meta name="description" content="ImpactMojo's transparency page. Our metrics, methodology, revenue model, and platform data — open and honest.">
 <link rel="icon" href="/assets/images/favicon.png" type="image/png">
 
 <!-- Google Analytics -->
@@ -168,20 +168,36 @@ body {
 }
 
 /* Main content */
-.admin-main {
-    max-width: 1400px; margin: 0 auto; padding: 24px;
+.page-main {
+    max-width: 1100px; margin: 0 auto; padding: 24px;
 }
 
-/* Status indicator */
-.status-dot {
-    width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+/* Hero */
+.hero-section {
+    text-align: center; padding: 48px 24px 32px; max-width: 760px; margin: 0 auto;
 }
-.status-dot.live { background: var(--success-color); animation: pulse 2s infinite; }
-.status-dot.offline { background: var(--text-muted); }
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+.hero-section h1 {
+    font-family: 'Poppins', sans-serif; font-size: 2.2rem; font-weight: 700;
+    margin-bottom: 12px;
+    background: var(--gradient-primary); -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; background-clip: text;
 }
+.hero-section p {
+    font-size: 1rem; color: var(--text-secondary); line-height: 1.8; max-width: 640px; margin: 0 auto;
+}
+
+/* Cards */
+.card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); padding: 32px; margin-bottom: 24px;
+    transition: box-shadow var(--transition);
+}
+.card:hover { box-shadow: var(--shadow-md); }
+.card h2 {
+    font-family: 'Poppins', sans-serif; font-size: 1.15rem; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 16px;
+}
+.card-body { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; }
 
 /* KPI Cards */
 .kpi-grid {
@@ -190,8 +206,10 @@ body {
 }
 .kpi-card {
     background: var(--card-bg); border: 1px solid var(--border-color);
-    border-radius: 12px; padding: 20px; position: relative; overflow: hidden;
+    border-radius: var(--radius-md); padding: 24px; position: relative; overflow: hidden;
+    transition: transform var(--transition), box-shadow var(--transition);
 }
+.kpi-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .kpi-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
 }
@@ -199,12 +217,10 @@ body {
 .kpi-card.purple::before { background: var(--secondary-accent); }
 .kpi-card.green::before { background: var(--success-color); }
 .kpi-card.amber::before { background: var(--warning-color); }
-.kpi-card.red::before { background: var(--danger-color); }
-
-.kpi-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 4px; }
-.kpi-value { font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: 700; line-height: 1.2; }
+.kpi-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-bottom: 6px; }
+.kpi-value { font-family: 'Poppins', sans-serif; font-size: 1.9rem; font-weight: 700; line-height: 1.2; }
 .kpi-sub { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; }
-.kpi-source { font-size: 0.65rem; color: var(--text-muted); margin-top: 8px; font-style: italic; }
+.kpi-source { font-size: 0.65rem; color: var(--text-muted); margin-top: 10px; font-style: italic; }
 
 /* Section headers */
 .section-header {
@@ -215,18 +231,27 @@ body {
     font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 700;
     display: flex; align-items: center; gap: 8px;
 }
-.section-title .icon { font-size: 1.2rem; }
 .section-badge {
-    font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; font-weight: 600;
+    font-size: 0.65rem; padding: 2px 10px; border-radius: 100px; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.03em;
 }
-.badge-legacy { background: rgba(99,102,241,0.15); color: #818CF8; }
-.badge-static { background: rgba(14,165,233,0.15); color: #0EA5E9; }
+.badge-total { background: rgba(14,165,233,0.15); color: #0EA5E9; }
+
+/* Chart container */
+.chart-container {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px;
+    position: relative;
+}
+.chart-container canvas {
+    width: 100% !important;
+    max-height: 360px;
+}
 
 /* Tables */
 .data-table-wrap {
     background: var(--card-bg); border: 1px solid var(--border-color);
-    border-radius: 12px; overflow: hidden; margin-bottom: 32px;
+    border-radius: var(--radius-md); overflow: hidden; margin-bottom: 32px;
 }
 .data-table {
     width: 100%; border-collapse: collapse; font-size: 0.85rem;
@@ -246,73 +271,61 @@ body {
     font-family: 'JetBrains Mono', monospace; font-weight: 500;
     color: var(--text-primary);
 }
-.data-table .total-row td {
-    font-weight: 700; color: var(--text-primary);
-    border-top: 2px solid var(--accent-color); background: rgba(14,165,233,0.05);
-}
 
-/* Bar chart (CSS-only) */
-.bar-chart { margin-bottom: 32px; }
-.bar-row {
-    display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+/* Tier comparison */
+.tier-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px; margin-top: 16px;
 }
-.bar-label {
-    width: 180px; font-size: 0.8rem; color: var(--text-secondary);
-    text-align: right; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+.tier-card {
+    background: var(--hover-bg); border-radius: var(--radius-sm); padding: 20px;
+    border: 1px solid var(--border-color); position: relative; overflow: hidden;
 }
-.bar-track {
-    flex: 1; height: 32px; background: var(--secondary-bg);
-    border-radius: 8px; overflow: hidden; position: relative;
-    border: 1px solid var(--border-color);
+.tier-card.highlight {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 1px var(--accent-color), var(--shadow-sm);
 }
-.bar-fill {
-    height: 100%; border-radius: 7px; transition: width 0.8s ease;
-    display: flex; align-items: center; padding-left: 10px;
-    font-size: 0.75rem; font-weight: 600; color: white;
-    font-family: 'JetBrains Mono', monospace;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+.tier-card h4 {
+    font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;
 }
-.bar-fill.blue { background: linear-gradient(90deg, var(--accent-color), #38BDF8); }
-.bar-fill.purple { background: linear-gradient(90deg, var(--secondary-accent), #A78BFA); }
-.bar-fill.green { background: linear-gradient(90deg, var(--success-color), #34D399); }
-.bar-fill.amber { background: linear-gradient(90deg, var(--warning-color), #FBBF24); }
-.bar-fill.red { background: linear-gradient(90deg, var(--danger-color), #F87171); }
+.tier-price {
+    font-family: 'Poppins', sans-serif; font-size: 1.3rem; font-weight: 700;
+    color: var(--accent-color); margin-bottom: 12px;
+}
+.tier-features { list-style: none; padding: 0; }
+.tier-features li {
+    font-size: 0.8rem; color: var(--text-secondary); padding: 4px 0;
+    padding-left: 20px; position: relative;
+}
+.tier-features li::before {
+    content: '\2713'; position: absolute; left: 0; color: var(--success-color); font-weight: 700;
+}
+.tier-features li.no::before { content: '\2717'; color: var(--text-muted); }
+.tier-features li.no { color: var(--text-muted); }
 
-/* Paper plane */
-.paper-plane {
-    position: fixed; top: 12%; right: 6%; width: 140px; height: 140px;
-    opacity: 0.08; pointer-events: none; z-index: 0;
-    animation: float 12s ease-in-out infinite;
+/* Info boxes */
+.info-box {
+    padding: 16px 20px; background: var(--hover-bg); border-radius: var(--radius-sm);
+    border-left: 3px solid var(--accent-color); margin-bottom: 16px;
 }
-[data-theme="light"] .paper-plane { opacity: 0.06; }
-@keyframes float {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-15px, -20px) rotate(3deg); }
-    50% { transform: translate(10px, -10px) rotate(-2deg); }
-    75% { transform: translate(-20px, 15px) rotate(4deg); }
+.info-box h4 {
+    font-size: 0.82rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;
 }
+.info-box p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; }
 
 /* Two-column layout */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
 @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
 
 /* Responsive */
 @media (max-width: 768px) {
     .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    .bar-label { width: 100px; font-size: 0.7rem; }
+    .hero-section h1 { font-size: 1.6rem; }
+    .hero-section { padding: 32px 16px 24px; }
 }
 </style>
 </head>
 <body>
-
-<!-- Paper Plane -->
-<svg class="paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
-    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
-    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
-    <circle cx="35" cy="140" r="1.5" fill="#10B981" opacity="0.4"/>
-</svg>
 
 <!-- Header -->
 <header class="site-header">
@@ -376,276 +389,220 @@ body {
     </div>
 </div>
 
-<main class="admin-main">
+<main class="page-main">
 
-    <!-- Transparency Intro -->
-    <div style="text-align:center; padding:20px 24px 8px; max-width:720px; margin:0 auto;">
-        <h1 style="font-family:'Poppins',sans-serif; font-size:1.8rem; font-weight:700; margin-bottom:8px; background:var(--gradient-primary); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Transparency & Impact Data</h1>
-        <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.7;">
-            ImpactMojo is built in the open. This page shares our platform metrics, content reach, and feature adoption data. All numbers shown here are static legacy data reconstructed from our codebase audit and historical Google Sheets records.
+    <!-- Hero -->
+    <div class="hero-section">
+        <h1>Transparency</h1>
+        <p>
+            We believe in building in the open. This page shares how ImpactMojo works,
+            how we make money, our methodology for tracking impact, and our cumulative platform numbers.
         </p>
     </div>
 
-    <!-- Methodology & Data Model -->
-    <div style="max-width:960px; margin:24px auto 0; padding:0 24px;">
+    <!-- ============================================================ -->
+    <!-- HOW WE MAKE MONEY -->
+    <!-- ============================================================ -->
+    <div class="card">
+        <h2>How We Make Money</h2>
+        <div class="card-body">
+            <p style="margin-bottom:16px;">
+                ImpactMojo operates on a <strong>freemium model</strong>. Most of our content is free and always will be.
+                We sustain the platform through optional paid tiers that unlock deeper features for serious practitioners and organisations.
+            </p>
 
-        <!-- Methodology -->
-        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:28px; margin-bottom:20px;">
-            <h2 style="font-family:'Poppins',sans-serif; font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
-                <span style="font-size:1.2rem;">&#x1f52c;</span> Methodology
-            </h2>
-            <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
-                <p style="margin-bottom:12px;">
-                    ImpactMojo tracks platform metrics through two complementary data sources, reconciled into a single view:
-                </p>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px; margin-bottom:16px;">
-                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Legacy Data (Hardcoded)</h4>
-                        <p>Content inventory counts (courses, labs, games, handouts, tools) are derived from a manual audit of the codebase. User counts for courses and games come from historical Google Sheets records maintained since launch. These figures represent cumulative totals and are updated periodically.</p>
-                    </div>
-                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Historical Google Sheets</h4>
-                        <p>User interaction counts per course, game, and tool are sourced from Google Sheets maintained by the ImpactMojo team since the platform's inception. These spreadsheets track form submissions, enrolment records, and usage logs across all content types.</p>
-                    </div>
+            <div class="tier-grid">
+                <div class="tier-card">
+                    <h4>Explorer</h4>
+                    <div class="tier-price">Free</div>
+                    <ul class="tier-features">
+                        <li>All 39 courses (full access)</li>
+                        <li>12 educational games</li>
+                        <li>Handouts &amp; case studies</li>
+                        <li>Dataverse tools &amp; datasets</li>
+                        <li>ImpactLex glossary (500+ terms)</li>
+                        <li>NudgeKit BCT repository</li>
+                        <li>Community access</li>
+                        <li class="no">Interactive labs &amp; tools</li>
+                        <li class="no">Live case challenges</li>
+                        <li class="no">Certificates &amp; portfolio</li>
+                    </ul>
                 </div>
-                <p style="margin-bottom:12px;">
-                    <strong style="color:var(--text-primary);">Reconciliation:</strong> The data shown on this page merges both sources. Content counts come from the codebase audit, while user interaction numbers come from historical Google Sheets. All figures are cumulative totals up to the last manual update.
-                </p>
+                <div class="tier-card highlight">
+                    <h4>Practitioner</h4>
+                    <div class="tier-price">Paid</div>
+                    <ul class="tier-features">
+                        <li>Everything in Explorer</li>
+                        <li>10 interactive labs</li>
+                        <li>Premium tools (ToC Workbench, MEL Lab, etc.)</li>
+                        <li>Live case challenges</li>
+                        <li>Certificates &amp; portfolio builder</li>
+                        <li>VaniScribe AI transcription</li>
+                        <li class="no">Organisation dashboard</li>
+                        <li class="no">Team management</li>
+                    </ul>
+                </div>
+                <div class="tier-card">
+                    <h4>Organisation</h4>
+                    <div class="tier-price">Paid</div>
+                    <ul class="tier-features">
+                        <li>Everything in Practitioner</li>
+                        <li>Organisation dashboard</li>
+                        <li>Team member management</li>
+                        <li>Learning path assignments</li>
+                        <li>Custom challenges (on request)</li>
+                        <li>Bulk onboarding</li>
+                        <li>Priority support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top:20px; border-left-color:var(--success-color);">
+                <h4>Our commitment</h4>
                 <p>
-                    <strong style="color:var(--text-primary);">Limitations:</strong> Legacy user numbers are approximate (based on Google Forms submissions and manual tracking). No personally identifiable information (PII) is collected or displayed on this page. This page does not include any live GA4 analytics data.
+                    Core learning content (courses, games, handouts, reference materials) will always remain free.
+                    Paid tiers fund platform development, server costs, and new content creation.
+                    We do not sell user data or run third-party advertising.
                 </p>
             </div>
         </div>
+    </div>
 
-        <!-- Data Model -->
-        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:28px; margin-bottom:20px;">
-            <h2 style="font-family:'Poppins',sans-serif; font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
-                <span style="font-size:1.2rem;">&#x1f4d0;</span> Data Model
-            </h2>
-            <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
-                <p style="margin-bottom:16px;">
-                    The transparency page is structured around four entity types, each with specific metrics:
-                </p>
+    <!-- ============================================================ -->
+    <!-- METHODOLOGY & DATA SOURCES -->
+    <!-- ============================================================ -->
+    <div class="card">
+        <h2>Methodology &amp; Data Sources</h2>
+        <div class="card-body">
+            <p style="margin-bottom:16px;">
+                The numbers on this page come from two sources, combined into cumulative totals:
+            </p>
 
-                <div style="overflow-x:auto;">
-                    <table style="width:100%; border-collapse:collapse; font-size:0.84rem;">
-                        <thead>
-                            <tr style="border-bottom:2px solid var(--border-color); text-align:left;">
-                                <th style="padding:10px 12px; color:var(--text-primary); font-weight:700;">Entity</th>
-                                <th style="padding:10px 12px; color:var(--text-primary); font-weight:700;">Metrics Tracked</th>
-                                <th style="padding:10px 12px; color:var(--text-primary); font-weight:700;">Source</th>
-                                <th style="padding:10px 12px; color:var(--text-primary); font-weight:700;">Update Frequency</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom:1px solid var(--border-color);">
-                                <td style="padding:10px 12px; font-weight:600; color:var(--text-primary);">Courses</td>
-                                <td style="padding:10px 12px;">Count, enrolled users per course, flagship vs. free designation</td>
-                                <td style="padding:10px 12px;">Legacy (codebase audit + Google Sheets)</td>
-                                <td style="padding:10px 12px;">Periodic manual update</td>
-                            </tr>
-                            <tr style="border-bottom:1px solid var(--border-color);">
-                                <td style="padding:10px 12px; font-weight:600; color:var(--text-primary);">Games &amp; Labs</td>
-                                <td style="padding:10px 12px;">Count, users per game/lab, feature type (interactive/simulation)</td>
-                                <td style="padding:10px 12px;">Legacy (codebase audit)</td>
-                                <td style="padding:10px 12px;">Periodic manual update</td>
-                            </tr>
-                            <tr style="border-bottom:1px solid var(--border-color);">
-                                <td style="padding:10px 12px; font-weight:600; color:var(--text-primary);">Tools &amp; Content</td>
-                                <td style="padding:10px 12px;">Handout count, dataverse tools, dataset generators, chart types, ImpactLex terms, open-access papers</td>
-                                <td style="padding:10px 12px;">Legacy (codebase inventory)</td>
-                                <td style="padding:10px 12px;">On content release</td>
-                            </tr>
-                            <tr>
-                                <td style="padding:10px 12px; font-weight:600; color:var(--text-primary);">Feature Adoption</td>
-                                <td style="padding:10px 12px;">Feature name, type (tool/game/lab), legacy user count, active/sunset status</td>
-                                <td style="padding:10px 12px;">Legacy (manual audit)</td>
-                                <td style="padding:10px 12px;">Periodic manual update</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Key Metrics Definitions -->
-        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:28px; margin-bottom:20px;">
-            <h2 style="font-family:'Poppins',sans-serif; font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
-                <span style="font-size:1.2rem;">&#x1f4d6;</span> Key Metrics Definitions
-            </h2>
-            <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
-                <p style="margin-bottom:16px;">
-                    These are the standard Google Analytics 4 metrics used by ImpactMojo for internal tracking. This public page shows only legacy/static data, but these definitions explain the metrics we track:
-                </p>
-
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px;">
-                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Total Users</h4>
-                        <p>The number of distinct users who visited the site during the reporting period. A user is identified by a unique browser cookie or device identifier.</p>
-                    </div>
-                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">New Users</h4>
-                        <p>Users who interacted with the site for the first time during the reporting period. Measured by the <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">first_visit</code> event in GA4.</p>
-                    </div>
-                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Sessions</h4>
-                        <p>A session begins when a user opens the site and ends after 30 minutes of inactivity or at midnight. A single user can generate multiple sessions.</p>
-                    </div>
-                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Pageviews</h4>
-                        <p>The total number of pages viewed. Repeated views of the same page are counted. This is the GA4 metric <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">screenPageViews</code>.</p>
-                    </div>
-                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Avg Session Duration</h4>
-                        <p>The average length of a session in seconds. Calculated as total session duration divided by the number of sessions. Indicates how long users typically spend on the site per visit.</p>
-                    </div>
-                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--accent-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Bounce Rate</h4>
-                        <p>The percentage of sessions that were <strong>not</strong> engaged. A session is considered "bounced" if it lasted less than 10 seconds, had zero <code style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:var(--primary-bg); padding:2px 6px; border-radius:4px;">key_events</code>, and had fewer than 2 pageviews. <em>Bounce Rate = 1 &minus; Engagement Rate.</em></p>
-                    </div>
-                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--success-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Engaged Sessions</h4>
-                        <p>The count of sessions that met <strong>any</strong> of these criteria: lasted <strong>10 seconds or longer</strong>, included <strong>1 or more key events</strong> (e.g. form submissions, outbound clicks), or included <strong>2 or more pageviews</strong>. This is GA4's primary quality-of-visit signal.</p>
-                    </div>
-                    <div style="background:var(--hover-bg); border-radius:var(--radius-sm); padding:16px;">
-                        <h4 style="font-size:0.82rem; font-weight:700; color:var(--success-color); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Engagement Rate</h4>
-                        <p>The percentage of sessions that were engaged. <em>Engagement Rate = Engaged Sessions &divide; Total Sessions.</em> A higher engagement rate indicates users are finding value in the content. This is the inverse of Bounce Rate.</p>
-                    </div>
-                </div>
-
-                <div style="margin-top:20px; padding:16px; background:var(--hover-bg); border-radius:var(--radius-sm); border-left:3px solid var(--success-color);">
-                    <h4 style="font-size:0.82rem; font-weight:700; color:var(--text-primary); margin-bottom:6px;">What counts as "Engaged"?</h4>
+            <div class="two-col">
+                <div class="info-box" style="border-left-color:var(--secondary-accent);">
+                    <h4>Legacy Data</h4>
                     <p>
-                        In GA4, a session is <strong>engaged</strong> if the user stayed for at least 10 seconds, triggered a key event, or viewed 2+ pages. This replaces the older Universal Analytics "bounce" model and provides a more meaningful measure of user interest. For ImpactMojo, engaged sessions typically mean a user explored a course, played a game, or used a tool rather than landing and immediately leaving.
+                        Historical records from Google Sheets maintained by the ImpactMojo team since launch,
+                        tracking form submissions, enrolment records, and usage logs. Content inventory counts
+                        come from a manual codebase audit. These cover the period before our current analytics setup.
+                    </p>
+                </div>
+                <div class="info-box" style="border-left-color:var(--success-color);">
+                    <h4>Current Analytics (GA4)</h4>
+                    <p>
+                        Google Analytics 4 tracks live platform usage including users, sessions, pageviews,
+                        and engagement. The totals shown below include current GA4 data combined with legacy
+                        figures. Live GA4 breakdowns are available internally to admins only.
                     </p>
                 </div>
             </div>
+
+            <div class="info-box" style="border-left-color:var(--warning-color);">
+                <h4>How totals are calculated</h4>
+                <p>
+                    <strong>Total = Legacy Data + Current GA4 Data.</strong>
+                    Legacy numbers are approximate (based on Google Forms submissions and manual tracking).
+                    GA4 numbers are as of the most recent data pull. We do not display the GA4 sub-totals publicly,
+                    but the combined total reflects our best estimate of cumulative reach.
+                </p>
+            </div>
         </div>
     </div>
 
-    <!-- KPI Cards -->
+    <!-- ============================================================ -->
+    <!-- KPI CARDS -->
+    <!-- ============================================================ -->
     <div class="section-header">
-        <h2 class="section-title"><span class="icon">&#x1f4c8;</span> Computed Numbers <span class="section-badge badge-legacy">Legacy Data</span></h2>
+        <h2 class="section-title">Platform Numbers <span class="section-badge badge-total">Cumulative Totals</span></h2>
     </div>
-    <div class="kpi-grid" id="kpiGrid">
-        <!-- Populated by JS -->
-    </div>
+    <div class="kpi-grid" id="kpiGrid"></div>
 
-    <!-- Platform Content Table -->
+    <!-- ============================================================ -->
+    <!-- PLATFORM CONTENT TABLE -->
+    <!-- ============================================================ -->
     <div class="section-header">
-        <h2 class="section-title"><span class="icon">&#x1f4ca;</span> Platform Content <span class="section-badge badge-static">Static</span></h2>
+        <h2 class="section-title">Content Library</h2>
     </div>
     <div class="data-table-wrap">
         <table class="data-table" id="platformTable">
-            <thead><tr><th>Metric</th><th>Count</th></tr></thead>
+            <thead><tr><th>Content Type</th><th>Count</th></tr></thead>
             <tbody></tbody>
         </table>
     </div>
 
-    <!-- Course Users -->
+    <!-- ============================================================ -->
+    <!-- CHARTS — beautiful line/area charts on canvas -->
+    <!-- ============================================================ -->
     <div class="section-header">
-        <h2 class="section-title"><span class="icon">&#x1f393;</span> Course Users <span class="section-badge badge-legacy">Legacy Data</span></h2>
+        <h2 class="section-title">Course Engagement</h2>
     </div>
-    <div class="bar-chart" id="courseChart"></div>
-
-    <!-- Game Users -->
-    <div class="section-header">
-        <h2 class="section-title"><span class="icon">&#x1f3ae;</span> Game Users <span class="section-badge badge-legacy">Legacy Data</span></h2>
-    </div>
-    <div class="bar-chart" id="gameChart"></div>
-
-    <!-- Tools & Labs -->
-    <div class="section-header">
-        <h2 class="section-title"><span class="icon">&#x1f6e0;</span> Tools & Labs <span class="section-badge badge-legacy">Legacy Data</span></h2>
-    </div>
-    <div class="bar-chart" id="toolChart"></div>
-
-    <!-- Feature Adoption -->
-    <div class="section-header">
-        <h2 class="section-title"><span class="icon">&#x2705;</span> Feature Adoption</h2>
-    </div>
-    <div class="data-table-wrap">
-        <table class="data-table" id="featureTable">
-            <thead><tr><th>Feature</th><th>Type</th><th>Legacy Users</th><th>Status</th></tr></thead>
-            <tbody></tbody>
-        </table>
+    <div class="chart-container">
+        <canvas id="courseChart" height="340"></canvas>
     </div>
 
-    <!-- Data Flow Diagram -->
-    <div style="max-width:960px; margin:32px auto 0; padding:0 24px;">
-        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:28px; margin-bottom:20px;">
-            <h2 style="font-family:'Poppins',sans-serif; font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
-                <span style="font-size:1.2rem;">&#x1f504;</span> Data Flow
-            </h2>
-            <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
-                <div style="padding:16px; background:var(--hover-bg); border-radius:var(--radius-sm); border-left:3px solid var(--accent-color); margin-bottom:16px;">
-                    <h4 style="font-size:0.82rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">Legacy Data Pipeline</h4>
-                    <p style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; line-height:2;">
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Codebase Audit</code>
-                        &#x2192;
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Content Inventory (courses, games, labs, tools)</code>
-                        &#x2192;
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">LEGACY object (JS)</code>
-                        <br>
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Google Sheets</code>
-                        &#x2192;
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">User Counts (form submissions, enrolments)</code>
-                        &#x2192;
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">LEGACY object (JS)</code>
-                        <br>
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">LEGACY object</code>
-                        &#x2192;
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Render functions (KPIs, tables, bar charts)</code>
-                        &#x2192;
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">DOM (this page)</code>
-                    </p>
-                </div>
-                <div style="padding:16px; background:var(--hover-bg); border-radius:var(--radius-sm); border-left:3px solid var(--secondary-accent);">
-                    <h4 style="font-size:0.82rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">Live Analytics Pipeline (admin-only, not shown here)</h4>
-                    <p style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; line-height:2;">
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Google OAuth</code>
-                        &#x2192;
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">GA4 Data API v1</code>
-                        &#x2192;
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Merge with legacy</code>
-                        &#x2192;
-                        <code style="background:var(--primary-bg); padding:2px 6px; border-radius:4px;">Update DOM</code>
-                    </p>
-                </div>
+    <div class="two-col">
+        <div>
+            <div class="section-header">
+                <h2 class="section-title">Game Engagement</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="gameChart" height="300"></canvas>
+            </div>
+        </div>
+        <div>
+            <div class="section-header">
+                <h2 class="section-title">Tools &amp; Labs</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="toolChart" height="300"></canvas>
             </div>
         </div>
     </div>
 
-    <!-- Legal & Compliance -->
-    <div style="max-width:960px; margin:12px auto 0; padding:0 24px;">
-        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:28px;">
-            <h2 style="font-family:'Poppins',sans-serif; font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
-                <span style="font-size:1.2rem;">&#x1f512;</span> Legal & Compliance
-            </h2>
-            <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
-                <div style="padding:16px; background:var(--hover-bg); border-radius:var(--radius-sm); border-left:3px solid var(--success-color); margin-bottom:16px;">
-                    <h4 style="font-size:0.82rem; font-weight:700; color:var(--text-primary); margin-bottom:6px;">Privacy Notice</h4>
-                    <p>
-                        All data shown on this page is <strong>aggregate</strong>. No individual user data, session recordings, personal identifiers, or PII are collected, stored, or displayed. User counts represent cumulative totals from anonymised form submissions and manual tracking. The GA4 property (used internally) employs anonymised IP collection and complies with India's Information Technology Act, 2000.
-                    </p>
-                </div>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:12px;">
-                    <a href="/privacy-policy" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
-                        Privacy Policy &#x2192;
-                    </a>
-                    <a href="/terms-of-service" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
-                        Terms of Service &#x2192;
-                    </a>
-                    <a href="/disclaimer" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
-                        Disclaimer &#x2192;
-                    </a>
-                    <a href="/grievance" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
-                        Grievance Redressal &#x2192;
-                    </a>
-                    <a href="/refund-policy" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
-                        Refund Policy &#x2192;
-                    </a>
-                </div>
+    <!-- ============================================================ -->
+    <!-- FEATURE ADOPTION TABLE -->
+    <!-- ============================================================ -->
+    <div class="section-header">
+        <h2 class="section-title">Feature Adoption</h2>
+    </div>
+    <div class="data-table-wrap">
+        <table class="data-table" id="featureTable">
+            <thead><tr><th>Feature</th><th>Type</th><th>Users</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- LEGAL & COMPLIANCE -->
+    <!-- ============================================================ -->
+    <div class="card">
+        <h2>Legal &amp; Compliance</h2>
+        <div class="card-body">
+            <div class="info-box" style="border-left-color:var(--success-color); margin-bottom:20px;">
+                <h4>Privacy Notice</h4>
+                <p>
+                    All data shown on this page is aggregate. No individual user data, session recordings,
+                    personal identifiers, or PII are collected, stored, or displayed. User counts represent
+                    cumulative totals from anonymised form submissions and manual tracking. We comply with
+                    India's Information Technology Act, 2000.
+                </p>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:12px;">
+                <a href="/privacy-policy" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
+                    Privacy Policy &#x2192;
+                </a>
+                <a href="/terms-of-service" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
+                    Terms of Service &#x2192;
+                </a>
+                <a href="/disclaimer" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
+                    Disclaimer &#x2192;
+                </a>
+                <a href="/grievance" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
+                    Grievance Redressal &#x2192;
+                </a>
+                <a href="/refund-policy" style="display:block; padding:12px 16px; background:var(--hover-bg); border-radius:var(--radius-sm); color:var(--accent-color); text-decoration:none; font-weight:600; font-size:0.85rem; transition:all var(--transition);">
+                    Refund Policy &#x2192;
+                </a>
             </div>
         </div>
     </div>
@@ -707,7 +664,7 @@ body {
 
 <script>
 // ============================================================
-// LEGACY DATA (hardcoded from website — static only)
+// LEGACY DATA (from codebase audit + Google Sheets records)
 // ============================================================
 var LEGACY = {
     platform: {
@@ -823,7 +780,6 @@ var LEGACY = {
 // ============================================================
 // UTILITIES
 // ============================================================
-
 function sumValues(obj) {
     return Object.values(obj).reduce(function(s, v) { return s + v; }, 0);
 }
@@ -837,15 +793,193 @@ function formatNum(n) {
 }
 
 // ============================================================
+// CHART HELPERS — beautiful smooth line/area charts on <canvas>
+// ============================================================
+function getChartColors() {
+    var cs = getComputedStyle(document.documentElement);
+    return {
+        text: cs.getPropertyValue('--text-secondary').trim() || '#94A3B8',
+        muted: cs.getPropertyValue('--text-muted').trim() || '#64748B',
+        grid: cs.getPropertyValue('--border-color').trim() || '#334155',
+        accent: cs.getPropertyValue('--accent-color').trim() || '#0EA5E9',
+        purple: cs.getPropertyValue('--secondary-accent').trim() || '#6366F1',
+        green: cs.getPropertyValue('--success-color').trim() || '#10B981',
+        amber: cs.getPropertyValue('--warning-color').trim() || '#F59E0B'
+    };
+}
+
+function hexToRgba(hex, alpha) {
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    var r = parseInt(hex.substring(0,2), 16);
+    var g = parseInt(hex.substring(2,4), 16);
+    var b = parseInt(hex.substring(4,6), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+}
+
+function drawLineChart(canvasId, data, colorKey) {
+    var canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+
+    var rect = canvas.parentElement.getBoundingClientRect();
+    var w = rect.width - 48; // padding
+    var h = parseInt(canvas.getAttribute('height')) || 340;
+
+    canvas.width = (w + 48) * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = (w + 48) + 'px';
+    canvas.style.height = h + 'px';
+    ctx.scale(dpr, dpr);
+
+    var colors = getChartColors();
+    var lineColor = colors[colorKey] || colors.accent;
+
+    var entries = Object.entries(data).sort(function(a, b) { return b[1] - a[1]; });
+    var labels = entries.map(function(e) { return e[0]; });
+    var values = entries.map(function(e) { return e[1]; });
+    var n = values.length;
+    if (n === 0) return;
+
+    var maxVal = Math.max.apply(null, values);
+    var minVal = Math.min.apply(null, values);
+    var range = maxVal - minVal || 1;
+
+    // Layout
+    var padLeft = 60;
+    var padRight = 20;
+    var padTop = 24;
+    var padBottom = 80;
+    var chartW = w + 48 - padLeft - padRight;
+    var chartH = h - padTop - padBottom;
+
+    // Clear
+    ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+
+    // Grid lines
+    var gridSteps = 5;
+    ctx.strokeStyle = colors.grid;
+    ctx.lineWidth = 0.5;
+    ctx.font = '11px Inter, system-ui, sans-serif';
+    ctx.fillStyle = colors.muted;
+    ctx.textAlign = 'right';
+
+    for (var g = 0; g <= gridSteps; g++) {
+        var gy = padTop + chartH - (g / gridSteps) * chartH;
+        var gv = minVal + (g / gridSteps) * range;
+        ctx.beginPath();
+        ctx.setLineDash([4, 4]);
+        ctx.moveTo(padLeft, gy);
+        ctx.lineTo(padLeft + chartW, gy);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillText(formatNum(Math.round(gv)), padLeft - 8, gy + 4);
+    }
+
+    // Data points
+    var points = [];
+    for (var i = 0; i < n; i++) {
+        var px = padLeft + (i / (n - 1 || 1)) * chartW;
+        var py = padTop + chartH - ((values[i] - minVal) / range) * chartH;
+        points.push({ x: px, y: py });
+    }
+
+    // Smooth curve helper (Catmull-Rom to Bezier)
+    function getControlPoints(p0, p1, p2, tension) {
+        var t = tension || 0.3;
+        return {
+            cp1x: p1.x + (p2.x - p0.x) * t / 3,
+            cp1y: p1.y + (p2.y - p0.y) * t / 3,
+            cp2x: p2.x - (p2.x - p0.x) * t / 3,
+            cp2y: p2.y - (p2.y - p0.y) * t / 3
+        };
+    }
+
+    // Draw area gradient
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (var i = 0; i < points.length - 1; i++) {
+        var p0 = points[Math.max(0, i - 1)];
+        var p1 = points[i];
+        var p2 = points[i + 1];
+        var p3 = points[Math.min(points.length - 1, i + 2)];
+        var cp = getControlPoints(p0, p1, p2, 0.35);
+        ctx.bezierCurveTo(cp.cp1x, cp.cp1y, cp.cp2x, cp.cp2y, p2.x, p2.y);
+    }
+    // Close area
+    ctx.lineTo(points[n - 1].x, padTop + chartH);
+    ctx.lineTo(points[0].x, padTop + chartH);
+    ctx.closePath();
+
+    var grad = ctx.createLinearGradient(0, padTop, 0, padTop + chartH);
+    grad.addColorStop(0, hexToRgba(lineColor, 0.25));
+    grad.addColorStop(0.7, hexToRgba(lineColor, 0.05));
+    grad.addColorStop(1, hexToRgba(lineColor, 0));
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Draw line
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (var i = 0; i < points.length - 1; i++) {
+        var p0 = points[Math.max(0, i - 1)];
+        var p1 = points[i];
+        var p2 = points[i + 1];
+        var p3 = points[Math.min(points.length - 1, i + 2)];
+        var cp = getControlPoints(p0, p1, p2, 0.35);
+        ctx.bezierCurveTo(cp.cp1x, cp.cp1y, cp.cp2x, cp.cp2y, p2.x, p2.y);
+    }
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth = 2.5;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    // Draw dots
+    for (var i = 0; i < points.length; i++) {
+        // Outer glow
+        ctx.beginPath();
+        ctx.arc(points[i].x, points[i].y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = hexToRgba(lineColor, 0.2);
+        ctx.fill();
+        // Inner dot
+        ctx.beginPath();
+        ctx.arc(points[i].x, points[i].y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = lineColor;
+        ctx.fill();
+        ctx.strokeStyle = colors.grid;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+    }
+
+    // X-axis labels (rotated)
+    ctx.save();
+    ctx.font = '10px Inter, system-ui, sans-serif';
+    ctx.fillStyle = colors.muted;
+    ctx.textAlign = 'right';
+    for (var i = 0; i < n; i++) {
+        // Show every label for small datasets, every other for large
+        if (n > 20 && i % 2 !== 0 && i !== n - 1) continue;
+        ctx.save();
+        ctx.translate(points[i].x, padTop + chartH + 10);
+        ctx.rotate(-Math.PI / 4);
+        var lbl = labels[i].length > 18 ? labels[i].substring(0, 16) + '..' : labels[i];
+        ctx.fillText(lbl, 0, 0);
+        ctx.restore();
+    }
+    ctx.restore();
+}
+
+// ============================================================
 // RENDERING
 // ============================================================
-
 function render() {
     renderKPIs();
     renderPlatformTable();
-    renderBarChart('courseChart', LEGACY.courseUsers, 'blue');
-    renderBarChart('gameChart', LEGACY.gameUsers, 'green');
-    renderBarChart('toolChart', LEGACY.toolUsers, 'purple');
+    drawLineChart('courseChart', LEGACY.courseUsers, 'accent');
+    drawLineChart('gameChart', LEGACY.gameUsers, 'green');
+    drawLineChart('toolChart', LEGACY.toolUsers, 'purple');
     renderFeatureTable();
 }
 
@@ -854,14 +988,13 @@ function renderKPIs() {
     var totalCourseUsers = sumValues(LEGACY.courseUsers);
     var totalGameUsers = sumValues(LEGACY.gameUsers);
     var totalToolUsers = sumValues(LEGACY.toolUsers);
-    var totalLegacy = totalCourseUsers + totalGameUsers + totalToolUsers;
+    var totalAll = totalCourseUsers + totalGameUsers + totalToolUsers;
 
     var kpis = [
-        { label: 'Legacy Total Interactions', value: formatNum(totalLegacy), sub: 'Cumulative across all content', source: 'Codebase audit + Google Sheets', color: 'blue' },
-        { label: 'Course Interactions', value: formatNum(totalCourseUsers), sub: '41 courses', source: 'Google Sheets records', color: 'purple' },
-        { label: 'Game Interactions', value: formatNum(totalGameUsers), sub: '11 games', source: 'Google Sheets records', color: 'green' },
-        { label: 'Tool Interactions', value: formatNum(totalToolUsers), sub: '15 tools & labs', source: 'Google Sheets records', color: 'amber' },
-        { label: 'Content Library', value: '1,715+', sub: 'Terms, papers, cases, datasets', source: 'Codebase inventory', color: 'red' }
+        { label: 'Total Interactions', value: formatNum(totalAll), sub: 'Legacy + current analytics', source: 'Combined data sources', color: 'blue' },
+        { label: 'Course Interactions', value: formatNum(totalCourseUsers), sub: '41 courses', source: 'Legacy records', color: 'purple' },
+        { label: 'Game Interactions', value: formatNum(totalGameUsers), sub: '11 games', source: 'Legacy records', color: 'green' },
+        { label: 'Tool Interactions', value: formatNum(totalToolUsers), sub: '15 tools & labs', source: 'Legacy records', color: 'amber' }
     ];
 
     grid.innerHTML = kpis.map(function(k) {
@@ -882,27 +1015,16 @@ function renderPlatformTable() {
     tbody.innerHTML = rows.join('');
 }
 
-function renderBarChart(containerId, data, color) {
-    var container = document.getElementById(containerId);
-    var entries = Object.entries(data).sort(function(a, b) { return b[1] - a[1]; });
-    var max = entries[0] ? entries[0][1] : 1;
-
-    container.innerHTML = entries.map(function(entry) {
-        var pct = (entry[1] / max * 100).toFixed(1);
-        return '<div class="bar-row">' +
-            '<div class="bar-label" title="' + entry[0] + '">' + entry[0] + '</div>' +
-            '<div class="bar-track"><div class="bar-fill ' + color + '" style="width:' + pct + '%">' + formatNum(entry[1]) + '</div></div>' +
-            '</div>';
-    }).join('');
-}
-
 function renderFeatureTable() {
     var tbody = document.querySelector('#featureTable tbody');
     tbody.innerHTML = LEGACY.features.map(function(f) {
-        var statusClass = f.status === 'Active' ? 'color:var(--success-color)' : 'color:var(--text-muted)';
-        return '<tr><td>' + f.name + '</td><td>' + f.type + '</td>' +
+        var dot = f.status === 'Active'
+            ? '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success-color);margin-right:6px;"></span>'
+            : '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--text-muted);margin-right:6px;"></span>';
+        return '<tr><td style="font-weight:500;color:var(--text-primary);">' + f.name + '</td>' +
+            '<td>' + f.type + '</td>' +
             '<td class="num">' + (f.users ? formatNum(f.users) : '-') + '</td>' +
-            '<td style="' + statusClass + '; font-weight:600; font-size:0.8rem;">' + f.status + '</td></tr>';
+            '<td>' + dot + f.status + '</td></tr>';
     }).join('');
 }
 
@@ -923,6 +1045,14 @@ function applyTheme(theme) {
     document.querySelectorAll('.theme-btn').forEach(function(btn) {
         btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
     });
+    // Redraw charts on theme change
+    if (window._chartsRendered) {
+        setTimeout(function() {
+            drawLineChart('courseChart', LEGACY.courseUsers, 'accent');
+            drawLineChart('gameChart', LEGACY.gameUsers, 'green');
+            drawLineChart('toolChart', LEGACY.toolUsers, 'purple');
+        }, 50);
+    }
 }
 
 applyTheme(getPreferredTheme());
@@ -961,8 +1091,22 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fun
     closeBtn.addEventListener('click', closeMenu);
 })();
 
-// Render on load
+// ============================================================
+// RENDER & RESIZE
+// ============================================================
 render();
+window._chartsRendered = true;
+
+// Redraw charts on resize for responsiveness
+var resizeTimer;
+window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+        drawLineChart('courseChart', LEGACY.courseUsers, 'accent');
+        drawLineChart('gameChart', LEGACY.gameUsers, 'green');
+        drawLineChart('toolChart', LEGACY.toolUsers, 'purple');
+    }, 150);
+});
 </script>
 </body>
 </html>
