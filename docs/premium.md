@@ -58,12 +58,12 @@ For the free platform content. UPI: `impactmojo@ibl`
 
 ## Premium Tools
 
-| Tool | Netlify Site | RESOURCE_ID | Tier |
-|------|-------------|-------------|------|
-| RQ Builder Pro | researchquestions.netlify.app | `rq-builder` | Practitioner |
-| Code Convert Pro | stats-assist.netlify.app | `code-convert-pro` | Professional |
-| Qual Insights Lab Pro | qual-lab.netlify.app | `qual-insights` | Professional |
-| VaniScribe AI | vaniscribe.netlify.app | `vaniscribe` | Professional |
+| Tool | RESOURCE_ID | Tier |
+|------|-------------|------|
+| RQ Builder Pro | `rq-builder` | Practitioner |
+| Code Convert Pro | `code-convert-pro` | Professional |
+| Qual Insights Lab Pro | `qual-insights` | Professional |
+| VaniScribe AI | `vaniscribe` | Professional |
 | DevData Practice | varnasr.github.io/devdata-practice | `devdata-practice` | Professional |
 | Visualization Cookbook | varnasr.github.io/devdata-practice/charts | `viz-cookbook` | Professional |
 | DevEconomics Toolkit | varnasr.github.io/deveconomics-toolkit | `devecon-toolkit` | Professional |

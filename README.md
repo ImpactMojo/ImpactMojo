@@ -421,12 +421,12 @@ This project deploys automatically via Netlify. Any push to `main` triggers a ne
 
 Each premium tool is a separate Netlify site with a JWT auth-gate edge function:
 
-| Resource | Netlify Site | RESOURCE_ID |
-|----------|-------------|-------------|
-| RQ Builder Pro | researchquestions.netlify.app | `rq-builder` |
-| Code Convert Pro | stats-assist.netlify.app | `code-convert-pro` |
-| Qual Insights Lab | qual-lab.netlify.app | `qual-insights` |
-| VaniScribe AI | vaniscribe.netlify.app | `vaniscribe` |
+| Resource | RESOURCE_ID |
+|----------|-------------|
+| RQ Builder Pro | `rq-builder` |
+| Code Convert Pro | `code-convert-pro` |
+| Qual Insights Lab | `qual-insights` |
+| VaniScribe AI | `vaniscribe` |
 
 Each site requires two environment variables:
 - `RESOURCE_TOKEN_SECRET` — shared HMAC signing key
