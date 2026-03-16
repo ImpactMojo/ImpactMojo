@@ -366,6 +366,24 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
     width: 32px; height: 32px; border-radius: 8px; display: flex;
     align-items: center; justify-content: center; flex-shrink: 0;
 }
+.path-section-header {
+    display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.75rem 0.35rem;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--text-secondary); border-top: 1px solid var(--border-color); margin-top: 0.5rem;
+}
+.path-section-header:first-child { border-top: none; margin-top: 0; }
+.path-cat-btn {
+    padding: 0.3rem 0.7rem; font-size: 0.75rem; border-radius: 6px; border: 1px solid var(--border-color);
+    background: transparent; color: var(--text-secondary); cursor: pointer; font-weight: 500;
+    transition: all 0.15s ease; font-family: inherit;
+}
+.path-cat-btn:hover { background: var(--hover-bg); }
+.path-cat-btn.active { background: #6366F1; color: white; border-color: #6366F1; }
+.path-cat-count {
+    display: inline-block; font-size: 0.65rem; background: rgba(99,102,241,0.12); color: #6366F1;
+    padding: 1px 5px; border-radius: 4px; margin-left: 2px; font-weight: 600;
+}
+.path-cat-btn.active .path-cat-count { background: rgba(255,255,255,0.25); color: white; }
 .path-course-name { font-size: 0.88rem; font-weight: 600; line-height: 1.3; }
 .path-course-desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.3; margin-top: 1px; }
 .path-course-hours {
@@ -494,6 +512,10 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         </div>
         <h1 id="orgName">Your Organization</h1>
         <p>Manage your team, track learning progress, and build custom pathways.</p>
+        <a href="/admin/" id="adminPanelLink" style="display:none; margin-top:0.75rem; font-size:0.82rem; font-weight:600; color:var(--accent-color); text-decoration:none; align-items:center; gap:0.4rem;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            Admin Panel
+        </a>
     </div>
 
     <!-- Stats -->
@@ -619,12 +641,12 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 </div>
                 <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">Pre-built training paths, facilitator guides, assessment rubrics, and cohort management. Go to the <strong>Training</strong> tab below.</p>
             </div>
-            <div style="background:var(--card-bg); border:1px dashed var(--border-color); border-radius:12px; padding:1.25rem; opacity:0.85;">
+            <div style="background:var(--card-bg); border:1px solid var(--accent-color); border-radius:12px; padding:1.25rem;">
                 <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
-                    <span style="font-size:0.65rem; background:rgba(245,158,11,0.15); color:#D97706; padding:2px 8px; border-radius:4px; font-weight:600;">ROADMAP</span>
+                    <span style="font-size:0.65rem; background:rgba(16,185,129,0.15); color:#059669; padding:2px 8px; border-radius:4px; font-weight:600;">LIVE</span>
                     <h4 style="font-size:0.95rem; font-weight:600;">Open Badges & Micro-credentials</h4>
                 </div>
-                <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">W3C-standard verifiable digital credentials shareable on LinkedIn, proving your team's mastery of development competencies.</p>
+                <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">W3C-standard verifiable digital credentials shareable on LinkedIn, proving your team's mastery of development competencies. Badges are auto-issued on course completion and visible in the <strong>Account</strong> page.</p>
             </div>
             <div style="background:var(--card-bg); border:1px solid var(--accent-color); border-radius:12px; padding:1.25rem;">
                 <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
@@ -1233,22 +1255,36 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 
 <!-- Create Learning Path Modal -->
 <div class="modal-overlay" id="pathModal">
-    <div class="modal" style="max-width:600px;">
+    <div class="modal" style="max-width:720px;">
         <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem;">
             <div style="width:40px; height:40px; background:linear-gradient(135deg, #6366F1, #8B5CF6); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             </div>
             <div>
                 <h3 style="margin:0; font-size:1.15rem;">Create Learning Path</h3>
-                <p style="margin:0; font-size:0.78rem; color:var(--text-secondary);">Build a custom course sequence for your team</p>
+                <p style="margin:0; font-size:0.78rem; color:var(--text-secondary);">Combine courses, labs, templates, games & challenges into a structured journey</p>
             </div>
         </div>
         <label>Path Title</label>
         <input type="text" id="pathTitle" placeholder="e.g., MEL Foundations for Field Staff">
         <label>Description</label>
         <textarea id="pathDesc" placeholder="What skills and competencies will this path develop for your team?" style="resize:vertical; min-height:80px;"></textarea>
-        <label style="margin-bottom:0.5rem;">Select Courses <span style="font-weight:400; color:var(--text-muted); font-size:0.78rem;">(click to add)</span></label>
-        <div id="courseSelector" style="max-height:320px; overflow-y:auto; border:1px solid var(--border-color); border-radius:12px; padding:0.25rem; margin-bottom:0.75rem;">
+
+        <!-- Category filter tabs -->
+        <div style="display:flex; gap:0.35rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+            <button class="path-cat-btn active" data-cat="all" onclick="filterPathCategory('all', this)">All</button>
+            <button class="path-cat-btn" data-cat="course" onclick="filterPathCategory('course', this)">Courses <span class="path-cat-count" id="catCount-course">0</span></button>
+            <button class="path-cat-btn" data-cat="lab" onclick="filterPathCategory('lab', this)">Labs <span class="path-cat-count" id="catCount-lab">0</span></button>
+            <button class="path-cat-btn" data-cat="template" onclick="filterPathCategory('template', this)">Templates <span class="path-cat-count" id="catCount-template">0</span></button>
+            <button class="path-cat-btn" data-cat="game" onclick="filterPathCategory('game', this)">Games <span class="path-cat-count" id="catCount-game">0</span></button>
+            <button class="path-cat-btn" data-cat="challenge" onclick="filterPathCategory('challenge', this)">Challenges <span class="path-cat-count" id="catCount-challenge">0</span></button>
+        </div>
+
+        <!-- Search -->
+        <input type="text" id="pathSearch" placeholder="Search content..." style="margin-bottom:0.5rem; font-size:0.85rem;" oninput="filterPathSearch(this.value)">
+
+        <label style="margin-bottom:0.5rem;">Select Content <span style="font-weight:400; color:var(--text-muted); font-size:0.78rem;">(click to add)</span></label>
+        <div id="courseSelector" style="max-height:480px; overflow-y:auto; border:1px solid var(--border-color); border-radius:12px; padding:0.25rem; margin-bottom:0.75rem;">
             <label class="path-course-option" data-value="devecon">
                 <input type="checkbox" value="devecon" style="display:none;">
                 <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -1357,10 +1393,526 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 </div>
                 <span class="path-course-hours">12 hrs</span>
             </label>
+
+            <!-- Section: Interactive Labs -->
+            <div class="path-section-header" data-cat="lab">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v4H9z"/><path d="M4 21l3.5-10h9L20 21z"/><path d="M7 11l-3 10h16l-3-10"/></svg>
+                Interactive Labs <span style="font-size:0.7rem; color:var(--text-muted); font-weight:400;">(12)</span>
+            </div>
+            <label class="path-course-option" data-value="lab-risk-mitigation" data-cat="lab">
+                <input type="checkbox" value="lab-risk-mitigation" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #EF4444, #F97316);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Risk & Mitigation Lab</div>
+                    <div class="path-course-desc">Risk assessment, mitigation planning, scenario analysis</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-policy-advocacy" data-cat="lab">
+                <input type="checkbox" value="lab-policy-advocacy" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #6366F1, #8B5CF6);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Policy & Advocacy Lab</div>
+                    <div class="path-course-desc">Policy brief writing, advocacy campaign design, stakeholder mapping</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-resource-sustainability" data-cat="lab">
+                <input type="checkbox" value="lab-resource-sustainability" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #10B981, #059669);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8l-4 4-4-4"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Resource & Sustainability Lab</div>
+                    <div class="path-course-desc">Resource flow analysis, fundraising strategy, sustainability planning</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-impact-partnerships" data-cat="lab">
+                <input type="checkbox" value="lab-impact-partnerships" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #0EA5E9, #6366F1);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Impact & Partnerships Lab</div>
+                    <div class="path-course-desc">Partnership ecosystem mapping, MOU drafting, collaboration frameworks</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-mel-design" data-cat="lab">
+                <input type="checkbox" value="lab-mel-design" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #10B981, #0EA5E9);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">MEL Design Lab</div>
+                    <div class="path-course-desc">M&E system design, indicator frameworks, data collection instruments</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-mel-plan" data-cat="lab">
+                <input type="checkbox" value="lab-mel-plan" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #10B981, #0EA5E9);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">MEL Plan Lab</div>
+                    <div class="path-course-desc">Detailed MEL planning with indicators, baselines, and targets</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-design-thinking" data-cat="lab">
+                <input type="checkbox" value="lab-design-thinking" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #F59E0B, #EC4899);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Design Thinking Lab</div>
+                    <div class="path-course-desc">Human-centered design methodology, empathy mapping, prototyping</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-toc" data-cat="lab">
+                <input type="checkbox" value="lab-toc" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #10B981, #F59E0B);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Theory of Change Lab</div>
+                    <div class="path-course-desc">Build robust Theories of Change with causal pathways and assumptions</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-impact-storytelling" data-cat="lab">
+                <input type="checkbox" value="lab-impact-storytelling" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #06B6D4, #10B981);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Impact Storytelling Lab</div>
+                    <div class="path-course-desc">Narrative development for social impact, beneficiary stories</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-storytelling" data-cat="lab">
+                <input type="checkbox" value="lab-storytelling" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #06B6D4, #8B5CF6);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Storytelling Lab</div>
+                    <div class="path-course-desc">Advanced multimedia production, documentary techniques</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-community" data-cat="lab">
+                <input type="checkbox" value="lab-community" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #EC4899, #F59E0B);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Community Development & Engagement Lab</div>
+                    <div class="path-course-desc">Facilitation techniques, community mapping, participatory methods</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="lab-mle-design" data-cat="lab">
+                <input type="checkbox" value="lab-mle-design" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #10B981, #6366F1);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">MLE Design Lab</div>
+                    <div class="path-course-desc">Monitoring, Learning & Evaluation framework design and implementation</div>
+                </div>
+                <span class="path-course-hours">2 hrs</span>
+            </label>
+
+            <!-- Section: Interactive Templates -->
+            <div class="path-section-header" data-cat="template">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                Interactive Templates <span style="font-size:0.7rem; color:var(--text-muted); font-weight:400;">(7)</span>
+            </div>
+            <label class="path-course-option" data-value="tpl-toc-builder" data-cat="template">
+                <input type="checkbox" value="tpl-toc-builder" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #10B981, #0EA5E9);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Theory of Change Builder</div>
+                    <div class="path-course-desc">Interactive ToC framework with causal pathways and assumptions</div>
+                </div>
+                <span class="path-course-hours">1 hr</span>
+            </label>
+            <label class="path-course-option" data-value="tpl-logframe" data-cat="template">
+                <input type="checkbox" value="tpl-logframe" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #10B981, #059669);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Logframe Builder</div>
+                    <div class="path-course-desc">Construct complete logical frameworks with indicators and verification</div>
+                </div>
+                <span class="path-course-hours">1 hr</span>
+            </label>
+            <label class="path-course-option" data-value="tpl-stakeholder-map" data-cat="template">
+                <input type="checkbox" value="tpl-stakeholder-map" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #0EA5E9, #6366F1);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Stakeholder Map</div>
+                    <div class="path-course-desc">Map stakeholder influence, interest, and engagement strategies</div>
+                </div>
+                <span class="path-course-hours">1 hr</span>
+            </label>
+            <label class="path-course-option" data-value="tpl-empathy-map" data-cat="template">
+                <input type="checkbox" value="tpl-empathy-map" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #EC4899, #F59E0B);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Empathy Map</div>
+                    <div class="path-course-desc">Map what beneficiaries think, feel, say, and do</div>
+                </div>
+                <span class="path-course-hours">1 hr</span>
+            </label>
+            <label class="path-course-option" data-value="tpl-policy-canvas" data-cat="template">
+                <input type="checkbox" value="tpl-policy-canvas" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #6366F1, #8B5CF6);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Policy Analysis Canvas</div>
+                    <div class="path-course-desc">Structured policy design with stakeholder and impact analysis</div>
+                </div>
+                <span class="path-course-hours">1 hr</span>
+            </label>
+            <label class="path-course-option" data-value="tpl-ai-canvas" data-cat="template">
+                <input type="checkbox" value="tpl-ai-canvas" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #8B5CF6, #EC4899);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">AI Opportunity Canvas</div>
+                    <div class="path-course-desc">Assess AI opportunities for development projects</div>
+                </div>
+                <span class="path-course-hours">1 hr</span>
+            </label>
+            <label class="path-course-option" data-value="tpl-chart-decision" data-cat="template">
+                <input type="checkbox" value="tpl-chart-decision" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #F59E0B, #10B981);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Chart Decision Tree</div>
+                    <div class="path-course-desc">Find the right chart type for your data through guided questions</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+
+            <!-- Section: Economics Games -->
+            <div class="path-section-header" data-cat="game">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                Economics Games <span style="font-size:0.7rem; color:var(--text-muted); font-weight:400;">(12)</span>
+            </div>
+            <label class="path-course-option" data-value="game-real-middle" data-cat="game">
+                <input type="checkbox" value="game-real-middle" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #0EA5E9, #6366F1);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">The Real Middle</div>
+                    <div class="path-course-desc">India's middle class, wealth inequality, consumption patterns</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-risk-reward" data-cat="game">
+                <input type="checkbox" value="game-risk-reward" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #F59E0B, #EF4444);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Risk & Reward Explorer</div>
+                    <div class="path-course-desc">Behavioral economics, prospect theory, decision-making under uncertainty</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-cooperation" data-cat="game">
+                <input type="checkbox" value="game-cooperation" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #10B981, #0EA5E9);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Cooperation Paradox</div>
+                    <div class="path-course-desc">Game theory, strategic decision-making, collective action problems</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-public-good" data-cat="game">
+                <input type="checkbox" value="game-public-good" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #6366F1, #10B981);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Public Good Game</div>
+                    <div class="path-course-desc">Free-rider problems, collective contributions, social incentives</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-prisoners" data-cat="game">
+                <input type="checkbox" value="game-prisoners" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #EF4444, #6366F1);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Prisoners' Dilemma</div>
+                    <div class="path-course-desc">Strategic cooperation, Nash equilibrium, iterative strategies</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-opportunity-cost" data-cat="game">
+                <input type="checkbox" value="game-opportunity-cost" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #F97316, #F59E0B);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Opportunity Cost Game</div>
+                    <div class="path-course-desc">Resource allocation, trade-offs, scarcity decision-making</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-network-effects" data-cat="game">
+                <input type="checkbox" value="game-network-effects" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #8B5CF6, #0EA5E9);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Network Effects Game</div>
+                    <div class="path-course-desc">Digital platforms, scaling dynamics, winner-take-all markets</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-bidding-wars" data-cat="game">
+                <input type="checkbox" value="game-bidding-wars" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #EF4444, #F97316);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Bidding Wars</div>
+                    <div class="path-course-desc">Auction formats, price discovery, winner's curse</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-info-asymmetry" data-cat="game">
+                <input type="checkbox" value="game-info-asymmetry" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #06B6D4, #6366F1);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Information Asymmetry</div>
+                    <div class="path-course-desc">Adverse selection, moral hazard, signaling, screening</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-econ-concepts" data-cat="game">
+                <input type="checkbox" value="game-econ-concepts" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #0EA5E9, #10B981);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Economics Concepts Puzzle</div>
+                    <div class="path-course-desc">Puzzle-based reasoning through core economic concepts</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-externalities" data-cat="game">
+                <input type="checkbox" value="game-externalities" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #F59E0B, #EF4444);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Externalities & Hidden Costs</div>
+                    <div class="path-course-desc">Market failures, Pigouvian taxes, social costs and benefits</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+            <label class="path-course-option" data-value="game-commons" data-cat="game">
+                <input type="checkbox" value="game-commons" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #10B981, #F59E0B);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Commons Crisis</div>
+                    <div class="path-course-desc">Tragedy of the commons, resource stewardship, governance solutions</div>
+                </div>
+                <span class="path-course-hours">0.5 hr</span>
+            </label>
+
+            <!-- Section: Case Challenges -->
+            <div class="path-section-header" data-cat="challenge">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                Live Case Challenges <span style="font-size:0.7rem; color:var(--text-muted); font-weight:400;">(10)</span>
+            </div>
+            <label class="path-course-option" data-value="ch-logframe-redesign" data-cat="challenge">
+                <input type="checkbox" value="ch-logframe-redesign" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #EF4444, #F97316);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Redesign a Flawed Logframe</div>
+                    <div class="path-course-desc">HealthBridge Foundation MEL challenge</div>
+                </div>
+                <span class="path-course-hours">3 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="ch-dashboard-critique" data-cat="challenge">
+                <input type="checkbox" value="ch-dashboard-critique" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #F59E0B, #10B981);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Critique & Redesign a Dashboard</div>
+                    <div class="path-course-desc">POSHAN Abhiyaan data visualization challenge</div>
+                </div>
+                <span class="path-course-hours">3 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="ch-ai-bias-audit" data-cat="challenge">
+                <input type="checkbox" value="ch-ai-bias-audit" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #8B5CF6, #EC4899);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Audit an AI Model for Bias</div>
+                    <div class="path-course-desc">Government of Jharkhand beneficiary targeting challenge</div>
+                </div>
+                <span class="path-course-hours">4 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="ch-cost-effectiveness" data-cat="challenge">
+                <input type="checkbox" value="ch-cost-effectiveness" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #0EA5E9, #6366F1);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Cost-Effectiveness Analysis</div>
+                    <div class="path-course-desc">Government of Odisha nutrition interventions comparison</div>
+                </div>
+                <span class="path-course-hours">4 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="ch-gesi-audit" data-cat="challenge">
+                <input type="checkbox" value="ch-gesi-audit" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #EC4899, #8B5CF6);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">GESI Audit of a Livelihood Program</div>
+                    <div class="path-course-desc">Grameen Shakti gender equity & social inclusion challenge</div>
+                </div>
+                <span class="path-course-hours">3 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="ch-gandhian-strategy" data-cat="challenge">
+                <input type="checkbox" value="ch-gandhian-strategy" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #F97316, #F59E0B);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Gandhian Strategy for Social Movement</div>
+                    <div class="path-course-desc">Apply non-violent strategy to a contemporary campaign</div>
+                </div>
+                <span class="path-course-hours">3 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="ch-rti-strategy" data-cat="challenge">
+                <input type="checkbox" value="ch-rti-strategy" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #6366F1, #8B5CF6);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Draft an RTI Accountability Strategy</div>
+                    <div class="path-course-desc">Jan Sarokar law & governance challenge</div>
+                </div>
+                <span class="path-course-hours">3 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="ch-bcc-campaign" data-cat="challenge">
+                <input type="checkbox" value="ch-bcc-campaign" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #06B6D4, #10B981);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Design a BCC Campaign</div>
+                    <div class="path-course-desc">Adolescent nutrition behavior change communication</div>
+                </div>
+                <span class="path-course-hours">3 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="ch-conflict-resolution" data-cat="challenge">
+                <input type="checkbox" value="ch-conflict-resolution" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #EC4899, #F59E0B);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Design a Conflict Resolution Workshop</div>
+                    <div class="path-course-desc">Samarth Foundation SEL challenge for field teams</div>
+                </div>
+                <span class="path-course-hours">3 hrs</span>
+            </label>
+            <label class="path-course-option" data-value="ch-custom" data-cat="challenge">
+                <input type="checkbox" value="ch-custom" style="display:none;">
+                <div class="path-course-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="path-course-icon" style="background:linear-gradient(135deg, #94A3B8, #64748B);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <div class="path-course-name">Request Custom Challenge</div>
+                    <div class="path-course-desc">Commission a challenge tailored to your organisation's programs</div>
+                </div>
+                <span class="path-course-hours">TBD</span>
+            </label>
         </div>
         <div id="pathSummary" style="display:none; background:var(--secondary-bg); border:1px solid var(--border-color); border-radius:10px; padding:0.75rem 1rem; margin-bottom:1rem;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:0.85rem; font-weight:500;"><span id="pathCourseCount">0</span> courses selected</span>
+                <span style="font-size:0.85rem; font-weight:500;"><span id="pathCourseCount">0</span> items selected</span>
                 <span style="font-size:0.85rem; color:var(--accent-color); font-weight:600;"><span id="pathTotalHours">0</span> total hours</span>
             </div>
         </div>
@@ -1502,6 +2054,13 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             // Always fetch a fresh profile to get the latest subscription_tier from Supabase
             var profile = await ImpactMojoAuth.fetchProfile();
             console.log('[OrgDash] Profile:', profile ? { id: profile.id, tier: profile.subscription_tier } : null);
+
+            // Show admin panel link for admin users
+            if (profile && profile.role === 'admin') {
+                var adminLink = document.getElementById('adminPanelLink');
+                if (adminLink) adminLink.style.display = 'inline-flex';
+            }
+
             if (!profile || profile.subscription_tier !== 'organization') {
                 console.warn('[OrgDash] Access denied: tier is', profile ? profile.subscription_tier : 'no profile');
                 document.getElementById('authGate').style.display = 'block';
@@ -1684,8 +2243,51 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         updatePathSummary();
     };
 
-    // Course hours lookup
-    var COURSE_HOURS = { devecon: 20, mel: 16, dataviz: 12, devai: 12, gandhi: 14, poa: 10, media: 10, law: 14, sel: 12 };
+    // Content hours lookup (courses, labs, templates, games, challenges)
+    var CONTENT_HOURS = {
+        devecon: 20, mel: 16, dataviz: 12, devai: 12, gandhi: 14, poa: 10, media: 10, law: 14, sel: 12,
+        'lab-risk-mitigation': 2, 'lab-policy-advocacy': 2, 'lab-resource-sustainability': 2,
+        'lab-impact-partnerships': 2, 'lab-mel-design': 2, 'lab-mel-plan': 2, 'lab-design-thinking': 2,
+        'lab-toc': 2, 'lab-impact-storytelling': 2, 'lab-storytelling': 2, 'lab-community': 2, 'lab-mle-design': 2,
+        'tpl-toc-builder': 1, 'tpl-logframe': 1, 'tpl-stakeholder-map': 1, 'tpl-empathy-map': 1,
+        'tpl-policy-canvas': 1, 'tpl-ai-canvas': 1, 'tpl-chart-decision': 0.5,
+        'game-real-middle': 0.5, 'game-risk-reward': 0.5, 'game-cooperation': 0.5, 'game-public-good': 0.5,
+        'game-prisoners': 0.5, 'game-opportunity-cost': 0.5, 'game-network-effects': 0.5,
+        'game-bidding-wars': 0.5, 'game-info-asymmetry': 0.5, 'game-econ-concepts': 0.5,
+        'game-externalities': 0.5, 'game-commons': 0.5,
+        'ch-logframe-redesign': 3, 'ch-dashboard-critique': 3, 'ch-ai-bias-audit': 4,
+        'ch-cost-effectiveness': 4, 'ch-gesi-audit': 3, 'ch-gandhian-strategy': 3,
+        'ch-rti-strategy': 3, 'ch-bcc-campaign': 3, 'ch-conflict-resolution': 3, 'ch-custom': 0
+    };
+
+    // Category filtering
+    window.filterPathCategory = function(cat, btn) {
+        document.querySelectorAll('.path-cat-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        document.querySelectorAll('#courseSelector .path-course-option, #courseSelector .path-section-header').forEach(function(el) {
+            if (cat === 'all') { el.style.display = ''; }
+            else {
+                var elCat = el.getAttribute('data-cat') || 'course';
+                el.style.display = (elCat === cat) ? '' : 'none';
+            }
+        });
+    };
+
+    // Search filtering
+    window.filterPathSearch = function(query) {
+        query = query.toLowerCase().trim();
+        document.querySelectorAll('#courseSelector .path-course-option').forEach(function(opt) {
+            var name = opt.querySelector('.path-course-name')?.textContent?.toLowerCase() || '';
+            var desc = opt.querySelector('.path-course-desc')?.textContent?.toLowerCase() || '';
+            opt.style.display = (!query || name.includes(query) || desc.includes(query)) ? '' : 'none';
+        });
+        // Show section headers if any child in that category is visible
+        document.querySelectorAll('#courseSelector .path-section-header').forEach(function(hdr) {
+            var cat = hdr.getAttribute('data-cat');
+            var anyVisible = !!document.querySelector('#courseSelector .path-course-option[data-cat="' + cat + '"]:not([style*="display: none"])');
+            hdr.style.display = anyVisible ? '' : 'none';
+        });
+    };
 
     // Toggle course selection styling
     document.addEventListener('DOMContentLoaded', function() {
@@ -1704,7 +2306,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         var checked = document.querySelectorAll('#courseSelector input:checked');
         var count = checked.length;
         var hours = 0;
-        checked.forEach(function(c) { hours += (COURSE_HOURS[c.value] || 10); });
+        checked.forEach(function(c) { hours += (CONTENT_HOURS[c.value] || 1); });
         var summary = document.getElementById('pathSummary');
         if (count > 0) {
             summary.style.display = 'block';
@@ -1713,6 +2315,16 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         } else {
             summary.style.display = 'none';
         }
+        // Update category counts
+        ['course','lab','template','game','challenge'].forEach(function(cat) {
+            var n = document.querySelectorAll('#courseSelector .path-course-option[data-cat="' + cat + '"] input:checked').length;
+            var el = document.getElementById('catCount-' + cat);
+            if (el) el.textContent = n;
+        });
+        // Course items without data-cat count as courses
+        var courseNoAttr = document.querySelectorAll('#courseSelector .path-course-option:not([data-cat]) input:checked').length;
+        var courseEl = document.getElementById('catCount-course');
+        if (courseEl) courseEl.textContent = parseInt(courseEl.textContent || 0) + courseNoAttr;
     }
     window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); };
 
@@ -1774,10 +2386,10 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         var title = document.getElementById('pathTitle').value.trim();
         var desc = document.getElementById('pathDesc').value.trim();
         var checked = document.querySelectorAll('#courseSelector input:checked');
-        var courseIds = Array.from(checked).map(function(c) { return c.value; });
+        var contentIds = Array.from(checked).map(function(c) { return c.value; });
 
         if (!title) { alert('Please enter a path title.'); return; }
-        if (courseIds.length === 0) { alert('Please select at least one course.'); return; }
+        if (contentIds.length === 0) { alert('Please select at least one item.'); return; }
 
         var { error } = await supabaseClient
             .from('learning_paths')
@@ -1785,7 +2397,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 org_id: orgData.id,
                 title: title,
                 description: desc,
-                course_ids: courseIds,
+                course_ids: contentIds,
                 created_by: ImpactMojoAuth.getUser().id
             });
 
@@ -1795,6 +2407,10 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         document.getElementById('pathTitle').value = '';
         document.getElementById('pathDesc').value = '';
         document.querySelectorAll('#courseSelector input').forEach(function(c) { c.checked = false; });
+        document.querySelectorAll('#courseSelector .path-course-option').forEach(function(o) { o.classList.remove('selected'); });
+        document.getElementById('pathSearch').value = '';
+        filterPathCategory('all', document.querySelector('.path-cat-btn[data-cat="all"]'));
+        updatePathSummary();
         await loadPaths();
         updateStats();
     };
