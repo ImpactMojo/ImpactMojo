@@ -250,36 +250,26 @@ body {
 }
 
 /* ========================================
-   SETUP INSTRUCTIONS
+   FEATURE LIST INSIDE CARDS
    ======================================== */
-.setup-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 28px;
-    margin-top: 32px;
+.dash-card-features {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 6px;
 }
-.setup-card h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem; font-weight: 700;
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 8px;
+.dash-card-features li {
+    font-size: 0.82rem; color: var(--text-secondary);
+    display: flex; align-items: flex-start; gap: 8px;
+    line-height: 1.5;
 }
-.setup-card pre {
-    background: var(--primary-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    padding: 16px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    overflow-x: auto;
-    line-height: 1.8;
-    white-space: pre-wrap;
+.dash-card-features li::before {
+    content: '';
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 7px;
 }
-.setup-card pre .kw { color: var(--accent-color); }
-.setup-card pre .str { color: var(--success-color); }
-.setup-card pre .cm { color: var(--text-muted); }
 
 /* ========================================
    RESPONSIVE
@@ -349,75 +339,66 @@ body {
             <a href="/admin/cms.html" class="dash-card">
                 <div class="dash-card-icon blue">&#x1f4dd;</div>
                 <div class="dash-card-title">Content Manager</div>
-                <div class="dash-card-desc">Edit homepage hero, courses, games, tools, testimonials, team, footer, and announcements — all via a visual JSON editor.</div>
+                <ul class="dash-card-features">
+                    <li>Homepage hero — headline, subtext, CTA buttons</li>
+                    <li>Course catalog — add, edit, remove courses with type, track, level</li>
+                    <li>Games &amp; simulations — manage interactive content listings</li>
+                    <li>Tools &amp; labs — free and premium tool directory</li>
+                    <li>Testimonials — quotes, ratings, user details</li>
+                    <li>Team members — bios, roles, photos, LinkedIn links</li>
+                    <li>Footer links — site-wide navigation sections</li>
+                    <li>Announcements — site-wide banners with active/inactive toggle</li>
+                    <li>Form view and raw JSON editor with toggle</li>
+                    <li>All changes saved to Supabase with admin-only write access</li>
+                </ul>
                 <span class="dash-card-badge new">CMS</span>
             </a>
 
             <!-- Analytics -->
             <a href="/admin/analytics" class="dash-card">
                 <div class="dash-card-icon purple">&#x1f4ca;</div>
-                <div class="dash-card-title">Analytics & Transparency</div>
-                <div class="dash-card-desc">View platform metrics, GA4 live data, course/game/tool usage, feature adoption, and geographic reach.</div>
+                <div class="dash-card-title">Analytics &amp; Transparency</div>
+                <ul class="dash-card-features">
+                    <li>Reconciled overview — legacy data merged with GA4 live metrics</li>
+                    <li>GA4 real-time data — users, sessions, pageviews, engagement rate</li>
+                    <li>Course user breakdown — enrolment numbers per course</li>
+                    <li>Game &amp; tool usage — interaction counts with bar charts</li>
+                    <li>Feature adoption table — type, user count, active/sunset status</li>
+                    <li>Geographic distribution — country-level user and session data</li>
+                    <li>Key metrics definitions — how each GA4 metric is calculated</li>
+                    <li>Data methodology &amp; model documentation</li>
+                    <li>24-hour client-side cache with manual refresh</li>
+                </ul>
                 <span class="dash-card-badge live">Live</span>
             </a>
 
-            <!-- User Management (future) -->
-            <div class="dash-card" style="opacity:0.5; cursor:default;">
+            <!-- User Management -->
+            <a href="/admin/users.html" class="dash-card">
                 <div class="dash-card-icon green">&#x1f465;</div>
                 <div class="dash-card-title">User Management</div>
-                <div class="dash-card-desc">View registered users, manage roles, review subscriptions and org memberships.</div>
-                <span class="dash-card-badge" style="background:var(--hover-bg); color:var(--text-muted);">Coming Soon</span>
-            </div>
+                <ul class="dash-card-features">
+                    <li>View all registered users with profile details</li>
+                    <li>Assign and revoke admin roles</li>
+                    <li>Review subscription tiers — explorer, practitioner, professional, organization</li>
+                    <li>Organization memberships and team structures</li>
+                    <li>Certificate issuance history per user</li>
+                    <li>Learning progress and streak data</li>
+                </ul>
+            </a>
 
-            <!-- Settings (future) -->
-            <div class="dash-card" style="opacity:0.5; cursor:default;">
+            <!-- Site Settings -->
+            <a href="/admin/settings.html" class="dash-card">
                 <div class="dash-card-icon amber">&#x2699;&#xFE0F;</div>
                 <div class="dash-card-title">Site Settings</div>
-                <div class="dash-card-desc">Configure site metadata, feature flags, maintenance mode, and integrations.</div>
-                <span class="dash-card-badge" style="background:var(--hover-bg); color:var(--text-muted);">Coming Soon</span>
-            </div>
-        </div>
-
-        <!-- Setup Instructions -->
-        <div class="setup-card" id="setupCard">
-            <h3>&#x1f6e0; Supabase Setup (one-time)</h3>
-            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">
-                Run this SQL in your Supabase SQL Editor to create the required tables and policies:
-            </p>
-            <pre><span class="cm">-- 1. Add role column to profiles</span>
-<span class="kw">ALTER TABLE</span> profiles <span class="kw">ADD COLUMN IF NOT EXISTS</span> role <span class="kw">TEXT DEFAULT</span> <span class="str">'user'</span>;
-
-<span class="cm">-- 2. Set yourself as admin (replace with your email)</span>
-<span class="kw">UPDATE</span> profiles <span class="kw">SET</span> role = <span class="str">'admin'</span>
-<span class="kw">WHERE</span> id = (<span class="kw">SELECT</span> id <span class="kw">FROM</span> auth.users <span class="kw">WHERE</span> email = <span class="str">'your-email@example.com'</span>);
-
-<span class="cm">-- 3. Create site_content table</span>
-<span class="kw">CREATE TABLE IF NOT EXISTS</span> site_content (
-    id <span class="kw">UUID DEFAULT</span> gen_random_uuid() <span class="kw">PRIMARY KEY</span>,
-    section_key <span class="kw">TEXT UNIQUE NOT NULL</span>,
-    label <span class="kw">TEXT NOT NULL</span>,
-    content <span class="kw">JSONB NOT NULL DEFAULT</span> <span class="str">'{}'</span>,
-    schema <span class="kw">JSONB DEFAULT NULL</span>,
-    updated_at <span class="kw">TIMESTAMPTZ DEFAULT</span> now(),
-    updated_by <span class="kw">UUID REFERENCES</span> auth.users(id)
-);
-
-<span class="cm">-- 4. Enable RLS</span>
-<span class="kw">ALTER TABLE</span> site_content <span class="kw">ENABLE ROW LEVEL SECURITY</span>;
-
-<span class="cm">-- 5. Public read access (so site pages can fetch content)</span>
-<span class="kw">CREATE POLICY</span> <span class="str">"Public read"</span> <span class="kw">ON</span> site_content
-    <span class="kw">FOR SELECT USING</span> (<span class="kw">true</span>);
-
-<span class="cm">-- 6. Admin-only write access</span>
-<span class="kw">CREATE POLICY</span> <span class="str">"Admin write"</span> <span class="kw">ON</span> site_content
-    <span class="kw">FOR ALL USING</span> (
-        <span class="kw">EXISTS</span> (
-            <span class="kw">SELECT</span> 1 <span class="kw">FROM</span> profiles
-            <span class="kw">WHERE</span> profiles.id = auth.uid()
-            <span class="kw">AND</span> profiles.role = <span class="str">'admin'</span>
-        )
-    );</pre>
+                <ul class="dash-card-features">
+                    <li>Site metadata — title, description, OG tags</li>
+                    <li>Feature flags — enable/disable platform features</li>
+                    <li>Maintenance mode — take site offline with custom message</li>
+                    <li>Integration keys — GA4 property, Supabase project, Stripe</li>
+                    <li>Email templates — welcome, password reset, certificate notifications</li>
+                    <li>Audit log — track admin actions and content changes</li>
+                </ul>
+            </a>
         </div>
     </main>
 </div>
