@@ -286,30 +286,6 @@ body {
 }
 
 /* Setup card (collapsible) */
-.setup-card {
-    background: var(--card-bg); border: 1px solid var(--border-color);
-    border-radius: var(--radius-md); margin-bottom: 32px; overflow: hidden;
-}
-.setup-toggle {
-    width: 100%; padding: 16px 20px; background: none; border: none;
-    color: var(--text-primary); font-family: 'Poppins', sans-serif;
-    font-size: 0.9rem; font-weight: 700; cursor: pointer;
-    display: flex; align-items: center; gap: 8px; text-align: left;
-}
-.setup-toggle:hover { background: var(--hover-bg); }
-.setup-toggle svg { transition: transform 0.2s ease; }
-.setup-toggle.open svg { transform: rotate(90deg); }
-.setup-body { display: none; padding: 0 20px 20px; }
-.setup-body.open { display: block; }
-.setup-body pre {
-    background: var(--primary-bg); border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm); padding: 16px;
-    font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
-    color: var(--text-secondary); overflow-x: auto; line-height: 1.8; white-space: pre-wrap;
-}
-.setup-body pre .kw { color: var(--accent-color); }
-.setup-body pre .str { color: var(--success-color); }
-.setup-body pre .cm { color: var(--text-muted); }
 
 /* Footer */
 .footer {
@@ -382,15 +358,8 @@ body {
 .data-table .num { font-family: 'JetBrains Mono', monospace; font-weight: 500; color: var(--text-primary); }
 
 /* Bar chart */
-.bar-chart { margin-bottom: 32px; }
-.bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-.bar-label { width: 180px; font-size: 0.8rem; color: var(--text-secondary); text-align: right; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.bar-track { flex: 1; height: 32px; background: var(--secondary-bg); border-radius: 8px; overflow: hidden; position: relative; border: 1px solid var(--border-color); }
-.bar-fill { height: 100%; border-radius: 7px; transition: width 0.8s ease; display: flex; align-items: center; padding-left: 10px; font-size: 0.75rem; font-weight: 600; color: white; font-family: 'JetBrains Mono', monospace; box-shadow: inset 0 1px 0 rgba(255,255,255,0.15); }
-.bar-fill.blue { background: linear-gradient(90deg, var(--accent-color), #38BDF8); }
-.bar-fill.purple { background: linear-gradient(90deg, var(--secondary-accent), #A78BFA); }
-.bar-fill.green { background: linear-gradient(90deg, var(--success-color), #34D399); }
-.bar-fill.amber { background: linear-gradient(90deg, var(--warning-color), #FBBF24); }
+.chart-container { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+.chart-container canvas { width: 100% !important; }
 
 /* Section headers (analytics) */
 .analytics-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-color); }
@@ -422,7 +391,6 @@ body {
 
 @media (max-width: 768px) {
     .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    .bar-label { width: 100px; font-size: 0.7rem; }
 }
 </style>
 </head>
@@ -653,42 +621,6 @@ body {
             <div class="ideas-empty" id="ideasEmpty">No ideas yet. Start jotting things down!</div>
         </div>
 
-        <!-- Supabase Setup (collapsible) -->
-        <div class="setup-card">
-            <button class="setup-toggle" id="setupToggle" onclick="toggleSetup()">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                Supabase Setup (one-time)
-            </button>
-            <div class="setup-body" id="setupBody">
-                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">
-                    Run this SQL in your Supabase SQL Editor to create the required tables and policies:
-                </p>
-                <pre><span class="cm">-- 1. Add role column to profiles</span>
-<span class="kw">ALTER TABLE</span> profiles <span class="kw">ADD COLUMN IF NOT EXISTS</span> role <span class="kw">TEXT DEFAULT</span> <span class="str">'user'</span>;
-
-<span class="cm">-- 2. Set yourself as admin (replace with your email)</span>
-<span class="kw">UPDATE</span> profiles <span class="kw">SET</span> role = <span class="str">'admin'</span>
-<span class="kw">WHERE</span> id = (<span class="kw">SELECT</span> id <span class="kw">FROM</span> auth.users <span class="kw">WHERE</span> email = <span class="str">'your-email@example.com'</span>);
-
-<span class="cm">-- 3. Create site_content table</span>
-<span class="kw">CREATE TABLE IF NOT EXISTS</span> site_content (
-    id <span class="kw">UUID DEFAULT</span> gen_random_uuid() <span class="kw">PRIMARY KEY</span>,
-    section_key <span class="kw">TEXT UNIQUE NOT NULL</span>,
-    label <span class="kw">TEXT NOT NULL</span>,
-    content <span class="kw">JSONB NOT NULL DEFAULT</span> <span class="str">'{}'</span>,
-    schema <span class="kw">JSONB DEFAULT NULL</span>,
-    updated_at <span class="kw">TIMESTAMPTZ DEFAULT</span> now(),
-    updated_by <span class="kw">UUID REFERENCES</span> auth.users(id)
-);
-
-<span class="cm">-- 4. Enable RLS & Policies</span>
-<span class="kw">ALTER TABLE</span> site_content <span class="kw">ENABLE ROW LEVEL SECURITY</span>;
-<span class="kw">CREATE POLICY</span> <span class="str">"Public read"</span> <span class="kw">ON</span> site_content <span class="kw">FOR SELECT USING</span> (<span class="kw">true</span>);
-<span class="kw">CREATE POLICY</span> <span class="str">"Admin write"</span> <span class="kw">ON</span> site_content <span class="kw">FOR ALL USING</span> (
-    <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> 1 <span class="kw">FROM</span> profiles <span class="kw">WHERE</span> profiles.id = auth.uid() <span class="kw">AND</span> profiles.role = <span class="str">'admin'</span>)
-);</pre>
-            </div>
-        </div>
         </div><!-- end tab-overview -->
 
         <!-- TAB: Analytics -->
@@ -735,19 +667,23 @@ body {
             <div class="analytics-section-header">
                 <h2 class="analytics-section-title"><span style="font-size:1.2rem;">&#x1f393;</span> Course Users <span class="section-badge badge-legacy">Legacy Data</span></h2>
             </div>
-            <div class="bar-chart" id="courseChart"></div>
+            <div class="chart-container"><canvas id="courseChart" height="360"></canvas></div>
 
-            <!-- Game Users -->
-            <div class="analytics-section-header">
-                <h2 class="analytics-section-title"><span style="font-size:1.2rem;">&#x1f3ae;</span> Game Users <span class="section-badge badge-legacy">Legacy Data</span></h2>
+            <!-- Game Users & Tools side by side -->
+            <div class="two-col">
+                <div>
+                    <div class="analytics-section-header">
+                        <h2 class="analytics-section-title"><span style="font-size:1.2rem;">&#x1f3ae;</span> Game Users <span class="section-badge badge-legacy">Legacy Data</span></h2>
+                    </div>
+                    <div class="chart-container"><canvas id="gameChart" height="300"></canvas></div>
+                </div>
+                <div>
+                    <div class="analytics-section-header">
+                        <h2 class="analytics-section-title"><span style="font-size:1.2rem;">&#x1f6e0;</span> Tools & Labs <span class="section-badge badge-legacy">Legacy Data</span></h2>
+                    </div>
+                    <div class="chart-container"><canvas id="toolChart" height="300"></canvas></div>
+                </div>
             </div>
-            <div class="bar-chart" id="gameChart"></div>
-
-            <!-- Tools & Labs -->
-            <div class="analytics-section-header">
-                <h2 class="analytics-section-title"><span style="font-size:1.2rem;">&#x1f6e0;</span> Tools & Labs <span class="section-badge badge-legacy">Legacy Data</span></h2>
-            </div>
-            <div class="bar-chart" id="toolChart"></div>
 
             <!-- Feature Adoption -->
             <div class="analytics-section-header">
@@ -850,13 +786,6 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fun
 // ============================================================
 // SETUP TOGGLE
 // ============================================================
-function toggleSetup() {
-    var toggle = document.getElementById('setupToggle');
-    var body = document.getElementById('setupBody');
-    toggle.classList.toggle('open');
-    body.classList.toggle('open');
-}
-
 // ============================================================
 // IDEAS TRACKER (localStorage)
 // ============================================================
@@ -1027,9 +956,9 @@ var GA4_CONFIG = {
 // ============================================================
 function render() {
     renderKPIs(); renderPlatformTable(); renderGA4Overview();
-    renderBarChart('courseChart', LEGACY.courseUsers, 'blue');
-    renderBarChart('gameChart', LEGACY.gameUsers, 'green');
-    renderBarChart('toolChart', LEGACY.toolUsers, 'purple');
+    drawLineChart('courseChart', LEGACY.courseUsers, 'accent');
+    drawLineChart('gameChart', LEGACY.gameUsers, 'green');
+    drawLineChart('toolChart', LEGACY.toolUsers, 'purple');
     renderFeatureTable(); renderGeo();
 }
 
@@ -1090,16 +1019,176 @@ function renderGA4Overview() {
     tbody.innerHTML = rows.join('');
 }
 
-function renderBarChart(containerId, data, color) {
-    var container = document.getElementById(containerId);
-    if (!container) return;
-    var entries = Object.entries(data).sort(function(a, b) { return b[1] - a[1]; });
-    var max = entries[0] ? entries[0][1] : 1;
-    container.innerHTML = entries.map(function(entry) {
-        var pct = (entry[1] / max * 100).toFixed(1);
-        return '<div class="bar-row"><div class="bar-label" title="' + entry[0] + '">' + entry[0] + '</div><div class="bar-track"><div class="bar-fill ' + color + '" style="width:' + pct + '%">' + formatNum(entry[1]) + '</div></div></div>';
-    }).join('');
+// ============================================================
+// LINE CHART RENDERER (canvas)
+// ============================================================
+function getChartColors() {
+    var cs = getComputedStyle(document.documentElement);
+    return {
+        text: cs.getPropertyValue('--text-secondary').trim() || '#94A3B8',
+        muted: cs.getPropertyValue('--text-muted').trim() || '#64748B',
+        grid: cs.getPropertyValue('--border-color').trim() || '#334155',
+        accent: cs.getPropertyValue('--accent-color').trim() || '#0EA5E9',
+        purple: cs.getPropertyValue('--secondary-accent').trim() || '#6366F1',
+        green: cs.getPropertyValue('--success-color').trim() || '#10B981',
+        amber: cs.getPropertyValue('--warning-color').trim() || '#F59E0B'
+    };
 }
+
+function hexToRgba(hex, alpha) {
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    var r = parseInt(hex.substring(0,2), 16);
+    var g = parseInt(hex.substring(2,4), 16);
+    var b = parseInt(hex.substring(4,6), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+}
+
+function drawLineChart(canvasId, data, colorKey) {
+    var canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+
+    var rect = canvas.parentElement.getBoundingClientRect();
+    var w = rect.width - 48;
+    var h = parseInt(canvas.getAttribute('height')) || 340;
+
+    canvas.width = (w + 48) * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = (w + 48) + 'px';
+    canvas.style.height = h + 'px';
+    ctx.scale(dpr, dpr);
+
+    var colors = getChartColors();
+    var lineColor = colors[colorKey] || colors.accent;
+
+    var entries = Object.entries(data).sort(function(a, b) { return b[1] - a[1]; });
+    var labels = entries.map(function(e) { return e[0]; });
+    var values = entries.map(function(e) { return e[1]; });
+    var n = values.length;
+    if (n === 0) return;
+
+    var maxVal = Math.max.apply(null, values);
+    var minVal = Math.min.apply(null, values);
+    var range = maxVal - minVal || 1;
+
+    var padLeft = 60, padRight = 20, padTop = 24, padBottom = 80;
+    var chartW = w + 48 - padLeft - padRight;
+    var chartH = h - padTop - padBottom;
+
+    ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+
+    // Grid
+    var gridSteps = 5;
+    ctx.font = '11px Inter, system-ui, sans-serif';
+    ctx.fillStyle = colors.muted;
+    ctx.textAlign = 'right';
+    for (var g = 0; g <= gridSteps; g++) {
+        var gy = padTop + chartH - (g / gridSteps) * chartH;
+        var gv = minVal + (g / gridSteps) * range;
+        ctx.strokeStyle = colors.grid;
+        ctx.lineWidth = 0.5;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(padLeft, gy);
+        ctx.lineTo(padLeft + chartW, gy);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillText(formatNum(Math.round(gv)), padLeft - 8, gy + 4);
+    }
+
+    // Points
+    var points = [];
+    for (var i = 0; i < n; i++) {
+        points.push({
+            x: padLeft + (i / (n - 1 || 1)) * chartW,
+            y: padTop + chartH - ((values[i] - minVal) / range) * chartH
+        });
+    }
+
+    function getCP(p0, p1, p2) {
+        var t = 0.35;
+        return {
+            cp1x: p1.x + (p2.x - p0.x) * t / 3,
+            cp1y: p1.y + (p2.y - p0.y) * t / 3,
+            cp2x: p2.x - (p2.x - p0.x) * t / 3,
+            cp2y: p2.y - (p2.y - p0.y) * t / 3
+        };
+    }
+
+    // Area fill
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (var i = 0; i < points.length - 1; i++) {
+        var cp = getCP(points[Math.max(0, i-1)], points[i], points[i+1]);
+        ctx.bezierCurveTo(cp.cp1x, cp.cp1y, cp.cp2x, cp.cp2y, points[i+1].x, points[i+1].y);
+    }
+    ctx.lineTo(points[n-1].x, padTop + chartH);
+    ctx.lineTo(points[0].x, padTop + chartH);
+    ctx.closePath();
+    var grad = ctx.createLinearGradient(0, padTop, 0, padTop + chartH);
+    grad.addColorStop(0, hexToRgba(lineColor, 0.25));
+    grad.addColorStop(0.7, hexToRgba(lineColor, 0.05));
+    grad.addColorStop(1, hexToRgba(lineColor, 0));
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Line
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (var i = 0; i < points.length - 1; i++) {
+        var cp = getCP(points[Math.max(0, i-1)], points[i], points[i+1]);
+        ctx.bezierCurveTo(cp.cp1x, cp.cp1y, cp.cp2x, cp.cp2y, points[i+1].x, points[i+1].y);
+    }
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth = 2.5;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    // Dots
+    for (var i = 0; i < points.length; i++) {
+        ctx.beginPath();
+        ctx.arc(points[i].x, points[i].y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = hexToRgba(lineColor, 0.2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(points[i].x, points[i].y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = lineColor;
+        ctx.fill();
+        ctx.strokeStyle = colors.grid;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+    }
+
+    // X labels (rotated)
+    ctx.font = '10px Inter, system-ui, sans-serif';
+    ctx.fillStyle = colors.muted;
+    ctx.textAlign = 'right';
+    for (var i = 0; i < n; i++) {
+        if (n > 20 && i % 2 !== 0 && i !== n - 1) continue;
+        ctx.save();
+        ctx.translate(points[i].x, padTop + chartH + 10);
+        ctx.rotate(-Math.PI / 4);
+        var lbl = labels[i].length > 18 ? labels[i].substring(0, 16) + '..' : labels[i];
+        ctx.fillText(lbl, 0, 0);
+        ctx.restore();
+    }
+}
+
+// Redraw charts on resize
+var _adminResizeTimer;
+window.addEventListener('resize', function() {
+    clearTimeout(_adminResizeTimer);
+    _adminResizeTimer = setTimeout(function() {
+        if (window._analyticsRendered) {
+            drawLineChart('courseChart', LEGACY.courseUsers, 'accent');
+            drawLineChart('gameChart', LEGACY.gameUsers, 'green');
+            drawLineChart('toolChart', LEGACY.toolUsers, 'purple');
+        }
+    }, 150);
+});
 
 function renderFeatureTable() {
     var tbody = document.querySelector('#featureTable tbody');
