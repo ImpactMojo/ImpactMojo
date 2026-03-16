@@ -37,9 +37,13 @@
       exitOnOverlayClick: true,
       disableInteraction: false,
       scrollToElement: true,
+      scrollPadding: 80,
       nextLabel: 'Next →',
       prevLabel: '← Back',
-      doneLabel: 'Got it!'
+      doneLabel: 'Done ✓',
+      skipLabel: '×',
+      tooltipClass: 'impactmojo-tour',
+      highlightClass: 'impactmojo-highlight'
     });
 
     tour.oncomplete(function () { markTourSeen(page); });
