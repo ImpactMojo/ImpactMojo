@@ -5,6 +5,40 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.0.0] - 2026-03-16
+
+### Added
+- **What's New section** on mobile homepage — 8 feature cards highlighting new courses, DevData, Case Studies, DevDiscourses
+- **Wall of Love section** on mobile homepage — horizontally scrollable testimonial cards in 6 languages (English, Hindi, Tamil, Bengali, Telugu, Marathi)
+- **4 new course pages** linked: Politics of Aspiration, Media for Development, Constitution & Law, Social-Emotional Learning
+- **Canvas line charts** on admin dashboard and transparency page — smooth Catmull-Rom spline rendering with gradient fills, replacing bar charts
+- **Revenue model section** on transparency page — Explorer (free) vs Practitioner/Organisation (paid) tier cards
+
+### Changed
+- **Font standardization across 80 files**: Amaranth (body text) + Inter (headings) + JetBrains Mono (code). Removed Poppins, Fraunces, Merriweather, Source Serif 4, Source Sans 3, Cormorant Garamond. All fallback chains standardized
+- **Google Fonts loading standardized**: Amaranth:400,700 + Inter:400-800 + JetBrains Mono:400,500. Consistent weight ranges across all pages
+- **Transparency page redesigned**: renamed from "Transparency & Analytics", simplified data model (Legacy + GA4 = Totals), added methodology section
+- **Admin dashboard redesigned**: removed one-time Supabase setup section, replaced bar charts with canvas line charts, games & tools charts in two-column layout
+- **Org dashboard modal polished**: Create Learning Path modal — tighter padding, compact course rows, pill-shaped category buttons, proper light theme checkbox styling
+- **Dashboard tabs** now accept profile parameter directly, fixing race condition where tabs showed wrong role/tier
+
+### Fixed
+- **Auth gate race condition**: `authStateChanged` event fired before profile fetch completed, causing premature access denial. Both `admin-gate.js` and `auth-gate.js` now await `fetchProfile()` before checking roles
+- **Dashboard tabs wrong role**: `DashboardTabs.init()` relied on global `ImpactMojoAuth.profile` which wasn't set yet. Fixed by passing profile from auth callback
+- **Mobile hamburger cutting off logo**: hidden desktop-only elements (theme selector, tour toggle, starburst badge, nav buttons) on mobile across `index.html`, `account.html`, `org-dashboard.html`, `mobile-index.html`
+- **Mobile logo truncation**: removed `overflow:hidden` + `text-overflow:ellipsis` that was truncating "ImpactMojo" to "Impact..." on mobile-index.html
+
+### Removed
+- One-off fonts: Fraunces (dojos), Merriweather (about), Source Serif 4 (lexicons), Source Sans 3 (gandhi), Cormorant Garamond (gandhi)
+- Supabase one-time setup section from admin dashboard
+- Bar chart rendering code from admin and transparency pages
+
+## [9.5.0] - 2026-03-15
+
+### Added
+- Unified dashboard tab navigation across account, org, admin, and analytics pages
+- Team training packages for organizations (pre-built training paths, facilitator guides, assessment rubrics, cohort management)
+
 ## [9.1.0] - 2026-03-07
 
 ### Added
@@ -85,6 +119,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dojos skill session page
 - Blog (Learning Loops) and podcast (Between the Logframes)
 
+[10.0.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.5.0...v10.0.0
+[9.5.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.1.0...v9.5.0
 [9.1.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.0.0...v9.1.0
 [9.0.0]: https://github.com/Varnasr/ImpactMojo/compare/v8.0.0...v9.0.0
 [8.0.0]: https://github.com/Varnasr/ImpactMojo/compare/v7.0.0...v8.0.0
