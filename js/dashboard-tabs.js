@@ -41,20 +41,24 @@
     /**
      * Initialize the dashboard tabs.
      * @param {string} currentPage - one of 'account', 'organization', 'admin'
+     * @param {Object} [profileOverride] - optional profile object to use instead of ImpactMojoAuth.profile
      */
-    init: function (currentPage) {
+    init: function (currentPage, profileOverride) {
       if (this._rendered) return;
 
       var container = document.getElementById('dashboardTabs');
       if (!container) return;
 
       // Inject CSS once
-      var style = document.createElement('style');
-      style.textContent = CSS;
-      document.head.appendChild(style);
+      if (!this._cssInjected) {
+        var style = document.createElement('style');
+        style.textContent = CSS;
+        document.head.appendChild(style);
+        this._cssInjected = true;
+      }
 
-      // Determine user's access level
-      var profile = (typeof ImpactMojoAuth !== 'undefined' && ImpactMojoAuth.profile) || null;
+      // Determine user's access level — prefer passed-in profile over global
+      var profile = profileOverride || (typeof ImpactMojoAuth !== 'undefined' && ImpactMojoAuth.profile) || null;
       var tier = (profile && profile.subscription_tier) || 'explorer';
       var role = (profile && profile.role) || 'user';
       var isOrg = (tier === 'organization');
@@ -92,12 +96,13 @@
     /**
      * Re-render tabs (e.g. after profile is fetched and role/tier changes).
      * @param {string} currentPage
+     * @param {Object} [profileOverride]
      */
-    refresh: function (currentPage) {
+    refresh: function (currentPage, profileOverride) {
       this._rendered = false;
       var container = document.getElementById('dashboardTabs');
       if (container) container.innerHTML = '';
-      this.init(currentPage);
+      this.init(currentPage, profileOverride);
     }
   };
 
