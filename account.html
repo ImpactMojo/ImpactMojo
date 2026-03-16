@@ -2531,26 +2531,26 @@ function showAlert(message, type = 'error') {
 // LocalStorage Helper Functions
 function getLocalBookmarks() {
     try {
-        return JSON.parse(localStorage.getItem('impactMojoBookmarks') || '[]');
+        return JSON.parse(localStorage.getItem('impactmojo_bookmarks') || '[]');
     } catch { return []; }
 }
 
 function getLocalNotes() {
     try {
-        return JSON.parse(localStorage.getItem('impactMojoNotes') || '{}');
-    } catch { return {}; }
+        return JSON.parse(localStorage.getItem('impactmojo_notes') || '[]');
+    } catch { return []; }
 }
 
 function getLocalProgress() {
     try {
-        return JSON.parse(localStorage.getItem('impactMojoProgress') || '{}');
+        return JSON.parse(localStorage.getItem('impactmojo_analytics') || '{}');
     } catch { return {}; }
 }
 
 function getLocalStreak() {
     try {
-        return JSON.parse(localStorage.getItem('impactMojoStreak') || '{"current": 0, "lastDate": null}');
-    } catch { return { current: 0, lastDate: null }; }
+        return JSON.parse(localStorage.getItem('impactmojo_streak') || '{"currentStreak": 0, "longestStreak": 0, "lastVisit": null}');
+    } catch { return { currentStreak: 0, longestStreak: 0, lastVisit: null }; }
 }
 
 // Gamification Card Update
@@ -2562,8 +2562,8 @@ function updateGamificationCard() {
     try { analytics = JSON.parse(localStorage.getItem('impactmojo_analytics') || '{}'); } catch {}
 
     // --- Streak display ---
-    const currentStreak = streak.current || 0;
-    const longestStreak = streak.longest || streak.current || 0;
+    const currentStreak = streak.currentStreak || streak.current || 0;
+    const longestStreak = streak.longestStreak || streak.longest || currentStreak || 0;
     document.getElementById('gamifStreakNum').textContent = currentStreak;
     document.getElementById('gamifBestStreak').textContent = longestStreak;
     const streakEl = document.getElementById('gamifStreak');
@@ -2670,7 +2670,7 @@ function updateSavedItemsDisplay() {
     document.getElementById('notesCount').textContent = Object.keys(notes).length;
     document.getElementById('progressCount').textContent = Object.keys(progress).filter(k => progress[k] > 0 && progress[k] < 100).length;
     document.getElementById('totalBookmarks').textContent = bookmarks.length;
-    document.getElementById('streakDays').textContent = streak.current || 0;
+    document.getElementById('streakDays').textContent = streak.currentStreak || streak.current || 0;
     document.getElementById('coursesCompleted').textContent = Object.keys(progress).filter(k => progress[k] === 100).length;
 
     updateGamificationCard();
@@ -2920,13 +2920,13 @@ function exportData() {
 function clearLocalData() {
     if (confirm('This will clear all your bookmarks, notes, and progress saved in this browser. This cannot be undone. Continue?')) {
         try {
-            localStorage.removeItem('impactMojoBookmarks');
-            localStorage.removeItem('impactMojoNotes');
-            localStorage.removeItem('impactMojoProgress');
-            localStorage.removeItem('impactMojoStreak');
-            localStorage.removeItem('impactMojoReadingList');
-            localStorage.removeItem('impactMojoCompareList');
-            
+            localStorage.removeItem('impactmojo_bookmarks');
+            localStorage.removeItem('impactmojo_notes');
+            localStorage.removeItem('impactmojo_analytics');
+            localStorage.removeItem('impactmojo_streak');
+            localStorage.removeItem('impactmojo_compare');
+            localStorage.removeItem('impactmojo_last_sync');
+
             showAlert('Browser data cleared successfully!', 'success');
             updateSavedItemsDisplay();
         } catch (e) {

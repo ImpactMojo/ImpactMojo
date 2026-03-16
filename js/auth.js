@@ -401,27 +401,85 @@ const ImpactMojoAuth = {
             return { success: false, message: 'Not logged in' };
         }
 
+        // Prevent overlapping full syncs
+        if (this.isSyncing) {
+            return { success: false, message: 'Sync already in progress' };
+        }
+
         console.log('🔄 Starting full sync...');
 
+        // Set the flag once for the entire operation so individual
+        // syncFromCloud / syncToCloud calls don't block each other
+        this.isSyncing = true;
+
         try {
-            // First pull and merge
-            const pullResult = await this.syncFromCloud();
-            if (!pullResult.success) {
-                console.warn('Pull failed, attempting push anyway');
+            // --- Pull from cloud and merge ---
+            var pullResult = { success: false, message: 'skipped' };
+            try {
+                const { data, error } = await supabaseClient
+                    .from('profiles')
+                    .select('bookmarks, notes, compare_list, streak_data, progress, last_synced_at')
+                    .eq('id', this.user.id)
+                    .single();
+
+                if (error) throw error;
+
+                const cloudData = {
+                    bookmarks: data.bookmarks || [],
+                    notes: data.notes || [],
+                    compare_list: data.compare_list || [],
+                    streak_data: data.streak_data || { currentStreak: 0, longestStreak: 0, lastVisit: null },
+                    progress: data.progress || {}
+                };
+                const localData = this.getLocalData();
+                const mergedData = this.mergeData(localData, cloudData);
+                this.setLocalData(mergedData);
+                localStorage.setItem(STORAGE_KEYS.LAST_SYNC, new Date().toISOString());
+                window.dispatchEvent(new CustomEvent('dataSynced', { detail: mergedData }));
+                pullResult = { success: true, message: 'Data synced from cloud', data: mergedData };
+            } catch (pullErr) {
+                console.warn('Pull failed, attempting push anyway:', pullErr.message);
+                pullResult = { success: false, message: pullErr.message };
             }
 
-            // Then push merged data back
-            const pushResult = await this.syncToCloud();
-            
+            // --- Push merged data back to cloud ---
+            var pushResult = { success: false, message: 'skipped' };
+            try {
+                const localData = this.getLocalData();
+                const { data, error } = await supabaseClient
+                    .from('profiles')
+                    .update({
+                        bookmarks: localData.bookmarks,
+                        notes: localData.notes,
+                        compare_list: localData.compare_list,
+                        streak_data: localData.streak_data,
+                        progress: localData.progress,
+                        last_synced_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', this.user.id)
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                localStorage.setItem(STORAGE_KEYS.LAST_SYNC, new Date().toISOString());
+                this.profile = data;
+                pushResult = { success: true, message: 'Data synced to cloud', data };
+            } catch (pushErr) {
+                console.error('Push failed:', pushErr.message);
+                pushResult = { success: false, message: pushErr.message };
+            }
+
             console.log('✅ Full sync complete');
-            
+
             // Dispatch sync complete event
-            window.dispatchEvent(new CustomEvent('syncComplete', { 
-                detail: { pullResult, pushResult } 
+            window.dispatchEvent(new CustomEvent('syncComplete', {
+                detail: { pullResult, pushResult }
             }));
 
-            return { 
-                success: true, 
+            return {
+                success: pullResult.success || pushResult.success,
                 message: 'Full sync complete',
                 pullResult,
                 pushResult
@@ -430,6 +488,8 @@ const ImpactMojoAuth = {
         } catch (err) {
             console.error('Full sync failed:', err);
             return { success: false, message: err.message, error: err };
+        } finally {
+            this.isSyncing = false;
         }
     },
 
@@ -870,14 +930,18 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 
 // =====================================================
 // AUTO-SYNC ON PAGE VISIBILITY CHANGE
+// (Profile re-fetch is handled by the visibilitychange
+//  listener inside init(). This listener only triggers
+//  a background data sync if the last sync was stale.)
 // =====================================================
 document.addEventListener('visibilitychange', () => {
-    // Sync when user returns to the page (if logged in)
     if (document.visibilityState === 'visible' && ImpactMojoAuth.user) {
-        // Only sync if last sync was more than 5 minutes ago
         const lastSync = ImpactMojoAuth.getLastSyncTime();
         if (!lastSync || (new Date() - lastSync) > 5 * 60 * 1000) {
-            ImpactMojoAuth.syncAll();
+            // Only sync data — do NOT re-fetch profile here (init() handler does that)
+            ImpactMojoAuth.syncToCloud().catch(function (e) {
+                console.error('Background visibility sync failed:', e);
+            });
         }
     }
 });

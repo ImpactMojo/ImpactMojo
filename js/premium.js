@@ -165,15 +165,23 @@
          */
         waitForAuth(callback, maxAttempts = 50) {
             let attempts = 0;
-            
+
             const check = () => {
                 attempts++;
-                
-                if (typeof window.ImpactMojoAuth !== 'undefined') {
+
+                // Wait until ImpactMojoAuth exists AND isAuthReady is true
+                // (profile is loaded at that point so we get the correct tier)
+                if (typeof window.ImpactMojoAuth !== 'undefined' && window.ImpactMojoAuth.isAuthReady) {
                     callback();
                     return;
                 }
-                
+
+                // If ImpactMojoAuth exists but not ready yet, use its promise
+                if (typeof window.ImpactMojoAuth !== 'undefined' && typeof window.ImpactMojoAuth.waitForAuthReady === 'function' && attempts >= 5) {
+                    window.ImpactMojoAuth.waitForAuthReady().then(callback);
+                    return;
+                }
+
                 if (attempts < maxAttempts) {
                     setTimeout(check, 100);
                 } else {
@@ -182,7 +190,7 @@
                     callback();
                 }
             };
-            
+
             check();
         },
         
@@ -650,8 +658,11 @@
                 var serverTier = res.data.subscription_tier || 'explorer';
                 var serverStatus = res.data.subscription_status;
 
-                // If subscription is not active, force explorer
-                if (serverStatus !== 'active') serverTier = 'explorer';
+                // Only force explorer if subscription is explicitly cancelled/expired.
+                // null/undefined status means the field was never set — trust the tier.
+                if (serverStatus && serverStatus !== 'active' && serverStatus !== 'trialing') {
+                    serverTier = 'explorer';
+                }
 
                 if (serverTier !== this.currentTier) {
                     if (CONFIG.DEBUG) console.log('[Premium] Tier mismatch — server:', serverTier, 'client:', this.currentTier);
