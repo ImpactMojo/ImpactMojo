@@ -299,4 +299,21 @@ All updates are logged in the [Changelog](changelog.md).
 
 ---
 
+## Do you have jobs or internships?
+
+No. ImpactMojo is a tiny, entirely bootstrapped team. We don't have the budget to pay salaries or stipends.
+
+That said — we would genuinely love your help. If you're interested in contributing (content, translations, code, design, research), here's what we can offer:
+
+- **Training.** We'll teach you what we know — research methods, M&E, development practice, platform development.
+- **Mentorship.** Work alongside the founders and get real feedback on real work.
+- **Experience.** Contribute to an open-source platform used by development professionals across South Asia.
+- **A certificate of experience.** We'll issue a formal certificate acknowledging your contribution and thanking you for your work.
+
+What we can't offer is money. We're honest about that. If you're looking for a paid position, we completely understand — and we hope our free courses help you land one.
+
+If you're interested in volunteering, email [hello@impactmojo.in](mailto:hello@impactmojo.in) and tell us what you'd like to help with.
+
+---
+
 *Have a question that is not answered here? Open an issue on GitHub or contact the ImpactMojo team at [hello@impactmojo.in](mailto:hello@impactmojo.in).*
