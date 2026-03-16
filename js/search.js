@@ -26,7 +26,7 @@
     dataverse: { icon: sargamImg('si_Bar_chart'),   label: 'Dataverse',     color: '#6366F1' },
     course:    { icon: sargamImg('si_Book'),         label: 'Course',        color: '#0EA5E9' },
     game:      { icon: sargamImg('si_Activity'),     label: 'Game',          color: '#F59E0B' },
-    lab:       { icon: sargamImg('si_Tool'),          label: 'Lab',           color: '#10B981' },
+    lab:       { icon: sargamImg('si_Wrench'),          label: 'Lab',           color: '#10B981' },
     page:      { icon: sargamImg('si_Article'),      label: 'Page',          color: '#8B5CF6' }
   };
 
