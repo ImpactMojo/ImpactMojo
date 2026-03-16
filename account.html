@@ -2543,7 +2543,16 @@ function getLocalNotes() {
 
 function getLocalProgress() {
     try {
-        return JSON.parse(localStorage.getItem('impactmojo_analytics') || '{}');
+        var progress = {};
+        for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            if (key && key.startsWith('impactmojo_course_progress_')) {
+                var courseId = key.replace('impactmojo_course_progress_', '');
+                var data = JSON.parse(localStorage.getItem(key) || '{}');
+                progress[courseId] = data.percentage || 0;
+            }
+        }
+        return progress;
     } catch { return {}; }
 }
 
@@ -2667,7 +2676,7 @@ function updateSavedItemsDisplay() {
     const streak = getLocalStreak();
 
     document.getElementById('bookmarkCount').textContent = bookmarks.length;
-    document.getElementById('notesCount').textContent = Object.keys(notes).length;
+    document.getElementById('notesCount').textContent = Array.isArray(notes) ? notes.length : Object.keys(notes).length;
     document.getElementById('progressCount').textContent = Object.keys(progress).filter(k => progress[k] > 0 && progress[k] < 100).length;
     document.getElementById('totalBookmarks').textContent = bookmarks.length;
     document.getElementById('streakDays').textContent = streak.currentStreak || streak.current || 0;
