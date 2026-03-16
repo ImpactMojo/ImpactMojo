@@ -229,6 +229,12 @@
   // =========================================================================
 
   function updateSavedItemsDisplay() {
+    try { _updateSavedItemsInner(); } catch (e) {
+      console.error('[Account] updateSavedItemsDisplay error:', e);
+    }
+  }
+
+  function _updateSavedItemsInner() {
     var bookmarks = IMState.bookmarks.get();
     var notes     = IMState.notes.get();
     var progress  = IMState.courseProgress.getAllPercentages();
@@ -265,6 +271,12 @@
   // =========================================================================
 
   function updatePageData() {
+    try { _updatePageDataInner(); } catch (e) {
+      console.error('[Account] updatePageData error:', e);
+    }
+  }
+
+  function _updatePageDataInner() {
     var profile = ImpactMojoAuth.profile || {};
     var user    = ImpactMojoAuth.user || {};
 
@@ -486,17 +498,9 @@
     }
   });
 
-  // Re-fetch profile on tab re-focus
-  document.addEventListener('visibilitychange', async function () {
-    if (document.visibilityState === 'visible' && ImpactMojoAuth.isLoggedIn()) {
-      try {
-        await ImpactMojoAuth.fetchProfile();
-        updatePageData();
-      } catch (e) {
-        console.error('Profile re-fetch on return failed:', e);
-      }
-    }
-  });
+  // Note: profile re-fetch on tab focus is handled by auth.js's
+  // visibilitychange listener, which dispatches authStateChanged.
+  // The authStateChanged listener above calls updatePageData().
 
   // =========================================================================
   // INITIALIZATION

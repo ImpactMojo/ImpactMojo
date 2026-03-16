@@ -58,14 +58,22 @@
       function succeed(user, profile) {
         if (pageReady) return;
         pageReady = true;
+        clearTimeout(safetyTimer);
+        clearTimeout(hardTimeout);
         if (loadingEl) loadingEl.style.display = 'none';
-        onReady(user, profile);
+        try {
+          onReady(user, profile);
+        } catch (e) {
+          console.error('[AuthGate] onReady callback error:', e);
+        }
       }
 
       // Helper: redirect or call onDenied
       function deny() {
         if (pageReady) return;
         pageReady = true;
+        clearTimeout(safetyTimer);
+        clearTimeout(hardTimeout);
         if (loadingEl) loadingEl.style.display = 'none';
         if (onDenied) {
           onDenied();
@@ -91,6 +99,20 @@
         succeed(user, profile);
       }
 
+      // ------- Hard max timeout -------
+      // Absolute last resort: hide overlay after 15s no matter what.
+      // Prevents infinite spinner even if all other mechanisms fail.
+      var hardTimeout = setTimeout(function () {
+        if (pageReady) return;
+        console.error('[AuthGate] Hard timeout reached — forcing page load');
+        // Try one last session check
+        if (ImpactMojoAuth.user) {
+          succeed(ImpactMojoAuth.user, ImpactMojoAuth.profile);
+        } else {
+          deny();
+        }
+      }, Math.min(timeoutMs + 6000, 15000));
+
       // ------- Safety timeout -------
       // If auth never resolves, check Supabase directly before giving up
       var safetyTimer = setTimeout(async function () {
@@ -102,9 +124,11 @@
             try { await ImpactMojoAuth.fetchProfile(); } catch (_) {}
             checkAndProceed(ImpactMojoAuth.user, ImpactMojoAuth.profile);
             ImpactMojoAuth.updateUI();
+            clearTimeout(hardTimeout);
             return;
           }
         } catch (_) { /* proceed with deny */ }
+        clearTimeout(hardTimeout);
         deny();
       }, timeoutMs);
 
@@ -131,6 +155,7 @@
 
       if (pageReady) return; // authStateChanged already handled it
       clearTimeout(safetyTimer);
+      clearTimeout(hardTimeout);
 
       if (ImpactMojoAuth.isLoggedIn()) {
         checkAndProceed(ImpactMojoAuth.user, ImpactMojoAuth.profile);
