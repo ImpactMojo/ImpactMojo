@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Econ Concepts Puzzle | ImpactMojo</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F172A;--bg2:#1E293B;--bg3:#334155;
+  --text:#F8FAFC;--text2:#94A3B8;--text3:#64748B;
+  --blue:#3B82F6;--purple:#A855F7;--amber:#F59E0B;
+  --red:#EF4444;--green:#22C55E;--teal:#14B8A6;
+  --pink:#EC4899;--orange:#F97316;--indigo:#6366F1;
+  --cyan:#06B6D4;--lime:#84CC16;--rose:#F43F5E;
+  --radius:12px;--radius-lg:16px;
+}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  display:flex;flex-direction:column;align-items:center;
+}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+.screen{display:none;width:100%;max-width:720px;padding:20px;animation:fadeUp .4s ease}
+.screen.active{display:flex;flex-direction:column;align-items:center}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px rgba(34,197,94,.3)}50%{box-shadow:0 0 24px rgba(34,197,94,.6)}}
+@keyframes barShrink{from{width:100%}to{width:0%}}
+
+/* ===== WELCOME ===== */
+#welcome{text-align:center;padding-top:60px}
+.logo-icon{font-size:64px;margin-bottom:16px}
+#welcome h1{font-size:2.4rem;font-weight:800;margin-bottom:8px;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#welcome .subtitle{font-size:1.1rem;color:var(--text2);margin-bottom:32px}
+.cat-preview{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:40px}
+.cat-chip{padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:600;color:#fff;opacity:.9}
+.stats-row{display:flex;gap:24px;justify-content:center;margin-bottom:36px;color:var(--text2);font-size:.9rem}
+.stats-row span{display:flex;align-items:center;gap:6px}
+.btn-primary{
+  padding:16px 48px;border-radius:var(--radius);font-size:1.15rem;font-weight:700;
+  background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;
+  transition:transform .15s,box-shadow .15s;
+  box-shadow:0 4px 20px rgba(99,102,241,.4);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(99,102,241,.55)}
+
+/* ===== HUD ===== */
+.hud{
+  width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:12px 16px;background:var(--bg2);border-radius:var(--radius);margin-bottom:16px;
+  flex-wrap:wrap;gap:8px;
+}
+.hud-item{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--text2)}
+.hud-item .val{color:var(--text);font-weight:700;font-size:1rem}
+.progress-wrap{width:100%;height:6px;background:var(--bg3);border-radius:3px;margin-bottom:12px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:3px;transition:width .4s ease}
+
+/* ===== TIMER ===== */
+.timer-wrap{width:100%;height:5px;background:var(--bg3);border-radius:3px;margin-bottom:20px;overflow:hidden}
+.timer-bar{height:100%;background:var(--green);border-radius:3px;transition:background .3s}
+.timer-bar.warn{background:var(--amber)}
+.timer-bar.danger{background:var(--red)}
+
+/* ===== PUZZLE ===== */
+.cat-badge{
+  display:inline-block;padding:6px 16px;border-radius:20px;font-size:.8rem;
+  font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px;color:#fff;
+}
+.question-text{font-size:1.35rem;font-weight:600;line-height:1.5;text-align:center;margin-bottom:28px;max-width:640px}
+.options{display:flex;flex-direction:column;gap:12px;width:100%;max-width:560px}
+.option-card{
+  display:flex;align-items:center;gap:14px;padding:16px 20px;
+  background:var(--bg2);border:2px solid var(--bg3);border-radius:var(--radius);
+  cursor:pointer;transition:all .2s;font-size:1rem;text-align:left;color:var(--text);
+}
+.option-card:hover:not(.disabled){border-color:var(--blue);background:rgba(59,130,246,.08);transform:translateX(4px)}
+.option-card .letter{
+  width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.9rem;background:var(--bg3);color:var(--text);flex-shrink:0;
+  transition:all .2s;
+}
+.option-card:hover:not(.disabled) .letter{background:var(--blue);color:#fff}
+.option-card.correct{border-color:var(--green);background:rgba(34,197,94,.12);animation:glow .6s ease}
+.option-card.correct .letter{background:var(--green);color:#fff}
+.option-card.wrong{border-color:var(--red);background:rgba(239,68,68,.1);animation:shake .4s ease}
+.option-card.wrong .letter{background:var(--red);color:#fff}
+.option-card.disabled{cursor:default;opacity:.6}
+.option-card.disabled.correct{opacity:1}
+.option-card.reveal-correct{border-color:var(--green);background:rgba(34,197,94,.08);opacity:1}
+.option-card.reveal-correct .letter{background:var(--green);color:#fff}
+
+/* ===== EXPLANATION ===== */
+.explanation-card{
+  width:100%;max-width:600px;margin-top:24px;padding:24px;
+  background:linear-gradient(135deg,var(--bg2),rgba(30,41,59,.95));
+  border:1px solid var(--bg3);border-radius:var(--radius-lg);
+  animation:slideUp .45s ease;
+  border-left:4px solid var(--blue);
+}
+.explanation-card h3{font-size:1rem;color:var(--blue);margin-bottom:10px;font-weight:700}
+.explanation-card p{font-size:.95rem;line-height:1.65;color:var(--text2)}
+.btn-next{
+  margin-top:24px;padding:14px 40px;border-radius:var(--radius);
+  font-size:1rem;font-weight:700;background:var(--bg2);color:var(--text);
+  border:2px solid var(--bg3);transition:all .2s;
+}
+.btn-next:hover{border-color:var(--blue);background:rgba(59,130,246,.1)}
+
+/* ===== RESULT FEEDBACK ===== */
+.result-flash{
+  position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+}
+.result-flash .icon{font-size:80px;animation:pulse .5s ease}
+
+/* ===== CONFETTI ===== */
+.confetti-piece{
+  position:fixed;top:-10px;width:10px;height:10px;z-index:99;
+  border-radius:2px;animation:confettiFall linear forwards;pointer-events:none;
+}
+
+/* ===== END SCREEN ===== */
+#end{text-align:center;padding-top:40px}
+#end h1{font-size:2rem;font-weight:800;margin-bottom:8px}
+#end .final-score{font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,var(--amber),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:12px 0}
+.end-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:400px;margin:24px auto}
+.end-stat{background:var(--bg2);padding:16px;border-radius:var(--radius);text-align:center}
+.end-stat .label{font-size:.8rem;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.end-stat .value{font-size:1.4rem;font-weight:700}
+.cat-results{width:100%;max-width:480px;margin:24px auto;text-align:left}
+.cat-results h3{font-size:.9rem;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;text-align:center}
+.cat-result-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:8px;margin-bottom:6px;background:var(--bg2)}
+.cat-result-row .name{font-size:.9rem;font-weight:600}
+.cat-result-row .result{font-size:.85rem;font-weight:700}
+.cat-result-row .result.pass{color:var(--green)}
+.cat-result-row .result.fail{color:var(--red)}
+.end-buttons{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;justify-content:center}
+.btn-share{
+  padding:14px 32px;border-radius:var(--radius);font-size:1rem;font-weight:700;
+  background:var(--bg2);color:var(--text);border:2px solid var(--bg3);transition:all .2s;
+}
+.btn-share:hover{border-color:var(--green);background:rgba(34,197,94,.1)}
+
+/* ===== STREAK INDICATOR ===== */
+.streak-badge{
+  display:inline-flex;align-items:center;gap:4px;padding:3px 10px;
+  border-radius:12px;font-size:.75rem;font-weight:700;
+  background:linear-gradient(135deg,var(--amber),var(--orange));color:#fff;
+  animation:pulse .6s ease;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+  .screen{padding:14px}
+  #welcome h1{font-size:1.8rem}
+  .question-text{font-size:1.1rem}
+  .option-card{padding:13px 15px;font-size:.92rem}
+  .option-card .letter{width:30px;height:30px;font-size:.8rem}
+  .hud{padding:10px 12px}
+  .end-stats{grid-template-columns:1fr 1fr}
+  #end .final-score{font-size:2.6rem}
+}
+</style>
+</head>
+<body>
+
+<!-- WELCOME SCREEN -->
+<div id="welcome" class="screen active">
+  <div class="logo-icon">&#129504;</div>
+  <h1>Econ Concepts Puzzle</h1>
+  <p class="subtitle">12 Economics Brain-Teasers &mdash; Real-World Reasoning</p>
+  <div class="cat-preview" id="catPreview"></div>
+  <div class="stats-row">
+    <span>&#128218; 12 Puzzles</span>
+    <span>&#9201; 30s Each</span>
+    <span>&#127942; 1800 Max Points</span>
+  </div>
+  <button class="btn-primary" onclick="startGame()">Start Challenge</button>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="game" class="screen">
+  <div class="hud">
+    <div class="hud-item">&#127942; <span class="val" id="hudScore">0</span></div>
+    <div class="hud-item" id="hudStreakWrap" style="display:none">
+      <span class="streak-badge" id="hudStreak"></span>
+    </div>
+    <div class="hud-item">&#9989; <span class="val" id="hudAccuracy">0%</span></div>
+    <div class="hud-item">Q<span class="val" id="hudQ">1/12</span></div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+  <div class="timer-wrap"><div class="timer-bar" id="timerBar"></div></div>
+  <div class="cat-badge" id="catBadge"></div>
+  <p class="question-text" id="questionText"></p>
+  <div class="options" id="optionsContainer"></div>
+  <div id="explanationWrap" style="display:none">
+    <div class="explanation-card">
+      <h3 id="explTitle">Explanation</h3>
+      <p id="explText"></p>
+    </div>
+  </div>
+  <button class="btn-next" id="btnNext" style="display:none" onclick="nextPuzzle()">Next Puzzle &#8594;</button>
+</div>
+
+<!-- END SCREEN -->
+<div id="end" class="screen">
+  <div class="logo-icon">&#127942;</div>
+  <h1>Challenge Complete!</h1>
+  <div class="final-score" id="finalScore">0</div>
+  <p style="color:var(--text2);margin-bottom:8px">points earned</p>
+  <div class="end-stats">
+    <div class="end-stat"><div class="label">Accuracy</div><div class="value" id="endAccuracy">0%</div></div>
+    <div class="end-stat"><div class="label">Best Streak</div><div class="value" id="endStreak">0</div></div>
+    <div class="end-stat"><div class="label">Avg Time</div><div class="value" id="endTime">0s</div></div>
+    <div class="end-stat"><div class="label">Correct</div><div class="value" id="endCorrect">0/12</div></div>
+  </div>
+  <div class="cat-results" id="catResults"></div>
+  <div class="end-buttons">
+    <button class="btn-share" onclick="shareResults()">&#128203; Copy Results</button>
+    <button class="btn-primary" onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+
+<script>
+var puzzles = [
+  {
+    category: "Supply & Demand",
+    question: "India bans wheat exports during a shortage. What happens to domestic wheat prices?",
+    options: ["Prices rise", "Prices fall", "Prices stay the same", "It depends on global prices"],
+    correct: 1,
+    explanation: "Banning exports increases domestic supply (wheat that would've been exported stays home), pushing prices DOWN. This is a supply shift \u2014 more supply at every price level. India actually did this in 2022."
+  },
+  {
+    category: "Game Theory",
+    question: "Two chai sellers on the same beach. Where should they set up to maximize customers?",
+    options: ["At opposite ends of the beach", "Both in the middle", "One at 1/4, one at 3/4", "It doesn\u2019t matter"],
+    correct: 1,
+    explanation: "This is Hotelling\u2019s model! Both sellers converge to the middle \u2014 each wants to capture customers from the other side. That\u2019s why competing shops cluster together (think: phone stores in Nehru Place). The Nash equilibrium is both in the center, even though it\u2019s socially suboptimal."
+  },
+  {
+    category: "Behavioral Economics",
+    question: "A farmer is offered: (A) \u20B91,000 guaranteed, or (B) 50% chance of \u20B92,500. Most farmers choose A. Why?",
+    options: ["They\u2019re irrational", "Loss aversion \u2014 potential loss hurts more than equal gain", "\u20B91,000 has higher expected value", "Risk aversion \u2014 certainty premium for people with low buffers"],
+    correct: 3,
+    explanation: "Risk aversion, not irrationality. When you\u2019re near subsistence, a guaranteed \u20B91,000 is worth more than the mathematical expectation of \u20B91,250 \u2014 because the downside (\u20B90) could mean skipping meals. This is why microinsurance matters more than expected value calculations suggest."
+  },
+  {
+    category: "Market Failure",
+    question: "Why do private companies under-invest in malaria vaccines compared to lifestyle drugs?",
+    options: ["Malaria isn\u2019t a real problem", "Positive externalities \u2014 benefits accrue to society, not just the buyer", "The technology doesn\u2019t exist", "Government regulation blocks them"],
+    correct: 1,
+    explanation: "Classic positive externality / public good problem. A malaria vaccine benefits not just the vaccinated person but everyone around them (herd immunity). Since companies can\u2019t capture these spillover benefits, they under-invest relative to the social optimum. This is why public funding for health R&D matters."
+  },
+  {
+    category: "Development Economics",
+    question: "A microfinance group uses \u2018joint liability\u2019 \u2014 if one member defaults, others must pay. Why does this work?",
+    options: ["It punishes the poor", "Peer monitoring replaces collateral \u2014 members screen and support each other", "Banks save on paperwork", "It doesn\u2019t actually work"],
+    correct: 1,
+    explanation: "Joint liability solves the information asymmetry problem. Banks can\u2019t easily assess individual borrowers, but community members CAN \u2014 they know who\u2019s trustworthy. This peer monitoring mechanism replaces traditional collateral. It\u2019s why Grameen Bank succeeded, though it has limits (social pressure can become coercive)."
+  },
+  {
+    category: "Incentives",
+    question: "A city pays people \u20B9100 per dead cobra to reduce the snake population. What happens?",
+    options: ["Cobra population drops to zero", "People start breeding cobras for the bounty", "Nothing changes", "People move to safer cities"],
+    correct: 1,
+    explanation: "The Cobra Effect! When the British tried this in Delhi, people started breeding cobras for the bounty. When the scheme was cancelled, breeders released their now-worthless cobras \u2014 making the problem WORSE. Lesson: incentives create behaviour, sometimes the opposite of what you intended. Always ask: \u2018How might people game this?\u2019"
+  },
+  {
+    category: "Comparative Advantage",
+    question: "India and Bangladesh both make textiles and software. India is better at BOTH. Should they still trade?",
+    options: ["No \u2014 India should make everything since it\u2019s better at both", "Yes \u2014 each should specialize in their COMPARATIVE advantage", "Only if trade is free", "Only if they\u2019re allies"],
+    correct: 1,
+    explanation: "Ricardian comparative advantage. Even if India is absolutely better at both, what matters is RELATIVE advantage. If India is 5x better at software but only 2x better at textiles, India should specialize in software and Bangladesh in textiles. Both gain from trade. This is perhaps the most counterintuitive but powerful idea in economics."
+  },
+  {
+    category: "Behavioral Economics",
+    question: "An NGO wants farmers to save more. Which intervention works best?",
+    options: ["Financial literacy classes", "Giving them a labeled savings box (mental account)", "Threatening penalties for not saving", "Offering higher interest rates"],
+    correct: 1,
+    explanation: "Mental accounting (Thaler). A simple labeled box \u2014 \u2018School Fees Fund\u2019 \u2014 makes saving 30% more likely than generic financial literacy. People treat money differently based on mental categories. Nudges often outperform information-heavy interventions. This is why labelled accounts work in Indian savings programmes."
+  },
+  {
+    category: "Market Structure",
+    question: "WhatsApp charges \u20B90 in India but has 500M users. How does this make economic sense?",
+    options: ["It doesn\u2019t \u2014 they\u2019re losing money", "Network effects create winner-take-all dynamics \u2014 the platform IS the product", "Government subsidizes it", "They sell user data"],
+    correct: 1,
+    explanation: "Two-sided platform economics + network effects. Each new user makes WhatsApp more valuable for ALL users (direct network effect). Once you pass critical mass, switching costs become enormous \u2014 your whole network is there. Meta monetizes through WhatsApp Business API, payments, and the broader ecosystem. The user base IS the asset."
+  },
+  {
+    category: "Public Choice",
+    question: "Why do governments often subsidize sugar but tax vegetables lightly?",
+    options: ["Sugar is more important", "Concentrated benefits (sugar lobby) vs diffused costs (taxpayers)", "Vegetables don\u2019t need help", "Historical accident"],
+    correct: 1,
+    explanation: "Mancur Olson\u2019s logic of collective action. Sugar producers are a SMALL, ORGANIZED group with a LOT to gain per person from subsidies. Taxpayers are a LARGE, DISPERSED group losing a tiny amount each. Small groups organize better for political action \u2014 classic concentrated benefits, diffused costs. This explains most agricultural policy worldwide."
+  },
+  {
+    category: "Information Economics",
+    question: "Why do employers care about college degrees even for jobs that don\u2019t need them?",
+    options: ["Colleges teach useful skills", "Signaling \u2014 completing a degree signals discipline and ability", "Legal requirements", "Social convention with no economic basis"],
+    correct: 1,
+    explanation: "Spence\u2019s signaling model. A degree may not teach job skills directly, but completing one signals that you have discipline, intelligence, and persistence. Employers use it as a FILTER in a world of imperfect information. This explains credential inflation \u2014 the signal value of a degree matters as much as its content."
+  },
+  {
+    category: "Development Economics",
+    question: "A village gets a new road connecting it to the nearest town. What\u2019s the MOST likely economic effect?",
+    options: ["Village shops boom", "Some village shops close as residents buy cheaper goods in town", "No change \u2014 transport costs are small", "The village population doubles"],
+    correct: 1,
+    explanation: "This is the \u2018backwash effect\u2019 (Myrdal). Better connectivity can HURT local producers \u2014 cheaper, higher-quality goods from town compete with village artisans. The road benefits consumers but can destroy local livelihoods. Development isn\u2019t uniformly positive \u2014 roads create winners AND losers. This is why complementary investments (skills, credit) matter alongside infrastructure."
+  }
+];
+
+var catColors = {
+  "Supply & Demand": "var(--blue)",
+  "Game Theory": "var(--purple)",
+  "Behavioral Economics": "var(--amber)",
+  "Market Failure": "var(--teal)",
+  "Development Economics": "var(--green)",
+  "Incentives": "var(--orange)",
+  "Comparative Advantage": "var(--indigo)",
+  "Market Structure": "var(--cyan)",
+  "Public Choice": "var(--pink)",
+  "Information Economics": "var(--rose)"
+};
+
+var state = {
+  current: 0,
+  score: 0,
+  streak: 0,
+  bestStreak: 0,
+  correctCount: 0,
+  totalTime: 0,
+  answered: false,
+  timerInterval: null,
+  timeLeft: 30,
+  results: [],
+  shuffledOrder: []
+};
+
+function shuffleArray(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+function init() {
+  var cats = {};
+  puzzles.forEach(function(p) { cats[p.category] = catColors[p.category] || "var(--bg3)"; });
+  var preview = document.getElementById("catPreview");
+  preview.innerHTML = "";
+  Object.keys(cats).forEach(function(c) {
+    var chip = document.createElement("span");
+    chip.className = "cat-chip";
+    chip.style.background = cats[c];
+    chip.textContent = c;
+    preview.appendChild(chip);
+  });
+}
+
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(function(s) { s.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+}
+
+function startGame() {
+  state = {
+    current: 0, score: 0, streak: 0, bestStreak: 0, correctCount: 0,
+    totalTime: 0, answered: false, timerInterval: null, timeLeft: 30,
+    results: [],
+    shuffledOrder: shuffleArray(Array.from({length: puzzles.length}, function(_, i) { return i; }))
+  };
+  showScreen("game");
+  loadPuzzle();
+}
+
+function getCurrentPuzzle() {
+  return puzzles[state.shuffledOrder[state.current]];
+}
+
+function loadPuzzle() {
+  var p = getCurrentPuzzle();
+  state.answered = false;
+  state.timeLeft = 30;
+
+  document.getElementById("hudScore").textContent = state.score;
+  document.getElementById("hudQ").textContent = (state.current + 1) + "/12";
+  updateAccuracyHud();
+  updateStreakHud();
+  document.getElementById("progressBar").style.width = ((state.current) / 12 * 100) + "%";
+
+  var badge = document.getElementById("catBadge");
+  badge.textContent = p.category;
+  badge.style.background = catColors[p.category] || "var(--bg3)";
+
+  document.getElementById("questionText").textContent = p.question;
+
+  var container = document.getElementById("optionsContainer");
+  container.innerHTML = "";
+  var letters = ["A", "B", "C", "D"];
+  p.options.forEach(function(opt, i) {
+    var card = document.createElement("button");
+    card.className = "option-card";
+    card.innerHTML = '<span class="letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    card.onclick = function() { selectAnswer(i); };
+    container.appendChild(card);
+  });
+
+  document.getElementById("explanationWrap").style.display = "none";
+  document.getElementById("btnNext").style.display = "none";
+
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(state.timerInterval);
+  var bar = document.getElementById("timerBar");
+  bar.style.width = "100%";
+  bar.className = "timer-bar";
+  var startTime = Date.now();
+  var duration = 30000;
+
+  state.timerInterval = setInterval(function() {
+    var elapsed = Date.now() - startTime;
+    var pct = Math.max(0, 1 - elapsed / duration);
+    state.timeLeft = Math.max(0, 30 - elapsed / 1000);
+    bar.style.width = (pct * 100) + "%";
+
+    if (pct < 0.2) bar.className = "timer-bar danger";
+    else if (pct < 0.5) bar.className = "timer-bar warn";
+    else bar.className = "timer-bar";
+
+    if (pct <= 0) {
+      clearInterval(state.timerInterval);
+      if (!state.answered) timeOut();
+    }
+  }, 50);
+}
+
+function timeOut() {
+  state.answered = true;
+  var p = getCurrentPuzzle();
+  var cards = document.querySelectorAll(".option-card");
+  cards.forEach(function(c, i) {
+    c.classList.add("disabled");
+    if (i === p.correct) c.classList.add("reveal-correct");
+  });
+  state.streak = 0;
+  state.results.push({ category: p.category, correct: false, time: 30 });
+  state.totalTime += 30;
+  updateStreakHud();
+  showExplanation(false);
+}
+
+function selectAnswer(idx) {
+  if (state.answered) return;
+  state.answered = true;
+  clearInterval(state.timerInterval);
+
+  var p = getCurrentPuzzle();
+  var timeTaken = 30 - state.timeLeft;
+  state.totalTime += timeTaken;
+  var isCorrect = idx === p.correct;
+
+  var cards = document.querySelectorAll(".option-card");
+  cards.forEach(function(c, i) {
+    c.classList.add("disabled");
+    if (i === p.correct) c.classList.add("correct");
+    if (i === idx && !isCorrect) c.classList.add("wrong");
+  });
+
+  if (isCorrect) {
+    state.streak++;
+    if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+    var timeBonus = Math.round(Math.max(0, (state.timeLeft / 30) * 50));
+    var multiplier = state.streak >= 3 ? 1.5 : 1;
+    var points = Math.round((100 + timeBonus) * multiplier);
+    state.score += points;
+    state.correctCount++;
+    spawnConfetti();
+  } else {
+    state.streak = 0;
+  }
+
+  state.results.push({ category: p.category, correct: isCorrect, time: timeTaken });
+
+  document.getElementById("hudScore").textContent = state.score;
+  updateAccuracyHud();
+  updateStreakHud();
+
+  showExplanation(isCorrect);
+}
+
+function updateAccuracyHud() {
+  var total = state.results.length || 1;
+  var pct = Math.round((state.correctCount / Math.max(total, 1)) * 100);
+  document.getElementById("hudAccuracy").textContent = pct + "%";
+}
+
+function updateStreakHud() {
+  var wrap = document.getElementById("hudStreakWrap");
+  var el = document.getElementById("hudStreak");
+  if (state.streak >= 2) {
+    wrap.style.display = "flex";
+    el.textContent = state.streak + "x streak" + (state.streak >= 3 ? " (1.5x!)" : "");
+  } else {
+    wrap.style.display = "none";
+  }
+}
+
+function showExplanation(isCorrect) {
+  var p = getCurrentPuzzle();
+  document.getElementById("explTitle").textContent = (isCorrect ? "Correct! " : "Not quite. ") + p.category;
+  document.getElementById("explTitle").style.color = isCorrect ? "var(--green)" : "var(--red)";
+  document.getElementById("explText").textContent = p.explanation;
+  document.getElementById("explanationWrap").style.display = "block";
+
+  var btn = document.getElementById("btnNext");
+  btn.style.display = "inline-block";
+  btn.textContent = state.current < 11 ? "Next Puzzle \u2192" : "See Results \u2192";
+}
+
+function nextPuzzle() {
+  state.current++;
+  if (state.current >= 12) {
+    showEnd();
+  } else {
+    loadPuzzle();
+  }
+}
+
+function showEnd() {
+  showScreen("end");
+  document.getElementById("finalScore").textContent = state.score;
+  document.getElementById("endAccuracy").textContent = Math.round((state.correctCount / 12) * 100) + "%";
+  document.getElementById("endStreak").textContent = state.bestStreak;
+  document.getElementById("endTime").textContent = (state.totalTime / 12).toFixed(1) + "s";
+  document.getElementById("endCorrect").textContent = state.correctCount + "/12";
+
+  var catMap = {};
+  state.results.forEach(function(r) {
+    if (!catMap[r.category]) catMap[r.category] = { correct: 0, total: 0 };
+    catMap[r.category].total++;
+    if (r.correct) catMap[r.category].correct++;
+  });
+
+  var wrap = document.getElementById("catResults");
+  wrap.innerHTML = "<h3>Category Breakdown</h3>";
+  Object.keys(catMap).forEach(function(cat) {
+    var d = catMap[cat];
+    var row = document.createElement("div");
+    row.className = "cat-result-row";
+    var pass = d.correct === d.total;
+    row.innerHTML = '<span class="name" style="color:' + (catColors[cat] || "var(--text)") + '">' + cat + '</span>' +
+      '<span class="result ' + (pass ? "pass" : "fail") + '">' + d.correct + '/' + d.total + '</span>';
+    wrap.appendChild(row);
+  });
+}
+
+function shareResults() {
+  var text = "Econ Concepts Puzzle\n" +
+    "Score: " + state.score + " | " + state.correctCount + "/12 correct\n" +
+    "Accuracy: " + Math.round((state.correctCount / 12) * 100) + "% | Best streak: " + state.bestStreak + "\n" +
+    "impactmojo.com";
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() { alert("Results copied to clipboard!"); });
+  } else {
+    prompt("Copy your results:", text);
+  }
+}
+
+function restartGame() {
+  startGame();
+}
+
+function spawnConfetti() {
+  var colors = ["#3B82F6","#A855F7","#F59E0B","#22C55E","#EF4444","#EC4899","#F97316","#06B6D4"];
+  for (var i = 0; i < 40; i++) {
+    var piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.style.left = Math.random() * 100 + "vw";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = (6 + Math.random() * 8) + "px";
+    piece.style.height = (6 + Math.random() * 8) + "px";
+    piece.style.animationDuration = (1.5 + Math.random() * 2) + "s";
+    piece.style.animationDelay = (Math.random() * 0.5) + "s";
+    document.body.appendChild(piece);
+    (function(el) {
+      setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 4000);
+    })(piece);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
