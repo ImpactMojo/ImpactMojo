@@ -41,7 +41,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 |----------|-------------|
 | **48 Courses** | 9 flagship + 39 foundational courses across 6 learning tracks |
 | **10 Interactive Labs** | Hands-on workbenches for MEL, policy, partnerships, and more |
-| **12 Learning Games** | Economics simulations and behavioral experiments |
+| **12 Learning Games** | Economics simulations with MiroFish AI agents (Groq/Gemini/DeepSeek) |
 | **ImpactLex Dictionary** | 500+ development terms with contextual definitions (PWA) |
 | **Dev Case Studies** | 200 evidence-based case studies from 117 countries |
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
@@ -164,20 +164,20 @@ Shorter introductory courses covering the breadth of development practice:
 
 ### Learning Games (12)
 
-Economics simulations and behavioral experiments:
+Self-contained economics simulations powered by **MiroFish AI agents** — each game features AI opponents with distinct South Asian personas, backed by Groq/Gemini/DeepSeek LLMs with automatic fallback to a local personality engine:
 
-- **Public Good Game** — Free-rider problems and collective action
-- **Prisoners' Dilemma** — Strategic interdependence and rationality
-- **Opportunity Cost Game** — Resource scarcity and trade-off decisions
-- **Network Effects Game** — Value creation and network scale
-- **Cooperation Paradox** — Self-interest vs. cooperation tensions
-- **Risk and Reward** — Risk assessment and portfolio management
-- **Bidding Wars** — Auction simulation and winner's curse
-- **Information Asymmetry** — Adverse selection and moral hazard
-- **Economics Concepts** — Supply-demand, elasticity puzzles
-- **Externality Game** — Positive and negative externalities
-- **Commons Crisis** — Tragedy of the commons and governance
-- **Real Middle India** — India's middle-class socioeconomic data explorer
+- **Public Good Game** — Free-rider problems and collective action (4 AI agents)
+- **Prisoners' Dilemma** — Strategic interdependence with tit-for-tat, grudger, pavlov, and random strategies (4 AI agents)
+- **Opportunity Cost Game** — Budget allocation across health, education, livelihoods with diminishing returns (2 AI agents)
+- **Network Effects Game** — Platform adoption, S-curve dynamics, critical mass (3 AI agents)
+- **Cooperation Paradox** — Nash equilibrium vs Pareto efficiency (2 AI agents)
+- **Risk & Reward Explorer** — Prospect theory, framing effects, loss aversion (3 AI agents)
+- **Bidding Wars** — Sealed-bid auctions and the winner's curse (3 AI agents)
+- **Information Asymmetry** — Akerlof's lemons problem, signaling, verification (3 AI agents)
+- **Externality Game** — Pigouvian taxation and market failure (3 AI agents)
+- **Commons Crisis** — Tragedy of the commons, Ostrom's design principles (4 AI agents)
+- **Real Middle India** — Income inequality dynamics and precarity in India
+- **Econ Concepts Puzzle** — 12 brain-teasers with South Asian development context
 
 ### Other Resources
 
@@ -279,7 +279,8 @@ Main site (impactmojo.in)
 ├── Supabase Auth ──► Login / Signup / Profiles
 ├── Premium flow ──► Supabase Edge Fn (mint JWT) ──► Netlify resource sites
 │                     └── auth-gate.ts verifies JWT, sets session cookie
-├── Static content ──► Courses, Labs, Games, ImpactLex
+├── Games ──► Supabase Edge Fn (game-agent) ──► Groq/Gemini/DeepSeek LLMs
+├── Static content ──► Courses, Labs, ImpactLex
 └── Community ──► WhatsApp PLC, Discord, Telegram
 ```
 
@@ -375,10 +376,26 @@ ImpactMojo/
 ├── impactlex/
 │   └── index.html          # ImpactLex dictionary (PWA)
 │
+├── Games/                         # 12 self-contained economics games
+│   ├── public-good-game.html
+│   ├── prisoners-dilemma-game.html
+│   ├── commons-crisis-game.html
+│   ├── cooperation-paradox-game.html
+│   ├── opportunity-cost-game.html
+│   ├── risk-reward-game.html
+│   ├── bidding-wars-game.html
+│   ├── info-asymmetry-game.html
+│   ├── network-effects-game.html
+│   ├── externality-game.html
+│   ├── real-middle-india.html
+│   └── econ-concepts-game.html
+│
 ├── supabase/
 │   ├── functions/
 │   │   ├── mint-resource-token/  # JWT minting Edge Function
-│   │   └── issue-certificate/    # Certificate issuance Edge Function
+│   │   ├── issue-certificate/    # Certificate issuance Edge Function
+│   │   ├── game-agent/           # MiroFish AI agent engine (multi-provider LLM)
+│   │   └── serve-course-content/ # Course content delivery
 │   └── migrations/               # Database migration scripts
 │
 ├── netlify-resource-template/    # Auth-gate template for resource sites
@@ -388,7 +405,8 @@ ImpactMojo/
 │
 ├── data/
 │   ├── bct-repository.json # BCT technique data (203 entries)
-│   └── dataverse.json      # Dataverse catalog data (247 entries, 22 categories)
+│   ├── dataverse.json      # Dataverse catalog data (247 entries, 22 categories)
+│   └── game-agents.json    # MiroFish AI agent personas (30+ agents across 10 games)
 │
 ├── assets/
 │   ├── images/             # Logos, icons, illustrations
@@ -622,7 +640,7 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 10.1.0
+**Version:** 10.2.0
 **Last Updated:** March 2026
 **License:** MIT (code) + CC BY-NC-ND 4.0 (content)
 **Hosting:** Netlify

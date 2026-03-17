@@ -6,7 +6,15 @@ ImpactMojo offers **12 interactive economics games** that teach development-rele
 
 These aren't quizzes or flashcards. They're interactive simulations where your decisions have consequences, and the concepts become clear through play rather than lecture.
 
-All 12 games are **free, browser-based, and require no login**.
+All 12 games are **free, browser-based, and require no login**. They are self-hosted at `/Games/` on impactmojo.in.
+
+### MiroFish AI Agents
+
+10 of the 12 games feature **MiroFish AI agents** — AI-powered opponents with distinct South Asian identities, backstories, and strategic personalities. Each agent has calibrated personality traits (cooperation bias, risk tolerance, memory weight) that shape their decisions.
+
+The AI system uses a **multi-provider LLM fallback chain** (DeepSeek → Groq → Gemini → Together → OpenAI) via a Supabase Edge Function. When LLM providers are unavailable, a local personality engine generates decisions using weighted heuristics — so games always work, even offline.
+
+See [Game Agents documentation](game-agents.md) for technical details on the AI system.
 
 ---
 
@@ -14,30 +22,30 @@ All 12 games are **free, browser-based, and require no login**.
 
 ### Collective Action & Cooperation
 
-| Game | Concept | What You Learn |
-|------|---------|---------------|
-| **Public Good Game** | Free-rider problem | Why people under-contribute to shared resources, and what mechanisms sustain cooperation |
-| **Commons Crisis Game** | Tragedy of the commons | How communication, monitoring, and sanctions help communities manage shared resources like water, forests, or fisheries |
-| **Cooperation Paradox** | Game theory | Why cooperation yields better outcomes but individual incentives push toward competition — Nash equilibrium and Pareto efficiency in action |
-| **Prisoners' Dilemma Game** | Strategic interdependence | How trust, reputation, and repeated interactions overcome cooperation failures |
+| Game | Concept | What You Learn | AI Agents |
+|------|---------|---------------|-----------|
+| **Public Good Game** | Free-rider problem | Why people under-contribute to shared resources, and what mechanisms sustain cooperation | Meera, Arjun, Fatima, Ravi |
+| **Commons Crisis Game** | Tragedy of the commons | How communication, monitoring, and sanctions help communities manage shared resources like water, forests, or fisheries | Priya, Raj, Ananya, Karthik |
+| **Cooperation Paradox** | Game theory | Why cooperation yields better outcomes but individual incentives push toward competition — Nash equilibrium and Pareto efficiency in action | Imran, Reshma |
+| **Prisoners' Dilemma Game** | Strategic interdependence | How trust, reputation, and repeated interactions overcome cooperation failures | Sunita, Vikram, Lakshmi, Deepak |
 
 ### Markets & Decision-Making
 
-| Game | Concept | What You Learn |
-|------|---------|---------------|
-| **Opportunity Cost Game** | Tradeoffs | How every choice has a cost — the next-best alternative you gave up — and how this shapes policy decisions |
-| **Risk & Reward Explorer** | Behavioural economics | Risk preferences, expected utility, prospect theory — why people make seemingly irrational choices under uncertainty |
-| **Bidding Wars Game** | Auction theory | How different auction formats affect prices, why winners sometimes overpay (winner's curse), and how procurement works |
-| **Information Asymmetry Game** | Asymmetric information | Adverse selection, moral hazard, and signalling — what happens when buyers and sellers know different things |
+| Game | Concept | What You Learn | AI Agents |
+|------|---------|---------------|-----------|
+| **Opportunity Cost Game** | Tradeoffs | How every choice has a cost — the next-best alternative you gave up — and how this shapes policy decisions | Pallavi, Suresh |
+| **Risk & Reward Explorer** | Behavioural economics | Risk preferences, expected utility, prospect theory — why people make seemingly irrational choices under uncertainty | Sanjay, Pooja, Arun |
+| **Bidding Wars Game** | Auction theory | How different auction formats affect prices, why winners sometimes overpay (winner's curse), and how procurement works | Nandini, Sameer, Zara |
+| **Information Asymmetry Game** | Asymmetric information | Adverse selection, moral hazard, and signalling — what happens when buyers and sellers know different things | Kavitha, Mohan, Aisha |
 
 ### Systems & Scale
 
-| Game | Concept | What You Learn |
-|------|---------|---------------|
-| **Network Effects Game** | Network economics | How value multiplies as more people join, critical mass dynamics, and why some platforms dominate |
-| **Externality Game** | Market failures | Hidden social costs and benefits — pollution, education spillovers — and why markets alone don't solve them |
-| **The Real Middle** | Inequality dynamics | Wealth distribution, income mobility, and the precarity of middle-class status in India |
-| **Econ Concepts Puzzle** | Mixed economics | Economic reasoning through puzzles and brain-teasers covering supply/demand, game theory, and market structure |
+| Game | Concept | What You Learn | AI Agents |
+|------|---------|---------------|-----------|
+| **Network Effects Game** | Network economics | How value multiplies as more people join, critical mass dynamics, and why some platforms dominate | Tanvi, Harish, Divya |
+| **Externality Game** | Market failures | Hidden social costs and benefits — pollution, education spillovers — and why markets alone don't solve them | Ashok, Nalini, Bina |
+| **The Real Middle** | Inequality dynamics | Wealth distribution, income mobility, and the precarity of middle-class status in India | 5 simulated households |
+| **Econ Concepts Puzzle** | Mixed economics | Economic reasoning through puzzles and brain-teasers covering supply/demand, game theory, and market structure | — |
 
 ---
 

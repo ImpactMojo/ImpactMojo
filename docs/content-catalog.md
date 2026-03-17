@@ -119,20 +119,22 @@ Hands-on workbenches where you build, design, and practice real skills.
 
 Economics simulations and interactive games — ideal for workshops and classroom use.
 
-| # | Game | Description | Link |
-|---|------|-------------|------|
-| 1 | The Real Middle | Wealth inequality dynamics in India | [Play](https://therealmiddle.netlify.app) |
-| 2 | Risk & Reward Explorer | Behavioral economics and prospect theory | [Play](https://risk-reward-be.netlify.app) |
-| 3 | Cooperation Paradox | Game theory and strategic decision-making | [Play](https://cooperationparadox.netlify.app/) |
-| 4 | Public Good Game | Free-rider problem and shared resources | [Play](https://101.impactmojo.in/public-good-game) |
-| 5 | Prisoners Dilemma Game | Strategic decisions and suboptimal outcomes | [Play](https://101.impactmojo.in/prisoners-dilemma-game) |
-| 6 | Opportunity Cost Game | Resource allocation and tradeoffs | [Play](https://101.impactmojo.in/opportunity-cost-game) |
-| 7 | Network Effects Game | Value multiplication through networks | [Play](https://101.impactmojo.in/network-effects-game) |
-| 8 | Bidding Wars Game | Auction formats and price discovery | [Play](https://101.impactmojo.in/bidding-wars-game) |
-| 9 | Information Asymmetry Game | Markets with asymmetric information | [Play](https://101.impactmojo.in/info-asymmetry-game) |
-| 10 | Externality Game | Hidden social costs and benefits | [Play](https://101.impactmojo.in/externality-game) |
-| 11 | Commons Crisis Game | Tragedy of the commons | [Play](https://101.impactmojo.in/commons-crisis-game) |
-| 12 | Econ Concepts Puzzle | Economic puzzles and brain-teasers | [Play](https://101.impactmojo.in/econ-concepts-game) |
+All games now feature **MiroFish AI agents** powered by Groq/Gemini/DeepSeek with local fallback.
+
+| # | Game | Description | AI Agents | Link |
+|---|------|-------------|-----------|------|
+| 1 | Public Good Game | Free-rider problem and collective action | Meera, Arjun, Fatima, Ravi | [Play](/Games/public-good-game.html) |
+| 2 | Prisoners' Dilemma | Strategic interdependence and trust | Sunita, Vikram, Lakshmi, Deepak | [Play](/Games/prisoners-dilemma-game.html) |
+| 3 | Commons Crisis Game | Tragedy of the commons and governance | Priya, Raj, Ananya, Karthik | [Play](/Games/commons-crisis-game.html) |
+| 4 | Cooperation Paradox | Nash equilibrium vs Pareto efficiency | Imran, Reshma | [Play](/Games/cooperation-paradox-game.html) |
+| 5 | Opportunity Cost Game | Budget allocation and diminishing returns | Pallavi, Suresh | [Play](/Games/opportunity-cost-game.html) |
+| 6 | Risk & Reward Explorer | Prospect theory and framing effects | Sanjay, Pooja, Arun | [Play](/Games/risk-reward-game.html) |
+| 7 | Bidding Wars Game | Auction theory and winner's curse | Nandini, Sameer, Zara | [Play](/Games/bidding-wars-game.html) |
+| 8 | Information Asymmetry | Lemons problem, signaling, verification | Kavitha, Mohan, Aisha | [Play](/Games/info-asymmetry-game.html) |
+| 9 | Network Effects Game | Platform adoption and critical mass | Tanvi, Harish, Divya | [Play](/Games/network-effects-game.html) |
+| 10 | Externality Game | Pigouvian tax and market failure | Ashok, Nalini, Bina | [Play](/Games/externality-game.html) |
+| 11 | The Real Middle | Income inequality dynamics in India | 5 simulated households | [Play](/Games/real-middle-india.html) |
+| 12 | Econ Concepts Puzzle | 12 economics brain-teasers | — | [Play](/Games/econ-concepts-game.html) |
 
 ---
 

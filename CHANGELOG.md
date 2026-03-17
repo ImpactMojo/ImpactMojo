@@ -5,6 +5,33 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.2.0] - 2026-03-17
+
+### Added
+- **12 self-hosted economics games** in `/Games/` folder — replacing old Netlify-hosted apps at 101.impactmojo.in
+- **MiroFish AI agent engine** (`supabase/functions/game-agent/`) — multi-provider LLM support with automatic fallback chain (DeepSeek → Groq → Gemini → Together → OpenAI)
+- **30+ AI agent personas** (`data/game-agents.json`) — South Asian development practitioners with distinct personalities, backstories, and strategic behaviours
+- **Game agents client library** (`js/game-agents.js`) — browser-side integration with Edge Function + local fallback engine
+- **LLM provider secrets** configured: Groq, Google Gemini, DeepSeek API keys set as Supabase secrets
+
+### Changed
+- **Game links in index.html** — all 12 game links updated from `101.impactmojo.in/*` to `/Games/*.html`
+- **game-agents.js Supabase URL** — corrected to actual project endpoint
+
+### Games Built
+- Public Good Game (free-rider problem, 4 AI agents)
+- Prisoners' Dilemma (strategic interdependence, 4 AI agents)
+- Commons Crisis (tragedy of the commons, 4 AI agents)
+- Cooperation Paradox (Nash vs Pareto, 2 AI agents)
+- Opportunity Cost (budget allocation, 2 AI agents)
+- Risk & Reward Explorer (prospect theory, 3 AI agents)
+- Bidding Wars (auction theory, 3 AI agents)
+- Information Asymmetry (lemons problem, 3 AI agents)
+- Network Effects (platform adoption, 3 AI agents)
+- Externality Game (Pigouvian tax, 3 AI agents)
+- The Real Middle (India income inequality)
+- Econ Concepts Puzzle (12 brain-teasers)
+
 ## [10.1.0] - 2026-03-16
 
 ### Added
