@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risk &amp; Reward Explorer — ImpactMojo</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F172A;--bg2:#1E293B;--bg3:#334155;
+  --green:#10B981;--green-dim:#065F46;--green-glow:rgba(16,185,129,.25);
+  --red:#EF4444;--red-dim:#991B1B;--red-glow:rgba(239,68,68,.25);
+  --amber:#F59E0B;--amber-dim:#92400E;
+  --white:#F8FAFC;--muted:#94A3B8;--border:#475569;
+  --radius:14px;
+}
+html{font-size:16px}
+body{
+  background:var(--bg);color:var(--white);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  min-height:100vh;overflow-x:hidden;
+}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+.screen{display:none;min-height:100vh;padding:20px;max-width:900px;margin:0 auto}
+.screen.active{display:flex;flex-direction:column;align-items:center}
+
+/* ─── Welcome ─── */
+#welcome{justify-content:center;text-align:center;gap:28px;padding-top:40px}
+#welcome h1{font-size:2.4rem;font-weight:800;background:linear-gradient(135deg,var(--green),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#welcome .subtitle{font-size:1.1rem;color:var(--muted);max-width:560px;line-height:1.6}
+.theory-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:22px 28px;max-width:620px;text-align:left;line-height:1.7;color:var(--muted);font-size:.93rem}
+.theory-box strong{color:var(--amber)}
+.agent-cards{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;width:100%}
+.agent-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;width:220px;text-align:left}
+.agent-card .aname{font-weight:700;font-size:1.05rem;margin-bottom:4px}
+.agent-card .arole{font-size:.82rem;color:var(--amber);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.agent-card .adesc{font-size:.85rem;color:var(--muted);line-height:1.5}
+.btn-primary{
+  background:linear-gradient(135deg,var(--green),#059669);
+  color:#fff;font-size:1.1rem;font-weight:700;
+  padding:16px 48px;border-radius:60px;
+  transition:transform .15s,box-shadow .15s;
+  box-shadow:0 4px 24px var(--green-glow);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px var(--green-glow)}
+
+/* ─── Game HUD ─── */
+#game{gap:20px;padding-top:20px}
+.hud{display:flex;justify-content:space-between;align-items:center;width:100%;flex-wrap:wrap;gap:12px}
+.hud-left{display:flex;align-items:center;gap:16px}
+.token-display{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:10px 20px;font-size:1.05rem;font-weight:700;
+  display:flex;align-items:center;gap:8px;
+}
+.token-display .coin{font-size:1.3rem}
+.token-val{color:var(--amber);font-variant-numeric:tabular-nums;min-width:50px;text-align:right;transition:color .3s}
+.round-badge{background:var(--bg3);border-radius:8px;padding:8px 16px;font-size:.9rem;font-weight:600;color:var(--muted)}
+.frame-badge{
+  padding:8px 20px;border-radius:8px;font-weight:700;font-size:.95rem;
+  letter-spacing:1px;text-transform:uppercase;
+}
+.frame-gain{background:var(--green-dim);color:var(--green);border:1px solid var(--green)}
+.frame-loss{background:var(--red-dim);color:var(--red);border:1px solid var(--red)}
+
+/* ─── Choice Cards ─── */
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:24px;width:100%;margin:8px 0}
+.choice-card{
+  background:var(--bg2);border:2px solid var(--border);border-radius:var(--radius);
+  padding:28px 24px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;
+}
+.choice-card:hover{transform:translateY(-4px);border-color:var(--amber)}
+.choice-card.selected{border-color:var(--amber);box-shadow:0 0 30px rgba(245,158,11,.2)}
+.choice-card.disabled{pointer-events:none;opacity:.6}
+.choice-label{font-size:.8rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:700}
+.choice-value{font-size:2rem;font-weight:800}
+.choice-detail{font-size:.9rem;color:var(--muted);line-height:1.6}
+.ev-reveal{
+  margin-top:8px;padding:8px 14px;border-radius:8px;font-size:.82rem;font-weight:600;
+  background:var(--bg3);color:var(--muted);opacity:0;transition:opacity .4s;
+}
+.ev-reveal.show{opacity:1}
+
+/* Safe card */
+.choice-card.safe-card{border-left:4px solid var(--green)}
+.safe-card .choice-value.gain{color:var(--green)}
+.safe-card .choice-value.loss{color:var(--red)}
+
+/* Risky card shimmer */
+.choice-card.risky-card{border-left:4px solid var(--amber)}
+.risky-card::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:conic-gradient(from 0deg,transparent,rgba(245,158,11,.06),transparent,transparent);
+  animation:shimmer 4s linear infinite;
+}
+@keyframes shimmer{to{transform:rotate(360deg)}}
+
+/* Probability bar */
+.prob-bar-wrap{width:100%;max-width:220px}
+.prob-bar{height:16px;border-radius:8px;overflow:hidden;display:flex;background:var(--bg)}
+.prob-bar .seg-win{background:var(--green);transition:width .5s}
+.prob-bar .seg-lose{background:var(--red);transition:width .5s}
+.prob-labels{display:flex;justify-content:space-between;font-size:.75rem;margin-top:4px;color:var(--muted)}
+
+/* ─── Outcome Reveal ─── */
+.outcome-area{width:100%;text-align:center;min-height:180px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.spinner-wheel{
+  width:120px;height:120px;border-radius:50%;
+  border:6px solid var(--bg3);border-top:6px solid var(--amber);
+  animation:spin 0.6s linear infinite;margin:10px auto;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.outcome-result{font-size:1.6rem;font-weight:800;animation:fadeUp .5s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.outcome-gain{color:var(--green)}
+.outcome-loss{color:var(--red)}
+.outcome-zero{color:var(--muted)}
+.insight-box{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 22px;font-size:.88rem;color:var(--muted);line-height:1.6;max-width:600px;
+}
+.insight-box strong{color:var(--amber)}
+
+/* Agent results */
+.agent-results{width:100%;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.agent-result-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:14px 18px;width:200px;font-size:.85rem;
+}
+.agent-result-card .ar-name{font-weight:700;margin-bottom:4px}
+.agent-result-card .ar-choice{color:var(--muted)}
+.agent-result-card .ar-outcome{font-weight:700;margin-top:4px}
+
+/* ─── Profile Tracker ─── */
+.profile-section{width:100%;margin:8px 0}
+.profile-section h3{font-size:.9rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;text-align:center}
+.spectrum-bar{
+  width:100%;height:32px;border-radius:16px;
+  background:linear-gradient(90deg,var(--green),var(--bg3),var(--red));
+  position:relative;overflow:visible;
+}
+.spectrum-labels{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-top:6px}
+.spectrum-dot{
+  position:absolute;top:50%;width:18px;height:18px;border-radius:50%;
+  background:var(--amber);border:3px solid var(--white);
+  transform:translate(-50%,-50%);transition:left .6s ease;
+  box-shadow:0 0 12px rgba(245,158,11,.5);
+}
+.btn-next{
+  background:var(--bg3);color:var(--white);font-weight:700;font-size:1rem;
+  padding:14px 40px;border-radius:60px;transition:background .2s;
+}
+.btn-next:hover{background:var(--border)}
+
+/* ─── End Screen ─── */
+#endscreen{justify-content:center;text-align:center;gap:24px;padding-top:40px}
+#endscreen h1{font-size:2rem;font-weight:800}
+.final-tokens{font-size:3rem;font-weight:800;color:var(--amber)}
+.profile-label{font-size:1.2rem;font-weight:700;margin-bottom:4px}
+.profile-desc{font-size:.95rem;color:var(--muted);max-width:520px;line-height:1.6}
+.comparison-grid{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.comp-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;width:180px;text-align:center;
+}
+.comp-card .comp-name{font-weight:700;font-size:1.05rem;margin-bottom:4px}
+.comp-card .comp-tokens{font-size:1.4rem;font-weight:800;color:var(--amber)}
+.comp-card .comp-profile{font-size:.82rem;color:var(--muted);margin-top:6px}
+
+/* Prospect theory graph */
+.pt-graph{width:100%;max-width:400px;margin:0 auto}
+.pt-graph canvas{width:100%;height:auto;border-radius:var(--radius)}
+.pt-explain{font-size:.88rem;color:var(--muted);line-height:1.6;max-width:560px;text-align:left}
+.pt-explain strong{color:var(--amber)}
+
+.framing-summary{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px 24px;max-width:560px;text-align:left;
+}
+.framing-summary h3{color:var(--amber);margin-bottom:10px;font-size:1rem}
+.framing-summary p{font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:8px}
+
+/* ─── Responsive ─── */
+@media(max-width:640px){
+  .choices{grid-template-columns:1fr;gap:16px}
+  .agent-cards{flex-direction:column;align-items:center}
+  .agent-card{width:100%;max-width:320px}
+  .agent-results{flex-direction:column;align-items:center}
+  .agent-result-card{width:100%;max-width:320px}
+  .comparison-grid{flex-direction:column;align-items:center}
+  .comp-card{width:100%;max-width:280px}
+  #welcome h1{font-size:1.8rem}
+  .choice-value{font-size:1.5rem}
+  .hud{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ WELCOME SCREEN ════════════ -->
+<div id="welcome" class="screen active">
+  <h1>Risk &amp; Reward Explorer</h1>
+  <p class="subtitle">Explore how your brain evaluates gains and losses — and discover the hidden biases that shape every risky decision you make.</p>
+
+  <div class="theory-box">
+    <strong>Prospect Theory</strong> (Kahneman &amp; Tversky, 1979) shows that people don't evaluate outcomes rationally. We feel losses roughly <strong>twice as strongly</strong> as equivalent gains. We also flip our risk preferences depending on whether a choice is framed as a gain or a loss. Over 8 rounds, you'll see this in action — in yourself and in three AI opponents.
+  </div>
+
+  <h2 style="font-size:1.1rem;color:var(--muted);margin-top:8px">Your AI Opponents</h2>
+  <div class="agent-cards">
+    <div class="agent-card">
+      <div class="aname" style="color:var(--green)">Sanjay</div>
+      <div class="arole">Loss-Averse</div>
+      <div class="adesc">Always takes the safe option, especially when there's something to gain. Hates uncertainty.</div>
+    </div>
+    <div class="agent-card">
+      <div class="aname" style="color:var(--red)">Pooja</div>
+      <div class="arole">Risk-Seeker</div>
+      <div class="adesc">Goes for the gamble every time. Loves the thrill and believes luck favors the bold.</div>
+    </div>
+    <div class="agent-card">
+      <div class="aname" style="color:var(--amber)">Arun</div>
+      <div class="arole">Framing-Sensitive</div>
+      <div class="adesc">Classic prospect theory: risk-averse for gains, risk-seeking for losses. The textbook human.</div>
+    </div>
+  </div>
+
+  <button class="btn-primary" onclick="startGame()">Begin the Experiment</button>
+</div>
+
+<!-- ════════════ GAME SCREEN ════════════ -->
+<div id="game" class="screen">
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-left">
+      <div class="token-display"><span class="coin">&#x1FA99;</span> Tokens: <span class="token-val" id="tokenVal">500</span></div>
+      <div class="round-badge" id="roundBadge">Round 1 / 8</div>
+    </div>
+    <div class="frame-badge" id="frameBadge">GAIN SCENARIO</div>
+  </div>
+
+  <!-- Choice Cards -->
+  <div class="choices" id="choiceArea">
+    <div class="choice-card safe-card" id="safeCard" onclick="choose('safe')">
+      <div class="choice-label">Safe Option</div>
+      <div class="choice-value" id="safeValue"></div>
+      <div class="choice-detail" id="safeDetail">Certain outcome</div>
+      <div class="ev-reveal" id="safeEV"></div>
+    </div>
+    <div class="choice-card risky-card" id="riskyCard" onclick="choose('risky')">
+      <div class="choice-label">Risky Option</div>
+      <div class="choice-value" id="riskyValue" style="color:var(--amber)">?</div>
+      <div class="choice-detail" id="riskyDetail"></div>
+      <div class="prob-bar-wrap">
+        <div class="prob-bar"><div class="seg-win" id="segWin"></div><div class="seg-lose" id="segLose"></div></div>
+        <div class="prob-labels"><span id="probWinLabel"></span><span id="probLoseLabel"></span></div>
+      </div>
+      <div class="ev-reveal" id="riskyEV"></div>
+    </div>
+  </div>
+
+  <!-- Outcome Area -->
+  <div class="outcome-area" id="outcomeArea" style="display:none"></div>
+
+  <!-- Agent Results -->
+  <div class="agent-results" id="agentResults" style="display:none"></div>
+
+  <!-- Insight -->
+  <div class="insight-box" id="insightBox" style="display:none"></div>
+
+  <!-- Profile Tracker -->
+  <div class="profile-section" id="profileSection" style="display:none">
+    <h3>Your Risk Profile</h3>
+    <div class="spectrum-bar"><div class="spectrum-dot" id="spectrumDot" style="left:50%"></div></div>
+    <div class="spectrum-labels"><span>Risk-Averse</span><span>Neutral</span><span>Risk-Seeking</span></div>
+  </div>
+
+  <button class="btn-next" id="btnNext" style="display:none" onclick="nextRound()">Next Round &rarr;</button>
+</div>
+
+<!-- ════════════ END SCREEN ════════════ -->
+<div id="endscreen" class="screen">
+  <h1>Experiment Complete</h1>
+  <div class="final-tokens" id="finalTokens"></div>
+  <div>
+    <div class="profile-label" id="profileLabel"></div>
+    <p class="profile-desc" id="profileDesc"></p>
+  </div>
+
+  <div class="framing-summary" id="framingSummary"></div>
+
+  <h2 style="font-size:1.05rem;color:var(--muted)">Final Standings</h2>
+  <div class="comparison-grid" id="comparisonGrid"></div>
+
+  <div class="pt-graph"><canvas id="ptCanvas" width="400" height="300"></canvas></div>
+  <div class="pt-explain">
+    <strong>The Prospect Theory Value Function</strong><br>
+    This S-shaped curve shows how we perceive value. The curve is <strong>steeper for losses</strong> than for gains — meaning losing 50 tokens feels worse than gaining 50 feels good. The curve is also <strong>concave for gains</strong> (risk-averse) and <strong>convex for losses</strong> (risk-seeking). This explains why most people take the safe bet when gaining but gamble when losing.
+  </div>
+
+  <button class="btn-primary" onclick="location.reload()" style="margin-top:10px">Play Again</button>
+</div>
+
+<script src="/js/game-agents.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ─── Scenarios ─── */
+var scenarios = [
+  { frame:'gain', safe:{value:40}, risky:{win:60,winProb:0.7,lose:0,loseProb:0.3}, ev_safe:40, ev_risky:42 },
+  { frame:'loss', safe:{value:-30}, risky:{win:0,winProb:0.4,lose:-60,loseProb:0.6}, ev_safe:-30, ev_risky:-36 },
+  { frame:'gain', safe:{value:25}, risky:{win:100,winProb:0.3,lose:0,loseProb:0.7}, ev_safe:25, ev_risky:30 },
+  { frame:'loss', safe:{value:-50}, risky:{win:0,winProb:0.5,lose:-100,loseProb:0.5}, ev_safe:-50, ev_risky:-50 },
+  { frame:'gain', safe:{value:60}, risky:{win:200,winProb:0.35,lose:0,loseProb:0.65}, ev_safe:60, ev_risky:70 },
+  { frame:'loss', safe:{value:-20}, risky:{win:0,winProb:0.8,lose:-100,loseProb:0.2}, ev_safe:-20, ev_risky:-20 },
+  { frame:'gain', safe:{value:35}, risky:{win:45,winProb:0.9,lose:-10,loseProb:0.1}, ev_safe:35, ev_risky:39.5 },
+  { frame:'loss', safe:{value:-45}, risky:{win:10,winProb:0.3,lose:-80,loseProb:0.7}, ev_safe:-45, ev_risky:-53 }
+];
+
+var TOTAL_ROUNDS = 8;
+var START_TOKENS = 500;
+
+/* ─── State ─── */
+var currentRound = 0;
+var tokens = START_TOKENS;
+var gameHistory = [];
+var playerChoices = []; // {round, frame, chose, evSafe, evRisky}
+var agentTokens = {sanjay:START_TOKENS, pooja:START_TOKENS, arun:START_TOKENS};
+var agents = null;
+
+/* ─── DOM refs ─── */
+var $=function(id){return document.getElementById(id)};
+
+/* ─── Init agents ─── */
+try{ agents = new IMGameAgents('risk-reward-game'); } catch(e){ agents = null; }
+
+/* ─── Screen management ─── */
+function showScreen(id){
+  var screens = document.querySelectorAll('.screen');
+  for(var i=0;i<screens.length;i++) screens[i].classList.remove('active');
+  $(id).classList.add('active');
+}
+
+window.startGame = function(){
+  currentRound = 0;
+  tokens = START_TOKENS;
+  gameHistory = [];
+  playerChoices = [];
+  agentTokens = {sanjay:START_TOKENS, pooja:START_TOKENS, arun:START_TOKENS};
+  showScreen('game');
+  setupRound();
+};
+
+/* ─── Setup Round ─── */
+function setupRound(){
+  var s = scenarios[currentRound];
+  $('roundBadge').textContent = 'Round '+(currentRound+1)+' / '+TOTAL_ROUNDS;
+  updateTokenDisplay();
+
+  // Frame badge
+  var fb = $('frameBadge');
+  if(s.frame==='gain'){
+    fb.textContent='GAIN SCENARIO';fb.className='frame-badge frame-gain';
+  } else {
+    fb.textContent='LOSS SCENARIO';fb.className='frame-badge frame-loss';
+  }
+
+  // Safe card
+  var sv = $('safeValue');
+  sv.textContent = (s.safe.value>=0?'+':'')+s.safe.value+' tokens';
+  sv.className = 'choice-value '+(s.safe.value>=0?'gain':'loss');
+  $('safeDetail').textContent = 'Guaranteed outcome';
+  $('safeEV').textContent = 'EV: '+s.ev_safe;
+  $('safeEV').classList.remove('show');
+
+  // Risky card
+  $('riskyValue').textContent = '?';
+  $('riskyValue').style.color = 'var(--amber)';
+  var winTxt = (s.risky.win>=0?'+':'')+s.risky.win;
+  var loseTxt = (s.risky.lose>=0?'+':'')+s.risky.lose;
+  $('riskyDetail').textContent = (s.risky.winProb*100)+'% chance of '+winTxt+' · '+(s.risky.loseProb*100)+'% chance of '+loseTxt;
+  $('segWin').style.width = (s.risky.winProb*100)+'%';
+  $('segLose').style.width = (s.risky.loseProb*100)+'%';
+  $('probWinLabel').textContent = (s.risky.winProb*100)+'% '+winTxt;
+  $('probLoseLabel').textContent = (s.risky.loseProb*100)+'% '+loseTxt;
+  $('riskyEV').textContent = 'EV: '+s.ev_risky;
+  $('riskyEV').classList.remove('show');
+
+  // Reset cards
+  $('safeCard').classList.remove('selected','disabled');
+  $('riskyCard').classList.remove('selected','disabled');
+  $('choiceArea').style.display='';
+  $('outcomeArea').style.display='none';
+  $('agentResults').style.display='none';
+  $('insightBox').style.display='none';
+  $('btnNext').style.display='none';
+  $('profileSection').style.display='none';
+}
+
+/* ─── Choose ─── */
+window.choose = function(choice){
+  var s = scenarios[currentRound];
+
+  // Mark selection
+  if(choice==='safe'){
+    $('safeCard').classList.add('selected');
+    $('riskyCard').classList.add('disabled');
+  } else {
+    $('riskyCard').classList.add('selected');
+    $('safeCard').classList.add('disabled');
+  }
+
+  // Reveal EVs
+  $('safeEV').classList.add('show');
+  $('riskyEV').classList.add('show');
+
+  // Calculate outcome
+  var playerOutcome;
+  if(choice==='safe'){
+    playerOutcome = s.safe.value;
+    showOutcome(playerOutcome, false, s, choice);
+  } else {
+    // Spin animation then resolve
+    showSpinner(function(resolvedOutcome){
+      showOutcome(resolvedOutcome, true, s, choice);
+    }, s);
+  }
+};
+
+function resolveRisky(s){
+  return Math.random() < s.risky.winProb ? s.risky.win : s.risky.lose;
+}
+
+function showSpinner(cb, s){
+  var oa = $('outcomeArea');
+  oa.style.display='flex';
+  oa.innerHTML='<div class="spinner-wheel"></div><div style="color:var(--muted);font-size:.95rem">Resolving gamble...</div>';
+  setTimeout(function(){
+    cb(resolveRisky(s));
+  }, 1200);
+}
+
+function showOutcome(playerOutcome, wasRisky, s, choice){
+  tokens += playerOutcome;
+  updateTokenDisplay();
+
+  var oa = $('outcomeArea');
+  oa.style.display = 'flex';
+
+  var cls = playerOutcome>0?'outcome-gain':playerOutcome<0?'outcome-loss':'outcome-zero';
+  var sign = playerOutcome>=0?'+':'';
+  oa.innerHTML='<div class="outcome-result '+cls+'">'+sign+playerOutcome+' tokens</div>';
+
+  // Record choice
+  playerChoices.push({
+    round:currentRound, frame:s.frame, chose:choice,
+    evSafe:s.ev_safe, evRisky:s.ev_risky, outcome:playerOutcome
+  });
+
+  // AI agent decisions
+  resolveAgents(s, choice, playerOutcome);
+}
+
+/* ─── AI Agents ─── */
+function resolveAgents(s, playerChoice, playerOutcome){
+  // Determine agent choices based on personality
+  var agentChoicesLocal = {};
+
+  // Sanjay: loss-averse, always safe especially for gains
+  agentChoicesLocal.sanjay = 'safe';
+
+  // Pooja: risk-seeker, always risky
+  agentChoicesLocal.pooja = 'risky';
+
+  // Arun: framing-sensitive, safe for gains, risky for losses
+  agentChoicesLocal.arun = (s.frame==='gain') ? 'safe' : 'risky';
+
+  // Resolve outcomes
+  var agentOutcomes = {};
+  var agentNames = {sanjay:'Sanjay', pooja:'Pooja', arun:'Arun'};
+  var agentColors = {sanjay:'var(--green)', pooja:'var(--red)', arun:'var(--amber)'};
+
+  ['sanjay','pooja','arun'].forEach(function(id){
+    if(agentChoicesLocal[id]==='safe'){
+      agentOutcomes[id] = s.safe.value;
+    } else {
+      agentOutcomes[id] = resolveRisky(s);
+    }
+    agentTokens[id] += agentOutcomes[id];
+  });
+
+  // Also try cloud agents (fire and forget, use local results regardless)
+  if(agents){
+    agents.getAllDecisions({
+      round: currentRound+1,
+      totalRounds: TOTAL_ROUNDS,
+      history: gameHistory,
+      availableActions: ['bid'],
+      context: { estimated_value: s.ev_risky }
+    }).catch(function(){});
+  }
+
+  // Record history
+  var histEntry = {
+    round: currentRound+1,
+    player_action: playerChoice,
+    player_outcome: playerOutcome,
+    agent_actions: {}
+  };
+  ['sanjay','pooja','arun'].forEach(function(id){
+    histEntry.agent_actions[id] = {action:agentChoicesLocal[id], outcome:agentOutcomes[id]};
+  });
+  gameHistory.push(histEntry);
+
+  // Show agent results
+  var ar = $('agentResults');
+  ar.style.display='flex';
+  var html='';
+  ['sanjay','pooja','arun'].forEach(function(id){
+    var oc = agentOutcomes[id];
+    var ocCls = oc>0?'outcome-gain':oc<0?'outcome-loss':'outcome-zero';
+    html+='<div class="agent-result-card">'
+      +'<div class="ar-name" style="color:'+agentColors[id]+'">'+agentNames[id]+'</div>'
+      +'<div class="ar-choice">Chose: <strong>'+agentChoicesLocal[id].toUpperCase()+'</strong></div>'
+      +'<div class="ar-outcome '+ocCls+'">'+(oc>=0?'+':'')+oc+' tokens</div>'
+      +'<div style="font-size:.78rem;color:var(--muted);margin-top:4px">Total: '+agentTokens[id]+'</div>'
+      +'</div>';
+  });
+  ar.innerHTML=html;
+
+  // Insight
+  showInsight(s, playerChoice, playerOutcome);
+
+  // Profile tracker
+  updateProfile();
+
+  // Next button
+  $('btnNext').style.display='inline-block';
+}
+
+/* ─── Insight ─── */
+function showInsight(s, choice, outcome){
+  var ib = $('insightBox');
+  ib.style.display='block';
+  var msg = '';
+
+  var betterEV = s.ev_risky > s.ev_safe ? 'risky' : (s.ev_risky < s.ev_safe ? 'safe' : 'either');
+
+  if(s.frame==='gain' && choice==='safe'){
+    if(betterEV==='risky'){
+      msg='<strong>Loss aversion detected!</strong> You chose the safe option even though the risky one had a higher expected value ('+s.ev_risky+' vs '+s.ev_safe+'). This is classic risk-aversion for gains — most people do exactly this.';
+    } else {
+      msg='<strong>Rational choice.</strong> The safe option had equal or better expected value here. You played it smart.';
+    }
+  } else if(s.frame==='gain' && choice==='risky'){
+    msg='<strong>Going for it!</strong> You took the gamble in a gain scenario. Expected value was '+s.ev_risky+' (risky) vs '+s.ev_safe+' (safe). '+(betterEV==='risky'?'The EV favored your choice.':'The safe option actually had better EV — bold move!');
+  } else if(s.frame==='loss' && choice==='risky'){
+    if(betterEV==='safe'){
+      msg='<strong>Classic framing effect!</strong> You chose the gamble even though the safe loss was smaller in expected value ('+s.ev_safe+' vs '+s.ev_risky+'). When facing losses, we become risk-seeking — hoping to escape the loss entirely.';
+    } else {
+      msg='<strong>Risk-seeking in losses.</strong> Prospect theory predicts this. When facing losses, people prefer to gamble. EV: '+s.ev_risky+' (risky) vs '+s.ev_safe+' (safe).';
+    }
+  } else if(s.frame==='loss' && choice==='safe'){
+    msg='<strong>Accepting the certain loss.</strong> Most people would gamble here to try to avoid the loss. You chose certainty — quite unusual! EV was '+s.ev_safe+' (safe) vs '+s.ev_risky+' (risky).';
+  }
+
+  ib.innerHTML=msg;
+}
+
+/* ─── Profile Tracker ─── */
+function updateProfile(){
+  $('profileSection').style.display='block';
+  // Calculate: % of risky choices. Weight loss-frame risky and gain-frame safe as "prospect theory" aligned
+  var riskyCount = 0;
+  playerChoices.forEach(function(c){ if(c.chose==='risky') riskyCount++; });
+  var pct = playerChoices.length > 0 ? (riskyCount / playerChoices.length) : 0.5;
+  // 0 = all safe (risk-averse), 1 = all risky (risk-seeking)
+  var leftPct = 10 + pct * 80; // map to 10%-90% range
+  $('spectrumDot').style.left = leftPct+'%';
+}
+
+/* ─── Token display animation ─── */
+function updateTokenDisplay(){
+  var el = $('tokenVal');
+  el.textContent = tokens;
+  el.style.color = tokens >= START_TOKENS ? 'var(--green)' : 'var(--red)';
+  el.style.transform = 'scale(1.3)';
+  setTimeout(function(){ el.style.transform='scale(1)'; }, 300);
+}
+
+/* ─── Next Round ─── */
+window.nextRound = function(){
+  currentRound++;
+  if(currentRound >= TOTAL_ROUNDS){
+    showEndScreen();
+  } else {
+    setupRound();
+  }
+};
+
+/* ─── End Screen ─── */
+function showEndScreen(){
+  showScreen('endscreen');
+  $('finalTokens').textContent = tokens + ' tokens';
+
+  // Determine profile
+  var gainSafe=0, gainRisky=0, lossSafe=0, lossRisky=0;
+  playerChoices.forEach(function(c){
+    if(c.frame==='gain'){ c.chose==='safe'?gainSafe++:gainRisky++; }
+    else { c.chose==='safe'?lossSafe++:lossRisky++; }
+  });
+
+  var label,desc;
+  if(gainSafe>=3 && lossRisky>=3){
+    label = 'Classic Prospect Theory Profile';
+    desc = 'You\'re risk-averse for gains and risk-seeking for losses — exactly what Kahneman and Tversky predicted. You feel losses more strongly than gains, and you\'ll gamble to avoid a sure loss.';
+  } else if(gainSafe>=3 && lossSafe>=3){
+    label = 'Strongly Risk-Averse';
+    desc = 'You prefer certainty in all situations. You\'d rather take a known outcome than gamble, whether it\'s a gain or a loss. You value security above potential upside.';
+  } else if(gainRisky>=3 && lossRisky>=3){
+    label = 'Strongly Risk-Seeking';
+    desc = 'You love the gamble! In both gains and losses, you went for the uncertain option. You\'re comfortable with volatility and believe the upside is worth the risk.';
+  } else if(gainRisky>=3 && lossSafe>=3){
+    label = 'Reverse Framing Profile';
+    desc = 'Interesting — you\'re the opposite of what prospect theory predicts. You take risks for gains but play it safe for losses. This is unusual and suggests you may evaluate probabilities more carefully than most.';
+  } else {
+    label = 'Mixed Risk Profile';
+    desc = 'You showed a mix of risk preferences across different scenarios. Context mattered to you — you evaluated each situation on its merits rather than following a fixed pattern.';
+  }
+
+  $('profileLabel').textContent = label;
+  $('profileDesc').textContent = desc;
+
+  // Framing summary
+  var fs = $('framingSummary');
+  fs.innerHTML = '<h3>Your Framing Breakdown</h3>'
+    +'<p><strong>Gain scenarios:</strong> You chose SAFE '+gainSafe+' time'+(gainSafe!==1?'s':'')+' and RISKY '+gainRisky+' time'+(gainRisky!==1?'s':'')+'.</p>'
+    +'<p><strong>Loss scenarios:</strong> You chose SAFE '+lossSafe+' time'+(lossSafe!==1?'s':'')+' and RISKY '+lossRisky+' time'+(lossRisky!==1?'s':'')+'.</p>'
+    +'<p style="margin-top:8px">Prospect theory predicts most people will be <strong>risk-averse for gains</strong> (prefer the safe bet) and <strong>risk-seeking for losses</strong> (prefer the gamble). '
+    +(gainSafe>=3&&lossRisky>=3?'You matched this pattern almost perfectly!':'Your pattern deviated from the classic prediction — you think differently!')+'</p>';
+
+  // Comparison grid
+  var cg = $('comparisonGrid');
+  var all = [
+    {name:'You',tokens:tokens,profile:label},
+    {name:'Sanjay',tokens:agentTokens.sanjay,profile:'Loss-Averse'},
+    {name:'Pooja',tokens:agentTokens.pooja,profile:'Risk-Seeker'},
+    {name:'Arun',tokens:agentTokens.arun,profile:'Framing-Sensitive'}
+  ];
+  var html='';
+  all.forEach(function(p){
+    html+='<div class="comp-card">'
+      +'<div class="comp-name">'+p.name+'</div>'
+      +'<div class="comp-tokens">'+p.tokens+'</div>'
+      +'<div class="comp-profile">'+p.profile+'</div>'
+      +'</div>';
+  });
+  cg.innerHTML=html;
+
+  // Draw prospect theory graph
+  drawPTCurve();
+}
+
+/* ─── Prospect Theory Value Function Graph ─── */
+function drawPTCurve(){
+  var canvas = $('ptCanvas');
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var cx = W/2, cy = H/2 - 10;
+
+  ctx.fillStyle = '#1E293B';
+  ctx.fillRect(0,0,W,H);
+
+  // Axes
+  ctx.strokeStyle = '#475569';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(20,cy);ctx.lineTo(W-20,cy);
+  ctx.moveTo(cx,20);ctx.lineTo(cx,H-30);
+  ctx.stroke();
+
+  // Labels
+  ctx.fillStyle = '#94A3B8';
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Losses',70,cy-8);
+  ctx.fillText('Gains',W-70,cy-8);
+  ctx.fillText('Value (+)',cx+30,35);
+  ctx.fillText('Value (-)',cx+30,H-35);
+
+  // S-curve: v(x) = x^0.88 for gains, -lambda*(-x)^0.88 for losses (lambda=2.25)
+  var lambda = 2.25;
+  var alpha = 0.88;
+  var scaleX = (W/2 - 30);
+  var scaleY = (H/2 - 30);
+
+  ctx.strokeStyle = '#F59E0B';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+
+  var maxInput = 1;
+  var steps = 200;
+  for(var i=0;i<=steps;i++){
+    var t = -maxInput + (2*maxInput*i/steps);
+    var v;
+    if(t>=0){
+      v = Math.pow(t,alpha);
+    } else {
+      v = -lambda * Math.pow(-t,alpha);
+    }
+    // Normalize v
+    var maxGain = Math.pow(maxInput,alpha);
+    var maxLoss = lambda * Math.pow(maxInput,alpha);
+    var normV;
+    if(v>=0) normV = v/maxGain;
+    else normV = v/maxLoss;
+
+    // But we want losses to look steeper, so use raw scale
+    var px = cx + t * scaleX;
+    var py = cy - (v / Math.max(maxGain,maxLoss)) * scaleY;
+
+    if(i===0) ctx.moveTo(px,py);
+    else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+
+  // Dashed reference line (45-degree, linear)
+  ctx.strokeStyle = '#475569';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([5,5]);
+  ctx.beginPath();
+  ctx.moveTo(cx - scaleX, cy + scaleY);
+  ctx.lineTo(cx + scaleX, cy - scaleY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Legend
+  ctx.fillStyle = '#F59E0B';
+  ctx.fillRect(20,H-22,14,3);
+  ctx.fillStyle = '#94A3B8';
+  ctx.font = '10px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('Value function (steeper for losses)',40,H-18);
+  ctx.fillStyle = '#475569';
+  ctx.fillRect(260,H-22,14,3);
+  ctx.fillStyle = '#94A3B8';
+  ctx.fillText('Linear reference',280,H-18);
+}
+
+})();
+</script>
+</body>
+</html>

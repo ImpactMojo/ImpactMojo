@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Effects Game | ImpactMojo</title>
+<style>
+/* ── Reset & Base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #0F172A;
+  color: #E2E8F0;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Utility ────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.5s ease-out forwards; }
+.fade-up { animation: fadeUp 0.6s ease-out forwards; }
+.scale-in { animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes glow { 0%, 100% { box-shadow: 0 0 8px #06B6D466; } 50% { box-shadow: 0 0 24px #06B6D4aa; } }
+@keyframes ripple { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes nodeJoin { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.3); } 100% { transform: scale(1); opacity: 1; } }
+@keyframes edgeDraw { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+@keyframes criticalMassBurst { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ── Screen: Welcome ────────────────────────────────────────── */
+#welcome-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.welcome-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.welcome-header .tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #06B6D422, #06B6D411);
+  border: 1px solid #06B6D444;
+  color: #06B6D4;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+
+.welcome-header h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #F8FAFC, #94A3B8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.welcome-header p {
+  font-size: 1.1rem;
+  color: #94A3B8;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.concept-card {
+  background: linear-gradient(135deg, #1E293B, #1a2436);
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.concept-card h3 {
+  color: #06B6D4;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.concept-card p, .concept-card li {
+  color: #CBD5E1;
+  font-size: 0.95rem;
+}
+
+.concept-card ul {
+  margin-top: 0.5rem;
+  padding-left: 1.2rem;
+}
+
+.concept-card li { margin-bottom: 0.35rem; }
+
+.concept-card .rules {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.concept-card .rule {
+  background: #0F172A;
+  border-radius: 10px;
+  padding: 0.85rem;
+  text-align: center;
+}
+
+.concept-card .rule .num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #06B6D4;
+}
+
+.concept-card .rule .label {
+  font-size: 0.78rem;
+  color: #94A3B8;
+  margin-top: 0.15rem;
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.example-item {
+  background: #0F172A;
+  border: 1px solid #1E293B;
+  border-radius: 10px;
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.example-item .icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
+.example-item .name { font-weight: 600; font-size: 0.9rem; color: #F8FAFC; }
+.example-item .desc { font-size: 0.75rem; color: #64748B; margin-top: 0.15rem; }
+
+/* Agent cards on welcome */
+.agents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto 2.5rem;
+}
+
+.agent-intro-card {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 1.25rem;
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.agent-intro-card:hover {
+  transform: translateY(-4px);
+  border-color: #475569;
+}
+
+.agent-intro-card .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #0F172A;
+  margin-bottom: 0.75rem;
+}
+
+.agent-intro-card .name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #F8FAFC;
+}
+
+.agent-intro-card .role {
+  font-size: 0.8rem;
+  color: #06B6D4;
+  margin-bottom: 0.1rem;
+}
+
+.agent-intro-card .location {
+  font-size: 0.75rem;
+  color: #64748B;
+  margin-bottom: 0.6rem;
+}
+
+.agent-intro-card .desc {
+  font-size: 0.82rem;
+  color: #94A3B8;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #06B6D4, #0891B2);
+  color: #0F172A;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.9rem 2.5rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px #06B6D433;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px #06B6D444;
+}
+
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #1E293B;
+  color: #E2E8F0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.8rem;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #273449;
+  border-color: #475569;
+}
+
+.start-container { text-align: center; }
+
+/* ── Screen: Game ───────────────────────────────────────────── */
+#game-screen {
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+
+/* Top bar */
+.top-bar {
+  background: #1E293B;
+  border-bottom: 1px solid #334155;
+  padding: 0.85rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.top-bar-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.top-bar .stat {
+  text-align: center;
+}
+
+.top-bar .stat .label {
+  font-size: 0.7rem;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.top-bar .stat .value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #F8FAFC;
+}
+
+.top-bar .stat .value.cyan { color: #06B6D4; }
+.top-bar .stat .value.amber { color: #F59E0B; }
+.top-bar .stat .value.emerald { color: #10B981; }
+
+/* ── Network Visualization ─────────────────────────────────── */
+.network-container {
+  max-width: 960px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.network-viz {
+  background: linear-gradient(135deg, #1E293B, #172032);
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.network-viz.critical-mass {
+  border-color: #F59E0B66;
+  animation: criticalMassBurst 0.6s ease-out;
+}
+
+.network-viz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.network-viz-header h3 {
+  font-size: 0.9rem;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.metcalfe-badge {
+  background: #0F172A;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  color: #06B6D4;
+  font-weight: 600;
+}
+
+.network-svg-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+}
+
+.network-svg-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Critical mass bar */
+.critical-mass-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #334155;
+}
+
+.cm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.cm-header .cm-label {
+  font-size: 0.8rem;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.cm-header .cm-count {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #F59E0B;
+}
+
+.cm-bar-track {
+  height: 10px;
+  background: #0F172A;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cm-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #334155, #06B6D4);
+  border-radius: 5px;
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.cm-bar-fill.reached {
+  background: linear-gradient(90deg, #06B6D4, #F59E0B);
+}
+
+.cm-bar-marker {
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: #F59E0B;
+  border-radius: 1px;
+}
+
+.cm-bar-marker::after {
+  content: 'Critical Mass';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: #F59E0B;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* ── Stats + Action Row ────────────────────────────────────── */
+.game-row {
+  max-width: 960px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.stats-panel {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+
+.stats-panel h3 {
+  font-size: 0.85rem;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #0F172A;
+}
+
+.stat-row:last-child { border-bottom: none; }
+
+.stat-row .s-label {
+  font-size: 0.85rem;
+  color: #94A3B8;
+}
+
+.stat-row .s-value {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.stat-row .s-value.cyan { color: #06B6D4; }
+.stat-row .s-value.amber { color: #F59E0B; }
+.stat-row .s-value.emerald { color: #10B981; }
+.stat-row .s-value.rose { color: #FB7185; }
+
+.action-panel {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.action-panel h3 {
+  font-size: 0.85rem;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.action-panel .action-hint {
+  font-size: 0.82rem;
+  color: #94A3B8;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.btn-join {
+  flex: 1;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #06B6D4, #0891B2);
+  color: #0F172A;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px #06B6D433;
+}
+
+.btn-join:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px #06B6D444;
+}
+
+.btn-join:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn-wait {
+  flex: 1;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #0F172A;
+  color: #94A3B8;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.btn-wait:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #64748B;
+}
+
+.btn-wait:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn-joined-indicator {
+  flex: 1;
+  padding: 0.85rem 1.5rem;
+  border: 2px solid #06B6D4;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  background: #06B6D411;
+  color: #06B6D4;
+  cursor: default;
+}
+
+/* ── Agent Row ──────────────────────────────────────────────── */
+.agents-row {
+  max-width: 960px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+.agents-row h3 {
+  font-size: 0.85rem;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.agent-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.agent-card {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1rem;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.agent-card.joined {
+  border-color: #06B6D466;
+  background: linear-gradient(135deg, #1E293B, #0c2d3a);
+}
+
+.agent-card .a-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.agent-card .a-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #0F172A;
+  flex-shrink: 0;
+}
+
+.agent-card .a-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #F8FAFC;
+}
+
+.agent-card .a-role {
+  font-size: 0.72rem;
+  color: #64748B;
+}
+
+.agent-card .a-status {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  margin-bottom: 0.35rem;
+  display: inline-block;
+}
+
+.agent-card .a-status.joined-status {
+  background: #06B6D422;
+  color: #06B6D4;
+}
+
+.agent-card .a-status.waiting-status {
+  background: #64748B22;
+  color: #64748B;
+}
+
+.agent-card .a-reasoning {
+  font-size: 0.78rem;
+  color: #94A3B8;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ── Adoption Curve Chart ──────────────────────────────────── */
+.chart-section {
+  max-width: 960px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.chart-card {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.chart-card h3 {
+  font-size: 0.9rem;
+  color: #94A3B8;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.chart-svg-wrap {
+  width: 100%;
+  aspect-ratio: 2.5 / 1;
+}
+
+.chart-svg-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Round Log ──────────────────────────────────────────────── */
+.round-log-section {
+  max-width: 960px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+.round-log {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 1.25rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.round-log h3 {
+  font-size: 0.85rem;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.log-entry {
+  font-size: 0.82rem;
+  color: #94A3B8;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid #0F172A;
+}
+
+.log-entry:last-child { border-bottom: none; }
+.log-entry .log-round { color: #06B6D4; font-weight: 700; }
+.log-entry .log-highlight { color: #F59E0B; font-weight: 600; }
+
+/* ── Screen: End ────────────────────────────────────────────── */
+#end-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.end-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.end-header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #06B6D4, #F59E0B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.75rem;
+}
+
+.end-header p {
+  color: #94A3B8;
+  font-size: 1.05rem;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.result-card {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.result-card .r-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.result-card .r-value.cyan { color: #06B6D4; }
+.result-card .r-value.amber { color: #F59E0B; }
+.result-card .r-value.emerald { color: #10B981; }
+.result-card .r-value.rose { color: #FB7185; }
+
+.result-card .r-label {
+  font-size: 0.78rem;
+  color: #64748B;
+  margin-top: 0.25rem;
+}
+
+.end-section {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 1.75rem;
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+}
+
+.end-section h3 {
+  color: #06B6D4;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.end-section p, .end-section li {
+  color: #CBD5E1;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.end-section ul {
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.end-section li { margin-bottom: 0.4rem; }
+
+.end-section .example-tag {
+  display: inline-block;
+  background: #06B6D411;
+  border: 1px solid #06B6D433;
+  color: #06B6D4;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  margin: 0.15rem;
+}
+
+.end-chart-wrap {
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.play-again-wrap {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* ── Loading overlay ───────────────────────────────────────── */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0F172Acc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #334155;
+  border-top-color: #06B6D4;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .game-row {
+    grid-template-columns: 1fr;
+  }
+  .agent-cards-row {
+    grid-template-columns: 1fr;
+  }
+  .concept-card .rules,
+  .examples-grid {
+    grid-template-columns: 1fr;
+  }
+  .top-bar-inner {
+    justify-content: center;
+  }
+  .network-svg-wrap {
+    aspect-ratio: 4/3;
+  }
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ WELCOME SCREEN ═══════════ -->
+<div id="welcome-screen" class="fade-in">
+  <div class="container">
+    <div class="welcome-header">
+      <div class="tag">Platform Economics</div>
+      <h1>The Network Effects Game</h1>
+      <p>A new platform is launching. Join early and reap rewards, or wait until others prove its value? Discover why some platforms become giants and others vanish.</p>
+    </div>
+
+    <div class="concept-card fade-up">
+      <h3>What are Network Effects?</h3>
+      <p>A product becomes <strong>more valuable as more people use it</strong>. WhatsApp is useless if you're the only one on it, but invaluable when all your contacts are there. This is Metcalfe's Law: the value of a network grows proportionally to the square of its users (value ~ n<sup>2</sup>).</p>
+      <div class="examples-grid">
+        <div class="example-item">
+          <div class="icon">&#128172;</div>
+          <div class="name">WhatsApp</div>
+          <div class="desc">500M+ Indians, replaced SMS</div>
+        </div>
+        <div class="example-item">
+          <div class="icon">&#128179;</div>
+          <div class="name">UPI</div>
+          <div class="desc">300M+ users, digital payments revolution</div>
+        </div>
+        <div class="example-item">
+          <div class="icon">&#127917;</div>
+          <div class="name">PUBG Mobile</div>
+          <div class="desc">More players = more fun</div>
+        </div>
+        <div class="example-item">
+          <div class="icon">&#128663;</div>
+          <div class="name">Ola/Uber</div>
+          <div class="desc">More riders attract more drivers</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card fade-up">
+      <h3>How to Play</h3>
+      <p>A new platform is launching. You, 3 AI agents, and 6 simulated users decide each round whether to <strong>JOIN</strong> or <strong>WAIT</strong>.</p>
+      <div class="rules">
+        <div class="rule">
+          <div class="num">10</div>
+          <div class="label">Rounds</div>
+        </div>
+        <div class="rule">
+          <div class="num">50</div>
+          <div class="label">Join Cost (tokens)</div>
+        </div>
+        <div class="rule">
+          <div class="num">n<sup>2</sup> x 5</div>
+          <div class="label">Platform Value</div>
+        </div>
+        <div class="rule">
+          <div class="num">5</div>
+          <div class="label">Critical Mass</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="agents-grid fade-up" id="agents-intro">
+      <div class="agent-intro-card">
+        <div class="avatar" style="background: #06B6D4;">T</div>
+        <div class="role">Early Adopter</div>
+        <div class="name">Tanvi</div>
+        <div class="location">Bengaluru, Karnataka</div>
+        <div class="desc">Tech enthusiast. Always first to try new platforms. Joins in the first 2 rounds no matter what.</div>
+      </div>
+      <div class="agent-intro-card">
+        <div class="avatar" style="background: #F59E0B;">H</div>
+        <div class="role">Skeptic</div>
+        <div class="name">Harish</div>
+        <div class="location">Lucknow, UP</div>
+        <div class="desc">Cautious and analytical. Waits until at least 40% of people have joined before committing.</div>
+      </div>
+      <div class="agent-intro-card">
+        <div class="avatar" style="background: #10B981;">D</div>
+        <div class="role">Influencer</div>
+        <div class="name">Divya</div>
+        <div class="location">Mumbai, Maharashtra</div>
+        <div class="desc">Trend-setter. Joins early and her presence catalyzes others to join the platform.</div>
+      </div>
+    </div>
+
+    <div class="start-container fade-up">
+      <button class="btn-primary" onclick="startGame()">Launch the Platform</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ GAME SCREEN ═══════════ -->
+<div id="game-screen" class="hidden">
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="stat">
+        <div class="label">Round</div>
+        <div class="value cyan" id="round-display">1 / 10</div>
+      </div>
+      <div class="stat">
+        <div class="label">Members</div>
+        <div class="value" id="members-display">0 / 10</div>
+      </div>
+      <div class="stat">
+        <div class="label">Platform Value</div>
+        <div class="value amber" id="value-display">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Your Earnings</div>
+        <div class="value emerald" id="earnings-display">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Network visualization -->
+  <div class="network-container">
+    <div class="network-viz" id="network-viz">
+      <div class="network-viz-header">
+        <h3>Platform Network</h3>
+        <div class="metcalfe-badge">Value = n<sup>2</sup> x 5</div>
+      </div>
+      <div class="network-svg-wrap">
+        <svg id="network-svg" viewBox="0 0 800 400"></svg>
+      </div>
+      <div class="critical-mass-section">
+        <div class="cm-header">
+          <span class="cm-label">Adoption Progress</span>
+          <span class="cm-count" id="cm-count">0 / 10 members</span>
+        </div>
+        <div class="cm-bar-track">
+          <div class="cm-bar-marker"></div>
+          <div class="cm-bar-fill" id="cm-bar-fill" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats + Action -->
+  <div class="game-row">
+    <div class="stats-panel">
+      <h3>Platform Economics</h3>
+      <div class="stat-row">
+        <span class="s-label">Network Size</span>
+        <span class="s-value cyan" id="stat-size">0 members</span>
+      </div>
+      <div class="stat-row">
+        <span class="s-label">Platform Value (n<sup>2</sup> x 5)</span>
+        <span class="s-value amber" id="stat-value">0 tokens</span>
+      </div>
+      <div class="stat-row">
+        <span class="s-label">Value per Member</span>
+        <span class="s-value" id="stat-per-member">0 tokens</span>
+      </div>
+      <div class="stat-row">
+        <span class="s-label">Your Total Earnings</span>
+        <span class="s-value emerald" id="stat-earnings">0 tokens</span>
+      </div>
+      <div class="stat-row">
+        <span class="s-label">Your Total Cost</span>
+        <span class="s-value rose" id="stat-cost">0 tokens</span>
+      </div>
+      <div class="stat-row">
+        <span class="s-label">Net Profit</span>
+        <span class="s-value" id="stat-profit">0 tokens</span>
+      </div>
+    </div>
+
+    <div class="action-panel" id="action-panel">
+      <h3>Your Decision</h3>
+      <div class="action-hint" id="action-hint">Join the platform for 50 tokens, or wait and see how it grows?</div>
+      <div class="action-buttons" id="action-buttons">
+        <button class="btn-join" id="btn-join" onclick="playerJoin()">JOIN (50 tokens)</button>
+        <button class="btn-wait" id="btn-wait" onclick="playerWait()">WAIT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agents -->
+  <div class="agents-row">
+    <h3>AI Agents</h3>
+    <div class="agent-cards-row" id="agent-cards"></div>
+  </div>
+
+  <!-- Adoption Curve -->
+  <div class="chart-section">
+    <div class="chart-card">
+      <h3>Adoption Curve (S-Curve)</h3>
+      <div class="chart-svg-wrap">
+        <svg id="adoption-chart" viewBox="0 0 700 250"></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Round log -->
+  <div class="round-log-section">
+    <div class="round-log" id="round-log">
+      <h3>Event Log</h3>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ END SCREEN ═══════════ -->
+<div id="end-screen" class="hidden"></div>
+
+<!-- ═══════════ LOADING ═══════════ -->
+<div id="loading-overlay" class="loading-overlay hidden">
+  <div class="loading-spinner"></div>
+</div>
+
+<script src="/js/game-agents.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // ── Constants ──────────────────────────────────────────────
+  var TOTAL_ROUNDS = 10;
+  var JOIN_COST = 50;
+  var CRITICAL_MASS = 5;
+  var TOTAL_POTENTIAL = 10; // player + 3 agents + 6 NPCs
+  var VALUE_MULTIPLIER = 5;
+
+  // ── Agent definitions ──────────────────────────────────────
+  var AI_AGENTS = [
+    { id: 'ne-early-adopter', name: 'Tanvi', role: 'Early Adopter', color: '#06B6D4', letter: 'T' },
+    { id: 'ne-skeptic', name: 'Harish', role: 'Skeptic', color: '#F59E0B', letter: 'H' },
+    { id: 'ne-influencer', name: 'Divya', role: 'Influencer', color: '#10B981', letter: 'D' }
+  ];
+
+  // NPC simulated users with random thresholds
+  var NPCS = [];
+  for (var i = 0; i < 6; i++) {
+    NPCS.push({
+      id: 'npc-' + (i + 1),
+      name: 'User ' + (i + 1),
+      threshold: 0.2 + Math.random() * 0.6, // 0.2 to 0.8
+      joined: false,
+      joinedRound: -1
+    });
+  }
+  NPCS.sort(function(a, b) { return a.threshold - b.threshold; });
+
+  // ── All network members (for visualization) ────────────────
+  // Index 0 = player, 1-3 = AI agents, 4-9 = NPCs
+  var MEMBERS = [
+    { id: 'player', name: 'You', color: '#8B5CF6', letter: 'Y' }
+  ];
+  AI_AGENTS.forEach(function(a) { MEMBERS.push({ id: a.id, name: a.name, color: a.color, letter: a.letter }); });
+  NPCS.forEach(function(n) { MEMBERS.push({ id: n.id, name: n.name, color: '#475569', letter: (MEMBERS.length - 3).toString() }); });
+
+  // Network node positions (precomputed circle layout)
+  var NODE_POSITIONS = [];
+  (function() {
+    var cx = 400, cy = 200, rx = 280, ry = 150;
+    for (var i = 0; i < TOTAL_POTENTIAL; i++) {
+      var angle = (2 * Math.PI * i / TOTAL_POTENTIAL) - Math.PI / 2;
+      NODE_POSITIONS.push({
+        x: cx + rx * Math.cos(angle),
+        y: cy + ry * Math.sin(angle)
+      });
+    }
+  })();
+
+  // ── Game state ─────────────────────────────────────────────
+  var state = {
+    round: 0,
+    playerJoined: false,
+    playerJoinedRound: -1,
+    agentJoined: {},    // agentId -> true/false
+    agentJoinedRound: {}, // agentId -> round
+    memberCount: 0,
+    playerEarnings: 0,
+    playerCost: 0,
+    history: [],         // { round, members, value, newJoiners[], playerAction }
+    adoptionData: [0],   // members at end of each round, index 0 = start
+    agentDecisions: {},  // latest decisions
+    criticalMassReached: false,
+    criticalMassRound: -1,
+    roundInProgress: false,
+    gameOver: false
+  };
+
+  // ── Initialize agents lib ──────────────────────────────────
+  var agents = null;
+  try {
+    agents = new IMGameAgents('network-effects-game');
+  } catch (e) {
+    console.warn('IMGameAgents not available, using local fallbacks');
+  }
+
+  // ── DOM references ─────────────────────────────────────────
+  var $welcome = document.getElementById('welcome-screen');
+  var $game = document.getElementById('game-screen');
+  var $end = document.getElementById('end-screen');
+  var $loading = document.getElementById('loading-overlay');
+
+  // ── Start game ─────────────────────────────────────────────
+  window.startGame = function() {
+    $welcome.classList.add('hidden');
+    $game.classList.remove('hidden');
+    $game.classList.add('fade-in');
+
+    renderAgentCards();
+    renderNetworkSVG();
+    renderAdoptionChart();
+    startRound();
+  };
+
+  // ── Render agent cards ─────────────────────────────────────
+  function renderAgentCards() {
+    var html = '';
+    AI_AGENTS.forEach(function(a) {
+      html += '<div class="agent-card" id="agent-card-' + a.id + '">'
+        + '<div class="a-top">'
+        + '<div class="a-avatar" style="background:' + a.color + '">' + a.letter + '</div>'
+        + '<div><div class="a-name">' + a.name + '</div><div class="a-role">' + a.role + '</div></div>'
+        + '</div>'
+        + '<div class="a-status waiting-status" id="agent-status-' + a.id + '">Considering...</div>'
+        + '<div class="a-reasoning" id="agent-reasoning-' + a.id + '"></div>'
+        + '</div>';
+    });
+    document.getElementById('agent-cards').innerHTML = html;
+  }
+
+  // ── Network SVG ────────────────────────────────────────────
+  function renderNetworkSVG() {
+    var svg = document.getElementById('network-svg');
+    var html = '<defs>'
+      + '<filter id="glow-filter"><feGaussianBlur stdDeviation="3" result="blur"/>'
+      + '<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
+      + '</defs>';
+
+    // Edges group
+    html += '<g id="edges-group"></g>';
+
+    // Nodes
+    for (var i = 0; i < TOTAL_POTENTIAL; i++) {
+      var m = MEMBERS[i];
+      var p = NODE_POSITIONS[i];
+      var isPlayer = i === 0;
+      html += '<g id="node-' + i + '" class="network-node" transform="translate(' + p.x + ',' + p.y + ')">'
+        + '<circle r="' + (isPlayer ? 26 : 22) + '" fill="#1E293B" stroke="#334155" stroke-width="2" id="node-circle-' + i + '"/>'
+        + '<text text-anchor="middle" dominant-baseline="central" fill="#64748B" font-size="' + (isPlayer ? 12 : 10) + '" font-weight="700" id="node-text-' + i + '">'
+        + m.letter + '</text>'
+        + '<text text-anchor="middle" y="' + (isPlayer ? 40 : 35) + '" fill="#64748B" font-size="9" id="node-label-' + i + '">'
+        + m.name + '</text>'
+        + '</g>';
+    }
+
+    svg.innerHTML = html;
+  }
+
+  function updateNetworkViz() {
+    var joinedIndices = [];
+    for (var i = 0; i < TOTAL_POTENTIAL; i++) {
+      var m = MEMBERS[i];
+      var isJoined = isMemberJoined(m.id);
+      var circle = document.getElementById('node-circle-' + i);
+      var text = document.getElementById('node-text-' + i);
+      var label = document.getElementById('node-label-' + i);
+
+      if (isJoined) {
+        joinedIndices.push(i);
+        circle.setAttribute('fill', m.color + '33');
+        circle.setAttribute('stroke', m.color);
+        circle.setAttribute('stroke-width', '3');
+        if (m.id.startsWith('npc')) {
+          circle.setAttribute('fill', '#06B6D422');
+          circle.setAttribute('stroke', '#06B6D4');
+        }
+        text.setAttribute('fill', '#F8FAFC');
+        label.setAttribute('fill', '#CBD5E1');
+        circle.setAttribute('filter', 'url(#glow-filter)');
+      } else {
+        circle.setAttribute('fill', '#1E293B');
+        circle.setAttribute('stroke', '#334155');
+        circle.setAttribute('stroke-width', '2');
+        text.setAttribute('fill', '#64748B');
+        label.setAttribute('fill', '#64748B');
+        circle.removeAttribute('filter');
+      }
+    }
+
+    // Draw edges between all joined members
+    var edgesHtml = '';
+    for (var a = 0; a < joinedIndices.length; a++) {
+      for (var b = a + 1; b < joinedIndices.length; b++) {
+        var pa = NODE_POSITIONS[joinedIndices[a]];
+        var pb = NODE_POSITIONS[joinedIndices[b]];
+        edgesHtml += '<line x1="' + pa.x + '" y1="' + pa.y + '" x2="' + pb.x + '" y2="' + pb.y + '" '
+          + 'stroke="#06B6D4" stroke-width="1.5" opacity="0.3" '
+          + 'stroke-dasharray="200" style="animation: edgeDraw 0.6s ease-out forwards"/>';
+      }
+    }
+    document.getElementById('edges-group').innerHTML = edgesHtml;
+
+    // Critical mass visual
+    var viz = document.getElementById('network-viz');
+    if (state.memberCount >= CRITICAL_MASS && !viz.classList.contains('critical-mass')) {
+      viz.classList.add('critical-mass');
+    }
+  }
+
+  function isMemberJoined(memberId) {
+    if (memberId === 'player') return state.playerJoined;
+    if (state.agentJoined[memberId]) return true;
+    for (var i = 0; i < NPCS.length; i++) {
+      if (NPCS[i].id === memberId && NPCS[i].joined) return true;
+    }
+    return false;
+  }
+
+  // ── Adoption Chart ─────────────────────────────────────────
+  function renderAdoptionChart() {
+    var svg = document.getElementById('adoption-chart');
+    var w = 700, h = 250;
+    var padL = 50, padR = 20, padT = 20, padB = 40;
+    var chartW = w - padL - padR;
+    var chartH = h - padT - padB;
+
+    var html = '';
+
+    // Grid lines
+    for (var i = 0; i <= TOTAL_POTENTIAL; i += 2) {
+      var y = padT + chartH - (i / TOTAL_POTENTIAL) * chartH;
+      html += '<line x1="' + padL + '" y1="' + y + '" x2="' + (w - padR) + '" y2="' + y + '" stroke="#1E293B" stroke-width="1"/>';
+      html += '<text x="' + (padL - 8) + '" y="' + (y + 4) + '" text-anchor="end" fill="#64748B" font-size="10">' + i + '</text>';
+    }
+
+    // X axis labels
+    for (var r = 0; r <= TOTAL_ROUNDS; r++) {
+      var x = padL + (r / TOTAL_ROUNDS) * chartW;
+      html += '<text x="' + x + '" y="' + (h - 10) + '" text-anchor="middle" fill="#64748B" font-size="10">' + r + '</text>';
+    }
+
+    // Critical mass line
+    var cmY = padT + chartH - (CRITICAL_MASS / TOTAL_POTENTIAL) * chartH;
+    html += '<line x1="' + padL + '" y1="' + cmY + '" x2="' + (w - padR) + '" y2="' + cmY + '" stroke="#F59E0B" stroke-width="1" stroke-dasharray="6,4" opacity="0.6"/>';
+    html += '<text x="' + (w - padR - 4) + '" y="' + (cmY - 6) + '" text-anchor="end" fill="#F59E0B" font-size="9" font-weight="600">Critical Mass (5)</text>';
+
+    // Axis labels
+    html += '<text x="' + (padL + chartW / 2) + '" y="' + (h - 0) + '" text-anchor="middle" fill="#64748B" font-size="10">Round</text>';
+    html += '<text x="12" y="' + (padT + chartH / 2) + '" text-anchor="middle" fill="#64748B" font-size="10" transform="rotate(-90, 12, ' + (padT + chartH / 2) + ')">Members</text>';
+
+    // Data line placeholder
+    html += '<polyline id="adoption-line" fill="none" stroke="#06B6D4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points=""/>';
+    html += '<polyline id="adoption-area" fill="url(#area-gradient)" opacity="0.3" points=""/>';
+
+    // Gradient
+    html += '<defs><linearGradient id="area-gradient" x1="0" y1="0" x2="0" y2="1">'
+      + '<stop offset="0%" stop-color="#06B6D4" stop-opacity="0.4"/>'
+      + '<stop offset="100%" stop-color="#06B6D4" stop-opacity="0"/>'
+      + '</linearGradient></defs>';
+
+    // Data points placeholder
+    html += '<g id="adoption-dots"></g>';
+
+    svg.innerHTML = html;
+  }
+
+  function updateAdoptionChart() {
+    var w = 700, h = 250;
+    var padL = 50, padR = 20, padT = 20, padB = 40;
+    var chartW = w - padL - padR;
+    var chartH = h - padT - padB;
+
+    var points = '';
+    var areaPoints = '';
+    var dotsHtml = '';
+    var baseY = padT + chartH;
+
+    for (var i = 0; i < state.adoptionData.length; i++) {
+      var x = padL + (i / TOTAL_ROUNDS) * chartW;
+      var y = padT + chartH - (state.adoptionData[i] / TOTAL_POTENTIAL) * chartH;
+      points += x + ',' + y + ' ';
+      areaPoints += x + ',' + y + ' ';
+
+      var dotColor = state.adoptionData[i] >= CRITICAL_MASS ? '#F59E0B' : '#06B6D4';
+      dotsHtml += '<circle cx="' + x + '" cy="' + y + '" r="4" fill="' + dotColor + '" stroke="#0F172A" stroke-width="2"/>';
+    }
+
+    // Close area polygon
+    if (state.adoptionData.length > 0) {
+      var lastX = padL + ((state.adoptionData.length - 1) / TOTAL_ROUNDS) * chartW;
+      var firstX = padL;
+      areaPoints += lastX + ',' + baseY + ' ' + firstX + ',' + baseY;
+    }
+
+    document.getElementById('adoption-line').setAttribute('points', points.trim());
+    document.getElementById('adoption-area').setAttribute('points', areaPoints.trim());
+    document.getElementById('adoption-dots').innerHTML = dotsHtml;
+  }
+
+  // ── Update all displays ────────────────────────────────────
+  function updateDisplays() {
+    var value = calcPlatformValue();
+    var perMember = state.memberCount > 0 ? Math.round(value / state.memberCount) : 0;
+    var netProfit = state.playerEarnings - state.playerCost;
+
+    document.getElementById('round-display').textContent = state.round + ' / ' + TOTAL_ROUNDS;
+    document.getElementById('members-display').textContent = state.memberCount + ' / ' + TOTAL_POTENTIAL;
+    document.getElementById('value-display').textContent = value;
+    document.getElementById('earnings-display').textContent = Math.round(state.playerEarnings);
+
+    document.getElementById('stat-size').textContent = state.memberCount + ' members';
+    document.getElementById('stat-value').textContent = value + ' tokens';
+    document.getElementById('stat-per-member').textContent = perMember + ' tokens';
+    document.getElementById('stat-earnings').textContent = Math.round(state.playerEarnings) + ' tokens';
+    document.getElementById('stat-cost').textContent = state.playerCost + ' tokens';
+
+    var profitEl = document.getElementById('stat-profit');
+    profitEl.textContent = Math.round(netProfit) + ' tokens';
+    profitEl.className = 's-value ' + (netProfit >= 0 ? 'emerald' : 'rose');
+
+    // Critical mass bar
+    var pct = Math.min(100, (state.memberCount / TOTAL_POTENTIAL) * 100);
+    var barFill = document.getElementById('cm-bar-fill');
+    barFill.style.width = pct + '%';
+    if (state.memberCount >= CRITICAL_MASS) {
+      barFill.classList.add('reached');
+    }
+    document.getElementById('cm-count').textContent = state.memberCount + ' / ' + TOTAL_POTENTIAL + ' members';
+
+    updateNetworkViz();
+    updateAdoptionChart();
+  }
+
+  function calcPlatformValue() {
+    return state.memberCount * state.memberCount * VALUE_MULTIPLIER;
+  }
+
+  // ── Round logic ────────────────────────────────────────────
+  function startRound() {
+    if (state.gameOver) return;
+
+    state.round++;
+    if (state.round > TOTAL_ROUNDS) {
+      endGame();
+      return;
+    }
+
+    state.roundInProgress = true;
+
+    // Update action panel
+    var actionHint = document.getElementById('action-hint');
+    var actionButtons = document.getElementById('action-buttons');
+
+    if (state.playerJoined) {
+      actionHint.textContent = 'You are a member of the platform. Earning value each round!';
+      actionButtons.innerHTML = '<div class="btn-joined-indicator">MEMBER (Joined Round ' + state.playerJoinedRound + ')</div>';
+    } else {
+      var value = calcPlatformValue();
+      var perMember = state.memberCount > 0 ? Math.round(value / state.memberCount) : 0;
+      actionHint.innerHTML = 'Platform has <strong>' + state.memberCount + '</strong> members. Value per member: <strong>' + perMember + '</strong> tokens/round. Join cost: 50 tokens.';
+      actionButtons.innerHTML = '<button class="btn-join" id="btn-join" onclick="playerJoin()">JOIN (50 tokens)</button>'
+        + '<button class="btn-wait" id="btn-wait" onclick="playerWait()">WAIT</button>';
+    }
+
+    // Reset agent status displays
+    AI_AGENTS.forEach(function(a) {
+      if (!state.agentJoined[a.id]) {
+        document.getElementById('agent-status-' + a.id).className = 'a-status waiting-status';
+        document.getElementById('agent-status-' + a.id).textContent = 'Deciding...';
+        document.getElementById('agent-reasoning-' + a.id).textContent = '';
+      }
+    });
+
+    updateDisplays();
+
+    // If player already joined, auto-advance after agent decisions
+    if (state.playerJoined) {
+      processAIDecisions();
+    }
+  }
+
+  window.playerJoin = function() {
+    if (state.playerJoined || !state.roundInProgress) return;
+    state.playerJoined = true;
+    state.playerJoinedRound = state.round;
+    state.playerCost = JOIN_COST;
+    state.memberCount++;
+
+    addLog('You <span class="log-highlight">JOINED</span> the platform! (-50 tokens)');
+    processAIDecisions();
+  };
+
+  window.playerWait = function() {
+    if (state.playerJoined || !state.roundInProgress) return;
+    addLog('You chose to <span class="log-highlight">WAIT</span> this round.');
+    processAIDecisions();
+  };
+
+  function processAIDecisions() {
+    state.roundInProgress = false;
+    disableButtons();
+    showLoading();
+
+    var networkSize = state.memberCount / TOTAL_POTENTIAL;
+
+    // Build game history for agents
+    var agentHistory = state.history.map(function(h) {
+      return {
+        round: h.round,
+        player_action: h.playerAction,
+        agent_actions: h.agentActions || {},
+        outcome: { members: h.members, value: h.value }
+      };
+    });
+
+    var opts = {
+      round: state.round,
+      totalRounds: TOTAL_ROUNDS,
+      history: agentHistory,
+      availableActions: ['join', 'wait'],
+      context: { network_size: networkSize }
+    };
+
+    var agentPromise;
+    if (agents) {
+      agentPromise = agents.getAllDecisions(opts).catch(function() {
+        return localAgentFallback(opts);
+      });
+    } else {
+      agentPromise = Promise.resolve(localAgentFallback(opts));
+    }
+
+    agentPromise.then(function(decisions) {
+      hideLoading();
+
+      var newJoiners = [];
+      var roundAgentActions = {};
+
+      // Process AI agent decisions
+      AI_AGENTS.forEach(function(a) {
+        if (state.agentJoined[a.id]) {
+          roundAgentActions[a.id] = { action: 'already_joined' };
+          return; // already joined
+        }
+
+        var decision = decisions[a.id];
+        var action = decision ? decision.action : 'wait';
+        var reasoning = decision ? decision.reasoning : '';
+
+        // Override with personality rules as backup
+        if (a.id === 'ne-early-adopter' && state.round <= 2) {
+          action = 'join';
+          if (!reasoning) reasoning = 'Tanvi always joins early -- she loves being first!';
+        }
+        if (a.id === 'ne-skeptic' && networkSize < 0.4) {
+          action = 'wait';
+          if (!reasoning) reasoning = 'Harish wants at least 40% adoption before committing.';
+        }
+        if (a.id === 'ne-influencer' && state.round <= 3 && !state.agentJoined[a.id]) {
+          action = 'join';
+          if (!reasoning) reasoning = 'Divya jumps in early to build momentum!';
+        }
+
+        roundAgentActions[a.id] = { action: action };
+
+        var statusEl = document.getElementById('agent-status-' + a.id);
+        var reasonEl = document.getElementById('agent-reasoning-' + a.id);
+        var cardEl = document.getElementById('agent-card-' + a.id);
+
+        if (action === 'join') {
+          state.agentJoined[a.id] = true;
+          state.agentJoinedRound[a.id] = state.round;
+          state.memberCount++;
+          newJoiners.push(a.name);
+          statusEl.className = 'a-status joined-status';
+          statusEl.textContent = 'JOINED (Round ' + state.round + ')';
+          cardEl.classList.add('joined');
+          addLog('<span class="log-round">R' + state.round + '</span> ' + a.name + ' <span class="log-highlight">joined</span> the platform!');
+        } else {
+          statusEl.className = 'a-status waiting-status';
+          statusEl.textContent = 'Waiting';
+        }
+
+        reasonEl.textContent = reasoning || '';
+      });
+
+      // Process NPC decisions
+      NPCS.forEach(function(npc) {
+        if (npc.joined) return;
+        var currentSize = state.memberCount / TOTAL_POTENTIAL;
+        // Influencer (Divya) boosts NPC joining probability
+        var influencerBoost = state.agentJoined['ne-influencer'] ? 0.1 : 0;
+        if (currentSize + influencerBoost >= npc.threshold) {
+          npc.joined = true;
+          npc.joinedRound = state.round;
+          state.memberCount++;
+          newJoiners.push(npc.name);
+          addLog('<span class="log-round">R' + state.round + '</span> ' + npc.name + ' joined (threshold: ' + Math.round(npc.threshold * 100) + '%)');
+        }
+      });
+
+      // Check critical mass
+      if (state.memberCount >= CRITICAL_MASS && !state.criticalMassReached) {
+        state.criticalMassReached = true;
+        state.criticalMassRound = state.round;
+        addLog('<span class="log-highlight">CRITICAL MASS reached!</span> Platform value now exceeds cost. Adoption will accelerate.');
+      }
+
+      // Calculate earnings for this round
+      var value = calcPlatformValue();
+      var perMember = state.memberCount > 0 ? Math.round(value / state.memberCount) : 0;
+
+      if (state.playerJoined) {
+        state.playerEarnings += perMember;
+      }
+
+      // Record history
+      state.history.push({
+        round: state.round,
+        members: state.memberCount,
+        value: value,
+        newJoiners: newJoiners,
+        playerAction: state.playerJoined ? 'member' : 'wait',
+        agentActions: roundAgentActions,
+        perMember: perMember
+      });
+
+      state.adoptionData.push(state.memberCount);
+
+      updateDisplays();
+
+      // Next round after delay
+      setTimeout(function() {
+        startRound();
+      }, 1200);
+    });
+  }
+
+  function localAgentFallback(opts) {
+    var decisions = {};
+    var networkSize = opts.context.network_size || 0;
+
+    // Tanvi: joins rounds 1-2
+    if (!state.agentJoined['ne-early-adopter']) {
+      if (state.round <= 2) {
+        decisions['ne-early-adopter'] = { action: 'join', reasoning: 'Tanvi always joins early -- she loves being first!' };
+      } else {
+        decisions['ne-early-adopter'] = { action: Math.random() < 0.7 ? 'join' : 'wait', reasoning: 'Tanvi considers the momentum.' };
+      }
+    } else {
+      decisions['ne-early-adopter'] = { action: 'already_joined', reasoning: '' };
+    }
+
+    // Harish: waits until 40% adoption
+    if (!state.agentJoined['ne-skeptic']) {
+      if (networkSize >= 0.4) {
+        decisions['ne-skeptic'] = { action: 'join', reasoning: 'Harish sees enough adoption (' + Math.round(networkSize * 100) + '%) to commit.' };
+      } else {
+        decisions['ne-skeptic'] = { action: 'wait', reasoning: 'Harish wants at least 40% adoption. Currently ' + Math.round(networkSize * 100) + '%.' };
+      }
+    } else {
+      decisions['ne-skeptic'] = { action: 'already_joined', reasoning: '' };
+    }
+
+    // Divya: joins early (round 1-3), catalyzes others
+    if (!state.agentJoined['ne-influencer']) {
+      if (state.round <= 3) {
+        decisions['ne-influencer'] = { action: 'join', reasoning: 'Divya jumps in early to build momentum!' };
+      } else {
+        decisions['ne-influencer'] = { action: Math.random() < 0.6 ? 'join' : 'wait', reasoning: 'Divya weighs the opportunity.' };
+      }
+    } else {
+      decisions['ne-influencer'] = { action: 'already_joined', reasoning: '' };
+    }
+
+    return decisions;
+  }
+
+  // ── Utility functions ──────────────────────────────────────
+  function addLog(html) {
+    var log = document.getElementById('round-log');
+    var entry = document.createElement('div');
+    entry.className = 'log-entry';
+    entry.innerHTML = html;
+    log.appendChild(entry);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function disableButtons() {
+    var join = document.getElementById('btn-join');
+    var wait = document.getElementById('btn-wait');
+    if (join) join.disabled = true;
+    if (wait) wait.disabled = true;
+  }
+
+  function showLoading() {
+    document.getElementById('loading-overlay').classList.remove('hidden');
+  }
+
+  function hideLoading() {
+    document.getElementById('loading-overlay').classList.add('hidden');
+  }
+
+  // ── End Game ───────────────────────────────────────────────
+  function endGame() {
+    state.gameOver = true;
+    $game.classList.add('hidden');
+    $end.classList.remove('hidden');
+    $end.classList.add('fade-in');
+
+    var netProfit = Math.round(state.playerEarnings - state.playerCost);
+    var finalValue = calcPlatformValue();
+    var joined = state.playerJoined;
+    var adoptionPct = Math.round((state.memberCount / TOTAL_POTENTIAL) * 100);
+
+    // Determine outcome message
+    var outcomeMsg = '';
+    if (joined && netProfit > 100) {
+      outcomeMsg = 'Excellent! You joined at the right time and earned strong returns from network effects.';
+    } else if (joined && netProfit > 0) {
+      outcomeMsg = 'You earned a positive return, but earlier joining could have earned you more.';
+    } else if (joined && netProfit <= 0) {
+      outcomeMsg = 'The network did not grow enough to cover your joining cost. The chicken-and-egg problem is real!';
+    } else {
+      outcomeMsg = 'You never joined the platform. ' + (state.memberCount >= CRITICAL_MASS ? 'It reached critical mass without you -- you missed out on network value!' : 'It never reached critical mass, so waiting was actually the safe choice.');
+    }
+
+    // Build end screen
+    var html = '<div class="container">'
+      + '<div class="end-header fade-up">'
+      + '<h1>Game Complete</h1>'
+      + '<p>' + outcomeMsg + '</p>'
+      + '</div>';
+
+    // Results
+    html += '<div class="results-grid fade-up">'
+      + '<div class="result-card"><div class="r-value cyan">' + state.memberCount + '/' + TOTAL_POTENTIAL + '</div><div class="r-label">Final Members</div></div>'
+      + '<div class="result-card"><div class="r-value amber">' + finalValue + '</div><div class="r-label">Platform Value</div></div>'
+      + '<div class="result-card"><div class="r-value emerald">' + Math.round(state.playerEarnings) + '</div><div class="r-label">Your Earnings</div></div>'
+      + '<div class="result-card"><div class="r-value ' + (netProfit >= 0 ? 'emerald' : 'rose') + '">' + netProfit + '</div><div class="r-label">Net Profit</div></div>'
+      + '<div class="result-card"><div class="r-value amber">' + adoptionPct + '%</div><div class="r-label">Adoption Rate</div></div>'
+      + '</div>';
+
+    // Final adoption chart
+    html += '<div class="end-chart-wrap fade-up"><div class="chart-card"><h3>Final Adoption Curve</h3>'
+      + '<div class="chart-svg-wrap"><svg id="final-adoption-chart" viewBox="0 0 700 250"></svg></div></div></div>';
+
+    // Agent summary
+    html += '<div class="end-section fade-up"><h3>Who Joined When?</h3><ul>';
+    if (state.playerJoined) {
+      html += '<li><strong>You</strong> -- Joined in Round ' + state.playerJoinedRound + '</li>';
+    } else {
+      html += '<li><strong>You</strong> -- Never joined</li>';
+    }
+    AI_AGENTS.forEach(function(a) {
+      if (state.agentJoined[a.id]) {
+        html += '<li><strong>' + a.name + '</strong> (' + a.role + ') -- Joined in Round ' + state.agentJoinedRound[a.id] + '</li>';
+      } else {
+        html += '<li><strong>' + a.name + '</strong> (' + a.role + ') -- Never joined</li>';
+      }
+    });
+    NPCS.forEach(function(n) {
+      if (n.joined) {
+        html += '<li>' + n.name + ' -- Joined in Round ' + n.joinedRound + ' (threshold: ' + Math.round(n.threshold * 100) + '%)</li>';
+      }
+    });
+    html += '</ul></div>';
+
+    // Educational content
+    html += '<div class="end-section fade-up">'
+      + '<h3>Understanding Network Effects</h3>'
+      + '<p><strong>Metcalfe\'s Law:</strong> The value of a network is proportional to the square of its users (V ~ n<sup>2</sup>). '
+      + 'This means going from 5 to 10 users doesn\'t just double the value -- it quadruples it!</p>'
+      + '<p style="margin-top:0.75rem"><strong>Critical Mass:</strong> Below ' + CRITICAL_MASS + ' members, each person\'s share of the value was less than the 50-token cost. '
+      + 'Once the network hit critical mass, value exceeded cost, triggering a cascade of adoption -- the famous S-curve.</p>'
+      + '<p style="margin-top:0.75rem"><strong>The Chicken-and-Egg Problem:</strong> Nobody wants to join an empty platform, but the platform needs users to become valuable. '
+      + 'This is why early adopters like Tanvi and influencers like Divya are crucial -- they take the risk that creates value for everyone.</p>'
+      + '</div>';
+
+    html += '<div class="end-section fade-up">'
+      + '<h3>Real-World Network Effects in India</h3>'
+      + '<ul>'
+      + '<li><strong>UPI (Unified Payments Interface):</strong> Launched in 2016 with few users. Once banks, apps (PhonePe, Google Pay), and merchants adopted it, the network exploded to 300M+ users. Every new user made UPI more valuable for everyone.</li>'
+      + '<li><strong>Aadhaar:</strong> India\'s biometric ID reached critical mass when government services and banks began requiring it. Now 1.3B enrollments create a platform for direct benefit transfers, eKYC, and digital identity.</li>'
+      + '<li><strong>WhatsApp in India:</strong> Early adopters convinced friends to switch from SMS. Once a contact group reached critical mass, holdouts had to join or be left out of conversations.</li>'
+      + '<li><strong>JioPhone / Reliance Jio:</strong> Cheap data created a network effect -- more users meant more content, more apps, and more reasons for others to get online.</li>'
+      + '</ul>'
+      + '<p style="margin-top:0.75rem">The pattern is the same: <strong>slow start &rarr; critical mass &rarr; explosive growth</strong>. Platforms that cross the tipping point win; those that don\'t, fail. This is why platforms often subsidize early users (free data, cashbacks) -- they are buying their way to critical mass.</p>'
+      + '</div>';
+
+    html += '<div class="play-again-wrap fade-up">'
+      + '<button class="btn-primary" onclick="location.reload()">Play Again</button>'
+      + '</div></div>';
+
+    $end.innerHTML = html;
+
+    // Render final chart
+    setTimeout(function() {
+      renderFinalChart();
+    }, 100);
+  }
+
+  function renderFinalChart() {
+    var svg = document.getElementById('final-adoption-chart');
+    if (!svg) return;
+
+    var w = 700, h = 250;
+    var padL = 50, padR = 20, padT = 20, padB = 40;
+    var chartW = w - padL - padR;
+    var chartH = h - padT - padB;
+
+    var html = '';
+
+    // Grid
+    for (var i = 0; i <= TOTAL_POTENTIAL; i += 2) {
+      var y = padT + chartH - (i / TOTAL_POTENTIAL) * chartH;
+      html += '<line x1="' + padL + '" y1="' + y + '" x2="' + (w - padR) + '" y2="' + y + '" stroke="#1E293B" stroke-width="1"/>';
+      html += '<text x="' + (padL - 8) + '" y="' + (y + 4) + '" text-anchor="end" fill="#64748B" font-size="10">' + i + '</text>';
+    }
+
+    for (var r = 0; r <= TOTAL_ROUNDS; r++) {
+      var x = padL + (r / TOTAL_ROUNDS) * chartW;
+      html += '<text x="' + x + '" y="' + (h - 10) + '" text-anchor="middle" fill="#64748B" font-size="10">' + r + '</text>';
+    }
+
+    // Critical mass line
+    var cmY = padT + chartH - (CRITICAL_MASS / TOTAL_POTENTIAL) * chartH;
+    html += '<line x1="' + padL + '" y1="' + cmY + '" x2="' + (w - padR) + '" y2="' + cmY + '" stroke="#F59E0B" stroke-width="1" stroke-dasharray="6,4" opacity="0.6"/>';
+    html += '<text x="' + (w - padR - 4) + '" y="' + (cmY - 6) + '" text-anchor="end" fill="#F59E0B" font-size="9" font-weight="600">Critical Mass</text>';
+
+    // Area + line
+    var points = '';
+    var areaPoints = '';
+    var dotsHtml = '';
+    var baseY = padT + chartH;
+
+    for (var j = 0; j < state.adoptionData.length; j++) {
+      var px = padL + (j / TOTAL_ROUNDS) * chartW;
+      var py = padT + chartH - (state.adoptionData[j] / TOTAL_POTENTIAL) * chartH;
+      points += px + ',' + py + ' ';
+      areaPoints += px + ',' + py + ' ';
+
+      var dotColor = state.adoptionData[j] >= CRITICAL_MASS ? '#F59E0B' : '#06B6D4';
+      dotsHtml += '<circle cx="' + px + '" cy="' + py + '" r="5" fill="' + dotColor + '" stroke="#0F172A" stroke-width="2"/>';
+      dotsHtml += '<text x="' + px + '" y="' + (py - 10) + '" text-anchor="middle" fill="#CBD5E1" font-size="9" font-weight="600">' + state.adoptionData[j] + '</text>';
+    }
+
+    if (state.adoptionData.length > 0) {
+      var lastX = padL + ((state.adoptionData.length - 1) / TOTAL_ROUNDS) * chartW;
+      areaPoints += lastX + ',' + baseY + ' ' + padL + ',' + baseY;
+    }
+
+    html += '<defs><linearGradient id="final-area-grad" x1="0" y1="0" x2="0" y2="1">'
+      + '<stop offset="0%" stop-color="#06B6D4" stop-opacity="0.4"/>'
+      + '<stop offset="100%" stop-color="#06B6D4" stop-opacity="0"/>'
+      + '</linearGradient></defs>';
+
+    html += '<polygon points="' + areaPoints.trim() + '" fill="url(#final-area-grad)"/>';
+    html += '<polyline points="' + points.trim() + '" fill="none" stroke="#06B6D4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    html += dotsHtml;
+
+    // Mark critical mass round
+    if (state.criticalMassRound > 0) {
+      var cmx = padL + (state.criticalMassRound / TOTAL_ROUNDS) * chartW;
+      html += '<line x1="' + cmx + '" y1="' + padT + '" x2="' + cmx + '" y2="' + (padT + chartH) + '" stroke="#F59E0B" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>';
+      html += '<text x="' + cmx + '" y="' + (padT - 4) + '" text-anchor="middle" fill="#F59E0B" font-size="8" font-weight="600">Tipping Point</text>';
+    }
+
+    // Axis labels
+    html += '<text x="' + (padL + chartW / 2) + '" y="' + h + '" text-anchor="middle" fill="#64748B" font-size="10">Round</text>';
+
+    svg.innerHTML = html;
+  }
+
+})();
+</script>
+</body>
+</html>

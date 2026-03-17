@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Externality Game — ImpactMojo</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0F172A;color:#E2E8F0;min-height:100vh;line-height:1.6}
+.screen{display:none;animation:fadeIn .5s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.welcome{max-width:720px;margin:0 auto;padding:2rem 1.5rem}
+.welcome h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,#84CC16,#3B82F6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.welcome .sub{font-size:1.1rem;color:#94A3B8;margin-bottom:1.5rem}
+.concept-box{background:#1E293B;border:1px solid #334155;border-radius:12px;padding:1.25rem;margin-bottom:1.5rem}
+.concept-box h3{color:#84CC16;margin-bottom:.5rem}
+.agents-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem}
+.agent-card{background:#1E293B;border:1px solid #334155;border-radius:12px;padding:1rem;transition:transform .2s}
+.agent-card:hover{transform:translateY(-3px)}
+.agent-card .avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0F172A;margin-bottom:.5rem;font-size:.9rem}
+.agent-card .name{font-weight:700;color:#F8FAFC;font-size:.95rem}
+.agent-card .role{font-size:.75rem;color:#F59E0B;margin-bottom:.25rem}
+.agent-card .desc{font-size:.78rem;color:#94A3B8;line-height:1.4}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:linear-gradient(135deg,#84CC16,#65A30D);color:#0F172A;font-weight:700;font-size:1.1rem;padding:.85rem 2.5rem;border:none;border-radius:12px;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 20px #84CC1633}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px #84CC1644}
+.start-wrap{text-align:center;margin-top:1rem}
+.top-bar{background:#1E293B;border-bottom:1px solid #334155;padding:.75rem 1rem;position:sticky;top:0;z-index:100}
+.top-bar-inner{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.stat .label{font-size:.65rem;color:#64748B;text-transform:uppercase;letter-spacing:.05em}
+.stat .value{font-size:1.2rem;font-weight:700;color:#F8FAFC}
+.game-area{max-width:900px;margin:0 auto;padding:1.5rem 1rem}
+.regulation-banner{background:linear-gradient(135deg,#1E40AF,#3B82F6);border-radius:12px;padding:1rem 1.5rem;margin-bottom:1.25rem;text-align:center;animation:fadeIn .6s ease;display:none}
+.regulation-banner h3{color:#F8FAFC;font-size:1.1rem}
+.regulation-banner p{color:#BFDBFE;font-size:.85rem}
+.factory-scene{display:flex;gap:1.5rem;margin-bottom:1.25rem;align-items:stretch}
+.factory-panel,.community-panel{flex:1;background:#1E293B;border:1px solid #334155;border-radius:14px;padding:1.25rem;position:relative;overflow:hidden}
+.factory-panel h3{color:#84CC16;font-size:.9rem;margin-bottom:.75rem}
+.community-panel h3{color:#EF4444;font-size:.9rem;margin-bottom:.75rem}
+.smoke{position:absolute;top:10px;right:15px;width:60px;height:60px;background:radial-gradient(circle,rgba(239,68,68,.4),transparent);border-radius:50%;filter:blur(12px);transition:all .5s ease;opacity:0}
+.slider-group{margin-bottom:1rem}
+.slider-group label{font-size:.85rem;color:#94A3B8;display:block;margin-bottom:.4rem}
+input[type=range]{width:100%;height:8px;-webkit-appearance:none;background:linear-gradient(to right,#84CC16,#EAB308,#EF4444);border-radius:4px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#F8FAFC;box-shadow:0 2px 8px rgba(0,0,0,.3);cursor:pointer}
+.preview{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1rem}
+.preview-item{text-align:center;padding:.6rem;background:#0F172A;border-radius:8px}
+.preview-item .plabel{font-size:.65rem;color:#64748B;text-transform:uppercase}
+.preview-item .pval{font-size:1.3rem;font-weight:700}
+.pval.green{color:#84CC16}.pval.red{color:#EF4444}.pval.blue{color:#3B82F6}
+.submit-btn{width:100%;padding:.75rem;background:linear-gradient(135deg,#84CC16,#65A30D);color:#0F172A;font-weight:700;font-size:1rem;border:none;border-radius:10px;cursor:pointer;transition:transform .2s}
+.submit-btn:hover{transform:translateY(-2px)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.agent-reactions{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1.25rem}
+.reaction{background:#1E293B;border:1px solid #334155;border-radius:10px;padding:.75rem;font-size:.8rem;line-height:1.4}
+.reaction .rname{font-weight:700;margin-bottom:.25rem}
+.history-table{width:100%;border-collapse:collapse;margin-top:1rem;font-size:.8rem}
+.history-table th,.history-table td{padding:.5rem .6rem;text-align:center;border-bottom:1px solid #1E293B}
+.history-table th{background:#1E293B;color:#94A3B8;font-size:.7rem;text-transform:uppercase;position:sticky;top:50px}
+.results{max-width:720px;margin:0 auto;padding:2rem 1.5rem}
+.results h2{font-size:1.8rem;font-weight:800;color:#F8FAFC;margin-bottom:1rem}
+.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.5rem}
+.result-card{background:#1E293B;border-radius:12px;padding:1rem;text-align:center}
+.result-card .rlabel{font-size:.75rem;color:#64748B;text-transform:uppercase}
+.result-card .rval{font-size:1.6rem;font-weight:700}
+.insight-card{background:#1E293B;border:1px solid #334155;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.insight-card h3{color:#3B82F6;font-size:1rem;margin-bottom:.5rem}
+.insight-card p{color:#94A3B8;font-size:.88rem;line-height:1.5}
+@media(max-width:640px){
+  .agents-grid,.agent-reactions{grid-template-columns:1fr}
+  .factory-scene{flex-direction:column}
+  .preview{grid-template-columns:1fr}
+  .result-grid{grid-template-columns:1fr}
+  .top-bar-inner{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div id="welcome-screen" class="screen active">
+<div class="welcome">
+  <h1>The Externality Game</h1>
+  <p class="sub">Discover the hidden costs of production — and why markets alone can't fix them.</p>
+  <div class="concept-box">
+    <h3>What Are Externalities?</h3>
+    <p>When a factory produces goods, it creates profit for the owner — but also pollution for the community. This pollution is a <strong>negative externality</strong>: a cost imposed on others not reflected in the market price. Without regulation, factories over-produce because they don't pay the full social cost.</p>
+  </div>
+  <div class="concept-box">
+    <h3>How This Game Works</h3>
+    <p><strong>Rounds 1–4:</strong> No regulation. Choose your production level (0–100) freely.<br>
+    <strong>Rounds 5–8:</strong> A Pigouvian tax of ₹3/unit is enacted — now you pay the social cost.<br>
+    <strong>Your goal:</strong> Maximise profit — but watch what happens to the community.</p>
+  </div>
+  <div class="agents-grid">
+    <div class="agent-card">
+      <div class="avatar" style="background:#84CC16">A</div>
+      <div class="name">Ashok</div>
+      <div class="role">Factory Owner, Kanpur</div>
+      <div class="desc">Maximises private profit. "Treating waste costs money — the river absorbs it for free."</div>
+    </div>
+    <div class="agent-card">
+      <div class="avatar" style="background:#3B82F6">N</div>
+      <div class="name">Nalini</div>
+      <div class="role">Environmental Scientist, Chennai</div>
+      <div class="desc">Champions Pigouvian taxes. "If polluters paid the true cost, the market would self-correct."</div>
+    </div>
+    <div class="agent-card">
+      <div class="avatar" style="background:#EF4444">B</div>
+      <div class="name">Bina</div>
+      <div class="role">Community Organiser, Varanasi</div>
+      <div class="desc">Bears the cost. "Fishermen in my community lost livelihoods to river pollution."</div>
+    </div>
+  </div>
+  <div class="start-wrap"><button class="btn" onclick="startGame()">Start Production</button></div>
+</div>
+</div>
+
+<div id="game-screen" class="screen">
+  <div class="top-bar"><div class="top-bar-inner">
+    <div class="stat"><div class="label">Round</div><div class="value" id="round-num">1 / 8</div></div>
+    <div class="stat"><div class="label">Total Profit</div><div class="value" style="color:#84CC16" id="total-profit">₹0</div></div>
+    <div class="stat"><div class="label">Total Social Cost</div><div class="value" style="color:#EF4444" id="total-social">₹0</div></div>
+    <div class="stat"><div class="label">Phase</div><div class="value" style="color:#3B82F6" id="phase-label">No Regulation</div></div>
+  </div></div>
+  <div class="game-area">
+    <div class="regulation-banner" id="reg-banner">
+      <h3>Regulation Enacted — Pigouvian Tax: ₹3/unit</h3>
+      <p>The government has imposed a tax equal to the marginal social cost of pollution.</p>
+    </div>
+    <div class="factory-scene">
+      <div class="factory-panel">
+        <div class="smoke" id="smoke"></div>
+        <h3>Your Factory</h3>
+        <div class="slider-group">
+          <label>Production Level: <strong id="prod-display">50</strong> units</label>
+          <input type="range" id="prod-slider" min="0" max="100" value="50" oninput="updatePreview()">
+        </div>
+        <div class="preview">
+          <div class="preview-item"><div class="plabel">Revenue</div><div class="pval green" id="prev-revenue">₹0</div></div>
+          <div class="preview-item"><div class="plabel" id="cost-label">Prod Cost</div><div class="pval red" id="prev-cost">₹0</div></div>
+          <div class="preview-item"><div class="plabel">Your Profit</div><div class="pval blue" id="prev-profit">₹0</div></div>
+        </div>
+        <button class="submit-btn" id="submit-btn" onclick="submitRound()">Produce</button>
+      </div>
+      <div class="community-panel">
+        <h3>Community Impact</h3>
+        <div class="preview">
+          <div class="preview-item"><div class="plabel">Pollution Cost</div><div class="pval red" id="prev-pollution">₹0</div></div>
+          <div class="preview-item"><div class="plabel">Net Welfare</div><div class="pval blue" id="prev-welfare">₹0</div></div>
+          <div class="preview-item"><div class="plabel">Optimal Level</div><div class="pval green">~83 units</div></div>
+        </div>
+        <p style="font-size:.8rem;color:#94A3B8;margin-top:.5rem" id="community-msg">The community watches your decisions.</p>
+      </div>
+    </div>
+    <div class="agent-reactions" id="agent-reactions" style="display:none"></div>
+    <div style="overflow-x:auto">
+      <table class="history-table"><thead><tr>
+        <th>Round</th><th>Phase</th><th>Production</th><th>Revenue</th><th>Cost</th><th>Profit</th><th>Social Cost</th><th>Welfare</th>
+      </tr></thead><tbody id="history-body"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<div id="end-screen" class="screen">
+<div class="results">
+  <h2>Production Complete</h2>
+  <div class="result-grid" id="result-grid"></div>
+  <div class="insight-card">
+    <h3>What Is a Pigouvian Tax?</h3>
+    <p>Named after economist Arthur Pigou, it sets the tax rate equal to the marginal social cost. This "internalises" the externality — making polluters pay the true cost. When set correctly, the profit-maximising level equals the socially optimal level.</p>
+  </div>
+  <div class="insight-card">
+    <h3>The Math</h3>
+    <p><strong>Without tax:</strong> Profit = 8q − 0.03q². Maximised at q ≈ 133 (capped at 100).<br>
+    <strong>With tax:</strong> Profit = 5q − 0.03q². Maximised at q ≈ 83.<br>
+    This matches the social optimum where marginal benefit (8 − 0.06q) = marginal social cost (3).</p>
+  </div>
+  <div class="insight-card">
+    <h3>Real-World Examples</h3>
+    <p><strong>Carbon taxes</strong> in Sweden and Canada price CO₂ emissions. <strong>India's National Green Tribunal</strong> fines polluting industries. <strong>Plastic bag bans</strong> internalise waste costs. The principle: make the price tell the ecological truth.</p>
+  </div>
+  <div class="start-wrap"><button class="btn" onclick="resetGame()">Play Again</button></div>
+</div>
+</div>
+
+<script src="/js/game-agents.js"></script>
+<script>
+var S={round:1,totalRounds:8,totalProfit:0,totalSocial:0,history:[],pre:[],post:[]};
+var agents;try{agents=new IMGameAgents('externality-game')}catch(e){agents=null}
+
+function calc(q,tax){var r=q*8,c=q*q*0.03,t=tax?q*3:0;return{rev:r,cost:c,tax:t,profit:r-c-t}}
+
+function updatePreview(){
+  var q=+document.getElementById('prod-slider').value,tax=S.round>4,c=calc(q,tax),sc=q*3;
+  document.getElementById('prod-display').textContent=q;
+  document.getElementById('prev-revenue').textContent='₹'+Math.round(c.rev);
+  document.getElementById('prev-cost').textContent='₹'+Math.round(c.cost+c.tax);
+  document.getElementById('prev-profit').textContent='₹'+Math.round(c.profit);
+  document.getElementById('prev-pollution').textContent='₹'+Math.round(sc);
+  document.getElementById('prev-welfare').textContent='₹'+Math.round(c.rev-c.cost-sc);
+  document.getElementById('cost-label').textContent=tax?'Cost + Tax':'Prod Cost';
+  var sm=document.getElementById('smoke'),i=q/100;
+  sm.style.opacity=i*.8;sm.style.width=(40+i*60)+'px';sm.style.height=(40+i*60)+'px';
+  var m=document.getElementById('community-msg');
+  m.textContent=q<30?'The river is relatively clean. Community is content.':q<60?'Some pollution. Fishermen report declining catches.':q<85?'Heavy pollution. Health complaints rising.':'Severe pollution crisis. Drinking water contaminated.';
+}
+
+function submitRound(){
+  var q=+document.getElementById('prod-slider').value,tax=S.round>4,c=calc(q,tax),sc=q*3,w=c.rev-c.cost-sc;
+  S.totalProfit+=c.profit;S.totalSocial+=sc;
+  if(tax)S.post.push(q);else S.pre.push(q);
+  S.history.push({round:S.round,phase:tax?'Tax':'Free',q:q,profit:c.profit,social:sc,welfare:w});
+  document.getElementById('total-profit').textContent='₹'+Math.round(S.totalProfit);
+  document.getElementById('total-social').textContent='₹'+Math.round(S.totalSocial);
+  var row='<tr><td>'+S.round+'</td><td>'+(tax?'<span style="color:#3B82F6">Tax</span>':'Free')+'</td><td>'+q+'</td><td>₹'+Math.round(c.rev)+'</td><td>₹'+Math.round(c.cost+c.tax)+'</td><td style="color:#84CC16">₹'+Math.round(c.profit)+'</td><td style="color:#EF4444">₹'+Math.round(sc)+'</td><td style="color:#3B82F6">₹'+Math.round(w)+'</td></tr>';
+  document.getElementById('history-body').innerHTML+=row;
+  showReactions(q,tax);
+  S.round++;
+  if(S.round>S.totalRounds){setTimeout(showEnd,1200);document.getElementById('submit-btn').disabled=true;return}
+  document.getElementById('round-num').textContent=S.round+' / '+S.totalRounds;
+  if(S.round===5){document.getElementById('reg-banner').style.display='block';document.getElementById('phase-label').textContent='Tax ₹3/unit'}
+  updatePreview();
+}
+
+function showReactions(q,tax){
+  var ap=tax?Math.round(70+Math.random()*15):Math.round(90+Math.random()*10);
+  var r=[
+    {n:'Ashok',c:'#84CC16',t:tax?'Tax cuts my margins. Reduced to '+ap+' units.':q>80?'Smart — max output while you can. I\'m at '+ap+'.':'Why hold back? No rules, max profit. I\'m at '+ap+'.'},
+    {n:'Nalini',c:'#3B82F6',t:tax?'Tax is working — production moving toward social optimum.':q>80?q+' units = ₹'+(q*3)+' social cost. We need regulation.':'Responsible, but without regulation others won\'t follow.'},
+    {n:'Bina',c:'#EF4444',t:tax?'At least they pay for the damage now.':q>70?'My community is suffering. ₹'+(q*3)+' in damage.':'Thank you for restraint — but one factory isn\'t enough.'}
+  ];
+  var h='';r.forEach(function(x){h+='<div class="reaction"><div class="rname" style="color:'+x.c+'">'+x.n+'</div>'+x.t+'</div>'});
+  var el=document.getElementById('agent-reactions');el.innerHTML=h;el.style.display='grid';
+}
+
+function avg(a){return a.length?a.reduce(function(s,v){return s+v},0)/a.length:0}
+
+function showEnd(){
+  document.getElementById('game-screen').classList.remove('active');
+  document.getElementById('end-screen').classList.add('active');
+  var ap=Math.round(avg(S.pre)),at=Math.round(avg(S.post));
+  var h='<div class="result-card"><div class="rlabel">Total Profit</div><div class="rval" style="color:#84CC16">₹'+Math.round(S.totalProfit)+'</div></div>';
+  h+='<div class="result-card"><div class="rlabel">Total Social Cost</div><div class="rval" style="color:#EF4444">₹'+Math.round(S.totalSocial)+'</div></div>';
+  h+='<div class="result-card"><div class="rlabel">Avg (No Tax)</div><div class="rval" style="color:#F59E0B">'+ap+' units</div></div>';
+  h+='<div class="result-card"><div class="rlabel">Avg (With Tax)</div><div class="rval" style="color:#3B82F6">'+at+' units</div></div>';
+  h+='<div class="result-card"><div class="rlabel">Change</div><div class="rval" style="color:#8B5CF6">'+(at-ap>0?'+':'')+(at-ap)+' units</div></div>';
+  h+='<div class="result-card"><div class="rlabel">Social Optimum</div><div class="rval" style="color:#10B981">~83 units</div></div>';
+  document.getElementById('result-grid').innerHTML=h;
+}
+
+function startGame(){document.getElementById('welcome-screen').classList.remove('active');document.getElementById('game-screen').classList.add('active');updatePreview()}
+
+function resetGame(){
+  S={round:1,totalRounds:8,totalProfit:0,totalSocial:0,history:[],pre:[],post:[]};
+  document.getElementById('end-screen').classList.remove('active');document.getElementById('welcome-screen').classList.add('active');
+  document.getElementById('history-body').innerHTML='';document.getElementById('agent-reactions').style.display='none';
+  document.getElementById('reg-banner').style.display='none';document.getElementById('phase-label').textContent='No Regulation';
+  document.getElementById('round-num').textContent='1 / 8';document.getElementById('total-profit').textContent='₹0';
+  document.getElementById('total-social').textContent='₹0';document.getElementById('submit-btn').disabled=false;
+  document.getElementById('prod-slider').value=50;
+}
+</script>
+</body>
+</html>

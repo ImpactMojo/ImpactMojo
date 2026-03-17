@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bidding Wars — Auction Theory &amp; The Winner's Curse | ImpactMojo</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F172A;--navy-light:#1E293B;--navy-mid:#334155;
+  --gold:#EAB308;--gold-dim:#A16207;--gold-glow:rgba(234,179,8,.25);
+  --emerald:#10B981;--emerald-dim:#065F46;
+  --red:#EF4444;--red-dim:#991B1B;
+  --white:#F8FAFC;--gray:#94A3B8;--gray-dark:#64748B;
+  --font-main:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia','Times New Roman',serif;
+  --radius:12px;--radius-sm:8px;
+}
+html{font-size:16px}
+body{
+  font-family:var(--font-main);background:var(--navy);color:var(--white);
+  min-height:100vh;overflow-x:hidden;line-height:1.6;
+}
+/* ── Utility ─────────────────────────────────────── */
+.hidden{display:none!important}
+.gold{color:var(--gold)}.emerald{color:var(--emerald)}.red{color:var(--red)}
+.text-center{text-align:center}
+.mt-1{margin-top:.5rem}.mt-2{margin-top:1rem}.mt-3{margin-top:1.5rem}.mt-4{margin-top:2rem}
+.mb-2{margin-bottom:1rem}
+
+/* ── Container ───────────────────────────────────── */
+.container{max-width:860px;margin:0 auto;padding:1.25rem}
+
+/* ── Buttons ─────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.75rem 1.75rem;border:none;border-radius:var(--radius-sm);
+  font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;
+  text-transform:uppercase;letter-spacing:.04em;
+}
+.btn-gold{background:var(--gold);color:var(--navy)}
+.btn-gold:hover{background:#FACC15;transform:translateY(-1px);box-shadow:0 4px 20px var(--gold-glow)}
+.btn-outline{background:transparent;border:2px solid var(--gold);color:var(--gold)}
+.btn-outline:hover{background:var(--gold);color:var(--navy)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* ── Cards ───────────────────────────────────────── */
+.card{
+  background:var(--navy-light);border:1px solid var(--navy-mid);
+  border-radius:var(--radius);padding:1.5rem;
+}
+.card-glow{box-shadow:0 0 30px rgba(234,179,8,.08)}
+
+/* ── Gavel Icon (CSS) ────────────────────────────── */
+.gavel{display:inline-block;font-size:1.5rem;margin-right:.35rem}
+
+/* ── Welcome Screen ──────────────────────────────── */
+#welcome{animation:fadeIn .6s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.welcome-title{
+  font-family:var(--font-display);font-size:2.6rem;font-weight:700;
+  background:linear-gradient(135deg,var(--gold),#FDE68A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:.25rem;
+}
+.welcome-subtitle{color:var(--gray);font-size:1.1rem;margin-bottom:2rem}
+
+.concept-box{
+  background:linear-gradient(135deg,rgba(234,179,8,.08),rgba(16,185,129,.06));
+  border:1px solid rgba(234,179,8,.2);border-radius:var(--radius);padding:1.25rem 1.5rem;
+  margin-bottom:1.5rem;text-align:left;
+}
+.concept-box h3{color:var(--gold);margin-bottom:.5rem;font-size:1.05rem}
+.concept-box p,.concept-box li{color:var(--gray);font-size:.92rem}
+.concept-box ul{padding-left:1.2rem}
+.concept-box li{margin-bottom:.3rem}
+
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.5rem 0}
+.agent-card{
+  background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:var(--radius);
+  padding:1.15rem;text-align:center;transition:border-color .2s;
+}
+.agent-card:hover{border-color:var(--gold)}
+.agent-avatar{font-size:2.2rem;margin-bottom:.4rem}
+.agent-card h4{font-size:1rem;margin-bottom:.2rem}
+.agent-card .agent-style{color:var(--gray);font-size:.82rem}
+
+/* ── Top Bar ─────────────────────────────────────── */
+.top-bar{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;
+  margin-bottom:1.25rem;
+}
+.balance-display{
+  font-size:1.35rem;font-weight:700;
+}
+.balance-display .amount{color:var(--gold)}
+.round-badge{
+  background:var(--navy-mid);padding:.4rem 1rem;border-radius:20px;
+  font-size:.9rem;font-weight:600;
+}
+
+/* ── Item Card ───────────────────────────────────── */
+.item-card{
+  background:linear-gradient(145deg,var(--navy-light),#1a2744);
+  border:1px solid rgba(234,179,8,.25);border-radius:var(--radius);
+  padding:1.75rem;text-align:center;margin-bottom:1.5rem;position:relative;overflow:hidden;
+}
+.item-card::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:conic-gradient(from 0deg,transparent,rgba(234,179,8,.04),transparent 30%);
+  animation:shimmer 6s linear infinite;
+}
+@keyframes shimmer{to{transform:rotate(360deg)}}
+.item-name{font-family:var(--font-display);font-size:1.5rem;color:var(--gold);margin-bottom:.75rem;position:relative}
+.estimate-display{position:relative}
+.estimate-value{font-size:2.4rem;font-weight:700;color:var(--white);margin:.5rem 0}
+.estimate-range{
+  display:flex;justify-content:center;align-items:center;gap:.5rem;
+  color:var(--gray);font-size:.88rem;
+}
+.confidence-bar{
+  width:100%;max-width:320px;height:8px;background:var(--navy-mid);
+  border-radius:4px;margin:1rem auto .5rem;overflow:hidden;position:relative;
+}
+.confidence-fill{
+  height:100%;border-radius:4px;position:absolute;
+  background:linear-gradient(90deg,var(--gold-dim),var(--gold),var(--gold-dim));
+  opacity:.7;
+}
+.confidence-center{
+  position:absolute;top:-2px;width:4px;height:12px;background:var(--white);
+  border-radius:2px;transform:translateX(-50%);z-index:2;
+}
+
+/* ── Bid Section ─────────────────────────────────── */
+.bid-section{margin-bottom:1.5rem}
+.bid-input-group{
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:center;margin:1rem 0;
+}
+.bid-input{
+  width:140px;padding:.75rem 1rem;font-size:1.4rem;font-weight:700;text-align:center;
+  background:var(--navy);border:2px solid var(--navy-mid);border-radius:var(--radius-sm);
+  color:var(--white);outline:none;transition:border-color .2s;
+}
+.bid-input:focus{border-color:var(--gold)}
+.bid-slider-wrap{flex:1;min-width:200px;max-width:400px}
+.bid-slider{
+  -webkit-appearance:none;width:100%;height:8px;border-radius:4px;outline:none;
+  background:var(--navy-mid);cursor:pointer;
+}
+.bid-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--gold);cursor:pointer;box-shadow:0 0 10px var(--gold-glow);
+}
+.bid-slider::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;border:none;
+  background:var(--gold);cursor:pointer;
+}
+.profit-preview{
+  text-align:center;font-size:.92rem;color:var(--gray);margin:.75rem 0;min-height:1.4em;
+}
+.curse-zone-label{
+  display:inline-block;background:rgba(239,68,68,.15);color:var(--red);
+  padding:.2rem .6rem;border-radius:4px;font-size:.8rem;font-weight:600;margin-top:.35rem;
+}
+
+/* ── Reveal ──────────────────────────────────────── */
+.reveal-area{margin:1.5rem 0}
+.bids-reveal{display:flex;flex-direction:column;gap:.6rem;margin:1rem 0}
+.bid-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.65rem 1rem;border-radius:var(--radius-sm);
+  background:var(--navy);border:1px solid var(--navy-mid);
+  opacity:0;transform:translateX(-20px);transition:all .4s ease;
+}
+.bid-row.revealed{opacity:1;transform:translateX(0)}
+.bid-row.winner{border-color:var(--gold);background:rgba(234,179,8,.08)}
+.bid-row .bidder-name{font-weight:600;font-size:.95rem}
+.bid-row .bid-amount{font-size:1.1rem;font-weight:700;color:var(--gold)}
+
+.true-value-reveal{
+  text-align:center;padding:1.25rem;border-radius:var(--radius);margin:1rem 0;
+  font-size:1.1rem;opacity:0;transition:opacity .5s;
+}
+.true-value-reveal.show{opacity:1}
+.true-value-reveal .tv-number{font-size:2.2rem;font-weight:700;display:block;margin:.4rem 0}
+.true-value-reveal.profit{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3)}
+.true-value-reveal.profit .tv-number{color:var(--emerald)}
+.true-value-reveal.loss{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3)}
+.true-value-reveal.loss .tv-number{color:var(--red)}
+.true-value-reveal.neutral{background:rgba(148,163,184,.08);border:1px solid var(--navy-mid)}
+.true-value-reveal.neutral .tv-number{color:var(--gray)}
+
+.winner-banner{
+  text-align:center;font-size:1.15rem;font-weight:700;padding:1rem;
+  border-radius:var(--radius);margin:1rem 0;
+  opacity:0;transition:opacity .5s;
+}
+.winner-banner.show{opacity:1}
+.winner-banner.cursed{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.winner-banner.profited{background:rgba(16,185,129,.12);color:var(--emerald);border:1px solid rgba(16,185,129,.3)}
+
+.curse-explainer{
+  background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);
+  border-radius:var(--radius-sm);padding:1rem;margin-top:1rem;
+  color:var(--gray);font-size:.88rem;line-height:1.55;
+}
+.curse-explainer strong{color:var(--red)}
+
+/* ── History Table ───────────────────────────────── */
+.history-section{margin-top:2rem}
+.history-section h3{color:var(--gold);margin-bottom:.75rem;font-size:1.1rem}
+.history-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.history-table{
+  width:100%;border-collapse:collapse;font-size:.82rem;
+}
+.history-table th{
+  background:var(--navy-mid);color:var(--gold);padding:.55rem .6rem;
+  text-align:left;font-weight:600;white-space:nowrap;
+}
+.history-table td{
+  padding:.5rem .6rem;border-bottom:1px solid rgba(51,65,85,.5);
+  white-space:nowrap;
+}
+.history-table tr:hover td{background:rgba(234,179,8,.03)}
+.cell-profit{color:var(--emerald);font-weight:600}
+.cell-loss{color:var(--red);font-weight:600}
+.cell-winner{color:var(--gold);font-weight:600}
+
+/* ── End Screen ──────────────────────────────────── */
+#endScreen{animation:fadeIn .6s ease}
+.final-score{
+  font-size:3rem;font-weight:700;
+  background:linear-gradient(135deg,var(--gold),#FDE68A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:1.5rem 0}
+.stat-card{
+  background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:var(--radius-sm);
+  padding:1rem;text-align:center;
+}
+.stat-card .stat-val{font-size:1.8rem;font-weight:700}
+.stat-card .stat-label{color:var(--gray);font-size:.82rem;margin-top:.25rem}
+.edu-section{
+  background:linear-gradient(135deg,rgba(234,179,8,.06),rgba(16,185,129,.04));
+  border:1px solid rgba(234,179,8,.15);border-radius:var(--radius);
+  padding:1.5rem;text-align:left;margin:1.5rem 0;
+}
+.edu-section h3{color:var(--gold);margin-bottom:.75rem}
+.edu-section p,.edu-section li{color:var(--gray);font-size:.9rem;line-height:1.6}
+.edu-section ul{padding-left:1.2rem}
+.edu-section li{margin-bottom:.4rem}
+
+/* ── Confetti ────────────────────────────────────── */
+.confetti-piece{
+  position:fixed;width:8px;height:8px;border-radius:2px;
+  animation:confetti-fall 1.8s ease-out forwards;pointer-events:none;z-index:1000;
+}
+@keyframes confetti-fall{
+  0%{opacity:1;transform:translateY(0) rotate(0deg)}
+  100%{opacity:0;transform:translateY(100vh) rotate(720deg)}
+}
+
+/* ── Red Flash ───────────────────────────────────── */
+.red-flash{animation:redFlash .6s ease}
+@keyframes redFlash{
+  0%,100%{background:var(--navy)}
+  50%{background:rgba(239,68,68,.08)}
+}
+
+/* ── Gavel Animation ─────────────────────────────── */
+.gavel-anim{display:inline-block;animation:gavelStrike .4s ease}
+@keyframes gavelStrike{
+  0%{transform:rotate(0)}
+  50%{transform:rotate(-25deg)}
+  100%{transform:rotate(0)}
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media(max-width:600px){
+  .welcome-title{font-size:1.8rem}
+  .estimate-value{font-size:1.8rem}
+  .bid-input{width:110px;font-size:1.15rem}
+  .agents-grid{grid-template-columns:1fr}
+  .top-bar{flex-direction:column;align-items:flex-start}
+  .container{padding:1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ WELCOME SCREEN ═══════════════ -->
+<div id="welcome" class="container">
+  <div class="text-center mt-4">
+    <div style="font-size:3.5rem;margin-bottom:.5rem">&#9878;</div>
+    <h1 class="welcome-title">Bidding Wars</h1>
+    <p class="welcome-subtitle">Auction Theory &amp; The Winner's Curse</p>
+  </div>
+
+  <div class="concept-box">
+    <h3>&#128218; How It Works</h3>
+    <p>In a <strong class="gold">sealed-bid first-price auction</strong>, every bidder submits one secret bid. The highest bidder wins and pays exactly what they bid.</p>
+    <ul class="mt-1">
+      <li>Each round, an item with a <strong>hidden true value</strong> goes up for auction.</li>
+      <li>You receive a <strong>noisy estimate</strong> of the value (&plusmn;20% of truth).</li>
+      <li>You and 3 AI agents bid simultaneously. Highest bid wins.</li>
+      <li>Winner's profit = <span class="emerald">True Value</span> &minus; <span class="gold">Your Bid</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box">
+    <h3>&#9888;&#65039; The Winner's Curse</h3>
+    <p>When everyone has imperfect information, the person who <em>wins</em> the auction is often the one who <em>most overestimated</em> the item's value. Winning can actually mean losing money. This is the <strong class="red">Winner's Curse</strong>.</p>
+  </div>
+
+  <h3 class="text-center gold mt-3" style="font-size:1.05rem">Your Opponents</h3>
+  <div class="agents-grid">
+    <div class="agent-card">
+      <div class="agent-avatar">&#128519;</div>
+      <h4>Nandini</h4>
+      <div class="agent-style">&#128737;&#65039; Cautious &mdash; bids conservatively,<br>avoids overpaying</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-avatar">&#128526;</div>
+      <h4>Sameer</h4>
+      <div class="agent-style">&#128293; Aggressive &mdash; bids high,<br>hates losing auctions</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-avatar">&#129488;</div>
+      <h4>Zara</h4>
+      <div class="agent-style">&#128202; Analytical &mdash; Bayesian updater,<br>learns from past rounds</div>
+    </div>
+  </div>
+
+  <div class="text-center mt-3">
+    <p style="color:var(--gray);font-size:.9rem;margin-bottom:1rem">8 rounds &bull; Starting balance: <strong class="gold">1,000 tokens</strong></p>
+    <button class="btn btn-gold" onclick="startGame()">
+      <span class="gavel">&#9878;</span> Enter the Auction House
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════ GAME SCREEN ═══════════════ -->
+<div id="gameScreen" class="container hidden">
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="balance-display">&#128176; Balance: <span class="amount" id="balanceDisplay">1,000</span></div>
+    <div class="round-badge" id="roundBadge">Round 1 / 8</div>
+  </div>
+
+  <!-- Item card -->
+  <div class="item-card" id="itemCard">
+    <div class="item-name" id="itemName">Mystery Lot #1</div>
+    <div class="estimate-display">
+      <div style="color:var(--gray);font-size:.85rem">Your Estimated Value</div>
+      <div class="estimate-value" id="estimateValue">~125</div>
+      <div class="confidence-bar" id="confidenceBar">
+        <div class="confidence-fill" id="confidenceFill"></div>
+        <div class="confidence-center" id="confidenceCenter"></div>
+      </div>
+      <div class="estimate-range">
+        <span id="rangeMin">100</span>
+        <span style="color:var(--navy-mid)">&mdash;&mdash;&mdash;&mdash;&mdash;</span>
+        <span id="rangeMax">150</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bid section -->
+  <div class="bid-section card" id="bidSection">
+    <h3 class="text-center gold mb-2">Place Your Sealed Bid</h3>
+    <div class="bid-input-group">
+      <input type="number" class="bid-input" id="bidInput" min="1" max="400" value="100" step="1">
+      <div class="bid-slider-wrap">
+        <input type="range" class="bid-slider" id="bidSlider" min="1" max="400" value="100">
+      </div>
+    </div>
+    <div class="profit-preview" id="profitPreview"></div>
+    <div class="text-center" id="curseZoneWarn"></div>
+    <div class="text-center mt-2">
+      <button class="btn btn-gold" id="placeBidBtn" onclick="placeBid()">
+        <span class="gavel" id="gavelIcon">&#9878;</span> Place Bid
+      </button>
+    </div>
+  </div>
+
+  <!-- Reveal area -->
+  <div class="reveal-area hidden" id="revealArea">
+    <h3 class="text-center gold mb-2">&#128220; Bid Reveal</h3>
+    <div class="bids-reveal" id="bidsReveal"></div>
+    <div class="true-value-reveal" id="trueValueReveal"></div>
+    <div class="winner-banner" id="winnerBanner"></div>
+    <div id="curseExplainer"></div>
+    <div class="text-center mt-3">
+      <button class="btn btn-gold" id="nextRoundBtn" onclick="nextRound()">
+        Next Round &#8594;
+      </button>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="history-section" id="historySection" style="display:none">
+    <h3>&#128203; Auction History</h3>
+    <div class="history-table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Rnd</th><th>Item</th><th>Estimate</th><th>Your Bid</th>
+            <th>Nandini</th><th>Sameer</th><th>Zara</th>
+            <th>True Val</th><th>Winner</th><th>Profit</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ END SCREEN ═══════════════ -->
+<div id="endScreen" class="container hidden">
+  <div class="text-center mt-4">
+    <div style="font-size:3rem;margin-bottom:.5rem">&#127942;</div>
+    <h1 class="welcome-title">Auction Closed</h1>
+    <p class="welcome-subtitle">Final Results</p>
+    <div class="final-score" id="finalScore">1,000</div>
+    <p style="color:var(--gray);font-size:.95rem" id="finalScoreLabel">tokens</p>
+  </div>
+
+  <div class="stats-grid" id="statsGrid"></div>
+
+  <div id="endHistorySection">
+    <h3 class="gold mt-3 mb-2" style="font-size:1.05rem">&#128203; Full Auction Record</h3>
+    <div class="history-table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Rnd</th><th>Item</th><th>Estimate</th><th>Your Bid</th>
+            <th>Nandini</th><th>Sameer</th><th>Zara</th>
+            <th>True Val</th><th>Winner</th><th>Profit</th>
+          </tr>
+        </thead>
+        <tbody id="endHistoryBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="edu-section mt-3" id="eduSection">
+    <h3>&#127891; What You Just Experienced</h3>
+    <div id="eduContent"></div>
+  </div>
+
+  <div class="text-center mt-3 mb-2">
+    <button class="btn btn-gold" onclick="restartGame()">
+      <span class="gavel">&#9878;</span> Play Again
+    </button>
+    <button class="btn btn-outline mt-2" onclick="document.getElementById('endScreen').classList.add('hidden');document.getElementById('welcome').classList.remove('hidden');window.scrollTo(0,0);">
+      Back to Intro
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════ GAME AGENTS ═══════════════ -->
+<script src="/js/game-agents.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ── State ────────────────────────────────────────── */
+var TOTAL_ROUNDS = 8;
+var STARTING_BALANCE = 1000;
+
+var state = {};
+var agents = null;
+
+var ITEM_NAMES = [
+  'Antique Rosewood Clock','Rare First-Edition Novel','Vintage Jazz Record Collection',
+  'Hand-Painted Persian Vase','Silver Compass (1890)','Abstract Oil Painting',
+  'Ivory Chess Set Replica','Art Deco Bronze Sculpture','Japanese Silk Scroll',
+  'Signed Movie Poster','Emerald Brooch (Estate)','Mahogany Writing Desk'
+];
+
+/* ── Fallback agents (if game-agents.js unavailable) */
+var FALLBACK_AGENTS = [
+  { id:'bw-cautious',   name:'Nandini', emoji:'&#128519;', style:'Cautious' },
+  { id:'bw-aggressive', name:'Sameer',  emoji:'&#128526;', style:'Aggressive' },
+  { id:'bw-analytical', name:'Zara',    emoji:'&#129488;', style:'Analytical' }
+];
+
+/* ── Init ─────────────────────────────────────────── */
+function initState(){
+  state = {
+    round: 1,
+    balance: STARTING_BALANCE,
+    history: [],
+    trueValue: 0,
+    playerEstimate: 0,
+    currentItemName: '',
+    wins: 0,
+    curses: 0,
+    totalProfit: 0
+  };
+}
+initState();
+
+/* ── Helpers ──────────────────────────────────────── */
+function $(id){ return document.getElementById(id); }
+function fmt(n){ return n.toLocaleString(); }
+function clamp(v,lo,hi){ return Math.max(lo,Math.min(hi,v)); }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+
+function generateNoisyEstimate(trueVal){
+  return Math.round(trueVal * (0.8 + Math.random() * 0.4));
+}
+
+/* ── Screens ──────────────────────────────────────── */
+function showScreen(id){
+  ['welcome','gameScreen','endScreen'].forEach(function(s){
+    $(s).classList.add('hidden');
+  });
+  $(id).classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+/* ── Start Game ───────────────────────────────────── */
+window.startGame = function(){
+  initState();
+  try { agents = new IMGameAgents('bidding-wars-game'); } catch(e){ agents = null; }
+  showScreen('gameScreen');
+  $('historyBody').innerHTML = '';
+  $('historySection').style.display = 'none';
+  setupRound();
+};
+
+/* ── Setup Round ──────────────────────────────────── */
+function setupRound(){
+  // Generate values
+  state.trueValue = Math.round(50 + Math.random() * 150);
+  state.playerEstimate = generateNoisyEstimate(state.trueValue);
+
+  // Item name
+  var namePool = shuffle(ITEM_NAMES.slice());
+  state.currentItemName = namePool[state.round % namePool.length];
+
+  // UI
+  $('roundBadge').textContent = 'Round ' + state.round + ' / ' + TOTAL_ROUNDS;
+  $('balanceDisplay').textContent = fmt(state.balance);
+  $('itemName').textContent = state.currentItemName;
+  $('estimateValue').textContent = '~' + state.playerEstimate;
+
+  var low = Math.round(state.playerEstimate * 0.8);
+  var high = Math.round(state.playerEstimate * 1.2);
+  $('rangeMin').textContent = low;
+  $('rangeMax').textContent = high;
+
+  // Confidence bar
+  var barMax = 300;
+  var fillLeft = (low / barMax) * 100;
+  var fillRight = (high / barMax) * 100;
+  $('confidenceFill').style.left = fillLeft + '%';
+  $('confidenceFill').style.width = (fillRight - fillLeft) + '%';
+  $('confidenceCenter').style.left = (state.playerEstimate / barMax * 100) + '%';
+
+  // Slider range
+  var sliderMax = Math.round(high * 1.5);
+  $('bidSlider').max = sliderMax;
+  $('bidInput').max = sliderMax;
+  var defaultBid = Math.round(state.playerEstimate * 0.85);
+  $('bidSlider').value = defaultBid;
+  $('bidInput').value = defaultBid;
+  updateBidPreview(defaultBid);
+
+  // Show bid section, hide reveal
+  $('bidSection').classList.remove('hidden');
+  $('revealArea').classList.add('hidden');
+  $('placeBidBtn').disabled = false;
+  $('itemCard').className = 'item-card';
+}
+
+/* ── Bid Preview ──────────────────────────────────── */
+function updateBidPreview(bid){
+  bid = parseInt(bid) || 0;
+  var est = state.playerEstimate;
+  var projectedProfit = est - bid;
+  var preview = '';
+  if(bid > 0){
+    if(projectedProfit >= 0){
+      preview = 'If true value = estimate: profit = <span class="emerald">+' + projectedProfit + '</span>';
+    } else {
+      preview = 'If true value = estimate: loss = <span class="red">' + projectedProfit + '</span>';
+    }
+  }
+  $('profitPreview').innerHTML = preview;
+
+  // Curse zone warning
+  var estHigh = Math.round(est * 1.1);
+  if(bid > estHigh){
+    $('curseZoneWarn').innerHTML = '<span class="curse-zone-label">&#9888; Winner\'s Curse Zone &mdash; bid exceeds likely value</span>';
+  } else if(bid > est){
+    $('curseZoneWarn').innerHTML = '<span class="curse-zone-label" style="background:rgba(234,179,8,.12);color:var(--gold)">&#9888; Risky &mdash; above your estimate</span>';
+  } else {
+    $('curseZoneWarn').innerHTML = '';
+  }
+}
+
+$('bidSlider').addEventListener('input', function(){
+  $('bidInput').value = this.value;
+  updateBidPreview(this.value);
+});
+$('bidInput').addEventListener('input', function(){
+  $('bidSlider').value = this.value;
+  updateBidPreview(this.value);
+});
+
+/* ── Place Bid ────────────────────────────────────── */
+window.placeBid = function(){
+  var playerBid = parseInt($('bidInput').value);
+  if(!playerBid || playerBid < 1){
+    $('bidInput').style.borderColor = 'var(--red)';
+    setTimeout(function(){ $('bidInput').style.borderColor = ''; }, 800);
+    return;
+  }
+
+  $('placeBidBtn').disabled = true;
+
+  // Gavel animation
+  $('gavelIcon').classList.add('gavel-anim');
+  setTimeout(function(){ $('gavelIcon').classList.remove('gavel-anim'); }, 500);
+
+  // Get AI decisions
+  getAIBids(function(aiBids){
+    revealBids(playerBid, aiBids);
+  });
+};
+
+/* ── Get AI Bids ──────────────────────────────────── */
+function getAIBids(callback){
+  // Each agent gets their own noisy estimate
+  var agentEstimates = {
+    'bw-cautious':   generateNoisyEstimate(state.trueValue),
+    'bw-aggressive': generateNoisyEstimate(state.trueValue),
+    'bw-analytical': generateNoisyEstimate(state.trueValue)
+  };
+
+  // Build history for agents
+  var agentHistory = state.history.map(function(h){
+    return {
+      round: h.round,
+      winner: h.winnerName,
+      true_value: h.trueValue,
+      bids: h.allBids
+    };
+  });
+
+  if(agents){
+    // Try real agent system
+    var promises = FALLBACK_AGENTS.map(function(fa){
+      return agents.getDecision(fa.id, {
+        round: state.round,
+        totalRounds: TOTAL_ROUNDS,
+        history: agentHistory,
+        availableActions: ['bid'],
+        context: { estimated_value: agentEstimates[fa.id] }
+      }).then(function(decision){
+        return { id: fa.id, bid: decision.amount || Math.round(agentEstimates[fa.id] * 0.8) };
+      }).catch(function(){
+        return { id: fa.id, bid: localAgentBid(fa.id, agentEstimates[fa.id]) };
+      });
+    });
+
+    Promise.all(promises).then(function(results){
+      var bids = {};
+      results.forEach(function(r){ bids[r.id] = r.bid; });
+      callback(bids);
+    });
+  } else {
+    // Pure local fallback
+    var bids = {};
+    FALLBACK_AGENTS.forEach(function(fa){
+      bids[fa.id] = localAgentBid(fa.id, agentEstimates[fa.id]);
+    });
+    callback(bids);
+  }
+}
+
+function localAgentBid(agentId, estimate){
+  var noise = (Math.random() - 0.5) * 0.1 * estimate;
+  switch(agentId){
+    case 'bw-cautious':
+      // 60-75% of estimate
+      return Math.round(estimate * (0.6 + Math.random() * 0.15) + noise);
+    case 'bw-aggressive':
+      // 90-110% of estimate
+      return Math.round(estimate * (0.9 + Math.random() * 0.2) + noise);
+    case 'bw-analytical':
+      // Bayesian: starts moderate, adjusts based on history
+      var base = 0.78;
+      if(state.history.length > 0){
+        var avgOverpay = 0;
+        var count = 0;
+        state.history.forEach(function(h){
+          if(h.winnerBid > h.trueValue){ avgOverpay++; }
+          count++;
+        });
+        if(avgOverpay / count > 0.4) base -= 0.08; // More cautious if lots of curses
+        else base += 0.05;
+      }
+      return Math.round(estimate * (base + Math.random() * 0.12) + noise);
+    default:
+      return Math.round(estimate * 0.75);
+  }
+}
+
+/* ── Reveal Bids ──────────────────────────────────── */
+function revealBids(playerBid, aiBids){
+  $('bidSection').classList.add('hidden');
+  $('revealArea').classList.remove('hidden');
+
+  // Build bid list
+  var allBids = [
+    { name: 'You', id: 'player', bid: playerBid, isPlayer: true }
+  ];
+  FALLBACK_AGENTS.forEach(function(fa){
+    allBids.push({ name: fa.name, id: fa.id, bid: Math.max(1, aiBids[fa.id] || 1), isPlayer: false });
+  });
+
+  // Sort ascending for dramatic reveal (highest last)
+  allBids.sort(function(a,b){ return a.bid - b.bid; });
+
+  // Determine winner
+  var winner = allBids[allBids.length - 1];
+  var trueValue = state.trueValue;
+  var profit = trueValue - winner.bid;
+  var isCursed = profit < 0;
+
+  // Render bid rows
+  var html = '';
+  allBids.forEach(function(b, i){
+    var isW = b.id === winner.id;
+    html += '<div class="bid-row' + (isW ? ' winner' : '') + '" id="bidRow' + i + '">' +
+      '<span class="bidder-name">' + b.name + '</span>' +
+      '<span class="bid-amount">' + fmt(b.bid) + '</span>' +
+    '</div>';
+  });
+  $('bidsReveal').innerHTML = html;
+
+  // Dramatic sequential reveal
+  allBids.forEach(function(b, i){
+    setTimeout(function(){
+      $('bidRow' + i).classList.add('revealed');
+    }, 400 + i * 500);
+  });
+
+  // Reveal true value after all bids
+  var tvDelay = 400 + allBids.length * 500 + 600;
+  setTimeout(function(){
+    var tvClass = '';
+    var tvMsg = '';
+    if(winner.isPlayer){
+      if(isCursed){
+        tvClass = 'loss';
+        tvMsg = 'You won but overpaid! Loss: ' + profit;
+      } else {
+        tvClass = 'profit';
+        tvMsg = 'You won! Profit: +' + profit;
+      }
+    } else {
+      tvClass = 'neutral';
+      tvMsg = winner.name + ' won this lot.';
+    }
+
+    $('trueValueReveal').className = 'true-value-reveal show ' + tvClass;
+    $('trueValueReveal').innerHTML = 'True Value<span class="tv-number">' + fmt(trueValue) + '</span>' + tvMsg;
+
+    // Winner banner
+    setTimeout(function(){
+      if(winner.isPlayer){
+        if(isCursed){
+          $('winnerBanner').className = 'winner-banner show cursed';
+          $('winnerBanner').innerHTML = '&#128561; Winner\'s Curse! You lost ' + Math.abs(profit) + ' tokens.';
+          document.body.classList.add('red-flash');
+          setTimeout(function(){ document.body.classList.remove('red-flash'); }, 600);
+          showCurseExplainer();
+        } else {
+          $('winnerBanner').className = 'winner-banner show profited';
+          $('winnerBanner').innerHTML = '&#127881; Nice trade! You earned +' + profit + ' tokens.';
+          spawnConfetti();
+          $('curseExplainer').innerHTML = '';
+        }
+      } else {
+        var winnerProfit = trueValue - winner.bid;
+        $('winnerBanner').className = 'winner-banner show ' + (winnerProfit < 0 ? 'cursed' : 'profited');
+        if(winnerProfit < 0){
+          $('winnerBanner').innerHTML = winner.name + ' got cursed! Lost ' + Math.abs(winnerProfit) + ' tokens.';
+        } else {
+          $('winnerBanner').innerHTML = winner.name + ' won with a profit of +' + winnerProfit + '.';
+        }
+        $('curseExplainer').innerHTML = '';
+      }
+
+      // Update state
+      if(winner.isPlayer){
+        state.balance += profit;
+        state.wins++;
+        state.totalProfit += profit;
+        if(isCursed) state.curses++;
+        $('balanceDisplay').textContent = fmt(state.balance);
+      }
+
+      // Record history
+      var rec = {
+        round: state.round,
+        itemName: state.currentItemName,
+        estimate: state.playerEstimate,
+        playerBid: playerBid,
+        trueValue: trueValue,
+        winnerName: winner.name,
+        winnerId: winner.id,
+        winnerBid: winner.bid,
+        profit: winner.isPlayer ? profit : 0,
+        allBids: {}
+      };
+      allBids.forEach(function(b){ rec.allBids[b.name] = b.bid; });
+      state.history.push(rec);
+
+      renderHistory();
+
+      // Update next round button
+      if(state.round >= TOTAL_ROUNDS){
+        $('nextRoundBtn').textContent = 'See Final Results';
+      }
+    }, 400);
+  }, tvDelay);
+}
+
+function showCurseExplainer(){
+  $('curseExplainer').innerHTML = '<div class="curse-explainer">' +
+    '<strong>The Winner\'s Curse:</strong> In auctions with imperfect information, ' +
+    'the bidder who wins is typically the one who most <em>overestimated</em> the item\'s value. ' +
+    'Rational bidders should shade their bids <em>below</em> their estimate to account for this effect. ' +
+    'The more bidders in the auction, the more you should shade down.' +
+  '</div>';
+}
+
+/* ── Next Round ───────────────────────────────────── */
+window.nextRound = function(){
+  if(state.round >= TOTAL_ROUNDS){
+    showEndScreen();
+    return;
+  }
+  state.round++;
+  setupRound();
+  $('gameScreen').scrollTo(0,0);
+  window.scrollTo(0,0);
+};
+
+/* ── History Table ────────────────────────────────── */
+function renderHistory(){
+  if(state.history.length === 0) return;
+  $('historySection').style.display = 'block';
+
+  var html = '';
+  state.history.forEach(function(h){
+    var profitClass = h.profit > 0 ? 'cell-profit' : (h.profit < 0 ? 'cell-loss' : '');
+    var profitStr = h.winnerId === 'player' ? (h.profit >= 0 ? '+' + h.profit : '' + h.profit) : '—';
+    html += '<tr>' +
+      '<td>' + h.round + '</td>' +
+      '<td>' + h.itemName + '</td>' +
+      '<td>' + h.estimate + '</td>' +
+      '<td>' + h.playerBid + '</td>' +
+      '<td>' + (h.allBids['Nandini'] || '—') + '</td>' +
+      '<td>' + (h.allBids['Sameer'] || '—') + '</td>' +
+      '<td>' + (h.allBids['Zara'] || '—') + '</td>' +
+      '<td>' + h.trueValue + '</td>' +
+      '<td class="cell-winner">' + h.winnerName + '</td>' +
+      '<td class="' + profitClass + '">' + profitStr + '</td>' +
+    '</tr>';
+  });
+  $('historyBody').innerHTML = html;
+}
+
+/* ── End Screen ───────────────────────────────────── */
+function showEndScreen(){
+  showScreen('endScreen');
+
+  var netChange = state.balance - STARTING_BALANCE;
+  $('finalScore').textContent = fmt(state.balance);
+  $('finalScoreLabel').textContent = netChange >= 0
+    ? 'tokens (net +' + fmt(netChange) + ')'
+    : 'tokens (net ' + fmt(netChange) + ')';
+
+  // Count AI curses
+  var aiCurses = 0;
+  state.history.forEach(function(h){
+    if(h.winnerId !== 'player' && h.winnerBid > h.trueValue) aiCurses++;
+  });
+
+  $('statsGrid').innerHTML =
+    statCard(state.wins, 'Auctions Won', 'var(--gold)') +
+    statCard(state.curses, 'Times Cursed', 'var(--red)') +
+    statCard(aiCurses, 'AI Curses', 'var(--gray)') +
+    statCard((netChange >= 0 ? '+' : '') + fmt(netChange), 'Net Profit', netChange >= 0 ? 'var(--emerald)' : 'var(--red)');
+
+  // End history
+  var html = '';
+  state.history.forEach(function(h){
+    var profitClass = h.profit > 0 ? 'cell-profit' : (h.profit < 0 ? 'cell-loss' : '');
+    var profitStr = h.winnerId === 'player' ? (h.profit >= 0 ? '+' + h.profit : '' + h.profit) : '—';
+    html += '<tr>' +
+      '<td>' + h.round + '</td>' +
+      '<td>' + h.itemName + '</td>' +
+      '<td>' + h.estimate + '</td>' +
+      '<td>' + h.playerBid + '</td>' +
+      '<td>' + (h.allBids['Nandini'] || '—') + '</td>' +
+      '<td>' + (h.allBids['Sameer'] || '—') + '</td>' +
+      '<td>' + (h.allBids['Zara'] || '—') + '</td>' +
+      '<td>' + h.trueValue + '</td>' +
+      '<td class="cell-winner">' + h.winnerName + '</td>' +
+      '<td class="' + profitClass + '">' + profitStr + '</td>' +
+    '</tr>';
+  });
+  $('endHistoryBody').innerHTML = html;
+
+  // Educational content
+  var avgShade = 0, shadeCount = 0;
+  state.history.forEach(function(h){
+    if(h.playerBid > 0 && h.estimate > 0){
+      avgShade += (h.playerBid / h.estimate);
+      shadeCount++;
+    }
+  });
+  avgShade = shadeCount > 0 ? (avgShade / shadeCount * 100).toFixed(0) : '—';
+
+  var eduHtml = '<p>Over 8 rounds, you bid an average of <strong class="gold">' + avgShade + '%</strong> of your estimates.</p>';
+
+  if(state.curses === 0){
+    eduHtml += '<p class="mt-2" style="color:var(--emerald)"><strong>Impressive!</strong> You avoided the winner\'s curse entirely. You correctly shaded your bids below your noisy estimates.</p>';
+  } else if(state.curses <= 2){
+    eduHtml += '<p class="mt-2">You experienced the winner\'s curse <strong class="red">' + state.curses + ' time' + (state.curses > 1 ? 's' : '') + '</strong>. In sealed-bid auctions with uncertain values, even careful bidders get burned occasionally.</p>';
+  } else {
+    eduHtml += '<p class="mt-2">You fell prey to the winner\'s curse <strong class="red">' + state.curses + ' times</strong>. The key insight: when your estimate is noisy, the winner tends to be whoever overestimated the most. You must bid <em>below</em> your estimate.</p>';
+  }
+
+  eduHtml += '<h3 class="mt-3" style="font-size:1rem">The Mathematics</h3>' +
+    '<p class="mt-1">In a first-price sealed-bid auction with <em>n</em> bidders and common values:</p>' +
+    '<ul class="mt-1">' +
+      '<li><strong>Optimal bid shading:</strong> With <em>n</em> bidders and noise &sigma;, the optimal bid is approximately:<br>' +
+        '<code style="color:var(--gold);font-size:.95rem">bid = estimate - &sigma; &times; (n-1)/n</code></li>' +
+      '<li><strong>More bidders = more shading:</strong> With 4 bidders and &plusmn;20% noise, you should bid roughly 10-15% below your estimate.</li>' +
+      '<li><strong>Why?</strong> Your estimate is unbiased, but <em>conditional on winning</em>, your estimate is likely an overestimate.</li>' +
+    '</ul>';
+
+  eduHtml += '<h3 class="mt-3" style="font-size:1rem">Real-World Applications</h3>' +
+    '<ul class="mt-1">' +
+      '<li><strong>IPOs:</strong> Investors who win allocations in hot IPOs often overpaid — the informed money already priced it correctly.</li>' +
+      '<li><strong>Spectrum Auctions:</strong> Telecom companies have paid billions in government spectrum auctions, sometimes regretting the price (e.g., 3G auctions in Europe).</li>' +
+      '<li><strong>Corporate Acquisitions:</strong> The acquiring company in M&amp;A tends to overpay — they "won" against other bidders who had different (possibly better) information.</li>' +
+      '<li><strong>Online Ad Auctions:</strong> In real-time bidding, advertisers must avoid overbidding for impressions whose true conversion value is uncertain.</li>' +
+    '</ul>';
+
+  $('eduContent').innerHTML = eduHtml;
+}
+
+function statCard(val, label, color){
+  return '<div class="stat-card">' +
+    '<div class="stat-val" style="color:' + color + '">' + val + '</div>' +
+    '<div class="stat-label">' + label + '</div>' +
+  '</div>';
+}
+
+/* ── Restart ──────────────────────────────────────── */
+window.restartGame = function(){
+  initState();
+  showScreen('gameScreen');
+  $('historyBody').innerHTML = '';
+  $('historySection').style.display = 'none';
+  setupRound();
+};
+
+/* ── Confetti ─────────────────────────────────────── */
+function spawnConfetti(){
+  var colors = ['#EAB308','#10B981','#3B82F6','#EC4899','#F97316','#8B5CF6'];
+  for(var i = 0; i < 40; i++){
+    (function(idx){
+      setTimeout(function(){
+        var el = document.createElement('div');
+        el.className = 'confetti-piece';
+        el.style.left = (10 + Math.random() * 80) + 'vw';
+        el.style.top = '-10px';
+        el.style.background = colors[idx % colors.length];
+        el.style.width = (5 + Math.random() * 8) + 'px';
+        el.style.height = (5 + Math.random() * 8) + 'px';
+        el.style.animationDuration = (1.2 + Math.random() * 1.2) + 's';
+        document.body.appendChild(el);
+        setTimeout(function(){ el.remove(); }, 2500);
+      }, idx * 40);
+    })(i);
+  }
+}
+
+})();
+</script>
+</body>
+</html>
