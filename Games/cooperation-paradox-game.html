@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cooperation Paradox Game | ImpactMojo</title>
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F172A;--bg2:#1E293B;--bg3:#334155;
+  --text:#E2E8F0;--text2:#94A3B8;--text3:#64748B;
+  --purple:#8B5CF6;--purple-dim:#6D28D9;--purple-glow:rgba(139,92,246,.35);
+  --orange:#F97316;--orange-dim:#C2410C;--orange-glow:rgba(249,115,22,.35);
+  --green:#10B981;--red:#EF4444;--cyan:#06B6D4;--yellow:#FACC15;
+  --radius:12px;--transition:.3s ease;
+}
+html{font-size:16px}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  line-height:1.6;
+}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+a{color:var(--purple);text-decoration:none}
+
+/* ── Layout Shell ─────────────────────────────────────────────── */
+.app{max-width:820px;margin:0 auto;padding:16px}
+.screen{display:none;animation:fadeIn .5s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Welcome Screen ───────────────────────────────────────────── */
+.welcome-header{text-align:center;padding:32px 0 16px}
+.welcome-header h1{
+  font-size:2.2rem;font-weight:800;
+  background:linear-gradient(135deg,var(--purple),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.welcome-header .subtitle{color:var(--text2);font-size:1.05rem;margin-top:6px}
+.card{background:var(--bg2);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;border:1px solid var(--bg3)}
+.card h2{font-size:1.15rem;margin-bottom:10px;color:var(--text)}
+.card p,.card li{color:var(--text2);font-size:.95rem}
+.card ul{padding-left:20px}
+.card li{margin-bottom:4px}
+.highlight-purple{color:var(--purple);font-weight:600}
+.highlight-orange{color:var(--orange);font-weight:600}
+.highlight-green{color:var(--green);font-weight:600}
+
+.agent-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.agent-card{background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--bg3)}
+.agent-card .agent-avatar{
+  width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;font-weight:700;margin-bottom:8px;
+}
+.agent-card.nash .agent-avatar{background:var(--orange-glow);color:var(--orange)}
+.agent-card.pareto .agent-avatar{background:var(--purple-glow);color:var(--purple)}
+.agent-card .agent-name{font-weight:700;font-size:1rem}
+.agent-card .agent-role{font-size:.82rem;color:var(--text3)}
+.agent-card .agent-desc{font-size:.85rem;color:var(--text2);margin-top:6px}
+
+.btn-start{
+  display:block;width:100%;padding:16px;margin-top:20px;
+  font-size:1.15rem;font-weight:700;color:#fff;border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--purple),var(--purple-dim));
+  box-shadow:0 0 30px var(--purple-glow);
+  transition:var(--transition);
+}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 0 40px var(--purple-glow)}
+
+/* ── Payoff Matrix (shared) ───────────────────────────────────── */
+.payoff-table-wrap{overflow-x:auto;margin:12px 0}
+.payoff-table{
+  width:100%;border-collapse:collapse;font-size:.82rem;text-align:center;
+}
+.payoff-table th,.payoff-table td{padding:8px 6px;border:1px solid var(--bg3)}
+.payoff-table th{background:var(--bg);color:var(--text2);font-weight:600}
+.payoff-table td{background:var(--bg);color:var(--text);transition:background .4s,color .4s,transform .3s}
+.payoff-table td.active-cell{
+  background:var(--purple);color:#fff;font-weight:700;
+  transform:scale(1.05);box-shadow:0 0 16px var(--purple-glow);
+  border-radius:4px;
+}
+.payoff-table .nash-label{color:var(--orange);font-weight:700;font-size:.7rem;display:block}
+.payoff-table .pareto-label{color:var(--green);font-weight:700;font-size:.7rem;display:block}
+
+/* ── Game Screen ──────────────────────────────────────────────── */
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.round-badge{
+  background:var(--bg2);border:1px solid var(--bg3);border-radius:20px;
+  padding:6px 16px;font-weight:700;font-size:.95rem;
+}
+.scores-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.score-card{
+  background:var(--bg2);border-radius:10px;padding:12px;text-align:center;
+  border:1px solid var(--bg3);position:relative;
+}
+.score-card .sc-name{font-size:.82rem;color:var(--text2);font-weight:600}
+.score-card .sc-score{font-size:1.5rem;font-weight:800;margin-top:2px}
+.score-card.player .sc-score{color:var(--cyan)}
+.score-card.nash-agent .sc-score{color:var(--orange)}
+.score-card.pareto-agent .sc-score{color:var(--purple)}
+
+.choice-section{text-align:center;margin:20px 0}
+.choice-section .prompt{font-size:1.05rem;color:var(--text2);margin-bottom:14px}
+.choice-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-choice{
+  flex:1;max-width:240px;min-width:140px;padding:22px 16px;
+  border-radius:var(--radius);font-size:1.2rem;font-weight:800;
+  color:#fff;transition:var(--transition);position:relative;overflow:hidden;
+}
+.btn-choice::after{
+  content:'';position:absolute;inset:0;opacity:0;
+  transition:opacity .3s;border-radius:var(--radius);
+}
+.btn-high{
+  background:linear-gradient(135deg,var(--purple),var(--purple-dim));
+  box-shadow:0 0 24px var(--purple-glow);
+}
+.btn-high:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 40px var(--purple-glow)}
+.btn-high .btn-sub{font-size:.75rem;font-weight:400;opacity:.8;display:block;margin-top:4px}
+.btn-low{
+  background:linear-gradient(135deg,var(--orange),var(--orange-dim));
+  box-shadow:0 0 24px var(--orange-glow);
+}
+.btn-low:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 40px var(--orange-glow)}
+.btn-low .btn-sub{font-size:.75rem;font-weight:400;opacity:.8;display:block;margin-top:4px}
+.btn-choice:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+
+/* ── Reveal Animation ─────────────────────────────────────────── */
+.reveal-area{margin:16px 0;min-height:80px}
+.reveal-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.reveal-card{
+  background:var(--bg2);border-radius:10px;padding:14px;text-align:center;
+  border:2px solid var(--bg3);transition:var(--transition);
+  opacity:0;transform:rotateY(90deg);
+}
+.reveal-card.shown{opacity:1;transform:rotateY(0)}
+.reveal-card .rv-name{font-size:.82rem;color:var(--text2);font-weight:600}
+.reveal-card .rv-choice{font-size:1.1rem;font-weight:800;margin:4px 0}
+.reveal-card .rv-payoff{font-size:.9rem;color:var(--text2)}
+.reveal-card.high-choice{border-color:var(--purple);background:rgba(139,92,246,.1)}
+.reveal-card.low-choice{border-color:var(--orange);background:rgba(249,115,22,.1)}
+.reveal-card .rv-choice.high{color:var(--purple)}
+.reveal-card .rv-choice.low{color:var(--orange)}
+
+.round-insight{
+  background:var(--bg2);border-radius:10px;padding:14px;margin-top:14px;
+  border-left:4px solid var(--cyan);font-size:.9rem;color:var(--text2);
+  opacity:0;transition:opacity .5s;
+}
+.round-insight.visible{opacity:1}
+.round-insight strong{color:var(--text)}
+
+.btn-next{
+  display:block;width:100%;padding:14px;margin-top:16px;
+  font-size:1rem;font-weight:700;color:#fff;border-radius:var(--radius);
+  background:var(--bg3);transition:var(--transition);
+}
+.btn-next:hover{background:var(--purple)}
+
+/* ── Score Bar Chart ──────────────────────────────────────────── */
+.bar-chart{display:flex;align-items:flex-end;gap:10px;height:120px;margin-top:14px;padding:0 20px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center}
+.bar{
+  width:100%;max-width:80px;border-radius:6px 6px 0 0;
+  transition:height .6s cubic-bezier(.4,0,.2,1);min-height:4px;
+}
+.bar.player-bar{background:var(--cyan)}
+.bar.nash-bar{background:var(--orange)}
+.bar.pareto-bar{background:var(--purple)}
+.bar-label{font-size:.75rem;color:var(--text3);margin-top:4px;text-align:center}
+.bar-value{font-size:.8rem;font-weight:700;margin-bottom:2px;text-align:center}
+
+/* ── History ──────────────────────────────────────────────────── */
+.history-section{margin-top:16px}
+.history-section h3{font-size:1rem;margin-bottom:8px;color:var(--text2)}
+.history-list{display:flex;flex-direction:column;gap:6px}
+.history-row{
+  display:grid;grid-template-columns:40px 1fr 1fr 1fr;gap:8px;
+  background:var(--bg2);border-radius:8px;padding:8px 12px;
+  font-size:.82rem;align-items:center;
+}
+.history-row .hr-round{font-weight:700;color:var(--text3)}
+.history-row .hr-cell{text-align:center;border-radius:4px;padding:2px 6px}
+.history-row .hr-cell.high{background:rgba(139,92,246,.15);color:var(--purple)}
+.history-row .hr-cell.low{background:rgba(249,115,22,.15);color:var(--orange)}
+.history-header{background:transparent!important;font-weight:700;color:var(--text3)}
+.history-header .hr-cell{background:transparent!important;color:var(--text3)!important}
+
+/* ── Cooperation Gap Meter ────────────────────────────────────── */
+.gap-meter{margin-top:14px}
+.gap-meter .gap-label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--text3);margin-bottom:4px}
+.gap-bar-bg{background:var(--bg);border-radius:6px;height:14px;overflow:hidden;position:relative}
+.gap-bar-fill{
+  height:100%;border-radius:6px;
+  background:linear-gradient(90deg,var(--red),var(--yellow),var(--green));
+  transition:width .6s ease;
+}
+
+/* ── End Screen ───────────────────────────────────────────────── */
+.end-header{text-align:center;padding:24px 0 12px}
+.end-header h1{font-size:1.8rem;font-weight:800;color:var(--text)}
+.end-header .end-sub{color:var(--text2);margin-top:4px}
+.final-scores{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.final-card{
+  background:var(--bg2);border-radius:var(--radius);padding:18px;text-align:center;
+  border:2px solid var(--bg3);
+}
+.final-card.winner{border-color:var(--yellow);box-shadow:0 0 20px rgba(250,204,21,.2)}
+.final-card .fc-name{font-size:.9rem;color:var(--text2);font-weight:600}
+.final-card .fc-score{font-size:2rem;font-weight:800;margin:4px 0}
+.final-card .fc-pareto{font-size:.78rem;color:var(--text3)}
+
+.insight-box{
+  background:var(--bg2);border-radius:var(--radius);padding:18px 22px;margin-bottom:14px;
+  border-left:4px solid var(--purple);
+}
+.insight-box h3{font-size:1rem;margin-bottom:6px}
+.insight-box p{font-size:.9rem;color:var(--text2);margin-bottom:6px}
+
+.btn-restart{
+  display:block;width:100%;padding:14px;margin-top:12px;
+  font-size:1rem;font-weight:700;color:#fff;border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--purple),var(--orange));
+  transition:var(--transition);
+}
+.btn-restart:hover{transform:translateY(-2px)}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media(max-width:600px){
+  .app{padding:10px}
+  .welcome-header h1{font-size:1.6rem}
+  .agent-cards{grid-template-columns:1fr}
+  .scores-row{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .score-card .sc-score{font-size:1.2rem}
+  .reveal-row{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .btn-choice{padding:16px 10px;font-size:1rem}
+  .history-row{grid-template-columns:32px 1fr 1fr 1fr;gap:4px;font-size:.75rem}
+  .final-scores{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .final-card .fc-score{font-size:1.5rem}
+  .bar-chart{height:90px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ═══════════════════ WELCOME SCREEN ═══════════════════ -->
+<div id="welcome-screen" class="screen active">
+  <div class="welcome-header">
+    <h1>The Cooperation Paradox</h1>
+    <div class="subtitle">Nash Equilibrium vs Pareto Efficiency</div>
+  </div>
+
+  <div class="card">
+    <h2>The Paradox</h2>
+    <p>Imagine every country at a climate summit. Each country can <span class="highlight-purple">INVEST heavily</span> in cutting emissions (costly but great for everyone) or <span class="highlight-orange">SAVE money</span> by doing the minimum (cheap but harmful collectively).</p>
+    <p style="margin-top:8px">If <em>everyone</em> invests, the planet thrives &mdash; the <span class="highlight-green">Pareto optimal</span> outcome. But each country is tempted to free-ride on others' efforts. When everyone follows that logic, no one invests &mdash; the <span class="highlight-orange">Nash equilibrium</span>, and everyone suffers.</p>
+    <p style="margin-top:8px"><strong>That is the cooperation paradox:</strong> rational self-interest leads to a collectively irrational outcome.</p>
+  </div>
+
+  <div class="card">
+    <h2>How It Works</h2>
+    <ul>
+      <li><strong>10 rounds.</strong> You play with two AI agents.</li>
+      <li>Each round, choose <span class="highlight-purple">HIGH</span> (cooperate) or <span class="highlight-orange">LOW</span> (defect).</li>
+      <li>Your payoff depends on how many players choose HIGH:</li>
+    </ul>
+    <div class="payoff-table-wrap">
+      <table class="payoff-table">
+        <thead>
+          <tr><th>Scenario</th><th>HIGH Players Get</th><th>LOW Players Get</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>All 3 HIGH</td><td>8 each <span class="pareto-label">PARETO OPTIMAL</span></td><td>&mdash;</td></tr>
+          <tr><td>2 HIGH, 1 LOW</td><td>4 each</td><td>10</td></tr>
+          <tr><td>1 HIGH, 2 LOW</td><td>1</td><td>6 each</td></tr>
+          <tr><td>All 3 LOW</td><td>&mdash;</td><td>3 each <span class="nash-label">NASH EQUILIBRIUM</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Your Opponents</h2>
+    <div class="agent-cards">
+      <div class="agent-card nash">
+        <div class="agent-avatar">I</div>
+        <div class="agent-name">Imran</div>
+        <div class="agent-role">Economics PhD Student, Lahore</div>
+        <div class="agent-desc">Rational optimizer. Believes the dominant strategy is to defect &mdash; plays Nash equilibrium. Tends toward LOW.</div>
+      </div>
+      <div class="agent-card pareto">
+        <div class="agent-avatar">R</div>
+        <div class="agent-name">Reshma</div>
+        <div class="agent-role">Development Adviser, Dhaka</div>
+        <div class="agent-desc">Pareto seeker. Tries to cooperate and build trust to reach the best collective outcome. Tends toward HIGH.</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-start" onclick="startGame()">Play the Paradox</button>
+</div>
+
+<!-- ═══════════════════ GAME SCREEN ═══════════════════ -->
+<div id="game-screen" class="screen">
+  <div class="top-bar">
+    <div class="round-badge">Round <span id="round-num">1</span> / 10</div>
+    <div style="font-size:.85rem;color:var(--text3)">
+      Cooperation Gap: <span id="coop-gap-pct" style="font-weight:700;color:var(--cyan)">0%</span>
+    </div>
+  </div>
+
+  <div class="scores-row">
+    <div class="score-card player"><div class="sc-name">You</div><div class="sc-score" id="score-player">0</div></div>
+    <div class="score-card nash-agent"><div class="sc-name">Imran</div><div class="sc-score" id="score-imran">0</div></div>
+    <div class="score-card pareto-agent"><div class="sc-name">Reshma</div><div class="sc-score" id="score-reshma">0</div></div>
+  </div>
+
+  <!-- Payoff matrix in game -->
+  <div class="card" style="padding:14px 16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <span style="font-size:.85rem;font-weight:700;color:var(--text2)">Payoff Matrix</span>
+      <span style="font-size:.72rem;color:var(--text3)">HIGH players | LOW players</span>
+    </div>
+    <div class="payoff-table-wrap" style="margin:0">
+      <table class="payoff-table" id="game-payoff-table">
+        <thead>
+          <tr><th>HIGHs</th><th>HIGH gets</th><th>LOW gets</th></tr>
+        </thead>
+        <tbody>
+          <tr id="pt-row-3"><td>3 HIGH</td><td id="pt-3h">8 <span class="pareto-label">PARETO</span></td><td>&mdash;</td></tr>
+          <tr id="pt-row-2"><td>2 HIGH</td><td id="pt-2h">4</td><td id="pt-2l">10</td></tr>
+          <tr id="pt-row-1"><td>1 HIGH</td><td id="pt-1h">1</td><td id="pt-1l">6</td></tr>
+          <tr id="pt-row-0"><td>0 HIGH</td><td>&mdash;</td><td id="pt-0l">3 <span class="nash-label">NASH</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Choice Buttons -->
+  <div class="choice-section" id="choice-section">
+    <div class="prompt">What do you choose?</div>
+    <div class="choice-btns">
+      <button class="btn-choice btn-high" id="btn-high" onclick="makeChoice('cooperate')">
+        HIGH
+        <span class="btn-sub">Cooperate / Invest</span>
+      </button>
+      <button class="btn-choice btn-low" id="btn-low" onclick="makeChoice('defect')">
+        LOW
+        <span class="btn-sub">Defect / Save</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Reveal -->
+  <div class="reveal-area" id="reveal-area" style="display:none">
+    <div class="reveal-row">
+      <div class="reveal-card" id="rv-player"><div class="rv-name">You</div><div class="rv-choice" id="rv-player-choice"></div><div class="rv-payoff" id="rv-player-payoff"></div></div>
+      <div class="reveal-card" id="rv-imran"><div class="rv-name">Imran</div><div class="rv-choice" id="rv-imran-choice"></div><div class="rv-payoff" id="rv-imran-payoff"></div></div>
+      <div class="reveal-card" id="rv-reshma"><div class="rv-name">Reshma</div><div class="rv-choice" id="rv-reshma-choice"></div><div class="rv-payoff" id="rv-reshma-payoff"></div></div>
+    </div>
+    <div class="round-insight" id="round-insight"></div>
+  </div>
+
+  <!-- Bar Chart -->
+  <div class="card" style="padding:14px 16px">
+    <div style="font-size:.85rem;font-weight:700;color:var(--text2);margin-bottom:2px">Score Tracker</div>
+    <div class="bar-chart" id="bar-chart">
+      <div class="bar-wrap"><div class="bar-value" id="bv-player" style="color:var(--cyan)">0</div><div class="bar player-bar" id="bar-player" style="height:4px"></div><div class="bar-label">You</div></div>
+      <div class="bar-wrap"><div class="bar-value" id="bv-imran" style="color:var(--orange)">0</div><div class="bar nash-bar" id="bar-imran" style="height:4px"></div><div class="bar-label">Imran</div></div>
+      <div class="bar-wrap"><div class="bar-value" id="bv-reshma" style="color:var(--purple)">0</div><div class="bar pareto-bar" id="bar-reshma" style="height:4px"></div><div class="bar-label">Reshma</div></div>
+    </div>
+    <!-- Cooperation Gap -->
+    <div class="gap-meter">
+      <div class="gap-label"><span>Cooperation Gap</span><span id="gap-detail">0 / 240 max</span></div>
+      <div class="gap-bar-bg"><div class="gap-bar-fill" id="gap-bar-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="history-section" id="history-section" style="display:none">
+    <h3>Round History</h3>
+    <div class="history-list" id="history-list">
+      <div class="history-row history-header">
+        <div class="hr-round">#</div>
+        <div class="hr-cell">You</div>
+        <div class="hr-cell">Imran</div>
+        <div class="hr-cell">Reshma</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Next Button -->
+  <button class="btn-next" id="btn-next" style="display:none" onclick="nextRound()">Next Round</button>
+</div>
+
+<!-- ═══════════════════ END SCREEN ═══════════════════ -->
+<div id="end-screen" class="screen">
+  <div class="end-header">
+    <h1>Game Over</h1>
+    <div class="end-sub" id="end-sub"></div>
+  </div>
+
+  <div class="final-scores" id="final-scores"></div>
+
+  <div class="card">
+    <div style="font-size:.85rem;font-weight:700;color:var(--text2);margin-bottom:4px">Final Score Chart</div>
+    <div class="bar-chart" id="final-bar-chart" style="height:140px"></div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:.85rem;font-weight:700;color:var(--text2);margin-bottom:4px">Cooperation Efficiency</div>
+    <div class="gap-meter">
+      <div class="gap-label"><span>Actual total vs Pareto maximum (240)</span><span id="final-gap-detail"></span></div>
+      <div class="gap-bar-bg" style="height:18px"><div class="gap-bar-fill" id="final-gap-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div id="end-insights"></div>
+
+  <div class="insight-box" style="border-left-color:var(--cyan)">
+    <h3>Why This Matters</h3>
+    <p><strong>Climate agreements:</strong> Every country benefits from low emissions, but cutting emissions is costly. The Paris Agreement works to shift the game from Nash (pollute freely) toward Pareto (cooperate to limit warming).</p>
+    <p><strong>Trade negotiations:</strong> Tariff wars arise when each country protects its own industries. Free trade is Pareto-superior, but unilateral free trade is risky &mdash; the same cooperation paradox.</p>
+    <p><strong>Public health:</strong> Vaccination is HIGH. If everyone vaccinates, herd immunity protects all (Pareto). But each person is tempted to skip the vaccine and free-ride on others' immunity (Nash).</p>
+    <p style="margin-top:8px;color:var(--text)"><strong>The lesson:</strong> Institutions, trust, repeated interaction, and communication can help groups escape the Nash trap and reach Pareto-superior outcomes.</p>
+  </div>
+
+  <!-- Full history at end -->
+  <div class="history-section">
+    <h3>Full History</h3>
+    <div class="history-list" id="end-history-list">
+      <div class="history-row history-header">
+        <div class="hr-round">#</div>
+        <div class="hr-cell">You</div>
+        <div class="hr-cell">Imran</div>
+        <div class="hr-cell">Reshma</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-restart" onclick="restartGame()">Play Again</button>
+</div>
+
+</div><!-- /.app -->
+
+<script src="/js/game-agents.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ── State ──────────────────────────────────────────── */
+var TOTAL_ROUNDS = 10;
+var PARETO_MAX = TOTAL_ROUNDS * 8 * 3; // 240
+
+var state = {
+  round: 1,
+  scores: { player: 0, imran: 0, reshma: 0 },
+  history: [],       // array of { round, player, imran, reshma, payoffs }
+  agentHistory: [],  // formatted for the agent API
+  waiting: false
+};
+
+var agents;
+try {
+  agents = new IMGameAgents('cooperation-paradox-game');
+} catch(e) {
+  console.warn('IMGameAgents not available, using fallback');
+  agents = null;
+}
+
+/* ── Payoff Logic ───────────────────────────────────── */
+// choices: array of 'cooperate'|'defect' for [player, imran, reshma]
+function computePayoffs(choices) {
+  var highCount = 0;
+  for (var i = 0; i < choices.length; i++) {
+    if (choices[i] === 'cooperate') highCount++;
+  }
+  var payoffs = [];
+  for (var j = 0; j < choices.length; j++) {
+    if (highCount === 3) payoffs.push(8);
+    else if (highCount === 2) payoffs.push(choices[j] === 'cooperate' ? 4 : 10);
+    else if (highCount === 1) payoffs.push(choices[j] === 'cooperate' ? 1 : 6);
+    else payoffs.push(3);
+  }
+  return { payoffs: payoffs, highCount: highCount };
+}
+
+/* ── Screen Management ──────────────────────────────── */
+function showScreen(id) {
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Start Game ─────────────────────────────────────── */
+window.startGame = function() {
+  state = { round: 1, scores: { player: 0, imran: 0, reshma: 0 }, history: [], agentHistory: [], waiting: false };
+  showScreen('game-screen');
+  updateUI();
+  resetRoundUI();
+};
+
+/* ── Make Choice ────────────────────────────────────── */
+window.makeChoice = function(playerChoice) {
+  if (state.waiting) return;
+  state.waiting = true;
+  var btnH = document.getElementById('btn-high');
+  var btnL = document.getElementById('btn-low');
+  btnH.disabled = true;
+  btnL.disabled = true;
+
+  getAgentDecisions(function(imranChoice, reshmaChoice) {
+    var choices = [playerChoice, imranChoice, reshmaChoice];
+    var result = computePayoffs(choices);
+
+    state.scores.player += result.payoffs[0];
+    state.scores.imran += result.payoffs[1];
+    state.scores.reshma += result.payoffs[2];
+
+    var roundData = {
+      round: state.round,
+      player: playerChoice,
+      imran: imranChoice,
+      reshma: reshmaChoice,
+      payoffs: { player: result.payoffs[0], imran: result.payoffs[1], reshma: result.payoffs[2] },
+      highCount: result.highCount
+    };
+    state.history.push(roundData);
+
+    // Build agent-API history entry
+    var agentActions = {};
+    agentActions['cp-nash-player'] = { action: imranChoice, amount: null };
+    agentActions['cp-pareto-seeker'] = { action: reshmaChoice, amount: null };
+    state.agentHistory.push({
+      round: state.round,
+      player_action: playerChoice,
+      agent_actions: agentActions
+    });
+
+    revealChoices(roundData, result);
+    updateUI();
+    highlightPayoffRow(result.highCount);
+  });
+  };
+
+/* ── Agent Decisions ────────────────────────────────── */
+function getAgentDecisions(callback) {
+  if (agents) {
+    agents.getAllDecisions({
+      round: state.round,
+      totalRounds: TOTAL_ROUNDS,
+      history: state.agentHistory,
+      availableActions: ['cooperate', 'defect'],
+      context: {}
+    }).then(function(decisions) {
+      var imranChoice = (decisions['cp-nash-player'] && decisions['cp-nash-player'].action) || fallbackImran();
+      var reshmaChoice = (decisions['cp-pareto-seeker'] && decisions['cp-pareto-seeker'].action) || fallbackReshma();
+      callback(imranChoice, reshmaChoice);
+    }).catch(function() {
+      callback(fallbackImran(), fallbackReshma());
+    });
+  } else {
+    callback(fallbackImran(), fallbackReshma());
+  }
+}
+
+function fallbackImran() {
+  // Nash player: ~30% cooperate, less in later rounds
+  var prob = 0.3;
+  if (state.round > 7) prob = 0.15;
+  if (state.history.length > 0 && state.history[state.history.length - 1].player === 'defect') prob -= 0.1;
+  return Math.random() < Math.max(0.05, prob) ? 'cooperate' : 'defect';
+}
+
+function fallbackReshma() {
+  // Pareto seeker: ~80% cooperate, reduces if exploited
+  var prob = 0.82;
+  if (state.history.length > 0) {
+    var last = state.history[state.history.length - 1];
+    if (last.player === 'defect' && last.imran === 'defect') prob -= 0.25;
+    else if (last.player === 'defect') prob -= 0.12;
+  }
+  if (state.round > 8) prob -= 0.1;
+  return Math.random() < Math.max(0.15, prob) ? 'cooperate' : 'defect';
+}
+
+/* ── Reveal Animation ───────────────────────────────── */
+function revealChoices(roundData, result) {
+  var area = document.getElementById('reveal-area');
+  area.style.display = 'block';
+  document.getElementById('choice-section').style.display = 'none';
+
+  var cards = [
+    { el: 'rv-player', choiceEl: 'rv-player-choice', payoffEl: 'rv-player-payoff', choice: roundData.player, payoff: result.payoffs[0] },
+    { el: 'rv-imran', choiceEl: 'rv-imran-choice', payoffEl: 'rv-imran-payoff', choice: roundData.imran, payoff: result.payoffs[1] },
+    { el: 'rv-reshma', choiceEl: 'rv-reshma-choice', payoffEl: 'rv-reshma-payoff', choice: roundData.reshma, payoff: result.payoffs[2] }
+  ];
+
+  // Reset cards
+  for (var i = 0; i < cards.length; i++) {
+    var card = document.getElementById(cards[i].el);
+    card.classList.remove('shown', 'high-choice', 'low-choice');
+    document.getElementById(cards[i].choiceEl).textContent = '';
+    document.getElementById(cards[i].payoffEl).textContent = '';
+  }
+
+  // Staggered reveal
+  cards.forEach(function(c, idx) {
+    setTimeout(function() {
+      var card = document.getElementById(c.el);
+      var isHigh = c.choice === 'cooperate';
+      card.classList.add('shown', isHigh ? 'high-choice' : 'low-choice');
+      var choiceEl = document.getElementById(c.choiceEl);
+      choiceEl.textContent = isHigh ? 'HIGH' : 'LOW';
+      choiceEl.className = 'rv-choice ' + (isHigh ? 'high' : 'low');
+      document.getElementById(c.payoffEl).textContent = '+' + c.payoff + ' points';
+    }, 300 + idx * 400);
+  });
+
+  // Show insight
+  setTimeout(function() {
+    showRoundInsight(roundData, result);
+    addHistoryRow(roundData);
+    document.getElementById('btn-next').style.display = 'block';
+  }, 300 + cards.length * 400 + 200);
+}
+
+function showRoundInsight(roundData, result) {
+  var insightEl = document.getElementById('round-insight');
+  var msg = '';
+  if (result.highCount === 3) {
+    msg = '<strong>Pareto optimal!</strong> Everyone cooperated. This is the best possible collective outcome &mdash; 24 points generated this round.';
+  } else if (result.highCount === 0) {
+    msg = '<strong>Nash equilibrium.</strong> Everyone defected. Individually "rational," but the group only generated 9 points instead of a possible 24.';
+  } else if (result.highCount === 2) {
+    var freeRider = roundData.player === 'defect' ? 'You' : (roundData.imran === 'defect' ? 'Imran' : 'Reshma');
+    msg = '<strong>' + freeRider + ' free-rode</strong> on the cooperators, earning 10 while they got only 4 each. The temptation to defect is real.';
+  } else {
+    var sucker = roundData.player === 'cooperate' ? 'You' : (roundData.imran === 'cooperate' ? 'Imran' : 'Reshma');
+    msg = '<strong>' + sucker + ' cooperated alone</strong> and got exploited (1 point). This is the sucker\'s payoff &mdash; the risk of trusting when others don\'t.';
+  }
+  insightEl.innerHTML = msg;
+  insightEl.classList.add('visible');
+}
+
+/* ── Highlight Payoff Table Row ─────────────────────── */
+function highlightPayoffRow(highCount) {
+  var rows = ['pt-row-0', 'pt-row-1', 'pt-row-2', 'pt-row-3'];
+  // Clear all
+  for (var i = 0; i < rows.length; i++) {
+    var cells = document.getElementById(rows[i]).querySelectorAll('td');
+    for (var j = 0; j < cells.length; j++) cells[j].classList.remove('active-cell');
+  }
+  // Highlight matching row
+  var rowId = 'pt-row-' + highCount;
+  var activeCells = document.getElementById(rowId).querySelectorAll('td');
+  for (var k = 0; k < activeCells.length; k++) activeCells[k].classList.add('active-cell');
+}
+
+/* ── Add History Row ────────────────────────────────── */
+function addHistoryRow(roundData) {
+  var section = document.getElementById('history-section');
+  section.style.display = 'block';
+  var list = document.getElementById('history-list');
+  var row = document.createElement('div');
+  row.className = 'history-row';
+  row.innerHTML =
+    '<div class="hr-round">' + roundData.round + '</div>' +
+    '<div class="hr-cell ' + (roundData.player === 'cooperate' ? 'high' : 'low') + '">' +
+      (roundData.player === 'cooperate' ? 'HIGH +' : 'LOW +') + roundData.payoffs.player + '</div>' +
+    '<div class="hr-cell ' + (roundData.imran === 'cooperate' ? 'high' : 'low') + '">' +
+      (roundData.imran === 'cooperate' ? 'HIGH +' : 'LOW +') + roundData.payoffs.imran + '</div>' +
+    '<div class="hr-cell ' + (roundData.reshma === 'cooperate' ? 'high' : 'low') + '">' +
+      (roundData.reshma === 'cooperate' ? 'HIGH +' : 'LOW +') + roundData.payoffs.reshma + '</div>';
+  list.appendChild(row);
+}
+
+/* ── Update UI ──────────────────────────────────────── */
+function updateUI() {
+  document.getElementById('round-num').textContent = state.round;
+  document.getElementById('score-player').textContent = state.scores.player;
+  document.getElementById('score-imran').textContent = state.scores.imran;
+  document.getElementById('score-reshma').textContent = state.scores.reshma;
+
+  // Bar chart
+  var maxScore = Math.max(state.scores.player, state.scores.imran, state.scores.reshma, 1);
+  var chartHeight = 120;
+  setBars('bar-player', 'bv-player', state.scores.player, maxScore, chartHeight);
+  setBars('bar-imran', 'bv-imran', state.scores.imran, maxScore, chartHeight);
+  setBars('bar-reshma', 'bv-reshma', state.scores.reshma, maxScore, chartHeight);
+
+  // Cooperation gap
+  var totalEarned = state.scores.player + state.scores.imran + state.scores.reshma;
+  var maxSoFar = state.round <= TOTAL_ROUNDS ? state.history.length * 24 : PARETO_MAX;
+  if (maxSoFar === 0) maxSoFar = PARETO_MAX;
+  var pct = Math.round((totalEarned / maxSoFar) * 100);
+  document.getElementById('coop-gap-pct').textContent = pct + '%';
+  document.getElementById('gap-detail').textContent = totalEarned + ' / ' + maxSoFar + ' max';
+  document.getElementById('gap-bar-fill').style.width = pct + '%';
+}
+
+function setBars(barId, valId, score, maxScore, chartHeight) {
+  var h = maxScore > 0 ? Math.max(4, (score / maxScore) * chartHeight) : 4;
+  document.getElementById(barId).style.height = h + 'px';
+  document.getElementById(valId).textContent = score;
+}
+
+function resetRoundUI() {
+  document.getElementById('choice-section').style.display = 'block';
+  document.getElementById('reveal-area').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('round-insight').classList.remove('visible');
+  document.getElementById('btn-high').disabled = false;
+  document.getElementById('btn-low').disabled = false;
+  // Clear payoff highlights
+  var allCells = document.getElementById('game-payoff-table').querySelectorAll('td');
+  for (var i = 0; i < allCells.length; i++) allCells[i].classList.remove('active-cell');
+}
+
+/* ── Next Round ─────────────────────────────────────── */
+window.nextRound = function() {
+  state.round++;
+  state.waiting = false;
+  if (state.round > TOTAL_ROUNDS) {
+    showEndScreen();
+    return;
+  }
+  updateUI();
+  resetRoundUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+/* ── End Screen ─────────────────────────────────────── */
+function showEndScreen() {
+  showScreen('end-screen');
+
+  var scores = state.scores;
+  var entries = [
+    { name: 'You', key: 'player', color: 'var(--cyan)' },
+    { name: 'Imran', key: 'imran', color: 'var(--orange)' },
+    { name: 'Reshma', key: 'reshma', color: 'var(--purple)' }
+  ];
+
+  // Find winner
+  var maxS = Math.max(scores.player, scores.imran, scores.reshma);
+  var paretoPerPlayer = TOTAL_ROUNDS * 8;
+  var totalEarned = scores.player + scores.imran + scores.reshma;
+
+  // Sub header
+  var subEl = document.getElementById('end-sub');
+  if (scores.player === maxS) subEl.textContent = 'You finished on top!';
+  else if (scores.player >= maxS - 5) subEl.textContent = 'Close game!';
+  else subEl.textContent = (scores.imran > scores.reshma ? 'Imran' : 'Reshma') + ' finished on top.';
+
+  // Final score cards
+  var container = document.getElementById('final-scores');
+  container.innerHTML = '';
+  entries.forEach(function(e) {
+    var s = scores[e.key];
+    var card = document.createElement('div');
+    card.className = 'final-card' + (s === maxS ? ' winner' : '');
+    card.innerHTML =
+      '<div class="fc-name">' + e.name + '</div>' +
+      '<div class="fc-score" style="color:' + e.color + '">' + s + '</div>' +
+      '<div class="fc-pareto">' + Math.round((s / paretoPerPlayer) * 100) + '% of Pareto max (' + paretoPerPlayer + ')</div>';
+    container.appendChild(card);
+  });
+
+  // Final bar chart
+  var finalChart = document.getElementById('final-bar-chart');
+  finalChart.innerHTML = '';
+  var maxFinal = Math.max(scores.player, scores.imran, scores.reshma, 1);
+  entries.forEach(function(e) {
+    var s = scores[e.key];
+    var h = Math.max(4, (s / maxFinal) * 140);
+    var classes = e.key === 'player' ? 'player-bar' : (e.key === 'imran' ? 'nash-bar' : 'pareto-bar');
+    var wrap = document.createElement('div');
+    wrap.className = 'bar-wrap';
+    wrap.innerHTML =
+      '<div class="bar-value" style="color:' + e.color + '">' + s + '</div>' +
+      '<div class="bar ' + classes + '" style="height:' + h + 'px"></div>' +
+      '<div class="bar-label">' + e.name + '</div>';
+    finalChart.appendChild(wrap);
+  });
+
+  // Cooperation gap
+  var gapPct = Math.round((totalEarned / PARETO_MAX) * 100);
+  document.getElementById('final-gap-detail').textContent = totalEarned + ' / ' + PARETO_MAX + ' (' + gapPct + '%)';
+  document.getElementById('final-gap-bar').style.width = gapPct + '%';
+
+  // Insights
+  var insightsEl = document.getElementById('end-insights');
+  insightsEl.innerHTML = '';
+
+  // Count cooperation rates
+  var playerHighs = 0, imranHighs = 0, reshmaHighs = 0, paretoRounds = 0, nashRounds = 0;
+  state.history.forEach(function(r) {
+    if (r.player === 'cooperate') playerHighs++;
+    if (r.imran === 'cooperate') imranHighs++;
+    if (r.reshma === 'cooperate') reshmaHighs++;
+    if (r.highCount === 3) paretoRounds++;
+    if (r.highCount === 0) nashRounds++;
+  });
+
+  var lostPoints = PARETO_MAX - totalEarned;
+
+  var insightHTML = '<div class="insight-box"><h3>Your Results</h3>';
+  insightHTML += '<p>You chose HIGH in <strong>' + playerHighs + '/' + TOTAL_ROUNDS + '</strong> rounds. ';
+  insightHTML += 'Imran chose HIGH in <strong>' + imranHighs + '/' + TOTAL_ROUNDS + '</strong>. ';
+  insightHTML += 'Reshma chose HIGH in <strong>' + reshmaHighs + '/' + TOTAL_ROUNDS + '</strong>.</p>';
+  insightHTML += '<p>The group achieved Pareto optimality in <strong>' + paretoRounds + '</strong> round' + (paretoRounds !== 1 ? 's' : '') + ' ';
+  insightHTML += 'and fell to Nash equilibrium in <strong>' + nashRounds + '</strong> round' + (nashRounds !== 1 ? 's' : '') + '.</p>';
+  insightHTML += '<p><strong>Cooperation Gap:</strong> The group earned <strong>' + totalEarned + '</strong> out of a possible <strong>' + PARETO_MAX + '</strong> points. ';
+  insightHTML += 'That is <strong>' + lostPoints + ' points lost</strong> to the cooperation paradox &mdash; ';
+  insightHTML += 'a <strong>' + (100 - gapPct) + '% efficiency loss</strong> from what was achievable with full cooperation.</p>';
+  insightHTML += '</div>';
+
+  // Strategic insight
+  insightHTML += '<div class="insight-box" style="border-left-color:var(--orange)"><h3>The Paradox in Action</h3>';
+  if (gapPct >= 90) {
+    insightHTML += '<p>Remarkable cooperation! Your group came very close to the Pareto optimum. In real life, this is rare without binding agreements or strong trust &mdash; you demonstrated what\'s possible when players resist the temptation to defect.</p>';
+  } else if (gapPct >= 70) {
+    insightHTML += '<p>Decent cooperation, but the gap is real. Even with good intentions, the temptation to defect eroded collective welfare. This mirrors real climate negotiations &mdash; countries agree on targets but actual commitments fall short.</p>';
+  } else if (gapPct >= 50) {
+    insightHTML += '<p>The paradox hit hard. Despite knowing that cooperation is better for everyone, rational self-interest pulled the group toward defection. This is exactly the trap that makes global challenges like climate change so difficult.</p>';
+  } else {
+    insightHTML += '<p>The group was caught deep in the Nash trap. When trust breaks down, everyone defects, and everyone suffers. This is the Tragedy of Rational Choice &mdash; the math says defect, and following the math makes everyone worse off.</p>';
+  }
+  insightHTML += '</div>';
+
+  insightsEl.innerHTML = insightHTML;
+
+  // End history
+  var endList = document.getElementById('end-history-list');
+  // Clear previous rows (keep header)
+  while (endList.children.length > 1) endList.removeChild(endList.lastChild);
+  state.history.forEach(function(r) {
+    var row = document.createElement('div');
+    row.className = 'history-row';
+    row.innerHTML =
+      '<div class="hr-round">' + r.round + '</div>' +
+      '<div class="hr-cell ' + (r.player === 'cooperate' ? 'high' : 'low') + '">' +
+        (r.player === 'cooperate' ? 'HIGH +' : 'LOW +') + r.payoffs.player + '</div>' +
+      '<div class="hr-cell ' + (r.imran === 'cooperate' ? 'high' : 'low') + '">' +
+        (r.imran === 'cooperate' ? 'HIGH +' : 'LOW +') + r.payoffs.imran + '</div>' +
+      '<div class="hr-cell ' + (r.reshma === 'cooperate' ? 'high' : 'low') + '">' +
+        (r.reshma === 'cooperate' ? 'HIGH +' : 'LOW +') + r.payoffs.reshma + '</div>';
+    endList.appendChild(row);
+  });
+}
+
+/* ── Restart ─────────────────────────────────────────── */
+window.restartGame = function() {
+  // Clear game history UI
+  var list = document.getElementById('history-list');
+  while (list.children.length > 1) list.removeChild(list.lastChild);
+  document.getElementById('history-section').style.display = 'none';
+  startGame();
+};
+
+})();
+</script>
+</body>
+</html>

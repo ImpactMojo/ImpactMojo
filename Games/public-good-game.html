@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Public Good Game | ImpactMojo</title>
+<style>
+/* ── Reset & Base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #0F172A;
+  color: #E2E8F0;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Utility ────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.5s ease-out forwards; }
+.fade-up { animation: fadeUp 0.6s ease-out forwards; }
+.scale-in { animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes countUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDown { from { opacity: 0; max-height: 0; } to { opacity: 1; max-height: 800px; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ── Screen: Welcome ────────────────────────────────────────── */
+#welcome-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.welcome-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.welcome-header .tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #F59E0B22, #F59E0B11);
+  border: 1px solid #F59E0B44;
+  color: #F59E0B;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+
+.welcome-header h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #F8FAFC, #94A3B8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.welcome-header p {
+  font-size: 1.1rem;
+  color: #94A3B8;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.concept-card {
+  background: linear-gradient(135deg, #1E293B, #1a2436);
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.concept-card h3 {
+  color: #F59E0B;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.concept-card p {
+  color: #CBD5E1;
+  font-size: 0.95rem;
+}
+
+.concept-card .rules {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.concept-card .rule {
+  background: #0F172A;
+  border-radius: 10px;
+  padding: 0.85rem;
+  text-align: center;
+}
+
+.concept-card .rule .num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #F59E0B;
+}
+
+.concept-card .rule .label {
+  font-size: 0.78rem;
+  color: #94A3B8;
+  margin-top: 0.15rem;
+}
+
+/* Agent cards on welcome */
+.agents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto 2.5rem;
+}
+
+.agent-intro-card {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 1.25rem;
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.agent-intro-card:hover {
+  transform: translateY(-4px);
+  border-color: #475569;
+}
+
+.agent-intro-card .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #0F172A;
+  margin-bottom: 0.75rem;
+}
+
+.agent-intro-card .name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #F8FAFC;
+}
+
+.agent-intro-card .role {
+  font-size: 0.8rem;
+  color: #F59E0B;
+  margin-bottom: 0.1rem;
+}
+
+.agent-intro-card .location {
+  font-size: 0.75rem;
+  color: #64748B;
+  margin-bottom: 0.6rem;
+}
+
+.agent-intro-card .desc {
+  font-size: 0.82rem;
+  color: #94A3B8;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  color: #0F172A;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.9rem 2.5rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px #F59E0B33;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px #F59E0B44;
+}
+
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #1E293B;
+  color: #E2E8F0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.8rem;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #273449;
+  border-color: #475569;
+}
+
+.start-container { text-align: center; }
+
+/* ── Screen: Game ───────────────────────────────────────────── */
+#game-screen {
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+
+/* Top bar */
+.top-bar {
+  background: #1E293B;
+  border-bottom: 1px solid #334155;
+  padding: 0.85rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.top-bar-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.top-bar .stat {
+  text-align: center;
+}
+
+.top-bar .stat .label {
+  font-size: 0.7rem;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.top-bar .stat .value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #F8FAFC;
+}
+
+.top-bar .stat .value.amber { color: #F59E0B; }
+.top-bar .stat .value.emerald { color: #10B981; }
+
+/* Agent panel */
+.agent-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin: 1.25rem auto;
+  max-width: 960px;
+  padding: 0 1rem;
+}
+
+.agent-card {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.agent-card.highlight {
+  border-color: #F59E0B;
+  box-shadow: 0 0 20px #F59E0B22;
+}
+
+.agent-card .avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #0F172A;
+  margin: 0 auto 0.5rem;
+}
+
+.agent-card .name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #F8FAFC;
+}
+
+.agent-card .archetype {
+  font-size: 0.7rem;
+  color: #64748B;
+  margin-bottom: 0.4rem;
+}
+
+.agent-card .last-action {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #94A3B8;
+  min-height: 1.4em;
+}
+
+.agent-card .earnings {
+  font-size: 0.75rem;
+  color: #64748B;
+  margin-top: 0.25rem;
+}
+
+/* Contribution area */
+.contribution-area {
+  max-width: 600px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.contribution-card {
+  background: linear-gradient(135deg, #1E293B, #1a2436);
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.contribution-card h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 0.5rem;
+}
+
+.contribution-card .subtitle {
+  font-size: 0.9rem;
+  color: #64748B;
+  margin-bottom: 1.5rem;
+}
+
+.slider-container {
+  position: relative;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #64748B;
+  margin-bottom: 0.5rem;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #EF4444, #F59E0B 50%, #10B981);
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #F8FAFC;
+  border: 3px solid #F59E0B;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #F8FAFC;
+  border: 3px solid #F59E0B;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
+.preview {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1.25rem 0;
+}
+
+.preview .item {
+  text-align: center;
+}
+
+.preview .item .amount {
+  font-size: 2rem;
+  font-weight: 800;
+  transition: all 0.15s;
+}
+
+.preview .item .amount.contribute { color: #10B981; }
+.preview .item .amount.keep { color: #F59E0B; }
+
+.preview .item .lbl {
+  font-size: 0.8rem;
+  color: #64748B;
+}
+
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: #FFF;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 0.85rem 2.5rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px #10B98133;
+  min-width: 200px;
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px #10B98144;
+}
+
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-submit.loading::after {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fff4;
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* Results overlay */
+.results-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0F172Aee;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.results-card {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.results-card h2 {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 1.25rem;
+  color: #F8FAFC;
+}
+
+.results-pot {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.results-pot .flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.results-pot .flow .box {
+  background: #0F172A;
+  border-radius: 12px;
+  padding: 0.8rem 1.2rem;
+  text-align: center;
+}
+
+.results-pot .flow .box .num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #F59E0B;
+}
+
+.results-pot .flow .box .lbl {
+  font-size: 0.72rem;
+  color: #64748B;
+}
+
+.results-pot .flow .arrow {
+  font-size: 1.4rem;
+  color: #475569;
+}
+
+.results-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #0F172A;
+  border-radius: 10px;
+  padding: 0.65rem 0.85rem;
+  animation: fadeUp 0.5s ease-out both;
+}
+
+.result-row:nth-child(2) { animation-delay: 0.08s; }
+.result-row:nth-child(3) { animation-delay: 0.16s; }
+.result-row:nth-child(4) { animation-delay: 0.24s; }
+.result-row:nth-child(5) { animation-delay: 0.32s; }
+
+.result-row .avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #0F172A;
+  flex-shrink: 0;
+}
+
+.result-row .info { flex: 1; }
+.result-row .info .nm { font-weight: 600; font-size: 0.88rem; color: #F8FAFC; }
+.result-row .info .detail { font-size: 0.75rem; color: #64748B; }
+
+.result-row .earned {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #10B981;
+}
+
+.results-insight {
+  background: linear-gradient(135deg, #F59E0B11, #F59E0B08);
+  border: 1px solid #F59E0B33;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.results-insight .title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #F59E0B;
+  margin-bottom: 0.3rem;
+}
+
+.results-insight p {
+  font-size: 0.85rem;
+  color: #CBD5E1;
+  line-height: 1.55;
+}
+
+.results-card .btn-container { text-align: center; }
+
+/* History panel */
+.history-section {
+  max-width: 960px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.history-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: #94A3B8;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+
+.history-toggle:hover { color: #F8FAFC; }
+
+.history-toggle .chevron {
+  transition: transform 0.3s;
+  font-size: 0.75rem;
+}
+
+.history-toggle.open .chevron { transform: rotate(180deg); }
+
+.history-table-wrap {
+  overflow-x: auto;
+  margin-top: 0.75rem;
+  animation: slideDown 0.4s ease-out;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.history-table th {
+  background: #1E293B;
+  color: #94A3B8;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid #334155;
+  white-space: nowrap;
+}
+
+.history-table td {
+  text-align: center;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid #1E293B;
+  color: #CBD5E1;
+}
+
+.history-table tr:hover td { background: #1E293B44; }
+
+.history-table .high { color: #10B981; font-weight: 600; }
+.history-table .low { color: #EF4444; font-weight: 600; }
+.history-table .mid { color: #F59E0B; font-weight: 600; }
+
+/* ── Screen: End ────────────────────────────────────────────── */
+#end-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.end-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.end-header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #F8FAFC;
+  margin-bottom: 0.5rem;
+}
+
+.end-header p {
+  color: #94A3B8;
+  font-size: 1rem;
+}
+
+.standings {
+  max-width: 560px;
+  margin: 0 auto 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.standing-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  animation: fadeUp 0.5s ease-out both;
+}
+
+.standing-row:nth-child(1) { animation-delay: 0.1s; }
+.standing-row:nth-child(2) { animation-delay: 0.2s; }
+.standing-row:nth-child(3) { animation-delay: 0.3s; }
+.standing-row:nth-child(4) { animation-delay: 0.4s; }
+.standing-row:nth-child(5) { animation-delay: 0.5s; }
+
+.standing-row.first {
+  border-color: #F59E0B;
+  background: linear-gradient(135deg, #1E293B, #2a2520);
+}
+
+.standing-row .rank {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #475569;
+  width: 2rem;
+  text-align: center;
+}
+
+.standing-row.first .rank { color: #F59E0B; }
+
+.standing-row .avatar-sm {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #0F172A;
+  flex-shrink: 0;
+}
+
+.standing-row .info { flex: 1; }
+.standing-row .info .nm { font-weight: 700; font-size: 1rem; color: #F8FAFC; }
+.standing-row .info .detail { font-size: 0.78rem; color: #64748B; }
+
+.standing-row .total {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #10B981;
+}
+
+.standing-row.is-player .nm { color: #F59E0B; }
+
+/* Insights cards */
+.end-insights {
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.insight-card {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+
+.insight-card h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.insight-card h3.red { color: #EF4444; }
+.insight-card h3.emerald { color: #10B981; }
+.insight-card h3.amber { color: #F59E0B; }
+.insight-card h3.blue { color: #3B82F6; }
+
+.insight-card p {
+  font-size: 0.85rem;
+  color: #94A3B8;
+  line-height: 1.55;
+}
+
+.end-actions { text-align: center; }
+
+/* ── Tooltip ────────────────────────────────────────────────── */
+.info-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #334155;
+  color: #94A3B8;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: help;
+  position: relative;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.info-tip .tip-text {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0F172A;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #CBD5E1;
+  width: 240px;
+  line-height: 1.5;
+  z-index: 300;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.info-tip:hover .tip-text,
+.info-tip:focus .tip-text { display: block; }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .agent-panel { grid-template-columns: repeat(2, 1fr); }
+  .agents-grid { grid-template-columns: 1fr 1fr; }
+  .concept-card .rules { grid-template-columns: 1fr 1fr; }
+  .end-insights { grid-template-columns: 1fr; }
+  .preview { gap: 1.25rem; }
+  .preview .item .amount { font-size: 1.5rem; }
+  .results-pot .flow { gap: 0.5rem; }
+  .results-pot .flow .box .num { font-size: 1.2rem; }
+}
+
+@media (max-width: 480px) {
+  .agent-panel { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .agents-grid { grid-template-columns: 1fr; }
+  .top-bar-inner { justify-content: center; gap: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     WELCOME SCREEN
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="welcome-screen">
+  <div class="container">
+    <div class="welcome-header fade-in">
+      <div class="tag">Economics Simulation</div>
+      <h1>The Public Good Game</h1>
+      <p>Can a group of strangers cooperate for the common good, or will self-interest prevail? Experience the free-rider problem firsthand.</p>
+    </div>
+
+    <div class="concept-card fade-up" style="animation-delay:0.15s">
+      <h3>
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#F59E0B" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        How It Works
+      </h3>
+      <p>Each round, you and 4 AI players each receive <strong style="color:#F59E0B">100 tokens</strong>. Decide how many to contribute to a shared pot. The pot is <strong style="color:#10B981">multiplied by 1.6x</strong> then split equally among all 5 players. Keep what you don't contribute.</p>
+      <div class="rules">
+        <div class="rule"><div class="num">10</div><div class="label">Rounds</div></div>
+        <div class="rule"><div class="num">5</div><div class="label">Players</div></div>
+        <div class="rule"><div class="num">1.6x</div><div class="label">Multiplier</div></div>
+        <div class="rule"><div class="num">100</div><div class="label">Tokens / Round</div></div>
+      </div>
+    </div>
+
+    <div id="agents-grid" class="agents-grid">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="start-container fade-up" style="animation-delay:0.5s">
+      <button class="btn-primary" onclick="startGame()">Start Game</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     GAME SCREEN
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="game-screen" class="hidden">
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="stat">
+        <div class="label">Round</div>
+        <div class="value amber" id="round-display">1 / 10</div>
+      </div>
+      <div class="stat">
+        <div class="label">Your Earnings</div>
+        <div class="value emerald" id="earnings-display">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Avg Contribution</div>
+        <div class="value" id="avg-display">--</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agent panel -->
+  <div class="agent-panel" id="agent-panel">
+    <!-- filled by JS -->
+  </div>
+
+  <!-- Contribution input -->
+  <div class="contribution-area" id="contribution-area">
+    <div class="contribution-card">
+      <h2>Your Contribution
+        <span class="info-tip" tabindex="0">?
+          <span class="tip-text"><strong>Public Good:</strong> A resource everyone benefits from, regardless of who pays. The multiplier (1.6x) means the group earns more when everyone contributes, but any individual can profit by free-riding on others' contributions.</span>
+        </span>
+      </h2>
+      <p class="subtitle">How many of your 100 tokens will you put in the public pot?
+        <span class="info-tip" tabindex="0">?
+          <span class="tip-text"><strong>The Multiplier:</strong> All contributions are pooled and multiplied by 1.6, then split 5 ways. If everyone puts in 100, each gets back 160. But if only you contribute 100 and others contribute 0, you get back only 32 while keeping nothing.</span>
+        </span>
+      </p>
+
+      <div class="slider-container">
+        <div class="slider-labels">
+          <span>Keep all (0)</span>
+          <span>Give all (100)</span>
+        </div>
+        <input type="range" id="contribution-slider" min="0" max="100" value="50" oninput="updatePreview()">
+      </div>
+
+      <div class="preview">
+        <div class="item">
+          <div class="amount contribute" id="preview-contribute">50</div>
+          <div class="lbl">Contribute</div>
+        </div>
+        <div class="item">
+          <div class="amount keep" id="preview-keep">50</div>
+          <div class="lbl">Keep</div>
+        </div>
+      </div>
+
+      <button class="btn-submit" id="submit-btn" onclick="submitContribution()">
+        Submit Contribution
+      </button>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="history-section" id="history-section" style="display:none">
+    <button class="history-toggle" id="history-toggle" onclick="toggleHistory()">
+      <span class="chevron">&#9660;</span> Round History
+    </button>
+    <div id="history-content" class="hidden">
+      <div class="history-table-wrap">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Round</th>
+              <th>You</th>
+              <th id="th-a1"></th>
+              <th id="th-a2"></th>
+              <th id="th-a3"></th>
+              <th id="th-a4"></th>
+              <th>Pot</th>
+              <th>Your Earn</th>
+            </tr>
+          </thead>
+          <tbody id="history-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     END SCREEN
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="end-screen" class="hidden">
+  <div class="container">
+    <div class="end-header fade-in">
+      <h1>Game Over</h1>
+      <p>10 rounds of the Public Good Game are complete. Here are the results.</p>
+    </div>
+
+    <div class="standings" id="standings">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="end-insights fade-up" style="animation-delay:0.5s">
+      <div class="insight-card">
+        <h3 class="red">The Free-Rider Problem</h3>
+        <p>Arjun consistently contributed less than the group average while still receiving an equal share of the multiplied pot. This is the <strong>free-rider problem</strong> -- individuals benefit from public goods without paying their fair share.</p>
+      </div>
+      <div class="insight-card">
+        <h3 class="emerald">Nash Equilibrium</h3>
+        <p>The Nash equilibrium in this game is for everyone to contribute <strong>0 tokens</strong> -- no individual can gain by contributing more if others don't. Yet this leads to the worst collective outcome.</p>
+      </div>
+      <div class="insight-card">
+        <h3 class="amber">Pareto Optimum</h3>
+        <p>The Pareto optimal outcome is for everyone to contribute <strong>100 tokens</strong>. Each player would earn <strong>160 tokens per round</strong> (1,600 total) instead of just 100. Cooperation beats defection -- if everyone does it.</p>
+      </div>
+      <div class="insight-card">
+        <h3 class="blue">Real-World Parallels</h3>
+        <p id="real-world-text">Taxes, vaccination, climate action, open-source software -- all public goods face this exact tension between individual self-interest and collective welfare.</p>
+      </div>
+    </div>
+
+    <div class="end-actions fade-up" style="animation-delay:0.7s">
+      <button class="btn-primary" onclick="resetGame()">Play Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     RESULTS OVERLAY (shown after each round)
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="results-overlay" class="results-overlay hidden">
+  <div class="results-card scale-in" id="results-card">
+    <h2 id="results-title">Round 1 Results</h2>
+    <div class="results-pot">
+      <div class="flow">
+        <div class="box">
+          <div class="num" id="res-pot-total">0</div>
+          <div class="lbl">Total Pot</div>
+        </div>
+        <div class="arrow">&#10230;</div>
+        <div class="box">
+          <div class="num" id="res-pot-multiplied">0</div>
+          <div class="lbl">After 1.6x</div>
+        </div>
+        <div class="arrow">&#10230;</div>
+        <div class="box">
+          <div class="num" id="res-share">0</div>
+          <div class="lbl">Each Gets</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-breakdown" id="results-breakdown">
+      <!-- filled by JS -->
+    </div>
+
+    <div id="results-insight-box" class="results-insight hidden">
+      <div class="title" id="insight-title"></div>
+      <p id="insight-text"></p>
+    </div>
+
+    <div class="btn-container">
+      <button class="btn-primary" id="results-next-btn" onclick="closeResults()">Next Round</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     GAME AGENTS LIBRARY
+     ═══════════════════════════════════════════════════════════════ -->
+<script src="/js/game-agents.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── Game State ─────────────────────────────────────────────────
+  var TOTAL_ROUNDS = 10;
+  var MULTIPLIER = 1.6;
+  var TOKENS_PER_ROUND = 100;
+  var NUM_PLAYERS = 5;
+
+  var state = {
+    round: 0,
+    playerEarnings: 0,
+    agentEarnings: {},
+    history: [],     // for display
+    agentHistory: [] // for agent API
+  };
+
+  // Agent metadata with colors
+  var AGENTS = [
+    { id: 'pg-altruist',     name: 'Meera',  initials: 'M', color: '#8B5CF6', archetype: 'Conditional Cooperator' },
+    { id: 'pg-freerider',    name: 'Arjun',  initials: 'A', color: '#EF4444', archetype: 'Strategic Free-Rider' },
+    { id: 'pg-reciprocator', name: 'Fatima', initials: 'F', color: '#3B82F6', archetype: 'Reciprocator' },
+    { id: 'pg-idealist',     name: 'Ravi',   initials: 'R', color: '#10B981', archetype: 'Unconditional Cooperator' }
+  ];
+
+  var agentsLib = null;
+  var rosterData = null;
+
+  // ── Init ───────────────────────────────────────────────────────
+
+  function init() {
+    try {
+      if (typeof IMGameAgents === 'function') {
+        agentsLib = new IMGameAgents('public-good-game');
+        agentsLib.getRoster().then(function(roster) {
+          rosterData = roster;
+          buildWelcomeAgents(roster);
+        }).catch(function() {
+          buildWelcomeAgents(null);
+        });
+      } else {
+        buildWelcomeAgents(null);
+      }
+    } catch(e) {
+      buildWelcomeAgents(null);
+    }
+  }
+
+  // ── Welcome Screen ─────────────────────────────────────────────
+
+  function buildWelcomeAgents(roster) {
+    var grid = document.getElementById('agents-grid');
+    var html = '';
+    AGENTS.forEach(function(ag, i) {
+      var rosterAgent = roster ? roster[i] : null;
+      var role = rosterAgent ? rosterAgent.role : ['NGO Programme Manager','Private Consultant','Community Health Worker','University Lecturer'][i];
+      var location = rosterAgent ? rosterAgent.location : ['Pune','Bengaluru','Lucknow','Kolkata'][i];
+      var desc = rosterAgent ? rosterAgent.personality.description : ag.archetype;
+
+      html += '<div class="agent-intro-card fade-up" style="animation-delay:' + (0.2 + i * 0.1) + 's">' +
+        '<div class="avatar" style="background:' + ag.color + '">' + ag.initials + '</div>' +
+        '<div class="name">' + ag.name + '</div>' +
+        '<div class="role">' + role + '</div>' +
+        '<div class="location">' + location + '</div>' +
+        '<div class="desc">' + desc + '</div>' +
+      '</div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  // ── Start Game ─────────────────────────────────────────────────
+
+  window.startGame = function() {
+    state.round = 1;
+    state.playerEarnings = 0;
+    state.history = [];
+    state.agentHistory = [];
+    state.agentEarnings = {};
+    AGENTS.forEach(function(a) { state.agentEarnings[a.id] = 0; });
+
+    document.getElementById('welcome-screen').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('hidden');
+
+    buildAgentPanel();
+    buildHistoryHeaders();
+    updateTopBar();
+    resetContribution();
+  };
+
+  function buildAgentPanel() {
+    var panel = document.getElementById('agent-panel');
+    var html = '';
+    AGENTS.forEach(function(ag) {
+      html += '<div class="agent-card" id="card-' + ag.id + '">' +
+        '<div class="avatar" style="background:' + ag.color + '">' + ag.initials + '</div>' +
+        '<div class="name">' + ag.name + '</div>' +
+        '<div class="archetype">' + ag.archetype + '</div>' +
+        '<div class="last-action" id="action-' + ag.id + '">--</div>' +
+        '<div class="earnings" id="earn-' + ag.id + '">Total: 0</div>' +
+      '</div>';
+    });
+    panel.innerHTML = html;
+  }
+
+  function buildHistoryHeaders() {
+    AGENTS.forEach(function(ag, i) {
+      document.getElementById('th-a' + (i + 1)).textContent = ag.name;
+    });
+  }
+
+  // ── UI Updates ─────────────────────────────────────────────────
+
+  function updateTopBar() {
+    document.getElementById('round-display').textContent = state.round + ' / ' + TOTAL_ROUNDS;
+    document.getElementById('earnings-display').textContent = state.playerEarnings;
+
+    if (state.history.length > 0) {
+      var totalContrib = 0, totalCount = 0;
+      state.history.forEach(function(h) {
+        totalContrib += h.playerContrib;
+        totalCount++;
+        AGENTS.forEach(function(ag) { totalContrib += h.agentContribs[ag.id]; totalCount++; });
+      });
+      document.getElementById('avg-display').textContent = Math.round(totalContrib / totalCount);
+    }
+  }
+
+  window.updatePreview = function() {
+    var val = parseInt(document.getElementById('contribution-slider').value);
+    document.getElementById('preview-contribute').textContent = val;
+    document.getElementById('preview-keep').textContent = TOKENS_PER_ROUND - val;
+  };
+
+  function resetContribution() {
+    document.getElementById('contribution-slider').value = 50;
+    updatePreview();
+    document.getElementById('submit-btn').disabled = false;
+    document.getElementById('submit-btn').classList.remove('loading');
+    document.getElementById('submit-btn').textContent = 'Submit Contribution';
+    document.getElementById('contribution-area').style.display = '';
+  }
+
+  // ── Submit ─────────────────────────────────────────────────────
+
+  window.submitContribution = function() {
+    var btn = document.getElementById('submit-btn');
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.textContent = 'Thinking';
+    btn.classList.add('loading');
+
+    var playerContrib = parseInt(document.getElementById('contribution-slider').value);
+
+    getAgentDecisions(playerContrib).then(function(agentContribs) {
+      processRound(playerContrib, agentContribs);
+    });
+  };
+
+  // ── Agent Decisions ────────────────────────────────────────────
+
+  function getAgentDecisions(playerContrib) {
+    var opts = {
+      round: state.round,
+      totalRounds: TOTAL_ROUNDS,
+      history: state.agentHistory,
+      availableActions: ['contribute'],
+      context: { max_contribution: TOKENS_PER_ROUND }
+    };
+
+    if (agentsLib) {
+      return agentsLib.getAllDecisions(opts).then(function(decisions) {
+        var contribs = {};
+        AGENTS.forEach(function(ag) {
+          var d = decisions[ag.id];
+          contribs[ag.id] = d && typeof d.amount === 'number'
+            ? Math.max(0, Math.min(100, Math.round(d.amount)))
+            : fallbackContribution(ag.id);
+        });
+        return contribs;
+      }).catch(function() {
+        return fallbackAll();
+      });
+    }
+
+    return Promise.resolve(fallbackAll());
+  }
+
+  function fallbackAll() {
+    var contribs = {};
+    AGENTS.forEach(function(ag) { contribs[ag.id] = fallbackContribution(ag.id); });
+    return contribs;
+  }
+
+  function fallbackContribution(agentId) {
+    var noise = Math.floor((Math.random() - 0.5) * 15);
+    switch (agentId) {
+      case 'pg-altruist':
+        // Meera: 60-80%, mirrors group average
+        var base = 70;
+        if (state.history.length > 0) {
+          var lastAvg = getLastRoundAvg();
+          base = Math.round(base * 0.4 + lastAvg * 0.6);
+        }
+        return clamp(base + noise);
+      case 'pg-freerider':
+        // Arjun: 10-20%
+        return clamp(15 + noise);
+      case 'pg-reciprocator':
+        // Fatima: matches group average
+        if (state.history.length > 0) {
+          return clamp(getLastRoundAvg() + Math.floor(noise * 0.7));
+        }
+        return clamp(55 + noise);
+      case 'pg-idealist':
+        // Ravi: 80-100%
+        return clamp(90 + noise);
+      default:
+        return clamp(50 + noise);
+    }
+  }
+
+  function getLastRoundAvg() {
+    if (state.history.length === 0) return 50;
+    var last = state.history[state.history.length - 1];
+    var sum = last.playerContrib;
+    var count = 1;
+    AGENTS.forEach(function(ag) { sum += last.agentContribs[ag.id]; count++; });
+    return Math.round(sum / count);
+  }
+
+  function clamp(v) { return Math.max(0, Math.min(100, Math.round(v))); }
+
+  // ── Process Round ──────────────────────────────────────────────
+
+  function processRound(playerContrib, agentContribs) {
+    var pot = playerContrib;
+    AGENTS.forEach(function(ag) { pot += agentContribs[ag.id]; });
+    var multiplied = pot * MULTIPLIER;
+    var share = multiplied / NUM_PLAYERS;
+    var roundShare = Math.round(share * 100) / 100;
+
+    var playerRoundEarnings = (TOKENS_PER_ROUND - playerContrib) + roundShare;
+    state.playerEarnings = Math.round((state.playerEarnings + playerRoundEarnings) * 100) / 100;
+
+    var agentRoundEarnings = {};
+    AGENTS.forEach(function(ag) {
+      var e = (TOKENS_PER_ROUND - agentContribs[ag.id]) + roundShare;
+      agentRoundEarnings[ag.id] = Math.round(e * 100) / 100;
+      state.agentEarnings[ag.id] = Math.round((state.agentEarnings[ag.id] + e) * 100) / 100;
+    });
+
+    // Record history
+    var roundData = {
+      round: state.round,
+      playerContrib: playerContrib,
+      agentContribs: agentContribs,
+      pot: pot,
+      multiplied: Math.round(multiplied * 100) / 100,
+      share: roundShare,
+      playerEarnings: Math.round(playerRoundEarnings * 100) / 100,
+      agentRoundEarnings: agentRoundEarnings
+    };
+    state.history.push(roundData);
+
+    // Build agentHistory for API
+    var agentActions = {};
+    AGENTS.forEach(function(ag) {
+      agentActions[ag.id] = { action: 'contribute', amount: agentContribs[ag.id] };
+    });
+    state.agentHistory.push({
+      round: state.round,
+      player_action: 'contribute',
+      player_amount: playerContrib,
+      agent_actions: agentActions
+    });
+
+    // Update agent cards
+    AGENTS.forEach(function(ag) {
+      var actionEl = document.getElementById('action-' + ag.id);
+      var earnEl = document.getElementById('earn-' + ag.id);
+      actionEl.textContent = 'Gave ' + agentContribs[ag.id];
+      earnEl.textContent = 'Total: ' + state.agentEarnings[ag.id];
+      var card = document.getElementById('card-' + ag.id);
+      card.classList.add('highlight');
+      setTimeout(function() { card.classList.remove('highlight'); }, 1500);
+    });
+
+    updateTopBar();
+    addHistoryRow(roundData);
+
+    // Show results
+    showResults(roundData);
+  }
+
+  // ── Results Overlay ────────────────────────────────────────────
+
+  function showResults(rd) {
+    document.getElementById('results-title').textContent = 'Round ' + rd.round + ' Results';
+    document.getElementById('res-pot-total').textContent = rd.pot;
+    document.getElementById('res-pot-multiplied').textContent = rd.multiplied;
+    document.getElementById('res-share').textContent = rd.share.toFixed(0);
+
+    // Breakdown rows
+    var bk = document.getElementById('results-breakdown');
+    var html = '';
+
+    // Player row
+    html += resultRow('#F59E0B', 'Y', 'You', 'Contributed ' + rd.playerContrib + ', kept ' + (100 - rd.playerContrib), rd.playerEarnings);
+
+    AGENTS.forEach(function(ag) {
+      var c = rd.agentContribs[ag.id];
+      html += resultRow(ag.color, ag.initials, ag.name, 'Contributed ' + c + ', kept ' + (100 - c), rd.agentRoundEarnings[ag.id]);
+    });
+
+    bk.innerHTML = html;
+
+    // Mid-game insights
+    var insightBox = document.getElementById('results-insight-box');
+    insightBox.classList.add('hidden');
+
+    if (rd.round === 5) {
+      showInsight('The Free-Rider Problem',
+        'Notice how Arjun benefits from others\' contributions without contributing much himself. He earns a share of the multiplied pot while keeping most of his tokens. This is the free-rider problem -- rational self-interest undermines collective welfare.');
+    } else if (rd.round === 3) {
+      showInsight('Watch the Patterns',
+        'Meera adjusts her contributions based on what the group does. Fatima closely mirrors the average. Ravi keeps giving generously. And Arjun? He\'s quietly free-riding. Who is the "smartest" player here?');
+    } else if (rd.round === 7) {
+      showInsight('The Cooperation Dilemma',
+        'If everyone contributed 100, each person would earn 160 per round. But any individual can earn more by contributing less while others contribute more. This tension is at the heart of every public goods problem -- from taxes to climate action.');
+    } else if (rd.round === TOTAL_ROUNDS) {
+      showInsight('Final Round Complete',
+        'The game is over. How did cooperation evolve over 10 rounds? In laboratory experiments, contributions typically decline over time as people learn that free-riding is individually rational. Did you see that pattern here?');
+    }
+
+    // Button text
+    var nextBtn = document.getElementById('results-next-btn');
+    nextBtn.textContent = rd.round === TOTAL_ROUNDS ? 'See Final Results' : 'Next Round';
+
+    document.getElementById('results-overlay').classList.remove('hidden');
+  }
+
+  function showInsight(title, text) {
+    var box = document.getElementById('results-insight-box');
+    document.getElementById('insight-title').textContent = title;
+    document.getElementById('insight-text').textContent = text;
+    box.classList.remove('hidden');
+  }
+
+  function resultRow(color, initial, name, detail, earned) {
+    return '<div class="result-row">' +
+      '<div class="avatar-sm" style="background:' + color + '">' + initial + '</div>' +
+      '<div class="info"><div class="nm">' + name + '</div><div class="detail">' + detail + '</div></div>' +
+      '<div class="earned">+' + earned.toFixed(0) + '</div>' +
+    '</div>';
+  }
+
+  window.closeResults = function() {
+    document.getElementById('results-overlay').classList.add('hidden');
+
+    if (state.round >= TOTAL_ROUNDS) {
+      showEndScreen();
+      return;
+    }
+
+    state.round++;
+    updateTopBar();
+    resetContribution();
+  };
+
+  // ── History ────────────────────────────────────────────────────
+
+  function addHistoryRow(rd) {
+    document.getElementById('history-section').style.display = '';
+    var tbody = document.getElementById('history-body');
+    var tr = document.createElement('tr');
+
+    function contribClass(v) {
+      if (v >= 70) return 'high';
+      if (v <= 30) return 'low';
+      return 'mid';
+    }
+
+    var cells = [
+      '<td>' + rd.round + '</td>',
+      '<td class="' + contribClass(rd.playerContrib) + '">' + rd.playerContrib + '</td>'
+    ];
+
+    AGENTS.forEach(function(ag) {
+      var c = rd.agentContribs[ag.id];
+      cells.push('<td class="' + contribClass(c) + '">' + c + '</td>');
+    });
+
+    cells.push('<td>' + rd.pot + '</td>');
+    cells.push('<td class="high">+' + rd.playerEarnings.toFixed(0) + '</td>');
+
+    tr.innerHTML = cells.join('');
+    tbody.appendChild(tr);
+  }
+
+  window.toggleHistory = function() {
+    var content = document.getElementById('history-content');
+    var toggle = document.getElementById('history-toggle');
+    content.classList.toggle('hidden');
+    toggle.classList.toggle('open');
+  };
+
+  // ── End Screen ─────────────────────────────────────────────────
+
+  function showEndScreen() {
+    document.getElementById('game-screen').classList.add('hidden');
+    document.getElementById('end-screen').classList.remove('hidden');
+
+    // Build standings
+    var players = [
+      { name: 'You', id: 'player', earnings: state.playerEarnings, color: '#F59E0B', initials: 'Y', detail: 'Your final score', isPlayer: true }
+    ];
+    AGENTS.forEach(function(ag) {
+      players.push({
+        name: ag.name,
+        id: ag.id,
+        earnings: state.agentEarnings[ag.id],
+        color: ag.color,
+        initials: ag.initials,
+        detail: ag.archetype,
+        isPlayer: false
+      });
+    });
+
+    players.sort(function(a, b) { return b.earnings - a.earnings; });
+
+    var html = '';
+    players.forEach(function(p, i) {
+      var rank = i + 1;
+      html += '<div class="standing-row' + (rank === 1 ? ' first' : '') + (p.isPlayer ? ' is-player' : '') + '">' +
+        '<div class="rank">' + rank + '</div>' +
+        '<div class="avatar-sm" style="background:' + p.color + '">' + p.initials + '</div>' +
+        '<div class="info"><div class="nm">' + p.name + '</div><div class="detail">' + p.detail + '</div></div>' +
+        '<div class="total">' + p.earnings.toFixed(0) + '</div>' +
+      '</div>';
+    });
+    document.getElementById('standings').innerHTML = html;
+
+    // Update insight text with actual data
+    var arjunAvg = 0;
+    var raviAvg = 0;
+    state.history.forEach(function(h) {
+      arjunAvg += h.agentContribs['pg-freerider'];
+      raviAvg += h.agentContribs['pg-idealist'];
+    });
+    arjunAvg = Math.round(arjunAvg / TOTAL_ROUNDS);
+    raviAvg = Math.round(raviAvg / TOTAL_ROUNDS);
+
+    var frText = document.querySelector('.insight-card:nth-child(1) p');
+    if (frText) {
+      frText.innerHTML = 'Arjun averaged <strong>' + arjunAvg + ' tokens</strong> per round while Ravi averaged <strong>' + raviAvg + '</strong>. Yet both received the same share of the multiplied pot each round. This is the <strong>free-rider problem</strong> -- individuals benefit from public goods without paying their fair share.';
+    }
+  }
+
+  // ── Reset ──────────────────────────────────────────────────────
+
+  window.resetGame = function() {
+    document.getElementById('end-screen').classList.add('hidden');
+    document.getElementById('results-overlay').classList.add('hidden');
+    document.getElementById('history-body').innerHTML = '';
+    document.getElementById('history-content').classList.add('hidden');
+    document.getElementById('history-toggle').classList.remove('open');
+    document.getElementById('history-section').style.display = 'none';
+    document.getElementById('welcome-screen').classList.remove('hidden');
+
+    state.round = 0;
+    state.playerEarnings = 0;
+    state.history = [];
+    state.agentHistory = [];
+    state.agentEarnings = {};
+  };
+
+  // ── Boot ───────────────────────────────────────────────────────
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+
+</body>
+</html>

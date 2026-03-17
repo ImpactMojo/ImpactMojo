@@ -49,7 +49,7 @@
 
   var CONFIG = {
     // Supabase Edge Function endpoint
-    EDGE_FUNCTION_URL: 'https://your-project.supabase.co/functions/v1/game-agent',
+    EDGE_FUNCTION_URL: 'https://ddyszmfffyedolkcugld.supabase.co/functions/v1/game-agent',
 
     // Fallback: load agent data directly for offline/free-tier play
     AGENT_DATA_URL: 'https://www.impactmojo.in/data/game-agents.json',

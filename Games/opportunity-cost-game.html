@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opportunity Cost Game | ImpactMojo</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F172A;--bg2:#1E293B;--bg3:#334155;
+  --text:#F1F5F9;--text2:#94A3B8;--text3:#64748B;
+  --cyan:#06B6D4;--cyan-dim:#0891B2;--cyan-glow:rgba(6,182,212,.25);
+  --violet:#8B5CF6;--violet-dim:#7C3AED;--violet-glow:rgba(139,92,246,.25);
+  --amber:#F59E0B;--amber-dim:#D97706;--amber-glow:rgba(245,158,11,.25);
+  --green:#10B981;--red:#EF4444;
+  --radius:12px;--radius-sm:8px;
+}
+html{font-size:16px}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+button{font-family:inherit;cursor:pointer;border:none;outline:none}
+.screen{display:none;animation:fadeIn .4s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+
+/* Layout */
+.container{max-width:900px;margin:0 auto;padding:24px 20px}
+
+/* Welcome Screen */
+.welcome-header{text-align:center;padding:40px 0 24px}
+.welcome-header h1{font-size:2.4rem;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--violet),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.welcome-header .subtitle{color:var(--text2);font-size:1.1rem}
+.concept-box{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:24px;margin:20px 0}
+.concept-box h3{color:var(--cyan);margin-bottom:8px;font-size:1.05rem}
+.concept-box p{color:var(--text2);font-size:.95rem}
+.concept-box .highlight{color:var(--amber);font-weight:600}
+.agent-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.agent-card{background:var(--bg2);border-radius:var(--radius);padding:20px;border:1px solid var(--bg3);transition:border-color .2s}
+.agent-card:hover{border-color:var(--cyan)}
+.agent-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;margin-bottom:12px}
+.agent-card:first-child .agent-avatar{background:linear-gradient(135deg,var(--cyan),var(--violet))}
+.agent-card:last-child .agent-avatar{background:linear-gradient(135deg,var(--amber),var(--red))}
+.agent-card h4{font-size:1rem;margin-bottom:4px}
+.agent-card .role{color:var(--text3);font-size:.82rem;margin-bottom:8px}
+.agent-card p{color:var(--text2);font-size:.88rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 36px;border-radius:var(--radius);font-size:1rem;font-weight:600;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,var(--cyan),var(--violet));color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(6,182,212,.3)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.center-btn{text-align:center;margin:32px 0}
+
+/* Game Screen */
+.game-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.round-badge{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:8px 16px;font-size:.9rem;color:var(--text2)}
+.round-badge span{color:var(--cyan);font-weight:700}
+.score-badge{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:8px 16px;font-size:.9rem;color:var(--text2)}
+.score-badge span{color:var(--amber);font-weight:700}
+
+/* Allocation UI */
+.alloc-panel{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.alloc-panel h3{font-size:1rem;margin-bottom:16px;color:var(--text2)}
+.alloc-bar-container{position:relative;height:56px;border-radius:var(--radius-sm);overflow:hidden;margin-bottom:20px;background:var(--bg3);user-select:none;touch-action:none}
+.alloc-segment{position:absolute;top:0;height:100%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;color:#fff;transition:width .05s}
+.alloc-segment.health{background:linear-gradient(90deg,#0891B2,var(--cyan));left:0}
+.alloc-segment.education{background:linear-gradient(90deg,var(--violet-dim),var(--violet))}
+.alloc-segment.livelihoods{background:linear-gradient(90deg,var(--amber-dim),var(--amber))}
+.alloc-handle{position:absolute;top:0;width:6px;height:100%;background:rgba(255,255,255,.8);cursor:col-resize;z-index:5;transform:translateX(-3px)}
+.alloc-handle:hover,.alloc-handle.dragging{background:#fff;box-shadow:0 0 12px rgba(255,255,255,.5)}
+
+.sector-details{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.sector-detail{background:var(--bg);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.sector-detail .label{font-size:.78rem;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.sector-detail .amount{font-size:1.8rem;font-weight:800;margin-bottom:4px}
+.sector-detail .impact-preview{font-size:.85rem;font-weight:600}
+.sector-detail.health .amount{color:var(--cyan)}
+.sector-detail.health .impact-preview{color:var(--cyan-dim)}
+.sector-detail.education .amount{color:var(--violet)}
+.sector-detail.education .impact-preview{color:var(--violet-dim)}
+.sector-detail.livelihoods .amount{color:var(--amber)}
+.sector-detail.livelihoods .impact-preview{color:var(--amber-dim)}
+
+/* Diminishing returns curve */
+.curve-panel{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.curve-panel h3{font-size:.9rem;color:var(--text3);margin-bottom:12px}
+.curve-canvas{width:100%;height:180px;display:block}
+
+/* Results */
+.results-panel{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:24px;margin-bottom:20px;animation:fadeIn .5s ease}
+.results-panel h3{font-size:1.05rem;margin-bottom:16px}
+.result-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:var(--radius-sm);margin-bottom:8px;background:var(--bg)}
+.result-row .name{font-weight:600;min-width:90px}
+.result-row .alloc-mini{display:flex;gap:6px;flex:1;margin:0 16px}
+.result-row .alloc-mini span{font-size:.8rem;padding:3px 8px;border-radius:4px;font-weight:600}
+.result-row .alloc-mini .h{background:rgba(6,182,212,.15);color:var(--cyan)}
+.result-row .alloc-mini .e{background:rgba(139,92,246,.15);color:var(--violet)}
+.result-row .alloc-mini .l{background:rgba(245,158,11,.15);color:var(--amber)}
+.result-row .impact-val{font-weight:800;font-size:1.1rem;min-width:60px;text-align:right}
+.result-row.player .impact-val{color:var(--green)}
+.result-row.pallavi .impact-val{color:var(--cyan)}
+.result-row.suresh .impact-val{color:var(--amber)}
+.result-row .reasoning{font-size:.78rem;color:var(--text3);margin-top:4px}
+
+/* Educational callout */
+.edu-callout{background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(139,92,246,.1));border:1px solid rgba(6,182,212,.3);border-radius:var(--radius);padding:20px;margin:20px 0;animation:slideIn .5s ease}
+.edu-callout h4{color:var(--cyan);margin-bottom:6px;font-size:.95rem}
+.edu-callout p{color:var(--text2);font-size:.9rem}
+
+/* Cumulative chart */
+.chart-panel{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.chart-panel h3{font-size:.9rem;color:var(--text3);margin-bottom:12px}
+.chart-canvas{width:100%;height:220px;display:block}
+
+/* End Screen */
+.end-header{text-align:center;padding:32px 0 20px}
+.end-header h2{font-size:2rem;font-weight:800;margin-bottom:8px}
+.final-scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:24px 0}
+.final-score-card{background:var(--bg2);border-radius:var(--radius);padding:24px;text-align:center;border:2px solid transparent;transition:border-color .3s}
+.final-score-card.winner{border-color:var(--green)}
+.final-score-card .rank{font-size:.8rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.final-score-card .name{font-size:1.1rem;font-weight:700;margin-bottom:4px}
+.final-score-card .score{font-size:2.2rem;font-weight:800}
+.final-score-card.player .score{color:var(--green)}
+.final-score-card.pallavi .score{color:var(--cyan)}
+.final-score-card.suresh .score{color:var(--amber)}
+.optimal-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.3);border-radius:var(--radius);padding:24px;margin:24px 0}
+.optimal-box h3{color:var(--green);margin-bottom:8px}
+.optimal-box p{color:var(--text2);font-size:.92rem;margin-bottom:8px}
+.optimal-box .formula{background:var(--bg);border-radius:var(--radius-sm);padding:12px 16px;font-family:'Courier New',monospace;font-size:.88rem;color:var(--cyan);margin:12px 0}
+
+/* Responsive */
+@media(max-width:640px){
+  .welcome-header h1{font-size:1.8rem}
+  .agent-cards{grid-template-columns:1fr}
+  .sector-details{grid-template-columns:1fr}
+  .sector-detail{display:flex;align-items:center;gap:12px;text-align:left}
+  .sector-detail .amount{font-size:1.4rem;margin:0}
+  .final-scores{grid-template-columns:1fr}
+  .result-row{flex-direction:column;align-items:flex-start;gap:8px}
+  .result-row .alloc-mini{margin:0}
+  .game-top{flex-direction:column;align-items:stretch;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== WELCOME SCREEN ===== -->
+<div id="screen-welcome" class="screen active">
+<div class="container">
+  <div class="welcome-header">
+    <h1>The Opportunity Cost Game</h1>
+    <p class="subtitle">Every rupee spent here is a rupee not spent there. Choose wisely.</p>
+  </div>
+
+  <div class="concept-box">
+    <h3>What is Opportunity Cost?</h3>
+    <p>When India's National Health Mission receives an additional Rs 10,000 crore, that money cannot simultaneously fund Samagra Shiksha Abhiyan. The <span class="highlight">true cost of any choice is what you give up</span> by not choosing the next best alternative. In development, these tradeoffs are everywhere — and they are rarely obvious.</p>
+  </div>
+
+  <div class="concept-box">
+    <h3>How This Game Works</h3>
+    <p>You are a <span class="highlight">development programme director</span> with <span class="highlight">100 budget units</span> each round. Across 6 rounds, allocate your budget among three sectors: Health, Education, and Livelihoods. Each sector follows <span class="highlight">diminishing returns</span> — the more you invest in one area, the less each additional unit delivers. Your goal: <span class="highlight">maximise total impact</span>.</p>
+  </div>
+
+  <div class="agent-cards">
+    <div class="agent-card">
+      <div class="agent-avatar">P</div>
+      <h4>Pallavi</h4>
+      <div class="role">The Diversifier</div>
+      <p>Believes in balanced portfolios. Never puts more than 40% in a single sector. "Spread your risks, spread your impact."</p>
+    </div>
+    <div class="agent-card">
+      <div class="agent-avatar">S</div>
+      <h4>Suresh</h4>
+      <div class="role">The Concentrator</div>
+      <p>Puts 70-90% into whatever he thinks yields the highest return. "Go big or go home — focus wins."</p>
+    </div>
+  </div>
+
+  <div class="center-btn">
+    <button class="btn btn-primary" onclick="startGame()">Begin Allocating</button>
+  </div>
+</div>
+</div>
+
+<!-- ===== GAME SCREEN ===== -->
+<div id="screen-game" class="screen">
+<div class="container">
+  <div class="game-top">
+    <div class="round-badge">Round <span id="round-num">1</span> / 6</div>
+    <div class="score-badge">Cumulative Impact: <span id="cum-score">0.0</span></div>
+  </div>
+
+  <!-- Allocation Panel -->
+  <div class="alloc-panel">
+    <h3>Drag the dividers to allocate your 100-unit budget</h3>
+    <div class="alloc-bar-container" id="alloc-bar">
+      <div class="alloc-segment health" id="seg-health"><span id="seg-health-label">34</span></div>
+      <div class="alloc-segment education" id="seg-education"><span id="seg-education-label">33</span></div>
+      <div class="alloc-segment livelihoods" id="seg-livelihoods"><span id="seg-livelihoods-label">33</span></div>
+      <div class="alloc-handle" id="handle-1"></div>
+      <div class="alloc-handle" id="handle-2"></div>
+    </div>
+    <div class="sector-details">
+      <div class="sector-detail health">
+        <div>
+          <div class="label">Health</div>
+          <div class="amount" id="val-health">34</div>
+          <div class="impact-preview" id="imp-health">Impact: 28.2</div>
+        </div>
+      </div>
+      <div class="sector-detail education">
+        <div>
+          <div class="label">Education</div>
+          <div class="amount" id="val-education">33</div>
+          <div class="impact-preview" id="imp-education">Impact: 27.6</div>
+        </div>
+      </div>
+      <div class="sector-detail livelihoods">
+        <div>
+          <div class="label">Livelihoods</div>
+          <div class="amount" id="val-livelihoods">33</div>
+          <div class="impact-preview" id="imp-livelihoods">Impact: 27.6</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diminishing Returns Curve -->
+  <div class="curve-panel">
+    <h3>Diminishing Returns: Impact vs. Investment</h3>
+    <canvas class="curve-canvas" id="curve-canvas"></canvas>
+  </div>
+
+  <div class="center-btn">
+    <button class="btn btn-primary" id="btn-allocate" onclick="submitAllocation()">Allocate Budget</button>
+  </div>
+
+  <!-- Round Results (shown after allocation) -->
+  <div id="round-results" style="display:none">
+    <div class="results-panel">
+      <h3>Round <span class="rr-round"></span> Results</h3>
+      <div class="result-row player">
+        <div class="name">You</div>
+        <div class="alloc-mini"><span class="h" id="rr-p-h"></span><span class="e" id="rr-p-e"></span><span class="l" id="rr-p-l"></span></div>
+        <div class="impact-val" id="rr-p-imp"></div>
+      </div>
+      <div class="result-row pallavi">
+        <div>
+          <div class="name">Pallavi</div>
+          <div class="reasoning" id="rr-pallavi-reason"></div>
+        </div>
+        <div class="alloc-mini"><span class="h" id="rr-a-h"></span><span class="e" id="rr-a-e"></span><span class="l" id="rr-a-l"></span></div>
+        <div class="impact-val" id="rr-a-imp"></div>
+      </div>
+      <div class="result-row suresh">
+        <div>
+          <div class="name">Suresh</div>
+          <div class="reasoning" id="rr-suresh-reason"></div>
+        </div>
+        <div class="alloc-mini"><span class="h" id="rr-b-h"></span><span class="e" id="rr-b-e"></span><span class="l" id="rr-b-l"></span></div>
+        <div class="impact-val" id="rr-b-imp"></div>
+      </div>
+    </div>
+
+    <!-- Educational callout after round 3 -->
+    <div id="edu-mid" class="edu-callout" style="display:none">
+      <h4>The Mathematics of Diminishing Returns</h4>
+      <p>Every additional rupee you pour into a single sector yields less than the previous one. At 50 units, your impact is 37.5 — but the next 50 units only add 12.5 more. That gap between what you spend and what you get elsewhere is the <strong>opportunity cost</strong>. This is why balanced allocation often outperforms concentrated bets in development portfolios.</p>
+    </div>
+
+    <!-- Cumulative Chart -->
+    <div class="chart-panel" id="chart-panel" style="display:none">
+      <h3>Cumulative Impact Over Rounds</h3>
+      <canvas class="chart-canvas" id="chart-canvas"></canvas>
+    </div>
+
+    <div class="center-btn">
+      <button class="btn btn-primary" id="btn-next" onclick="nextRound()">Next Round</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== END SCREEN ===== -->
+<div id="screen-end" class="screen">
+<div class="container">
+  <div class="end-header">
+    <h2>Game Complete</h2>
+    <p style="color:var(--text2)">6 rounds of development allocation — here are the final standings.</p>
+  </div>
+
+  <div class="final-scores" id="final-scores"></div>
+
+  <!-- Final cumulative chart -->
+  <div class="chart-panel">
+    <h3>Cumulative Impact: Full Game</h3>
+    <canvas class="chart-canvas" id="final-chart-canvas"></canvas>
+  </div>
+
+  <div class="optimal-box">
+    <h3>The Optimal Strategy</h3>
+    <p>With the diminishing returns formula <code>impact = amount * (1 - 0.005 * amount)</code>, the mathematically optimal allocation is an <strong>equal split: 33/33/34</strong> across sectors each round.</p>
+    <div class="formula">
+      Equal split: 3 x (33.3 * 0.833) = 83.2 per round<br>
+      All-in on one: 1 x (100 * 0.5) = 50.0 per round
+    </div>
+    <p>Diversification wins by <strong>66%</strong>. This is not just math — it reflects a deep truth about development work. The World Bank, UNDP, and national planning commissions must balance competing priorities precisely because concentrated investment hits diminishing returns faster than a diversified portfolio.</p>
+    <p style="margin-top:12px">Real-world parallel: India's Five Year Plans evolved from heavy-industry concentration (First and Second Plans) toward more balanced sectoral allocation — mirroring the lesson this game teaches.</p>
+  </div>
+
+  <div class="edu-callout">
+    <h4>Why This Matters for Development</h4>
+    <p>Development organisations face these tradeoffs every day. A district health officer choosing between more ASHA workers or better supply chains. A state education minister weighing teacher training against school infrastructure. The opportunity cost framework helps us see that <strong>the best next rupee is the one with the highest marginal return</strong> — and that often means investing where you have invested the least.</p>
+  </div>
+
+  <div class="center-btn">
+    <button class="btn btn-primary" onclick="resetGame()">Play Again</button>
+  </div>
+</div>
+</div>
+
+<script src="/js/game-agents.js"></script>
+<script>
+(function(){
+'use strict';
+
+// ── Game State ──
+var TOTAL_ROUNDS = 6;
+var BUDGET = 100;
+var state = {
+  round: 1,
+  playerScore: 0,
+  pallaviScore: 0,
+  sureshScore: 0,
+  history: [],
+  allocHealth: 34,
+  allocEdu: 33,
+  allocLiv: 33,
+  // Track cumulative scores per round for chart
+  cumPlayer: [],
+  cumPallavi: [],
+  cumSuresh: []
+};
+
+// ── Agent Integration ──
+var agents = null;
+try { agents = new IMGameAgents('opportunity-cost-game'); } catch(e) { console.warn('Agent init failed:', e); }
+
+// ── Impact Formula ──
+function calcImpact(amount) {
+  return amount * (1 - 0.005 * amount);
+}
+function totalImpact(h, e, l) {
+  return calcImpact(h) + calcImpact(e) + calcImpact(l);
+}
+
+// ── Screens ──
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+window.startGame = function() {
+  state = { round:1, playerScore:0, pallaviScore:0, sureshScore:0, history:[], allocHealth:34, allocEdu:33, allocLiv:33, cumPlayer:[], cumPallavi:[], cumSuresh:[] };
+  showScreen('game');
+  updateGameUI();
+  drawCurve();
+  document.getElementById('round-results').style.display = 'none';
+  document.getElementById('btn-allocate').disabled = false;
+};
+
+window.resetGame = function() {
+  showScreen('welcome');
+};
+
+// ── Allocation Bar ──
+var barEl = document.getElementById('alloc-bar');
+var handle1 = document.getElementById('handle-1');
+var handle2 = document.getElementById('handle-2');
+var dragging = null;
+
+function getBarWidth() { return barEl.getBoundingClientRect().width; }
+
+function updateBarVisuals() {
+  var h = state.allocHealth;
+  var e = state.allocEdu;
+  var l = state.allocLiv;
+  var total = h + e + l;
+  var pH = (h / total) * 100;
+  var pE = (e / total) * 100;
+  var pL = (l / total) * 100;
+
+  document.getElementById('seg-health').style.width = pH + '%';
+  document.getElementById('seg-education').style.width = pE + '%';
+  document.getElementById('seg-education').style.left = pH + '%';
+  document.getElementById('seg-livelihoods').style.width = pL + '%';
+  document.getElementById('seg-livelihoods').style.left = (pH + pE) + '%';
+
+  handle1.style.left = pH + '%';
+  handle2.style.left = (pH + pE) + '%';
+
+  // Labels: only show if segment wide enough
+  document.getElementById('seg-health-label').textContent = h > 5 ? h : '';
+  document.getElementById('seg-education-label').textContent = e > 5 ? e : '';
+  document.getElementById('seg-livelihoods-label').textContent = l > 5 ? l : '';
+
+  document.getElementById('val-health').textContent = h;
+  document.getElementById('val-education').textContent = e;
+  document.getElementById('val-livelihoods').textContent = l;
+
+  document.getElementById('imp-health').textContent = 'Impact: ' + calcImpact(h).toFixed(1);
+  document.getElementById('imp-education').textContent = 'Impact: ' + calcImpact(e).toFixed(1);
+  document.getElementById('imp-livelihoods').textContent = 'Impact: ' + calcImpact(l).toFixed(1);
+
+  drawCurve();
+}
+
+function onPointerDown(e) {
+  e.preventDefault();
+  var target = e.target;
+  if (target === handle1) dragging = 1;
+  else if (target === handle2) dragging = 2;
+  else return;
+  target.classList.add('dragging');
+  document.addEventListener('pointermove', onPointerMove);
+  document.addEventListener('pointerup', onPointerUp);
+}
+
+function onPointerMove(e) {
+  if (!dragging) return;
+  var rect = barEl.getBoundingClientRect();
+  var x = e.clientX - rect.left;
+  var pct = Math.max(0, Math.min(100, (x / rect.width) * 100));
+  var val = Math.round(pct);
+
+  if (dragging === 1) {
+    // Handle 1: between health and education
+    var h = Math.max(0, Math.min(BUDGET, val));
+    var boundary2 = state.allocHealth + state.allocEdu;
+    // Don't let handle1 pass handle2
+    var maxH = BUDGET - state.allocLiv;
+    h = Math.min(h, maxH);
+    var e2 = maxH - h;
+    state.allocHealth = h;
+    state.allocEdu = e2;
+  } else {
+    // Handle 2: between education and livelihoods
+    var boundary = state.allocHealth;
+    var pos = Math.max(boundary, Math.min(BUDGET, val));
+    state.allocEdu = pos - boundary;
+    state.allocLiv = BUDGET - pos;
+  }
+
+  updateBarVisuals();
+}
+
+function onPointerUp() {
+  dragging = null;
+  handle1.classList.remove('dragging');
+  handle2.classList.remove('dragging');
+  document.removeEventListener('pointermove', onPointerMove);
+  document.removeEventListener('pointerup', onPointerUp);
+}
+
+barEl.addEventListener('pointerdown', onPointerDown);
+
+// ── Update Game UI ──
+function updateGameUI() {
+  document.getElementById('round-num').textContent = state.round;
+  document.getElementById('cum-score').textContent = state.playerScore.toFixed(1);
+  updateBarVisuals();
+}
+
+// ── Diminishing Returns Curve ──
+function drawCurve() {
+  var canvas = document.getElementById('curve-canvas');
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  var W = rect.width, H = rect.height;
+  var pad = {top:20, right:20, bottom:30, left:45};
+  var gW = W - pad.left - pad.right;
+  var gH = H - pad.top - pad.bottom;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(148,163,184,.12)';
+  ctx.lineWidth = 1;
+  for (var i = 0; i <= 5; i++) {
+    var y = pad.top + (gH / 5) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+  }
+
+  // Curve
+  ctx.strokeStyle = 'rgba(148,163,184,.5)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (var x = 0; x <= 100; x++) {
+    var imp = calcImpact(x);
+    var px = pad.left + (x / 100) * gW;
+    var py = pad.top + gH - (imp / 50) * gH;
+    if (x === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // Markers for current allocation
+  var sectors = [
+    {val: state.allocHealth, color: '#06B6D4', label: 'H'},
+    {val: state.allocEdu, color: '#8B5CF6', label: 'E'},
+    {val: state.allocLiv, color: '#F59E0B', label: 'L'}
+  ];
+  sectors.forEach(function(s) {
+    var imp = calcImpact(s.val);
+    var px = pad.left + (s.val / 100) * gW;
+    var py = pad.top + gH - (imp / 50) * gH;
+    ctx.fillStyle = s.color;
+    ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(s.label, px, py + 3.5);
+  });
+
+  // Axes labels
+  ctx.fillStyle = '#64748B';
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('0', pad.left, H - 8);
+  ctx.fillText('50', pad.left + gW * 0.5, H - 8);
+  ctx.fillText('100', pad.left + gW, H - 8);
+  ctx.fillText('Investment', W / 2, H - 2);
+
+  ctx.save();
+  ctx.translate(12, pad.top + gH / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText('Impact', 0, 0);
+  ctx.restore();
+
+  // Y-axis values
+  ctx.textAlign = 'right';
+  ctx.fillText('0', pad.left - 6, pad.top + gH + 4);
+  ctx.fillText('25', pad.left - 6, pad.top + gH / 2 + 4);
+  ctx.fillText('50', pad.left - 6, pad.top + 4);
+}
+
+// ── AI Agent Allocation (local fallback strategies) ──
+function pallaviAllocate() {
+  // Diversifier: spread evenly, no sector > 40%
+  var base = Math.floor(BUDGET / 3);
+  var rem = BUDGET - base * 3;
+  var h = base, e = base, l = base;
+  // Add noise but cap at 40
+  var noise1 = Math.floor(Math.random() * 9) - 4; // -4 to +4
+  var noise2 = Math.floor(Math.random() * 9) - 4;
+  h = Math.min(40, Math.max(20, h + noise1));
+  e = Math.min(40, Math.max(20, e + noise2));
+  l = BUDGET - h - e;
+  l = Math.min(40, Math.max(20, l));
+  // Re-normalize
+  var diff = BUDGET - (h + e + l);
+  if (diff > 0) { h += Math.ceil(diff / 2); e += Math.floor(diff / 2); }
+  else if (diff < 0) { h += Math.ceil(diff / 2); e += Math.floor(diff / 2); }
+  h = Math.max(0, h); e = Math.max(0, e); l = Math.max(0, l);
+  // Final fix
+  var sum = h + e + l;
+  if (sum !== BUDGET) { l += (BUDGET - sum); }
+  return {health: h, education: e, livelihoods: l};
+}
+
+function sureshAllocate() {
+  // Concentrator: 70-90% in one, rest split
+  var sectors = ['health', 'education', 'livelihoods'];
+  var focus = sectors[Math.floor(Math.random() * 3)];
+  var main = 70 + Math.floor(Math.random() * 21); // 70-90
+  var rest = BUDGET - main;
+  var a = Math.floor(rest / 2);
+  var b = rest - a;
+  var alloc = {health: 0, education: 0, livelihoods: 0};
+  alloc[focus] = main;
+  var others = sectors.filter(function(s){ return s !== focus; });
+  alloc[others[0]] = a;
+  alloc[others[1]] = b;
+  return alloc;
+}
+
+// ── Submit Allocation ──
+window.submitAllocation = function() {
+  document.getElementById('btn-allocate').disabled = true;
+
+  var playerAlloc = {
+    health: state.allocHealth,
+    education: state.allocEdu,
+    livelihoods: state.allocLiv
+  };
+  var playerImp = totalImpact(playerAlloc.health, playerAlloc.education, playerAlloc.livelihoods);
+
+  // Get AI allocations
+  var pallaviAlloc, sureshAlloc, pallaviReason, sureshReason;
+
+  // Try to use game-agents, fall back to local
+  var agentPromise;
+  if (agents) {
+    agentPromise = agents.getAllDecisions({
+      round: state.round,
+      totalRounds: TOTAL_ROUNDS,
+      history: state.history,
+      availableActions: ['contribute'],
+      context: { max_contribution: BUDGET }
+    }).then(function(decisions) {
+      // Pallavi (oc-diversifier)
+      var pDec = decisions['oc-diversifier'];
+      if (pDec && pDec.amount != null) {
+        var pMain = Math.min(40, Math.max(20, pDec.amount));
+        var pRest = BUDGET - pMain;
+        var pA = Math.floor(pRest / 2);
+        pallaviAlloc = {health: pMain, education: pA, livelihoods: pRest - pA};
+        pallaviReason = pDec.reasoning || '';
+      } else {
+        pallaviAlloc = pallaviAllocate();
+        pallaviReason = 'Spreading investment across all sectors.';
+      }
+
+      // Suresh (oc-concentrator)
+      var sDec = decisions['oc-concentrator'];
+      if (sDec && sDec.amount != null) {
+        var sMain = Math.max(70, Math.min(90, sDec.amount));
+        var sRest = BUDGET - sMain;
+        var sA2 = Math.floor(sRest / 2);
+        var sectors2 = ['health', 'education', 'livelihoods'];
+        var sFocus = sectors2[Math.floor(Math.random() * 3)];
+        sureshAlloc = {health: 0, education: 0, livelihoods: 0};
+        sureshAlloc[sFocus] = sMain;
+        var others2 = sectors2.filter(function(s){ return s !== sFocus; });
+        sureshAlloc[others2[0]] = sA2;
+        sureshAlloc[others2[1]] = sRest - sA2;
+        sureshReason = sDec.reasoning || '';
+      } else {
+        sureshAlloc = sureshAllocate();
+        sureshReason = 'Going big on the highest-return sector.';
+      }
+    }).catch(function() {
+      pallaviAlloc = pallaviAllocate();
+      pallaviReason = 'Spreading investment across all sectors.';
+      sureshAlloc = sureshAllocate();
+      sureshReason = 'Going big on the highest-return sector.';
+    });
+  } else {
+    agentPromise = Promise.resolve();
+    pallaviAlloc = pallaviAllocate();
+    pallaviReason = 'Spreading investment across all sectors.';
+    sureshAlloc = sureshAllocate();
+    sureshReason = 'Going big on the highest-return sector.';
+  }
+
+  agentPromise.then(function() {
+    var pallaviImp = totalImpact(pallaviAlloc.health, pallaviAlloc.education, pallaviAlloc.livelihoods);
+    var sureshImp = totalImpact(sureshAlloc.health, sureshAlloc.education, sureshAlloc.livelihoods);
+
+    state.playerScore += playerImp;
+    state.pallaviScore += pallaviImp;
+    state.sureshScore += sureshImp;
+
+    state.cumPlayer.push(state.playerScore);
+    state.cumPallavi.push(state.pallaviScore);
+    state.cumSuresh.push(state.sureshScore);
+
+    state.history.push({
+      round: state.round,
+      player_action: 'contribute',
+      player_amount: BUDGET,
+      player_alloc: playerAlloc,
+      agent_actions: {
+        'oc-diversifier': {action: 'contribute', amount: pallaviAlloc.health, alloc: pallaviAlloc},
+        'oc-concentrator': {action: 'contribute', amount: sureshAlloc.health, alloc: sureshAlloc}
+      }
+    });
+
+    // Show results
+    showRoundResults(playerAlloc, playerImp, pallaviAlloc, pallaviImp, pallaviReason, sureshAlloc, sureshImp, sureshReason);
+  });
+  };
+
+function showRoundResults(pAlloc, pImp, aAlloc, aImp, aReason, bAlloc, bImp, bReason) {
+  document.querySelectorAll('.rr-round').forEach(function(el){ el.textContent = state.round; });
+  document.getElementById('cum-score').textContent = state.playerScore.toFixed(1);
+
+  // Player
+  document.getElementById('rr-p-h').textContent = 'H:' + pAlloc.health;
+  document.getElementById('rr-p-e').textContent = 'E:' + pAlloc.education;
+  document.getElementById('rr-p-l').textContent = 'L:' + pAlloc.livelihoods;
+  animateNumber('rr-p-imp', pImp);
+
+  // Pallavi
+  document.getElementById('rr-a-h').textContent = 'H:' + aAlloc.health;
+  document.getElementById('rr-a-e').textContent = 'E:' + aAlloc.education;
+  document.getElementById('rr-a-l').textContent = 'L:' + aAlloc.livelihoods;
+  animateNumber('rr-a-imp', aImp);
+  document.getElementById('rr-pallavi-reason').textContent = aReason || '';
+
+  // Suresh
+  document.getElementById('rr-b-h').textContent = 'H:' + bAlloc.health;
+  document.getElementById('rr-b-e').textContent = 'E:' + bAlloc.education;
+  document.getElementById('rr-b-l').textContent = 'L:' + bAlloc.livelihoods;
+  animateNumber('rr-b-imp', bImp);
+  document.getElementById('rr-suresh-reason').textContent = bReason || '';
+
+  document.getElementById('round-results').style.display = 'block';
+
+  // Educational callout after round 3
+  document.getElementById('edu-mid').style.display = (state.round >= 3) ? 'block' : 'none';
+
+  // Chart
+  if (state.cumPlayer.length > 1) {
+    document.getElementById('chart-panel').style.display = 'block';
+    drawCumulativeChart('chart-canvas');
+  }
+
+  // Button label
+  document.getElementById('btn-next').textContent = state.round < TOTAL_ROUNDS ? 'Next Round' : 'See Final Results';
+
+  // Smooth scroll to results
+  setTimeout(function(){
+    document.getElementById('round-results').scrollIntoView({behavior:'smooth', block:'start'});
+  }, 100);
+}
+
+function animateNumber(elId, target) {
+  var el = document.getElementById(elId);
+  var start = 0;
+  var duration = 600;
+  var startTime = null;
+  function step(ts) {
+    if (!startTime) startTime = ts;
+    var progress = Math.min((ts - startTime) / duration, 1);
+    var eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = (start + (target - start) * eased).toFixed(1);
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ── Cumulative Chart ──
+function drawCumulativeChart(canvasId) {
+  var canvas = document.getElementById(canvasId);
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  var W = rect.width, H = rect.height;
+  var pad = {top:20, right:20, bottom:30, left:50};
+  var gW = W - pad.left - pad.right;
+  var gH = H - pad.top - pad.bottom;
+
+  ctx.clearRect(0, 0, W, H);
+
+  var maxVal = Math.max(
+    state.cumPlayer[state.cumPlayer.length - 1] || 1,
+    state.cumPallavi[state.cumPallavi.length - 1] || 1,
+    state.cumSuresh[state.cumSuresh.length - 1] || 1
+  ) * 1.1;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(148,163,184,.1)';
+  ctx.lineWidth = 1;
+  for (var i = 0; i <= 4; i++) {
+    var y = pad.top + (gH / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = '#64748B';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxVal * (1 - i / 4)), pad.left - 6, y + 4);
+  }
+
+  // X-axis labels
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#64748B';
+  var numPts = state.cumPlayer.length;
+  for (var r = 0; r < numPts; r++) {
+    var x = pad.left + (r / Math.max(1, TOTAL_ROUNDS - 1)) * gW;
+    ctx.fillText('R' + (r + 1), x, H - 8);
+  }
+
+  function drawLine(data, color) {
+    if (data.length < 1) return;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.5;
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    for (var i = 0; i < data.length; i++) {
+      var x = pad.left + (i / Math.max(1, TOTAL_ROUNDS - 1)) * gW;
+      var y = pad.top + gH - (data[i] / maxVal) * gH;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    // Dots
+    for (var i = 0; i < data.length; i++) {
+      var x = pad.left + (i / Math.max(1, TOTAL_ROUNDS - 1)) * gW;
+      var y = pad.top + gH - (data[i] / maxVal) * gH;
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  drawLine(state.cumPlayer, '#10B981');
+  drawLine(state.cumPallavi, '#06B6D4');
+  drawLine(state.cumSuresh, '#F59E0B');
+
+  // Legend
+  var legendY = pad.top + 4;
+  var legendItems = [
+    {label:'You', color:'#10B981'},
+    {label:'Pallavi', color:'#06B6D4'},
+    {label:'Suresh', color:'#F59E0B'}
+  ];
+  ctx.font = 'bold 11px sans-serif';
+  var lx = W - pad.right;
+  for (var li = legendItems.length - 1; li >= 0; li--) {
+    var item = legendItems[li];
+    var tw = ctx.measureText(item.label).width;
+    lx -= tw + 4;
+    ctx.fillStyle = item.color;
+    ctx.textAlign = 'left';
+    ctx.fillText(item.label, lx, legendY + 10);
+    lx -= 14;
+    ctx.fillStyle = item.color;
+    ctx.beginPath(); ctx.arc(lx + 5, legendY + 6, 4, 0, Math.PI * 2); ctx.fill();
+    lx -= 12;
+  }
+}
+
+// ── Next Round / End ──
+window.nextRound = function() {
+  if (state.round >= TOTAL_ROUNDS) {
+    showEndScreen();
+    return;
+  }
+  state.round++;
+  document.getElementById('round-results').style.display = 'none';
+  document.getElementById('btn-allocate').disabled = false;
+  // Reset allocation to even split
+  state.allocHealth = 34;
+  state.allocEdu = 33;
+  state.allocLiv = 33;
+  updateGameUI();
+  window.scrollTo({top:0, behavior:'smooth'});
+};
+
+// ── End Screen ──
+function showEndScreen() {
+  showScreen('end');
+
+  var scores = [
+    {name: 'You', score: state.playerScore, cls: 'player'},
+    {name: 'Pallavi', score: state.pallaviScore, cls: 'pallavi'},
+    {name: 'Suresh', score: state.sureshScore, cls: 'suresh'}
+  ];
+  scores.sort(function(a, b){ return b.score - a.score; });
+
+  var labels = ['1st', '2nd', '3rd'];
+  var container = document.getElementById('final-scores');
+  container.innerHTML = '';
+  scores.forEach(function(s, i) {
+    var card = document.createElement('div');
+    card.className = 'final-score-card ' + s.cls + (i === 0 ? ' winner' : '');
+    card.innerHTML = '<div class="rank">' + labels[i] + ' Place</div>' +
+      '<div class="name">' + s.name + '</div>' +
+      '<div class="score">' + s.score.toFixed(1) + '</div>';
+    container.appendChild(card);
+  });
+
+  // Final chart
+  setTimeout(function() {
+    drawCumulativeChart('final-chart-canvas');
+  }, 200);
+}
+
+// ── Initial draw ──
+window.addEventListener('resize', function() {
+  if (document.getElementById('screen-game').classList.contains('active')) {
+    drawCurve();
+    if (state.cumPlayer.length > 1) drawCumulativeChart('chart-canvas');
+  }
+});
+
+// Set initial bar state
+updateBarVisuals();
+})();
+</script>
+</body>
+</html>

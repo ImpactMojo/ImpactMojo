@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Information Asymmetry Game — The Market for Lemons | ImpactMojo</title>
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0F172A; --bg2: #1E293B; --bg3: #334155;
+  --teal: #14B8A6; --teal-dim: #0D9488; --teal-glow: rgba(20,184,166,.25);
+  --amber: #F59E0B; --amber-dim: #D97706; --amber-glow: rgba(245,158,11,.25);
+  --red: #EF4444; --red-dim: #DC2626; --red-glow: rgba(239,68,68,.25);
+  --green: #22C55E; --green-glow: rgba(34,197,94,.25);
+  --text: #E2E8F0; --text-dim: #94A3B8; --text-bright: #F8FAFC;
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  --radius: 12px; --radius-sm: 8px;
+}
+html { font-size: 16px; }
+body {
+  font-family: var(--font); background: var(--bg); color: var(--text);
+  min-height: 100vh; line-height: 1.6; overflow-x: hidden;
+}
+button {
+  font-family: var(--font); cursor: pointer; border: none;
+  transition: all .2s ease;
+}
+button:active { transform: scale(.97); }
+
+/* ── Utility ──────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn .5s ease both; }
+.slide-up { animation: slideUp .5s ease both; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes popIn { 0% { transform: scale(0); opacity:0; } 60% { transform: scale(1.15); } 100% { transform: scale(1); opacity:1; } }
+@keyframes shake { 0%,100%{transform:translateX(0);} 20%{transform:translateX(-6px);} 40%{transform:translateX(6px);} 60%{transform:translateX(-4px);} 80%{transform:translateX(4px);} }
+
+/* ── Screens ──────────────────────────────────────────────────── */
+.screen {
+  max-width: 960px; margin: 0 auto; padding: 24px 16px;
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+
+/* ── Welcome Screen ───────────────────────────────────────────── */
+#welcome { justify-content: center; align-items: center; text-align: center; }
+.welcome-icon {
+  font-size: 64px; margin-bottom: 16px;
+  animation: pulse 2s ease infinite;
+}
+#welcome h1 {
+  font-size: 2.2rem; font-weight: 800; color: var(--text-bright);
+  margin-bottom: 8px; letter-spacing: -.02em;
+}
+#welcome .subtitle {
+  font-size: 1.1rem; color: var(--amber); font-weight: 600; margin-bottom: 24px;
+}
+.lemon-card {
+  background: var(--bg2); border: 1px solid var(--bg3); border-radius: var(--radius);
+  padding: 24px; max-width: 600px; text-align: left; margin-bottom: 32px;
+}
+.lemon-card h3 { color: var(--amber); margin-bottom: 8px; font-size: 1rem; }
+.lemon-card p { color: var(--text-dim); font-size: .92rem; margin-bottom: 12px; }
+.lemon-card .highlight {
+  background: var(--amber-glow); border-left: 3px solid var(--amber);
+  padding: 10px 14px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text); font-size: .88rem; margin-top: 8px;
+}
+
+/* Agent intro cards */
+.agent-intros {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  max-width: 640px; margin: 0 auto 32px;
+}
+.agent-intro {
+  background: var(--bg2); border-radius: var(--radius-sm); padding: 16px;
+  border: 1px solid var(--bg3); text-align: center;
+}
+.agent-intro .avatar { font-size: 36px; margin-bottom: 6px; }
+.agent-intro .aname { font-weight: 700; font-size: .95rem; color: var(--text-bright); }
+.agent-intro .arole { font-size: .78rem; color: var(--text-dim); margin-top: 2px; }
+.agent-intro.honest { border-color: var(--teal-dim); }
+.agent-intro.lemon { border-color: var(--amber-dim); }
+.agent-intro.buyer { border-color: var(--bg3); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--teal), var(--teal-dim));
+  color: #fff; font-weight: 700; font-size: 1.05rem;
+  padding: 14px 40px; border-radius: 50px;
+  box-shadow: 0 4px 20px var(--teal-glow);
+}
+.btn-primary:hover { box-shadow: 0 6px 28px var(--teal-glow); transform: translateY(-1px); }
+
+.btn-secondary {
+  background: var(--bg3); color: var(--text); font-weight: 600;
+  padding: 10px 24px; border-radius: 50px; font-size: .9rem;
+}
+.btn-secondary:hover { background: #475569; }
+
+/* ── Top Bar ──────────────────────────────────────────────────── */
+.top-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--bg2); border-radius: var(--radius); padding: 14px 20px;
+  margin-bottom: 20px; border: 1px solid var(--bg3); flex-wrap: wrap; gap: 8px;
+}
+.top-bar .stat {
+  display: flex; align-items: center; gap: 6px; font-size: .9rem;
+}
+.stat .label { color: var(--text-dim); }
+.stat .value { font-weight: 700; color: var(--text-bright); font-family: var(--mono); }
+.stat .value.tokens { color: var(--teal); }
+.stat .value.round { color: var(--amber); }
+.stat .value.lemon { color: var(--red); }
+
+/* ── Market Insight Banner ────────────────────────────────────── */
+.insight-banner {
+  background: var(--amber-glow); border: 1px solid var(--amber-dim);
+  border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 18px;
+  font-size: .88rem; color: var(--amber); display: flex; align-items: flex-start; gap: 10px;
+}
+.insight-banner .icon { font-size: 1.3rem; flex-shrink: 0; }
+
+/* ── Seller Cards ─────────────────────────────────────────────── */
+.sellers-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-bottom: 20px;
+}
+.seller-card {
+  background: var(--bg2); border: 2px solid var(--bg3); border-radius: var(--radius);
+  padding: 20px; position: relative; transition: all .25s ease;
+}
+.seller-card:hover { border-color: #475569; }
+.seller-card.selected { border-color: var(--teal); box-shadow: 0 0 20px var(--teal-glow); }
+.seller-card.revealed-honest { border-color: var(--green); box-shadow: 0 0 20px var(--green-glow); }
+.seller-card.revealed-lemon { border-color: var(--red); box-shadow: 0 0 20px var(--red-glow); }
+
+.seller-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.seller-avatar { font-size: 32px; }
+.seller-info { flex: 1; }
+.seller-name { font-weight: 700; font-size: 1.05rem; color: var(--text-bright); }
+.seller-role { font-size: .78rem; color: var(--text-dim); }
+.seller-rep {
+  font-size: .72rem; font-weight: 600; padding: 3px 8px;
+  border-radius: 50px; background: var(--bg3); color: var(--text-dim);
+}
+.seller-rep.good { background: var(--green-glow); color: var(--green); }
+.seller-rep.bad { background: var(--red-glow); color: var(--red); }
+.seller-rep.neutral { background: var(--amber-glow); color: var(--amber); }
+
+.quality-section { margin-bottom: 14px; }
+.quality-label { font-size: .78rem; color: var(--text-dim); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.stars { font-size: 1.1rem; letter-spacing: 2px; line-height: 1; }
+.stars.claimed { color: var(--amber); }
+.stars.true-quality { font-size: 1.2rem; }
+.stars.true-quality.honest { color: var(--green); }
+.stars.true-quality.inflated { color: var(--red); }
+
+.price-range {
+  font-size: .85rem; color: var(--text-dim); margin-bottom: 14px;
+  padding: 8px 12px; background: var(--bg); border-radius: var(--radius-sm);
+}
+.price-range span { color: var(--text-bright); font-weight: 600; font-family: var(--mono); }
+
+.seller-pitch {
+  font-size: .82rem; color: var(--text-dim); font-style: italic;
+  margin-bottom: 14px; min-height: 40px;
+  padding: 8px 12px; background: rgba(255,255,255,.03); border-radius: var(--radius-sm);
+}
+
+.seller-actions { display: flex; gap: 8px; }
+.btn-verify {
+  flex: 1; padding: 10px; border-radius: var(--radius-sm);
+  background: rgba(20,184,166,.1); color: var(--teal); font-weight: 600;
+  font-size: .82rem; border: 1px solid var(--teal-dim);
+}
+.btn-verify:hover { background: rgba(20,184,166,.2); }
+.btn-verify:disabled { opacity: .4; cursor: not-allowed; }
+.btn-verify .cost { font-size: .72rem; opacity: .7; }
+
+.btn-select {
+  flex: 1; padding: 10px; border-radius: var(--radius-sm);
+  background: var(--teal); color: #fff; font-weight: 700; font-size: .88rem;
+}
+.btn-select:hover { background: var(--teal-dim); }
+.btn-select:disabled { opacity: .4; cursor: not-allowed; }
+
+.verified-badge {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--teal); color: #fff; font-size: .7rem; font-weight: 700;
+  padding: 3px 8px; border-radius: 50px;
+  animation: popIn .3s ease both;
+}
+
+/* True quality reveal */
+.true-reveal {
+  margin-top: 12px; padding: 10px 14px; border-radius: var(--radius-sm);
+  animation: slideUp .4s ease both;
+}
+.true-reveal.good { background: var(--green-glow); border: 1px solid rgba(34,197,94,.3); }
+.true-reveal.bad { background: var(--red-glow); border: 1px solid rgba(239,68,68,.3); }
+.true-reveal .reveal-label { font-size: .75rem; font-weight: 600; margin-bottom: 2px; }
+.true-reveal.good .reveal-label { color: var(--green); }
+.true-reveal.bad .reveal-label { color: var(--red); }
+
+/* ── Purchase Panel ───────────────────────────────────────────── */
+.purchase-panel {
+  background: var(--bg2); border: 1px solid var(--bg3); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 20px;
+}
+.purchase-panel h3 { font-size: 1rem; color: var(--text-bright); margin-bottom: 14px; }
+.price-input-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.price-slider-wrap { flex: 1; min-width: 200px; }
+.price-slider-wrap label { font-size: .82rem; color: var(--text-dim); display: block; margin-bottom: 6px; }
+.price-slider {
+  width: 100%; -webkit-appearance: none; appearance: none;
+  height: 6px; border-radius: 3px; background: var(--bg3); outline: none;
+}
+.price-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--teal); cursor: pointer; box-shadow: 0 2px 8px var(--teal-glow);
+}
+.price-slider::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--teal); cursor: pointer; border: none;
+}
+.price-display {
+  font-size: 1.8rem; font-weight: 800; color: var(--teal);
+  font-family: var(--mono); min-width: 80px; text-align: center;
+}
+.price-display span { font-size: .7rem; color: var(--text-dim); font-weight: 400; display: block; }
+.btn-buy {
+  padding: 14px 32px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--teal), var(--teal-dim));
+  color: #fff; font-weight: 700; font-size: 1rem;
+  box-shadow: 0 4px 16px var(--teal-glow);
+}
+.btn-buy:hover { box-shadow: 0 6px 24px var(--teal-glow); }
+.btn-buy:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── Result Banner ────────────────────────────────────────────── */
+.result-banner {
+  padding: 20px; border-radius: var(--radius); margin-bottom: 20px;
+  text-align: center; animation: slideUp .4s ease both;
+}
+.result-banner.profit { background: var(--green-glow); border: 1px solid rgba(34,197,94,.3); }
+.result-banner.loss { background: var(--red-glow); border: 1px solid rgba(239,68,68,.3); }
+.result-banner .result-amount {
+  font-size: 2rem; font-weight: 800; font-family: var(--mono);
+}
+.result-banner.profit .result-amount { color: var(--green); }
+.result-banner.loss .result-amount { color: var(--red); }
+.result-banner .result-detail { font-size: .88rem; color: var(--text-dim); margin-top: 4px; }
+
+.btn-next {
+  display: block; margin: 0 auto; padding: 12px 36px;
+  border-radius: 50px; background: var(--amber); color: #000;
+  font-weight: 700; font-size: .95rem;
+}
+.btn-next:hover { background: var(--amber-dim); }
+
+/* ── Aisha Insight ────────────────────────────────────────────── */
+.aisha-panel {
+  background: var(--bg2); border: 1px solid var(--bg3); border-radius: var(--radius);
+  padding: 16px; margin-bottom: 20px; display: flex; align-items: flex-start; gap: 12px;
+}
+.aisha-panel .avatar { font-size: 28px; flex-shrink: 0; }
+.aisha-panel .content { flex: 1; }
+.aisha-panel .aname { font-weight: 700; color: var(--text-bright); font-size: .88rem; }
+.aisha-panel .arole { font-size: .72rem; color: var(--text-dim); }
+.aisha-panel .text { font-size: .85rem; color: var(--text-dim); margin-top: 6px; }
+.aisha-panel .rational-price {
+  display: inline-block; margin-top: 6px; padding: 4px 10px;
+  background: var(--bg); border-radius: var(--radius-sm);
+  font-family: var(--mono); font-weight: 700; color: var(--teal); font-size: .85rem;
+}
+
+/* ── Market Tracker ───────────────────────────────────────────── */
+.tracker-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;
+}
+.tracker-card {
+  background: var(--bg2); border: 1px solid var(--bg3); border-radius: var(--radius);
+  padding: 16px;
+}
+.tracker-card h4 { font-size: .82rem; color: var(--text-dim); margin-bottom: 10px; text-transform: uppercase; letter-spacing: .04em; }
+.tracker-bars { display: flex; flex-direction: column; gap: 6px; }
+.tracker-bar-row { display: flex; align-items: center; gap: 8px; font-size: .78rem; }
+.tracker-bar-row .label { width: 24px; color: var(--text-dim); text-align: center; }
+.tracker-bar-row .bar-bg {
+  flex: 1; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden;
+}
+.tracker-bar-row .bar-fill {
+  height: 100%; border-radius: 4px; transition: width .6s ease;
+}
+.tracker-bar-row .bar-fill.quality { background: var(--teal); }
+.tracker-bar-row .bar-fill.lemon { background: var(--red); }
+
+.rep-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.rep-row .name { font-size: .85rem; color: var(--text); width: 70px; }
+.rep-row .rep-bar-bg {
+  flex: 1; height: 10px; background: var(--bg); border-radius: 5px; overflow: hidden;
+}
+.rep-row .rep-bar-fill { height: 100%; border-radius: 5px; transition: width .5s ease; }
+.rep-row .rep-bar-fill.honest { background: var(--teal); }
+.rep-row .rep-bar-fill.dishonest { background: var(--red); }
+.rep-row .rep-bar-fill.mixed { background: var(--amber); }
+.rep-row .pct { font-size: .78rem; font-family: var(--mono); color: var(--text-dim); width: 40px; text-align: right; }
+
+/* ── End Screen ───────────────────────────────────────────────── */
+#endScreen { justify-content: center; align-items: center; text-align: center; }
+#endScreen h1 { font-size: 2rem; font-weight: 800; color: var(--text-bright); margin-bottom: 8px; }
+.final-score {
+  font-size: 3.2rem; font-weight: 800; font-family: var(--mono);
+  margin: 12px 0 24px;
+}
+.final-score.positive { color: var(--green); }
+.final-score.negative { color: var(--red); }
+
+.final-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  max-width: 500px; margin: 0 auto 32px;
+}
+.final-stat {
+  background: var(--bg2); border-radius: var(--radius-sm); padding: 16px;
+  border: 1px solid var(--bg3);
+}
+.final-stat .val { font-size: 1.6rem; font-weight: 800; font-family: var(--mono); }
+.final-stat .val.green { color: var(--green); }
+.final-stat .val.red { color: var(--red); }
+.final-stat .val.amber { color: var(--amber); }
+.final-stat .lbl { font-size: .75rem; color: var(--text-dim); margin-top: 4px; }
+
+.lesson-card {
+  background: var(--bg2); border: 1px solid var(--bg3); border-radius: var(--radius);
+  padding: 24px; max-width: 640px; text-align: left; margin: 0 auto 24px;
+}
+.lesson-card h3 { color: var(--amber); font-size: 1rem; margin-bottom: 12px; }
+.lesson-card .lesson-item {
+  margin-bottom: 14px; padding-left: 16px;
+  border-left: 3px solid var(--bg3); font-size: .88rem; color: var(--text-dim);
+}
+.lesson-card .lesson-item strong { color: var(--text); display: block; margin-bottom: 2px; }
+.lesson-card .lesson-item.teal { border-color: var(--teal); }
+.lesson-card .lesson-item.amber { border-color: var(--amber); }
+.lesson-card .lesson-item.red { border-color: var(--red); }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .sellers-grid { grid-template-columns: 1fr; }
+  .agent-intros { grid-template-columns: 1fr; max-width: 300px; }
+  .tracker-row { grid-template-columns: 1fr; }
+  .final-stats { grid-template-columns: 1fr; max-width: 240px; }
+  #welcome h1 { font-size: 1.6rem; }
+  .price-input-row { flex-direction: column; align-items: stretch; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════ WELCOME SCREEN ════════════════════════ -->
+<div id="welcome" class="screen fade-in">
+  <div class="welcome-icon">🍋</div>
+  <h1>The Market for Lemons</h1>
+  <p class="subtitle">An Information Asymmetry Game</p>
+
+  <div class="lemon-card slide-up">
+    <h3>🎓 The Lemons Problem (Akerlof, 1970)</h3>
+    <p>
+      Imagine a used car market. Sellers know if their car is good or a "lemon" (defective) — but buyers cannot tell
+      the difference just by looking. What happens?
+    </p>
+    <p>
+      Buyers, fearing lemons, offer lower prices. Good sellers leave because prices are too low.
+      Only lemon sellers remain. The market collapses — <em>adverse selection</em> drives out quality.
+    </p>
+    <div class="highlight">
+      <strong>Your mission:</strong> You are a buyer with 500 tokens. Over 8 rounds, purchase products from sellers
+      whose true quality you cannot see. Can you beat the lemons problem?
+    </div>
+  </div>
+
+  <div class="agent-intros slide-up">
+    <div class="agent-intro honest">
+      <div class="avatar">👩‍🔬</div>
+      <div class="aname">Kavitha</div>
+      <div class="arole">Honest Seller — invests in quality &amp; certification</div>
+    </div>
+    <div class="agent-intro lemon">
+      <div class="avatar">🧔</div>
+      <div class="aname">Mohan</div>
+      <div class="arole">Lemon Seller — overstates quality, sells at premium</div>
+    </div>
+    <div class="agent-intro buyer">
+      <div class="avatar">🧕</div>
+      <div class="aname">Aisha</div>
+      <div class="arole">Skeptical Buyer — shows rational market price</div>
+    </div>
+  </div>
+
+  <button class="btn-primary" onclick="startGame()">Enter the Market</button>
+</div>
+
+<!-- ════════════════════════ GAME SCREEN ═══════════════════════════ -->
+<div id="gameScreen" class="screen hidden">
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="stat">
+      <span class="label">Balance:</span>
+      <span class="value tokens" id="balanceDisplay">500</span>
+    </div>
+    <div class="stat">
+      <span class="label">Round:</span>
+      <span class="value round" id="roundDisplay">1 / 8</span>
+    </div>
+    <div class="stat">
+      <span class="label">Lemon Index:</span>
+      <span class="value lemon" id="lemonIndex">0%</span>
+    </div>
+  </div>
+
+  <!-- Insight banner (shows from round 5+) -->
+  <div id="insightBanner" class="insight-banner hidden">
+    <span class="icon">💡</span>
+    <span id="insightText"></span>
+  </div>
+
+  <!-- Seller cards -->
+  <div class="sellers-grid" id="sellersGrid"></div>
+
+  <!-- Aisha's market analysis -->
+  <div class="aisha-panel" id="aishaPanel">
+    <div class="avatar">🧕</div>
+    <div class="content">
+      <div class="aname">Aisha <span class="arole">— Skeptical Buyer</span></div>
+      <div class="text" id="aishaText">Analyzing the market...</div>
+      <div class="rational-price" id="aishaPrice"></div>
+    </div>
+  </div>
+
+  <!-- Purchase panel (shown after selecting a seller) -->
+  <div id="purchasePanel" class="purchase-panel hidden">
+    <h3>Make Your Offer to <span id="selectedSellerName"></span></h3>
+    <div class="price-input-row">
+      <div class="price-slider-wrap">
+        <label>How much will you pay?</label>
+        <input type="range" class="price-slider" id="priceSlider" min="10" max="100" value="50" step="5"
+               oninput="updatePriceDisplay()">
+      </div>
+      <div class="price-display" id="priceDisplayVal">50<span>tokens</span></div>
+      <button class="btn-buy" id="btnBuy" onclick="executePurchase()">Buy</button>
+    </div>
+  </div>
+
+  <!-- Result banner (shown after purchase) -->
+  <div id="resultBanner" class="hidden"></div>
+
+  <!-- Market tracker -->
+  <div class="tracker-row" id="trackerRow">
+    <div class="tracker-card">
+      <h4>Market Quality by Round</h4>
+      <div class="tracker-bars" id="qualityBars"></div>
+    </div>
+    <div class="tracker-card">
+      <h4>Seller Reputation</h4>
+      <div id="repBars"></div>
+    </div>
+  </div>
+
+  <!-- Next round button -->
+  <button class="btn-next hidden" id="btnNext" onclick="nextRound()">Next Round →</button>
+</div>
+
+<!-- ════════════════════════ END SCREEN ════════════════════════════ -->
+<div id="endScreen" class="screen hidden"></div>
+
+<!-- ════════════════════════ GAME AGENTS ═══════════════════════════ -->
+<script src="/js/game-agents.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // ── State ────────────────────────────────────────────────────────
+  var TOTAL_ROUNDS = 8;
+  var STARTING_BALANCE = 500;
+  var VERIFY_COST = 15;
+
+  var state = {
+    round: 0,
+    balance: STARTING_BALANCE,
+    history: [],            // { round, seller, trueQuality, claimedQuality, pricePaid, profit, verified, wasLemon }
+    sellers: [],            // current round sellers
+    selectedSeller: null,
+    phase: 'select',        // select | purchase | result
+    verifiedThisRound: {},  // sellerId -> true
+    reputation: { kavitha: { honest: 0, total: 0 }, mohan: { honest: 0, total: 0 } },
+    lemonCount: 0,
+    totalPurchases: 0
+  };
+
+  var agents = null;
+  try { agents = new IMGameAgents('info-asymmetry-game'); } catch(e) { console.warn('IMGameAgents not available, using local only.'); }
+
+  // ── Seller Generation ────────────────────────────────────────────
+
+  function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+  function generateSellers(round) {
+    // Kavitha: honest, high quality
+    var kQuality = randInt(6, 10);
+    var kavitha = {
+      id: 'kavitha', name: 'Kavitha', role: 'Certified Seller', avatar: '👩‍🔬',
+      trueQuality: kQuality,
+      claimedQuality: kQuality,
+      minPrice: kQuality * 7,
+      maxPrice: kQuality * 10,
+      isHonest: true,
+      agentId: 'ia-honest-seller',
+      pitch: ''
+    };
+
+    // Mohan: lemon seller, inflates
+    var mTrueQuality = randInt(2, 6);
+    var inflation = randInt(3, Math.min(4, 10 - mTrueQuality));
+    var mClaimed = Math.min(10, mTrueQuality + inflation);
+    var mohan = {
+      id: 'mohan', name: 'Mohan', role: 'Market Seller', avatar: '🧔',
+      trueQuality: mTrueQuality,
+      claimedQuality: mClaimed,
+      minPrice: mClaimed * 5,
+      maxPrice: mClaimed * 9,
+      isHonest: false,
+      agentId: 'ia-lemon-seller',
+      pitch: ''
+    };
+
+    // Third seller: rotating — sometimes honest, sometimes not (adds uncertainty)
+    var thirdIsHonest = Math.random() < 0.45;
+    var tQuality, tClaimed;
+    if (thirdIsHonest) {
+      tQuality = randInt(5, 9);
+      tClaimed = tQuality;
+    } else {
+      tQuality = randInt(2, 5);
+      tClaimed = Math.min(10, tQuality + randInt(2, 4));
+    }
+    var thirdNames = [
+      { name: 'Priya', avatar: '👩‍💼', role: 'Indie Seller' },
+      { name: 'Raj', avatar: '👨‍🏭', role: 'Discount Seller' },
+      { name: 'Zara', avatar: '👩‍🎨', role: 'Boutique Seller' },
+      { name: 'Dev', avatar: '👨‍💻', role: 'Online Seller' }
+    ];
+    var tn = thirdNames[(round - 1) % thirdNames.length];
+    var third = {
+      id: 'third', name: tn.name, role: tn.role, avatar: tn.avatar,
+      trueQuality: tQuality,
+      claimedQuality: tClaimed,
+      minPrice: tClaimed * 5,
+      maxPrice: tClaimed * 9,
+      isHonest: thirdIsHonest,
+      agentId: thirdIsHonest ? 'ia-honest-seller' : 'ia-lemon-seller',
+      pitch: ''
+    };
+
+    // Shuffle order
+    var arr = [kavitha, mohan, third];
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = randInt(0, i);
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  // ── Stars Rendering ──────────────────────────────────────────────
+
+  function starsHTML(count, maxCount, cssClass) {
+    var s = '';
+    for (var i = 0; i < maxCount; i++) {
+      s += i < count ? '★' : '☆';
+    }
+    return '<span class="stars ' + cssClass + '">' + s + '</span>';
+  }
+
+  // ── Agent Pitches ────────────────────────────────────────────────
+
+  function getAgentPitch(seller, round, callback) {
+    if (!agents) { callback(getLocalPitch(seller)); return; }
+    agents.getDecision(seller.agentId, {
+      round: round,
+      totalRounds: TOTAL_ROUNDS,
+      history: state.history,
+      availableActions: ['bid'],
+      context: { estimated_value: seller.trueQuality * 10, claimed_quality: seller.claimedQuality }
+    }).then(function(decision) {
+      callback(decision.reasoning || getLocalPitch(seller));
+    }).catch(function() {
+      callback(getLocalPitch(seller));
+    });
+  }
+
+  function getLocalPitch(seller) {
+    if (seller.isHonest) {
+      var honestPitches = [
+        '"My product speaks for itself. Quality guaranteed."',
+        '"I invest in certification so you can trust the rating."',
+        '"What you see is what you get — always."',
+        '"I\'d rather lose a sale than misrepresent quality."',
+        '"Ask anyone who\'s bought from me before."',
+        '"Transparency is my competitive advantage."',
+        '"My prices reflect true value — no tricks."',
+        '"Quality costs more, but it\'s worth every token."'
+      ];
+      return honestPitches[randInt(0, honestPitches.length - 1)];
+    } else {
+      var lemonPitches = [
+        '"Premium quality at an unbeatable price! Trust me."',
+        '"This is the best deal in the market — don\'t miss out!"',
+        '"Top-rated product, verified by... well, me!"',
+        '"Everyone else charges double for this quality."',
+        '"Limited stock! This one is exceptional."',
+        '"You won\'t find better quality anywhere else."',
+        '"I guarantee satisfaction* (*terms apply)."',
+        '"The reviews speak for themselves. Buy now!"'
+      ];
+      return lemonPitches[randInt(0, lemonPitches.length - 1)];
+    }
+  }
+
+  function getAishaInsight(sellers, round, callback) {
+    var avgClaimed = sellers.reduce(function(s, v) { return s + v.claimedQuality; }, 0) / sellers.length;
+    // Rational buyer assumes average quality is lower due to adverse selection
+    var discountFactor = Math.max(0.4, 0.7 - (round - 1) * 0.03);
+    var rationalPrice = Math.round(avgClaimed * 10 * discountFactor);
+
+    if (!agents) {
+      callback({
+        text: getLocalAisha(round, avgClaimed, rationalPrice),
+        price: rationalPrice
+      });
+      return;
+    }
+    agents.getDecision('ia-skeptical-buyer', {
+      round: round,
+      totalRounds: TOTAL_ROUNDS,
+      history: state.history,
+      availableActions: ['bid'],
+      context: { estimated_value: rationalPrice, avg_claimed: avgClaimed }
+    }).then(function(decision) {
+      callback({
+        text: decision.reasoning || getLocalAisha(round, avgClaimed, rationalPrice),
+        price: rationalPrice
+      });
+    }).catch(function() {
+      callback({
+        text: getLocalAisha(round, avgClaimed, rationalPrice),
+        price: rationalPrice
+      });
+    });
+  }
+
+  function getLocalAisha(round, avgClaimed, rationalPrice) {
+    if (round <= 2) return 'Average claimed quality is ' + avgClaimed.toFixed(1) + '/10. But can we trust claims? A rational buyer discounts for information asymmetry.';
+    if (round <= 4) return 'I\'ve been watching this market. Claims average ' + avgClaimed.toFixed(1) + ' but actual quality is likely lower. I\'d pay no more than ' + rationalPrice + ' tokens.';
+    if (round <= 6) return 'The lemon problem is real. Inflated claims erode trust for everyone. Smart money pays ' + rationalPrice + ' tokens max.';
+    return 'After many rounds, the market should be correcting. Honest sellers who survived deserve premium pricing. But verify first.';
+  }
+
+  // ── Render Functions ─────────────────────────────────────────────
+
+  function renderTopBar() {
+    document.getElementById('balanceDisplay').textContent = state.balance;
+    document.getElementById('roundDisplay').textContent = state.round + ' / ' + TOTAL_ROUNDS;
+    var lemonPct = state.totalPurchases > 0 ? Math.round((state.lemonCount / state.totalPurchases) * 100) : 0;
+    document.getElementById('lemonIndex').textContent = lemonPct + '%';
+  }
+
+  function renderSellers() {
+    var grid = document.getElementById('sellersGrid');
+    grid.innerHTML = '';
+    state.sellers.forEach(function(seller, idx) {
+      var card = document.createElement('div');
+      card.className = 'seller-card';
+      card.id = 'seller-' + seller.id;
+      if (state.selectedSeller === seller.id) card.className += ' selected';
+
+      var repData = getReputation(seller);
+
+      var html = '';
+      // Verified badge
+      if (state.verifiedThisRound[seller.id]) {
+        html += '<div class="verified-badge">✓ VERIFIED</div>';
+      }
+
+      html += '<div class="seller-header">';
+      html += '<div class="seller-avatar">' + seller.avatar + '</div>';
+      html += '<div class="seller-info">';
+      html += '<div class="seller-name">' + seller.name + '</div>';
+      html += '<div class="seller-role">' + seller.role + '</div>';
+      html += '</div>';
+      html += '<div class="seller-rep ' + repData.cls + '">' + repData.label + '</div>';
+      html += '</div>';
+
+      // Claimed quality
+      html += '<div class="quality-section">';
+      html += '<div class="quality-label"><span>Claimed Quality</span></div>';
+      html += starsHTML(seller.claimedQuality, 10, 'claimed');
+      html += '</div>';
+
+      // Show true quality if verified
+      if (state.verifiedThisRound[seller.id]) {
+        var tClass = seller.trueQuality === seller.claimedQuality ? 'honest' : 'inflated';
+        html += '<div class="quality-section">';
+        html += '<div class="quality-label"><span>True Quality</span></div>';
+        html += starsHTML(seller.trueQuality, 10, 'true-quality ' + tClass);
+        html += '</div>';
+      }
+
+      // Price range
+      html += '<div class="price-range">Asking: <span>' + seller.minPrice + ' – ' + seller.maxPrice + '</span> tokens</div>';
+
+      // Pitch
+      html += '<div class="seller-pitch">' + (seller.pitch || '...') + '</div>';
+
+      // Buttons
+      if (state.phase === 'select') {
+        html += '<div class="seller-actions">';
+        var verifyDisabled = state.verifiedThisRound[seller.id] || state.balance < VERIFY_COST ? ' disabled' : '';
+        html += '<button class="btn-verify" onclick="verifySeller(\'' + seller.id + '\')"' + verifyDisabled + '>';
+        html += 'Verify <span class="cost">(' + VERIFY_COST + ' tokens)</span></button>';
+        html += '<button class="btn-select" onclick="selectSeller(\'' + seller.id + '\')">Select</button>';
+        html += '</div>';
+      }
+
+      card.innerHTML = html;
+      grid.appendChild(card);
+    });
+  }
+
+  function getReputation(seller) {
+    var key = seller.id === 'kavitha' ? 'kavitha' : (seller.id === 'mohan' ? 'mohan' : null);
+    if (!key || !state.reputation[key] || state.reputation[key].total === 0) {
+      return { cls: 'neutral', label: 'New' };
+    }
+    var r = state.reputation[key];
+    var pct = Math.round((r.honest / r.total) * 100);
+    if (pct >= 70) return { cls: 'good', label: pct + '% honest' };
+    if (pct >= 40) return { cls: 'neutral', label: pct + '% honest' };
+    return { cls: 'bad', label: pct + '% honest' };
+  }
+
+  function renderReputation() {
+    var repBars = document.getElementById('repBars');
+    repBars.innerHTML = '';
+    ['kavitha', 'mohan'].forEach(function(key) {
+      var r = state.reputation[key];
+      var pct = r.total > 0 ? Math.round((r.honest / r.total) * 100) : 50;
+      var cls = pct >= 70 ? 'honest' : (pct >= 40 ? 'mixed' : 'dishonest');
+      var html = '<div class="rep-row">';
+      html += '<div class="name">' + key.charAt(0).toUpperCase() + key.slice(1) + '</div>';
+      html += '<div class="rep-bar-bg"><div class="rep-bar-fill ' + cls + '" style="width:' + pct + '%"></div></div>';
+      html += '<div class="pct">' + (r.total > 0 ? pct + '%' : '—') + '</div>';
+      html += '</div>';
+      repBars.innerHTML += html;
+    });
+  }
+
+  function renderQualityBars() {
+    var bars = document.getElementById('qualityBars');
+    bars.innerHTML = '';
+    for (var i = 0; i < state.history.length; i++) {
+      var h = state.history[i];
+      var qualPct = h.trueQuality * 10;
+      var lemonPct = h.wasLemon ? 100 : 0;
+      var html = '<div class="tracker-bar-row">';
+      html += '<div class="label">R' + h.round + '</div>';
+      html += '<div class="bar-bg"><div class="bar-fill quality" style="width:' + qualPct + '%"></div></div>';
+      if (h.wasLemon) {
+        html += '<span style="color:var(--red);font-size:.72rem;">🍋</span>';
+      } else {
+        html += '<span style="color:var(--green);font-size:.72rem;">✓</span>';
+      }
+      html += '</div>';
+      bars.innerHTML += html;
+    }
+    if (state.history.length === 0) {
+      bars.innerHTML = '<div style="font-size:.82rem;color:var(--text-dim);padding:8px;">No purchases yet</div>';
+    }
+  }
+
+  function renderInsight() {
+    var banner = document.getElementById('insightBanner');
+    var text = document.getElementById('insightText');
+    if (state.round === 5) {
+      text.textContent = 'Notice how Mohan\'s inflated claims make it harder to trust Kavitha\'s honest signals — that\'s adverse selection in action. When buyers can\'t distinguish quality, they discount everyone.';
+      banner.classList.remove('hidden');
+    } else if (state.round === 7) {
+      var lemonPct = state.totalPurchases > 0 ? Math.round((state.lemonCount / state.totalPurchases) * 100) : 0;
+      text.textContent = 'Your lemon index is ' + lemonPct + '%. In Akerlof\'s model, without intervention, lemon sellers dominate and quality sellers exit. Verification (screening) is your best tool against this.';
+      banner.classList.remove('hidden');
+    } else {
+      banner.classList.add('hidden');
+    }
+  }
+
+  // ── Game Flow ────────────────────────────────────────────────────
+
+  window.startGame = function() {
+    document.getElementById('welcome').classList.add('hidden');
+    document.getElementById('gameScreen').classList.remove('hidden');
+    state.round = 1;
+    startRound();
+  };
+
+  function startRound() {
+    state.phase = 'select';
+    state.selectedSeller = null;
+    state.verifiedThisRound = {};
+    state.sellers = generateSellers(state.round);
+
+    // Hide panels
+    document.getElementById('purchasePanel').classList.add('hidden');
+    document.getElementById('resultBanner').classList.add('hidden');
+    document.getElementById('btnNext').classList.add('hidden');
+
+    renderTopBar();
+    renderInsight();
+    renderSellers();
+    renderQualityBars();
+    renderReputation();
+
+    // Fetch pitches
+    state.sellers.forEach(function(seller) {
+      getAgentPitch(seller, state.round, function(pitch) {
+        seller.pitch = pitch;
+        renderSellers();
+      });
+    });
+
+    // Fetch Aisha's insight
+    getAishaInsight(state.sellers, state.round, function(result) {
+      document.getElementById('aishaText').textContent = result.text;
+      document.getElementById('aishaPrice').textContent = 'Rational price: ' + result.price + ' tokens';
+    });
+  }
+
+  window.verifySeller = function(sellerId) {
+    if (state.balance < VERIFY_COST) return;
+    if (state.verifiedThisRound[sellerId]) return;
+
+    state.balance -= VERIFY_COST;
+    state.verifiedThisRound[sellerId] = true;
+    renderTopBar();
+    renderSellers();
+  };
+
+  window.selectSeller = function(sellerId) {
+    state.selectedSeller = sellerId;
+    renderSellers();
+
+    var seller = state.sellers.find(function(s) { return s.id === sellerId; });
+    document.getElementById('selectedSellerName').textContent = seller.name;
+
+    // Set slider range based on seller
+    var slider = document.getElementById('priceSlider');
+    slider.min = 10;
+    slider.max = 100;
+    slider.value = Math.round((seller.minPrice + seller.maxPrice) / 2);
+    updatePriceDisplay();
+
+    document.getElementById('purchasePanel').classList.remove('hidden');
+    document.getElementById('purchasePanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  window.updatePriceDisplay = function() {
+    document.getElementById('priceDisplayVal').innerHTML =
+      document.getElementById('priceSlider').value + '<span>tokens</span>';
+  };
+
+  window.executePurchase = function() {
+    if (!state.selectedSeller) return;
+
+    var seller = state.sellers.find(function(s) { return s.id === state.selectedSeller; });
+    var price = parseInt(document.getElementById('priceSlider').value);
+
+    if (state.balance < price) {
+      alert('Not enough tokens! You have ' + state.balance + ' tokens.');
+      return;
+    }
+
+    state.balance -= price;
+    state.phase = 'result';
+
+    // Calculate payoff
+    var trueValue = seller.trueQuality * 10;
+    var profit = trueValue - price;
+    var wasLemon = seller.claimedQuality > seller.trueQuality;
+
+    if (profit > 0) {
+      state.balance += profit;
+    }
+
+    // Track
+    state.totalPurchases++;
+    if (wasLemon) state.lemonCount++;
+
+    // Update reputation
+    if (seller.id === 'kavitha' || seller.id === 'mohan') {
+      var rk = seller.id;
+      state.reputation[rk].total++;
+      if (seller.isHonest) state.reputation[rk].honest++;
+    }
+
+    // Record history
+    state.history.push({
+      round: state.round,
+      seller: seller.name,
+      sellerId: seller.id,
+      trueQuality: seller.trueQuality,
+      claimedQuality: seller.claimedQuality,
+      pricePaid: price,
+      profit: profit,
+      verified: !!state.verifiedThisRound[seller.id],
+      wasLemon: wasLemon
+    });
+
+    renderTopBar();
+
+    // Reveal true quality on all cards
+    state.sellers.forEach(function(s) {
+      var card = document.getElementById('seller-' + s.id);
+      if (!card) return;
+
+      // Remove action buttons, add reveal
+      var actionsEl = card.querySelector('.seller-actions');
+      if (actionsEl) actionsEl.remove();
+
+      // Add true quality reveal if not already verified
+      if (!state.verifiedThisRound[s.id]) {
+        var tClass = s.trueQuality === s.claimedQuality ? 'honest' : 'inflated';
+        var revealDiv = document.createElement('div');
+        var goodBad = s.trueQuality === s.claimedQuality ? 'good' : 'bad';
+        revealDiv.className = 'true-reveal ' + goodBad;
+        revealDiv.innerHTML = '<div class="reveal-label">' + (s.isHonest ? 'Honest claim!' : 'Inflated by ' + (s.claimedQuality - s.trueQuality) + ' stars!') + '</div>' +
+          starsHTML(s.trueQuality, 10, 'true-quality ' + tClass);
+        card.appendChild(revealDiv);
+      }
+
+      // Highlight selected card
+      if (s.id === state.selectedSeller) {
+        card.className = 'seller-card ' + (profit >= 0 ? 'revealed-honest' : 'revealed-lemon');
+      }
+    });
+
+    // Show result banner
+    var banner = document.getElementById('resultBanner');
+    banner.className = 'result-banner ' + (profit >= 0 ? 'profit' : 'loss');
+    var sign = profit >= 0 ? '+' : '';
+    banner.innerHTML = '<div class="result-amount">' + sign + profit + ' tokens</div>' +
+      '<div class="result-detail">' +
+      'Bought from ' + seller.name + ' for ' + price + ' tokens. True value: ' + trueValue + ' tokens.' +
+      (wasLemon ? ' 🍋 This was a lemon!' : ' ✓ Honest deal.') +
+      '</div>';
+    banner.classList.remove('hidden');
+
+    // Hide purchase panel
+    document.getElementById('purchasePanel').classList.add('hidden');
+
+    // Show next button
+    document.getElementById('btnNext').classList.remove('hidden');
+    document.getElementById('btnNext').textContent = state.round >= TOTAL_ROUNDS ? 'See Results' : 'Next Round →';
+
+    renderQualityBars();
+    renderReputation();
+  };
+
+  window.nextRound = function() {
+    if (state.round >= TOTAL_ROUNDS || state.balance <= 0) {
+      showEndScreen();
+      return;
+    }
+    state.round++;
+    startRound();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // ── End Screen ───────────────────────────────────────────────────
+
+  function showEndScreen() {
+    document.getElementById('gameScreen').classList.add('hidden');
+    var screen = document.getElementById('endScreen');
+    screen.classList.remove('hidden');
+
+    var finalBalance = state.balance;
+    var netProfit = finalBalance - STARTING_BALANCE;
+    var lemonPct = state.totalPurchases > 0 ? Math.round((state.lemonCount / state.totalPurchases) * 100) : 0;
+    var verifyCount = state.history.filter(function(h) { return h.verified; }).length;
+    var goodDeals = state.history.filter(function(h) { return h.profit >= 0; }).length;
+
+    var scoreClass = netProfit >= 0 ? 'positive' : 'negative';
+    var title = netProfit >= 50 ? 'Market Savvy!' : (netProfit >= 0 ? 'Broke Even' : 'The Lemons Won');
+    var titleIcon = netProfit >= 50 ? '🏆' : (netProfit >= 0 ? '📊' : '🍋');
+
+    var html = '<div class="fade-in" style="max-width:700px;">';
+    html += '<div style="font-size:48px;margin-bottom:12px;">' + titleIcon + '</div>';
+    html += '<h1>' + title + '</h1>';
+    html += '<p style="color:var(--text-dim);margin-bottom:8px;">You navigated ' + TOTAL_ROUNDS + ' rounds of the market for lemons.</p>';
+    html += '<div class="final-score ' + scoreClass + '">' + (netProfit >= 0 ? '+' : '') + netProfit + ' tokens</div>';
+
+    html += '<div class="final-stats">';
+    html += '<div class="final-stat"><div class="val green">' + goodDeals + '/' + state.totalPurchases + '</div><div class="lbl">Good Deals</div></div>';
+    html += '<div class="final-stat"><div class="val red">' + lemonPct + '%</div><div class="lbl">Lemon Index</div></div>';
+    html += '<div class="final-stat"><div class="val amber">' + verifyCount + '</div><div class="lbl">Verifications</div></div>';
+    html += '</div>';
+
+    // Market evolution
+    html += '<div class="lesson-card slide-up">';
+    html += '<h3>📉 How Your Market Evolved</h3>';
+
+    if (lemonPct > 50) {
+      html += '<div class="lesson-item red"><strong>Adverse Selection Dominated</strong>Lemons flooded your market. Without sufficient screening, dishonest sellers thrived and quality eroded — just as Akerlof predicted.</div>';
+    } else if (lemonPct > 25) {
+      html += '<div class="lesson-item amber"><strong>Mixed Market</strong>You encountered a blend of honest and dishonest sellers. Your screening efforts helped, but the lemon problem persisted.</div>';
+    } else {
+      html += '<div class="lesson-item teal"><strong>Screening Success</strong>You effectively screened for quality! By verifying and tracking reputation, you mitigated the worst effects of information asymmetry.</div>';
+    }
+    html += '</div>';
+
+    // Lessons
+    html += '<div class="lesson-card slide-up">';
+    html += '<h3>🎓 The Economics Behind the Game</h3>';
+
+    html += '<div class="lesson-item amber">';
+    html += '<strong>Adverse Selection (Akerlof, 1970)</strong>';
+    html += 'When buyers can\'t distinguish quality, they pay average prices. This drives high-quality sellers out, leaving only "lemons." George Akerlof won the Nobel Prize for this insight.';
+    html += '</div>';
+
+    html += '<div class="lesson-item teal">';
+    html += '<strong>Signaling (Spence, 1973)</strong>';
+    html += 'Kavitha\'s honest claims and certifications are <em>signals</em> — costly actions that only high-quality sellers can afford. Education, warranties, and brand reputation all work this way.';
+    html += '</div>';
+
+    html += '<div class="lesson-item teal">';
+    html += '<strong>Screening (Stiglitz, 1975)</strong>';
+    html += 'Your verification button is <em>screening</em> — the buyer\'s tool to uncover hidden information. Insurance deductibles, job interviews, and product reviews all serve this purpose.';
+    html += '</div>';
+
+    html += '<div class="lesson-item red">';
+    html += '<strong>Moral Hazard</strong>';
+    html += 'Mohan had no incentive to improve quality because he could profit from inflated claims. Without consequences (regulation, reputation damage), sellers face moral hazard — they take risks at the buyer\'s expense.';
+    html += '</div>';
+
+    html += '</div>';
+
+    // Real-world solutions
+    html += '<div class="lesson-card slide-up">';
+    html += '<h3>🔧 Real-World Solutions</h3>';
+    html += '<div class="lesson-item teal"><strong>Warranties & Guarantees</strong>Sellers who offer warranties signal confidence in their product — a costly signal lemons can\'t afford.</div>';
+    html += '<div class="lesson-item teal"><strong>Certifications & Standards</strong>Third-party certification (ISO, organic labels, credit ratings) reduces information asymmetry.</div>';
+    html += '<div class="lesson-item amber"><strong>Regulation</strong>Consumer protection laws, mandatory disclosures, and lemon laws force sellers to reveal hidden information.</div>';
+    html += '<div class="lesson-item teal"><strong>Reputation Systems</strong>Online reviews, ratings, and repeat business create accountability — exactly like the reputation tracker in this game.</div>';
+    html += '</div>';
+
+    html += '<div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">';
+    html += '<button class="btn-primary" onclick="restartGame()">Play Again</button>';
+    html += '</div>';
+    html += '</div>';
+
+    screen.innerHTML = html;
+    screen.scrollIntoView({ top: 0 });
+  }
+
+  window.restartGame = function() {
+    state.round = 0;
+    state.balance = STARTING_BALANCE;
+    state.history = [];
+    state.sellers = [];
+    state.selectedSeller = null;
+    state.phase = 'select';
+    state.verifiedThisRound = {};
+    state.reputation = { kavitha: { honest: 0, total: 0 }, mohan: { honest: 0, total: 0 } };
+    state.lemonCount = 0;
+    state.totalPurchases = 0;
+
+    document.getElementById('endScreen').classList.add('hidden');
+    document.getElementById('welcome').classList.remove('hidden');
+    window.scrollTo({ top: 0 });
+  };
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commons Crisis — The Tragedy of the Commons Game | ImpactMojo</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0B1120;--bg2:#111827;--bg3:#1F2937;--bg4:#374151;
+  --text:#F9FAFB;--text2:#D1D5DB;--text3:#9CA3AF;
+  --green:#059669;--green-light:#34D399;--green-bg:rgba(5,150,105,.12);
+  --amber:#F59E0B;--amber-bg:rgba(245,158,11,.12);
+  --red:#EF4444;--red-bg:rgba(239,68,68,.12);
+  --blue:#3B82F6;--blue-bg:rgba(59,130,246,.12);
+  --purple:#8B5CF6;
+  --radius:12px;--radius-sm:8px;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+  --transition:all .3s ease;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+
+/* ── Utility ── */
+.hidden{display:none!important}
+.flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.gap-1{gap:.5rem}.gap-2{gap:1rem}.gap-3{gap:1.5rem}
+.text-center{text-align:center}.w-full{width:100%}
+
+/* ── Containers ── */
+.screen{min-height:100vh;padding:2rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.container{max-width:900px;width:100%;margin:0 auto}
+.card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow)}
+
+/* ── Typography ── */
+h1{font-size:2.5rem;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+h2{font-size:1.5rem;font-weight:700}
+h3{font-size:1.1rem;font-weight:600}
+.subtitle{color:var(--text2);font-size:1.05rem;max-width:600px;margin:0 auto}
+.badge{display:inline-block;padding:.2rem .65rem;border-radius:99px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.badge-green{background:var(--green-bg);color:var(--green-light)}
+.badge-amber{background:var(--amber-bg);color:var(--amber)}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.badge-blue{background:var(--blue-bg);color:var(--blue)}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem 2rem;border:none;border-radius:var(--radius-sm);font-size:1rem;font-weight:600;cursor:pointer;transition:var(--transition);text-decoration:none}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:#047857;transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0)}
+.btn-secondary{background:var(--bg3);color:var(--text)}
+.btn-secondary:hover{background:var(--bg4)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* ── Welcome Screen ── */
+#welcome-screen .hero{padding:3rem 0 2rem;text-align:center}
+#welcome-screen .hero h1 span{background:linear-gradient(135deg,var(--green-light),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.concept-box{background:linear-gradient(135deg,rgba(5,150,105,.08),rgba(59,130,246,.08));border:1px solid rgba(5,150,105,.2);border-radius:var(--radius);padding:1.5rem;margin:1.5rem 0}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
+.agent-intro{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center;transition:var(--transition)}
+.agent-intro:hover{border-color:var(--green);transform:translateY(-2px)}
+.agent-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto .6rem;font-weight:700}
+
+/* ── Game Screen ── */
+#game-screen .game-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
+.round-badge{font-size:1.4rem;font-weight:800;color:var(--green-light)}
+
+/* Resource Bar */
+.resource-container{position:relative;margin-bottom:2rem}
+.resource-bar-outer{width:100%;height:64px;background:var(--bg3);border-radius:var(--radius);overflow:hidden;position:relative;border:2px solid var(--bg4)}
+.resource-bar-inner{height:100%;border-radius:calc(var(--radius) - 2px);transition:width .8s cubic-bezier(.4,0,.2,1),background .5s ease;position:relative;overflow:hidden}
+.resource-bar-inner::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,.12) 0%,transparent 50%,rgba(0,0,0,.1) 100%)}
+.resource-bar-inner.healthy{background:linear-gradient(90deg,#059669,#34D399)}
+.resource-bar-inner.warning{background:linear-gradient(90deg,#D97706,#F59E0B)}
+.resource-bar-inner.critical{background:linear-gradient(90deg,#DC2626,#EF4444)}
+.resource-bar-inner.dead{background:#4B5563;width:0!important}
+
+/* Animated waves inside the bar */
+.resource-waves{position:absolute;bottom:0;left:0;width:200%;height:30px;opacity:.3}
+.resource-waves svg{width:100%;height:100%}
+@keyframes wave{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.resource-waves{animation:wave 3s linear infinite}
+
+/* Sustainable yield line */
+.sustainable-line{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.5);z-index:2;transition:left .5s ease}
+.sustainable-line::after{content:'Sustainable Yield';position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:.65rem;color:var(--text3);white-space:nowrap;background:var(--bg);padding:1px 6px;border-radius:4px}
+
+.resource-numbers{display:flex;justify-content:space-between;align-items:baseline;margin-top:.6rem}
+.resource-level{font-size:2.2rem;font-weight:800;transition:color .3s}
+.resource-label{color:var(--text3);font-size:.85rem}
+
+/* Warning banner */
+.warning-banner{background:var(--amber-bg);border:1px solid rgba(245,158,11,.3);border-radius:var(--radius-sm);padding:.8rem 1rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;font-size:.9rem;color:var(--amber);animation:pulse-border 2s ease infinite}
+.warning-banner.critical-banner{background:var(--red-bg);border-color:rgba(239,68,68,.3);color:var(--red)}
+@keyframes pulse-border{0%,100%{opacity:1}50%{opacity:.7}}
+
+/* Extraction controls */
+.extraction-panel{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.slider-container{position:relative;margin:1rem 0}
+.slider-container input[type=range]{-webkit-appearance:none;width:100%;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--green) 0%,var(--amber) 50%,var(--red) 100%);outline:none;cursor:pointer}
+.slider-container input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3);cursor:pointer;transition:transform .15s}
+.slider-container input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.slider-container input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3);cursor:pointer;border:none}
+.slider-labels{display:flex;justify-content:space-between;font-size:.75rem;color:var(--text3);margin-top:.3rem}
+.extraction-value{font-size:2rem;font-weight:800;text-align:center;margin:.5rem 0}
+
+/* Agent cards */
+.agents-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.agent-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem;transition:var(--transition)}
+.agent-card .agent-top{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem}
+.agent-card .agent-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0}
+.agent-card .agent-info h4{font-size:.9rem;font-weight:600;margin-bottom:.1rem}
+.agent-card .agent-info .archetype{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.03em}
+.agent-card .stat-row{display:flex;justify-content:space-between;font-size:.8rem;padding:.25rem 0;border-top:1px solid var(--bg3)}
+.agent-card .stat-value{font-weight:700}
+.agent-card .extraction-flash{animation:flash-extract .6s ease}
+@keyframes flash-extract{0%{background:rgba(245,158,11,.15)}100%{background:transparent}}
+
+/* Communication round */
+.comm-panel{background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(59,130,246,.08));border:1px solid rgba(139,92,246,.2);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.comm-message{background:var(--bg2);border-radius:var(--radius-sm);padding:.8rem 1rem;margin-bottom:.6rem;display:flex;gap:.8rem;align-items:flex-start;font-size:.9rem}
+.comm-message:last-child{margin-bottom:0}
+.comm-name{font-weight:700;white-space:nowrap;min-width:60px}
+
+/* Chart */
+.chart-container{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:1rem;margin-bottom:1.5rem}
+.chart-container canvas{width:100%;height:180px;display:block}
+
+/* Regeneration animation */
+@keyframes regen-pulse{0%{box-shadow:0 0 0 0 rgba(5,150,105,.4)}70%{box-shadow:0 0 0 12px rgba(5,150,105,0)}100%{box-shadow:0 0 0 0 rgba(5,150,105,0)}}
+.regen-pulse{animation:regen-pulse .8s ease}
+
+/* ── End Screen ── */
+.scoreboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.75rem;margin:1.5rem 0}
+.score-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center}
+.score-card .score-name{font-weight:700;margin-bottom:.3rem}
+.score-card .score-value{font-size:1.6rem;font-weight:800;color:var(--green-light)}
+.score-card.player-card{border-color:var(--green);background:var(--green-bg)}
+
+.ostrom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.75rem;margin:1rem 0}
+.ostrom-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem}
+.ostrom-card .ostrom-num{font-size:.75rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
+.ostrom-card h4{font-size:.9rem;margin-bottom:.3rem}
+.ostrom-card p{font-size:.8rem;color:var(--text3);line-height:1.5}
+
+/* Collapse overlay */
+.collapse-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:100;animation:fade-in .5s ease}
+.collapse-overlay .collapse-content{text-align:center;max-width:500px;padding:2rem}
+.collapse-overlay h2{font-size:2rem;color:var(--red);margin-bottom:1rem}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+
+/* Responsive */
+@media(max-width:640px){
+  h1{font-size:1.8rem}
+  .resource-bar-outer{height:48px}
+  .resource-level{font-size:1.6rem}
+  .agents-panel{grid-template-columns:1fr 1fr}
+  .agent-grid{grid-template-columns:1fr 1fr}
+  .extraction-value{font-size:1.5rem}
+  .screen{padding:1rem .75rem}
+  .ostrom-grid{grid-template-columns:1fr}
+  .scoreboard{grid-template-columns:1fr 1fr}
+}
+@media(max-width:400px){
+  .agents-panel{grid-template-columns:1fr}
+  .agent-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ====== WELCOME SCREEN ====== -->
+<div id="welcome-screen" class="screen">
+  <div class="container">
+    <div class="hero">
+      <div style="font-size:3rem;margin-bottom:.5rem">🌊</div>
+      <h1><span>Commons Crisis</span></h1>
+      <p class="subtitle" style="margin-top:.75rem">Can you manage a shared resource without destroying it?</p>
+    </div>
+
+    <div class="concept-box">
+      <h3 style="margin-bottom:.5rem;color:var(--amber)">The Tragedy of the Commons</h3>
+      <p style="color:var(--text2);font-size:.95rem">
+        When many people share a limited resource, each person has an incentive to take as much as possible —
+        even though everyone would be better off if they showed restraint. This dilemma, described by Garrett Hardin in 1968,
+        explains overfishing, deforestation, pollution, and climate change. Economist Elinor Ostrom won the Nobel Prize
+        for showing that communities <em>can</em> solve this — with the right institutions.
+      </p>
+    </div>
+
+    <h3 style="text-align:center;margin-bottom:.5rem">You share a fishery with 4 others</h3>
+    <p style="text-align:center;color:var(--text3);font-size:.9rem;margin-bottom:1rem">
+      1,000 fish. 12 rounds. The fishery regenerates 10% each round — but only if there are fish left.
+    </p>
+
+    <div class="agent-grid">
+      <div class="agent-intro">
+        <div class="agent-avatar" style="background:var(--green-bg);color:var(--green-light)">P</div>
+        <h4>Priya</h4>
+        <span class="badge badge-green">Sustainability-First</span>
+        <p style="font-size:.8rem;color:var(--text3);margin-top:.4rem">Extracts conservatively, always below sustainable yield</p>
+      </div>
+      <div class="agent-intro">
+        <div class="agent-avatar" style="background:var(--red-bg);color:var(--red)">R</div>
+        <h4>Raj</h4>
+        <span class="badge badge-red">Opportunist</span>
+        <p style="font-size:.8rem;color:var(--text3);margin-top:.4rem">Grabs 70-90% of what he can. Short-term thinker</p>
+      </div>
+      <div class="agent-intro">
+        <div class="agent-avatar" style="background:var(--blue-bg);color:var(--blue)">A</div>
+        <h4>Ananya</h4>
+        <span class="badge badge-blue">Institution Builder</span>
+        <p style="font-size:.8rem;color:var(--text3);margin-top:.4rem">Moderate extraction (40-50%), advocates for rules</p>
+      </div>
+      <div class="agent-intro">
+        <div class="agent-avatar" style="background:var(--amber-bg);color:var(--amber)">K</div>
+        <h4>Karthik</h4>
+        <span class="badge badge-amber">Norm Follower</span>
+        <p style="font-size:.8rem;color:var(--text3);margin-top:.4rem">Watches others, then matches the group average</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:1.5rem">
+      <button class="btn btn-primary" onclick="startGame()" style="font-size:1.1rem;padding:1rem 3rem">
+        Start Fishing Season
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== GAME SCREEN ====== -->
+<div id="game-screen" class="screen hidden">
+  <div class="container">
+    <div class="game-header">
+      <div>
+        <span class="round-badge" id="round-display">Round 1 / 12</span>
+      </div>
+      <div style="text-align:right">
+        <span style="color:var(--text3);font-size:.85rem">Your total harvest</span><br>
+        <span style="font-size:1.3rem;font-weight:800;color:var(--green-light)" id="player-total">0</span>
+        <span style="color:var(--text3);font-size:.8rem">fish</span>
+      </div>
+    </div>
+
+    <!-- Warning Banner -->
+    <div id="warning-banner" class="warning-banner hidden">
+      <span id="warning-icon">&#9888;</span>
+      <span id="warning-text"></span>
+    </div>
+
+    <!-- Resource Bar -->
+    <div class="resource-container" id="resource-container">
+      <div class="resource-bar-outer">
+        <div class="resource-bar-inner healthy" id="resource-bar" style="width:100%">
+          <div class="resource-waves">
+            <svg viewBox="0 0 1200 30" preserveAspectRatio="none"><path d="M0,15 Q150,0 300,15 T600,15 T900,15 T1200,15 L1200,30 L0,30 Z" fill="rgba(255,255,255,.15)"/></svg>
+          </div>
+        </div>
+        <div class="sustainable-line" id="sustainable-line" style="left:18%"></div>
+      </div>
+      <div class="resource-numbers">
+        <div>
+          <span class="resource-level" id="resource-level">1,000</span>
+          <span class="resource-label"> / 1,000 fish</span>
+        </div>
+        <div>
+          <span class="resource-label" id="regen-display">Regeneration: +10%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Communication Panel (shown on rounds 4, 8) -->
+    <div id="comm-panel" class="comm-panel hidden">
+      <h3 style="margin-bottom:.75rem;color:var(--purple)">&#128172; Community Discussion</h3>
+      <div id="comm-messages"></div>
+      <div style="text-align:center;margin-top:.75rem">
+        <button class="btn btn-secondary" onclick="dismissComm()">Continue to Extraction</button>
+      </div>
+    </div>
+
+    <!-- Extraction Panel -->
+    <div class="extraction-panel" id="extraction-panel">
+      <h3 style="margin-bottom:.3rem">How much will you extract?</h3>
+      <p style="font-size:.85rem;color:var(--text3)">Choose wisely. The fishery must survive for all.</p>
+      <div class="extraction-value">
+        <span id="extraction-display">30</span>
+        <span style="font-size:.9rem;font-weight:400;color:var(--text3)"> fish</span>
+      </div>
+      <div class="slider-container">
+        <input type="range" id="extraction-slider" min="0" max="100" value="30" oninput="updateSlider(this.value)">
+        <div class="slider-labels">
+          <span style="color:var(--green)">0 — Sustainable</span>
+          <span style="color:var(--amber)">Moderate</span>
+          <span style="color:var(--red)">100 — Greedy</span>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:1rem">
+        <button class="btn btn-primary" id="extract-btn" onclick="submitExtraction()">
+          Extract Fish
+        </button>
+      </div>
+    </div>
+
+    <!-- Agent Cards -->
+    <h3 style="margin-bottom:.6rem">Other Fishers</h3>
+    <div class="agents-panel" id="agents-panel">
+      <div class="agent-card" id="card-priya">
+        <div class="agent-top">
+          <div class="agent-dot" style="background:var(--green-bg);color:var(--green-light)">P</div>
+          <div class="agent-info"><h4>Priya</h4><div class="archetype">Sustainability-First</div></div>
+        </div>
+        <div class="stat-row"><span>Last extraction</span><span class="stat-value" id="priya-last">—</span></div>
+        <div class="stat-row"><span>Total harvested</span><span class="stat-value" id="priya-total">0</span></div>
+      </div>
+      <div class="agent-card" id="card-raj">
+        <div class="agent-top">
+          <div class="agent-dot" style="background:var(--red-bg);color:var(--red)">R</div>
+          <div class="agent-info"><h4>Raj</h4><div class="archetype">Opportunist</div></div>
+        </div>
+        <div class="stat-row"><span>Last extraction</span><span class="stat-value" id="raj-last">—</span></div>
+        <div class="stat-row"><span>Total harvested</span><span class="stat-value" id="raj-total">0</span></div>
+      </div>
+      <div class="agent-card" id="card-ananya">
+        <div class="agent-top">
+          <div class="agent-dot" style="background:var(--blue-bg);color:var(--blue)">A</div>
+          <div class="agent-info"><h4>Ananya</h4><div class="archetype">Institution Builder</div></div>
+        </div>
+        <div class="stat-row"><span>Last extraction</span><span class="stat-value" id="ananya-last">—</span></div>
+        <div class="stat-row"><span>Total harvested</span><span class="stat-value" id="ananya-total">0</span></div>
+      </div>
+      <div class="agent-card" id="card-karthik">
+        <div class="agent-top">
+          <div class="agent-dot" style="background:var(--amber-bg);color:var(--amber)">K</div>
+          <div class="agent-info"><h4>Karthik</h4><div class="archetype">Norm Follower</div></div>
+        </div>
+        <div class="stat-row"><span>Last extraction</span><span class="stat-value" id="karthik-last">—</span></div>
+        <div class="stat-row"><span>Total harvested</span><span class="stat-value" id="karthik-total">0</span></div>
+      </div>
+    </div>
+
+    <!-- Resource History Chart -->
+    <div class="chart-container">
+      <h3 style="margin-bottom:.5rem">Resource History</h3>
+      <canvas id="history-chart" height="180"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ====== COLLAPSE OVERLAY ====== -->
+<div id="collapse-overlay" class="collapse-overlay hidden">
+  <div class="collapse-content">
+    <div style="font-size:4rem;margin-bottom:1rem">&#128680;</div>
+    <h2>The Fishery Has Collapsed</h2>
+    <p style="color:var(--text2);margin-bottom:1.5rem">Overfishing destroyed the resource. No one can fish anymore.</p>
+    <button class="btn btn-primary" onclick="showEndScreen()">See Results</button>
+  </div>
+</div>
+
+<!-- ====== END SCREEN ====== -->
+<div id="end-screen" class="screen hidden">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:2rem">
+      <div style="font-size:3rem;margin-bottom:.5rem" id="end-emoji"></div>
+      <h1 id="end-title"></h1>
+      <p class="subtitle" id="end-subtitle" style="margin-top:.5rem"></p>
+    </div>
+
+    <div class="card" style="margin-bottom:1.5rem">
+      <h3 style="margin-bottom:.75rem">Final Scoreboard</h3>
+      <div class="scoreboard" id="scoreboard"></div>
+      <div style="margin-top:1rem;text-align:center">
+        <p style="color:var(--text3);font-size:.9rem">
+          Final resource level: <strong id="final-resource">0</strong> / 1,000
+        </p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:1.5rem">
+      <h3 style="margin-bottom:.5rem;color:var(--green-light)">Ostrom's 8 Design Principles for Managing the Commons</h3>
+      <p style="font-size:.9rem;color:var(--text3);margin-bottom:1rem">
+        Elinor Ostrom studied communities worldwide that successfully managed shared resources. She identified these principles:
+      </p>
+      <div class="ostrom-grid" id="ostrom-grid"></div>
+    </div>
+
+    <div class="card" style="margin-bottom:1.5rem">
+      <h3 style="margin-bottom:.5rem">What Did You Learn?</h3>
+      <p style="font-size:.9rem;color:var(--text2);line-height:1.7" id="end-lesson"></p>
+    </div>
+
+    <div style="text-align:center;margin-top:1rem">
+      <button class="btn btn-primary" onclick="resetGame()" style="font-size:1.1rem;padding:1rem 3rem">
+        Play Again
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/game-agents.js"></script>
+<script>
+(function(){
+'use strict';
+
+// ── Game State ──
+var TOTAL_ROUNDS = 12;
+var MAX_RESOURCE = 1000;
+var REGEN_RATE = 0.10;
+var MAX_EXTRACTION = 100;
+var NUM_PLAYERS = 5; // 1 human + 4 AI
+
+var state = {
+  round: 1,
+  resource: MAX_RESOURCE,
+  playerTotal: 0,
+  agentTotals: { priya: 0, raj: 0, ananya: 0, karthik: 0 },
+  agentLast: { priya: 0, raj: 0, ananya: 0, karthik: 0 },
+  history: [],        // game history for agent API
+  resourceHistory: [MAX_RESOURCE], // for chart
+  collapsed: false,
+  gameOver: false,
+  commDismissed: false
+};
+
+var agentIdMap = {
+  'cc-sustainable': 'priya',
+  'cc-opportunist': 'raj',
+  'cc-monitor': 'ananya',
+  'cc-follower': 'karthik'
+};
+var agentIds = ['cc-sustainable','cc-opportunist','cc-monitor','cc-follower'];
+
+var agents = null;
+try { agents = new IMGameAgents('commons-crisis-game'); } catch(e) { console.warn('IMGameAgents not available, using fallback'); }
+
+// ── Communication Messages ──
+var commMessages = {
+  4: {
+    priya: "We must reduce our catch. At this rate, we risk collapse within a few seasons.",
+    raj: "There are plenty of fish. I need to feed my family now, not worry about next year.",
+    ananya: "I propose we agree on a catch limit. Perhaps 40 fish each? We can monitor compliance.",
+    karthik: "I'll go along with whatever most people agree to. What's everyone else doing?"
+  },
+  8: {
+    priya: "The numbers speak for themselves. Restraint is working — or lack of it is costing us all.",
+    raj: "Fine, I'll cut back a little... but only if everyone else does too.",
+    ananya: "We need enforcement, not just promises. Let's track who's overfishing.",
+    karthik: "I've been matching the average. Seems fair. Should we all do the same?"
+  }
+};
+
+// ── DOM Helpers ──
+function $(id){ return document.getElementById(id); }
+function show(id){ $(id).classList.remove('hidden'); }
+function hide(id){ $(id).classList.add('hidden'); }
+
+// ── Chart Drawing ──
+function drawChart(){
+  var canvas = $('history-chart');
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 180 * dpr;
+  ctx.scale(dpr, dpr);
+  var W = rect.width, H = 180;
+  var pad = { top: 20, right: 15, bottom: 30, left: 45 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,.06)';
+  ctx.lineWidth = 1;
+  for(var g = 0; g <= 4; g++){
+    var gy = pad.top + plotH * (1 - g/4);
+    ctx.beginPath(); ctx.moveTo(pad.left, gy); ctx.lineTo(W - pad.right, gy); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.3)';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText((g * 250).toString(), pad.left - 6, gy + 4);
+  }
+
+  // X labels
+  ctx.fillStyle = 'rgba(255,255,255,.3)';
+  ctx.textAlign = 'center';
+  ctx.font = '11px sans-serif';
+  var data = state.resourceHistory;
+  var maxPts = TOTAL_ROUNDS + 1;
+  for(var x = 0; x < data.length; x++){
+    var xPos = pad.left + (x / (maxPts - 1)) * plotW;
+    if(x === 0 || x === data.length - 1 || x % 2 === 0){
+      ctx.fillText(x === 0 ? 'Start' : 'R' + x, xPos, H - pad.bottom + 18);
+    }
+  }
+
+  if(data.length < 2) return;
+
+  // Sustainable yield zone (rough line at ~50%)
+  var syY = pad.top + plotH * (1 - 0.5);
+  ctx.setLineDash([4,4]);
+  ctx.strokeStyle = 'rgba(245,158,11,.3)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad.left, syY); ctx.lineTo(W - pad.right, syY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = 'rgba(245,158,11,.4)';
+  ctx.font = '10px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('50% warning', W - pad.right - 60, syY - 5);
+
+  // Line
+  ctx.beginPath();
+  for(var i = 0; i < data.length; i++){
+    var px = pad.left + (i / (maxPts - 1)) * plotW;
+    var py = pad.top + plotH * (1 - data[i] / MAX_RESOURCE);
+    if(i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.strokeStyle = '#34D399';
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+
+  // Gradient fill
+  var lastX = pad.left + ((data.length - 1) / (maxPts - 1)) * plotW;
+  var lastY = pad.top + plotH * (1 - data[data.length - 1] / MAX_RESOURCE);
+  ctx.lineTo(lastX, pad.top + plotH);
+  ctx.lineTo(pad.left, pad.top + plotH);
+  ctx.closePath();
+  var grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + plotH);
+  grad.addColorStop(0, 'rgba(52,211,153,.2)');
+  grad.addColorStop(1, 'rgba(52,211,153,.01)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Dots
+  for(var j = 0; j < data.length; j++){
+    var dx = pad.left + (j / (maxPts - 1)) * plotW;
+    var dy = pad.top + plotH * (1 - data[j] / MAX_RESOURCE);
+    var pct = data[j] / MAX_RESOURCE;
+    ctx.beginPath();
+    ctx.arc(dx, dy, 4, 0, Math.PI * 2);
+    ctx.fillStyle = pct > 0.5 ? '#34D399' : pct > 0.25 ? '#F59E0B' : '#EF4444';
+    ctx.fill();
+  }
+}
+
+// ── Resource Bar Update ──
+function updateResourceBar(animated){
+  var pct = state.resource / MAX_RESOURCE;
+  var bar = $('resource-bar');
+  bar.style.width = (pct * 100) + '%';
+  bar.className = 'resource-bar-inner ' + (pct > 0.5 ? 'healthy' : pct > 0.25 ? 'warning' : pct > 0 ? 'critical' : 'dead');
+
+  var lvl = $('resource-level');
+  lvl.textContent = Math.round(state.resource).toLocaleString();
+  lvl.style.color = pct > 0.5 ? 'var(--green-light)' : pct > 0.25 ? 'var(--amber)' : 'var(--red)';
+
+  // Sustainable yield line: if all 5 players extract X, the sustainable X per person is where
+  // resource * (1 - 5X/resource) * 1.1 = resource => X = resource * (1 - 1/1.1) / 5 ~ resource * 0.0909 / 5
+  // Actually: sustainable total extraction = resource - resource/1.1 = resource * (1 - 1/1.1) = resource * 0.0909
+  // Per person: resource * 0.0909 / 5 as a fraction of max extraction (100)
+  // But the line shows as fraction of the bar: sustainableTotal / resource on the resource bar
+  var sustainableTotal = state.resource * (1 - 1/1.1);
+  var linePct = sustainableTotal / MAX_RESOURCE * 100;
+  $('sustainable-line').style.left = Math.min(linePct, 100) + '%';
+
+  // Warning banner
+  if(pct <= 0.5 && pct > 0.25 && !state.collapsed){
+    show('warning-banner');
+    $('warning-banner').className = 'warning-banner';
+    $('warning-text').textContent = 'Resource below 50%! The fishery is declining. Reduce extraction to allow recovery.';
+  } else if(pct <= 0.25 && pct > 0 && !state.collapsed){
+    show('warning-banner');
+    $('warning-banner').className = 'warning-banner critical-banner';
+    $('warning-text').textContent = 'CRITICAL: Resource below 25%! Collapse is imminent if overfishing continues.';
+  } else if(pct > 0.5){
+    hide('warning-banner');
+  }
+
+  if(animated){
+    $('resource-container').classList.add('regen-pulse');
+    setTimeout(function(){ $('resource-container').classList.remove('regen-pulse'); }, 900);
+  }
+}
+
+// ── Slider ──
+window.updateSlider = function(val){
+  $('extraction-display').textContent = val;
+  var v = parseInt(val);
+  var el = $('extraction-display');
+  if(v <= 30) el.style.color = 'var(--green-light)';
+  else if(v <= 60) el.style.color = 'var(--amber)';
+  else el.style.color = 'var(--red)';
+};
+
+// ── Start Game ──
+window.startGame = function(){
+  hide('welcome-screen');
+  show('game-screen');
+  updateResourceBar(false);
+  drawChart();
+  checkCommunicationRound();
+};
+
+// ── Communication Rounds ──
+function checkCommunicationRound(){
+  if((state.round === 4 || state.round === 8) && commMessages[state.round]){
+    state.commDismissed = false;
+    show('comm-panel');
+    hide('extraction-panel');
+    var msgs = commMessages[state.round];
+    var html = '';
+    var names = { priya: 'Priya', raj: 'Raj', ananya: 'Ananya', karthik: 'Karthik' };
+    var colors = { priya: 'var(--green-light)', raj: 'var(--red)', ananya: 'var(--blue)', karthik: 'var(--amber)' };
+    ['priya','raj','ananya','karthik'].forEach(function(k){
+      html += '<div class="comm-message"><span class="comm-name" style="color:'+colors[k]+'">'+names[k]+':</span><span style="color:var(--text2)">'+msgs[k]+'</span></div>';
+    });
+    $('comm-messages').innerHTML = html;
+  }
+}
+
+window.dismissComm = function(){
+  state.commDismissed = true;
+  hide('comm-panel');
+  show('extraction-panel');
+};
+
+// ── Fallback Agent Decisions ──
+function fallbackDecisions(){
+  var res = state.resource;
+  var pct = res / MAX_RESOURCE;
+  var decisions = {};
+
+  // Priya: sustainable, extracts below sustainable yield
+  var sustainablePerPerson = (res * REGEN_RATE) / NUM_PLAYERS;
+  var priyaBase = Math.min(sustainablePerPerson * (0.7 + Math.random() * 0.3), MAX_EXTRACTION);
+  decisions['cc-sustainable'] = { amount: Math.round(Math.max(5, priyaBase)), agent_name: 'Priya' };
+
+  // Raj: opportunist, 70-90% of allowed
+  var rajBase = MAX_EXTRACTION * (0.7 + Math.random() * 0.2);
+  if(pct < 0.3) rajBase *= 0.6; // even Raj panics a bit
+  decisions['cc-opportunist'] = { amount: Math.round(Math.min(rajBase, MAX_EXTRACTION)), agent_name: 'Raj' };
+
+  // Ananya: moderate, 40-50%
+  var ananyaBase = MAX_EXTRACTION * (0.4 + Math.random() * 0.1);
+  if(pct < 0.4) ananyaBase *= 0.7;
+  decisions['cc-monitor'] = { amount: Math.round(ananyaBase), agent_name: 'Ananya' };
+
+  // Karthik: matches group average of last round
+  var karthikBase = 30; // default
+  if(state.history.length > 0){
+    var lastRound = state.history[state.history.length - 1];
+    var vals = [lastRound.player_extraction];
+    if(lastRound.agent_actions){
+      var keys = Object.keys(lastRound.agent_actions);
+      for(var i = 0; i < keys.length; i++) vals.push(lastRound.agent_actions[keys[i]].amount || 0);
+    }
+    karthikBase = vals.reduce(function(a,b){return a+b},0) / vals.length;
+  }
+  karthikBase += (Math.random() - 0.5) * 10;
+  decisions['cc-follower'] = { amount: Math.round(Math.max(5, Math.min(MAX_EXTRACTION, karthikBase))), agent_name: 'Karthik' };
+
+  return decisions;
+}
+
+// ── Submit Extraction ──
+window.submitExtraction = function(){
+  if(state.gameOver) return;
+  var btn = $('extract-btn');
+  btn.disabled = true;
+  btn.textContent = 'Fishing...';
+
+  var playerExtraction = parseInt($('extraction-slider').value);
+
+  // Get AI decisions
+  var opts = {
+    round: state.round,
+    totalRounds: TOTAL_ROUNDS,
+    history: state.history,
+    availableActions: ['extract'],
+    context: { max_extraction: MAX_EXTRACTION, resource_level: state.resource / MAX_RESOURCE }
+  };
+
+  var decisionPromise;
+  if(agents){
+    decisionPromise = agents.getAllDecisions(opts).catch(function(){
+      return fallbackDecisions();
+    });
+  } else {
+    decisionPromise = Promise.resolve(fallbackDecisions());
+  }
+
+  decisionPromise.then(function(decisions){
+    processRound(playerExtraction, decisions);
+  });
+};
+
+function processRound(playerExtraction, decisions){
+  // Clamp extractions to available resource
+  var totalRequested = playerExtraction;
+  var agentExtractions = {};
+  agentIds.forEach(function(id){
+    var amt = decisions[id] ? (decisions[id].amount || 0) : 30;
+    amt = Math.max(0, Math.min(MAX_EXTRACTION, amt));
+    agentExtractions[id] = amt;
+    totalRequested += amt;
+  });
+
+  // If total exceeds resource, scale down proportionally
+  if(totalRequested > state.resource){
+    var scale = state.resource / totalRequested;
+    playerExtraction = Math.round(playerExtraction * scale);
+    agentIds.forEach(function(id){
+      agentExtractions[id] = Math.round(agentExtractions[id] * scale);
+    });
+  }
+
+  // Apply extractions
+  state.playerTotal += playerExtraction;
+  var totalExtracted = playerExtraction;
+  var agentActionsRecord = {};
+
+  agentIds.forEach(function(id){
+    var name = agentIdMap[id];
+    var amt = agentExtractions[id];
+    state.agentTotals[name] += amt;
+    state.agentLast[name] = amt;
+    totalExtracted += amt;
+    agentActionsRecord[id] = { amount: amt };
+  });
+
+  state.resource = Math.max(0, state.resource - totalExtracted);
+
+  // Record history
+  state.history.push({
+    round: state.round,
+    player_extraction: playerExtraction,
+    agent_actions: agentActionsRecord,
+    resource_before: state.resourceHistory[state.resourceHistory.length - 1],
+    resource_after_extraction: state.resource
+  });
+
+  // Regeneration
+  if(state.resource > 0){
+    state.resource = Math.min(MAX_RESOURCE, state.resource * (1 + REGEN_RATE));
+  }
+  state.resource = Math.round(state.resource);
+  state.resourceHistory.push(state.resource);
+
+  // Update UI
+  updateUI(playerExtraction);
+
+  // Check collapse
+  if(state.resource <= 0){
+    state.collapsed = true;
+    state.gameOver = true;
+    setTimeout(function(){
+      show('collapse-overlay');
+    }, 800);
+    return;
+  }
+
+  // Next round
+  state.round++;
+  if(state.round > TOTAL_ROUNDS){
+    state.gameOver = true;
+    setTimeout(function(){ showEndScreen(); }, 1000);
+    return;
+  }
+
+  // Re-enable controls
+  setTimeout(function(){
+    var btn = $('extract-btn');
+    btn.disabled = false;
+    btn.textContent = 'Extract Fish';
+    $('round-display').textContent = 'Round ' + state.round + ' / ' + TOTAL_ROUNDS;
+    checkCommunicationRound();
+  }, 800);
+}
+
+function updateUI(playerExtraction){
+  $('player-total').textContent = state.playerTotal.toLocaleString();
+
+  // Animate agent cards
+  var names = ['priya','raj','ananya','karthik'];
+  names.forEach(function(name){
+    $(name + '-last').textContent = state.agentLast[name];
+    $(name + '-total').textContent = state.agentTotals[name].toLocaleString();
+    var card = $('card-' + name);
+    card.classList.remove('extraction-flash');
+    void card.offsetWidth; // force reflow
+    card.classList.add('extraction-flash');
+  });
+
+  updateResourceBar(true);
+  drawChart();
+}
+
+// ── End Screen ──
+window.showEndScreen = function(){
+  hide('game-screen');
+  hide('collapse-overlay');
+  show('end-screen');
+
+  var survived = !state.collapsed;
+  var finalRes = state.resource;
+
+  $('end-emoji').textContent = survived ? (finalRes > 500 ? '🎉' : '😅') : '💀';
+  $('end-title').textContent = survived
+    ? (finalRes > 500 ? 'The Fishery Thrives!' : 'Barely Survived')
+    : 'Total Collapse';
+  $('end-subtitle').textContent = survived
+    ? 'The community managed to sustain the resource for all 12 seasons.'
+    : 'The fishery was destroyed by overexploitation. The tragedy of the commons played out.';
+  $('final-resource').textContent = Math.round(finalRes).toLocaleString();
+
+  // Scoreboard
+  var players = [
+    { name: 'You', total: state.playerTotal, isPlayer: true },
+    { name: 'Priya', total: state.agentTotals.priya },
+    { name: 'Raj', total: state.agentTotals.raj },
+    { name: 'Ananya', total: state.agentTotals.ananya },
+    { name: 'Karthik', total: state.agentTotals.karthik }
+  ];
+  players.sort(function(a,b){ return b.total - a.total; });
+
+  var sbHTML = '';
+  players.forEach(function(p, i){
+    var cls = p.isPlayer ? 'score-card player-card' : 'score-card';
+    sbHTML += '<div class="'+cls+'"><div class="score-name">'+(i===0?'🥇 ':i===1?'🥈 ':i===2?'🥉 ':'')+p.name+'</div><div class="score-value">'+p.total.toLocaleString()+'</div><div style="font-size:.8rem;color:var(--text3)">fish harvested</div></div>';
+  });
+  $('scoreboard').innerHTML = sbHTML;
+
+  // Ostrom's principles
+  var principles = [
+    { num: '1', title: 'Clear Boundaries', desc: 'Define who has access to the resource. In our game, 5 fishers shared one fishery.' },
+    { num: '2', title: 'Proportional Rules', desc: 'Rules match local conditions. Extraction limits should reflect the resource\'s regeneration capacity.' },
+    { num: '3', title: 'Collective Choice', desc: 'Those affected by rules help make them. Our communication rounds let fishers voice opinions.' },
+    { num: '4', title: 'Monitoring', desc: 'Community members monitor resource use. Ananya advocated tracking who overfishes.' },
+    { num: '5', title: 'Graduated Sanctions', desc: 'Punishments for rule-breakers start small and increase. Peer pressure before penalties.' },
+    { num: '6', title: 'Conflict Resolution', desc: 'Quick, low-cost mechanisms to resolve disputes among resource users.' },
+    { num: '7', title: 'Local Autonomy', desc: 'External authorities respect the community\'s right to self-govern their resource.' },
+    { num: '8', title: 'Nested Enterprises', desc: 'For large resources, governance is organized in multiple layers — local to regional.' }
+  ];
+  var oHTML = '';
+  principles.forEach(function(p){
+    oHTML += '<div class="ostrom-card"><div class="ostrom-num">Principle '+p.num+'</div><h4>'+p.title+'</h4><p>'+p.desc+'</p></div>';
+  });
+  $('ostrom-grid').innerHTML = oHTML;
+
+  // Lesson
+  var lesson = '';
+  if(state.collapsed){
+    lesson = 'The fishery collapsed because total extraction exceeded the regeneration rate. ' +
+      'This is the tragedy of the commons in action: each individual\'s rational choice to maximize their own catch ' +
+      'leads to collective ruin. Garrett Hardin argued this was inevitable — but Elinor Ostrom proved communities ' +
+      'can solve it through communication, monitoring, and self-governance. The key insight: sustainable yield ' +
+      'means never taking more than the resource can regenerate.';
+  } else if(finalRes > 700){
+    lesson = 'Excellent stewardship! The fishery remained healthy throughout all 12 seasons. ' +
+      'This shows that when users exercise restraint and keep extraction below the regeneration rate, ' +
+      'shared resources can thrive indefinitely. You demonstrated that the tragedy of the commons is not inevitable — ' +
+      'it\'s a choice. Ostrom\'s research confirms: communities that communicate and self-govern can sustain their commons.';
+  } else if(finalRes > 400){
+    lesson = 'The fishery survived, but it was a close call. The resource declined significantly, ' +
+      'showing the tension between individual incentives and collective well-being. Notice how different strategies ' +
+      'led to different outcomes: Priya\'s restraint helped, while Raj\'s greed pulled the resource down. ' +
+      'This is why Ostrom emphasized monitoring and graduated sanctions — norms alone aren\'t always enough.';
+  } else {
+    lesson = 'The fishery barely survived. It came dangerously close to collapse, illustrating how ' +
+      'even a small amount of overexploitation compounds over time. The regeneration rate couldn\'t keep up with demand. ' +
+      'In real commons — fisheries, forests, groundwater — this is exactly how resources degrade slowly until ' +
+      'sudden collapse. Ostrom\'s principles show us the way out: clear rules, monitoring, and collective decision-making.';
+  }
+  $('end-lesson').textContent = lesson;
+};
+
+// ── Reset ──
+window.resetGame = function(){
+  state = {
+    round: 1, resource: MAX_RESOURCE, playerTotal: 0,
+    agentTotals: { priya: 0, raj: 0, ananya: 0, karthik: 0 },
+    agentLast: { priya: 0, raj: 0, ananya: 0, karthik: 0 },
+    history: [], resourceHistory: [MAX_RESOURCE],
+    collapsed: false, gameOver: false, commDismissed: false
+  };
+  hide('end-screen');
+  hide('collapse-overlay');
+  show('welcome-screen');
+  // Reset UI elements
+  $('extraction-slider').value = 30;
+  updateSlider(30);
+  $('round-display').textContent = 'Round 1 / 12';
+  $('player-total').textContent = '0';
+  ['priya','raj','ananya','karthik'].forEach(function(n){
+    $(n + '-last').textContent = '—';
+    $(n + '-total').textContent = '0';
+  });
+  hide('warning-banner');
+  hide('comm-panel');
+  show('extraction-panel');
+  var btn = $('extract-btn');
+  btn.disabled = false;
+  btn.textContent = 'Extract Fish';
+};
+
+// ── Init ──
+updateSlider(30);
+window.addEventListener('resize', function(){
+  if(!$('game-screen').classList.contains('hidden')) drawChart();
+});
+
+})();
+</script>
+</body>
+</html>
