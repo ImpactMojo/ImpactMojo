@@ -2,12 +2,23 @@
 // MiroFish-inspired AI Agent Engine for ImpactMojo Economics Games.
 //
 // Accepts game state + agent ID, returns the agent's next decision via LLM.
-// Uses OpenAI-compatible API (works with OpenAI, Anthropic via proxy, or local models).
+// Supports multiple LLM providers with automatic fallback.
 //
 // Env secrets (set via `supabase secrets set`):
-//   LLM_API_KEY        — API key for the LLM provider
-//   LLM_BASE_URL       — Base URL for the API (default: https://api.openai.com/v1)
-//   LLM_MODEL          — Model ID (default: gpt-4o-mini)
+//   LLM_PROVIDER       — Provider priority list, comma-separated
+//                         (default: "deepseek,groq,gemini,together,openai")
+//   LLM_API_KEY        — Default API key (legacy, used if provider-specific key missing)
+//   LLM_BASE_URL       — Default base URL (legacy fallback)
+//   LLM_MODEL          — Default model (legacy fallback)
+//
+//   Provider-specific keys (set only those you want to use):
+//   DEEPSEEK_API_KEY   — DeepSeek API key  (cheapest quality option)
+//   GROQ_API_KEY       — Groq API key      (free tier, rate-limited, fast)
+//   GEMINI_API_KEY     — Google Gemini key  (free tier available)
+//   TOGETHER_API_KEY   — Together AI key    (cheap, reliable)
+//   OPENAI_API_KEY     — OpenAI API key     (premium fallback)
+//   ANTHROPIC_API_KEY  — Anthropic API key  (premium)
+//
 //   SUPABASE_URL       — auto-provided
 //   SUPABASE_ANON_KEY  — auto-provided
 
@@ -181,31 +192,108 @@ Respond ONLY with a JSON object (no markdown, no explanation outside JSON):
 }`;
 }
 
-// ── LLM call ─────────────────────────────────────────────────────────
+// ── LLM Provider Registry ────────────────────────────────────────────
+// Each provider defines how to call its API. All use OpenAI-compatible
+// chat/completions format except Gemini which needs translation.
 
-async function callLLM(prompt: string): Promise<AgentDecision> {
-  const apiKey = Deno.env.get("LLM_API_KEY");
-  if (!apiKey) {
-    throw new Error("LLM_API_KEY not configured");
+interface LLMProvider {
+  name: string;
+  envKey: string;         // env var name for the API key
+  baseUrl: string;        // API base URL
+  defaultModel: string;   // default model ID
+  format: "openai" | "gemini";  // API format
+}
+
+const PROVIDERS: Record<string, LLMProvider> = {
+  deepseek: {
+    name: "DeepSeek",
+    envKey: "DEEPSEEK_API_KEY",
+    baseUrl: "https://api.deepseek.com/v1",
+    defaultModel: "deepseek-chat",
+    format: "openai",
+  },
+  groq: {
+    name: "Groq",
+    envKey: "GROQ_API_KEY",
+    baseUrl: "https://api.groq.com/openai/v1",
+    defaultModel: "llama-3.1-70b-versatile",
+    format: "openai",
+  },
+  gemini: {
+    name: "Google Gemini",
+    envKey: "GEMINI_API_KEY",
+    baseUrl: "https://generativelanguage.googleapis.com/v1beta",
+    defaultModel: "gemini-2.0-flash",
+    format: "gemini",
+  },
+  together: {
+    name: "Together AI",
+    envKey: "TOGETHER_API_KEY",
+    baseUrl: "https://api.together.xyz/v1",
+    defaultModel: "meta-llama/Llama-3.1-70B-Instruct-Turbo",
+    format: "openai",
+  },
+  openai: {
+    name: "OpenAI",
+    envKey: "OPENAI_API_KEY",
+    baseUrl: "https://api.openai.com/v1",
+    defaultModel: "gpt-4o-mini",
+    format: "openai",
+  },
+  anthropic: {
+    name: "Anthropic",
+    envKey: "ANTHROPIC_API_KEY",
+    baseUrl: "https://api.anthropic.com/v1",
+    defaultModel: "claude-haiku-4-5-20251001",
+    format: "openai", // Uses Messages API but we adapt below
+  },
+};
+
+// Default provider priority — cheapest first
+const DEFAULT_PROVIDER_CHAIN = "deepseek,groq,gemini,together,openai";
+
+function getProviderChain(preferred?: string): LLMProvider[] {
+  // If a specific provider is requested, try it first then fall through
+  const chainStr = Deno.env.get("LLM_PROVIDER") || DEFAULT_PROVIDER_CHAIN;
+  const chainIds = chainStr.split(",").map((s) => s.trim().toLowerCase());
+
+  // If caller requested a specific provider, put it first
+  if (preferred && PROVIDERS[preferred]) {
+    const idx = chainIds.indexOf(preferred);
+    if (idx > 0) {
+      chainIds.splice(idx, 1);
+      chainIds.unshift(preferred);
+    } else if (idx === -1) {
+      chainIds.unshift(preferred);
+    }
   }
 
-  const baseUrl = Deno.env.get("LLM_BASE_URL") || "https://api.openai.com/v1";
-  const model = Deno.env.get("LLM_MODEL") || "gpt-4o-mini";
+  return chainIds
+    .filter((id) => PROVIDERS[id])
+    .map((id) => PROVIDERS[id])
+    .filter((p) => Deno.env.get(p.envKey)); // Only include providers with keys set
+}
 
-  const response = await fetch(`${baseUrl}/chat/completions`, {
+// ── LLM call with provider fallback ─────────────────────────────────
+
+const SYSTEM_MSG =
+  "You are an AI agent playing an economics simulation game. You must respond with ONLY valid JSON. No markdown fences, no extra text. Stay in character.";
+
+async function callOpenAIFormat(
+  provider: LLMProvider,
+  prompt: string
+): Promise<string> {
+  const apiKey = Deno.env.get(provider.envKey)!;
+  const response = await fetch(`${provider.baseUrl}/chat/completions`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model,
+      model: provider.defaultModel,
       messages: [
-        {
-          role: "system",
-          content:
-            "You are an AI agent playing an economics simulation game. You must respond with ONLY valid JSON. No markdown fences, no extra text. Stay in character.",
-        },
+        { role: "system", content: SYSTEM_MSG },
         { role: "user", content: prompt },
       ],
       temperature: 0.7,
@@ -215,19 +303,80 @@ async function callLLM(prompt: string): Promise<AgentDecision> {
 
   if (!response.ok) {
     const errText = await response.text();
-    throw new Error(`LLM API error (${response.status}): ${errText}`);
+    throw new Error(`${provider.name} API error (${response.status}): ${errText}`);
   }
 
   const data = await response.json();
   const content = data.choices?.[0]?.message?.content?.trim();
+  if (!content) throw new Error(`Empty response from ${provider.name}`);
+  return content;
+}
 
-  if (!content) {
-    throw new Error("Empty LLM response");
+async function callGeminiFormat(
+  provider: LLMProvider,
+  prompt: string
+): Promise<string> {
+  const apiKey = Deno.env.get(provider.envKey)!;
+  const model = provider.defaultModel;
+  const url = `${provider.baseUrl}/models/${model}:generateContent?key=${apiKey}`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      system_instruction: { parts: [{ text: SYSTEM_MSG }] },
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.7, maxOutputTokens: 200 },
+    }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Gemini API error (${response.status}): ${errText}`);
   }
 
-  // Parse JSON — strip markdown fences if the model adds them
-  const cleaned = content.replace(/^```json?\s*/, "").replace(/\s*```$/, "");
-  return JSON.parse(cleaned);
+  const data = await response.json();
+  const content = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+  if (!content) throw new Error("Empty response from Gemini");
+  return content;
+}
+
+async function callLLM(prompt: string, preferredProvider?: string): Promise<AgentDecision> {
+  const chain = getProviderChain(preferredProvider);
+
+  // Legacy fallback: if no provider-specific keys, check LLM_API_KEY
+  if (chain.length === 0) {
+    const legacyKey = Deno.env.get("LLM_API_KEY");
+    if (!legacyKey) throw new Error("No LLM provider configured");
+    chain.push({
+      name: "Legacy",
+      envKey: "LLM_API_KEY",
+      baseUrl: Deno.env.get("LLM_BASE_URL") || "https://api.openai.com/v1",
+      defaultModel: Deno.env.get("LLM_MODEL") || "gpt-4o-mini",
+      format: "openai",
+    });
+  }
+
+  let lastError: Error | null = null;
+
+  for (const provider of chain) {
+    try {
+      const callFn = provider.format === "gemini" ? callGeminiFormat : callOpenAIFormat;
+      const content = await callFn(provider, prompt);
+
+      // Parse JSON — strip markdown fences if the model adds them
+      const cleaned = content.replace(/^```json?\s*/, "").replace(/\s*```$/, "");
+      const result = JSON.parse(cleaned);
+      // Tag which provider was used (useful for analytics)
+      result._provider = provider.name;
+      return result;
+    } catch (err) {
+      console.error(`[${provider.name}] failed:`, err);
+      lastError = err instanceof Error ? err : new Error(String(err));
+    }
+  }
+
+  throw lastError || new Error("All LLM providers failed");
 }
 
 // ── Fallback engine (no LLM, uses personality weights) ───────────────
@@ -447,12 +596,13 @@ serve(async (req: Request) => {
     let decision: AgentDecision;
 
     // Use LLM if requested and available, otherwise use fallback engine
-    const useLLM = body.use_llm !== false && Deno.env.get("LLM_API_KEY");
+    const hasAnyProvider = getProviderChain().length > 0 || Deno.env.get("LLM_API_KEY");
+    const useLLM = body.use_llm !== false && hasAnyProvider;
 
     if (useLLM) {
       try {
         const prompt = buildPrompt(agent, body);
-        const llmResult = await callLLM(prompt);
+        const llmResult = await callLLM(prompt, (body as any).provider);
         decision = {
           ...llmResult,
           agent_id: agent.id,

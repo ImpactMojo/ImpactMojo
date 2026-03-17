@@ -279,10 +279,24 @@
 
   // ── Main class ─────────────────────────────────────────────────────
 
+  // ── Available LLM providers (for UI display) ───────────────────────
+  var LLM_PROVIDERS = [
+    { id: 'auto',     name: 'Auto (cheapest available)', description: 'Automatically picks the cheapest configured provider' },
+    { id: 'deepseek', name: 'DeepSeek',                  description: 'Near GPT-4 quality, very cheap (~₹0.50/1K sessions)' },
+    { id: 'groq',     name: 'Groq (Llama 3.1 70B)',      description: 'Free tier, fast inference, rate-limited' },
+    { id: 'gemini',   name: 'Google Gemini Flash',        description: 'Free tier available, good quality' },
+    { id: 'together', name: 'Together AI',                description: 'Cheap and reliable (~₹1-3/1K sessions)' },
+    { id: 'openai',   name: 'OpenAI (GPT-4o-mini)',       description: 'Premium quality' },
+    { id: 'none',     name: 'No AI (personality engine)',  description: 'Free — uses personality weights only, no LLM' }
+  ];
+
   function IMGameAgents(gameId, options) {
     this.gameId = gameId;
     this.options = options || {};
     this.useLLM = this.options.useLLM !== false;
+    // Provider preference: 'auto' (default), 'deepseek', 'groq', 'gemini', 'together', 'openai', 'none'
+    this.provider = this.options.provider || 'auto';
+    if (this.provider === 'none') this.useLLM = false;
     this._roster = null;
   }
 
@@ -320,7 +334,8 @@
       history: opts.history || [],
       available_actions: opts.availableActions,
       context: opts.context || {},
-      use_llm: self.useLLM
+      use_llm: self.useLLM,
+      provider: self.provider !== 'auto' ? self.provider : undefined
     };
 
     return callEdgeFunction(body).catch(function () {
@@ -367,6 +382,23 @@
         return decisions;
       });
     });
+  };
+
+  /**
+   * Switch LLM provider at runtime.
+   * @param {string} providerId - 'auto', 'deepseek', 'groq', 'gemini', 'together', 'openai', or 'none'
+   */
+  IMGameAgents.prototype.setProvider = function (providerId) {
+    this.provider = providerId || 'auto';
+    this.useLLM = providerId !== 'none';
+  };
+
+  /**
+   * Get available LLM providers (for settings UI).
+   * Returns array of { id, name, description }.
+   */
+  IMGameAgents.getProviders = function () {
+    return LLM_PROVIDERS.slice(); // return a copy
   };
 
   /**
