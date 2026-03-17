@@ -102,6 +102,22 @@ function toggleMobileDropdown(event, element) {
 
 /* Mobile detection flag */
 window.IMPACTMOJO_IS_MOBILE = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+// Modal open/close (global, called from onclick attributes)
+function openModal(modalId) {
+    var el = document.getElementById(modalId);
+    if (el) el.style.display = 'block';
+}
+function closeModal(modalId) {
+    var el = document.getElementById(modalId);
+    if (el) el.style.display = 'none';
+}
+// Close modal when clicking outside content
+window.addEventListener('click', function(e) {
+    if (e.target.classList && e.target.classList.contains('modal')) {
+        e.target.style.display = 'none';
+    }
+});
 </script>
 
 
@@ -8383,9 +8399,9 @@ body.introjs-active-tour .nav-links > li.has-dropdown:not(.tour-dropdown-open):h
 </svg>
 </a>
 <ul class="dropdown-menu" id="learn-dropdown">
-<li id="nav-courses"><a onclick="openModal('coursesModal')"><span data-i18n="nav.courses">Courses</span></a></li>
-<li id="nav-labs"><a onclick="openModal('labsModal')"><span data-i18n="nav.labs">Labs</span></a></li>
-<li id="nav-games"><a onclick="openModal('gamesModal')"><span data-i18n="nav.games">Games</span></a></li>
+<li id="nav-courses"><a href="javascript:void(0)" onclick="openModal('coursesModal')"><span data-i18n="nav.courses">Courses</span></a></li>
+<li id="nav-labs"><a href="javascript:void(0)" onclick="openModal('labsModal')"><span data-i18n="nav.labs">Labs</span></a></li>
+<li id="nav-games"><a href="javascript:void(0)" onclick="openModal('gamesModal')"><span data-i18n="nav.games">Games</span></a></li>
 <li id="nav-premium"><a href='/premium'><span data-i18n="nav.premium">Premium</span></a></li>
 <li class="dropdown-divider"></li>
 <li id="nav-resources"><a href='/handouts'><span data-i18n="nav.handouts">Handouts</span></a></li>
@@ -12754,9 +12770,9 @@ body.introjs-active-tour .nav-links > li.has-dropdown:not(.tour-dropdown-open):h
 <div class="footer-section">
 <h4>Quick Links</h4>
 <ul>
-<li><a onclick="openModal('coursesModal')">All Courses</a></li>
-<li><a onclick="openModal('labsModal')">All Labs</a></li>
-<li><a onclick="openModal('gamesModal')">All Games</a></li>
+<li><a href="javascript:void(0)" onclick="openModal('coursesModal')">All Courses</a></li>
+<li><a href="javascript:void(0)" onclick="openModal('labsModal')">All Labs</a></li>
+<li><a href="javascript:void(0)" onclick="openModal('gamesModal')">All Games</a></li>
 <li><a href='/premium'>Premium Content</a></li>
 <li><a href='/coaching'>Coaching Services</a></li>
 </ul>
