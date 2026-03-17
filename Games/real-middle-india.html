@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Real Middle — India's Inequality Game | ImpactMojo</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F172A;--bg2:#1E293B;--bg3:#334155;--bg4:#475569;
+  --text:#F8FAFC;--text2:#CBD5E1;--text3:#94A3B8;
+  --saffron:#F97316;--saffron-light:#FB923C;--saffron-bg:rgba(249,115,22,.12);
+  --green:#059669;--green-light:#34D399;--green-bg:rgba(5,150,105,.12);
+  --blue:#3B82F6;--blue-bg:rgba(59,130,246,.12);
+  --red:#EF4444;--red-light:#F87171;--red-bg:rgba(239,68,68,.12);
+  --amber:#F59E0B;--amber-bg:rgba(245,158,11,.12);
+  --purple:#A855F7;--purple-bg:rgba(168,85,247,.12);
+  --teal:#14B8A6;
+  --radius:14px;--radius-sm:10px;
+  --shadow:0 8px 32px rgba(0,0,0,.45);
+  --transition:all .35s cubic-bezier(.4,0,.2,1);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+
+.hidden{display:none!important}
+.screen{min-height:100vh;padding:2rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.container{max-width:960px;width:100%;margin:0 auto}
+
+h1{font-size:2.6rem;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+h2{font-size:1.5rem;font-weight:700}
+h3{font-size:1.15rem;font-weight:600}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.9rem 2.2rem;border:none;border-radius:var(--radius-sm);font-size:1.05rem;font-weight:600;cursor:pointer;transition:var(--transition);text-decoration:none;position:relative;overflow:hidden}
+.btn-primary{background:linear-gradient(135deg,var(--saffron),#EA580C);color:#fff;box-shadow:0 4px 16px rgba(249,115,22,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(249,115,22,.5)}
+.btn-secondary{background:var(--bg3);color:var(--text);border:1px solid var(--bg4)}
+.btn-secondary:hover{background:var(--bg4);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+
+/* ── Welcome ── */
+#welcome .hero{padding:3rem 0 1.5rem;text-align:center}
+#welcome .hero h1 .grad{background:linear-gradient(135deg,var(--saffron-light),var(--amber),var(--green-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+#welcome .hero .subtitle{color:var(--text2);font-size:1.1rem;max-width:640px;margin:.8rem auto 0;line-height:1.7}
+
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:2rem 0}
+.stat-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1.2rem;text-align:center;transition:var(--transition)}
+.stat-card:hover{border-color:var(--saffron);transform:translateY(-2px)}
+.stat-card .num{font-size:1.8rem;font-weight:800;color:var(--saffron-light)}
+.stat-card .label{color:var(--text3);font-size:.85rem;margin-top:.25rem}
+
+.info-box{background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(20,184,166,.08));border:1px solid rgba(249,115,22,.2);border-radius:var(--radius);padding:1.5rem;margin:1.5rem 0;color:var(--text2);line-height:1.7}
+.info-box strong{color:var(--saffron-light)}
+
+.household-intro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin:1.5rem 0}
+.hh-intro{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center;font-size:.9rem}
+.hh-intro .emoji{font-size:1.6rem;margin-bottom:.3rem}
+.hh-intro .hh-name{font-weight:700;color:var(--text)}
+.hh-intro .hh-income{color:var(--text3);font-size:.8rem}
+
+/* ── Game Screen ── */
+.game-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1rem}
+.round-badge{font-size:1.3rem;font-weight:800;color:var(--saffron-light)}
+
+/* Status bar */
+.status-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.5rem}
+.status-item{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center}
+.status-item .s-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin-bottom:.25rem}
+.status-item .s-value{font-size:1.5rem;font-weight:800}
+.s-income{color:var(--green-light)}
+.s-savings{color:var(--amber)}
+.s-percentile{color:var(--saffron-light)}
+
+/* Distribution Bar */
+.dist-section{margin-bottom:1.5rem}
+.dist-section h3{margin-bottom:.6rem;color:var(--text2);font-size:.9rem;text-transform:uppercase;letter-spacing:.05em}
+.dist-bar-container{position:relative;height:56px;background:var(--bg2);border-radius:var(--radius);overflow:visible;border:1px solid var(--bg3)}
+.dist-gradient{height:100%;border-radius:var(--radius);background:linear-gradient(90deg,#7C2D12 0%,#DC2626 15%,#F97316 30%,#EAB308 50%,#22C55E 70%,#06B6D4 85%,#8B5CF6 100%);opacity:.6}
+.dist-labels{display:flex;justify-content:space-between;margin-top:.4rem;font-size:.7rem;color:var(--text3)}
+.dist-marker{position:absolute;top:-8px;transition:left .8s cubic-bezier(.4,0,.2,1);z-index:10}
+.dist-marker .marker-pin{width:3px;height:72px;background:var(--text);border-radius:2px;margin:0 auto}
+.dist-marker .marker-label{position:absolute;top:-22px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:.7rem;font-weight:700;color:var(--text);background:var(--saffron);padding:2px 8px;border-radius:4px}
+.dist-marker.hh-marker .marker-pin{width:2px;height:56px;opacity:.6}
+.dist-marker.hh-marker .marker-label{background:var(--bg4);color:var(--text2);font-size:.6rem;top:auto;bottom:-20px}
+
+/* Scenario Card */
+.scenario-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.scenario-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--saffron),var(--amber))}
+.scenario-icon{font-size:3rem;margin-bottom:.8rem}
+.scenario-card h2{margin-bottom:.5rem}
+.scenario-card .desc{color:var(--text2);margin-bottom:1.5rem;font-size:1.05rem;line-height:1.7}
+
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.choice-btn{background:var(--bg);border:2px solid var(--bg3);border-radius:var(--radius-sm);padding:1.2rem;cursor:pointer;transition:var(--transition);text-align:left;font-size:.95rem;color:var(--text);line-height:1.5}
+.choice-btn:hover{border-color:var(--saffron);background:rgba(249,115,22,.05);transform:translateY(-2px)}
+.choice-btn.selected{border-color:var(--saffron);background:rgba(249,115,22,.1)}
+.choice-btn .choice-label{font-weight:700;margin-bottom:.3rem;display:block}
+.choice-btn .choice-meta{font-size:.8rem;color:var(--text3)}
+
+/* Outcome */
+.outcome-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;text-align:center}
+.outcome-card .outcome-text{font-size:1.1rem;line-height:1.7;color:var(--text2);margin:.8rem 0}
+.outcome-card .change-display{display:flex;justify-content:center;gap:2rem;margin:1rem 0}
+.change-item{text-align:center}
+.change-item .c-label{font-size:.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:.04em}
+.change-item .c-value{font-size:1.4rem;font-weight:800}
+.c-positive{color:var(--green-light)}
+.c-negative{color:var(--red-light)}
+.c-neutral{color:var(--text3)}
+
+.insight-box{background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(239,68,68,.08));border-left:3px solid var(--saffron);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:1rem 1.2rem;margin:1rem 0;font-size:.9rem;color:var(--text2);line-height:1.6;font-style:italic}
+
+/* Trajectory Chart */
+.chart-section{margin:1.5rem 0}
+.chart-section h3{margin-bottom:.6rem;color:var(--text2);font-size:.9rem;text-transform:uppercase;letter-spacing:.05em}
+.chart-container{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:1rem;position:relative}
+canvas#trajectoryChart{width:100%;height:200px}
+
+/* Comparison households */
+.hh-comparison{margin-top:1rem}
+.hh-row{display:flex;align-items:center;gap:.6rem;padding:.4rem 0;font-size:.85rem;border-bottom:1px solid rgba(51,65,85,.4)}
+.hh-row:last-child{border:none}
+.hh-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.hh-row .hh-r-name{width:100px;color:var(--text3);flex-shrink:0}
+.hh-row .hh-r-income{font-weight:700;color:var(--text)}
+.hh-row .hh-r-pct{color:var(--text3);margin-left:auto;font-size:.8rem}
+
+/* ── End Screen ── */
+#endscreen .end-hero{text-align:center;margin-bottom:2rem}
+#endscreen .end-hero h1 .grad{background:linear-gradient(135deg,var(--saffron-light),var(--amber),var(--green-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.final-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1.5rem 0}
+.final-stat{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1.2rem;text-align:center}
+.final-stat .fs-value{font-size:1.6rem;font-weight:800}
+.final-stat .fs-label{font-size:.78rem;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin-top:.2rem}
+
+.journey-summary{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:1.5rem;margin:1.5rem 0}
+.journey-summary h3{margin-bottom:.8rem}
+.journey-step{display:flex;gap:.8rem;padding:.6rem 0;border-bottom:1px solid rgba(51,65,85,.3);font-size:.9rem}
+.journey-step:last-child{border:none}
+.journey-step .j-round{color:var(--saffron-light);font-weight:700;flex-shrink:0;width:24px}
+.journey-step .j-choice{color:var(--text2)}
+.journey-step .j-impact{margin-left:auto;font-weight:700;flex-shrink:0}
+
+.ending-insight{background:linear-gradient(135deg,rgba(249,115,22,.12),rgba(20,184,166,.08));border:1px solid rgba(249,115,22,.25);border-radius:var(--radius);padding:2rem;margin:2rem 0;text-align:center}
+.ending-insight h3{color:var(--saffron-light);margin-bottom:.8rem;font-size:1.2rem}
+.ending-insight p{color:var(--text2);line-height:1.8;max-width:700px;margin:0 auto}
+
+.structural-facts{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+.struct-fact{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem}
+.struct-fact .sf-icon{font-size:1.5rem;margin-bottom:.4rem}
+.struct-fact .sf-text{font-size:.85rem;color:var(--text2);line-height:1.6}
+
+@media(max-width:640px){
+  h1{font-size:1.8rem}
+  .status-bar{grid-template-columns:1fr}
+  .choice-grid{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .household-intro-grid{grid-template-columns:1fr 1fr}
+  .structural-facts{grid-template-columns:1fr}
+  .change-display{flex-direction:column;gap:.8rem!important}
+  .hh-row .hh-r-name{width:70px}
+  .scenario-card{padding:1.2rem}
+  .final-stats{grid-template-columns:1fr 1fr}
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.animate-in{animation:fadeIn .5s ease both}
+.animate-up{animation:slideUp .6s ease both}
+</style>
+</head>
+<body>
+
+<!-- ══════════ WELCOME SCREEN ══════════ -->
+<div id="welcome" class="screen">
+<div class="container">
+  <div class="hero">
+    <div style="font-size:3rem;margin-bottom:.5rem">🇮🇳</div>
+    <h1><span class="grad">The Real Middle</span></h1>
+    <p style="color:var(--saffron-light);font-weight:600;font-size:1.1rem;margin-top:.4rem">Inequality, Mobility &amp; the Precarity of India's Middle Class</p>
+    <p class="subtitle">You are a household earning ₹25,000/month — roughly India's median. Over 10 rounds, navigate life events that shape your economic destiny. One wrong turn can change everything.</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card"><div class="num">₹25K</div><div class="label">Median Household Income</div></div>
+    <div class="stat-card"><div class="num">₹1.4L+</div><div class="label">Top 10% Threshold</div></div>
+    <div class="stat-card"><div class="num">6×</div><div class="label">Top 10% / Bottom 50% Gap</div></div>
+    <div class="stat-card"><div class="num">60M</div><div class="label">Pushed to Poverty by Health Shocks/Year</div></div>
+  </div>
+
+  <div class="info-box">
+    <strong>How it works:</strong> Each round presents a life event common to Indian households — job changes, medical emergencies, education choices, inflation. Your decisions affect your income and savings. Five comparison households travel alongside you, showing how inequality compounds over time.
+  </div>
+
+  <h3 style="color:var(--text2);margin-bottom:.4rem">Comparison Households</h3>
+  <div class="household-intro-grid">
+    <div class="hh-intro"><div class="emoji">👩‍🌾</div><div class="hh-name">Lakshmi</div><div class="hh-income">₹12K/mo — Rural worker</div></div>
+    <div class="hh-intro"><div class="emoji">🧑‍🏭</div><div class="hh-name">Raju</div><div class="hh-income">₹18K/mo — Factory worker</div></div>
+    <div class="hh-intro"><div class="emoji">👩‍💼</div><div class="hh-name">Priya</div><div class="hh-income">₹35K/mo — Office clerk</div></div>
+    <div class="hh-intro"><div class="emoji">🧑‍💻</div><div class="hh-name">Arjun</div><div class="hh-income">₹75K/mo — IT professional</div></div>
+    <div class="hh-intro"><div class="emoji">🏭</div><div class="hh-name">Mehta family</div><div class="hh-income">₹1.8L/mo — Business owners</div></div>
+  </div>
+
+  <div style="text-align:center;margin-top:2rem">
+    <button class="btn btn-primary" onclick="startGame()" style="font-size:1.15rem;padding:1rem 3rem">Begin Your Journey</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════ GAME SCREEN ══════════ -->
+<div id="game" class="screen hidden">
+<div class="container">
+  <div class="game-header">
+    <div class="round-badge" id="roundLabel">Round 1 / 10</div>
+    <div style="font-size:.85rem;color:var(--text3)" id="yearLabel">Year 1</div>
+  </div>
+
+  <!-- Status -->
+  <div class="status-bar">
+    <div class="status-item"><div class="s-label">Monthly Income</div><div class="s-value s-income" id="incomeDisplay">₹25,000</div></div>
+    <div class="status-item"><div class="s-label">Savings</div><div class="s-value s-savings" id="savingsDisplay">₹1,50,000</div></div>
+    <div class="status-item"><div class="s-label">Percentile</div><div class="s-value s-percentile" id="percentileDisplay">Top 40%</div></div>
+  </div>
+
+  <!-- Distribution Bar -->
+  <div class="dist-section">
+    <h3>India's Income Distribution — Where You Stand</h3>
+    <div class="dist-bar-container" id="distBar">
+      <div class="dist-gradient"></div>
+      <div class="dist-marker" id="playerMarker" style="left:60%">
+        <div class="marker-label">You</div>
+        <div class="marker-pin"></div>
+      </div>
+    </div>
+    <div class="dist-labels">
+      <span>₹5K (Bottom 10%)</span>
+      <span>₹15K</span>
+      <span>₹25K (Median)</span>
+      <span>₹50K</span>
+      <span>₹1L</span>
+      <span>₹2L+ (Top 3%)</span>
+    </div>
+  </div>
+
+  <!-- Scenario / Outcome -->
+  <div id="scenarioArea"></div>
+
+  <!-- Comparison Households -->
+  <div class="hh-comparison" id="hhComparison"></div>
+
+  <!-- Trajectory Chart -->
+  <div class="chart-section">
+    <h3>Income Trajectory</h3>
+    <div class="chart-container">
+      <canvas id="trajectoryChart" width="900" height="200"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════ END SCREEN ══════════ -->
+<div id="endscreen" class="screen hidden">
+<div class="container">
+  <div class="end-hero">
+    <div style="font-size:3rem;margin-bottom:.5rem">📊</div>
+    <h1><span class="grad">Your Journey Through</span><br><span class="grad">India's Income Ladder</span></h1>
+  </div>
+  <div id="endContent"></div>
+</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   THE REAL MIDDLE — Game Logic
+   ═══════════════════════════════════════════ */
+
+var scenarios = [
+  { title:"Job Offer", desc:"A better-paying job in a nearby city. Moving would cost ₹50,000 — first month's rent, deposit, and travel.", icon:"💼",
+    choices:[
+      {text:"Take the job (₹50K moving cost)", income_change:8000, savings_change:-50000},
+      {text:"Stay in current job", income_change:1000, savings_change:0}
+    ], insight:null },
+  { title:"Medical Emergency", desc:"A family member needs urgent surgery. A private hospital quotes ₹2,00,000. The government hospital is ₹20,000 but has a 3-month wait.", icon:"🏥",
+    choices:[
+      {text:"Private hospital (₹2L, better care)", income_change:0, savings_change:-200000},
+      {text:"Government hospital (₹20K, longer wait)", income_change:-1000, savings_change:-20000}
+    ], insight:"One health shock — that's how 60 million Indians fall below the poverty line each year. India's out-of-pocket health expenditure is among the highest in the world." },
+  { title:"Education Investment", desc:"An opportunity for a professional certification that could boost your career. Cost: ₹80,000 including lost wages.", icon:"📚",
+    choices:[
+      {text:"Invest in certification (₹80K)", income_change:5000, savings_change:-80000},
+      {text:"Skip — can't afford time off", income_change:500, savings_change:0}
+    ], insight:null },
+  { title:"Inflation Shock", desc:"Food and fuel prices spike 15% in a single quarter. Your monthly expenses jump by ₹4,000.", icon:"📈",
+    choices:[
+      {text:"Cut spending aggressively", income_change:0, savings_change:-5000},
+      {text:"Take a loan to maintain lifestyle", income_change:0, savings_change:-15000}
+    ], insight:"Inflation hits the poor hardest. The bottom 50% spend 50%+ of income on food, vs 25% for the top 10%. A 15% food price rise is a crisis for some and an inconvenience for others." },
+  { title:"Side Business Opportunity", desc:"A friend proposes starting a small catering business together. Investment needed: ₹1,50,000.", icon:"🏪",
+    choices:[
+      {text:"Start the business (risky)", income_change:[12000,-3000], savings_change:-150000, risky:true, successProb:0.6},
+      {text:"Keep salary job (safe)", income_change:1500, savings_change:5000}
+    ], insight:null },
+  { title:"Government Scheme", desc:"The Pradhan Mantri Awas Yojana (PMAY) housing subsidy is open for applications. Potential benefit: ₹1,00,000.", icon:"🏛️",
+    choices:[
+      {text:"Apply for subsidy (bureaucratic process)", income_change:0, savings_change:100000, successProb:0.7, risky:true},
+      {text:"Skip — too much paperwork", income_change:0, savings_change:0}
+    ], insight:"Only 30% of eligible households successfully access government welfare schemes. Bureaucratic barriers disproportionately exclude the poorest, who need them most." },
+  { title:"Child's Education", desc:"Your child qualifies for a good private school. Annual fees: ₹1,20,000. The government school nearby is free.", icon:"🎓",
+    choices:[
+      {text:"Enroll in private school (₹1.2L/yr)", income_change:0, savings_change:-120000},
+      {text:"Government school (free)", income_change:0, savings_change:0}
+    ], insight:"India has one of the world's highest rates of private school enrollment — even among lower-income families. Parents sacrifice savings believing private education is the path to social mobility." },
+  { title:"Crop Failure / Layoff", desc:"An economic downturn hits your sector. Work dries up. You need to adapt or wait it out.", icon:"📉",
+    choices:[
+      {text:"Retrain for new sector (₹40K, 3 months)", income_change:3000, savings_change:-40000},
+      {text:"Wait for recovery", income_change:-5000, savings_change:-10000}
+    ], insight:"India's informal sector employs 90% of workers with zero safety net. A layoff doesn't mean unemployment insurance — it means dipping into savings or borrowing at 24%+ interest." },
+  { title:"Land Opportunity", desc:"A small plot of land is available in your home village. Price: ₹5,00,000. Land is the ultimate asset in rural India.", icon:"🏡",
+    choices:[
+      {text:"Buy land (₹5L loan)", income_change:2000, savings_change:-500000},
+      {text:"Pass — too risky", income_change:0, savings_change:5000}
+    ], insight:null },
+  { title:"Retirement Planning", desc:"You're thinking about the future. An SIP (Systematic Investment Plan) could build a corpus, but means less cash now.", icon:"🧓",
+    choices:[
+      {text:"Start SIP investment (₹5K/month)", income_change:-500, savings_change:3000},
+      {text:"Spend now, worry later", income_change:0, savings_change:-8000}
+    ], insight:"Only 7% of Indian workers have formal pension coverage. For the vast majority, 'retirement planning' is hoping your children will support you." }
+];
+
+/* Comparison Households */
+var households = [
+  {name:"Lakshmi", emoji:"👩‍🌾", income:12000, savings:20000, color:"#F87171", history:[12000]},
+  {name:"Raju", emoji:"🧑‍🏭", income:18000, savings:60000, color:"#FB923C", history:[18000]},
+  {name:"Priya", emoji:"👩‍💼", income:35000, savings:250000, color:"#A78BFA", history:[35000]},
+  {name:"Arjun", emoji:"🧑‍💻", income:75000, savings:800000, color:"#38BDF8", history:[75000]},
+  {name:"Mehta", emoji:"🏭", income:180000, savings:5000000, color:"#34D399", history:[180000]}
+];
+
+/* Household AI responses to scenarios */
+var hhResponses = [
+  /* Round 0: Job Offer */
+  [{inc:500,sav:-10000},{inc:2000,sav:-30000},{inc:3000,sav:-50000},{inc:5000,sav:-40000},{inc:10000,sav:0}],
+  /* Round 1: Medical Emergency */
+  [{inc:-1500,sav:-15000},{inc:-1000,sav:-30000},{inc:0,sav:-200000},{inc:0,sav:-200000},{inc:0,sav:-200000}],
+  /* Round 2: Education */
+  [{inc:200,sav:0},{inc:500,sav:0},{inc:3000,sav:-80000},{inc:5000,sav:-80000},{inc:0,sav:0}],
+  /* Round 3: Inflation */
+  [{inc:0,sav:-8000},{inc:0,sav:-6000},{inc:0,sav:-4000},{inc:0,sav:-2000},{inc:0,sav:0}],
+  /* Round 4: Side Business */
+  [{inc:0,sav:1000},{inc:1000,sav:2000},{inc:2000,sav:5000},{inc:0,sav:10000},{inc:15000,sav:-150000}],
+  /* Round 5: Govt Scheme */
+  [{inc:0,sav:0},{inc:0,sav:50000},{inc:0,sav:0},{inc:0,sav:0},{inc:0,sav:0}],
+  /* Round 6: Child Education */
+  [{inc:0,sav:0},{inc:0,sav:-40000},{inc:0,sav:-120000},{inc:0,sav:-120000},{inc:0,sav:-250000}],
+  /* Round 7: Layoff */
+  [{inc:-3000,sav:-15000},{inc:-2000,sav:-10000},{inc:1000,sav:-40000},{inc:2000,sav:-20000},{inc:5000,sav:0}],
+  /* Round 8: Land */
+  [{inc:0,sav:0},{inc:0,sav:2000},{inc:0,sav:5000},{inc:1000,sav:-300000},{inc:3000,sav:-500000}],
+  /* Round 9: Retirement */
+  [{inc:0,sav:-2000},{inc:0,sav:-3000},{inc:-300,sav:3000},{inc:-500,sav:5000},{inc:0,sav:20000}]
+];
+
+/* Game State */
+var state = {
+  round: 0,
+  income: 25000,
+  savings: 150000,
+  history: [25000],
+  savingsHistory: [150000],
+  choices: [],
+  phase: "choose" // "choose" or "outcome"
+};
+
+function getPercentile(monthlyIncome) {
+  if (monthlyIncome <= 0) return 0;
+  if (monthlyIncome < 10000) return Math.round(monthlyIncome / 10000 * 30);
+  if (monthlyIncome < 25000) return 30 + Math.round((monthlyIncome - 10000) / 15000 * 30);
+  if (monthlyIncome < 50000) return 60 + Math.round((monthlyIncome - 25000) / 25000 * 20);
+  if (monthlyIncome < 100000) return 80 + Math.round((monthlyIncome - 50000) / 50000 * 12);
+  if (monthlyIncome < 200000) return 92 + Math.round((monthlyIncome - 100000) / 100000 * 5);
+  return Math.min(99, 97 + Math.round((monthlyIncome - 200000) / 300000 * 2));
+}
+
+function formatINR(n) {
+  if (n < 0) return "-₹" + formatNum(Math.abs(n));
+  return "₹" + formatNum(n);
+}
+function formatNum(n) {
+  n = Math.round(n);
+  var s = Math.abs(n).toString();
+  if (s.length <= 3) return s;
+  var last3 = s.slice(-3);
+  var rest = s.slice(0, -3);
+  var formatted = "";
+  while (rest.length > 2) {
+    formatted = "," + rest.slice(-2) + formatted;
+    rest = rest.slice(0, -2);
+  }
+  formatted = rest + formatted + "," + last3;
+  return formatted;
+}
+
+function formatChange(n) {
+  if (n > 0) return "+" + formatINR(n);
+  if (n < 0) return formatINR(n);
+  return "₹0";
+}
+
+function startGame() {
+  document.getElementById("welcome").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
+  renderRound();
+}
+
+function renderRound() {
+  state.phase = "choose";
+  var r = state.round;
+  var sc = scenarios[r];
+
+  document.getElementById("roundLabel").textContent = "Round " + (r + 1) + " / 10";
+  document.getElementById("yearLabel").textContent = "Year " + (r + 1);
+
+  updateStatus();
+  updateDistBar();
+  renderHouseholds();
+  drawChart();
+
+  var html = '<div class="scenario-card animate-in">';
+  html += '<div class="scenario-icon">' + sc.icon + '</div>';
+  html += '<h2>' + sc.title + '</h2>';
+  html += '<p class="desc">' + sc.desc + '</p>';
+  html += '<div class="choice-grid">';
+  for (var i = 0; i < sc.choices.length; i++) {
+    var ch = sc.choices[i];
+    var meta = "";
+    if (ch.income_change) {
+      var ic = Array.isArray(ch.income_change) ? ch.income_change[0] : ch.income_change;
+      if (ic > 0) meta += "Income: +" + formatINR(ic) + "/mo";
+      else if (ic < 0) meta += "Income: " + formatINR(ic) + "/mo";
+    }
+    if (ch.savings_change) {
+      if (meta) meta += " · ";
+      meta += "Savings: " + formatChange(ch.savings_change);
+    }
+    if (ch.risky) {
+      if (meta) meta += " · ";
+      meta += Math.round(ch.successProb * 100) + "% success";
+    }
+    html += '<button class="choice-btn" onclick="makeChoice(' + i + ')">';
+    html += '<span class="choice-label">' + (i === 0 ? "A" : "B") + '. ' + ch.text + '</span>';
+    html += '<span class="choice-meta">' + meta + '</span>';
+    html += '</button>';
+  }
+  html += '</div></div>';
+
+  document.getElementById("scenarioArea").innerHTML = html;
+}
+
+function makeChoice(idx) {
+  var r = state.round;
+  var sc = scenarios[r];
+  var ch = sc.choices[idx];
+
+  var incomeChange = 0;
+  var savingsChange = ch.savings_change || 0;
+  var outcomeText = "";
+  var success = true;
+
+  if (ch.risky) {
+    success = Math.random() < ch.successProb;
+    if (Array.isArray(ch.income_change)) {
+      incomeChange = success ? ch.income_change[0] : ch.income_change[1];
+    } else {
+      incomeChange = success ? ch.income_change : 0;
+      savingsChange = success ? ch.savings_change : 0;
+    }
+    if (success) {
+      outcomeText = "It worked out! " + (sc.title === "Side Business Opportunity" ? "The business is thriving." : "Your application was approved.");
+    } else {
+      outcomeText = "It didn't work out. " + (sc.title === "Side Business Opportunity" ? "The business struggled and you lost money." : "Your application was rejected after months of waiting.");
+    }
+  } else {
+    incomeChange = ch.income_change || 0;
+    if (idx === 0) {
+      outcomeText = "You chose the bolder path.";
+    } else {
+      outcomeText = "You played it safe.";
+    }
+  }
+
+  state.income = Math.max(5000, state.income + incomeChange);
+  state.savings = state.savings + savingsChange;
+
+  state.choices.push({
+    round: r,
+    title: sc.title,
+    choiceIdx: idx,
+    choiceText: ch.text,
+    incomeChange: incomeChange,
+    savingsChange: savingsChange,
+    success: success
+  });
+
+  state.history.push(state.income);
+  state.savingsHistory.push(state.savings);
+
+  // Update comparison households
+  for (var h = 0; h < households.length; h++) {
+    var resp = hhResponses[r][h];
+    households[h].income = Math.max(5000, households[h].income + resp.inc);
+    households[h].savings += resp.sav;
+    households[h].history.push(households[h].income);
+  }
+
+  state.phase = "outcome";
+  showOutcome(sc, ch, idx, incomeChange, savingsChange, success, outcomeText);
+}
+
+function showOutcome(sc, ch, idx, incomeChange, savingsChange, success, outcomeText) {
+  updateStatus();
+  updateDistBar();
+  renderHouseholds();
+  drawChart();
+
+  var html = '<div class="outcome-card animate-up">';
+  html += '<h2>' + sc.title + ' — Result</h2>';
+  html += '<p class="outcome-text">' + outcomeText + '</p>';
+
+  html += '<div class="change-display">';
+  html += '<div class="change-item"><div class="c-label">Income Change</div><div class="c-value ' +
+    (incomeChange > 0 ? 'c-positive' : incomeChange < 0 ? 'c-negative' : 'c-neutral') + '">' +
+    formatChange(incomeChange) + '/mo</div></div>';
+  html += '<div class="change-item"><div class="c-label">Savings Impact</div><div class="c-value ' +
+    (savingsChange > 0 ? 'c-positive' : savingsChange < 0 ? 'c-negative' : 'c-neutral') + '">' +
+    formatChange(savingsChange) + '</div></div>';
+  html += '<div class="change-item"><div class="c-label">Now at</div><div class="c-value" style="color:var(--saffron-light)">Top ' +
+    (100 - getPercentile(state.income)) + '%</div></div>';
+  html += '</div>';
+
+  if (sc.insight) {
+    html += '<div class="insight-box">' + sc.insight + '</div>';
+  }
+
+  html += '</div>';
+
+  if (state.round < 9) {
+    html += '<div style="text-align:center;margin-top:1rem"><button class="btn btn-primary" onclick="nextRound()">Next Round →</button></div>';
+  } else {
+    html += '<div style="text-align:center;margin-top:1rem"><button class="btn btn-primary" onclick="showEnd()">See Your Final Results →</button></div>';
+  }
+
+  document.getElementById("scenarioArea").innerHTML = html;
+}
+
+function nextRound() {
+  state.round++;
+  renderRound();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function updateStatus() {
+  document.getElementById("incomeDisplay").textContent = formatINR(state.income) + "/mo";
+  document.getElementById("savingsDisplay").textContent = formatINR(state.savings);
+  var pct = getPercentile(state.income);
+  document.getElementById("percentileDisplay").textContent = "Top " + (100 - pct) + "%";
+
+  // Color savings based on health
+  var savEl = document.getElementById("savingsDisplay");
+  if (state.savings < 0) savEl.style.color = "var(--red-light)";
+  else if (state.savings < 50000) savEl.style.color = "var(--amber)";
+  else savEl.style.color = "var(--green-light)";
+}
+
+function updateDistBar() {
+  var pct = getPercentile(state.income);
+  var marker = document.getElementById("playerMarker");
+  marker.style.left = pct + "%";
+
+  // Remove old HH markers
+  var old = document.querySelectorAll(".hh-marker");
+  for (var i = 0; i < old.length; i++) old[i].remove();
+
+  var bar = document.getElementById("distBar");
+  for (var h = 0; h < households.length; h++) {
+    var hp = getPercentile(households[h].income);
+    var m = document.createElement("div");
+    m.className = "dist-marker hh-marker";
+    m.style.left = hp + "%";
+    m.innerHTML = '<div class="marker-label">' + households[h].emoji + '</div><div class="marker-pin" style="background:' + households[h].color + '"></div>';
+    bar.appendChild(m);
+  }
+}
+
+function renderHouseholds() {
+  var html = '<div style="font-size:.85rem;color:var(--text3);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em;font-weight:600">Comparison Households</div>';
+  // Player first
+  html += '<div class="hh-row"><div class="hh-dot" style="background:var(--saffron)"></div>';
+  html += '<div class="hh-r-name" style="color:var(--saffron-light);font-weight:700">You</div>';
+  html += '<div class="hh-r-income">' + formatINR(state.income) + '/mo</div>';
+  html += '<div class="hh-r-pct">Top ' + (100 - getPercentile(state.income)) + '%</div></div>';
+
+  for (var h = 0; h < households.length; h++) {
+    var hh = households[h];
+    html += '<div class="hh-row"><div class="hh-dot" style="background:' + hh.color + '"></div>';
+    html += '<div class="hh-r-name">' + hh.emoji + ' ' + hh.name + '</div>';
+    html += '<div class="hh-r-income">' + formatINR(hh.income) + '/mo</div>';
+    html += '<div class="hh-r-pct">Top ' + (100 - getPercentile(hh.income)) + '%</div></div>';
+  }
+
+  document.getElementById("hhComparison").innerHTML = html;
+}
+
+/* ═══ Canvas Chart ═══ */
+function drawChart() {
+  var canvas = document.getElementById("trajectoryChart");
+  var ctx = canvas.getContext("2d");
+  var dpr = window.devicePixelRatio || 1;
+  var w = canvas.parentElement.clientWidth - 32;
+  var h = 200;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+  ctx.scale(dpr, dpr);
+
+  // Find min/max across all
+  var allData = [state.history];
+  for (var i = 0; i < households.length; i++) allData.push(households[i].history);
+  var min = Infinity, max = -Infinity;
+  for (var d = 0; d < allData.length; d++) {
+    for (var j = 0; j < allData[d].length; j++) {
+      if (allData[d][j] < min) min = allData[d][j];
+      if (allData[d][j] > max) max = allData[d][j];
+    }
+  }
+  min = Math.max(0, min - 5000);
+  max = max + 10000;
+
+  var padL = 60, padR = 10, padT = 15, padB = 25;
+  var chartW = w - padL - padR;
+  var chartH = h - padT - padB;
+  var points = state.history.length;
+  var maxPts = 11;
+
+  function x(i) { return padL + (i / (maxPts - 1)) * chartW; }
+  function y(v) { return padT + chartH - ((v - min) / (max - min)) * chartH; }
+
+  // Background
+  ctx.fillStyle = "#1E293B";
+  ctx.fillRect(0, 0, w, h);
+
+  // Grid lines
+  ctx.strokeStyle = "rgba(71,85,105,.4)";
+  ctx.lineWidth = 0.5;
+  var gridLines = 4;
+  for (var g = 0; g <= gridLines; g++) {
+    var gy = padT + (g / gridLines) * chartH;
+    ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(w - padR, gy); ctx.stroke();
+    var val = max - (g / gridLines) * (max - min);
+    ctx.fillStyle = "#94A3B8";
+    ctx.font = "10px system-ui";
+    ctx.textAlign = "right";
+    ctx.fillText("₹" + Math.round(val / 1000) + "K", padL - 6, gy + 4);
+  }
+
+  // X labels
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#94A3B8";
+  for (var lbl = 0; lbl < maxPts; lbl++) {
+    ctx.fillText("R" + lbl, x(lbl), h - 4);
+  }
+
+  // Draw household lines
+  var colors = [];
+  for (var hh = 0; hh < households.length; hh++) colors.push(households[hh].color);
+
+  for (var hh = 0; hh < households.length; hh++) {
+    var data = households[hh].history;
+    ctx.beginPath();
+    ctx.strokeStyle = colors[hh];
+    ctx.lineWidth = 1.5;
+    ctx.globalAlpha = 0.5;
+    for (var p = 0; p < data.length; p++) {
+      if (p === 0) ctx.moveTo(x(p), y(data[p]));
+      else ctx.lineTo(x(p), y(data[p]));
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  // Draw player line
+  ctx.beginPath();
+  ctx.strokeStyle = "#F97316";
+  ctx.lineWidth = 3;
+  ctx.shadowColor = "rgba(249,115,22,.5)";
+  ctx.shadowBlur = 8;
+  for (var p = 0; p < state.history.length; p++) {
+    if (p === 0) ctx.moveTo(x(p), y(state.history[p]));
+    else ctx.lineTo(x(p), y(state.history[p]));
+  }
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // Player dot at end
+  var lastIdx = state.history.length - 1;
+  ctx.beginPath();
+  ctx.arc(x(lastIdx), y(state.history[lastIdx]), 5, 0, Math.PI * 2);
+  ctx.fillStyle = "#F97316";
+  ctx.fill();
+  ctx.strokeStyle = "#fff";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+/* ═══ End Screen ═══ */
+function showEnd() {
+  document.getElementById("game").classList.add("hidden");
+  document.getElementById("endscreen").classList.remove("hidden");
+  window.scrollTo({top:0, behavior:'smooth'});
+
+  var pct = getPercentile(state.income);
+  var startPct = getPercentile(25000);
+  var incomeChange = state.income - 25000;
+  var savingsChange = state.savings - 150000;
+
+  var html = '';
+
+  // Final stats
+  html += '<div class="final-stats">';
+  html += '<div class="final-stat"><div class="fs-value" style="color:var(--green-light)">' + formatINR(state.income) + '</div><div class="fs-label">Monthly Income</div></div>';
+  html += '<div class="final-stat"><div class="fs-value" style="color:' + (state.savings >= 0 ? 'var(--amber)' : 'var(--red-light)') + '">' + formatINR(state.savings) + '</div><div class="fs-label">Savings</div></div>';
+  html += '<div class="final-stat"><div class="fs-value" style="color:var(--saffron-light)">Top ' + (100 - pct) + '%</div><div class="fs-label">Percentile</div></div>';
+  html += '<div class="final-stat"><div class="fs-value" style="color:' + (incomeChange >= 0 ? 'var(--green-light)' : 'var(--red-light)') + '">' + formatChange(incomeChange) + '</div><div class="fs-label">Income Change</div></div>';
+  html += '</div>';
+
+  // Final distribution bar
+  html += '<div class="dist-section" style="margin:2rem 0">';
+  html += '<h3>Your Final Position in India\'s Income Distribution</h3>';
+  html += '<div class="dist-bar-container" id="endDistBar"><div class="dist-gradient"></div>';
+  html += '<div class="dist-marker" style="left:' + pct + '%"><div class="marker-label">You</div><div class="marker-pin"></div></div>';
+  for (var h = 0; h < households.length; h++) {
+    var hp = getPercentile(households[h].income);
+    html += '<div class="dist-marker hh-marker" style="left:' + hp + '%"><div class="marker-label">' + households[h].emoji + '</div><div class="marker-pin" style="background:' + households[h].color + '"></div></div>';
+  }
+  html += '</div>';
+  html += '<div class="dist-labels"><span>₹5K (Bottom 10%)</span><span>₹15K</span><span>₹25K (Median)</span><span>₹50K</span><span>₹1L</span><span>₹2L+ (Top 3%)</span></div>';
+  html += '</div>';
+
+  // Final trajectory chart
+  html += '<div class="chart-section"><h3>Complete Income Trajectory</h3><div class="chart-container"><canvas id="endChart" width="900" height="220"></canvas></div></div>';
+
+  // Journey summary
+  html += '<div class="journey-summary"><h3>Your Decisions</h3>';
+  for (var c = 0; c < state.choices.length; c++) {
+    var ch = state.choices[c];
+    html += '<div class="journey-step">';
+    html += '<div class="j-round">' + (c + 1) + '</div>';
+    html += '<div class="j-choice"><strong>' + ch.title + ':</strong> ' + ch.choiceText + '</div>';
+    var impact = ch.incomeChange;
+    html += '<div class="j-impact ' + (impact >= 0 ? 'c-positive' : 'c-negative') + '">' + formatChange(impact) + '/mo</div>';
+    html += '</div>';
+  }
+  html += '</div>';
+
+  // Comparison table
+  html += '<div class="journey-summary"><h3>Final Comparison</h3>';
+  var allHH = [{name:"You (start)", income:25000, final: state.income, emoji:"🧑"}];
+  for (var h = 0; h < households.length; h++) {
+    allHH.push({name:households[h].name, income:households[h].history[0], final:households[h].income, emoji:households[h].emoji});
+  }
+  for (var a = 0; a < allHH.length; a++) {
+    var diff = allHH[a].final - allHH[a].income;
+    html += '<div class="hh-row">';
+    html += '<div style="width:24px;text-align:center">' + allHH[a].emoji + '</div>';
+    html += '<div class="hh-r-name">' + allHH[a].name + '</div>';
+    html += '<div class="hh-r-income">' + formatINR(allHH[a].income) + ' → ' + formatINR(allHH[a].final) + '</div>';
+    html += '<div class="hh-r-pct ' + (diff >= 0 ? 'c-positive' : 'c-negative') + '">' + formatChange(diff) + '</div>';
+    html += '</div>';
+  }
+  html += '</div>';
+
+  // Key insight
+  var insightTitle, insightText;
+  if (state.savings < 0) {
+    insightTitle = "In Debt — The Precarity Trap";
+    insightText = "You ended in debt. This is the reality for millions of Indian households. One medical emergency, one layoff, one failed investment — and years of careful saving evaporate. Without a safety net, the 'middle class' is one shock away from poverty. India's household debt has been rising steadily, with the poorest borrowing at interest rates 3-5x those available to the wealthy.";
+  } else if (state.income > 40000) {
+    insightTitle = "You Moved Up — But Most Can't";
+    insightText = "You managed to climb the income ladder. But notice how the comparison households diverged — the rich got richer, the poor fell behind. Your success required lucky breaks and smart choices. For the 800 million Indians earning less than ₹15,000/month, these 'choices' don't exist. Structural barriers — caste, geography, gender, access to capital — determine outcomes far more than individual decisions.";
+  } else {
+    insightTitle = "The Treadmill — Running to Stand Still";
+    insightText = "Despite a decade of decisions, you're roughly where you started. This is the reality of India's 'middle class' — not a stable platform, but a treadmill. Inflation erodes gains. Health shocks destroy savings. Education costs consume income. Meanwhile, the top 10% compound their wealth through assets, investments, and access. The gap isn't closing — it's accelerating.";
+  }
+
+  html += '<div class="ending-insight"><h3>' + insightTitle + '</h3><p>' + insightText + '</p></div>';
+
+  // Structural facts
+  html += '<h3 style="color:var(--text2);margin-bottom:.6rem">The Structural Reality</h3>';
+  html += '<div class="structural-facts">';
+  html += '<div class="struct-fact"><div class="sf-icon">🏥</div><div class="sf-text"><strong>Healthcare:</strong> 62.4% of health spending is out-of-pocket. 55 million Indians are pushed into poverty by health costs every year.</div></div>';
+  html += '<div class="struct-fact"><div class="sf-icon">📚</div><div class="sf-text"><strong>Education:</strong> A child born in the top 20% is 6x more likely to complete college than one born in the bottom 20%.</div></div>';
+  html += '<div class="struct-fact"><div class="sf-icon">💰</div><div class="sf-text"><strong>Wealth Gap:</strong> The top 10% own 77% of national wealth. The bottom 50% own just 6%. This gap has widened since liberalization.</div></div>';
+  html += '<div class="struct-fact"><div class="sf-icon">🏘️</div><div class="sf-text"><strong>Social Mobility:</strong> Intergenerational income elasticity in India is ~0.5 — meaning your parents\' income strongly predicts yours. Caste and geography compound this.</div></div>';
+  html += '</div>';
+
+  html += '<div class="info-box" style="margin-top:2rem;text-align:center">';
+  html += '<strong>The game\'s core lesson:</strong> Individual choices matter, but structural forces — healthcare access, education quality, social safety nets, asset inequality — matter far more. Building a genuine middle class requires public investment, not just personal aspiration.';
+  html += '</div>';
+
+  html += '<div style="text-align:center;margin-top:2rem"><button class="btn btn-primary" onclick="resetGame()">Play Again</button></div>';
+
+  document.getElementById("endContent").innerHTML = html;
+
+  // Draw end chart
+  setTimeout(function() { drawEndChart(); }, 100);
+}
+
+function drawEndChart() {
+  var canvas = document.getElementById("endChart");
+  if (!canvas) return;
+  var ctx = canvas.getContext("2d");
+  var dpr = window.devicePixelRatio || 1;
+  var w = canvas.parentElement.clientWidth - 32;
+  var h = 220;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+  ctx.scale(dpr, dpr);
+
+  var allData = [state.history];
+  for (var i = 0; i < households.length; i++) allData.push(households[i].history);
+  var min = Infinity, max = -Infinity;
+  for (var d = 0; d < allData.length; d++) {
+    for (var j = 0; j < allData[d].length; j++) {
+      if (allData[d][j] < min) min = allData[d][j];
+      if (allData[d][j] > max) max = allData[d][j];
+    }
+  }
+  min = Math.max(0, min - 5000);
+  max = max + 10000;
+
+  var padL = 60, padR = 20, padT = 15, padB = 25;
+  var chartW = w - padL - padR;
+  var chartH = h - padT - padB;
+  var maxPts = 11;
+
+  function x(i) { return padL + (i / (maxPts - 1)) * chartW; }
+  function y(v) { return padT + chartH - ((v - min) / (max - min)) * chartH; }
+
+  ctx.fillStyle = "#1E293B";
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.strokeStyle = "rgba(71,85,105,.4)";
+  ctx.lineWidth = 0.5;
+  for (var g = 0; g <= 4; g++) {
+    var gy = padT + (g / 4) * chartH;
+    ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(w - padR, gy); ctx.stroke();
+    var val = max - (g / 4) * (max - min);
+    ctx.fillStyle = "#94A3B8";
+    ctx.font = "10px system-ui";
+    ctx.textAlign = "right";
+    ctx.fillText("₹" + Math.round(val / 1000) + "K", padL - 6, gy + 4);
+  }
+
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#94A3B8";
+  for (var lbl = 0; lbl < maxPts; lbl++) {
+    ctx.fillText("R" + lbl, x(lbl), h - 4);
+  }
+
+  for (var hh = 0; hh < households.length; hh++) {
+    var data = households[hh].history;
+    ctx.beginPath();
+    ctx.strokeStyle = households[hh].color;
+    ctx.lineWidth = 2;
+    ctx.globalAlpha = 0.5;
+    for (var p = 0; p < data.length; p++) {
+      if (p === 0) ctx.moveTo(x(p), y(data[p]));
+      else ctx.lineTo(x(p), y(data[p]));
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    // Label at end
+    ctx.fillStyle = households[hh].color;
+    ctx.font = "10px system-ui";
+    ctx.textAlign = "left";
+    ctx.fillText(households[hh].name, x(data.length - 1) + 8, y(data[data.length - 1]) + 3);
+  }
+
+  // Player
+  ctx.beginPath();
+  ctx.strokeStyle = "#F97316";
+  ctx.lineWidth = 3;
+  ctx.shadowColor = "rgba(249,115,22,.5)";
+  ctx.shadowBlur = 8;
+  for (var p = 0; p < state.history.length; p++) {
+    if (p === 0) ctx.moveTo(x(p), y(state.history[p]));
+    else ctx.lineTo(x(p), y(state.history[p]));
+  }
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  ctx.beginPath();
+  ctx.arc(x(state.history.length - 1), y(state.history[state.history.length - 1]), 5, 0, Math.PI * 2);
+  ctx.fillStyle = "#F97316";
+  ctx.fill();
+  ctx.strokeStyle = "#fff";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.fillStyle = "#F97316";
+  ctx.font = "bold 11px system-ui";
+  ctx.textAlign = "left";
+  ctx.fillText("You", x(state.history.length - 1) + 8, y(state.history[state.history.length - 1]) + 4);
+}
+
+function resetGame() {
+  state = { round:0, income:25000, savings:150000, history:[25000], savingsHistory:[150000], choices:[], phase:"choose" };
+  households = [
+    {name:"Lakshmi", emoji:"👩‍🌾", income:12000, savings:20000, color:"#F87171", history:[12000]},
+    {name:"Raju", emoji:"🧑‍🏭", income:18000, savings:60000, color:"#FB923C", history:[18000]},
+    {name:"Priya", emoji:"👩‍💼", income:35000, savings:250000, color:"#A78BFA", history:[35000]},
+    {name:"Arjun", emoji:"🧑‍💻", income:75000, savings:800000, color:"#38BDF8", history:[75000]},
+    {name:"Mehta", emoji:"🏭", income:180000, savings:5000000, color:"#34D399", history:[180000]}
+  ];
+  document.getElementById("endscreen").classList.add("hidden");
+  document.getElementById("welcome").classList.remove("hidden");
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* Resize handler */
+window.addEventListener("resize", function() {
+  if (!document.getElementById("game").classList.contains("hidden")) drawChart();
+  if (!document.getElementById("endscreen").classList.contains("hidden")) drawEndChart();
+});
+</script>
+</body>
+</html>
