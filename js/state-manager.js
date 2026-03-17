@@ -66,6 +66,10 @@
     BCT_NOTES:       'impactmojo_bct_notes',
     BCT_COMPARE:     'impactmojo_bct_compare',
 
+    // Game agent sessions
+    GAME_SESSION_PREFIX: 'impactmojo_game_session_',
+    GAME_HISTORY:        'impactmojo_game_history',
+
     // Org dashboard
     COHORTS_PREFIX:  'impactmojo_cohorts_',
 
@@ -255,6 +259,37 @@
       clear: function () { safeRemove(KEYS.PATHWAY_STATE); }
     },
 
+    // ------- Game sessions (AI agent games) -------
+
+    gameSession: {
+      /** Get active session for a game */
+      get: function (gameId) {
+        return safeGet(KEYS.GAME_SESSION_PREFIX + gameId, null);
+      },
+      /** Save session state (round, history, agent decisions) */
+      set: function (gameId, data) {
+        return safeSet(KEYS.GAME_SESSION_PREFIX + gameId, data);
+      },
+      /** Clear session for a game */
+      clear: function (gameId) {
+        safeRemove(KEYS.GAME_SESSION_PREFIX + gameId);
+      }
+    },
+
+    gameHistory: {
+      /** Get completed game history (array of summaries) */
+      get: function () { return safeGet(KEYS.GAME_HISTORY, []); },
+      /** Add a completed game to history */
+      add: function (entry) {
+        var hist = safeGet(KEYS.GAME_HISTORY, []);
+        hist.push(entry);
+        // Keep last 50 games
+        if (hist.length > 50) hist = hist.slice(-50);
+        return safeSet(KEYS.GAME_HISTORY, hist);
+      },
+      clear: function () { safeRemove(KEYS.GAME_HISTORY); }
+    },
+
     // ------- Challenges -------
 
     challengeSubmissions: {
@@ -376,6 +411,8 @@
   Object.freeze(IMState.pathwayState);
   Object.freeze(IMState.challengeSubmissions);
   Object.freeze(IMState.challengeDrafts);
+  Object.freeze(IMState.gameSession);
+  Object.freeze(IMState.gameHistory);
   Object.freeze(IMState.theme);
   Object.freeze(IMState.lang);
   Object.freeze(IMState.tourCompleted);
