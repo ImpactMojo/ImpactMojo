@@ -8,7 +8,7 @@ What ImpactMojo commits to — and how we hold ourselves accountable.
 
 ### 1. Free Content Stays Free
 
-All 9 flagship courses, 39 foundational courses, 12 games, 10 labs, 400+ handouts, ImpactLex, Dev Case Studies, DevDiscourses, and the Dataverse are free. This is not a promotional offer or a trial period — it's the foundation of the platform.
+All 9 flagship courses, 39 foundational courses, 16 games, 10 labs, 400+ handouts, ImpactLex, Dev Case Studies, DevDiscourses, and the Dataverse are free. This is not a promotional offer or a trial period — it's the foundation of the platform.
 
 **What this means in practice:**
 - We will never put existing free content behind a paywall

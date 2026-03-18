@@ -103,7 +103,7 @@ Here is a straightforward comparison:
 | Feature | Explorer (Free) | Practitioner (₹399/mo) | Professional (₹999/mo) | Organization (₹1,499/user/mo) |
 |---------|----------------|------------------------|------------------------|-------------------------------|
 | All 48 courses | Yes | Yes | Yes | Yes |
-| 12 games | Yes | Yes | Yes | Yes |
+| 16 games | Yes | Yes | Yes | Yes |
 | 10 labs | Yes | Yes | Yes | Yes |
 | 400+ handouts | Yes | Yes | Yes | Yes |
 | ImpactLex, DevDiscourses, Case Studies | Yes | Yes | Yes | Yes |
