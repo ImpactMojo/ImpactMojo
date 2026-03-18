@@ -371,9 +371,9 @@
     'body:not(.light-mode) h1, body:not(.light-mode) h2, body:not(.light-mode) h3, body:not(.light-mode) h4, body:not(.light-mode) h5, body:not(.light-mode) h6 { color: #F8FAFC !important; }' +
     'body:not(.light-mode) small, body:not(.light-mode) .text-muted, body:not(.light-mode) .subtitle, body:not(.light-mode) .desc, body:not(.light-mode) .description { color: #CBD5E1 !important; }' +
     /* Game-specific label/stat classes that use #64748B — force readable */
-    'body:not(.light-mode) .label, body:not(.light-mode) .plabel, body:not(.light-mode) .rlabel, body:not(.light-mode) .stat .label, body:not(.light-mode) .stat-label { color: #94A3B8 !important; }' +
+    'body:not(.light-mode) .label, body:not(.light-mode) .plabel, body:not(.light-mode) .rlabel, body:not(.light-mode) .stat .label, body:not(.light-mode) .stat-label { color: #CBD5E1 !important; }' +
     'body:not(.light-mode) .value, body:not(.light-mode) .rval, body:not(.light-mode) .pval, body:not(.light-mode) .stat .value, body:not(.light-mode) .stat-value { color: #F1F5F9 !important; }' +
-    'body:not(.light-mode) .example-item .desc, body:not(.light-mode) .meta, body:not(.light-mode) .caption, body:not(.light-mode) .helper-text, body:not(.light-mode) figcaption { color: #94A3B8 !important; }' +
+    'body:not(.light-mode) .example-item .desc, body:not(.light-mode) .meta, body:not(.light-mode) .caption, body:not(.light-mode) .helper-text, body:not(.light-mode) figcaption { color: #CBD5E1 !important; }' +
     'body:not(.light-mode) .panel, body:not(.light-mode) .box, body:not(.light-mode) .section, body:not(.light-mode) [class*="panel"], body:not(.light-mode) [class*="box"] { background: #1E293B !important; color: #F1F5F9 !important; }' +
     'body:not(.light-mode) th { background: #334155 !important; color: #F1F5F9 !important; }' +
     'body:not(.light-mode) td { border-color: #475569 !important; color: #E2E8F0 !important; }' +
@@ -381,9 +381,9 @@
     'body:not(.light-mode) button:not(.imx-theme-btn) { color: #F1F5F9 !important; }' +
     'body:not(.light-mode) .hint, body:not(.light-mode) .tip, body:not(.light-mode) blockquote, body:not(.light-mode) .note, body:not(.light-mode) .info, body:not(.light-mode) .insight-card { background: #1E3A5F !important; border-color: #3B82F6 !important; color: #E2E8F0 !important; }' +
     /* Catch-all: any element with inline color: #64748B or similar dark greys */
-    'body:not(.light-mode) [style*="color:#64748B"], body:not(.light-mode) [style*="color: #64748B"] { color: #94A3B8 !important; }' +
+    'body:not(.light-mode) [style*="color:#64748B"], body:not(.light-mode) [style*="color: #64748B"] { color: #CBD5E1 !important; }' +
     'body:not(.light-mode) [style*="color:#374151"], body:not(.light-mode) [style*="color: #374151"] { color: #CBD5E1 !important; }' +
-    'body:not(.light-mode) [style*="color:#4B5563"], body:not(.light-mode) [style*="color: #4B5563"] { color: #94A3B8 !important; }' +
+    'body:not(.light-mode) [style*="color:#4B5563"], body:not(.light-mode) [style*="color: #4B5563"] { color: #CBD5E1 !important; }' +
 
     /* ═══ LIGHT MODE ═══════════════════════════════════════ */
     'body.light-mode { background: #FFFBF5 !important; color: #1E293B !important; }' +
@@ -433,8 +433,8 @@
 
     /* ═══ DECORATIVE ELEMENTS ═════════════════════════════ */
 
-    /* Indian folk art motifs */
-    '.imx-game-motif { position: fixed; pointer-events: none; z-index: 0; }' +
+    /* Indian folk art motifs — z-index 1 so they float above content backgrounds */
+    '.imx-game-motif { position: fixed; pointer-events: none; z-index: 1; }' +
     '.imx-game-motif svg { width: 100%; height: 100%; }' +
     '.imx-motif-warli { bottom: 0; left: 0; width: 420px; height: 320px; color: #F59E0B; }' +
     'body.light-mode .imx-motif-warli { color: #92400E; }' +
@@ -530,4 +530,52 @@
       '.imx-gh-logo span { font-size: 0.8rem; }' +
     '}';
   document.head.appendChild(css);
+
+  // ── JS-based contrast fixer ──────────────────────────────
+  // Runs after page load to catch inline styles the CSS can't override
+  function fixDarkContrast() {
+    if (document.body.classList.contains('light-mode')) return;
+
+    // Map of low-contrast colors → readable replacements
+    var fixes = {
+      '#64748b': '#CBD5E1', '#64748B': '#CBD5E1',
+      '#374151': '#CBD5E1', '#4b5563': '#CBD5E1', '#4B5563': '#CBD5E1',
+      '#6b7280': '#CBD5E1', '#6B7280': '#CBD5E1',
+      '#475569': '#94A3B8',
+      '#334155': '#94A3B8',
+      '#1f2937': '#CBD5E1', '#1F2937': '#CBD5E1',
+      'rgb(100, 116, 139)': '#CBD5E1',
+      'rgb(55, 65, 81)': '#CBD5E1',
+      'rgb(75, 85, 99)': '#CBD5E1'
+    };
+
+    document.querySelectorAll('[style]').forEach(function(el) {
+      if (el.closest('#imx-game-header') || el.closest('#imx-game-footer')) return;
+      var s = el.style;
+      if (s.color) {
+        var c = s.color.toLowerCase();
+        Object.keys(fixes).forEach(function(bad) {
+          if (c === bad.toLowerCase() || c === bad) {
+            s.setProperty('color', fixes[bad], 'important');
+          }
+        });
+      }
+    });
+  }
+
+  // Run after page fully loads and on theme change
+  var origSetTheme = setTheme;
+  setTheme = function(pref) {
+    origSetTheme(pref);
+    setTimeout(fixDarkContrast, 50);
+  };
+
+  if (document.readyState === 'complete') {
+    fixDarkContrast();
+  } else {
+    window.addEventListener('load', fixDarkContrast);
+  }
+  // Also re-run periodically for dynamically added content
+  setTimeout(fixDarkContrast, 1000);
+  setTimeout(fixDarkContrast, 3000);
 })();
