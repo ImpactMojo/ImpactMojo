@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Epidemic Response Challenge | ImpactMojo</title>
+<style>
+/* ── CSS Custom Properties ─────────────────────────────────── */
+:root {
+  --deep-red: #B71C1C;
+  --saffron: #FF6F00;
+  --leaf-green: #33691E;
+  --indigo: #1A237E;
+  --cream: #FFF8E1;
+  --bg: #0F172A;
+  --bg2: #1E293B;
+  --bg3: #334155;
+  --bg4: #475569;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --radius: 14px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+/* ── Reset & Base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: 'Amaranth', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Utility ────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.5s ease-out forwards; }
+.fade-up { animation: fadeUp 0.6s ease-out forwards; }
+.scale-in { animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes tickerScroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ── Pattachitra Border ─────────────────────────────────────── */
+.pattachitra-border {
+  border: 3px solid var(--saffron);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+}
+.pattachitra-border::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 2px solid var(--deep-red);
+  border-radius: calc(var(--radius) - 3px);
+  margin: 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+.pattachitra-border::after {
+  content: '◈ ◆ ◈ ◆ ◈ ◆ ◈ ◆ ◈ ◆ ◈ ◆ ◈ ◆ ◈ ◆ ◈ ◆ ◈ ◆ ◈ ◆ ◈ ◆ ◈';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  text-align: center;
+  font-size: 0.6rem;
+  color: var(--saffron);
+  opacity: 0.4;
+  padding: 2px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Back Link ──────────────────────────────────────────────── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 1rem 0;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--cream); }
+.back-link svg { width: 16px; height: 16px; }
+
+/* ── Screen: Welcome ────────────────────────────────────────── */
+#welcome-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.welcome-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.welcome-header .tag {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(183,28,28,0.15), rgba(183,28,28,0.08));
+  border: 1px solid rgba(183,28,28,0.4);
+  color: #EF5350;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+
+.welcome-header h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--cream), var(--saffron));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.welcome-header p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* Pattachitra SVG Hero */
+.hero-art {
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+.hero-art svg {
+  width: 100%;
+  max-height: 220px;
+}
+
+/* Concept cards */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+}
+
+.concept-card {
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.concept-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--bg4);
+}
+.concept-card .icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+.concept-card h3 {
+  color: var(--saffron);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.concept-card p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--saffron), #E65100);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.9rem 2.5rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(255,111,0,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(255,111,0,0.4);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--bg2);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.8rem;
+  border: 1px solid var(--bg3);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.btn-secondary:hover {
+  background: #273449;
+  border-color: var(--bg4);
+}
+
+.start-container { text-align: center; }
+
+/* ── Screen: Game ───────────────────────────────────────────── */
+#game-screen {
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Top bar */
+.game-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.game-top-bar h2 {
+  font-size: 1.3rem;
+  color: var(--cream);
+}
+.round-badge {
+  background: var(--indigo);
+  color: var(--cream);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255,248,225,0.2);
+}
+
+/* News ticker */
+.news-ticker-container {
+  background: linear-gradient(135deg, rgba(183,28,28,0.15), rgba(26,35,126,0.15));
+  border: 1px solid rgba(183,28,28,0.3);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+.news-ticker-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--deep-red);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  padding: 0 0.7rem;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.news-ticker-text {
+  color: var(--cream);
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding-left: 4.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Metrics dashboard */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.metric-card {
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: 12px;
+  padding: 0.9rem;
+  text-align: center;
+}
+.metric-card .metric-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.3rem;
+}
+.metric-card .metric-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--cream);
+}
+.metric-card .metric-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+.metric-card.danger .metric-value { color: #EF5350; }
+.metric-card.warning .metric-value { color: var(--saffron); }
+.metric-card.good .metric-value { color: #66BB6A; }
+
+/* Epidemic curve */
+.epi-curve-container {
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+.epi-curve-container h3 {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.epi-curve-svg {
+  width: 100%;
+  height: 140px;
+}
+
+/* Hospital & Trust bars */
+.bar-meters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.bar-meter {
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: 12px;
+  padding: 0.9rem;
+}
+.bar-meter .bar-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.bar-meter .bar-label span:first-child {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.bar-meter .bar-label span:last-child {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+.bar-track {
+  background: var(--bg);
+  border-radius: 6px;
+  height: 12px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.8s ease, background 0.5s ease;
+}
+.bar-fill.green { background: linear-gradient(90deg, #43A047, #66BB6A); }
+.bar-fill.amber { background: linear-gradient(90deg, #FF8F00, #FFB300); }
+.bar-fill.red { background: linear-gradient(90deg, #C62828, #EF5350); }
+.bar-fill.blue { background: linear-gradient(90deg, var(--indigo), #3949AB); }
+
+/* Budget allocation section */
+.allocation-section {
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.allocation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.allocation-header h3 {
+  font-size: 1rem;
+  color: var(--cream);
+}
+.budget-remaining {
+  background: var(--bg);
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--saffron);
+  border: 1px solid rgba(255,111,0,0.3);
+}
+
+/* Action cards */
+.action-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.75rem;
+}
+.action-card {
+  background: var(--bg);
+  border: 2px solid var(--bg3);
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+.action-card:hover {
+  border-color: var(--bg4);
+  transform: translateY(-2px);
+}
+.action-card.selected {
+  border-color: var(--saffron);
+  background: rgba(255,111,0,0.08);
+}
+.action-card .action-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+.action-card .action-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 0.3rem;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+.action-card .action-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 0.6rem;
+}
+.action-card .action-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.action-card .action-slider-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--saffron);
+  height: 6px;
+}
+.action-card .action-amount {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--saffron);
+  min-width: 2.5rem;
+  text-align: right;
+}
+
+/* Confirm button */
+.confirm-row {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Narrative panel */
+.narrative-panel {
+  background: linear-gradient(135deg, rgba(255,248,225,0.06), rgba(255,111,0,0.04));
+  border: 1px solid rgba(255,111,0,0.2);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+.narrative-panel::before {
+  content: '✦';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--saffron);
+  font-size: 1rem;
+  background: var(--bg);
+  padding: 0 0.5rem;
+}
+.narrative-panel p {
+  color: var(--cream);
+  font-size: 0.92rem;
+  text-align: center;
+  line-height: 1.7;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* ── Screen: Results ────────────────────────────────────────── */
+#results-screen {
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.results-header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+.results-header .outcome-good {
+  background: linear-gradient(135deg, #66BB6A, #43A047);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.results-header .outcome-ok {
+  background: linear-gradient(135deg, var(--saffron), #FFB300);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.results-header .outcome-bad {
+  background: linear-gradient(135deg, #EF5350, var(--deep-red));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.results-header p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Result stats */
+.results-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+}
+.result-stat {
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  text-align: center;
+}
+.result-stat .stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--cream);
+}
+.result-stat .stat-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.3rem;
+}
+.result-stat.stat-good .stat-value { color: #66BB6A; }
+.result-stat.stat-warn .stat-value { color: var(--saffron); }
+.result-stat.stat-bad .stat-value { color: #EF5350; }
+
+/* Lessons */
+.lessons-card {
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+.lessons-card h3 {
+  color: var(--saffron);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+.lesson-item {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+  align-items: flex-start;
+}
+.lesson-item .lesson-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.lesson-item .lesson-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.lesson-item .lesson-text strong {
+  color: var(--cream);
+}
+
+/* Village outcome SVG */
+.village-outcome {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+.village-outcome svg {
+  width: 100%;
+  max-height: 180px;
+}
+
+.results-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── R0 Visual ──────────────────────────────────────────────── */
+.r0-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+.r0-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.r0-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+.r0-high { color: #EF5350; }
+.r0-med { color: var(--saffron); }
+.r0-low { color: #66BB6A; }
+.r0-dots {
+  display: flex;
+  gap: 3px;
+}
+.r0-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .bar-meters { grid-template-columns: 1fr; }
+  .action-cards { grid-template-columns: 1fr; }
+  .concept-grid { grid-template-columns: 1fr; }
+  .results-stats { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ WELCOME SCREEN ═══════════════════ -->
+<div id="welcome-screen" class="fade-in">
+  <div class="container">
+    <a href="/Games" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Games
+    </a>
+
+    <div class="welcome-header">
+      <div class="tag">Public Health Simulation</div>
+      <h1>Epidemic Response Challenge</h1>
+      <p>You are a district health officer. A mysterious disease has appeared in your region. Over 10 weeks, you must allocate limited resources to contain the outbreak and save lives.</p>
+    </div>
+
+    <!-- Pattachitra Hero Art -->
+    <div class="hero-art">
+      <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background -->
+        <rect width="700" height="220" fill="#1A237E" rx="14"/>
+        <!-- Decorative border -->
+        <rect x="4" y="4" width="692" height="212" fill="none" stroke="#FF6F00" stroke-width="2" rx="12"/>
+        <rect x="10" y="10" width="680" height="200" fill="none" stroke="#B71C1C" stroke-width="1.5" rx="10"/>
+        <!-- Floral corner patterns -->
+        <g fill="none" stroke="#FF6F00" stroke-width="1.5" opacity="0.7">
+          <circle cx="30" cy="30" r="8"/><circle cx="30" cy="30" r="4"/>
+          <circle cx="670" cy="30" r="8"/><circle cx="670" cy="30" r="4"/>
+          <circle cx="30" cy="190" r="8"/><circle cx="30" cy="190" r="4"/>
+          <circle cx="670" cy="190" r="8"/><circle cx="670" cy="190" r="4"/>
+          <line x1="22" y1="30" x2="12" y2="30"/><line x1="38" y1="30" x2="48" y2="30"/>
+          <line x1="30" y1="22" x2="30" y2="12"/><line x1="30" y1="38" x2="30" y2="48"/>
+        </g>
+        <!-- Village huts -->
+        <g transform="translate(60, 120)">
+          <polygon points="0,50 30,20 60,50" fill="none" stroke="#FFF8E1" stroke-width="2"/>
+          <rect x="18" y="38" width="24" height="12" fill="none" stroke="#FFF8E1" stroke-width="1.5"/>
+          <rect x="25" y="42" width="10" height="8" fill="#FF6F00" opacity="0.4"/>
+        </g>
+        <g transform="translate(130, 130)">
+          <polygon points="0,40 25,15 50,40" fill="none" stroke="#FFF8E1" stroke-width="2"/>
+          <rect x="15" y="30" width="20" height="10" fill="none" stroke="#FFF8E1" stroke-width="1.5"/>
+        </g>
+        <!-- Trees (medicinal plants) -->
+        <g transform="translate(200, 100)">
+          <line x1="15" y1="70" x2="15" y2="45" stroke="#33691E" stroke-width="3"/>
+          <ellipse cx="15" cy="40" rx="18" ry="22" fill="#33691E" stroke="#FFF8E1" stroke-width="1.5"/>
+          <circle cx="8" cy="35" r="3" fill="#FF6F00" opacity="0.6"/>
+          <circle cx="22" cy="42" r="2.5" fill="#B71C1C" opacity="0.6"/>
+        </g>
+        <!-- Healer figure (center) -->
+        <g transform="translate(310, 55)">
+          <!-- Head -->
+          <circle cx="40" cy="20" r="16" fill="none" stroke="#FFF8E1" stroke-width="2.5"/>
+          <!-- Body -->
+          <line x1="40" y1="36" x2="40" y2="85" stroke="#FFF8E1" stroke-width="2.5"/>
+          <!-- Arms holding bowl -->
+          <line x1="40" y1="55" x2="15" y2="65" stroke="#FFF8E1" stroke-width="2"/>
+          <line x1="40" y1="55" x2="65" y2="65" stroke="#FFF8E1" stroke-width="2"/>
+          <!-- Healing bowl -->
+          <ellipse cx="40" cy="70" rx="14" ry="6" fill="none" stroke="#FF6F00" stroke-width="2"/>
+          <path d="M30,67 Q40,60 50,67" fill="none" stroke="#FF6F00" stroke-width="1.5"/>
+          <!-- Rising steam/healing energy -->
+          <path d="M35,60 Q33,52 36,45" fill="none" stroke="#66BB6A" stroke-width="1" opacity="0.7"/>
+          <path d="M40,58 Q38,48 41,42" fill="none" stroke="#66BB6A" stroke-width="1" opacity="0.7"/>
+          <path d="M45,60 Q43,52 46,45" fill="none" stroke="#66BB6A" stroke-width="1" opacity="0.7"/>
+          <!-- Legs -->
+          <line x1="40" y1="85" x2="28" y2="115" stroke="#FFF8E1" stroke-width="2"/>
+          <line x1="40" y1="85" x2="52" y2="115" stroke="#FFF8E1" stroke-width="2"/>
+          <!-- Crown/headdress -->
+          <path d="M24,12 L32,4 L40,10 L48,4 L56,12" fill="none" stroke="#FF6F00" stroke-width="2"/>
+        </g>
+        <!-- People (community) -->
+        <g transform="translate(460, 110)" opacity="0.85">
+          <circle cx="15" cy="15" r="8" fill="none" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="15" y1="23" x2="15" y2="50" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="15" y1="35" x2="5" y2="42" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="15" y1="35" x2="25" y2="42" stroke="#FFF8E1" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(510, 115)" opacity="0.7">
+          <circle cx="12" cy="12" r="7" fill="none" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="12" y1="19" x2="12" y2="42" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="12" y1="28" x2="4" y2="34" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="12" y1="28" x2="20" y2="34" stroke="#FFF8E1" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(555, 108)" opacity="0.6">
+          <circle cx="12" cy="12" r="7" fill="none" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="12" y1="19" x2="12" y2="45" stroke="#FFF8E1" stroke-width="1.5"/>
+        </g>
+        <!-- Disease particles (scattered) -->
+        <g fill="#B71C1C" opacity="0.5">
+          <circle cx="260" cy="60" r="4"/>
+          <circle cx="430" cy="80" r="3"/>
+          <circle cx="500" cy="50" r="3.5"/>
+          <circle cx="160" cy="75" r="2.5"/>
+          <circle cx="600" cy="95" r="3"/>
+        </g>
+        <!-- Bottom decorative pattern -->
+        <g fill="none" stroke="#FF6F00" stroke-width="1" opacity="0.4">
+          <path d="M50,195 Q80,180 110,195 Q140,210 170,195 Q200,180 230,195 Q260,210 290,195 Q320,180 350,195 Q380,210 410,195 Q440,180 470,195 Q500,210 530,195 Q560,180 590,195 Q620,210 650,195"/>
+        </g>
+        <!-- Title -->
+        <text x="350" y="198" text-anchor="middle" fill="#FFF8E1" font-size="11" font-weight="600" letter-spacing="0.15em" opacity="0.6">PATTACHITRA SCROLL NARRATIVE</text>
+      </svg>
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="icon">🔬</div>
+        <h3>Surveillance</h3>
+        <p>Detect cases early. Data drives decisions. Without testing, you fly blind.</p>
+      </div>
+      <div class="concept-card">
+        <div class="icon">🏥</div>
+        <h3>Treatment</h3>
+        <p>Hospitals save lives but are reactive. Capacity can be overwhelmed fast.</p>
+      </div>
+      <div class="concept-card">
+        <div class="icon">💉</div>
+        <h3>Prevention</h3>
+        <p>Vaccines and prevention reduce R0 but take time to scale up.</p>
+      </div>
+      <div class="concept-card">
+        <div class="icon">🤝</div>
+        <h3>Community</h3>
+        <p>Health workers and trust are force multipliers. People must cooperate.</p>
+      </div>
+    </div>
+
+    <div class="start-container">
+      <button class="btn-primary" onclick="startGame()">
+        Begin Response ▸
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ GAME SCREEN ═══════════════════ -->
+<div id="game-screen" class="hidden">
+  <div class="container">
+    <div class="game-top-bar">
+      <h2>Epidemic Response</h2>
+      <div class="round-badge" id="round-badge">Week 1 / 10</div>
+    </div>
+
+    <!-- News Ticker -->
+    <div class="news-ticker-container" id="news-ticker">
+      <div class="news-ticker-label">ALERT</div>
+      <div class="news-ticker-text" id="news-text">A cluster of unusual fever cases reported in the eastern villages...</div>
+    </div>
+
+    <!-- R0 Display -->
+    <div class="r0-display">
+      <span class="r0-label">Effective R₀:</span>
+      <span class="r0-value" id="r0-value">2.5</span>
+      <div class="r0-dots" id="r0-dots"></div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="metrics-grid">
+      <div class="metric-card" id="mc-cases">
+        <div class="metric-label">Total Cases</div>
+        <div class="metric-value" id="m-cases">12</div>
+        <div class="metric-sub" id="m-cases-new">+12 this week</div>
+      </div>
+      <div class="metric-card" id="mc-deaths">
+        <div class="metric-label">Deaths</div>
+        <div class="metric-value" id="m-deaths">0</div>
+        <div class="metric-sub" id="m-deaths-new">+0 this week</div>
+      </div>
+      <div class="metric-card" id="mc-detected">
+        <div class="metric-label">Detection Rate</div>
+        <div class="metric-value" id="m-detected">35%</div>
+        <div class="metric-sub">of actual cases</div>
+      </div>
+      <div class="metric-card" id="mc-budget">
+        <div class="metric-label">Budget Left</div>
+        <div class="metric-value" id="m-budget">₹100L</div>
+        <div class="metric-sub" id="m-budget-sub">of ₹100L total</div>
+      </div>
+    </div>
+
+    <!-- Epidemic Curve -->
+    <div class="epi-curve-container pattachitra-border">
+      <h3>Epidemic Curve - Detected Cases Per Week</h3>
+      <svg class="epi-curve-svg" id="epi-curve" viewBox="0 0 500 140" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="curveGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#EF5350" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#EF5350" stop-opacity="0.05"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid lines -->
+        <line x1="0" y1="35" x2="500" y2="35" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+        <line x1="0" y1="70" x2="500" y2="70" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+        <line x1="0" y1="105" x2="500" y2="105" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+        <path id="epi-area" d="" fill="url(#curveGrad)"/>
+        <path id="epi-line" d="" fill="none" stroke="#EF5350" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <!-- Hospital & Trust bars -->
+    <div class="bar-meters">
+      <div class="bar-meter">
+        <div class="bar-label">
+          <span>Hospital Capacity</span>
+          <span id="hospital-pct">15%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill green" id="hospital-bar" style="width:15%"></div>
+        </div>
+      </div>
+      <div class="bar-meter">
+        <div class="bar-label">
+          <span>Community Trust</span>
+          <span id="trust-pct">70%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill blue" id="trust-bar" style="width:70%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Narrative panel (shown at certain weeks) -->
+    <div class="narrative-panel hidden" id="narrative-panel">
+      <p id="narrative-text"></p>
+    </div>
+
+    <!-- Budget Allocation -->
+    <div class="allocation-section">
+      <div class="allocation-header">
+        <h3>Allocate This Week's Budget</h3>
+        <div class="budget-remaining" id="week-budget">₹15L available</div>
+      </div>
+      <div class="action-cards" id="action-cards">
+        <!-- Generated by JS -->
+      </div>
+      <div class="confirm-row">
+        <button class="btn-primary" id="confirm-btn" onclick="confirmRound()">
+          Confirm Allocation ▸
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════ RESULTS SCREEN ═══════════════════ -->
+<div id="results-screen" class="hidden">
+  <div class="container" id="results-content">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// EPIDEMIC RESPONSE CHALLENGE - Game Engine
+// ═══════════════════════════════════════════════════════════
+
+const ACTIONS = [
+  {
+    id: 'surveillance',
+    name: 'Surveillance & Testing',
+    icon: '🔬',
+    desc: 'Ramp up testing to detect cases early and improve data quality.',
+    effect: 'Increases detection rate; better data informs response.'
+  },
+  {
+    id: 'treatment',
+    name: 'Treatment & Hospitals',
+    icon: '🏥',
+    desc: 'Expand hospital beds, supply medicines, train clinical staff.',
+    effect: 'Reduces mortality; increases hospital capacity.'
+  },
+  {
+    id: 'prevention',
+    name: 'Prevention & Vaccines',
+    icon: '💉',
+    desc: 'Distribute vaccines, promote hygiene, implement containment zones.',
+    effect: 'Reduces R₀ over time; slow to scale but powerful.'
+  },
+  {
+    id: 'community',
+    name: 'Community Health Workers',
+    icon: '🤝',
+    desc: 'Deploy door-to-door outreach, contact tracing, trust building.',
+    effect: 'Boosts community trust; amplifies all other interventions.'
+  },
+  {
+    id: 'communication',
+    name: 'Communication & Awareness',
+    icon: '📢',
+    desc: 'Counter misinformation, public education, media campaigns.',
+    effect: 'Reduces misinformation; maintains community cooperation.'
+  }
+];
+
+const RANDOM_EVENTS = [
+  { text: 'Supply shortage! Medical supply costs doubled this week.', type: 'bad', effect: s => { s.weekBudget = Math.floor(s.weekBudget * 0.6); } },
+  { text: 'Misinformation surge on social media erodes public trust.', type: 'bad', effect: s => { s.trust = Math.max(10, s.trust - 15); } },
+  { text: 'New variant detected - appears more transmissible!', type: 'bad', effect: s => { s.baseR0 += 0.4; } },
+  { text: 'International aid package arrives with medical supplies!', type: 'good', effect: s => { s.totalBudget += 10; s.weekBudget += 5; } },
+  { text: 'Neighboring district shares outbreak data and coordinates response.', type: 'good', effect: s => { s.detectionRate = Math.min(95, s.detectionRate + 10); } },
+  { text: 'Religious leader endorses vaccination - community trust rises.', type: 'good', effect: s => { s.trust = Math.min(100, s.trust + 12); } },
+  { text: 'Monsoon flooding disrupts supply chains and hospital access.', type: 'bad', effect: s => { s.hospitalCapacity = Math.max(20, s.hospitalCapacity - 15); } },
+  { text: 'Health workers report burnout - effectiveness reduced.', type: 'bad', effect: s => { s.communityEffect = Math.max(0, s.communityEffect - 0.1); } },
+  { text: 'NGO deploys mobile testing vans in remote areas.', type: 'good', effect: s => { s.detectionRate = Math.min(95, s.detectionRate + 8); } },
+  { text: 'Rumor spreads that vaccine causes illness. Trust drops.', type: 'bad', effect: s => { s.trust = Math.max(10, s.trust - 10); s.preventionEffect = Math.max(0, s.preventionEffect - 0.05); } },
+  { text: 'Government releases emergency health funds!', type: 'good', effect: s => { s.totalBudget += 15; s.weekBudget += 8; } },
+  { text: 'Asymptomatic super-spreader event at a festival.', type: 'bad', effect: s => { s.newCases = Math.floor(s.newCases * 1.5); } },
+];
+
+const NARRATIVES = {
+  1: "Week 1: First reports trickle in. A handful of villagers present with high fever, cough, and fatigue. The pathogen is unknown. Your surveillance team is thin. What will you prioritize?",
+  3: "Week 3: The outbreak is spreading. Markets are tense. Rumors circulate faster than facts. Your early decisions are shaping the trajectory. Every rupee matters now.",
+  5: "Week 5: Midpoint. The epidemic curve tells a story - is it bending? Hospitals report pressure. Community health workers bring back field reports. The scroll of this outbreak is being written by your choices.",
+  7: "Week 7: The tide may be turning - or not. Prevention measures planted weeks ago may bear fruit now. Trust earned (or lost) determines whether people follow guidance.",
+  10: "Week 10: Final week. The district watches and waits. Your legacy as health officer is written in the numbers - and in the lives behind them."
+};
+
+// ── Game State ──────────────────────────────────────────────
+let state = {};
+
+function initState() {
+  state = {
+    round: 1,
+    totalBudget: 100,
+    weekBudget: 15,
+    baseR0: 2.5,
+    effectiveR0: 2.5,
+    // Cumulative
+    totalCases: 12,
+    totalDeaths: 0,
+    // Per-week
+    newCases: 12,
+    newDeaths: 0,
+    casesHistory: [12],
+    deathsHistory: [0],
+    // Capacities & rates
+    hospitalCapacity: 80,   // max beds available (%)
+    hospitalUsage: 15,      // current usage (%)
+    trust: 70,
+    detectionRate: 35,      // % of true cases detected
+    // Cumulative effects (0-1 scale, built over time)
+    surveillanceEffect: 0,
+    treatmentEffect: 0,
+    preventionEffect: 0,
+    communityEffect: 0,
+    communicationEffect: 0,
+    // Allocation this round
+    allocations: {},
+    // Event log
+    events: [],
+    // Track spending per category
+    totalSpending: { surveillance: 0, treatment: 0, prevention: 0, community: 0, communication: 0 }
+  };
+}
+
+// ── Start Game ──────────────────────────────────────────────
+function startGame() {
+  initState();
+  document.getElementById('welcome-screen').classList.add('hidden');
+  document.getElementById('game-screen').classList.remove('hidden');
+  document.getElementById('game-screen').classList.add('fade-in');
+  renderRound();
+}
+
+// ── Render Current Round ────────────────────────────────────
+function renderRound() {
+  const s = state;
+  // Round badge
+  document.getElementById('round-badge').textContent = `Week ${s.round} / 10`;
+
+  // Random event (not on round 1)
+  if (s.round > 1) {
+    const eventRoll = Math.random();
+    if (eventRoll < 0.6) { // 60% chance of event
+      const event = RANDOM_EVENTS[Math.floor(Math.random() * RANDOM_EVENTS.length)];
+      event.effect(s);
+      s.events.push({ round: s.round, text: event.text, type: event.type });
+      document.getElementById('news-text').textContent = event.text;
+      document.getElementById('news-ticker').style.borderColor = event.type === 'bad'
+        ? 'rgba(183,28,28,0.5)' : 'rgba(102,187,106,0.4)';
+    } else {
+      document.getElementById('news-text').textContent = `Week ${s.round}: The outbreak continues. Your response team awaits orders.`;
+      document.getElementById('news-ticker').style.borderColor = 'rgba(183,28,28,0.3)';
+    }
+  }
+
+  // Narrative
+  const narrativePanel = document.getElementById('narrative-panel');
+  if (NARRATIVES[s.round]) {
+    narrativePanel.classList.remove('hidden');
+    document.getElementById('narrative-text').textContent = NARRATIVES[s.round];
+  } else {
+    narrativePanel.classList.add('hidden');
+  }
+
+  // Metrics
+  updateMetrics();
+  updateEpiCurve();
+  updateBars();
+  updateR0Display();
+  renderActionCards();
+
+  // Week budget (base 15, less as budget runs low)
+  s.weekBudget = Math.min(15, Math.max(3, Math.floor(s.totalBudget * 0.15)));
+  document.getElementById('week-budget').textContent = `₹${s.weekBudget}L available`;
+}
+
+function updateMetrics() {
+  const s = state;
+  const detectedCases = Math.floor(s.totalCases * s.detectionRate / 100);
+  document.getElementById('m-cases').textContent = detectedCases.toLocaleString();
+  document.getElementById('m-cases-new').textContent = `+${Math.floor(s.newCases * s.detectionRate / 100)} detected this week`;
+
+  document.getElementById('m-deaths').textContent = s.totalDeaths.toLocaleString();
+  document.getElementById('m-deaths-new').textContent = `+${s.newDeaths} this week`;
+
+  document.getElementById('m-detected').textContent = `${Math.round(s.detectionRate)}%`;
+
+  document.getElementById('m-budget').textContent = `₹${s.totalBudget}L`;
+  document.getElementById('m-budget-sub').textContent = `of ₹100L initial`;
+
+  // Color coding
+  const mcCases = document.getElementById('mc-cases');
+  mcCases.className = 'metric-card' + (detectedCases > 5000 ? ' danger' : detectedCases > 1000 ? ' warning' : '');
+
+  const mcDeaths = document.getElementById('mc-deaths');
+  mcDeaths.className = 'metric-card' + (s.totalDeaths > 200 ? ' danger' : s.totalDeaths > 50 ? ' warning' : '');
+
+  const mcBudget = document.getElementById('mc-budget');
+  mcBudget.className = 'metric-card' + (s.totalBudget < 15 ? ' danger' : s.totalBudget < 40 ? ' warning' : ' good');
+}
+
+function updateR0Display() {
+  const s = state;
+  const r0El = document.getElementById('r0-value');
+  r0El.textContent = s.effectiveR0.toFixed(2);
+  r0El.className = 'r0-value ' + (s.effectiveR0 > 2 ? 'r0-high' : s.effectiveR0 > 1 ? 'r0-med' : 'r0-low');
+
+  // Visual dots
+  const dotsEl = document.getElementById('r0-dots');
+  const dotCount = Math.min(10, Math.max(1, Math.round(s.effectiveR0 * 2)));
+  let dotsHTML = '';
+  for (let i = 0; i < 10; i++) {
+    const color = i < dotCount
+      ? (s.effectiveR0 > 2 ? '#EF5350' : s.effectiveR0 > 1 ? '#FFB300' : '#66BB6A')
+      : '#334155';
+    dotsHTML += `<div class="r0-dot" style="background:${color}"></div>`;
+  }
+  dotsEl.innerHTML = dotsHTML;
+}
+
+function updateEpiCurve() {
+  const s = state;
+  const data = s.casesHistory.map(c => Math.floor(c * s.detectionRate / 100));
+  if (data.length === 0) return;
+
+  const maxVal = Math.max(...data, 1);
+  const w = 500;
+  const h = 140;
+  const pad = 5;
+  const usableH = h - pad * 2;
+  const barW = w / 10;
+
+  let linePts = [];
+  let areaPts = [];
+
+  data.forEach((val, i) => {
+    const x = barW * i + barW / 2;
+    const y = pad + usableH - (val / maxVal) * usableH;
+    linePts.push(`${i === 0 ? 'M' : 'L'}${x},${y}`);
+    areaPts.push({ x, y });
+  });
+
+  const lineD = linePts.join(' ');
+  document.getElementById('epi-line').setAttribute('d', lineD);
+
+  if (areaPts.length > 0) {
+    const firstX = areaPts[0].x;
+    const lastX = areaPts[areaPts.length - 1].x;
+    const areaD = `M${firstX},${h} ` + areaPts.map(p => `L${p.x},${p.y}`).join(' ') + ` L${lastX},${h} Z`;
+    document.getElementById('epi-area').setAttribute('d', areaD);
+  }
+}
+
+function updateBars() {
+  const s = state;
+  // Hospital
+  const hospBar = document.getElementById('hospital-bar');
+  const hospPct = Math.min(100, Math.round(s.hospitalUsage));
+  document.getElementById('hospital-pct').textContent = `${hospPct}%`;
+  hospBar.style.width = `${hospPct}%`;
+  hospBar.className = 'bar-fill ' + (hospPct > 80 ? 'red' : hospPct > 50 ? 'amber' : 'green');
+
+  // Trust
+  const trustBar = document.getElementById('trust-bar');
+  const trustPct = Math.max(0, Math.min(100, Math.round(s.trust)));
+  document.getElementById('trust-pct').textContent = `${trustPct}%`;
+  trustBar.style.width = `${trustPct}%`;
+  trustBar.className = 'bar-fill ' + (trustPct < 30 ? 'red' : trustPct < 50 ? 'amber' : 'blue');
+}
+
+function renderActionCards() {
+  const container = document.getElementById('action-cards');
+  state.allocations = {};
+  ACTIONS.forEach(a => { state.allocations[a.id] = 0; });
+
+  container.innerHTML = ACTIONS.map(a => `
+    <div class="action-card" id="card-${a.id}">
+      <div class="action-icon">${a.icon}</div>
+      <div class="action-name">${a.name}</div>
+      <div class="action-desc">${a.desc}</div>
+      <div class="action-slider-row">
+        <input type="range" min="0" max="${state.weekBudget}" value="0" step="1"
+          id="slider-${a.id}"
+          oninput="updateAllocation('${a.id}', this.value)">
+        <span class="action-amount" id="amt-${a.id}">₹0L</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateAllocation(id, val) {
+  val = parseInt(val);
+  const s = state;
+
+  // Calculate total allocated excluding this one
+  let otherTotal = 0;
+  for (const key of Object.keys(s.allocations)) {
+    if (key !== id) otherTotal += s.allocations[key];
+  }
+
+  // Clamp to available budget
+  const maxForThis = s.weekBudget - otherTotal;
+  val = Math.min(val, maxForThis);
+
+  s.allocations[id] = val;
+
+  // Update slider and display
+  document.getElementById(`slider-${id}`).value = val;
+  document.getElementById(`amt-${id}`).textContent = `₹${val}L`;
+
+  // Update card selection state
+  document.getElementById(`card-${id}`).classList.toggle('selected', val > 0);
+
+  // Update remaining display
+  const totalAllocated = Object.values(s.allocations).reduce((a, b) => a + b, 0);
+  document.getElementById('week-budget').textContent = `₹${s.weekBudget - totalAllocated}L remaining`;
+}
+
+// ── Confirm Round ───────────────────────────────────────────
+function confirmRound() {
+  const s = state;
+  const alloc = s.allocations;
+  const totalAllocated = Object.values(alloc).reduce((a, b) => a + b, 0);
+
+  // Deduct from budget
+  s.totalBudget -= totalAllocated;
+
+  // Track spending
+  for (const key of Object.keys(alloc)) {
+    s.totalSpending[key] += alloc[key];
+  }
+
+  // ── Apply effects with lag ──────────────────────────────
+  // Effects build cumulatively and have different lag profiles
+
+  // Surveillance: relatively quick effect
+  s.surveillanceEffect = Math.min(1, s.surveillanceEffect + alloc.surveillance * 0.04);
+  s.detectionRate = Math.min(95, 35 + s.surveillanceEffect * 55);
+
+  // Treatment: immediate on mortality, slower on capacity
+  s.treatmentEffect = Math.min(1, s.treatmentEffect + alloc.treatment * 0.035);
+  s.hospitalCapacity = Math.min(100, 80 + s.treatmentEffect * 20);
+
+  // Prevention: SLOW to build, but powerful
+  s.preventionEffect = Math.min(1, s.preventionEffect + alloc.prevention * 0.025);
+
+  // Community: moderate speed, multiplies everything
+  s.communityEffect = Math.min(1, s.communityEffect + alloc.community * 0.03);
+
+  // Communication: maintains trust, counters misinformation
+  s.communicationEffect = Math.min(1, s.communicationEffect + alloc.communication * 0.035);
+
+  // ── Trust dynamics ──────────────────────────────────────
+  // Trust naturally decays during an epidemic
+  let trustDelta = -3; // natural decay from fear
+  trustDelta += alloc.community * 1.5;
+  trustDelta += alloc.communication * 1.2;
+  // High hospital usage erodes trust
+  if (s.hospitalUsage > 70) trustDelta -= 5;
+  // Low detection rate means people feel ignored
+  if (s.detectionRate < 40) trustDelta -= 3;
+  s.trust = Math.max(5, Math.min(100, s.trust + trustDelta));
+
+  // ── R0 calculation ──────────────────────────────────────
+  // Base R0 reduced by prevention, community effect, and trust
+  const trustMultiplier = 0.7 + (s.trust / 100) * 0.3; // trust amplifies interventions
+  const preventionReduction = s.preventionEffect * 1.2 * trustMultiplier;
+  const communityReduction = s.communityEffect * 0.5 * trustMultiplier;
+  const communicationReduction = s.communicationEffect * 0.3;
+
+  s.effectiveR0 = Math.max(0.3, s.baseR0 - preventionReduction - communityReduction - communicationReduction);
+
+  // Natural R0 decay (some natural immunity builds)
+  if (s.round > 4) {
+    s.baseR0 = Math.max(1.5, s.baseR0 - 0.05);
+  }
+
+  // ── Disease dynamics ────────────────────────────────────
+  // New cases based on effective R0
+  const serialInterval = 1; // one generation per week for simplicity
+  s.newCases = Math.max(1, Math.floor(s.newCases * s.effectiveR0 * (0.85 + Math.random() * 0.3)));
+
+  // Mortality depends on treatment, hospital capacity, and whether hospitals are overwhelmed
+  const baseMortality = 0.03; // 3% base case fatality
+  const treatmentReduction = s.treatmentEffect * 0.6;
+  const overwhelmPenalty = s.hospitalUsage > 90 ? 0.04 : s.hospitalUsage > 70 ? 0.02 : 0;
+  const mortality = Math.max(0.005, baseMortality - treatmentReduction + overwhelmPenalty);
+
+  s.newDeaths = Math.max(0, Math.floor(s.newCases * mortality));
+  s.totalCases += s.newCases;
+  s.totalDeaths += s.newDeaths;
+  s.casesHistory.push(s.newCases);
+  s.deathsHistory.push(s.newDeaths);
+
+  // Hospital usage: function of active cases needing care
+  const activeCases = s.newCases; // simplified: this week's cases need hospital
+  const hospitalizationRate = 0.15;
+  s.hospitalUsage = Math.min(100, (activeCases * hospitalizationRate / s.hospitalCapacity) * 100);
+
+  // ── Advance round ───────────────────────────────────────
+  s.round++;
+
+  if (s.round > 10) {
+    showResults();
+  } else {
+    renderRound();
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+// ── Results Screen ──────────────────────────────────────────
+function showResults() {
+  document.getElementById('game-screen').classList.add('hidden');
+  document.getElementById('results-screen').classList.remove('hidden');
+  document.getElementById('results-screen').classList.add('fade-in');
+
+  const s = state;
+  const detectedCases = Math.floor(s.totalCases * s.detectionRate / 100);
+
+  // Score calculation
+  let score = 100;
+  score -= Math.min(40, s.totalDeaths * 0.15);           // Deaths penalty
+  score -= Math.min(20, Math.max(0, (s.totalCases - 500) * 0.005)); // Cases penalty
+  score += Math.min(10, s.trust * 0.1);                  // Trust bonus
+  score += Math.min(10, s.detectionRate * 0.1);           // Detection bonus
+  score += s.totalBudget > 0 ? 5 : 0;                    // Budget management bonus
+  score = Math.max(0, Math.min(100, Math.round(score)));
+
+  let outcomeClass, outcomeTitle, outcomeDesc;
+  if (score >= 70) {
+    outcomeClass = 'outcome-good';
+    outcomeTitle = 'Outbreak Contained';
+    outcomeDesc = 'Your balanced response saved many lives. The district is recovering, and your approach is being studied as a model.';
+  } else if (score >= 40) {
+    outcomeClass = 'outcome-ok';
+    outcomeTitle = 'Managed but Costly';
+    outcomeDesc = 'The outbreak was eventually controlled, but the toll was heavier than it needed to be. Lessons must be learned.';
+  } else {
+    outcomeClass = 'outcome-bad';
+    outcomeTitle = 'Crisis Deepened';
+    outcomeDesc = 'The outbreak overwhelmed your district. The response will be examined for what went wrong and how to prepare better.';
+  }
+
+  // Determine lessons based on player behavior
+  let lessons = [];
+
+  const totalSpent = Object.values(s.totalSpending).reduce((a, b) => a + b, 0);
+  const spendingPcts = {};
+  for (const key of Object.keys(s.totalSpending)) {
+    spendingPcts[key] = totalSpent > 0 ? (s.totalSpending[key] / totalSpent * 100) : 0;
+  }
+
+  if (spendingPcts.prevention < 15) {
+    lessons.push({ icon: '💉', text: '<strong>Prevention was underfunded.</strong> Investing in vaccines and prevention early reduces R₀ more effectively than any other intervention. Prevention is always cheaper than cure.' });
+  }
+  if (spendingPcts.surveillance < 10) {
+    lessons.push({ icon: '🔬', text: '<strong>Surveillance gaps left you flying blind.</strong> Without adequate testing, true case counts were unknown, leading to delayed response. Data is the foundation of epidemic control.' });
+  }
+  if (s.trust < 40) {
+    lessons.push({ icon: '🤝', text: '<strong>Community trust collapsed.</strong> When people don\'t trust the health system, they hide symptoms, reject vaccines, and follow misinformation. Trust is a public health infrastructure.' });
+  }
+  if (s.hospitalUsage > 85) {
+    lessons.push({ icon: '🏥', text: '<strong>Hospitals were overwhelmed.</strong> When capacity is exceeded, mortality spikes for all conditions - not just the epidemic disease. Treatment capacity needs proactive investment.' });
+  }
+  if (spendingPcts.communication < 10) {
+    lessons.push({ icon: '📢', text: '<strong>Communication was neglected.</strong> Misinformation fills the vacuum when official channels are quiet. Proactive communication prevents panic and maintains cooperation.' });
+  }
+
+  // Always include these core lessons
+  lessons.push({ icon: '⚖️', text: '<strong>No single intervention is sufficient.</strong> Epidemics require a balanced portfolio of surveillance, treatment, prevention, community engagement, and communication working together.' });
+  lessons.push({ icon: '⏱️', text: '<strong>Timing matters enormously.</strong> Early investment in prevention has compound returns. The same resources deployed in week 1 vs week 7 have vastly different impacts due to exponential growth.' });
+
+  // Village outcome SVG
+  const villageHealth = score >= 70 ? 'thriving' : score >= 40 ? 'recovering' : 'struggling';
+  const treeFill = score >= 70 ? '#33691E' : score >= 40 ? '#FF6F00' : '#B71C1C';
+  const skyColor = score >= 70 ? '#1A237E' : score >= 40 ? '#4A148C' : '#3E2723';
+
+  const resultsHTML = `
+    <a href="/Games" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Games
+    </a>
+
+    <div class="results-header">
+      <h1 class="${outcomeClass}">${outcomeTitle}</h1>
+      <p>${outcomeDesc}</p>
+    </div>
+
+    <!-- Village Outcome Art -->
+    <div class="village-outcome pattachitra-border">
+      <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
+        <rect width="600" height="180" fill="${skyColor}" rx="10"/>
+        <rect x="4" y="4" width="592" height="172" fill="none" stroke="#FF6F00" stroke-width="1.5" rx="8"/>
+        <!-- Ground -->
+        <rect x="0" y="130" width="600" height="50" fill="#33691E" opacity="0.3" rx="0"/>
+        <!-- Huts -->
+        <g transform="translate(60, 80)">
+          <polygon points="0,50 30,20 60,50" fill="none" stroke="#FFF8E1" stroke-width="2"/>
+          <rect x="18" y="38" width="24" height="12" fill="none" stroke="#FFF8E1" stroke-width="1.5"/>
+          ${score >= 40 ? '<rect x="25" y="42" width="10" height="8" fill="#FF6F00" opacity="0.5"/>' : ''}
+        </g>
+        <g transform="translate(150, 85)">
+          <polygon points="0,45 25,18 50,45" fill="none" stroke="#FFF8E1" stroke-width="2"/>
+          <rect x="15" y="35" width="20" height="10" fill="none" stroke="#FFF8E1" stroke-width="1.5"/>
+        </g>
+        <!-- Trees -->
+        <g transform="translate(250, 70)">
+          <line x1="15" y1="60" x2="15" y2="35" stroke="${treeFill}" stroke-width="3"/>
+          <ellipse cx="15" cy="30" rx="16" ry="20" fill="${treeFill}" stroke="#FFF8E1" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(420, 75)">
+          <line x1="12" y1="55" x2="12" y2="32" stroke="${treeFill}" stroke-width="2.5"/>
+          <ellipse cx="12" cy="28" rx="14" ry="18" fill="${treeFill}" stroke="#FFF8E1" stroke-width="1.5"/>
+        </g>
+        <!-- People -->
+        ${score >= 40 ? `
+        <g transform="translate(310, 85)" opacity="0.9">
+          <circle cx="15" cy="12" r="7" fill="none" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="15" y1="19" x2="15" y2="45" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="15" y1="28" x2="5" y2="35" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="15" y1="28" x2="25" y2="35" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="15" y1="45" x2="8" y2="58" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="15" y1="45" x2="22" y2="58" stroke="#FFF8E1" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(350, 90)" opacity="0.8">
+          <circle cx="12" cy="10" r="6" fill="none" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="12" y1="16" x2="12" y2="38" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="12" y1="24" x2="4" y2="30" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="12" y1="24" x2="20" y2="30" stroke="#FFF8E1" stroke-width="1.5"/>
+        </g>` : ''}
+        ${score >= 70 ? `
+        <g transform="translate(380, 88)" opacity="0.7">
+          <circle cx="10" cy="10" r="6" fill="none" stroke="#FFF8E1" stroke-width="1.5"/>
+          <line x1="10" y1="16" x2="10" y2="40" stroke="#FFF8E1" stroke-width="1.5"/>
+        </g>
+        <!-- Sun/hope -->
+        <circle cx="520" cy="40" r="18" fill="#FF6F00" opacity="0.4"/>
+        <circle cx="520" cy="40" r="12" fill="#FFB300" opacity="0.5"/>
+        ` : ''}
+        <!-- Status text -->
+        <text x="300" y="168" text-anchor="middle" fill="#FFF8E1" font-size="11" font-weight="600" letter-spacing="0.1em" opacity="0.7">VILLAGE ${villageHealth.toUpperCase()}</text>
+        <!-- Bottom decorative -->
+        <path d="M30,175 Q60,165 90,175 Q120,185 150,175 Q180,165 210,175 Q240,185 270,175 Q300,165 330,175 Q360,185 390,175 Q420,165 450,175 Q480,185 510,175 Q540,165 570,175" fill="none" stroke="#FF6F00" stroke-width="1" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <div class="results-stats">
+      <div class="result-stat ${s.totalCases < 500 ? 'stat-good' : s.totalCases < 3000 ? 'stat-warn' : 'stat-bad'}">
+        <div class="stat-value">${s.totalCases.toLocaleString()}</div>
+        <div class="stat-label">Total Cases</div>
+      </div>
+      <div class="result-stat ${s.totalDeaths < 30 ? 'stat-good' : s.totalDeaths < 150 ? 'stat-warn' : 'stat-bad'}">
+        <div class="stat-value">${s.totalDeaths.toLocaleString()}</div>
+        <div class="stat-label">Deaths</div>
+      </div>
+      <div class="result-stat ${s.detectionRate > 70 ? 'stat-good' : s.detectionRate > 45 ? 'stat-warn' : 'stat-bad'}">
+        <div class="stat-value">${Math.round(s.detectionRate)}%</div>
+        <div class="stat-label">Detection Rate</div>
+      </div>
+      <div class="result-stat ${s.trust > 60 ? 'stat-good' : s.trust > 35 ? 'stat-warn' : 'stat-bad'}">
+        <div class="stat-value">${Math.round(s.trust)}%</div>
+        <div class="stat-label">Community Trust</div>
+      </div>
+      <div class="result-stat">
+        <div class="stat-value">${score}</div>
+        <div class="stat-label">Overall Score</div>
+      </div>
+    </div>
+
+    <!-- Final Epidemic Curve -->
+    <div class="epi-curve-container pattachitra-border" style="max-width:700px;margin:0 auto 2rem;">
+      <h3>Final Epidemic Curve - Weekly Cases</h3>
+      <svg class="epi-curve-svg" viewBox="0 0 500 140" preserveAspectRatio="none" id="final-epi-curve"></svg>
+    </div>
+
+    <div class="lessons-card pattachitra-border">
+      <h3>Lessons from the Outbreak</h3>
+      ${lessons.map(l => `
+        <div class="lesson-item">
+          <div class="lesson-icon">${l.icon}</div>
+          <div class="lesson-text">${l.text}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="results-buttons">
+      <button class="btn-primary" onclick="resetGame()">Play Again ▸</button>
+      <a href="/Games" class="btn-secondary">Back to Games</a>
+    </div>
+  `;
+
+  document.getElementById('results-content').innerHTML = resultsHTML;
+
+  // Draw final epidemic curve
+  setTimeout(() => drawFinalCurve(), 100);
+}
+
+function drawFinalCurve() {
+  const s = state;
+  const svg = document.getElementById('final-epi-curve');
+  if (!svg) return;
+
+  const data = s.casesHistory;
+  const maxVal = Math.max(...data, 1);
+  const w = 500;
+  const h = 140;
+  const pad = 5;
+  const usableH = h - pad * 2;
+  const barW = w / data.length;
+
+  let linePts = [];
+  let areaPts = [];
+
+  data.forEach((val, i) => {
+    const x = barW * i + barW / 2;
+    const y = pad + usableH - (val / maxVal) * usableH;
+    linePts.push(`${i === 0 ? 'M' : 'L'}${x},${y}`);
+    areaPts.push({ x, y });
+  });
+
+  const lineD = linePts.join(' ');
+  const firstX = areaPts[0].x;
+  const lastX = areaPts[areaPts.length - 1].x;
+  const areaD = `M${firstX},${h} ` + areaPts.map(p => `L${p.x},${p.y}`).join(' ') + ` L${lastX},${h} Z`;
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="finalGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#EF5350" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#EF5350" stop-opacity="0.05"/>
+      </linearGradient>
+    </defs>
+    <line x1="0" y1="35" x2="500" y2="35" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="0" y1="70" x2="500" y2="70" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="0" y1="105" x2="500" y2="105" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+    <path d="${areaD}" fill="url(#finalGrad)"/>
+    <path d="${lineD}" fill="none" stroke="#EF5350" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    ${areaPts.map((p, i) => `<circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#EF5350" stroke="#0F172A" stroke-width="1.5"/>`).join('')}
+    ${areaPts.map((p, i) => `<text x="${p.x}" y="${p.y - 8}" text-anchor="middle" fill="#94A3B8" font-size="9">${data[i]}</text>`).join('')}
+    ${areaPts.map((p, i) => `<text x="${p.x}" y="${h - 2}" text-anchor="middle" fill="#64748B" font-size="8">W${i + 1}</text>`).join('')}
+  `;
+}
+
+function resetGame() {
+  document.getElementById('results-screen').classList.add('hidden');
+  document.getElementById('welcome-screen').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
