@@ -160,7 +160,7 @@ body{
   text-align:center;font-size:.92rem;color:var(--gray);margin:.75rem 0;min-height:1.4em;
 }
 .curse-zone-label{
-  display:inline-block;background:rgba(239,68,68,.15);color:var(--red);
+  display:inline-block;background:rgba(239,68,68,.22);color:#DC3B3B;
   padding:.2rem .6rem;border-radius:4px;font-size:.8rem;font-weight:600;margin-top:.35rem;
 }
 
@@ -174,7 +174,7 @@ body{
   opacity:0;transform:translateX(-20px);transition:all .4s ease;
 }
 .bid-row.revealed{opacity:1;transform:translateX(0)}
-.bid-row.winner{border-color:var(--gold);background:rgba(234,179,8,.08)}
+.bid-row.winner{border-color:var(--gold);background:rgba(234,179,8,.18)}
 .bid-row .bidder-name{font-weight:600;font-size:.95rem}
 .bid-row .bid-amount{font-size:1.1rem;font-weight:700;color:var(--gold)}
 
@@ -184,11 +184,11 @@ body{
 }
 .true-value-reveal.show{opacity:1}
 .true-value-reveal .tv-number{font-size:2.2rem;font-weight:700;display:block;margin:.4rem 0}
-.true-value-reveal.profit{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3)}
+.true-value-reveal.profit{background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.3)}
 .true-value-reveal.profit .tv-number{color:var(--emerald)}
-.true-value-reveal.loss{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3)}
+.true-value-reveal.loss{background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.3)}
 .true-value-reveal.loss .tv-number{color:var(--red)}
-.true-value-reveal.neutral{background:rgba(148,163,184,.08);border:1px solid var(--navy-mid)}
+.true-value-reveal.neutral{background:rgba(148,163,184,.18);border:1px solid var(--navy-mid)}
 .true-value-reveal.neutral .tv-number{color:var(--gray)}
 
 .winner-banner{
@@ -197,11 +197,11 @@ body{
   opacity:0;transition:opacity .5s;
 }
 .winner-banner.show{opacity:1}
-.winner-banner.cursed{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.3)}
-.winner-banner.profited{background:rgba(16,185,129,.12);color:var(--emerald);border:1px solid rgba(16,185,129,.3)}
+.winner-banner.cursed{background:rgba(239,68,68,.2);color:#DC3B3B;border:1px solid rgba(239,68,68,.3)}
+.winner-banner.profited{background:rgba(16,185,129,.2);color:#0EA472;border:1px solid rgba(16,185,129,.3)}
 
 .curse-explainer{
-  background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);
+  background:rgba(239,68,68,.16);border:1px solid rgba(239,68,68,.2);
   border-radius:var(--radius-sm);padding:1rem;margin-top:1rem;
   color:var(--gray);font-size:.88rem;line-height:1.55;
 }
@@ -275,6 +275,50 @@ body{
   100%{transform:rotate(0)}
 }
 
+/* ── Story Intro Screen ─────────────────────────── */
+#storyIntro{animation:fadeIn .8s ease}
+.story-intro-wrap{
+  text-align:center;padding:2rem 0;
+}
+.story-svg-wrap{
+  margin:0 auto 2rem;max-width:800px;
+  border-radius:var(--radius);overflow:hidden;
+  border:2px solid rgba(255,215,0,.25);
+  box-shadow:0 0 40px rgba(255,215,0,.08),0 0 80px rgba(27,94,32,.06);
+}
+.story-svg-wrap svg{display:block;width:100%;height:auto}
+.story-narrative{
+  max-width:640px;margin:0 auto 2rem;
+  font-size:1.08rem;line-height:1.75;color:var(--gray);
+  background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(13,71,161,.06));
+  border:1px solid rgba(255,215,0,.15);border-radius:var(--radius);
+  padding:1.5rem 2rem;
+}
+.story-narrative .story-highlight{
+  color:#FFD700;font-weight:700;
+}
+.story-narrative .story-curse{
+  color:var(--red);font-weight:700;font-style:italic;
+}
+.btn-bazaar{
+  background:linear-gradient(135deg,#FFD700,#FFA000);color:#1B5E20;
+  font-size:1.1rem;padding:1rem 2.5rem;border-radius:var(--radius);
+  border:none;cursor:pointer;font-weight:700;text-transform:uppercase;
+  letter-spacing:.06em;box-shadow:0 4px 24px rgba(255,215,0,.3);
+  transition:all .3s;
+}
+.btn-bazaar:hover{
+  transform:translateY(-2px);box-shadow:0 6px 32px rgba(255,215,0,.45);
+}
+
+/* ── End Story Art ──────────────────────────────── */
+.end-story-art{
+  max-width:700px;margin:1.5rem auto;
+  border-radius:var(--radius);overflow:hidden;
+  border:2px solid rgba(255,215,0,.2);
+}
+.end-story-art svg{display:block;width:100%;height:auto}
+
 /* ── Responsive ──────────────────────────────────── */
 @media(max-width:600px){
   .welcome-title{font-size:1.8rem}
@@ -283,13 +327,468 @@ body{
   .agents-grid{grid-template-columns:1fr}
   .top-bar{flex-direction:column;align-items:flex-start}
   .container{padding:1rem}
+  .story-narrative{padding:1rem;font-size:.95rem}
 }
 </style>
 </head>
 <body>
 
+<!-- ═══════════════ STORY INTRO SCREEN ═══════════════ -->
+<div id="storyIntro" class="container">
+  <div class="story-intro-wrap">
+    <div class="story-svg-wrap">
+      <!-- Pichwai-style Grand Bazaar SVG -->
+      <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Gold gradient -->
+          <linearGradient id="piGold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFD700"/>
+            <stop offset="50%" stop-color="#FFA000"/>
+            <stop offset="100%" stop-color="#FFD700"/>
+          </linearGradient>
+          <!-- Crimson gradient -->
+          <linearGradient id="piCrimson" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#D32F2F"/>
+            <stop offset="100%" stop-color="#B71C1C"/>
+          </linearGradient>
+          <!-- Deep green gradient -->
+          <linearGradient id="piGreen" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2E7D32"/>
+            <stop offset="100%" stop-color="#1B5E20"/>
+          </linearGradient>
+          <!-- Royal blue gradient -->
+          <linearGradient id="piBlue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1565C0"/>
+            <stop offset="100%" stop-color="#0D47A1"/>
+          </linearGradient>
+          <!-- Sky gradient for background -->
+          <linearGradient id="piBg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0a1628"/>
+            <stop offset="100%" stop-color="#1a2a44"/>
+          </linearGradient>
+          <!-- Lotus petal pattern -->
+          <pattern id="lotusBorder" x="0" y="0" width="50" height="20" patternUnits="userSpaceOnUse">
+            <path d="M25 2 C20 2,15 8,15 12 C15 16,20 18,25 18 C30 18,35 16,35 12 C35 8,30 2,25 2Z" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+            <path d="M0 10 C5 6,10 8,12 10 C10 12,5 14,0 10Z" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>
+            <path d="M50 10 C45 6,40 8,38 10 C40 12,45 14,50 10Z" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>
+          </pattern>
+        </defs>
+
+        <!-- Background -->
+        <rect width="800" height="400" fill="url(#piBg)"/>
+
+        <!-- Top decorative lotus chain border -->
+        <rect x="0" y="0" width="800" height="20" fill="url(#lotusBorder)" opacity="0.8"/>
+        <line x1="0" y1="20" x2="800" y2="20" stroke="#FFD700" stroke-width="0.5" opacity="0.4"/>
+
+        <!-- Bottom decorative lotus chain border -->
+        <rect x="0" y="380" width="800" height="20" fill="url(#lotusBorder)" opacity="0.8"/>
+        <line x1="0" y1="380" x2="800" y2="380" stroke="#FFD700" stroke-width="0.5" opacity="0.4"/>
+
+        <!-- Floor / ground plane -->
+        <rect x="0" y="320" width="800" height="60" fill="#1B5E20" opacity="0.3"/>
+        <path d="M0 320 Q200 310,400 320 Q600 330,800 320 L800 380 L0 380Z" fill="#1B5E20" opacity="0.2"/>
+
+        <!-- ═══ Central Grand Archway ═══ -->
+        <!-- Main arch structure -->
+        <path d="M280 320 L280 140 Q400 60,520 140 L520 320" fill="none" stroke="url(#piGold)" stroke-width="4"/>
+        <!-- Inner arch -->
+        <path d="M300 320 L300 160 Q400 90,500 160 L500 320" fill="rgba(255,248,225,0.05)" stroke="#FFD700" stroke-width="2"/>
+        <!-- Arch keystone -->
+        <path d="M385 85 L400 70 L415 85 L410 95 L390 95Z" fill="#FFD700"/>
+        <!-- Arch decorative bands -->
+        <path d="M290 320 L290 150 Q400 75,510 150 L510 320" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.4"/>
+        <!-- Pillar details left -->
+        <rect x="275" y="140" width="15" height="180" fill="url(#piCrimson)" opacity="0.6"/>
+        <rect x="278" y="140" width="9" height="180" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.5"/>
+        <!-- Pillar capital left -->
+        <path d="M270 140 L295 140 L290 130 L275 130Z" fill="#FFD700" opacity="0.7"/>
+        <!-- Pillar details right -->
+        <rect x="510" y="140" width="15" height="180" fill="url(#piCrimson)" opacity="0.6"/>
+        <rect x="513" y="140" width="9" height="180" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.5"/>
+        <!-- Pillar capital right -->
+        <path d="M505 140 L530 140 L525 130 L510 130Z" fill="#FFD700" opacity="0.7"/>
+
+        <!-- Ornate arch spandrel patterns (left) -->
+        <circle cx="310" cy="130" r="8" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="310" cy="130" r="4" fill="#FFD700" opacity="0.3"/>
+        <circle cx="330" cy="115" r="6" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+        <!-- Ornate arch spandrel patterns (right) -->
+        <circle cx="490" cy="130" r="8" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="490" cy="130" r="4" fill="#FFD700" opacity="0.3"/>
+        <circle cx="470" cy="115" r="6" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+
+        <!-- Arch inner decorative motifs -->
+        <path d="M350 120 Q400 100,450 120" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+        <path d="M360 130 Q400 112,440 130" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>
+
+        <!-- ═══ Central Lotus (inside arch, at top) ═══ -->
+        <!-- Outer petals layer 1 -->
+        <g transform="translate(400,115)">
+          <ellipse cx="0" cy="-12" rx="6" ry="14" fill="#FFD700" opacity="0.7"/>
+          <ellipse cx="0" cy="-12" rx="6" ry="14" fill="none" stroke="#FFF8E1" stroke-width="0.5"/>
+          <ellipse cx="-11" cy="-7" rx="6" ry="13" fill="#FFD700" opacity="0.6" transform="rotate(-35)"/>
+          <ellipse cx="11" cy="-7" rx="6" ry="13" fill="#FFD700" opacity="0.6" transform="rotate(35)"/>
+          <!-- Layer 2 -->
+          <ellipse cx="-8" cy="-10" rx="4" ry="10" fill="#FFA000" opacity="0.8" transform="rotate(-20)"/>
+          <ellipse cx="8" cy="-10" rx="4" ry="10" fill="#FFA000" opacity="0.8" transform="rotate(20)"/>
+          <!-- Layer 3 - inner -->
+          <ellipse cx="0" cy="-8" rx="3" ry="8" fill="#B71C1C" opacity="0.7"/>
+          <!-- Center -->
+          <circle cx="0" cy="-3" r="3" fill="#FFD700"/>
+          <circle cx="0" cy="-3" r="1.5" fill="#FFF8E1"/>
+        </g>
+
+        <!-- ═══ Lotus garlands hanging from arch ═══ -->
+        <!-- Left garland -->
+        <path d="M300 145 Q330 175,360 150 Q380 170,400 155" fill="none" stroke="#2E7D32" stroke-width="1.5" opacity="0.7"/>
+        <!-- Mini lotuses on garland -->
+        <g transform="translate(330,162)">
+          <ellipse cx="0" cy="-5" rx="3" ry="6" fill="#B71C1C" opacity="0.6"/>
+          <ellipse cx="-4" cy="-3" rx="2.5" ry="5" fill="#D32F2F" opacity="0.5" transform="rotate(-25)"/>
+          <ellipse cx="4" cy="-3" rx="2.5" ry="5" fill="#D32F2F" opacity="0.5" transform="rotate(25)"/>
+          <circle cx="0" cy="-1" r="1.5" fill="#FFD700" opacity="0.8"/>
+        </g>
+        <g transform="translate(365,153)">
+          <ellipse cx="0" cy="-4" rx="2.5" ry="5" fill="#B71C1C" opacity="0.6"/>
+          <ellipse cx="-3" cy="-2" rx="2" ry="4" fill="#D32F2F" opacity="0.5" transform="rotate(-25)"/>
+          <ellipse cx="3" cy="-2" rx="2" ry="4" fill="#D32F2F" opacity="0.5" transform="rotate(25)"/>
+          <circle cx="0" cy="0" r="1.2" fill="#FFD700" opacity="0.8"/>
+        </g>
+        <!-- Right garland -->
+        <path d="M500 145 Q470 175,440 150 Q420 170,400 155" fill="none" stroke="#2E7D32" stroke-width="1.5" opacity="0.7"/>
+        <g transform="translate(470,162)">
+          <ellipse cx="0" cy="-5" rx="3" ry="6" fill="#B71C1C" opacity="0.6"/>
+          <ellipse cx="-4" cy="-3" rx="2.5" ry="5" fill="#D32F2F" opacity="0.5" transform="rotate(-25)"/>
+          <ellipse cx="4" cy="-3" rx="2.5" ry="5" fill="#D32F2F" opacity="0.5" transform="rotate(25)"/>
+          <circle cx="0" cy="-1" r="1.5" fill="#FFD700" opacity="0.8"/>
+        </g>
+        <g transform="translate(435,153)">
+          <ellipse cx="0" cy="-4" rx="2.5" ry="5" fill="#B71C1C" opacity="0.6"/>
+          <ellipse cx="-3" cy="-2" rx="2" ry="4" fill="#D32F2F" opacity="0.5" transform="rotate(-25)"/>
+          <ellipse cx="3" cy="-2" rx="2" ry="4" fill="#D32F2F" opacity="0.5" transform="rotate(25)"/>
+          <circle cx="0" cy="0" r="1.2" fill="#FFD700" opacity="0.8"/>
+        </g>
+        <!-- Hanging strings with beads -->
+        <line x1="340" y1="145" x2="340" y2="180" stroke="#FFD700" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="340" cy="180" r="2" fill="#FFD700" opacity="0.5"/>
+        <line x1="400" y1="155" x2="400" y2="185" stroke="#FFD700" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="400" cy="185" r="2" fill="#FFD700" opacity="0.5"/>
+        <line x1="460" y1="145" x2="460" y2="180" stroke="#FFD700" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="460" cy="180" r="2" fill="#FFD700" opacity="0.5"/>
+
+        <!-- ═══ Left Peacock ═══ -->
+        <g transform="translate(160,240)">
+          <!-- Tail feathers fan (elaborate) -->
+          <ellipse cx="-40" cy="-40" rx="8" ry="35" fill="url(#piBlue)" opacity="0.5" transform="rotate(-40)"/>
+          <ellipse cx="-40" cy="-40" rx="4" ry="32" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4" transform="rotate(-40)"/>
+          <circle cx="-55" cy="-55" r="4" fill="#0D47A1" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+          <circle cx="-55" cy="-55" r="1.5" fill="#FFD700" opacity="0.7"/>
+
+          <ellipse cx="-25" cy="-55" rx="8" ry="38" fill="url(#piBlue)" opacity="0.55" transform="rotate(-25)"/>
+          <ellipse cx="-25" cy="-55" rx="4" ry="35" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4" transform="rotate(-25)"/>
+          <circle cx="-32" cy="-75" r="4.5" fill="#0D47A1" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+          <circle cx="-32" cy="-75" r="1.8" fill="#FFD700" opacity="0.7"/>
+
+          <ellipse cx="-5" cy="-60" rx="8" ry="42" fill="url(#piBlue)" opacity="0.6" transform="rotate(-10)"/>
+          <ellipse cx="-5" cy="-60" rx="4" ry="39" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4" transform="rotate(-10)"/>
+          <circle cx="-8" cy="-85" r="5" fill="#0D47A1" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+          <circle cx="-8" cy="-85" r="2" fill="#FFD700" opacity="0.7"/>
+          <circle cx="-8" cy="-85" r="1" fill="#1B5E20" opacity="0.8"/>
+
+          <ellipse cx="12" cy="-58" rx="8" ry="40" fill="url(#piBlue)" opacity="0.55" transform="rotate(8)"/>
+          <ellipse cx="12" cy="-58" rx="4" ry="37" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4" transform="rotate(8)"/>
+          <circle cx="15" cy="-80" r="4.5" fill="#0D47A1" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+          <circle cx="15" cy="-80" r="1.8" fill="#FFD700" opacity="0.7"/>
+
+          <ellipse cx="28" cy="-48" rx="7" ry="35" fill="url(#piBlue)" opacity="0.5" transform="rotate(22)"/>
+          <ellipse cx="28" cy="-48" rx="3.5" ry="32" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4" transform="rotate(22)"/>
+          <circle cx="38" cy="-65" r="4" fill="#0D47A1" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+          <circle cx="38" cy="-65" r="1.5" fill="#FFD700" opacity="0.7"/>
+
+          <!-- Body -->
+          <ellipse cx="0" cy="10" rx="18" ry="25" fill="#0D47A1" opacity="0.8"/>
+          <ellipse cx="0" cy="10" rx="14" ry="20" fill="#1565C0" opacity="0.6"/>
+          <!-- Neck -->
+          <path d="M-3 -10 Q-5 -30,0 -40 Q5 -30,3 -10" fill="#0D47A1" stroke="#1565C0" stroke-width="0.5"/>
+          <!-- Head -->
+          <circle cx="0" cy="-42" r="7" fill="#0D47A1"/>
+          <circle cx="0" cy="-42" r="5" fill="#1565C0" opacity="0.7"/>
+          <!-- Crown feathers -->
+          <line x1="-2" y1="-48" x2="-4" y2="-58" stroke="#FFD700" stroke-width="1"/>
+          <circle cx="-4" cy="-58" r="1.5" fill="#FFD700"/>
+          <line x1="0" y1="-49" x2="0" y2="-60" stroke="#FFD700" stroke-width="1"/>
+          <circle cx="0" cy="-60" r="1.5" fill="#FFD700"/>
+          <line x1="2" y1="-48" x2="4" y2="-58" stroke="#FFD700" stroke-width="1"/>
+          <circle cx="4" cy="-58" r="1.5" fill="#FFD700"/>
+          <!-- Eye -->
+          <circle cx="3" cy="-43" r="1.5" fill="#FFF8E1"/>
+          <circle cx="3.5" cy="-43" r="0.8" fill="#1B5E20"/>
+          <!-- Beak -->
+          <path d="M6 -42 L12 -44 L6 -40Z" fill="#FFD700"/>
+          <!-- Legs -->
+          <line x1="-5" y1="32" x2="-8" y2="55" stroke="#FFD700" stroke-width="1.5" opacity="0.6"/>
+          <line x1="5" y1="32" x2="8" y2="55" stroke="#FFD700" stroke-width="1.5" opacity="0.6"/>
+          <!-- Feet -->
+          <path d="M-12 55 L-8 55 L-4 55" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+          <path d="M4 55 L8 55 L12 55" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+        </g>
+
+        <!-- ═══ Right Peacock (mirrored) ═══ -->
+        <g transform="translate(640,240) scale(-1,1)">
+          <!-- Tail feathers fan -->
+          <ellipse cx="-40" cy="-40" rx="8" ry="35" fill="url(#piBlue)" opacity="0.5" transform="rotate(-40)"/>
+          <ellipse cx="-40" cy="-40" rx="4" ry="32" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4" transform="rotate(-40)"/>
+          <circle cx="-55" cy="-55" r="4" fill="#0D47A1" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+          <circle cx="-55" cy="-55" r="1.5" fill="#FFD700" opacity="0.7"/>
+
+          <ellipse cx="-25" cy="-55" rx="8" ry="38" fill="url(#piBlue)" opacity="0.55" transform="rotate(-25)"/>
+          <ellipse cx="-25" cy="-55" rx="4" ry="35" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4" transform="rotate(-25)"/>
+          <circle cx="-32" cy="-75" r="4.5" fill="#0D47A1" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+          <circle cx="-32" cy="-75" r="1.8" fill="#FFD700" opacity="0.7"/>
+
+          <ellipse cx="-5" cy="-60" rx="8" ry="42" fill="url(#piBlue)" opacity="0.6" transform="rotate(-10)"/>
+          <ellipse cx="-5" cy="-60" rx="4" ry="39" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4" transform="rotate(-10)"/>
+          <circle cx="-8" cy="-85" r="5" fill="#0D47A1" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+          <circle cx="-8" cy="-85" r="2" fill="#FFD700" opacity="0.7"/>
+          <circle cx="-8" cy="-85" r="1" fill="#1B5E20" opacity="0.8"/>
+
+          <ellipse cx="12" cy="-58" rx="8" ry="40" fill="url(#piBlue)" opacity="0.55" transform="rotate(8)"/>
+          <ellipse cx="12" cy="-58" rx="4" ry="37" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4" transform="rotate(8)"/>
+          <circle cx="15" cy="-80" r="4.5" fill="#0D47A1" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+          <circle cx="15" cy="-80" r="1.8" fill="#FFD700" opacity="0.7"/>
+
+          <ellipse cx="28" cy="-48" rx="7" ry="35" fill="url(#piBlue)" opacity="0.5" transform="rotate(22)"/>
+          <ellipse cx="28" cy="-48" rx="3.5" ry="32" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4" transform="rotate(22)"/>
+          <circle cx="38" cy="-65" r="4" fill="#0D47A1" stroke="#FFD700" stroke-width="1" opacity="0.6"/>
+          <circle cx="38" cy="-65" r="1.5" fill="#FFD700" opacity="0.7"/>
+
+          <!-- Body -->
+          <ellipse cx="0" cy="10" rx="18" ry="25" fill="#0D47A1" opacity="0.8"/>
+          <ellipse cx="0" cy="10" rx="14" ry="20" fill="#1565C0" opacity="0.6"/>
+          <!-- Neck -->
+          <path d="M-3 -10 Q-5 -30,0 -40 Q5 -30,3 -10" fill="#0D47A1" stroke="#1565C0" stroke-width="0.5"/>
+          <!-- Head -->
+          <circle cx="0" cy="-42" r="7" fill="#0D47A1"/>
+          <circle cx="0" cy="-42" r="5" fill="#1565C0" opacity="0.7"/>
+          <!-- Crown -->
+          <line x1="-2" y1="-48" x2="-4" y2="-58" stroke="#FFD700" stroke-width="1"/>
+          <circle cx="-4" cy="-58" r="1.5" fill="#FFD700"/>
+          <line x1="0" y1="-49" x2="0" y2="-60" stroke="#FFD700" stroke-width="1"/>
+          <circle cx="0" cy="-60" r="1.5" fill="#FFD700"/>
+          <line x1="2" y1="-48" x2="4" y2="-58" stroke="#FFD700" stroke-width="1"/>
+          <circle cx="4" cy="-58" r="1.5" fill="#FFD700"/>
+          <!-- Eye -->
+          <circle cx="3" cy="-43" r="1.5" fill="#FFF8E1"/>
+          <circle cx="3.5" cy="-43" r="0.8" fill="#1B5E20"/>
+          <!-- Beak -->
+          <path d="M6 -42 L12 -44 L6 -40Z" fill="#FFD700"/>
+          <!-- Legs -->
+          <line x1="-5" y1="32" x2="-8" y2="55" stroke="#FFD700" stroke-width="1.5" opacity="0.6"/>
+          <line x1="5" y1="32" x2="8" y2="55" stroke="#FFD700" stroke-width="1.5" opacity="0.6"/>
+          <path d="M-12 55 L-8 55 L-4 55" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+          <path d="M4 55 L8 55 L12 55" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.5"/>
+        </g>
+
+        <!-- ═══ Left Merchant with Goods ═══ -->
+        <g transform="translate(80,260)">
+          <!-- Cloth/carpet display -->
+          <rect x="-30" y="20" width="60" height="40" rx="3" fill="url(#piCrimson)" opacity="0.6"/>
+          <rect x="-28" y="22" width="56" height="36" rx="2" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>
+          <!-- Pattern on cloth -->
+          <circle cx="-10" cy="38" r="5" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.4"/>
+          <circle cx="10" cy="38" r="5" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.4"/>
+          <circle cx="0" cy="28" r="4" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.4"/>
+          <!-- Merchant body -->
+          <ellipse cx="0" cy="5" rx="14" ry="20" fill="#FFA000" opacity="0.7"/>
+          <ellipse cx="0" cy="5" rx="10" ry="16" fill="#FFD700" opacity="0.3"/>
+          <!-- Head -->
+          <circle cx="0" cy="-18" r="10" fill="#D2B48C" opacity="0.8"/>
+          <!-- Turban -->
+          <path d="M-10 -22 Q-12 -32,0 -34 Q12 -32,10 -22" fill="url(#piCrimson)"/>
+          <path d="M-8 -24 Q-10 -30,0 -32 Q10 -30,8 -24" fill="#D32F2F" opacity="0.7"/>
+          <circle cx="0" cy="-30" r="3" fill="#FFD700" opacity="0.6"/>
+          <!-- Eyes and smile -->
+          <circle cx="-3" cy="-18" r="1" fill="#1B5E20"/>
+          <circle cx="3" cy="-18" r="1" fill="#1B5E20"/>
+          <path d="M-3 -14 Q0 -12,3 -14" fill="none" stroke="#1B5E20" stroke-width="0.8"/>
+          <!-- Arms gesturing -->
+          <path d="M-12 0 Q-25 -5,-28 5" fill="none" stroke="#D2B48C" stroke-width="3" opacity="0.7"/>
+          <path d="M12 0 Q25 -5,28 5" fill="none" stroke="#D2B48C" stroke-width="3" opacity="0.7"/>
+          <!-- Stacked pots/vases -->
+          <ellipse cx="-35" cy="45" rx="10" ry="14" fill="#B71C1C" opacity="0.5"/>
+          <ellipse cx="-35" cy="40" rx="7" ry="4" fill="#D32F2F" opacity="0.6"/>
+          <path d="M-38 35 Q-35 30,-32 35" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+          <ellipse cx="35" cy="48" rx="8" ry="12" fill="#0D47A1" opacity="0.5"/>
+          <ellipse cx="35" cy="43" rx="5.5" ry="3.5" fill="#1565C0" opacity="0.6"/>
+        </g>
+
+        <!-- ═══ Right Merchant with Goods ═══ -->
+        <g transform="translate(720,260)">
+          <!-- Jewelry display table -->
+          <rect x="-30" y="20" width="60" height="40" rx="3" fill="url(#piGreen)" opacity="0.5"/>
+          <rect x="-28" y="22" width="56" height="36" rx="2" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>
+          <!-- Jewels on table -->
+          <circle cx="-12" cy="35" r="3" fill="#FFD700" opacity="0.7"/>
+          <circle cx="0" cy="32" r="4" fill="#B71C1C" opacity="0.6"/>
+          <circle cx="12" cy="35" r="3.5" fill="#0D47A1" opacity="0.6"/>
+          <circle cx="5" cy="42" r="2.5" fill="#FFD700" opacity="0.5"/>
+          <circle cx="-8" cy="44" r="2" fill="#2E7D32" opacity="0.6"/>
+          <!-- Merchant body -->
+          <ellipse cx="0" cy="5" rx="14" ry="20" fill="#1565C0" opacity="0.7"/>
+          <ellipse cx="0" cy="5" rx="10" ry="16" fill="#0D47A1" opacity="0.4"/>
+          <!-- Head -->
+          <circle cx="0" cy="-18" r="10" fill="#D2B48C" opacity="0.8"/>
+          <!-- Turban -->
+          <path d="M-10 -22 Q-12 -32,0 -34 Q12 -32,10 -22" fill="url(#piGreen)"/>
+          <path d="M-8 -24 Q-10 -30,0 -32 Q10 -30,8 -24" fill="#2E7D32" opacity="0.7"/>
+          <circle cx="0" cy="-30" r="3" fill="#FFD700" opacity="0.6"/>
+          <!-- Eyes -->
+          <circle cx="-3" cy="-18" r="1" fill="#1B5E20"/>
+          <circle cx="3" cy="-18" r="1" fill="#1B5E20"/>
+          <path d="M-3 -14 Q0 -12,3 -14" fill="none" stroke="#1B5E20" stroke-width="0.8"/>
+          <!-- Arms -->
+          <path d="M-12 0 Q-22 -8,-20 5" fill="none" stroke="#D2B48C" stroke-width="3" opacity="0.7"/>
+          <path d="M12 0 Q22 -8,20 5" fill="none" stroke="#D2B48C" stroke-width="3" opacity="0.7"/>
+          <!-- Chest/treasure box -->
+          <rect x="25" y="35" width="22" height="18" rx="2" fill="#5D4037" opacity="0.7"/>
+          <rect x="27" y="37" width="18" height="14" rx="1" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+          <line x1="30" y1="35" x2="44" y2="35" stroke="#FFD700" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="36" cy="44" r="2" fill="#FFD700" opacity="0.6"/>
+        </g>
+
+        <!-- ═══ Treasures inside archway ═══ -->
+        <!-- Central pedestal -->
+        <rect x="370" y="280" width="60" height="40" rx="3" fill="#5D4037" opacity="0.5"/>
+        <rect x="372" y="282" width="56" height="36" rx="2" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.3"/>
+        <!-- Large ornate vase -->
+        <path d="M390 280 Q385 260,395 245 Q400 240,405 245 Q415 260,410 280" fill="url(#piCrimson)" opacity="0.7"/>
+        <ellipse cx="400" cy="245" rx="8" ry="4" fill="#D32F2F" opacity="0.6"/>
+        <path d="M392 260 Q400 255,408 260" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+        <path d="M393 268 Q400 263,407 268" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+        <!-- Crown/tiara on pedestal -->
+        <path d="M375 278 L380 268 L385 275 L390 265 L395 275 L400 268 L405 278Z" fill="#FFD700" opacity="0.6"/>
+        <circle cx="390" cy="268" r="2" fill="#B71C1C" opacity="0.7"/>
+
+        <!-- Stacked books/scrolls left of center -->
+        <rect x="330" y="290" width="30" height="8" rx="1" fill="#5D4037" opacity="0.5"/>
+        <rect x="333" y="283" width="24" height="7" rx="1" fill="#8D6E63" opacity="0.5"/>
+        <rect x="336" y="277" width="18" height="6" rx="1" fill="#A1887F" opacity="0.5"/>
+        <!-- Scroll -->
+        <rect x="340" y="270" width="12" height="7" rx="3" fill="#FFF8E1" opacity="0.4"/>
+
+        <!-- Antique items right of center -->
+        <circle cx="440" cy="290" r="10" fill="url(#piBlue)" opacity="0.4"/>
+        <circle cx="440" cy="290" r="7" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="440" cy="290" r="3" fill="#FFD700" opacity="0.4"/>
+        <!-- Small statue -->
+        <path d="M455 298 L458 280 L461 298" fill="#FFD700" opacity="0.4"/>
+        <circle cx="458" cy="277" r="3" fill="#FFD700" opacity="0.3"/>
+
+        <!-- ═══ Side decorative columns ═══ -->
+        <!-- Far left column -->
+        <rect x="30" y="160" width="12" height="140" fill="url(#piCrimson)" opacity="0.3"/>
+        <rect x="32" y="162" width="8" height="136" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+        <path d="M26 160 L46 160 L42 152 L30 152Z" fill="#FFD700" opacity="0.4"/>
+        <!-- Column lotus -->
+        <g transform="translate(36,152)">
+          <ellipse cx="0" cy="-4" rx="3" ry="6" fill="#B71C1C" opacity="0.4"/>
+          <ellipse cx="-4" cy="-2" rx="2.5" ry="5" fill="#D32F2F" opacity="0.3" transform="rotate(-25)"/>
+          <ellipse cx="4" cy="-2" rx="2.5" ry="5" fill="#D32F2F" opacity="0.3" transform="rotate(25)"/>
+        </g>
+
+        <!-- Far right column -->
+        <rect x="758" y="160" width="12" height="140" fill="url(#piCrimson)" opacity="0.3"/>
+        <rect x="760" y="162" width="8" height="136" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+        <path d="M754 160 L774 160 L770 152 L758 152Z" fill="#FFD700" opacity="0.4"/>
+        <g transform="translate(764,152)">
+          <ellipse cx="0" cy="-4" rx="3" ry="6" fill="#B71C1C" opacity="0.4"/>
+          <ellipse cx="-4" cy="-2" rx="2.5" ry="5" fill="#D32F2F" opacity="0.3" transform="rotate(-25)"/>
+          <ellipse cx="4" cy="-2" rx="2.5" ry="5" fill="#D32F2F" opacity="0.3" transform="rotate(25)"/>
+        </g>
+
+        <!-- ═══ Hanging oil lamps ═══ -->
+        <g transform="translate(240,50)">
+          <line x1="0" y1="0" x2="0" y2="30" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+          <path d="M-6 30 Q0 25,6 30 Q4 38,-4 38Z" fill="#FFD700" opacity="0.5"/>
+          <ellipse cx="0" cy="28" rx="2" ry="4" fill="#FF6F00" opacity="0.6"/>
+          <ellipse cx="0" cy="26" rx="1" ry="3" fill="#FFF8E1" opacity="0.4"/>
+        </g>
+        <g transform="translate(560,50)">
+          <line x1="0" y1="0" x2="0" y2="30" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+          <path d="M-6 30 Q0 25,6 30 Q4 38,-4 38Z" fill="#FFD700" opacity="0.5"/>
+          <ellipse cx="0" cy="28" rx="2" ry="4" fill="#FF6F00" opacity="0.6"/>
+          <ellipse cx="0" cy="26" rx="1" ry="3" fill="#FFF8E1" opacity="0.4"/>
+        </g>
+
+        <!-- ═══ Stars / atmosphere dots ═══ -->
+        <circle cx="120" cy="40" r="1" fill="#FFF8E1" opacity="0.5"/>
+        <circle cx="200" cy="60" r="0.8" fill="#FFF8E1" opacity="0.4"/>
+        <circle cx="600" cy="45" r="1" fill="#FFF8E1" opacity="0.5"/>
+        <circle cx="680" cy="65" r="0.8" fill="#FFF8E1" opacity="0.4"/>
+        <circle cx="400" cy="35" r="1.2" fill="#FFD700" opacity="0.4"/>
+        <circle cx="300" cy="55" r="0.7" fill="#FFF8E1" opacity="0.3"/>
+        <circle cx="500" cy="50" r="0.7" fill="#FFF8E1" opacity="0.3"/>
+
+        <!-- ═══ Left side decorative lotuses (ground level) ═══ -->
+        <g transform="translate(60,340)">
+          <!-- Full lotus bloom -->
+          <ellipse cx="0" cy="-12" rx="5" ry="12" fill="#B71C1C" opacity="0.5"/>
+          <ellipse cx="-8" cy="-8" rx="5" ry="11" fill="#D32F2F" opacity="0.4" transform="rotate(-30)"/>
+          <ellipse cx="8" cy="-8" rx="5" ry="11" fill="#D32F2F" opacity="0.4" transform="rotate(30)"/>
+          <ellipse cx="-5" cy="-10" rx="3.5" ry="9" fill="#FF5252" opacity="0.3" transform="rotate(-15)"/>
+          <ellipse cx="5" cy="-10" rx="3.5" ry="9" fill="#FF5252" opacity="0.3" transform="rotate(15)"/>
+          <circle cx="0" cy="-5" r="3" fill="#FFD700" opacity="0.6"/>
+          <circle cx="0" cy="-5" r="1.5" fill="#FFF8E1" opacity="0.5"/>
+          <!-- Stem -->
+          <line x1="0" y1="0" x2="0" y2="15" stroke="#2E7D32" stroke-width="1.5" opacity="0.5"/>
+          <!-- Leaves -->
+          <ellipse cx="-10" cy="8" rx="10" ry="4" fill="#1B5E20" opacity="0.4" transform="rotate(-10)"/>
+          <ellipse cx="10" cy="8" rx="10" ry="4" fill="#1B5E20" opacity="0.4" transform="rotate(10)"/>
+        </g>
+
+        <!-- Right side lotus -->
+        <g transform="translate(740,340)">
+          <ellipse cx="0" cy="-12" rx="5" ry="12" fill="#B71C1C" opacity="0.5"/>
+          <ellipse cx="-8" cy="-8" rx="5" ry="11" fill="#D32F2F" opacity="0.4" transform="rotate(-30)"/>
+          <ellipse cx="8" cy="-8" rx="5" ry="11" fill="#D32F2F" opacity="0.4" transform="rotate(30)"/>
+          <ellipse cx="-5" cy="-10" rx="3.5" ry="9" fill="#FF5252" opacity="0.3" transform="rotate(-15)"/>
+          <ellipse cx="5" cy="-10" rx="3.5" ry="9" fill="#FF5252" opacity="0.3" transform="rotate(15)"/>
+          <circle cx="0" cy="-5" r="3" fill="#FFD700" opacity="0.6"/>
+          <circle cx="0" cy="-5" r="1.5" fill="#FFF8E1" opacity="0.5"/>
+          <line x1="0" y1="0" x2="0" y2="15" stroke="#2E7D32" stroke-width="1.5" opacity="0.5"/>
+          <ellipse cx="-10" cy="8" rx="10" ry="4" fill="#1B5E20" opacity="0.4" transform="rotate(-10)"/>
+          <ellipse cx="10" cy="8" rx="10" ry="4" fill="#1B5E20" opacity="0.4" transform="rotate(10)"/>
+        </g>
+
+        <!-- ═══ Decorative corner motifs ═══ -->
+        <!-- Top-left corner -->
+        <path d="M0 25 Q15 25,20 35 Q25 25,40 25" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.3"/>
+        <path d="M5 30 Q15 30,18 38" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+        <!-- Top-right corner -->
+        <path d="M760 25 Q775 25,780 35 Q785 25,800 25" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.3"/>
+        <!-- Bottom-left -->
+        <path d="M0 375 Q15 375,20 365 Q25 375,40 375" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.3"/>
+        <!-- Bottom-right -->
+        <path d="M760 375 Q775 375,780 365 Q785 375,800 375" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.3"/>
+
+        <!-- Side decorative vertical borders -->
+        <line x1="8" y1="25" x2="8" y2="375" stroke="#FFD700" stroke-width="0.5" opacity="0.15"/>
+        <line x1="792" y1="25" x2="792" y2="375" stroke="#FFD700" stroke-width="0.5" opacity="0.15"/>
+      </svg>
+    </div>
+
+    <div class="story-narrative">
+      <p>In the <span class="story-highlight">grand bazaar of Jaipur</span>, rare treasures exchange hands beneath ornate archways and the watchful eyes of painted peacocks. Merchants from distant lands gather, each claiming to know the true worth of every gem, scroll, and antique.</p>
+      <p style="margin-top:1rem">But in a <span class="story-highlight">sealed-bid auction</span>, the boldest bidder often pays the highest price &mdash; sometimes more than the treasure is worth. The one who wins may lose the most. This is the <span class="story-curse">Winner's Curse</span>.</p>
+    </div>
+
+    <button class="btn-bazaar" onclick="enterBazaar()">Enter the Bazaar &rarr;</button>
+  </div>
+</div>
+
 <!-- ═══════════════ WELCOME SCREEN ═══════════════ -->
-<div id="welcome" class="container">
+<div id="welcome" class="container hidden">
   <div class="text-center mt-4">
     <div style="margin-bottom:.5rem"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Hammer.svg" width="48" height="48" alt="" class="imx-sargam-icon" aria-hidden="true"></div>
     <h1 class="welcome-title">Bidding Wars</h1>
@@ -417,6 +916,9 @@ body{
 
 <!-- ═══════════════ END SCREEN ═══════════════ -->
 <div id="endScreen" class="container hidden">
+  <!-- End Story Art -->
+  <div class="end-story-art" id="endStoryArt"></div>
+
   <div class="text-center mt-4">
     <div style="margin-bottom:.5rem"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Star.svg" width="48" height="48" alt="" class="imx-sargam-icon" aria-hidden="true"></div>
     <h1 class="welcome-title">Auction Closed</h1>
@@ -452,7 +954,7 @@ body{
     <button class="btn btn-gold" onclick="restartGame()">
       <span class="gavel"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Hammer.svg" width="18" height="18" alt="" class="imx-sargam-icon" aria-hidden="true"></span> Play Again
     </button>
-    <button class="btn btn-outline mt-2" onclick="document.getElementById('endScreen').classList.add('hidden');document.getElementById('welcome').classList.remove('hidden');window.scrollTo(0,0);">
+    <button class="btn btn-outline mt-2" onclick="document.getElementById('endScreen').classList.add('hidden');document.getElementById('storyIntro').classList.remove('hidden');window.scrollTo(0,0);">
       Back to Intro
     </button>
   </div>
@@ -513,12 +1015,17 @@ function generateNoisyEstimate(trueVal){
 
 /* ── Screens ──────────────────────────────────────── */
 function showScreen(id){
-  ['welcome','gameScreen','endScreen'].forEach(function(s){
+  ['storyIntro','welcome','gameScreen','endScreen'].forEach(function(s){
     $(s).classList.add('hidden');
   });
   $(id).classList.remove('hidden');
   window.scrollTo(0,0);
 }
+
+/* ── Enter Bazaar (story → welcome) ──────────────── */
+window.enterBazaar = function(){
+  showScreen('welcome');
+};
 
 /* ── Start Game ───────────────────────────────────── */
 window.startGame = function(){
@@ -595,7 +1102,7 @@ function updateBidPreview(bid){
   if(bid > estHigh){
     $('curseZoneWarn').innerHTML = '<span class="curse-zone-label"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Warning.svg" width="16" height="16" alt="" class="imx-sargam-icon" aria-hidden="true"> Winner\'s Curse Zone &mdash; bid exceeds likely value</span>';
   } else if(bid > est){
-    $('curseZoneWarn').innerHTML = '<span class="curse-zone-label" style="background:rgba(234,179,8,.12);color:var(--gold)"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Warning.svg" width="16" height="16" alt="" class="imx-sargam-icon" aria-hidden="true"> Risky &mdash; above your estimate</span>';
+    $('curseZoneWarn').innerHTML = '<span class="curse-zone-label" style="background:rgba(234,179,8,.22);color:#C99A07"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Warning.svg" width="16" height="16" alt="" class="imx-sargam-icon" aria-hidden="true"> Risky &mdash; above your estimate</span>';
   } else {
     $('curseZoneWarn').innerHTML = '';
   }
@@ -899,6 +1406,9 @@ function showEndScreen(){
     statCard(aiCurses, 'AI Curses', 'var(--gray)') +
     statCard((netChange >= 0 ? '+' : '') + fmt(netChange), 'Net Profit', netChange >= 0 ? 'var(--emerald)' : 'var(--red)');
 
+  // End story art
+  renderEndStoryArt(netChange >= 0 && state.curses <= 2);
+
   // End history
   var html = '';
   state.history.forEach(function(h){
@@ -957,6 +1467,277 @@ function showEndScreen(){
     '</ul>';
 
   $('eduContent').innerHTML = eduHtml;
+}
+
+/* ── End Story Art (Pichwai) ──────────────────────── */
+function renderEndStoryArt(profitable){
+  var svg = '';
+  if(profitable){
+    // Celebration: merchant with treasures, lotus blooming, peacocks dancing
+    svg = '<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs>' +
+        '<linearGradient id="egGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#FFA000"/></linearGradient>' +
+        '<linearGradient id="egGreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2E7D32"/><stop offset="100%" stop-color="#1B5E20"/></linearGradient>' +
+        '<linearGradient id="egBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1565C0"/><stop offset="100%" stop-color="#0D47A1"/></linearGradient>' +
+        '<linearGradient id="egCrimson" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D32F2F"/><stop offset="100%" stop-color="#B71C1C"/></linearGradient>' +
+        '<pattern id="egLotusBorder" x="0" y="0" width="50" height="20" patternUnits="userSpaceOnUse">' +
+          '<path d="M25 2 C20 2,15 8,15 12 C15 16,20 18,25 18 C30 18,35 16,35 12 C35 8,30 2,25 2Z" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.6"/>' +
+          '<path d="M0 10 C5 6,10 8,12 10 C10 12,5 14,0 10Z" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>' +
+          '<path d="M50 10 C45 6,40 8,38 10 C40 12,45 14,50 10Z" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>' +
+        '</pattern>' +
+      '</defs>' +
+      '<rect width="800" height="400" fill="#0a1628"/>' +
+      // Lotus borders
+      '<rect x="0" y="0" width="800" height="20" fill="url(#egLotusBorder)" opacity="0.8"/>' +
+      '<rect x="0" y="380" width="800" height="20" fill="url(#egLotusBorder)" opacity="0.8"/>' +
+      // Ground
+      '<rect x="0" y="310" width="800" height="70" fill="#1B5E20" opacity="0.25"/>' +
+      // Golden rays from center
+      '<g opacity="0.08">' +
+        '<line x1="400" y1="100" x2="100" y2="380" stroke="#FFD700" stroke-width="3"/>' +
+        '<line x1="400" y1="100" x2="200" y2="380" stroke="#FFD700" stroke-width="2"/>' +
+        '<line x1="400" y1="100" x2="300" y2="380" stroke="#FFD700" stroke-width="2"/>' +
+        '<line x1="400" y1="100" x2="500" y2="380" stroke="#FFD700" stroke-width="2"/>' +
+        '<line x1="400" y1="100" x2="600" y2="380" stroke="#FFD700" stroke-width="2"/>' +
+        '<line x1="400" y1="100" x2="700" y2="380" stroke="#FFD700" stroke-width="3"/>' +
+      '</g>' +
+      // Victorious merchant center
+      '<g transform="translate(400,220)">' +
+        // Ornate mandapa frame
+        '<path d="M-80 60 L-80 -40 Q0 -100,80 -40 L80 60" fill="none" stroke="#FFD700" stroke-width="2.5" opacity="0.6"/>' +
+        '<path d="M-70 60 L-70 -30 Q0 -85,70 -30 L70 60" fill="rgba(255,248,225,0.03)" stroke="#FFD700" stroke-width="1" opacity="0.3"/>' +
+        // Body
+        '<ellipse cx="0" cy="15" rx="22" ry="30" fill="#FFA000" opacity="0.7"/>' +
+        '<ellipse cx="0" cy="15" rx="16" ry="24" fill="#FFD700" opacity="0.3"/>' +
+        // Necklace
+        '<path d="M-12 0 Q-8 8,0 10 Q8 8,12 0" fill="none" stroke="#FFD700" stroke-width="1.5"/>' +
+        '<circle cx="0" cy="10" r="2.5" fill="#B71C1C" opacity="0.7"/>' +
+        // Head
+        '<circle cx="0" cy="-22" r="14" fill="#D2B48C" opacity="0.8"/>' +
+        // Crown/turban
+        '<path d="M-14 -28 Q-16 -42,0 -46 Q16 -42,14 -28" fill="url(#egCrimson)"/>' +
+        '<path d="M-11 -30 Q-13 -40,0 -43 Q13 -40,11 -30" fill="#D32F2F" opacity="0.7"/>' +
+        '<path d="M-5 -42 L0 -50 L5 -42" fill="#FFD700" opacity="0.8"/>' +
+        '<circle cx="0" cy="-50" r="3" fill="#FFD700"/>' +
+        '<circle cx="0" cy="-38" r="4" fill="#FFD700" opacity="0.7"/>' +
+        '<circle cx="0" cy="-38" r="2" fill="#B71C1C" opacity="0.6"/>' +
+        // Eyes (happy)
+        '<path d="M-5 -22 Q-3 -24,-1 -22" fill="none" stroke="#1B5E20" stroke-width="1.2"/>' +
+        '<path d="M1 -22 Q3 -24,5 -22" fill="none" stroke="#1B5E20" stroke-width="1.2"/>' +
+        // Big smile
+        '<path d="M-6 -16 Q0 -10,6 -16" fill="none" stroke="#1B5E20" stroke-width="1.2"/>' +
+        // Arms raised in triumph
+        '<path d="M-18 5 Q-35 -15,-40 -25" fill="none" stroke="#D2B48C" stroke-width="4" stroke-linecap="round"/>' +
+        '<path d="M18 5 Q35 -15,40 -25" fill="none" stroke="#D2B48C" stroke-width="4" stroke-linecap="round"/>' +
+        // Holding treasures
+        '<circle cx="-42" cy="-28" r="6" fill="#FFD700" opacity="0.7"/>' +
+        '<circle cx="-42" cy="-28" r="3" fill="#FFF8E1" opacity="0.5"/>' +
+        '<circle cx="42" cy="-28" r="6" fill="#B71C1C" opacity="0.7"/>' +
+        '<circle cx="42" cy="-28" r="3" fill="#FFD700" opacity="0.5"/>' +
+        // Treasure pile at feet
+        '<ellipse cx="-20" cy="55" rx="12" ry="8" fill="#5D4037" opacity="0.6"/>' +
+        '<circle cx="-22" cy="50" r="4" fill="#FFD700" opacity="0.6"/>' +
+        '<circle cx="-16" cy="48" r="3" fill="#B71C1C" opacity="0.5"/>' +
+        '<circle cx="-25" cy="47" r="2.5" fill="#0D47A1" opacity="0.5"/>' +
+        '<ellipse cx="20" cy="55" rx="12" ry="8" fill="#5D4037" opacity="0.6"/>' +
+        '<circle cx="18" cy="50" r="4" fill="#FFD700" opacity="0.6"/>' +
+        '<circle cx="24" cy="48" r="3" fill="#2E7D32" opacity="0.5"/>' +
+      '</g>' +
+      // Large blooming lotuses (left)
+      '<g transform="translate(130,300)">' +
+        '<line x1="0" y1="20" x2="0" y2="50" stroke="#2E7D32" stroke-width="2.5" opacity="0.6"/>' +
+        '<ellipse cx="-15" cy="35" rx="18" ry="6" fill="#1B5E20" opacity="0.4" transform="rotate(-10)"/>' +
+        '<ellipse cx="15" cy="35" rx="18" ry="6" fill="#1B5E20" opacity="0.4" transform="rotate(10)"/>' +
+        // Petals layer 1
+        '<ellipse cx="0" cy="-15" rx="8" ry="18" fill="#B71C1C" opacity="0.6"/>' +
+        '<ellipse cx="-14" cy="-8" rx="8" ry="16" fill="#D32F2F" opacity="0.5" transform="rotate(-35)"/>' +
+        '<ellipse cx="14" cy="-8" rx="8" ry="16" fill="#D32F2F" opacity="0.5" transform="rotate(35)"/>' +
+        // Layer 2
+        '<ellipse cx="-9" cy="-12" rx="5" ry="13" fill="#FF5252" opacity="0.4" transform="rotate(-18)"/>' +
+        '<ellipse cx="9" cy="-12" rx="5" ry="13" fill="#FF5252" opacity="0.4" transform="rotate(18)"/>' +
+        // Layer 3
+        '<ellipse cx="0" cy="-10" rx="4" ry="10" fill="#FFD700" opacity="0.5"/>' +
+        '<circle cx="0" cy="-5" r="4" fill="#FFD700" opacity="0.7"/>' +
+        '<circle cx="0" cy="-5" r="2" fill="#FFF8E1" opacity="0.6"/>' +
+      '</g>' +
+      // Large blooming lotus (right)
+      '<g transform="translate(670,300)">' +
+        '<line x1="0" y1="20" x2="0" y2="50" stroke="#2E7D32" stroke-width="2.5" opacity="0.6"/>' +
+        '<ellipse cx="-15" cy="35" rx="18" ry="6" fill="#1B5E20" opacity="0.4" transform="rotate(-10)"/>' +
+        '<ellipse cx="15" cy="35" rx="18" ry="6" fill="#1B5E20" opacity="0.4" transform="rotate(10)"/>' +
+        '<ellipse cx="0" cy="-15" rx="8" ry="18" fill="#B71C1C" opacity="0.6"/>' +
+        '<ellipse cx="-14" cy="-8" rx="8" ry="16" fill="#D32F2F" opacity="0.5" transform="rotate(-35)"/>' +
+        '<ellipse cx="14" cy="-8" rx="8" ry="16" fill="#D32F2F" opacity="0.5" transform="rotate(35)"/>' +
+        '<ellipse cx="-9" cy="-12" rx="5" ry="13" fill="#FF5252" opacity="0.4" transform="rotate(-18)"/>' +
+        '<ellipse cx="9" cy="-12" rx="5" ry="13" fill="#FF5252" opacity="0.4" transform="rotate(18)"/>' +
+        '<ellipse cx="0" cy="-10" rx="4" ry="10" fill="#FFD700" opacity="0.5"/>' +
+        '<circle cx="0" cy="-5" r="4" fill="#FFD700" opacity="0.7"/>' +
+        '<circle cx="0" cy="-5" r="2" fill="#FFF8E1" opacity="0.6"/>' +
+      '</g>' +
+      // Celebrating peacock left
+      '<g transform="translate(250,260)">' +
+        '<ellipse cx="-15" cy="-35" rx="6" ry="28" fill="url(#egBlue)" opacity="0.5" transform="rotate(-30)"/>' +
+        '<circle cx="-28" cy="-48" r="3.5" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="-28" cy="-48" r="1.5" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="0" cy="-42" rx="6" ry="32" fill="url(#egBlue)" opacity="0.55" transform="rotate(-8)"/>' +
+        '<circle cx="-2" cy="-60" r="4" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="-2" cy="-60" r="1.8" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="15" cy="-35" rx="6" ry="28" fill="url(#egBlue)" opacity="0.5" transform="rotate(15)"/>' +
+        '<circle cx="22" cy="-50" r="3.5" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="22" cy="-50" r="1.5" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="0" cy="5" rx="12" ry="18" fill="#0D47A1" opacity="0.8"/>' +
+        '<path d="M-2 -10 Q-3 -25,0 -30 Q3 -25,2 -10" fill="#0D47A1"/>' +
+        '<circle cx="0" cy="-32" r="5" fill="#0D47A1"/>' +
+        '<circle cx="0" cy="-32" r="3.5" fill="#1565C0" opacity="0.7"/>' +
+        '<line x1="0" y1="-37" x2="0" y2="-44" stroke="#FFD700" stroke-width="0.8"/>' +
+        '<circle cx="0" cy="-44" r="1.2" fill="#FFD700"/>' +
+        '<circle cx="2" cy="-33" r="1" fill="#FFF8E1"/>' +
+        '<path d="M4 -32 L8 -33 L4 -31Z" fill="#FFD700"/>' +
+      '</g>' +
+      // Celebrating peacock right
+      '<g transform="translate(550,260) scale(-1,1)">' +
+        '<ellipse cx="-15" cy="-35" rx="6" ry="28" fill="url(#egBlue)" opacity="0.5" transform="rotate(-30)"/>' +
+        '<circle cx="-28" cy="-48" r="3.5" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="-28" cy="-48" r="1.5" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="0" cy="-42" rx="6" ry="32" fill="url(#egBlue)" opacity="0.55" transform="rotate(-8)"/>' +
+        '<circle cx="-2" cy="-60" r="4" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="-2" cy="-60" r="1.8" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="15" cy="-35" rx="6" ry="28" fill="url(#egBlue)" opacity="0.5" transform="rotate(15)"/>' +
+        '<circle cx="22" cy="-50" r="3.5" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="22" cy="-50" r="1.5" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="0" cy="5" rx="12" ry="18" fill="#0D47A1" opacity="0.8"/>' +
+        '<path d="M-2 -10 Q-3 -25,0 -30 Q3 -25,2 -10" fill="#0D47A1"/>' +
+        '<circle cx="0" cy="-32" r="5" fill="#0D47A1"/>' +
+        '<circle cx="0" cy="-32" r="3.5" fill="#1565C0" opacity="0.7"/>' +
+        '<line x1="0" y1="-37" x2="0" y2="-44" stroke="#FFD700" stroke-width="0.8"/>' +
+        '<circle cx="0" cy="-44" r="1.2" fill="#FFD700"/>' +
+        '<circle cx="2" cy="-33" r="1" fill="#FFF8E1"/>' +
+        '<path d="M4 -32 L8 -33 L4 -31Z" fill="#FFD700"/>' +
+      '</g>' +
+      // Floating gold coins / sparkles
+      '<circle cx="300" cy="120" r="4" fill="#FFD700" opacity="0.5"/><circle cx="300" cy="120" r="2" fill="#FFF8E1" opacity="0.3"/>' +
+      '<circle cx="500" cy="130" r="3.5" fill="#FFD700" opacity="0.4"/><circle cx="500" cy="130" r="1.5" fill="#FFF8E1" opacity="0.3"/>' +
+      '<circle cx="350" cy="160" r="3" fill="#FFD700" opacity="0.35"/>' +
+      '<circle cx="450" cy="150" r="3" fill="#FFD700" opacity="0.35"/>' +
+      '<circle cx="200" cy="180" r="2.5" fill="#FFD700" opacity="0.3"/>' +
+      '<circle cx="600" cy="170" r="2.5" fill="#FFD700" opacity="0.3"/>' +
+      // Title text
+      '<text x="400" y="60" text-anchor="middle" fill="#FFD700" font-family="serif" font-size="28" font-weight="bold" opacity="0.8">A Prosperous Trade</text>' +
+      '<text x="400" y="85" text-anchor="middle" fill="#FFF8E1" font-family="serif" font-size="14" opacity="0.5">The wise merchant knows when to hold back</text>' +
+    '</svg>';
+  } else {
+    // Cursed: merchant with empty purse, wilted flowers
+    svg = '<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs>' +
+        '<linearGradient id="ecGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#FFA000"/></linearGradient>' +
+        '<linearGradient id="ecBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1565C0"/><stop offset="100%" stop-color="#0D47A1"/></linearGradient>' +
+        '<linearGradient id="ecCrimson" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D32F2F"/><stop offset="100%" stop-color="#B71C1C"/></linearGradient>' +
+        '<pattern id="ecLotusBorder" x="0" y="0" width="50" height="20" patternUnits="userSpaceOnUse">' +
+          '<path d="M25 2 C20 2,15 8,15 12 C15 16,20 18,25 18 C30 18,35 16,35 12 C35 8,30 2,25 2Z" fill="none" stroke="#8D6E63" stroke-width="1" opacity="0.4"/>' +
+        '</pattern>' +
+      '</defs>' +
+      '<rect width="800" height="400" fill="#0a1020"/>' +
+      // Muted borders
+      '<rect x="0" y="0" width="800" height="20" fill="url(#ecLotusBorder)" opacity="0.5"/>' +
+      '<rect x="0" y="380" width="800" height="20" fill="url(#ecLotusBorder)" opacity="0.5"/>' +
+      // Dark ground
+      '<rect x="0" y="310" width="800" height="70" fill="#1a1a1a" opacity="0.4"/>' +
+      // Somber merchant center
+      '<g transform="translate(400,230)">' +
+        // Dim arch frame
+        '<path d="M-70 60 L-70 -30 Q0 -85,70 -30 L70 60" fill="none" stroke="#8D6E63" stroke-width="1.5" opacity="0.3"/>' +
+        // Body (dull clothes)
+        '<ellipse cx="0" cy="15" rx="22" ry="30" fill="#5D4037" opacity="0.5"/>' +
+        '<ellipse cx="0" cy="15" rx="16" ry="24" fill="#8D6E63" opacity="0.2"/>' +
+        // Head
+        '<circle cx="0" cy="-22" r="14" fill="#D2B48C" opacity="0.7"/>' +
+        // Turban (faded)
+        '<path d="M-14 -28 Q-16 -42,0 -46 Q16 -42,14 -28" fill="#5D4037" opacity="0.6"/>' +
+        '<path d="M-11 -30 Q-13 -40,0 -43 Q13 -40,11 -30" fill="#795548" opacity="0.5"/>' +
+        // Sad eyes
+        '<path d="M-5 -24 Q-3 -22,-1 -24" fill="none" stroke="#1B5E20" stroke-width="1"/>' +
+        '<path d="M1 -24 Q3 -22,5 -24" fill="none" stroke="#1B5E20" stroke-width="1"/>' +
+        '<circle cx="-3" cy="-21" r="0.8" fill="#1B5E20" opacity="0.6"/>' +
+        '<circle cx="3" cy="-21" r="0.8" fill="#1B5E20" opacity="0.6"/>' +
+        // Frown
+        '<path d="M-5 -14 Q0 -18,5 -14" fill="none" stroke="#1B5E20" stroke-width="1"/>' +
+        // Arms down, holding empty purse
+        '<path d="M-18 10 Q-28 20,-25 35" fill="none" stroke="#D2B48C" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>' +
+        '<path d="M18 10 Q28 20,25 35" fill="none" stroke="#D2B48C" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>' +
+        // Empty purse (open, upside down)
+        '<path d="M-5 40 Q-10 32,-8 28 Q0 25,8 28 Q10 32,5 40Z" fill="#8D6E63" opacity="0.6" stroke="#5D4037" stroke-width="0.8"/>' +
+        '<path d="M-4 40 L-3 45" fill="none" stroke="#8D6E63" stroke-width="0.5" opacity="0.4"/>' +
+        '<path d="M4 40 L3 45" fill="none" stroke="#8D6E63" stroke-width="0.5" opacity="0.4"/>' +
+        // Fallen coins (few)
+        '<circle cx="-8" cy="55" r="2.5" fill="#FFD700" opacity="0.25"/>' +
+        '<circle cx="5" cy="58" r="2" fill="#FFD700" opacity="0.2"/>' +
+        '<circle cx="-2" cy="60" r="1.5" fill="#FFD700" opacity="0.15"/>' +
+      '</g>' +
+      // Wilted lotus left
+      '<g transform="translate(180,290)">' +
+        '<path d="M0 20 Q-5 0,-3 -10" fill="none" stroke="#5D4037" stroke-width="2" opacity="0.5"/>' +
+        // Drooping petals
+        '<ellipse cx="-8" cy="-8" rx="5" ry="10" fill="#8D6E63" opacity="0.3" transform="rotate(-50)"/>' +
+        '<ellipse cx="3" cy="-12" rx="4" ry="9" fill="#795548" opacity="0.25" transform="rotate(10)"/>' +
+        '<ellipse cx="-3" cy="-14" rx="3.5" ry="8" fill="#8D6E63" opacity="0.2" transform="rotate(-15)"/>' +
+        // Wilted center
+        '<circle cx="-2" cy="-8" r="2.5" fill="#5D4037" opacity="0.3"/>' +
+        // Fallen petals on ground
+        '<ellipse cx="10" cy="25" rx="4" ry="2" fill="#8D6E63" opacity="0.2" transform="rotate(20)"/>' +
+        '<ellipse cx="-12" cy="28" rx="3" ry="1.5" fill="#795548" opacity="0.15" transform="rotate(-30)"/>' +
+        // Drooping leaf
+        '<ellipse cx="-12" cy="12" rx="12" ry="4" fill="#5D4037" opacity="0.25" transform="rotate(25)"/>' +
+      '</g>' +
+      // Wilted lotus right
+      '<g transform="translate(620,290)">' +
+        '<path d="M0 20 Q5 0,3 -10" fill="none" stroke="#5D4037" stroke-width="2" opacity="0.5"/>' +
+        '<ellipse cx="8" cy="-8" rx="5" ry="10" fill="#8D6E63" opacity="0.3" transform="rotate(50)"/>' +
+        '<ellipse cx="-3" cy="-12" rx="4" ry="9" fill="#795548" opacity="0.25" transform="rotate(-10)"/>' +
+        '<ellipse cx="3" cy="-14" rx="3.5" ry="8" fill="#8D6E63" opacity="0.2" transform="rotate(15)"/>' +
+        '<circle cx="2" cy="-8" r="2.5" fill="#5D4037" opacity="0.3"/>' +
+        '<ellipse cx="-10" cy="25" rx="4" ry="2" fill="#8D6E63" opacity="0.2" transform="rotate(-20)"/>' +
+        '<ellipse cx="12" cy="28" rx="3" ry="1.5" fill="#795548" opacity="0.15" transform="rotate(30)"/>' +
+        '<ellipse cx="12" cy="12" rx="12" ry="4" fill="#5D4037" opacity="0.25" transform="rotate(-25)"/>' +
+      '</g>' +
+      // Sad peacock left (drooping)
+      '<g transform="translate(280,280)">' +
+        // Droopy tail feathers
+        '<ellipse cx="-10" cy="5" rx="5" ry="22" fill="url(#ecBlue)" opacity="0.25" transform="rotate(-20)"/>' +
+        '<ellipse cx="5" cy="0" rx="5" ry="25" fill="url(#ecBlue)" opacity="0.3" transform="rotate(5)"/>' +
+        '<ellipse cx="18" cy="5" rx="5" ry="20" fill="url(#ecBlue)" opacity="0.25" transform="rotate(20)"/>' +
+        // Faded eye spots
+        '<circle cx="-14" cy="-10" r="2.5" fill="#0D47A1" opacity="0.2" stroke="#5D4037" stroke-width="0.5"/>' +
+        '<circle cx="6" cy="-18" r="3" fill="#0D47A1" opacity="0.2" stroke="#5D4037" stroke-width="0.5"/>' +
+        // Body
+        '<ellipse cx="0" cy="15" rx="10" ry="14" fill="#0D47A1" opacity="0.4"/>' +
+        // Drooping neck
+        '<path d="M-2 5 Q-8 -8,-10 -15" fill="none" stroke="#0D47A1" stroke-width="3" opacity="0.4"/>' +
+        // Head down
+        '<circle cx="-11" cy="-17" r="4" fill="#0D47A1" opacity="0.4"/>' +
+        '<circle cx="-9" cy="-17" r="0.8" fill="#FFF8E1" opacity="0.3"/>' +
+      '</g>' +
+      // Sad peacock right
+      '<g transform="translate(520,280) scale(-1,1)">' +
+        '<ellipse cx="-10" cy="5" rx="5" ry="22" fill="url(#ecBlue)" opacity="0.25" transform="rotate(-20)"/>' +
+        '<ellipse cx="5" cy="0" rx="5" ry="25" fill="url(#ecBlue)" opacity="0.3" transform="rotate(5)"/>' +
+        '<ellipse cx="18" cy="5" rx="5" ry="20" fill="url(#ecBlue)" opacity="0.25" transform="rotate(20)"/>' +
+        '<circle cx="-14" cy="-10" r="2.5" fill="#0D47A1" opacity="0.2" stroke="#5D4037" stroke-width="0.5"/>' +
+        '<circle cx="6" cy="-18" r="3" fill="#0D47A1" opacity="0.2" stroke="#5D4037" stroke-width="0.5"/>' +
+        '<ellipse cx="0" cy="15" rx="10" ry="14" fill="#0D47A1" opacity="0.4"/>' +
+        '<path d="M-2 5 Q-8 -8,-10 -15" fill="none" stroke="#0D47A1" stroke-width="3" opacity="0.4"/>' +
+        '<circle cx="-11" cy="-17" r="4" fill="#0D47A1" opacity="0.4"/>' +
+        '<circle cx="-9" cy="-17" r="0.8" fill="#FFF8E1" opacity="0.3"/>' +
+      '</g>' +
+      // Dim atmosphere
+      '<circle cx="200" cy="100" r="1" fill="#8D6E63" opacity="0.2"/>' +
+      '<circle cx="600" cy="90" r="1" fill="#8D6E63" opacity="0.2"/>' +
+      '<circle cx="400" cy="60" r="1.5" fill="#8D6E63" opacity="0.15"/>' +
+      // Title text
+      '<text x="400" y="55" text-anchor="middle" fill="#8D6E63" font-family="serif" font-size="26" font-weight="bold" opacity="0.7">The Price of Ambition</text>' +
+      '<text x="400" y="80" text-anchor="middle" fill="#8D6E63" font-family="serif" font-size="14" opacity="0.4">The boldest bidder paid the highest price</text>' +
+    '</svg>';
+  }
+  $('endStoryArt').innerHTML = svg;
 }
 
 function statCard(val, label, color){

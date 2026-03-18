@@ -2,7 +2,7 @@
 
 ## Overview
 
-ImpactMojo's economics games now support **AI-powered opponents** inspired by [MiroFish](https://github.com/666ghj/MiroFish), an open-source swarm intelligence engine. Instead of simple rule-based payoff calculations, games can feature AI agents with distinct personalities, memories, and adaptive strategies — all grounded in South Asian development contexts.
+ImpactMojo's games now support **AI-powered opponents** inspired by [MiroFish](https://github.com/666ghj/MiroFish), an open-source swarm intelligence engine. Instead of simple rule-based payoff calculations, games can feature AI agents with distinct personalities, memories, and adaptive strategies — all grounded in South Asian development contexts.
 
 ## Architecture
 

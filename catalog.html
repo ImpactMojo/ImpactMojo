@@ -1629,6 +1629,30 @@ body.dark-mode .v3-blob-4 { background: radial-gradient(circle, rgba(245, 158, 1
         align-items: flex-start;
     }
 }
+
+/* Accessibility: focus-visible styles */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid var(--accent-color, #0EA5E9);
+    outline-offset: 2px;
+}
+
+/* Screen-reader only utility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
 </style>
 </head>
 <body>
@@ -1657,8 +1681,8 @@ body.dark-mode .v3-blob-4 { background: radial-gradient(circle, rgba(245, 158, 1
 </div>
 
 <!-- Header -->
-<header class="header">
-    <nav class="nav-container">
+<header class="header" role="banner">
+    <nav class="nav-container" role="navigation" aria-label="Main navigation">
         <a class='logo-container' href='/'>
             <div class="logo-svg">
                 <img alt="ImpactMojo logo" src="assets/images/ImpactMojo%20Logo.png" width="48" height="48" loading="lazy">
@@ -1773,7 +1797,7 @@ body.dark-mode .v3-blob-4 { background: radial-gradient(circle, rgba(245, 158, 1
 <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
 
 <!-- PAGE CONTENT -->
-<main class="page-content" id="main-content">
+<main class="page-content" id="main-content" role="main">
     <!-- Hero Section -->
     <section class="page-hero">
         <h1>Course Catalog</h1>
@@ -1802,6 +1826,7 @@ body.dark-mode .v3-blob-4 { background: radial-gradient(circle, rgba(245, 158, 1
     <!-- Filter Section -->
     <section class="filter-section">
         <div class="search-box">
+            <label for="searchInput" class="sr-only">Search courses, labs, games</label>
             <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search courses, labs, games...">
         </div>
         
@@ -1845,7 +1870,7 @@ body.dark-mode .v3-blob-4 { background: radial-gradient(circle, rgba(245, 158, 1
 </main>
 
 <!-- Footer -->
-<footer class="footer">
+<footer class="footer" role="contentinfo">
     <div class="footer-content">
         <div class="footer-grid">
             <div class="footer-section">
@@ -1928,14 +1953,14 @@ body.dark-mode .v3-blob-4 { background: radial-gradient(circle, rgba(245, 158, 1
 </div>
 
 <!-- Mojini Chatbot FAB -->
-<button class="feedback-fab" id="mojini-chat-toggle" onclick="openChatbot()" title="Chat with Mojini">
-    <svg viewBox="0 0 24 24">
+<button class="feedback-fab" id="mojini-chat-toggle" onclick="openChatbot()" title="Chat with Mojini" aria-label="Open Mojini chatbot">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
     </svg>
 </button>
 
 <!-- Chatbot Modal -->
-<div class="chatbot-modal" id="chatbotModal">
+<div class="chatbot-modal" id="chatbotModal" role="dialog" aria-label="Mojini chatbot">
     <div class="chat-header">
         <h3>
             <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
@@ -1959,9 +1984,10 @@ body.dark-mode .v3-blob-4 { background: radial-gradient(circle, rgba(245, 158, 1
         <button class="chat-option" onclick="selectOption('feedback')">💬 Feedback</button>
     </div>
     <div class="chat-input-area">
+        <label for="chatInput" class="sr-only">Chat message</label>
         <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
         <button class="chat-send" aria-label="Send message" onclick="sendChatMessage()">
-            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
     </div>
 </div>

@@ -42,7 +42,7 @@ ImpactMojo is the only platform that covers all six pillars of development pract
 
 ### 4. Learn by doing, not just reading
 
-- **12 economics games** teach behavioral economics, game theory, and market failures through interactive simulations
+- **Interactive games** teach behavioral economics, game theory, market failures, climate action, gender equity, public health, and digital ethics through interactive simulations
 - **10 labs** let practitioners build theories of change, design MEL systems, and practice policy advocacy hands-on
 - **35+ Dojos** are 90-minute practice sessions where skills are drilled, not lectured
 

@@ -876,14 +876,779 @@ input[type="range"]::-moz-range-thumb {
   .agents-grid { grid-template-columns: 1fr; }
   .top-bar-inner { justify-content: center; gap: 1.25rem; }
 }
+
+/* ── Story Screens (Madhubani) ─────────────────────────────── */
+.story-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #0F172A;
+  padding: 2rem 1rem;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.story-card {
+  background: #1E293B;
+  border: 3px solid #C62828;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  max-width: 860px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(198,40,40,0.15), 0 0 80px rgba(249,168,37,0.08);
+}
+
+.story-card .story-svg-container {
+  margin: 0 auto 1.5rem;
+  max-width: 800px;
+}
+
+.story-card .story-svg-container svg {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.story-card .story-text {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.15rem;
+  color: #E2E8F0;
+  line-height: 1.8;
+  max-width: 640px;
+  margin: 0 auto 1.5rem;
+  font-style: italic;
+}
+
+.story-card .story-text strong {
+  color: #F9A825;
+  font-style: normal;
+}
+
+.btn-story {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #C62828, #E65100);
+  color: #FFF;
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.9rem 2.5rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(198,40,40,0.3);
+}
+
+.btn-story:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(198,40,40,0.4);
+}
+
+/* Mid-game story modal */
+.story-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.92);
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.story-modal {
+  background: #1E293B;
+  border: 3px solid #E65100;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  animation: scaleIn 0.5s ease-out;
+}
+
+.story-modal .story-svg-container {
+  margin: 0 auto 1.25rem;
+  max-width: 600px;
+}
+
+.story-modal .story-svg-container svg {
+  width: 100%;
+  height: auto;
+}
+
+.story-modal .story-text {
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  color: #CBD5E1;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+  font-style: italic;
+}
+
+/* End story section */
+.end-story-section {
+  max-width: 700px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+  animation: fadeUp 0.8s ease-out;
+}
+
+.end-story-section .story-svg-container {
+  margin: 0 auto 1.25rem;
+}
+
+.end-story-section .story-svg-container svg {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.end-story-section .story-text {
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  color: #CBD5E1;
+  line-height: 1.7;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 700px) {
+  .story-card { padding: 1.5rem 1rem; }
+  .story-card .story-text { font-size: 1rem; }
+  .story-modal { padding: 1.5rem 1rem; }
+}
+
+/* Madhubani SVG art styles */
+.madhubani-art { display: block; margin: 0 auto; }
+.madhubani-art .crosshatch { stroke: #1A1A2E; stroke-width: 1; }
+.madhubani-art .outline { stroke: #1A1A2E; stroke-width: 2.5; fill: none; }
+.madhubani-art .outline-thin { stroke: #1A1A2E; stroke-width: 1.5; fill: none; }
+
+@keyframes fadeInSlow { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+.story-screen .story-card { animation: fadeInSlow 1.2s ease-out forwards; }
+
+.story-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #F9A825;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+}
 </style>
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════════
+     STORY INTRO SCREEN (Madhubani Art)
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="story-intro" class="story-screen">
+  <div class="story-card">
+    <div class="story-title">The Village Well</div>
+    <div class="story-svg-container">
+      <svg viewBox="0 0 800 450" class="madhubani-art" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Crosshatch pattern -->
+          <pattern id="crosshatch" width="8" height="8" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="8" y2="8" stroke="#1A1A2E" stroke-width="0.8"/>
+            <line x1="8" y1="0" x2="0" y2="8" stroke="#1A1A2E" stroke-width="0.8"/>
+          </pattern>
+          <!-- Dot pattern -->
+          <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
+            <circle cx="3" cy="3" r="1.2" fill="#1A1A2E"/>
+          </pattern>
+          <!-- Zigzag pattern -->
+          <pattern id="zigzag" width="10" height="6" patternUnits="userSpaceOnUse">
+            <polyline points="0,6 5,0 10,6" fill="none" stroke="#1A1A2E" stroke-width="0.8"/>
+          </pattern>
+          <!-- Parallel lines pattern -->
+          <pattern id="hlines" width="6" height="6" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="3" x2="6" y2="3" stroke="#1A1A2E" stroke-width="0.7"/>
+          </pattern>
+          <!-- Vertical lines -->
+          <pattern id="vlines" width="6" height="6" patternUnits="userSpaceOnUse">
+            <line x1="3" y1="0" x2="3" y2="6" stroke="#1A1A2E" stroke-width="0.7"/>
+          </pattern>
+          <!-- Fish scale pattern -->
+          <pattern id="scales" width="12" height="10" patternUnits="userSpaceOnUse">
+            <path d="M0,10 Q6,4 12,10" fill="none" stroke="#1A1A2E" stroke-width="0.6"/>
+            <path d="M-6,5 Q0,-1 6,5" fill="none" stroke="#1A1A2E" stroke-width="0.6"/>
+          </pattern>
+        </defs>
+
+        <!-- OUTER BORDER: Double-line Madhubani border with fish corners -->
+        <rect x="4" y="4" width="792" height="442" rx="4" fill="none" stroke="#1A1A2E" stroke-width="3"/>
+        <rect x="12" y="12" width="776" height="426" rx="3" fill="none" stroke="#C62828" stroke-width="2"/>
+        <rect x="18" y="18" width="764" height="414" rx="2" fill="none" stroke="#1A1A2E" stroke-width="1.5"/>
+        <!-- Border decoration: small repeating motifs along top -->
+        <g id="border-motif">
+          <circle cx="0" cy="0" r="3" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>
+          <circle cx="0" cy="0" r="1.5" fill="#F9A825"/>
+        </g>
+        <!-- Top border dots -->
+        <use href="#border-motif" x="40" y="9"/>
+        <use href="#border-motif" x="80" y="9"/>
+        <use href="#border-motif" x="120" y="9"/>
+        <use href="#border-motif" x="160" y="9"/>
+        <use href="#border-motif" x="200" y="9"/>
+        <use href="#border-motif" x="240" y="9"/>
+        <use href="#border-motif" x="280" y="9"/>
+        <use href="#border-motif" x="320" y="9"/>
+        <use href="#border-motif" x="360" y="9"/>
+        <use href="#border-motif" x="400" y="9"/>
+        <use href="#border-motif" x="440" y="9"/>
+        <use href="#border-motif" x="480" y="9"/>
+        <use href="#border-motif" x="520" y="9"/>
+        <use href="#border-motif" x="560" y="9"/>
+        <use href="#border-motif" x="600" y="9"/>
+        <use href="#border-motif" x="640" y="9"/>
+        <use href="#border-motif" x="680" y="9"/>
+        <use href="#border-motif" x="720" y="9"/>
+        <use href="#border-motif" x="760" y="9"/>
+        <!-- Bottom border dots -->
+        <use href="#border-motif" x="40" y="441"/>
+        <use href="#border-motif" x="80" y="441"/>
+        <use href="#border-motif" x="120" y="441"/>
+        <use href="#border-motif" x="160" y="441"/>
+        <use href="#border-motif" x="200" y="441"/>
+        <use href="#border-motif" x="240" y="441"/>
+        <use href="#border-motif" x="280" y="441"/>
+        <use href="#border-motif" x="320" y="441"/>
+        <use href="#border-motif" x="360" y="441"/>
+        <use href="#border-motif" x="400" y="441"/>
+        <use href="#border-motif" x="440" y="441"/>
+        <use href="#border-motif" x="480" y="441"/>
+        <use href="#border-motif" x="520" y="441"/>
+        <use href="#border-motif" x="560" y="441"/>
+        <use href="#border-motif" x="600" y="441"/>
+        <use href="#border-motif" x="640" y="441"/>
+        <use href="#border-motif" x="680" y="441"/>
+        <use href="#border-motif" x="720" y="441"/>
+        <use href="#border-motif" x="760" y="441"/>
+
+        <!-- CORNER FISH (Madhubani fish motif) -->
+        <!-- Top-left fish -->
+        <g transform="translate(30,22) scale(0.7)">
+          <ellipse cx="18" cy="12" rx="16" ry="9" fill="#E65100" stroke="#1A1A2E" stroke-width="2"/>
+          <polygon points="34,12 48,4 48,20" fill="#C62828" stroke="#1A1A2E" stroke-width="1.5"/>
+          <circle cx="12" cy="10" r="3" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <circle cx="12" cy="10" r="1.2" fill="#1A1A2E"/>
+          <path d="M20,7 Q24,12 20,17" fill="none" stroke="#1A1A2E" stroke-width="1"/>
+          <path d="M24,6 Q28,12 24,18" fill="none" stroke="#1A1A2E" stroke-width="1"/>
+          <line x1="36" y1="6" x2="44" y2="4" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="36" y1="18" x2="44" y2="20" stroke="#1A1A2E" stroke-width="0.8"/>
+        </g>
+        <!-- Top-right fish -->
+        <g transform="translate(740,22) scale(-0.7,0.7)">
+          <ellipse cx="18" cy="12" rx="16" ry="9" fill="#E65100" stroke="#1A1A2E" stroke-width="2"/>
+          <polygon points="34,12 48,4 48,20" fill="#C62828" stroke="#1A1A2E" stroke-width="1.5"/>
+          <circle cx="12" cy="10" r="3" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <circle cx="12" cy="10" r="1.2" fill="#1A1A2E"/>
+          <path d="M20,7 Q24,12 20,17" fill="none" stroke="#1A1A2E" stroke-width="1"/>
+          <path d="M24,6 Q28,12 24,18" fill="none" stroke="#1A1A2E" stroke-width="1"/>
+        </g>
+        <!-- Bottom-left fish -->
+        <g transform="translate(30,420) scale(0.7,-0.7)">
+          <ellipse cx="18" cy="12" rx="16" ry="9" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>
+          <polygon points="34,12 48,4 48,20" fill="#2E7D32" stroke="#1A1A2E" stroke-width="1.5"/>
+          <circle cx="12" cy="10" r="3" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <circle cx="12" cy="10" r="1.2" fill="#1A1A2E"/>
+          <path d="M20,7 Q24,12 20,17" fill="none" stroke="#1A1A2E" stroke-width="1"/>
+        </g>
+        <!-- Bottom-right fish -->
+        <g transform="translate(740,420) scale(-0.7,-0.7)">
+          <ellipse cx="18" cy="12" rx="16" ry="9" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>
+          <polygon points="34,12 48,4 48,20" fill="#2E7D32" stroke="#1A1A2E" stroke-width="1.5"/>
+          <circle cx="12" cy="10" r="3" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <circle cx="12" cy="10" r="1.2" fill="#1A1A2E"/>
+          <path d="M20,7 Q24,12 20,17" fill="none" stroke="#1A1A2E" stroke-width="1"/>
+        </g>
+
+        <!-- BACKGROUND: Warm earth tone -->
+        <rect x="20" y="20" width="760" height="410" fill="#FFF8E1" rx="2"/>
+
+        <!-- ===== SUN WITH FACE (top center) ===== -->
+        <g transform="translate(400,65)">
+          <!-- Sun rays -->
+          <g>
+            <line x1="0" y1="-42" x2="0" y2="-55" stroke="#F9A825" stroke-width="3"/>
+            <line x1="30" y1="-30" x2="40" y2="-40" stroke="#F9A825" stroke-width="3"/>
+            <line x1="-30" y1="-30" x2="-40" y2="-40" stroke="#F9A825" stroke-width="3"/>
+            <line x1="42" y1="0" x2="55" y2="0" stroke="#F9A825" stroke-width="3"/>
+            <line x1="-42" y1="0" x2="-55" y2="0" stroke="#F9A825" stroke-width="3"/>
+            <line x1="30" y1="30" x2="40" y2="40" stroke="#F9A825" stroke-width="2.5"/>
+            <line x1="-30" y1="30" x2="-40" y2="40" stroke="#F9A825" stroke-width="2.5"/>
+            <!-- Decorative rays (triangles) -->
+            <polygon points="0,-44 -6,-56 6,-56" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>
+            <polygon points="32,-32 24,-46 40,-42" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>
+            <polygon points="-32,-32 -24,-46 -40,-42" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>
+            <polygon points="44,0 56,-6 56,6" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>
+            <polygon points="-44,0 -56,-6 -56,6" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>
+            <!-- Wavy rays -->
+            <path d="M18,-38 Q22,-48 16,-55" fill="none" stroke="#F9A825" stroke-width="2"/>
+            <path d="M-18,-38 Q-22,-48 -16,-55" fill="none" stroke="#F9A825" stroke-width="2"/>
+            <path d="M38,-18 Q48,-22 55,-16" fill="none" stroke="#F9A825" stroke-width="2"/>
+            <path d="M-38,-18 Q-48,-22 -55,-16" fill="none" stroke="#F9A825" stroke-width="2"/>
+          </g>
+          <!-- Sun circle -->
+          <circle cx="0" cy="0" r="35" fill="#F9A825" stroke="#1A1A2E" stroke-width="2.5"/>
+          <circle cx="0" cy="0" r="30" fill="#FFD54F" stroke="#E65100" stroke-width="1.5"/>
+          <circle cx="0" cy="0" r="25" fill="url(#dots)" stroke="none"/>
+          <!-- Sun face -->
+          <ellipse cx="-10" cy="-6" rx="4" ry="5" fill="#1A1A2E"/>
+          <circle cx="-10" cy="-7" r="1.5" fill="#FFF8E1"/>
+          <ellipse cx="10" cy="-6" rx="4" ry="5" fill="#1A1A2E"/>
+          <circle cx="10" cy="-7" r="1.5" fill="#FFF8E1"/>
+          <path d="M-8,8 Q0,16 8,8" fill="none" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="-18" cy="4" r="4" fill="#E65100" opacity="0.5"/>
+          <circle cx="18" cy="4" r="4" fill="#E65100" opacity="0.5"/>
+          <!-- Nose -->
+          <path d="M0,-2 L-3,4 L3,4 Z" fill="none" stroke="#1A1A2E" stroke-width="1.2"/>
+          <!-- Bindi -->
+          <circle cx="0" cy="-14" r="2.5" fill="#C62828" stroke="#1A1A2E" stroke-width="0.8"/>
+        </g>
+
+        <!-- ===== LEFT TREE with crosshatch leaves ===== -->
+        <g transform="translate(90,120)">
+          <!-- Trunk -->
+          <rect x="-8" y="60" width="16" height="120" fill="#8D6E63" stroke="#1A1A2E" stroke-width="2"/>
+          <rect x="-6" y="65" width="12" height="110" fill="url(#vlines)"/>
+          <!-- Branches -->
+          <line x1="0" y1="80" x2="-30" y2="50" stroke="#8D6E63" stroke-width="4"/>
+          <line x1="0" y1="80" x2="30" y2="45" stroke="#8D6E63" stroke-width="4"/>
+          <line x1="0" y1="100" x2="-25" y2="75" stroke="#8D6E63" stroke-width="3"/>
+          <!-- Leaves (large teardrop shapes with crosshatch) -->
+          <path d="M0,10 Q-30,-20 0,-50 Q30,-20 0,10Z" fill="#2E7D32" stroke="#1A1A2E" stroke-width="2"/>
+          <path d="M0,12 Q-26,-16 0,-44 Q26,-16 0,12Z" fill="url(#crosshatch)"/>
+          <!-- Side leaves -->
+          <path d="M-30,30 Q-55,10 -30,-10 Q-10,10 -30,30Z" fill="#2E7D32" stroke="#1A1A2E" stroke-width="2"/>
+          <path d="M-28,26 Q-50,12 -28,-6 Q-12,12 -28,26Z" fill="url(#crosshatch)"/>
+          <path d="M30,25 Q55,5 30,-15 Q10,5 30,25Z" fill="#4CAF50" stroke="#1A1A2E" stroke-width="2"/>
+          <path d="M28,22 Q50,6 28,-12 Q12,6 28,22Z" fill="url(#crosshatch)"/>
+          <!-- Extra leaves cluster -->
+          <path d="M-15,50 Q-35,35 -15,20 Q0,35 -15,50Z" fill="#4CAF50" stroke="#1A1A2E" stroke-width="1.5"/>
+          <path d="M-14,47 Q-32,36 -14,23 Q0,36 -14,47Z" fill="url(#hlines)"/>
+          <path d="M18,45 Q38,30 18,15 Q2,30 18,45Z" fill="#2E7D32" stroke="#1A1A2E" stroke-width="1.5"/>
+          <path d="M17,42 Q34,31 17,18 Q4,31 17,42Z" fill="url(#hlines)"/>
+          <!-- Fruits/flowers on tree -->
+          <circle cx="-20" cy="5" r="5" fill="#C62828" stroke="#1A1A2E" stroke-width="1.5"/>
+          <circle cx="-20" cy="5" r="2" fill="#E65100"/>
+          <circle cx="22" cy="0" r="5" fill="#E65100" stroke="#1A1A2E" stroke-width="1.5"/>
+          <circle cx="22" cy="0" r="2" fill="#F9A825"/>
+          <circle cx="5" cy="-25" r="4" fill="#C62828" stroke="#1A1A2E" stroke-width="1"/>
+          <!-- Root lines -->
+          <path d="M-8,180 Q-20,185 -30,195" fill="none" stroke="#8D6E63" stroke-width="3"/>
+          <path d="M8,180 Q20,185 30,195" fill="none" stroke="#8D6E63" stroke-width="3"/>
+        </g>
+
+        <!-- ===== RIGHT TREE with crosshatch leaves ===== -->
+        <g transform="translate(710,120)">
+          <!-- Trunk -->
+          <rect x="-8" y="60" width="16" height="120" fill="#8D6E63" stroke="#1A1A2E" stroke-width="2"/>
+          <rect x="-6" y="65" width="12" height="110" fill="url(#vlines)"/>
+          <!-- Leaves -->
+          <path d="M0,10 Q-30,-20 0,-50 Q30,-20 0,10Z" fill="#2E7D32" stroke="#1A1A2E" stroke-width="2"/>
+          <path d="M0,12 Q-26,-16 0,-44 Q26,-16 0,12Z" fill="url(#crosshatch)"/>
+          <path d="M-28,28 Q-52,10 -28,-8 Q-8,10 -28,28Z" fill="#4CAF50" stroke="#1A1A2E" stroke-width="2"/>
+          <path d="M-26,24 Q-48,12 -26,-4 Q-10,12 -26,24Z" fill="url(#crosshatch)"/>
+          <path d="M28,25 Q52,7 28,-13 Q8,7 28,25Z" fill="#2E7D32" stroke="#1A1A2E" stroke-width="2"/>
+          <path d="M26,22 Q48,8 26,-10 Q10,8 26,22Z" fill="url(#crosshatch)"/>
+          <path d="M-12,48 Q-30,36 -12,22 Q2,36 -12,48Z" fill="#4CAF50" stroke="#1A1A2E" stroke-width="1.5"/>
+          <path d="M-11,45 Q-28,35 -11,25 Q2,35 -11,45Z" fill="url(#hlines)"/>
+          <!-- Fruits -->
+          <circle cx="-18" cy="6" r="5" fill="#E65100" stroke="#1A1A2E" stroke-width="1.5"/>
+          <circle cx="-18" cy="6" r="2" fill="#F9A825"/>
+          <circle cx="15" cy="-5" r="4" fill="#C62828" stroke="#1A1A2E" stroke-width="1"/>
+          <!-- Roots -->
+          <path d="M-8,180 Q-20,185 -28,195" fill="none" stroke="#8D6E63" stroke-width="3"/>
+          <path d="M8,180 Q20,185 28,195" fill="none" stroke="#8D6E63" stroke-width="3"/>
+        </g>
+
+        <!-- ===== CENTRAL WELL (geometric Madhubani style) ===== -->
+        <g transform="translate(400,230)">
+          <!-- Well base (stone circle) -->
+          <ellipse cx="0" cy="40" rx="65" ry="18" fill="#8D6E63" stroke="#1A1A2E" stroke-width="2.5"/>
+          <ellipse cx="0" cy="40" rx="60" ry="15" fill="url(#scales)"/>
+          <!-- Well wall -->
+          <rect x="-60" y="-15" width="120" height="55" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>
+          <rect x="-55" y="-10" width="110" height="45" fill="url(#zigzag)"/>
+          <!-- Stone pattern on well wall -->
+          <line x1="-55" y1="5" x2="55" y2="5" stroke="#1A1A2E" stroke-width="1"/>
+          <line x1="-55" y1="20" x2="55" y2="20" stroke="#1A1A2E" stroke-width="1"/>
+          <line x1="-25" y1="-10" x2="-25" y2="5" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="5" y1="-10" x2="5" y2="5" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="35" y1="-10" x2="35" y2="5" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="-40" y1="5" x2="-40" y2="20" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="-10" y1="5" x2="-10" y2="20" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="20" y1="5" x2="20" y2="20" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="50" y1="5" x2="50" y2="20" stroke="#1A1A2E" stroke-width="0.8"/>
+          <!-- Well opening (top ellipse with water) -->
+          <ellipse cx="0" cy="-15" rx="55" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>
+          <ellipse cx="0" cy="-15" rx="45" ry="10" fill="#42A5F5" stroke="none"/>
+          <ellipse cx="0" cy="-15" rx="35" ry="7" fill="#64B5F6" stroke="none"/>
+          <!-- Water ripple lines -->
+          <path d="M-25,-16 Q-15,-20 -5,-16 Q5,-12 15,-16 Q25,-20 30,-16" fill="none" stroke="#FFF" stroke-width="0.8" opacity="0.6"/>
+          <!-- Well posts -->
+          <rect x="-50" y="-70" width="8" height="55" fill="#8D6E63" stroke="#1A1A2E" stroke-width="2"/>
+          <rect x="-48" y="-65" width="4" height="46" fill="url(#vlines)"/>
+          <rect x="42" y="-70" width="8" height="55" fill="#8D6E63" stroke="#1A1A2E" stroke-width="2"/>
+          <rect x="44" y="-65" width="4" height="46" fill="url(#vlines)"/>
+          <!-- Cross beam -->
+          <rect x="-52" y="-78" width="104" height="10" fill="#A1887F" stroke="#1A1A2E" stroke-width="2" rx="2"/>
+          <rect x="-48" y="-76" width="96" height="6" fill="url(#hlines)"/>
+          <!-- Decorative triangles on beam -->
+          <polygon points="-30,-78 -25,-84 -20,-78" fill="#C62828" stroke="#1A1A2E" stroke-width="1"/>
+          <polygon points="0,-78 5,-84 10,-78" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>
+          <polygon points="20,-78 25,-84 30,-78" fill="#C62828" stroke="#1A1A2E" stroke-width="1"/>
+          <!-- Rope -->
+          <line x1="0" y1="-70" x2="0" y2="-30" stroke="#8D6E63" stroke-width="2"/>
+          <!-- Bucket -->
+          <path d="M-8,-30 L-10,-18 L10,-18 L8,-30 Z" fill="#A1887F" stroke="#1A1A2E" stroke-width="1.5"/>
+          <path d="M-8,-30 Q0,-33 8,-30" fill="none" stroke="#1A1A2E" stroke-width="1.5"/>
+          <rect x="-9" y="-20" width="18" height="2" fill="url(#hlines)" stroke="#1A1A2E" stroke-width="0.5"/>
+          <!-- Decorative arch above well -->
+          <path d="M-55,-78 Q0,-110 55,-78" fill="none" stroke="#C62828" stroke-width="2.5"/>
+          <path d="M-50,-78 Q0,-105 50,-78" fill="none" stroke="#E65100" stroke-width="1.5"/>
+          <!-- Dots on arch -->
+          <circle cx="-35" cy="-90" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+          <circle cx="-15" cy="-97" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+          <circle cx="5" cy="-100" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+          <circle cx="25" cy="-97" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+          <circle cx="40" cy="-88" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+        </g>
+
+        <!-- ===== LEFT PEACOCK (detailed Madhubani) ===== -->
+        <g transform="translate(200,260)">
+          <!-- Tail fan (semicircle of feathers) -->
+          <g transform="translate(0,-20)">
+            <!-- Outer tail feathers with eye patterns -->
+            <path d="M-5,0 Q-70,-60 -55,-100" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+            <ellipse cx="-58" cy="-105" rx="10" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>
+            <ellipse cx="-58" cy="-105" rx="7" ry="10" fill="#2E7D32"/>
+            <ellipse cx="-58" cy="-105" rx="4" ry="6" fill="#F9A825"/>
+            <circle cx="-58" cy="-105" r="2.5" fill="#1A1A2E"/>
+
+            <path d="M-5,0 Q-45,-75 -25,-110" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+            <ellipse cx="-26" cy="-115" rx="10" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>
+            <ellipse cx="-26" cy="-115" rx="7" ry="10" fill="#4CAF50"/>
+            <ellipse cx="-26" cy="-115" rx="4" ry="6" fill="#F9A825"/>
+            <circle cx="-26" cy="-115" r="2.5" fill="#1A1A2E"/>
+
+            <path d="M-5,0 Q-15,-80 5,-115" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+            <ellipse cx="5" cy="-120" rx="10" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>
+            <ellipse cx="5" cy="-120" rx="7" ry="10" fill="#2E7D32"/>
+            <ellipse cx="5" cy="-120" rx="4" ry="6" fill="#F9A825"/>
+            <circle cx="5" cy="-120" r="2.5" fill="#1A1A2E"/>
+
+            <path d="M-5,0 Q15,-75 35,-108" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+            <ellipse cx="36" cy="-113" rx="10" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>
+            <ellipse cx="36" cy="-113" rx="7" ry="10" fill="#4CAF50"/>
+            <ellipse cx="36" cy="-113" rx="4" ry="6" fill="#F9A825"/>
+            <circle cx="36" cy="-113" r="2.5" fill="#1A1A2E"/>
+
+            <path d="M-5,0 Q40,-55 60,-95" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+            <ellipse cx="62" cy="-100" rx="10" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>
+            <ellipse cx="62" cy="-100" rx="7" ry="10" fill="#2E7D32"/>
+            <ellipse cx="62" cy="-100" rx="4" ry="6" fill="#F9A825"/>
+            <circle cx="62" cy="-100" r="2.5" fill="#1A1A2E"/>
+
+            <!-- Small decorative feathers between -->
+            <path d="M-5,0 Q-60,-40 -65,-75" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+            <circle cx="-66" cy="-78" r="4" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+            <path d="M-5,0 Q55,-35 70,-70" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+            <circle cx="72" cy="-73" r="4" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          </g>
+          <!-- Body -->
+          <ellipse cx="0" cy="15" rx="18" ry="22" fill="#1565C0" stroke="#1A1A2E" stroke-width="2.5"/>
+          <ellipse cx="0" cy="15" rx="14" ry="18" fill="url(#scales)"/>
+          <!-- Neck -->
+          <path d="M-5,0 Q-8,-25 0,-40" fill="none" stroke="#1565C0" stroke-width="8"/>
+          <path d="M5,0 Q8,-25 0,-40" fill="none" stroke="#1565C0" stroke-width="8"/>
+          <path d="M-3,-5 Q-6,-25 0,-38" fill="none" stroke="url(#dots)" stroke-width="4"/>
+          <!-- Head -->
+          <circle cx="0" cy="-45" r="12" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>
+          <circle cx="0" cy="-45" r="8" fill="url(#dots)"/>
+          <!-- Eye -->
+          <ellipse cx="-4" cy="-47" rx="3" ry="3.5" fill="#FFF" stroke="#1A1A2E" stroke-width="1"/>
+          <circle cx="-4" cy="-47" r="1.5" fill="#1A1A2E"/>
+          <!-- Beak -->
+          <polygon points="0,-42 -12,-40 -2,-38" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <!-- Crown -->
+          <line x1="0" y1="-57" x2="-3" y2="-68" stroke="#1565C0" stroke-width="1.5"/>
+          <circle cx="-3" cy="-70" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="0" y1="-57" x2="3" y2="-70" stroke="#1565C0" stroke-width="1.5"/>
+          <circle cx="3" cy="-72" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="0" y1="-57" x2="0" y2="-72" stroke="#1565C0" stroke-width="1.5"/>
+          <circle cx="0" cy="-74" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+          <!-- Legs -->
+          <line x1="-8" y1="35" x2="-12" y2="60" stroke="#8D6E63" stroke-width="2"/>
+          <line x1="8" y1="35" x2="12" y2="60" stroke="#8D6E63" stroke-width="2"/>
+          <path d="M-18,60 L-12,60 L-6,60" fill="none" stroke="#8D6E63" stroke-width="1.5"/>
+          <path d="M6,60 L12,60 L18,60" fill="none" stroke="#8D6E63" stroke-width="1.5"/>
+        </g>
+
+        <!-- ===== RIGHT PEACOCK (mirrored) ===== -->
+        <g transform="translate(600,260) scale(-1,1)">
+          <!-- Tail fan -->
+          <g transform="translate(0,-20)">
+            <path d="M-5,0 Q-70,-60 -55,-100" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+            <ellipse cx="-58" cy="-105" rx="10" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>
+            <ellipse cx="-58" cy="-105" rx="7" ry="10" fill="#2E7D32"/>
+            <ellipse cx="-58" cy="-105" rx="4" ry="6" fill="#F9A825"/>
+            <circle cx="-58" cy="-105" r="2.5" fill="#1A1A2E"/>
+
+            <path d="M-5,0 Q-45,-75 -25,-110" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+            <ellipse cx="-26" cy="-115" rx="10" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>
+            <ellipse cx="-26" cy="-115" rx="7" ry="10" fill="#4CAF50"/>
+            <ellipse cx="-26" cy="-115" rx="4" ry="6" fill="#F9A825"/>
+            <circle cx="-26" cy="-115" r="2.5" fill="#1A1A2E"/>
+
+            <path d="M-5,0 Q-15,-80 5,-115" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+            <ellipse cx="5" cy="-120" rx="10" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>
+            <ellipse cx="5" cy="-120" rx="7" ry="10" fill="#2E7D32"/>
+            <ellipse cx="5" cy="-120" rx="4" ry="6" fill="#F9A825"/>
+            <circle cx="5" cy="-120" r="2.5" fill="#1A1A2E"/>
+
+            <path d="M-5,0 Q15,-75 35,-108" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+            <ellipse cx="36" cy="-113" rx="10" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>
+            <ellipse cx="36" cy="-113" rx="7" ry="10" fill="#4CAF50"/>
+            <ellipse cx="36" cy="-113" rx="4" ry="6" fill="#F9A825"/>
+            <circle cx="36" cy="-113" r="2.5" fill="#1A1A2E"/>
+
+            <path d="M-5,0 Q40,-55 60,-95" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+            <ellipse cx="62" cy="-100" rx="10" ry="14" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>
+            <ellipse cx="62" cy="-100" rx="7" ry="10" fill="#2E7D32"/>
+            <ellipse cx="62" cy="-100" rx="4" ry="6" fill="#F9A825"/>
+            <circle cx="62" cy="-100" r="2.5" fill="#1A1A2E"/>
+
+            <path d="M-5,0 Q-60,-40 -65,-75" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+            <circle cx="-66" cy="-78" r="4" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+            <path d="M-5,0 Q55,-35 70,-70" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+            <circle cx="72" cy="-73" r="4" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          </g>
+          <!-- Body -->
+          <ellipse cx="0" cy="15" rx="18" ry="22" fill="#1565C0" stroke="#1A1A2E" stroke-width="2.5"/>
+          <ellipse cx="0" cy="15" rx="14" ry="18" fill="url(#scales)"/>
+          <!-- Neck -->
+          <path d="M-5,0 Q-8,-25 0,-40" fill="none" stroke="#1565C0" stroke-width="8"/>
+          <path d="M5,0 Q8,-25 0,-40" fill="none" stroke="#1565C0" stroke-width="8"/>
+          <!-- Head -->
+          <circle cx="0" cy="-45" r="12" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>
+          <ellipse cx="-4" cy="-47" rx="3" ry="3.5" fill="#FFF" stroke="#1A1A2E" stroke-width="1"/>
+          <circle cx="-4" cy="-47" r="1.5" fill="#1A1A2E"/>
+          <polygon points="0,-42 -12,-40 -2,-38" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <!-- Crown -->
+          <line x1="0" y1="-57" x2="-3" y2="-68" stroke="#1565C0" stroke-width="1.5"/>
+          <circle cx="-3" cy="-70" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="0" y1="-57" x2="3" y2="-70" stroke="#1565C0" stroke-width="1.5"/>
+          <circle cx="3" cy="-72" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+          <line x1="0" y1="-57" x2="0" y2="-72" stroke="#1565C0" stroke-width="1.5"/>
+          <circle cx="0" cy="-74" r="2.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>
+          <!-- Legs -->
+          <line x1="-8" y1="35" x2="-12" y2="60" stroke="#8D6E63" stroke-width="2"/>
+          <line x1="8" y1="35" x2="12" y2="60" stroke="#8D6E63" stroke-width="2"/>
+          <path d="M-18,60 L-12,60 L-6,60" fill="none" stroke="#8D6E63" stroke-width="1.5"/>
+          <path d="M6,60 L12,60 L18,60" fill="none" stroke="#8D6E63" stroke-width="1.5"/>
+        </g>
+
+        <!-- ===== COMMUNITY FIGURES ===== -->
+        <!-- Figure 1 (woman with vessel, left of well) -->
+        <g transform="translate(290,235)">
+          <!-- Body (triangular sari) -->
+          <polygon points="0,-15 -18,45 18,45" fill="#C62828" stroke="#1A1A2E" stroke-width="2"/>
+          <polygon points="0,-12 -15,42 15,42" fill="url(#zigzag)"/>
+          <!-- Sari decoration -->
+          <line x1="-5" y1="0" x2="-12" y2="30" stroke="#F9A825" stroke-width="1.5"/>
+          <line x1="5" y1="0" x2="12" y2="30" stroke="#F9A825" stroke-width="1.5"/>
+          <!-- Head -->
+          <circle cx="0" cy="-22" r="10" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>
+          <circle cx="0" cy="-22" r="7" fill="url(#dots)" opacity="0.3"/>
+          <!-- Face -->
+          <circle cx="-3" cy="-23" r="1.5" fill="#1A1A2E"/>
+          <circle cx="4" cy="-23" r="1.5" fill="#1A1A2E"/>
+          <path d="M-2,-18 Q1,-16 4,-18" fill="none" stroke="#1A1A2E" stroke-width="0.8"/>
+          <!-- Hair/dupatta -->
+          <path d="M-10,-22 Q-12,-32 0,-34 Q12,-32 10,-22" fill="#1A1A2E" stroke="none"/>
+          <path d="M10,-22 Q15,-15 18,-5" fill="none" stroke="#C62828" stroke-width="3"/>
+          <!-- Bindi -->
+          <circle cx="0" cy="-28" r="1.5" fill="#C62828"/>
+          <!-- Arm with vessel -->
+          <line x1="-8" y1="-5" x2="-22" y2="5" stroke="#D4A574" stroke-width="2.5"/>
+          <!-- Vessel -->
+          <ellipse cx="-25" cy="10" rx="8" ry="10" fill="#E65100" stroke="#1A1A2E" stroke-width="1.5"/>
+          <ellipse cx="-25" cy="10" rx="6" ry="7" fill="url(#hlines)"/>
+          <ellipse cx="-25" cy="2" rx="6" ry="3" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>
+          <!-- Feet -->
+          <line x1="-8" y1="45" x2="-10" y2="55" stroke="#D4A574" stroke-width="2"/>
+          <line x1="8" y1="45" x2="10" y2="55" stroke="#D4A574" stroke-width="2"/>
+        </g>
+
+        <!-- Figure 2 (person near well, right side) -->
+        <g transform="translate(510,235)">
+          <!-- Body -->
+          <polygon points="0,-15 -18,45 18,45" fill="#2E7D32" stroke="#1A1A2E" stroke-width="2"/>
+          <polygon points="0,-12 -15,42 15,42" fill="url(#hlines)"/>
+          <!-- Kurta pattern -->
+          <line x1="-3" y1="0" x2="-10" y2="30" stroke="#F9A825" stroke-width="1"/>
+          <line x1="3" y1="0" x2="10" y2="30" stroke="#F9A825" stroke-width="1"/>
+          <!-- Head -->
+          <circle cx="0" cy="-22" r="10" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>
+          <circle cx="-3" cy="-23" r="1.5" fill="#1A1A2E"/>
+          <circle cx="4" cy="-23" r="1.5" fill="#1A1A2E"/>
+          <path d="M-2,-18 Q1,-16 4,-18" fill="none" stroke="#1A1A2E" stroke-width="0.8"/>
+          <!-- Turban -->
+          <path d="M-10,-25 Q-12,-35 0,-37 Q12,-35 10,-25" fill="#E65100" stroke="#1A1A2E" stroke-width="1.5"/>
+          <path d="M-8,-28 Q0,-38 8,-28" fill="url(#zigzag)"/>
+          <!-- Arm holding vessel -->
+          <line x1="8" y1="-5" x2="22" y2="5" stroke="#D4A574" stroke-width="2.5"/>
+          <!-- Vessel -->
+          <ellipse cx="26" cy="10" rx="8" ry="10" fill="#F9A825" stroke="#1A1A2E" stroke-width="1.5"/>
+          <ellipse cx="26" cy="10" rx="6" ry="7" fill="url(#scales)"/>
+          <ellipse cx="26" cy="2" rx="6" ry="3" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <!-- Feet -->
+          <line x1="-8" y1="45" x2="-10" y2="55" stroke="#D4A574" stroke-width="2"/>
+          <line x1="8" y1="45" x2="10" y2="55" stroke="#D4A574" stroke-width="2"/>
+        </g>
+
+        <!-- Figure 3 (small, behind well) -->
+        <g transform="translate(360,200) scale(0.7)">
+          <polygon points="0,-15 -16,40 16,40" fill="#E65100" stroke="#1A1A2E" stroke-width="2"/>
+          <polygon points="0,-12 -13,37 13,37" fill="url(#dots)"/>
+          <circle cx="0" cy="-22" r="9" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>
+          <circle cx="-3" cy="-23" r="1.2" fill="#1A1A2E"/>
+          <circle cx="3" cy="-23" r="1.2" fill="#1A1A2E"/>
+          <path d="M-8,-25 Q-10,-34 0,-35 Q10,-34 8,-25" fill="#1A1A2E"/>
+        </g>
+
+        <!-- Figure 4 (small, behind well right) -->
+        <g transform="translate(445,205) scale(0.7)">
+          <polygon points="0,-15 -16,40 16,40" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>
+          <polygon points="0,-12 -13,37 13,37" fill="url(#zigzag)"/>
+          <circle cx="0" cy="-22" r="9" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>
+          <circle cx="-3" cy="-23" r="1.2" fill="#1A1A2E"/>
+          <circle cx="3" cy="-23" r="1.2" fill="#1A1A2E"/>
+          <path d="M-8,-25 Q-10,-34 0,-35 Q10,-34 8,-25" fill="#1565C0" stroke="#1A1A2E" stroke-width="1"/>
+        </g>
+
+        <!-- ===== LOTUS POND (bottom) ===== -->
+        <!-- Pond -->
+        <ellipse cx="400" cy="385" rx="180" ry="30" fill="#1565C0" opacity="0.3" stroke="#1A1A2E" stroke-width="1.5"/>
+        <ellipse cx="400" cy="385" rx="160" ry="22" fill="#42A5F5" opacity="0.3"/>
+        <!-- Water ripples -->
+        <path d="M260,382 Q280,378 300,382 Q320,386 340,382 Q360,378 380,382 Q400,386 420,382 Q440,378 460,382 Q480,386 500,382 Q520,378 540,382" fill="none" stroke="#FFF" stroke-width="0.8" opacity="0.5"/>
+
+        <!-- Lotus 1 (center) -->
+        <g transform="translate(400,375)">
+          <!-- Outer petals -->
+          <ellipse cx="-18" cy="-5" rx="8" ry="16" fill="#F48FB1" stroke="#C62828" stroke-width="1.5" transform="rotate(-30)"/>
+          <ellipse cx="18" cy="-5" rx="8" ry="16" fill="#F48FB1" stroke="#C62828" stroke-width="1.5" transform="rotate(30)"/>
+          <ellipse cx="-10" cy="-8" rx="7" ry="15" fill="#EC407A" stroke="#C62828" stroke-width="1.5" transform="rotate(-15)"/>
+          <ellipse cx="10" cy="-8" rx="7" ry="15" fill="#EC407A" stroke="#C62828" stroke-width="1.5" transform="rotate(15)"/>
+          <!-- Center petals -->
+          <ellipse cx="-4" cy="-10" rx="6" ry="14" fill="#E91E63" stroke="#C62828" stroke-width="1.2" transform="rotate(-5)"/>
+          <ellipse cx="4" cy="-10" rx="6" ry="14" fill="#E91E63" stroke="#C62828" stroke-width="1.2" transform="rotate(5)"/>
+          <!-- Center -->
+          <circle cx="0" cy="-8" r="5" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <circle cx="0" cy="-8" r="3" fill="url(#dots)"/>
+          <!-- Dot decorations on petals -->
+          <circle cx="-6" cy="-18" r="1" fill="#FFF"/>
+          <circle cx="6" cy="-18" r="1" fill="#FFF"/>
+          <circle cx="0" cy="-20" r="1" fill="#FFF"/>
+          <!-- Leaf -->
+          <ellipse cx="-22" cy="5" rx="16" ry="6" fill="#2E7D32" stroke="#1A1A2E" stroke-width="1.2"/>
+          <line x1="-30" y1="5" x2="-14" y2="5" stroke="#1A1A2E" stroke-width="0.6"/>
+          <ellipse cx="24" cy="5" rx="16" ry="6" fill="#4CAF50" stroke="#1A1A2E" stroke-width="1.2"/>
+          <line x1="16" y1="5" x2="32" y2="5" stroke="#1A1A2E" stroke-width="0.6"/>
+        </g>
+
+        <!-- Lotus 2 (left) -->
+        <g transform="translate(320,388) scale(0.7)">
+          <ellipse cx="-15" cy="-5" rx="7" ry="14" fill="#F48FB1" stroke="#C62828" stroke-width="1.5" transform="rotate(-25)"/>
+          <ellipse cx="15" cy="-5" rx="7" ry="14" fill="#F48FB1" stroke="#C62828" stroke-width="1.5" transform="rotate(25)"/>
+          <ellipse cx="-5" cy="-8" rx="6" ry="13" fill="#EC407A" stroke="#C62828" stroke-width="1.2"/>
+          <ellipse cx="5" cy="-8" rx="6" ry="13" fill="#EC407A" stroke="#C62828" stroke-width="1.2"/>
+          <circle cx="0" cy="-6" r="4" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <ellipse cx="-18" cy="5" rx="12" ry="5" fill="#2E7D32" stroke="#1A1A2E" stroke-width="1"/>
+        </g>
+
+        <!-- Lotus 3 (right) -->
+        <g transform="translate(485,388) scale(0.7)">
+          <ellipse cx="-15" cy="-5" rx="7" ry="14" fill="#F48FB1" stroke="#C62828" stroke-width="1.5" transform="rotate(-25)"/>
+          <ellipse cx="15" cy="-5" rx="7" ry="14" fill="#F48FB1" stroke="#C62828" stroke-width="1.5" transform="rotate(25)"/>
+          <ellipse cx="-5" cy="-8" rx="6" ry="13" fill="#E91E63" stroke="#C62828" stroke-width="1.2"/>
+          <ellipse cx="5" cy="-8" rx="6" ry="13" fill="#E91E63" stroke="#C62828" stroke-width="1.2"/>
+          <circle cx="0" cy="-6" r="4" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <ellipse cx="20" cy="5" rx="12" ry="5" fill="#4CAF50" stroke="#1A1A2E" stroke-width="1"/>
+        </g>
+
+        <!-- Lotus buds -->
+        <g transform="translate(260,392)">
+          <path d="M0,0 Q-4,-12 0,-20 Q4,-12 0,0Z" fill="#EC407A" stroke="#C62828" stroke-width="1"/>
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#2E7D32" stroke-width="1.5"/>
+        </g>
+        <g transform="translate(540,390)">
+          <path d="M0,0 Q-4,-12 0,-20 Q4,-12 0,0Z" fill="#F48FB1" stroke="#C62828" stroke-width="1"/>
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#2E7D32" stroke-width="1.5"/>
+        </g>
+
+        <!-- ===== SMALL DECORATIVE ELEMENTS ===== -->
+        <!-- Flying birds -->
+        <path d="M150,60 Q155,55 160,58" fill="none" stroke="#1A1A2E" stroke-width="1.5"/>
+        <path d="M160,58 Q165,55 170,60" fill="none" stroke="#1A1A2E" stroke-width="1.5"/>
+        <path d="M620,50 Q625,45 630,48" fill="none" stroke="#1A1A2E" stroke-width="1.5"/>
+        <path d="M630,48 Q635,45 640,50" fill="none" stroke="#1A1A2E" stroke-width="1.5"/>
+        <path d="M560,70 Q565,65 570,68" fill="none" stroke="#1A1A2E" stroke-width="1.2"/>
+        <path d="M570,68 Q575,65 580,70" fill="none" stroke="#1A1A2E" stroke-width="1.2"/>
+
+        <!-- Small decorative flowers on ground -->
+        <g transform="translate(160,320)">
+          <circle cx="0" cy="0" r="5" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>
+          <circle cx="0" cy="-7" r="3" fill="#C62828" stroke="#1A1A2E" stroke-width="0.8"/>
+          <circle cx="0" cy="7" r="3" fill="#C62828" stroke="#1A1A2E" stroke-width="0.8"/>
+          <circle cx="-7" cy="0" r="3" fill="#C62828" stroke="#1A1A2E" stroke-width="0.8"/>
+          <circle cx="7" cy="0" r="3" fill="#C62828" stroke="#1A1A2E" stroke-width="0.8"/>
+        </g>
+        <g transform="translate(640,315)">
+          <circle cx="0" cy="0" r="5" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>
+          <circle cx="0" cy="-7" r="3" fill="#2E7D32" stroke="#1A1A2E" stroke-width="0.8"/>
+          <circle cx="0" cy="7" r="3" fill="#2E7D32" stroke="#1A1A2E" stroke-width="0.8"/>
+          <circle cx="-7" cy="0" r="3" fill="#2E7D32" stroke="#1A1A2E" stroke-width="0.8"/>
+          <circle cx="7" cy="0" r="3" fill="#2E7D32" stroke="#1A1A2E" stroke-width="0.8"/>
+        </g>
+
+        <!-- Ground line with grass tufts -->
+        <line x1="25" y1="345" x2="775" y2="345" stroke="#2E7D32" stroke-width="1.5" opacity="0.5"/>
+        <path d="M130,345 Q132,335 134,345" fill="none" stroke="#2E7D32" stroke-width="1"/>
+        <path d="M136,345 Q138,338 140,345" fill="none" stroke="#2E7D32" stroke-width="1"/>
+        <path d="M660,345 Q662,335 664,345" fill="none" stroke="#2E7D32" stroke-width="1"/>
+        <path d="M666,345 Q668,338 670,345" fill="none" stroke="#2E7D32" stroke-width="1"/>
+      </svg>
+    </div>
+    <p class="story-text">
+      In the heart of <strong>Bihar</strong>, a village gathers around a shared well.
+      Each family must choose -- contribute to its upkeep, or let others bear the cost.
+      The well sustains all, but only if all sustain the well.
+    </p>
+    <button class="btn-story" onclick="beginFromStory()">Begin the Story &rarr;</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     STORY MODAL (mid-game overlays)
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="story-modal-container"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
      WELCOME SCREEN
      ═══════════════════════════════════════════════════════════════ -->
-<div id="welcome-screen">
+<div id="welcome-screen" class="hidden">
   <div class="container">
     <div class="welcome-header fade-in">
       <div class="tag">Economics Simulation</div>
@@ -1018,6 +1783,9 @@ input[type="range"]::-moz-range-thumb {
       <p>10 rounds of the Public Good Game are complete. Here are the results.</p>
     </div>
 
+    <!-- End story art (filled by JS based on player behavior) -->
+    <div id="end-story-art" class="end-story-section"></div>
+
     <div class="standings" id="standings">
       <!-- filled by JS -->
     </div>
@@ -1120,6 +1888,7 @@ input[type="range"]::-moz-range-thumb {
 
   var agentsLib = null;
   var rosterData = null;
+  var playerContributions = []; // track player contributions for story endings
 
   // ── Init ───────────────────────────────────────────────────────
 
@@ -1163,6 +1932,13 @@ input[type="range"]::-moz-range-thumb {
     grid.innerHTML = html;
   }
 
+  // ── Story Intro ────────────────────────────────────────────────
+
+  window.beginFromStory = function() {
+    document.getElementById('story-intro').classList.add('hidden');
+    document.getElementById('welcome-screen').classList.remove('hidden');
+  };
+
   // ── Start Game ─────────────────────────────────────────────────
 
   window.startGame = function() {
@@ -1171,6 +1947,7 @@ input[type="range"]::-moz-range-thumb {
     state.history = [];
     state.agentHistory = [];
     state.agentEarnings = {};
+    playerContributions = [];
     AGENTS.forEach(function(a) { state.agentEarnings[a.id] = 0; });
 
     document.getElementById('welcome-screen').classList.add('hidden');
@@ -1344,6 +2121,9 @@ input[type="range"]::-moz-range-thumb {
       state.agentEarnings[ag.id] = Math.round((state.agentEarnings[ag.id] + e) * 100) / 100;
     });
 
+    // Track player contribution
+    playerContributions.push(playerContrib);
+
     // Record history
     var roundData = {
       round: state.round,
@@ -1457,6 +2237,23 @@ input[type="range"]::-moz-range-thumb {
       return;
     }
 
+    // Show mid-game story modals
+    if (state.round === 3) {
+      showMidGameStory3();
+      return;
+    }
+    if (state.round === 7) {
+      showMidGameStory7();
+      return;
+    }
+
+    state.round++;
+    updateTopBar();
+    resetContribution();
+  };
+
+  window.closeMidGameStory = function() {
+    document.getElementById('story-modal-container').innerHTML = '';
     state.round++;
     updateTopBar();
     resetContribution();
@@ -1505,6 +2302,9 @@ input[type="range"]::-moz-range-thumb {
     document.getElementById('game-screen').classList.add('hidden');
     document.getElementById('end-screen').classList.remove('hidden');
 
+    // Generate end story art based on player behavior
+    generateEndStoryArt();
+
     // Build standings
     var players = [
       { name: 'You', id: 'player', earnings: state.playerEarnings, color: '#F59E0B', initials: 'Y', detail: 'Your final score', isPlayer: true }
@@ -1551,6 +2351,611 @@ input[type="range"]::-moz-range-thumb {
     }
   }
 
+  // ── Mid-Game Story Modals ───────────────────────────────────────
+
+  function showMidGameStory3() {
+    var svg = '<svg viewBox="0 0 600 250" class="madhubani-art" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs>' +
+      '<pattern id="mch" width="8" height="8" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="8" y2="8" stroke="#1A1A2E" stroke-width="0.7"/><line x1="8" y1="0" x2="0" y2="8" stroke="#1A1A2E" stroke-width="0.7"/></pattern>' +
+      '<pattern id="mdots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1" fill="#1A1A2E"/></pattern>' +
+      '<pattern id="mzz" width="10" height="6" patternUnits="userSpaceOnUse"><polyline points="0,6 5,0 10,6" fill="none" stroke="#1A1A2E" stroke-width="0.7"/></pattern>' +
+      '</defs>' +
+      '<rect x="2" y="2" width="596" height="246" fill="#FFF8E1" stroke="#1A1A2E" stroke-width="2.5" rx="3"/>' +
+      '<rect x="6" y="6" width="588" height="238" fill="none" stroke="#C62828" stroke-width="1.5" rx="2"/>' +
+      // Cracked well
+      '<g transform="translate(300,130)">' +
+      '<ellipse cx="0" cy="30" rx="50" ry="14" fill="#8D6E63" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<rect x="-45" y="-15" width="90" height="45" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<rect x="-40" y="-10" width="80" height="35" fill="url(#mzz)"/>' +
+      // Cracks
+      '<path d="M-20,-10 L-25,5 L-18,12 L-22,25" fill="none" stroke="#1A1A2E" stroke-width="2.5" stroke-linecap="round"/>' +
+      '<path d="M-25,5 L-32,10" fill="none" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<path d="M15,-5 L18,8 L12,18" fill="none" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>' +
+      // Well opening
+      '<ellipse cx="0" cy="-15" rx="40" ry="10" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<ellipse cx="0" cy="-15" rx="30" ry="7" fill="#42A5F5"/>' +
+      // Posts
+      '<rect x="-38" y="-55" width="6" height="40" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<rect x="32" y="-55" width="6" height="40" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<rect x="-40" y="-60" width="80" height="7" fill="#A1887F" stroke="#1A1A2E" stroke-width="1.5" rx="1"/>' +
+      '</g>' +
+      // Figure walking away (right side)
+      '<g transform="translate(480,130)">' +
+      '<polygon points="0,-12 -14,35 14,35" fill="#EF4444" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<polygon points="0,-10 -12,32 12,32" fill="url(#mch)"/>' +
+      '<circle cx="0" cy="-20" r="8" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="-3" cy="-21" r="1.2" fill="#1A1A2E"/>' +
+      '<circle cx="3" cy="-21" r="1.2" fill="#1A1A2E"/>' +
+      '<path d="M-6,-23 Q-8,-30 0,-32 Q8,-30 6,-23" fill="#1A1A2E"/>' +
+      // Walking lines
+      '<line x1="-6" y1="35" x2="-12" y2="48" stroke="#D4A574" stroke-width="2"/>' +
+      '<line x1="6" y1="35" x2="14" y2="48" stroke="#D4A574" stroke-width="2"/>' +
+      // Arrow showing walking away
+      '<path d="M20,0 L40,0" fill="none" stroke="#1A1A2E" stroke-width="1.5" stroke-dasharray="4,3"/>' +
+      '<polygon points="40,-4 48,0 40,4" fill="#1A1A2E"/>' +
+      '</g>' +
+      // Contributing figures (left)
+      '<g transform="translate(130,140)">' +
+      '<polygon points="0,-12 -14,35 14,35" fill="#2E7D32" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<polygon points="0,-10 -12,32 12,32" fill="url(#mdots)"/>' +
+      '<circle cx="0" cy="-20" r="8" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="-3" cy="-21" r="1.2" fill="#1A1A2E"/><circle cx="3" cy="-21" r="1.2" fill="#1A1A2E"/>' +
+      '<path d="M-6,-23 Q-8,-30 0,-32 Q8,-30 6,-23" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>' +
+      '<line x1="8" y1="-5" x2="20" y2="2" stroke="#D4A574" stroke-width="2"/>' +
+      '<ellipse cx="24" cy="6" rx="6" ry="8" fill="#F9A825" stroke="#1A1A2E" stroke-width="1.2"/>' +
+      '</g>' +
+      '<g transform="translate(190,145) scale(0.85)">' +
+      '<polygon points="0,-12 -14,35 14,35" fill="#C62828" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<polygon points="0,-10 -12,32 12,32" fill="url(#mzz)"/>' +
+      '<circle cx="0" cy="-20" r="8" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="-3" cy="-21" r="1.2" fill="#1A1A2E"/><circle cx="3" cy="-21" r="1.2" fill="#1A1A2E"/>' +
+      '<path d="M-6,-23 Q-8,-30 0,-32 Q8,-30 6,-23" fill="#1A1A2E"/>' +
+      '<circle cx="0" cy="-27" r="1.2" fill="#C62828"/>' +
+      '</g>' +
+      // Decorative elements
+      '<g transform="translate(80,60)">' +
+      '<circle cx="0" cy="0" r="4" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>' +
+      '<circle cx="0" cy="-6" r="2.5" fill="#C62828" stroke="#1A1A2E" stroke-width="0.7"/>' +
+      '<circle cx="6" cy="0" r="2.5" fill="#C62828" stroke="#1A1A2E" stroke-width="0.7"/>' +
+      '<circle cx="0" cy="6" r="2.5" fill="#C62828" stroke="#1A1A2E" stroke-width="0.7"/>' +
+      '<circle cx="-6" cy="0" r="2.5" fill="#C62828" stroke="#1A1A2E" stroke-width="0.7"/>' +
+      '</g>' +
+      '<g transform="translate(520,55)">' +
+      '<circle cx="0" cy="0" r="4" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>' +
+      '<circle cx="0" cy="-6" r="2.5" fill="#2E7D32" stroke="#1A1A2E" stroke-width="0.7"/>' +
+      '<circle cx="6" cy="0" r="2.5" fill="#2E7D32" stroke="#1A1A2E" stroke-width="0.7"/>' +
+      '<circle cx="0" cy="6" r="2.5" fill="#2E7D32" stroke="#1A1A2E" stroke-width="0.7"/>' +
+      '<circle cx="-6" cy="0" r="2.5" fill="#2E7D32" stroke="#1A1A2E" stroke-width="0.7"/>' +
+      '</g>' +
+      // Ground
+      '<line x1="20" y1="195" x2="580" y2="195" stroke="#2E7D32" stroke-width="1" opacity="0.5"/>' +
+      '</svg>';
+
+    var html = '<div class="story-modal-overlay" onclick="event.target===this&&closeMidGameStory()">' +
+      '<div class="story-modal">' +
+      '<div class="story-svg-container">' + svg + '</div>' +
+      '<p class="story-text">Some contribute less, hoping others won\'t notice. The well shows its first cracks. Will the community come together, or will neglect take its toll?</p>' +
+      '<button class="btn-story" onclick="closeMidGameStory()">Continue &rarr;</button>' +
+      '</div></div>';
+
+    document.getElementById('story-modal-container').innerHTML = html;
+  }
+
+  function showMidGameStory7() {
+    // Calculate average contribution so far
+    var totalContrib = 0;
+    var totalCount = 0;
+    state.history.forEach(function(h) {
+      totalContrib += h.playerContrib;
+      totalCount++;
+      AGENTS.forEach(function(ag) { totalContrib += h.agentContribs[ag.id]; totalCount++; });
+    });
+    var avgContrib = Math.round(totalContrib / totalCount);
+    var isGood = avgContrib > 50;
+
+    var svg;
+    if (isGood) {
+      // Decorated well with good water
+      svg = '<svg viewBox="0 0 600 250" class="madhubani-art" xmlns="http://www.w3.org/2000/svg">' +
+        '<defs>' +
+        '<pattern id="m7ch" width="8" height="8" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="8" y2="8" stroke="#1A1A2E" stroke-width="0.7"/><line x1="8" y1="0" x2="0" y2="8" stroke="#1A1A2E" stroke-width="0.7"/></pattern>' +
+        '<pattern id="m7d" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1" fill="#1A1A2E"/></pattern>' +
+        '<pattern id="m7z" width="10" height="6" patternUnits="userSpaceOnUse"><polyline points="0,6 5,0 10,6" fill="none" stroke="#1A1A2E" stroke-width="0.7"/></pattern>' +
+        '</defs>' +
+        '<rect x="2" y="2" width="596" height="246" fill="#FFF8E1" stroke="#1A1A2E" stroke-width="2.5" rx="3"/>' +
+        '<rect x="6" y="6" width="588" height="238" fill="none" stroke="#2E7D32" stroke-width="1.5" rx="2"/>' +
+        // Beautiful decorated well
+        '<g transform="translate(300,125)">' +
+        '<ellipse cx="0" cy="35" rx="55" ry="16" fill="#8D6E63" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<rect x="-50" y="-15" width="100" height="50" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<rect x="-45" y="-10" width="90" height="40" fill="url(#m7z)"/>' +
+        // Floral decorations on well
+        '<circle cx="-25" cy="5" r="5" fill="#C62828" stroke="#1A1A2E" stroke-width="1"/>' +
+        '<circle cx="-25" cy="5" r="2.5" fill="#F9A825"/>' +
+        '<circle cx="0" cy="5" r="5" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>' +
+        '<circle cx="0" cy="5" r="2.5" fill="#F9A825"/>' +
+        '<circle cx="25" cy="5" r="5" fill="#C62828" stroke="#1A1A2E" stroke-width="1"/>' +
+        '<circle cx="25" cy="5" r="2.5" fill="#F9A825"/>' +
+        // Well opening with abundant water
+        '<ellipse cx="0" cy="-15" rx="45" ry="12" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<ellipse cx="0" cy="-15" rx="35" ry="8" fill="#42A5F5"/>' +
+        '<ellipse cx="0" cy="-15" rx="25" ry="5" fill="#64B5F6"/>' +
+        '<path d="M-20,-16 Q-10,-20 0,-16 Q10,-12 20,-16" fill="none" stroke="#FFF" stroke-width="1" opacity="0.7"/>' +
+        // Posts and beam
+        '<rect x="-42" y="-58" width="7" height="43" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5"/>' +
+        '<rect x="35" y="-58" width="7" height="43" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5"/>' +
+        '<rect x="-44" y="-63" width="88" height="7" fill="#A1887F" stroke="#1A1A2E" stroke-width="1.5" rx="1"/>' +
+        // Garland on beam
+        '<path d="M-40,-60 Q-20,-52 0,-60 Q20,-52 40,-60" fill="none" stroke="#F9A825" stroke-width="2"/>' +
+        '<circle cx="-30" cy="-56" r="3" fill="#E65100" stroke="#1A1A2E" stroke-width="0.8"/>' +
+        '<circle cx="-10" cy="-58" r="3" fill="#C62828" stroke="#1A1A2E" stroke-width="0.8"/>' +
+        '<circle cx="10" cy="-58" r="3" fill="#E65100" stroke="#1A1A2E" stroke-width="0.8"/>' +
+        '<circle cx="30" cy="-56" r="3" fill="#C62828" stroke="#1A1A2E" stroke-width="0.8"/>' +
+        '</g>' +
+        // Happy community figures
+        '<g transform="translate(130,140)">' +
+        '<polygon points="0,-12 -14,35 14,35" fill="#C62828" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<polygon points="0,-10 -12,32 12,32" fill="url(#m7d)"/>' +
+        '<circle cx="0" cy="-20" r="8" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<circle cx="-3" cy="-21" r="1.2" fill="#1A1A2E"/><circle cx="3" cy="-21" r="1.2" fill="#1A1A2E"/>' +
+        '<path d="M-3,-17 Q0,-15 3,-17" fill="none" stroke="#1A1A2E" stroke-width="0.8"/>' +
+        '<path d="M-6,-23 Q-8,-30 0,-32 Q8,-30 6,-23" fill="#1A1A2E"/>' +
+        '<circle cx="0" cy="-27" r="1.2" fill="#C62828"/>' +
+        '<line x1="8" y1="-5" x2="22" y2="0" stroke="#D4A574" stroke-width="2"/>' +
+        '<ellipse cx="26" cy="4" rx="6" ry="8" fill="#F9A825" stroke="#1A1A2E" stroke-width="1.2"/>' +
+        '</g>' +
+        '<g transform="translate(470,135)">' +
+        '<polygon points="0,-12 -14,35 14,35" fill="#2E7D32" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<polygon points="0,-10 -12,32 12,32" fill="url(#m7ch)"/>' +
+        '<circle cx="0" cy="-20" r="8" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<circle cx="-3" cy="-21" r="1.2" fill="#1A1A2E"/><circle cx="3" cy="-21" r="1.2" fill="#1A1A2E"/>' +
+        '<path d="M-3,-17 Q0,-15 3,-17" fill="none" stroke="#1A1A2E" stroke-width="0.8"/>' +
+        '<path d="M-6,-23 Q-8,-30 0,-32 Q8,-30 6,-23" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>' +
+        '<line x1="-8" y1="-5" x2="-22" y2="2" stroke="#D4A574" stroke-width="2"/>' +
+        '<ellipse cx="-26" cy="6" rx="6" ry="8" fill="#E65100" stroke="#1A1A2E" stroke-width="1.2"/>' +
+        '</g>' +
+        // Lotus flowers at bottom
+        '<g transform="translate(200,210) scale(0.6)">' +
+        '<ellipse cx="-12" cy="-4" rx="6" ry="12" fill="#F48FB1" stroke="#C62828" stroke-width="1.2" transform="rotate(-20)"/>' +
+        '<ellipse cx="12" cy="-4" rx="6" ry="12" fill="#F48FB1" stroke="#C62828" stroke-width="1.2" transform="rotate(20)"/>' +
+        '<ellipse cx="0" cy="-6" rx="5" ry="11" fill="#EC407A" stroke="#C62828" stroke-width="1"/>' +
+        '<circle cx="0" cy="-5" r="3" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>' +
+        '</g>' +
+        '<g transform="translate(400,215) scale(0.6)">' +
+        '<ellipse cx="-12" cy="-4" rx="6" ry="12" fill="#F48FB1" stroke="#C62828" stroke-width="1.2" transform="rotate(-20)"/>' +
+        '<ellipse cx="12" cy="-4" rx="6" ry="12" fill="#F48FB1" stroke="#C62828" stroke-width="1.2" transform="rotate(20)"/>' +
+        '<ellipse cx="0" cy="-6" rx="5" ry="11" fill="#E91E63" stroke="#C62828" stroke-width="1"/>' +
+        '<circle cx="0" cy="-5" r="3" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>' +
+        '</g>' +
+        // Ground
+        '<line x1="20" y1="195" x2="580" y2="195" stroke="#2E7D32" stroke-width="1" opacity="0.5"/>' +
+        '</svg>';
+    } else {
+      // Crumbling well
+      svg = '<svg viewBox="0 0 600 250" class="madhubani-art" xmlns="http://www.w3.org/2000/svg">' +
+        '<defs>' +
+        '<pattern id="m7ch2" width="8" height="8" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="8" y2="8" stroke="#1A1A2E" stroke-width="0.7"/><line x1="8" y1="0" x2="0" y2="8" stroke="#1A1A2E" stroke-width="0.7"/></pattern>' +
+        '<pattern id="m7d2" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1" fill="#1A1A2E"/></pattern>' +
+        '</defs>' +
+        '<rect x="2" y="2" width="596" height="246" fill="#FFF8E1" stroke="#1A1A2E" stroke-width="2.5" rx="3"/>' +
+        '<rect x="6" y="6" width="588" height="238" fill="none" stroke="#EF4444" stroke-width="1.5" rx="2"/>' +
+        // Crumbling well
+        '<g transform="translate(300,130)">' +
+        '<ellipse cx="0" cy="30" rx="50" ry="14" fill="#8D6E63" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<rect x="-45" y="-15" width="90" height="45" fill="#BCAAA4" stroke="#1A1A2E" stroke-width="2"/>' +
+        // Major cracks
+        '<path d="M-30,-15 L-28,0 L-35,15 L-30,30" fill="none" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/>' +
+        '<path d="M-28,0 L-38,5" fill="none" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<path d="M15,-10 L20,5 L14,20 L22,30" fill="none" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/>' +
+        '<path d="M20,5 L30,8" fill="none" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<path d="M-5,-15 L-2,0 L-8,15" fill="none" stroke="#1A1A2E" stroke-width="2"/>' +
+        // Fallen stones
+        '<rect x="50" y="20" width="12" height="8" fill="#BCAAA4" stroke="#1A1A2E" stroke-width="1" transform="rotate(15,56,24)"/>' +
+        '<rect x="-60" y="25" width="10" height="7" fill="#BCAAA4" stroke="#1A1A2E" stroke-width="1" transform="rotate(-10,-55,28)"/>' +
+        // Dry well opening
+        '<ellipse cx="0" cy="-15" rx="40" ry="10" fill="#795548" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<ellipse cx="0" cy="-15" rx="30" ry="7" fill="#8D6E63"/>' +
+        // Broken post
+        '<rect x="-38" y="-45" width="6" height="30" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5"/>' +
+        '<rect x="32" y="-50" width="6" height="35" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5" transform="rotate(8,35,-32)"/>' +
+        // Broken beam
+        '<rect x="-40" y="-50" width="40" height="6" fill="#A1887F" stroke="#1A1A2E" stroke-width="1.5" rx="1"/>' +
+        '<rect x="15" y="-48" width="30" height="6" fill="#A1887F" stroke="#1A1A2E" stroke-width="1.5" rx="1" transform="rotate(12,30,-45)"/>' +
+        '</g>' +
+        // Figures with empty vessels, looking sad
+        '<g transform="translate(140,145)">' +
+        '<polygon points="0,-12 -14,35 14,35" fill="#795548" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<polygon points="0,-10 -12,32 12,32" fill="url(#m7d2)"/>' +
+        '<circle cx="0" cy="-20" r="8" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<circle cx="-3" cy="-21" r="1.2" fill="#1A1A2E"/><circle cx="3" cy="-21" r="1.2" fill="#1A1A2E"/>' +
+        '<path d="M-3,-17 Q0,-14 3,-17" fill="none" stroke="#1A1A2E" stroke-width="0.8"/>' +
+        '<path d="M-6,-23 Q-8,-30 0,-32 Q8,-30 6,-23" fill="#1A1A2E"/>' +
+        // Empty upturned vessel
+        '<ellipse cx="22" cy="30" rx="6" ry="4" fill="#E65100" stroke="#1A1A2E" stroke-width="1" transform="rotate(45,22,30)"/>' +
+        '</g>' +
+        '<g transform="translate(460,140)">' +
+        '<polygon points="0,-12 -14,35 14,35" fill="#9E9E9E" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<polygon points="0,-10 -12,32 12,32" fill="url(#m7ch2)"/>' +
+        '<circle cx="0" cy="-20" r="8" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+        '<circle cx="-3" cy="-21" r="1.2" fill="#1A1A2E"/><circle cx="3" cy="-21" r="1.2" fill="#1A1A2E"/>' +
+        '<path d="M-3,-17 Q0,-14 3,-17" fill="none" stroke="#1A1A2E" stroke-width="0.8"/>' +
+        '<path d="M-6,-23 Q-8,-30 0,-32 Q8,-30 6,-23" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>' +
+        '</g>' +
+        // Dry ground
+        '<line x1="20" y1="195" x2="580" y2="195" stroke="#8D6E63" stroke-width="1.5"/>' +
+        '<path d="M100,195 L105,205 L110,195" fill="none" stroke="#8D6E63" stroke-width="1"/>' +
+        '<path d="M250,195 L255,203 L260,195" fill="none" stroke="#8D6E63" stroke-width="1"/>' +
+        '<path d="M400,195 L405,205 L410,195" fill="none" stroke="#8D6E63" stroke-width="1"/>' +
+        '</svg>';
+    }
+
+    var storyText = isGood
+      ? 'The community has come together. The well stands strong, its waters clear and plentiful. Cooperation is bearing fruit -- but the final rounds will tell the true tale.'
+      : 'Neglect has taken its toll. The well crumbles, its waters dwindling. Without renewed cooperation, the shared resource may fail entirely. There is still time to change course.';
+
+    var html = '<div class="story-modal-overlay" onclick="event.target===this&&closeMidGameStory()">' +
+      '<div class="story-modal">' +
+      '<div class="story-svg-container">' + svg + '</div>' +
+      '<p class="story-text">' + storyText + '</p>' +
+      '<button class="btn-story" onclick="closeMidGameStory()">Continue &rarr;</button>' +
+      '</div></div>';
+
+    document.getElementById('story-modal-container').innerHTML = html;
+  }
+
+  // ── End Screen Story Art ──────────────────────────────────────
+
+  function getPlayerAvgContribution() {
+    if (playerContributions.length === 0) return 50;
+    var sum = 0;
+    playerContributions.forEach(function(c) { sum += c; });
+    return sum / playerContributions.length;
+  }
+
+  function generateEndStoryArt() {
+    var avg = getPlayerAvgContribution();
+    var container = document.getElementById('end-story-art');
+
+    var svg, text;
+
+    if (avg > 70) {
+      // CELEBRATION: Decorated well, abundant water, dancing peacocks, blooming lotuses
+      svg = buildEndSvgCooperative();
+      text = 'The village prospers! Your generosity helped sustain the well through all seasons. The water flows freely, the lotuses bloom, and the peacocks dance in celebration. This is what happens when a community chooses cooperation over self-interest.';
+    } else if (avg < 30) {
+      // DRY: Crumbled well, wilted lotus, empty vessels
+      svg = buildEndSvgFreeRider();
+      text = 'The well has run dry. Without your contributions, the shared resource could not sustain itself. The lotuses have wilted, and the villagers carry empty vessels. The tragedy of the commons has played out before your eyes.';
+    } else {
+      // MIXED: Moderate scene
+      svg = buildEndSvgMixed();
+      text = 'The well survives, but barely. Your mixed contributions kept it going, though it shows the strain. Some lotuses bloom while others wilt. The village persists, caught between cooperation and self-interest.';
+    }
+
+    container.innerHTML = '<div class="story-svg-container">' + svg + '</div>' +
+      '<p class="story-text">' + text + '</p>';
+  }
+
+  function buildEndSvgCooperative() {
+    return '<svg viewBox="0 0 800 350" class="madhubani-art" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs>' +
+      '<pattern id="ech" width="8" height="8" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="8" y2="8" stroke="#1A1A2E" stroke-width="0.7"/><line x1="8" y1="0" x2="0" y2="8" stroke="#1A1A2E" stroke-width="0.7"/></pattern>' +
+      '<pattern id="ed" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1" fill="#1A1A2E"/></pattern>' +
+      '<pattern id="ez" width="10" height="6" patternUnits="userSpaceOnUse"><polyline points="0,6 5,0 10,6" fill="none" stroke="#1A1A2E" stroke-width="0.7"/></pattern>' +
+      '<pattern id="ehl" width="6" height="6" patternUnits="userSpaceOnUse"><line x1="0" y1="3" x2="6" y2="3" stroke="#1A1A2E" stroke-width="0.6"/></pattern>' +
+      '<pattern id="esc" width="12" height="10" patternUnits="userSpaceOnUse"><path d="M0,10 Q6,4 12,10" fill="none" stroke="#1A1A2E" stroke-width="0.5"/></pattern>' +
+      '</defs>' +
+      // Border
+      '<rect x="3" y="3" width="794" height="344" fill="#FFF8E1" stroke="#1A1A2E" stroke-width="2.5" rx="3"/>' +
+      '<rect x="8" y="8" width="784" height="334" fill="none" stroke="#2E7D32" stroke-width="2" rx="2"/>' +
+      '<rect x="12" y="12" width="776" height="326" fill="none" stroke="#F9A825" stroke-width="1" rx="2"/>' +
+      // Decorated well (center)
+      '<g transform="translate(400,165)">' +
+      '<ellipse cx="0" cy="35" rx="55" ry="16" fill="#8D6E63" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<rect x="-50" y="-15" width="100" height="50" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<rect x="-45" y="-10" width="90" height="40" fill="url(#ez)"/>' +
+      // Flower decorations on well
+      '<circle cx="-30" cy="5" r="6" fill="#C62828" stroke="#1A1A2E" stroke-width="1"/><circle cx="-30" cy="5" r="3" fill="#F9A825"/>' +
+      '<circle cx="-10" cy="5" r="6" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/><circle cx="-10" cy="5" r="3" fill="#F9A825"/>' +
+      '<circle cx="10" cy="5" r="6" fill="#C62828" stroke="#1A1A2E" stroke-width="1"/><circle cx="10" cy="5" r="3" fill="#F9A825"/>' +
+      '<circle cx="30" cy="5" r="6" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/><circle cx="30" cy="5" r="3" fill="#F9A825"/>' +
+      // Garland chain between flowers
+      '<path d="M-30,5 Q-20,12 -10,5 Q0,12 10,5 Q20,12 30,5" fill="none" stroke="#F9A825" stroke-width="1.5"/>' +
+      // Water overflowing
+      '<ellipse cx="0" cy="-15" rx="45" ry="12" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<ellipse cx="0" cy="-15" rx="35" ry="8" fill="#42A5F5"/>' +
+      '<ellipse cx="0" cy="-15" rx="25" ry="5" fill="#64B5F6"/>' +
+      '<path d="M-20,-16 Q-10,-20 0,-16 Q10,-12 20,-16" fill="none" stroke="#FFF" stroke-width="1" opacity="0.7"/>' +
+      // Water splashes (overflowing)
+      '<path d="M-45,-5 Q-55,-8 -50,-15" fill="none" stroke="#42A5F5" stroke-width="2"/>' +
+      '<path d="M45,-5 Q55,-8 50,-15" fill="none" stroke="#42A5F5" stroke-width="2"/>' +
+      // Posts and decorated beam
+      '<rect x="-42" y="-58" width="7" height="43" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<rect x="35" y="-58" width="7" height="43" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<rect x="-44" y="-63" width="88" height="7" fill="#A1887F" stroke="#1A1A2E" stroke-width="1.5" rx="1"/>' +
+      // Garland on beam
+      '<path d="M-42,-60 Q-25,-50 0,-60 Q25,-50 42,-60" fill="none" stroke="#C62828" stroke-width="2.5"/>' +
+      '<circle cx="-32" cy="-55" r="3.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      '<circle cx="-15" cy="-53" r="3.5" fill="#E65100" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      '<circle cx="0" cy="-55" r="3.5" fill="#C62828" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      '<circle cx="15" cy="-53" r="3.5" fill="#E65100" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      '<circle cx="32" cy="-55" r="3.5" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      // Arch decoration
+      '<path d="M-48,-63 Q0,-90 48,-63" fill="none" stroke="#C62828" stroke-width="2"/>' +
+      '<path d="M-44,-63 Q0,-86 44,-63" fill="none" stroke="#E65100" stroke-width="1.2"/>' +
+      '</g>' +
+      // Women with full vessels (left)
+      '<g transform="translate(200,175)">' +
+      '<polygon points="0,-15 -18,45 18,45" fill="#C62828" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<polygon points="0,-12 -15,42 15,42" fill="url(#ez)"/>' +
+      '<line x1="-4" y1="0" x2="-12" y2="30" stroke="#F9A825" stroke-width="1.5"/>' +
+      '<line x1="4" y1="0" x2="12" y2="30" stroke="#F9A825" stroke-width="1.5"/>' +
+      '<circle cx="0" cy="-22" r="10" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="-3" cy="-23" r="1.5" fill="#1A1A2E"/><circle cx="4" cy="-23" r="1.5" fill="#1A1A2E"/>' +
+      '<path d="M-2,-18 Q1,-15 4,-18" fill="none" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      '<path d="M-10,-22 Q-12,-32 0,-34 Q12,-32 10,-22" fill="#1A1A2E"/>' +
+      '<circle cx="0" cy="-28" r="1.5" fill="#C62828"/>' +
+      // Full vessel on head
+      '<ellipse cx="0" cy="-38" rx="9" ry="12" fill="#E65100" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<ellipse cx="0" cy="-38" rx="7" ry="9" fill="url(#ehl)"/>' +
+      '<ellipse cx="0" cy="-48" rx="7" ry="3" fill="#42A5F5" stroke="#1A1A2E" stroke-width="1"/>' +
+      '</g>' +
+      // Another woman with vessel (right)
+      '<g transform="translate(600,180)">' +
+      '<polygon points="0,-15 -18,45 18,45" fill="#2E7D32" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<polygon points="0,-12 -15,42 15,42" fill="url(#ed)"/>' +
+      '<circle cx="0" cy="-22" r="10" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="-3" cy="-23" r="1.5" fill="#1A1A2E"/><circle cx="4" cy="-23" r="1.5" fill="#1A1A2E"/>' +
+      '<path d="M-2,-18 Q1,-15 4,-18" fill="none" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      '<path d="M-10,-22 Q-12,-32 0,-34 Q12,-32 10,-22" fill="#1A1A2E"/>' +
+      '<circle cx="0" cy="-28" r="1.5" fill="#C62828"/>' +
+      '<ellipse cx="0" cy="-38" rx="9" ry="12" fill="#F9A825" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<ellipse cx="0" cy="-38" rx="7" ry="9" fill="url(#esc)"/>' +
+      '<ellipse cx="0" cy="-48" rx="7" ry="3" fill="#42A5F5" stroke="#1A1A2E" stroke-width="1"/>' +
+      '</g>' +
+      // Dancing peacock (left)
+      '<g transform="translate(110,185)">' +
+      '<g transform="translate(0,-15)">' +
+      '<path d="M0,0 Q-40,-40 -30,-70" fill="none" stroke="#1565C0" stroke-width="2"/>' +
+      '<ellipse cx="-32" cy="-75" rx="8" ry="11" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.2"/>' +
+      '<ellipse cx="-32" cy="-75" rx="5" ry="7" fill="#2E7D32"/><ellipse cx="-32" cy="-75" rx="3" ry="4" fill="#F9A825"/><circle cx="-32" cy="-75" r="1.5" fill="#1A1A2E"/>' +
+      '<path d="M0,0 Q-20,-50 -5,-80" fill="none" stroke="#1565C0" stroke-width="2"/>' +
+      '<ellipse cx="-6" cy="-85" rx="8" ry="11" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.2"/>' +
+      '<ellipse cx="-6" cy="-85" rx="5" ry="7" fill="#4CAF50"/><ellipse cx="-6" cy="-85" rx="3" ry="4" fill="#F9A825"/><circle cx="-6" cy="-85" r="1.5" fill="#1A1A2E"/>' +
+      '<path d="M0,0 Q10,-50 25,-75" fill="none" stroke="#1565C0" stroke-width="2"/>' +
+      '<ellipse cx="27" cy="-80" rx="8" ry="11" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.2"/>' +
+      '<ellipse cx="27" cy="-80" rx="5" ry="7" fill="#2E7D32"/><ellipse cx="27" cy="-80" rx="3" ry="4" fill="#F9A825"/><circle cx="27" cy="-80" r="1.5" fill="#1A1A2E"/>' +
+      '<path d="M0,0 Q30,-35 45,-60" fill="none" stroke="#1565C0" stroke-width="2"/>' +
+      '<ellipse cx="47" cy="-65" rx="7" ry="10" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.2"/>' +
+      '<ellipse cx="47" cy="-65" rx="4" ry="6" fill="#4CAF50"/><circle cx="47" cy="-65" r="2.5" fill="#F9A825"/><circle cx="47" cy="-65" r="1" fill="#1A1A2E"/>' +
+      '</g>' +
+      '<ellipse cx="0" cy="8" rx="14" ry="18" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<ellipse cx="0" cy="8" rx="10" ry="14" fill="url(#esc)"/>' +
+      '<path d="M-4,-5 Q-6,-20 0,-30" fill="none" stroke="#1565C0" stroke-width="6"/>' +
+      '<path d="M4,-5 Q6,-20 0,-30" fill="none" stroke="#1565C0" stroke-width="6"/>' +
+      '<circle cx="0" cy="-34" r="9" fill="#1565C0" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<ellipse cx="-3" cy="-36" rx="2.5" ry="3" fill="#FFF" stroke="#1A1A2E" stroke-width="0.8"/><circle cx="-3" cy="-36" r="1" fill="#1A1A2E"/>' +
+      '<polygon points="0,-33 -9,-31 -1,-29" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      '<line x1="0" y1="-43" x2="-2" y2="-52" stroke="#1565C0" stroke-width="1.2"/><circle cx="-2" cy="-54" r="2" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.6"/>' +
+      '<line x1="0" y1="-43" x2="2" y2="-53" stroke="#1565C0" stroke-width="1.2"/><circle cx="2" cy="-55" r="2" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.6"/>' +
+      '<line x1="0" y1="-43" x2="0" y2="-55" stroke="#1565C0" stroke-width="1.2"/><circle cx="0" cy="-57" r="2" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.6"/>' +
+      '</g>' +
+      // Blooming lotuses at bottom
+      '<g transform="translate(300,290)">' +
+      '<ellipse cx="-18" cy="5" rx="18" ry="7" fill="#2E7D32" stroke="#1A1A2E" stroke-width="1.2"/>' +
+      '<line x1="-28" y1="5" x2="-8" y2="5" stroke="#1A1A2E" stroke-width="0.5"/>' +
+      '<ellipse cx="22" cy="5" rx="18" ry="7" fill="#4CAF50" stroke="#1A1A2E" stroke-width="1.2"/>' +
+      '<line x1="12" y1="5" x2="32" y2="5" stroke="#1A1A2E" stroke-width="0.5"/>' +
+      '<ellipse cx="-16" cy="-5" rx="7" ry="15" fill="#F48FB1" stroke="#C62828" stroke-width="1.2" transform="rotate(-25)"/>' +
+      '<ellipse cx="16" cy="-5" rx="7" ry="15" fill="#F48FB1" stroke="#C62828" stroke-width="1.2" transform="rotate(25)"/>' +
+      '<ellipse cx="-6" cy="-8" rx="6" ry="14" fill="#EC407A" stroke="#C62828" stroke-width="1"/>' +
+      '<ellipse cx="6" cy="-8" rx="6" ry="14" fill="#E91E63" stroke="#C62828" stroke-width="1"/>' +
+      '<circle cx="0" cy="-7" r="5" fill="#F9A825" stroke="#1A1A2E" stroke-width="1"/>' +
+      '<circle cx="0" cy="-7" r="2.5" fill="url(#ed)"/>' +
+      '</g>' +
+      '<g transform="translate(500,295) scale(0.8)">' +
+      '<ellipse cx="-14" cy="-4" rx="6" ry="13" fill="#F48FB1" stroke="#C62828" stroke-width="1.2" transform="rotate(-20)"/>' +
+      '<ellipse cx="14" cy="-4" rx="6" ry="13" fill="#F48FB1" stroke="#C62828" stroke-width="1.2" transform="rotate(20)"/>' +
+      '<ellipse cx="0" cy="-6" rx="5" ry="12" fill="#EC407A" stroke="#C62828" stroke-width="1"/>' +
+      '<circle cx="0" cy="-5" r="4" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      '<ellipse cx="-16" cy="5" rx="14" ry="5" fill="#2E7D32" stroke="#1A1A2E" stroke-width="1"/>' +
+      '</g>' +
+      // Small sun
+      '<g transform="translate(700,55) scale(0.5)">' +
+      '<circle cx="0" cy="0" r="25" fill="#F9A825" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="0" cy="0" r="20" fill="#FFD54F"/>' +
+      '<line x1="0" y1="-30" x2="0" y2="-40" stroke="#F9A825" stroke-width="2.5"/>' +
+      '<line x1="22" y1="-22" x2="30" y2="-30" stroke="#F9A825" stroke-width="2.5"/>' +
+      '<line x1="30" y1="0" x2="40" y2="0" stroke="#F9A825" stroke-width="2.5"/>' +
+      '<line x1="-30" y1="0" x2="-40" y2="0" stroke="#F9A825" stroke-width="2.5"/>' +
+      '<line x1="-22" y1="-22" x2="-30" y2="-30" stroke="#F9A825" stroke-width="2.5"/>' +
+      '<ellipse cx="-7" cy="-4" rx="3" ry="3.5" fill="#1A1A2E"/>' +
+      '<ellipse cx="7" cy="-4" rx="3" ry="3.5" fill="#1A1A2E"/>' +
+      '<path d="M-6,6 Q0,12 6,6" fill="none" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '</g>' +
+      // Ground and water pond
+      '<ellipse cx="400" cy="310" rx="200" ry="20" fill="#1565C0" opacity="0.15" stroke="none"/>' +
+      '<path d="M220,305 Q260,300 300,305 Q340,310 380,305 Q420,300 460,305 Q500,310 540,305 Q580,300 600,305" fill="none" stroke="#42A5F5" stroke-width="0.8" opacity="0.5"/>' +
+      '</svg>';
+  }
+
+  function buildEndSvgFreeRider() {
+    return '<svg viewBox="0 0 800 350" class="madhubani-art" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs>' +
+      '<pattern id="efch" width="8" height="8" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="8" y2="8" stroke="#1A1A2E" stroke-width="0.7"/><line x1="8" y1="0" x2="0" y2="8" stroke="#1A1A2E" stroke-width="0.7"/></pattern>' +
+      '<pattern id="efd" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1" fill="#1A1A2E"/></pattern>' +
+      '</defs>' +
+      // Border (muted)
+      '<rect x="3" y="3" width="794" height="344" fill="#F5F0E0" stroke="#1A1A2E" stroke-width="2.5" rx="3"/>' +
+      '<rect x="8" y="8" width="784" height="334" fill="none" stroke="#795548" stroke-width="1.5" rx="2"/>' +
+      // Dry crumbled well
+      '<g transform="translate(400,170)">' +
+      '<ellipse cx="0" cy="35" rx="55" ry="14" fill="#795548" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<rect x="-50" y="-15" width="100" height="50" fill="#BCAAA4" stroke="#1A1A2E" stroke-width="2"/>' +
+      // Major cracks everywhere
+      '<path d="M-35,-15 L-30,0 L-38,18 L-32,35" fill="none" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/>' +
+      '<path d="M-30,0 L-42,5" fill="none" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<path d="M15,-12 L22,8 L14,25" fill="none" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/>' +
+      '<path d="M22,8 L35,12" fill="none" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<path d="M-10,-15 L-6,5 L-14,20 L-8,35" fill="none" stroke="#1A1A2E" stroke-width="2.5"/>' +
+      '<path d="M35,-10 L38,5 L42,20" fill="none" stroke="#1A1A2E" stroke-width="2"/>' +
+      // Fallen stones
+      '<rect x="55" y="15" width="15" height="10" fill="#BCAAA4" stroke="#1A1A2E" stroke-width="1" transform="rotate(20,62,20)"/>' +
+      '<rect x="-70" y="22" width="12" height="8" fill="#BCAAA4" stroke="#1A1A2E" stroke-width="1" transform="rotate(-15,-64,26)"/>' +
+      '<rect x="48" y="30" width="10" height="7" fill="#BCAAA4" stroke="#1A1A2E" stroke-width="1" transform="rotate(35,53,33)"/>' +
+      // Dry well
+      '<ellipse cx="0" cy="-15" rx="40" ry="10" fill="#795548" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<ellipse cx="0" cy="-15" rx="30" ry="7" fill="#8D6E63"/>' +
+      // Dry crack in bottom
+      '<path d="M-10,-15 L-5,-12 L5,-15 L10,-12" fill="none" stroke="#5D4037" stroke-width="1.5"/>' +
+      // Broken posts
+      '<rect x="-38" y="-40" width="6" height="25" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<rect x="32" y="-45" width="6" height="30" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5" transform="rotate(15,35,-30)"/>' +
+      // Broken beam pieces
+      '<rect x="-40" y="-45" width="35" height="6" fill="#A1887F" stroke="#1A1A2E" stroke-width="1.5" rx="1"/>' +
+      '<rect x="18" y="-40" width="25" height="5" fill="#A1887F" stroke="#1A1A2E" stroke-width="1" rx="1" transform="rotate(25,30,-38)"/>' +
+      // Dangling broken rope
+      '<path d="M-5,-35 L-3,-25 L-7,-18" fill="none" stroke="#8D6E63" stroke-width="1.5" stroke-dasharray="3,2"/>' +
+      '</g>' +
+      // Sad figures with empty vessels
+      '<g transform="translate(180,185)">' +
+      '<polygon points="0,-15 -18,45 18,45" fill="#795548" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<polygon points="0,-12 -15,42 15,42" fill="url(#efd)"/>' +
+      '<circle cx="0" cy="-22" r="10" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="-3" cy="-23" r="1.5" fill="#1A1A2E"/><circle cx="4" cy="-23" r="1.5" fill="#1A1A2E"/>' +
+      '<path d="M-3,-17 Q1,-14 4,-17" fill="none" stroke="#1A1A2E" stroke-width="1"/>' +
+      '<path d="M-10,-22 Q-12,-32 0,-34 Q12,-32 10,-22" fill="#1A1A2E"/>' +
+      // Upside-down empty vessel
+      '<ellipse cx="-20" cy="40" rx="7" ry="5" fill="#E65100" stroke="#1A1A2E" stroke-width="1" transform="rotate(160,-20,40)"/>' +
+      '<ellipse cx="-20" cy="48" rx="5" ry="3" fill="#E65100" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      '</g>' +
+      '<g transform="translate(620,180)">' +
+      '<polygon points="0,-15 -18,45 18,45" fill="#9E9E9E" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<polygon points="0,-12 -15,42 15,42" fill="url(#efch)"/>' +
+      '<circle cx="0" cy="-22" r="10" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="-3" cy="-23" r="1.5" fill="#1A1A2E"/><circle cx="4" cy="-23" r="1.5" fill="#1A1A2E"/>' +
+      '<path d="M-3,-17 Q1,-14 4,-17" fill="none" stroke="#1A1A2E" stroke-width="1"/>' +
+      '<path d="M-10,-22 Q-12,-32 0,-34 Q12,-32 10,-22" fill="#795548" stroke="#1A1A2E" stroke-width="1"/>' +
+      // Empty vessel at feet
+      '<ellipse cx="22" cy="42" rx="7" ry="5" fill="#BCAAA4" stroke="#1A1A2E" stroke-width="1"/>' +
+      '</g>' +
+      // Wilted lotus
+      '<g transform="translate(300,295)">' +
+      '<path d="M-8,-5 Q-12,-20 -5,-25" fill="none" stroke="#795548" stroke-width="1.5"/>' +
+      '<path d="M8,-5 Q12,-20 5,-25" fill="none" stroke="#795548" stroke-width="1.5"/>' +
+      '<path d="M0,-5 Q-2,-22 2,-28" fill="none" stroke="#795548" stroke-width="1.5"/>' +
+      '<ellipse cx="-14" cy="3" rx="14" ry="5" fill="#795548" stroke="#1A1A2E" stroke-width="1" opacity="0.7"/>' +
+      '</g>' +
+      '<g transform="translate(500,300)">' +
+      '<path d="M-6,-3 Q-8,-15 -3,-18" fill="none" stroke="#795548" stroke-width="1.2"/>' +
+      '<path d="M6,-3 Q8,-15 3,-18" fill="none" stroke="#795548" stroke-width="1.2"/>' +
+      '<ellipse cx="12" cy="2" rx="12" ry="4" fill="#795548" stroke="#1A1A2E" stroke-width="0.8" opacity="0.6"/>' +
+      '</g>' +
+      // Dry cracked ground
+      '<line x1="50" y1="265" x2="750" y2="265" stroke="#8D6E63" stroke-width="1.5"/>' +
+      '<path d="M150,265 L155,280 L160,265" fill="none" stroke="#8D6E63" stroke-width="1.2"/>' +
+      '<path d="M300,265 L308,280 L316,265" fill="none" stroke="#8D6E63" stroke-width="1.2"/>' +
+      '<path d="M500,265 L507,278 L514,265" fill="none" stroke="#8D6E63" stroke-width="1.2"/>' +
+      '<path d="M650,265 L656,275 L662,265" fill="none" stroke="#8D6E63" stroke-width="1.2"/>' +
+      // Pale sun (no smile)
+      '<g transform="translate(700,60) scale(0.45)">' +
+      '<circle cx="0" cy="0" r="25" fill="#E0C068" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="0" cy="0" r="20" fill="#D4B44C"/>' +
+      '<ellipse cx="-7" cy="-4" rx="3" ry="3.5" fill="#1A1A2E"/>' +
+      '<ellipse cx="7" cy="-4" rx="3" ry="3.5" fill="#1A1A2E"/>' +
+      '<path d="M-6,6 Q0,4 6,6" fill="none" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '</g>' +
+      // Dead tree
+      '<g transform="translate(100,100)">' +
+      '<rect x="-5" y="30" width="10" height="100" fill="#795548" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<line x1="0" y1="50" x2="-25" y2="30" stroke="#795548" stroke-width="3"/>' +
+      '<line x1="0" y1="60" x2="20" y2="40" stroke="#795548" stroke-width="3"/>' +
+      '<line x1="0" y1="40" x2="-15" y2="20" stroke="#795548" stroke-width="2.5"/>' +
+      '</g>' +
+      '</svg>';
+  }
+
+  function buildEndSvgMixed() {
+    return '<svg viewBox="0 0 800 350" class="madhubani-art" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs>' +
+      '<pattern id="emch" width="8" height="8" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="8" y2="8" stroke="#1A1A2E" stroke-width="0.7"/><line x1="8" y1="0" x2="0" y2="8" stroke="#1A1A2E" stroke-width="0.7"/></pattern>' +
+      '<pattern id="emd" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1" fill="#1A1A2E"/></pattern>' +
+      '<pattern id="emz" width="10" height="6" patternUnits="userSpaceOnUse"><polyline points="0,6 5,0 10,6" fill="none" stroke="#1A1A2E" stroke-width="0.7"/></pattern>' +
+      '</defs>' +
+      // Border
+      '<rect x="3" y="3" width="794" height="344" fill="#FFF8E1" stroke="#1A1A2E" stroke-width="2.5" rx="3"/>' +
+      '<rect x="8" y="8" width="784" height="334" fill="none" stroke="#F9A825" stroke-width="1.5" rx="2"/>' +
+      // Well with minor cracks but still functional
+      '<g transform="translate(400,170)">' +
+      '<ellipse cx="0" cy="35" rx="55" ry="16" fill="#8D6E63" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<rect x="-50" y="-15" width="100" height="50" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<rect x="-45" y="-10" width="90" height="40" fill="url(#emz)"/>' +
+      // Some cracks
+      '<path d="M-25,-10 L-22,5 L-28,15" fill="none" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round"/>' +
+      '<path d="M20,-5 L24,10" fill="none" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      // Still has some water
+      '<ellipse cx="0" cy="-15" rx="45" ry="12" fill="#1565C0" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<ellipse cx="0" cy="-15" rx="30" ry="7" fill="#42A5F5" opacity="0.7"/>' +
+      // Posts (one slightly tilted)
+      '<rect x="-42" y="-55" width="7" height="40" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '<rect x="35" y="-55" width="7" height="40" fill="#8D6E63" stroke="#1A1A2E" stroke-width="1.5" transform="rotate(3,38,-35)"/>' +
+      '<rect x="-44" y="-60" width="88" height="7" fill="#A1887F" stroke="#1A1A2E" stroke-width="1.5" rx="1"/>' +
+      '</g>' +
+      // Figures -- one contributing, one uncertain
+      '<g transform="translate(200,185)">' +
+      '<polygon points="0,-15 -18,45 18,45" fill="#C62828" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<polygon points="0,-12 -15,42 15,42" fill="url(#emz)"/>' +
+      '<circle cx="0" cy="-22" r="10" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="-3" cy="-23" r="1.5" fill="#1A1A2E"/><circle cx="4" cy="-23" r="1.5" fill="#1A1A2E"/>' +
+      '<path d="M-10,-22 Q-12,-32 0,-34 Q12,-32 10,-22" fill="#1A1A2E"/>' +
+      '<circle cx="0" cy="-28" r="1.5" fill="#C62828"/>' +
+      '<line x1="8" y1="-5" x2="22" y2="2" stroke="#D4A574" stroke-width="2"/>' +
+      '<ellipse cx="26" cy="6" rx="7" ry="9" fill="#E65100" stroke="#1A1A2E" stroke-width="1.2"/>' +
+      '<ellipse cx="26" cy="6" rx="5" ry="6" fill="url(#emd)"/>' +
+      '</g>' +
+      '<g transform="translate(600,185)">' +
+      '<polygon points="0,-15 -18,45 18,45" fill="#2E7D32" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<polygon points="0,-12 -15,42 15,42" fill="url(#emch)"/>' +
+      '<circle cx="0" cy="-22" r="10" fill="#D4A574" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="-3" cy="-23" r="1.5" fill="#1A1A2E"/><circle cx="4" cy="-23" r="1.5" fill="#1A1A2E"/>' +
+      '<path d="M-10,-22 Q-12,-32 0,-34 Q12,-32 10,-22" fill="#E65100" stroke="#1A1A2E" stroke-width="1"/>' +
+      '<line x1="-8" y1="-5" x2="-18" y2="5" stroke="#D4A574" stroke-width="2"/>' +
+      // Half-full vessel
+      '<ellipse cx="-22" cy="10" rx="7" ry="9" fill="#BCAAA4" stroke="#1A1A2E" stroke-width="1.2"/>' +
+      '</g>' +
+      // One blooming lotus, one wilted
+      '<g transform="translate(280,295)">' +
+      '<ellipse cx="-14" cy="-4" rx="6" ry="13" fill="#F48FB1" stroke="#C62828" stroke-width="1.2" transform="rotate(-20)"/>' +
+      '<ellipse cx="14" cy="-4" rx="6" ry="13" fill="#F48FB1" stroke="#C62828" stroke-width="1.2" transform="rotate(20)"/>' +
+      '<ellipse cx="0" cy="-6" rx="5" ry="12" fill="#EC407A" stroke="#C62828" stroke-width="1"/>' +
+      '<circle cx="0" cy="-5" r="4" fill="#F9A825" stroke="#1A1A2E" stroke-width="0.8"/>' +
+      '<ellipse cx="-16" cy="5" rx="14" ry="5" fill="#2E7D32" stroke="#1A1A2E" stroke-width="1"/>' +
+      '</g>' +
+      '<g transform="translate(520,298)">' +
+      '<path d="M-6,-3 Q-10,-18 -4,-22" fill="none" stroke="#795548" stroke-width="1.5"/>' +
+      '<path d="M6,-3 Q10,-18 4,-22" fill="none" stroke="#795548" stroke-width="1.5"/>' +
+      '<ellipse cx="14" cy="2" rx="12" ry="4" fill="#795548" stroke="#1A1A2E" stroke-width="0.8" opacity="0.6"/>' +
+      '</g>' +
+      // Moderate sun
+      '<g transform="translate(700,60) scale(0.45)">' +
+      '<circle cx="0" cy="0" r="25" fill="#F9A825" stroke="#1A1A2E" stroke-width="2"/>' +
+      '<circle cx="0" cy="0" r="20" fill="#FFD54F"/>' +
+      '<line x1="0" y1="-30" x2="0" y2="-38" stroke="#F9A825" stroke-width="2.5"/>' +
+      '<line x1="22" y1="-22" x2="28" y2="-28" stroke="#F9A825" stroke-width="2.5"/>' +
+      '<line x1="30" y1="0" x2="38" y2="0" stroke="#F9A825" stroke-width="2.5"/>' +
+      '<line x1="-30" y1="0" x2="-38" y2="0" stroke="#F9A825" stroke-width="2.5"/>' +
+      '<line x1="-22" y1="-22" x2="-28" y2="-28" stroke="#F9A825" stroke-width="2.5"/>' +
+      '<ellipse cx="-7" cy="-4" rx="3" ry="3.5" fill="#1A1A2E"/>' +
+      '<ellipse cx="7" cy="-4" rx="3" ry="3.5" fill="#1A1A2E"/>' +
+      '<line x1="-5" y1="6" x2="5" y2="6" stroke="#1A1A2E" stroke-width="1.5"/>' +
+      '</g>' +
+      // Ground
+      '<line x1="50" y1="265" x2="750" y2="265" stroke="#2E7D32" stroke-width="1" opacity="0.5"/>' +
+      // Some sparse water
+      '<ellipse cx="400" cy="310" rx="150" ry="15" fill="#1565C0" opacity="0.08"/>' +
+      '</svg>';
+  }
+
   // ── Reset ──────────────────────────────────────────────────────
 
   window.resetGame = function() {
@@ -1560,13 +2965,16 @@ input[type="range"]::-moz-range-thumb {
     document.getElementById('history-content').classList.add('hidden');
     document.getElementById('history-toggle').classList.remove('open');
     document.getElementById('history-section').style.display = 'none';
-    document.getElementById('welcome-screen').classList.remove('hidden');
+    document.getElementById('story-modal-container').innerHTML = '';
+    document.getElementById('end-story-art').innerHTML = '';
+    document.getElementById('story-intro').classList.remove('hidden');
 
     state.round = 0;
     state.playerEarnings = 0;
     state.history = [];
     state.agentHistory = [];
     state.agentEarnings = {};
+    playerContributions = [];
   };
 
   // ── Boot ───────────────────────────────────────────────────────

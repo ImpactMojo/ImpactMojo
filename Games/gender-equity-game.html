@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Care Economy Challenge — ImpactMojo</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F172A;--bg2:#1E293B;--bg3:#334155;
+  --red:#C62828;--yellow:#FDD835;--blue:#1565C0;--green:#2E7D32;
+  --red-light:#EF5350;--yellow-light:#FFF176;--blue-light:#42A5F5;--green-light:#66BB6A;
+  --white:#F8FAFC;--muted:#94A3B8;--border:#475569;
+  --radius:14px;
+  --madhubani-red:#C62828;--madhubani-yellow:#FDD835;--madhubani-blue:#1565C0;--madhubani-green:#2E7D32;
+}
+html{font-size:16px}
+body{
+  background:var(--bg);color:var(--white);
+  font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
+  min-height:100vh;overflow-x:hidden;
+}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+a{color:var(--yellow);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.screen{display:none;min-height:100vh;padding:20px;max-width:960px;margin:0 auto}
+.screen.active{display:flex;flex-direction:column;align-items:center}
+
+/* ─── Back Link ─── */
+.back-link{
+  position:fixed;top:16px;left:16px;z-index:100;
+  color:var(--muted);font-size:.85rem;
+  display:flex;align-items:center;gap:6px;
+  text-decoration:none;transition:color .2s;
+}
+.back-link:hover{color:var(--white);text-decoration:none}
+
+/* ─── Welcome Screen ─── */
+#welcome{justify-content:center;text-align:center;gap:24px;padding-top:40px}
+#welcome h1{
+  font-size:2.4rem;font-weight:800;
+  background:linear-gradient(135deg,var(--yellow),var(--red-light));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+#welcome .subtitle{font-size:1.05rem;color:var(--muted);max-width:600px;line-height:1.7}
+.intro-box{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 28px;max-width:640px;text-align:left;line-height:1.7;color:var(--muted);font-size:.93rem;
+}
+.intro-box strong{color:var(--yellow)}
+.intro-box ul{margin:10px 0 0 18px;list-style:disc}
+.intro-box li{margin-bottom:4px}
+
+.btn-primary{
+  background:linear-gradient(135deg,var(--red),#D32F2F);
+  color:#fff;font-size:1.1rem;font-weight:700;
+  padding:16px 48px;border-radius:60px;
+  transition:transform .15s,box-shadow .15s;
+  box-shadow:0 4px 24px rgba(198,40,40,.3);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(198,40,40,.4)}
+
+.btn-next{
+  background:var(--bg3);color:var(--white);font-weight:700;font-size:1rem;
+  padding:14px 40px;border-radius:60px;transition:background .2s;
+}
+.btn-next:hover{background:var(--border)}
+
+.btn-policy{
+  font-weight:700;font-size:.95rem;
+  padding:12px 32px;border-radius:60px;transition:all .2s;
+}
+.btn-accept{background:var(--green);color:#fff}
+.btn-accept:hover{background:#388E3C}
+.btn-reject{background:var(--bg3);color:var(--white);border:1px solid var(--border)}
+.btn-reject:hover{background:var(--border)}
+
+/* ─── Game Screen ─── */
+#game{gap:16px;padding-top:16px}
+.hud{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  width:100%;gap:12px;margin-bottom:8px;
+}
+.hud-left{display:flex;align-items:center;gap:12px}
+.hud-right{display:flex;align-items:center;gap:12px;justify-content:flex-end}
+.round-badge{
+  background:var(--bg3);border-radius:8px;padding:8px 16px;
+  font-size:.9rem;font-weight:600;color:var(--muted);
+}
+.phase-badge{
+  padding:6px 14px;border-radius:8px;font-weight:700;font-size:.8rem;
+  letter-spacing:1px;text-transform:uppercase;
+}
+.phase-constrained{background:rgba(198,40,40,.2);color:var(--red-light);border:1px solid var(--red)}
+.phase-free{background:rgba(46,125,50,.2);color:var(--green-light);border:1px solid var(--green)}
+
+/* ─── Dashboard ─── */
+.dashboard{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:10px;width:100%;
+}
+.dash-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:12px 10px;text-align:center;
+}
+.dash-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.dash-value{font-size:1.3rem;font-weight:800;font-variant-numeric:tabular-nums}
+.dash-income .dash-value{color:var(--yellow)}
+.dash-child .dash-value{color:var(--blue-light)}
+.dash-health .dash-value{color:var(--green-light)}
+.dash-career .dash-value{color:#CE93D8}
+.dash-equity .dash-value{color:var(--red-light)}
+
+/* ─── Burnout Meter ─── */
+.burnout-section{width:100%;max-width:600px;margin:4px auto}
+.burnout-label{font-size:.8rem;color:var(--muted);margin-bottom:4px;display:flex;justify-content:space-between}
+.burnout-bar{
+  height:14px;border-radius:7px;background:var(--bg3);overflow:hidden;width:100%;
+}
+.burnout-fill{
+  height:100%;border-radius:7px;transition:width .5s,background .5s;
+}
+
+/* ─── Time Allocation ─── */
+.allocation-section{width:100%;margin:8px 0}
+.allocation-title{font-size:1.1rem;font-weight:700;margin-bottom:4px;text-align:center}
+.allocation-subtitle{font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:12px}
+.time-remaining{
+  text-align:center;font-size:1rem;font-weight:700;margin-bottom:12px;
+  color:var(--yellow);
+}
+.alloc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+.alloc-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;display:flex;flex-direction:column;gap:8px;
+}
+.alloc-header{display:flex;justify-content:space-between;align-items:center}
+.alloc-name{font-weight:700;font-size:.95rem}
+.alloc-icon{font-size:1.2rem}
+.alloc-desc{font-size:.78rem;color:var(--muted);line-height:1.4}
+.alloc-slider-row{display:flex;align-items:center;gap:10px}
+.alloc-slider{
+  flex:1;-webkit-appearance:none;appearance:none;height:8px;border-radius:4px;
+  background:var(--bg3);outline:none;
+}
+.alloc-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;
+  cursor:pointer;border:2px solid var(--white);
+}
+.alloc-val{
+  min-width:32px;text-align:center;font-weight:700;font-size:1.05rem;
+  font-variant-numeric:tabular-nums;
+}
+.alloc-locked .alloc-slider{opacity:.5;pointer-events:none}
+.alloc-locked{opacity:.7}
+
+/* Slider thumb colors */
+.slider-paid::-webkit-slider-thumb{background:var(--yellow)}
+.slider-childcare::-webkit-slider-thumb{background:var(--blue-light)}
+.slider-eldercare::-webkit-slider-thumb{background:var(--green-light)}
+.slider-household::-webkit-slider-thumb{background:#FF8A65}
+.slider-education::-webkit-slider-thumb{background:#CE93D8}
+.slider-rest::-webkit-slider-thumb{background:#EF5350}
+
+/* ─── Policy Event ─── */
+#policy-screen{justify-content:center;text-align:center;gap:20px;padding-top:40px}
+.policy-card{
+  background:var(--bg2);border:2px solid var(--yellow);border-radius:var(--radius);
+  padding:28px 32px;max-width:580px;text-align:left;
+}
+.policy-tag{
+  font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;
+  color:var(--yellow);margin-bottom:8px;
+}
+.policy-name{font-size:1.3rem;font-weight:800;margin-bottom:10px;color:var(--white)}
+.policy-desc{font-size:.93rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.policy-effects{list-style:none;padding:0}
+.policy-effects li{
+  font-size:.88rem;padding:6px 0;color:var(--muted);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.policy-effects li:last-child{border-bottom:none}
+.effect-positive{color:var(--green-light) !important}
+.effect-negative{color:var(--red-light) !important}
+.policy-buttons{display:flex;gap:16px;justify-content:center}
+
+/* ─── Interlude ─── */
+#interlude{justify-content:center;text-align:center;gap:24px;padding-top:30px}
+.interlude-text{
+  font-size:1.05rem;color:var(--muted);max-width:600px;line-height:1.8;font-style:italic;
+}
+.interlude-text strong{color:var(--yellow)}
+
+/* ─── Results Screen ─── */
+#results{justify-content:center;text-align:center;gap:20px;padding-top:30px}
+#results h1{font-size:2rem;font-weight:800}
+.final-score{font-size:3rem;font-weight:800;color:var(--yellow)}
+.final-grade{font-size:1.2rem;color:var(--muted);margin-top:-8px}
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:600px}
+.result-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;text-align:center;
+}
+.result-card .rc-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+.result-card .rc-value{font-size:1.4rem;font-weight:800}
+.lessons-box{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 28px;max-width:640px;text-align:left;line-height:1.7;
+}
+.lessons-box h3{color:var(--yellow);margin-bottom:10px;font-size:1rem}
+.lessons-box p{font-size:.9rem;color:var(--muted);margin-bottom:8px}
+.lessons-box strong{color:var(--white)}
+.community-section{width:100%;max-width:600px}
+.community-section h3{font-size:.95rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.equity-timeline{display:flex;align-items:flex-end;gap:6px;justify-content:center;height:120px}
+.eq-bar{
+  width:40px;border-radius:6px 6px 0 0;transition:height .5s;
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;
+  font-size:.7rem;font-weight:700;color:var(--white);text-shadow:0 1px 2px rgba(0,0,0,.5);
+}
+
+/* ─── Madhubani Art ─── */
+.madhubani-art{width:100%;max-width:820px;margin:0 auto}
+.madhubani-art svg{width:100%;height:auto;min-height:280px;border-radius:var(--radius)}
+
+/* ─── Responsive ─── */
+@media(max-width:768px){
+  .dashboard{grid-template-columns:repeat(3,1fr)}
+  .alloc-grid{grid-template-columns:1fr}
+  .results-grid{grid-template-columns:repeat(2,1fr)}
+  .hud{grid-template-columns:1fr;text-align:center}
+  .hud-left,.hud-right{justify-content:center}
+}
+@media(max-width:480px){
+  #welcome h1{font-size:1.8rem}
+  .dashboard{grid-template-columns:repeat(2,1fr)}
+  .results-grid{grid-template-columns:1fr}
+  .policy-card{padding:20px 18px}
+  .alloc-card{padding:12px}
+}
+</style>
+</head>
+<body>
+
+<a href="/Games" class="back-link">&#8592; Back to Games</a>
+
+<!-- ════════════ WELCOME SCREEN ════════════ -->
+<div id="welcome" class="screen active">
+  <div class="madhubani-art">
+    <svg viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Madhubani art showing women in daily activities with decorative borders">
+      <rect width="800" height="380" fill="#0F172A"/>
+      <!-- Decorative border -->
+      <rect x="6" y="6" width="788" height="368" rx="10" fill="none" stroke="#C62828" stroke-width="3"/>
+      <rect x="12" y="12" width="776" height="356" rx="8" fill="none" stroke="#FDD835" stroke-width="1.5"/>
+      <!-- Fish border pattern - top -->
+      <g fill="none" stroke="#1565C0" stroke-width="1.5">
+        <path d="M60 20 Q70 12 80 20 Q70 28 60 20Z"/><circle cx="76" cy="18" r="1.5" fill="#1565C0"/>
+        <path d="M160 20 Q170 12 180 20 Q170 28 160 20Z"/><circle cx="176" cy="18" r="1.5" fill="#1565C0"/>
+        <path d="M260 20 Q270 12 280 20 Q270 28 260 20Z"/><circle cx="276" cy="18" r="1.5" fill="#1565C0"/>
+        <path d="M360 20 Q370 12 380 20 Q370 28 360 20Z"/><circle cx="376" cy="18" r="1.5" fill="#1565C0"/>
+        <path d="M460 20 Q470 12 480 20 Q470 28 460 20Z"/><circle cx="476" cy="18" r="1.5" fill="#1565C0"/>
+        <path d="M560 20 Q570 12 580 20 Q570 28 560 20Z"/><circle cx="576" cy="18" r="1.5" fill="#1565C0"/>
+        <path d="M660 20 Q670 12 680 20 Q670 28 660 20Z"/><circle cx="676" cy="18" r="1.5" fill="#1565C0"/>
+      </g>
+      <!-- Lotus border - bottom -->
+      <g fill="var(--madhubani-red)" stroke="#111" stroke-width="1">
+        <path d="M100 360 Q110 345 120 360 Q110 350 100 360Z"/>
+        <path d="M112 360 Q122 342 132 360 Q122 348 112 360Z"/>
+        <path d="M250 360 Q260 345 270 360 Q260 350 250 360Z"/>
+        <path d="M262 360 Q272 342 282 360 Q272 348 262 360Z"/>
+        <path d="M400 360 Q410 345 420 360 Q410 350 400 360Z"/>
+        <path d="M412 360 Q422 342 432 360 Q422 348 412 360Z"/>
+        <path d="M550 360 Q560 345 570 360 Q560 350 550 360Z"/>
+        <path d="M562 360 Q572 342 582 360 Q572 348 562 360Z"/>
+        <path d="M700 360 Q710 345 720 360 Q710 350 700 360Z"/>
+        <path d="M712 360 Q722 342 732 360 Q722 348 712 360Z"/>
+      </g>
+      <!-- Woman cooking (left) -->
+      <g transform="translate(100,100)">
+        <!-- Body -->
+        <circle cx="40" cy="30" r="18" fill="#FDD835" stroke="#111" stroke-width="2.5"/>
+        <line x1="40" y1="22" x2="40" y2="18" stroke="#111" stroke-width="1.5"/>
+        <circle cx="36" cy="28" r="1.5" fill="#111"/>
+        <circle cx="44" cy="28" r="1.5" fill="#111"/>
+        <path d="M36 34 Q40 38 44 34" fill="none" stroke="#111" stroke-width="1.2"/>
+        <!-- Hair/Dupatta -->
+        <path d="M22 30 Q20 10 40 12 Q60 10 58 30" fill="#C62828" stroke="#111" stroke-width="2"/>
+        <!-- Sari body -->
+        <path d="M28 48 L28 130 Q40 140 52 130 L52 48" fill="#C62828" stroke="#111" stroke-width="2.5"/>
+        <path d="M28 48 L52 48" stroke="#FDD835" stroke-width="2"/>
+        <line x1="28" y1="65" x2="52" y2="65" stroke="#FDD835" stroke-width="1" stroke-dasharray="3,3"/>
+        <!-- Arms with cooking pot -->
+        <line x1="28" y1="60" x2="8" y2="90" stroke="#111" stroke-width="2.5"/>
+        <line x1="52" y1="60" x2="72" y2="90" stroke="#111" stroke-width="2.5"/>
+        <!-- Pot -->
+        <ellipse cx="40" cy="105" rx="30" ry="12" fill="#1565C0" stroke="#111" stroke-width="2"/>
+        <path d="M10 105 Q10 130 40 130 Q70 130 70 105" fill="#1565C0" stroke="#111" stroke-width="2"/>
+        <!-- Fire -->
+        <path d="M30 138 Q35 128 40 138 Q45 128 50 138" fill="#FDD835" stroke="#C62828" stroke-width="1"/>
+        <!-- Decorative dots on sari -->
+        <circle cx="35" cy="75" r="2" fill="#FDD835"/>
+        <circle cx="45" cy="80" r="2" fill="#FDD835"/>
+        <circle cx="35" cy="90" r="2" fill="#FDD835"/>
+        <circle cx="45" cy="95" r="2" fill="#FDD835"/>
+      </g>
+      <!-- Woman farming (center) -->
+      <g transform="translate(320,90)">
+        <circle cx="60" cy="35" r="18" fill="#FDD835" stroke="#111" stroke-width="2.5"/>
+        <circle cx="56" cy="33" r="1.5" fill="#111"/>
+        <circle cx="64" cy="33" r="1.5" fill="#111"/>
+        <path d="M56 39 Q60 43 64 39" fill="none" stroke="#111" stroke-width="1.2"/>
+        <!-- Hair -->
+        <path d="M42 35 Q40 15 60 17 Q80 15 78 35" fill="#111" stroke="#111" stroke-width="2"/>
+        <!-- Sari -->
+        <path d="M48 53 L48 145 Q60 155 72 145 L72 53" fill="#2E7D32" stroke="#111" stroke-width="2.5"/>
+        <path d="M48 53 L72 53" stroke="#FDD835" stroke-width="2"/>
+        <line x1="48" y1="70" x2="72" y2="70" stroke="#FDD835" stroke-width="1" stroke-dasharray="3,3"/>
+        <!-- Arms with tool -->
+        <line x1="48" y1="65" x2="20" y2="100" stroke="#111" stroke-width="2.5"/>
+        <line x1="72" y1="65" x2="100" y2="50" stroke="#111" stroke-width="2.5"/>
+        <!-- Farming tool -->
+        <line x1="100" y1="50" x2="110" y2="30" stroke="#8B4513" stroke-width="3"/>
+        <path d="M105 30 Q115 20 120 35" fill="none" stroke="#555" stroke-width="2"/>
+        <!-- Plants -->
+        <g fill="#2E7D32" stroke="#111" stroke-width="1">
+          <path d="M10 170 Q15 150 20 170 Q15 155 10 170Z"/>
+          <path d="M25 170 Q30 145 35 170 Q30 150 25 170Z"/>
+          <path d="M80 170 Q85 150 90 170 Q85 155 80 170Z"/>
+          <path d="M95 170 Q100 145 105 170 Q100 150 95 170Z"/>
+        </g>
+        <!-- Ground -->
+        <line x1="0" y1="170" x2="120" y2="170" stroke="#8B4513" stroke-width="2"/>
+        <!-- Dots on sari -->
+        <circle cx="55" cy="80" r="2" fill="#FDD835"/>
+        <circle cx="65" cy="85" r="2" fill="#FDD835"/>
+        <circle cx="55" cy="100" r="2" fill="#FDD835"/>
+      </g>
+      <!-- Woman teaching (right) -->
+      <g transform="translate(560,100)">
+        <circle cx="50" cy="30" r="18" fill="#FDD835" stroke="#111" stroke-width="2.5"/>
+        <circle cx="46" cy="28" r="1.5" fill="#111"/>
+        <circle cx="54" cy="28" r="1.5" fill="#111"/>
+        <path d="M46 34 Q50 38 54 34" fill="none" stroke="#111" stroke-width="1.2"/>
+        <!-- Hair -->
+        <path d="M32 30 Q30 10 50 12 Q70 10 68 30" fill="#111" stroke="#111" stroke-width="2"/>
+        <!-- Bindi -->
+        <circle cx="50" cy="18" r="2" fill="#C62828"/>
+        <!-- Sari -->
+        <path d="M38 48 L38 130 Q50 140 62 130 L62 48" fill="#1565C0" stroke="#111" stroke-width="2.5"/>
+        <path d="M38 48 L62 48" stroke="#FDD835" stroke-width="2"/>
+        <!-- Arms pointing at board -->
+        <line x1="62" y1="60" x2="95" y2="50" stroke="#111" stroke-width="2.5"/>
+        <line x1="38" y1="60" x2="15" y2="80" stroke="#111" stroke-width="2.5"/>
+        <!-- Blackboard -->
+        <rect x="85" y="30" width="60" height="45" rx="3" fill="#2E7D32" stroke="#111" stroke-width="2"/>
+        <text x="95" y="52" fill="#FDD835" font-size="10" font-weight="bold">A B C</text>
+        <text x="100" y="66" fill="#FDD835" font-size="9">1+1=2</text>
+        <!-- Child figure -->
+        <g transform="translate(-10,80)">
+          <circle cx="25" cy="20" r="10" fill="#FDD835" stroke="#111" stroke-width="2"/>
+          <circle cx="23" cy="19" r="1" fill="#111"/>
+          <circle cx="27" cy="19" r="1" fill="#111"/>
+          <path d="M20 30 L20 60 Q25 65 30 60 L30 30" fill="#C62828" stroke="#111" stroke-width="1.5"/>
+        </g>
+        <!-- Dots on sari -->
+        <circle cx="45" cy="70" r="2" fill="#FDD835"/>
+        <circle cx="55" cy="75" r="2" fill="#FDD835"/>
+      </g>
+      <!-- Peacock motif (decorative, left side) -->
+      <g transform="translate(20,160)">
+        <ellipse cx="30" cy="30" rx="10" ry="14" fill="#1565C0" stroke="#111" stroke-width="1.5"/>
+        <circle cx="30" cy="18" r="6" fill="#1565C0" stroke="#111" stroke-width="1.5"/>
+        <circle cx="30" cy="18" r="2" fill="#FDD835"/>
+        <path d="M26 16 L30 10 L34 16" fill="none" stroke="#FDD835" stroke-width="1"/>
+        <!-- Tail feathers -->
+        <path d="M30 44 Q10 70 5 55" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+        <path d="M30 44 Q15 75 8 65" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+        <path d="M30 44 Q50 70 55 55" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+        <path d="M30 44 Q45 75 52 65" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+        <circle cx="5" cy="55" r="3" fill="#FDD835" stroke="#2E7D32" stroke-width="1"/>
+        <circle cx="8" cy="65" r="3" fill="#FDD835" stroke="#2E7D32" stroke-width="1"/>
+        <circle cx="55" cy="55" r="3" fill="#FDD835" stroke="#2E7D32" stroke-width="1"/>
+        <circle cx="52" cy="65" r="3" fill="#FDD835" stroke="#2E7D32" stroke-width="1"/>
+      </g>
+      <!-- Peacock motif (right side) -->
+      <g transform="translate(720,160) scale(-1,1) translate(-60,0)">
+        <ellipse cx="30" cy="30" rx="10" ry="14" fill="#1565C0" stroke="#111" stroke-width="1.5"/>
+        <circle cx="30" cy="18" r="6" fill="#1565C0" stroke="#111" stroke-width="1.5"/>
+        <circle cx="30" cy="18" r="2" fill="#FDD835"/>
+        <path d="M26 16 L30 10 L34 16" fill="none" stroke="#FDD835" stroke-width="1"/>
+        <path d="M30 44 Q10 70 5 55" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+        <path d="M30 44 Q15 75 8 65" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+        <path d="M30 44 Q50 70 55 55" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+        <path d="M30 44 Q45 75 52 65" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+        <circle cx="5" cy="55" r="3" fill="#FDD835" stroke="#2E7D32" stroke-width="1"/>
+        <circle cx="8" cy="65" r="3" fill="#FDD835" stroke="#2E7D32" stroke-width="1"/>
+        <circle cx="55" cy="55" r="3" fill="#FDD835" stroke="#2E7D32" stroke-width="1"/>
+        <circle cx="52" cy="65" r="3" fill="#FDD835" stroke="#2E7D32" stroke-width="1"/>
+      </g>
+      <!-- Sun motif -->
+      <g transform="translate(400,50)">
+        <circle cx="0" cy="0" r="16" fill="#FDD835" stroke="#C62828" stroke-width="2"/>
+        <g stroke="#FDD835" stroke-width="2">
+          <line x1="0" y1="-20" x2="0" y2="-28"/>
+          <line x1="14" y1="-14" x2="20" y2="-20"/>
+          <line x1="20" y1="0" x2="28" y2="0"/>
+          <line x1="14" y1="14" x2="20" y2="20"/>
+          <line x1="0" y1="20" x2="0" y2="28"/>
+          <line x1="-14" y1="14" x2="-20" y2="20"/>
+          <line x1="-20" y1="0" x2="-28" y2="0"/>
+          <line x1="-14" y1="-14" x2="-20" y2="-20"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <h1>The Care Economy Challenge</h1>
+  <p class="subtitle">Experience the invisible burden of unpaid care work and discover how policy choices shape gender equity outcomes.</p>
+
+  <div class="intro-box">
+    <strong>How to play:</strong> You manage a household over 8 years. Each year, allocate 24 time units across activities:
+    <ul>
+      <li><strong>Paid work</strong> — earns income, builds career</li>
+      <li><strong>Childcare</strong> — affects child wellbeing</li>
+      <li><strong>Eldercare</strong> — affects family health</li>
+      <li><strong>Household work</strong> — cooking, cleaning, maintenance</li>
+      <li><strong>Education</strong> — boosts future earning power</li>
+      <li><strong>Rest &amp; self-care</strong> — prevents burnout</li>
+    </ul>
+    <br/>
+    <strong>The twist:</strong> In the first 3 years, time is pre-allocated reflecting systemic inequality. From year 4 onward, you redesign the distribution. Policy events will shape what is possible.
+  </div>
+
+  <button class="btn-primary" onclick="startGame()">Begin the Challenge</button>
+</div>
+
+<!-- ════════════ GAME SCREEN ════════════ -->
+<div id="game" class="screen">
+  <div class="hud">
+    <div class="hud-left">
+      <div class="round-badge" id="roundBadge">Year 1 / 8</div>
+    </div>
+    <div style="text-align:center">
+      <span class="phase-badge" id="phaseBadge">Constrained</span>
+    </div>
+    <div class="hud-right"></div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dashboard">
+    <div class="dash-card dash-income"><div class="dash-label">Income</div><div class="dash-value" id="dIncome">0</div></div>
+    <div class="dash-card dash-child"><div class="dash-label">Child Wellbeing</div><div class="dash-value" id="dChild">50</div></div>
+    <div class="dash-card dash-health"><div class="dash-label">Health</div><div class="dash-value" id="dHealth">50</div></div>
+    <div class="dash-card dash-career"><div class="dash-label">Career</div><div class="dash-value" id="dCareer">1</div></div>
+    <div class="dash-card dash-equity"><div class="dash-label">Equity Index</div><div class="dash-value" id="dEquity">20</div></div>
+  </div>
+
+  <!-- Burnout -->
+  <div class="burnout-section">
+    <div class="burnout-label"><span>Burnout</span><span id="burnoutPct">0%</span></div>
+    <div class="burnout-bar"><div class="burnout-fill" id="burnoutFill" style="width:0%;background:#66BB6A"></div></div>
+  </div>
+
+  <!-- Allocation -->
+  <div class="allocation-section">
+    <div class="allocation-title" id="allocTitle">Allocate Your 24 Time Units</div>
+    <div class="allocation-subtitle" id="allocSubtitle"></div>
+    <div class="time-remaining">Remaining: <span id="timeLeft">24</span> units</div>
+    <div class="alloc-grid" id="allocGrid"></div>
+  </div>
+
+  <button class="btn-primary" id="confirmBtn" onclick="confirmAllocation()" style="margin-top:16px">Confirm Allocation</button>
+
+  <!-- Round Summary -->
+  <div id="roundSummary" style="display:none;width:100%;text-align:center;margin-top:12px">
+    <div class="intro-box" id="summaryText" style="margin:0 auto 16px"></div>
+    <button class="btn-next" onclick="nextRound()">Next Year</button>
+  </div>
+</div>
+
+<!-- ════════════ POLICY EVENT SCREEN ════════════ -->
+<div id="policy-screen" class="screen">
+  <h2 style="color:var(--yellow);font-size:1.4rem">Policy Proposal</h2>
+  <div class="policy-card" id="policyCard"></div>
+  <div class="policy-buttons">
+    <button class="btn-policy btn-accept" onclick="policyDecision(true)">Accept Policy</button>
+    <button class="btn-policy btn-reject" onclick="policyDecision(false)">Reject Policy</button>
+  </div>
+</div>
+
+<!-- ════════════ INTERLUDE SCREEN ════════════ -->
+<div id="interlude" class="screen">
+  <div class="madhubani-art" id="interludeArt"></div>
+  <p class="interlude-text" id="interludeText"></p>
+  <button class="btn-next" onclick="continueFromInterlude()">Continue</button>
+</div>
+
+<!-- ════════════ RESULTS SCREEN ════════════ -->
+<div id="results" class="screen">
+  <div class="madhubani-art" id="endArt"></div>
+  <h1>Challenge Complete</h1>
+  <div class="final-score" id="finalScore">0</div>
+  <div class="final-grade" id="finalGrade"></div>
+
+  <div class="results-grid" id="resultsGrid"></div>
+
+  <div class="community-section">
+    <h3>Community Equity Over Time</h3>
+    <div class="equity-timeline" id="equityTimeline"></div>
+  </div>
+
+  <div class="lessons-box" id="lessonsBox"></div>
+
+  <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
+    <button class="btn-primary" onclick="location.reload()">Play Again</button>
+    <a href="/Games" class="btn-next" style="display:inline-flex;align-items:center;text-decoration:none">Back to Games</a>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   THE CARE ECONOMY CHALLENGE — Game Logic
+   ═══════════════════════════════════════════ */
+
+const TOTAL_ROUNDS = 8;
+const TIME_UNITS = 24;
+const CONSTRAINED_ROUNDS = 3; // Rounds 1-3 are pre-set
+
+const ACTIVITIES = [
+  { id:'paid',       name:'Paid Work',      icon:'&#128176;', desc:'Earns income and advances your career level.', color:'var(--yellow)', sliderClass:'slider-paid' },
+  { id:'childcare',  name:'Childcare',      icon:'&#128118;', desc:'Nurturing children improves their wellbeing score.', color:'var(--blue-light)', sliderClass:'slider-childcare' },
+  { id:'eldercare',  name:'Eldercare',      icon:'&#129491;', desc:'Caring for elderly family members affects family health.', color:'var(--green-light)', sliderClass:'slider-eldercare' },
+  { id:'household',  name:'Household Work', icon:'&#127869;', desc:'Cooking, cleaning, and maintaining the home.', color:'#FF8A65', sliderClass:'slider-household' },
+  { id:'education',  name:'Education',      icon:'&#128218;', desc:'Skill-building increases future earning potential.', color:'#CE93D8', sliderClass:'slider-education' },
+  { id:'rest',       name:'Rest & Self-Care',icon:'&#128150;', desc:'Prevents burnout. Too little rest degrades health.', color:'#EF5350', sliderClass:'slider-rest' },
+];
+
+// Default constrained allocations (reflecting systemic inequality)
+const CONSTRAINED_ALLOCS = [
+  { paid:3, childcare:6, eldercare:3, household:6, education:1, rest:5 },
+  { paid:3, childcare:7, eldercare:3, household:6, education:0, rest:5 },
+  { paid:4, childcare:6, eldercare:4, household:5, education:1, rest:4 },
+];
+
+// Policy events
+const POLICIES = [
+  {
+    name:'Paid Parental Leave Act',
+    desc:'The government proposes 6 months of paid parental leave for all parents, regardless of gender. This recognizes that caregiving is essential work that should not come at the cost of economic security.',
+    effects:[
+      { text:'Income penalty from childcare reduced by 40%', positive:true },
+      { text:'Child wellbeing bonus +8 per round', positive:true },
+      { text:'Small tax increase (-2 income per round)', positive:false },
+    ],
+    apply: (s) => { s.policiesActive.parentalLeave = true; },
+  },
+  {
+    name:'Universal Childcare Subsidy',
+    desc:'Subsidized childcare centers would be established in every district. This frees up time for paid work and education while ensuring quality care for children.',
+    effects:[
+      { text:'Childcare requires 2 fewer time units for same effect', positive:true },
+      { text:'Child wellbeing baseline increases +5', positive:true },
+      { text:'Community equity index +10', positive:true },
+    ],
+    apply: (s) => { s.policiesActive.childcareSubsidy = true; },
+  },
+  {
+    name:'Flexible Work Legislation',
+    desc:'Employers would be required to offer flexible and remote work options. This helps workers balance care responsibilities with employment.',
+    effects:[
+      { text:'Paid work efficiency increases by 30%', positive:true },
+      { text:'Rest requirement reduced by 1 unit', positive:true },
+      { text:'Some employers may resist — career growth slightly slower', positive:false },
+    ],
+    apply: (s) => { s.policiesActive.flexWork = true; },
+  },
+  {
+    name:'Equal Pay Legislation',
+    desc:'A new law mandates equal pay for equal work and pay transparency across all sectors. This addresses the systemic wage gap.',
+    effects:[
+      { text:'Income from paid work increases by 25%', positive:true },
+      { text:'Career advancement becomes merit-based (+faster growth)', positive:true },
+      { text:'Adjustment period: -3 income in first year of implementation', positive:false },
+    ],
+    apply: (s) => { s.policiesActive.equalPay = true; },
+  },
+];
+
+// Interlude narratives
+const INTERLUDES = {
+  3: {
+    text: '<strong>A turning point.</strong> For three years, your time was dictated by tradition and necessity. The cooking, the caregiving, the endless household tasks — all essential, all unpaid, all invisible in economic measures. Now, imagine you could redesign how time is shared. What would change?',
+    svg: 'interlude-mid'
+  },
+  6: {
+    text: '<strong>The community is shifting.</strong> Your choices are rippling outward. Neighbors are watching. Some families have adopted shared caregiving. Others resist change. The policies you supported (or rejected) are starting to show measurable effects on everyone\'s wellbeing.',
+    svg: 'interlude-late'
+  }
+};
+
+// ── State ──
+let state = {
+  round: 1,
+  income: 0,
+  childWellbeing: 50,
+  health: 50,
+  career: 1,
+  equityIndex: 20,
+  burnout: 0,
+  eduBonus: 0,
+  policiesActive: {},
+  policyQueue: [...POLICIES],
+  equityHistory: [],
+  allocHistory: [],
+  totalIncome: 0,
+  pendingPolicy: null,
+};
+
+// ── Screen Management ──
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── Start Game ──
+function startGame() {
+  state = {
+    round:1, income:0, childWellbeing:50, health:50, career:1,
+    equityIndex:20, burnout:0, eduBonus:0,
+    policiesActive:{}, policyQueue:[...POLICIES],
+    equityHistory:[], allocHistory:[], totalIncome:0, pendingPolicy:null,
+  };
+  showScreen('game');
+  setupRound();
+}
+
+// ── Setup Round ──
+function setupRound() {
+  const r = state.round;
+  document.getElementById('roundBadge').textContent = `Year ${r} / ${TOTAL_ROUNDS}`;
+
+  const isConstrained = r <= CONSTRAINED_ROUNDS;
+  const pb = document.getElementById('phaseBadge');
+  pb.textContent = isConstrained ? 'Constrained' : 'Free Choice';
+  pb.className = 'phase-badge ' + (isConstrained ? 'phase-constrained' : 'phase-free');
+
+  if (isConstrained) {
+    document.getElementById('allocSubtitle').textContent = 'Your time allocation is pre-determined by social norms. Observe how it feels.';
+  } else {
+    document.getElementById('allocSubtitle').textContent = 'You now have the power to redesign your time allocation.';
+  }
+
+  updateDashboard();
+  buildSliders(isConstrained);
+
+  document.getElementById('confirmBtn').style.display = '';
+  document.getElementById('roundSummary').style.display = 'none';
+}
+
+// ── Build Sliders ──
+function buildSliders(locked) {
+  const grid = document.getElementById('allocGrid');
+  grid.innerHTML = '';
+
+  const preset = locked ? CONSTRAINED_ALLOCS[state.round - 1] : { paid:6, childcare:4, eldercare:2, household:4, education:3, rest:5 };
+
+  ACTIVITIES.forEach(act => {
+    const val = preset[act.id] || 0;
+    const card = document.createElement('div');
+    card.className = 'alloc-card' + (locked ? ' alloc-locked' : '');
+    card.innerHTML = `
+      <div class="alloc-header">
+        <span class="alloc-name">${act.name}</span>
+        <span class="alloc-icon">${act.icon}</span>
+      </div>
+      <div class="alloc-desc">${act.desc}</div>
+      <div class="alloc-slider-row">
+        <input type="range" min="0" max="24" value="${val}" class="alloc-slider ${act.sliderClass}"
+               data-id="${act.id}" ${locked ? 'disabled' : ''} oninput="onSliderChange(this)">
+        <span class="alloc-val" id="val-${act.id}" style="color:${act.color}">${val}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  updateTimeRemaining();
+}
+
+function getAllocations() {
+  const allocs = {};
+  document.querySelectorAll('.alloc-slider').forEach(s => {
+    allocs[s.dataset.id] = parseInt(s.value);
+  });
+  return allocs;
+}
+
+function getTotalAllocated() {
+  return Object.values(getAllocations()).reduce((a,b) => a+b, 0);
+}
+
+function updateTimeRemaining() {
+  const total = getTotalAllocated();
+  const left = TIME_UNITS - total;
+  const el = document.getElementById('timeLeft');
+  el.textContent = left;
+  el.style.color = left < 0 ? 'var(--red-light)' : left === 0 ? 'var(--green-light)' : 'var(--yellow)';
+
+  const btn = document.getElementById('confirmBtn');
+  btn.disabled = left !== 0;
+  btn.style.opacity = left !== 0 ? '.5' : '1';
+}
+
+function onSliderChange(slider) {
+  document.getElementById('val-' + slider.dataset.id).textContent = slider.value;
+  updateTimeRemaining();
+}
+
+// ── Confirm Allocation ──
+function confirmAllocation() {
+  const allocs = getAllocations();
+  const total = Object.values(allocs).reduce((a,b) => a+b, 0);
+  if (total !== TIME_UNITS) return;
+
+  // Calculate outcomes
+  const r = state.round;
+  const policies = state.policiesActive;
+
+  // Income calculation
+  let incomeGain = allocs.paid * (3 + state.career * 0.5 + state.eduBonus * 0.3);
+  if (policies.equalPay) incomeGain *= 1.25;
+  if (policies.flexWork) incomeGain *= 1.3;
+  if (policies.parentalLeave) incomeGain -= 2; // small tax
+  incomeGain = Math.round(incomeGain);
+
+  // Child wellbeing
+  let childcareEffect = allocs.childcare;
+  if (policies.childcareSubsidy) childcareEffect += 2;
+  let childDelta = (childcareEffect >= 4) ? 5 : (childcareEffect >= 2) ? 0 : -8;
+  if (policies.parentalLeave) childDelta += 8;
+  if (policies.childcareSubsidy && state.round > 3) childDelta += 5;
+
+  // Health
+  let healthDelta = (allocs.eldercare >= 3) ? 3 : (allocs.eldercare >= 1) ? 0 : -5;
+  let restNeeded = policies.flexWork ? 3 : 4;
+  if (allocs.rest < restNeeded) {
+    state.burnout = Math.min(100, state.burnout + (restNeeded - allocs.rest) * 12);
+    healthDelta -= 5;
+  } else {
+    state.burnout = Math.max(0, state.burnout - allocs.rest * 4);
+    healthDelta += 2;
+  }
+  if (state.burnout > 60) { healthDelta -= 5; incomeGain = Math.round(incomeGain * 0.7); }
+
+  // Household quality affects health slightly
+  if (allocs.household < 3) healthDelta -= 3;
+
+  // Career growth
+  let careerGrowth = 0;
+  if (allocs.paid >= 6) careerGrowth = 1;
+  else if (allocs.paid >= 4) careerGrowth = 0.5;
+  if (policies.equalPay) careerGrowth += 0.3;
+  if (policies.flexWork && allocs.paid >= 3) careerGrowth += 0.2;
+
+  // Education bonus accumulates
+  state.eduBonus += allocs.education * 0.5;
+
+  // Equity index
+  let equityDelta = 0;
+  if (r > CONSTRAINED_ROUNDS) {
+    // Equity improves when allocation is more balanced
+    const balance = 1 - (Math.max(...Object.values(allocs)) - Math.min(...Object.values(allocs))) / TIME_UNITS;
+    equityDelta = Math.round(balance * 12);
+    if (policies.childcareSubsidy) equityDelta += 5;
+    if (policies.equalPay) equityDelta += 4;
+    if (policies.parentalLeave) equityDelta += 3;
+    if (policies.flexWork) equityDelta += 3;
+  } else {
+    equityDelta = -2; // Constrained rounds reduce equity
+  }
+
+  // Apply changes
+  state.income += Math.max(0, incomeGain);
+  state.totalIncome += Math.max(0, incomeGain);
+  state.childWellbeing = clamp(state.childWellbeing + childDelta, 0, 100);
+  state.health = clamp(state.health + healthDelta, 0, 100);
+  state.career = Math.round((state.career + careerGrowth) * 10) / 10;
+  state.equityIndex = clamp(state.equityIndex + equityDelta, 0, 100);
+  state.equityHistory.push(state.equityIndex);
+  state.allocHistory.push({...allocs});
+
+  updateDashboard();
+  updateBurnout();
+
+  // Show summary
+  document.getElementById('confirmBtn').style.display = 'none';
+  const summary = document.getElementById('roundSummary');
+  summary.style.display = '';
+
+  let summaryHtml = `<strong>Year ${r} Summary:</strong><br>`;
+  summaryHtml += `Income earned: <span style="color:var(--yellow)">+${Math.max(0, incomeGain)}</span> | `;
+  summaryHtml += `Child wellbeing: <span style="color:${childDelta >= 0 ? 'var(--green-light)' : 'var(--red-light)'}">${childDelta >= 0 ? '+' : ''}${childDelta}</span> | `;
+  summaryHtml += `Health: <span style="color:${healthDelta >= 0 ? 'var(--green-light)' : 'var(--red-light)'}">${healthDelta >= 0 ? '+' : ''}${healthDelta}</span>`;
+  if (state.burnout > 40) summaryHtml += `<br><span style="color:var(--red-light)">Warning: Burnout is rising (${state.burnout}%). You need more rest!</span>`;
+  if (r <= CONSTRAINED_ROUNDS) summaryHtml += `<br><em style="color:var(--muted)">Your time was not your own this year. Social expectations dictated your schedule.</em>`;
+
+  document.getElementById('summaryText').innerHTML = summaryHtml;
+}
+
+// ── Next Round ──
+function nextRound() {
+  state.round++;
+
+  // Check for interlude
+  if (INTERLUDES[state.round - 1]) {
+    showInterlude(state.round - 1);
+    return;
+  }
+
+  // Check for policy event (rounds 4, 5, 6, 7)
+  if (state.round > CONSTRAINED_ROUNDS && state.policyQueue.length > 0 && state.round <= 7) {
+    showPolicyEvent();
+    return;
+  }
+
+  if (state.round > TOTAL_ROUNDS) {
+    showResults();
+    return;
+  }
+
+  showScreen('game');
+  setupRound();
+}
+
+// ── Interlude ──
+function showInterlude(afterRound) {
+  const data = INTERLUDES[afterRound];
+  document.getElementById('interludeText').innerHTML = data.text;
+
+  // Generate interlude art
+  const artContainer = document.getElementById('interludeArt');
+  if (afterRound === 3) {
+    artContainer.innerHTML = generateInterludeArtMid();
+  } else {
+    artContainer.innerHTML = generateInterludeArtLate();
+  }
+
+  showScreen('interlude');
+}
+
+function continueFromInterlude() {
+  if (state.round > CONSTRAINED_ROUNDS && state.policyQueue.length > 0 && state.round <= 7) {
+    showPolicyEvent();
+  } else if (state.round > TOTAL_ROUNDS) {
+    showResults();
+  } else {
+    showScreen('game');
+    setupRound();
+  }
+}
+
+// ── Policy Event ──
+function showPolicyEvent() {
+  const policy = state.policyQueue.shift();
+  state.pendingPolicy = policy;
+
+  const card = document.getElementById('policyCard');
+  let effectsHtml = policy.effects.map(e =>
+    `<li class="${e.positive ? 'effect-positive' : 'effect-negative'}">${e.positive ? '+' : '-'} ${e.text}</li>`
+  ).join('');
+
+  card.innerHTML = `
+    <div class="policy-tag">Year ${state.round} Policy Event</div>
+    <div class="policy-name">${policy.name}</div>
+    <div class="policy-desc">${policy.desc}</div>
+    <ul class="policy-effects">${effectsHtml}</ul>
+  `;
+
+  showScreen('policy-screen');
+}
+
+function policyDecision(accept) {
+  if (accept && state.pendingPolicy) {
+    state.pendingPolicy.apply(state);
+  }
+  state.pendingPolicy = null;
+
+  if (state.round > TOTAL_ROUNDS) {
+    showResults();
+  } else {
+    showScreen('game');
+    setupRound();
+  }
+}
+
+// ── Dashboard ──
+function updateDashboard() {
+  document.getElementById('dIncome').textContent = state.income;
+  document.getElementById('dChild').textContent = state.childWellbeing;
+  document.getElementById('dHealth').textContent = state.health;
+  document.getElementById('dCareer').textContent = state.career.toFixed(1);
+  document.getElementById('dEquity').textContent = state.equityIndex;
+}
+
+function updateBurnout() {
+  const pct = state.burnout;
+  document.getElementById('burnoutPct').textContent = pct + '%';
+  const fill = document.getElementById('burnoutFill');
+  fill.style.width = pct + '%';
+  if (pct > 70) fill.style.background = '#EF5350';
+  else if (pct > 40) fill.style.background = '#FFA726';
+  else fill.style.background = '#66BB6A';
+}
+
+function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+// ── Results ──
+function showResults() {
+  // Calculate composite score
+  const score = Math.round(
+    state.income * 0.3 +
+    state.childWellbeing * 1.5 +
+    state.health * 1.2 +
+    state.career * 15 +
+    state.equityIndex * 2 -
+    state.burnout * 0.8
+  );
+
+  document.getElementById('finalScore').textContent = score;
+
+  let grade = '';
+  if (score >= 400) grade = 'Transformative Leader — You reshaped the care economy';
+  else if (score >= 300) grade = 'Change Maker — Significant progress toward equity';
+  else if (score >= 200) grade = 'Aware Advocate — Good balance, room to grow';
+  else grade = 'Status Quo — Systemic constraints held you back';
+  document.getElementById('finalGrade').textContent = grade;
+
+  // Results grid
+  const grid = document.getElementById('resultsGrid');
+  const metrics = [
+    { label:'Total Income', value:state.income, color:'var(--yellow)' },
+    { label:'Child Wellbeing', value:state.childWellbeing, color:'var(--blue-light)' },
+    { label:'Health', value:state.health, color:'var(--green-light)' },
+    { label:'Career Level', value:state.career.toFixed(1), color:'#CE93D8' },
+    { label:'Equity Index', value:state.equityIndex, color:'var(--red-light)' },
+    { label:'Burnout', value:state.burnout + '%', color: state.burnout > 50 ? 'var(--red-light)' : 'var(--green-light)' },
+  ];
+  grid.innerHTML = metrics.map(m => `
+    <div class="result-card">
+      <div class="rc-label">${m.label}</div>
+      <div class="rc-value" style="color:${m.color}">${m.value}</div>
+    </div>
+  `).join('');
+
+  // Equity timeline
+  const timeline = document.getElementById('equityTimeline');
+  const maxEq = Math.max(...state.equityHistory, 1);
+  timeline.innerHTML = state.equityHistory.map((eq, i) => {
+    const h = Math.max(10, (eq / 100) * 110);
+    const color = eq > 60 ? 'var(--green)' : eq > 35 ? 'var(--yellow)' : 'var(--red)';
+    return `<div class="eq-bar" style="height:${h}px;background:${color}">Y${i+1}</div>`;
+  }).join('');
+
+  // Lessons
+  const activePolicies = Object.keys(state.policiesActive).length;
+  const lessonsBox = document.getElementById('lessonsBox');
+  let lessons = '<h3>Key Takeaways</h3>';
+  lessons += '<p><strong>Care work has economic value.</strong> The hours spent on childcare, eldercare, and household maintenance are essential for a functioning economy — yet they rarely appear in GDP calculations. Globally, unpaid care work is valued at $10.8 trillion per year.</p>';
+
+  if (activePolicies >= 3) {
+    lessons += '<p><strong>Policy design matters.</strong> You embraced systemic change. The policies you supported created infrastructure that made equitable choices possible. Individual effort alone cannot overcome structural barriers.</p>';
+  } else if (activePolicies >= 1) {
+    lessons += '<p><strong>Partial reform has limits.</strong> Some policies helped, but without comprehensive support systems, individuals still face impossible trade-offs between earning income and providing care.</p>';
+  } else {
+    lessons += '<p><strong>Without policy support, inequality persists.</strong> When systems do not change, the burden of care falls disproportionately on women, limiting their economic participation and wellbeing.</p>';
+  }
+
+  lessons += '<p><strong>Individual choices are constrained by systems.</strong> The first three years showed how social norms pre-determine time allocation. Real freedom requires structural change — parental leave, childcare infrastructure, and equal pay.</p>';
+  lessonsBox.innerHTML = lessons;
+
+  // End art
+  document.getElementById('endArt').innerHTML = generateEndArt(score);
+
+  showScreen('results');
+}
+
+// ── Madhubani Art Generators ──
+function generateInterludeArtMid() {
+  return `<svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Madhubani art showing a woman at a crossroads between tradition and change">
+    <rect width="800" height="300" fill="#0F172A"/>
+    <rect x="6" y="6" width="788" height="288" rx="10" fill="none" stroke="#C62828" stroke-width="3"/>
+    <rect x="12" y="12" width="776" height="276" rx="8" fill="none" stroke="#FDD835" stroke-width="1.5"/>
+    <!-- Lotus row top -->
+    <g fill="#C62828" stroke="#111" stroke-width="1">
+      ${[80,180,280,380,480,580,680].map(x => `
+        <path d="M${x} 20 Q${x+8} 8 ${x+16} 20 Q${x+8} 12 ${x} 20Z"/>
+      `).join('')}
+    </g>
+    <!-- Central figure - woman breaking chains -->
+    <g transform="translate(350,60)">
+      <circle cx="50" cy="30" r="22" fill="#FDD835" stroke="#111" stroke-width="3"/>
+      <circle cx="44" cy="27" r="2" fill="#111"/><circle cx="56" cy="27" r="2" fill="#111"/>
+      <path d="M44 35 Q50 40 56 35" fill="none" stroke="#111" stroke-width="1.5"/>
+      <circle cx="50" cy="15" r="2.5" fill="#C62828"/>
+      <path d="M30 30 Q28 8 50 10 Q72 8 70 30" fill="#111" stroke="#111" stroke-width="2"/>
+      <path d="M36 52 L36 150 Q50 162 64 150 L64 52" fill="#C62828" stroke="#111" stroke-width="2.5"/>
+      <path d="M36 52 L64 52" stroke="#FDD835" stroke-width="2.5"/>
+      <!-- Arms raised -->
+      <line x1="36" y1="65" x2="10" y2="45" stroke="#111" stroke-width="3"/>
+      <line x1="64" y1="65" x2="90" y2="45" stroke="#111" stroke-width="3"/>
+      <!-- Broken chain left -->
+      <g stroke="#94A3B8" stroke-width="2" fill="none">
+        <path d="M10 45 Q0 40 -5 48 Q-10 56 0 55"/>
+        <path d="M-8 50 Q-18 45 -20 55"/>
+      </g>
+      <!-- Broken chain right -->
+      <g stroke="#94A3B8" stroke-width="2" fill="none">
+        <path d="M90 45 Q100 40 105 48 Q110 56 100 55"/>
+        <path d="M108 50 Q118 45 120 55"/>
+      </g>
+    </g>
+    <!-- Left: traditional scene (faded) -->
+    <g transform="translate(60,80)" opacity="0.5">
+      <rect x="0" y="0" width="140" height="100" rx="8" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <text x="70" y="40" text-anchor="middle" fill="#94A3B8" font-size="11">Traditional</text>
+      <text x="70" y="58" text-anchor="middle" fill="#94A3B8" font-size="11">Time Allocation</text>
+      <text x="70" y="80" text-anchor="middle" fill="#94A3B8" font-size="9">Fixed Roles</text>
+    </g>
+    <!-- Right: new possibility -->
+    <g transform="translate(580,80)">
+      <rect x="0" y="0" width="140" height="100" rx="8" fill="none" stroke="#FDD835" stroke-width="1.5"/>
+      <text x="70" y="40" text-anchor="middle" fill="#FDD835" font-size="11" font-weight="bold">Redesigned</text>
+      <text x="70" y="58" text-anchor="middle" fill="#FDD835" font-size="11" font-weight="bold">Time Allocation</text>
+      <text x="70" y="80" text-anchor="middle" fill="#2E7D32" font-size="9">Your Choice</text>
+    </g>
+    <!-- Arrow -->
+    <line x1="250" y1="140" x2="560" y2="140" stroke="#FDD835" stroke-width="2" stroke-dasharray="6,4"/>
+    <polygon points="560,134 575,140 560,146" fill="#FDD835"/>
+    <!-- Fish border bottom -->
+    <g fill="none" stroke="#1565C0" stroke-width="1.5">
+      ${[80,180,280,380,480,580,680].map(x => `
+        <path d="M${x} 280 Q${x+10} 272 ${x+20} 280 Q${x+10} 288 ${x} 280Z"/>
+        <circle cx="${x+16}" cy="278" r="1.5" fill="#1565C0"/>
+      `).join('')}
+    </g>
+  </svg>`;
+}
+
+function generateInterludeArtLate() {
+  return `<svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Madhubani art showing community transformation">
+    <rect width="800" height="300" fill="#0F172A"/>
+    <rect x="6" y="6" width="788" height="288" rx="10" fill="none" stroke="#2E7D32" stroke-width="3"/>
+    <rect x="12" y="12" width="776" height="276" rx="8" fill="none" stroke="#FDD835" stroke-width="1.5"/>
+    <!-- Tree of life (center) -->
+    <g transform="translate(350,240)">
+      <rect x="40" y="-10" width="20" height="60" fill="#8B4513" stroke="#111" stroke-width="2"/>
+      <!-- Branches -->
+      <path d="M50 -10 Q20 -60 10 -80" fill="none" stroke="#8B4513" stroke-width="3"/>
+      <path d="M50 -10 Q80 -60 90 -80" fill="none" stroke="#8B4513" stroke-width="3"/>
+      <path d="M50 -30 Q30 -50 15 -55" fill="none" stroke="#8B4513" stroke-width="2"/>
+      <path d="M50 -30 Q70 -50 85 -55" fill="none" stroke="#8B4513" stroke-width="2"/>
+      <path d="M50 -20 Q50 -90 50 -100" fill="none" stroke="#8B4513" stroke-width="3"/>
+      <!-- Leaves/circles (Madhubani style) -->
+      <g fill="#2E7D32" stroke="#111" stroke-width="1.5">
+        <circle cx="10" cy="-80" r="14"/><circle cx="90" cy="-80" r="14"/>
+        <circle cx="15" cy="-55" r="12"/><circle cx="85" cy="-55" r="12"/>
+        <circle cx="50" cy="-100" r="16"/>
+        <circle cx="30" cy="-90" r="10"/><circle cx="70" cy="-90" r="10"/>
+      </g>
+      <!-- Fruits (representing outcomes) -->
+      <circle cx="10" cy="-80" r="5" fill="#C62828" stroke="#111" stroke-width="1"/>
+      <circle cx="90" cy="-80" r="5" fill="#FDD835" stroke="#111" stroke-width="1"/>
+      <circle cx="50" cy="-100" r="6" fill="#1565C0" stroke="#111" stroke-width="1"/>
+      <circle cx="30" cy="-90" r="4" fill="#FDD835" stroke="#111" stroke-width="1"/>
+      <circle cx="70" cy="-90" r="4" fill="#C62828" stroke="#111" stroke-width="1"/>
+    </g>
+    <!-- People gathered around tree -->
+    <g transform="translate(180,160)">
+      ${[0,40,80].map((x,i) => `
+        <circle cx="${x+15}" cy="55" r="10" fill="#FDD835" stroke="#111" stroke-width="2"/>
+        <path d="M${x+8} 65 L${x+8} 95 Q${x+15} 100 ${x+22} 95 L${x+22} 65" fill="${['#C62828','#1565C0','#2E7D32'][i]}" stroke="#111" stroke-width="1.5"/>
+      `).join('')}
+    </g>
+    <g transform="translate(470,160)">
+      ${[0,40,80].map((x,i) => `
+        <circle cx="${x+15}" cy="55" r="10" fill="#FDD835" stroke="#111" stroke-width="2"/>
+        <path d="M${x+8} 65 L${x+8} 95 Q${x+15} 100 ${x+22} 95 L${x+22} 65" fill="${['#2E7D32','#C62828','#1565C0'][i]}" stroke="#111" stroke-width="1.5"/>
+      `).join('')}
+    </g>
+    <!-- Decorative border elements -->
+    <g fill="none" stroke="#FDD835" stroke-width="1.5">
+      ${[60,160,260,540,640,740].map(x => `
+        <path d="M${x} 22 Q${x+8} 14 ${x+16} 22 Q${x+8} 14 ${x} 22Z"/>
+        <path d="M${x} 22 Q${x+8} 30 ${x+16} 22"/>
+      `).join('')}
+    </g>
+  </svg>`;
+}
+
+function generateEndArt(score) {
+  const isGood = score >= 300;
+  const bloom = isGood ? '#2E7D32' : '#C62828';
+  return `<svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Madhubani art reflecting game outcomes">
+    <rect width="800" height="280" fill="#0F172A"/>
+    <rect x="6" y="6" width="788" height="268" rx="10" fill="none" stroke="${bloom}" stroke-width="3"/>
+    <rect x="12" y="12" width="776" height="256" rx="8" fill="none" stroke="#FDD835" stroke-width="1.5"/>
+    <!-- Sun (outcome dependent) -->
+    <g transform="translate(400,80)">
+      <circle cx="0" cy="0" r="30" fill="#FDD835" stroke="${bloom}" stroke-width="3"/>
+      <g stroke="#FDD835" stroke-width="2.5">
+        ${Array.from({length:12}, (_,i) => {
+          const angle = i * 30 * Math.PI / 180;
+          const x1 = Math.cos(angle) * 35, y1 = Math.sin(angle) * 35;
+          const x2 = Math.cos(angle) * 50, y2 = Math.sin(angle) * 50;
+          return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+        }).join('')}
+      </g>
+      ${isGood ? '<path d="M-10 5 Q0 15 10 5" fill="none" stroke="#111" stroke-width="2"/>' : '<path d="M-10 10 Q0 2 10 10" fill="none" stroke="#111" stroke-width="2"/>'}
+      <circle cx="-8" cy="-5" r="3" fill="#111"/><circle cx="8" cy="-5" r="3" fill="#111"/>
+    </g>
+    <!-- Lotus flowers at bottom -->
+    <g transform="translate(100,180)">
+      ${[0,150,300,450].map(x => `
+        <g transform="translate(${x},0)">
+          <path d="M25 60 Q30 30 35 60" fill="${bloom}" stroke="#111" stroke-width="1.5"/>
+          <path d="M20 60 Q25 25 30 60" fill="#C62828" stroke="#111" stroke-width="1.5"/>
+          <path d="M30 60 Q35 25 40 60" fill="#C62828" stroke="#111" stroke-width="1.5"/>
+          <path d="M15 60 Q20 35 25 60" fill="${isGood ? '#FDD835' : '#475569'}" stroke="#111" stroke-width="1"/>
+          <path d="M35 60 Q40 35 45 60" fill="${isGood ? '#FDD835' : '#475569'}" stroke="#111" stroke-width="1"/>
+          <ellipse cx="30" cy="62" rx="20" ry="6" fill="#1565C0" stroke="#111" stroke-width="1.5"/>
+        </g>
+      `).join('')}
+    </g>
+    <!-- Peacock feather eyes -->
+    <g fill="none" stroke-width="1.5">
+      ${[50,750].map(x => `
+        <g transform="translate(${x},140)">
+          <ellipse cx="0" cy="0" rx="15" ry="25" stroke="#2E7D32" fill="rgba(46,125,50,0.3)"/>
+          <ellipse cx="0" cy="0" rx="8" ry="14" stroke="#1565C0" fill="rgba(21,101,192,0.3)"/>
+          <circle cx="0" cy="0" r="5" fill="#FDD835" stroke="#111"/>
+        </g>
+      `).join('')}
+    </g>
+    <!-- Fish border top -->
+    <g fill="none" stroke="#1565C0" stroke-width="1.5">
+      ${[80,180,280,380,480,580,680].map(x => `
+        <path d="M${x} 20 Q${x+10} 12 ${x+20} 20 Q${x+10} 28 ${x} 20Z"/>
+        <circle cx="${x+16}" cy="18" r="1.5" fill="#1565C0"/>
+      `).join('')}
+    </g>
+  </svg>`;
+}
+
+</script>
+</body>
+</html>
