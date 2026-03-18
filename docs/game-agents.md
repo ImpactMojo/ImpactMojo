@@ -2,14 +2,16 @@
 
 ## Overview
 
-ImpactMojo's games now support **AI-powered opponents** inspired by [MiroFish](https://github.com/666ghj/MiroFish), an open-source swarm intelligence engine. Instead of simple rule-based payoff calculations, games can feature AI agents with distinct personalities, memories, and adaptive strategies — all grounded in South Asian development contexts.
+ImpactMojo's games feature **AI-powered opponents** inspired by [MiroFish](https://github.com/666ghj/MiroFish), an open-source swarm intelligence engine. Instead of simple rule-based payoff calculations, games feature AI agents with distinct personalities, memories, and adaptive strategies — all grounded in South Asian development contexts.
+
+Each game is also enriched with **Indian folk art story illustrations** in six traditional styles (Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) that provide narrative context and adapt to player choices. See the [Games Guide](games-guide.md) for details on the art styles.
 
 ## Architecture
 
 ```
 ┌─────────────────────┐     POST /game-agent     ┌──────────────────────────┐
 │  Game Frontend       │ ──────────────────────→  │  Supabase Edge Function   │
-│  (101.impactmojo.in) │ ←──────────────────────  │  game-agent/index.ts      │
+│  (impactmojo.in)     │ ←──────────────────────  │  game-agent/index.ts      │
 │                       │    agent decision JSON   │                            │
 │  Uses: game-agents.js │                          │  ┌─── LLM API ──────────┐ │
 └─────────────────────┘                          │  │  (Haiku / GPT-4o-mini)│ │
