@@ -242,7 +242,7 @@ function populateLegacyData() {
 
   featureData.push(
     ['Courses (39 total)', 'Learning', totalCourseUsers, '', '', 'Active'],
-    ['Games (12 total)', 'Engagement', totalGameUsers, '', '', 'Active'],
+    ['Games (16 total)', 'Engagement', totalGameUsers, '', '', 'Active'],
     ['Labs & Tools (15 total)', 'Hands-on', totalToolUsers, '', '', 'Active'],
     ['Live Case Challenges', 'Assessment', '', '', '', 'Active'],
     ['Portfolio Builder', 'Credentialing', '', '', '', 'Active'],

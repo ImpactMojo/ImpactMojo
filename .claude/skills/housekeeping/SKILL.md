@@ -42,7 +42,15 @@ Run through this checklist after completing major work on ImpactMojo.
    - Update project board
    - Post to Discussions if relevant
 
-8. **Quality checks**
-   - Verify no broken navigation links
-   - Check mobile responsiveness
-   - Verify text contrast on new UI elements
+8. **Backup**
+   - Copy current working `index.html` to `Backups/` with a descriptive name
+   - Verify existing backups are not stale (delete if superseded)
+
+9. **Update counts & references**
+   - Verify game, lab, course counts are consistent across all docs, index, mobile-index, catalog, admin dashboards, and transparency pages
+   - Check for stale `101.impactmojo.in` references that should now point to self-hosted files
+
+10. **Quality checks**
+    - Verify no broken navigation links
+    - Check mobile responsiveness
+    - Verify text contrast on new UI elements

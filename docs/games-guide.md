@@ -38,7 +38,7 @@ The art grounds each game in South Asian visual culture while making abstract co
 
 ---
 
-## The 12 Games
+## The Games
 
 ### Collective Action & Cooperation
 
