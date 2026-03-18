@@ -14129,6 +14129,28 @@ PASTE THIS ENTIRE BLOCK JUST BEFORE
     });
     
 })();
+
+// Move navLinks and overlay out of header to body so position:fixed works
+// (backdrop-filter on .header creates a containing block that traps fixed children)
+(function() {
+    function moveMenuToBody() {
+        if (window.innerWidth > 768) return;
+        var navLinks = document.getElementById('navLinks');
+        var overlay = document.getElementById('mobileMenuOverlay');
+        if (navLinks && navLinks.closest('.header')) {
+            document.body.appendChild(navLinks);
+        }
+        if (overlay && overlay.closest('.header')) {
+            document.body.appendChild(overlay);
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', moveMenuToBody);
+    } else {
+        moveMenuToBody();
+    }
+    setTimeout(moveMenuToBody, 100);
+})();
 </script>
 
 <!-- State Manager (must load before auth.js) -->
