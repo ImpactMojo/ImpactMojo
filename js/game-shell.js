@@ -66,157 +66,279 @@
     btn.addEventListener('click', function() { setTheme(btn.getAttribute('data-theme')); });
   });
 
-  // ── Paper Plane SVG ────────────────────────────────────────
-  var plane = document.createElement('div');
-  plane.className = 'imx-game-plane';
-  plane.setAttribute('aria-hidden', 'true');
-  plane.innerHTML =
-    '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">' +
-      '<path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
-      '<path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>' +
-      '<circle cx="150" cy="50" r="4" fill="#6366F1"/>' +
-    '</svg>';
-  document.body.appendChild(plane);
-
   // ── Indian Folk Art Decorations ────────────────────────────
 
-  // Warli-inspired village scene (bottom-left) — stick figures, huts, trees
+  // Warli-inspired village scene (bottom-left) — larger, more visible
   var warli = document.createElement('div');
   warli.className = 'imx-game-motif imx-motif-warli';
   warli.setAttribute('aria-hidden', 'true');
   warli.innerHTML =
-    '<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">' +
-      // Ground line
-      '<line x1="0" y1="180" x2="300" y2="180" stroke="currentColor" stroke-width="0.8" opacity="0.15"/>' +
-      // Hut
-      '<polygon points="50,180 50,140 75,115 100,140 100,180" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.2"/>' +
-      '<line x1="70" y1="180" x2="70" y2="155" stroke="currentColor" stroke-width="0.8" opacity="0.15"/>' +
-      '<line x1="80" y1="180" x2="80" y2="155" stroke="currentColor" stroke-width="0.8" opacity="0.15"/>' +
-      // Tree (Warli style - trunk + circles)
-      '<line x1="150" y1="180" x2="150" y2="120" stroke="currentColor" stroke-width="1" opacity="0.18"/>' +
-      '<circle cx="150" cy="110" r="18" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.15"/>' +
-      '<circle cx="140" cy="120" r="12" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.12"/>' +
-      '<circle cx="160" cy="118" r="14" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.12"/>' +
-      // Dancing figures (Warli tarpa dance)
-      '<g opacity="0.2" transform="translate(200,140)">' +
-        // Figure 1 - triangle body
-        '<polygon points="0,0 -8,25 8,25" fill="none" stroke="currentColor" stroke-width="1"/>' +
-        '<circle cx="0" cy="-6" r="5" fill="none" stroke="currentColor" stroke-width="1"/>' +
-        '<line x1="-10" y1="8" x2="10" y2="8" stroke="currentColor" stroke-width="0.8"/>' +
-        '<line x1="-4" y1="25" x2="-8" y2="40" stroke="currentColor" stroke-width="0.8"/>' +
-        '<line x1="4" y1="25" x2="8" y2="40" stroke="currentColor" stroke-width="0.8"/>' +
+    '<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">' +
+      // Ground
+      '<line x1="0" y1="260" x2="400" y2="260" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>' +
+      // Hut 1
+      '<polygon points="30,260 30,210 60,175 90,210 90,260" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>' +
+      '<line x1="55" y1="260" x2="55" y2="220" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>' +
+      '<line x1="65" y1="260" x2="65" y2="220" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>' +
+      '<line x1="30" y1="235" x2="90" y2="235" stroke="currentColor" stroke-width="0.8" opacity="0.3"/>' +
+      // Hut 2 (smaller, background)
+      '<polygon points="100,260 100,225 120,200 140,225 140,260" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>' +
+      '<line x1="117" y1="260" x2="117" y2="235" stroke="currentColor" stroke-width="1" opacity="0.3"/>' +
+      '<line x1="123" y1="260" x2="123" y2="235" stroke="currentColor" stroke-width="1" opacity="0.3"/>' +
+      // Tree 1 (Warli style - trunk + overlapping circles)
+      '<line x1="180" y1="260" x2="180" y2="170" stroke="currentColor" stroke-width="2" opacity="0.45"/>' +
+      '<circle cx="180" cy="155" r="25" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>' +
+      '<circle cx="165" cy="168" r="18" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>' +
+      '<circle cx="195" cy="165" r="20" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>' +
+      '<circle cx="180" cy="140" r="12" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.25"/>' +
+      // Tree 2 (smaller)
+      '<line x1="155" y1="260" x2="155" y2="210" stroke="currentColor" stroke-width="1.2" opacity="0.3"/>' +
+      '<circle cx="155" cy="200" r="14" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"/>' +
+      // Tarpa dance — circle of 5 figures holding hands
+      '<g opacity="0.55" transform="translate(270,195)">' +
+        // Central tarpa player
+        '<polygon points="0,-10 -10,18 10,18" fill="currentColor" opacity="0.5" stroke="currentColor" stroke-width="1.5"/>' +
+        '<circle cx="0" cy="-18" r="7" fill="currentColor" opacity="0.5"/>' +
+        '<line x1="-14" y1="0" x2="-20" y2="-10" stroke="currentColor" stroke-width="1.5"/>' +
+        '<line x1="14" y1="0" x2="20" y2="-10" stroke="currentColor" stroke-width="1.5"/>' +
+        '<line x1="-5" y1="18" x2="-10" y2="35" stroke="currentColor" stroke-width="1.5"/>' +
+        '<line x1="5" y1="18" x2="10" y2="35" stroke="currentColor" stroke-width="1.5"/>' +
+        // Long tarpa horn
+        '<path d="M-20,-10 Q-35,-25 -28,-40" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
       '</g>' +
-      '<g opacity="0.2" transform="translate(225,138)">' +
-        '<polygon points="0,0 -8,25 8,25" fill="none" stroke="currentColor" stroke-width="1"/>' +
-        '<circle cx="0" cy="-6" r="5" fill="none" stroke="currentColor" stroke-width="1"/>' +
-        '<line x1="-12" y1="6" x2="12" y2="10" stroke="currentColor" stroke-width="0.8"/>' +
-        '<line x1="-4" y1="25" x2="-10" y2="42" stroke="currentColor" stroke-width="0.8"/>' +
-        '<line x1="4" y1="25" x2="10" y2="42" stroke="currentColor" stroke-width="0.8"/>' +
+      // Dancer 1
+      '<g opacity="0.5" transform="translate(235,200)">' +
+        '<polygon points="0,-5 -8,16 8,16" fill="currentColor" opacity="0.4" stroke="currentColor" stroke-width="1.2"/>' +
+        '<circle cx="0" cy="-12" r="6" fill="currentColor" opacity="0.4"/>' +
+        '<line x1="-12" y1="2" x2="-22" y2="-5" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="12" y1="2" x2="22" y2="8" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="-4" y1="16" x2="-12" y2="32" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="4" y1="16" x2="8" y2="32" stroke="currentColor" stroke-width="1.2"/>' +
       '</g>' +
-      '<g opacity="0.18" transform="translate(250,142)">' +
-        '<polygon points="0,0 -7,22 7,22" fill="none" stroke="currentColor" stroke-width="1"/>' +
-        '<circle cx="0" cy="-5" r="4.5" fill="none" stroke="currentColor" stroke-width="1"/>' +
-        '<line x1="-10" y1="10" x2="8" y2="5" stroke="currentColor" stroke-width="0.8"/>' +
-        '<line x1="-3" y1="22" x2="-6" y2="38" stroke="currentColor" stroke-width="0.8"/>' +
-        '<line x1="3" y1="22" x2="6" y2="38" stroke="currentColor" stroke-width="0.8"/>' +
+      // Dancer 2
+      '<g opacity="0.5" transform="translate(305,198)">' +
+        '<polygon points="0,-5 -8,16 8,16" fill="currentColor" opacity="0.4" stroke="currentColor" stroke-width="1.2"/>' +
+        '<circle cx="0" cy="-12" r="6" fill="currentColor" opacity="0.4"/>' +
+        '<line x1="-12" y1="4" x2="-22" y2="10" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="12" y1="0" x2="22" y2="-8" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="-4" y1="16" x2="-8" y2="32" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="4" y1="16" x2="12" y2="32" stroke="currentColor" stroke-width="1.2"/>' +
       '</g>' +
-      // Sun (Warli spiral)
-      '<circle cx="270" cy="30" r="15" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.15"/>' +
-      '<path d="M270,30 m-8,0 a8,8 0 1,1 16,0 a12,12 0 1,0 -24,0" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.12"/>' +
+      // Dancer 3 (behind)
+      '<g opacity="0.4" transform="translate(250,215)">' +
+        '<polygon points="0,-4 -6,12 6,12" fill="currentColor" opacity="0.35" stroke="currentColor" stroke-width="1"/>' +
+        '<circle cx="0" cy="-10" r="5" fill="currentColor" opacity="0.35"/>' +
+        '<line x1="-10" y1="0" x2="-16" y2="6" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="10" y1="2" x2="16" y2="-2" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="-3" y1="12" x2="-6" y2="25" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="3" y1="12" x2="6" y2="25" stroke="currentColor" stroke-width="1"/>' +
+      '</g>' +
+      // Dancer 4 (behind)
+      '<g opacity="0.4" transform="translate(290,218)">' +
+        '<polygon points="0,-4 -6,12 6,12" fill="currentColor" opacity="0.35" stroke="currentColor" stroke-width="1"/>' +
+        '<circle cx="0" cy="-10" r="5" fill="currentColor" opacity="0.35"/>' +
+        '<line x1="-10" y1="2" x2="-15" y2="-4" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="10" y1="0" x2="15" y2="8" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="-3" y1="12" x2="-7" y2="25" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="3" y1="12" x2="7" y2="25" stroke="currentColor" stroke-width="1"/>' +
+      '</g>' +
+      // Sun with rays (Warli spiral sun)
+      '<g opacity="0.45" transform="translate(350,50)">' +
+        '<circle cx="0" cy="0" r="20" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+        '<circle cx="0" cy="0" r="12" fill="none" stroke="currentColor" stroke-width="1"/>' +
+        '<circle cx="0" cy="0" r="5" fill="currentColor" opacity="0.3"/>' +
+        '<line x1="0" y1="-23" x2="0" y2="-32" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="0" y1="23" x2="0" y2="32" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="-23" y1="0" x2="-32" y2="0" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="23" y1="0" x2="32" y2="0" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="-16" y1="-16" x2="-22" y2="-22" stroke="currentColor" stroke-width="0.8"/>' +
+        '<line x1="16" y1="-16" x2="22" y2="-22" stroke="currentColor" stroke-width="0.8"/>' +
+        '<line x1="-16" y1="16" x2="-22" y2="22" stroke="currentColor" stroke-width="0.8"/>' +
+        '<line x1="16" y1="16" x2="22" y2="22" stroke="currentColor" stroke-width="0.8"/>' +
+      '</g>' +
+      // Ox / bullock (Warli staple)
+      '<g opacity="0.4" transform="translate(340,235)">' +
+        '<ellipse cx="0" cy="0" rx="18" ry="10" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+        '<circle cx="-15" cy="-10" r="5" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="-18" y1="-14" x2="-22" y2="-22" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="-12" y1="-14" x2="-8" y2="-22" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="-10" y1="8" x2="-12" y2="22" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="-4" y1="9" x2="-2" y2="22" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="6" y1="9" x2="4" y2="22" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="12" y1="8" x2="14" y2="22" stroke="currentColor" stroke-width="1.2"/>' +
+        '<path d="M16,0 Q28,0 25,5" fill="none" stroke="currentColor" stroke-width="1"/>' +
+      '</g>' +
     '</svg>';
   document.body.appendChild(warli);
 
-  // Madhubani-inspired border pattern (top-right) — fish, peacock, geometric
+  // Madhubani-inspired border (top-right) — rich colors, larger motifs
   var madhubani = document.createElement('div');
   madhubani.className = 'imx-game-motif imx-motif-madhubani';
   madhubani.setAttribute('aria-hidden', 'true');
   madhubani.innerHTML =
-    '<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">' +
-      // Vertical border strip with geometric patterns
-      // Outer border
-      '<rect x="5" y="5" width="40" height="290" fill="none" stroke="#D97706" stroke-width="0.8" opacity="0.15" rx="4"/>' +
-      '<rect x="10" y="10" width="30" height="280" fill="none" stroke="#DC2626" stroke-width="0.5" opacity="0.12" rx="3"/>' +
-      // Fish motifs (Madhubani signature)
-      '<g transform="translate(25,40)" opacity="0.2">' +
-        '<ellipse cx="0" cy="0" rx="12" ry="6" fill="none" stroke="#D97706" stroke-width="1"/>' +
-        '<path d="M12,0 L18,-5 L18,5Z" fill="none" stroke="#D97706" stroke-width="0.8"/>' +
-        '<circle cx="-5" cy="-1" r="1.5" fill="#D97706" opacity="0.5"/>' +
-        '<line x1="-3" y1="0" x2="8" y2="0" stroke="#D97706" stroke-width="0.4" stroke-dasharray="1,2"/>' +
+    '<svg viewBox="0 0 120 500" xmlns="http://www.w3.org/2000/svg">' +
+      // Double border strip
+      '<rect x="8" y="8" width="104" height="484" fill="none" stroke="#D97706" stroke-width="1.5" opacity="0.3" rx="6"/>' +
+      '<rect x="15" y="15" width="90" height="470" fill="none" stroke="#DC2626" stroke-width="1" opacity="0.25" rx="4"/>' +
+      // Fish 1 (Madhubani signature — detailed)
+      '<g transform="translate(60,60)" opacity="0.5">' +
+        '<ellipse cx="0" cy="0" rx="28" ry="14" fill="none" stroke="#D97706" stroke-width="1.8"/>' +
+        '<path d="M28,0 L40,-10 L40,10Z" fill="#D97706" opacity="0.3" stroke="#D97706" stroke-width="1"/>' +
+        '<circle cx="-12" cy="-3" r="3" fill="#D97706" opacity="0.6"/>' +
+        '<circle cx="-12" cy="-3" r="1.2" fill="#1E293B" opacity="0.8"/>' +
+        '<path d="M-8,0 Q0,-8 18,0" fill="none" stroke="#D97706" stroke-width="0.6"/>' +
+        '<path d="M-8,0 Q0,8 18,0" fill="none" stroke="#D97706" stroke-width="0.6"/>' +
+        '<line x1="-5" y1="-6" x2="-5" y2="6" stroke="#D97706" stroke-width="0.5" opacity="0.5"/>' +
+        '<line x1="2" y1="-9" x2="2" y2="9" stroke="#D97706" stroke-width="0.5" opacity="0.5"/>' +
+        '<line x1="10" y1="-11" x2="10" y2="11" stroke="#D97706" stroke-width="0.5" opacity="0.5"/>' +
+        '<line x1="18" y1="-8" x2="18" y2="8" stroke="#D97706" stroke-width="0.5" opacity="0.5"/>' +
       '</g>' +
-      // Peacock (simplified Madhubani style)
-      '<g transform="translate(25,100)" opacity="0.18">' +
-        '<ellipse cx="0" cy="0" rx="8" ry="10" fill="none" stroke="#059669" stroke-width="0.8"/>' +
-        '<circle cx="0" cy="-14" r="4" fill="none" stroke="#059669" stroke-width="0.8"/>' +
-        '<line x1="0" y1="-18" x2="0" y2="-22" stroke="#059669" stroke-width="0.6"/>' +
-        '<circle cx="0" cy="-23" r="1" fill="#059669" opacity="0.4"/>' +
-        // Tail feathers (fan)
-        '<path d="M-8,5 Q-20,-15 -5,-25" fill="none" stroke="#2563EB" stroke-width="0.6" opacity="0.8"/>' +
-        '<path d="M0,5 Q0,-20 0,-28" fill="none" stroke="#2563EB" stroke-width="0.6" opacity="0.8"/>' +
-        '<path d="M8,5 Q20,-15 5,-25" fill="none" stroke="#2563EB" stroke-width="0.6" opacity="0.8"/>' +
-        '<circle cx="-10" cy="-18" r="2" fill="none" stroke="#D97706" stroke-width="0.5" opacity="0.6"/>' +
-        '<circle cx="0" cy="-22" r="2" fill="none" stroke="#D97706" stroke-width="0.5" opacity="0.6"/>' +
-        '<circle cx="10" cy="-18" r="2" fill="none" stroke="#D97706" stroke-width="0.5" opacity="0.6"/>' +
+      // Peacock (Madhubani style — detailed fan tail)
+      '<g transform="translate(60,160)" opacity="0.45">' +
+        // Body
+        '<ellipse cx="0" cy="5" rx="12" ry="16" fill="none" stroke="#059669" stroke-width="1.5"/>' +
+        '<ellipse cx="0" cy="5" rx="6" ry="10" fill="#059669" opacity="0.15"/>' +
+        // Head and neck
+        '<path d="M0,-11 Q0,-25 0,-30" fill="none" stroke="#059669" stroke-width="1.5"/>' +
+        '<circle cx="0" cy="-33" r="6" fill="none" stroke="#059669" stroke-width="1.5"/>' +
+        '<circle cx="0" cy="-33" r="3" fill="#059669" opacity="0.3"/>' +
+        // Crown
+        '<line x1="0" y1="-39" x2="0" y2="-45" stroke="#D97706" stroke-width="1"/>' +
+        '<line x1="-3" y1="-39" x2="-4" y2="-44" stroke="#D97706" stroke-width="0.8"/>' +
+        '<line x1="3" y1="-39" x2="4" y2="-44" stroke="#D97706" stroke-width="0.8"/>' +
+        '<circle cx="0" cy="-46" r="1.5" fill="#D97706" opacity="0.6"/>' +
+        '<circle cx="-5" cy="-45" r="1.2" fill="#D97706" opacity="0.5"/>' +
+        '<circle cx="5" cy="-45" r="1.2" fill="#D97706" opacity="0.5"/>' +
+        // Beak and eye
+        '<path d="M6,-33 L10,-32 L6,-31" fill="#D97706" opacity="0.6"/>' +
+        '<circle cx="-2" cy="-34" r="1" fill="#1E293B" opacity="0.8"/>' +
+        // Tail feathers (large fan)
+        '<path d="M-12,15 Q-40,-20 -20,-50" fill="none" stroke="#2563EB" stroke-width="1.2"/>' +
+        '<path d="M-8,18 Q-30,-10 -10,-45" fill="none" stroke="#7C3AED" stroke-width="1"/>' +
+        '<path d="M0,20 Q0,-15 0,-50" fill="none" stroke="#2563EB" stroke-width="1.2"/>' +
+        '<path d="M8,18 Q30,-10 10,-45" fill="none" stroke="#7C3AED" stroke-width="1"/>' +
+        '<path d="M12,15 Q40,-20 20,-50" fill="none" stroke="#2563EB" stroke-width="1.2"/>' +
+        // Eye spots on feathers
+        '<circle cx="-25" cy="-35" r="4" fill="none" stroke="#D97706" stroke-width="0.8"/>' +
+        '<circle cx="-25" cy="-35" r="1.5" fill="#2563EB" opacity="0.5"/>' +
+        '<circle cx="-12" cy="-38" r="3.5" fill="none" stroke="#D97706" stroke-width="0.8"/>' +
+        '<circle cx="-12" cy="-38" r="1.3" fill="#7C3AED" opacity="0.5"/>' +
+        '<circle cx="0" cy="-42" r="4" fill="none" stroke="#D97706" stroke-width="0.8"/>' +
+        '<circle cx="0" cy="-42" r="1.5" fill="#2563EB" opacity="0.5"/>' +
+        '<circle cx="12" cy="-38" r="3.5" fill="none" stroke="#D97706" stroke-width="0.8"/>' +
+        '<circle cx="12" cy="-38" r="1.3" fill="#7C3AED" opacity="0.5"/>' +
+        '<circle cx="25" cy="-35" r="4" fill="none" stroke="#D97706" stroke-width="0.8"/>' +
+        '<circle cx="25" cy="-35" r="1.5" fill="#2563EB" opacity="0.5"/>' +
       '</g>' +
-      // Lotus (Madhubani style)
-      '<g transform="translate(25,170)" opacity="0.18">' +
-        '<ellipse cx="0" cy="0" rx="5" ry="12" fill="none" stroke="#EC4899" stroke-width="0.8"/>' +
-        '<ellipse cx="0" cy="0" rx="5" ry="12" fill="none" stroke="#EC4899" stroke-width="0.8" transform="rotate(30)"/>' +
-        '<ellipse cx="0" cy="0" rx="5" ry="12" fill="none" stroke="#EC4899" stroke-width="0.8" transform="rotate(60)"/>' +
-        '<ellipse cx="0" cy="0" rx="5" ry="12" fill="none" stroke="#EC4899" stroke-width="0.8" transform="rotate(90)"/>' +
-        '<ellipse cx="0" cy="0" rx="5" ry="12" fill="none" stroke="#EC4899" stroke-width="0.8" transform="rotate(120)"/>' +
-        '<ellipse cx="0" cy="0" rx="5" ry="12" fill="none" stroke="#EC4899" stroke-width="0.8" transform="rotate(150)"/>' +
-        '<circle cx="0" cy="0" r="4" fill="none" stroke="#D97706" stroke-width="0.8" opacity="0.6"/>' +
+      // Lotus (Madhubani style — full bloom)
+      '<g transform="translate(60,290)" opacity="0.45">' +
+        '<ellipse cx="0" cy="0" rx="8" ry="20" fill="#EC4899" opacity="0.12" stroke="#EC4899" stroke-width="1.2"/>' +
+        '<ellipse cx="0" cy="0" rx="8" ry="20" fill="#EC4899" opacity="0.12" stroke="#EC4899" stroke-width="1.2" transform="rotate(36)"/>' +
+        '<ellipse cx="0" cy="0" rx="8" ry="20" fill="#EC4899" opacity="0.12" stroke="#EC4899" stroke-width="1.2" transform="rotate(72)"/>' +
+        '<ellipse cx="0" cy="0" rx="8" ry="20" fill="#EC4899" opacity="0.12" stroke="#EC4899" stroke-width="1.2" transform="rotate(108)"/>' +
+        '<ellipse cx="0" cy="0" rx="8" ry="20" fill="#EC4899" opacity="0.12" stroke="#EC4899" stroke-width="1.2" transform="rotate(144)"/>' +
+        '<circle cx="0" cy="0" r="8" fill="none" stroke="#D97706" stroke-width="1.2"/>' +
+        '<circle cx="0" cy="0" r="4" fill="#D97706" opacity="0.25"/>' +
+        // Inner detail
+        '<circle cx="0" cy="0" r="12" fill="none" stroke="#EC4899" stroke-width="0.5" stroke-dasharray="2,2"/>' +
       '</g>' +
-      // Geometric diamond pattern
-      '<g transform="translate(25,230)" opacity="0.15">' +
-        '<rect x="-10" y="-10" width="20" height="20" fill="none" stroke="#D97706" stroke-width="0.8" transform="rotate(45)"/>' +
-        '<rect x="-6" y="-6" width="12" height="12" fill="none" stroke="#DC2626" stroke-width="0.5" transform="rotate(45)"/>' +
-        '<circle cx="0" cy="0" r="3" fill="#D97706" opacity="0.2"/>' +
+      // Geometric rangoli pattern
+      '<g transform="translate(60,380)" opacity="0.4">' +
+        '<rect x="-18" y="-18" width="36" height="36" fill="none" stroke="#D97706" stroke-width="1.2" transform="rotate(45)"/>' +
+        '<rect x="-12" y="-12" width="24" height="24" fill="none" stroke="#DC2626" stroke-width="1" transform="rotate(45)"/>' +
+        '<rect x="-6" y="-6" width="12" height="12" fill="none" stroke="#D97706" stroke-width="0.8" transform="rotate(45)"/>' +
+        '<circle cx="0" cy="0" r="5" fill="#D97706" opacity="0.2"/>' +
+        '<circle cx="0" cy="-18" r="3" fill="#DC2626" opacity="0.3"/>' +
+        '<circle cx="0" cy="18" r="3" fill="#DC2626" opacity="0.3"/>' +
+        '<circle cx="-18" cy="0" r="3" fill="#DC2626" opacity="0.3"/>' +
+        '<circle cx="18" cy="0" r="3" fill="#DC2626" opacity="0.3"/>' +
       '</g>' +
-      // Another fish (bottom)
-      '<g transform="translate(25,270) rotate(180)" opacity="0.17">' +
-        '<ellipse cx="0" cy="0" rx="12" ry="6" fill="none" stroke="#059669" stroke-width="1"/>' +
-        '<path d="M12,0 L18,-5 L18,5Z" fill="none" stroke="#059669" stroke-width="0.8"/>' +
-        '<circle cx="-5" cy="-1" r="1.5" fill="#059669" opacity="0.4"/>' +
+      // Fish 2 (bottom, flipped)
+      '<g transform="translate(60,450) scale(-1,1)" opacity="0.45">' +
+        '<ellipse cx="0" cy="0" rx="25" ry="12" fill="none" stroke="#059669" stroke-width="1.5"/>' +
+        '<path d="M25,0 L36,-9 L36,9Z" fill="#059669" opacity="0.25" stroke="#059669" stroke-width="1"/>' +
+        '<circle cx="-10" cy="-2" r="2.5" fill="#059669" opacity="0.5"/>' +
+        '<line x1="-2" y1="-5" x2="-2" y2="5" stroke="#059669" stroke-width="0.5" opacity="0.4"/>' +
+        '<line x1="5" y1="-8" x2="5" y2="8" stroke="#059669" stroke-width="0.5" opacity="0.4"/>' +
+        '<line x1="12" y1="-10" x2="12" y2="10" stroke="#059669" stroke-width="0.5" opacity="0.4"/>' +
       '</g>' +
     '</svg>';
   document.body.appendChild(madhubani);
 
-  // Gond-inspired tree of life (right side, lower)
+  // Gond-inspired tree of life (right side, larger)
   var gond = document.createElement('div');
   gond.className = 'imx-game-motif imx-motif-gond';
   gond.setAttribute('aria-hidden', 'true');
   gond.innerHTML =
-    '<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">' +
-      // Tree trunk with Gond dot-and-line pattern
-      '<line x1="80" y1="200" x2="80" y2="80" stroke="currentColor" stroke-width="2" opacity="0.15"/>' +
-      '<line x1="75" y1="200" x2="75" y2="90" stroke="currentColor" stroke-width="0.5" opacity="0.1" stroke-dasharray="2,3"/>' +
-      '<line x1="85" y1="200" x2="85" y2="90" stroke="currentColor" stroke-width="0.5" opacity="0.1" stroke-dasharray="2,3"/>' +
-      // Branches
-      '<path d="M80,130 Q50,110 30,90" fill="none" stroke="currentColor" stroke-width="1" opacity="0.15"/>' +
-      '<path d="M80,130 Q110,110 130,90" fill="none" stroke="currentColor" stroke-width="1" opacity="0.15"/>' +
-      '<path d="M80,100 Q55,85 40,60" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.13"/>' +
-      '<path d="M80,100 Q105,85 120,60" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.13"/>' +
-      '<path d="M80,80 Q65,60 55,35" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.12"/>' +
-      '<path d="M80,80 Q95,60 105,35" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.12"/>' +
-      // Gond-style leaf circles (dots-within-dots)
-      '<circle cx="30" cy="85" r="10" fill="none" stroke="#059669" stroke-width="0.8" opacity="0.18"/>' +
-      '<circle cx="30" cy="85" r="5" fill="none" stroke="#059669" stroke-width="0.5" opacity="0.12"/>' +
-      '<circle cx="30" cy="85" r="2" fill="#059669" opacity="0.15"/>' +
-      '<circle cx="130" cy="85" r="10" fill="none" stroke="#D97706" stroke-width="0.8" opacity="0.18"/>' +
-      '<circle cx="130" cy="85" r="5" fill="none" stroke="#D97706" stroke-width="0.5" opacity="0.12"/>' +
-      '<circle cx="130" cy="85" r="2" fill="#D97706" opacity="0.15"/>' +
-      '<circle cx="40" cy="55" r="8" fill="none" stroke="#EC4899" stroke-width="0.6" opacity="0.15"/>' +
-      '<circle cx="40" cy="55" r="3" fill="#EC4899" opacity="0.1"/>' +
-      '<circle cx="120" cy="55" r="8" fill="none" stroke="#3B82F6" stroke-width="0.6" opacity="0.15"/>' +
-      '<circle cx="120" cy="55" r="3" fill="#3B82F6" opacity="0.1"/>' +
-      '<circle cx="55" cy="30" r="7" fill="none" stroke="#8B5CF6" stroke-width="0.5" opacity="0.13"/>' +
-      '<circle cx="55" cy="30" r="2.5" fill="#8B5CF6" opacity="0.1"/>' +
-      '<circle cx="105" cy="30" r="7" fill="none" stroke="#10B981" stroke-width="0.5" opacity="0.13"/>' +
-      '<circle cx="105" cy="30" r="2.5" fill="#10B981" opacity="0.1"/>' +
-      // Birds (Gond style — simple)
-      '<path d="M20,40 Q25,32 30,38 L35,35" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.15"/>' +
-      '<path d="M130,25 Q135,18 140,24 L145,21" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.15"/>' +
+    '<svg viewBox="0 0 240 300" xmlns="http://www.w3.org/2000/svg">' +
+      // Tree trunk with Gond hatching pattern
+      '<line x1="120" y1="300" x2="120" y2="110" stroke="currentColor" stroke-width="3" opacity="0.35"/>' +
+      '<line x1="114" y1="300" x2="114" y2="120" stroke="currentColor" stroke-width="1" opacity="0.2" stroke-dasharray="3,4"/>' +
+      '<line x1="126" y1="300" x2="126" y2="120" stroke="currentColor" stroke-width="1" opacity="0.2" stroke-dasharray="3,4"/>' +
+      // Roots
+      '<path d="M120,290 Q90,295 70,300" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.25"/>' +
+      '<path d="M120,290 Q150,295 170,300" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.25"/>' +
+      // Main branches
+      '<path d="M120,180 Q70,150 30,130" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/>' +
+      '<path d="M120,180 Q170,150 210,130" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/>' +
+      '<path d="M120,150 Q75,120 45,85" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.28"/>' +
+      '<path d="M120,150 Q165,120 195,85" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.28"/>' +
+      '<path d="M120,120 Q85,90 60,50" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.25"/>' +
+      '<path d="M120,120 Q155,90 180,50" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.25"/>' +
+      '<path d="M120,110 Q100,75 80,30" fill="none" stroke="currentColor" stroke-width="1" opacity="0.22"/>' +
+      '<path d="M120,110 Q140,75 160,30" fill="none" stroke="currentColor" stroke-width="1" opacity="0.22"/>' +
+      // Gond concentric circle leaves (large, colorful)
+      '<circle cx="30" cy="125" r="16" fill="none" stroke="#059669" stroke-width="1.5" opacity="0.4"/>' +
+      '<circle cx="30" cy="125" r="10" fill="none" stroke="#059669" stroke-width="1" opacity="0.3"/>' +
+      '<circle cx="30" cy="125" r="5" fill="#059669" opacity="0.2"/>' +
+      '<circle cx="210" cy="125" r="16" fill="none" stroke="#D97706" stroke-width="1.5" opacity="0.4"/>' +
+      '<circle cx="210" cy="125" r="10" fill="none" stroke="#D97706" stroke-width="1" opacity="0.3"/>' +
+      '<circle cx="210" cy="125" r="5" fill="#D97706" opacity="0.2"/>' +
+      '<circle cx="45" cy="80" r="14" fill="none" stroke="#EC4899" stroke-width="1.2" opacity="0.35"/>' +
+      '<circle cx="45" cy="80" r="7" fill="none" stroke="#EC4899" stroke-width="0.8" opacity="0.25"/>' +
+      '<circle cx="45" cy="80" r="3" fill="#EC4899" opacity="0.2"/>' +
+      '<circle cx="195" cy="80" r="14" fill="none" stroke="#3B82F6" stroke-width="1.2" opacity="0.35"/>' +
+      '<circle cx="195" cy="80" r="7" fill="none" stroke="#3B82F6" stroke-width="0.8" opacity="0.25"/>' +
+      '<circle cx="195" cy="80" r="3" fill="#3B82F6" opacity="0.2"/>' +
+      '<circle cx="60" cy="45" r="12" fill="none" stroke="#8B5CF6" stroke-width="1" opacity="0.3"/>' +
+      '<circle cx="60" cy="45" r="6" fill="none" stroke="#8B5CF6" stroke-width="0.6" opacity="0.2"/>' +
+      '<circle cx="60" cy="45" r="2.5" fill="#8B5CF6" opacity="0.2"/>' +
+      '<circle cx="180" cy="45" r="12" fill="none" stroke="#10B981" stroke-width="1" opacity="0.3"/>' +
+      '<circle cx="180" cy="45" r="6" fill="none" stroke="#10B981" stroke-width="0.6" opacity="0.2"/>' +
+      '<circle cx="180" cy="45" r="2.5" fill="#10B981" opacity="0.2"/>' +
+      '<circle cx="80" cy="25" r="10" fill="none" stroke="#F59E0B" stroke-width="1" opacity="0.3"/>' +
+      '<circle cx="80" cy="25" r="4" fill="#F59E0B" opacity="0.15"/>' +
+      '<circle cx="160" cy="25" r="10" fill="none" stroke="#EF4444" stroke-width="1" opacity="0.3"/>' +
+      '<circle cx="160" cy="25" r="4" fill="#EF4444" opacity="0.15"/>' +
+      // Top crown leaves
+      '<circle cx="120" cy="15" r="11" fill="none" stroke="#059669" stroke-width="1" opacity="0.3"/>' +
+      '<circle cx="120" cy="15" r="5" fill="#059669" opacity="0.15"/>' +
+      // Gond birds (detailed — body with line pattern)
+      '<g opacity="0.4" transform="translate(15,55)">' +
+        '<path d="M0,0 Q8,-12 16,-8 L22,-12 L20,-6 Q24,-2 20,4 Q8,10 0,0Z" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
+        '<circle cx="16" cy="-6" r="1.5" fill="currentColor" opacity="0.6"/>' +
+        '<line x1="4" y1="-2" x2="4" y2="4" stroke="currentColor" stroke-width="0.5"/>' +
+        '<line x1="8" y1="-4" x2="8" y2="4" stroke="currentColor" stroke-width="0.5"/>' +
+        '<line x1="12" y1="-6" x2="12" y2="2" stroke="currentColor" stroke-width="0.5"/>' +
+      '</g>' +
+      '<g opacity="0.4" transform="translate(200,40) scale(-1,1)">' +
+        '<path d="M0,0 Q8,-12 16,-8 L22,-12 L20,-6 Q24,-2 20,4 Q8,10 0,0Z" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
+        '<circle cx="16" cy="-6" r="1.5" fill="currentColor" opacity="0.6"/>' +
+        '<line x1="4" y1="-2" x2="4" y2="4" stroke="currentColor" stroke-width="0.5"/>' +
+        '<line x1="8" y1="-4" x2="8" y2="4" stroke="currentColor" stroke-width="0.5"/>' +
+        '<line x1="12" y1="-6" x2="12" y2="2" stroke="currentColor" stroke-width="0.5"/>' +
+      '</g>' +
+      // Small Gond deer
+      '<g opacity="0.35" transform="translate(30,250)">' +
+        '<ellipse cx="0" cy="0" rx="14" ry="8" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
+        '<line x1="-8" y1="7" x2="-10" y2="18" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="-2" y1="7" x2="-2" y2="18" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="4" y1="7" x2="4" y2="18" stroke="currentColor" stroke-width="1"/>' +
+        '<line x1="10" y1="7" x2="12" y2="18" stroke="currentColor" stroke-width="1"/>' +
+        '<circle cx="-12" cy="-8" r="4" fill="none" stroke="currentColor" stroke-width="1"/>' +
+        '<path d="M-14,-12 Q-18,-22 -12,-20" fill="none" stroke="currentColor" stroke-width="0.8"/>' +
+        '<path d="M-10,-12 Q-6,-22 -10,-20" fill="none" stroke="currentColor" stroke-width="0.8"/>' +
+      '</g>' +
     '</svg>';
   document.body.appendChild(gond);
 
@@ -299,22 +421,15 @@
 
     /* ═══ DECORATIVE ELEMENTS ═════════════════════════════ */
 
-    /* Paper plane */
-    '.imx-game-plane { position: fixed; top: 12%; right: 6%; width: 100px; height: 100px; opacity: 0.12; z-index: 0; pointer-events: none; animation: imx-fly 25s ease-in-out infinite; }' +
-    'body.light-mode .imx-game-plane { opacity: 0.08; }' +
-    '.imx-game-plane svg { width: 100%; height: 100%; }' +
-    '@keyframes imx-fly { 0%,100% { transform: translate(0,0) rotate(0deg); } 20% { transform: translate(50px,-30px) rotate(10deg); } 40% { transform: translate(100px,20px) rotate(-6deg); } 60% { transform: translate(30px,50px) rotate(12deg); } 80% { transform: translate(-20px,15px) rotate(-4deg); } }' +
-
     /* Indian folk art motifs */
     '.imx-game-motif { position: fixed; pointer-events: none; z-index: 0; }' +
     '.imx-game-motif svg { width: 100%; height: 100%; }' +
-    '.imx-motif-warli { bottom: 0; left: 0; width: 300px; height: 200px; opacity: 0.7; color: #F59E0B; }' +
-    'body.light-mode .imx-motif-warli { color: #92400E; opacity: 0.5; }' +
-    '.imx-motif-madhubani { top: 60px; right: 0; width: 50px; height: 300px; opacity: 0.8; }' +
-    'body.light-mode .imx-motif-madhubani { opacity: 0.6; }' +
-    '.imx-motif-gond { bottom: 5%; right: 8%; width: 140px; height: 180px; opacity: 0.6; color: #94A3B8; animation: imx-sway 30s ease-in-out infinite; }' +
-    'body.light-mode .imx-motif-gond { color: #78350F; opacity: 0.4; }' +
-    '@keyframes imx-sway { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(2deg); } }' +
+    '.imx-motif-warli { bottom: 0; left: 0; width: 420px; height: 320px; color: #F59E0B; }' +
+    'body.light-mode .imx-motif-warli { color: #92400E; }' +
+    '.imx-motif-madhubani { top: 60px; right: 0; width: 100px; height: 420px; }' +
+    '.imx-motif-gond { bottom: 2%; right: 2%; width: 220px; height: 280px; color: #94A3B8; animation: imx-sway 30s ease-in-out infinite; }' +
+    'body.light-mode .imx-motif-gond { color: #78350F; }' +
+    '@keyframes imx-sway { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(1.5deg); } }' +
 
     /* ═══ FOOTER ═══════════════════════════════════════════ */
     '#imx-game-footer { margin-top: 3rem; padding: 2rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.08); text-align: center; font-size: 0.8rem; color: #94A3B8; }' +
@@ -378,10 +493,9 @@
       '#imx-game-header { padding: 0.4rem 0.75rem; }' +
       '.imx-gh-logo span { font-size: 0.9rem; }' +
       '.imx-gh-link { display: none; }' +
-      '.imx-game-plane { width: 60px; height: 60px; top: 8%; right: 3%; }' +
-      '.imx-motif-warli { width: 180px; height: 120px; opacity: 0.5; }' +
-      '.imx-motif-madhubani { width: 30px; height: 180px; opacity: 0.5; }' +
-      '.imx-motif-gond { width: 80px; height: 100px; opacity: 0.4; }' +
+      '.imx-motif-warli { width: 260px; height: 200px; }' +
+      '.imx-motif-madhubani { width: 60px; height: 260px; }' +
+      '.imx-motif-gond { width: 140px; height: 180px; }' +
       '.imx-theme-btn { width: 28px; height: 28px; }' +
       '.imx-theme-btn svg { width: 14px; height: 14px; }' +
     '}';
