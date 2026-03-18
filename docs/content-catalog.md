@@ -115,7 +115,7 @@ Hands-on workbenches where you build, design, and practice real skills.
 
 ---
 
-## Learning Games (12)
+## Learning Games (16)
 
 Economics simulations and interactive games — ideal for workshops and classroom use.
 
