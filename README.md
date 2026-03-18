@@ -377,18 +377,21 @@ ImpactMojo/
 │   └── index.html          # ImpactLex dictionary (PWA)
 │
 ├── Games/                         # Self-contained interactive games
-│   ├── public-good-game.html
-│   ├── prisoners-dilemma-game.html
-│   ├── commons-crisis-game.html
-│   ├── cooperation-paradox-game.html
-│   ├── opportunity-cost-game.html
-│   ├── risk-reward-game.html
-│   ├── bidding-wars-game.html
-│   ├── info-asymmetry-game.html
-│   ├── network-effects-game.html
-│   ├── externality-game.html
-│   ├── real-middle-india.html
-│   └── econ-concepts-game.html
+│   ├── public-good-game.html      # Economics: free-rider problem
+│   ├── prisoners-dilemma-game.html # Economics: strategic interdependence
+│   ├── commons-crisis-game.html   # Economics: tragedy of the commons
+│   ├── cooperation-paradox-game.html # Economics: Nash vs Pareto
+│   ├── opportunity-cost-game.html # Economics: resource allocation
+│   ├── risk-reward-game.html      # Economics: livelihood diversification
+│   ├── bidding-wars-game.html     # Economics: winner's curse
+│   ├── info-asymmetry-game.html   # Economics: adverse selection
+│   ├── network-effects-game.html  # Economics: technology adoption
+│   ├── externality-game.html      # Economics: market failures
+│   ├── real-middle-india.html     # Economics: inequality
+│   ├── econ-concepts-game.html    # Economics: concept quiz
+│   ├── climate-action-game.html   # Climate: mitigation vs adaptation
+│   ├── gender-equity-game.html    # Gender: care economy
+│   └── public-health-game.html    # Health: epidemic response
 │
 ├── supabase/
 │   ├── functions/

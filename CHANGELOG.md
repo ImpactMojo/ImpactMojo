@@ -5,6 +5,26 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.3.0] - 2026-03-18
+
+### Added
+- **3 new games** beyond economics: Climate Action (Warli art), Gender Equity/Care Economy (Madhubani art), Public Health/Epidemic Response (Pattachitra art)
+- **Indian folk art story illustrations** across all 12 existing games — intro screens, mid-game interludes, and adaptive ending art in 6 styles (Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra)
+- **Sample Size Calculator** lab tool — 4 modes (proportion, mean, two-group, cluster sampling) with educational content
+- **Budget Template Generator** lab tool — 7 budget categories, 5 smart templates, CSV/clipboard export
+- **Admin dashboard panels** — User Management (search, filter, pagination) and Site Settings (feature flags, metadata, integrations, backups)
+- **Accessibility improvements** — skip-nav links, ARIA landmarks, focus-visible styles, screen-reader labels on index, mobile-index, about, catalog
+- **Claude Code project config** — `.claude/CLAUDE.md`, Stop hook for housekeeping, `/housekeeping` skill
+
+### Changed
+- **Renamed "Economics Games" → "Games"** across 14 files (now covers broader topics)
+- **Fixed card text contrast** across 8 games — increased badge opacity, darkened text, added text-shadows (WCAG AA)
+- **Fixed Dojos nav icon** — was duplicating Flagship Courses icon, now uses Activity icon
+- **Fixed PolicyDhara workflow** — commit-msg prefix mismatch causing all scheduled runs to fail
+
+### Removed
+- **12 old Netlify game sites** deleted — all games now self-hosted in `/Games/`
+
 ## [10.2.0] - 2026-03-17
 
 ### Added
