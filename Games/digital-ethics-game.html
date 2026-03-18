@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Algorithm's Dilemma | ImpactMojo</title>
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F172A;--bg2:#1E293B;--bg3:#334155;
+  --text:#E2E8F0;--text2:#94A3B8;--text3:#64748B;
+  --turquoise:#00BFA5;--turquoise-dim:#00897B;--turquoise-glow:rgba(0,191,165,.35);
+  --orange:#FF6B35;--orange-dim:#E65100;--orange-glow:rgba(255,107,53,.35);
+  --navy:#1A237E;--navy-glow:rgba(26,35,126,.35);
+  --red:#D32F2F;--red-glow:rgba(211,47,47,.3);
+  --green:#388E3C;--green-glow:rgba(56,142,60,.3);
+  --amber:#FFB300;--amber-glow:rgba(255,179,0,.3);
+  --radius:12px;--transition:.3s ease;
+}
+html{font-size:16px}
+body{
+  font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  line-height:1.6;
+}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+a{color:var(--turquoise);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── Layout Shell ─────────────────────────────────────────────── */
+.app{max-width:820px;margin:0 auto;padding:16px}
+.screen{display:none;animation:fadeIn .5s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Back Link ────────────────────────────────────────────────── */
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.85rem;color:var(--text3);margin-bottom:12px;
+  transition:var(--transition);
+}
+.back-link:hover{color:var(--turquoise);text-decoration:none}
+
+/* ── Welcome Screen ───────────────────────────────────────────── */
+.welcome-header{text-align:center;padding:32px 0 16px}
+.welcome-header h1{
+  font-size:2.2rem;font-weight:800;
+  background:linear-gradient(135deg,var(--turquoise),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.welcome-header .subtitle{color:var(--text2);font-size:1.05rem;margin-top:6px}
+.card{background:var(--bg2);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;border:1px solid var(--bg3)}
+.card h2{font-size:1.15rem;margin-bottom:10px;color:var(--text)}
+.card p,.card li{color:var(--text2);font-size:.95rem}
+.card ul{padding-left:20px}
+.card li{margin-bottom:4px}
+.highlight-turquoise{color:var(--turquoise);font-weight:600}
+.highlight-orange{color:var(--orange);font-weight:600}
+.highlight-green{color:var(--green);font-weight:600}
+.highlight-red{color:var(--red);font-weight:600}
+.highlight-amber{color:var(--amber);font-weight:600}
+
+.btn-start{
+  display:block;width:100%;padding:16px;margin-top:20px;
+  font-size:1.15rem;font-weight:700;color:#fff;border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--turquoise),var(--turquoise-dim));
+  box-shadow:0 0 30px var(--turquoise-glow);
+  transition:var(--transition);
+}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 0 40px var(--turquoise-glow)}
+
+/* ── Story Intro Screen ──────────────────────────────────────── */
+.story-intro-header{text-align:center;padding:24px 0 8px}
+.story-intro-header h1{
+  font-size:2rem;font-weight:800;
+  background:linear-gradient(135deg,var(--turquoise),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.story-art-wrap{
+  display:flex;justify-content:center;padding:16px 0;
+}
+.story-art-wrap svg{
+  width:100%;max-width:800px;min-height:300px;
+  filter:drop-shadow(0 0 24px var(--turquoise-glow));
+}
+.story-narrative{
+  background:var(--bg2);border-radius:var(--radius);padding:22px 26px;
+  margin:12px 0 18px;border:1px solid var(--bg3);
+  font-size:1.08rem;line-height:1.75;color:var(--text2);
+  text-align:center;
+}
+.story-narrative strong{color:var(--text)}
+
+/* ── Game Screen ──────────────────────────────────────────────── */
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.round-badge{
+  background:var(--bg2);border:1px solid var(--bg3);border-radius:20px;
+  padding:6px 16px;font-weight:700;font-size:.95rem;
+}
+.progress-dots{display:flex;gap:6px;align-items:center}
+.progress-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--bg3);transition:var(--transition);
+}
+.progress-dot.done{background:var(--turquoise)}
+.progress-dot.current{background:var(--orange);box-shadow:0 0 8px var(--orange-glow)}
+
+/* ── Dashboard Scores ─────────────────────────────────────────── */
+.scores-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.score-card{
+  background:var(--bg2);border-radius:10px;padding:10px;text-align:center;
+  border:1px solid var(--bg3);position:relative;
+}
+.score-card .sc-name{font-size:.72rem;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.score-card .sc-score{font-size:1.4rem;font-weight:800;margin-top:2px}
+.score-card.efficiency .sc-score{color:var(--turquoise)}
+.score-card.fairness .sc-score{color:var(--orange)}
+.score-card.privacy .sc-score{color:var(--green)}
+.score-card.trust .sc-score{color:var(--amber)}
+
+/* ── Scenario Card ────────────────────────────────────────────── */
+.scenario-card{
+  background:var(--bg2);border-radius:var(--radius);padding:24px;margin-bottom:16px;
+  border:1px solid var(--bg3);border-left:4px solid var(--turquoise);
+}
+.scenario-card .scenario-title{font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.scenario-card .scenario-context{font-size:.92rem;color:var(--text2);line-height:1.7}
+.scenario-icon{font-size:1.8rem;margin-bottom:8px;display:block}
+
+/* ── Choice Buttons ───────────────────────────────────────────── */
+.choice-section{margin:16px 0}
+.choice-section .prompt{font-size:1rem;color:var(--text2);margin-bottom:12px;text-align:center;font-weight:600}
+.choice-grid{display:flex;flex-direction:column;gap:10px}
+.btn-approach{
+  width:100%;padding:16px 20px;text-align:left;
+  border-radius:var(--radius);font-size:.92rem;font-weight:500;
+  color:var(--text);background:var(--bg);
+  border:2px solid var(--bg3);transition:var(--transition);
+  line-height:1.5;
+}
+.btn-approach:hover{border-color:var(--turquoise);background:rgba(0,191,165,.08);transform:translateX(4px)}
+.btn-approach:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+.btn-approach .approach-label{font-weight:700;color:var(--turquoise);display:block;margin-bottom:4px;font-size:.95rem}
+
+/* ── Consequence Reveal ───────────────────────────────────────── */
+.reveal-area{margin:16px 0;min-height:80px}
+.consequence-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.consequence-card{
+  background:var(--bg2);border-radius:10px;padding:12px;text-align:center;
+  border:2px solid var(--bg3);transition:var(--transition);
+  opacity:0;transform:scale(0.8);
+}
+.consequence-card.shown{opacity:1;transform:scale(1)}
+.consequence-card .cq-name{font-size:.7rem;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.consequence-card .cq-change{font-size:1.2rem;font-weight:800;margin:4px 0}
+.consequence-card .cq-change.positive{color:var(--green)}
+.consequence-card .cq-change.negative{color:var(--red)}
+.consequence-card .cq-change.neutral{color:var(--amber)}
+.consequence-card.efficiency{border-color:var(--turquoise)}
+.consequence-card.fairness{border-color:var(--orange)}
+.consequence-card.privacy{border-color:var(--green)}
+.consequence-card.trust{border-color:var(--amber)}
+
+.round-insight{
+  background:var(--bg2);border-radius:10px;padding:14px 18px;margin-top:14px;
+  border-left:4px solid var(--turquoise);font-size:.9rem;color:var(--text2);
+  opacity:0;transition:opacity .5s;line-height:1.6;
+}
+.round-insight.visible{opacity:1}
+.round-insight strong{color:var(--text)}
+
+.btn-next{
+  display:block;width:100%;padding:14px;margin-top:16px;
+  font-size:1rem;font-weight:700;color:#fff;border-radius:var(--radius);
+  background:var(--bg3);transition:var(--transition);
+}
+.btn-next:hover{background:var(--turquoise)}
+
+/* ── Radar Chart (canvas placeholder) ─────────────────────────── */
+.radar-wrap{text-align:center;margin:14px 0}
+.radar-wrap canvas{max-width:280px;width:100%;height:auto}
+
+/* ── Bar Chart ──────────────────────────────────────────────── */
+.bar-chart{display:flex;align-items:flex-end;gap:10px;height:120px;margin-top:14px;padding:0 20px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center}
+.bar{
+  width:100%;max-width:80px;border-radius:6px 6px 0 0;
+  transition:height .6s cubic-bezier(.4,0,.2,1);min-height:4px;
+}
+.bar.eff-bar{background:var(--turquoise)}
+.bar.fair-bar{background:var(--orange)}
+.bar.priv-bar{background:var(--green)}
+.bar.trust-bar{background:var(--amber)}
+.bar-label{font-size:.72rem;color:var(--text3);margin-top:4px;text-align:center}
+.bar-value{font-size:.8rem;font-weight:700;margin-bottom:2px;text-align:center}
+
+/* ── End Screen ───────────────────────────────────────────────── */
+.end-header{text-align:center;padding:24px 0 12px}
+.end-header h1{font-size:1.8rem;font-weight:800;color:var(--text)}
+.end-header .end-sub{color:var(--text2);margin-top:4px}
+.final-scores{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.final-card{
+  background:var(--bg2);border-radius:var(--radius);padding:16px;text-align:center;
+  border:2px solid var(--bg3);
+}
+.final-card .fc-name{font-size:.78rem;color:var(--text3);font-weight:600;text-transform:uppercase}
+.final-card .fc-score{font-size:1.8rem;font-weight:800;margin:4px 0}
+.final-card .fc-max{font-size:.75rem;color:var(--text3)}
+
+.profile-badge{
+  display:inline-block;padding:8px 20px;border-radius:20px;
+  font-size:1.05rem;font-weight:700;color:#fff;margin:12px 0;
+  background:linear-gradient(135deg,var(--turquoise),var(--orange));
+}
+
+.insight-box{
+  background:var(--bg2);border-radius:var(--radius);padding:18px 22px;margin-bottom:14px;
+  border-left:4px solid var(--turquoise);
+}
+.insight-box h3{font-size:1rem;margin-bottom:6px}
+.insight-box p{font-size:.9rem;color:var(--text2);margin-bottom:6px;line-height:1.6}
+
+.scenario-recap{
+  background:var(--bg);border-radius:10px;padding:12px 16px;margin-bottom:8px;
+  border:1px solid var(--bg3);
+}
+.scenario-recap .sr-title{font-size:.85rem;font-weight:700;color:var(--text)}
+.scenario-recap .sr-choice{font-size:.8rem;color:var(--turquoise);margin-top:2px}
+
+.btn-restart{
+  display:block;width:100%;padding:14px;margin-top:12px;
+  font-size:1rem;font-weight:700;color:#fff;border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--turquoise),var(--orange));
+  transition:var(--transition);
+}
+.btn-restart:hover{transform:translateY(-2px)}
+
+/* ── Gond dot-pattern decorations ─────────────────────────────── */
+.gond-dots{
+  position:relative;overflow:hidden;
+}
+.gond-dots::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,var(--turquoise) 1px,transparent 1px);
+  background-size:12px 12px;opacity:.06;pointer-events:none;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media(max-width:600px){
+  .app{padding:10px}
+  .welcome-header h1{font-size:1.6rem}
+  .scores-row{grid-template-columns:repeat(2,1fr);gap:6px}
+  .score-card .sc-score{font-size:1.1rem}
+  .consequence-grid{grid-template-columns:repeat(2,1fr);gap:6px}
+  .btn-approach{padding:14px 16px;font-size:.88rem}
+  .final-scores{grid-template-columns:repeat(2,1fr);gap:8px}
+  .final-card .fc-score{font-size:1.4rem}
+  .bar-chart{height:90px}
+  .progress-dots{gap:4px}
+  .progress-dot{width:8px;height:8px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ═══════════════════ STORY INTRO SCREEN ═══════════════════ -->
+<div id="story-intro-screen" class="screen active">
+  <a href="../Games/" class="back-link">&larr; Back to Games</a>
+  <div class="story-intro-header">
+    <h1>The Algorithm's Dilemma</h1>
+  </div>
+
+  <div class="story-art-wrap">
+    <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <!-- Gond-style border: dot patterns -->
+      <defs>
+        <pattern id="gondDots" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+          <circle cx="5" cy="5" r="1.5" fill="#00BFA5" opacity=".5"/>
+        </pattern>
+        <pattern id="gondDotsOrange" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+          <circle cx="5" cy="5" r="1.5" fill="#FF6B35" opacity=".5"/>
+        </pattern>
+      </defs>
+
+      <!-- Background dot field -->
+      <rect x="0" y="0" width="800" height="400" fill="url(#gondDots)" opacity=".3"/>
+
+      <!-- Gond border frame - bold outline with dots -->
+      <rect x="12" y="12" width="776" height="376" rx="8" stroke="#00BFA5" stroke-width="2.5" fill="none" opacity=".6"/>
+      <rect x="20" y="20" width="760" height="360" rx="6" stroke="#FF6B35" stroke-width="1.5" fill="none" opacity=".4"/>
+
+      <!-- Corner dot clusters (Gond style) -->
+      <g fill="#00BFA5" opacity=".7">
+        <circle cx="30" cy="30" r="3"/><circle cx="40" cy="30" r="2"/><circle cx="30" cy="40" r="2"/><circle cx="38" cy="38" r="1.5"/>
+        <circle cx="770" cy="30" r="3"/><circle cx="760" cy="30" r="2"/><circle cx="770" cy="40" r="2"/><circle cx="762" cy="38" r="1.5"/>
+        <circle cx="30" cy="370" r="3"/><circle cx="40" cy="370" r="2"/><circle cx="30" cy="360" r="2"/><circle cx="38" cy="362" r="1.5"/>
+        <circle cx="770" cy="370" r="3"/><circle cx="760" cy="370" r="2"/><circle cx="770" cy="360" r="2"/><circle cx="762" cy="362" r="1.5"/>
+      </g>
+
+      <!-- Central Tree of Knowledge (Gond nature motif merged with digital) -->
+      <!-- Trunk -->
+      <path d="M400,350 L400,180" stroke="#FF6B35" stroke-width="4" stroke-linecap="round"/>
+      <path d="M400,280 L360,240" stroke="#FF6B35" stroke-width="3" stroke-linecap="round"/>
+      <path d="M400,280 L440,240" stroke="#FF6B35" stroke-width="3" stroke-linecap="round"/>
+      <path d="M400,240 L370,200" stroke="#FF6B35" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M400,240 L430,200" stroke="#FF6B35" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M400,210 L380,175" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+      <path d="M400,210 L420,175" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Roots as circuit lines -->
+      <path d="M400,350 L360,380 L340,380" stroke="#1A237E" stroke-width="2" opacity=".7"/>
+      <path d="M400,350 L440,380 L460,380" stroke="#1A237E" stroke-width="2" opacity=".7"/>
+      <path d="M400,350 L400,385" stroke="#1A237E" stroke-width="2" opacity=".7"/>
+      <!-- Root dots -->
+      <circle cx="340" cy="380" r="3" fill="#1A237E" opacity=".7"/>
+      <circle cx="460" cy="380" r="3" fill="#1A237E" opacity=".7"/>
+      <circle cx="400" cy="385" r="3" fill="#1A237E" opacity=".7"/>
+
+      <!-- Leaf clusters as dot patterns (Gond style) -->
+      <!-- Left canopy -->
+      <g fill="#388E3C" opacity=".8">
+        <circle cx="345" cy="230" r="4"/><circle cx="340" cy="222" r="3"/><circle cx="350" cy="222" r="3"/>
+        <circle cx="335" cy="215" r="2.5"/><circle cx="345" cy="215" r="2.5"/><circle cx="355" cy="215" r="2.5"/>
+        <circle cx="340" cy="208" r="2"/><circle cx="350" cy="208" r="2"/>
+      </g>
+      <!-- Right canopy -->
+      <g fill="#388E3C" opacity=".8">
+        <circle cx="455" cy="230" r="4"/><circle cx="450" cy="222" r="3"/><circle cx="460" cy="222" r="3"/>
+        <circle cx="445" cy="215" r="2.5"/><circle cx="455" cy="215" r="2.5"/><circle cx="465" cy="215" r="2.5"/>
+        <circle cx="450" cy="208" r="2"/><circle cx="460" cy="208" r="2"/>
+      </g>
+      <!-- Top canopy -->
+      <g fill="#00BFA5" opacity=".7">
+        <circle cx="380" cy="190" r="3.5"/><circle cx="390" cy="183" r="3"/><circle cx="400" cy="178" r="4"/>
+        <circle cx="410" cy="183" r="3"/><circle cx="420" cy="190" r="3.5"/>
+        <circle cx="385" cy="175" r="2.5"/><circle cx="395" cy="170" r="3"/><circle cx="405" cy="170" r="3"/>
+        <circle cx="415" cy="175" r="2.5"/>
+        <circle cx="392" cy="163" r="2"/><circle cx="400" cy="160" r="3"/><circle cx="408" cy="163" r="2"/>
+      </g>
+
+      <!-- Digital nodes on branches (binary/AI motif) -->
+      <g>
+        <circle cx="360" cy="240" r="6" fill="none" stroke="#FFB300" stroke-width="1.5"/>
+        <text x="360" y="243" text-anchor="middle" fill="#FFB300" font-size="8" font-weight="700">0</text>
+        <circle cx="440" cy="240" r="6" fill="none" stroke="#FFB300" stroke-width="1.5"/>
+        <text x="440" y="243" text-anchor="middle" fill="#FFB300" font-size="8" font-weight="700">1</text>
+        <circle cx="370" cy="200" r="5" fill="none" stroke="#FFB300" stroke-width="1.5"/>
+        <text x="370" y="203" text-anchor="middle" fill="#FFB300" font-size="7" font-weight="700">1</text>
+        <circle cx="430" cy="200" r="5" fill="none" stroke="#FFB300" stroke-width="1.5"/>
+        <text x="430" y="203" text-anchor="middle" fill="#FFB300" font-size="7" font-weight="700">0</text>
+      </g>
+
+      <!-- Left: Gond-style bird (representing freedom/privacy) -->
+      <g transform="translate(100,120)" stroke="#00BFA5" stroke-width="2" fill="none" opacity=".8">
+        <path d="M0,40 Q15,20 30,30 Q45,15 50,30 L55,25 L50,35 L60,40 Q45,45 30,40 Q15,50 0,40Z"/>
+        <circle cx="20" cy="33" r="2.5" fill="#00BFA5"/>
+        <!-- Dot pattern on body -->
+        <circle cx="30" cy="35" r="1" fill="#00BFA5"/><circle cx="35" cy="33" r="1" fill="#00BFA5"/>
+        <circle cx="40" cy="35" r="1" fill="#00BFA5"/><circle cx="25" cy="37" r="1" fill="#00BFA5"/>
+        <circle cx="33" cy="38" r="1" fill="#00BFA5"/><circle cx="38" cy="38" r="1" fill="#00BFA5"/>
+      </g>
+
+      <!-- Right: Gond-style peacock (representing beauty/fairness) -->
+      <g transform="translate(620,100)" stroke="#FF6B35" stroke-width="2" fill="none" opacity=".8">
+        <ellipse cx="30" cy="50" rx="12" ry="18"/>
+        <circle cx="30" cy="35" r="7"/>
+        <circle cx="28" cy="34" r="2" fill="#FF6B35"/>
+        <path d="M37,35 L45,32 L42,36Z" fill="#FF6B35"/>
+        <!-- Tail fan with dots -->
+        <path d="M25,68 Q5,40 15,15" stroke-width="1.5"/>
+        <path d="M30,68 Q10,45 20,20" stroke-width="1.5"/>
+        <path d="M35,68 Q50,45 40,20" stroke-width="1.5"/>
+        <path d="M30,68 Q55,40 45,15" stroke-width="1.5"/>
+        <!-- Dots on tail -->
+        <circle cx="15" cy="25" r="3" fill="none" stroke="#FFB300" stroke-width="1"/>
+        <circle cx="15" cy="25" r="1.5" fill="#FFB300"/>
+        <circle cx="22" cy="28" r="3" fill="none" stroke="#FFB300" stroke-width="1"/>
+        <circle cx="22" cy="28" r="1.5" fill="#FFB300"/>
+        <circle cx="38" cy="28" r="3" fill="none" stroke="#FFB300" stroke-width="1"/>
+        <circle cx="38" cy="28" r="1.5" fill="#FFB300"/>
+        <circle cx="45" cy="25" r="3" fill="none" stroke="#FFB300" stroke-width="1"/>
+        <circle cx="45" cy="25" r="1.5" fill="#FFB300"/>
+      </g>
+
+      <!-- Bottom: Gond-style fish (representing data flow) -->
+      <g transform="translate(180,320)" stroke="#1A237E" stroke-width="1.5" fill="none" opacity=".6">
+        <path d="M0,15 Q15,0 30,10 Q40,5 50,10 L55,5 L55,20 L50,15 Q40,20 30,15 Q15,25 0,15Z"/>
+        <circle cx="15" cy="13" r="1.5" fill="#1A237E"/>
+        <circle cx="25" cy="12" r="1" fill="#1A237E"/><circle cx="30" cy="14" r="1" fill="#1A237E"/><circle cx="35" cy="12" r="1" fill="#1A237E"/>
+      </g>
+      <g transform="translate(560,330)" stroke="#1A237E" stroke-width="1.5" fill="none" opacity=".6">
+        <path d="M50,12 Q35,0 20,8 Q10,3 5,8 L0,4 L0,18 L5,13 Q10,18 20,14 Q35,22 50,12Z"/>
+        <circle cx="38" cy="11" r="1.5" fill="#1A237E"/>
+        <circle cx="28" cy="10" r="1" fill="#1A237E"/><circle cx="23" cy="12" r="1" fill="#1A237E"/><circle cx="18" cy="10" r="1" fill="#1A237E"/>
+      </g>
+
+      <!-- Central eye/lens (AI eye motif) -->
+      <g transform="translate(375,100)">
+        <ellipse cx="25" cy="15" rx="25" ry="15" stroke="#FFB300" stroke-width="2" fill="none" opacity=".7"/>
+        <circle cx="25" cy="15" r="8" stroke="#D32F2F" stroke-width="1.5" fill="none" opacity=".6"/>
+        <circle cx="25" cy="15" r="3" fill="#D32F2F" opacity=".5"/>
+        <!-- Radiating dots -->
+        <circle cx="25" cy="-2" r="1.5" fill="#FFB300" opacity=".5"/>
+        <circle cx="25" cy="32" r="1.5" fill="#FFB300" opacity=".5"/>
+        <circle cx="-2" cy="15" r="1.5" fill="#FFB300" opacity=".5"/>
+        <circle cx="52" cy="15" r="1.5" fill="#FFB300" opacity=".5"/>
+      </g>
+
+      <!-- Title text -->
+      <text x="400" y="145" text-anchor="middle" fill="#E2E8F0" font-size="14" font-weight="600" opacity=".7">Design AI Systems. Face the Tradeoffs.</text>
+
+      <!-- Decorative dot rows (Gond border motif) -->
+      <g fill="#00BFA5" opacity=".3">
+        <circle cx="50" cy="200" r="2"/><circle cx="60" cy="200" r="1.5"/><circle cx="70" cy="200" r="2"/><circle cx="80" cy="200" r="1.5"/>
+        <circle cx="720" cy="200" r="2"/><circle cx="730" cy="200" r="1.5"/><circle cx="740" cy="200" r="2"/><circle cx="750" cy="200" r="1.5"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="story-narrative">
+    You are the <strong>Chief Ethics Officer</strong> at a major technology company.
+    Your algorithms shape lives &mdash; who gets a loan, who gets surveilled, who gets hired.
+    Every system you design demands a choice between
+    <strong>efficiency</strong>, <strong>fairness</strong>, <strong>privacy</strong>, and <strong>public trust</strong>.
+    There are no perfect answers &mdash; only tradeoffs. Choose wisely.
+  </div>
+
+  <button class="btn-start" onclick="startGame()">Begin the Dilemma</button>
+</div>
+
+<!-- ═══════════════════ WELCOME / INFO SCREEN ═══════════════════ -->
+<div id="welcome-screen" class="screen">
+  <a href="../Games/" class="back-link">&larr; Back to Games</a>
+  <div class="welcome-header">
+    <h1>The Algorithm's Dilemma</h1>
+    <div class="subtitle">Navigate 8 real-world AI ethics scenarios</div>
+  </div>
+
+  <div class="card gond-dots">
+    <h2>How It Works</h2>
+    <ul>
+      <li>You will face <span class="highlight-turquoise">8 scenarios</span> involving AI and algorithmic systems</li>
+      <li>Each scenario presents <span class="highlight-orange">3&ndash;4 approaches</span> to a real ethical dilemma</li>
+      <li>Your choices affect <strong>4 dimensions</strong>:
+        <span class="highlight-turquoise">Efficiency</span>,
+        <span class="highlight-orange">Fairness</span>,
+        <span class="highlight-green">Privacy</span>,
+        <span class="highlight-amber">Public Trust</span></li>
+      <li>There is <strong>no perfect solution</strong> &mdash; every choice involves tradeoffs</li>
+      <li>Your cumulative dashboard reveals your design philosophy</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>The Four Dimensions</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+      <div style="background:var(--bg);border-radius:8px;padding:12px;border-left:3px solid var(--turquoise)">
+        <div style="font-weight:700;color:var(--turquoise);font-size:.9rem">Efficiency</div>
+        <div style="font-size:.82rem;color:var(--text2);margin-top:4px">How well does the system achieve its intended purpose?</div>
+      </div>
+      <div style="background:var(--bg);border-radius:8px;padding:12px;border-left:3px solid var(--orange)">
+        <div style="font-weight:700;color:var(--orange);font-size:.9rem">Fairness</div>
+        <div style="font-size:.82rem;color:var(--text2);margin-top:4px">Does the system treat all groups equitably?</div>
+      </div>
+      <div style="background:var(--bg);border-radius:8px;padding:12px;border-left:3px solid var(--green)">
+        <div style="font-weight:700;color:var(--green);font-size:.9rem">Privacy</div>
+        <div style="font-size:.82rem;color:var(--text2);margin-top:4px">How well are individual data rights protected?</div>
+      </div>
+      <div style="background:var(--bg);border-radius:8px;padding:12px;border-left:3px solid var(--amber)">
+        <div style="font-weight:700;color:var(--amber);font-size:.9rem">Public Trust</div>
+        <div style="font-size:.82rem;color:var(--text2);margin-top:4px">Does the public believe the system is legitimate?</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-start" onclick="showScreen('game-screen');loadScenario()">Start Designing</button>
+</div>
+
+<!-- ═══════════════════ GAME SCREEN ═══════════════════ -->
+<div id="game-screen" class="screen">
+  <a href="../Games/" class="back-link">&larr; Back to Games</a>
+  <div class="top-bar">
+    <div class="round-badge">Scenario <span id="round-num">1</span> / 8</div>
+    <div class="progress-dots" id="progress-dots"></div>
+  </div>
+
+  <div class="scores-row">
+    <div class="score-card efficiency"><div class="sc-name">Efficiency</div><div class="sc-score" id="score-efficiency">0</div></div>
+    <div class="score-card fairness"><div class="sc-name">Fairness</div><div class="sc-score" id="score-fairness">0</div></div>
+    <div class="score-card privacy"><div class="sc-name">Privacy</div><div class="sc-score" id="score-privacy">0</div></div>
+    <div class="score-card trust"><div class="sc-name">Trust</div><div class="sc-score" id="score-trust">0</div></div>
+  </div>
+
+  <!-- Scenario -->
+  <div id="scenario-area"></div>
+
+  <!-- Choice Buttons -->
+  <div class="choice-section" id="choice-section">
+    <div class="prompt">Choose your approach:</div>
+    <div class="choice-grid" id="choice-grid"></div>
+  </div>
+
+  <!-- Reveal -->
+  <div class="reveal-area" id="reveal-area" style="display:none">
+    <div class="consequence-grid" id="consequence-grid"></div>
+    <div class="round-insight" id="round-insight"></div>
+  </div>
+
+  <button class="btn-next" id="btn-next" style="display:none" onclick="nextRound()">Next Scenario &rarr;</button>
+
+  <!-- Score Bar Chart -->
+  <div class="card" style="padding:14px 16px;margin-top:14px">
+    <div style="font-size:.85rem;font-weight:700;color:var(--text2);margin-bottom:2px">Cumulative Dashboard</div>
+    <div class="bar-chart" id="bar-chart">
+      <div class="bar-wrap"><div class="bar-value" id="bv-eff" style="color:var(--turquoise)">0</div><div class="bar eff-bar" id="bar-eff" style="height:4px"></div><div class="bar-label">Efficiency</div></div>
+      <div class="bar-wrap"><div class="bar-value" id="bv-fair" style="color:var(--orange)">0</div><div class="bar fair-bar" id="bar-fair" style="height:4px"></div><div class="bar-label">Fairness</div></div>
+      <div class="bar-wrap"><div class="bar-value" id="bv-priv" style="color:var(--green)">0</div><div class="bar priv-bar" id="bar-priv" style="height:4px"></div><div class="bar-label">Privacy</div></div>
+      <div class="bar-wrap"><div class="bar-value" id="bv-trust" style="color:var(--amber)">0</div><div class="bar trust-bar" id="bar-trust" style="height:4px"></div><div class="bar-label">Trust</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ END SCREEN ═══════════════════ -->
+<div id="end-screen" class="screen">
+  <a href="../Games/" class="back-link">&larr; Back to Games</a>
+  <div class="end-header">
+    <h1>Your Design Philosophy</h1>
+    <div class="end-sub" id="end-sub"></div>
+  </div>
+
+  <div id="profile-area" style="text-align:center"></div>
+
+  <div class="final-scores" id="final-scores"></div>
+
+  <div class="card" style="padding:14px 16px">
+    <div style="font-size:.85rem;font-weight:700;color:var(--text2);margin-bottom:2px">Final Dashboard</div>
+    <div class="bar-chart" id="final-bar-chart" style="height:140px"></div>
+  </div>
+
+  <div id="end-insights"></div>
+
+  <div class="card">
+    <h2>Your Decisions</h2>
+    <div id="end-recap"></div>
+  </div>
+
+  <button class="btn-restart" onclick="restartGame()">Play Again</button>
+</div>
+
+</div><!-- /.app -->
+
+<script>
+(function(){
+'use strict';
+
+/* ── Scenario Data ─────────────────────────────────── */
+var SCENARIOS = [
+  {
+    id: 1,
+    title: 'Facial Recognition for Public Safety',
+    icon: '\uD83D\uDCF7',
+    context: 'Your city wants to deploy facial recognition cameras in public spaces to help police identify suspects faster. Studies show it can reduce crime by 15%, but the technology has significantly higher error rates for darker-skinned individuals and creates a mass surveillance infrastructure.',
+    approaches: [
+      {
+        label: 'Full Deployment',
+        desc: 'Deploy cameras citywide with real-time matching against criminal databases. Maximum coverage, maximum crime reduction potential.',
+        effects: { efficiency: 9, fairness: 2, privacy: 1, trust: 3 },
+        insight: 'Full deployment maximizes crime detection but creates a surveillance state. Studies from London show facial recognition misidentifies Black faces at rates 10x higher than white faces. Public spaces become zones of constant monitoring.'
+      },
+      {
+        label: 'Targeted & Audited Deployment',
+        desc: 'Deploy only in high-crime areas with mandatory bias audits, human review of all matches, and annual public transparency reports.',
+        effects: { efficiency: 6, fairness: 5, privacy: 4, trust: 7 },
+        insight: 'Targeted deployment with audits balances safety and rights. The bias audits catch some errors, but high-crime areas often correlate with minority neighborhoods, so "targeted" deployment can still be discriminatory in practice.'
+      },
+      {
+        label: 'Ban Facial Recognition',
+        desc: 'Prohibit government use of facial recognition technology entirely. Invest in community policing and other non-surveillance approaches.',
+        effects: { efficiency: 2, fairness: 8, privacy: 9, trust: 6 },
+        insight: 'Cities like San Francisco and Boston banned government facial recognition. This protects privacy and fairness but means foregoing a tool that genuinely does help solve some crimes. The question is whether the civil liberties cost is worth the safety benefit.'
+      },
+      {
+        label: 'Opt-in Consent Model',
+        desc: 'Only use facial recognition with individual consent for specific purposes (finding missing persons, verifying identity at borders). No mass surveillance.',
+        effects: { efficiency: 4, fairness: 7, privacy: 7, trust: 8 },
+        insight: 'The consent model respects autonomy but severely limits effectiveness. Criminals do not opt in to being identified. This approach works for narrow use cases but cannot serve as a public safety tool at scale.'
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: 'Credit Scoring Algorithm',
+    icon: '\uD83D\uDCB3',
+    context: 'Your bank is building an AI credit scoring model. Using zip codes, social media activity, and shopping patterns dramatically improves prediction accuracy compared to traditional credit scores. However, these data proxies strongly correlate with race and socioeconomic status.',
+    approaches: [
+      {
+        label: 'Maximum Accuracy Model',
+        desc: 'Use all available data including zip codes, social media, and purchase history. Achieves 94% accuracy in predicting defaults.',
+        effects: { efficiency: 9, fairness: 2, privacy: 2, trust: 3 },
+        insight: 'Maximum accuracy often means maximum bias. When zip code predicts creditworthiness, it is really using neighborhood racial composition as a factor. The model may be accurate on average but systematically disadvantages entire communities.'
+      },
+      {
+        label: 'Fairness-Constrained Model',
+        desc: 'Remove proxy variables for protected classes. Accept slightly lower accuracy (88%) to ensure approval rates are proportional across demographic groups.',
+        effects: { efficiency: 6, fairness: 8, privacy: 5, trust: 7 },
+        insight: 'Fairness constraints reduce predictive power but prevent algorithmic redlining. The 6% accuracy drop means some loans will default that would not have been approved otherwise. But it also means deserving borrowers are not excluded by their zip code.'
+      },
+      {
+        label: 'Transparent Traditional Model',
+        desc: 'Stick with traditional credit scoring (payment history, debt ratio, credit length). Fully explainable, well-understood, but misses "thin file" applicants.',
+        effects: { efficiency: 5, fairness: 5, privacy: 8, trust: 8 },
+        insight: 'Traditional models are well-understood and regulatable, but they have their own biases. People without credit history (often young, immigrant, or low-income) are invisible to these models. Familiarity does not equal fairness.'
+      },
+      {
+        label: 'Alternative Data with Consent',
+        desc: 'Allow applicants to voluntarily share rent payments, utility bills, and employment data to supplement thin credit files. Opt-in only.',
+        effects: { efficiency: 7, fairness: 6, privacy: 6, trust: 7 },
+        insight: 'Voluntary alternative data helps underserved populations access credit while respecting choice. The catch: those who benefit most from sharing data are often those with the least understanding of what they are giving up.'
+      }
+    ]
+  },
+  {
+    id: 3,
+    title: 'Content Moderation at Scale',
+    icon: '\uD83D\uDCAC',
+    context: 'Your social media platform processes 500 million posts per day. AI moderation can flag harmful content in milliseconds, but it struggles with context, satire, and non-English languages. Human moderators are more accurate but cannot keep up with volume. Meanwhile, harmful content spreads virally in minutes.',
+    approaches: [
+      {
+        label: 'Aggressive AI Filtering',
+        desc: 'Deploy AI to automatically remove content flagged as harmful. Fast and comprehensive, but with a 12% false positive rate and bias against certain dialects.',
+        effects: { efficiency: 8, fairness: 3, privacy: 5, trust: 4 },
+        insight: 'Aggressive filtering catches most harm but silences legitimate speech. The 12% false positive rate means 60 million posts per day wrongly removed. Marginalized communities, who often discuss discrimination using language the AI flags, are disproportionately censored.'
+      },
+      {
+        label: 'AI Flags, Humans Decide',
+        desc: 'AI flags suspicious content, human moderators make final decisions. Slower but more nuanced. Content stays visible during review unless extremely graphic.',
+        effects: { efficiency: 5, fairness: 7, privacy: 6, trust: 7 },
+        insight: 'Human-in-the-loop moderation is more accurate but creates a brutal job. Moderators review violent, abusive, and traumatic content all day, leading to high PTSD rates. And the review delay means harmful content can still go viral before being caught.'
+      },
+      {
+        label: 'Community-Based Moderation',
+        desc: 'Empower community moderators with cultural context. AI provides tools and data, but local communities set and enforce their own standards.',
+        effects: { efficiency: 4, fairness: 8, privacy: 7, trust: 6 },
+        insight: 'Community moderation respects cultural context but creates inconsistency. What is acceptable in one community may be harmful in another. It also places an unpaid labor burden on community members and can enable local power dynamics that suppress minority voices within groups.'
+      },
+      {
+        label: 'Minimal Moderation, Maximum Transparency',
+        desc: 'Only remove clearly illegal content. Provide users with powerful filtering tools and transparent labeling. Prioritize free expression.',
+        effects: { efficiency: 3, fairness: 5, privacy: 8, trust: 4 },
+        insight: 'Maximum free speech sounds principled but shifts the burden to users. People who are targets of harassment must individually block and filter, while harassers face no friction. "Neutral" platforms often amplify the loudest and most extreme voices.'
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: 'Predictive Policing System',
+    icon: '\uD83D\uDEA8',
+    context: 'The police department wants to use AI to predict where crimes are most likely to occur and allocate patrols accordingly. The training data comes from historical arrest records, which reflect decades of biased policing in minority neighborhoods. More patrols in these areas lead to more arrests, confirming the algorithm.',
+    approaches: [
+      {
+        label: 'Deploy As-Is',
+        desc: 'Use historical crime data directly. The algorithm predicts hotspots with 73% accuracy. Police resources are allocated based on predictions.',
+        effects: { efficiency: 8, fairness: 1, privacy: 3, trust: 2 },
+        insight: 'Deploying with biased training data automates historical discrimination. More police in over-policed neighborhoods means more arrests for minor offenses, which feeds back into the data and intensifies the bias. This is a textbook feedback loop that perpetuates systemic inequality.'
+      },
+      {
+        label: 'Bias-Corrected Model',
+        desc: 'Adjust the algorithm to account for historical policing bias. Use victimization surveys and 911 call data (reported crime, not just arrests). Accuracy drops to 61%.',
+        effects: { efficiency: 5, fairness: 6, privacy: 4, trust: 6 },
+        insight: 'Bias correction is better but imperfect. Victimization surveys have their own biases (underreporting in communities that distrust police). And even "corrected" predictions still send more police to areas they identify, creating a version of the same feedback loop.'
+      },
+      {
+        label: 'Reject Predictive Policing',
+        desc: 'Abandon algorithmic prediction entirely. Allocate police resources based on community input, equal distribution, and social worker partnerships.',
+        effects: { efficiency: 3, fairness: 8, privacy: 8, trust: 7 },
+        insight: 'Rejecting predictive policing addresses the bias problem but may reduce response to genuine crime patterns. Communities experiencing real crime spikes may receive less help. The question is whether algorithmic policing can ever be separated from its discriminatory roots.'
+      }
+    ]
+  },
+  {
+    id: 5,
+    title: 'Health Insurance Pricing Algorithm',
+    icon: '\u2695\uFE0F',
+    context: 'Your health insurance company can use wearable device data (steps, heart rate, sleep patterns) and genetic testing to precisely predict individual health risks. This allows "personalized" pricing that is actuarially accurate. But it means people with chronic conditions or genetic predispositions pay dramatically more.',
+    approaches: [
+      {
+        label: 'Full Personalization',
+        desc: 'Use all available health data for precision pricing. Healthier individuals pay 40% less. Those with genetic risk markers pay up to 300% more.',
+        effects: { efficiency: 9, fairness: 1, privacy: 1, trust: 2 },
+        insight: 'Precision pricing is efficient for insurers but destroys the fundamental purpose of insurance: pooling risk. When algorithms can perfectly predict who will get sick, insurance becomes a charge for being unlucky. People with genetic conditions they did not choose face unaffordable coverage.'
+      },
+      {
+        label: 'Community-Rated with Incentives',
+        desc: 'Base rates on broad community pools. Offer optional wellness program discounts (up to 15%) for healthy behaviors, but never penalize conditions.',
+        effects: { efficiency: 5, fairness: 7, privacy: 6, trust: 8 },
+        insight: 'Community rating preserves the risk-pooling function of insurance while incentivizing health. But wellness discounts can still disadvantage people with disabilities who cannot increase their step count. "Healthy behavior" is easier for the privileged.'
+      },
+      {
+        label: 'Blind Risk Pooling',
+        desc: 'Prohibit use of any health data for pricing. Everyone in a region pays the same rate regardless of individual risk factors.',
+        effects: { efficiency: 3, fairness: 9, privacy: 9, trust: 6 },
+        insight: 'Blind pooling is maximally equitable but creates adverse selection problems. Without risk adjustment, healthy people may opt out of expensive pools, leaving sicker populations in pools with rising costs. Equity in pricing requires equity in participation.'
+      },
+      {
+        label: 'Regulated Bands',
+        desc: 'Allow limited pricing variation (max 3:1 ratio) based on age and smoking status only. Ban genetic and wearable data from pricing. Mandate coverage.',
+        effects: { efficiency: 6, fairness: 7, privacy: 7, trust: 7 },
+        insight: 'Regulated bands balance actuarial reality with social protection (this is roughly the ACA approach). The 3:1 cap means young healthy people subsidize older sicker ones, which is the social contract of insurance. But it requires a mandate to prevent adverse selection.'
+      }
+    ]
+  },
+  {
+    id: 6,
+    title: 'AI Hiring Algorithm',
+    icon: '\uD83D\uDCBC',
+    context: 'Your company receives 50,000 applications per year. An AI resume screener can reduce review time by 85%. But it was trained on data from your historically homogeneous workforce. It consistently scores candidates from elite universities higher and penalizes career gaps (which disproportionately affect women who took parental leave).',
+    approaches: [
+      {
+        label: 'Deploy the AI Screener',
+        desc: 'Use the AI as-is for initial screening. It matches the hiring patterns of your most successful managers. Fast, consistent, and cost-effective.',
+        effects: { efficiency: 9, fairness: 2, privacy: 4, trust: 3 },
+        insight: 'The AI replicates existing patterns of success, which means replicating existing patterns of exclusion. Amazon famously scrapped its AI hiring tool when it systematically downgraded resumes containing the word "women\'s." Training on biased history produces biased futures.'
+      },
+      {
+        label: 'AI with Diversity Constraints',
+        desc: 'Use AI screening but enforce that shortlists must reflect the demographic composition of the applicant pool. Blind identifying information during review.',
+        effects: { efficiency: 7, fairness: 7, privacy: 6, trust: 6 },
+        insight: 'Diversity constraints force the algorithm to look beyond its biases, but the approach is legally complex. Some jurisdictions consider demographic quotas discriminatory. And blinding names does not address the subtler biases embedded in how "quality" is defined.'
+      },
+      {
+        label: 'Structured Human Review',
+        desc: 'Abandon AI screening entirely. Use structured interviews with standardized rubrics, diverse hiring panels, and skills-based assessments.',
+        effects: { efficiency: 3, fairness: 8, privacy: 8, trust: 8 },
+        insight: 'Structured human review is the gold standard for fairness but enormously expensive at scale. Processing 50,000 applications manually requires significant resources. There is also no guarantee human reviewers are bias-free; they are just biased in different, less systematic ways.'
+      },
+      {
+        label: 'AI Assisted, Human Decided',
+        desc: 'AI organizes and summarizes applications but does not rank or score them. Humans make all selection decisions with AI providing data, not judgments.',
+        effects: { efficiency: 6, fairness: 6, privacy: 5, trust: 7 },
+        insight: 'AI as assistant rather than decision-maker preserves human agency but still risks "automation bias" where reviewers over-trust the AI summary. If the AI highlights certain qualifications, humans tend to anchor on those features even when told the AI is not making recommendations.'
+      }
+    ]
+  },
+  {
+    id: 7,
+    title: 'Pandemic Surveillance System',
+    icon: '\uD83E\uDDA0',
+    context: 'A new pandemic is emerging. Contact tracing apps using Bluetooth proximity and location data can identify 80% of exposure chains within hours. But this requires tracking everyone\'s movements and social contacts. The data could be invaluable for public health or devastating if misused.',
+    approaches: [
+      {
+        label: 'Mandatory National Tracking',
+        desc: 'Require all smartphones to run contact tracing with location data. Government health agencies access all movement data. Maximum epidemiological effectiveness.',
+        effects: { efficiency: 9, fairness: 4, privacy: 1, trust: 2 },
+        insight: 'Mandatory tracking was effective in some countries (South Korea, Taiwan) but required enormous public trust in government. The infrastructure for pandemic surveillance is identical to the infrastructure for political surveillance. Temporary emergency powers have a history of becoming permanent.'
+      },
+      {
+        label: 'Privacy-Preserving Protocol',
+        desc: 'Use decentralized Bluetooth-only contact tracing (like Apple/Google protocol). No location data. No central database. Voluntary participation.',
+        effects: { efficiency: 4, fairness: 7, privacy: 9, trust: 7 },
+        insight: 'Privacy-preserving protocols protect civil liberties but rely on voluntary adoption. Most countries saw adoption rates below 25%, far too low for effective contact tracing. Privacy by design is admirable but may cost lives during a genuine emergency.'
+      },
+      {
+        label: 'Tiered Emergency Powers',
+        desc: 'Grant expanded surveillance only during declared health emergencies with automatic sunset clauses, independent oversight, and mandatory data deletion.',
+        effects: { efficiency: 7, fairness: 6, privacy: 5, trust: 7 },
+        insight: 'Tiered powers balance emergency needs with safeguards, but sunset clauses are only as strong as political will to enforce them. The USA PATRIOT Act was "temporary" in 2001. Emergency data collection, once built, creates institutional incentives to maintain it.'
+      },
+      {
+        label: 'Community Health Partnerships',
+        desc: 'Work with community health workers for manual contact tracing. Use technology for logistics and data management, not surveillance. Slower but trusted.',
+        effects: { efficiency: 3, fairness: 8, privacy: 8, trust: 8 },
+        insight: 'Community-based approaches build trust and reach populations that technology misses (elderly, unhoused, undocumented). But manual contact tracing cannot match the speed of viral spread. When a disease has a 2-day incubation period, a 5-day investigation cycle means exponential spread.'
+      }
+    ]
+  },
+  {
+    id: 8,
+    title: 'Educational AI for Children',
+    icon: '\uD83C\uDF93',
+    context: 'An AI tutoring system can personalize learning for each student, adapting in real-time to their strengths, weaknesses, and learning style. It improves test scores by 25%. But it requires continuous monitoring of children\'s behavior, attention, emotional state, and learning patterns, building detailed psychological profiles from age 5.',
+    approaches: [
+      {
+        label: 'Full Personalization',
+        desc: 'Deploy the complete AI system with behavioral tracking, emotion detection, and predictive analytics. Students get perfectly tailored learning paths.',
+        effects: { efficiency: 9, fairness: 4, privacy: 1, trust: 3 },
+        insight: 'Full personalization creates extraordinary learning outcomes but builds the most detailed psychological profiles of children ever assembled. These profiles, created before children can consent, will follow them for life. Who owns this data? What happens when it is breached, sold, or subpoenaed?'
+      },
+      {
+        label: 'Performance-Only Tracking',
+        desc: 'Track only academic performance (answers, completion rates, scores). No behavioral or emotional monitoring. Personalization based on learning outcomes, not psychology.',
+        effects: { efficiency: 6, fairness: 6, privacy: 7, trust: 7 },
+        insight: 'Performance-only tracking is less invasive but also less effective. Much of the AI\'s power comes from understanding when a child is frustrated, bored, or anxious. Without emotional data, the system adapts slower and misses the students who need the most support.'
+      },
+      {
+        label: 'Teacher-Controlled AI Tools',
+        desc: 'Give teachers AI-powered analytics dashboards but keep students off direct AI interaction. Teachers decide how to use insights. All data stays within the school.',
+        effects: { efficiency: 5, fairness: 7, privacy: 6, trust: 8 },
+        insight: 'Teacher-mediated AI preserves the human relationship at the heart of education. But it depends entirely on teacher quality and training. Overwhelmed teachers may not use the tools effectively, and the benefits may not reach the students in under-resourced schools who need them most.'
+      },
+      {
+        label: 'Minimal Data, Maximum Autonomy',
+        desc: 'Provide AI tools that students can choose to use. No tracking persists between sessions. No profiles are built. Students control their own learning data.',
+        effects: { efficiency: 3, fairness: 8, privacy: 9, trust: 6 },
+        insight: 'Maximum student autonomy protects children\'s privacy but limits the AI\'s ability to help. Without persistent profiles, the system cannot identify long-term learning patterns or students falling behind over time. It also assumes children have the maturity to direct their own learning.'
+      }
+    ]
+  }
+];
+
+var TOTAL_SCENARIOS = SCENARIOS.length;
+
+/* ── State ──────────────────────────────────────────── */
+var state = {
+  round: 0,
+  scores: { efficiency: 0, fairness: 0, privacy: 0, trust: 0 },
+  choices: [],
+  waiting: false
+};
+
+/* ── Screen Management ──────────────────────────────── */
+function showScreen(id) {
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.showScreen = showScreen;
+
+/* ── Start Game ─────────────────────────────────────── */
+window.startGame = function() {
+  state = {
+    round: 0,
+    scores: { efficiency: 0, fairness: 0, privacy: 0, trust: 0 },
+    choices: [],
+    waiting: false
+  };
+  showScreen('welcome-screen');
+};
+
+/* ── Load Scenario ──────────────────────────────────── */
+window.loadScenario = function() {
+  var s = SCENARIOS[state.round];
+  document.getElementById('round-num').textContent = state.round + 1;
+
+  // Progress dots
+  var dotsHTML = '';
+  for (var i = 0; i < TOTAL_SCENARIOS; i++) {
+    var cls = 'progress-dot';
+    if (i < state.round) cls += ' done';
+    else if (i === state.round) cls += ' current';
+    dotsHTML += '<div class="' + cls + '"></div>';
+  }
+  document.getElementById('progress-dots').innerHTML = dotsHTML;
+
+  // Scenario card
+  var scenarioHTML = '<div class="scenario-card">' +
+    '<span class="scenario-icon">' + s.icon + '</span>' +
+    '<div class="scenario-title">' + s.title + '</div>' +
+    '<div class="scenario-context">' + s.context + '</div>' +
+    '</div>';
+  document.getElementById('scenario-area').innerHTML = scenarioHTML;
+
+  // Choice buttons
+  var choiceHTML = '';
+  for (var j = 0; j < s.approaches.length; j++) {
+    choiceHTML += '<button class="btn-approach" onclick="makeChoice(' + j + ')" id="btn-approach-' + j + '">' +
+      '<span class="approach-label">' + String.fromCharCode(65 + j) + '. ' + s.approaches[j].label + '</span>' +
+      s.approaches[j].desc +
+      '</button>';
+  }
+  document.getElementById('choice-grid').innerHTML = choiceHTML;
+
+  // Reset UI
+  document.getElementById('choice-section').style.display = 'block';
+  document.getElementById('reveal-area').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('round-insight').classList.remove('visible');
+
+  updateDashboard();
+};
+
+/* ── Make Choice ────────────────────────────────────── */
+window.makeChoice = function(idx) {
+  if (state.waiting) return;
+  state.waiting = true;
+
+  var s = SCENARIOS[state.round];
+  var approach = s.approaches[idx];
+
+  // Disable all buttons
+  for (var i = 0; i < s.approaches.length; i++) {
+    document.getElementById('btn-approach-' + i).disabled = true;
+  }
+
+  // Highlight selected
+  var selectedBtn = document.getElementById('btn-approach-' + idx);
+  selectedBtn.style.borderColor = 'var(--turquoise)';
+  selectedBtn.style.background = 'rgba(0,191,165,.12)';
+
+  // Apply effects
+  state.scores.efficiency += approach.effects.efficiency;
+  state.scores.fairness += approach.effects.fairness;
+  state.scores.privacy += approach.effects.privacy;
+  state.scores.trust += approach.effects.trust;
+
+  // Record choice
+  state.choices.push({
+    scenario: s.title,
+    approach: approach.label,
+    effects: approach.effects,
+    insight: approach.insight
+  });
+
+  // Show consequences
+  revealConsequences(approach);
+  updateDashboard();
+};
+
+/* ── Reveal Consequences ───────────────────────────── */
+function revealConsequences(approach) {
+  var area = document.getElementById('reveal-area');
+  area.style.display = 'block';
+  document.getElementById('choice-section').style.display = 'none';
+
+  var dims = [
+    { key: 'efficiency', name: 'Efficiency', cls: 'efficiency' },
+    { key: 'fairness', name: 'Fairness', cls: 'fairness' },
+    { key: 'privacy', name: 'Privacy', cls: 'privacy' },
+    { key: 'trust', name: 'Trust', cls: 'trust' }
+  ];
+
+  var gridHTML = '';
+  for (var i = 0; i < dims.length; i++) {
+    var val = approach.effects[dims[i].key];
+    var changeClass = val >= 7 ? 'positive' : (val <= 3 ? 'negative' : 'neutral');
+    gridHTML += '<div class="consequence-card ' + dims[i].cls + '" id="cq-' + dims[i].key + '">' +
+      '<div class="cq-name">' + dims[i].name + '</div>' +
+      '<div class="cq-change ' + changeClass + '">+' + val + '</div>' +
+      '</div>';
+  }
+  document.getElementById('consequence-grid').innerHTML = gridHTML;
+
+  // Staggered reveal
+  dims.forEach(function(d, idx) {
+    setTimeout(function() {
+      var card = document.getElementById('cq-' + d.key);
+      if (card) card.classList.add('shown');
+    }, 200 + idx * 250);
+  });
+
+  // Show insight
+  setTimeout(function() {
+    var insightEl = document.getElementById('round-insight');
+    insightEl.innerHTML = '<strong>Tradeoff Analysis:</strong> ' + approach.insight;
+    insightEl.classList.add('visible');
+    document.getElementById('btn-next').style.display = 'block';
+  }, 200 + dims.length * 250 + 300);
+}
+
+/* ── Update Dashboard ──────────────────────────────── */
+function updateDashboard() {
+  document.getElementById('score-efficiency').textContent = state.scores.efficiency;
+  document.getElementById('score-fairness').textContent = state.scores.fairness;
+  document.getElementById('score-privacy').textContent = state.scores.privacy;
+  document.getElementById('score-trust').textContent = state.scores.trust;
+
+  var maxScore = Math.max(state.scores.efficiency, state.scores.fairness, state.scores.privacy, state.scores.trust, 1);
+  var chartHeight = 120;
+  setBar('bar-eff', 'bv-eff', state.scores.efficiency, maxScore, chartHeight);
+  setBar('bar-fair', 'bv-fair', state.scores.fairness, maxScore, chartHeight);
+  setBar('bar-priv', 'bv-priv', state.scores.privacy, maxScore, chartHeight);
+  setBar('bar-trust', 'bv-trust', state.scores.trust, maxScore, chartHeight);
+}
+
+function setBar(barId, valId, score, maxScore, chartHeight) {
+  var h = maxScore > 0 ? Math.max(4, (score / maxScore) * chartHeight) : 4;
+  document.getElementById(barId).style.height = h + 'px';
+  document.getElementById(valId).textContent = score;
+}
+
+/* ── Next Round ─────────────────────────────────────── */
+window.nextRound = function() {
+  state.round++;
+  state.waiting = false;
+  if (state.round >= TOTAL_SCENARIOS) {
+    showEndScreen();
+    return;
+  }
+  showScreen('game-screen');
+  loadScenario();
+};
+
+/* ── End Screen ─────────────────────────────────────── */
+function showEndScreen() {
+  showScreen('end-screen');
+
+  var scores = state.scores;
+  var maxPossible = TOTAL_SCENARIOS * 9;
+
+  // Determine profile
+  var profile = getProfile(scores);
+  document.getElementById('end-sub').textContent = profile.subtitle;
+
+  var profileArea = document.getElementById('profile-area');
+  profileArea.innerHTML = '<div class="profile-badge">' + profile.name + '</div>' +
+    '<p style="color:var(--text2);font-size:.92rem;margin-bottom:16px">' + profile.desc + '</p>';
+
+  // Final score cards
+  var dims = [
+    { name: 'Efficiency', key: 'efficiency', color: 'var(--turquoise)' },
+    { name: 'Fairness', key: 'fairness', color: 'var(--orange)' },
+    { name: 'Privacy', key: 'privacy', color: 'var(--green)' },
+    { name: 'Trust', key: 'trust', color: 'var(--amber)' }
+  ];
+
+  var container = document.getElementById('final-scores');
+  container.innerHTML = '';
+  dims.forEach(function(d) {
+    var s = scores[d.key];
+    var pct = Math.round((s / maxPossible) * 100);
+    var card = document.createElement('div');
+    card.className = 'final-card';
+    card.innerHTML =
+      '<div class="fc-name">' + d.name + '</div>' +
+      '<div class="fc-score" style="color:' + d.color + '">' + s + '</div>' +
+      '<div class="fc-max">' + pct + '% of max (' + maxPossible + ')</div>';
+    container.appendChild(card);
+  });
+
+  // Final bar chart
+  var finalChart = document.getElementById('final-bar-chart');
+  finalChart.innerHTML = '';
+  var maxFinal = Math.max(scores.efficiency, scores.fairness, scores.privacy, scores.trust, 1);
+  dims.forEach(function(d) {
+    var s = scores[d.key];
+    var h = Math.max(4, (s / maxFinal) * 140);
+    var barClass = d.key === 'efficiency' ? 'eff-bar' : (d.key === 'fairness' ? 'fair-bar' : (d.key === 'privacy' ? 'priv-bar' : 'trust-bar'));
+    var wrap = document.createElement('div');
+    wrap.className = 'bar-wrap';
+    wrap.innerHTML =
+      '<div class="bar-value" style="color:' + d.color + '">' + s + '</div>' +
+      '<div class="bar ' + barClass + '" style="height:' + h + 'px"></div>' +
+      '<div class="bar-label">' + d.name + '</div>';
+    finalChart.appendChild(wrap);
+  });
+
+  // Insights
+  var insightsEl = document.getElementById('end-insights');
+  var insightHTML = '';
+
+  var totalScore = scores.efficiency + scores.fairness + scores.privacy + scores.trust;
+  var avgScore = totalScore / 4;
+  var maxDim = 'efficiency';
+  var minDim = 'efficiency';
+  for (var key in scores) {
+    if (scores[key] > scores[maxDim]) maxDim = key;
+    if (scores[key] < scores[minDim]) minDim = key;
+  }
+
+  var dimLabels = { efficiency: 'Efficiency', fairness: 'Fairness', privacy: 'Privacy', trust: 'Public Trust' };
+
+  insightHTML += '<div class="insight-box"><h3>The Tradeoff Map</h3>';
+  insightHTML += '<p>Your strongest dimension was <strong>' + dimLabels[maxDim] + ' (' + scores[maxDim] + ')</strong>, ';
+  insightHTML += 'while <strong>' + dimLabels[minDim] + ' (' + scores[minDim] + ')</strong> received the least priority.</p>';
+  insightHTML += '<p>This gap of <strong>' + (scores[maxDim] - scores[minDim]) + ' points</strong> illustrates the central lesson: ';
+  insightHTML += 'optimizing for one value necessarily means sacrificing another. There is no "have it all" option in algorithmic design.</p>';
+  insightHTML += '</div>';
+
+  insightHTML += '<div class="insight-box" style="border-left-color:var(--orange)"><h3>Why This Matters</h3>';
+  insightHTML += '<p>Every algorithm deployed in the real world embodies the values of its designers. ';
+  insightHTML += 'The choices you made here &mdash; whether to prioritize efficiency or fairness, privacy or public safety &mdash; ';
+  insightHTML += 'are the same choices being made right now by engineers and policymakers shaping AI systems that affect billions of lives.</p>';
+  insightHTML += '<p><strong>Transparency about these tradeoffs is itself a form of ethics.</strong> The most dangerous algorithms are those whose designers pretend there are no tradeoffs at all.</p>';
+  insightHTML += '</div>';
+
+  insightHTML += '<div class="insight-box" style="border-left-color:var(--green)"><h3>Key Takeaways</h3>';
+  insightHTML += '<p><strong>1. No perfect solutions exist.</strong> Every approach involves sacrificing something valuable.</p>';
+  insightHTML += '<p><strong>2. Tradeoffs are real and unavoidable.</strong> Algorithms that seem "neutral" have embedded value choices.</p>';
+  insightHTML += '<p><strong>3. Transparency matters.</strong> The public deserves to know what values are being optimized and what is being sacrificed.</p>';
+  insightHTML += '<p><strong>4. Context changes everything.</strong> The "right" answer for a pandemic may be wrong for everyday policing.</p>';
+  insightHTML += '</div>';
+
+  insightsEl.innerHTML = insightHTML;
+
+  // Recap
+  var recapEl = document.getElementById('end-recap');
+  var recapHTML = '';
+  state.choices.forEach(function(c, idx) {
+    recapHTML += '<div class="scenario-recap">' +
+      '<div class="sr-title">' + (idx + 1) + '. ' + c.scenario + '</div>' +
+      '<div class="sr-choice">Your approach: ' + c.approach +
+      ' (Eff +' + c.effects.efficiency + ', Fair +' + c.effects.fairness +
+      ', Priv +' + c.effects.privacy + ', Trust +' + c.effects.trust + ')</div>' +
+      '</div>';
+  });
+  recapEl.innerHTML = recapHTML;
+}
+
+/* ── Profile Determination ──────────────────────────── */
+function getProfile(scores) {
+  var maxKey = 'efficiency';
+  for (var key in scores) {
+    if (scores[key] > scores[maxKey]) maxKey = key;
+  }
+
+  var spread = Math.max(scores.efficiency, scores.fairness, scores.privacy, scores.trust) -
+               Math.min(scores.efficiency, scores.fairness, scores.privacy, scores.trust);
+
+  if (spread <= 8) {
+    return {
+      name: 'The Balanced Architect',
+      subtitle: 'You sought equilibrium across all dimensions',
+      desc: 'You tried to balance all four values, never letting any single dimension dominate. This reflects a pragmatic approach to AI governance that acknowledges complexity. In practice, balanced approaches often produce moderate outcomes across the board, which can be either wise compromise or unsatisfying to everyone.'
+    };
+  }
+
+  switch (maxKey) {
+    case 'efficiency':
+      return {
+        name: 'The Optimizer',
+        subtitle: 'You prioritized system performance above all',
+        desc: 'You consistently chose the most technically effective solutions. This reflects a worldview where the purpose of technology is to work as well as possible. The risk: efficiency without equity creates powerful systems that serve some populations far better than others.'
+      };
+    case 'fairness':
+      return {
+        name: 'The Equity Champion',
+        subtitle: 'You fought for fairness in every scenario',
+        desc: 'You prioritized equitable outcomes even when it meant reducing system performance. This reflects a deep commitment to ensuring technology does not reproduce or amplify existing inequalities. The challenge: fairness constraints can reduce the total benefit a system provides.'
+      };
+    case 'privacy':
+      return {
+        name: 'The Privacy Guardian',
+        subtitle: 'You defended individual rights above all',
+        desc: 'You consistently protected personal data and individual autonomy. This reflects a rights-based approach to technology governance. The tension: strong privacy protections can make it harder to build systems that serve the collective good, especially in emergencies.'
+      };
+    case 'trust':
+      return {
+        name: 'The Trust Builder',
+        subtitle: 'You prioritized public confidence and legitimacy',
+        desc: 'You chose approaches that the public would accept and trust. This reflects an understanding that the best algorithm in the world is useless if people refuse to use it. The risk: public trust can lag behind what is technically possible, leading to underinvestment in beneficial technologies.'
+      };
+    default:
+      return {
+        name: 'The Deliberator',
+        subtitle: 'Your choices reflect deep consideration',
+        desc: 'Your pattern of choices does not fit a single archetype, suggesting you weighed each scenario on its own merits. This context-sensitive approach is arguably the most realistic: different dilemmas call for different priorities.'
+      };
+  }
+}
+
+/* ── Restart ────────────────────────────────────────── */
+window.restartGame = function() {
+  state = {
+    round: 0,
+    scores: { efficiency: 0, fairness: 0, privacy: 0, trust: 0 },
+    choices: [],
+    waiting: false
+  };
+  showScreen('story-intro-screen');
+};
+
+})();
+</script>
+</body>
+</html>
