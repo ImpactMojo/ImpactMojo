@@ -1741,6 +1741,419 @@ async function handleSignOut() {
 }
 
 // ============================================================
+// USER MANAGEMENT
+// ============================================================
+var umAllUsers = [];
+var umFilteredUsers = [];
+var umCurrentPage = 1;
+var umPageSize = 10;
+var umUsingMock = false;
+
+var UM_MOCK_USERS = [
+    { id: '1', full_name: 'Ananya Sharma', email: 'ananya@example.com', role: 'admin', status: 'active', tier: 'premium', created_at: '2024-06-15T10:00:00Z', last_sign_in_at: '2026-03-18T08:30:00Z' },
+    { id: '2', full_name: 'Rajesh Kumar', email: 'rajesh.k@example.com', role: 'instructor', status: 'active', tier: 'premium', created_at: '2024-08-22T14:00:00Z', last_sign_in_at: '2026-03-17T14:20:00Z' },
+    { id: '3', full_name: 'Priya Nair', email: 'priya.nair@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2025-01-10T09:00:00Z', last_sign_in_at: '2026-03-18T11:45:00Z' },
+    { id: '4', full_name: 'Vikram Singh', email: 'vikram.s@example.com', role: 'learner', status: 'suspended', tier: 'free', created_at: '2025-03-05T16:00:00Z', last_sign_in_at: '2026-02-20T09:00:00Z' },
+    { id: '5', full_name: 'Meera Patel', email: 'meera.p@example.com', role: 'instructor', status: 'active', tier: 'premium', created_at: '2024-11-20T11:00:00Z', last_sign_in_at: '2026-03-16T17:00:00Z' },
+    { id: '6', full_name: 'Arjun Desai', email: 'arjun.d@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2025-06-01T08:00:00Z', last_sign_in_at: '2026-03-15T10:30:00Z' },
+    { id: '7', full_name: 'Kavitha Rao', email: 'kavitha.r@example.com', role: 'learner', status: 'active', tier: 'premium', created_at: '2025-02-14T13:00:00Z', last_sign_in_at: '2026-03-18T06:15:00Z' },
+    { id: '8', full_name: 'Suresh Iyer', email: 'suresh.i@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2025-07-30T15:00:00Z', last_sign_in_at: '2026-03-14T20:00:00Z' },
+    { id: '9', full_name: 'Deepa Menon', email: 'deepa.m@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2025-09-12T10:00:00Z', last_sign_in_at: '2026-03-17T09:45:00Z' },
+    { id: '10', full_name: 'Aditya Joshi', email: 'aditya.j@example.com', role: 'learner', status: 'suspended', tier: 'free', created_at: '2025-04-18T12:00:00Z', last_sign_in_at: '2026-01-05T14:00:00Z' },
+    { id: '11', full_name: 'Sneha Gupta', email: 'sneha.g@example.com', role: 'learner', status: 'active', tier: 'premium', created_at: '2025-11-02T09:00:00Z', last_sign_in_at: '2026-03-18T07:00:00Z' },
+    { id: '12', full_name: 'Rohit Verma', email: 'rohit.v@example.com', role: 'instructor', status: 'active', tier: 'premium', created_at: '2024-12-01T10:00:00Z', last_sign_in_at: '2026-03-16T13:00:00Z' },
+    { id: '13', full_name: 'Lakshmi Reddy', email: 'lakshmi.r@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2025-08-19T14:00:00Z', last_sign_in_at: '2026-03-12T16:30:00Z' },
+    { id: '14', full_name: 'Nikhil Banerjee', email: 'nikhil.b@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2026-03-14T11:00:00Z', last_sign_in_at: '2026-03-18T10:00:00Z' },
+    { id: '15', full_name: 'Pooja Mishra', email: 'pooja.m@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2026-03-16T08:00:00Z', last_sign_in_at: '2026-03-17T22:00:00Z' },
+    { id: '16', full_name: 'Karthik Sundaram', email: 'karthik.s@example.com', role: 'learner', status: 'active', tier: 'premium', created_at: '2025-05-25T16:00:00Z', last_sign_in_at: '2026-03-18T12:00:00Z' },
+    { id: '17', full_name: 'Isha Chauhan', email: 'isha.c@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2025-10-08T10:00:00Z', last_sign_in_at: '2026-03-11T08:45:00Z' },
+    { id: '18', full_name: 'Manish Tiwari', email: 'manish.t@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2026-01-20T14:00:00Z', last_sign_in_at: '2026-03-18T09:15:00Z' },
+    { id: '19', full_name: 'Divya Pillai', email: 'divya.p@example.com', role: 'admin', status: 'active', tier: 'premium', created_at: '2024-05-01T09:00:00Z', last_sign_in_at: '2026-03-18T11:00:00Z' },
+    { id: '20', full_name: 'Sanjay Hegde', email: 'sanjay.h@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2025-12-10T12:00:00Z', last_sign_in_at: '2026-03-10T15:30:00Z' },
+    { id: '21', full_name: 'Nandini Das', email: 'nandini.d@example.com', role: 'learner', status: 'active', tier: 'free', created_at: '2026-02-05T08:00:00Z', last_sign_in_at: '2026-03-13T14:00:00Z' },
+    { id: '22', full_name: 'Amit Saxena', email: 'amit.s@example.com', role: 'learner', status: 'active', tier: 'premium', created_at: '2025-07-14T11:00:00Z', last_sign_in_at: '2026-03-18T13:30:00Z' }
+];
+
+async function umInit() {
+    var loaded = false;
+    try {
+        if (typeof supabaseClient !== 'undefined') {
+            var { data, error } = await supabaseClient
+                .from('profiles')
+                .select('id, full_name, email, role, status, tier, created_at, last_sign_in_at')
+                .order('created_at', { ascending: false });
+            if (!error && data && data.length > 0) {
+                umAllUsers = data.map(function(u) {
+                    return {
+                        id: u.id,
+                        full_name: u.full_name || 'Unnamed',
+                        email: u.email || '',
+                        role: u.role || 'learner',
+                        status: u.status || 'active',
+                        tier: u.tier || 'free',
+                        created_at: u.created_at || '',
+                        last_sign_in_at: u.last_sign_in_at || ''
+                    };
+                });
+                loaded = true;
+            }
+        }
+    } catch (e) {
+        console.warn('User Management: Supabase fetch failed, using mock data.', e);
+    }
+    if (!loaded) {
+        umAllUsers = UM_MOCK_USERS;
+        umUsingMock = true;
+        document.getElementById('umNotice').style.display = 'flex';
+    }
+    umFilterUsers();
+    umRenderSummary();
+}
+
+function umRenderSummary() {
+    var now = new Date();
+    var todayStr = now.toISOString().slice(0, 10);
+    var weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+    var total = umAllUsers.length;
+    var activeToday = umAllUsers.filter(function(u) {
+        return u.last_sign_in_at && u.last_sign_in_at.slice(0, 10) === todayStr;
+    }).length;
+    var newWeek = umAllUsers.filter(function(u) {
+        return u.created_at && u.created_at >= weekAgo;
+    }).length;
+    var premium = umAllUsers.filter(function(u) {
+        return u.tier === 'premium';
+    }).length;
+
+    document.getElementById('umTotalUsers').textContent = total;
+    document.getElementById('umActiveToday').textContent = activeToday;
+    document.getElementById('umNewWeek').textContent = newWeek;
+    document.getElementById('umPremium').textContent = premium;
+}
+
+function umFilterUsers() {
+    var search = (document.getElementById('umSearch').value || '').toLowerCase();
+    var roleFilter = document.getElementById('umRoleFilter').value;
+    var statusFilter = document.getElementById('umStatusFilter').value;
+
+    umFilteredUsers = umAllUsers.filter(function(u) {
+        var matchSearch = !search || (u.full_name || '').toLowerCase().indexOf(search) > -1 || (u.email || '').toLowerCase().indexOf(search) > -1;
+        var matchRole = !roleFilter || u.role === roleFilter;
+        var matchStatus = !statusFilter || u.status === statusFilter;
+        return matchSearch && matchRole && matchStatus;
+    });
+
+    umCurrentPage = 1;
+    umRenderTable();
+}
+
+function umRenderTable() {
+    var tbody = document.getElementById('umTableBody');
+    var totalPages = Math.max(1, Math.ceil(umFilteredUsers.length / umPageSize));
+    if (umCurrentPage > totalPages) umCurrentPage = totalPages;
+
+    var start = (umCurrentPage - 1) * umPageSize;
+    var pageUsers = umFilteredUsers.slice(start, start + umPageSize);
+
+    if (pageUsers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">No users found.</td></tr>';
+    } else {
+        tbody.innerHTML = pageUsers.map(function(u) {
+            var joinedDate = u.created_at ? new Date(u.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '-';
+            var lastActive = u.last_sign_in_at ? umTimeAgo(new Date(u.last_sign_in_at)) : '-';
+            var statusClass = u.status === 'suspended' ? 'suspended' : 'active';
+            var statusLabel = u.status === 'suspended' ? 'Suspended' : 'Active';
+            var toggleLabel = u.status === 'suspended' ? 'Activate' : 'Suspend';
+
+            return '<tr>' +
+                '<td style="font-weight:500; color:var(--text-primary);">' + escapeHtml(u.full_name) + '</td>' +
+                '<td>' + escapeHtml(u.email) + '</td>' +
+                '<td><span class="um-role-badge ' + u.role + '">' + u.role + '</span></td>' +
+                '<td><span class="um-status-badge ' + statusClass + '"><span class="dot"></span> ' + statusLabel + '</span></td>' +
+                '<td style="white-space:nowrap;">' + joinedDate + '</td>' +
+                '<td style="white-space:nowrap;">' + lastActive + '</td>' +
+                '<td class="um-actions-cell">' +
+                    '<button class="um-action-btn" onclick="umViewProfile(\'' + u.id + '\')">View</button>' +
+                    '<button class="um-action-btn" onclick="umChangeRole(\'' + u.id + '\')">Role</button>' +
+                    '<button class="um-action-btn danger" onclick="umToggleStatus(\'' + u.id + '\')">' + toggleLabel + '</button>' +
+                '</td>' +
+                '</tr>';
+        }).join('');
+    }
+
+    umRenderPagination(totalPages);
+}
+
+function umTimeAgo(date) {
+    var now = new Date();
+    var diff = Math.floor((now - date) / 1000);
+    if (diff < 60) return 'Just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+}
+
+function umRenderPagination(totalPages) {
+    var pag = document.getElementById('umPagination');
+    if (totalPages <= 1) { pag.innerHTML = ''; return; }
+
+    var html = '<button class="um-page-btn" onclick="umGoPage(' + (umCurrentPage - 1) + ')"' + (umCurrentPage === 1 ? ' disabled' : '') + '>&laquo; Prev</button>';
+    for (var p = 1; p <= totalPages; p++) {
+        html += '<button class="um-page-btn' + (p === umCurrentPage ? ' active' : '') + '" onclick="umGoPage(' + p + ')">' + p + '</button>';
+    }
+    html += '<button class="um-page-btn" onclick="umGoPage(' + (umCurrentPage + 1) + ')"' + (umCurrentPage === totalPages ? ' disabled' : '') + '>Next &raquo;</button>';
+    html += '<span class="um-page-info">' + umFilteredUsers.length + ' user' + (umFilteredUsers.length !== 1 ? 's' : '') + '</span>';
+    pag.innerHTML = html;
+}
+
+function umGoPage(page) {
+    var totalPages = Math.ceil(umFilteredUsers.length / umPageSize);
+    if (page < 1 || page > totalPages) return;
+    umCurrentPage = page;
+    umRenderTable();
+}
+
+function umViewProfile(userId) {
+    var user = umAllUsers.find(function(u) { return u.id === userId; });
+    if (!user) return;
+    document.getElementById('umModalTitle').textContent = user.full_name || 'User Profile';
+    var rows = [
+        ['Name', user.full_name || '-'],
+        ['Email', user.email || '-'],
+        ['Role', user.role || '-'],
+        ['Status', user.status || '-'],
+        ['Tier', user.tier || '-'],
+        ['Joined', user.created_at ? new Date(user.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : '-'],
+        ['Last Active', user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString('en-IN') : '-'],
+        ['User ID', user.id]
+    ];
+    document.getElementById('umModalBody').innerHTML = rows.map(function(r) {
+        return '<div class="um-modal-row"><span class="um-modal-label">' + r[0] + '</span><span class="um-modal-value">' + escapeHtml(String(r[1])) + '</span></div>';
+    }).join('');
+    document.getElementById('umModal').classList.add('active');
+}
+
+function umCloseModal() {
+    document.getElementById('umModal').classList.remove('active');
+}
+
+// Close modal on overlay click
+document.addEventListener('click', function(e) {
+    if (e.target.id === 'umModal') umCloseModal();
+});
+
+async function umChangeRole(userId) {
+    var user = umAllUsers.find(function(u) { return u.id === userId; });
+    if (!user) return;
+    var roles = ['admin', 'instructor', 'learner'];
+    var currentIdx = roles.indexOf(user.role);
+    var newRole = prompt('Change role for ' + user.full_name + '.\nCurrent: ' + user.role + '\nEnter new role (admin / instructor / learner):');
+    if (!newRole) return;
+    newRole = newRole.trim().toLowerCase();
+    if (roles.indexOf(newRole) === -1) { alert('Invalid role. Choose admin, instructor, or learner.'); return; }
+    if (newRole === user.role) return;
+
+    if (!umUsingMock) {
+        try {
+            var { error } = await supabaseClient.from('profiles').update({ role: newRole }).eq('id', userId);
+            if (error) { alert('Failed to update role: ' + error.message); return; }
+        } catch (e) { alert('Error: ' + e.message); return; }
+    }
+    user.role = newRole;
+    umRenderTable();
+    umRenderSummary();
+    ssShowToast('Role updated to ' + newRole);
+}
+
+async function umToggleStatus(userId) {
+    var user = umAllUsers.find(function(u) { return u.id === userId; });
+    if (!user) return;
+    var newStatus = user.status === 'suspended' ? 'active' : 'suspended';
+    if (!confirm((newStatus === 'suspended' ? 'Suspend' : 'Activate') + ' user ' + user.full_name + '?')) return;
+
+    if (!umUsingMock) {
+        try {
+            var { error } = await supabaseClient.from('profiles').update({ status: newStatus }).eq('id', userId);
+            if (error) { alert('Failed to update status: ' + error.message); return; }
+        } catch (e) { alert('Error: ' + e.message); return; }
+    }
+    user.status = newStatus;
+    umRenderTable();
+    umRenderSummary();
+    ssShowToast('User ' + (newStatus === 'suspended' ? 'suspended' : 'activated'));
+}
+
+// ============================================================
+// SITE SETTINGS
+// ============================================================
+var SS_FLAGS_KEY = 'impactmojo_admin_flags';
+var SS_META_KEY = 'impactmojo_admin_meta';
+var SS_BACKUP_KEY = 'impactmojo_admin_last_backup';
+
+function ssInit() {
+    ssLoadFlags();
+    ssLoadMetadata();
+    ssCheckIntegrations();
+    ssLoadBackupDate();
+}
+
+function ssLoadFlags() {
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(SS_FLAGS_KEY)); } catch(e) {}
+    if (saved) {
+        document.getElementById('ssMaintenanceMode').checked = !!saved.maintenanceMode;
+        document.getElementById('ssRegistrationOpen').checked = saved.registrationOpen !== false;
+        document.getElementById('ssPremiumEnabled').checked = saved.premiumEnabled !== false;
+        document.getElementById('ssAIEnabled').checked = saved.aiEnabled !== false;
+    }
+}
+
+async function ssSaveFlags() {
+    var flags = {
+        maintenanceMode: document.getElementById('ssMaintenanceMode').checked,
+        registrationOpen: document.getElementById('ssRegistrationOpen').checked,
+        premiumEnabled: document.getElementById('ssPremiumEnabled').checked,
+        aiEnabled: document.getElementById('ssAIEnabled').checked
+    };
+    try { localStorage.setItem(SS_FLAGS_KEY, JSON.stringify(flags)); } catch(e) {}
+
+    // Try to save to Supabase site_settings table
+    try {
+        if (typeof supabaseClient !== 'undefined') {
+            await supabaseClient.from('site_settings').upsert({ id: 'feature_flags', value: flags, updated_at: new Date().toISOString() });
+        }
+    } catch(e) { /* fallback to localStorage only */ }
+    ssShowToast('Feature flags saved');
+}
+
+function ssLoadMetadata() {
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(SS_META_KEY)); } catch(e) {}
+    if (saved) {
+        if (saved.siteTitle) document.getElementById('ssSiteTitle').value = saved.siteTitle;
+        if (saved.siteDesc) document.getElementById('ssSiteDesc').value = saved.siteDesc;
+        if (saved.supportEmail) document.getElementById('ssSupportEmail').value = saved.supportEmail;
+    }
+}
+
+async function ssSaveMetadata() {
+    var meta = {
+        siteTitle: document.getElementById('ssSiteTitle').value.trim(),
+        siteDesc: document.getElementById('ssSiteDesc').value.trim(),
+        supportEmail: document.getElementById('ssSupportEmail').value.trim()
+    };
+    try { localStorage.setItem(SS_META_KEY, JSON.stringify(meta)); } catch(e) {}
+
+    try {
+        if (typeof supabaseClient !== 'undefined') {
+            await supabaseClient.from('site_settings').upsert({ id: 'site_metadata', value: meta, updated_at: new Date().toISOString() });
+        }
+    } catch(e) { /* fallback to localStorage only */ }
+    ssShowToast('Metadata saved');
+}
+
+async function ssCheckIntegrations() {
+    // Supabase
+    var sbEl = document.getElementById('ssIntSupabase');
+    try {
+        if (typeof supabaseClient !== 'undefined') {
+            var { data, error } = await supabaseClient.from('profiles').select('id', { count: 'exact', head: true });
+            if (!error) {
+                sbEl.className = 'ss-integration-status connected';
+                sbEl.innerHTML = '<span class="dot"></span> Connected';
+            } else {
+                sbEl.className = 'ss-integration-status disconnected';
+                sbEl.innerHTML = '<span class="dot"></span> Error';
+            }
+        } else {
+            sbEl.className = 'ss-integration-status disconnected';
+            sbEl.innerHTML = '<span class="dot"></span> Not loaded';
+        }
+    } catch(e) {
+        sbEl.className = 'ss-integration-status disconnected';
+        sbEl.innerHTML = '<span class="dot"></span> Error';
+    }
+
+    // Netlify (check if running on Netlify)
+    var nlEl = document.getElementById('ssIntNetlify');
+    var isNetlify = window.location.hostname.indexOf('netlify') > -1 || window.location.hostname.indexOf('impactmojo') > -1;
+    nlEl.className = 'ss-integration-status ' + (isNetlify ? 'connected' : 'disconnected');
+    nlEl.innerHTML = '<span class="dot"></span> ' + (isNetlify ? 'Connected' : 'Local / Unknown');
+
+    // GA4
+    var gaEl = document.getElementById('ssIntGA4');
+    var hasCachedGA4 = false;
+    try { hasCachedGA4 = !!localStorage.getItem(GA4_CONFIG.CACHE_KEY); } catch(e) {}
+    if (ga4Data && ga4Data.overview && Object.keys(ga4Data.overview).length > 0) {
+        gaEl.className = 'ss-integration-status connected';
+        gaEl.innerHTML = '<span class="dot"></span> Connected (live)';
+    } else if (hasCachedGA4) {
+        gaEl.className = 'ss-integration-status connected';
+        gaEl.innerHTML = '<span class="dot"></span> Connected (cached)';
+    } else {
+        gaEl.className = 'ss-integration-status disconnected';
+        gaEl.innerHTML = '<span class="dot"></span> Not authenticated';
+    }
+}
+
+function ssLoadBackupDate() {
+    var last = localStorage.getItem(SS_BACKUP_KEY);
+    var el = document.getElementById('ssLastBackup');
+    if (last) {
+        el.textContent = new Date(last).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } else {
+        el.textContent = 'Never';
+    }
+}
+
+function ssTriggerBackup() {
+    var btn = document.getElementById('ssBackupBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Backing up...';
+
+    // Gather all localStorage data for backup
+    var backup = {};
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key && key.indexOf('impactmojo') > -1) {
+            try { backup[key] = JSON.parse(localStorage.getItem(key)); } catch(e) { backup[key] = localStorage.getItem(key); }
+        }
+    }
+    backup._timestamp = new Date().toISOString();
+    backup._type = 'impactmojo_admin_backup';
+
+    // Download as JSON
+    var blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'impactmojo-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    localStorage.setItem(SS_BACKUP_KEY, new Date().toISOString());
+    ssLoadBackupDate();
+
+    setTimeout(function() {
+        btn.disabled = false;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Trigger Manual Backup';
+    }, 1500);
+
+    ssShowToast('Backup downloaded');
+}
+
+function ssShowToast(message) {
+    var toast = document.getElementById('ssToast');
+    toast.textContent = message;
+    toast.classList.add('visible');
+    setTimeout(function() { toast.classList.remove('visible'); }, 2500);
+}
+
+// ============================================================
 // ADMIN GATE
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
