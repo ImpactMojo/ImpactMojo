@@ -14,8 +14,8 @@
   --red: #EF4444; --red-dim: #DC2626; --red-glow: rgba(239,68,68,.25);
   --green: #22C55E; --green-glow: rgba(34,197,94,.25);
   --text: #E2E8F0; --text-dim: #94A3B8; --text-bright: #F8FAFC;
-  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  --font: 'Amaranth', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
   --radius: 12px; --radius-sm: 8px;
 }
 html { font-size: 16px; }
@@ -28,6 +28,7 @@ button {
   transition: all .2s ease;
 }
 button:active { transform: scale(.97); }
+h1, h2, h3, h4 { font-family: 'Inter', sans-serif; }
 
 /* ── Utility ──────────────────────────────────────────────────── */
 .hidden { display: none !important; }
@@ -366,12 +367,12 @@ button:active { transform: scale(.97); }
 
 <!-- ════════════════════════ WELCOME SCREEN ════════════════════════ -->
 <div id="welcome" class="screen fade-in">
-  <div class="welcome-icon">🍋</div>
+  <div class="welcome-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Warning.svg" width="48" height="48" alt="" class="imx-sargam-icon" style="filter:invert(67%) sepia(74%) saturate(1200%) hue-rotate(2deg) brightness(104%)"></div>
   <h1>The Market for Lemons</h1>
   <p class="subtitle">An Information Asymmetry Game</p>
 
   <div class="lemon-card slide-up">
-    <h3>🎓 The Lemons Problem (Akerlof, 1970)</h3>
+    <h3><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Graduation_cap.svg" width="18" height="18" alt="" class="imx-sargam-icon"> The Lemons Problem (Akerlof, 1970)</h3>
     <p>
       Imagine a used car market. Sellers know if their car is good or a "lemon" (defective) — but buyers cannot tell
       the difference just by looking. What happens?
@@ -388,17 +389,17 @@ button:active { transform: scale(.97); }
 
   <div class="agent-intros slide-up">
     <div class="agent-intro honest">
-      <div class="avatar">👩‍🔬</div>
+      <div class="avatar"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_User.svg" width="28" height="28" alt="" class="imx-sargam-icon"></div>
       <div class="aname">Kavitha</div>
       <div class="arole">Honest Seller — invests in quality &amp; certification</div>
     </div>
     <div class="agent-intro lemon">
-      <div class="avatar">🧔</div>
+      <div class="avatar"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_User.svg" width="28" height="28" alt="" class="imx-sargam-icon"></div>
       <div class="aname">Mohan</div>
       <div class="arole">Lemon Seller — overstates quality, sells at premium</div>
     </div>
     <div class="agent-intro buyer">
-      <div class="avatar">🧕</div>
+      <div class="avatar"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_User.svg" width="28" height="28" alt="" class="imx-sargam-icon"></div>
       <div class="aname">Aisha</div>
       <div class="arole">Skeptical Buyer — shows rational market price</div>
     </div>
@@ -427,7 +428,7 @@ button:active { transform: scale(.97); }
 
   <!-- Insight banner (shows from round 5+) -->
   <div id="insightBanner" class="insight-banner hidden">
-    <span class="icon">💡</span>
+    <span class="icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Bulb.svg" width="16" height="16" alt="" class="imx-sargam-icon"></span>
     <span id="insightText"></span>
   </div>
 
@@ -436,7 +437,7 @@ button:active { transform: scale(.97); }
 
   <!-- Aisha's market analysis -->
   <div class="aisha-panel" id="aishaPanel">
-    <div class="avatar">🧕</div>
+    <div class="avatar"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_User.svg" width="28" height="28" alt="" class="imx-sargam-icon"></div>
     <div class="content">
       <div class="aname">Aisha <span class="arole">— Skeptical Buyer</span></div>
       <div class="text" id="aishaText">Analyzing the market...</div>
@@ -515,7 +516,7 @@ button:active { transform: scale(.97); }
     // Kavitha: honest, high quality
     var kQuality = randInt(6, 10);
     var kavitha = {
-      id: 'kavitha', name: 'Kavitha', role: 'Certified Seller', avatar: '👩‍🔬',
+      id: 'kavitha', name: 'Kavitha', role: 'Certified Seller', avatar: IMXIcon('User', 28),
       trueQuality: kQuality,
       claimedQuality: kQuality,
       minPrice: kQuality * 7,
@@ -530,7 +531,7 @@ button:active { transform: scale(.97); }
     var inflation = randInt(3, Math.min(4, 10 - mTrueQuality));
     var mClaimed = Math.min(10, mTrueQuality + inflation);
     var mohan = {
-      id: 'mohan', name: 'Mohan', role: 'Market Seller', avatar: '🧔',
+      id: 'mohan', name: 'Mohan', role: 'Market Seller', avatar: IMXIcon('User', 28),
       trueQuality: mTrueQuality,
       claimedQuality: mClaimed,
       minPrice: mClaimed * 5,
@@ -551,10 +552,10 @@ button:active { transform: scale(.97); }
       tClaimed = Math.min(10, tQuality + randInt(2, 4));
     }
     var thirdNames = [
-      { name: 'Priya', avatar: '👩‍💼', role: 'Indie Seller' },
-      { name: 'Raj', avatar: '👨‍🏭', role: 'Discount Seller' },
-      { name: 'Zara', avatar: '👩‍🎨', role: 'Boutique Seller' },
-      { name: 'Dev', avatar: '👨‍💻', role: 'Online Seller' }
+      { name: 'Priya', avatar: IMXIcon('User', 28), role: 'Indie Seller' },
+      { name: 'Raj', avatar: IMXIcon('User', 28), role: 'Discount Seller' },
+      { name: 'Zara', avatar: IMXIcon('User', 28), role: 'Boutique Seller' },
+      { name: 'Dev', avatar: IMXIcon('User', 28), role: 'Online Seller' }
     ];
     var tn = thirdNames[(round - 1) % thirdNames.length];
     var third = {
@@ -694,7 +695,7 @@ button:active { transform: scale(.97); }
       var html = '';
       // Verified badge
       if (state.verifiedThisRound[seller.id]) {
-        html += '<div class="verified-badge">✓ VERIFIED</div>';
+        html += '<div class="verified-badge">' + IMXIcon('Check_circle', 14) + ' VERIFIED</div>';
       }
 
       html += '<div class="seller-header">';
@@ -781,9 +782,9 @@ button:active { transform: scale(.97); }
       html += '<div class="label">R' + h.round + '</div>';
       html += '<div class="bar-bg"><div class="bar-fill quality" style="width:' + qualPct + '%"></div></div>';
       if (h.wasLemon) {
-        html += '<span style="color:var(--red);font-size:.72rem;">🍋</span>';
+        html += '<span style="color:var(--red);font-size:.72rem;">' + IMXIcon('Warning', 14) + '</span>';
       } else {
-        html += '<span style="color:var(--green);font-size:.72rem;">✓</span>';
+        html += '<span style="color:var(--green);font-size:.72rem;">' + IMXIcon('Check_circle', 14) + '</span>';
       }
       html += '</div>';
       bars.innerHTML += html;
@@ -964,7 +965,7 @@ button:active { transform: scale(.97); }
     banner.innerHTML = '<div class="result-amount">' + sign + profit + ' tokens</div>' +
       '<div class="result-detail">' +
       'Bought from ' + seller.name + ' for ' + price + ' tokens. True value: ' + trueValue + ' tokens.' +
-      (wasLemon ? ' 🍋 This was a lemon!' : ' ✓ Honest deal.') +
+      (wasLemon ? ' ' + IMXIcon('Warning', 14) + ' This was a lemon!' : ' ' + IMXIcon('Check_circle', 14) + ' Honest deal.') +
       '</div>';
     banner.classList.remove('hidden');
 
@@ -1004,7 +1005,7 @@ button:active { transform: scale(.97); }
 
     var scoreClass = netProfit >= 0 ? 'positive' : 'negative';
     var title = netProfit >= 50 ? 'Market Savvy!' : (netProfit >= 0 ? 'Broke Even' : 'The Lemons Won');
-    var titleIcon = netProfit >= 50 ? '🏆' : (netProfit >= 0 ? '📊' : '🍋');
+    var titleIcon = netProfit >= 50 ? IMXIcon('Award', 14) : (netProfit >= 0 ? IMXIcon('Bar_chart', 14) : IMXIcon('Warning', 14));
 
     var html = '<div class="fade-in" style="max-width:700px;">';
     html += '<div style="font-size:48px;margin-bottom:12px;">' + titleIcon + '</div>';
@@ -1020,7 +1021,7 @@ button:active { transform: scale(.97); }
 
     // Market evolution
     html += '<div class="lesson-card slide-up">';
-    html += '<h3>📉 How Your Market Evolved</h3>';
+    html += '<h3>' + IMXIcon('Trending_down', 18) + ' How Your Market Evolved</h3>';
 
     if (lemonPct > 50) {
       html += '<div class="lesson-item red"><strong>Adverse Selection Dominated</strong>Lemons flooded your market. Without sufficient screening, dishonest sellers thrived and quality eroded — just as Akerlof predicted.</div>';
@@ -1033,7 +1034,7 @@ button:active { transform: scale(.97); }
 
     // Lessons
     html += '<div class="lesson-card slide-up">';
-    html += '<h3>🎓 The Economics Behind the Game</h3>';
+    html += '<h3>' + IMXIcon('Graduation_cap', 18) + ' The Economics Behind the Game</h3>';
 
     html += '<div class="lesson-item amber">';
     html += '<strong>Adverse Selection (Akerlof, 1970)</strong>';
@@ -1059,7 +1060,7 @@ button:active { transform: scale(.97); }
 
     // Real-world solutions
     html += '<div class="lesson-card slide-up">';
-    html += '<h3>🔧 Real-World Solutions</h3>';
+    html += '<h3>' + IMXIcon('Settings', 18) + ' Real-World Solutions</h3>';
     html += '<div class="lesson-item teal"><strong>Warranties & Guarantees</strong>Sellers who offer warranties signal confidence in their product — a costly signal lemons can\'t afford.</div>';
     html += '<div class="lesson-item teal"><strong>Certifications & Standards</strong>Third-party certification (ISO, organic labels, credit ratings) reduces information asymmetry.</div>';
     html += '<div class="lesson-item amber"><strong>Regulation</strong>Consumer protection laws, mandatory disclosures, and lemon laws force sellers to reveal hidden information.</div>';
@@ -1094,6 +1095,6 @@ button:active { transform: scale(.97); }
 
 })();
 </script>
-<script src="../js/game-shell.js?v=5"></script>
+<script src="../js/game-shell.js?v=6"></script>
 </body>
 </html>
