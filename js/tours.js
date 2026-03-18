@@ -168,6 +168,9 @@
   }
 
   function init() {
+    // Skip auto-start on mobile — tour is too heavy for small screens
+    if (window.innerWidth <= 768) return;
+
     var page = detectPage();
     if (!TOURS[page]) return;
     if (hasSeenTour(page)) return;
