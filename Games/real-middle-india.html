@@ -277,53 +277,57 @@ canvas#trajectoryChart{width:100%;height:200px}
    THE REAL MIDDLE — Game Logic
    ═══════════════════════════════════════════ */
 
+function IMXIcon(name, size) {
+  return '<img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_' + name + '.svg" width="' + size + '" height="' + size + '" alt="" class="imx-sargam-icon" aria-hidden="true">';
+}
+
 var scenarios = [
-  { title:"Job Offer", desc:"A better-paying job in a nearby city. Moving would cost ₹50,000 — first month's rent, deposit, and travel.", icon:"💼",
+  { title:"Job Offer", desc:"A better-paying job in a nearby city. Moving would cost ₹50,000 — first month's rent, deposit, and travel.", icon:IMXIcon('Briefcase', 40),
     choices:[
       {text:"Take the job (₹50K moving cost)", income_change:8000, savings_change:-50000},
       {text:"Stay in current job", income_change:1000, savings_change:0}
     ], insight:null },
-  { title:"Medical Emergency", desc:"A family member needs urgent surgery. A private hospital quotes ₹2,00,000. The government hospital is ₹20,000 but has a 3-month wait.", icon:"🏥",
+  { title:"Medical Emergency", desc:"A family member needs urgent surgery. A private hospital quotes ₹2,00,000. The government hospital is ₹20,000 but has a 3-month wait.", icon:IMXIcon('Heart', 40),
     choices:[
       {text:"Private hospital (₹2L, better care)", income_change:0, savings_change:-200000},
       {text:"Government hospital (₹20K, longer wait)", income_change:-1000, savings_change:-20000}
     ], insight:"One health shock — that's how 60 million Indians fall below the poverty line each year. India's out-of-pocket health expenditure is among the highest in the world." },
-  { title:"Education Investment", desc:"An opportunity for a professional certification that could boost your career. Cost: ₹80,000 including lost wages.", icon:"📚",
+  { title:"Education Investment", desc:"An opportunity for a professional certification that could boost your career. Cost: ₹80,000 including lost wages.", icon:IMXIcon('Book', 40),
     choices:[
       {text:"Invest in certification (₹80K)", income_change:5000, savings_change:-80000},
       {text:"Skip — can't afford time off", income_change:500, savings_change:0}
     ], insight:null },
-  { title:"Inflation Shock", desc:"Food and fuel prices spike 15% in a single quarter. Your monthly expenses jump by ₹4,000.", icon:"📈",
+  { title:"Inflation Shock", desc:"Food and fuel prices spike 15% in a single quarter. Your monthly expenses jump by ₹4,000.", icon:IMXIcon('Trending_up', 40),
     choices:[
       {text:"Cut spending aggressively", income_change:0, savings_change:-5000},
       {text:"Take a loan to maintain lifestyle", income_change:0, savings_change:-15000}
     ], insight:"Inflation hits the poor hardest. The bottom 50% spend 50%+ of income on food, vs 25% for the top 10%. A 15% food price rise is a crisis for some and an inconvenience for others." },
-  { title:"Side Business Opportunity", desc:"A friend proposes starting a small catering business together. Investment needed: ₹1,50,000.", icon:"🏪",
+  { title:"Side Business Opportunity", desc:"A friend proposes starting a small catering business together. Investment needed: ₹1,50,000.", icon:IMXIcon('Home', 40),
     choices:[
       {text:"Start the business (risky)", income_change:[12000,-3000], savings_change:-150000, risky:true, successProb:0.6},
       {text:"Keep salary job (safe)", income_change:1500, savings_change:5000}
     ], insight:null },
-  { title:"Government Scheme", desc:"The Pradhan Mantri Awas Yojana (PMAY) housing subsidy is open for applications. Potential benefit: ₹1,00,000.", icon:"🏛️",
+  { title:"Government Scheme", desc:"The Pradhan Mantri Awas Yojana (PMAY) housing subsidy is open for applications. Potential benefit: ₹1,00,000.", icon:IMXIcon('Bank', 40),
     choices:[
       {text:"Apply for subsidy (bureaucratic process)", income_change:0, savings_change:100000, successProb:0.7, risky:true},
       {text:"Skip — too much paperwork", income_change:0, savings_change:0}
     ], insight:"Only 30% of eligible households successfully access government welfare schemes. Bureaucratic barriers disproportionately exclude the poorest, who need them most." },
-  { title:"Child's Education", desc:"Your child qualifies for a good private school. Annual fees: ₹1,20,000. The government school nearby is free.", icon:"🎓",
+  { title:"Child's Education", desc:"Your child qualifies for a good private school. Annual fees: ₹1,20,000. The government school nearby is free.", icon:IMXIcon('Graduation_cap', 40),
     choices:[
       {text:"Enroll in private school (₹1.2L/yr)", income_change:0, savings_change:-120000},
       {text:"Government school (free)", income_change:0, savings_change:0}
     ], insight:"India has one of the world's highest rates of private school enrollment — even among lower-income families. Parents sacrifice savings believing private education is the path to social mobility." },
-  { title:"Crop Failure / Layoff", desc:"An economic downturn hits your sector. Work dries up. You need to adapt or wait it out.", icon:"📉",
+  { title:"Crop Failure / Layoff", desc:"An economic downturn hits your sector. Work dries up. You need to adapt or wait it out.", icon:IMXIcon('Trending_down', 40),
     choices:[
       {text:"Retrain for new sector (₹40K, 3 months)", income_change:3000, savings_change:-40000},
       {text:"Wait for recovery", income_change:-5000, savings_change:-10000}
     ], insight:"India's informal sector employs 90% of workers with zero safety net. A layoff doesn't mean unemployment insurance — it means dipping into savings or borrowing at 24%+ interest." },
-  { title:"Land Opportunity", desc:"A small plot of land is available in your home village. Price: ₹5,00,000. Land is the ultimate asset in rural India.", icon:"🏡",
+  { title:"Land Opportunity", desc:"A small plot of land is available in your home village. Price: ₹5,00,000. Land is the ultimate asset in rural India.", icon:IMXIcon('Home', 40),
     choices:[
       {text:"Buy land (₹5L loan)", income_change:2000, savings_change:-500000},
       {text:"Pass — too risky", income_change:0, savings_change:5000}
     ], insight:null },
-  { title:"Retirement Planning", desc:"You're thinking about the future. An SIP (Systematic Investment Plan) could build a corpus, but means less cash now.", icon:"🧓",
+  { title:"Retirement Planning", desc:"You're thinking about the future. An SIP (Systematic Investment Plan) could build a corpus, but means less cash now.", icon:IMXIcon('User', 40),
     choices:[
       {text:"Start SIP investment (₹5K/month)", income_change:-500, savings_change:3000},
       {text:"Spend now, worry later", income_change:0, savings_change:-8000}
@@ -332,11 +336,11 @@ var scenarios = [
 
 /* Comparison Households */
 var households = [
-  {name:"Lakshmi", emoji:"👩‍🌾", income:12000, savings:20000, color:"#F87171", history:[12000]},
-  {name:"Raju", emoji:"🧑‍🏭", income:18000, savings:60000, color:"#FB923C", history:[18000]},
-  {name:"Priya", emoji:"👩‍💼", income:35000, savings:250000, color:"#A78BFA", history:[35000]},
-  {name:"Arjun", emoji:"🧑‍💻", income:75000, savings:800000, color:"#38BDF8", history:[75000]},
-  {name:"Mehta", emoji:"🏭", income:180000, savings:5000000, color:"#34D399", history:[180000]}
+  {name:"Lakshmi", emoji:IMXIcon('User', 20), income:12000, savings:20000, color:"#F87171", history:[12000]},
+  {name:"Raju", emoji:IMXIcon('User', 20), income:18000, savings:60000, color:"#FB923C", history:[18000]},
+  {name:"Priya", emoji:IMXIcon('User', 20), income:35000, savings:250000, color:"#A78BFA", history:[35000]},
+  {name:"Arjun", emoji:IMXIcon('User', 20), income:75000, savings:800000, color:"#38BDF8", history:[75000]},
+  {name:"Mehta", emoji:IMXIcon('User', 20), income:180000, savings:5000000, color:"#34D399", history:[180000]}
 ];
 
 /* Household AI responses to scenarios */
@@ -767,7 +771,7 @@ function showEnd() {
 
   // Comparison table
   html += '<div class="journey-summary"><h3>Final Comparison</h3>';
-  var allHH = [{name:"You (start)", income:25000, final: state.income, emoji:"🧑"}];
+  var allHH = [{name:"You (start)", income:25000, final: state.income, emoji:IMXIcon('User', 20)}];
   for (var h = 0; h < households.length; h++) {
     allHH.push({name:households[h].name, income:households[h].history[0], final:households[h].income, emoji:households[h].emoji});
   }
@@ -800,10 +804,10 @@ function showEnd() {
   // Structural facts
   html += '<h3 style="color:var(--text2);margin-bottom:.6rem">The Structural Reality</h3>';
   html += '<div class="structural-facts">';
-  html += '<div class="struct-fact"><div class="sf-icon">🏥</div><div class="sf-text"><strong>Healthcare:</strong> 62.4% of health spending is out-of-pocket. 55 million Indians are pushed into poverty by health costs every year.</div></div>';
-  html += '<div class="struct-fact"><div class="sf-icon">📚</div><div class="sf-text"><strong>Education:</strong> A child born in the top 20% is 6x more likely to complete college than one born in the bottom 20%.</div></div>';
-  html += '<div class="struct-fact"><div class="sf-icon">💰</div><div class="sf-text"><strong>Wealth Gap:</strong> The top 10% own 77% of national wealth. The bottom 50% own just 6%. This gap has widened since liberalization.</div></div>';
-  html += '<div class="struct-fact"><div class="sf-icon">🏘️</div><div class="sf-text"><strong>Social Mobility:</strong> Intergenerational income elasticity in India is ~0.5 — meaning your parents\' income strongly predicts yours. Caste and geography compound this.</div></div>';
+  html += '<div class="struct-fact"><div class="sf-icon">' + IMXIcon('Heart', 24) + '</div><div class="sf-text"><strong>Healthcare:</strong> 62.4% of health spending is out-of-pocket. 55 million Indians are pushed into poverty by health costs every year.</div></div>';
+  html += '<div class="struct-fact"><div class="sf-icon">' + IMXIcon('Book', 24) + '</div><div class="sf-text"><strong>Education:</strong> A child born in the top 20% is 6x more likely to complete college than one born in the bottom 20%.</div></div>';
+  html += '<div class="struct-fact"><div class="sf-icon">' + IMXIcon('Wallet', 24) + '</div><div class="sf-text"><strong>Wealth Gap:</strong> The top 10% own 77% of national wealth. The bottom 50% own just 6%. This gap has widened since liberalization.</div></div>';
+  html += '<div class="struct-fact"><div class="sf-icon">' + IMXIcon('Home', 24) + '</div><div class="sf-text"><strong>Social Mobility:</strong> Intergenerational income elasticity in India is ~0.5 — meaning your parents\' income strongly predicts yours. Caste and geography compound this.</div></div>';
   html += '</div>';
 
   html += '<div class="info-box" style="margin-top:2rem;text-align:center">';
@@ -922,11 +926,11 @@ function drawEndChart() {
 function resetGame() {
   state = { round:0, income:25000, savings:150000, history:[25000], savingsHistory:[150000], choices:[], phase:"choose" };
   households = [
-    {name:"Lakshmi", emoji:"👩‍🌾", income:12000, savings:20000, color:"#F87171", history:[12000]},
-    {name:"Raju", emoji:"🧑‍🏭", income:18000, savings:60000, color:"#FB923C", history:[18000]},
-    {name:"Priya", emoji:"👩‍💼", income:35000, savings:250000, color:"#A78BFA", history:[35000]},
-    {name:"Arjun", emoji:"🧑‍💻", income:75000, savings:800000, color:"#38BDF8", history:[75000]},
-    {name:"Mehta", emoji:"🏭", income:180000, savings:5000000, color:"#34D399", history:[180000]}
+    {name:"Lakshmi", emoji:IMXIcon('User', 20), income:12000, savings:20000, color:"#F87171", history:[12000]},
+    {name:"Raju", emoji:IMXIcon('User', 20), income:18000, savings:60000, color:"#FB923C", history:[18000]},
+    {name:"Priya", emoji:IMXIcon('User', 20), income:35000, savings:250000, color:"#A78BFA", history:[35000]},
+    {name:"Arjun", emoji:IMXIcon('User', 20), income:75000, savings:800000, color:"#38BDF8", history:[75000]},
+    {name:"Mehta", emoji:IMXIcon('User', 20), income:180000, savings:5000000, color:"#34D399", history:[180000]}
   ];
   document.getElementById("endscreen").classList.add("hidden");
   document.getElementById("welcome").classList.remove("hidden");
@@ -940,6 +944,6 @@ window.addEventListener("resize", function() {
 });
 </script>
 <script src="../js/game-agents.js"></script>
-<script src="../js/game-shell.js?v=5"></script>
+<script src="../js/game-shell.js?v=6"></script>
 </body>
 </html>
