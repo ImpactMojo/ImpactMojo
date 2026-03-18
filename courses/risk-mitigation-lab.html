@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Risk & Mitigation Lab | ImpactMojo</title>
+    <meta name="description" content="Interactive risk register builder for development practitioners. Identify, assess, and mitigate project risks with visual heat maps and structured planning tools.">
+    <meta name="keywords" content="risk register, risk assessment, mitigation strategy, project management, MEL, development, ImpactMojo, risk matrix, heat map">
+    <link rel="canonical" href="https://www.impactmojo.in/courses/risk-mitigation-lab.html">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-bg: #0F172A;
+            --secondary-bg: #1E293B;
+            --accent-color: #0EA5E9;
+            --accent-hover: #0284C7;
+            --secondary-accent: #6366F1;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --card-bg: #1E293B;
+            --hover-bg: #334155;
+            --border-color: #334155;
+            --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+            --font-sans: 'Amaranth', sans-serif;
+            --font-heading: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --risk-low: #10B981;
+            --risk-medium: #F59E0B;
+            --risk-high: #EF4444;
+            --risk-critical: #991B1B;
+        }
+
+        [data-theme="light"] {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F8FAFC;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --card-bg: #FFFFFF;
+            --hover-bg: #F1F5F9;
+            --border-color: #E2E8F0;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background: var(--primary-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+        /* Back link */
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; transition: color 0.2s ease; }
+        .back-link:hover { color: var(--accent-hover); }
+        .back-link svg { width: 18px; height: 18px; }
+
+        /* Header */
+        .header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 1rem; background: rgba(14, 165, 233, 0.15); color: var(--accent-color); border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+
+        /* Top controls */
+        .top-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+        .top-controls-right { display: flex; gap: 0.5rem; align-items: center; }
+        .theme-toggle, .btn-sm { padding: 0.6rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; font-family: var(--font-sans); }
+        .theme-toggle:hover, .btn-sm:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .theme-toggle svg, .btn-sm svg { width: 16px; height: 16px; }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .tab-btn { padding: 0.85rem 1.25rem; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--text-muted); font-size: 0.9rem; font-family: var(--font-sans); cursor: pointer; white-space: nowrap; transition: all 0.2s ease; }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+
+        /* Tab panels */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* Section cards */
+        .section-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.75rem; margin-bottom: 1.5rem; }
+        .section-card h2 { font-family: var(--font-heading); font-size: 1.15rem; color: var(--accent-color); margin-bottom: 0.5rem; }
+        .section-card h3 { font-family: var(--font-heading); font-size: 1rem; color: var(--text-primary); margin-bottom: 0.75rem; }
+        .section-card p.desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.5; }
+
+        /* Form fields */
+        .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+        .field label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); font-family: var(--font-heading); }
+        .field-hint { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+        .field select, .field input[type="text"], .field input[type="number"], .field textarea {
+            width: 100%; padding: 0.7rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color);
+            border-radius: 8px; color: var(--text-primary); font-size: 0.95rem; font-family: var(--font-sans);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .field select:focus, .field input:focus, .field textarea:focus {
+            outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+        }
+        .field select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 16px; padding-right: 2.5rem;
+        }
+        .field textarea { resize: vertical; min-height: 70px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+
+        /* Buttons */
+        .btn-primary { padding: 0.75rem 1.5rem; background: var(--gradient-primary); border: none; border-radius: 8px; color: #fff; font-size: 0.9rem; font-family: var(--font-sans); font-weight: 700; cursor: pointer; transition: opacity 0.2s ease, transform 0.1s ease; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-secondary { padding: 0.65rem 1.25rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-secondary:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .btn-danger { padding: 0.5rem 0.75rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; color: var(--danger-color); font-size: 0.8rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s ease; }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.2); border-color: var(--danger-color); }
+        .btn-group { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+
+        /* Template chips */
+        .template-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .template-chip { padding: 0.45rem 0.85rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 20px; color: var(--secondary-accent); font-size: 0.8rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s ease; }
+        .template-chip:hover { background: rgba(99, 102, 241, 0.2); border-color: var(--secondary-accent); }
+        .template-chip.active { background: var(--secondary-accent); color: #fff; border-color: var(--secondary-accent); }
+
+        /* Risk register table */
+        .risk-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 1rem; }
+        .risk-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        .risk-table th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); padding: 0.65rem 0.5rem; border-bottom: 2px solid var(--border-color); font-family: var(--font-heading); font-weight: 600; text-align: left; white-space: nowrap; }
+        .risk-table td { font-size: 0.85rem; color: var(--text-secondary); padding: 0.65rem 0.5rem; border-bottom: 1px solid rgba(51, 65, 85, 0.5); vertical-align: top; }
+        .risk-table tbody tr:hover { background: var(--hover-bg); }
+        .risk-table td.risk-id { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+
+        /* Risk score badge */
+        .risk-badge { display: inline-flex; align-items: center; justify-content: center; padding: 0.25rem 0.65rem; border-radius: 12px; font-size: 0.75rem; font-weight: 700; font-family: var(--font-heading); min-width: 32px; }
+        .risk-low { background: rgba(16, 185, 129, 0.15); color: var(--risk-low); }
+        .risk-medium { background: rgba(245, 158, 11, 0.15); color: var(--risk-medium); }
+        .risk-high { background: rgba(239, 68, 68, 0.15); color: var(--risk-high); }
+        .risk-critical { background: rgba(153, 27, 27, 0.2); color: #FCA5A5; }
+
+        /* Category badge */
+        .cat-badge { display: inline-flex; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.3px; background: rgba(14, 165, 233, 0.12); color: var(--accent-color); white-space: nowrap; }
+
+        /* Risk matrix (5x5 heatmap) */
+        .matrix-container { margin-top: 1.5rem; }
+        .matrix-grid { display: grid; grid-template-columns: auto repeat(5, 1fr); grid-template-rows: repeat(5, 1fr) auto; gap: 3px; max-width: 500px; margin: 0 auto; }
+        .matrix-label-y { display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-family: var(--font-heading); font-weight: 600; color: var(--text-muted); writing-mode: horizontal-tb; padding: 0 0.5rem; white-space: nowrap; }
+        .matrix-label-x { display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-family: var(--font-heading); font-weight: 600; color: var(--text-muted); padding: 0.5rem 0; white-space: nowrap; }
+        .matrix-cell { position: relative; aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 2px; padding: 3px; min-height: 56px; transition: transform 0.15s ease; }
+        .matrix-cell:hover { transform: scale(1.05); z-index: 2; }
+        .matrix-dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.9); display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: #fff; font-family: var(--font-heading); cursor: pointer; transition: transform 0.15s ease; position: relative; z-index: 1; }
+        .matrix-dot:hover { transform: scale(1.3); z-index: 3; }
+        .matrix-corner { }
+        .matrix-axis-title { font-size: 0.75rem; font-family: var(--font-heading); font-weight: 700; color: var(--text-secondary); text-align: center; margin-top: 0.75rem; }
+        .matrix-axis-title-y { position: absolute; left: -2rem; top: 50%; transform: rotate(-90deg) translateX(-50%); transform-origin: 0 0; font-size: 0.75rem; font-family: var(--font-heading); font-weight: 700; color: var(--text-secondary); white-space: nowrap; }
+        .matrix-wrapper { position: relative; padding-left: 2.5rem; }
+        .matrix-legend { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
+        .matrix-legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--text-secondary); }
+        .matrix-legend-swatch { width: 14px; height: 14px; border-radius: 3px; }
+
+        /* Filter/sort bar */
+        .filter-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+        .filter-bar select { padding: 0.45rem 2rem 0.45rem 0.65rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.8rem; font-family: var(--font-sans);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 0.4rem center; background-size: 14px;
+        }
+        .filter-bar label { font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-heading); }
+
+        /* Stats row */
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
+        .stat-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; text-align: center; }
+        .stat-value { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; line-height: 1.2; }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-family: var(--font-heading); font-weight: 600; margin-top: 0.25rem; }
+
+        /* Empty state */
+        .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
+        .empty-state svg { width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.5; }
+        .empty-state p { font-size: 0.9rem; margin-bottom: 1rem; }
+
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 100; align-items: center; justify-content: center; padding: 1rem; }
+        .modal-overlay.open { display: flex; }
+        .modal { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 2rem; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; }
+        .modal h2 { font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 1.25rem; color: var(--accent-color); }
+        .modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
+
+        /* Tooltip */
+        .tooltip { position: relative; }
+        .tooltip-text { display: none; position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); background: var(--primary-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.5rem 0.75rem; font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; z-index: 50; pointer-events: none; }
+        .tooltip:hover .tooltip-text { display: block; }
+
+        /* Notification */
+        .notification { position: fixed; top: 1rem; right: 1rem; padding: 0.75rem 1.25rem; background: var(--success-color); color: #fff; border-radius: 8px; font-size: 0.85rem; font-family: var(--font-sans); z-index: 200; transform: translateX(120%); transition: transform 0.3s ease; }
+        .notification.show { transform: translateX(0); }
+
+        /* Footer */
+        .footer { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        .footer a { color: var(--accent-color); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Print */
+        @media print {
+            body { background: #fff; color: #000; }
+            .back-link, .top-controls, .tabs, .btn-primary, .btn-secondary, .btn-danger, .template-chips, .filter-bar, .modal-overlay, .notification, .footer, .tab-btn, .btn-group { display: none !important; }
+            .tab-panel { display: block !important; page-break-inside: avoid; }
+            .section-card { border-color: #ccc; }
+            .risk-table th, .risk-table td { border-color: #ccc; }
+            .container { max-width: 100%; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .form-row, .form-row-3 { grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .matrix-grid { max-width: 100%; }
+            .matrix-cell { min-height: 44px; }
+            .matrix-dot { width: 14px; height: 14px; font-size: 0.45rem; }
+            .top-controls { flex-direction: column; align-items: flex-start; }
+        }
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/courses" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            Back to Courses
+        </a>
+
+        <div class="top-controls">
+            <div class="top-controls-right">
+                <button class="btn-sm" onclick="saveToStorage()" title="Save to browser"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save</button>
+                <button class="btn-sm" onclick="loadFromStorage()" title="Load saved data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Load</button>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                <span id="theme-label">Light mode</span>
+            </button>
+        </div>
+
+        <div class="header">
+            <div class="header-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Interactive Lab</div>
+            <h1>Risk & Mitigation Lab</h1>
+            <p>Build a comprehensive project risk register. Identify threats, assess their severity, plan mitigations, and visualise your risk landscape.</p>
+        </div>
+
+        <div class="tabs" role="tablist">
+            <button class="tab-btn active" role="tab" data-tab="context" aria-selected="true">1. Context</button>
+            <button class="tab-btn" role="tab" data-tab="identify">2. Identify</button>
+            <button class="tab-btn" role="tab" data-tab="assess">3. Assess</button>
+            <button class="tab-btn" role="tab" data-tab="mitigate">4. Mitigate</button>
+            <button class="tab-btn" role="tab" data-tab="monitor">5. Monitor</button>
+            <button class="tab-btn" role="tab" data-tab="matrix">6. Matrix</button>
+        </div>
+
+        <!-- TAB 1: PROJECT CONTEXT -->
+        <div class="tab-panel active" id="panel-context" role="tabpanel">
+            <div class="section-card">
+                <h2>Project Context</h2>
+                <p class="desc">Provide background on your project so the risk register is properly scoped.</p>
+                <div class="form-row">
+                    <div class="field">
+                        <label for="project-name">Project Name</label>
+                        <input type="text" id="project-name" placeholder="e.g. Community Health Strengthening Programme">
+                    </div>
+                    <div class="field">
+                        <label for="project-sector">Sector</label>
+                        <select id="project-sector">
+                            <option value="">-- Select --</option>
+                            <option value="health">Health</option>
+                            <option value="education">Education</option>
+                            <option value="livelihoods">Livelihoods</option>
+                            <option value="wash">WASH</option>
+                            <option value="protection">Protection</option>
+                            <option value="nutrition">Nutrition</option>
+                            <option value="governance">Governance</option>
+                            <option value="environment">Environment</option>
+                            <option value="multi">Multi-sector</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label for="project-duration">Duration (months)</label>
+                        <input type="number" id="project-duration" min="1" max="120" placeholder="e.g. 36">
+                    </div>
+                    <div class="field">
+                        <label for="project-budget">Budget Range</label>
+                        <select id="project-budget">
+                            <option value="">-- Select --</option>
+                            <option value="<100k">Under $100K</option>
+                            <option value="100k-500k">$100K - $500K</option>
+                            <option value="500k-1m">$500K - $1M</option>
+                            <option value="1m-5m">$1M - $5M</option>
+                            <option value="5m+">Over $5M</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="project-stakeholders">Key Stakeholders</label>
+                    <textarea id="project-stakeholders" placeholder="List primary stakeholders, partners, and beneficiary groups..."></textarea>
+                </div>
+                <div class="field">
+                    <label for="project-location">Location / Geographic Scope</label>
+                    <input type="text" id="project-location" placeholder="e.g. Northern Kenya, 5 sub-counties">
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: RISK IDENTIFICATION -->
+        <div class="tab-panel" id="panel-identify" role="tabpanel">
+            <div class="section-card">
+                <h2>Risk Identification</h2>
+                <p class="desc">Add risks by category. Use sector templates for quick-start inspiration or add your own custom risks.</p>
+
+                <h3>Sector Templates</h3>
+                <div class="template-chips">
+                    <button class="template-chip" onclick="loadTemplate('health')">Health</button>
+                    <button class="template-chip" onclick="loadTemplate('education')">Education</button>
+                    <button class="template-chip" onclick="loadTemplate('livelihoods')">Livelihoods</button>
+                    <button class="template-chip" onclick="loadTemplate('wash')">WASH</button>
+                </div>
+
+                <h3>Add a New Risk</h3>
+                <div class="form-row">
+                    <div class="field">
+                        <label for="risk-category">Category</label>
+                        <select id="risk-category">
+                            <option value="programmatic">Programmatic</option>
+                            <option value="financial">Financial</option>
+                            <option value="operational">Operational</option>
+                            <option value="reputational">Reputational</option>
+                            <option value="security">Security</option>
+                            <option value="environmental">Environmental</option>
+                            <option value="political">Political</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="risk-title">Risk Title</label>
+                        <input type="text" id="risk-title" placeholder="Brief risk name">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="risk-description">Description</label>
+                    <textarea id="risk-description" placeholder="Describe the risk event, its causes, and potential consequences..."></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-primary" onclick="addRisk()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Add Risk
+                    </button>
+                </div>
+            </div>
+
+            <!-- Risk list -->
+            <div class="section-card">
+                <h3>Registered Risks (<span id="risk-count">0</span>)</h3>
+                <div id="risk-list-empty" class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <p>No risks added yet. Use a sector template or add risks manually above.</p>
+                </div>
+                <div id="risk-list-table" class="risk-table-wrap" style="display:none">
+                    <table class="risk-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Category</th>
+                                <th>Risk</th>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="risk-list-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: RISK ASSESSMENT -->
+        <div class="tab-panel" id="panel-assess" role="tabpanel">
+            <div class="section-card">
+                <h2>Risk Assessment</h2>
+                <p class="desc">Rate each risk for likelihood and impact (1-5). The risk score is auto-calculated and colour-coded.</p>
+
+                <div class="stats-row" id="assess-stats">
+                    <div class="stat-card"><div class="stat-value" style="color:var(--risk-critical)" id="stat-critical">0</div><div class="stat-label">Critical</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:var(--risk-high)" id="stat-high">0</div><div class="stat-label">High</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:var(--risk-medium)" id="stat-medium">0</div><div class="stat-label">Medium</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:var(--risk-low)" id="stat-low">0</div><div class="stat-label">Low</div></div>
+                </div>
+
+                <div class="filter-bar">
+                    <label>Filter:</label>
+                    <select id="filter-category" onchange="renderAssessTable()">
+                        <option value="all">All Categories</option>
+                        <option value="programmatic">Programmatic</option>
+                        <option value="financial">Financial</option>
+                        <option value="operational">Operational</option>
+                        <option value="reputational">Reputational</option>
+                        <option value="security">Security</option>
+                        <option value="environmental">Environmental</option>
+                        <option value="political">Political</option>
+                    </select>
+                    <label>Sort:</label>
+                    <select id="sort-assess" onchange="renderAssessTable()">
+                        <option value="id">By ID</option>
+                        <option value="score-desc">Score (High to Low)</option>
+                        <option value="score-asc">Score (Low to High)</option>
+                        <option value="category">By Category</option>
+                    </select>
+                </div>
+
+                <div id="assess-empty" class="empty-state">
+                    <p>Add risks in the Identify tab first.</p>
+                </div>
+                <div id="assess-table-wrap" class="risk-table-wrap" style="display:none">
+                    <table class="risk-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Risk</th>
+                                <th>Category</th>
+                                <th>Likelihood (1-5)</th>
+                                <th>Impact (1-5)</th>
+                                <th>Score</th>
+                                <th>Level</th>
+                            </tr>
+                        </thead>
+                        <tbody id="assess-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: MITIGATION STRATEGIES -->
+        <div class="tab-panel" id="panel-mitigate" role="tabpanel">
+            <div class="section-card">
+                <h2>Mitigation Strategies</h2>
+                <p class="desc">For each risk, define prevention actions, contingency plans, assign responsibility, and set timelines.</p>
+                <div id="mitigate-empty" class="empty-state">
+                    <p>Add and assess risks first.</p>
+                </div>
+                <div id="mitigate-list"></div>
+            </div>
+        </div>
+
+        <!-- TAB 5: RISK MONITORING -->
+        <div class="tab-panel" id="panel-monitor" role="tabpanel">
+            <div class="section-card">
+                <h2>Risk Monitoring Plan</h2>
+                <p class="desc">Set up early-warning indicators, review schedules, and escalation triggers for your highest-priority risks.</p>
+                <div class="form-row">
+                    <div class="field">
+                        <label for="review-frequency">Default Review Frequency</label>
+                        <select id="review-frequency">
+                            <option value="weekly">Weekly</option>
+                            <option value="biweekly">Bi-weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="escalation-threshold">Escalation Threshold (Score >=)</label>
+                        <select id="escalation-threshold">
+                            <option value="15">15 (Critical only)</option>
+                            <option value="12" selected>12 (High + Critical)</option>
+                            <option value="9">9 (Medium and above)</option>
+                            <option value="6">6 (All except Low)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="monitor-empty" class="empty-state" style="margin-top:1rem;">
+                    <p>Add and assess risks first to set up monitoring.</p>
+                </div>
+                <div id="monitor-list"></div>
+            </div>
+        </div>
+
+        <!-- TAB 6: RISK MATRIX -->
+        <div class="tab-panel" id="panel-matrix" role="tabpanel">
+            <div class="section-card">
+                <h2>Risk Matrix</h2>
+                <p class="desc">Visual 5x5 heatmap with all assessed risks plotted by likelihood vs impact. Hover over dots for details.</p>
+
+                <div class="stats-row" id="matrix-stats">
+                    <div class="stat-card"><div class="stat-value" id="stat-total" style="background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div><div class="stat-label">Total Risks</div></div>
+                    <div class="stat-card"><div class="stat-value" id="stat-avg" style="background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div><div class="stat-label">Avg Score</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:var(--risk-critical)" id="stat-crit2">0</div><div class="stat-label">Critical</div></div>
+                    <div class="stat-card"><div class="stat-value" style="color:var(--risk-high)" id="stat-high2">0</div><div class="stat-label">High</div></div>
+                </div>
+
+                <div id="matrix-empty" class="empty-state">
+                    <p>Assess risks first to populate the matrix.</p>
+                </div>
+                <div id="matrix-area" style="display:none">
+                    <div class="matrix-wrapper">
+                        <div class="matrix-axis-title-y">IMPACT</div>
+                        <div class="matrix-grid" id="matrix-grid"></div>
+                    </div>
+                    <div class="matrix-axis-title">LIKELIHOOD</div>
+                    <div class="matrix-legend">
+                        <div class="matrix-legend-item"><div class="matrix-legend-swatch" style="background:var(--risk-low)"></div> Low (1-4)</div>
+                        <div class="matrix-legend-item"><div class="matrix-legend-swatch" style="background:var(--risk-medium)"></div> Medium (5-9)</div>
+                        <div class="matrix-legend-item"><div class="matrix-legend-swatch" style="background:var(--risk-high)"></div> High (10-16)</div>
+                        <div class="matrix-legend-item"><div class="matrix-legend-swatch" style="background:var(--risk-critical)"></div> Critical (17-25)</div>
+                    </div>
+                </div>
+
+                <div class="btn-group" style="margin-top:2rem;">
+                    <button class="btn-secondary" onclick="exportCSV()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</button>
+                    <button class="btn-secondary" onclick="exportText()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Export Text</button>
+                    <button class="btn-secondary" onclick="window.print()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Print</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Risk & Mitigation Lab &mdash; <a href="https://www.impactmojo.in">ImpactMojo</a></p>
+        </div>
+    </div>
+
+    <!-- Risk detail/edit modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="risk-modal">
+            <h2 id="modal-title">Edit Risk</h2>
+            <div id="modal-body"></div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn-primary" id="modal-save" onclick="saveModal()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification toast -->
+    <div class="notification" id="notification"></div>
+
+<script>
+/* ========== STATE ========== */
+let risks = [];
+let riskIdCounter = 1;
+
+const CATEGORIES = ['programmatic','financial','operational','reputational','security','environmental','political'];
+
+const TEMPLATES = {
+    health: [
+        { category:'programmatic', title:'Low beneficiary uptake', description:'Community members do not attend health facilities or engage with health workers due to cultural resistance or mistrust.' },
+        { category:'operational', title:'Supply chain disruption', description:'Essential medicines or medical supplies are delayed or unavailable due to logistical bottlenecks.' },
+        { category:'security', title:'Staff safety in remote areas', description:'Health workers face security threats when travelling to remote or conflict-affected communities.' },
+        { category:'financial', title:'Currency devaluation', description:'Local currency loses value, reducing purchasing power of programme budget.' },
+        { category:'environmental', title:'Disease outbreak', description:'A disease outbreak diverts health system resources and changes programme priorities.' },
+        { category:'reputational', title:'Adverse health event', description:'Negative health outcome among beneficiaries attributed to programme activities, damaging credibility.' },
+        { category:'political', title:'Policy change on health priorities', description:'Government shifts health priorities, reducing alignment with programme objectives.' }
+    ],
+    education: [
+        { category:'programmatic', title:'Low school attendance', description:'Targeted students do not attend school regularly due to economic pressures or seasonal labour demands.' },
+        { category:'operational', title:'Teacher attrition', description:'Trained teachers leave the programme area, undermining quality of intervention delivery.' },
+        { category:'financial', title:'Funding gap for materials', description:'Insufficient funds to procure learning materials, textbooks, or classroom supplies.' },
+        { category:'security', title:'School safety incidents', description:'Schools targeted or damaged due to conflict, forcing closures.' },
+        { category:'environmental', title:'Natural disaster school damage', description:'Floods or earthquakes damage school infrastructure, interrupting education services.' },
+        { category:'reputational', title:'Safeguarding incident', description:'Child protection concern within programme schools damages organisational reputation.' },
+        { category:'political', title:'Curriculum reform delays', description:'Government curriculum changes delay programme implementation or require redesign.' }
+    ],
+    livelihoods: [
+        { category:'programmatic', title:'Market access barriers', description:'Beneficiaries unable to sell products due to poor infrastructure, middlemen exploitation, or market saturation.' },
+        { category:'operational', title:'Low adoption of new practices', description:'Farmers or entrepreneurs do not adopt promoted techniques due to risk aversion or lack of inputs.' },
+        { category:'financial', title:'Microfinance default risk', description:'High default rates on microloans threaten revolving fund sustainability.' },
+        { category:'security', title:'Theft of productive assets', description:'Livestock, tools, or cash transfers stolen from beneficiaries, especially in insecure areas.' },
+        { category:'environmental', title:'Climate shock to harvests', description:'Drought, flood, or pest infestation destroys crops and undermines food security gains.' },
+        { category:'reputational', title:'Perceived favouritism in targeting', description:'Community perceives beneficiary selection as biased, generating conflict.' },
+        { category:'political', title:'Trade policy change', description:'New tariffs or trade restrictions affect market prices for programme commodities.' }
+    ],
+    wash: [
+        { category:'programmatic', title:'Low latrine usage', description:'Constructed latrines are not used due to cultural preferences for open defecation.' },
+        { category:'operational', title:'Borehole maintenance failure', description:'Community water committees lack capacity or funds to maintain water points after handover.' },
+        { category:'financial', title:'Construction cost overruns', description:'Material costs increase beyond budget due to inflation or supply constraints.' },
+        { category:'security', title:'Conflict over water resources', description:'New water points create or exacerbate tensions between communities over resource access.' },
+        { category:'environmental', title:'Water table depletion', description:'Groundwater levels drop due to over-extraction or climate change, reducing borehole yields.' },
+        { category:'reputational', title:'Water quality failure', description:'Water from programme sources tests positive for contaminants, undermining trust.' },
+        { category:'political', title:'Local government disputes', description:'Disputes between local authorities over jurisdiction delay WASH infrastructure approvals.' }
+    ]
+};
+
+/* ========== TABS ========== */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected','true');
+        document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+        if (btn.dataset.tab === 'assess') renderAssessTable();
+        if (btn.dataset.tab === 'mitigate') renderMitigatePanel();
+        if (btn.dataset.tab === 'monitor') renderMonitorPanel();
+        if (btn.dataset.tab === 'matrix') renderMatrix();
+    });
+});
+
+/* ========== THEME ========== */
+function toggleTheme() {
+    const curr = document.documentElement.getAttribute('data-theme');
+    const next = curr === 'light' ? null : 'light';
+    if (next) document.documentElement.setAttribute('data-theme', 'light');
+    else document.documentElement.removeAttribute('data-theme');
+    document.getElementById('theme-label').textContent = next ? 'Dark mode' : 'Light mode';
+    document.getElementById('theme-icon').innerHTML = next
+        ? '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
+        : '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
+    localStorage.setItem('impactmojo-theme', next || 'dark');
+}
+(function() {
+    const saved = localStorage.getItem('impactmojo-theme');
+    if (saved === 'light') toggleTheme();
+})();
+
+/* ========== NOTIFICATIONS ========== */
+function notify(msg, type) {
+    const el = document.getElementById('notification');
+    el.textContent = msg;
+    el.style.background = type === 'error' ? 'var(--danger-color)' : type === 'warn' ? 'var(--warning-color)' : 'var(--success-color)';
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+/* ========== RISK SCORING ========== */
+function riskLevel(score) {
+    if (score >= 17) return 'critical';
+    if (score >= 10) return 'high';
+    if (score >= 5) return 'medium';
+    return 'low';
+}
+function riskLevelLabel(score) {
+    if (score >= 17) return 'Critical';
+    if (score >= 10) return 'High';
+    if (score >= 5) return 'Medium';
+    return 'Low';
+}
+function matrixColor(l, i) {
+    const s = l * i;
+    if (s >= 17) return 'rgba(153, 27, 27, 0.7)';
+    if (s >= 10) return 'rgba(239, 68, 68, 0.45)';
+    if (s >= 5) return 'rgba(245, 158, 11, 0.35)';
+    return 'rgba(16, 185, 129, 0.2)';
+}
+
+/* ========== TEMPLATES ========== */
+function loadTemplate(sector) {
+    const tmpl = TEMPLATES[sector];
+    if (!tmpl) return;
+    document.querySelectorAll('.template-chip').forEach(c => c.classList.remove('active'));
+    event.target.classList.add('active');
+    let added = 0;
+    tmpl.forEach(r => {
+        const exists = risks.some(x => x.title.toLowerCase() === r.title.toLowerCase());
+        if (!exists) {
+            risks.push({ id: riskIdCounter++, ...r, likelihood: 0, impact: 0, prevention: '', contingency: '', responsible: '', timeline: '', indicators: '', notes: '' });
+            added++;
+        }
+    });
+    renderRiskList();
+    notify(added > 0 ? `Added ${added} risks from ${sector} template` : 'Template risks already added', added > 0 ? 'success' : 'warn');
+}
+
+/* ========== ADD RISK ========== */
+function addRisk() {
+    const cat = document.getElementById('risk-category').value;
+    const title = document.getElementById('risk-title').value.trim();
+    const desc = document.getElementById('risk-description').value.trim();
+    if (!title) { notify('Please enter a risk title', 'error'); return; }
+    risks.push({ id: riskIdCounter++, category: cat, title, description: desc, likelihood: 0, impact: 0, prevention: '', contingency: '', responsible: '', timeline: '', indicators: '', notes: '' });
+    document.getElementById('risk-title').value = '';
+    document.getElementById('risk-description').value = '';
+    renderRiskList();
+    notify('Risk added');
+}
+
+function removeRisk(id) {
+    risks = risks.filter(r => r.id !== id);
+    renderRiskList();
+    renderAssessTable();
+    renderMitigatePanel();
+    renderMonitorPanel();
+    notify('Risk removed');
+}
+
+/* ========== RENDER RISK LIST (Tab 2) ========== */
+function renderRiskList() {
+    const empty = document.getElementById('risk-list-empty');
+    const table = document.getElementById('risk-list-table');
+    const count = document.getElementById('risk-count');
+    count.textContent = risks.length;
+    if (risks.length === 0) { empty.style.display = ''; table.style.display = 'none'; return; }
+    empty.style.display = 'none';
+    table.style.display = '';
+    const tbody = document.getElementById('risk-list-body');
+    tbody.innerHTML = risks.map(r => `
+        <tr>
+            <td class="risk-id">R${String(r.id).padStart(2,'0')}</td>
+            <td><span class="cat-badge">${r.category}</span></td>
+            <td>${esc(r.title)}</td>
+            <td>${esc(r.description).substring(0, 80)}${r.description.length > 80 ? '...' : ''}</td>
+            <td><button class="btn-danger" onclick="removeRisk(${r.id})">Remove</button></td>
+        </tr>
+    `).join('');
+}
+
+/* ========== RENDER ASSESS TABLE (Tab 3) ========== */
+function renderAssessTable() {
+    const empty = document.getElementById('assess-empty');
+    const wrap = document.getElementById('assess-table-wrap');
+    if (risks.length === 0) { empty.style.display = ''; wrap.style.display = 'none'; updateStats(); return; }
+    empty.style.display = 'none';
+    wrap.style.display = '';
+
+    let filtered = [...risks];
+    const catFilter = document.getElementById('filter-category').value;
+    if (catFilter !== 'all') filtered = filtered.filter(r => r.category === catFilter);
+
+    const sortBy = document.getElementById('sort-assess').value;
+    if (sortBy === 'score-desc') filtered.sort((a,b) => (b.likelihood*b.impact) - (a.likelihood*a.impact));
+    else if (sortBy === 'score-asc') filtered.sort((a,b) => (a.likelihood*a.impact) - (b.likelihood*b.impact));
+    else if (sortBy === 'category') filtered.sort((a,b) => a.category.localeCompare(b.category));
+    else filtered.sort((a,b) => a.id - b.id);
+
+    const tbody = document.getElementById('assess-body');
+    tbody.innerHTML = filtered.map(r => {
+        const score = r.likelihood * r.impact;
+        const level = riskLevel(score);
+        return `
+        <tr>
+            <td class="risk-id">R${String(r.id).padStart(2,'0')}</td>
+            <td>${esc(r.title)}</td>
+            <td><span class="cat-badge">${r.category}</span></td>
+            <td><select onchange="updateLikelihood(${r.id}, this.value)" style="padding:0.35rem 0.5rem;background:var(--secondary-bg);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-sans);">
+                <option value="0" ${r.likelihood===0?'selected':''}>--</option>
+                <option value="1" ${r.likelihood===1?'selected':''}>1 - Rare</option>
+                <option value="2" ${r.likelihood===2?'selected':''}>2 - Unlikely</option>
+                <option value="3" ${r.likelihood===3?'selected':''}>3 - Possible</option>
+                <option value="4" ${r.likelihood===4?'selected':''}>4 - Likely</option>
+                <option value="5" ${r.likelihood===5?'selected':''}>5 - Almost Certain</option>
+            </select></td>
+            <td><select onchange="updateImpact(${r.id}, this.value)" style="padding:0.35rem 0.5rem;background:var(--secondary-bg);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-sans);">
+                <option value="0" ${r.impact===0?'selected':''}>--</option>
+                <option value="1" ${r.impact===1?'selected':''}>1 - Negligible</option>
+                <option value="2" ${r.impact===2?'selected':''}>2 - Minor</option>
+                <option value="3" ${r.impact===3?'selected':''}>3 - Moderate</option>
+                <option value="4" ${r.impact===4?'selected':''}>4 - Major</option>
+                <option value="5" ${r.impact===5?'selected':''}>5 - Severe</option>
+            </select></td>
+            <td><span class="risk-badge risk-${level}">${score > 0 ? score : '-'}</span></td>
+            <td>${score > 0 ? riskLevelLabel(score) : '-'}</td>
+        </tr>`;
+    }).join('');
+    updateStats();
+}
+
+function updateLikelihood(id, val) { const r = risks.find(x => x.id === id); if (r) { r.likelihood = parseInt(val); renderAssessTable(); } }
+function updateImpact(id, val) { const r = risks.find(x => x.id === id); if (r) { r.impact = parseInt(val); renderAssessTable(); } }
+
+function updateStats() {
+    let c = 0, h = 0, m = 0, l = 0;
+    risks.forEach(r => {
+        const s = r.likelihood * r.impact;
+        if (s >= 17) c++;
+        else if (s >= 10) h++;
+        else if (s >= 5) m++;
+        else if (s > 0) l++;
+    });
+    document.getElementById('stat-critical').textContent = c;
+    document.getElementById('stat-high').textContent = h;
+    document.getElementById('stat-medium').textContent = m;
+    document.getElementById('stat-low').textContent = l;
+}
+
+/* ========== RENDER MITIGATE PANEL (Tab 4) ========== */
+function renderMitigatePanel() {
+    const empty = document.getElementById('mitigate-empty');
+    const list = document.getElementById('mitigate-list');
+    const assessed = risks.filter(r => r.likelihood > 0 && r.impact > 0);
+    if (assessed.length === 0) { empty.style.display = ''; list.innerHTML = ''; return; }
+    empty.style.display = 'none';
+    assessed.sort((a,b) => (b.likelihood*b.impact) - (a.likelihood*a.impact));
+    list.innerHTML = assessed.map(r => {
+        const score = r.likelihood * r.impact;
+        const level = riskLevel(score);
+        return `
+        <div class="section-card" style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+                <h3 style="margin:0;">R${String(r.id).padStart(2,'0')}: ${esc(r.title)}</h3>
+                <span class="risk-badge risk-${level}">Score: ${score}</span>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>Prevention Actions</label>
+                    <textarea id="prev-${r.id}" onchange="updateMitField(${r.id},'prevention',this.value)" placeholder="What actions can prevent or reduce likelihood?">${esc(r.prevention)}</textarea>
+                </div>
+                <div class="field">
+                    <label>Contingency Plans</label>
+                    <textarea id="cont-${r.id}" onchange="updateMitField(${r.id},'contingency',this.value)" placeholder="If the risk materialises, what is the response?">${esc(r.contingency)}</textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>Responsible Person / Team</label>
+                    <input type="text" id="resp-${r.id}" value="${esc(r.responsible)}" onchange="updateMitField(${r.id},'responsible',this.value)" placeholder="e.g. Programme Manager">
+                </div>
+                <div class="field">
+                    <label>Timeline / Deadline</label>
+                    <input type="text" id="tl-${r.id}" value="${esc(r.timeline)}" onchange="updateMitField(${r.id},'timeline',this.value)" placeholder="e.g. Before Q2 2026">
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function updateMitField(id, field, val) {
+    const r = risks.find(x => x.id === id);
+    if (r) r[field] = val;
+}
+
+/* ========== RENDER MONITOR PANEL (Tab 5) ========== */
+function renderMonitorPanel() {
+    const empty = document.getElementById('monitor-empty');
+    const list = document.getElementById('monitor-list');
+    const assessed = risks.filter(r => r.likelihood > 0 && r.impact > 0);
+    if (assessed.length === 0) { empty.style.display = ''; list.innerHTML = ''; return; }
+    empty.style.display = 'none';
+    assessed.sort((a,b) => (b.likelihood*b.impact) - (a.likelihood*a.impact));
+    const threshold = parseInt(document.getElementById('escalation-threshold').value);
+    list.innerHTML = assessed.map(r => {
+        const score = r.likelihood * r.impact;
+        const level = riskLevel(score);
+        const needsEscalation = score >= threshold;
+        return `
+        <div class="section-card" style="margin-bottom:1rem;${needsEscalation ? 'border-left:3px solid var(--danger-color);' : ''}">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+                <h3 style="margin:0;">R${String(r.id).padStart(2,'0')}: ${esc(r.title)}</h3>
+                <div style="display:flex;gap:0.5rem;align-items:center;">
+                    <span class="risk-badge risk-${level}">${score}</span>
+                    ${needsEscalation ? '<span style="font-size:0.75rem;color:var(--danger-color);font-weight:600;font-family:var(--font-heading);">ESCALATION</span>' : ''}
+                </div>
+            </div>
+            <div class="field">
+                <label>Early Warning Indicators</label>
+                <textarea id="ind-${r.id}" onchange="updateMitField(${r.id},'indicators',this.value)" placeholder="What signals would indicate this risk is materialising?">${esc(r.indicators)}</textarea>
+            </div>
+            <div class="field">
+                <label>Monitoring Notes</label>
+                <textarea id="notes-${r.id}" onchange="updateMitField(${r.id},'notes',this.value)" placeholder="Current status, recent observations, actions taken...">${esc(r.notes)}</textarea>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+/* ========== RENDER MATRIX (Tab 6) ========== */
+function renderMatrix() {
+    const assessed = risks.filter(r => r.likelihood > 0 && r.impact > 0);
+    const empty = document.getElementById('matrix-empty');
+    const area = document.getElementById('matrix-area');
+
+    // Update stats
+    document.getElementById('stat-total').textContent = assessed.length;
+    const avgScore = assessed.length > 0 ? (assessed.reduce((s,r) => s + r.likelihood * r.impact, 0) / assessed.length).toFixed(1) : '0';
+    document.getElementById('stat-avg').textContent = avgScore;
+    let c2 = 0, h2 = 0;
+    assessed.forEach(r => { const s = r.likelihood*r.impact; if (s>=17) c2++; else if (s>=10) h2++; });
+    document.getElementById('stat-crit2').textContent = c2;
+    document.getElementById('stat-high2').textContent = h2;
+
+    if (assessed.length === 0) { empty.style.display = ''; area.style.display = 'none'; return; }
+    empty.style.display = 'none';
+    area.style.display = '';
+
+    const grid = document.getElementById('matrix-grid');
+    grid.innerHTML = '';
+
+    const impactLabels = ['5 - Severe','4 - Major','3 - Moderate','2 - Minor','1 - Negligible'];
+    const likelihoodLabels = ['1 - Rare','2 - Unlikely','3 - Possible','4 - Likely','5 - Certain'];
+
+    // Build grid: rows from impact 5 (top) to 1 (bottom)
+    for (let impIdx = 0; impIdx < 5; impIdx++) {
+        const impactVal = 5 - impIdx;
+        // Y-axis label
+        const labelY = document.createElement('div');
+        labelY.className = 'matrix-label-y';
+        labelY.textContent = impactLabels[impIdx];
+        grid.appendChild(labelY);
+
+        for (let lk = 1; lk <= 5; lk++) {
+            const cell = document.createElement('div');
+            cell.className = 'matrix-cell';
+            cell.style.background = matrixColor(lk, impactVal);
+            cell.title = `L${lk} x I${impactVal} = ${lk*impactVal}`;
+
+            // Find risks in this cell
+            const inCell = assessed.filter(r => r.likelihood === lk && r.impact === impactVal);
+            inCell.forEach(r => {
+                const dot = document.createElement('div');
+                dot.className = 'matrix-dot';
+                const s = r.likelihood * r.impact;
+                dot.style.background = s >= 17 ? 'var(--risk-critical)' : s >= 10 ? 'var(--risk-high)' : s >= 5 ? 'var(--risk-medium)' : 'var(--risk-low)';
+                dot.textContent = r.id;
+                dot.title = `R${String(r.id).padStart(2,'0')}: ${r.title} (Score: ${s})`;
+                cell.appendChild(dot);
+            });
+
+            grid.appendChild(cell);
+        }
+    }
+
+    // Bottom row: corner + X labels
+    const corner = document.createElement('div');
+    corner.className = 'matrix-corner';
+    grid.appendChild(corner);
+    likelihoodLabels.forEach(label => {
+        const lx = document.createElement('div');
+        lx.className = 'matrix-label-x';
+        lx.textContent = label;
+        grid.appendChild(lx);
+    });
+}
+
+/* ========== EXPORT ========== */
+function exportCSV() {
+    if (risks.length === 0) { notify('No risks to export', 'warn'); return; }
+    const headers = ['ID','Category','Title','Description','Likelihood','Impact','Score','Level','Prevention','Contingency','Responsible','Timeline','Indicators','Notes'];
+    const rows = risks.map(r => {
+        const s = r.likelihood * r.impact;
+        return [
+            'R' + String(r.id).padStart(2,'0'), r.category, csvSafe(r.title), csvSafe(r.description),
+            r.likelihood || '', r.impact || '', s || '', s > 0 ? riskLevelLabel(s) : '',
+            csvSafe(r.prevention), csvSafe(r.contingency), csvSafe(r.responsible), csvSafe(r.timeline),
+            csvSafe(r.indicators), csvSafe(r.notes)
+        ];
+    });
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    download(csv, 'risk-register.csv', 'text/csv');
+    notify('CSV exported');
+}
+
+function exportText() {
+    if (risks.length === 0) { notify('No risks to export', 'warn'); return; }
+    const ctx = {
+        name: document.getElementById('project-name').value,
+        sector: document.getElementById('project-sector').value,
+        duration: document.getElementById('project-duration').value,
+        location: document.getElementById('project-location').value,
+        stakeholders: document.getElementById('project-stakeholders').value
+    };
+    let text = '=== RISK REGISTER ===\n\n';
+    text += `Project: ${ctx.name || 'N/A'}\nSector: ${ctx.sector || 'N/A'}\nDuration: ${ctx.duration ? ctx.duration + ' months' : 'N/A'}\nLocation: ${ctx.location || 'N/A'}\nStakeholders: ${ctx.stakeholders || 'N/A'}\n`;
+    text += `Review Frequency: ${document.getElementById('review-frequency').value}\nEscalation Threshold: Score >= ${document.getElementById('escalation-threshold').value}\n`;
+    text += '\n--- RISKS ---\n\n';
+    risks.forEach(r => {
+        const s = r.likelihood * r.impact;
+        text += `[R${String(r.id).padStart(2,'0')}] ${r.title}\n`;
+        text += `  Category: ${r.category}\n`;
+        text += `  Description: ${r.description || 'N/A'}\n`;
+        text += `  Likelihood: ${r.likelihood || 'Not assessed'} | Impact: ${r.impact || 'Not assessed'} | Score: ${s || 'N/A'} | Level: ${s > 0 ? riskLevelLabel(s) : 'N/A'}\n`;
+        if (r.prevention) text += `  Prevention: ${r.prevention}\n`;
+        if (r.contingency) text += `  Contingency: ${r.contingency}\n`;
+        if (r.responsible) text += `  Responsible: ${r.responsible}\n`;
+        if (r.timeline) text += `  Timeline: ${r.timeline}\n`;
+        if (r.indicators) text += `  Indicators: ${r.indicators}\n`;
+        if (r.notes) text += `  Notes: ${r.notes}\n`;
+        text += '\n';
+    });
+    download(text, 'risk-register.txt', 'text/plain');
+    notify('Text report exported');
+}
+
+function download(content, filename, type) {
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function csvSafe(str) {
+    if (!str) return '';
+    str = str.replace(/"/g, '""');
+    return str.includes(',') || str.includes('\n') || str.includes('"') ? `"${str}"` : str;
+}
+
+/* ========== SAVE / LOAD ========== */
+function saveToStorage() {
+    const data = {
+        risks,
+        riskIdCounter,
+        context: {
+            name: document.getElementById('project-name').value,
+            sector: document.getElementById('project-sector').value,
+            duration: document.getElementById('project-duration').value,
+            budget: document.getElementById('project-budget').value,
+            stakeholders: document.getElementById('project-stakeholders').value,
+            location: document.getElementById('project-location').value
+        },
+        monitoring: {
+            frequency: document.getElementById('review-frequency').value,
+            threshold: document.getElementById('escalation-threshold').value
+        }
+    };
+    localStorage.setItem('impactmojo-risk-register', JSON.stringify(data));
+    notify('Saved to browser');
+}
+
+function loadFromStorage() {
+    const raw = localStorage.getItem('impactmojo-risk-register');
+    if (!raw) { notify('No saved data found', 'warn'); return; }
+    try {
+        const data = JSON.parse(raw);
+        risks = data.risks || [];
+        riskIdCounter = data.riskIdCounter || (risks.length > 0 ? Math.max(...risks.map(r=>r.id)) + 1 : 1);
+        if (data.context) {
+            document.getElementById('project-name').value = data.context.name || '';
+            document.getElementById('project-sector').value = data.context.sector || '';
+            document.getElementById('project-duration').value = data.context.duration || '';
+            document.getElementById('project-budget').value = data.context.budget || '';
+            document.getElementById('project-stakeholders').value = data.context.stakeholders || '';
+            document.getElementById('project-location').value = data.context.location || '';
+        }
+        if (data.monitoring) {
+            document.getElementById('review-frequency').value = data.monitoring.frequency || 'monthly';
+            document.getElementById('escalation-threshold').value = data.monitoring.threshold || '12';
+        }
+        renderRiskList();
+        renderAssessTable();
+        notify('Data loaded');
+    } catch(e) {
+        notify('Failed to load data', 'error');
+    }
+}
+
+/* ========== MODAL ========== */
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+function saveModal() { closeModal(); }
+document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+
+/* ========== UTILS ========== */
+function esc(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+/* ========== INIT ========== */
+renderRiskList();
+</script>
+</body>
+</html>
