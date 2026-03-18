@@ -44,6 +44,11 @@ function toggleMobileMenu() {
         if (authSection) authSection.classList.add('active');
         document.body.classList.add('menu-open');
         document.body.style.overflow = 'hidden';
+        // Move theme selector into mobile menu
+        var ts = document.querySelector('.theme-selector');
+        if (ts && !navLinks.contains(ts)) {
+            navLinks.appendChild(ts);
+        }
     }
 }
 
@@ -92,8 +97,13 @@ window.IMPACTMOJO_IS_MOBILE = window.innerWidth <= 768 || /Android|webOS|iPhone|
 
 // Modal open/close (global, called from onclick attributes)
 function openModal(modalId) {
+    // Close mobile menu first so modal is visible
+    if (window.innerWidth <= 768) closeMobileMenu();
     var el = document.getElementById(modalId);
-    if (el) el.style.display = 'block';
+    if (el) {
+        el.style.display = 'block';
+        el.style.zIndex = '100000';
+    }
 }
 function closeModal(modalId) {
     var el = document.getElementById(modalId);
@@ -6462,18 +6472,22 @@ footer::before {
     /* === HEADER === */
     .nav-container {
         padding: 0.5rem 0.75rem !important;
-        gap: 0.5rem !important;
+        gap: 0 !important;
         flex-wrap: nowrap !important;
         align-items: center !important;
-        justify-content: space-between !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
     }
 
     .nav-with-badge {
-        display: flex !important;
-        align-items: center !important;
-        flex: 0 1 auto !important;
-        min-width: 0 !important;
-        max-width: 50% !important;
+        position: static !important;
+        display: block !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: visible !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        flex: 0 0 0px !important;
     }
     
     .logo-container {
@@ -13893,25 +13907,32 @@ PASTE THIS ENTIRE BLOCK JUST BEFORE
         display: flex !important;
         flex-wrap: nowrap !important;
         align-items: center !important;
-        padding: 0.5rem 1rem !important;
-        gap: 0.5rem !important;
+        padding: 0.5rem 0.75rem !important;
+        gap: 0 !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
     }
-    
+
     .logo-container {
         flex: 0 1 auto !important;
         max-width: 130px !important;
         overflow: hidden !important;
     }
-    
-    .nav-buttons {
-        display: flex !important;
-        gap: 0.25rem !important;
-        margin-left: auto !important;
-        margin-right: 0.5rem !important;
-        width: auto !important;
-        border-top: none !important;
-        padding-top: 0 !important;
-        margin-top: 0 !important;
+
+    .nav-with-badge {
+        position: static !important;
+        display: block !important;
+        width: 0 !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        flex: 0 0 0px !important;
+        overflow: visible !important;
+    }
+
+    .nav-buttons,
+    .mobile-auth-section:not(.active) {
+        display: none !important;
     }
 
     /* FAB BUTTONS - FORCE VISIBLE AND ALIGNED */
