@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Resource Sustainability Lab | ImpactMojo</title>
+    <meta name="description" content="Interactive resource sustainability lab for development projects. Map resources, assess sustainability, analyse risks, and build actionable sustainability plans for South Asian contexts.">
+    <meta name="keywords" content="resource sustainability, sustainable development, resource mapping, risk analysis, sustainability planning, development projects, ImpactMojo">
+    <link rel="canonical" href="https://www.impactmojo.in/courses/resource-sustainability-lab.html">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-bg: #0F172A;
+            --secondary-bg: #1E293B;
+            --accent-color: #0EA5E9;
+            --accent-hover: #0284C7;
+            --secondary-accent: #6366F1;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --card-bg: #1E293B;
+            --hover-bg: #334155;
+            --border-color: #334155;
+            --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+            --font-sans: 'Amaranth', sans-serif;
+            --font-heading: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        [data-theme="light"] {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F8FAFC;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --card-bg: #FFFFFF;
+            --hover-bg: #F1F5F9;
+            --border-color: #E2E8F0;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background: var(--primary-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+        /* Back link */
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; transition: color 0.2s ease; }
+        .back-link:hover { color: var(--accent-hover); }
+        .back-link svg { width: 18px; height: 18px; }
+
+        /* Header */
+        .header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 1rem; background: rgba(14, 165, 233, 0.15); color: var(--accent-color); border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 700px; margin: 0 auto; }
+
+        /* Top controls */
+        .top-controls { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .theme-toggle, .ctrl-btn { padding: 0.6rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; font-family: var(--font-sans); }
+        .theme-toggle:hover, .ctrl-btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .theme-toggle svg, .ctrl-btn svg { width: 16px; height: 16px; }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .tab-btn { padding: 0.85rem 1.25rem; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--text-muted); font-size: 0.9rem; font-family: var(--font-sans); cursor: pointer; white-space: nowrap; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.4rem; }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+        .tab-btn .tab-num { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--border-color); font-size: 0.7rem; font-weight: 700; font-family: var(--font-heading); }
+        .tab-btn.active .tab-num { background: var(--accent-color); color: #fff; }
+        .tab-btn.completed .tab-num { background: var(--success-color); color: #fff; }
+
+        /* Tab panels */
+        .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Section title */
+        .section-title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .section-desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+        /* Form fields */
+        .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.25rem; }
+        .field label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); font-family: var(--font-heading); }
+        .field-hint { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+
+        .field select, .field input[type="text"], .field input[type="number"], .field textarea {
+            width: 100%; padding: 0.7rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.95rem; font-family: var(--font-sans); transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .field select:focus, .field input:focus, .field textarea:focus {
+            outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+        }
+        .field textarea { resize: vertical; min-height: 80px; }
+        .field select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 16px; padding-right: 2.5rem;
+        }
+
+        /* Slider */
+        .slider-wrap { display: flex; align-items: center; gap: 0.75rem; }
+        .slider-wrap input[type="range"] { flex: 1; height: 6px; -webkit-appearance: none; appearance: none; background: var(--border-color); border-radius: 3px; outline: none; }
+        .slider-wrap input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--accent-color); cursor: pointer; }
+        .slider-wrap input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--accent-color); cursor: pointer; border: none; }
+        .slider-val { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; min-width: 32px; text-align: center; color: var(--accent-color); }
+
+        /* Grid layouts */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .form-grid .field.full-width { grid-column: 1 / -1; }
+
+        /* Cards */
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; transition: border-color 0.2s ease; }
+        .card:hover { border-color: var(--accent-color); }
+        .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .card-title { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; }
+        .card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+
+        /* Resource cards */
+        .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+        .resource-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; transition: all 0.2s ease; }
+        .resource-card:hover { border-color: var(--accent-color); transform: translateY(-2px); }
+        .resource-card-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+        .resource-cat-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+        .resource-cat-icon.financial { background: rgba(16, 185, 129, 0.15); color: #34D399; }
+        .resource-cat-icon.human { background: rgba(99, 102, 241, 0.15); color: #818CF8; }
+        .resource-cat-icon.material { background: rgba(245, 158, 11, 0.15); color: #FBBF24; }
+        .resource-cat-icon.institutional { background: rgba(14, 165, 233, 0.15); color: #38BDF8; }
+        .resource-cat-name { font-family: var(--font-heading); font-weight: 600; font-size: 0.95rem; }
+        .resource-cat-desc { font-size: 0.75rem; color: var(--text-muted); }
+        .resource-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.75rem; min-height: 40px; }
+        .resource-item { display: flex; align-items: center; justify-content: space-between; background: var(--hover-bg); padding: 0.5rem 0.75rem; border-radius: 6px; font-size: 0.85rem; gap: 0.5rem; }
+        .resource-item span { flex: 1; }
+        .resource-item .item-meta { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-heading); flex: 0 0 auto; }
+        .resource-remove { background: none; border: none; color: var(--danger-color); cursor: pointer; font-size: 1rem; padding: 0; line-height: 1; opacity: 0.7; transition: opacity 0.2s; }
+        .resource-remove:hover { opacity: 1; }
+        .resource-add-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .resource-add-row input, .resource-add-row select { flex: 1; min-width: 80px; padding: 0.5rem 0.75rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.85rem; font-family: var(--font-sans); }
+        .resource-add-row input:focus, .resource-add-row select:focus { outline: none; border-color: var(--accent-color); }
+        .resource-add-row button { padding: 0.5rem 0.75rem; }
+        .resource-add-row select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 14px; padding-right: 2rem;
+        }
+
+        /* Score cards */
+        .score-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem; margin-bottom: 0.5rem; }
+        .score-card { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; }
+        .score-card-title { font-family: var(--font-heading); font-weight: 600; font-size: 0.85rem; margin-bottom: 0.15rem; }
+        .score-card-desc { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.6rem; line-height: 1.3; }
+        .score-bar { height: 6px; background: var(--border-color); border-radius: 3px; overflow: hidden; margin-top: 0.4rem; }
+        .score-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
+        .score-bar-fill.low { background: var(--danger-color); }
+        .score-bar-fill.medium { background: var(--warning-color); }
+        .score-bar-fill.high { background: var(--success-color); }
+
+        /* Risk items */
+        .risk-cards { display: flex; flex-direction: column; gap: 1rem; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; }
+        .risk-card-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.75rem; }
+        .risk-details { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .risk-detail { font-size: 0.85rem; }
+        .risk-detail strong { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-family: var(--font-heading); margin-bottom: 0.15rem; }
+        .risk-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; font-family: var(--font-heading); }
+        .risk-critical { background: rgba(239, 68, 68, 0.15); color: #F87171; }
+        .risk-high { background: rgba(245, 158, 11, 0.15); color: #FBBF24; }
+        .risk-medium { background: rgba(14, 165, 233, 0.15); color: #38BDF8; }
+        .risk-low { background: rgba(16, 185, 129, 0.15); color: #34D399; }
+
+        /* Plan items */
+        .plan-cards { display: flex; flex-direction: column; gap: 1rem; }
+        .plan-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; }
+        .plan-card-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+        .plan-details { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .plan-detail { font-size: 0.85rem; }
+        .plan-detail strong { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-family: var(--font-heading); margin-bottom: 0.15rem; }
+        .plan-phase-badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; background: rgba(99, 102, 241, 0.12); color: #818CF8; font-family: var(--font-heading); font-weight: 600; }
+
+        /* Summary dashboard */
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .summary-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; text-align: center; }
+        .summary-value { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; }
+        .summary-label { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-heading); margin-top: 0.15rem; }
+
+        /* Gantt */
+        .gantt-wrap { margin-top: 2rem; }
+        .gantt-title { font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem; }
+        .gantt-chart { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .gantt-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        .gantt-table th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); padding: 0.5rem; border-bottom: 1px solid var(--border-color); font-family: var(--font-heading); font-weight: 600; text-align: center; }
+        .gantt-table th:first-child { text-align: left; min-width: 180px; }
+        .gantt-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border-color); }
+        .gantt-table td:first-child { font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+        .gantt-bar-cell { position: relative; }
+        .gantt-bar { height: 22px; border-radius: 4px; min-width: 100%; }
+
+        /* Buttons */
+        .btn { padding: 0.65rem 1.25rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .btn-primary { background: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 600; }
+        .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+        .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
+        .btn-danger { color: var(--danger-color); }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.1); border-color: var(--danger-color); }
+        .btn-success { background: var(--success-color); border-color: var(--success-color); color: #fff; }
+        .btn-success:hover { background: #059669; }
+
+        /* Add forms */
+        .add-form { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; margin-top: 1rem; }
+        .add-form-title { font-family: var(--font-heading); font-weight: 600; font-size: 0.95rem; margin-bottom: 1rem; }
+        .add-form-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
+
+        /* Empty state */
+        .empty-state { text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); font-size: 0.9rem; }
+        .empty-state svg { width: 48px; height: 48px; margin-bottom: 0.75rem; opacity: 0.4; }
+
+        /* Nav buttons at bottom */
+        .tab-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 0.85rem 1.25rem; background: var(--success-color); color: #fff; border-radius: 10px; font-size: 0.9rem; font-family: var(--font-sans); box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 1000; transform: translateY(120%); opacity: 0; transition: all 0.3s ease; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* Print */
+        @media print {
+            body { background: #fff; color: #000; }
+            .top-controls, .tabs, .tab-nav, .btn, .resource-add-row, .resource-remove, .add-form, .back-link, .toast { display: none !important; }
+            .tab-panel { display: block !important; page-break-inside: avoid; margin-bottom: 2rem; }
+            .tab-panel::before { content: attr(data-print-title); display: block; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; border-bottom: 2px solid #000; padding-bottom: 0.5rem; }
+            .card, .resource-card, .risk-card, .plan-card, .score-card, .summary-card { border-color: #ccc; background: #fff; }
+            .container { max-width: 100%; padding: 1rem; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            .resource-grid { grid-template-columns: 1fr; }
+            .score-grid { grid-template-columns: 1fr; }
+            .risk-details { grid-template-columns: 1fr; }
+            .plan-details { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: 1fr 1fr; }
+            .top-controls { justify-content: center; }
+            .tab-btn { padding: 0.7rem 0.85rem; font-size: 0.8rem; }
+        }
+
+        /* Skip link */
+        .skip-link { position: absolute; top: -100%; left: 1rem; background: var(--accent-color); color: #fff; padding: 0.5rem 1rem; border-radius: 0 0 8px 8px; z-index: 100; font-size: 0.85rem; }
+        .skip-link:focus { top: 0; }
+
+        /* SR only */
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="container" id="main-content" role="main">
+        <a href="../index.html" class="back-link" aria-label="Back to Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            Back to Home
+        </a>
+
+        <div class="top-controls">
+            <button class="ctrl-btn" onclick="saveData()" aria-label="Save progress">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Save
+            </button>
+            <button class="ctrl-btn" onclick="loadData()" aria-label="Load saved progress">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Load
+            </button>
+            <button class="ctrl-btn" onclick="exportText()" aria-label="Export as text">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Export
+            </button>
+            <button class="ctrl-btn" onclick="window.print()" aria-label="Print report">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Print
+            </button>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark theme">
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            </button>
+        </div>
+
+        <div class="header">
+            <div class="header-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                Interactive Lab
+            </div>
+            <h1>Resource Sustainability Lab</h1>
+            <p>A guided tool for sustainable resource management in development projects. Map resources, assess sustainability, analyse risks, and build actionable plans for long-term impact in South Asian contexts.</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs" role="tablist" aria-label="Lab phases">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-mapping" id="tab-mapping" onclick="switchTab('mapping')"><span class="tab-num">1</span> Resource Mapping</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-assessment" id="tab-assessment" onclick="switchTab('assessment')"><span class="tab-num">2</span> Sustainability</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-risk" id="tab-risk" onclick="switchTab('risk')"><span class="tab-num">3</span> Risk Analysis</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-plan" id="tab-plan" onclick="switchTab('plan')"><span class="tab-num">4</span> Sustainability Plan</button>
+        </div>
+
+        <!-- Panel 1: Resource Mapping -->
+        <div class="tab-panel active" id="panel-mapping" role="tabpanel" aria-labelledby="tab-mapping" data-print-title="1. Resource Mapping">
+            <h2 class="section-title">Resource Mapping</h2>
+            <p class="section-desc">Identify and catalogue all available resources for your development project. For each resource, note its name, current availability level, and a sustainability rating (1 = depleting fast, 5 = fully renewable or self-sustaining).</p>
+
+            <div class="form-grid" style="margin-bottom: 1.5rem;">
+                <div class="field">
+                    <label for="proj-name">Project Name</label>
+                    <input type="text" id="proj-name" placeholder="e.g., Watershed Restoration Programme, Barmer District" data-save="proj-name">
+                </div>
+                <div class="field">
+                    <label for="proj-location">Location</label>
+                    <input type="text" id="proj-location" placeholder="e.g., Thar region, Rajasthan" data-save="proj-location">
+                </div>
+                <div class="field full-width">
+                    <label for="proj-desc">Project Description</label>
+                    <span class="field-hint">Briefly describe the project goals, target population, and expected duration.</span>
+                    <textarea id="proj-desc" placeholder="e.g., A 3-year programme to restore traditional water harvesting structures (johads, tankas) in 15 villages, benefiting 8,000 households dependent on rain-fed agriculture." data-save="proj-desc"></textarea>
+                </div>
+            </div>
+
+            <div class="resource-grid" id="resource-grid">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="tab-nav">
+                <div></div>
+                <button class="btn btn-primary" onclick="switchTab('assessment')">Next: Sustainability Assessment &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Panel 2: Sustainability Assessment -->
+        <div class="tab-panel" id="panel-assessment" role="tabpanel" aria-labelledby="tab-assessment" data-print-title="2. Sustainability Assessment">
+            <h2 class="section-title">Sustainability Assessment</h2>
+            <p class="section-desc">Score each mapped resource across four sustainability dimensions. Use the sliders to rate from 1 (poor) to 10 (excellent). Consider how each resource performs in terms of environmental impact, social equity, economic viability, and institutional capacity.</p>
+
+            <div id="assessment-empty" class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                <p>Add resources in the Resource Mapping phase first to begin the sustainability assessment.</p>
+            </div>
+
+            <div id="assessment-content" style="display:none;">
+                <div class="summary-grid" id="dimension-summary">
+                    <!-- Populated by JS -->
+                </div>
+                <div id="assessment-cards">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div class="tab-nav">
+                <button class="btn" onclick="switchTab('mapping')">&larr; Resource Mapping</button>
+                <button class="btn btn-primary" onclick="switchTab('risk')">Next: Risk Analysis &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Panel 3: Risk Analysis -->
+        <div class="tab-panel" id="panel-risk" role="tabpanel" aria-labelledby="tab-risk" data-print-title="3. Risk Analysis">
+            <h2 class="section-title">Risk Analysis</h2>
+            <p class="section-desc">Identify potential risks to resource sustainability. Consider depletion risks (overuse of groundwater), dependency risks (reliance on a single donor), political and institutional risks (change in government priorities), and climate vulnerabilities (erratic monsoon, droughts, floods) common in South Asian development contexts.</p>
+
+            <div class="risk-cards" id="risk-cards">
+                <!-- Populated by JS -->
+            </div>
+
+            <div id="risk-empty" class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <p>No risks identified yet. Add a risk below.</p>
+            </div>
+
+            <div class="add-form" id="risk-form">
+                <div class="add-form-title">Add Risk</div>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="risk-name">Risk Description</label>
+                        <input type="text" id="risk-name" placeholder="e.g., Groundwater table declining due to over-extraction">
+                    </div>
+                    <div class="field">
+                        <label for="risk-type">Risk Type</label>
+                        <select id="risk-type">
+                            <option value="Depletion">Resource Depletion</option>
+                            <option value="Dependency">External Dependency</option>
+                            <option value="Political">Political / Institutional</option>
+                            <option value="Climate">Climate / Environmental</option>
+                            <option value="Social">Social / Community</option>
+                            <option value="Financial">Financial / Economic</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="risk-severity">Severity</label>
+                        <select id="risk-severity">
+                            <option value="critical">Critical</option>
+                            <option value="high">High</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="risk-likelihood">Likelihood</label>
+                        <select id="risk-likelihood">
+                            <option value="Almost Certain">Almost Certain</option>
+                            <option value="Likely">Likely</option>
+                            <option value="Possible" selected>Possible</option>
+                            <option value="Unlikely">Unlikely</option>
+                            <option value="Rare">Rare</option>
+                        </select>
+                    </div>
+                    <div class="field full-width">
+                        <label for="risk-affected">Affected Resources</label>
+                        <span class="field-hint">Which mapped resources does this risk threaten?</span>
+                        <input type="text" id="risk-affected" placeholder="e.g., Groundwater supply, irrigation infrastructure, crop yields">
+                    </div>
+                    <div class="field full-width">
+                        <label for="risk-mitigation">Mitigation Strategy</label>
+                        <span class="field-hint">How can this risk be reduced or managed? Consider traditional and local knowledge.</span>
+                        <textarea id="risk-mitigation" placeholder="e.g., Promote traditional rainwater harvesting (johads, tankas), enforce community groundwater usage norms, install water meters at tubewells, diversify water sources."></textarea>
+                    </div>
+                </div>
+                <div class="add-form-actions">
+                    <button class="btn btn-primary" onclick="addRisk()">Add Risk</button>
+                </div>
+            </div>
+
+            <div class="tab-nav">
+                <button class="btn" onclick="switchTab('assessment')">&larr; Sustainability Assessment</button>
+                <button class="btn btn-primary" onclick="switchTab('plan')">Next: Sustainability Plan &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Panel 4: Sustainability Plan -->
+        <div class="tab-panel" id="panel-plan" role="tabpanel" aria-labelledby="tab-plan" data-print-title="4. Sustainability Plan">
+            <h2 class="section-title">Sustainability Plan</h2>
+            <p class="section-desc">Build an actionable sustainability plan with phased implementation. Define actions, assign responsible parties, set measurable targets and monitoring indicators. Phases: Immediate (0-3 months), Medium-term (3-12 months), and Long-term (1-3 years).</p>
+
+            <div class="summary-grid" id="plan-summary">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="plan-cards" id="plan-cards">
+                <!-- Populated by JS -->
+            </div>
+
+            <div id="plan-empty" class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <p>No plan items added yet. Add a sustainability action below.</p>
+            </div>
+
+            <div class="add-form" id="plan-form">
+                <div class="add-form-title">Add Sustainability Action</div>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="plan-action">Action / Activity</label>
+                        <input type="text" id="plan-action" placeholder="e.g., Establish Village Water User Committee">
+                    </div>
+                    <div class="field">
+                        <label for="plan-phase">Implementation Phase</label>
+                        <select id="plan-phase">
+                            <option value="Immediate (0-3 months)">Immediate (0-3 months)</option>
+                            <option value="Medium-term (3-12 months)">Medium-term (3-12 months)</option>
+                            <option value="Long-term (1-3 years)">Long-term (1-3 years)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="plan-responsible">Responsible Party</label>
+                        <input type="text" id="plan-responsible" placeholder="e.g., Gram Panchayat + Block Development Officer">
+                    </div>
+                    <div class="field">
+                        <label for="plan-target">Target / Milestone</label>
+                        <input type="text" id="plan-target" placeholder="e.g., Committee formed with 50% women representation">
+                    </div>
+                    <div class="field">
+                        <label for="plan-indicator">Monitoring Indicator</label>
+                        <span class="field-hint">How will you measure progress toward the target?</span>
+                        <input type="text" id="plan-indicator" placeholder="e.g., Number of monthly meetings held, attendance records">
+                    </div>
+                    <div class="field">
+                        <label for="plan-resource">Resources Required</label>
+                        <input type="text" id="plan-resource" placeholder="e.g., Rs 50,000 for capacity building, 2 field staff">
+                    </div>
+                    <div class="field full-width">
+                        <label for="plan-linked-risk">Linked Risk (if any)</label>
+                        <select id="plan-linked-risk">
+                            <option value="">-- None --</option>
+                        </select>
+                    </div>
+                    <div class="field full-width">
+                        <label for="plan-notes">Additional Notes</label>
+                        <textarea id="plan-notes" placeholder="e.g., Ensure representation from SC/ST communities. Link with existing MGNREGA works committee. Coordinate with district water department."></textarea>
+                    </div>
+                </div>
+                <div class="add-form-actions">
+                    <button class="btn btn-primary" onclick="addPlanItem()">Add Action</button>
+                </div>
+            </div>
+
+            <!-- Gantt chart -->
+            <div class="gantt-wrap" id="gantt-wrap" style="display:none">
+                <h3 class="gantt-title">Implementation Timeline</h3>
+                <div class="gantt-chart" id="gantt-chart">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div class="tab-nav">
+                <button class="btn" onclick="switchTab('risk')">&larr; Risk Analysis</button>
+                <button class="btn btn-success" onclick="exportText()">Export Full Report</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+    /* ============================
+       STATE
+    ============================ */
+    const RESOURCE_CATEGORIES = [
+        { id: 'financial', name: 'Financial Resources', desc: 'Budgets, grants, loans, community funds, government schemes', icon: '&#x1F4B0;', examples: 'MGNREGA funds, SHG savings, CSR grants, district plan allocation' },
+        { id: 'human', name: 'Human Resources', desc: 'Staff, volunteers, community workers, skilled labour', icon: '&#x1F9D1;', examples: 'ASHA workers, Anganwadi staff, trained masons, youth volunteers' },
+        { id: 'material', name: 'Material Resources', desc: 'Equipment, supplies, infrastructure, natural materials', icon: '&#x1F3D7;', examples: 'Construction materials, solar panels, seeds, hand pumps, vehicles' },
+        { id: 'institutional', name: 'Institutional Resources', desc: 'Organisations, partnerships, governance structures, policies', icon: '&#x1F3DB;', examples: 'Gram Panchayat, district administration, NGO partners, SHG federation' }
+    ];
+
+    const SUSTAINABILITY_DIMENSIONS = [
+        { id: 'environmental', name: 'Environmental Impact', desc: 'Effect on ecosystems, pollution, biodiversity, climate resilience' },
+        { id: 'social', name: 'Social Equity', desc: 'Inclusion of marginalised groups, gender equity, community ownership' },
+        { id: 'economic', name: 'Economic Viability', desc: 'Cost-effectiveness, income generation, financial self-sufficiency' },
+        { id: 'institutional', name: 'Institutional Capacity', desc: 'Governance strength, policy support, organisational sustainability' }
+    ];
+
+    const QUARTERS = ['Q1','Q2','Q3','Q4','Q5','Q6','Q7','Q8','Q9','Q10','Q11','Q12'];
+    const QUARTER_LABELS = ['M1-3','M4-6','M7-9','M10-12','M13-15','M16-18','M19-21','M22-24','M25-27','M28-30','M31-33','M34-36'];
+
+    const AVAILABILITY_OPTIONS = ['Abundant', 'Sufficient', 'Limited', 'Scarce', 'Unavailable'];
+
+    let state = {
+        resources: { financial: [], human: [], material: [], institutional: [] },
+        assessments: {},
+        risks: [],
+        planItems: []
+    };
+
+    /* ============================
+       TABS
+    ============================ */
+    function switchTab(id) {
+        document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        const btn = document.getElementById('tab-' + id);
+        const panel = document.getElementById('panel-' + id);
+        if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected', 'true'); }
+        if (panel) { panel.classList.add('active'); }
+        if (id === 'assessment') renderAssessment();
+        if (id === 'plan') { populatePlanRiskSelect(); renderPlanSummary(); }
+        updateTabCompletion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateTabCompletion() {
+        const totalResources = getAllResources().length;
+        const totalAssessments = Object.keys(state.assessments).length;
+        const tabs = {
+            'mapping': totalResources > 0,
+            'assessment': totalAssessments > 0,
+            'risk': state.risks.length > 0,
+            'plan': state.planItems.length > 0
+        };
+        Object.keys(tabs).forEach(id => {
+            const btn = document.getElementById('tab-' + id);
+            if (btn && !btn.classList.contains('active')) {
+                if (tabs[id]) btn.classList.add('completed');
+                else btn.classList.remove('completed');
+            }
+        });
+    }
+
+    /* ============================
+       THEME
+    ============================ */
+    function toggleTheme() {
+        const body = document.documentElement;
+        const current = body.getAttribute('data-theme');
+        const next = current === 'light' ? '' : 'light';
+        if (next) { body.setAttribute('data-theme', next); } else { body.removeAttribute('data-theme'); }
+        document.querySelector('.icon-sun').style.display = next === 'light' ? 'none' : '';
+        document.querySelector('.icon-moon').style.display = next === 'light' ? '' : 'none';
+        localStorage.setItem('impactmojo-theme', next || 'dark');
+    }
+
+    (function initTheme() {
+        const saved = localStorage.getItem('impactmojo-theme');
+        if (saved === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            const sun = document.querySelector('.icon-sun');
+            const moon = document.querySelector('.icon-moon');
+            if (sun) sun.style.display = 'none';
+            if (moon) moon.style.display = '';
+        }
+    })();
+
+    /* ============================
+       HELPERS
+    ============================ */
+    function esc(str) {
+        if (!str) return '';
+        const d = document.createElement('div');
+        d.textContent = str;
+        return d.innerHTML;
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    function getAllResources() {
+        const all = [];
+        RESOURCE_CATEGORIES.forEach(cat => {
+            (state.resources[cat.id] || []).forEach((r, i) => {
+                all.push({ ...r, catId: cat.id, catName: cat.name, idx: i });
+            });
+        });
+        return all;
+    }
+
+    /* ============================
+       RESOURCE MAPPING
+    ============================ */
+    function renderResources() {
+        const grid = document.getElementById('resource-grid');
+        grid.innerHTML = RESOURCE_CATEGORIES.map(cat => {
+            const items = state.resources[cat.id] || [];
+            return `<div class="resource-card">
+                <div class="resource-card-head">
+                    <div class="resource-cat-icon ${cat.id}">${cat.icon}</div>
+                    <div>
+                        <div class="resource-cat-name">${cat.name}</div>
+                        <div class="resource-cat-desc">${cat.desc}</div>
+                    </div>
+                </div>
+                <ul class="resource-list" aria-label="${cat.name}">
+                    ${items.map((item, i) => `<li class="resource-item">
+                        <span>${esc(item.name)}</span>
+                        <span class="item-meta">${esc(item.availability)} | ${item.sustainability}/5</span>
+                        <button class="resource-remove" onclick="removeResource('${cat.id}',${i})" aria-label="Remove ${esc(item.name)}">&times;</button>
+                    </li>`).join('')}
+                </ul>
+                <div class="resource-add-row">
+                    <input type="text" id="res-input-${cat.id}" placeholder="e.g., ${cat.examples}" aria-label="Add ${cat.name}" onkeydown="if(event.key==='Enter')addResource('${cat.id}')">
+                    <select id="res-avail-${cat.id}" aria-label="Availability">
+                        ${AVAILABILITY_OPTIONS.map(o => `<option value="${o}">${o}</option>`).join('')}
+                    </select>
+                    <select id="res-sust-${cat.id}" aria-label="Sustainability rating">
+                        <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option>
+                    </select>
+                    <button class="btn btn-sm btn-primary" onclick="addResource('${cat.id}')">+</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function addResource(catId) {
+        const input = document.getElementById('res-input-' + catId);
+        const val = input.value.trim();
+        if (!val) return;
+        const availability = document.getElementById('res-avail-' + catId).value;
+        const sustainability = document.getElementById('res-sust-' + catId).value;
+        state.resources[catId].push({ name: val, availability: availability, sustainability: +sustainability });
+        input.value = '';
+        renderResources();
+        autoSave();
+    }
+
+    function removeResource(catId, idx) {
+        SUSTAINABILITY_DIMENSIONS.forEach(dim => {
+            delete state.assessments[catId + '-' + idx + '-' + dim.id];
+        });
+        // Re-key assessments for items after the removed index
+        const remaining = state.resources[catId].length;
+        for (let i = idx + 1; i < remaining; i++) {
+            SUSTAINABILITY_DIMENSIONS.forEach(dim => {
+                const oldKey = catId + '-' + i + '-' + dim.id;
+                const newKey = catId + '-' + (i - 1) + '-' + dim.id;
+                if (state.assessments[oldKey] !== undefined) {
+                    state.assessments[newKey] = state.assessments[oldKey];
+                    delete state.assessments[oldKey];
+                }
+            });
+        }
+        state.resources[catId].splice(idx, 1);
+        renderResources();
+        autoSave();
+    }
+
+    /* ============================
+       SUSTAINABILITY ASSESSMENT
+    ============================ */
+    function renderAssessment() {
+        const allRes = getAllResources();
+        const empty = document.getElementById('assessment-empty');
+        const content = document.getElementById('assessment-content');
+
+        if (allRes.length === 0) {
+            empty.style.display = '';
+            content.style.display = 'none';
+            return;
+        }
+        empty.style.display = 'none';
+        content.style.display = '';
+
+        renderDimensionSummary(allRes);
+
+        const cards = document.getElementById('assessment-cards');
+        cards.innerHTML = allRes.map(r => {
+            const makeKey = (dimId) => r.catId + '-' + r.idx + '-' + dimId;
+            return `<div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">${esc(r.name)}</div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);font-family:var(--font-heading);">${esc(r.catName)} | ${esc(r.availability)} | Sustainability: ${r.sustainability}/5</div>
+                    </div>
+                    <div class="resource-cat-icon ${r.catId}" style="width:32px;height:32px;font-size:1rem;">
+                        ${RESOURCE_CATEGORIES.find(c => c.id === r.catId).icon}
+                    </div>
+                </div>
+                <div class="score-grid">
+                    ${SUSTAINABILITY_DIMENSIONS.map(dim => {
+                        const k = makeKey(dim.id);
+                        const val = state.assessments[k] || 5;
+                        const pct = val * 10;
+                        const level = val <= 3 ? 'low' : val <= 6 ? 'medium' : 'high';
+                        return `<div class="score-card">
+                            <div class="score-card-title">${dim.name}</div>
+                            <div class="score-card-desc">${dim.desc}</div>
+                            <div class="slider-wrap">
+                                <input type="range" min="1" max="10" value="${val}" data-key="${k}" oninput="updateAssessment(this.dataset.key, this.value)" aria-label="${dim.name} score for ${esc(r.name)}">
+                                <span class="slider-val" id="val-${k}">${val}</span>
+                            </div>
+                            <div class="score-bar"><div class="score-bar-fill ${level}" id="bar-${k}" style="width:${pct}%"></div></div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function updateAssessment(key, val) {
+        state.assessments[key] = +val;
+        const valEl = document.getElementById('val-' + key);
+        if (valEl) valEl.textContent = val;
+
+        const pct = val * 10;
+        const level = val <= 3 ? 'low' : val <= 6 ? 'medium' : 'high';
+        const barEl = document.getElementById('bar-' + key);
+        if (barEl) {
+            barEl.style.width = pct + '%';
+            barEl.className = 'score-bar-fill ' + level;
+        }
+
+        renderDimensionSummary(getAllResources());
+        autoSave();
+    }
+
+    function renderDimensionSummary(allRes) {
+        const summary = document.getElementById('dimension-summary');
+        if (allRes.length === 0) { summary.innerHTML = ''; return; }
+
+        summary.innerHTML = SUSTAINABILITY_DIMENSIONS.map(dim => {
+            let total = 0, count = 0;
+            allRes.forEach(r => {
+                const k = r.catId + '-' + r.idx + '-' + dim.id;
+                const val = state.assessments[k];
+                if (val !== undefined) { total += val; count++; }
+            });
+            const avg = count > 0 ? (total / count).toFixed(1) : '--';
+            const numAvg = parseFloat(avg) || 0;
+            const color = numAvg <= 3 ? 'var(--danger-color)' : numAvg <= 6 ? 'var(--warning-color)' : 'var(--success-color)';
+            return `<div class="summary-card">
+                <div class="summary-value" style="color:${color}">${avg}</div>
+                <div class="summary-label">${dim.name}</div>
+            </div>`;
+        }).join('');
+    }
+
+    /* ============================
+       RISK ANALYSIS
+    ============================ */
+    function renderRisks() {
+        const wrap = document.getElementById('risk-cards');
+        const empty = document.getElementById('risk-empty');
+        if (state.risks.length === 0) {
+            wrap.innerHTML = '';
+            empty.style.display = '';
+            return;
+        }
+        empty.style.display = 'none';
+        wrap.innerHTML = state.risks.map((r, i) => `<div class="risk-card">
+            <div class="risk-card-head">
+                <div>
+                    <div class="card-title">${esc(r.name)}</div>
+                    <div style="display:flex;gap:0.5rem;margin-top:0.25rem;flex-wrap:wrap;align-items:center;">
+                        <span class="risk-badge risk-${r.severity}">${r.severity.charAt(0).toUpperCase() + r.severity.slice(1)}</span>
+                        <span style="font-size:0.7rem;color:var(--text-muted);font-family:var(--font-heading);">${esc(r.type)} | ${esc(r.likelihood)}</span>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-danger" onclick="removeRisk(${i})" aria-label="Remove risk">&times;</button>
+            </div>
+            <div class="risk-details">
+                <div class="risk-detail"><strong>Affected Resources</strong>${esc(r.affected) || 'Not specified'}</div>
+                <div class="risk-detail"><strong>Likelihood</strong>${esc(r.likelihood)}</div>
+                <div class="risk-detail" style="grid-column:1/-1;"><strong>Mitigation Strategy</strong>${esc(r.mitigation) || 'Not specified'}</div>
+            </div>
+        </div>`).join('');
+    }
+
+    function addRisk() {
+        const name = document.getElementById('risk-name').value.trim();
+        if (!name) return;
+        state.risks.push({
+            name,
+            type: document.getElementById('risk-type').value,
+            severity: document.getElementById('risk-severity').value,
+            likelihood: document.getElementById('risk-likelihood').value,
+            affected: document.getElementById('risk-affected').value.trim(),
+            mitigation: document.getElementById('risk-mitigation').value.trim()
+        });
+        document.getElementById('risk-name').value = '';
+        document.getElementById('risk-affected').value = '';
+        document.getElementById('risk-mitigation').value = '';
+        document.getElementById('risk-severity').value = 'medium';
+        document.getElementById('risk-likelihood').value = 'Possible';
+        renderRisks();
+        autoSave();
+    }
+
+    function removeRisk(idx) {
+        state.risks.splice(idx, 1);
+        renderRisks();
+        autoSave();
+    }
+
+    /* ============================
+       SUSTAINABILITY PLAN
+    ============================ */
+    function populatePlanRiskSelect() {
+        const sel = document.getElementById('plan-linked-risk');
+        const current = sel.value;
+        sel.innerHTML = '<option value="">-- None --</option>' + state.risks.map((r, i) => `<option value="${i}">${esc(r.name)}</option>`).join('');
+        sel.value = current;
+    }
+
+    function renderPlanSummary() {
+        const summary = document.getElementById('plan-summary');
+        const immediate = state.planItems.filter(p => p.phase.startsWith('Immediate')).length;
+        const medium = state.planItems.filter(p => p.phase.startsWith('Medium')).length;
+        const longTerm = state.planItems.filter(p => p.phase.startsWith('Long')).length;
+        const totalRisks = state.risks.length;
+        const linkedRisks = new Set(state.planItems.filter(p => p.linkedRisk !== '').map(p => p.linkedRisk)).size;
+
+        if (state.planItems.length === 0 && state.risks.length === 0) {
+            summary.innerHTML = '';
+            return;
+        }
+
+        summary.innerHTML = `
+            <div class="summary-card"><div class="summary-value" style="color:var(--accent-color)">${state.planItems.length}</div><div class="summary-label">Total Actions</div></div>
+            <div class="summary-card"><div class="summary-value" style="color:var(--danger-color)">${immediate}</div><div class="summary-label">Immediate</div></div>
+            <div class="summary-card"><div class="summary-value" style="color:var(--warning-color)">${medium}</div><div class="summary-label">Medium-term</div></div>
+            <div class="summary-card"><div class="summary-value" style="color:var(--success-color)">${longTerm}</div><div class="summary-label">Long-term</div></div>
+            <div class="summary-card"><div class="summary-value" style="color:var(--secondary-accent)">${linkedRisks}/${totalRisks}</div><div class="summary-label">Risks Addressed</div></div>
+        `;
+    }
+
+    function renderPlanItems() {
+        const wrap = document.getElementById('plan-cards');
+        const empty = document.getElementById('plan-empty');
+        const ganttWrap = document.getElementById('gantt-wrap');
+
+        if (state.planItems.length === 0) {
+            wrap.innerHTML = '';
+            empty.style.display = '';
+            ganttWrap.style.display = 'none';
+            return;
+        }
+        empty.style.display = 'none';
+        wrap.innerHTML = state.planItems.map((p, i) => {
+            const linkedRisk = p.linkedRisk !== '' && state.risks[p.linkedRisk] ? state.risks[p.linkedRisk].name : 'None';
+            return `<div class="plan-card">
+                <div class="plan-card-head">
+                    <div>
+                        <div class="card-title">${esc(p.action)}</div>
+                        <span class="plan-phase-badge">${esc(p.phase)}</span>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="removePlanItem(${i})" aria-label="Remove plan item">&times;</button>
+                </div>
+                <div class="plan-details">
+                    <div class="plan-detail"><strong>Responsible</strong>${esc(p.responsible) || 'Not assigned'}</div>
+                    <div class="plan-detail"><strong>Target</strong>${esc(p.target) || 'Not set'}</div>
+                    <div class="plan-detail"><strong>Monitoring Indicator</strong>${esc(p.indicator) || 'Not defined'}</div>
+                    <div class="plan-detail"><strong>Resources Required</strong>${esc(p.resource) || 'Not specified'}</div>
+                    <div class="plan-detail"><strong>Linked Risk</strong>${esc(linkedRisk)}</div>
+                    ${p.notes ? `<div class="plan-detail" style="grid-column:1/-1;"><strong>Notes</strong>${esc(p.notes)}</div>` : ''}
+                </div>
+            </div>`;
+        }).join('');
+
+        renderPlanGantt();
+        renderPlanSummary();
+    }
+
+    function addPlanItem() {
+        const action = document.getElementById('plan-action').value.trim();
+        if (!action) return;
+        state.planItems.push({
+            action,
+            phase: document.getElementById('plan-phase').value,
+            responsible: document.getElementById('plan-responsible').value.trim(),
+            target: document.getElementById('plan-target').value.trim(),
+            indicator: document.getElementById('plan-indicator').value.trim(),
+            resource: document.getElementById('plan-resource').value.trim(),
+            linkedRisk: document.getElementById('plan-linked-risk').value,
+            notes: document.getElementById('plan-notes').value.trim()
+        });
+        document.getElementById('plan-action').value = '';
+        document.getElementById('plan-responsible').value = '';
+        document.getElementById('plan-target').value = '';
+        document.getElementById('plan-indicator').value = '';
+        document.getElementById('plan-resource').value = '';
+        document.getElementById('plan-notes').value = '';
+        document.getElementById('plan-linked-risk').value = '';
+        renderPlanItems();
+        autoSave();
+    }
+
+    function removePlanItem(idx) {
+        state.planItems.splice(idx, 1);
+        renderPlanItems();
+        autoSave();
+    }
+
+    /* Gantt chart for plan */
+    const GANTT_COLORS = ['#0EA5E9','#6366F1','#10B981','#F59E0B','#EF4444','#EC4899','#8B5CF6','#14B8A6'];
+    function renderPlanGantt() {
+        const wrap = document.getElementById('gantt-wrap');
+        if (state.planItems.length === 0) { wrap.style.display = 'none'; return; }
+        wrap.style.display = '';
+
+        const phaseToQuarters = {
+            'Immediate (0-3 months)': [0, 0],
+            'Medium-term (3-12 months)': [1, 3],
+            'Long-term (1-3 years)': [4, 11]
+        };
+
+        const chart = document.getElementById('gantt-chart');
+        let html = '<table class="gantt-table"><thead><tr><th>Action</th>';
+        QUARTERS.forEach((q, i) => { html += `<th title="${QUARTER_LABELS[i]}">${q}</th>`; });
+        html += '</tr></thead><tbody>';
+
+        state.planItems.forEach((p, pi) => {
+            const color = GANTT_COLORS[pi % GANTT_COLORS.length];
+            const range = phaseToQuarters[p.phase] || [0, 0];
+            html += `<tr><td>${esc(p.action)}</td>`;
+            QUARTERS.forEach((q, qi) => {
+                if (qi >= range[0] && qi <= range[1]) {
+                    let radius = '0';
+                    if (qi === range[0] && qi === range[1]) radius = '4px';
+                    else if (qi === range[0]) radius = '4px 0 0 4px';
+                    else if (qi === range[1]) radius = '0 4px 4px 0';
+                    html += `<td class="gantt-bar-cell"><div class="gantt-bar" style="background:${color};border-radius:${radius};"></div></td>`;
+                } else {
+                    html += '<td></td>';
+                }
+            });
+            html += '</tr>';
+        });
+
+        html += '</tbody></table>';
+        chart.innerHTML = html;
+    }
+
+    /* ============================
+       SAVE / LOAD / EXPORT
+    ============================ */
+    const STORAGE_KEY = 'impactmojo-resource-sustainability-lab';
+
+    function gatherProfileData() {
+        const profile = {};
+        document.querySelectorAll('[data-save]').forEach(el => { profile[el.dataset.save] = el.value; });
+        return profile;
+    }
+
+    function restoreProfileData(profile) {
+        if (!profile) return;
+        Object.keys(profile).forEach(key => {
+            const el = document.querySelector(`[data-save="${key}"]`);
+            if (el) el.value = profile[key];
+        });
+    }
+
+    function saveData() {
+        const data = { profile: gatherProfileData(), ...state, version: 1 };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        showToast('Progress saved');
+    }
+
+    function autoSave() {
+        saveData();
+    }
+
+    function loadData() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) { showToast('No saved data found'); return; }
+        try {
+            const data = JSON.parse(raw);
+            restoreProfileData(data.profile);
+            state.resources = data.resources || { financial: [], human: [], material: [], institutional: [] };
+            state.assessments = data.assessments || {};
+            state.risks = data.risks || [];
+            state.planItems = data.planItems || [];
+            renderAll();
+            showToast('Data loaded');
+        } catch (e) {
+            showToast('Error loading data');
+        }
+    }
+
+    function exportText() {
+        const p = gatherProfileData();
+        let txt = '=== RESOURCE SUSTAINABILITY LAB REPORT ===\n';
+        txt += 'Generated: ' + new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) + '\n\n';
+
+        txt += '--- PROJECT OVERVIEW ---\n';
+        txt += `Project: ${p['proj-name'] || 'N/A'}\n`;
+        txt += `Location: ${p['proj-location'] || 'N/A'}\n`;
+        txt += `Description: ${p['proj-desc'] || 'N/A'}\n\n`;
+
+        txt += '--- 1. RESOURCE MAPPING ---\n';
+        RESOURCE_CATEGORIES.forEach(cat => {
+            const items = state.resources[cat.id] || [];
+            txt += `\n${cat.name}:\n`;
+            if (items.length === 0) { txt += '  None listed\n'; return; }
+            items.forEach((item, i) => {
+                txt += `  ${i + 1}. ${item.name} [Availability: ${item.availability}, Sustainability: ${item.sustainability}/5]\n`;
+            });
+        });
+        txt += '\n';
+
+        txt += '--- 2. SUSTAINABILITY ASSESSMENT ---\n';
+        const allRes = getAllResources();
+        if (allRes.length === 0) {
+            txt += 'No resources assessed.\n';
+        } else {
+            txt += '\nDimension Averages:\n';
+            SUSTAINABILITY_DIMENSIONS.forEach(dim => {
+                let total = 0, count = 0;
+                allRes.forEach(r => {
+                    const k = r.catId + '-' + r.idx + '-' + dim.id;
+                    const val = state.assessments[k];
+                    if (val !== undefined) { total += val; count++; }
+                });
+                const avg = count > 0 ? (total / count).toFixed(1) : 'N/A';
+                txt += `  ${dim.name}: ${avg}/10\n`;
+            });
+            txt += '\nPer Resource Scores:\n';
+            allRes.forEach(r => {
+                txt += `\n  ${r.name} (${r.catName}):\n`;
+                SUSTAINABILITY_DIMENSIONS.forEach(dim => {
+                    const k = r.catId + '-' + r.idx + '-' + dim.id;
+                    const val = state.assessments[k] || 'Not rated';
+                    txt += `    ${dim.name}: ${val}/10\n`;
+                });
+            });
+        }
+        txt += '\n';
+
+        txt += '--- 3. RISK ANALYSIS ---\n';
+        if (state.risks.length === 0) {
+            txt += 'No risks identified.\n';
+        } else {
+            state.risks.forEach((r, i) => {
+                txt += `\n${i + 1}. ${r.name}\n`;
+                txt += `   Type: ${r.type}\n`;
+                txt += `   Severity: ${r.severity} | Likelihood: ${r.likelihood}\n`;
+                txt += `   Affected Resources: ${r.affected || 'N/A'}\n`;
+                txt += `   Mitigation: ${r.mitigation || 'N/A'}\n`;
+            });
+        }
+        txt += '\n';
+
+        txt += '--- 4. SUSTAINABILITY PLAN ---\n';
+        if (state.planItems.length === 0) {
+            txt += 'No plan items defined.\n';
+        } else {
+            const phases = ['Immediate (0-3 months)', 'Medium-term (3-12 months)', 'Long-term (1-3 years)'];
+            phases.forEach(phase => {
+                const items = state.planItems.filter(p => p.phase === phase);
+                if (items.length === 0) return;
+                txt += `\n[${phase}]\n`;
+                items.forEach((p, i) => {
+                    const linkedRisk = p.linkedRisk !== '' && state.risks[p.linkedRisk] ? state.risks[p.linkedRisk].name : 'None';
+                    txt += `  ${i + 1}. ${p.action}\n`;
+                    txt += `     Responsible: ${p.responsible || 'N/A'}\n`;
+                    txt += `     Target: ${p.target || 'N/A'}\n`;
+                    txt += `     Monitoring Indicator: ${p.indicator || 'N/A'}\n`;
+                    txt += `     Resources Required: ${p.resource || 'N/A'}\n`;
+                    txt += `     Linked Risk: ${linkedRisk}\n`;
+                    if (p.notes) txt += `     Notes: ${p.notes}\n`;
+                });
+            });
+        }
+
+        txt += '\n=== END OF REPORT ===\n';
+
+        const blob = new Blob([txt], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'resource-sustainability-report.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Report exported');
+    }
+
+    /* ============================
+       RENDER ALL
+    ============================ */
+    function renderAll() {
+        renderResources();
+        renderRisks();
+        renderPlanItems();
+        renderAssessment();
+        renderPlanSummary();
+        updateTabCompletion();
+    }
+
+    /* ============================
+       INIT
+    ============================ */
+    (function init() {
+        renderResources();
+        renderRisks();
+        renderPlanItems();
+        updateTabCompletion();
+
+        // Try auto-load
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+            try {
+                const data = JSON.parse(raw);
+                restoreProfileData(data.profile);
+                state.resources = data.resources || state.resources;
+                state.assessments = data.assessments || {};
+                state.risks = data.risks || [];
+                state.planItems = data.planItems || [];
+                renderAll();
+            } catch(e) {}
+        }
+
+        // Auto-save profile fields on input
+        document.querySelectorAll('[data-save]').forEach(el => {
+            el.addEventListener('input', autoSave);
+        });
+    })();
+    </script>
+</body>
+</html>

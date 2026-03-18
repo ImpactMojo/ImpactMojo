@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>MEL Plan Builder Lab | ImpactMojo</title>
+    <meta name="description" content="Interactive MEL Plan Builder — create a complete MEL plan with project overview, indicator matrix, calendar, budget, and reporting framework.">
+    <meta name="keywords" content="MEL plan, logframe, indicator matrix, monitoring calendar, MEL budget, results framework, ImpactMojo">
+    <link rel="canonical" href="https://www.impactmojo.in/courses/mel-plan-lab.html">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-bg: #0F172A; --secondary-bg: #1E293B; --accent-color: #0EA5E9; --accent-hover: #0284C7;
+            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --text-primary: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+            --card-bg: #1E293B; --hover-bg: #334155; --border-color: #334155;
+            --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+            --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+        }
+        [data-theme="light"] {
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --text-primary: #0F172A; --text-secondary: #475569;
+            --text-muted: #94A3B8; --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background: var(--primary-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; }
+        .back-link:hover { color: var(--accent-hover); }
+        .back-link svg { width: 18px; height: 18px; }
+        .header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 1rem; background: rgba(14, 165, 233, 0.15); color: var(--accent-color); border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 700px; margin: 0 auto; }
+        .top-controls { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .theme-toggle, .ctrl-btn { padding: 0.6rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); transition: all 0.2s; }
+        .theme-toggle:hover, .ctrl-btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .progress-bar { width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; margin-bottom: 2rem; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: var(--gradient-primary); border-radius: 3px; transition: width 0.4s; }
+        .tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); overflow-x: auto; }
+        .tab-btn { padding: 0.85rem 1.25rem; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--text-muted); font-size: 0.9rem; font-family: var(--font-sans); cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 0.4rem; transition: all 0.2s; }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+        .tab-btn .tab-num { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--border-color); font-size: 0.7rem; font-weight: 700; font-family: var(--font-heading); }
+        .tab-btn.active .tab-num { background: var(--accent-color); color: #fff; }
+        .tab-btn.completed .tab-num { background: var(--success-color); color: #fff; }
+        .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .section-title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .section-desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.25rem; }
+        .field label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); font-family: var(--font-heading); }
+        .field-hint { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+        .field select, .field input[type="text"], .field input[type="number"], .field textarea {
+            width: 100%; padding: 0.7rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.95rem; font-family: var(--font-sans); transition: border-color 0.2s;
+        }
+        .field select:focus, .field input:focus, .field textarea:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15); }
+        .field textarea { resize: vertical; min-height: 80px; }
+        .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 16px; padding-right: 2.5rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .form-grid .field.full-width { grid-column: 1 / -1; }
+        .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; transition: border-color 0.2s; }
+        .card:hover { border-color: var(--accent-color); }
+        .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .card-title { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; }
+        .btn { padding: 0.65rem 1.25rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .btn-primary { background: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 600; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
+        .btn-danger { color: var(--danger-color); }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.1); border-color: var(--danger-color); }
+        .btn-success { background: var(--success-color); border-color: var(--success-color); color: #fff; }
+        .btn-success:hover { background: #059669; }
+        .item-row { display: flex; align-items: center; justify-content: space-between; background: var(--hover-bg); padding: 0.5rem 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.4rem; }
+        .item-row span { flex: 1; }
+        .item-remove { background: none; border: none; color: var(--danger-color); cursor: pointer; font-size: 1rem; padding: 0; opacity: 0.7; }
+        .item-remove:hover { opacity: 1; }
+        .matrix-wrap { overflow-x: auto; margin-top: 1rem; }
+        .matrix-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        .matrix-table th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); padding: 0.65rem 0.5rem; border-bottom: 1px solid var(--border-color); font-family: var(--font-heading); font-weight: 600; text-align: left; white-space: nowrap; }
+        .matrix-table td { padding: 0.5rem; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; vertical-align: top; }
+        .matrix-table tr:last-child td { border-bottom: none; }
+        .level-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; font-family: var(--font-heading); }
+        .level-goal { background: rgba(239, 68, 68, 0.15); color: #F87171; }
+        .level-outcome { background: rgba(245, 158, 11, 0.15); color: #FBBF24; }
+        .level-output { background: rgba(16, 185, 129, 0.15); color: #34D399; }
+        .budget-total { font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem; color: var(--accent-color); padding: 1rem; text-align: right; }
+        .nav-row { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+        @media (max-width: 768px) { .container { padding: 1rem; } .form-grid, .form-grid-3 { grid-template-columns: 1fr; } }
+        @media print {
+            body { background: #fff; color: #000; }
+            .top-controls, .back-link, .tabs, .nav-row, .btn { display: none !important; }
+            .tab-panel { display: block !important; page-break-inside: avoid; margin-bottom: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;padding:0.5rem;background:var(--accent-color);color:#fff;z-index:100;">Skip to content</a>
+    <div class="container" id="main">
+        <a href="../index.html" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            Back to ImpactMojo
+        </a>
+
+        <div class="header">
+            <div class="header-badge">Interactive Lab</div>
+            <h1>MEL Plan Builder</h1>
+            <p>Build a complete MEL Plan document — from project overview and results framework to indicator matrix, MEL calendar, budget, and reporting plan.</p>
+        </div>
+
+        <div class="top-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">Theme</button>
+            <button class="ctrl-btn" onclick="exportResults()">Export</button>
+            <button class="ctrl-btn" onclick="window.print()">Print</button>
+        </div>
+
+        <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width: 0%"></div></div>
+
+        <div class="tabs" role="tablist">
+            <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span> Project Overview</button>
+            <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span> Indicator Matrix</button>
+            <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">3</span> Calendar & Budget</button>
+            <button class="tab-btn" onclick="switchTab(3)"><span class="tab-num">4</span> Reporting & Learning</button>
+        </div>
+
+        <!-- Tab 1: Project Overview -->
+        <div class="tab-panel active" id="panel-0">
+            <h2 class="section-title">Project Overview</h2>
+            <p class="section-desc">Enter basic project information and results framework. This forms the foundation of your MEL plan.</p>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Project Information</div>
+                <div class="form-grid">
+                    <div class="field full-width">
+                        <label>Project Name</label>
+                        <input type="text" id="projName" placeholder="e.g., Integrated Child Development Services Strengthening, Madhya Pradesh">
+                    </div>
+                    <div class="field">
+                        <label>Donor / Funder</label>
+                        <input type="text" id="donor" placeholder="e.g., UNICEF India">
+                    </div>
+                    <div class="field">
+                        <label>Duration</label>
+                        <input type="text" id="duration" placeholder="e.g., April 2024 — March 2027 (3 years)">
+                    </div>
+                    <div class="field">
+                        <label>Geographic Scope</label>
+                        <input type="text" id="geography" placeholder="e.g., 5 districts in Madhya Pradesh">
+                    </div>
+                    <div class="field">
+                        <label>Target Population</label>
+                        <input type="text" id="targetPop" placeholder="e.g., 50,000 children under 5 and 25,000 pregnant/lactating women">
+                    </div>
+                    <div class="field full-width">
+                        <label>Project Goal</label>
+                        <textarea id="goal" placeholder="e.g., Reduce stunting prevalence among children under 5 from 42% to 30% in target districts by 2027" style="min-height:60px;"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Objectives</div>
+                <div id="objectiveList"></div>
+                <div class="field">
+                    <label>Add Objective</label>
+                    <input type="text" id="objInput" placeholder="e.g., Improve complementary feeding practices for children 6-23 months">
+                </div>
+                <button class="btn btn-primary" onclick="addObjective()">+ Add Objective</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Donor MEL Requirements</div>
+                <div class="field">
+                    <label>Specific Requirements</label>
+                    <textarea id="donorReqs" placeholder="e.g., Quarterly progress reports, annual outcome survey, endline evaluation, sex-disaggregated data, contribution to global indicators"></textarea>
+                    <span class="field-hint">Check donor guidelines for mandatory reporting templates, indicator frameworks, and evaluation standards</span>
+                </div>
+            </div>
+
+            <div class="nav-row">
+                <div></div>
+                <button class="btn btn-primary" onclick="switchTab(1)">Next: Indicator Matrix &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Tab 2: Indicator Matrix -->
+        <div class="tab-panel" id="panel-1">
+            <h2 class="section-title">Indicator Matrix</h2>
+            <p class="section-desc">Build the core MEL matrix — define indicators at each results level with means of verification, baselines, and targets.</p>
+
+            <div class="matrix-wrap" id="matrixDisplay"></div>
+
+            <div class="card" style="margin-top:1rem;">
+                <div class="card-title" style="margin-bottom:1rem;">Add Indicator Row</div>
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Results Level</label>
+                        <select id="mxLevel">
+                            <option value="goal">Goal</option>
+                            <option value="outcome">Outcome</option>
+                            <option value="output" selected>Output</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Result Statement</label>
+                        <input type="text" id="mxResult" placeholder="e.g., Output 1.1: Anganwadi workers trained">
+                    </div>
+                    <div class="field full-width">
+                        <label>Indicator</label>
+                        <input type="text" id="mxIndicator" placeholder="e.g., # of AWWs completing nutrition counselling training">
+                    </div>
+                    <div class="field">
+                        <label>Means of Verification</label>
+                        <input type="text" id="mxMOV" placeholder="e.g., Training attendance registers, post-test scores">
+                    </div>
+                    <div class="field">
+                        <label>Data Source</label>
+                        <input type="text" id="mxSource" placeholder="e.g., Training MIS">
+                    </div>
+                    <div class="field">
+                        <label>Frequency</label>
+                        <select id="mxFreq">
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly" selected>Quarterly</option>
+                            <option value="Bi-annual">Bi-annual</option>
+                            <option value="Annual">Annual</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Responsible</label>
+                        <input type="text" id="mxResponsible" placeholder="e.g., Training Coordinator">
+                    </div>
+                    <div class="field">
+                        <label>Baseline</label>
+                        <input type="text" id="mxBaseline" placeholder="e.g., 0">
+                    </div>
+                    <div class="field">
+                        <label>Target</label>
+                        <input type="text" id="mxTarget" placeholder="e.g., 500 AWWs by Year 2">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addMatrixRow()">+ Add to Matrix</button>
+            </div>
+
+            <div class="nav-row">
+                <button class="btn" onclick="switchTab(0)">&larr; Previous</button>
+                <button class="btn btn-primary" onclick="switchTab(2)">Next: Calendar & Budget &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Tab 3: MEL Calendar & Budget -->
+        <div class="tab-panel" id="panel-2">
+            <h2 class="section-title">MEL Calendar & Budget</h2>
+            <p class="section-desc">Map MEL activities to a timeline and estimate costs for each activity.</p>
+
+            <div id="calendarList"></div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Add MEL Activity</div>
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Activity</label>
+                        <select id="calActivity">
+                            <option value="Baseline Survey">Baseline Survey</option>
+                            <option value="Midline Assessment">Midline Assessment</option>
+                            <option value="Endline Evaluation">Endline Evaluation</option>
+                            <option value="Routine Monitoring">Routine Monitoring</option>
+                            <option value="Quarterly Review">Quarterly Review Meeting</option>
+                            <option value="Annual Review">Annual Review / Reflection</option>
+                            <option value="Data Quality Audit">Data Quality Audit</option>
+                            <option value="Beneficiary Feedback">Beneficiary Feedback Collection</option>
+                            <option value="Learning Workshop">Learning Workshop</option>
+                            <option value="Other">Other (specify below)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Custom Name (if Other)</label>
+                        <input type="text" id="calCustom" placeholder="e.g., Participatory impact assessment">
+                    </div>
+                    <div class="field">
+                        <label>Timing</label>
+                        <input type="text" id="calTiming" placeholder="e.g., Month 1-2 of Year 1">
+                    </div>
+                    <div class="field">
+                        <label>Responsible</label>
+                        <input type="text" id="calResponsible" placeholder="e.g., External evaluator">
+                    </div>
+                </div>
+                <div class="card-title" style="margin:1rem 0 0.5rem;">Budget Line Items</div>
+                <div class="form-grid-3">
+                    <div class="field">
+                        <label>Personnel</label>
+                        <input type="number" id="budgetPersonnel" placeholder="0" min="0">
+                    </div>
+                    <div class="field">
+                        <label>Travel</label>
+                        <input type="number" id="budgetTravel" placeholder="0" min="0">
+                    </div>
+                    <div class="field">
+                        <label>Data Collection</label>
+                        <input type="number" id="budgetData" placeholder="0" min="0">
+                    </div>
+                    <div class="field">
+                        <label>Analysis</label>
+                        <input type="number" id="budgetAnalysis" placeholder="0" min="0">
+                    </div>
+                    <div class="field">
+                        <label>Reporting / Print</label>
+                        <input type="number" id="budgetReporting" placeholder="0" min="0">
+                    </div>
+                    <div class="field">
+                        <label>Other</label>
+                        <input type="number" id="budgetOther" placeholder="0" min="0">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addCalendarItem()">+ Add Activity</button>
+            </div>
+
+            <div class="card" id="budgetSummary" style="display:none;">
+                <div class="card-title">Budget Summary</div>
+                <div id="budgetBreakdown"></div>
+                <div class="budget-total" id="budgetTotal"></div>
+            </div>
+
+            <div class="nav-row">
+                <button class="btn" onclick="switchTab(1)">&larr; Previous</button>
+                <button class="btn btn-primary" onclick="switchTab(3)">Next: Reporting & Learning &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Tab 4: Reporting & Learning -->
+        <div class="tab-panel" id="panel-3">
+            <h2 class="section-title">Reporting & Learning</h2>
+            <p class="section-desc">Define reporting templates, schedules, and knowledge management practices for your MEL system.</p>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Reporting Schedule</div>
+                <div id="reportList"></div>
+                <div class="form-grid" style="margin-top:1rem;">
+                    <div class="field">
+                        <label>Report Type</label>
+                        <select id="rptType">
+                            <option value="Monthly Progress Report">Monthly Progress Report</option>
+                            <option value="Quarterly MEL Report">Quarterly MEL Report</option>
+                            <option value="Annual Report">Annual Report</option>
+                            <option value="Baseline Report">Baseline Report</option>
+                            <option value="Evaluation Report">Evaluation Report</option>
+                            <option value="Policy Brief">Policy / Learning Brief</option>
+                            <option value="Dashboard Update">Dashboard Update</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Audience</label>
+                        <input type="text" id="rptAudience" placeholder="e.g., Donor, project team, government, community">
+                    </div>
+                    <div class="field">
+                        <label>Frequency</label>
+                        <input type="text" id="rptFreq" placeholder="e.g., Quarterly by 15th of following month">
+                    </div>
+                    <div class="field">
+                        <label>Responsible</label>
+                        <input type="text" id="rptOwner" placeholder="e.g., MEL Manager">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addReport()">+ Add Report</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Learning & Knowledge Management</div>
+                <div class="field">
+                    <label>Key Learning Questions</label>
+                    <textarea id="learningQs" placeholder="e.g., What combination of nutrition interventions is most effective in reducing stunting? How do social norms affect complementary feeding practices across different caste groups?"></textarea>
+                </div>
+                <div class="field">
+                    <label>Knowledge Management Plan</label>
+                    <textarea id="kmPlan" placeholder="e.g., Document case studies quarterly; maintain photo/video library; share learning briefs on website; present at national nutrition conferences"></textarea>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Data Quality Assurance</div>
+                <div class="field">
+                    <label>DQA Procedures</label>
+                    <textarea id="dqa" placeholder="e.g., Monthly data verification by M&E officer; quarterly spot checks on 10% of records; annual data quality assessment using WHO DQA tool; double-entry for survey data"></textarea>
+                </div>
+                <div class="field">
+                    <label>Data Management & Security</label>
+                    <textarea id="dataMgmt" placeholder="e.g., KoboToolbox for mobile data collection; data stored on encrypted server; access restricted to MEL team; monthly backups; anonymized datasets for sharing"></textarea>
+                </div>
+            </div>
+
+            <div class="nav-row">
+                <button class="btn" onclick="switchTab(2)">&larr; Previous</button>
+                <button class="btn btn-success" onclick="exportResults()">Download MEL Plan</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+const state = { objectives: [], matrix: [], calendar: [], reports: [] };
+
+function toggleTheme() { const t = document.documentElement.getAttribute('data-theme'); document.documentElement.setAttribute('data-theme', t === 'light' ? '' : 'light'); }
+
+function switchTab(idx) {
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+    updateProgress(); saveState();
+}
+
+function updateProgress() {
+    let f = 0;
+    if (document.getElementById('projName')?.value || state.objectives.length) f++;
+    if (state.matrix.length) f++;
+    if (state.calendar.length) f++;
+    if (state.reports.length || document.getElementById('learningQs')?.value) f++;
+    document.getElementById('progressFill').style.width = (f / 4 * 100) + '%';
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+function addObjective() {
+    const v = document.getElementById('objInput').value.trim(); if (!v) return;
+    state.objectives.push(v); document.getElementById('objInput').value = '';
+    renderObjectives(); updateProgress(); saveState();
+}
+function renderObjectives() {
+    const el = document.getElementById('objectiveList');
+    if (!state.objectives.length) { el.innerHTML = ''; return; }
+    el.innerHTML = state.objectives.map((o, i) =>
+        '<div class="item-row"><span>' + esc(o) + '</span><button class="item-remove" onclick="state.objectives.splice(' + i + ',1);renderObjectives();saveState();">&times;</button></div>'
+    ).join('');
+}
+
+function addMatrixRow() {
+    const ind = document.getElementById('mxIndicator').value.trim(); if (!ind) return;
+    state.matrix.push({
+        level: document.getElementById('mxLevel').value,
+        result: document.getElementById('mxResult').value.trim(),
+        indicator: ind,
+        mov: document.getElementById('mxMOV').value.trim(),
+        source: document.getElementById('mxSource').value.trim(),
+        frequency: document.getElementById('mxFreq').value,
+        responsible: document.getElementById('mxResponsible').value.trim(),
+        baseline: document.getElementById('mxBaseline').value.trim(),
+        target: document.getElementById('mxTarget').value.trim()
+    });
+    ['mxResult','mxIndicator','mxMOV','mxSource','mxResponsible','mxBaseline','mxTarget'].forEach(id => document.getElementById(id).value = '');
+    renderMatrix(); updateProgress(); saveState();
+}
+function renderMatrix() {
+    const el = document.getElementById('matrixDisplay');
+    if (!state.matrix.length) { el.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">No indicators added yet. Add rows below to build your matrix.</p>'; return; }
+    let html = '<table class="matrix-table"><thead><tr><th>Level</th><th>Result</th><th>Indicator</th><th>MOV</th><th>Baseline</th><th>Target</th><th>Freq</th><th></th></tr></thead><tbody>';
+    state.matrix.forEach((r, i) => {
+        html += '<tr><td><span class="level-badge level-' + r.level + '">' + r.level.toUpperCase() + '</span></td>' +
+            '<td>' + esc(r.result) + '</td><td>' + esc(r.indicator) + '</td><td>' + esc(r.mov) + '</td>' +
+            '<td>' + esc(r.baseline) + '</td><td>' + esc(r.target) + '</td><td>' + esc(r.frequency) + '</td>' +
+            '<td><button class="btn btn-sm btn-danger" onclick="state.matrix.splice(' + i + ',1);renderMatrix();saveState();">&times;</button></td></tr>';
+    });
+    html += '</tbody></table>';
+    el.innerHTML = html;
+}
+
+function addCalendarItem() {
+    const activity = document.getElementById('calActivity').value;
+    const name = activity === 'Other' ? document.getElementById('calCustom').value.trim() : activity;
+    if (!name) return;
+    const budget = {
+        personnel: parseInt(document.getElementById('budgetPersonnel').value) || 0,
+        travel: parseInt(document.getElementById('budgetTravel').value) || 0,
+        data: parseInt(document.getElementById('budgetData').value) || 0,
+        analysis: parseInt(document.getElementById('budgetAnalysis').value) || 0,
+        reporting: parseInt(document.getElementById('budgetReporting').value) || 0,
+        other: parseInt(document.getElementById('budgetOther').value) || 0
+    };
+    budget.total = budget.personnel + budget.travel + budget.data + budget.analysis + budget.reporting + budget.other;
+    state.calendar.push({
+        name, timing: document.getElementById('calTiming').value.trim(),
+        responsible: document.getElementById('calResponsible').value.trim(), budget
+    });
+    ['calCustom','calTiming','calResponsible'].forEach(id => document.getElementById(id).value = '');
+    ['budgetPersonnel','budgetTravel','budgetData','budgetAnalysis','budgetReporting','budgetOther'].forEach(id => document.getElementById(id).value = '');
+    renderCalendar(); updateProgress(); saveState();
+}
+function renderCalendar() {
+    const el = document.getElementById('calendarList');
+    if (!state.calendar.length) { el.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">No activities added yet.</p>'; return; }
+    el.innerHTML = state.calendar.map((c, i) =>
+        '<div class="card" style="padding:1rem;"><div class="card-header" style="margin-bottom:0.5rem;"><div class="card-title">' + esc(c.name) + '</div><button class="btn btn-sm btn-danger" onclick="state.calendar.splice(' + i + ',1);renderCalendar();saveState();">&times;</button></div>' +
+        '<div style="font-size:0.8rem;color:var(--text-secondary);display:flex;gap:1rem;flex-wrap:wrap;">' +
+        '<span><strong>When:</strong> ' + esc(c.timing) + '</span><span><strong>Who:</strong> ' + esc(c.responsible) + '</span>' +
+        '<span><strong>Budget:</strong> &#8377;' + c.budget.total.toLocaleString('en-IN') + '</span></div></div>'
+    ).join('');
+    // Budget summary
+    const total = state.calendar.reduce((s, c) => s + c.budget.total, 0);
+    if (total > 0) {
+        document.getElementById('budgetSummary').style.display = 'block';
+        const cats = ['personnel','travel','data','analysis','reporting','other'];
+        const catTotals = cats.map(c => state.calendar.reduce((s, item) => s + item.budget[c], 0));
+        document.getElementById('budgetBreakdown').innerHTML = cats.map((c, i) =>
+            catTotals[i] > 0 ? '<div class="item-row"><span>' + c.charAt(0).toUpperCase() + c.slice(1) + '</span><span style="text-align:right;">&#8377;' + catTotals[i].toLocaleString('en-IN') + '</span></div>' : ''
+        ).join('');
+        document.getElementById('budgetTotal').innerHTML = 'Total MEL Budget: &#8377;' + total.toLocaleString('en-IN');
+    } else {
+        document.getElementById('budgetSummary').style.display = 'none';
+    }
+}
+
+function addReport() {
+    const type = document.getElementById('rptType').value;
+    state.reports.push({
+        type, audience: document.getElementById('rptAudience').value.trim(),
+        frequency: document.getElementById('rptFreq').value.trim(),
+        owner: document.getElementById('rptOwner').value.trim()
+    });
+    ['rptAudience','rptFreq','rptOwner'].forEach(id => document.getElementById(id).value = '');
+    renderReports(); updateProgress(); saveState();
+}
+function renderReports() {
+    const el = document.getElementById('reportList');
+    if (!state.reports.length) { el.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">No reports defined yet.</p>'; return; }
+    el.innerHTML = state.reports.map((r, i) =>
+        '<div class="item-row"><span><strong>' + esc(r.type) + '</strong> | ' + esc(r.audience) + ' | ' + esc(r.frequency) + ' | ' + esc(r.owner) + '</span><button class="item-remove" onclick="state.reports.splice(' + i + ',1);renderReports();saveState();">&times;</button></div>'
+    ).join('');
+}
+
+function saveState() { try { localStorage.setItem('impactmojo-mel-plan', JSON.stringify(state)); } catch(e) {} }
+function loadState() {
+    try {
+        const s = localStorage.getItem('impactmojo-mel-plan');
+        if (s) { Object.assign(state, JSON.parse(s)); renderObjectives(); renderMatrix(); renderCalendar(); renderReports(); updateProgress(); }
+    } catch(e) {}
+}
+
+function exportResults() {
+    let t = 'MEL PLAN\n========\n\n';
+    t += 'Project: ' + (document.getElementById('projName')?.value || 'N/A') + '\n';
+    t += 'Donor: ' + (document.getElementById('donor')?.value || 'N/A') + '\n';
+    t += 'Duration: ' + (document.getElementById('duration')?.value || 'N/A') + '\n';
+    t += 'Geography: ' + (document.getElementById('geography')?.value || 'N/A') + '\n';
+    t += 'Target: ' + (document.getElementById('targetPop')?.value || 'N/A') + '\n';
+    t += 'Goal: ' + (document.getElementById('goal')?.value || 'N/A') + '\n\n';
+    t += 'Objectives:\n'; state.objectives.forEach((o, i) => t += '  ' + (i+1) + '. ' + o + '\n');
+    t += '\n--- INDICATOR MATRIX ---\n';
+    state.matrix.forEach(r => t += '\n  [' + r.level.toUpperCase() + '] ' + r.result + '\n  Indicator: ' + r.indicator + '\n  MOV: ' + r.mov + ' | Baseline: ' + r.baseline + ' | Target: ' + r.target + ' | Freq: ' + r.frequency + '\n');
+    t += '\n--- MEL CALENDAR & BUDGET ---\n';
+    state.calendar.forEach(c => t += '  ' + c.name + ' | ' + c.timing + ' | ' + c.responsible + ' | Rs.' + c.budget.total + '\n');
+    const total = state.calendar.reduce((s, c) => s + c.budget.total, 0);
+    t += '  TOTAL: Rs.' + total + '\n';
+    t += '\n--- REPORTING ---\n';
+    state.reports.forEach(r => t += '  ' + r.type + ' | ' + r.audience + ' | ' + r.frequency + '\n');
+    t += '\nLearning Questions: ' + (document.getElementById('learningQs')?.value || 'N/A') + '\n';
+    t += 'DQA: ' + (document.getElementById('dqa')?.value || 'N/A') + '\n';
+    const blob = new Blob([t], { type: 'text/plain' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'mel-plan.txt'; a.click();
+}
+
+loadState(); renderObjectives(); renderMatrix(); renderCalendar(); renderReports(); updateProgress();
+</script>
+</body>
+</html>
