@@ -1235,6 +1235,56 @@ body.user-authenticated .auth-logged-in { display: flex !important; }
     fill: none;
 }
 
+/* Accessibility: focus-visible styles */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid var(--accent-color, #0EA5E9);
+    outline-offset: 2px;
+}
+
+/* Screen-reader only utility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Skip navigation link */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 9999;
+    padding: 8px 16px;
+    background: #F59E0B;
+    color: #0F172A;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+}
+
 </style>
 
 <!-- Supabase Auth -->
@@ -1243,6 +1293,7 @@ body.user-authenticated .auth-logged-in { display: flex !important; }
 <script src="js/auth.js"></script>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to content</a>
 
 <!-- Subtle Background Plane Animation -->
 <div class="mobile-plane" aria-hidden="true">
@@ -1252,8 +1303,8 @@ body.user-authenticated .auth-logged-in { display: flex !important; }
 </div>
 
 <!-- Header -->
-<header>
-    <nav class="nav-container">
+<header role="banner">
+    <nav class="nav-container" role="navigation" aria-label="Main navigation">
         <a href="index.html" class="logo-link">
             <img src="assets/images/ImpactMojo Logo.png" alt="ImpactMojo" class="logo-img">
             <span class="logo-text">ImpactMojo</span>
@@ -1282,7 +1333,7 @@ body.user-authenticated .auth-logged-in { display: flex !important; }
 </div>
 
 <!-- Mobile Menu (slides in) -->
-<nav id="mobileMenu">
+<nav id="mobileMenu" role="navigation" aria-label="Mobile menu">
     <!-- Auth Section (logged out) -->
     <div class="menu-auth-section auth-logged-out">
         <a href="/login" class="menu-auth-btn login">
@@ -1432,7 +1483,7 @@ body.user-authenticated .auth-logged-in { display: flex !important; }
 </nav>
 
 <!-- Main Content -->
-<main>
+<main id="main-content" role="main">
     <!-- Hero -->
     <section class="hero">
         <div style="font-size: 0.75rem; font-weight: 600; color: rgba(255, 255, 255, 0.8); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Development Know-How</div>
