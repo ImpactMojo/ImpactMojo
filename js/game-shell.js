@@ -360,6 +360,15 @@
     '</div>';
   document.body.appendChild(footer);
 
+  // ── Override CSS variables for dark mode contrast ─────────
+  // Games define --text-muted:#64748B etc. which are unreadable on dark bg.
+  // Override the CSS custom properties directly so var() references pick up readable values.
+  var varFix = document.createElement('style');
+  varFix.textContent =
+    'body:not(.light-mode) { --text-dim: #CBD5E1 !important; --text-muted: #94A3B8 !important; --text: #F1F5F9 !important; --border: #475569 !important; }' +
+    'body.light-mode { --bg: #FFFBF5 !important; --card: #FFFFFF !important; --text: #1E293B !important; --text-dim: #78350F !important; --text-muted: #92400E !important; --border: #E7DDD0 !important; }';
+  document.head.appendChild(varFix);
+
   // ── Inject Styles ──────────────────────────────────────────
   var css = document.createElement('style');
   css.textContent =
@@ -433,8 +442,8 @@
 
     /* ═══ DECORATIVE ELEMENTS ═════════════════════════════ */
 
-    /* Indian folk art motifs — z-index 1 so they float above content backgrounds */
-    '.imx-game-motif { position: fixed; pointer-events: none; z-index: 1; }' +
+    /* Indian folk art motifs — high z-index so they float above game content */
+    '.imx-game-motif { position: fixed; pointer-events: none; z-index: 9998; opacity: 0.6; }' +
     '.imx-game-motif svg { width: 100%; height: 100%; }' +
     '.imx-motif-warli { bottom: 0; left: 0; width: 420px; height: 320px; color: #F59E0B; }' +
     'body.light-mode .imx-motif-warli { color: #92400E; }' +
