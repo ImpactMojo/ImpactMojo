@@ -3,6 +3,17 @@
   command = "echo '{\"v\":\"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'\"}' > version.json"
   publish = "."
 
+# Short cache for JS/CSS so updates propagate quickly
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
+[[headers]]
+  for = "/Games/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
 # GitBook documentation — 200 proxy rewrite avoids redirect loops
 [[redirects]]
   from = "/docs"
