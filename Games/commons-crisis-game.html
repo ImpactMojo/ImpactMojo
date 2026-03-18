@@ -1417,6 +1417,135 @@ window.showEndScreen = function(){
   $('end-lesson').textContent = lesson;
 };
 
+// ── End Story Art Builder ──
+function buildEndStoryArt(finalRes, survived){
+  var container = $('end-story-art');
+  var svgInner = '';
+  var storyText = '';
+
+  if(survived && finalRes > 700){
+    // THRIVING: Celebration scene — dancing figures, abundant fish, flowering trees
+    storyText = "The village celebrates. Through wisdom and restraint, the sea continues to give. The children will inherit abundance.";
+    svgInner =
+      '<rect x="4" y="4" width="792" height="342" rx="8" fill="none" stroke="#F8FAFC" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>' +
+      // Dancing figures in circle (6 figures, arms linked, legs in motion)
+      '<g transform="translate(400,160)">' +
+        '<circle cx="0" cy="0" r="55" fill="none" stroke="#F8FAFC" stroke-width="0.6" stroke-dasharray="4,6" opacity=".2"/>' +
+        // Dancer 1
+        '<g transform="translate(60,0) rotate(10)"><circle cx="0" cy="-10" r="5" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><polygon points="-7,4 7,4 0,-5" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="-3" y1="4" x2="-8" y2="15" stroke="#F8FAFC" stroke-width="1"/><line x1="3" y1="4" x2="10" y2="13" stroke="#F8FAFC" stroke-width="1"/><line x1="7" y1="-2" x2="18" y2="-6" stroke="#F8FAFC" stroke-width="0.8"/><line x1="-7" y1="-2" x2="-16" y2="-8" stroke="#F8FAFC" stroke-width="0.8"/></g>' +
+        // Dancer 2
+        '<g transform="translate(30,-52) rotate(-5)"><circle cx="0" cy="-10" r="5" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><polygon points="-7,4 7,4 0,-5" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="-3" y1="4" x2="-9" y2="14" stroke="#F8FAFC" stroke-width="1"/><line x1="3" y1="4" x2="8" y2="15" stroke="#F8FAFC" stroke-width="1"/><line x1="7" y1="-2" x2="16" y2="-8" stroke="#F8FAFC" stroke-width="0.8"/><line x1="-7" y1="-2" x2="-14" y2="-10" stroke="#F8FAFC" stroke-width="0.8"/></g>' +
+        // Dancer 3
+        '<g transform="translate(-30,-52) rotate(5)"><circle cx="0" cy="-10" r="5" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><polygon points="-7,4 7,4 0,-5" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="-3" y1="4" x2="-7" y2="16" stroke="#F8FAFC" stroke-width="1"/><line x1="3" y1="4" x2="9" y2="14" stroke="#F8FAFC" stroke-width="1"/><line x1="7" y1="-2" x2="15" y2="-6" stroke="#F8FAFC" stroke-width="0.8"/><line x1="-7" y1="-2" x2="-17" y2="-5" stroke="#F8FAFC" stroke-width="0.8"/></g>' +
+        // Dancer 4
+        '<g transform="translate(-60,0) rotate(-10)"><circle cx="0" cy="-10" r="5" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><polygon points="-7,4 7,4 0,-5" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="-3" y1="4" x2="-10" y2="13" stroke="#F8FAFC" stroke-width="1"/><line x1="3" y1="4" x2="8" y2="15" stroke="#F8FAFC" stroke-width="1"/><line x1="7" y1="-2" x2="16" y2="-8" stroke="#F8FAFC" stroke-width="0.8"/><line x1="-7" y1="-2" x2="-18" y2="-6" stroke="#F8FAFC" stroke-width="0.8"/></g>' +
+        // Dancer 5
+        '<g transform="translate(-30,52) rotate(8)"><circle cx="0" cy="-10" r="5" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><polygon points="-7,4 7,4 0,-5" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="-3" y1="4" x2="-8" y2="14" stroke="#F8FAFC" stroke-width="1"/><line x1="3" y1="4" x2="9" y2="14" stroke="#F8FAFC" stroke-width="1"/><line x1="7" y1="-2" x2="14" y2="-9" stroke="#F8FAFC" stroke-width="0.8"/><line x1="-7" y1="-2" x2="-15" y2="-7" stroke="#F8FAFC" stroke-width="0.8"/></g>' +
+        // Dancer 6
+        '<g transform="translate(30,52) rotate(-8)"><circle cx="0" cy="-10" r="5" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><polygon points="-7,4 7,4 0,-5" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="-3" y1="4" x2="-7" y2="16" stroke="#F8FAFC" stroke-width="1"/><line x1="3" y1="4" x2="10" y2="13" stroke="#F8FAFC" stroke-width="1"/><line x1="7" y1="-2" x2="15" y2="-6" stroke="#F8FAFC" stroke-width="0.8"/><line x1="-7" y1="-2" x2="-16" y2="-8" stroke="#F8FAFC" stroke-width="0.8"/></g>' +
+        // Connecting arms
+        '<path d="M55,-6 Q45,-30 25,-46" fill="none" stroke="#F8FAFC" stroke-width="0.5" opacity=".4"/>' +
+        '<path d="M25,-46 Q0,-58 -25,-46" fill="none" stroke="#F8FAFC" stroke-width="0.5" opacity=".4"/>' +
+        '<path d="M-25,-46 Q-50,-30 -55,-6" fill="none" stroke="#F8FAFC" stroke-width="0.5" opacity=".4"/>' +
+        '<path d="M-55,-6 Q-45,30 -25,46" fill="none" stroke="#F8FAFC" stroke-width="0.5" opacity=".4"/>' +
+        '<path d="M-25,46 Q0,58 25,46" fill="none" stroke="#F8FAFC" stroke-width="0.5" opacity=".4"/>' +
+        '<path d="M25,46 Q50,30 55,-6" fill="none" stroke="#F8FAFC" stroke-width="0.5" opacity=".4"/>' +
+      '</g>' +
+      // Flowering trees
+      '<g transform="translate(100,110)"><polygon points="0,-35 -20,0 20,0" fill="none" stroke="#F8FAFC" stroke-width="1.1"/><polygon points="0,-55 -16,-20 16,-20" fill="none" stroke="#F8FAFC" stroke-width="1.1"/><circle cx="0" cy="-62" r="9" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="0" y1="0" x2="0" y2="30" stroke="#F8FAFC" stroke-width="1.5"/>' +
+      '<circle cx="-12" cy="-35" r="3" fill="none" stroke="#F8FAFC" stroke-width="0.7"/><circle cx="12" cy="-30" r="3" fill="none" stroke="#F8FAFC" stroke-width="0.7"/><circle cx="-6" cy="-50" r="2.5" fill="none" stroke="#F8FAFC" stroke-width="0.7"/><circle cx="8" cy="-45" r="2" fill="#F8FAFC" opacity=".4"/></g>' +
+      '<g transform="translate(700,110)"><polygon points="0,-35 -20,0 20,0" fill="none" stroke="#F8FAFC" stroke-width="1.1"/><polygon points="0,-55 -16,-20 16,-20" fill="none" stroke="#F8FAFC" stroke-width="1.1"/><circle cx="0" cy="-62" r="9" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="0" y1="0" x2="0" y2="30" stroke="#F8FAFC" stroke-width="1.5"/>' +
+      '<circle cx="10" cy="-38" r="3" fill="none" stroke="#F8FAFC" stroke-width="0.7"/><circle cx="-10" cy="-28" r="3" fill="none" stroke="#F8FAFC" stroke-width="0.7"/><circle cx="5" cy="-50" r="2.5" fill="none" stroke="#F8FAFC" stroke-width="0.7"/></g>' +
+      // Abundant water with many fish
+      '<path d="M40,260 Q100,250 160,260 T280,260 T400,260 T520,260 T640,260 T760,260" fill="none" stroke="#F8FAFC" stroke-width="1.2" opacity=".6"/>' +
+      '<path d="M40,275 Q100,265 160,275 T280,275 T400,275 T520,275 T640,275 T760,275" fill="none" stroke="#F8FAFC" stroke-width="1" opacity=".4"/>' +
+      '<path d="M40,290 Q100,280 160,290 T280,290 T400,290 T520,290 T640,290 T760,290" fill="none" stroke="#F8FAFC" stroke-width="0.8" opacity=".3"/>' +
+      '<path d="M40,305 Q100,295 160,305 T280,305 T400,305 T520,305 T640,305 T760,305" fill="none" stroke="#F8FAFC" stroke-width="0.6" opacity=".2"/>' +
+      '<g opacity=".7">' +
+      '<ellipse cx="150" cy="270" rx="10" ry="5" fill="none" stroke="#F8FAFC" stroke-width="0.9"/><circle cx="156" cy="269" r="1.2" fill="#F8FAFC"/><line x1="160" y1="270" x2="166" y2="267" stroke="#F8FAFC" stroke-width="0.7"/><line x1="160" y1="270" x2="166" y2="273" stroke="#F8FAFC" stroke-width="0.7"/>' +
+      '<ellipse cx="300" cy="280" rx="11" ry="5.5" fill="none" stroke="#F8FAFC" stroke-width="0.9"/><circle cx="307" cy="279" r="1.3" fill="#F8FAFC"/><line x1="311" y1="280" x2="318" y2="276" stroke="#F8FAFC" stroke-width="0.7"/><line x1="311" y1="280" x2="318" y2="284" stroke="#F8FAFC" stroke-width="0.7"/>' +
+      '<ellipse cx="500" cy="268" rx="12" ry="6" fill="none" stroke="#F8FAFC" stroke-width="0.9"/><circle cx="508" cy="267" r="1.5" fill="#F8FAFC"/><line x1="512" y1="268" x2="520" y2="264" stroke="#F8FAFC" stroke-width="0.8"/><line x1="512" y1="268" x2="520" y2="272" stroke="#F8FAFC" stroke-width="0.8"/>' +
+      '<ellipse cx="650" cy="278" rx="9" ry="4.5" fill="none" stroke="#F8FAFC" stroke-width="0.8"/><circle cx="655" cy="277" r="1.1" fill="#F8FAFC"/><line x1="659" y1="278" x2="664" y2="275" stroke="#F8FAFC" stroke-width="0.6"/><line x1="659" y1="278" x2="664" y2="281" stroke="#F8FAFC" stroke-width="0.6"/>' +
+      '</g>' +
+      // Sun shining bright
+      '<circle cx="700" cy="50" r="20" fill="none" stroke="#F8FAFC" stroke-width="1.5"/><circle cx="700" cy="50" r="4" fill="#F8FAFC"/>' +
+      '<line x1="700" y1="24" x2="700" y2="16" stroke="#F8FAFC" stroke-width="1.2"/><line x1="700" y1="76" x2="700" y2="84" stroke="#F8FAFC" stroke-width="1.2"/><line x1="674" y1="50" x2="666" y2="50" stroke="#F8FAFC" stroke-width="1.2"/><line x1="726" y1="50" x2="734" y2="50" stroke="#F8FAFC" stroke-width="1.2"/>' +
+      '<line x1="682" y1="32" x2="676" y2="26" stroke="#F8FAFC" stroke-width="1"/><line x1="718" y1="68" x2="724" y2="74" stroke="#F8FAFC" stroke-width="1"/><line x1="718" y1="32" x2="724" y2="26" stroke="#F8FAFC" stroke-width="1"/><line x1="682" y1="68" x2="676" y2="74" stroke="#F8FAFC" stroke-width="1"/>' +
+      // Birds
+      '<path d="M180,40 Q185,34 190,40" fill="none" stroke="#F8FAFC" stroke-width="0.8"/><path d="M200,32 Q205,26 210,32" fill="none" stroke="#F8FAFC" stroke-width="0.8"/><path d="M500,38 Q505,32 510,38" fill="none" stroke="#F8FAFC" stroke-width="0.7"/><path d="M520,30 Q525,24 530,30" fill="none" stroke="#F8FAFC" stroke-width="0.7"/>' +
+      // Decorative dots bottom
+      '<g opacity=".3"><circle cx="100" cy="340" r="1.5" fill="#F8FAFC"/><circle cx="200" cy="340" r="1.5" fill="#F8FAFC"/><circle cx="300" cy="340" r="1.5" fill="#F8FAFC"/><circle cx="400" cy="340" r="1.5" fill="#F8FAFC"/><circle cx="500" cy="340" r="1.5" fill="#F8FAFC"/><circle cx="600" cy="340" r="1.5" fill="#F8FAFC"/><circle cx="700" cy="340" r="1.5" fill="#F8FAFC"/></g>';
+
+  } else if(survived && finalRes >= 300){
+    // SURVIVED: Cautious fishing, moderate community
+    storyText = "The village endures. The catch is smaller, the future uncertain \u2014 but the community has learned the cost of excess.";
+    svgInner =
+      '<rect x="4" y="4" width="792" height="342" rx="8" fill="none" stroke="#F8FAFC" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>' +
+      // Moderate trees
+      '<g transform="translate(120,130)"><polygon points="0,-28 -16,0 16,0" fill="none" stroke="#F8FAFC" stroke-width="1"/><polygon points="0,-44 -12,-16 12,-16" fill="none" stroke="#F8FAFC" stroke-width="1"/><circle cx="0" cy="-50" r="7" fill="none" stroke="#F8FAFC" stroke-width="0.9"/><line x1="0" y1="0" x2="0" y2="25" stroke="#F8FAFC" stroke-width="1.3"/></g>' +
+      '<g transform="translate(680,130)"><polygon points="0,-28 -16,0 16,0" fill="none" stroke="#F8FAFC" stroke-width="1"/><polygon points="0,-44 -12,-16 12,-16" fill="none" stroke="#F8FAFC" stroke-width="1"/><circle cx="0" cy="-50" r="7" fill="none" stroke="#F8FAFC" stroke-width="0.9"/><line x1="0" y1="0" x2="0" y2="25" stroke="#F8FAFC" stroke-width="1.3"/></g>' +
+      // Cautious fisherman with small net
+      '<g transform="translate(300,135)"><circle cx="0" cy="-12" r="5.5" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><polygon points="-7,4 7,4 0,-6" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="-3" y1="4" x2="-6" y2="16" stroke="#F8FAFC" stroke-width="1"/><line x1="3" y1="4" x2="6" y2="16" stroke="#F8FAFC" stroke-width="1"/><line x1="7" y1="-3" x2="18" y2="-6" stroke="#F8FAFC" stroke-width="0.8"/><line x1="-7" y1="-3" x2="-14" y2="-10" stroke="#F8FAFC" stroke-width="0.8"/></g>' +
+      // Another figure sitting
+      '<g transform="translate(450,140)"><circle cx="0" cy="-10" r="5" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><polygon points="-7,4 7,4 0,-5" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="-3" y1="4" x2="-10" y2="10" stroke="#F8FAFC" stroke-width="1"/><line x1="3" y1="4" x2="0" y2="12" stroke="#F8FAFC" stroke-width="1"/></g>' +
+      // Standing figure watching water
+      '<g transform="translate(550,130)"><circle cx="0" cy="-12" r="5.5" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><polygon points="-7,4 7,4 0,-6" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="-3" y1="4" x2="-5" y2="16" stroke="#F8FAFC" stroke-width="1"/><line x1="3" y1="4" x2="5" y2="16" stroke="#F8FAFC" stroke-width="1"/></g>' +
+      // Ground line
+      '<line x1="60" y1="180" x2="740" y2="180" stroke="#F8FAFC" stroke-width="0.8" stroke-dasharray="3,6" opacity=".3"/>' +
+      // Moderate water
+      '<path d="M40,210 Q100,200 160,210 T280,210 T400,210 T520,210 T640,210 T760,210" fill="none" stroke="#F8FAFC" stroke-width="1" opacity=".5"/>' +
+      '<path d="M40,225 Q100,215 160,225 T280,225 T400,225 T520,225 T640,225 T760,225" fill="none" stroke="#F8FAFC" stroke-width="0.8" opacity=".35"/>' +
+      '<path d="M40,240 Q100,230 160,240 T280,240 T400,240 T520,240 T640,240 T760,240" fill="none" stroke="#F8FAFC" stroke-width="0.6" opacity=".2"/>' +
+      // Some fish, not many
+      '<g opacity=".6">' +
+      '<ellipse cx="250" cy="218" rx="10" ry="5" fill="none" stroke="#F8FAFC" stroke-width="0.9"/><circle cx="256" cy="217" r="1.2" fill="#F8FAFC"/><line x1="260" y1="218" x2="266" y2="215" stroke="#F8FAFC" stroke-width="0.7"/><line x1="260" y1="218" x2="266" y2="221" stroke="#F8FAFC" stroke-width="0.7"/>' +
+      '<ellipse cx="500" cy="222" rx="9" ry="4.5" fill="none" stroke="#F8FAFC" stroke-width="0.8"/><circle cx="505" cy="221" r="1.1" fill="#F8FAFC"/><line x1="509" y1="222" x2="514" y2="219" stroke="#F8FAFC" stroke-width="0.6"/><line x1="509" y1="222" x2="514" y2="225" stroke="#F8FAFC" stroke-width="0.6"/>' +
+      '</g>' +
+      // Half-sun at horizon
+      '<path d="M710,90 A18,18 0 0,1 746,90" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><circle cx="728" cy="90" r="3" fill="#F8FAFC" opacity=".5"/>' +
+      '<line x1="728" y1="70" x2="728" y2="64" stroke="#F8FAFC" stroke-width="0.8"/><line x1="712" y1="78" x2="708" y2="74" stroke="#F8FAFC" stroke-width="0.8"/><line x1="744" y1="78" x2="748" y2="74" stroke="#F8FAFC" stroke-width="0.8"/>' +
+      // A hut
+      '<g transform="translate(200,135)"><polygon points="0,-18 -16,0 16,0" fill="none" stroke="#F8FAFC" stroke-width="0.9"/><rect x="-7" y="-2" width="14" height="10" fill="none" stroke="#F8FAFC" stroke-width="0.7"/><line x1="0" y1="-2" x2="0" y2="8" stroke="#F8FAFC" stroke-width="0.5"/></g>';
+
+  } else {
+    // COLLAPSED: Empty nets, still water, figures walking away
+    storyText = "Silence. The nets hang empty. One by one, the families leave \u2014 carrying nothing but the memory of what the sea once gave.";
+    svgInner =
+      '<rect x="4" y="4" width="792" height="342" rx="8" fill="none" stroke="#F8FAFC" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>' +
+      // Dead trees (bare sticks)
+      '<g transform="translate(100,120)" opacity=".5"><line x1="0" y1="-40" x2="0" y2="30" stroke="#F8FAFC" stroke-width="1.2"/><line x1="0" y1="-30" x2="-15" y2="-42" stroke="#F8FAFC" stroke-width="0.8"/><line x1="0" y1="-20" x2="12" y2="-30" stroke="#F8FAFC" stroke-width="0.8"/><line x1="0" y1="-8" x2="-10" y2="-16" stroke="#F8FAFC" stroke-width="0.6"/></g>' +
+      '<g transform="translate(700,120)" opacity=".5"><line x1="0" y1="-40" x2="0" y2="30" stroke="#F8FAFC" stroke-width="1.2"/><line x1="0" y1="-30" x2="15" y2="-42" stroke="#F8FAFC" stroke-width="0.8"/><line x1="0" y1="-20" x2="-12" y2="-30" stroke="#F8FAFC" stroke-width="0.8"/><line x1="0" y1="-8" x2="10" y2="-16" stroke="#F8FAFC" stroke-width="0.6"/></g>' +
+      '<g transform="translate(350,100)" opacity=".4"><line x1="0" y1="-35" x2="0" y2="25" stroke="#F8FAFC" stroke-width="1"/><line x1="0" y1="-25" x2="-10" y2="-35" stroke="#F8FAFC" stroke-width="0.7"/><line x1="0" y1="-15" x2="8" y2="-22" stroke="#F8FAFC" stroke-width="0.7"/></g>' +
+      // Figures walking away (to the right, backs turned, with bundles)
+      '<g transform="translate(500,120)" opacity=".7"><circle cx="0" cy="-12" r="5" fill="none" stroke="#F8FAFC" stroke-width="1.2"/><polygon points="-6,4 6,4 0,-6" fill="none" stroke="#F8FAFC" stroke-width="1"/><line x1="-2" y1="4" x2="-6" y2="16" stroke="#F8FAFC" stroke-width="1"/><line x1="4" y1="4" x2="8" y2="16" stroke="#F8FAFC" stroke-width="1"/><line x1="6" y1="-4" x2="14" y2="-10" stroke="#F8FAFC" stroke-width="0.8"/><circle cx="16" cy="-12" r="4" fill="none" stroke="#F8FAFC" stroke-width="0.6"/></g>' +
+      '<g transform="translate(540,125)" opacity=".55"><circle cx="0" cy="-10" r="4.5" fill="none" stroke="#F8FAFC" stroke-width="1.1"/><polygon points="-5.5,3.5 5.5,3.5 0,-5" fill="none" stroke="#F8FAFC" stroke-width="0.9"/><line x1="-2" y1="3.5" x2="-5" y2="14" stroke="#F8FAFC" stroke-width="0.9"/><line x1="3" y1="3.5" x2="7" y2="14" stroke="#F8FAFC" stroke-width="0.9"/></g>' +
+      '<g transform="translate(580,118)" opacity=".4"><circle cx="0" cy="-10" r="4" fill="none" stroke="#F8FAFC" stroke-width="1"/><polygon points="-5,3 5,3 0,-5" fill="none" stroke="#F8FAFC" stroke-width="0.8"/><line x1="-2" y1="3" x2="-4" y2="12" stroke="#F8FAFC" stroke-width="0.8"/><line x1="3" y1="3" x2="6" y2="12" stroke="#F8FAFC" stroke-width="0.8"/></g>' +
+      '<g transform="translate(620,128)" opacity=".3"><circle cx="0" cy="-9" r="3.5" fill="none" stroke="#F8FAFC" stroke-width="0.9"/><polygon points="-4.5,2.5 4.5,2.5 0,-4.5" fill="none" stroke="#F8FAFC" stroke-width="0.7"/><line x1="-2" y1="2.5" x2="-4" y2="10" stroke="#F8FAFC" stroke-width="0.7"/><line x1="2" y1="2.5" x2="5" y2="10" stroke="#F8FAFC" stroke-width="0.7"/></g>' +
+      // Empty net hanging from pole
+      '<g transform="translate(250,90)" opacity=".5"><line x1="0" y1="0" x2="0" y2="60" stroke="#F8FAFC" stroke-width="1.2"/><line x1="0" y1="0" x2="30" y2="5" stroke="#F8FAFC" stroke-width="1"/>' +
+      '<path d="M10,5 Q20,30 0,35 Q-5,20 10,5" fill="none" stroke="#F8FAFC" stroke-width="0.7" stroke-dasharray="2,3"/>' +
+      '<path d="M18,8 Q28,28 10,32" fill="none" stroke="#F8FAFC" stroke-width="0.5" stroke-dasharray="2,3"/></g>' +
+      // Still, flat water (no waves)
+      '<line x1="40" y1="200" x2="760" y2="200" stroke="#F8FAFC" stroke-width="0.6" opacity=".25"/>' +
+      '<line x1="80" y1="220" x2="720" y2="220" stroke="#F8FAFC" stroke-width="0.4" opacity=".15"/>' +
+      '<line x1="120" y1="240" x2="680" y2="240" stroke="#F8FAFC" stroke-width="0.3" opacity=".1"/>' +
+      // Ground sparse
+      '<line x1="40" y1="170" x2="760" y2="170" stroke="#F8FAFC" stroke-width="0.6" stroke-dasharray="6,12" opacity=".2"/>' +
+      // No fish at all
+      // Overcast — dim moon only
+      '<circle cx="680" cy="50" r="18" fill="none" stroke="#F8FAFC" stroke-width="0.8" opacity=".25"/><circle cx="670" cy="44" r="14" fill="rgba(11,17,32,.97)"/>' +
+      // Abandoned hut
+      '<g transform="translate(180,130)" opacity=".35"><polygon points="0,-20 -18,0 18,0" fill="none" stroke="#F8FAFC" stroke-width="0.8"/><rect x="-8" y="-2" width="16" height="12" fill="none" stroke="#F8FAFC" stroke-width="0.6"/>' +
+      '<line x1="-18" y1="0" x2="-22" y2="4" stroke="#F8FAFC" stroke-width="0.5"/><line x1="18" y1="0" x2="22" y2="4" stroke="#F8FAFC" stroke-width="0.5"/></g>';
+  }
+
+  container.innerHTML =
+    '<div class="warli-frame"><svg viewBox="0 0 800 350" width="800" height="350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Warli art: Story conclusion">' +
+    svgInner +
+    '</svg></div>' +
+    '<p class="story-text">' + storyText + '</p>';
+}
+
 // ── Reset ──
 window.resetGame = function(){
   state = {
@@ -1428,7 +1557,12 @@ window.resetGame = function(){
   };
   hide('end-screen');
   hide('collapse-overlay');
-  show('welcome-screen');
+  // Show story intro again on reset
+  $('story-intro').style.display = '';
+  $('story-intro').classList.remove('hidden');
+  hide('welcome-screen');
+  hide('story-modal-r4');
+  hide('story-modal-r8');
   // Reset UI elements
   $('extraction-slider').value = 30;
   updateSlider(30);
