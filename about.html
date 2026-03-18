@@ -1775,9 +1775,60 @@ div[class*="acsb"],
         justify-content: center;
     }
 }
+
+/* Accessibility: focus-visible styles */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid var(--accent-color, #0EA5E9);
+    outline-offset: 2px;
+}
+
+/* Screen-reader only utility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Skip navigation link */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 9999;
+    padding: 8px 16px;
+    background: #F59E0B;
+    color: #0F172A;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+}
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to content</a>
 
 <!-- V3 Decorative Elements -->
 <div class="v3-decoration-container">
@@ -1795,8 +1846,8 @@ div[class*="acsb"],
 </svg>
 
 <!-- Header -->
-<header class="header">
-    <nav class="nav-container">
+<header class="header" role="banner">
+    <nav class="nav-container" role="navigation" aria-label="Main navigation">
         <a class="logo-container" href="index.html">
             <div class="logo-svg">
                 <img alt="ImpactMojo logo" src="assets/images/ImpactMojo%20Logo.png" width="48" height="48" loading="lazy">
@@ -1900,7 +1951,7 @@ div[class*="acsb"],
 <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
 
 <!-- Page Content -->
-<main class="page-content">
+<main class="page-content" id="main-content" role="main">
     <section class="page-hero">
         <h1>About ImpactMojo</h1>
         <p>Free development education for impact practitioners across South Asia</p>
@@ -2176,7 +2227,7 @@ div[class*="acsb"],
 </main>
 
 <!-- Footer -->
-<footer class="footer">
+<footer class="footer" role="contentinfo">
     <div class="footer-content">
         <div class="footer-grid">
             <div class="footer-section">
@@ -2215,11 +2266,11 @@ div[class*="acsb"],
         <div class="footer-bottom">
             <p class="footer-copyright">© 2026 ImpactMojo. All rights reserved. Made with ♥ in India.</p>
             <div class="footer-social">
-                <a href="https://www.linkedin.com/company/impactmojo" target="_blank" rel="noopener" title="LinkedIn">
-                    <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <a href="https://www.linkedin.com/company/impactmojo" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                 </a>
-                <a href="https://www.instagram.com/impactmojo" target="_blank" rel="noopener" title="Instagram">
-                    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                <a href="https://www.instagram.com/impactmojo" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                 </a>
                 <a href="https://twitter.com/impactmojo" target="_blank" rel="noopener" title="X (Twitter)">
                     <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -2261,9 +2312,10 @@ div[class*="acsb"],
         <button class="chat-option" onclick="selectOption('feedback')">Feedback</button>
     </div>
     <div class="chat-input-area">
+        <label for="chatInput" class="sr-only">Chat message</label>
         <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
         <button class="chat-send" aria-label="Send message" onclick="sendChatMessage()">
-            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
     </div>
 </div>

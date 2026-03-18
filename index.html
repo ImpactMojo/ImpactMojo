@@ -12984,7 +12984,7 @@ textarea:focus-visible,
 <footer class="footer" id="contact" role="contentinfo">
 <div class="footer-content">
 <p style="text-align: center; margin-bottom: 2rem; color: var(--text-muted); font-size: 0.95rem;">
-    Made with <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Heart"/></svg> by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank" style="color: var(--accent-color);">PinPoint Ventures</a>
+    Made with <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon" aria-hidden="true"><use href="#si_Heart"/></svg> by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank" style="color: var(--accent-color);">PinPoint Ventures</a>
 </p>
 <div class="footer-links">
 <div class="footer-section">
@@ -14389,6 +14389,22 @@ document.addEventListener('click', function(e) {
     setTimeout(loadScripts, 2000);
   }
 })();
+</script>
+<!-- Accessibility: enhance modal close buttons for keyboard users -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('span.close').forEach(function(el) {
+        el.setAttribute('role', 'button');
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('aria-label', 'Close dialog');
+        el.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                el.click();
+            }
+        });
+    });
+});
 </script>
 </body>
 </html>

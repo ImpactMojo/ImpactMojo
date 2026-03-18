@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Budget Template Generator | ImpactMojo</title>
+    <meta name="description" content="Interactive budget template generator for NGO and development project planning. Build, customize, and export professional project budgets.">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0F172A;
+            --secondary-bg: #1E293B;
+            --accent-color: #0EA5E9;
+            --accent-hover: #0284C7;
+            --secondary-accent: #6366F1;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --card-bg: #1E293B;
+            --hover-bg: #334155;
+            --border-color: #334155;
+            --font-sans: 'Amaranth', sans-serif;
+            --font-heading: 'Inter', sans-serif;
+
+            --cat-personnel: #6366F1;
+            --cat-travel: #0EA5E9;
+            --cat-activities: #10B981;
+            --cat-equipment: #F59E0B;
+            --cat-office: #EC4899;
+            --cat-me: #8B5CF6;
+            --cat-indirect: #F97316;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background: var(--primary-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; transition: color 0.2s ease; }
+        .back-link:hover { color: var(--accent-hover); }
+        .back-link svg { width: 18px; height: 18px; }
+
+        .header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 1rem; background: rgba(14, 165, 233, 0.15); color: var(--accent-color); border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 650px; margin: 0 auto; }
+
+        /* Sections */
+        .section { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .section-title { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .section-title svg { width: 20px; height: 20px; stroke: var(--accent-color); flex-shrink: 0; }
+
+        /* Form Controls */
+        label { display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.3rem; font-weight: 500; }
+        input[type="text"], input[type="number"], select {
+            width: 100%; padding: 0.65rem 0.85rem; background: var(--primary-bg); border: 1px solid var(--border-color);
+            border-radius: 8px; color: var(--text-primary); font-size: 0.95rem; font-family: var(--font-sans);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus, select:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15); }
+        select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.6rem center; background-size: 16px; padding-right: 2.2rem; }
+        select option { background: var(--secondary-bg); color: var(--text-primary); }
+
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+        .form-group { display: flex; flex-direction: column; }
+
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border: none; border-radius: 8px; font-family: var(--font-sans); font-size: 0.9rem; cursor: pointer; transition: all 0.2s; font-weight: 500; }
+        .btn svg { width: 16px; height: 16px; }
+        .btn-primary { background: var(--accent-color); color: #fff; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-success { background: var(--success-color); color: #fff; }
+        .btn-success:hover { background: #059669; }
+        .btn-warning { background: var(--warning-color); color: #1E293B; }
+        .btn-warning:hover { background: #D97706; }
+        .btn-danger { background: transparent; color: var(--danger-color); border: 1px solid var(--danger-color); padding: 0.35rem 0.65rem; font-size: 0.8rem; }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.15); }
+        .btn-ghost { background: var(--secondary-bg); color: var(--text-secondary); border: 1px solid var(--border-color); }
+        .btn-ghost:hover { border-color: var(--accent-color); color: var(--text-primary); }
+        .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
+
+        .btn-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+        /* Template Cards */
+        .template-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; margin-top: 0.75rem; }
+        .template-card { background: var(--primary-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; cursor: pointer; transition: all 0.2s; text-align: center; }
+        .template-card:hover { border-color: var(--accent-color); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+        .template-card.active { border-color: var(--accent-color); background: rgba(14,165,233,0.08); }
+        .template-card h4 { font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 0.25rem; color: var(--text-primary); }
+        .template-card .template-meta { font-size: 0.78rem; color: var(--text-muted); }
+
+        /* Budget Table */
+        .budget-table-wrap { overflow-x: auto; margin-top: 0.75rem; -webkit-overflow-scrolling: touch; }
+        .budget-table { width: 100%; border-collapse: collapse; min-width: 700px; font-size: 0.9rem; }
+        .budget-table th { background: var(--primary-bg); padding: 0.65rem 0.75rem; text-align: left; font-family: var(--font-heading); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); border-bottom: 2px solid var(--border-color); position: sticky; top: 0; z-index: 1; }
+        .budget-table th:last-child, .budget-table td:last-child { text-align: right; }
+        .budget-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(51,65,85,0.5); vertical-align: middle; }
+        .budget-table .cat-header { background: rgba(14,165,233,0.06); font-weight: 700; font-family: var(--font-heading); cursor: pointer; user-select: none; }
+        .budget-table .cat-header td { padding: 0.75rem; border-bottom: 1px solid var(--border-color); }
+        .budget-table .cat-header .cat-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.5rem; }
+        .budget-table .cat-subtotal { background: rgba(14,165,233,0.04); font-weight: 600; }
+        .budget-table .cat-subtotal td { border-top: 1px solid var(--border-color); }
+        .budget-table .grand-total { background: rgba(14,165,233,0.12); font-weight: 700; font-family: var(--font-heading); font-size: 1rem; }
+        .budget-table .grand-total td { border-top: 2px solid var(--accent-color); padding: 0.85rem 0.75rem; }
+
+        .budget-table input[type="text"], .budget-table input[type="number"] {
+            padding: 0.4rem 0.5rem; font-size: 0.85rem; background: var(--primary-bg); border: 1px solid transparent; border-radius: 6px;
+        }
+        .budget-table input:hover { border-color: var(--border-color); }
+        .budget-table input:focus { border-color: var(--accent-color); }
+        .budget-table .item-name-input { width: 100%; min-width: 140px; }
+        .budget-table .num-input { width: 90px; text-align: right; }
+        .budget-table .line-total { font-weight: 600; color: var(--accent-color); white-space: nowrap; }
+        .budget-table .delete-row { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.25rem; border-radius: 4px; transition: color 0.2s; }
+        .budget-table .delete-row:hover { color: var(--danger-color); }
+
+        .add-item-btn { margin-top: 0.25rem; margin-bottom: 0.5rem; font-size: 0.8rem; padding: 0.3rem 0.7rem; }
+
+        /* Chart */
+        .chart-section { margin-top: 1rem; }
+        .bar-chart { display: flex; flex-direction: column; gap: 0.5rem; }
+        .bar-row { display: flex; align-items: center; gap: 0.75rem; }
+        .bar-label { width: 130px; font-size: 0.82rem; color: var(--text-secondary); text-align: right; flex-shrink: 0; }
+        .bar-track { flex: 1; height: 24px; background: var(--primary-bg); border-radius: 6px; overflow: hidden; position: relative; }
+        .bar-fill { height: 100%; border-radius: 6px; transition: width 0.4s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 0.5rem; font-size: 0.72rem; font-weight: 600; color: #fff; min-width: fit-content; }
+        .bar-pct { width: 50px; font-size: 0.82rem; color: var(--text-muted); text-align: right; flex-shrink: 0; }
+
+        /* Warnings */
+        .alert { padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.88rem; margin-top: 1rem; display: flex; align-items: flex-start; gap: 0.5rem; }
+        .alert svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+        .alert-warning { background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245,158,11,0.3); color: var(--warning-color); }
+        .alert-info { background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.25); color: var(--accent-color); }
+
+        /* Summary Cards */
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+        .summary-card { background: var(--primary-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; text-align: center; }
+        .summary-card .summary-value { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--accent-color); }
+        .summary-card .summary-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+        /* Tips */
+        .tip-box { background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2); border-radius: 10px; padding: 1rem 1.25rem; margin-top: 0.75rem; }
+        .tip-box h4 { font-family: var(--font-heading); font-size: 0.9rem; color: var(--secondary-accent); margin-bottom: 0.4rem; }
+        .tip-box p, .tip-box li { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.65; }
+        .tip-box ul { margin-left: 1.2rem; margin-top: 0.3rem; }
+        .tip-box a { color: var(--accent-color); text-decoration: none; }
+        .tip-box a:hover { text-decoration: underline; }
+
+        /* Export */
+        .export-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+
+        /* Footer */
+        .footer { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        .footer a { color: var(--accent-color); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Print */
+        @media print {
+            body { background: #fff; color: #000; }
+            .back-link, .btn, .export-bar, .template-grid, .tip-box, .header-badge, .add-item-btn, .delete-row, .footer { display: none !important; }
+            .container { max-width: 100%; padding: 0; }
+            .section { border: 1px solid #ccc; box-shadow: none; }
+            .budget-table th { background: #f0f0f0; color: #333; }
+            .budget-table td { color: #333; border-color: #ddd; }
+            .budget-table input { border: none; background: transparent; color: #000; padding: 0; }
+            .header h1 { background: none; -webkit-text-fill-color: #1a1a2e; color: #1a1a2e; }
+            .summary-card { border-color: #ccc; }
+            .summary-card .summary-value { color: #1a1a2e; }
+            .bar-fill { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+        }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--success-color); color: #fff; padding: 0.75rem 1.25rem; border-radius: 10px; font-size: 0.9rem; z-index: 999; transform: translateY(100px); opacity: 0; transition: all 0.3s ease; pointer-events: none; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .template-grid { grid-template-columns: repeat(2, 1fr); }
+            .summary-grid { grid-template-columns: repeat(2, 1fr); }
+            .bar-label { width: 80px; font-size: 0.75rem; }
+            .export-bar { flex-direction: column; }
+            .export-bar .btn { width: 100%; justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .template-grid { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/courses/mel/index.html" class="back-link">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            Back to Courses
+        </a>
+
+        <header class="header">
+            <div class="header-badge">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                Interactive Lab Tool
+            </div>
+            <h1>Project Budget Template Generator</h1>
+            <p>Build professional project budgets for NGO and development programs. Start from a template or build from scratch, then export for your proposal.</p>
+        </header>
+
+        <!-- Project Setup -->
+        <div class="section">
+            <div class="section-title">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Project Setup
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="projectName">Project Name</label>
+                    <input type="text" id="projectName" placeholder="e.g., Rural Livelihoods Enhancement Program" value="">
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration (months)</label>
+                    <input type="number" id="duration" min="1" max="120" value="12">
+                </div>
+                <div class="form-group">
+                    <label for="currency">Currency</label>
+                    <select id="currency">
+                        <option value="INR">INR - Indian Rupee</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="BDT">BDT - Bangladeshi Taka</option>
+                        <option value="NPR">NPR - Nepalese Rupee</option>
+                        <option value="LKR">LKR - Sri Lankan Rupee</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="funderType">Funder Type</label>
+                    <select id="funderType">
+                        <option value="bilateral">Bilateral (USAID, DFID, GIZ)</option>
+                        <option value="multilateral">Multilateral (UN, World Bank)</option>
+                        <option value="foundation">Foundation (Gates, Ford)</option>
+                        <option value="government">Government (domestic)</option>
+                        <option value="csr">CSR / Corporate</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="beneficiaries">Target Beneficiaries</label>
+                    <input type="number" id="beneficiaries" min="0" value="1000" placeholder="e.g., 1000">
+                </div>
+            </div>
+        </div>
+
+        <!-- Smart Templates -->
+        <div class="section">
+            <div class="section-title">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+                Quick Start Templates
+            </div>
+            <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:0.5rem;">Select a template to pre-fill your budget, then customize as needed. Or start with a blank budget below.</p>
+            <div class="template-grid">
+                <div class="template-card" onclick="loadTemplate('livelihoods')">
+                    <h4>Livelihoods Program</h4>
+                    <div class="template-meta">12 months | SHGs, skill training</div>
+                </div>
+                <div class="template-card" onclick="loadTemplate('health')">
+                    <h4>Health Intervention</h4>
+                    <div class="template-meta">24 months | Community health</div>
+                </div>
+                <div class="template-card" onclick="loadTemplate('education')">
+                    <h4>Education Project</h4>
+                    <div class="template-meta">12 months | Schools, learning</div>
+                </div>
+                <div class="template-card" onclick="loadTemplate('wash')">
+                    <h4>WASH Program</h4>
+                    <div class="template-meta">18 months | Water & sanitation</div>
+                </div>
+                <div class="template-card" onclick="loadTemplate('gender')">
+                    <h4>Gender Empowerment</h4>
+                    <div class="template-meta">12 months | Women-led initiatives</div>
+                </div>
+                <div class="template-card" onclick="loadTemplate('blank')" style="border-style:dashed;">
+                    <h4>Blank Budget</h4>
+                    <div class="template-meta">Start from scratch</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Budget Table -->
+        <div class="section" id="budgetSection">
+            <div class="section-title">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                Budget Builder
+            </div>
+            <div class="budget-table-wrap">
+                <table class="budget-table" id="budgetTable">
+                    <thead>
+                        <tr>
+                            <th style="width:30px;"></th>
+                            <th>Line Item</th>
+                            <th style="width:100px;">Unit Cost</th>
+                            <th style="width:80px;">Quantity</th>
+                            <th style="width:80px;">Months</th>
+                            <th style="width:120px;">Total</th>
+                            <th style="width:40px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="budgetBody">
+                        <!-- Rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="overheadWarning"></div>
+        </div>
+
+        <!-- Summary -->
+        <div class="section" id="summarySection">
+            <div class="section-title">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                Budget Summary
+            </div>
+            <div class="summary-grid" id="summaryCards"></div>
+            <div class="chart-section">
+                <div class="bar-chart" id="barChart"></div>
+            </div>
+        </div>
+
+        <!-- Export -->
+        <div class="section">
+            <div class="section-title">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Export Options
+            </div>
+            <div class="export-bar">
+                <button class="btn btn-primary" onclick="downloadCSV()">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Download CSV
+                </button>
+                <button class="btn btn-success" onclick="copyToClipboard()">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                    Copy for Excel
+                </button>
+                <button class="btn btn-ghost" onclick="window.print()">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                    Print View
+                </button>
+            </div>
+        </div>
+
+        <!-- Tips -->
+        <div class="section">
+            <div class="section-title">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Budget Best Practices
+            </div>
+
+            <div class="tip-box" style="margin-top:0;">
+                <h4>Personnel Costs</h4>
+                <ul>
+                    <li>Salary benchmarking: Use sector salary surveys (e.g., Indian Development Sector Salary Survey) for realistic figures.</li>
+                    <li>Include statutory benefits: PF, gratuity, medical insurance (add 20-30% on top of gross salary in India).</li>
+                    <li>Consultants: Budget daily rates; short-term experts are often more cost-effective than full-time hires for specialized tasks.</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <h4>Funder-Specific Guidance</h4>
+                <ul>
+                    <li><strong>Bilateral (USAID/DFID):</strong> Indirect costs typically negotiated at 10-15%. Require detailed cost notes.</li>
+                    <li><strong>Multilateral (UN/WB):</strong> Often use harmonized budget templates. Programme support costs usually 7-8%.</li>
+                    <li><strong>Foundations:</strong> More flexible on overhead (8-15%). Focus on cost-effectiveness narrative.</li>
+                    <li><strong>Government:</strong> Strict line-item budgets. Overhead usually capped at 5-8%.</li>
+                    <li><strong>CSR:</strong> Prefer low admin costs (under 10%). Strong focus on direct beneficiary spend.</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <h4>Realistic Costing for South Asian Contexts</h4>
+                <ul>
+                    <li>Factor in seasonal accessibility issues (monsoon travel costs, field activity windows).</li>
+                    <li>Community mobilizer stipends: INR 8,000-15,000/month (varies by state and urban/rural).</li>
+                    <li>Training workshop costs: INR 500-1,500 per participant per day (including refreshments, venue, materials).</li>
+                    <li>Always budget a 3-5% contingency for exchange rate fluctuations and price escalation.</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <h4>Helpful Resources</h4>
+                <p>
+                    <a href="/courses/mel/index.html">ImpactMojo M&E Course</a> &mdash; Learn to plan M&E budgets effectively.<br>
+                    <a href="/courses/devecon/index.html">Development Economics Course</a> &mdash; Cost-effectiveness analysis frameworks.<br>
+                    <a href="/courses/poa/index.html">Program Operations &amp; Administration</a> &mdash; Program planning and budgeting.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Project Budget Template Generator &mdash; <a href="/">ImpactMojo</a> &mdash; Built for development practitioners.</p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+<script>
+// ===== DATA =====
+const CATEGORIES = [
+    { id: 'personnel', name: 'Personnel', color: 'var(--cat-personnel)', colorHex: '#6366F1' },
+    { id: 'travel', name: 'Travel & Transport', color: 'var(--cat-travel)', colorHex: '#0EA5E9' },
+    { id: 'activities', name: 'Activities / Programs', color: 'var(--cat-activities)', colorHex: '#10B981' },
+    { id: 'equipment', name: 'Equipment', color: 'var(--cat-equipment)', colorHex: '#F59E0B' },
+    { id: 'office', name: 'Office / Operations', color: 'var(--cat-office)', colorHex: '#EC4899' },
+    { id: 'me', name: 'M&E', color: 'var(--cat-me)', colorHex: '#8B5CF6' },
+    { id: 'indirect', name: 'Indirect / Overhead', color: 'var(--cat-indirect)', colorHex: '#F97316' }
+];
+
+const CURRENCY_SYMBOLS = { INR: '\u20B9', USD: '$', EUR: '\u20AC', BDT: '\u09F3', NPR: '\u0930\u0942', LKR: 'Rs' };
+
+const OVERHEAD_LIMITS = {
+    bilateral: { max: 15, label: 'Bilateral funders typically allow 10-15% indirect costs.' },
+    multilateral: { max: 8, label: 'Multilateral agencies typically cap programme support costs at 7-8%.' },
+    foundation: { max: 15, label: 'Foundations generally accept 8-15% overhead.' },
+    government: { max: 8, label: 'Government grants usually cap overhead at 5-8%.' },
+    csr: { max: 10, label: 'CSR funders prefer admin costs under 10%.' }
+};
+
+// Template data: arrays of { cat, name, unitCost, qty, months } (months=0 means use project duration)
+const TEMPLATES = {
+    livelihoods: {
+        name: 'Rural Livelihoods Enhancement Program', duration: 12, beneficiaries: 2000,
+        items: [
+            { cat:'personnel', name:'Project Manager', unitCost:75000, qty:1, months:0 },
+            { cat:'personnel', name:'M&E Officer', unitCost:45000, qty:1, months:0 },
+            { cat:'personnel', name:'Field Coordinators', unitCost:35000, qty:3, months:0 },
+            { cat:'personnel', name:'Community Workers / Mobilizers', unitCost:12000, qty:10, months:0 },
+            { cat:'personnel', name:'Finance & Admin Officer', unitCost:40000, qty:1, months:0 },
+            { cat:'personnel', name:'Livelihoods Consultant', unitCost:5000, qty:30, months:1 },
+            { cat:'travel', name:'Local travel (field visits)', unitCost:3000, qty:3, months:0 },
+            { cat:'travel', name:'Inter-city travel', unitCost:5000, qty:4, months:1 },
+            { cat:'travel', name:'Vehicle hire', unitCost:25000, qty:1, months:0 },
+            { cat:'travel', name:'Fuel & maintenance', unitCost:10000, qty:1, months:0 },
+            { cat:'activities', name:'SHG formation & training workshops', unitCost:15000, qty:20, months:1 },
+            { cat:'activities', name:'Skill training programs', unitCost:25000, qty:10, months:1 },
+            { cat:'activities', name:'Community meetings', unitCost:3000, qty:24, months:1 },
+            { cat:'activities', name:'IEC materials (posters, pamphlets)', unitCost:50000, qty:1, months:1 },
+            { cat:'activities', name:'Seed capital / revolving fund', unitCost:5000, qty:100, months:1 },
+            { cat:'equipment', name:'Laptops', unitCost:45000, qty:3, months:1 },
+            { cat:'equipment', name:'Tablets for field staff', unitCost:15000, qty:5, months:1 },
+            { cat:'equipment', name:'Projector & screen', unitCost:35000, qty:1, months:1 },
+            { cat:'office', name:'Office rent', unitCost:15000, qty:1, months:0 },
+            { cat:'office', name:'Utilities & internet', unitCost:5000, qty:1, months:0 },
+            { cat:'office', name:'Stationery & printing', unitCost:3000, qty:1, months:0 },
+            { cat:'office', name:'Communications (phone, data)', unitCost:4000, qty:1, months:0 },
+            { cat:'me', name:'Baseline survey', unitCost:200000, qty:1, months:1 },
+            { cat:'me', name:'Endline survey', unitCost:200000, qty:1, months:1 },
+            { cat:'me', name:'Monthly data collection', unitCost:10000, qty:1, months:0 },
+            { cat:'me', name:'MIS / data platform', unitCost:50000, qty:1, months:1 },
+            { cat:'indirect', name:'Organization overhead (10%)', unitCost:0, qty:1, months:1, pct:10 },
+            { cat:'indirect', name:'Contingency (5%)', unitCost:0, qty:1, months:1, pct:5 }
+        ]
+    },
+    health: {
+        name: 'Community Health Intervention Program', duration: 24, beneficiaries: 5000,
+        items: [
+            { cat:'personnel', name:'Project Director', unitCost:90000, qty:1, months:0 },
+            { cat:'personnel', name:'M&E Specialist', unitCost:55000, qty:1, months:0 },
+            { cat:'personnel', name:'Health Program Coordinators', unitCost:40000, qty:2, months:0 },
+            { cat:'personnel', name:'Community Health Workers (ASHA support)', unitCost:10000, qty:15, months:0 },
+            { cat:'personnel', name:'Finance Officer', unitCost:40000, qty:1, months:0 },
+            { cat:'personnel', name:'Admin Assistant', unitCost:25000, qty:1, months:0 },
+            { cat:'personnel', name:'Public Health Consultant', unitCost:8000, qty:20, months:1 },
+            { cat:'travel', name:'Local travel (health facility visits)', unitCost:4000, qty:4, months:0 },
+            { cat:'travel', name:'Inter-district travel', unitCost:5000, qty:6, months:1 },
+            { cat:'travel', name:'Vehicle hire (2 vehicles)', unitCost:25000, qty:2, months:0 },
+            { cat:'travel', name:'Fuel & maintenance', unitCost:15000, qty:1, months:0 },
+            { cat:'activities', name:'Health camps', unitCost:30000, qty:24, months:1 },
+            { cat:'activities', name:'Training of health workers', unitCost:20000, qty:8, months:1 },
+            { cat:'activities', name:'BCC / awareness campaigns', unitCost:25000, qty:12, months:1 },
+            { cat:'activities', name:'IEC materials (health education)', unitCost:75000, qty:1, months:1 },
+            { cat:'activities', name:'Community meetings / PLA sessions', unitCost:3000, qty:48, months:1 },
+            { cat:'equipment', name:'Laptops', unitCost:45000, qty:4, months:1 },
+            { cat:'equipment', name:'BP monitors, weighing scales', unitCost:5000, qty:15, months:1 },
+            { cat:'equipment', name:'Tablets for data collection', unitCost:15000, qty:8, months:1 },
+            { cat:'office', name:'Office rent', unitCost:18000, qty:1, months:0 },
+            { cat:'office', name:'Utilities & internet', unitCost:6000, qty:1, months:0 },
+            { cat:'office', name:'Stationery', unitCost:3000, qty:1, months:0 },
+            { cat:'office', name:'Communications', unitCost:5000, qty:1, months:0 },
+            { cat:'me', name:'Baseline health survey', unitCost:300000, qty:1, months:1 },
+            { cat:'me', name:'Midline assessment', unitCost:150000, qty:1, months:1 },
+            { cat:'me', name:'Endline survey', unitCost:300000, qty:1, months:1 },
+            { cat:'me', name:'Data collection tools / MIS', unitCost:100000, qty:1, months:1 },
+            { cat:'me', name:'External evaluation consultant', unitCost:400000, qty:1, months:1 },
+            { cat:'indirect', name:'Organization overhead (8%)', unitCost:0, qty:1, months:1, pct:8 },
+            { cat:'indirect', name:'Contingency (3%)', unitCost:0, qty:1, months:1, pct:3 }
+        ]
+    },
+    education: {
+        name: 'Quality Education Enhancement Project', duration: 12, beneficiaries: 3000,
+        items: [
+            { cat:'personnel', name:'Project Manager', unitCost:70000, qty:1, months:0 },
+            { cat:'personnel', name:'M&E Officer', unitCost:45000, qty:1, months:0 },
+            { cat:'personnel', name:'Education Coordinators', unitCost:35000, qty:2, months:0 },
+            { cat:'personnel', name:'Teaching Fellows / Resource Persons', unitCost:20000, qty:8, months:0 },
+            { cat:'personnel', name:'Finance & Admin', unitCost:35000, qty:1, months:0 },
+            { cat:'personnel', name:'Education Consultant', unitCost:5000, qty:15, months:1 },
+            { cat:'travel', name:'School visits (local travel)', unitCost:3000, qty:3, months:0 },
+            { cat:'travel', name:'Inter-city / block travel', unitCost:4000, qty:4, months:1 },
+            { cat:'travel', name:'Vehicle hire', unitCost:22000, qty:1, months:0 },
+            { cat:'activities', name:'Teacher training workshops', unitCost:20000, qty:12, months:1 },
+            { cat:'activities', name:'Learning material development', unitCost:100000, qty:1, months:1 },
+            { cat:'activities', name:'Community engagement events', unitCost:5000, qty:15, months:1 },
+            { cat:'activities', name:'Student learning kits', unitCost:500, qty:3000, months:1 },
+            { cat:'activities', name:'Library books & TLM', unitCost:30000, qty:10, months:1 },
+            { cat:'equipment', name:'Laptops', unitCost:45000, qty:3, months:1 },
+            { cat:'equipment', name:'Tablets for assessments', unitCost:15000, qty:5, months:1 },
+            { cat:'equipment', name:'Projectors for schools', unitCost:30000, qty:5, months:1 },
+            { cat:'office', name:'Office rent', unitCost:12000, qty:1, months:0 },
+            { cat:'office', name:'Utilities & internet', unitCost:4000, qty:1, months:0 },
+            { cat:'office', name:'Stationery & printing', unitCost:3000, qty:1, months:0 },
+            { cat:'me', name:'Baseline learning assessment', unitCost:150000, qty:1, months:1 },
+            { cat:'me', name:'Endline learning assessment', unitCost:150000, qty:1, months:1 },
+            { cat:'me', name:'Monthly monitoring visits', unitCost:8000, qty:1, months:0 },
+            { cat:'me', name:'MIS platform', unitCost:50000, qty:1, months:1 },
+            { cat:'indirect', name:'Organization overhead (10%)', unitCost:0, qty:1, months:1, pct:10 },
+            { cat:'indirect', name:'Contingency (4%)', unitCost:0, qty:1, months:1, pct:4 }
+        ]
+    },
+    wash: {
+        name: 'Water, Sanitation & Hygiene (WASH) Program', duration: 18, beneficiaries: 4000,
+        items: [
+            { cat:'personnel', name:'Project Manager', unitCost:80000, qty:1, months:0 },
+            { cat:'personnel', name:'WASH Engineer', unitCost:60000, qty:1, months:0 },
+            { cat:'personnel', name:'M&E Officer', unitCost:45000, qty:1, months:0 },
+            { cat:'personnel', name:'Community Mobilizers', unitCost:12000, qty:8, months:0 },
+            { cat:'personnel', name:'Finance & Admin', unitCost:38000, qty:1, months:0 },
+            { cat:'personnel', name:'WASH Consultant', unitCost:6000, qty:20, months:1 },
+            { cat:'travel', name:'Field travel (village visits)', unitCost:4000, qty:4, months:0 },
+            { cat:'travel', name:'Vehicle hire', unitCost:25000, qty:1, months:0 },
+            { cat:'travel', name:'Fuel & maintenance', unitCost:12000, qty:1, months:0 },
+            { cat:'activities', name:'Hygiene promotion campaigns', unitCost:15000, qty:16, months:1 },
+            { cat:'activities', name:'CLTS triggering sessions', unitCost:8000, qty:30, months:1 },
+            { cat:'activities', name:'Water committee trainings', unitCost:12000, qty:10, months:1 },
+            { cat:'activities', name:'IEC materials', unitCost:60000, qty:1, months:1 },
+            { cat:'activities', name:'Handwashing stations (schools)', unitCost:8000, qty:20, months:1 },
+            { cat:'equipment', name:'Water quality testing kits', unitCost:25000, qty:5, months:1 },
+            { cat:'equipment', name:'Laptops', unitCost:45000, qty:3, months:1 },
+            { cat:'equipment', name:'GPS devices', unitCost:15000, qty:3, months:1 },
+            { cat:'office', name:'Office rent', unitCost:15000, qty:1, months:0 },
+            { cat:'office', name:'Utilities & internet', unitCost:5000, qty:1, months:0 },
+            { cat:'office', name:'Stationery & printing', unitCost:3000, qty:1, months:0 },
+            { cat:'office', name:'Communications', unitCost:4000, qty:1, months:0 },
+            { cat:'me', name:'Baseline KAP survey', unitCost:200000, qty:1, months:1 },
+            { cat:'me', name:'Endline KAP survey', unitCost:200000, qty:1, months:1 },
+            { cat:'me', name:'Water quality monitoring', unitCost:10000, qty:1, months:0 },
+            { cat:'me', name:'MIS / data platform', unitCost:75000, qty:1, months:1 },
+            { cat:'indirect', name:'Organization overhead (10%)', unitCost:0, qty:1, months:1, pct:10 },
+            { cat:'indirect', name:'Contingency (5%)', unitCost:0, qty:1, months:1, pct:5 }
+        ]
+    },
+    gender: {
+        name: 'Women Empowerment & Gender Equality Program', duration: 12, beneficiaries: 1500,
+        items: [
+            { cat:'personnel', name:'Project Manager', unitCost:70000, qty:1, months:0 },
+            { cat:'personnel', name:'Gender Specialist', unitCost:55000, qty:1, months:0 },
+            { cat:'personnel', name:'M&E Officer', unitCost:45000, qty:1, months:0 },
+            { cat:'personnel', name:'Field Coordinators', unitCost:30000, qty:2, months:0 },
+            { cat:'personnel', name:'Community Workers (women)', unitCost:12000, qty:8, months:0 },
+            { cat:'personnel', name:'Finance & Admin', unitCost:35000, qty:1, months:0 },
+            { cat:'travel', name:'Local travel (village visits)', unitCost:3000, qty:3, months:0 },
+            { cat:'travel', name:'Inter-city travel', unitCost:5000, qty:4, months:1 },
+            { cat:'travel', name:'Vehicle hire', unitCost:22000, qty:1, months:0 },
+            { cat:'activities', name:'Women SHG meetings & training', unitCost:10000, qty:24, months:1 },
+            { cat:'activities', name:'Gender sensitization workshops', unitCost:20000, qty:6, months:1 },
+            { cat:'activities', name:'Legal awareness camps', unitCost:15000, qty:6, months:1 },
+            { cat:'activities', name:'Entrepreneurship training', unitCost:25000, qty:8, months:1 },
+            { cat:'activities', name:'IEC / BCC materials', unitCost:50000, qty:1, months:1 },
+            { cat:'activities', name:'Exposure visits for women leaders', unitCost:30000, qty:3, months:1 },
+            { cat:'equipment', name:'Laptops', unitCost:45000, qty:2, months:1 },
+            { cat:'equipment', name:'Tablets', unitCost:15000, qty:4, months:1 },
+            { cat:'office', name:'Office rent', unitCost:12000, qty:1, months:0 },
+            { cat:'office', name:'Utilities & internet', unitCost:4000, qty:1, months:0 },
+            { cat:'office', name:'Stationery & printing', unitCost:2500, qty:1, months:0 },
+            { cat:'me', name:'Baseline survey (gender analysis)', unitCost:175000, qty:1, months:1 },
+            { cat:'me', name:'Endline survey', unitCost:175000, qty:1, months:1 },
+            { cat:'me', name:'Monthly data collection', unitCost:8000, qty:1, months:0 },
+            { cat:'me', name:'Documentation & case studies', unitCost:50000, qty:1, months:1 },
+            { cat:'indirect', name:'Organization overhead (10%)', unitCost:0, qty:1, months:1, pct:10 },
+            { cat:'indirect', name:'Contingency (4%)', unitCost:0, qty:1, months:1, pct:4 }
+        ]
+    },
+    blank: {
+        name: '', duration: 12, beneficiaries: 1000,
+        items: [
+            { cat:'personnel', name:'Project Manager', unitCost:0, qty:1, months:0 },
+            { cat:'personnel', name:'M&E Officer', unitCost:0, qty:1, months:0 },
+            { cat:'travel', name:'Local travel', unitCost:0, qty:1, months:0 },
+            { cat:'activities', name:'Training workshops', unitCost:0, qty:1, months:1 },
+            { cat:'equipment', name:'Laptops', unitCost:0, qty:1, months:1 },
+            { cat:'office', name:'Office rent', unitCost:0, qty:1, months:0 },
+            { cat:'me', name:'Baseline survey', unitCost:0, qty:1, months:1 },
+            { cat:'indirect', name:'Organization overhead', unitCost:0, qty:1, months:1, pct:0 },
+            { cat:'indirect', name:'Contingency', unitCost:0, qty:1, months:1, pct:0 }
+        ]
+    }
+};
+
+// ===== STATE =====
+let budgetItems = []; // { id, cat, name, unitCost, qty, months, pct? }
+let nextId = 1;
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+    loadTemplate('livelihoods');
+    document.getElementById('duration').addEventListener('change', recalcAll);
+    document.getElementById('currency').addEventListener('change', recalcAll);
+    document.getElementById('funderType').addEventListener('change', recalcAll);
+    document.getElementById('beneficiaries').addEventListener('change', recalcAll);
+});
+
+function loadTemplate(key) {
+    const tpl = TEMPLATES[key];
+    if (!tpl) return;
+    const dur = tpl.duration;
+    document.getElementById('duration').value = dur;
+    if (tpl.name) document.getElementById('projectName').value = tpl.name;
+    if (tpl.beneficiaries) document.getElementById('beneficiaries').value = tpl.beneficiaries;
+
+    // highlight card
+    document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
+    const cards = document.querySelectorAll('.template-card');
+    const keys = ['livelihoods','health','education','wash','gender','blank'];
+    const idx = keys.indexOf(key);
+    if (idx >= 0 && cards[idx]) cards[idx].classList.add('active');
+
+    budgetItems = tpl.items.map(it => ({
+        id: nextId++,
+        cat: it.cat,
+        name: it.name,
+        unitCost: it.unitCost,
+        qty: it.qty,
+        months: it.months === 0 ? dur : it.months,
+        pct: it.pct || 0
+    }));
+
+    renderBudget();
+}
+
+// ===== RENDER =====
+function renderBudget() {
+    const tbody = document.getElementById('budgetBody');
+    const dur = parseInt(document.getElementById('duration').value) || 12;
+    let html = '';
+
+    // Compute direct total (all except indirect) for overhead percentage calculation
+    const directTotal = budgetItems.filter(i => i.cat !== 'indirect').reduce((s, i) => s + lineTotal(i), 0);
+
+    CATEGORIES.forEach(cat => {
+        const items = budgetItems.filter(i => i.cat === cat.id);
+        if (items.length === 0 && cat.id !== 'personnel') return; // always show personnel
+
+        const catTotal = items.reduce((s, i) => {
+            if (i.pct && i.pct > 0) return s + Math.round(directTotal * i.pct / 100);
+            return s + lineTotal(i);
+        }, 0);
+
+        html += `<tr class="cat-header" onclick="toggleCategory('${cat.id}')">
+            <td colspan="6"><span class="cat-dot" style="background:${cat.color}"></span>${cat.name}</td>
+            <td style="text-align:right;font-weight:600;">${formatCurrency(catTotal)}</td>
+        </tr>`;
+
+        items.forEach(item => {
+            const isIndirectPct = item.cat === 'indirect' && item.pct > 0;
+            const total = isIndirectPct ? Math.round(directTotal * item.pct / 100) : lineTotal(item);
+            html += `<tr class="item-row" data-cat="${cat.id}">
+                <td></td>
+                <td><input type="text" class="item-name-input" value="${escHtml(item.name)}" onchange="updateItem(${item.id},'name',this.value)"></td>
+                <td>${isIndirectPct
+                    ? `<input type="number" class="num-input" value="${item.pct}" min="0" max="100" step="0.5" onchange="updateItem(${item.id},'pct',this.value)" title="Percentage of direct costs"> <span style="font-size:0.75rem;color:var(--text-muted);">%</span>`
+                    : `<input type="number" class="num-input" value="${item.unitCost}" min="0" onchange="updateItem(${item.id},'unitCost',this.value)">`
+                }</td>
+                <td>${isIndirectPct ? '' : `<input type="number" class="num-input" value="${item.qty}" min="0" onchange="updateItem(${item.id},'qty',this.value)">`}</td>
+                <td>${isIndirectPct ? '' : `<input type="number" class="num-input" value="${item.months}" min="1" max="120" onchange="updateItem(${item.id},'months',this.value)">`}</td>
+                <td class="line-total">${formatCurrency(total)}</td>
+                <td><button class="delete-row" onclick="removeItem(${item.id})" title="Remove line item">&times;</button></td>
+            </tr>`;
+        });
+
+        // Subtotal row
+        html += `<tr class="cat-subtotal" data-cat="${cat.id}">
+            <td colspan="5" style="text-align:right;color:var(--text-muted);font-size:0.82rem;">Subtotal: ${cat.name}</td>
+            <td colspan="2" style="text-align:right;">${formatCurrency(catTotal)}</td>
+        </tr>`;
+
+        // Add item button
+        html += `<tr data-cat="${cat.id}"><td colspan="7"><button class="btn btn-ghost btn-sm add-item-btn" onclick="addItem('${cat.id}')">+ Add line item</button></td></tr>`;
+    });
+
+    // Grand total
+    const grandTotal = computeGrandTotal(directTotal);
+    html += `<tr class="grand-total"><td colspan="5" style="text-align:right;">GRAND TOTAL</td><td colspan="2" style="text-align:right;">${formatCurrency(grandTotal)}</td></tr>`;
+
+    tbody.innerHTML = html;
+    renderSummary(directTotal, grandTotal);
+    renderChart(directTotal);
+    checkOverhead(directTotal, grandTotal);
+}
+
+function lineTotal(item) {
+    return (item.unitCost || 0) * (item.qty || 0) * (item.months || 1);
+}
+
+function computeGrandTotal(directTotal) {
+    const indirectItems = budgetItems.filter(i => i.cat === 'indirect');
+    const indirectTotal = indirectItems.reduce((s, i) => {
+        if (i.pct && i.pct > 0) return s + Math.round(directTotal * i.pct / 100);
+        return s + lineTotal(i);
+    }, 0);
+    return directTotal + indirectTotal;
+}
+
+function getCatTotal(catId, directTotal) {
+    return budgetItems.filter(i => i.cat === catId).reduce((s, i) => {
+        if (i.pct && i.pct > 0) return s + Math.round(directTotal * i.pct / 100);
+        return s + lineTotal(i);
+    }, 0);
+}
+
+// ===== SUMMARY =====
+function renderSummary(directTotal, grandTotal) {
+    const curr = document.getElementById('currency').value;
+    const sym = CURRENCY_SYMBOLS[curr];
+    const bene = parseInt(document.getElementById('beneficiaries').value) || 1;
+    const dur = parseInt(document.getElementById('duration').value) || 12;
+    const costPerBene = grandTotal / bene;
+    const monthlyCost = grandTotal / dur;
+    const indirectTotal = grandTotal - directTotal;
+    const overheadPct = directTotal > 0 ? ((indirectTotal / directTotal) * 100).toFixed(1) : '0.0';
+
+    document.getElementById('summaryCards').innerHTML = `
+        <div class="summary-card"><div class="summary-value">${formatCurrency(grandTotal)}</div><div class="summary-label">Grand Total</div></div>
+        <div class="summary-card"><div class="summary-value">${formatCurrency(directTotal)}</div><div class="summary-label">Direct Costs</div></div>
+        <div class="summary-card"><div class="summary-value">${overheadPct}%</div><div class="summary-label">Overhead Rate</div></div>
+        <div class="summary-card"><div class="summary-value">${sym} ${Math.round(costPerBene).toLocaleString()}</div><div class="summary-label">Cost / Beneficiary</div></div>
+        <div class="summary-card"><div class="summary-value">${formatCurrency(Math.round(monthlyCost))}</div><div class="summary-label">Monthly Burn Rate</div></div>
+    `;
+}
+
+// ===== BAR CHART =====
+function renderChart(directTotal) {
+    const grandTotal = computeGrandTotal(directTotal);
+    if (grandTotal === 0) { document.getElementById('barChart').innerHTML = ''; return; }
+    let html = '';
+    CATEGORIES.forEach(cat => {
+        const catTotal = getCatTotal(cat.id, directTotal);
+        if (catTotal === 0) return;
+        const pct = ((catTotal / grandTotal) * 100).toFixed(1);
+        html += `<div class="bar-row">
+            <div class="bar-label">${cat.name}</div>
+            <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${cat.color};">${formatCurrency(catTotal)}</div></div>
+            <div class="bar-pct">${pct}%</div>
+        </div>`;
+    });
+    document.getElementById('barChart').innerHTML = html;
+}
+
+// ===== OVERHEAD WARNING =====
+function checkOverhead(directTotal, grandTotal) {
+    const funder = document.getElementById('funderType').value;
+    const limit = OVERHEAD_LIMITS[funder];
+    const indirectTotal = grandTotal - directTotal;
+    const overheadPct = directTotal > 0 ? (indirectTotal / directTotal) * 100 : 0;
+    const container = document.getElementById('overheadWarning');
+
+    if (overheadPct > limit.max) {
+        container.innerHTML = `<div class="alert alert-warning">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+            <div><strong>Overhead warning:</strong> Your indirect costs are ${overheadPct.toFixed(1)}% of direct costs. ${limit.label}</div>
+        </div>`;
+    } else {
+        container.innerHTML = `<div class="alert alert-info">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div>Overhead is ${overheadPct.toFixed(1)}% of direct costs. ${limit.label}</div>
+        </div>`;
+    }
+}
+
+// ===== ITEM CRUD =====
+function updateItem(id, field, val) {
+    const item = budgetItems.find(i => i.id === id);
+    if (!item) return;
+    if (field === 'name') item.name = val;
+    else if (field === 'pct') item.pct = parseFloat(val) || 0;
+    else item[field] = parseFloat(val) || 0;
+    renderBudget();
+}
+
+function removeItem(id) {
+    budgetItems = budgetItems.filter(i => i.id !== id);
+    renderBudget();
+}
+
+function addItem(catId) {
+    const dur = parseInt(document.getElementById('duration').value) || 12;
+    const isIndirect = catId === 'indirect';
+    budgetItems.push({
+        id: nextId++,
+        cat: catId,
+        name: '',
+        unitCost: 0,
+        qty: 1,
+        months: isIndirect ? 1 : dur,
+        pct: isIndirect ? 0 : 0
+    });
+    renderBudget();
+    // Focus the new item name input
+    setTimeout(() => {
+        const inputs = document.querySelectorAll(`tr[data-cat="${catId}"] .item-name-input`);
+        if (inputs.length) inputs[inputs.length - 1].focus();
+    }, 50);
+}
+
+function recalcAll() {
+    renderBudget();
+}
+
+// ===== EXPORT =====
+function downloadCSV() {
+    const projectName = document.getElementById('projectName').value || 'Project_Budget';
+    const curr = document.getElementById('currency').value;
+    const directTotal = budgetItems.filter(i => i.cat !== 'indirect').reduce((s, i) => s + lineTotal(i), 0);
+    let csv = 'Category,Line Item,Unit Cost,Quantity,Months,Total (' + curr + ')\n';
+
+    CATEGORIES.forEach(cat => {
+        const items = budgetItems.filter(i => i.cat === cat.id);
+        items.forEach(item => {
+            const isIndirectPct = item.cat === 'indirect' && item.pct > 0;
+            const total = isIndirectPct ? Math.round(directTotal * item.pct / 100) : lineTotal(item);
+            csv += `"${cat.name}","${item.name}",${isIndirectPct ? item.pct + '%' : item.unitCost},${isIndirectPct ? '' : item.qty},${isIndirectPct ? '' : item.months},${total}\n`;
+        });
+        const catTotal = getCatTotal(cat.id, directTotal);
+        if (catTotal > 0) csv += `"${cat.name}","SUBTOTAL",,,,${catTotal}\n`;
+    });
+    const grandTotal = computeGrandTotal(directTotal);
+    csv += `"","GRAND TOTAL",,,,${grandTotal}\n`;
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = projectName.replace(/[^a-zA-Z0-9_-]/g, '_') + '_Budget.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('CSV downloaded successfully');
+}
+
+function copyToClipboard() {
+    const curr = document.getElementById('currency').value;
+    const directTotal = budgetItems.filter(i => i.cat !== 'indirect').reduce((s, i) => s + lineTotal(i), 0);
+    let tsv = 'Category\tLine Item\tUnit Cost\tQuantity\tMonths\tTotal (' + curr + ')\n';
+
+    CATEGORIES.forEach(cat => {
+        const items = budgetItems.filter(i => i.cat === cat.id);
+        items.forEach(item => {
+            const isIndirectPct = item.cat === 'indirect' && item.pct > 0;
+            const total = isIndirectPct ? Math.round(directTotal * item.pct / 100) : lineTotal(item);
+            tsv += `${cat.name}\t${item.name}\t${isIndirectPct ? item.pct + '%' : item.unitCost}\t${isIndirectPct ? '' : item.qty}\t${isIndirectPct ? '' : item.months}\t${total}\n`;
+        });
+        const catTotal = getCatTotal(cat.id, directTotal);
+        if (catTotal > 0) tsv += `${cat.name}\tSUBTOTAL\t\t\t\t${catTotal}\n`;
+    });
+    const grandTotal = computeGrandTotal(directTotal);
+    tsv += `\tGRAND TOTAL\t\t\t\t${grandTotal}\n`;
+
+    navigator.clipboard.writeText(tsv).then(() => {
+        showToast('Copied! Paste into Excel or Google Sheets.');
+    }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = tsv;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('Copied to clipboard');
+    });
+}
+
+// ===== UTILS =====
+function formatCurrency(val) {
+    const curr = document.getElementById('currency').value;
+    const sym = CURRENCY_SYMBOLS[curr];
+    if (val >= 10000000) return sym + ' ' + (val / 10000000).toFixed(2) + ' Cr';
+    if (val >= 100000 && curr === 'INR') return sym + ' ' + (val / 100000).toFixed(2) + ' L';
+    return sym + ' ' + val.toLocaleString('en-IN');
+}
+
+function escHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+
+<!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
+<script defer src="../js/translate.js"></script>
+<script src="/js/search.js" defer></script>
+</body>
+</html>

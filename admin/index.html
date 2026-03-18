@@ -392,6 +392,245 @@ body {
 @media (max-width: 768px) {
     .kpi-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ============================================================
+   USER MANAGEMENT PANEL
+   ============================================================ */
+.um-summary-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px; margin-bottom: 24px;
+}
+.um-summary-card {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 12px; padding: 16px 20px; position: relative; overflow: hidden;
+}
+.um-summary-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.um-summary-card.blue::before { background: var(--accent-color); }
+.um-summary-card.green::before { background: var(--success-color); }
+.um-summary-card.purple::before { background: var(--secondary-accent); }
+.um-summary-card.amber::before { background: var(--warning-color); }
+.um-summary-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 2px; }
+.um-summary-value { font-family: 'Inter', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--text-primary); }
+
+.um-toolbar {
+    display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;
+}
+.um-search {
+    flex: 1; min-width: 200px; padding: 9px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color); background: var(--primary-bg);
+    color: var(--text-primary); font-family: inherit; font-size: 0.85rem;
+}
+.um-search:focus { outline: none; border-color: var(--accent-color); }
+.um-search::placeholder { color: var(--text-muted); }
+.um-filter-select {
+    padding: 9px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color); background: var(--primary-bg);
+    color: var(--text-primary); font-family: inherit; font-size: 0.85rem;
+    cursor: pointer; min-width: 130px;
+}
+.um-filter-select:focus { outline: none; border-color: var(--accent-color); }
+
+.um-table-wrap {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: 12px; overflow: hidden; margin-bottom: 16px;
+}
+.um-table-scroll { overflow-x: auto; }
+.um-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 700px; }
+.um-table th {
+    text-align: left; padding: 12px 16px; font-weight: 600; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);
+    border-bottom: 2px solid var(--border-color); background: var(--secondary-bg);
+    white-space: nowrap;
+}
+.um-table td { padding: 10px 16px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
+.um-table tr:last-child td { border-bottom: none; }
+.um-table tr:hover td { background: var(--hover-bg); }
+
+.um-role-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 100px;
+    font-size: 0.7rem; font-weight: 600; text-transform: capitalize;
+}
+.um-role-badge.admin { background: rgba(239,68,68,0.15); color: var(--danger-color); }
+.um-role-badge.instructor { background: rgba(99,102,241,0.15); color: var(--secondary-accent); }
+.um-role-badge.learner { background: rgba(14,165,233,0.15); color: var(--accent-color); }
+
+.um-status-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.75rem; font-weight: 500;
+}
+.um-status-badge .dot { width: 7px; height: 7px; border-radius: 50%; }
+.um-status-badge.active .dot { background: var(--success-color); }
+.um-status-badge.suspended .dot { background: var(--danger-color); }
+
+.um-actions-cell { white-space: nowrap; }
+.um-action-btn {
+    background: none; border: 1px solid var(--border-color); color: var(--text-secondary);
+    padding: 4px 10px; border-radius: 6px; font-size: 0.72rem; cursor: pointer;
+    font-family: inherit; transition: all var(--transition); margin-right: 4px;
+}
+.um-action-btn:hover { color: var(--accent-color); border-color: var(--accent-color); }
+.um-action-btn.danger:hover { color: var(--danger-color); border-color: var(--danger-color); }
+
+.um-pagination {
+    display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px;
+}
+.um-page-btn {
+    padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color);
+    background: var(--card-bg); color: var(--text-secondary); font-size: 0.82rem;
+    cursor: pointer; font-family: inherit; transition: all var(--transition);
+}
+.um-page-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.um-page-btn:disabled { opacity: 0.4; cursor: default; }
+.um-page-btn.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
+.um-page-info { font-size: 0.8rem; color: var(--text-muted); }
+
+.um-notice {
+    display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+    background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25);
+    border-radius: var(--radius-sm); margin-bottom: 20px; font-size: 0.82rem; color: var(--warning-color);
+}
+.um-notice svg { flex-shrink: 0; width: 18px; height: 18px; }
+
+/* User profile modal */
+.um-modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    z-index: 2000; align-items: center; justify-content: center; padding: 20px;
+}
+.um-modal-overlay.active { display: flex; }
+.um-modal {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg); max-width: 480px; width: 100%;
+    padding: 28px; position: relative; max-height: 80vh; overflow-y: auto;
+}
+.um-modal-close {
+    position: absolute; top: 12px; right: 12px; background: none; border: none;
+    color: var(--text-muted); cursor: pointer; padding: 4px;
+}
+.um-modal-close:hover { color: var(--text-primary); }
+.um-modal h3 { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+.um-modal-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; }
+.um-modal-row:last-child { border-bottom: none; }
+.um-modal-label { color: var(--text-muted); font-weight: 500; }
+.um-modal-value { color: var(--text-primary); font-weight: 500; }
+
+/* ============================================================
+   SITE SETTINGS PANEL
+   ============================================================ */
+.ss-section {
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); padding: 20px; margin-bottom: 20px;
+}
+.ss-section-title {
+    font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700;
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+    color: var(--text-primary);
+}
+.ss-section-title svg { width: 18px; height: 18px; color: var(--accent-color); }
+
+/* Feature flag toggles */
+.ss-flag-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 0; border-bottom: 1px solid var(--border-color);
+}
+.ss-flag-row:last-child { border-bottom: none; }
+.ss-flag-info { flex: 1; }
+.ss-flag-name { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); }
+.ss-flag-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+.ss-toggle {
+    position: relative; width: 44px; height: 24px; flex-shrink: 0; margin-left: 16px;
+}
+.ss-toggle input { opacity: 0; width: 0; height: 0; }
+.ss-toggle-slider {
+    position: absolute; inset: 0; background: var(--hover-bg);
+    border: 1px solid var(--border-color); border-radius: 12px;
+    cursor: pointer; transition: all 0.25s ease;
+}
+.ss-toggle-slider::before {
+    content: ''; position: absolute; width: 18px; height: 18px;
+    left: 2px; top: 2px; background: var(--text-muted); border-radius: 50%;
+    transition: all 0.25s ease;
+}
+.ss-toggle input:checked + .ss-toggle-slider { background: var(--accent-color); border-color: var(--accent-color); }
+.ss-toggle input:checked + .ss-toggle-slider::before { transform: translateX(20px); background: white; }
+
+/* Metadata fields */
+.ss-field-group { margin-bottom: 14px; }
+.ss-field-label {
+    display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;
+}
+.ss-field-input {
+    width: 100%; padding: 9px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color); background: var(--primary-bg);
+    color: var(--text-primary); font-family: inherit; font-size: 0.85rem;
+    box-sizing: border-box;
+}
+.ss-field-input:focus { outline: none; border-color: var(--accent-color); }
+.ss-field-textarea {
+    width: 100%; padding: 9px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color); background: var(--primary-bg);
+    color: var(--text-primary); font-family: inherit; font-size: 0.85rem;
+    resize: vertical; min-height: 60px; box-sizing: border-box;
+}
+.ss-field-textarea:focus { outline: none; border-color: var(--accent-color); }
+.ss-save-btn {
+    padding: 9px 20px; border-radius: var(--radius-sm); border: none;
+    background: var(--accent-color); color: white; font-weight: 600;
+    font-size: 0.85rem; cursor: pointer; font-family: inherit;
+    transition: background var(--transition); margin-top: 8px;
+}
+.ss-save-btn:hover { background: var(--accent-hover); }
+.ss-save-btn:disabled { opacity: 0.5; cursor: default; }
+
+/* Integration status */
+.ss-integration-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 0; border-bottom: 1px solid var(--border-color);
+}
+.ss-integration-row:last-child { border-bottom: none; }
+.ss-integration-name { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); }
+.ss-integration-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.78rem; font-weight: 500;
+}
+.ss-integration-status .dot { width: 8px; height: 8px; border-radius: 50%; }
+.ss-integration-status.connected .dot { background: var(--success-color); }
+.ss-integration-status.connected { color: var(--success-color); }
+.ss-integration-status.disconnected .dot { background: var(--text-muted); }
+.ss-integration-status.disconnected { color: var(--text-muted); }
+
+/* Backup section */
+.ss-backup-row {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+}
+.ss-backup-info { font-size: 0.85rem; color: var(--text-secondary); }
+.ss-backup-info strong { color: var(--text-primary); font-weight: 600; }
+.ss-backup-btn {
+    padding: 8px 16px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color); background: var(--card-bg);
+    color: var(--text-primary); font-weight: 600; font-size: 0.82rem;
+    cursor: pointer; font-family: inherit; transition: all var(--transition);
+    display: inline-flex; align-items: center; gap: 6px;
+}
+.ss-backup-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.ss-backup-btn:disabled { opacity: 0.5; cursor: default; }
+
+.ss-toast {
+    position: fixed; bottom: 24px; right: 24px; padding: 12px 20px;
+    background: var(--success-color); color: white; border-radius: var(--radius-sm);
+    font-size: 0.85rem; font-weight: 600; z-index: 3000;
+    transform: translateY(80px); opacity: 0; transition: all 0.3s ease;
+}
+.ss-toast.visible { transform: translateY(0); opacity: 1; }
+
+@media (max-width: 640px) {
+    .um-summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .um-toolbar { flex-direction: column; }
+    .um-search, .um-filter-select { min-width: 100%; }
+}
 </style>
 </head>
 
@@ -502,6 +741,14 @@ body {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
                 Analytics
             </button>
+            <button class="admin-tab" data-tab="users" onclick="switchAdminTab('users')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Users
+            </button>
+            <button class="admin-tab" data-tab="settings" onclick="switchAdminTab('settings')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                Settings
+            </button>
         </div>
 
         <!-- TAB: Overview -->
@@ -585,23 +832,23 @@ body {
                 <span class="dash-card-badge badge-live">Public</span>
             </a>
 
-            <div class="dash-card" style="opacity:0.5; cursor:default;">
+            <a class="dash-card" href="javascript:void(0)" onclick="switchAdminTab('users')">
                 <div class="dash-card-icon red">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 </div>
                 <div class="dash-card-title">User Management</div>
                 <div class="dash-card-desc">View registered users, manage roles, review subscriptions and memberships.</div>
-                <span class="dash-card-badge badge-soon">Coming Soon</span>
-            </div>
+                <span class="dash-card-badge badge-live">Live</span>
+            </a>
 
-            <div class="dash-card" style="opacity:0.5; cursor:default;">
+            <a class="dash-card" href="javascript:void(0)" onclick="switchAdminTab('settings')">
                 <div class="dash-card-icon amber">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 </div>
                 <div class="dash-card-title">Site Settings</div>
                 <div class="dash-card-desc">Feature flags, maintenance mode, integrations, and site metadata.</div>
-                <span class="dash-card-badge badge-soon">Coming Soon</span>
-            </div>
+                <span class="dash-card-badge badge-live">Live</span>
+            </a>
         </div>
 
         <!-- Ideas Tracker -->
@@ -721,6 +968,194 @@ body {
                 </div>
             </div>
         </div><!-- end tab-analytics -->
+
+        <!-- TAB: User Management -->
+        <div id="tab-users" class="tab-content">
+
+            <!-- Supabase notice (shown when using mock data) -->
+            <div class="um-notice" id="umNotice" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <span>Supabase not connected or no user data found. Showing placeholder data. Connect Supabase with a <code>profiles</code> table to load real users.</span>
+            </div>
+
+            <!-- Summary cards -->
+            <div class="um-summary-grid" id="umSummaryGrid">
+                <div class="um-summary-card blue">
+                    <div class="um-summary-label">Total Users</div>
+                    <div class="um-summary-value" id="umTotalUsers">--</div>
+                </div>
+                <div class="um-summary-card green">
+                    <div class="um-summary-label">Active Today</div>
+                    <div class="um-summary-value" id="umActiveToday">--</div>
+                </div>
+                <div class="um-summary-card purple">
+                    <div class="um-summary-label">New This Week</div>
+                    <div class="um-summary-value" id="umNewWeek">--</div>
+                </div>
+                <div class="um-summary-card amber">
+                    <div class="um-summary-label">Premium</div>
+                    <div class="um-summary-value" id="umPremium">--</div>
+                </div>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="um-toolbar">
+                <input type="text" class="um-search" id="umSearch" placeholder="Search by name or email..." oninput="umFilterUsers()">
+                <select class="um-filter-select" id="umRoleFilter" onchange="umFilterUsers()">
+                    <option value="">All Roles</option>
+                    <option value="admin">Admin</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="learner">Learner</option>
+                </select>
+                <select class="um-filter-select" id="umStatusFilter" onchange="umFilterUsers()">
+                    <option value="">All Statuses</option>
+                    <option value="active">Active</option>
+                    <option value="suspended">Suspended</option>
+                </select>
+            </div>
+
+            <!-- Users table -->
+            <div class="um-table-wrap">
+                <div class="um-table-scroll">
+                    <table class="um-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Last Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="umTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="um-pagination" id="umPagination"></div>
+            </div>
+
+        </div><!-- end tab-users -->
+
+        <!-- TAB: Site Settings -->
+        <div id="tab-settings" class="tab-content">
+
+            <!-- Feature Flags -->
+            <div class="ss-section">
+                <div class="ss-section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                    Feature Flags
+                </div>
+                <div class="ss-flag-row">
+                    <div class="ss-flag-info">
+                        <div class="ss-flag-name">Maintenance Mode</div>
+                        <div class="ss-flag-desc">Show a maintenance banner to all visitors. Site remains accessible.</div>
+                    </div>
+                    <label class="ss-toggle"><input type="checkbox" id="ssMaintenanceMode" onchange="ssSaveFlags()"><span class="ss-toggle-slider"></span></label>
+                </div>
+                <div class="ss-flag-row">
+                    <div class="ss-flag-info">
+                        <div class="ss-flag-name">Registration Open</div>
+                        <div class="ss-flag-desc">Allow new users to register on the platform.</div>
+                    </div>
+                    <label class="ss-toggle"><input type="checkbox" id="ssRegistrationOpen" onchange="ssSaveFlags()" checked><span class="ss-toggle-slider"></span></label>
+                </div>
+                <div class="ss-flag-row">
+                    <div class="ss-flag-info">
+                        <div class="ss-flag-name">Premium Features Enabled</div>
+                        <div class="ss-flag-desc">Enable access to premium courses, tools, and labs for subscribed users.</div>
+                    </div>
+                    <label class="ss-toggle"><input type="checkbox" id="ssPremiumEnabled" onchange="ssSaveFlags()" checked><span class="ss-toggle-slider"></span></label>
+                </div>
+                <div class="ss-flag-row">
+                    <div class="ss-flag-info">
+                        <div class="ss-flag-name">AI Agents Enabled</div>
+                        <div class="ss-flag-desc">Enable AI-powered agents like VaniScribe and Code Convert Pro.</div>
+                    </div>
+                    <label class="ss-toggle"><input type="checkbox" id="ssAIEnabled" onchange="ssSaveFlags()" checked><span class="ss-toggle-slider"></span></label>
+                </div>
+            </div>
+
+            <!-- Site Metadata -->
+            <div class="ss-section">
+                <div class="ss-section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+                    Site Metadata
+                </div>
+                <div class="ss-field-group">
+                    <label class="ss-field-label" for="ssSiteTitle">Site Title</label>
+                    <input type="text" class="ss-field-input" id="ssSiteTitle" value="ImpactMojo">
+                </div>
+                <div class="ss-field-group">
+                    <label class="ss-field-label" for="ssSiteDesc">Site Description</label>
+                    <textarea class="ss-field-textarea" id="ssSiteDesc">Free courses, tools, and resources for international development professionals.</textarea>
+                </div>
+                <div class="ss-field-group">
+                    <label class="ss-field-label" for="ssSupportEmail">Support Email</label>
+                    <input type="email" class="ss-field-input" id="ssSupportEmail" value="support@impactmojo.in">
+                </div>
+                <button class="ss-save-btn" id="ssMetaSaveBtn" onclick="ssSaveMetadata()">Save Metadata</button>
+            </div>
+
+            <!-- Integrations -->
+            <div class="ss-section">
+                <div class="ss-section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    Integrations
+                </div>
+                <div class="ss-integration-row">
+                    <span class="ss-integration-name">Supabase</span>
+                    <span class="ss-integration-status" id="ssIntSupabase">
+                        <span class="dot"></span> Checking...
+                    </span>
+                </div>
+                <div class="ss-integration-row">
+                    <span class="ss-integration-name">Netlify</span>
+                    <span class="ss-integration-status" id="ssIntNetlify">
+                        <span class="dot"></span> Checking...
+                    </span>
+                </div>
+                <div class="ss-integration-row">
+                    <span class="ss-integration-name">Google Analytics (GA4)</span>
+                    <span class="ss-integration-status" id="ssIntGA4">
+                        <span class="dot"></span> Checking...
+                    </span>
+                </div>
+            </div>
+
+            <!-- Backup -->
+            <div class="ss-section">
+                <div class="ss-section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Backup
+                </div>
+                <div class="ss-backup-row">
+                    <div class="ss-backup-info">
+                        Last backup: <strong id="ssLastBackup">Never</strong>
+                    </div>
+                    <button class="ss-backup-btn" id="ssBackupBtn" onclick="ssTriggerBackup()">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Trigger Manual Backup
+                    </button>
+                </div>
+            </div>
+
+        </div><!-- end tab-settings -->
+
+        <!-- User Profile Modal -->
+        <div class="um-modal-overlay" id="umModal">
+            <div class="um-modal">
+                <button class="um-modal-close" onclick="umCloseModal()">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+                <h3 id="umModalTitle">User Profile</h3>
+                <div id="umModalBody"></div>
+            </div>
+        </div>
+
+        <!-- Settings Toast -->
+        <div class="ss-toast" id="ssToast"></div>
+
     </main>
 
     <!-- Footer -->
@@ -877,6 +1312,14 @@ function switchAdminTab(tabId) {
             var jps = document.getElementById('jsonPasteSection');
             if (jps) jps.style.display = '';
         }
+    }
+    if (tabId === 'users' && !window._usersRendered) {
+        umInit();
+        window._usersRendered = true;
+    }
+    if (tabId === 'settings' && !window._settingsRendered) {
+        ssInit();
+        window._settingsRendered = true;
     }
 }
 
