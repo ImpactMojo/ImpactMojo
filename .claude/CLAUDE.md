@@ -41,7 +41,15 @@ When implementing major features, significant refactoring, or multi-file bug fix
 - Update `sitemap.xml` if new pages were added
 - Update `data/search-index.json` if new searchable content was added
 
-### 7. Quality Checks
+### 7. Backup
+- Copy current `index.html` to `Backups/` before major changes
+- Verify backups are not stale
+
+### 8. Counts & References
+- Verify game, lab, course counts are consistent across all pages and docs
+- Check for stale `101.impactmojo.in` links that should point to self-hosted files
+
+### 9. Quality Checks
 - Ensure no broken links in navigation
 - Verify mobile responsiveness for new UI
 - Check text contrast/readability (WCAG AA minimum)
