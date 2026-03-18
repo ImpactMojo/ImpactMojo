@@ -6,7 +6,7 @@ ImpactMojo offers **interactive games** that teach development-relevant concepts
 
 These aren't quizzes or flashcards. They're interactive simulations where your decisions have consequences, and the concepts become clear through play rather than lecture.
 
-All 12 games are **free, browser-based, and require no login**. They are self-hosted at `/Games/` on impactmojo.in.
+All games are **free, browser-based, and require no login**. They are self-hosted at `/Games/` on impactmojo.in.
 
 ### MiroFish AI Agents
 
@@ -46,6 +46,14 @@ See [Game Agents documentation](game-agents.md) for technical details on the AI 
 | **Externality Game** | Market failures | Hidden social costs and benefits — pollution, education spillovers — and why markets alone don't solve them | Ashok, Nalini, Bina |
 | **The Real Middle** | Inequality dynamics | Wealth distribution, income mobility, and the precarity of middle-class status in India | 5 simulated households |
 | **Econ Concepts Puzzle** | Mixed economics | Economic reasoning through puzzles and brain-teasers covering supply/demand, game theory, and market structure | — |
+
+### Beyond Economics
+
+| Game | Concept | What You Learn | AI Agents |
+|------|---------|---------------|-----------|
+| **Climate Action Challenge** | Climate science | Allocate resources between mitigation and adaptation across decades — the lesson that both are needed together | — |
+| **Care Economy Challenge** | Gender equity | Experience the invisible burden of unpaid care work and how policy choices affect equity outcomes | — |
+| **Epidemic Response** | Public health | Manage a disease outbreak across surveillance, treatment, prevention, community health workers, and communication | — |
 
 ---
 

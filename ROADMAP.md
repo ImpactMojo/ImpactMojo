@@ -22,11 +22,21 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 - [x] **Self-hosted interactive games** with MiroFish AI agents — replacing Netlify-hosted apps
 - [x] **MiroFish AI agent engine** — Supabase Edge Function with multi-provider LLM fallback (Groq/Gemini/DeepSeek)
 - [x] **30+ AI agent personas** — South Asian development practitioners across 10 games
+- [x] **3 new games** beyond economics — Climate Action, Gender Equity, Public Health (Digital Ethics in progress)
+- [x] **Indian folk art story illustrations** — across all games in 6 styles
+- [x] **Card text contrast fixes** — WCAG AA compliance across 8 games
+- [x] **Sample Size Calculator** — survey planning lab with 4 calculation modes
+- [x] **Budget Template Generator** — project budget lab with smart templates and CSV export
+- [x] **Admin dashboard** — User Management and Site Settings panels
+- [x] **Accessibility improvements** — skip-nav, ARIA landmarks, focus styles on key pages
+- [x] **Old Netlify game sites deleted** — freed 12 slots
+- [x] **PolicyDhara workflow fix** — commit-msg prefix causing build failures
+- [x] **Gender Studies flagship course** — in progress
 
 ## Q2 2026 (Apr-Jun) — Planned
 
 - [ ] **Vernacular Content** — Full courses in Hindi and Tamil (#29)
-- [ ] **Cohort-based learning** — Scheduled cohorts with discussion threads and deadlines
+- [ ] **Cohort-based learning** — Scheduled cohorts with discussion threads and deadlines (schema designed)
 - [ ] **Notification system** — Email digests for course updates, streak reminders, community activity
 - [ ] **Analytics dashboard v2** — Learner analytics with completion funnels, time-on-task, assessment scores
 - [ ] **Mobile app (PWA)** — Enhanced PWA with push notifications and background sync
@@ -36,7 +46,6 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 - [ ] **Peer review system** — Learners review each other's assignments and case analyses
 - [ ] **Certificate marketplace** — Employer-facing verification portal
 - [ ] **API for partners** — REST API for organizations to integrate ImpactMojo content
-- [ ] **Accessibility audit** — Full WCAG 2.1 AA compliance review and fixes
 
 ## Q4 2026 (Oct-Dec) — Exploratory
 
