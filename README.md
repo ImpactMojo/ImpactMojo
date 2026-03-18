@@ -40,8 +40,8 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | Category | Description |
 |----------|-------------|
 | **48 Courses** | 9 flagship + 39 foundational courses across 6 learning tracks |
-| **10 Interactive Labs** | Hands-on workbenches for MEL, policy, partnerships, and more |
-| **12 Learning Games** | Economics simulations with MiroFish AI agents (Groq/Gemini/DeepSeek) |
+| **12 Interactive Labs** | Hands-on workbenches for MEL, policy, partnerships, budgeting, and more |
+| **16 Learning Games** | Interactive simulations with MiroFish AI agents and Indian folk art (Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) |
 | **ImpactLex Dictionary** | 500+ development terms with contextual definitions (PWA) |
 | **Dev Case Studies** | 200 evidence-based case studies from 117 countries |
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
@@ -149,35 +149,44 @@ Shorter introductory courses covering the breadth of development practice:
 | **Health & Wellbeing** | Public Health 101, Climate Essentials, Social Emotional Learning, Decent Work for All, Livelihoods Fundamentals |
 | **Communication & Data** | English for Development, Visual Ethnography, Data Literacy for Development, BCC and Communications, Advocacy Fundamentals, Digital Development Ethics, Education and Pedagogy |
 
-### Interactive Labs (10)
+### Interactive Labs (12)
 
-- **MEL Design Lab** — Theory of change and evaluation framework builder
-- **MEL Plan Lab** — Operational planning tool for monitoring systems
-- **Qual Insights Lab** — Thematic analysis workbench for interview/FGD data
-- **Risk Mitigation Lab** — Scenario planning and risk identification
-- **Policy Advocacy Lab** — Strategic planning for advocacy campaigns
-- **Resource Sustainability Lab** — Resource flow analysis and sustainability modeling
-- **Impact Partnerships Lab** — Partnership mapping and collaboration design
-- **Design Thinking Lab** — Structured facilitation for problem-solving
-- **Storytelling Lab** — Crafting evidence-based impact narratives
-- **Community Engagement Lab** — Participatory engagement strategy design
+- **Theory of Change Lab** — Guided ToC builder with real-time flowchart diagram and PNG export
+- **MEL Design Lab** — Monitoring, evaluation, and learning framework builder
+- **MEL Plan Lab** — Complete MEL implementation plan with data collection schedule
+- **Design Thinking Lab** — Human-centred design process: empathy maps, ideation, prototyping
+- **Storytelling Lab** — Impact narrative builder with 4 format adapters and ethical checklist
+- **Risk Mitigation Lab** — Risk register with 5×5 heatmap and mitigation strategies
+- **Policy Advocacy Lab** — Policy brief generator with stakeholder mapping
+- **Resource Sustainability Lab** — Resource mobilisation and sustainability planning
+- **Impact Partnerships Lab** — Partnership mapping and collaboration framework
+- **Community Engagement Lab** — Participatory assessment and action planning
+- **Sample Size Calculator** — Survey sample size for proportion, mean, two-group, and cluster designs
+- **Budget Template Generator** — Project budget builder with smart templates and CSV export
 
 ### Learning Games (16)
 
-Self-contained economics simulations powered by **MiroFish AI agents** — each game features AI opponents with distinct South Asian personas, backed by Groq/Gemini/DeepSeek LLMs with automatic fallback to a local personality engine:
+Interactive simulations powered by **MiroFish AI agents** with **Indian folk art story illustrations** in 6 traditional styles. Each game features AI opponents with distinct South Asian personas, backed by Groq/Gemini/DeepSeek LLMs with automatic fallback:
 
-- **Public Good Game** — Free-rider problems and collective action (4 AI agents)
-- **Prisoners' Dilemma** — Strategic interdependence with tit-for-tat, grudger, pavlov, and random strategies (4 AI agents)
-- **Opportunity Cost Game** — Budget allocation across health, education, livelihoods with diminishing returns (2 AI agents)
-- **Network Effects Game** — Platform adoption, S-curve dynamics, critical mass (3 AI agents)
-- **Cooperation Paradox** — Nash equilibrium vs Pareto efficiency (2 AI agents)
-- **Risk & Reward Explorer** — Prospect theory, framing effects, loss aversion (3 AI agents)
-- **Bidding Wars** — Sealed-bid auctions and the winner's curse (3 AI agents)
-- **Information Asymmetry** — Akerlof's lemons problem, signaling, verification (3 AI agents)
+**Economics & Markets:**
+- **Public Good Game** — Free-rider problems and collective action (4 AI agents, Pichwai art)
+- **Prisoners' Dilemma** — Strategic interdependence (4 AI agents, Gond art)
+- **Opportunity Cost Game** — Budget allocation with diminishing returns (2 AI agents, Kalamkari art)
+- **Network Effects Game** — Platform adoption and critical mass (3 AI agents, Warli art)
+- **Cooperation Paradox** — Nash equilibrium vs Pareto efficiency (2 AI agents, Warli art)
+- **Risk & Reward Explorer** — Prospect theory and loss aversion (3 AI agents, Kalamkari art)
+- **Bidding Wars** — Sealed-bid auctions and winner's curse (3 AI agents, Pichwai art)
+- **Information Asymmetry** — Akerlof's lemons problem (3 AI agents, Pattachitra art)
 - **Externality Game** — Pigouvian taxation and market failure (3 AI agents)
-- **Commons Crisis** — Tragedy of the commons, Ostrom's design principles (4 AI agents)
-- **Real Middle India** — Income inequality dynamics and precarity in India
-- **Econ Concepts Puzzle** — 12 brain-teasers with South Asian development context
+- **Commons Crisis** — Tragedy of the commons (4 AI agents)
+- **Real Middle India** — Income inequality in India (Madhubani art)
+- **Econ Concepts Puzzle** — Brain-teasers with South Asian context (Madhubani art)
+
+**Beyond Economics:**
+- **Climate Action Challenge** — Mitigation vs adaptation across decades (Warli art)
+- **Care Economy Challenge** — Gender equity and unpaid care work (Madhubani art)
+- **Epidemic Response** — Public health outbreak management (Pattachitra art)
+- **Algorithm's Dilemma** — AI ethics: fairness, privacy, trust tradeoffs (Gond art)
 
 ### Other Resources
 
@@ -391,7 +400,8 @@ ImpactMojo/
 │   ├── econ-concepts-game.html    # Economics: concept quiz
 │   ├── climate-action-game.html   # Climate: mitigation vs adaptation
 │   ├── gender-equity-game.html    # Gender: care economy
-│   └── public-health-game.html    # Health: epidemic response
+│   ├── public-health-game.html    # Health: epidemic response
+│   └── digital-ethics-game.html   # Ethics: AI fairness tradeoffs
 │
 ├── supabase/
 │   ├── functions/
@@ -643,7 +653,7 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 10.2.0
+**Version:** 10.3.0
 **Last Updated:** March 2026
 **License:** MIT (code) + CC BY-NC-ND 4.0 (content)
 **Hosting:** Netlify
