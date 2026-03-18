@@ -5340,72 +5340,7 @@ window.addEventListener('click', function(e) {
     }
 }
 </style>
-<script>
-// Immediate hamburger fix - runs before DOMContentLoaded
-(function() {
-    function initHamburger() {
-        var btn = document.getElementById('mobile-menu-btn');
-        if (!btn) return false;
-        
-        // Remove any existing onclick
-        btn.onclick = null;
-        btn.removeAttribute('onclick');
-        
-        // Single handler for all interactions
-        function handleToggle(e) {
-            if (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-            }
-            
-            var navLinks = document.getElementById('navLinks');
-            var overlay = document.getElementById('mobileMenuOverlay');
-            
-            if (!navLinks) return;
-            
-            var isOpen = navLinks.classList.contains('active');
-            
-            if (isOpen) {
-                navLinks.classList.remove('active');
-                btn.classList.remove('active');
-                if (overlay) overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            } else {
-                navLinks.classList.add('active');
-                btn.classList.add('active');
-                if (overlay) overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-        
-        // Remove all existing listeners by cloning
-        var newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        btn = newBtn;
-        
-        // Add fresh listeners
-        btn.addEventListener('click', handleToggle, { passive: false, capture: true });
-        btn.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            handleToggle(e);
-        }, { passive: false, capture: true });
-        
-        return true;
-    }
-    
-    // Try immediately
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initHamburger);
-    } else {
-        initHamburger();
-    }
-    
-    // Also try after a delay as backup
-    setTimeout(initHamburger, 100);
-    setTimeout(initHamburger, 500);
-})();
-</script>
+<!-- Immediate hamburger fix removed — consolidated into FINAL MOBILE FIX -->
 
 <style id="v3-design-system">
 
@@ -13934,6 +13869,18 @@ PASTE THIS ENTIRE BLOCK JUST BEFORE
         z-index: 9000 !important;
         transform: none !important;
     }
+
+    /* Speed dial menu: fan out to the right on mobile (left-anchored FAB) */
+    #imxSpeedDial .imx-speed-dial-menu {
+        right: auto !important;
+        left: 0 !important;
+    }
+    #imxSpeedDial .imx-speed-dial-item {
+        flex-direction: row !important;
+    }
+    #imxSpeedDial .imx-speed-dial-label {
+        white-space: nowrap !important;
+    }
     
     #imxSpeedDialToggle {
         display: flex !important;
@@ -14020,7 +13967,6 @@ PASTE THIS ENTIRE BLOCK JUST BEFORE
 (function() {
     'use strict';
     var menuOpen = false;
-    var ready = false;
 
     var MENU_OPEN_STYLE = 'display:flex;position:fixed;top:60px;left:0;right:0;bottom:0;' +
         'width:100%;height:calc(100vh - 60px);background:var(--primary-bg,#0F172A);' +
@@ -14073,12 +14019,10 @@ PASTE THIS ENTIRE BLOCK JUST BEFORE
     window.toggleMobileMenu = toggle;
 
     function setup() {
-        if (ready) return;
         if (window.innerWidth > 768) return;
         var btn = document.getElementById('mobile-menu-btn');
         var overlay = document.getElementById('mobileMenuOverlay');
         if (!btn) return;
-        ready = true;
 
         // Clone to remove ALL old listeners
         var fresh = btn.cloneNode(true);
