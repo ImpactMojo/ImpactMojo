@@ -954,7 +954,7 @@ body{
     <button class="btn btn-gold" onclick="restartGame()">
       <span class="gavel"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Hammer.svg" width="18" height="18" alt="" class="imx-sargam-icon" aria-hidden="true"></span> Play Again
     </button>
-    <button class="btn btn-outline mt-2" onclick="document.getElementById('endScreen').classList.add('hidden');document.getElementById('welcome').classList.remove('hidden');window.scrollTo(0,0);">
+    <button class="btn btn-outline mt-2" onclick="document.getElementById('endScreen').classList.add('hidden');document.getElementById('storyIntro').classList.remove('hidden');window.scrollTo(0,0);">
       Back to Intro
     </button>
   </div>
@@ -1467,6 +1467,277 @@ function showEndScreen(){
     '</ul>';
 
   $('eduContent').innerHTML = eduHtml;
+}
+
+/* ── End Story Art (Pichwai) ──────────────────────── */
+function renderEndStoryArt(profitable){
+  var svg = '';
+  if(profitable){
+    // Celebration: merchant with treasures, lotus blooming, peacocks dancing
+    svg = '<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs>' +
+        '<linearGradient id="egGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#FFA000"/></linearGradient>' +
+        '<linearGradient id="egGreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2E7D32"/><stop offset="100%" stop-color="#1B5E20"/></linearGradient>' +
+        '<linearGradient id="egBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1565C0"/><stop offset="100%" stop-color="#0D47A1"/></linearGradient>' +
+        '<linearGradient id="egCrimson" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D32F2F"/><stop offset="100%" stop-color="#B71C1C"/></linearGradient>' +
+        '<pattern id="egLotusBorder" x="0" y="0" width="50" height="20" patternUnits="userSpaceOnUse">' +
+          '<path d="M25 2 C20 2,15 8,15 12 C15 16,20 18,25 18 C30 18,35 16,35 12 C35 8,30 2,25 2Z" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.6"/>' +
+          '<path d="M0 10 C5 6,10 8,12 10 C10 12,5 14,0 10Z" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>' +
+          '<path d="M50 10 C45 6,40 8,38 10 C40 12,45 14,50 10Z" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.4"/>' +
+        '</pattern>' +
+      '</defs>' +
+      '<rect width="800" height="400" fill="#0a1628"/>' +
+      // Lotus borders
+      '<rect x="0" y="0" width="800" height="20" fill="url(#egLotusBorder)" opacity="0.8"/>' +
+      '<rect x="0" y="380" width="800" height="20" fill="url(#egLotusBorder)" opacity="0.8"/>' +
+      // Ground
+      '<rect x="0" y="310" width="800" height="70" fill="#1B5E20" opacity="0.25"/>' +
+      // Golden rays from center
+      '<g opacity="0.08">' +
+        '<line x1="400" y1="100" x2="100" y2="380" stroke="#FFD700" stroke-width="3"/>' +
+        '<line x1="400" y1="100" x2="200" y2="380" stroke="#FFD700" stroke-width="2"/>' +
+        '<line x1="400" y1="100" x2="300" y2="380" stroke="#FFD700" stroke-width="2"/>' +
+        '<line x1="400" y1="100" x2="500" y2="380" stroke="#FFD700" stroke-width="2"/>' +
+        '<line x1="400" y1="100" x2="600" y2="380" stroke="#FFD700" stroke-width="2"/>' +
+        '<line x1="400" y1="100" x2="700" y2="380" stroke="#FFD700" stroke-width="3"/>' +
+      '</g>' +
+      // Victorious merchant center
+      '<g transform="translate(400,220)">' +
+        // Ornate mandapa frame
+        '<path d="M-80 60 L-80 -40 Q0 -100,80 -40 L80 60" fill="none" stroke="#FFD700" stroke-width="2.5" opacity="0.6"/>' +
+        '<path d="M-70 60 L-70 -30 Q0 -85,70 -30 L70 60" fill="rgba(255,248,225,0.03)" stroke="#FFD700" stroke-width="1" opacity="0.3"/>' +
+        // Body
+        '<ellipse cx="0" cy="15" rx="22" ry="30" fill="#FFA000" opacity="0.7"/>' +
+        '<ellipse cx="0" cy="15" rx="16" ry="24" fill="#FFD700" opacity="0.3"/>' +
+        // Necklace
+        '<path d="M-12 0 Q-8 8,0 10 Q8 8,12 0" fill="none" stroke="#FFD700" stroke-width="1.5"/>' +
+        '<circle cx="0" cy="10" r="2.5" fill="#B71C1C" opacity="0.7"/>' +
+        // Head
+        '<circle cx="0" cy="-22" r="14" fill="#D2B48C" opacity="0.8"/>' +
+        // Crown/turban
+        '<path d="M-14 -28 Q-16 -42,0 -46 Q16 -42,14 -28" fill="url(#egCrimson)"/>' +
+        '<path d="M-11 -30 Q-13 -40,0 -43 Q13 -40,11 -30" fill="#D32F2F" opacity="0.7"/>' +
+        '<path d="M-5 -42 L0 -50 L5 -42" fill="#FFD700" opacity="0.8"/>' +
+        '<circle cx="0" cy="-50" r="3" fill="#FFD700"/>' +
+        '<circle cx="0" cy="-38" r="4" fill="#FFD700" opacity="0.7"/>' +
+        '<circle cx="0" cy="-38" r="2" fill="#B71C1C" opacity="0.6"/>' +
+        // Eyes (happy)
+        '<path d="M-5 -22 Q-3 -24,-1 -22" fill="none" stroke="#1B5E20" stroke-width="1.2"/>' +
+        '<path d="M1 -22 Q3 -24,5 -22" fill="none" stroke="#1B5E20" stroke-width="1.2"/>' +
+        // Big smile
+        '<path d="M-6 -16 Q0 -10,6 -16" fill="none" stroke="#1B5E20" stroke-width="1.2"/>' +
+        // Arms raised in triumph
+        '<path d="M-18 5 Q-35 -15,-40 -25" fill="none" stroke="#D2B48C" stroke-width="4" stroke-linecap="round"/>' +
+        '<path d="M18 5 Q35 -15,40 -25" fill="none" stroke="#D2B48C" stroke-width="4" stroke-linecap="round"/>' +
+        // Holding treasures
+        '<circle cx="-42" cy="-28" r="6" fill="#FFD700" opacity="0.7"/>' +
+        '<circle cx="-42" cy="-28" r="3" fill="#FFF8E1" opacity="0.5"/>' +
+        '<circle cx="42" cy="-28" r="6" fill="#B71C1C" opacity="0.7"/>' +
+        '<circle cx="42" cy="-28" r="3" fill="#FFD700" opacity="0.5"/>' +
+        // Treasure pile at feet
+        '<ellipse cx="-20" cy="55" rx="12" ry="8" fill="#5D4037" opacity="0.6"/>' +
+        '<circle cx="-22" cy="50" r="4" fill="#FFD700" opacity="0.6"/>' +
+        '<circle cx="-16" cy="48" r="3" fill="#B71C1C" opacity="0.5"/>' +
+        '<circle cx="-25" cy="47" r="2.5" fill="#0D47A1" opacity="0.5"/>' +
+        '<ellipse cx="20" cy="55" rx="12" ry="8" fill="#5D4037" opacity="0.6"/>' +
+        '<circle cx="18" cy="50" r="4" fill="#FFD700" opacity="0.6"/>' +
+        '<circle cx="24" cy="48" r="3" fill="#2E7D32" opacity="0.5"/>' +
+      '</g>' +
+      // Large blooming lotuses (left)
+      '<g transform="translate(130,300)">' +
+        '<line x1="0" y1="20" x2="0" y2="50" stroke="#2E7D32" stroke-width="2.5" opacity="0.6"/>' +
+        '<ellipse cx="-15" cy="35" rx="18" ry="6" fill="#1B5E20" opacity="0.4" transform="rotate(-10)"/>' +
+        '<ellipse cx="15" cy="35" rx="18" ry="6" fill="#1B5E20" opacity="0.4" transform="rotate(10)"/>' +
+        // Petals layer 1
+        '<ellipse cx="0" cy="-15" rx="8" ry="18" fill="#B71C1C" opacity="0.6"/>' +
+        '<ellipse cx="-14" cy="-8" rx="8" ry="16" fill="#D32F2F" opacity="0.5" transform="rotate(-35)"/>' +
+        '<ellipse cx="14" cy="-8" rx="8" ry="16" fill="#D32F2F" opacity="0.5" transform="rotate(35)"/>' +
+        // Layer 2
+        '<ellipse cx="-9" cy="-12" rx="5" ry="13" fill="#FF5252" opacity="0.4" transform="rotate(-18)"/>' +
+        '<ellipse cx="9" cy="-12" rx="5" ry="13" fill="#FF5252" opacity="0.4" transform="rotate(18)"/>' +
+        // Layer 3
+        '<ellipse cx="0" cy="-10" rx="4" ry="10" fill="#FFD700" opacity="0.5"/>' +
+        '<circle cx="0" cy="-5" r="4" fill="#FFD700" opacity="0.7"/>' +
+        '<circle cx="0" cy="-5" r="2" fill="#FFF8E1" opacity="0.6"/>' +
+      '</g>' +
+      // Large blooming lotus (right)
+      '<g transform="translate(670,300)">' +
+        '<line x1="0" y1="20" x2="0" y2="50" stroke="#2E7D32" stroke-width="2.5" opacity="0.6"/>' +
+        '<ellipse cx="-15" cy="35" rx="18" ry="6" fill="#1B5E20" opacity="0.4" transform="rotate(-10)"/>' +
+        '<ellipse cx="15" cy="35" rx="18" ry="6" fill="#1B5E20" opacity="0.4" transform="rotate(10)"/>' +
+        '<ellipse cx="0" cy="-15" rx="8" ry="18" fill="#B71C1C" opacity="0.6"/>' +
+        '<ellipse cx="-14" cy="-8" rx="8" ry="16" fill="#D32F2F" opacity="0.5" transform="rotate(-35)"/>' +
+        '<ellipse cx="14" cy="-8" rx="8" ry="16" fill="#D32F2F" opacity="0.5" transform="rotate(35)"/>' +
+        '<ellipse cx="-9" cy="-12" rx="5" ry="13" fill="#FF5252" opacity="0.4" transform="rotate(-18)"/>' +
+        '<ellipse cx="9" cy="-12" rx="5" ry="13" fill="#FF5252" opacity="0.4" transform="rotate(18)"/>' +
+        '<ellipse cx="0" cy="-10" rx="4" ry="10" fill="#FFD700" opacity="0.5"/>' +
+        '<circle cx="0" cy="-5" r="4" fill="#FFD700" opacity="0.7"/>' +
+        '<circle cx="0" cy="-5" r="2" fill="#FFF8E1" opacity="0.6"/>' +
+      '</g>' +
+      // Celebrating peacock left
+      '<g transform="translate(250,260)">' +
+        '<ellipse cx="-15" cy="-35" rx="6" ry="28" fill="url(#egBlue)" opacity="0.5" transform="rotate(-30)"/>' +
+        '<circle cx="-28" cy="-48" r="3.5" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="-28" cy="-48" r="1.5" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="0" cy="-42" rx="6" ry="32" fill="url(#egBlue)" opacity="0.55" transform="rotate(-8)"/>' +
+        '<circle cx="-2" cy="-60" r="4" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="-2" cy="-60" r="1.8" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="15" cy="-35" rx="6" ry="28" fill="url(#egBlue)" opacity="0.5" transform="rotate(15)"/>' +
+        '<circle cx="22" cy="-50" r="3.5" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="22" cy="-50" r="1.5" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="0" cy="5" rx="12" ry="18" fill="#0D47A1" opacity="0.8"/>' +
+        '<path d="M-2 -10 Q-3 -25,0 -30 Q3 -25,2 -10" fill="#0D47A1"/>' +
+        '<circle cx="0" cy="-32" r="5" fill="#0D47A1"/>' +
+        '<circle cx="0" cy="-32" r="3.5" fill="#1565C0" opacity="0.7"/>' +
+        '<line x1="0" y1="-37" x2="0" y2="-44" stroke="#FFD700" stroke-width="0.8"/>' +
+        '<circle cx="0" cy="-44" r="1.2" fill="#FFD700"/>' +
+        '<circle cx="2" cy="-33" r="1" fill="#FFF8E1"/>' +
+        '<path d="M4 -32 L8 -33 L4 -31Z" fill="#FFD700"/>' +
+      '</g>' +
+      // Celebrating peacock right
+      '<g transform="translate(550,260) scale(-1,1)">' +
+        '<ellipse cx="-15" cy="-35" rx="6" ry="28" fill="url(#egBlue)" opacity="0.5" transform="rotate(-30)"/>' +
+        '<circle cx="-28" cy="-48" r="3.5" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="-28" cy="-48" r="1.5" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="0" cy="-42" rx="6" ry="32" fill="url(#egBlue)" opacity="0.55" transform="rotate(-8)"/>' +
+        '<circle cx="-2" cy="-60" r="4" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="-2" cy="-60" r="1.8" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="15" cy="-35" rx="6" ry="28" fill="url(#egBlue)" opacity="0.5" transform="rotate(15)"/>' +
+        '<circle cx="22" cy="-50" r="3.5" fill="#0D47A1" stroke="#FFD700" stroke-width="0.8" opacity="0.6"/>' +
+        '<circle cx="22" cy="-50" r="1.5" fill="#FFD700" opacity="0.6"/>' +
+        '<ellipse cx="0" cy="5" rx="12" ry="18" fill="#0D47A1" opacity="0.8"/>' +
+        '<path d="M-2 -10 Q-3 -25,0 -30 Q3 -25,2 -10" fill="#0D47A1"/>' +
+        '<circle cx="0" cy="-32" r="5" fill="#0D47A1"/>' +
+        '<circle cx="0" cy="-32" r="3.5" fill="#1565C0" opacity="0.7"/>' +
+        '<line x1="0" y1="-37" x2="0" y2="-44" stroke="#FFD700" stroke-width="0.8"/>' +
+        '<circle cx="0" cy="-44" r="1.2" fill="#FFD700"/>' +
+        '<circle cx="2" cy="-33" r="1" fill="#FFF8E1"/>' +
+        '<path d="M4 -32 L8 -33 L4 -31Z" fill="#FFD700"/>' +
+      '</g>' +
+      // Floating gold coins / sparkles
+      '<circle cx="300" cy="120" r="4" fill="#FFD700" opacity="0.5"/><circle cx="300" cy="120" r="2" fill="#FFF8E1" opacity="0.3"/>' +
+      '<circle cx="500" cy="130" r="3.5" fill="#FFD700" opacity="0.4"/><circle cx="500" cy="130" r="1.5" fill="#FFF8E1" opacity="0.3"/>' +
+      '<circle cx="350" cy="160" r="3" fill="#FFD700" opacity="0.35"/>' +
+      '<circle cx="450" cy="150" r="3" fill="#FFD700" opacity="0.35"/>' +
+      '<circle cx="200" cy="180" r="2.5" fill="#FFD700" opacity="0.3"/>' +
+      '<circle cx="600" cy="170" r="2.5" fill="#FFD700" opacity="0.3"/>' +
+      // Title text
+      '<text x="400" y="60" text-anchor="middle" fill="#FFD700" font-family="serif" font-size="28" font-weight="bold" opacity="0.8">A Prosperous Trade</text>' +
+      '<text x="400" y="85" text-anchor="middle" fill="#FFF8E1" font-family="serif" font-size="14" opacity="0.5">The wise merchant knows when to hold back</text>' +
+    '</svg>';
+  } else {
+    // Cursed: merchant with empty purse, wilted flowers
+    svg = '<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs>' +
+        '<linearGradient id="ecGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#FFA000"/></linearGradient>' +
+        '<linearGradient id="ecBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1565C0"/><stop offset="100%" stop-color="#0D47A1"/></linearGradient>' +
+        '<linearGradient id="ecCrimson" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D32F2F"/><stop offset="100%" stop-color="#B71C1C"/></linearGradient>' +
+        '<pattern id="ecLotusBorder" x="0" y="0" width="50" height="20" patternUnits="userSpaceOnUse">' +
+          '<path d="M25 2 C20 2,15 8,15 12 C15 16,20 18,25 18 C30 18,35 16,35 12 C35 8,30 2,25 2Z" fill="none" stroke="#8D6E63" stroke-width="1" opacity="0.4"/>' +
+        '</pattern>' +
+      '</defs>' +
+      '<rect width="800" height="400" fill="#0a1020"/>' +
+      // Muted borders
+      '<rect x="0" y="0" width="800" height="20" fill="url(#ecLotusBorder)" opacity="0.5"/>' +
+      '<rect x="0" y="380" width="800" height="20" fill="url(#ecLotusBorder)" opacity="0.5"/>' +
+      // Dark ground
+      '<rect x="0" y="310" width="800" height="70" fill="#1a1a1a" opacity="0.4"/>' +
+      // Somber merchant center
+      '<g transform="translate(400,230)">' +
+        // Dim arch frame
+        '<path d="M-70 60 L-70 -30 Q0 -85,70 -30 L70 60" fill="none" stroke="#8D6E63" stroke-width="1.5" opacity="0.3"/>' +
+        // Body (dull clothes)
+        '<ellipse cx="0" cy="15" rx="22" ry="30" fill="#5D4037" opacity="0.5"/>' +
+        '<ellipse cx="0" cy="15" rx="16" ry="24" fill="#8D6E63" opacity="0.2"/>' +
+        // Head
+        '<circle cx="0" cy="-22" r="14" fill="#D2B48C" opacity="0.7"/>' +
+        // Turban (faded)
+        '<path d="M-14 -28 Q-16 -42,0 -46 Q16 -42,14 -28" fill="#5D4037" opacity="0.6"/>' +
+        '<path d="M-11 -30 Q-13 -40,0 -43 Q13 -40,11 -30" fill="#795548" opacity="0.5"/>' +
+        // Sad eyes
+        '<path d="M-5 -24 Q-3 -22,-1 -24" fill="none" stroke="#1B5E20" stroke-width="1"/>' +
+        '<path d="M1 -24 Q3 -22,5 -24" fill="none" stroke="#1B5E20" stroke-width="1"/>' +
+        '<circle cx="-3" cy="-21" r="0.8" fill="#1B5E20" opacity="0.6"/>' +
+        '<circle cx="3" cy="-21" r="0.8" fill="#1B5E20" opacity="0.6"/>' +
+        // Frown
+        '<path d="M-5 -14 Q0 -18,5 -14" fill="none" stroke="#1B5E20" stroke-width="1"/>' +
+        // Arms down, holding empty purse
+        '<path d="M-18 10 Q-28 20,-25 35" fill="none" stroke="#D2B48C" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>' +
+        '<path d="M18 10 Q28 20,25 35" fill="none" stroke="#D2B48C" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>' +
+        // Empty purse (open, upside down)
+        '<path d="M-5 40 Q-10 32,-8 28 Q0 25,8 28 Q10 32,5 40Z" fill="#8D6E63" opacity="0.6" stroke="#5D4037" stroke-width="0.8"/>' +
+        '<path d="M-4 40 L-3 45" fill="none" stroke="#8D6E63" stroke-width="0.5" opacity="0.4"/>' +
+        '<path d="M4 40 L3 45" fill="none" stroke="#8D6E63" stroke-width="0.5" opacity="0.4"/>' +
+        // Fallen coins (few)
+        '<circle cx="-8" cy="55" r="2.5" fill="#FFD700" opacity="0.25"/>' +
+        '<circle cx="5" cy="58" r="2" fill="#FFD700" opacity="0.2"/>' +
+        '<circle cx="-2" cy="60" r="1.5" fill="#FFD700" opacity="0.15"/>' +
+      '</g>' +
+      // Wilted lotus left
+      '<g transform="translate(180,290)">' +
+        '<path d="M0 20 Q-5 0,-3 -10" fill="none" stroke="#5D4037" stroke-width="2" opacity="0.5"/>' +
+        // Drooping petals
+        '<ellipse cx="-8" cy="-8" rx="5" ry="10" fill="#8D6E63" opacity="0.3" transform="rotate(-50)"/>' +
+        '<ellipse cx="3" cy="-12" rx="4" ry="9" fill="#795548" opacity="0.25" transform="rotate(10)"/>' +
+        '<ellipse cx="-3" cy="-14" rx="3.5" ry="8" fill="#8D6E63" opacity="0.2" transform="rotate(-15)"/>' +
+        // Wilted center
+        '<circle cx="-2" cy="-8" r="2.5" fill="#5D4037" opacity="0.3"/>' +
+        // Fallen petals on ground
+        '<ellipse cx="10" cy="25" rx="4" ry="2" fill="#8D6E63" opacity="0.2" transform="rotate(20)"/>' +
+        '<ellipse cx="-12" cy="28" rx="3" ry="1.5" fill="#795548" opacity="0.15" transform="rotate(-30)"/>' +
+        // Drooping leaf
+        '<ellipse cx="-12" cy="12" rx="12" ry="4" fill="#5D4037" opacity="0.25" transform="rotate(25)"/>' +
+      '</g>' +
+      // Wilted lotus right
+      '<g transform="translate(620,290)">' +
+        '<path d="M0 20 Q5 0,3 -10" fill="none" stroke="#5D4037" stroke-width="2" opacity="0.5"/>' +
+        '<ellipse cx="8" cy="-8" rx="5" ry="10" fill="#8D6E63" opacity="0.3" transform="rotate(50)"/>' +
+        '<ellipse cx="-3" cy="-12" rx="4" ry="9" fill="#795548" opacity="0.25" transform="rotate(-10)"/>' +
+        '<ellipse cx="3" cy="-14" rx="3.5" ry="8" fill="#8D6E63" opacity="0.2" transform="rotate(15)"/>' +
+        '<circle cx="2" cy="-8" r="2.5" fill="#5D4037" opacity="0.3"/>' +
+        '<ellipse cx="-10" cy="25" rx="4" ry="2" fill="#8D6E63" opacity="0.2" transform="rotate(-20)"/>' +
+        '<ellipse cx="12" cy="28" rx="3" ry="1.5" fill="#795548" opacity="0.15" transform="rotate(30)"/>' +
+        '<ellipse cx="12" cy="12" rx="12" ry="4" fill="#5D4037" opacity="0.25" transform="rotate(-25)"/>' +
+      '</g>' +
+      // Sad peacock left (drooping)
+      '<g transform="translate(280,280)">' +
+        // Droopy tail feathers
+        '<ellipse cx="-10" cy="5" rx="5" ry="22" fill="url(#ecBlue)" opacity="0.25" transform="rotate(-20)"/>' +
+        '<ellipse cx="5" cy="0" rx="5" ry="25" fill="url(#ecBlue)" opacity="0.3" transform="rotate(5)"/>' +
+        '<ellipse cx="18" cy="5" rx="5" ry="20" fill="url(#ecBlue)" opacity="0.25" transform="rotate(20)"/>' +
+        // Faded eye spots
+        '<circle cx="-14" cy="-10" r="2.5" fill="#0D47A1" opacity="0.2" stroke="#5D4037" stroke-width="0.5"/>' +
+        '<circle cx="6" cy="-18" r="3" fill="#0D47A1" opacity="0.2" stroke="#5D4037" stroke-width="0.5"/>' +
+        // Body
+        '<ellipse cx="0" cy="15" rx="10" ry="14" fill="#0D47A1" opacity="0.4"/>' +
+        // Drooping neck
+        '<path d="M-2 5 Q-8 -8,-10 -15" fill="none" stroke="#0D47A1" stroke-width="3" opacity="0.4"/>' +
+        // Head down
+        '<circle cx="-11" cy="-17" r="4" fill="#0D47A1" opacity="0.4"/>' +
+        '<circle cx="-9" cy="-17" r="0.8" fill="#FFF8E1" opacity="0.3"/>' +
+      '</g>' +
+      // Sad peacock right
+      '<g transform="translate(520,280) scale(-1,1)">' +
+        '<ellipse cx="-10" cy="5" rx="5" ry="22" fill="url(#ecBlue)" opacity="0.25" transform="rotate(-20)"/>' +
+        '<ellipse cx="5" cy="0" rx="5" ry="25" fill="url(#ecBlue)" opacity="0.3" transform="rotate(5)"/>' +
+        '<ellipse cx="18" cy="5" rx="5" ry="20" fill="url(#ecBlue)" opacity="0.25" transform="rotate(20)"/>' +
+        '<circle cx="-14" cy="-10" r="2.5" fill="#0D47A1" opacity="0.2" stroke="#5D4037" stroke-width="0.5"/>' +
+        '<circle cx="6" cy="-18" r="3" fill="#0D47A1" opacity="0.2" stroke="#5D4037" stroke-width="0.5"/>' +
+        '<ellipse cx="0" cy="15" rx="10" ry="14" fill="#0D47A1" opacity="0.4"/>' +
+        '<path d="M-2 5 Q-8 -8,-10 -15" fill="none" stroke="#0D47A1" stroke-width="3" opacity="0.4"/>' +
+        '<circle cx="-11" cy="-17" r="4" fill="#0D47A1" opacity="0.4"/>' +
+        '<circle cx="-9" cy="-17" r="0.8" fill="#FFF8E1" opacity="0.3"/>' +
+      '</g>' +
+      // Dim atmosphere
+      '<circle cx="200" cy="100" r="1" fill="#8D6E63" opacity="0.2"/>' +
+      '<circle cx="600" cy="90" r="1" fill="#8D6E63" opacity="0.2"/>' +
+      '<circle cx="400" cy="60" r="1.5" fill="#8D6E63" opacity="0.15"/>' +
+      // Title text
+      '<text x="400" y="55" text-anchor="middle" fill="#8D6E63" font-family="serif" font-size="26" font-weight="bold" opacity="0.7">The Price of Ambition</text>' +
+      '<text x="400" y="80" text-anchor="middle" fill="#8D6E63" font-family="serif" font-size="14" opacity="0.4">The boldest bidder paid the highest price</text>' +
+    '</svg>';
+  }
+  $('endStoryArt').innerHTML = svg;
 }
 
 function statCard(val, label, color){
