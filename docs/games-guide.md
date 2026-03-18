@@ -10,11 +10,31 @@ All games are **free, browser-based, and require no login**. They are self-hoste
 
 ### MiroFish AI Agents
 
-10 of the 12 games feature **MiroFish AI agents** — AI-powered opponents with distinct South Asian identities, backstories, and strategic personalities. Each agent has calibrated personality traits (cooperation bias, risk tolerance, memory weight) that shape their decisions.
+The economics games feature **MiroFish AI agents** — AI-powered opponents with distinct South Asian identities, backstories, and strategic personalities. Each agent has calibrated personality traits (cooperation bias, risk tolerance, memory weight) that shape their decisions. You're not playing against a random number generator — you're negotiating with Meera the pragmatic NGO director, debating Arjun the idealistic researcher, or competing against Nandini the shrewd procurement officer.
 
 The AI system uses a **multi-provider LLM fallback chain** (DeepSeek → Groq → Gemini → Together → OpenAI) via a Supabase Edge Function. When LLM providers are unavailable, a local personality engine generates decisions using weighted heuristics — so games always work, even offline.
 
 See [Game Agents documentation](game-agents.md) for technical details on the AI system.
+
+### Indian Folk Art Story Illustrations
+
+Every game features **original Indian folk art** rendered as inline SVGs in six traditional styles:
+
+| Art Style | Origin | Games |
+|-----------|--------|-------|
+| **Warli** | Maharashtra — white line art on terracotta | Climate Action, Cooperation Paradox, Network Effects |
+| **Madhubani** | Bihar — bold outlines, bright fills, nature motifs | Gender Equity, Econ Concepts, Real Middle India |
+| **Gond** | Madhya Pradesh — dot patterns, vibrant nature-tech fusion | Prisoners' Dilemma, Digital Ethics |
+| **Kalamkari** | Andhra Pradesh — pen-drawn narrative scrolls | Opportunity Cost, Risk & Reward |
+| **Pichwai** | Rajasthan — devotional temple art, rich detail | Bidding Wars, Public Good |
+| **Pattachitra** | Odisha — scrollwork narrative art, bold outlines | Information Asymmetry, Public Health |
+
+Each game includes:
+- **Story intro screen** — a full-screen folk art scene setting the narrative context
+- **Mid-game interludes** — art and narrative that respond to your choices between rounds
+- **Adaptive ending art** — different illustrations based on your overall performance
+
+The art grounds each game in South Asian visual culture while making abstract concepts tangible through storytelling.
 
 ---
 
