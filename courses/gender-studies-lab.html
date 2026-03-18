@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Gender Analysis Lab | ImpactMojo</title>
+    <meta name="description" content="Interactive Gender Analysis Lab — apply gender frameworks, assess intersectionality, design gender-responsive programmes, and plan gender-responsive budgeting.">
+    <meta name="keywords" content="gender analysis, gender mainstreaming, intersectionality, Harvard framework, gender-responsive budgeting, GBV, women empowerment, ImpactMojo">
+    <link rel="canonical" href="https://www.impactmojo.in/courses/gender-studies-lab.html">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-bg: #0F172A; --secondary-bg: #1E293B; --accent-color: #0EA5E9; --accent-hover: #0284C7;
+            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --text-primary: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+            --card-bg: #1E293B; --hover-bg: #334155; --border-color: #334155;
+            --gradient-primary: linear-gradient(135deg, #EC4899 0%, #6366F1 100%);
+            --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+        }
+        [data-theme="light"] {
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --text-primary: #0F172A; --text-secondary: #475569;
+            --text-muted: #94A3B8; --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background: var(--primary-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; }
+        .back-link:hover { color: var(--accent-hover); }
+        .back-link svg { width: 18px; height: 18px; }
+        .header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 1rem; background: rgba(236, 72, 153, 0.15); color: #EC4899; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 700px; margin: 0 auto; }
+        .top-controls { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .theme-toggle, .ctrl-btn { padding: 0.6rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); transition: all 0.2s; }
+        .theme-toggle:hover, .ctrl-btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .progress-bar { width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; margin-bottom: 2rem; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: var(--gradient-primary); border-radius: 3px; transition: width 0.4s; }
+        .tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); overflow-x: auto; }
+        .tab-btn { padding: 0.85rem 1.25rem; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--text-muted); font-size: 0.9rem; font-family: var(--font-sans); cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 0.4rem; transition: all 0.2s; }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active { color: #EC4899; border-bottom-color: #EC4899; }
+        .tab-btn .tab-num { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--border-color); font-size: 0.7rem; font-weight: 700; font-family: var(--font-heading); }
+        .tab-btn.active .tab-num { background: #EC4899; color: #fff; }
+        .tab-btn.completed .tab-num { background: var(--success-color); color: #fff; }
+        .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .section-title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .section-desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.25rem; }
+        .field label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); font-family: var(--font-heading); }
+        .field-hint { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+        .field select, .field input[type="text"], .field textarea {
+            width: 100%; padding: 0.7rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.95rem; font-family: var(--font-sans); transition: border-color 0.2s;
+        }
+        .field select:focus, .field input:focus, .field textarea:focus { outline: none; border-color: #EC4899; box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.15); }
+        .field textarea { resize: vertical; min-height: 80px; }
+        .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 16px; padding-right: 2.5rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .form-grid .field.full-width { grid-column: 1 / -1; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; transition: border-color 0.2s; }
+        .card:hover { border-color: #EC4899; }
+        .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .card-title { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; }
+        .btn { padding: 0.65rem 1.25rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .btn:hover { border-color: #EC4899; background: var(--hover-bg); }
+        .btn-primary { background: #EC4899; border-color: #EC4899; color: #fff; font-weight: 600; }
+        .btn-primary:hover { background: #DB2777; }
+        .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
+        .btn-danger { color: var(--danger-color); }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.1); border-color: var(--danger-color); }
+        .btn-success { background: var(--success-color); border-color: var(--success-color); color: #fff; }
+        .btn-success:hover { background: #059669; }
+        .item-row { display: flex; align-items: center; justify-content: space-between; background: var(--hover-bg); padding: 0.5rem 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.4rem; }
+        .item-row span { flex: 1; }
+        .item-remove { background: none; border: none; color: var(--danger-color); cursor: pointer; font-size: 1rem; padding: 0; opacity: 0.7; }
+        .item-remove:hover { opacity: 1; }
+        .matrix-wrap { overflow-x: auto; margin: 1rem 0; }
+        .matrix-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        .matrix-table th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); padding: 0.65rem 0.5rem; border-bottom: 1px solid var(--border-color); font-family: var(--font-heading); font-weight: 600; text-align: left; }
+        .matrix-table td { padding: 0.5rem; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; vertical-align: top; }
+        .check-group { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+        .check-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer; }
+        .check-item input[type="checkbox"] { accent-color: #EC4899; width: 16px; height: 16px; }
+        .continuum-bar { display: flex; border-radius: 8px; overflow: hidden; margin: 1rem 0; height: 40px; }
+        .continuum-segment { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; font-family: var(--font-heading); color: #fff; cursor: pointer; transition: all 0.2s; opacity: 0.4; }
+        .continuum-segment.selected { opacity: 1; transform: scaleY(1.1); }
+        .continuum-segment:nth-child(1) { background: #EF4444; }
+        .continuum-segment:nth-child(2) { background: #F59E0B; }
+        .continuum-segment:nth-child(3) { background: #0EA5E9; }
+        .continuum-segment:nth-child(4) { background: #10B981; }
+        .continuum-segment:nth-child(5) { background: #6366F1; }
+        .nav-row { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+        @media (max-width: 768px) { .container { padding: 1rem; } .form-grid { grid-template-columns: 1fr; } }
+        @media print {
+            body { background: #fff; color: #000; }
+            .top-controls, .back-link, .tabs, .nav-row, .btn { display: none !important; }
+            .tab-panel { display: block !important; page-break-inside: avoid; margin-bottom: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;padding:0.5rem;background:#EC4899;color:#fff;z-index:100;">Skip to content</a>
+    <div class="container" id="main">
+        <a href="../index.html" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            Back to ImpactMojo
+        </a>
+
+        <div class="header">
+            <div class="header-badge">Interactive Lab</div>
+            <h1>Gender Analysis Lab</h1>
+            <p>Apply gender analysis frameworks to development programming — map gender dynamics, assess intersectionality, design gender-responsive interventions, and plan gender-responsive budgeting for South Asian contexts.</p>
+        </div>
+
+        <div class="top-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">Theme</button>
+            <button class="ctrl-btn" onclick="exportResults()">Export</button>
+            <button class="ctrl-btn" onclick="window.print()">Print</button>
+        </div>
+
+        <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width: 0%"></div></div>
+
+        <div class="tabs" role="tablist">
+            <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span> Gender Context</button>
+            <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span> Intersectionality</button>
+            <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">3</span> Gender-Responsive Design</button>
+            <button class="tab-btn" onclick="switchTab(3)"><span class="tab-num">4</span> Gender Budget & MEL</button>
+        </div>
+
+        <!-- Tab 1: Gender Context Analysis -->
+        <div class="tab-panel active" id="panel-0">
+            <h2 class="section-title">Gender Context Analysis</h2>
+            <p class="section-desc">Map gender dynamics using the Harvard Analytical Framework. Examine roles, access to resources, decision-making, and gendered barriers in your project context.</p>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Project Context</div>
+                <div class="form-grid">
+                    <div class="field full-width">
+                        <label>Project / Programme</label>
+                        <input type="text" id="project" placeholder="e.g., Women's Livelihood Enhancement Programme, Rajasthan">
+                    </div>
+                    <div class="field">
+                        <label>Geographic Area</label>
+                        <input type="text" id="geography" placeholder="e.g., Rural blocks in Udaipur and Dungarpur districts">
+                    </div>
+                    <div class="field">
+                        <label>Target Population</label>
+                        <input type="text" id="targetPop" placeholder="e.g., 5,000 women from tribal and Dalit communities">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Activity Profile — Roles & Responsibilities</div>
+                <span class="field-hint" style="display:block;margin-bottom:1rem;">Harvard Framework: Map who does what — productive (income-generating), reproductive (care/domestic), and community management roles.</span>
+                <div id="roleList"></div>
+                <div class="form-grid" style="margin-top:1rem;">
+                    <div class="field">
+                        <label>Activity</label>
+                        <input type="text" id="roleActivity" placeholder="e.g., Fetching water from village well">
+                    </div>
+                    <div class="field">
+                        <label>Category</label>
+                        <select id="roleCat">
+                            <option value="productive">Productive (income-generating)</option>
+                            <option value="reproductive">Reproductive (care/domestic)</option>
+                            <option value="community">Community Management</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Who Does It?</label>
+                        <select id="roleWho">
+                            <option value="Women mostly">Women mostly</option>
+                            <option value="Men mostly">Men mostly</option>
+                            <option value="Both equally">Both equally</option>
+                            <option value="Girls">Girls</option>
+                            <option value="Boys">Boys</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Time Spent (hrs/day)</label>
+                        <input type="text" id="roleTime" placeholder="e.g., 2-3 hours">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addRole()">+ Add Activity</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Access & Control Profile</div>
+                <span class="field-hint" style="display:block;margin-bottom:1rem;">Who has access to and control over key resources and benefits? Access = ability to use; Control = ability to decide.</span>
+                <div id="accessList"></div>
+                <div class="form-grid" style="margin-top:1rem;">
+                    <div class="field">
+                        <label>Resource / Benefit</label>
+                        <input type="text" id="accResource" placeholder="e.g., Agricultural land, credit, education, healthcare">
+                    </div>
+                    <div class="field">
+                        <label>Women's Access</label>
+                        <select id="accWomenAccess">
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low" selected>Low</option>
+                            <option value="None">None</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Women's Control</label>
+                        <select id="accWomenControl">
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low" selected>Low</option>
+                            <option value="None">None</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Men's Access</label>
+                        <select id="accMenAccess">
+                            <option value="High" selected>High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                            <option value="None">None</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addAccess()">+ Add Resource</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Gender Norms & Barriers</div>
+                <div class="field">
+                    <label>Key Gender Norms</label>
+                    <textarea id="norms" placeholder="e.g., Purdah/ghunghat norms restrict women's mobility; early marriage prevalent (NFHS-5: 23.3% married before 18 in Rajasthan); son preference affects nutrition and education investment"></textarea>
+                </div>
+                <div class="field">
+                    <label>Barriers to Women's Participation</label>
+                    <textarea id="barriers" placeholder="e.g., Limited mobility, unpaid care burden (5.8 hrs/day vs 1.5 hrs for men), lack of identity documents, low digital literacy, social sanctions for attending meetings"></textarea>
+                </div>
+            </div>
+
+            <div class="nav-row">
+                <div></div>
+                <button class="btn btn-primary" onclick="switchTab(1)">Next: Intersectionality &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Tab 2: Intersectionality Assessment -->
+        <div class="tab-panel" id="panel-1">
+            <h2 class="section-title">Intersectionality Assessment</h2>
+            <p class="section-desc">Analyze how gender intersects with other dimensions of identity and marginalization. Identify the most excluded groups and their specific needs.</p>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Intersecting Identities</div>
+                <span class="field-hint" style="display:block;margin-bottom:1rem;">Select all dimensions that create compounding disadvantage in your context.</span>
+                <div class="check-group" id="identities">
+                    <label class="check-item"><input type="checkbox" value="caste" checked> Caste (SC/ST/OBC/DNT)</label>
+                    <label class="check-item"><input type="checkbox" value="class" checked> Class / Income</label>
+                    <label class="check-item"><input type="checkbox" value="religion"> Religion / Ethnicity</label>
+                    <label class="check-item"><input type="checkbox" value="disability"> Disability</label>
+                    <label class="check-item"><input type="checkbox" value="age"> Age (adolescents/elderly)</label>
+                    <label class="check-item"><input type="checkbox" value="geography"> Geography (remote/urban)</label>
+                    <label class="check-item"><input type="checkbox" value="marital"> Marital status (widows/single)</label>
+                    <label class="check-item"><input type="checkbox" value="sexuality"> Sexual orientation/gender identity</label>
+                    <label class="check-item"><input type="checkbox" value="migration"> Migration status</label>
+                    <label class="check-item"><input type="checkbox" value="education"> Education level</label>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Most Marginalized Groups</div>
+                <div id="margGroupList"></div>
+                <div class="form-grid" style="margin-top:1rem;">
+                    <div class="field">
+                        <label>Group</label>
+                        <input type="text" id="mgGroup" placeholder="e.g., Dalit adolescent girls in remote hamlets">
+                    </div>
+                    <div class="field">
+                        <label>Intersecting Factors</label>
+                        <input type="text" id="mgFactors" placeholder="e.g., Gender + Caste + Age + Geography">
+                    </div>
+                    <div class="field full-width">
+                        <label>Specific Needs & Barriers</label>
+                        <textarea id="mgNeeds" placeholder="e.g., No secondary school within 5km; menstruation taboos prevent school attendance; early marriage pressure from age 14; no Aadhaar/ration card" style="min-height:60px;"></textarea>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addMargGroup()">+ Add Group</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Power Analysis</div>
+                <div class="field">
+                    <label>Power Over (visible power — who makes decisions?)</label>
+                    <textarea id="powerOver" placeholder="e.g., Male household heads control land & finances; sarpanch (often proxy for husband) controls panchayat decisions; upper-caste men dominate gram sabha"></textarea>
+                </div>
+                <div class="field">
+                    <label>Power To (agency — what can marginalized groups do?)</label>
+                    <textarea id="powerTo" placeholder="e.g., SHG membership gives women some financial agency; MGNREGA provides independent income; mobile phones increase information access"></textarea>
+                </div>
+                <div class="field">
+                    <label>Power With (collective power — what alliances exist?)</label>
+                    <textarea id="powerWith" placeholder="e.g., SHG federations, Mahila Mandals, women's collectives, Dalit rights organizations, ASHA/AWW networks"></textarea>
+                </div>
+            </div>
+
+            <div class="nav-row">
+                <button class="btn" onclick="switchTab(0)">&larr; Previous</button>
+                <button class="btn btn-primary" onclick="switchTab(2)">Next: Gender-Responsive Design &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Tab 3: Gender-Responsive Programming -->
+        <div class="tab-panel" id="panel-2">
+            <h2 class="section-title">Gender-Responsive Programming</h2>
+            <p class="section-desc">Design interventions using the Gender Integration Continuum. Move beyond gender-blind approaches to transformative programming.</p>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Gender Integration Continuum</div>
+                <span class="field-hint" style="display:block;margin-bottom:0.5rem;">Where does your programme currently sit? Click to select your target position.</span>
+                <div class="continuum-bar" id="continuum">
+                    <div class="continuum-segment" onclick="selectContinuum(0)" data-idx="0">Exploitative</div>
+                    <div class="continuum-segment" onclick="selectContinuum(1)" data-idx="1">Blind</div>
+                    <div class="continuum-segment" onclick="selectContinuum(2)" data-idx="2">Sensitive</div>
+                    <div class="continuum-segment selected" onclick="selectContinuum(3)" data-idx="3">Responsive</div>
+                    <div class="continuum-segment" onclick="selectContinuum(4)" data-idx="4">Transformative</div>
+                </div>
+                <div id="continuumDesc" style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.5rem;">
+                    <strong>Gender-Responsive:</strong> Addresses different needs of women, men, and other genders. Ensures equitable participation, access, and benefits. Does not challenge underlying power structures.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Gender-Responsive Interventions</div>
+                <div id="interventionList"></div>
+                <div class="form-grid" style="margin-top:1rem;">
+                    <div class="field full-width">
+                        <label>Intervention</label>
+                        <input type="text" id="intActivity" placeholder="e.g., Women-only financial literacy training at village level with childcare provision">
+                    </div>
+                    <div class="field">
+                        <label>Gender Strategy</label>
+                        <select id="intStrategy">
+                            <option value="participation">Ensure women's participation</option>
+                            <option value="leadership">Promote women's leadership</option>
+                            <option value="access">Address access barriers</option>
+                            <option value="norms">Challenge harmful norms</option>
+                            <option value="gbv">Address GBV risks</option>
+                            <option value="economic">Economic empowerment</option>
+                            <option value="voice">Amplify women's voice</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Target Group</label>
+                        <input type="text" id="intTarget" placeholder="e.g., SC/ST women aged 18-45 in SHGs">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addIntervention()">+ Add Intervention</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">GBV Risk Mitigation</div>
+                <div class="field">
+                    <label>Identified GBV Risks</label>
+                    <textarea id="gbvRisks" placeholder="e.g., Backlash when women earn independent income; increased domestic violence during economic stress; sexual harassment at workplace/training venues"></textarea>
+                    <span class="field-hint">Consider: domestic violence, sexual harassment, child marriage, trafficking, dowry-related violence, honour-based violence</span>
+                </div>
+                <div class="field">
+                    <label>Mitigation Measures</label>
+                    <textarea id="gbvMitigation" placeholder="e.g., Train staff on GBV referral pathways (One Stop Centre, 181 helpline); engage men as allies through gender dialogues; ensure safe reporting mechanisms; partner with local women's organizations"></textarea>
+                </div>
+            </div>
+
+            <div class="nav-row">
+                <button class="btn" onclick="switchTab(1)">&larr; Previous</button>
+                <button class="btn btn-primary" onclick="switchTab(3)">Next: Gender Budget & MEL &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Tab 4: Gender Budget & MEL -->
+        <div class="tab-panel" id="panel-3">
+            <h2 class="section-title">Gender Budget & MEL</h2>
+            <p class="section-desc">Plan gender-responsive budgeting, sex-disaggregated data collection, and gender equality outcomes with accountability mechanisms.</p>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Gender-Responsive Budget Tagging</div>
+                <div id="budgetList"></div>
+                <div class="form-grid" style="margin-top:1rem;">
+                    <div class="field">
+                        <label>Budget Line Item</label>
+                        <input type="text" id="budgetItem" placeholder="e.g., Community mobilization and training">
+                    </div>
+                    <div class="field">
+                        <label>Amount</label>
+                        <input type="text" id="budgetAmount" placeholder="e.g., &#8377;12,00,000">
+                    </div>
+                    <div class="field">
+                        <label>Gender Relevance</label>
+                        <select id="budgetRelevance">
+                            <option value="directly-gender">Directly gender-focused (100%)</option>
+                            <option value="gender-responsive">Gender-responsive (50-99%)</option>
+                            <option value="gender-neutral">Gender-neutral (indirect benefit)</option>
+                            <option value="not-applicable">Not gender-relevant</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Notes</label>
+                        <input type="text" id="budgetNotes" placeholder="e.g., Includes childcare, women facilitators, safe transport">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addBudgetItem()">+ Add Budget Line</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Gender Indicators</div>
+                <div id="genderIndList"></div>
+                <div class="form-grid" style="margin-top:1rem;">
+                    <div class="field full-width">
+                        <label>Indicator</label>
+                        <input type="text" id="giIndicator" placeholder="e.g., % of women reporting increased decision-making power in household finances">
+                    </div>
+                    <div class="field">
+                        <label>Baseline</label>
+                        <input type="text" id="giBaseline" placeholder="e.g., 18% (NFHS-5)">
+                    </div>
+                    <div class="field">
+                        <label>Target</label>
+                        <input type="text" id="giTarget" placeholder="e.g., 50% by Year 3">
+                    </div>
+                    <div class="field">
+                        <label>Data Source</label>
+                        <input type="text" id="giSource" placeholder="e.g., Annual women's empowerment survey">
+                    </div>
+                    <div class="field">
+                        <label>Disaggregation</label>
+                        <input type="text" id="giDisagg" placeholder="e.g., Sex, caste, age, disability">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addGenderIndicator()">+ Add Indicator</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="margin-bottom:1rem;">Accountability Mechanisms</div>
+                <div class="field">
+                    <label>Gender Accountability Structure</label>
+                    <textarea id="accountability" placeholder="e.g., Gender focal point in project team; gender review in all quarterly meetings; women's feedback committee at village level; annual gender audit by external expert"></textarea>
+                </div>
+                <div class="field">
+                    <label>Data Collection for Gender</label>
+                    <textarea id="dataCollection" placeholder="e.g., All surveys collect sex-disaggregated data; FGDs conducted separately for women and men; women enumerators for sensitive topics; safety audits conducted by women beneficiaries"></textarea>
+                </div>
+            </div>
+
+            <div class="nav-row">
+                <button class="btn" onclick="switchTab(2)">&larr; Previous</button>
+                <button class="btn btn-success" onclick="exportResults()">Download Gender Analysis</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+const state = { roles: [], access: [], margGroups: [], interventions: [], budgetItems: [], genderIndicators: [], continuumIdx: 3 };
+
+const CONTINUUM_DESCS = [
+    '<strong>Exploitative:</strong> Reinforces or exploits gender inequalities to achieve programme goals. Harmful and unethical.',
+    '<strong>Gender-Blind:</strong> Ignores gender norms, roles, and relations. Risks reinforcing existing inequalities.',
+    '<strong>Gender-Sensitive:</strong> Acknowledges gender differences but does not address them systematically.',
+    '<strong>Gender-Responsive:</strong> Addresses different needs of women, men, and other genders. Ensures equitable participation, access, and benefits. Does not challenge underlying power structures.',
+    '<strong>Gender-Transformative:</strong> Actively challenges and transforms unequal gender relations, norms, and power structures. Promotes structural change for gender equality.'
+];
+
+function toggleTheme() { const t = document.documentElement.getAttribute('data-theme'); document.documentElement.setAttribute('data-theme', t === 'light' ? '' : 'light'); }
+
+function switchTab(idx) {
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+    updateProgress(); saveState();
+}
+
+function updateProgress() {
+    let f = 0;
+    if (state.roles.length || document.getElementById('norms')?.value) f++;
+    if (state.margGroups.length || document.getElementById('powerOver')?.value) f++;
+    if (state.interventions.length) f++;
+    if (state.budgetItems.length || state.genderIndicators.length) f++;
+    document.getElementById('progressFill').style.width = (f / 4 * 100) + '%';
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+function selectContinuum(idx) {
+    state.continuumIdx = idx;
+    document.querySelectorAll('.continuum-segment').forEach((s, i) => s.classList.toggle('selected', i === idx));
+    document.getElementById('continuumDesc').innerHTML = CONTINUUM_DESCS[idx];
+    saveState();
+}
+
+function addRole() {
+    const act = document.getElementById('roleActivity').value.trim(); if (!act) return;
+    state.roles.push({ activity: act, category: document.getElementById('roleCat').value, who: document.getElementById('roleWho').value, time: document.getElementById('roleTime').value.trim() });
+    document.getElementById('roleActivity').value = ''; document.getElementById('roleTime').value = '';
+    renderRoles(); updateProgress(); saveState();
+}
+function renderRoles() {
+    const el = document.getElementById('roleList');
+    if (!state.roles.length) { el.innerHTML = ''; return; }
+    el.innerHTML = state.roles.map((r, i) =>
+        '<div class="item-row"><span><strong>' + esc(r.activity) + '</strong> | ' + esc(r.category) + ' | ' + esc(r.who) + ' | ' + esc(r.time) + '</span><button class="item-remove" onclick="state.roles.splice(' + i + ',1);renderRoles();saveState();">&times;</button></div>'
+    ).join('');
+}
+
+function addAccess() {
+    const res = document.getElementById('accResource').value.trim(); if (!res) return;
+    state.access.push({ resource: res, womenAccess: document.getElementById('accWomenAccess').value, womenControl: document.getElementById('accWomenControl').value, menAccess: document.getElementById('accMenAccess').value });
+    document.getElementById('accResource').value = '';
+    renderAccess(); saveState();
+}
+function renderAccess() {
+    const el = document.getElementById('accessList');
+    if (!state.access.length) { el.innerHTML = ''; return; }
+    let html = '<div class="matrix-wrap"><table class="matrix-table"><thead><tr><th>Resource</th><th>Women Access</th><th>Women Control</th><th>Men Access</th><th></th></tr></thead><tbody>';
+    state.access.forEach((a, i) => {
+        html += '<tr><td>' + esc(a.resource) + '</td><td>' + a.womenAccess + '</td><td>' + a.womenControl + '</td><td>' + a.menAccess + '</td><td><button class="btn btn-sm btn-danger" onclick="state.access.splice(' + i + ',1);renderAccess();saveState();">&times;</button></td></tr>';
+    });
+    html += '</tbody></table></div>';
+    el.innerHTML = html;
+}
+
+function addMargGroup() {
+    const g = document.getElementById('mgGroup').value.trim(); if (!g) return;
+    state.margGroups.push({ group: g, factors: document.getElementById('mgFactors').value.trim(), needs: document.getElementById('mgNeeds').value.trim() });
+    document.getElementById('mgGroup').value = ''; document.getElementById('mgFactors').value = ''; document.getElementById('mgNeeds').value = '';
+    renderMargGroups(); updateProgress(); saveState();
+}
+function renderMargGroups() {
+    const el = document.getElementById('margGroupList');
+    if (!state.margGroups.length) { el.innerHTML = ''; return; }
+    el.innerHTML = state.margGroups.map((m, i) =>
+        '<div class="card" style="padding:1rem;"><div class="card-header" style="margin-bottom:0.5rem;"><div class="card-title">' + esc(m.group) + '</div><button class="btn btn-sm btn-danger" onclick="state.margGroups.splice(' + i + ',1);renderMargGroups();saveState();">&times;</button></div>' +
+        '<div style="font-size:0.8rem;color:var(--text-secondary);"><strong>Factors:</strong> ' + esc(m.factors) + '<br><strong>Needs:</strong> ' + esc(m.needs) + '</div></div>'
+    ).join('');
+}
+
+function addIntervention() {
+    const act = document.getElementById('intActivity').value.trim(); if (!act) return;
+    state.interventions.push({ activity: act, strategy: document.getElementById('intStrategy').value, target: document.getElementById('intTarget').value.trim() });
+    document.getElementById('intActivity').value = ''; document.getElementById('intTarget').value = '';
+    renderInterventions(); updateProgress(); saveState();
+}
+function renderInterventions() {
+    const el = document.getElementById('interventionList');
+    if (!state.interventions.length) { el.innerHTML = ''; return; }
+    el.innerHTML = state.interventions.map((v, i) =>
+        '<div class="item-row"><span><strong>' + esc(v.activity) + '</strong> | Strategy: ' + esc(v.strategy) + ' | Target: ' + esc(v.target) + '</span><button class="item-remove" onclick="state.interventions.splice(' + i + ',1);renderInterventions();saveState();">&times;</button></div>'
+    ).join('');
+}
+
+function addBudgetItem() {
+    const item = document.getElementById('budgetItem').value.trim(); if (!item) return;
+    state.budgetItems.push({ item, amount: document.getElementById('budgetAmount').value.trim(), relevance: document.getElementById('budgetRelevance').value, notes: document.getElementById('budgetNotes').value.trim() });
+    document.getElementById('budgetItem').value = ''; document.getElementById('budgetAmount').value = ''; document.getElementById('budgetNotes').value = '';
+    renderBudget(); updateProgress(); saveState();
+}
+function renderBudget() {
+    const el = document.getElementById('budgetList');
+    if (!state.budgetItems.length) { el.innerHTML = ''; return; }
+    el.innerHTML = state.budgetItems.map((b, i) =>
+        '<div class="item-row"><span><strong>' + esc(b.item) + '</strong> | ' + esc(b.amount) + ' | ' + esc(b.relevance) + '</span><button class="item-remove" onclick="state.budgetItems.splice(' + i + ',1);renderBudget();saveState();">&times;</button></div>'
+    ).join('');
+}
+
+function addGenderIndicator() {
+    const ind = document.getElementById('giIndicator').value.trim(); if (!ind) return;
+    state.genderIndicators.push({ indicator: ind, baseline: document.getElementById('giBaseline').value.trim(), target: document.getElementById('giTarget').value.trim(), source: document.getElementById('giSource').value.trim(), disagg: document.getElementById('giDisagg').value.trim() });
+    ['giIndicator','giBaseline','giTarget','giSource','giDisagg'].forEach(id => document.getElementById(id).value = '');
+    renderGenderIndicators(); updateProgress(); saveState();
+}
+function renderGenderIndicators() {
+    const el = document.getElementById('genderIndList');
+    if (!state.genderIndicators.length) { el.innerHTML = ''; return; }
+    el.innerHTML = state.genderIndicators.map((g, i) =>
+        '<div class="card" style="padding:1rem;"><div class="card-header" style="margin-bottom:0.5rem;"><div class="card-title">' + esc(g.indicator) + '</div><button class="btn btn-sm btn-danger" onclick="state.genderIndicators.splice(' + i + ',1);renderGenderIndicators();saveState();">&times;</button></div>' +
+        '<div style="font-size:0.8rem;color:var(--text-secondary);display:flex;gap:1rem;flex-wrap:wrap;"><span>Baseline: ' + esc(g.baseline) + '</span><span>Target: ' + esc(g.target) + '</span><span>Source: ' + esc(g.source) + '</span><span>Disagg: ' + esc(g.disagg) + '</span></div></div>'
+    ).join('');
+}
+
+function saveState() { try { localStorage.setItem('impactmojo-gender-analysis', JSON.stringify(state)); } catch(e) {} }
+function loadState() {
+    try {
+        const s = localStorage.getItem('impactmojo-gender-analysis');
+        if (s) {
+            Object.assign(state, JSON.parse(s));
+            renderRoles(); renderAccess(); renderMargGroups(); renderInterventions(); renderBudget(); renderGenderIndicators();
+            selectContinuum(state.continuumIdx || 3);
+            updateProgress();
+        }
+    } catch(e) {}
+}
+
+function exportResults() {
+    let t = 'GENDER ANALYSIS REPORT\n=====================\n\n';
+    t += 'Project: ' + (document.getElementById('project')?.value || 'N/A') + '\n';
+    t += 'Geography: ' + (document.getElementById('geography')?.value || 'N/A') + '\n';
+    t += 'Target: ' + (document.getElementById('targetPop')?.value || 'N/A') + '\n\n';
+    t += '--- GENDER CONTEXT ---\n';
+    t += 'Activity Profile:\n';
+    state.roles.forEach(r => t += '  ' + r.activity + ' | ' + r.category + ' | ' + r.who + ' | ' + r.time + '\n');
+    t += '\nAccess & Control:\n';
+    state.access.forEach(a => t += '  ' + a.resource + ' | Women Access: ' + a.womenAccess + ' | Women Control: ' + a.womenControl + ' | Men Access: ' + a.menAccess + '\n');
+    t += '\nNorms: ' + (document.getElementById('norms')?.value || 'N/A') + '\n';
+    t += 'Barriers: ' + (document.getElementById('barriers')?.value || 'N/A') + '\n\n';
+    t += '--- INTERSECTIONALITY ---\n';
+    t += 'Identities: ' + Array.from(document.querySelectorAll('#identities input:checked')).map(c => c.value).join(', ') + '\n';
+    t += '\nMost Marginalized Groups:\n';
+    state.margGroups.forEach(m => t += '  ' + m.group + ' (' + m.factors + ') — ' + m.needs + '\n');
+    t += '\nPower Over: ' + (document.getElementById('powerOver')?.value || 'N/A') + '\n';
+    t += 'Power To: ' + (document.getElementById('powerTo')?.value || 'N/A') + '\n';
+    t += 'Power With: ' + (document.getElementById('powerWith')?.value || 'N/A') + '\n\n';
+    t += '--- GENDER-RESPONSIVE DESIGN ---\n';
+    t += 'Continuum Position: ' + ['Exploitative','Blind','Sensitive','Responsive','Transformative'][state.continuumIdx] + '\n';
+    t += '\nInterventions:\n';
+    state.interventions.forEach(v => t += '  ' + v.activity + ' | ' + v.strategy + ' | ' + v.target + '\n');
+    t += '\nGBV Risks: ' + (document.getElementById('gbvRisks')?.value || 'N/A') + '\n';
+    t += 'GBV Mitigation: ' + (document.getElementById('gbvMitigation')?.value || 'N/A') + '\n\n';
+    t += '--- GENDER BUDGET & MEL ---\n';
+    t += 'Budget:\n';
+    state.budgetItems.forEach(b => t += '  ' + b.item + ' | ' + b.amount + ' | ' + b.relevance + '\n');
+    t += '\nGender Indicators:\n';
+    state.genderIndicators.forEach(g => t += '  ' + g.indicator + ' | Baseline: ' + g.baseline + ' | Target: ' + g.target + '\n');
+    t += '\nAccountability: ' + (document.getElementById('accountability')?.value || 'N/A') + '\n';
+    const blob = new Blob([t], { type: 'text/plain' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'gender-analysis.txt'; a.click();
+}
+
+loadState(); renderRoles(); renderAccess(); renderMargGroups(); renderInterventions(); renderBudget(); renderGenderIndicators(); updateProgress();
+</script>
+</body>
+</html>

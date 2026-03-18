@@ -5,6 +5,17 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.4.0] - 2026-03-18
+
+### Added
+- **7 new self-hosted interactive labs** — Design Thinking, Impact Partnerships, Resource Sustainability, Policy Advocacy, MEL Design, MEL Plan Builder, Gender Analysis (all in `/courses/`)
+- **Lab links updated** — all lab links in index.html now point to self-hosted files instead of `101.impactmojo.in`
+
+### Changed
+- **Lab count updated** from 12 to 19 across README and platform pages
+- **Sitemap updated** with 7 new lab page entries
+- **Search index updated** with entries for all new labs
+
 ## [10.3.0] - 2026-03-18
 
 ### Added

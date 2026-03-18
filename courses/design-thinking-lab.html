@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Design Thinking Lab | ImpactMojo</title>
+    <meta name="description" content="Interactive Design Thinking Lab — walk through all 5 phases of human-centred design: Empathize, Define, Ideate, Prototype, and Test.">
+    <meta name="keywords" content="design thinking, human centred design, HCD, empathy map, persona, ideation, prototype, MEL, development, ImpactMojo">
+    <link rel="canonical" href="https://www.impactmojo.in/courses/design-thinking-lab.html">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== DESIGN TOKENS ========== */
+        :root {
+            --primary-bg: #0F172A;
+            --secondary-bg: #1E293B;
+            --accent-color: #0EA5E9;
+            --accent-hover: #0284C7;
+            --secondary-accent: #6366F1;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --card-bg: #1E293B;
+            --hover-bg: #334155;
+            --border-color: #334155;
+            --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+            --font-sans: 'Amaranth', sans-serif;
+            --font-heading: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Phase colors */
+            --phase-empathize: #EC4899;
+            --phase-define: #F59E0B;
+            --phase-ideate: #10B981;
+            --phase-prototype: #6366F1;
+            --phase-test: #0EA5E9;
+        }
+
+        [data-theme="light"] {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F8FAFC;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --card-bg: #FFFFFF;
+            --hover-bg: #F1F5F9;
+            --border-color: #E2E8F0;
+        }
+
+        /* ========== RESET ========== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background: var(--primary-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+
+        .container { max-width: 1060px; margin: 0 auto; padding: 2rem; }
+
+        /* ========== BACK LINK ========== */
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; transition: color 0.2s ease; }
+        .back-link:hover { color: var(--accent-hover); }
+        .back-link svg { width: 18px; height: 18px; }
+
+        /* ========== HEADER ========== */
+        .header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 1rem; background: rgba(14, 165, 233, 0.15); color: var(--accent-color); border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+
+        /* ========== TOP CONTROLS ========== */
+        .top-controls { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .top-btn { padding: 0.6rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; font-family: var(--font-sans); }
+        .top-btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .top-btn svg { width: 16px; height: 16px; }
+
+        /* ========== PHASE TABS ========== */
+        .tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .tab-btn { padding: 0.85rem 1.25rem; background: none; border: none; border-bottom: 3px solid transparent; margin-bottom: -2px; color: var(--text-muted); font-size: 0.9rem; font-family: var(--font-sans); cursor: pointer; white-space: nowrap; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.4rem; }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active { border-bottom-color: var(--accent-color); }
+        .tab-btn[data-phase="empathize"].active { color: var(--phase-empathize); border-bottom-color: var(--phase-empathize); }
+        .tab-btn[data-phase="define"].active { color: var(--phase-define); border-bottom-color: var(--phase-define); }
+        .tab-btn[data-phase="ideate"].active { color: var(--phase-ideate); border-bottom-color: var(--phase-ideate); }
+        .tab-btn[data-phase="prototype"].active { color: var(--phase-prototype); border-bottom-color: var(--phase-prototype); }
+        .tab-btn[data-phase="test"].active { color: var(--phase-test); border-bottom-color: var(--phase-test); }
+        .tab-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--border-color); font-size: 0.7rem; font-weight: 700; font-family: var(--font-heading); }
+        .tab-btn.active .tab-num { background: currentColor; color: var(--primary-bg); }
+
+        /* ========== PANELS ========== */
+        .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .phase-intro { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+        .phase-intro h2 { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.4rem; }
+        .phase-intro p { color: var(--text-secondary); font-size: 0.92rem; }
+
+        .section-title { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin: 1.75rem 0 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        /* ========== FORM FIELDS ========== */
+        .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+        .field label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); font-family: var(--font-heading); }
+        .field-hint { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: var(--font-sans);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+        }
+        textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+
+        /* ========== BUTTONS ========== */
+        .btn { padding: 0.6rem 1.1rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-family: var(--font-sans); font-size: 0.88rem; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .btn:hover { background: var(--hover-bg); border-color: var(--accent-color); }
+        .btn-primary { background: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 600; }
+        .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+        .btn-danger { color: var(--danger-color); }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.12); border-color: var(--danger-color); }
+        .btn-sm { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
+
+        /* ========== PERSONA CARD ========== */
+        .persona-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem; position: relative; }
+        .persona-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .persona-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 700; color: #fff; font-family: var(--font-heading); flex-shrink: 0; }
+        .persona-meta { flex: 1; }
+        .persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .persona-grid .field { margin-bottom: 0; }
+        .persona-remove { position: absolute; top: 0.75rem; right: 0.75rem; background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.25rem; border-radius: 4px; transition: color 0.2s; }
+        .persona-remove:hover { color: var(--danger-color); }
+
+        /* ========== EMPATHY MAP ========== */
+        .empathy-map { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-color); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
+        .empathy-quadrant { background: var(--card-bg); padding: 1.25rem; min-height: 140px; }
+        .empathy-quadrant h4 { font-family: var(--font-heading); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.35rem; }
+        .eq-says h4 { color: var(--accent-color); }
+        .eq-thinks h4 { color: var(--phase-prototype); }
+        .eq-does h4 { color: var(--success-color); }
+        .eq-feels h4 { color: var(--phase-empathize); }
+        .empathy-quadrant textarea { min-height: 80px; font-size: 0.88rem; }
+
+        /* ========== STAKEHOLDER LIST ========== */
+        .stakeholder-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+        .stakeholder-row { display: flex; gap: 0.5rem; align-items: center; }
+        .stakeholder-row input { flex: 1; }
+        .stakeholder-row select { width: 140px; flex-shrink: 0; }
+
+        /* ========== HMW BUILDER ========== */
+        .hmw-display { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin: 1rem 0 1.5rem; text-align: center; }
+        .hmw-display .hmw-text { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 600; color: var(--phase-define); line-height: 1.5; }
+        .hmw-display .hmw-placeholder { color: var(--text-muted); font-style: italic; }
+
+        /* ========== NEEDS/WANTS MATRIX ========== */
+        .needs-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-color); border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 1.5rem; }
+        .needs-cell { background: var(--card-bg); padding: 1.25rem; }
+        .needs-cell h4 { font-family: var(--font-heading); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; color: var(--text-secondary); }
+        .needs-cell textarea { min-height: 80px; font-size: 0.88rem; }
+
+        /* ========== IDEA CARDS ========== */
+        .ideas-container { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem; min-height: 60px; }
+        .idea-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.75rem 1rem; max-width: 240px; cursor: grab; position: relative; transition: box-shadow 0.2s, transform 0.15s; user-select: none; }
+        .idea-card:active { cursor: grabbing; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transform: scale(1.04); }
+        .idea-card .idea-text { font-size: 0.88rem; color: var(--text-primary); word-break: break-word; }
+        .idea-card .idea-remove { position: absolute; top: 4px; right: 6px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.75rem; padding: 2px 4px; border-radius: 3px; }
+        .idea-card .idea-remove:hover { color: var(--danger-color); }
+        .idea-add-row { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .idea-add-row input { flex: 1; }
+
+        /* ========== FEASIBILITY-IMPACT MATRIX ========== */
+        .fi-matrix-wrapper { position: relative; margin-bottom: 2rem; }
+        .fi-matrix { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1px; background: var(--border-color); border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); min-height: 340px; }
+        .fi-cell { background: var(--card-bg); padding: 1rem; min-height: 160px; position: relative; display: flex; flex-direction: column; }
+        .fi-cell-label { font-family: var(--font-heading); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+        .fi-cell[data-zone="high-high"] .fi-cell-label { color: var(--success-color); }
+        .fi-cell[data-zone="high-low"] .fi-cell-label { color: var(--phase-define); }
+        .fi-cell[data-zone="low-high"] .fi-cell-label { color: var(--phase-prototype); }
+        .fi-cell[data-zone="low-low"] .fi-cell-label { color: var(--text-muted); }
+        .fi-cell .ideas-drop { flex: 1; min-height: 80px; border: 2px dashed var(--border-color); border-radius: 8px; padding: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; transition: border-color 0.2s, background 0.2s; }
+        .fi-cell .ideas-drop.drag-over { border-color: var(--accent-color); background: rgba(14, 165, 233, 0.06); }
+        .fi-cell .ideas-drop .idea-card { cursor: grab; max-width: 180px; font-size: 0.82rem; padding: 0.5rem 0.7rem; }
+        .fi-axis-label { position: absolute; font-family: var(--font-heading); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        .fi-axis-x { bottom: -24px; left: 50%; transform: translateX(-50%); }
+        .fi-axis-y { top: 50%; left: -32px; transform: translateY(-50%) rotate(-90deg); white-space: nowrap; }
+
+        /* ========== USER JOURNEY ========== */
+        .journey-container { display: flex; gap: 0; align-items: flex-start; overflow-x: auto; padding: 1rem 0 1.5rem; -webkit-overflow-scrolling: touch; }
+        .journey-step { display: flex; align-items: flex-start; flex-shrink: 0; }
+        .journey-step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; width: 200px; position: relative; }
+        .journey-step-num { font-family: var(--font-heading); font-size: 0.7rem; font-weight: 700; color: var(--phase-prototype); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem; }
+        .journey-step-card input { font-size: 0.88rem; margin-bottom: 0.4rem; }
+        .journey-step-card textarea { font-size: 0.82rem; min-height: 50px; }
+        .journey-step-card .step-remove { position: absolute; top: 4px; right: 6px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.75rem; padding: 2px 4px; }
+        .journey-step-card .step-remove:hover { color: var(--danger-color); }
+        .journey-arrow { display: flex; align-items: center; padding: 0 0.25rem; color: var(--text-muted); font-size: 1.3rem; margin-top: 2.5rem; }
+
+        /* ========== TEST PHASE ========== */
+        .test-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
+
+        .feedback-entry { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; margin-bottom: 0.75rem; position: relative; }
+        .feedback-entry .entry-remove { position: absolute; top: 6px; right: 8px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.75rem; }
+        .feedback-entry .entry-remove:hover { color: var(--danger-color); }
+
+        /* ========== NAV BUTTONS (prev/next) ========== */
+        .phase-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+
+        /* ========== FOOTER ========== */
+        .footer { text-align: center; padding: 2rem 0; margin-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.82rem; }
+
+        /* ========== TOAST ========== */
+        .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--success-color); color: #fff; padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.88rem; font-family: var(--font-sans); z-index: 1000; opacity: 0; transform: translateY(12px); transition: all 0.3s ease; pointer-events: none; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        /* ========== PRINT ========== */
+        @media print {
+            body { background: #fff; color: #000; }
+            .top-controls, .back-link, .tabs, .phase-nav, .btn, .persona-remove, .idea-remove, .step-remove, .entry-remove, .idea-add-row, .footer { display: none !important; }
+            .tab-panel { display: block !important; page-break-inside: avoid; margin-bottom: 2rem; }
+            .container { max-width: 100%; padding: 1rem; }
+            .header h1 { -webkit-text-fill-color: #0F172A; background: none; }
+            .phase-intro h2, .section-title { color: #0F172A; }
+            .persona-card, .empathy-map, .fi-matrix, .hmw-display, .needs-matrix, .journey-step-card, .feedback-entry, .test-grid, .phase-intro { border-color: #ccc; background: #fff; }
+            .empathy-map, .fi-matrix, .needs-matrix { background: #ccc; }
+            input, textarea, select { border-color: #ccc !important; background: #fff !important; color: #000 !important; }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .persona-grid { grid-template-columns: 1fr; }
+            .empathy-map { grid-template-columns: 1fr; }
+            .needs-matrix { grid-template-columns: 1fr; }
+            .fi-matrix { grid-template-columns: 1fr; grid-template-rows: auto; min-height: auto; }
+            .fi-cell { min-height: 120px; }
+            .test-grid { grid-template-columns: 1fr; }
+            .stakeholder-row { flex-wrap: wrap; }
+            .stakeholder-row select { width: 100%; }
+            .tab-btn { padding: 0.65rem 0.85rem; font-size: 0.82rem; }
+            .top-controls { justify-content: center; }
+            .journey-step-card { width: 170px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back link -->
+        <a class="back-link" href="/index.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 5l-7 7 7 7"/></svg>
+            Back to ImpactMojo
+        </a>
+
+        <!-- Top controls -->
+        <div class="top-controls">
+            <button class="top-btn" onclick="saveProject()" title="Save to browser">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Save
+            </button>
+            <button class="top-btn" onclick="loadProject()" title="Load from browser">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Load
+            </button>
+            <button class="top-btn" onclick="exportText()" title="Export as text">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Export
+            </button>
+            <button class="top-btn" onclick="window.print()" title="Print">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Print
+            </button>
+            <button class="top-btn" id="themeToggle" onclick="toggleTheme()">
+                <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                <span id="themeLabel">Light</span>
+            </button>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                Interactive Lab
+            </div>
+            <h1>Design Thinking Lab</h1>
+            <p>Walk through all 5 phases of human-centred design. Build personas, define problems, brainstorm solutions, prototype, and plan testing — all in one place.</p>
+        </div>
+
+        <!-- Phase Tabs -->
+        <div class="tabs" role="tablist">
+            <button class="tab-btn active" data-phase="empathize" role="tab" aria-selected="true" onclick="switchPhase('empathize')"><span class="tab-num">1</span> Empathize</button>
+            <button class="tab-btn" data-phase="define" role="tab" aria-selected="false" onclick="switchPhase('define')"><span class="tab-num">2</span> Define</button>
+            <button class="tab-btn" data-phase="ideate" role="tab" aria-selected="false" onclick="switchPhase('ideate')"><span class="tab-num">3</span> Ideate</button>
+            <button class="tab-btn" data-phase="prototype" role="tab" aria-selected="false" onclick="switchPhase('prototype')"><span class="tab-num">4</span> Prototype</button>
+            <button class="tab-btn" data-phase="test" role="tab" aria-selected="false" onclick="switchPhase('test')"><span class="tab-num">5</span> Test</button>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PHASE 1: EMPATHIZE -->
+        <!-- ============================================================ -->
+        <div class="tab-panel active" id="panel-empathize" role="tabpanel">
+            <div class="phase-intro" style="border-left: 3px solid var(--phase-empathize);">
+                <h2 style="color: var(--phase-empathize);">Phase 1: Empathize</h2>
+                <p>Understand the people you are designing for. Map stakeholders, create detailed personas, and build empathy maps to capture what users say, think, do, and feel.</p>
+            </div>
+
+            <!-- Stakeholder Mapping -->
+            <h3 class="section-title">Stakeholder Mapping</h3>
+            <div id="stakeholder-list" class="stakeholder-list"></div>
+            <button class="btn" onclick="addStakeholder()">+ Add Stakeholder</button>
+
+            <!-- Personas -->
+            <h3 class="section-title" style="margin-top: 2rem;">Persona Creation</h3>
+            <div id="persona-list"></div>
+            <button class="btn" onclick="addPersona()">+ Add Persona</button>
+
+            <!-- Empathy Map -->
+            <h3 class="section-title" style="margin-top: 2rem;">Empathy Map</h3>
+            <p class="field-hint" style="margin-bottom: 0.75rem;">Focus on your primary persona. What do they say, think, do, and feel about the problem?</p>
+            <div class="empathy-map">
+                <div class="empathy-quadrant eq-says">
+                    <h4>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                        Says
+                    </h4>
+                    <textarea id="empathy-says" placeholder="Quotes and statements from users..."></textarea>
+                </div>
+                <div class="empathy-quadrant eq-thinks">
+                    <h4>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                        Thinks
+                    </h4>
+                    <textarea id="empathy-thinks" placeholder="What occupies their mind? Worries, aspirations..."></textarea>
+                </div>
+                <div class="empathy-quadrant eq-does">
+                    <h4>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        Does
+                    </h4>
+                    <textarea id="empathy-does" placeholder="Actions, behaviours, workarounds they use..."></textarea>
+                </div>
+                <div class="empathy-quadrant eq-feels">
+                    <h4>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                        Feels
+                    </h4>
+                    <textarea id="empathy-feels" placeholder="Emotions, frustrations, joys, anxieties..."></textarea>
+                </div>
+            </div>
+
+            <div class="phase-nav">
+                <div></div>
+                <button class="btn btn-primary" onclick="switchPhase('define')">Next: Define &rarr;</button>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PHASE 2: DEFINE -->
+        <!-- ============================================================ -->
+        <div class="tab-panel" id="panel-define" role="tabpanel">
+            <div class="phase-intro" style="border-left: 3px solid var(--phase-define);">
+                <h2 style="color: var(--phase-define);">Phase 2: Define</h2>
+                <p>Synthesize your empathy research into a clear problem statement. Reframe the challenge and craft a "How Might We" question that opens up solution space.</p>
+            </div>
+
+            <!-- Problem Reframing -->
+            <h3 class="section-title">Problem Reframing</h3>
+            <div class="field">
+                <label>Initial Problem Statement</label>
+                <textarea id="define-initial-problem" placeholder="What is the problem as you first understood it?"></textarea>
+            </div>
+            <div class="field">
+                <label>Reframed Problem (user-centred)</label>
+                <textarea id="define-reframed-problem" placeholder="Restate the problem from the user's perspective, focusing on their needs..."></textarea>
+            </div>
+
+            <!-- HMW Builder -->
+            <h3 class="section-title">How Might We (HMW) Statement Builder</h3>
+            <p class="field-hint" style="margin-bottom: 0.75rem;">Combine a user, a need, and an insight to create your HMW statement.</p>
+            <div class="field">
+                <label>User</label>
+                <input type="text" id="hmw-user" placeholder="e.g., rural health workers" oninput="updateHMW()">
+            </div>
+            <div class="field">
+                <label>Need</label>
+                <input type="text" id="hmw-need" placeholder="e.g., access reliable health data" oninput="updateHMW()">
+            </div>
+            <div class="field">
+                <label>Insight</label>
+                <input type="text" id="hmw-insight" placeholder="e.g., they currently rely on outdated paper records" oninput="updateHMW()">
+            </div>
+            <div class="hmw-display">
+                <div id="hmw-output" class="hmw-placeholder">Fill in the fields above to generate your HMW statement</div>
+            </div>
+
+            <!-- Needs vs Wants Matrix -->
+            <h3 class="section-title">Needs vs Wants Matrix</h3>
+            <div class="needs-matrix">
+                <div class="needs-cell">
+                    <h4 style="color: var(--success-color);">Must Have (Needs)</h4>
+                    <textarea id="needs-must" placeholder="Essential requirements that solve the core problem..."></textarea>
+                </div>
+                <div class="needs-cell">
+                    <h4 style="color: var(--accent-color);">Should Have</h4>
+                    <textarea id="needs-should" placeholder="Important but not critical..."></textarea>
+                </div>
+                <div class="needs-cell">
+                    <h4 style="color: var(--phase-define);">Nice to Have (Wants)</h4>
+                    <textarea id="needs-nice" placeholder="Desirable additions if resources allow..."></textarea>
+                </div>
+                <div class="needs-cell">
+                    <h4 style="color: var(--text-muted);">Out of Scope</h4>
+                    <textarea id="needs-out" placeholder="Explicitly excluded from this project..."></textarea>
+                </div>
+            </div>
+
+            <div class="phase-nav">
+                <button class="btn" onclick="switchPhase('empathize')">&larr; Back: Empathize</button>
+                <button class="btn btn-primary" onclick="switchPhase('ideate')">Next: Ideate &rarr;</button>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PHASE 3: IDEATE -->
+        <!-- ============================================================ -->
+        <div class="tab-panel" id="panel-ideate" role="tabpanel">
+            <div class="phase-intro" style="border-left: 3px solid var(--phase-ideate);">
+                <h2 style="color: var(--phase-ideate);">Phase 3: Ideate</h2>
+                <p>Generate as many ideas as possible. Capture them freely, then cluster and prioritize using the feasibility-impact matrix.</p>
+            </div>
+
+            <!-- Brainstorm Capture -->
+            <h3 class="section-title">Brainstorm Ideas</h3>
+            <div class="idea-add-row">
+                <input type="text" id="new-idea-input" placeholder="Type an idea and press Enter or click Add..." onkeydown="if(event.key==='Enter')addIdea()">
+                <button class="btn btn-primary" onclick="addIdea()">Add</button>
+            </div>
+            <div class="ideas-container" id="ideas-pool"></div>
+
+            <!-- Idea Clustering -->
+            <h3 class="section-title">Idea Clusters</h3>
+            <p class="field-hint" style="margin-bottom: 0.75rem;">Group related ideas into themes or clusters.</p>
+            <div id="clusters-list"></div>
+            <button class="btn" onclick="addCluster()">+ Add Cluster</button>
+
+            <!-- Feasibility-Impact Matrix -->
+            <h3 class="section-title" style="margin-top: 2rem;">Feasibility-Impact Matrix</h3>
+            <p class="field-hint" style="margin-bottom: 0.75rem;">Drag idea cards from the pool above into the appropriate quadrant.</p>
+            <div class="fi-matrix-wrapper">
+                <div class="fi-matrix">
+                    <div class="fi-cell" data-zone="high-high">
+                        <div class="fi-cell-label">High Impact / High Feasibility</div>
+                        <div class="ideas-drop" data-drop="high-high" ondragover="fiDragOver(event)" ondragleave="fiDragLeave(event)" ondrop="fiDrop(event)"></div>
+                    </div>
+                    <div class="fi-cell" data-zone="high-low">
+                        <div class="fi-cell-label">High Impact / Low Feasibility</div>
+                        <div class="ideas-drop" data-drop="high-low" ondragover="fiDragOver(event)" ondragleave="fiDragLeave(event)" ondrop="fiDrop(event)"></div>
+                    </div>
+                    <div class="fi-cell" data-zone="low-high">
+                        <div class="fi-cell-label">Low Impact / High Feasibility</div>
+                        <div class="ideas-drop" data-drop="low-high" ondragover="fiDragOver(event)" ondragleave="fiDragLeave(event)" ondrop="fiDrop(event)"></div>
+                    </div>
+                    <div class="fi-cell" data-zone="low-low">
+                        <div class="fi-cell-label">Low Impact / Low Feasibility</div>
+                        <div class="ideas-drop" data-drop="low-low" ondragover="fiDragOver(event)" ondragleave="fiDragLeave(event)" ondrop="fiDrop(event)"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-nav">
+                <button class="btn" onclick="switchPhase('define')">&larr; Back: Define</button>
+                <button class="btn btn-primary" onclick="switchPhase('prototype')">Next: Prototype &rarr;</button>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PHASE 4: PROTOTYPE -->
+        <!-- ============================================================ -->
+        <div class="tab-panel" id="panel-prototype" role="tabpanel">
+            <div class="phase-intro" style="border-left: 3px solid var(--phase-prototype);">
+                <h2 style="color: var(--phase-prototype);">Phase 4: Prototype</h2>
+                <p>Describe your solution, outline key features and resources, and map the user journey from first awareness to final outcome.</p>
+            </div>
+
+            <!-- Solution Description -->
+            <h3 class="section-title">Solution Description</h3>
+            <div class="field">
+                <label>Solution Name</label>
+                <input type="text" id="proto-name" placeholder="Give your solution a working title...">
+            </div>
+            <div class="field">
+                <label>Solution Overview</label>
+                <textarea id="proto-overview" placeholder="Describe the solution in 2-3 sentences..." style="min-height: 90px;"></textarea>
+            </div>
+
+            <!-- Key Features -->
+            <h3 class="section-title">Key Features</h3>
+            <div id="features-list"></div>
+            <button class="btn" onclick="addFeature()">+ Add Feature</button>
+
+            <!-- Resource Requirements -->
+            <h3 class="section-title" style="margin-top: 1.5rem;">Resource Requirements</h3>
+            <div class="field">
+                <label>Team / Skills Needed</label>
+                <textarea id="proto-team" placeholder="What people, skills, or roles are required?"></textarea>
+            </div>
+            <div class="field">
+                <label>Budget / Materials</label>
+                <textarea id="proto-budget" placeholder="Estimated costs, tools, materials needed..."></textarea>
+            </div>
+            <div class="field">
+                <label>Timeline</label>
+                <input type="text" id="proto-timeline" placeholder="e.g., 4 weeks for MVP">
+            </div>
+
+            <!-- User Journey Mapping -->
+            <h3 class="section-title" style="margin-top: 1.5rem;">User Journey Map</h3>
+            <p class="field-hint" style="margin-bottom: 0.75rem;">Map the steps a user takes from first learning about the solution to achieving their outcome.</p>
+            <div class="journey-container" id="journey-container"></div>
+            <button class="btn" onclick="addJourneyStep()">+ Add Step</button>
+
+            <div class="phase-nav">
+                <button class="btn" onclick="switchPhase('ideate')">&larr; Back: Ideate</button>
+                <button class="btn btn-primary" onclick="switchPhase('test')">Next: Test &rarr;</button>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PHASE 5: TEST -->
+        <!-- ============================================================ -->
+        <div class="tab-panel" id="panel-test" role="tabpanel">
+            <div class="phase-intro" style="border-left: 3px solid var(--phase-test);">
+                <h2 style="color: var(--phase-test);">Phase 5: Test</h2>
+                <p>Plan how to test your prototype, capture feedback from users, and document iterations for improvement.</p>
+            </div>
+
+            <!-- Test Plan -->
+            <h3 class="section-title">Test Plan</h3>
+            <div class="test-grid">
+                <div class="field">
+                    <label>Who to Test With</label>
+                    <textarea id="test-who" placeholder="Target testers, sample size, recruitment plan..."></textarea>
+                </div>
+                <div class="field">
+                    <label>What to Measure</label>
+                    <textarea id="test-what" placeholder="Key metrics, usability criteria, behaviours to observe..."></textarea>
+                </div>
+                <div class="field">
+                    <label>Success Criteria</label>
+                    <textarea id="test-success" placeholder="How will you know if the prototype succeeds?"></textarea>
+                </div>
+                <div class="field">
+                    <label>Test Method</label>
+                    <textarea id="test-method" placeholder="Interviews, surveys, A/B testing, observation..."></textarea>
+                </div>
+            </div>
+
+            <!-- Feedback Capture -->
+            <h3 class="section-title">Feedback Capture</h3>
+            <div id="feedback-list"></div>
+            <button class="btn" onclick="addFeedback()">+ Add Feedback Entry</button>
+
+            <!-- Iteration Notes -->
+            <h3 class="section-title" style="margin-top: 1.5rem;">Iteration Notes</h3>
+            <div class="field">
+                <label>What Worked</label>
+                <textarea id="test-worked" placeholder="Things that users responded well to..."></textarea>
+            </div>
+            <div class="field">
+                <label>What Needs Changing</label>
+                <textarea id="test-change" placeholder="Pain points, confusion, suggested improvements..."></textarea>
+            </div>
+            <div class="field">
+                <label>Next Steps</label>
+                <textarea id="test-next" placeholder="What will you do differently in the next iteration?"></textarea>
+            </div>
+
+            <div class="phase-nav">
+                <button class="btn" onclick="switchPhase('prototype')">&larr; Back: Prototype</button>
+                <button class="btn btn-primary" onclick="exportText()">Export Full Report</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            Design Thinking Lab &mdash; ImpactMojo | Data saved locally in your browser
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+    /* ================================================================
+       STATE
+       ================================================================ */
+    const STATE = {
+        stakeholders: [],
+        personas: [],
+        empathy: { says: '', thinks: '', does: '', feels: '' },
+        define: { initialProblem: '', reframedProblem: '', hmwUser: '', hmwNeed: '', hmwInsight: '' },
+        needs: { must: '', should: '', nice: '', out: '' },
+        ideas: [],          // { id, text, zone: null|'high-high'|... }
+        clusters: [],       // { id, name, ideaIds: [] }
+        prototype: { name: '', overview: '', team: '', budget: '', timeline: '' },
+        features: [],       // { id, text }
+        journey: [],        // { id, title, description }
+        test: { who: '', what: '', success: '', method: '', worked: '', change: '', next: '' },
+        feedback: []        // { id, source, quote, rating }
+    };
+
+    let idCounter = Date.now();
+    function uid() { return ++idCounter; }
+
+    /* ================================================================
+       PHASE SWITCHING
+       ================================================================ */
+    function switchPhase(phase) {
+        document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.querySelector(`.tab-btn[data-phase="${phase}"]`).classList.add('active');
+        document.querySelector(`.tab-btn[data-phase="${phase}"]`).setAttribute('aria-selected', 'true');
+        document.getElementById(`panel-${phase}`).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ================================================================
+       THEME TOGGLE
+       ================================================================ */
+    function toggleTheme() {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        document.documentElement.setAttribute('data-theme', isLight ? '' : 'light');
+        document.getElementById('themeLabel').textContent = isLight ? 'Light' : 'Dark';
+        localStorage.setItem('dt-lab-theme', isLight ? 'dark' : 'light');
+    }
+    (function initTheme() {
+        const saved = localStorage.getItem('dt-lab-theme');
+        if (saved === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.getElementById('themeLabel').textContent = 'Dark';
+        }
+    })();
+
+    /* ================================================================
+       TOAST
+       ================================================================ */
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    /* ================================================================
+       STAKEHOLDERS
+       ================================================================ */
+    function addStakeholder(name, influence) {
+        const s = { id: uid(), name: name || '', influence: influence || 'high' };
+        STATE.stakeholders.push(s);
+        renderStakeholders();
+    }
+    function removeStakeholder(id) {
+        STATE.stakeholders = STATE.stakeholders.filter(s => s.id !== id);
+        renderStakeholders();
+    }
+    function renderStakeholders() {
+        const el = document.getElementById('stakeholder-list');
+        el.innerHTML = STATE.stakeholders.map(s => `
+            <div class="stakeholder-row">
+                <input type="text" value="${esc(s.name)}" placeholder="Stakeholder name" onchange="updateStakeholder(${s.id}, 'name', this.value)">
+                <select onchange="updateStakeholder(${s.id}, 'influence', this.value)">
+                    <option value="high" ${s.influence==='high'?'selected':''}>High Influence</option>
+                    <option value="medium" ${s.influence==='medium'?'selected':''}>Medium</option>
+                    <option value="low" ${s.influence==='low'?'selected':''}>Low Influence</option>
+                </select>
+                <button class="btn btn-sm btn-danger" onclick="removeStakeholder(${s.id})">Remove</button>
+            </div>
+        `).join('');
+    }
+    function updateStakeholder(id, key, val) {
+        const s = STATE.stakeholders.find(x => x.id === id);
+        if (s) s[key] = val;
+    }
+
+    /* ================================================================
+       PERSONAS
+       ================================================================ */
+    function addPersona(data) {
+        const p = Object.assign({ id: uid(), name: '', age: '', gender: '', location: '', occupation: '', needs: '', frustrations: '', goals: '' }, data || {});
+        STATE.personas.push(p);
+        renderPersonas();
+    }
+    function removePersona(id) {
+        STATE.personas = STATE.personas.filter(p => p.id !== id);
+        renderPersonas();
+    }
+    function renderPersonas() {
+        const el = document.getElementById('persona-list');
+        el.innerHTML = STATE.personas.map(p => `
+            <div class="persona-card">
+                <button class="persona-remove" onclick="removePersona(${p.id})" title="Remove persona">&#10005;</button>
+                <div class="persona-header">
+                    <div class="persona-avatar">${p.name ? p.name.charAt(0).toUpperCase() : '?'}</div>
+                    <div class="persona-meta">
+                        <input type="text" value="${esc(p.name)}" placeholder="Persona name" style="font-size:1.1rem;font-weight:600;margin-bottom:0.3rem;" onchange="updatePersona(${p.id},'name',this.value); renderPersonas();">
+                        <input type="text" value="${esc(p.occupation)}" placeholder="Occupation / Role" style="font-size:0.88rem;" onchange="updatePersona(${p.id},'occupation',this.value)">
+                    </div>
+                </div>
+                <div class="persona-grid">
+                    <div class="field"><label>Age</label><input type="text" value="${esc(p.age)}" placeholder="e.g., 32" onchange="updatePersona(${p.id},'age',this.value)"></div>
+                    <div class="field"><label>Gender</label><input type="text" value="${esc(p.gender)}" placeholder="e.g., Female" onchange="updatePersona(${p.id},'gender',this.value)"></div>
+                    <div class="field"><label>Location</label><input type="text" value="${esc(p.location)}" placeholder="e.g., Rural Bihar" onchange="updatePersona(${p.id},'location',this.value)"></div>
+                    <div class="field"><label>Needs</label><textarea onchange="updatePersona(${p.id},'needs',this.value)" placeholder="What does this person need?">${esc(p.needs)}</textarea></div>
+                    <div class="field"><label>Frustrations</label><textarea onchange="updatePersona(${p.id},'frustrations',this.value)" placeholder="Pain points and barriers...">${esc(p.frustrations)}</textarea></div>
+                    <div class="field"><label>Goals</label><textarea onchange="updatePersona(${p.id},'goals',this.value)" placeholder="What are they trying to achieve?">${esc(p.goals)}</textarea></div>
+                </div>
+            </div>
+        `).join('');
+    }
+    function updatePersona(id, key, val) {
+        const p = STATE.personas.find(x => x.id === id);
+        if (p) p[key] = val;
+    }
+
+    /* ================================================================
+       HMW BUILDER
+       ================================================================ */
+    function updateHMW() {
+        const user = document.getElementById('hmw-user').value.trim();
+        const need = document.getElementById('hmw-need').value.trim();
+        const insight = document.getElementById('hmw-insight').value.trim();
+        const out = document.getElementById('hmw-output');
+        if (user || need || insight) {
+            let parts = ['How might we'];
+            if (need) parts.push(`help ${user || '[user]'} ${need}`);
+            else parts.push(`help ${user || '[user]'}`);
+            if (insight) parts.push(`given that ${insight}`);
+            out.className = 'hmw-text';
+            out.textContent = parts.join(' ') + '?';
+        } else {
+            out.className = 'hmw-placeholder';
+            out.textContent = 'Fill in the fields above to generate your HMW statement';
+        }
+    }
+
+    /* ================================================================
+       IDEAS
+       ================================================================ */
+    function addIdea() {
+        const input = document.getElementById('new-idea-input');
+        const text = input.value.trim();
+        if (!text) return;
+        STATE.ideas.push({ id: uid(), text, zone: null });
+        input.value = '';
+        renderIdeas();
+    }
+    function removeIdea(id) {
+        STATE.ideas = STATE.ideas.filter(i => i.id !== id);
+        renderIdeas();
+    }
+    function renderIdeas() {
+        // Pool: ideas with no zone
+        const pool = document.getElementById('ideas-pool');
+        const poolIdeas = STATE.ideas.filter(i => !i.zone);
+        pool.innerHTML = poolIdeas.map(i => `
+            <div class="idea-card" draggable="true" data-idea-id="${i.id}" ondragstart="ideaDragStart(event, ${i.id})">
+                <button class="idea-remove" onclick="removeIdea(${i.id})">&#10005;</button>
+                <div class="idea-text">${esc(i.text)}</div>
+            </div>
+        `).join('');
+        if (poolIdeas.length === 0) {
+            pool.innerHTML = '<span style="color:var(--text-muted);font-size:0.85rem;padding:0.5rem;">Add ideas above. They will appear here as draggable cards.</span>';
+        }
+
+        // Matrix drop zones
+        ['high-high','high-low','low-high','low-low'].forEach(zone => {
+            const drop = document.querySelector(`.ideas-drop[data-drop="${zone}"]`);
+            const zoneIdeas = STATE.ideas.filter(i => i.zone === zone);
+            drop.innerHTML = zoneIdeas.map(i => `
+                <div class="idea-card" draggable="true" data-idea-id="${i.id}" ondragstart="ideaDragStart(event, ${i.id})">
+                    <button class="idea-remove" onclick="removeIdeaFromMatrix(${i.id})">&#10005;</button>
+                    <div class="idea-text">${esc(i.text)}</div>
+                </div>
+            `).join('');
+            if (zoneIdeas.length === 0) {
+                drop.innerHTML += '<span style="color:var(--text-muted);font-size:0.78rem;">Drop ideas here</span>';
+            }
+        });
+    }
+    function removeIdeaFromMatrix(id) {
+        const idea = STATE.ideas.find(i => i.id === id);
+        if (idea) idea.zone = null;
+        renderIdeas();
+    }
+
+    let draggedIdeaId = null;
+    function ideaDragStart(e, id) {
+        draggedIdeaId = id;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', id);
+    }
+    function fiDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        e.currentTarget.classList.add('drag-over');
+    }
+    function fiDragLeave(e) {
+        e.currentTarget.classList.remove('drag-over');
+    }
+    function fiDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('drag-over');
+        const zone = e.currentTarget.getAttribute('data-drop');
+        const id = parseInt(e.dataTransfer.getData('text/plain')) || draggedIdeaId;
+        const idea = STATE.ideas.find(i => i.id === id);
+        if (idea) idea.zone = zone;
+        renderIdeas();
+    }
+
+    // Also allow dropping back to pool
+    document.addEventListener('DOMContentLoaded', () => {
+        const pool = document.getElementById('ideas-pool');
+        pool.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; });
+        pool.addEventListener('drop', e => {
+            e.preventDefault();
+            const id = parseInt(e.dataTransfer.getData('text/plain')) || draggedIdeaId;
+            const idea = STATE.ideas.find(i => i.id === id);
+            if (idea) idea.zone = null;
+            renderIdeas();
+        });
+    });
+
+    /* ================================================================
+       CLUSTERS
+       ================================================================ */
+    function addCluster() {
+        STATE.clusters.push({ id: uid(), name: '', notes: '' });
+        renderClusters();
+    }
+    function removeCluster(id) {
+        STATE.clusters = STATE.clusters.filter(c => c.id !== id);
+        renderClusters();
+    }
+    function renderClusters() {
+        const el = document.getElementById('clusters-list');
+        el.innerHTML = STATE.clusters.map(c => `
+            <div class="feedback-entry">
+                <button class="entry-remove" onclick="removeCluster(${c.id})">&#10005;</button>
+                <div class="field" style="margin-bottom:0.5rem;">
+                    <label>Cluster Name</label>
+                    <input type="text" value="${esc(c.name)}" placeholder="Theme name..." onchange="updateCluster(${c.id},'name',this.value)">
+                </div>
+                <div class="field" style="margin-bottom:0;">
+                    <label>Ideas in this Cluster</label>
+                    <textarea placeholder="List related ideas..." onchange="updateCluster(${c.id},'notes',this.value)">${esc(c.notes)}</textarea>
+                </div>
+            </div>
+        `).join('');
+    }
+    function updateCluster(id, key, val) {
+        const c = STATE.clusters.find(x => x.id === id);
+        if (c) c[key] = val;
+    }
+
+    /* ================================================================
+       FEATURES
+       ================================================================ */
+    function addFeature() {
+        STATE.features.push({ id: uid(), text: '' });
+        renderFeatures();
+    }
+    function removeFeature(id) {
+        STATE.features = STATE.features.filter(f => f.id !== id);
+        renderFeatures();
+    }
+    function renderFeatures() {
+        const el = document.getElementById('features-list');
+        el.innerHTML = STATE.features.map((f, i) => `
+            <div class="stakeholder-row" style="margin-bottom:0.5rem;">
+                <span style="color:var(--phase-prototype);font-weight:700;font-family:var(--font-heading);font-size:0.82rem;min-width:20px;">${i+1}.</span>
+                <input type="text" value="${esc(f.text)}" placeholder="Feature description..." onchange="updateFeature(${f.id},this.value)">
+                <button class="btn btn-sm btn-danger" onclick="removeFeature(${f.id})">Remove</button>
+            </div>
+        `).join('');
+    }
+    function updateFeature(id, val) {
+        const f = STATE.features.find(x => x.id === id);
+        if (f) f.text = val;
+    }
+
+    /* ================================================================
+       USER JOURNEY
+       ================================================================ */
+    function addJourneyStep() {
+        const defaults = ['Awareness','Consideration','Onboarding','First Use','Regular Use','Outcome'];
+        const idx = STATE.journey.length;
+        STATE.journey.push({ id: uid(), title: defaults[idx] || '', description: '' });
+        renderJourney();
+    }
+    function removeJourneyStep(id) {
+        STATE.journey = STATE.journey.filter(s => s.id !== id);
+        renderJourney();
+    }
+    function renderJourney() {
+        const el = document.getElementById('journey-container');
+        el.innerHTML = STATE.journey.map((s, i) => {
+            const arrow = i < STATE.journey.length - 1 ? '<div class="journey-arrow">&rarr;</div>' : '';
+            return `
+                <div class="journey-step">
+                    <div class="journey-step-card">
+                        <button class="step-remove" onclick="removeJourneyStep(${s.id})">&#10005;</button>
+                        <div class="journey-step-num">Step ${i+1}</div>
+                        <input type="text" value="${esc(s.title)}" placeholder="Step title" onchange="updateJourneyStep(${s.id},'title',this.value)">
+                        <textarea placeholder="What happens here?" onchange="updateJourneyStep(${s.id},'description',this.value)">${esc(s.description)}</textarea>
+                    </div>
+                    ${arrow}
+                </div>
+            `;
+        }).join('');
+    }
+    function updateJourneyStep(id, key, val) {
+        const s = STATE.journey.find(x => x.id === id);
+        if (s) s[key] = val;
+    }
+
+    /* ================================================================
+       FEEDBACK
+       ================================================================ */
+    function addFeedback() {
+        STATE.feedback.push({ id: uid(), source: '', quote: '', rating: '' });
+        renderFeedback();
+    }
+    function removeFeedback(id) {
+        STATE.feedback = STATE.feedback.filter(f => f.id !== id);
+        renderFeedback();
+    }
+    function renderFeedback() {
+        const el = document.getElementById('feedback-list');
+        el.innerHTML = STATE.feedback.map(f => `
+            <div class="feedback-entry">
+                <button class="entry-remove" onclick="removeFeedback(${f.id})">&#10005;</button>
+                <div class="field" style="margin-bottom:0.5rem;">
+                    <label>Source / Tester</label>
+                    <input type="text" value="${esc(f.source)}" placeholder="Who gave this feedback?" onchange="updateFeedback(${f.id},'source',this.value)">
+                </div>
+                <div class="field" style="margin-bottom:0.5rem;">
+                    <label>Feedback</label>
+                    <textarea placeholder="What did they say?" onchange="updateFeedback(${f.id},'quote',this.value)">${esc(f.quote)}</textarea>
+                </div>
+                <div class="field" style="margin-bottom:0;">
+                    <label>Sentiment</label>
+                    <select onchange="updateFeedback(${f.id},'rating',this.value)">
+                        <option value="" ${f.rating===''?'selected':''}>Select...</option>
+                        <option value="positive" ${f.rating==='positive'?'selected':''}>Positive</option>
+                        <option value="neutral" ${f.rating==='neutral'?'selected':''}>Neutral</option>
+                        <option value="negative" ${f.rating==='negative'?'selected':''}>Negative</option>
+                    </select>
+                </div>
+            </div>
+        `).join('');
+    }
+    function updateFeedback(id, key, val) {
+        const f = STATE.feedback.find(x => x.id === id);
+        if (f) f[key] = val;
+    }
+
+    /* ================================================================
+       COLLECT STATE FROM DOM (for fields not driven by render functions)
+       ================================================================ */
+    function collectState() {
+        // Empathy
+        STATE.empathy.says = document.getElementById('empathy-says').value;
+        STATE.empathy.thinks = document.getElementById('empathy-thinks').value;
+        STATE.empathy.does = document.getElementById('empathy-does').value;
+        STATE.empathy.feels = document.getElementById('empathy-feels').value;
+        // Define
+        STATE.define.initialProblem = document.getElementById('define-initial-problem').value;
+        STATE.define.reframedProblem = document.getElementById('define-reframed-problem').value;
+        STATE.define.hmwUser = document.getElementById('hmw-user').value;
+        STATE.define.hmwNeed = document.getElementById('hmw-need').value;
+        STATE.define.hmwInsight = document.getElementById('hmw-insight').value;
+        // Needs
+        STATE.needs.must = document.getElementById('needs-must').value;
+        STATE.needs.should = document.getElementById('needs-should').value;
+        STATE.needs.nice = document.getElementById('needs-nice').value;
+        STATE.needs.out = document.getElementById('needs-out').value;
+        // Prototype
+        STATE.prototype.name = document.getElementById('proto-name').value;
+        STATE.prototype.overview = document.getElementById('proto-overview').value;
+        STATE.prototype.team = document.getElementById('proto-team').value;
+        STATE.prototype.budget = document.getElementById('proto-budget').value;
+        STATE.prototype.timeline = document.getElementById('proto-timeline').value;
+        // Test
+        STATE.test.who = document.getElementById('test-who').value;
+        STATE.test.what = document.getElementById('test-what').value;
+        STATE.test.success = document.getElementById('test-success').value;
+        STATE.test.method = document.getElementById('test-method').value;
+        STATE.test.worked = document.getElementById('test-worked').value;
+        STATE.test.change = document.getElementById('test-change').value;
+        STATE.test.next = document.getElementById('test-next').value;
+    }
+
+    function restoreDOM() {
+        document.getElementById('empathy-says').value = STATE.empathy.says;
+        document.getElementById('empathy-thinks').value = STATE.empathy.thinks;
+        document.getElementById('empathy-does').value = STATE.empathy.does;
+        document.getElementById('empathy-feels').value = STATE.empathy.feels;
+        document.getElementById('define-initial-problem').value = STATE.define.initialProblem;
+        document.getElementById('define-reframed-problem').value = STATE.define.reframedProblem;
+        document.getElementById('hmw-user').value = STATE.define.hmwUser;
+        document.getElementById('hmw-need').value = STATE.define.hmwNeed;
+        document.getElementById('hmw-insight').value = STATE.define.hmwInsight;
+        document.getElementById('needs-must').value = STATE.needs.must;
+        document.getElementById('needs-should').value = STATE.needs.should;
+        document.getElementById('needs-nice').value = STATE.needs.nice;
+        document.getElementById('needs-out').value = STATE.needs.out;
+        document.getElementById('proto-name').value = STATE.prototype.name;
+        document.getElementById('proto-overview').value = STATE.prototype.overview;
+        document.getElementById('proto-team').value = STATE.prototype.team;
+        document.getElementById('proto-budget').value = STATE.prototype.budget;
+        document.getElementById('proto-timeline').value = STATE.prototype.timeline;
+        document.getElementById('test-who').value = STATE.test.who;
+        document.getElementById('test-what').value = STATE.test.what;
+        document.getElementById('test-success').value = STATE.test.success;
+        document.getElementById('test-method').value = STATE.test.method;
+        document.getElementById('test-worked').value = STATE.test.worked;
+        document.getElementById('test-change').value = STATE.test.change;
+        document.getElementById('test-next').value = STATE.test.next;
+        updateHMW();
+        renderStakeholders();
+        renderPersonas();
+        renderIdeas();
+        renderClusters();
+        renderFeatures();
+        renderJourney();
+        renderFeedback();
+    }
+
+    /* ================================================================
+       SAVE / LOAD
+       ================================================================ */
+    function saveProject() {
+        collectState();
+        localStorage.setItem('dt-lab-data', JSON.stringify(STATE));
+        showToast('Project saved to browser');
+    }
+    function loadProject() {
+        const raw = localStorage.getItem('dt-lab-data');
+        if (!raw) { showToast('No saved project found'); return; }
+        try {
+            const data = JSON.parse(raw);
+            Object.assign(STATE, data);
+            restoreDOM();
+            showToast('Project loaded');
+        } catch (e) {
+            showToast('Error loading saved data');
+        }
+    }
+
+    /* ================================================================
+       EXPORT
+       ================================================================ */
+    function exportText() {
+        collectState();
+        const lines = [];
+        const hr = '='.repeat(60);
+        lines.push('DESIGN THINKING LAB REPORT');
+        lines.push('Generated: ' + new Date().toLocaleString());
+        lines.push(hr);
+
+        // Empathize
+        lines.push('\n1. EMPATHIZE\n');
+        lines.push('STAKEHOLDERS:');
+        STATE.stakeholders.forEach(s => lines.push(`  - ${s.name || '(unnamed)'} [${s.influence} influence]`));
+        lines.push('\nPERSONAS:');
+        STATE.personas.forEach(p => {
+            lines.push(`  Name: ${p.name || '(unnamed)'}`);
+            lines.push(`  Age: ${p.age}  Gender: ${p.gender}  Location: ${p.location}`);
+            lines.push(`  Occupation: ${p.occupation}`);
+            lines.push(`  Needs: ${p.needs}`);
+            lines.push(`  Frustrations: ${p.frustrations}`);
+            lines.push(`  Goals: ${p.goals}`);
+            lines.push('');
+        });
+        lines.push('EMPATHY MAP:');
+        lines.push(`  Says: ${STATE.empathy.says}`);
+        lines.push(`  Thinks: ${STATE.empathy.thinks}`);
+        lines.push(`  Does: ${STATE.empathy.does}`);
+        lines.push(`  Feels: ${STATE.empathy.feels}`);
+
+        // Define
+        lines.push('\n' + hr);
+        lines.push('\n2. DEFINE\n');
+        lines.push(`Initial Problem: ${STATE.define.initialProblem}`);
+        lines.push(`Reframed Problem: ${STATE.define.reframedProblem}`);
+        const hmwUser = STATE.define.hmwUser || '[user]';
+        const hmwNeed = STATE.define.hmwNeed;
+        const hmwInsight = STATE.define.hmwInsight;
+        let hmw = `How might we help ${hmwUser}`;
+        if (hmwNeed) hmw += ` ${hmwNeed}`;
+        if (hmwInsight) hmw += ` given that ${hmwInsight}`;
+        lines.push(`HMW: ${hmw}?`);
+        lines.push('\nNeeds Matrix:');
+        lines.push(`  Must Have: ${STATE.needs.must}`);
+        lines.push(`  Should Have: ${STATE.needs.should}`);
+        lines.push(`  Nice to Have: ${STATE.needs.nice}`);
+        lines.push(`  Out of Scope: ${STATE.needs.out}`);
+
+        // Ideate
+        lines.push('\n' + hr);
+        lines.push('\n3. IDEATE\n');
+        lines.push('ALL IDEAS:');
+        STATE.ideas.forEach(i => lines.push(`  - ${i.text} [${i.zone || 'unplaced'}]`));
+        lines.push('\nCLUSTERS:');
+        STATE.clusters.forEach(c => {
+            lines.push(`  ${c.name || '(unnamed)'}:`);
+            lines.push(`    ${c.notes}`);
+        });
+        lines.push('\nFEASIBILITY-IMPACT PLACEMENT:');
+        ['high-high','high-low','low-high','low-low'].forEach(zone => {
+            const zoneIdeas = STATE.ideas.filter(i => i.zone === zone);
+            const label = zone.replace('high-high','High Impact / High Feasibility').replace('high-low','High Impact / Low Feasibility').replace('low-high','Low Impact / High Feasibility').replace('low-low','Low Impact / Low Feasibility');
+            lines.push(`  ${label}:`);
+            zoneIdeas.forEach(i => lines.push(`    - ${i.text}`));
+        });
+
+        // Prototype
+        lines.push('\n' + hr);
+        lines.push('\n4. PROTOTYPE\n');
+        lines.push(`Solution Name: ${STATE.prototype.name}`);
+        lines.push(`Overview: ${STATE.prototype.overview}`);
+        lines.push('\nKey Features:');
+        STATE.features.forEach((f, i) => lines.push(`  ${i+1}. ${f.text}`));
+        lines.push(`\nTeam/Skills: ${STATE.prototype.team}`);
+        lines.push(`Budget/Materials: ${STATE.prototype.budget}`);
+        lines.push(`Timeline: ${STATE.prototype.timeline}`);
+        lines.push('\nUser Journey:');
+        STATE.journey.forEach((s, i) => lines.push(`  Step ${i+1}: ${s.title} — ${s.description}`));
+
+        // Test
+        lines.push('\n' + hr);
+        lines.push('\n5. TEST\n');
+        lines.push(`Who to Test: ${STATE.test.who}`);
+        lines.push(`What to Measure: ${STATE.test.what}`);
+        lines.push(`Success Criteria: ${STATE.test.success}`);
+        lines.push(`Test Method: ${STATE.test.method}`);
+        lines.push('\nFeedback:');
+        STATE.feedback.forEach(f => {
+            lines.push(`  Source: ${f.source} [${f.rating || 'unrated'}]`);
+            lines.push(`  "${f.quote}"`);
+            lines.push('');
+        });
+        lines.push(`What Worked: ${STATE.test.worked}`);
+        lines.push(`What Needs Changing: ${STATE.test.change}`);
+        lines.push(`Next Steps: ${STATE.test.next}`);
+
+        lines.push('\n' + hr);
+        lines.push('End of Report');
+
+        const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'design-thinking-report.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Report exported');
+    }
+
+    /* ================================================================
+       UTILITY
+       ================================================================ */
+    function esc(str) {
+        if (!str) return '';
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    /* ================================================================
+       INIT — seed with starter content
+       ================================================================ */
+    document.addEventListener('DOMContentLoaded', () => {
+        // Try loading saved data first
+        const raw = localStorage.getItem('dt-lab-data');
+        if (raw) {
+            try {
+                Object.assign(STATE, JSON.parse(raw));
+                restoreDOM();
+                return;
+            } catch(e) {}
+        }
+        // Otherwise seed with minimal starters
+        addStakeholder('', 'high');
+        addPersona();
+        addJourneyStep();
+        addJourneyStep();
+        addJourneyStep();
+    });
+    </script>
+</body>
+</html>
