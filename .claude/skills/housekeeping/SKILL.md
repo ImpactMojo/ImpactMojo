@@ -50,7 +50,13 @@ Run through this checklist after completing major work on ImpactMojo.
    - Verify game, lab, course counts are consistent across all docs, index, mobile-index, catalog, admin dashboards, and transparency pages
    - Check for stale `101.impactmojo.in` references that should now point to self-hosted files
 
-10. **Quality checks**
-    - Verify no broken navigation links
-    - Check mobile responsiveness
-    - Verify text contrast on new UI elements
+10. **Mobile interface check**
+    - Verify `mobile-index.html` reflects all changes made to `index.html` (new games, labs, links, counts)
+    - Check that all navigation menus, modals, and dropdowns are functional and tappable
+    - Confirm new content appears in mobile game/lab listings
+    - Test that new pages (games, labs, courses) are mobile responsive and usable on small screens
+
+11. **Quality checks**
+    - Verify no broken navigation links on both desktop and mobile
+    - Check text contrast on new UI elements (WCAG AA)
+    - Test all forms submit to correct Formspree endpoint
