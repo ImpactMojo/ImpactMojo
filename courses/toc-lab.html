@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Theory of Change Workbench | ImpactMojo</title>
+    <meta name="description" content="Interactive Theory of Change builder for development practitioners. Design structured causal pathways from activities to long-term impact.">
+    <meta name="keywords" content="theory of change, ToC, causal pathway, impact, outcomes, MEL, development, ImpactMojo">
+    <link rel="canonical" href="https://www.impactmojo.in/courses/toc-lab.html">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-bg: #0F172A;
+            --secondary-bg: #1E293B;
+            --accent-color: #0EA5E9;
+            --accent-hover: #0284C7;
+            --secondary-accent: #6366F1;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --card-bg: #1E293B;
+            --hover-bg: #334155;
+            --border-color: #334155;
+            --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+            --font-sans: 'Amaranth', sans-serif;
+            --font-heading: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --outcome-color: #3B82F6;
+            --output-color: #10B981;
+            --assumption-color: #F59E0B;
+            --indicator-color: #A855F7;
+        }
+
+        [data-theme="light"] {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F8FAFC;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --card-bg: #FFFFFF;
+            --hover-bg: #F1F5F9;
+            --border-color: #E2E8F0;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background: var(--primary-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+        /* Back link */
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; transition: color 0.2s ease; }
+        .back-link:hover { color: var(--accent-hover); }
+        .back-link svg { width: 18px; height: 18px; }
+
+        /* Header */
+        .header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 1rem; background: rgba(14, 165, 233, 0.15); color: var(--accent-color); border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 700px; margin: 0 auto; }
+
+        /* Theme toggle */
+        .top-controls { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+        .theme-toggle { padding: 0.6rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; font-family: var(--font-sans); }
+        .theme-toggle:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .theme-toggle svg { width: 16px; height: 16px; }
+
+        /* Steps nav */
+        .steps-nav { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .step-btn { padding: 0.85rem 1.25rem; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer; white-space: nowrap; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.4rem; }
+        .step-btn:hover { color: var(--text-secondary); }
+        .step-btn.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+        .step-btn .step-num { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.7rem; font-weight: 700; font-family: var(--font-heading); background: rgba(100,116,139,0.2); color: var(--text-muted); }
+        .step-btn.active .step-num { background: rgba(14, 165, 233, 0.2); color: var(--accent-color); }
+        .step-btn.completed .step-num { background: rgba(16, 185, 129, 0.2); color: var(--success-color); }
+
+        /* Step panels */
+        .step-panel { display: none; }
+        .step-panel.active { display: block; }
+
+        /* Form fields */
+        .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.25rem; }
+        .field label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); font-family: var(--font-heading); }
+        .field-hint { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+
+        .field textarea,
+        .field input[type="text"] {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: var(--font-sans);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            resize: vertical;
+        }
+        .field textarea { min-height: 80px; }
+        .field textarea:focus,
+        .field input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+        }
+
+        /* Item list (outcomes, outputs, etc.) */
+        .item-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+        .item-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem 1.25rem; position: relative; transition: border-color 0.2s ease; cursor: grab; }
+        .item-card:active { cursor: grabbing; }
+        .item-card.dragging { opacity: 0.5; }
+        .item-card.drag-over { border-color: var(--accent-color); border-style: dashed; }
+        .item-card:hover { border-color: var(--accent-color); }
+
+        .item-card .item-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+        .item-card .item-badge { flex-shrink: 0; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 0.75rem; font-weight: 700; font-family: var(--font-heading); }
+        .item-card .item-badge.outcome { background: rgba(59, 130, 246, 0.15); color: var(--outcome-color); }
+        .item-card .item-badge.output { background: rgba(16, 185, 129, 0.15); color: var(--output-color); }
+        .item-card .item-badge.assumption { background: rgba(245, 158, 11, 0.15); color: var(--assumption-color); }
+        .item-card .item-badge.indicator { background: rgba(168, 85, 247, 0.15); color: var(--indicator-color); }
+
+        .item-card .item-input { flex: 1; background: transparent; border: none; color: var(--text-primary); font-size: 0.9rem; font-family: var(--font-sans); outline: none; padding: 0.25rem 0; }
+        .item-card .item-input::placeholder { color: var(--text-muted); }
+
+        .item-card .item-actions { display: flex; gap: 0.25rem; }
+        .item-card .item-actions button { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.25rem; border-radius: 4px; transition: all 0.2s ease; display: flex; align-items: center; }
+        .item-card .item-actions button:hover { color: var(--danger-color); background: rgba(239, 68, 68, 0.1); }
+        .item-card .item-actions button svg { width: 16px; height: 16px; }
+        .item-card .drag-handle { cursor: grab; color: var(--text-muted); display: flex; align-items: center; flex-shrink: 0; }
+        .item-card .drag-handle svg { width: 16px; height: 16px; }
+
+        .item-card .item-sub { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); }
+        .item-card .item-sub-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-family: var(--font-heading); font-weight: 600; margin-bottom: 0.35rem; }
+        .item-card .item-sub textarea { width: 100%; padding: 0.4rem 0.6rem; background: var(--primary-bg); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.8rem; font-family: var(--font-sans); resize: vertical; min-height: 40px; }
+        .item-card .item-sub textarea:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.1); }
+
+        .item-card .linked-select { margin-top: 0.5rem; }
+        .item-card .linked-select select { width: 100%; padding: 0.4rem 0.6rem; background: var(--primary-bg); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.8rem; font-family: var(--font-sans); appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 14px; padding-right: 2rem; }
+        .item-card .linked-select select:focus { outline: none; border-color: var(--accent-color); }
+
+        /* Add button */
+        .add-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.1rem; background: rgba(14, 165, 233, 0.1); border: 1px dashed rgba(14, 165, 233, 0.4); border-radius: 8px; color: var(--accent-color); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s ease; }
+        .add-btn:hover { background: rgba(14, 165, 233, 0.2); border-color: var(--accent-color); }
+        .add-btn svg { width: 16px; height: 16px; }
+
+        /* Tip boxes */
+        .tip-box { display: flex; gap: 0.5rem; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem; }
+        .tip-box.info { background: rgba(14, 165, 233, 0.08); border-left: 3px solid var(--accent-color); }
+        .tip-box.warn { background: rgba(245, 158, 11, 0.08); border-left: 3px solid var(--warning-color); }
+        .tip-box.success { background: rgba(16, 185, 129, 0.08); border-left: 3px solid var(--success-color); }
+        .tip-box .tip-icon { flex-shrink: 0; font-weight: 700; }
+        .tip-box.info .tip-icon { color: var(--accent-color); }
+        .tip-box.warn .tip-icon { color: var(--warning-color); }
+        .tip-box.success .tip-icon { color: var(--success-color); }
+
+        /* Validation warnings */
+        .validation-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .validation-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(245, 158, 11, 0.08); border-left: 3px solid var(--warning-color); border-radius: 0 6px 6px 0; font-size: 0.8rem; color: var(--text-secondary); }
+        .validation-item .v-icon { color: var(--warning-color); font-weight: 700; flex-shrink: 0; }
+        .validation-item.error { background: rgba(239, 68, 68, 0.08); border-left-color: var(--danger-color); }
+        .validation-item.error .v-icon { color: var(--danger-color); }
+
+        /* Diagram area */
+        .diagram-container { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; min-height: 400px; overflow-x: auto; position: relative; }
+        .diagram-empty { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
+        .diagram-empty svg { width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.5; }
+
+        .toc-diagram { display: flex; flex-direction: column; align-items: center; gap: 0; min-width: 600px; padding: 1rem 0; }
+
+        .toc-level { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .toc-level-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-family: var(--font-heading); font-weight: 600; margin-bottom: 0.5rem; }
+        .toc-level-items { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 0; }
+
+        .toc-node { padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.78rem; max-width: 200px; text-align: center; line-height: 1.4; font-family: var(--font-sans); color: var(--text-primary); word-break: break-word; position: relative; border: 2px solid; }
+        .toc-node.goal-node { background: rgba(99, 102, 241, 0.15); border-color: var(--secondary-accent); }
+        .toc-node.outcome-node { background: rgba(59, 130, 246, 0.12); border-color: var(--outcome-color); }
+        .toc-node.output-node { background: rgba(16, 185, 129, 0.12); border-color: var(--output-color); }
+        .toc-node.assumption-node { background: rgba(245, 158, 11, 0.1); border-color: var(--assumption-color); font-style: italic; font-size: 0.7rem; border-style: dashed; }
+        .toc-node.indicator-node { background: rgba(168, 85, 247, 0.1); border-color: var(--indicator-color); font-size: 0.7rem; }
+        .toc-node.problem-node { background: rgba(239, 68, 68, 0.1); border-color: var(--danger-color); }
+
+        .toc-arrows { display: flex; justify-content: center; padding: 0.5rem 0; }
+        .toc-arrows svg { color: var(--text-muted); }
+
+        .toc-assumptions-row { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 0.25rem; margin-bottom: 0; }
+        .toc-indicators-row { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 0.25rem; }
+
+        /* Export bar */
+        .export-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .export-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.8rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s ease; }
+        .export-btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .export-btn svg { width: 16px; height: 16px; }
+
+        /* Educational section */
+        .education-section { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
+        .education-section h2 { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--text-primary); }
+        .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+        .edu-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; transition: border-color 0.2s ease; }
+        .edu-card:hover { border-color: var(--accent-color); }
+        .edu-card h3 { font-family: var(--font-heading); font-size: 0.95rem; color: var(--accent-color); margin-bottom: 0.5rem; }
+        .edu-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+        .edu-card .example { margin-top: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(16, 185, 129, 0.08); border-left: 3px solid var(--success-color); border-radius: 0 4px 4px 0; font-size: 0.8rem; color: var(--text-secondary); }
+
+        .rules-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+        .rules-list li { display: flex; gap: 0.75rem; padding: 0.85rem 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+        .rules-list li .rule-num { flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: rgba(14, 165, 233, 0.15); color: var(--accent-color); border-radius: 50%; font-size: 0.75rem; font-weight: 700; font-family: var(--font-heading); }
+
+        .course-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+        .course-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 8px; color: var(--accent-color); text-decoration: none; font-size: 0.85rem; transition: all 0.2s ease; }
+        .course-link:hover { background: rgba(14, 165, 233, 0.2); border-color: var(--accent-color); }
+        .course-link svg { width: 16px; height: 16px; }
+
+        /* Footer */
+        .footer { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        .footer a { color: var(--accent-color); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Color legend */
+        .legend { display: flex; gap: 1.25rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+        .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--text-secondary); }
+        .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+        .legend-dot.outcome { background: var(--outcome-color); }
+        .legend-dot.output { background: var(--output-color); }
+        .legend-dot.assumption { background: var(--assumption-color); }
+        .legend-dot.indicator { background: var(--indicator-color); }
+        .legend-dot.goal { background: var(--secondary-accent); }
+
+        /* Print-friendly */
+        @media print {
+            body { background: #fff; color: #000; }
+            .back-link, .top-controls, .steps-nav, .export-bar, .add-btn, .item-actions, .drag-handle, .theme-toggle { display: none !important; }
+            .step-panel { display: block !important; page-break-inside: avoid; margin-bottom: 2rem; }
+            .step-panel::before { content: attr(data-print-title); display: block; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; border-bottom: 2px solid #333; padding-bottom: 0.25rem; }
+            .container { max-width: 100%; padding: 1rem; }
+            .item-card { border: 1px solid #ccc; }
+            .diagram-container { border: 1px solid #ccc; }
+            .toc-node { border: 2px solid #333; }
+            .education-section { display: none; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .steps-nav { gap: 0; }
+            .step-btn { padding: 0.7rem 0.75rem; font-size: 0.78rem; }
+            .step-btn span:not(.step-num) { display: none; }
+            .step-btn .step-num { width: 28px; height: 28px; font-size: 0.8rem; }
+            .export-bar { flex-direction: column; }
+            .edu-grid { grid-template-columns: 1fr; }
+            .toc-diagram { min-width: 400px; }
+            .toc-level-items { flex-direction: column; align-items: center; }
+            .legend { gap: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="mel/" class="back-link">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            Back to MEL Course
+        </a>
+
+        <div class="top-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <svg id="themeIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                <span id="themeLabel">Light</span>
+            </button>
+        </div>
+
+        <header class="header">
+            <div class="header-badge">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                Lab Tool
+            </div>
+            <h1>Theory of Change Workbench</h1>
+            <p>Build a structured Theory of Change step by step. Define your causal pathway from problem to impact, complete with assumptions and indicators.</p>
+        </header>
+
+        <!-- Steps navigation -->
+        <nav class="steps-nav" id="stepsNav">
+            <button class="step-btn active" onclick="showStep(0)" data-step="0">
+                <span class="step-num">1</span><span>Problem</span>
+            </button>
+            <button class="step-btn" onclick="showStep(1)" data-step="1">
+                <span class="step-num">2</span><span>Goal</span>
+            </button>
+            <button class="step-btn" onclick="showStep(2)" data-step="2">
+                <span class="step-num">3</span><span>Outcomes</span>
+            </button>
+            <button class="step-btn" onclick="showStep(3)" data-step="3">
+                <span class="step-num">4</span><span>Outputs</span>
+            </button>
+            <button class="step-btn" onclick="showStep(4)" data-step="4">
+                <span class="step-num">5</span><span>Assumptions</span>
+            </button>
+            <button class="step-btn" onclick="showStep(5)" data-step="5">
+                <span class="step-num">6</span><span>Indicators</span>
+            </button>
+            <button class="step-btn" onclick="showStep(6)" data-step="6">
+                <span class="step-num">7</span><span>Diagram</span>
+            </button>
+        </nav>
+
+        <!-- Step 1: Problem Statement -->
+        <div class="step-panel active" id="step-0" data-print-title="1. Problem Statement">
+            <div class="tip-box info">
+                <span class="tip-icon">i</span>
+                <span>Start by clearly defining the problem your programme or intervention addresses. A well-defined problem grounds the entire Theory of Change. Be specific about who is affected, where, and why existing conditions persist.</span>
+            </div>
+
+            <div class="field">
+                <label>Problem Statement</label>
+                <div class="field-hint">Describe the core problem or need your intervention addresses.</div>
+                <textarea id="problemStatement" placeholder="e.g., Smallholder farmers in eastern Kenya face chronic food insecurity due to unpredictable rainfall, limited access to drought-resistant seeds, and poor market linkages." oninput="onDataChange()"></textarea>
+            </div>
+
+            <div class="field">
+                <label>Target Population</label>
+                <div class="field-hint">Who are the primary beneficiaries or affected communities?</div>
+                <input type="text" id="targetPopulation" placeholder="e.g., 5,000 smallholder farming households in Kitui and Machakos counties" oninput="onDataChange()">
+            </div>
+
+            <div class="field">
+                <label>Geographic Context</label>
+                <div class="field-hint">Where does the intervention take place?</div>
+                <input type="text" id="geoContext" placeholder="e.g., Semi-arid regions of eastern Kenya (Kitui and Machakos counties)" oninput="onDataChange()">
+            </div>
+        </div>
+
+        <!-- Step 2: Long-term Goal -->
+        <div class="step-panel" id="step-1" data-print-title="2. Long-term Goal">
+            <div class="tip-box info">
+                <span class="tip-icon">i</span>
+                <span>Your long-term goal is the ultimate impact you aim to achieve. It should be aspirational but realistic, and clearly linked to the problem statement. Think 5-10 years ahead.</span>
+            </div>
+
+            <div class="field">
+                <label>Long-term Goal / Impact Statement</label>
+                <div class="field-hint">What is the ultimate change you want to see? This sits at the top of your Theory of Change.</div>
+                <textarea id="longTermGoal" placeholder="e.g., Improved food security and resilience to climate shocks among smallholder farming households in eastern Kenya." oninput="onDataChange()"></textarea>
+            </div>
+        </div>
+
+        <!-- Step 3: Outcomes -->
+        <div class="step-panel" id="step-2" data-print-title="3. Outcomes">
+            <div class="tip-box info">
+                <span class="tip-icon">i</span>
+                <span>Outcomes are the intermediate changes (in behaviour, knowledge, practice, or conditions) that must occur for your long-term goal to be achieved. Aim for 3-5 outcomes. Order them from most immediate to most distal.</span>
+            </div>
+
+            <div class="item-list" id="outcomesList"></div>
+            <button class="add-btn" onclick="addOutcome()">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Add Outcome
+            </button>
+        </div>
+
+        <!-- Step 4: Outputs -->
+        <div class="step-panel" id="step-3" data-print-title="4. Outputs">
+            <div class="tip-box info">
+                <span class="tip-icon">i</span>
+                <span>Outputs are the tangible products, services, or activities your programme delivers. Each output should logically contribute to at least one outcome. Link each output to its parent outcome.</span>
+            </div>
+
+            <div class="item-list" id="outputsList"></div>
+            <button class="add-btn" onclick="addOutput()">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Add Output
+            </button>
+        </div>
+
+        <!-- Step 5: Assumptions -->
+        <div class="step-panel" id="step-4" data-print-title="5. Assumptions">
+            <div class="tip-box info">
+                <span class="tip-icon">i</span>
+                <span>Assumptions are the conditions that must hold true for each causal link to work. Good assumptions are specific, testable, and linked to a particular step in the chain. Ask: "What else needs to be true for this output to lead to this outcome?"</span>
+            </div>
+
+            <div class="tip-box warn">
+                <span class="tip-icon">!</span>
+                <span>Common mistake: listing assumptions that are too vague (e.g., "political will exists"). Be specific: "District health officers allocate at least 20% of budget to community health workers during the project period."</span>
+            </div>
+
+            <div class="item-list" id="assumptionsList"></div>
+            <button class="add-btn" onclick="addAssumption()">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Add Assumption
+            </button>
+        </div>
+
+        <!-- Step 6: Indicators -->
+        <div class="step-panel" id="step-5" data-print-title="6. Indicators">
+            <div class="tip-box info">
+                <span class="tip-icon">i</span>
+                <span>Indicators define how you will measure whether each outcome has been achieved. Use SMART criteria: Specific, Measurable, Achievable, Relevant, Time-bound. Each outcome should have at least one indicator.</span>
+            </div>
+
+            <div class="tip-box success">
+                <span class="tip-icon">i</span>
+                <span>Good indicator: "Percentage of target households with a dietary diversity score of 5+ (out of 10 food groups) by end of Year 3." Bad indicator: "Food security improves."</span>
+            </div>
+
+            <div class="item-list" id="indicatorsList"></div>
+            <button class="add-btn" onclick="addIndicator()">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Add Indicator
+            </button>
+        </div>
+
+        <!-- Step 7: Diagram & Export -->
+        <div class="step-panel" id="step-6" data-print-title="7. Theory of Change Diagram">
+            <div id="validationArea"></div>
+
+            <div class="legend">
+                <span class="legend-item"><span class="legend-dot goal"></span> Goal</span>
+                <span class="legend-item"><span class="legend-dot outcome"></span> Outcomes</span>
+                <span class="legend-item"><span class="legend-dot output"></span> Outputs</span>
+                <span class="legend-item"><span class="legend-dot assumption"></span> Assumptions</span>
+                <span class="legend-item"><span class="legend-dot indicator"></span> Indicators</span>
+            </div>
+
+            <div class="export-bar">
+                <button class="export-btn" onclick="exportPNG()">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    Download PNG
+                </button>
+                <button class="export-btn" onclick="exportText()">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
+                    Copy as Text
+                </button>
+                <button class="export-btn" onclick="window.print()">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                    Print View
+                </button>
+            </div>
+
+            <div class="diagram-container" id="diagramContainer">
+                <div class="diagram-empty" id="diagramEmpty">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                    <p>Your Theory of Change diagram will appear here as you fill in the steps above.</p>
+                </div>
+                <div class="toc-diagram" id="tocDiagram" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Educational section -->
+        <div class="education-section">
+            <h2>Understanding Theory of Change</h2>
+
+            <div class="edu-grid">
+                <div class="edu-card">
+                    <h3>What is a Theory of Change?</h3>
+                    <p>A Theory of Change (ToC) is a comprehensive description and illustration of how and why a desired change is expected to happen in a particular context. It maps the causal logic from activities and outputs through intermediate outcomes to long-term impact.</p>
+                    <div class="example">Unlike a logframe, a ToC makes explicit the assumptions underlying each causal step, enabling more rigorous programme design and evaluation.</div>
+                </div>
+                <div class="edu-card">
+                    <h3>Why Build a ToC?</h3>
+                    <p>A well-articulated ToC helps teams align on programme logic, identify gaps in reasoning, design meaningful M&amp;E frameworks, communicate with stakeholders and donors, and adapt programming when assumptions prove wrong.</p>
+                </div>
+                <div class="edu-card">
+                    <h3>Writing Good Outcomes</h3>
+                    <p>Outcomes should describe changes in people's lives, behaviours, or conditions -- not what the programme delivers (those are outputs). Use active language: "Farmers adopt drought-resistant crop varieties" rather than "Drought-resistant seeds distributed."</p>
+                    <div class="example">Good: "Women in target communities report increased decision-making power over household finances." Bad: "Gender training conducted."</div>
+                </div>
+                <div class="edu-card">
+                    <h3>Crafting Testable Assumptions</h3>
+                    <p>Assumptions should be specific enough to monitor. Instead of "communities participate," try "At least 60% of invited households send a representative to monthly farmer field school sessions." This lets you track whether your theory holds during implementation.</p>
+                </div>
+                <div class="edu-card">
+                    <h3>SMART Indicators</h3>
+                    <p>Each indicator should be <strong>S</strong>pecific (precisely defined), <strong>M</strong>easurable (quantifiable or verifiable), <strong>A</strong>chievable (realistically collectible), <strong>R</strong>elevant (connected to the outcome), and <strong>T</strong>ime-bound (with a target date or frequency).</p>
+                    <div class="example">Example: "% of target households consuming 3+ meals per day, measured quarterly via household survey, target: 75% by Month 36."</div>
+                </div>
+                <div class="edu-card">
+                    <h3>Common ToC Mistakes</h3>
+                    <p>Watch out for these pitfalls: confusing outputs with outcomes, missing causal links (logical gaps), unstated assumptions, indicators that measure activity not change, overly linear thinking (ignoring feedback loops), and building the ToC after the programme is designed rather than before.</p>
+                </div>
+            </div>
+
+            <h2>Rules of Thumb</h2>
+            <ul class="rules-list">
+                <li><span class="rule-num">1</span> Start with the long-term goal and work backwards -- what must change for this to happen?</li>
+                <li><span class="rule-num">2</span> Aim for 3-5 outcomes. Fewer than 3 usually means oversimplification; more than 5 becomes hard to manage and evaluate.</li>
+                <li><span class="rule-num">3</span> Every outcome should have at least one indicator and one assumption. If you cannot measure it, you cannot know whether your theory holds.</li>
+                <li><span class="rule-num">4</span> Assumptions are not risks. An assumption is something you believe to be true; a risk is something you fear may go wrong. Both matter, but they serve different roles in a ToC.</li>
+                <li><span class="rule-num">5</span> Revisit and revise your ToC regularly. It is a living document, not a one-time exercise.</li>
+            </ul>
+
+            <h2>Continue Learning</h2>
+            <div class="course-links">
+                <a href="mel/" class="course-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    MEL Foundations Course
+                </a>
+                <a href="sample-size-calculator.html" class="course-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    Sample Size Calculator
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Theory of Change Workbench -- part of <a href="/">ImpactMojo</a> learning tools for development practitioners.</p>
+        </footer>
+    </div>
+
+    <script>
+        // ==========================================
+        // Data model
+        // ==========================================
+        const tocData = {
+            problemStatement: '',
+            targetPopulation: '',
+            geoContext: '',
+            longTermGoal: '',
+            outcomes: [],
+            outputs: [],
+            assumptions: [],
+            indicators: []
+        };
+
+        let idCounter = 0;
+        function nextId() { return ++idCounter; }
+
+        // ==========================================
+        // Step navigation
+        // ==========================================
+        let currentStep = 0;
+        function showStep(idx) {
+            currentStep = idx;
+            document.querySelectorAll('.step-panel').forEach((p, i) => {
+                p.classList.toggle('active', i === idx);
+            });
+            document.querySelectorAll('.step-btn').forEach((b, i) => {
+                b.classList.toggle('active', i === idx);
+            });
+            if (idx === 6) {
+                renderDiagram();
+                runValidation();
+            }
+            updateStepCompletion();
+        }
+
+        function updateStepCompletion() {
+            const btns = document.querySelectorAll('.step-btn');
+            // Step 1: problem
+            if (tocData.problemStatement.trim()) btns[0].classList.add('completed');
+            else btns[0].classList.remove('completed');
+            // Step 2: goal
+            if (tocData.longTermGoal.trim()) btns[1].classList.add('completed');
+            else btns[1].classList.remove('completed');
+            // Step 3: outcomes
+            if (tocData.outcomes.length > 0 && tocData.outcomes.some(o => o.text.trim())) btns[2].classList.add('completed');
+            else btns[2].classList.remove('completed');
+            // Step 4: outputs
+            if (tocData.outputs.length > 0 && tocData.outputs.some(o => o.text.trim())) btns[3].classList.add('completed');
+            else btns[3].classList.remove('completed');
+            // Step 5: assumptions
+            if (tocData.assumptions.length > 0 && tocData.assumptions.some(a => a.text.trim())) btns[4].classList.add('completed');
+            else btns[4].classList.remove('completed');
+            // Step 6: indicators
+            if (tocData.indicators.length > 0 && tocData.indicators.some(i => i.text.trim())) btns[5].classList.add('completed');
+            else btns[5].classList.remove('completed');
+        }
+
+        // ==========================================
+        // Data change handler
+        // ==========================================
+        function onDataChange() {
+            tocData.problemStatement = document.getElementById('problemStatement').value;
+            tocData.targetPopulation = document.getElementById('targetPopulation').value;
+            tocData.geoContext = document.getElementById('geoContext').value;
+            tocData.longTermGoal = document.getElementById('longTermGoal').value;
+            updateStepCompletion();
+        }
+
+        // ==========================================
+        // Drag and drop helpers
+        // ==========================================
+        let dragSrcEl = null;
+        let dragListType = null;
+
+        function handleDragStart(e) {
+            dragSrcEl = this;
+            dragListType = this.dataset.listType;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', this.dataset.itemId);
+        }
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            if (this.dataset.listType === dragListType) {
+                this.classList.add('drag-over');
+            }
+        }
+        function handleDragLeave() { this.classList.remove('drag-over'); }
+        function handleDrop(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+            if (dragSrcEl === this || this.dataset.listType !== dragListType) return;
+            const fromId = parseInt(e.dataTransfer.getData('text/plain'));
+            const toId = parseInt(this.dataset.itemId);
+            const listType = this.dataset.listType;
+            reorderItems(listType, fromId, toId);
+        }
+        function handleDragEnd() {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+        }
+
+        function reorderItems(listType, fromId, toId) {
+            const list = tocData[listType];
+            const fromIdx = list.findIndex(item => item.id === fromId);
+            const toIdx = list.findIndex(item => item.id === toId);
+            if (fromIdx < 0 || toIdx < 0) return;
+            const [moved] = list.splice(fromIdx, 1);
+            list.splice(toIdx, 0, moved);
+            renderList(listType);
+        }
+
+        function attachDragEvents(card) {
+            card.setAttribute('draggable', 'true');
+            card.addEventListener('dragstart', handleDragStart);
+            card.addEventListener('dragover', handleDragOver);
+            card.addEventListener('dragleave', handleDragLeave);
+            card.addEventListener('drop', handleDrop);
+            card.addEventListener('dragend', handleDragEnd);
+        }
+
+        // ==========================================
+        // Outcomes
+        // ==========================================
+        function addOutcome() {
+            tocData.outcomes.push({ id: nextId(), text: '' });
+            renderList('outcomes');
+        }
+
+        function removeItem(listType, id) {
+            tocData[listType] = tocData[listType].filter(item => item.id !== id);
+            // Clean up linked references
+            if (listType === 'outcomes') {
+                tocData.outputs.forEach(o => { if (o.linkedOutcome === id) o.linkedOutcome = null; });
+                tocData.assumptions.forEach(a => { if (a.linkedOutcome === id) a.linkedOutcome = null; });
+                tocData.indicators.forEach(i => { if (i.linkedOutcome === id) i.linkedOutcome = null; });
+                renderList('outputs');
+                renderList('assumptions');
+                renderList('indicators');
+            }
+            renderList(listType);
+            updateStepCompletion();
+        }
+
+        function updateItemText(listType, id, value) {
+            const item = tocData[listType].find(i => i.id === id);
+            if (item) item.text = value;
+            updateStepCompletion();
+            // Update labels in linked dropdowns for other lists
+            if (listType === 'outcomes') {
+                renderList('outputs');
+                renderList('assumptions');
+                renderList('indicators');
+            }
+        }
+
+        function updateItemLink(listType, id, outcomeId) {
+            const item = tocData[listType].find(i => i.id === id);
+            if (item) item.linkedOutcome = outcomeId ? parseInt(outcomeId) : null;
+        }
+
+        // ==========================================
+        // Outputs
+        // ==========================================
+        function addOutput() {
+            tocData.outputs.push({ id: nextId(), text: '', linkedOutcome: null });
+            renderList('outputs');
+        }
+
+        // ==========================================
+        // Assumptions
+        // ==========================================
+        function addAssumption() {
+            tocData.assumptions.push({ id: nextId(), text: '', linkedOutcome: null });
+            renderList('assumptions');
+        }
+
+        // ==========================================
+        // Indicators
+        // ==========================================
+        function addIndicator() {
+            tocData.indicators.push({ id: nextId(), text: '', linkedOutcome: null });
+            renderList('indicators');
+        }
+
+        // ==========================================
+        // Render item lists
+        // ==========================================
+        function getOutcomeOptions(selectedId) {
+            if (tocData.outcomes.length === 0) return '<option value="">No outcomes defined yet</option>';
+            let html = '<option value="">-- Link to outcome --</option>';
+            tocData.outcomes.forEach((o, i) => {
+                const label = o.text.trim() ? o.text.trim().substring(0, 50) : 'Outcome ' + (i + 1);
+                html += `<option value="${o.id}" ${o.id === selectedId ? 'selected' : ''}>${label}</option>`;
+            });
+            return html;
+        }
+
+        function renderList(listType) {
+            const configs = {
+                outcomes: { containerId: 'outcomesList', badge: 'outcome', prefix: 'OC', showLink: false },
+                outputs: { containerId: 'outputsList', badge: 'output', prefix: 'OP', showLink: true },
+                assumptions: { containerId: 'assumptionsList', badge: 'assumption', prefix: 'AS', showLink: true },
+                indicators: { containerId: 'indicatorsList', badge: 'indicator', prefix: 'IN', showLink: true }
+            };
+            const cfg = configs[listType];
+            const container = document.getElementById(cfg.containerId);
+            const list = tocData[listType];
+
+            if (list.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = list.map((item, idx) => {
+                const placeholders = {
+                    outcomes: 'e.g., Farmers adopt improved agricultural practices',
+                    outputs: 'e.g., 200 farmer field school sessions conducted across 10 sub-counties',
+                    assumptions: 'e.g., Farmers have access to sufficient land and water for adopting new techniques',
+                    indicators: 'e.g., % of target farmers using at least 2 improved practices by Year 2'
+                };
+                let linkedHtml = '';
+                if (cfg.showLink) {
+                    linkedHtml = `<div class="linked-select">
+                        <select onchange="updateItemLink('${listType}', ${item.id}, this.value)">
+                            ${getOutcomeOptions(item.linkedOutcome)}
+                        </select>
+                    </div>`;
+                }
+                return `<div class="item-card" data-item-id="${item.id}" data-list-type="${listType}">
+                    <div class="item-header">
+                        <span class="drag-handle"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg></span>
+                        <span class="item-badge ${cfg.badge}">${cfg.prefix}${idx + 1}</span>
+                        <input type="text" class="item-input" value="${escHtml(item.text)}" placeholder="${placeholders[listType]}" oninput="updateItemText('${listType}', ${item.id}, this.value)">
+                        <div class="item-actions">
+                            <button onclick="removeItem('${listType}', ${item.id})" title="Remove">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    ${linkedHtml}
+                </div>`;
+            }).join('');
+
+            // Attach drag events
+            container.querySelectorAll('.item-card').forEach(attachDragEvents);
+        }
+
+        function escHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // ==========================================
+        // Validation
+        // ==========================================
+        function runValidation() {
+            const warnings = [];
+
+            if (!tocData.problemStatement.trim()) {
+                warnings.push({ type: 'error', msg: 'Problem statement is empty. Go to Step 1 to define the problem.' });
+            }
+            if (!tocData.longTermGoal.trim()) {
+                warnings.push({ type: 'error', msg: 'Long-term goal is not defined. Go to Step 2.' });
+            }
+            if (tocData.outcomes.length === 0) {
+                warnings.push({ type: 'error', msg: 'No outcomes defined. A ToC needs at least one outcome.' });
+            } else if (tocData.outcomes.length < 3) {
+                warnings.push({ type: 'warn', msg: 'You have fewer than 3 outcomes. Consider whether additional intermediate outcomes would strengthen your causal chain.' });
+            }
+            if (tocData.outputs.length === 0 && tocData.outcomes.length > 0) {
+                warnings.push({ type: 'warn', msg: 'No outputs defined. What activities or deliverables will drive your outcomes?' });
+            }
+
+            // Check each outcome for indicators and assumptions
+            tocData.outcomes.forEach((o, i) => {
+                const label = o.text.trim() ? '"' + o.text.trim().substring(0, 40) + '"' : 'Outcome ' + (i + 1);
+                const hasIndicator = tocData.indicators.some(ind => ind.linkedOutcome === o.id && ind.text.trim());
+                const hasAssumption = tocData.assumptions.some(a => a.linkedOutcome === o.id && a.text.trim());
+                if (!hasIndicator) {
+                    warnings.push({ type: 'warn', msg: label + ' has no indicators. How will you measure this outcome?' });
+                }
+                if (!hasAssumption) {
+                    warnings.push({ type: 'warn', msg: label + ' has no assumptions. What must hold true for this outcome to occur?' });
+                }
+                if (!o.text.trim()) {
+                    warnings.push({ type: 'warn', msg: 'Outcome ' + (i + 1) + ' is blank.' });
+                }
+            });
+
+            // Unlinked outputs
+            tocData.outputs.forEach((o, i) => {
+                if (o.text.trim() && !o.linkedOutcome) {
+                    const label = o.text.trim().substring(0, 40);
+                    warnings.push({ type: 'warn', msg: 'Output "' + label + '" is not linked to any outcome.' });
+                }
+            });
+
+            const area = document.getElementById('validationArea');
+            if (warnings.length === 0) {
+                area.innerHTML = '<div class="tip-box success"><span class="tip-icon">&#10003;</span><span>Your Theory of Change looks complete. Review the diagram below.</span></div>';
+            } else {
+                area.innerHTML = '<div class="validation-list">' +
+                    warnings.map(w => `<div class="validation-item ${w.type}"><span class="v-icon">${w.type === 'error' ? '!' : '?'}</span><span>${escHtml(w.msg)}</span></div>`).join('') +
+                    '</div>';
+            }
+        }
+
+        // ==========================================
+        // Diagram rendering
+        // ==========================================
+        function renderDiagram() {
+            const diagram = document.getElementById('tocDiagram');
+            const empty = document.getElementById('diagramEmpty');
+
+            const hasContent = tocData.longTermGoal.trim() || tocData.outcomes.some(o => o.text.trim()) || tocData.outputs.some(o => o.text.trim());
+
+            if (!hasContent) {
+                diagram.style.display = 'none';
+                empty.style.display = 'block';
+                return;
+            }
+
+            diagram.style.display = 'flex';
+            empty.style.display = 'none';
+
+            let html = '';
+
+            // Problem (bottom of visual, but we render top-down: Goal -> Outcomes -> Outputs -> Problem)
+            // Conventional ToC reads top = goal, bottom = activities
+
+            // Level: Long-term Goal
+            if (tocData.longTermGoal.trim()) {
+                html += `<div class="toc-level">
+                    <div class="toc-level-label">Long-term Goal</div>
+                    <div class="toc-level-items">
+                        <div class="toc-node goal-node">${escHtml(tocData.longTermGoal.trim())}</div>
+                    </div>
+                </div>`;
+            }
+
+            // Arrows
+            const arrowSvg = `<div class="toc-arrows"><svg width="24" height="32" viewBox="0 0 24 32"><path d="M12 0 L12 24 M6 18 L12 24 L18 18" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+
+            // Level: Outcomes
+            const validOutcomes = tocData.outcomes.filter(o => o.text.trim());
+            if (validOutcomes.length > 0) {
+                if (tocData.longTermGoal.trim()) html += arrowSvg;
+                html += `<div class="toc-level">
+                    <div class="toc-level-label">Outcomes</div>
+                    <div class="toc-level-items">
+                        ${validOutcomes.map(o => `<div class="toc-node outcome-node">${escHtml(o.text.trim())}</div>`).join('')}
+                    </div>`;
+
+                // Indicators for outcomes
+                const outcomeIndicators = tocData.indicators.filter(ind => ind.text.trim() && ind.linkedOutcome && validOutcomes.some(o => o.id === ind.linkedOutcome));
+                if (outcomeIndicators.length > 0) {
+                    html += `<div class="toc-indicators-row">
+                        ${outcomeIndicators.map(ind => `<div class="toc-node indicator-node">${escHtml(ind.text.trim())}</div>`).join('')}
+                    </div>`;
+                }
+
+                // Assumptions between outcomes and outputs
+                const linkedAssumptions = tocData.assumptions.filter(a => a.text.trim() && a.linkedOutcome && validOutcomes.some(o => o.id === a.linkedOutcome));
+                if (linkedAssumptions.length > 0) {
+                    html += `<div class="toc-assumptions-row">
+                        ${linkedAssumptions.map(a => `<div class="toc-node assumption-node">${escHtml(a.text.trim())}</div>`).join('')}
+                    </div>`;
+                }
+
+                html += `</div>`;
+            }
+
+            // Level: Outputs
+            const validOutputs = tocData.outputs.filter(o => o.text.trim());
+            if (validOutputs.length > 0) {
+                if (validOutcomes.length > 0) html += arrowSvg;
+                html += `<div class="toc-level">
+                    <div class="toc-level-label">Outputs / Activities</div>
+                    <div class="toc-level-items">
+                        ${validOutputs.map(o => `<div class="toc-node output-node">${escHtml(o.text.trim())}</div>`).join('')}
+                    </div>
+                </div>`;
+            }
+
+            // Unlinked assumptions and indicators
+            const unlinkedAssumptions = tocData.assumptions.filter(a => a.text.trim() && (!a.linkedOutcome || !validOutcomes.some(o => o.id === a.linkedOutcome)));
+            const unlinkedIndicators = tocData.indicators.filter(ind => ind.text.trim() && (!ind.linkedOutcome || !validOutcomes.some(o => o.id === ind.linkedOutcome)));
+
+            if (unlinkedAssumptions.length > 0 || unlinkedIndicators.length > 0) {
+                html += `<div class="toc-level" style="margin-top: 1rem;">
+                    <div class="toc-level-label">Unlinked Elements</div>
+                    <div class="toc-level-items">
+                        ${unlinkedAssumptions.map(a => `<div class="toc-node assumption-node">${escHtml(a.text.trim())}</div>`).join('')}
+                        ${unlinkedIndicators.map(ind => `<div class="toc-node indicator-node">${escHtml(ind.text.trim())}</div>`).join('')}
+                    </div>
+                </div>`;
+            }
+
+            // Level: Problem statement at the bottom
+            if (tocData.problemStatement.trim()) {
+                if (validOutputs.length > 0 || validOutcomes.length > 0) html += arrowSvg;
+                html += `<div class="toc-level">
+                    <div class="toc-level-label">Problem</div>
+                    <div class="toc-level-items">
+                        <div class="toc-node problem-node">${escHtml(tocData.problemStatement.trim())}</div>
+                    </div>
+                </div>`;
+            }
+
+            diagram.innerHTML = html;
+        }
+
+        // ==========================================
+        // Export: PNG via canvas
+        // ==========================================
+        function exportPNG() {
+            const diagramEl = document.getElementById('tocDiagram');
+            if (diagramEl.style.display === 'none') {
+                alert('Nothing to export. Please fill in your Theory of Change first.');
+                return;
+            }
+
+            // Build an SVG from the diagram HTML using foreignObject
+            const rect = diagramEl.getBoundingClientRect();
+            const w = Math.max(rect.width, 600);
+            const h = Math.max(rect.height, 400);
+            const pad = 40;
+
+            const canvas = document.createElement('canvas');
+            const scale = 2;
+            canvas.width = (w + pad * 2) * scale;
+            canvas.height = (h + pad * 2) * scale;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(scale, scale);
+
+            // Draw background
+            ctx.fillStyle = '#0F172A';
+            ctx.fillRect(0, 0, w + pad * 2, h + pad * 2);
+
+            // Title
+            ctx.fillStyle = '#F1F5F9';
+            ctx.font = 'bold 18px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Theory of Change', (w + pad * 2) / 2, 28);
+
+            // Serialize the diagram HTML into SVG foreignObject
+            const svgData = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">
+                <foreignObject width="100%" height="100%">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Amaranth, Inter, sans-serif; color: #F1F5F9;">
+                        ${diagramEl.innerHTML}
+                    </div>
+                </foreignObject>
+            </svg>`;
+
+            // Use a simpler text-based export as fallback
+            const lines = buildTextExport();
+            ctx.fillStyle = '#F1F5F9';
+            ctx.font = '13px Inter, sans-serif';
+            ctx.textAlign = 'left';
+
+            let y = 50;
+            const lineHeight = 20;
+            const maxWidth = w + pad;
+
+            lines.forEach(line => {
+                if (line.startsWith('===') || line.startsWith('---')) {
+                    ctx.strokeStyle = '#334155';
+                    ctx.beginPath();
+                    ctx.moveTo(pad, y);
+                    ctx.lineTo(w + pad, y);
+                    ctx.stroke();
+                    y += 10;
+                } else if (line.startsWith('##')) {
+                    ctx.fillStyle = '#0EA5E9';
+                    ctx.font = 'bold 15px Inter, sans-serif';
+                    ctx.fillText(line.replace(/^#+\s*/, ''), pad, y);
+                    ctx.fillStyle = '#F1F5F9';
+                    ctx.font = '13px Inter, sans-serif';
+                    y += lineHeight + 4;
+                } else if (line.trim() === '') {
+                    y += 8;
+                } else {
+                    // Word wrap
+                    const words = line.split(' ');
+                    let currentLine = '';
+                    words.forEach(word => {
+                        const test = currentLine + (currentLine ? ' ' : '') + word;
+                        if (ctx.measureText(test).width > maxWidth - pad) {
+                            ctx.fillText(currentLine, pad, y);
+                            y += lineHeight;
+                            currentLine = word;
+                        } else {
+                            currentLine = test;
+                        }
+                    });
+                    if (currentLine) {
+                        ctx.fillText(currentLine, pad, y);
+                        y += lineHeight;
+                    }
+                }
+            });
+
+            // Resize canvas to fit content
+            const finalH = Math.max(y + pad, (h + pad * 2));
+            const finalCanvas = document.createElement('canvas');
+            finalCanvas.width = (w + pad * 2) * scale;
+            finalCanvas.height = finalH * scale;
+            const fctx = finalCanvas.getContext('2d');
+            fctx.scale(scale, scale);
+            fctx.fillStyle = '#0F172A';
+            fctx.fillRect(0, 0, w + pad * 2, finalH);
+            fctx.drawImage(canvas, 0, 0, canvas.width / scale, canvas.height / scale);
+
+            // Watermark
+            fctx.fillStyle = '#64748B';
+            fctx.font = '10px Inter, sans-serif';
+            fctx.textAlign = 'center';
+            fctx.fillText('Generated with ImpactMojo Theory of Change Workbench', (w + pad * 2) / 2, finalH - 12);
+
+            // Download
+            const link = document.createElement('a');
+            link.download = 'theory-of-change.png';
+            link.href = finalCanvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // ==========================================
+        // Export: Structured text
+        // ==========================================
+        function buildTextExport() {
+            const lines = [];
+            lines.push('## THEORY OF CHANGE');
+            lines.push('===');
+            lines.push('');
+
+            if (tocData.problemStatement.trim()) {
+                lines.push('## Problem Statement');
+                lines.push(tocData.problemStatement.trim());
+                lines.push('');
+            }
+            if (tocData.targetPopulation.trim()) {
+                lines.push('## Target Population');
+                lines.push(tocData.targetPopulation.trim());
+                lines.push('');
+            }
+            if (tocData.geoContext.trim()) {
+                lines.push('## Geographic Context');
+                lines.push(tocData.geoContext.trim());
+                lines.push('');
+            }
+            if (tocData.longTermGoal.trim()) {
+                lines.push('## Long-term Goal');
+                lines.push(tocData.longTermGoal.trim());
+                lines.push('');
+            }
+            lines.push('---');
+            lines.push('');
+
+            if (tocData.outcomes.length > 0) {
+                lines.push('## Outcomes');
+                tocData.outcomes.forEach((o, i) => {
+                    if (o.text.trim()) lines.push((i + 1) + '. ' + o.text.trim());
+                });
+                lines.push('');
+            }
+
+            if (tocData.outputs.length > 0) {
+                lines.push('## Outputs');
+                tocData.outputs.forEach((o, i) => {
+                    if (!o.text.trim()) return;
+                    let linked = '';
+                    if (o.linkedOutcome) {
+                        const oc = tocData.outcomes.find(oc => oc.id === o.linkedOutcome);
+                        if (oc) linked = ' [linked to: ' + oc.text.trim().substring(0, 40) + ']';
+                    }
+                    lines.push((i + 1) + '. ' + o.text.trim() + linked);
+                });
+                lines.push('');
+            }
+
+            if (tocData.assumptions.length > 0) {
+                lines.push('## Assumptions');
+                tocData.assumptions.forEach((a, i) => {
+                    if (!a.text.trim()) return;
+                    let linked = '';
+                    if (a.linkedOutcome) {
+                        const oc = tocData.outcomes.find(oc => oc.id === a.linkedOutcome);
+                        if (oc) linked = ' [for: ' + oc.text.trim().substring(0, 40) + ']';
+                    }
+                    lines.push((i + 1) + '. ' + a.text.trim() + linked);
+                });
+                lines.push('');
+            }
+
+            if (tocData.indicators.length > 0) {
+                lines.push('## Indicators');
+                tocData.indicators.forEach((ind, i) => {
+                    if (!ind.text.trim()) return;
+                    let linked = '';
+                    if (ind.linkedOutcome) {
+                        const oc = tocData.outcomes.find(oc => oc.id === ind.linkedOutcome);
+                        if (oc) linked = ' [measures: ' + oc.text.trim().substring(0, 40) + ']';
+                    }
+                    lines.push((i + 1) + '. ' + ind.text.trim() + linked);
+                });
+                lines.push('');
+            }
+
+            return lines;
+        }
+
+        function exportText() {
+            const text = buildTextExport().join('\n');
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.export-btn');
+                const orig = btn.innerHTML;
+                btn.innerHTML = '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:16px;height:16px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Copied!';
+                setTimeout(() => { btn.innerHTML = orig; }, 2000);
+            }).catch(() => {
+                // Fallback: open in a textarea
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                alert('Theory of Change copied to clipboard.');
+            });
+        }
+
+        // ==========================================
+        // Theme
+        // ==========================================
+        function initTheme() {
+            const saved = localStorage.getItem('impactmojo-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (prefersDark ? 'dark' : 'light');
+            setTheme(theme);
+        }
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('impactmojo-theme', theme);
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+            if (theme === 'dark') {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>';
+                label.textContent = 'Light';
+            } else {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>';
+                label.textContent = 'Dark';
+            }
+        }
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        }
+
+        // ==========================================
+        // Initialize
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            updateStepCompletion();
+        });
+    </script>
+
+<!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
+<script defer src="../js/translate.js"></script>
+<script src="/js/search.js" defer></script>
+</body>
+</html>
