@@ -162,7 +162,7 @@ Shorter introductory courses covering the breadth of development practice:
 - **Storytelling Lab** — Crafting evidence-based impact narratives
 - **Community Engagement Lab** — Participatory engagement strategy design
 
-### Learning Games (12)
+### Learning Games (16)
 
 Self-contained economics simulations powered by **MiroFish AI agents** — each game features AI opponents with distinct South Asian personas, backed by Groq/Gemini/DeepSeek LLMs with automatic fallback to a local personality engine:
 
