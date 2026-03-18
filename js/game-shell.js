@@ -365,16 +365,25 @@
   css.textContent =
 
     /* ═══ DARK MODE CONTRAST FIX ═══════════════════════════ */
-    /* Fix black cards with grey text — boost contrast */
-    'body:not(.light-mode) .card, body:not(.light-mode) [class*="card"] { background: #1E293B !important; color: #F1F5F9 !important; border-color: #475569 !important; }' +
-    'body:not(.light-mode) p, body:not(.light-mode) span, body:not(.light-mode) li, body:not(.light-mode) label, body:not(.light-mode) td { color: #E2E8F0 !important; }' +
-    'body:not(.light-mode) h1, body:not(.light-mode) h2, body:not(.light-mode) h3, body:not(.light-mode) h4 { color: #F8FAFC !important; }' +
-    'body:not(.light-mode) small, body:not(.light-mode) .text-muted, body:not(.light-mode) .subtitle { color: #CBD5E1 !important; }' +
+    /* Fix dark text on dark backgrounds — comprehensive contrast overrides */
+    'body:not(.light-mode) .card, body:not(.light-mode) [class*="card"]:not(.imx-theme-btn) { background: #1E293B !important; color: #F1F5F9 !important; border-color: #475569 !important; }' +
+    'body:not(.light-mode) p, body:not(.light-mode) span:not(.imx-gh-logo span), body:not(.light-mode) li, body:not(.light-mode) label, body:not(.light-mode) td, body:not(.light-mode) dd, body:not(.light-mode) dt { color: #E2E8F0 !important; }' +
+    'body:not(.light-mode) h1, body:not(.light-mode) h2, body:not(.light-mode) h3, body:not(.light-mode) h4, body:not(.light-mode) h5, body:not(.light-mode) h6 { color: #F8FAFC !important; }' +
+    'body:not(.light-mode) small, body:not(.light-mode) .text-muted, body:not(.light-mode) .subtitle, body:not(.light-mode) .desc, body:not(.light-mode) .description { color: #CBD5E1 !important; }' +
+    /* Game-specific label/stat classes that use #64748B — force readable */
+    'body:not(.light-mode) .label, body:not(.light-mode) .plabel, body:not(.light-mode) .rlabel, body:not(.light-mode) .stat .label, body:not(.light-mode) .stat-label { color: #94A3B8 !important; }' +
+    'body:not(.light-mode) .value, body:not(.light-mode) .rval, body:not(.light-mode) .pval, body:not(.light-mode) .stat .value, body:not(.light-mode) .stat-value { color: #F1F5F9 !important; }' +
+    'body:not(.light-mode) .example-item .desc, body:not(.light-mode) .meta, body:not(.light-mode) .caption, body:not(.light-mode) .helper-text, body:not(.light-mode) figcaption { color: #94A3B8 !important; }' +
+    'body:not(.light-mode) .panel, body:not(.light-mode) .box, body:not(.light-mode) .section, body:not(.light-mode) [class*="panel"], body:not(.light-mode) [class*="box"] { background: #1E293B !important; color: #F1F5F9 !important; }' +
     'body:not(.light-mode) th { background: #334155 !important; color: #F1F5F9 !important; }' +
-    'body:not(.light-mode) td { border-color: #475569 !important; }' +
+    'body:not(.light-mode) td { border-color: #475569 !important; color: #E2E8F0 !important; }' +
     'body:not(.light-mode) input, body:not(.light-mode) select, body:not(.light-mode) textarea { background: #334155 !important; color: #F1F5F9 !important; border-color: #475569 !important; }' +
     'body:not(.light-mode) button:not(.imx-theme-btn) { color: #F1F5F9 !important; }' +
-    'body:not(.light-mode) .hint, body:not(.light-mode) .tip, body:not(.light-mode) blockquote, body:not(.light-mode) .note { background: #1E3A5F !important; border-color: #3B82F6 !important; color: #E2E8F0 !important; }' +
+    'body:not(.light-mode) .hint, body:not(.light-mode) .tip, body:not(.light-mode) blockquote, body:not(.light-mode) .note, body:not(.light-mode) .info, body:not(.light-mode) .insight-card { background: #1E3A5F !important; border-color: #3B82F6 !important; color: #E2E8F0 !important; }' +
+    /* Catch-all: any element with inline color: #64748B or similar dark greys */
+    'body:not(.light-mode) [style*="color:#64748B"], body:not(.light-mode) [style*="color: #64748B"] { color: #94A3B8 !important; }' +
+    'body:not(.light-mode) [style*="color:#374151"], body:not(.light-mode) [style*="color: #374151"] { color: #CBD5E1 !important; }' +
+    'body:not(.light-mode) [style*="color:#4B5563"], body:not(.light-mode) [style*="color: #4B5563"] { color: #94A3B8 !important; }' +
 
     /* ═══ LIGHT MODE ═══════════════════════════════════════ */
     'body.light-mode { background: #FFFBF5 !important; color: #1E293B !important; }' +
@@ -387,19 +396,22 @@
     'body.light-mode table { border-color: #E7DDD0 !important; }' +
     'body.light-mode th { background: #FFF3E6 !important; color: #1A1207 !important; }' +
     'body.light-mode td { border-color: #E7DDD0 !important; }' +
+    'body.light-mode .label, body.light-mode .plabel, body.light-mode .rlabel, body.light-mode .stat .label, body.light-mode .stat-label { color: #78350F !important; }' +
+    'body.light-mode .value, body.light-mode .rval, body.light-mode .pval, body.light-mode .stat .value, body.light-mode .stat-value { color: #1A1207 !important; }' +
+    'body.light-mode .desc, body.light-mode .description, body.light-mode .meta, body.light-mode .caption, body.light-mode .helper-text { color: #78350F !important; }' +
+    'body.light-mode .panel, body.light-mode .box, body.light-mode [class*="panel"], body.light-mode [class*="box"] { background: #FFFFFF !important; color: #1E293B !important; border-color: #E7DDD0 !important; }' +
     'body.light-mode [class*="stat"] { background: #FFFFFF !important; border-color: #E7DDD0 !important; }' +
     'body.light-mode .progress-bar, body.light-mode [class*="progress"]:not([class*="fill"]) { background: #E7DDD0 !important; }' +
-    'body.light-mode .hint, body.light-mode .tip, body.light-mode blockquote, body.light-mode .note { background: #FFF8F0 !important; border-color: #D97706 !important; color: #78350F !important; }' +
+    'body.light-mode .hint, body.light-mode .tip, body.light-mode blockquote, body.light-mode .note, body.light-mode .info, body.light-mode .insight-card { background: #FFF8F0 !important; border-color: #D97706 !important; color: #78350F !important; }' +
 
     /* ═══ HEADER ═══════════════════════════════════════════ */
     '#imx-game-header {' +
       'position: sticky; top: 0; z-index: 999;' +
       'display: flex; align-items: center; justify-content: space-between;' +
       'padding: 0.5rem 1.25rem;' +
-      'background: rgba(15,23,42,0.92); backdrop-filter: blur(12px);' +
-      'border-bottom: 1px solid rgba(255,255,255,0.08);' +
+      'background: #0F172A; border-bottom: 1px solid rgba(255,255,255,0.08);' +
     '}' +
-    'body.light-mode #imx-game-header { background: rgba(255,251,245,0.95); border-bottom-color: #E7DDD0; }' +
+    'body.light-mode #imx-game-header { background: #FFFBF5; border-bottom-color: #E7DDD0; }' +
     '.imx-gh-logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: #F8FAFC; font-weight: 700; font-size: 1rem; }' +
     'body.light-mode .imx-gh-logo { color: #1A1207; }' +
     '.imx-gh-logo img { width: 32px; height: 32px; border-radius: 6px; }' +
@@ -493,11 +505,29 @@
       '#imx-game-header { padding: 0.4rem 0.75rem; }' +
       '.imx-gh-logo span { font-size: 0.9rem; }' +
       '.imx-gh-link { display: none; }' +
-      '.imx-motif-warli { width: 260px; height: 200px; }' +
-      '.imx-motif-madhubani { width: 60px; height: 260px; }' +
-      '.imx-motif-gond { width: 140px; height: 180px; }' +
+      '.imx-motif-warli { width: 200px; height: 150px; }' +
+      '.imx-motif-madhubani { width: 45px; height: 200px; }' +
+      '.imx-motif-gond { width: 110px; height: 140px; }' +
       '.imx-theme-btn { width: 28px; height: 28px; }' +
       '.imx-theme-btn svg { width: 14px; height: 14px; }' +
+      /* Mobile game layout helpers */
+      '.container { padding: 0 0.75rem !important; }' +
+      'h1 { font-size: 1.5rem !important; }' +
+      'h2 { font-size: 1.2rem !important; }' +
+      '.welcome-header h1 { font-size: clamp(1.4rem, 5vw, 2rem) !important; }' +
+      /* Ensure game cards stack vertically on mobile */
+      '.choice-grid, .options-grid, .grid, [class*="grid"]:not(#imx-game-header) { grid-template-columns: 1fr !important; }' +
+      '[class*="flex-row"], [class*="row"]:not(tr) { flex-direction: column !important; }' +
+      /* Tables scroll horizontally */
+      'table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }' +
+      /* Stat cards wrap */
+      '.stats, .stat-row, [class*="stats"] { flex-wrap: wrap !important; gap: 0.5rem !important; }' +
+      '.stat { min-width: 80px !important; flex: 1 1 45% !important; }' +
+    '}' +
+    '@media (max-width: 380px) {' +
+      '.imx-motif-warli, .imx-motif-madhubani, .imx-motif-gond { display: none; }' +
+      '.imx-gh-logo img { width: 24px; height: 24px; }' +
+      '.imx-gh-logo span { font-size: 0.8rem; }' +
     '}';
   document.head.appendChild(css);
 })();
