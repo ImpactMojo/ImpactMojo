@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.2.0] - 2026-03-17
 
 ### Added
-- **12 self-hosted economics games** in `/Games/` folder — replacing old Netlify-hosted apps at 101.impactmojo.in
+- **Self-hosted interactive games** in `/Games/` folder — replacing old Netlify-hosted apps at 101.impactmojo.in
 - **MiroFish AI agent engine** (`supabase/functions/game-agent/`) — multi-provider LLM support with automatic fallback chain (DeepSeek → Groq → Gemini → Together → OpenAI)
 - **30+ AI agent personas** (`data/game-agents.json`) — South Asian development practitioners with distinct personalities, backstories, and strategic behaviours
 - **Game agents client library** (`js/game-agents.js`) — browser-side integration with Edge Function + local fallback engine

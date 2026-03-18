@@ -1,5 +1,5 @@
 // supabase/functions/game-agent/index.ts
-// MiroFish-inspired AI Agent Engine for ImpactMojo Economics Games.
+// MiroFish-inspired AI Agent Engine for ImpactMojo Games.
 //
 // Accepts game state + agent ID, returns the agent's next decision via LLM.
 // Supports multiple LLM providers with automatic fallback.

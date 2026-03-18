@@ -19,7 +19,7 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 - [x] 4 new flagship courses (Politics of Aspiration, Media for Development, Constitution & Law, SEL)
 - [x] Git best-practice standards propagated across all 29 repos (hooks, templates, dependabot, CODEOWNERS, SECURITY)
 - [x] GitBook docs sidebar link fix (`/impactmojo/*` → `/docs/*` redirects)
-- [x] **12 self-hosted economics games** with MiroFish AI agents — replacing Netlify-hosted apps
+- [x] **Self-hosted interactive games** with MiroFish AI agents — replacing Netlify-hosted apps
 - [x] **MiroFish AI agent engine** — Supabase Edge Function with multi-provider LLM fallback (Groq/Gemini/DeepSeek)
 - [x] **30+ AI agent personas** — South Asian development practitioners across 10 games
 

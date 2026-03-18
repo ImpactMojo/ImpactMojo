@@ -2,7 +2,7 @@
 
 ## What Are the ImpactMojo Games?
 
-ImpactMojo offers **12 interactive economics games** that teach development-relevant concepts through strategic decision-making and simulation. Each game takes 10–20 minutes to play and covers a specific economic concept — from game theory to market failures to collective action.
+ImpactMojo offers **interactive games** that teach development-relevant concepts through strategic decision-making and simulation. Each game takes 10–20 minutes to play and covers a specific concept — from game theory and market failures to climate action, gender equity, public health, and digital ethics.
 
 These aren't quizzes or flashcards. They're interactive simulations where your decisions have consequences, and the concepts become clear through play rather than lecture.
 

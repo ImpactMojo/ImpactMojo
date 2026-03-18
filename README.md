@@ -376,7 +376,7 @@ ImpactMojo/
 ├── impactlex/
 │   └── index.html          # ImpactLex dictionary (PWA)
 │
-├── Games/                         # 12 self-contained economics games
+├── Games/                         # Self-contained interactive games
 │   ├── public-good-game.html
 │   ├── prisoners-dilemma-game.html
 │   ├── commons-crisis-game.html
