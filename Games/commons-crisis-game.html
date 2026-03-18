@@ -19,7 +19,7 @@
   --transition:all .3s ease;
 }
 html{font-size:16px;scroll-behavior:smooth}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+body{font-family:'Amaranth',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
 
 /* ── Utility ── */
 .hidden{display:none!important}
@@ -32,9 +32,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow)}
 
 /* ── Typography ── */
-h1{font-size:2.5rem;font-weight:800;letter-spacing:-.02em;line-height:1.2}
-h2{font-size:1.5rem;font-weight:700}
-h3{font-size:1.1rem;font-weight:600}
+h1{font-size:2.5rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;font-family:'Inter',sans-serif}
+h2{font-size:1.5rem;font-weight:700;font-family:'Inter',sans-serif}
+h3{font-size:1.1rem;font-weight:600;font-family:'Inter',sans-serif}
 .subtitle{color:var(--text2);font-size:1.05rem;max-width:600px;margin:0 auto}
 .badge{display:inline-block;padding:.2rem .65rem;border-radius:99px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
 .badge-green{background:var(--green-bg);color:var(--green-light)}
@@ -172,7 +172,7 @@ h3{font-size:1.1rem;font-weight:600}
 <div id="welcome-screen" class="screen">
   <div class="container">
     <div class="hero">
-      <div style="font-size:3rem;margin-bottom:.5rem">🌊</div>
+      <div style="margin-bottom:.5rem"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Water_drop.svg" width="48" height="48" alt="" class="imx-sargam-icon" style="filter:invert(67%) sepia(74%) saturate(1200%) hue-rotate(170deg) brightness(104%)" aria-hidden="true"></div>
       <h1><span>Commons Crisis</span></h1>
       <p class="subtitle" style="margin-top:.75rem">Can you manage a shared resource without destroying it?</p>
     </div>
@@ -804,7 +804,7 @@ window.showEndScreen = function(){
   var survived = !state.collapsed;
   var finalRes = state.resource;
 
-  $('end-emoji').textContent = survived ? (finalRes > 500 ? '🎉' : '😅') : '💀';
+  $('end-emoji').innerHTML = survived ? (finalRes > 500 ? IMXIcon('Flare', 16) : IMXIcon('Alert_circle', 16)) : IMXIcon('Close_circle', 16);
   $('end-title').textContent = survived
     ? (finalRes > 500 ? 'The Fishery Thrives!' : 'Barely Survived')
     : 'Total Collapse';
@@ -826,7 +826,7 @@ window.showEndScreen = function(){
   var sbHTML = '';
   players.forEach(function(p, i){
     var cls = p.isPlayer ? 'score-card player-card' : 'score-card';
-    sbHTML += '<div class="'+cls+'"><div class="score-name">'+(i===0?'🥇 ':i===1?'🥈 ':i===2?'🥉 ':'')+p.name+'</div><div class="score-value">'+p.total.toLocaleString()+'</div><div style="font-size:.8rem;color:var(--text3)">fish harvested</div></div>';
+    sbHTML += '<div class="'+cls+'"><div class="score-name">'+(i===0?IMXIcon('Award', 14)+' ':i===1?IMXIcon('Award', 14)+' ':i===2?IMXIcon('Award', 14)+' ':'')+p.name+'</div><div class="score-value">'+p.total.toLocaleString()+'</div><div style="font-size:.8rem;color:var(--text3)">fish harvested</div></div>';
   });
   $('scoreboard').innerHTML = sbHTML;
 

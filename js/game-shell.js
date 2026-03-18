@@ -1,12 +1,37 @@
 /**
- * ImpactMojo Game Shell v3
+ * ImpactMojo Game Shell v4
  * Injects shared header, footer, 3-way theme, Indian folk art motifs,
- * and visual enhancements into all game pages.
- * Inspired by FolkLog's use of Madhubani, Warli, and Gond art traditions.
+ * ImpactMojo typography, Sargam icon helpers, and visual enhancements.
+ * Inspired by DesiLog, FolkLog, and Indian folk art traditions.
+ * Typography: Inter (titles), Amaranth (body), JetBrains Mono (code)
  * Usage: <script src="/js/game-shell.js"></script> (at end of <body>)
  */
 (function() {
   'use strict';
+
+  // ── Load ImpactMojo Fonts ──────────────────────────────────
+  var fontLink = document.createElement('link');
+  fontLink.rel = 'stylesheet';
+  fontLink.href = 'https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap';
+  document.head.appendChild(fontLink);
+
+  // Preconnect for font performance
+  var preconnect = document.createElement('link');
+  preconnect.rel = 'preconnect';
+  preconnect.href = 'https://fonts.gstatic.com';
+  preconnect.crossOrigin = '';
+  document.head.insertBefore(preconnect, document.head.firstChild);
+
+  // ── Sargam Icon helper ─────────────────────────────────────
+  // Usage: IMXIcon('Flare') returns an <img> tag string
+  var SARGAM_CDN = 'https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/';
+  window.IMXIcon = function(name, size, style) {
+    size = size || 16;
+    style = style || 'Line';
+    return '<img src="' + SARGAM_CDN + style + '/si_' + name + '.svg" ' +
+      'width="' + size + '" height="' + size + '" ' +
+      'alt="" class="imx-sargam-icon" aria-hidden="true">';
+  };
 
   // ── Theme System (System / Light / Dark) ──────────────────
   var THEME_KEY = 'imx_theme';
@@ -342,6 +367,41 @@
     '</svg>';
   document.body.appendChild(gond);
 
+  // ── Kolam/Rangoli top border decoration ───────────────────
+  var kolam = document.createElement('div');
+  kolam.className = 'imx-game-motif imx-motif-kolam';
+  kolam.setAttribute('aria-hidden', 'true');
+  kolam.innerHTML =
+    '<svg viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' +
+      // Flowing vine pattern
+      '<path d="M0,20 Q30,5 60,20 Q90,35 120,20 Q150,5 180,20 Q210,35 240,20 Q270,5 300,20 Q330,35 360,20 Q390,5 420,20 Q450,35 480,20 Q510,5 540,20 Q570,35 600,20 Q630,5 660,20 Q690,35 720,20 Q750,5 780,20 Q810,35 840,20 Q870,5 900,20 Q930,35 960,20 Q990,5 1020,20 Q1050,35 1080,20 Q1110,5 1140,20 Q1170,35 1200,20" fill="none" stroke="#D97706" stroke-width="1.5" opacity="0.5"/>' +
+      // Dots at peaks and troughs
+      '<g fill="#EC4899" opacity="0.4">' +
+        '<circle cx="60" cy="20" r="3"/><circle cx="180" cy="20" r="3"/><circle cx="300" cy="20" r="3"/>' +
+        '<circle cx="420" cy="20" r="3"/><circle cx="540" cy="20" r="3"/><circle cx="660" cy="20" r="3"/>' +
+        '<circle cx="780" cy="20" r="3"/><circle cx="900" cy="20" r="3"/><circle cx="1020" cy="20" r="3"/><circle cx="1140" cy="20" r="3"/>' +
+      '</g>' +
+      '<g fill="#059669" opacity="0.35">' +
+        '<circle cx="120" cy="20" r="2.5"/><circle cx="240" cy="20" r="2.5"/><circle cx="360" cy="20" r="2.5"/>' +
+        '<circle cx="480" cy="20" r="2.5"/><circle cx="600" cy="20" r="2.5"/><circle cx="720" cy="20" r="2.5"/>' +
+        '<circle cx="840" cy="20" r="2.5"/><circle cx="960" cy="20" r="2.5"/><circle cx="1080" cy="20" r="2.5"/>' +
+      '</g>' +
+      // Small paisley/leaf shapes along the vine
+      '<g opacity="0.3">' +
+        '<path d="M25,12 Q30,5 35,12 Q30,16 25,12Z" fill="#D97706"/>' +
+        '<path d="M145,28 Q150,35 155,28 Q150,24 145,28Z" fill="#059669"/>' +
+        '<path d="M265,12 Q270,5 275,12 Q270,16 265,12Z" fill="#EC4899"/>' +
+        '<path d="M385,28 Q390,35 395,28 Q390,24 385,28Z" fill="#8B5CF6"/>' +
+        '<path d="M505,12 Q510,5 515,12 Q510,16 505,12Z" fill="#D97706"/>' +
+        '<path d="M625,28 Q630,35 635,28 Q630,24 625,28Z" fill="#059669"/>' +
+        '<path d="M745,12 Q750,5 755,12 Q750,16 745,12Z" fill="#EC4899"/>' +
+        '<path d="M865,28 Q870,35 875,28 Q870,24 865,28Z" fill="#8B5CF6"/>' +
+        '<path d="M985,12 Q990,5 995,12 Q990,16 985,12Z" fill="#D97706"/>' +
+        '<path d="M1105,28 Q1110,35 1115,28 Q1110,24 1105,28Z" fill="#059669"/>' +
+      '</g>' +
+    '</svg>';
+  document.body.insertBefore(kolam, header.nextSibling);
+
   // ── Footer ─────────────────────────────────────────────────
   var footer = document.createElement('footer');
   footer.id = 'imx-game-footer';
@@ -372,6 +432,17 @@
   // ── Inject Styles ──────────────────────────────────────────
   var css = document.createElement('style');
   css.textContent =
+
+    /* ═══ TYPOGRAPHY ═════════════════════════════════════════ */
+    'body { font-family: "Amaranth", sans-serif !important; }' +
+    'h1, h2, h3, h4, h5, h6, .welcome-title, .game-title, .section-title { font-family: "Inter", sans-serif !important; }' +
+    'code, pre, kbd, samp, .mono, [class*="mono"] { font-family: "JetBrains Mono", monospace !important; }' +
+    '.imx-gh-logo span { font-family: "Inter", sans-serif !important; font-weight: 800 !important; }' +
+    '#imx-game-footer { font-family: "Amaranth", sans-serif !important; }' +
+    /* Sargam icon inline styling */
+    '.imx-sargam-icon { display: inline-block; vertical-align: middle; margin: 0 2px; filter: brightness(0) invert(1); }' +
+    'body.light-mode .imx-sargam-icon { filter: brightness(0) invert(0.2); }' +
+    '.imx-sargam-accent { filter: invert(67%) sepia(74%) saturate(1200%) hue-rotate(2deg) brightness(104%) contrast(97%); }' +
 
     /* ═══ DARK MODE CONTRAST FIX ═══════════════════════════ */
     /* Fix dark text on dark backgrounds — comprehensive contrast overrides */
@@ -450,6 +521,8 @@
     '.imx-motif-madhubani { top: 60px; right: 0; width: 100px; height: 420px; }' +
     '.imx-motif-gond { bottom: 2%; right: 2%; width: 220px; height: 280px; color: #94A3B8; animation: imx-sway 30s ease-in-out infinite; }' +
     'body.light-mode .imx-motif-gond { color: #78350F; }' +
+    '.imx-motif-kolam { position: relative !important; z-index: auto !important; opacity: 1 !important; width: 100%; height: 40px; pointer-events: none; }' +
+    '.imx-motif-kolam svg { width: 100%; height: 100%; }' +
     '@keyframes imx-sway { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(1.5deg); } }' +
 
     /* ═══ FOOTER ═══════════════════════════════════════════ */
