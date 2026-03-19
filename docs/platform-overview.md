@@ -75,7 +75,7 @@ Each game:
 
 ---
 
-## Interactive Labs (10 labs)
+## Interactive Labs (19 labs)
 
 Labs are browser-based workbenches where you build something. Unlike courses (where you read and reflect), labs are hands-on — you follow a guided workflow and produce a real output.
 
@@ -141,11 +141,11 @@ Entries are organized by topic and tagged for easy browsing.
 
 ---
 
-## Dataverse (215+ resources)
+## Dataverse (247 resources)
 
 Dataverse is your starting point for development data. It includes:
 
-- **215+ datasets** from sources like the World Bank, DHS, NFHS, NSSO, and more
+- **247 datasets, tools, and APIs** from sources like the World Bank, DHS, NFHS, NSSO, and more
 - **APIs** for programmatic data access
 - **Tools** for data analysis and visualization
 - **MCP servers** for AI-assisted development research
@@ -208,7 +208,7 @@ Switch languages from the platform interface. This makes ImpactMojo usable for t
 
 ## What's Free vs. Premium?
 
-The vast majority of ImpactMojo is **completely free** — this is a genuine commitment, not a marketing strategy. All 48 courses, 16 games, 10 labs, handouts, ImpactLex, case studies, DevDiscourses, and Dataverse are available at no cost.
+The vast majority of ImpactMojo is **completely free** — this is a genuine commitment, not a marketing strategy. All 48 courses, 16 games, 19 labs, handouts, ImpactLex, case studies, DevDiscourses, and Dataverse are available at no cost.
 
 Premium memberships (starting at ₹399/month) unlock additional tools, PDF/PNG export from labs, certificates, and priority access to coaching and workshops.
 

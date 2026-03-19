@@ -49,12 +49,7 @@ When implementing major features, significant refactoring, or multi-file bug fix
 - Verify game, lab, course counts are consistent across all pages and docs
 - Check for stale `101.impactmojo.in` links that should point to self-hosted files
 
-### 9. Mobile Interface Check
-- Verify `mobile-index.html` reflects all changes made to `index.html`
-- Confirm new games, labs, links, and counts appear in mobile navigation
-- Test that all new pages are mobile responsive and usable on small screens
-
-### 10. Quality Checks
+### 9. Quality Checks
 - Ensure no broken links in navigation (desktop and mobile)
 - Verify mobile responsiveness for new UI
 - Check text contrast/readability (WCAG AA minimum)

@@ -5,6 +5,24 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.6.0] - 2026-03-19
+
+### Added
+- **Field Notes Pro** — 70 curated development economics field notes deployed as premium tool at `impactmojo-field-notes-pro.netlify.app`
+- **Workshop Pro** — 7 interactive workshop templates (ToC, Logframe, Chart Selector, Stakeholder Mapping, Empathy Canvas, Policy Canvas, AI Canvas) deployed at `impactmojo-workshop-pro.netlify.app`
+- **Field Notes JSON editor** link added to admin dashboard — edit `data/notes.json` directly from GitHub
+- **Server-side auth-gate** on all new premium Netlify resource sites with `RESOURCE_TOKEN_SECRET` env vars configured
+
+### Changed
+- **Removed `mobile-index.html`** — `index.html` is now fully responsive, no separate mobile page needed
+- **Updated all doc counts** — labs 10→19, games 12→16, Dataverse 215→247 across platform-overview, content-guide, architecture docs
+- **Architecture docs updated** — full tier access control matrix with all 16 resource IDs
+- **GitBook changelog updated** through v10.5.1
+- **Sitemap timestamps refreshed** to 2026-03-19
+- **ROADMAP.md updated** with Q1 2026 completions (workshop templates, field notes, auth-gate, mobile removal)
+- **CLAUDE.md updated** — removed stale mobile-index.html checklist item
+- **GitHub repo description updated** with current counts
+
 ## [10.5.1] - 2026-03-19
 
 ### Fixed
