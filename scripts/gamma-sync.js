@@ -23,7 +23,7 @@ const API_BASE = "https://public-api.gamma.app/v1.0";
 const API_KEY = process.env.GAMMA_API_KEY;
 const FOLDER_ID = "fw1e4twcu3rypew"; // "101 Decks" folder
 const POLL_INTERVAL = 5000; // 5s between status checks
-const POLL_TIMEOUT = 600000; // 10min max wait per generation (45-card decks take ~3-4min)
+const POLL_TIMEOUT = 900000; // 15min max wait per generation (60-slide decks can take 10min+)
 
 // Closest built-in theme: clean, light, blue — matches ImpactMojo palette
 const THEME_ID = "cornflower";
