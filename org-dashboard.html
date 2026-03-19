@@ -678,14 +678,44 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
     </div>
 
     <!-- Tabs -->
-    <div class="tab-nav">
-        <button class="tab-btn active" data-tab="members" onclick="switchTab(this)">Team Members</button>
-        <button class="tab-btn" data-tab="training" onclick="switchTab(this)">Training</button>
-        <button class="tab-btn" data-tab="paths" onclick="switchTab(this)">Learning Paths</button>
-        <button class="tab-btn" data-tab="progress" onclick="switchTab(this)">Progress & Reports</button>
-        <button class="tab-btn" data-tab="challenges" onclick="switchTab(this)">Team Challenges</button>
-        <button class="tab-btn" data-tab="settings" onclick="switchTab(this)">Settings</button>
+    <div class="tab-nav" id="orgTabNav">
+        <button class="tab-btn active" data-tab="members">Team Members</button>
+        <button class="tab-btn" data-tab="training">Training</button>
+        <button class="tab-btn" data-tab="paths">Learning Paths</button>
+        <button class="tab-btn" data-tab="progress">Progress & Reports</button>
+        <button class="tab-btn" data-tab="challenges">Team Challenges</button>
+        <button class="tab-btn" data-tab="settings">Settings</button>
     </div>
+    <script>
+    // Wire up tab switching immediately (elements are already in DOM)
+    (function() {
+        var nav = document.getElementById('orgTabNav');
+        if (!nav) return;
+        nav.addEventListener('click', function(e) {
+            var btn = e.target.closest('.tab-btn');
+            if (!btn) return;
+            // Switch active tab button
+            nav.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            // Switch active tab content
+            document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+            var panel = document.getElementById('tab-' + btn.dataset.tab);
+            if (panel) panel.classList.add('active');
+            // Lazy-load tab data on first view
+            if (typeof window._orgTabLoaded === 'undefined') window._orgTabLoaded = {};
+            var tab = btn.dataset.tab;
+            if (!window._orgTabLoaded[tab]) {
+                window._orgTabLoaded[tab] = true;
+                if (tab === 'progress' && typeof loadAnalytics === 'function') loadAnalytics();
+                if (tab === 'training' && typeof loadCohorts === 'function') loadCohorts();
+                if (tab === 'challenges') {
+                    if (typeof loadTeamChallenges === 'function') loadTeamChallenges();
+                    if (typeof loadChallengeRequests === 'function') loadChallengeRequests();
+                }
+            }
+        });
+    })();
+    </script>
 
     <!-- Members Tab -->
     <div class="tab-content active" id="tab-members">
@@ -2248,25 +2278,9 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         return d.innerHTML;
     }
 
-    // Tab switching (global so inline onclick works)
-    var analyticsLoaded = false;
-    var cohortsLoaded = false;
-    var challengesLoaded = false;
+    // Tab switching handled by inline <script> after .tab-nav
 
-    window.switchTab = function(btn) {
-        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-        document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
-        btn.classList.add('active');
-        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-
-        // Lazy-load tab data on first view
-        var tab = btn.dataset.tab;
-        if (tab === 'progress' && !analyticsLoaded) { analyticsLoaded = true; loadAnalytics(); }
-        if (tab === 'training' && !cohortsLoaded) { cohortsLoaded = true; loadCohorts(); }
-        if (tab === 'challenges' && !challengesLoaded) { challengesLoaded = true; loadTeamChallenges(); loadChallengeRequests(); }
-    };
-
-    // Member search
+    // Member search — attach when IIFE runs (element is already in DOM)
     var searchEl = document.getElementById('memberSearch');
     if (searchEl) {
         searchEl.addEventListener('input', function() { renderMembers(this.value); });
@@ -2960,8 +2974,6 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
     // Cohorts lazy-loading handled by switchTab()
 
     // ========== Team Challenges Tab ==========
-    var challengesLoaded = false;
-
     async function loadTeamChallenges() {
         try {
             var resp = await fetch('data/challenges.json');
