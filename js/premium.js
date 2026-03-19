@@ -81,6 +81,7 @@
                 'Everything in Practitioner',
                 'Priority coaching access',
                 'Power analysis tools',
+                '7 interactive workshop templates',
                 'Downloadable templates',
                 'Monthly expert webinars',
                 'Early access to new content'
