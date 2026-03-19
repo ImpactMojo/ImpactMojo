@@ -10,6 +10,7 @@
  *   --dry-run       Print payloads without calling the API
  *   --course SLUG   Regenerate a single course by slug
  *   --delay MS      Delay between API calls in ms (default: 5000)
+ *   --resume        Skip courses already completed in gamma-sync-results.json
  */
 
 const { execSync } = require("child_process");
@@ -157,13 +158,15 @@ const COURSES = [
 
 // ─── HTTP helpers (using curl for DNS reliability) ───────────────────────────
 
-function apiRequest(method, apiPath, body) {
+function apiRequestOnce(method, apiPath, body) {
   const url = API_BASE + apiPath;
   const curlArgs = [
     "curl", "-s", "-w", "'\\n%{http_code}'",
     "-X", method,
     "-H", `'X-API-KEY: ${API_KEY}'`,
     "-H", "'Content-Type: application/json'",
+    "--connect-timeout", "30",
+    "--max-time", "120",
   ];
 
   let tmpFile;
@@ -197,7 +200,25 @@ function apiRequest(method, apiPath, body) {
   } catch {
     data = responseBody;
   }
-  return Promise.resolve({ status: statusCode, data });
+  return { status: statusCode, data };
+}
+
+const MAX_RETRIES = 4;
+const RETRY_BACKOFF = [2000, 4000, 8000, 16000];
+
+async function apiRequest(method, apiPath, body) {
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      return apiRequestOnce(method, apiPath, body);
+    } catch (err) {
+      if (attempt === MAX_RETRIES) {
+        throw new Error(`API ${method} ${apiPath} failed after ${MAX_RETRIES + 1} attempts: ${err.message}`);
+      }
+      const backoff = RETRY_BACKOFF[attempt] || 16000;
+      console.log(`  ⚠ Network error (attempt ${attempt + 1}/${MAX_RETRIES + 1}), retrying in ${backoff / 1000}s...`);
+      await sleep(backoff);
+    }
+  }
 }
 
 function sleep(ms) {
@@ -277,13 +298,28 @@ function buildPayload(course) {
 
 async function pollGeneration(generationId) {
   const startTime = Date.now();
+  let consecutiveErrors = 0;
+  const MAX_CONSECUTIVE_ERRORS = 5;
 
   while (Date.now() - startTime < POLL_TIMEOUT) {
     await sleep(POLL_INTERVAL);
-    const res = await apiRequest("GET", `/generations/${generationId}`);
+
+    let res;
+    try {
+      res = await apiRequest("GET", `/generations/${generationId}`);
+    } catch (err) {
+      consecutiveErrors++;
+      console.error(`  Poll network error (${consecutiveErrors}/${MAX_CONSECUTIVE_ERRORS}): ${err.message}`);
+      if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
+        throw new Error(`Polling abandoned after ${MAX_CONSECUTIVE_ERRORS} consecutive network failures`);
+      }
+      continue;
+    }
+
+    consecutiveErrors = 0; // reset on successful request
 
     if (res.status !== 200) {
-      console.error(`  Poll error (${res.status}):`, JSON.stringify(res.data));
+      console.error(`  Poll HTTP error (${res.status}):`, JSON.stringify(res.data));
       continue;
     }
 
@@ -311,10 +347,26 @@ async function main() {
   const delayIdx = args.indexOf("--delay");
   const delay = delayIdx !== -1 ? parseInt(args[delayIdx + 1], 10) : 5000;
 
+  const resume = args.includes("--resume");
+
   if (!API_KEY) {
     console.error("Error: GAMMA_API_KEY environment variable not set");
     process.exit(1);
   }
+
+  // Load existing results for resume and merge
+  const resultsPath = path.join(__dirname, "..", "data", "gamma-sync-results.json");
+  let existingResults = { results: [] };
+  if (fs.existsSync(resultsPath)) {
+    try {
+      existingResults = JSON.parse(fs.readFileSync(resultsPath, "utf8"));
+    } catch { /* start fresh */ }
+  }
+  const completedSlugs = new Set(
+    existingResults.results
+      .filter((r) => r.status === "completed")
+      .map((r) => r.slug)
+  );
 
   let courses = COURSES;
   if (singleSlug) {
@@ -326,11 +378,17 @@ async function main() {
     }
   }
 
+  if (resume) {
+    const before = courses.length;
+    courses = courses.filter((c) => !completedSlugs.has(c.slug));
+    console.log(`\n🔄 Resume mode: skipping ${before - courses.length} already-completed courses`);
+  }
+
   console.log(`\n🎓 ImpactMojo Gamma Sync`);
   console.log(`   Courses: ${courses.length}`);
   console.log(`   Theme: ${THEME_ID}`);
   console.log(`   Folder: ${FOLDER_ID} (101 Decks)`);
-  console.log(`   Mode: ${dryRun ? "DRY RUN" : "LIVE"}\n`);
+  console.log(`   Mode: ${dryRun ? "DRY RUN" : "LIVE"}${resume ? " (RESUME)" : ""}\n`);
 
   const results = [];
 
@@ -402,25 +460,32 @@ async function main() {
     failed.forEach((f) => console.log(`  - ${f.slug}: ${f.error}`));
   }
 
-  // Write results to file
-  if (!dryRun && completed.length > 0) {
-    const outputPath = path.join(__dirname, "..", "data", "gamma-sync-results.json");
-    const outputDir = path.dirname(outputPath);
+  // Merge results into existing file (don't overwrite previous completions)
+  if (!dryRun && results.length > 0) {
+    const outputDir = path.dirname(resultsPath);
     if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
-    fs.writeFileSync(
-      outputPath,
-      JSON.stringify(
-        {
-          syncDate: new Date().toISOString(),
-          theme: THEME_ID,
-          results,
-        },
-        null,
-        2
-      )
-    );
-    console.log(`\nResults saved to: ${outputPath}`);
+    // Merge: update existing entries or add new ones
+    for (const result of results) {
+      const idx = existingResults.results.findIndex((r) => r.slug === result.slug);
+      if (idx >= 0) {
+        // Only overwrite if new result is completed, or old was not completed
+        if (result.status === "completed" || existingResults.results[idx].status !== "completed") {
+          existingResults.results[idx] = result;
+        }
+      } else {
+        existingResults.results.push(result);
+      }
+    }
+
+    existingResults.syncDate = new Date().toISOString();
+    existingResults.theme = THEME_ID;
+
+    fs.writeFileSync(resultsPath, JSON.stringify(existingResults, null, 2));
+
+    const totalCompleted = existingResults.results.filter((r) => r.status === "completed").length;
+    console.log(`\nResults merged to: ${resultsPath}`);
+    console.log(`Total completed across all runs: ${totalCompleted}/${COURSES.length}`);
   }
 }
 
