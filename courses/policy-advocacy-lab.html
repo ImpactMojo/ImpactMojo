@@ -47,8 +47,8 @@
         .header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 700px; margin: 0 auto; }
         .top-controls { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-        .theme-toggle, .ctrl-btn { padding: 0.6rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; font-family: var(--font-sans); }
-        .theme-toggle:hover, .ctrl-btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .ctrl-btn { padding: 0.6rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; font-family: var(--font-sans); }
+        .ctrl-btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
         .progress-bar { width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; margin-bottom: 2rem; overflow: hidden; }
         .progress-bar-fill { height: 100%; background: var(--gradient-primary); border-radius: 3px; transition: width 0.4s ease; }
         .tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); overflow-x: auto; }
@@ -103,7 +103,16 @@
         .check-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer; }
         .check-item input[type="checkbox"] { accent-color: var(--accent-color); width: 16px; height: 16px; }
         .nav-row { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
-        @media (max-width: 768px) { .container { padding: 1rem; } .form-grid { grid-template-columns: 1fr; } }
+        .v3-paper-plane { position: fixed; top: 15%; right: 8%; width: 140px; height: 140px; opacity: 0.25; z-index: 0; pointer-events: none; animation: v3-float-plane 25s ease-in-out infinite; }
+        @keyframes v3-float-plane { 0% { transform: translate(0, 0) rotate(0deg); } 20% { transform: translate(-60px, 40px) rotate(10deg); } 40% { transform: translate(120px, 30px) rotate(-8deg); } 60% { transform: translate(40px, 60px) rotate(15deg); } 80% { transform: translate(-30px, -40px) rotate(-12deg); } 100% { transform: translate(0, 0) rotate(0deg); } }
+        .theme-selector { display: flex; gap: 4px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 4px; }
+        .theme-btn { background: transparent; border: none; color: var(--text-secondary); padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+        .theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+        .theme-btn.active { background: var(--accent-color); color: white; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .theme-btn svg { width: 18px; height: 18px; }
+        .v3-inline-icon { width: 16px; height: 16px; vertical-align: middle; display: inline-block; }
+        @media (max-width: 768px) { .container { padding: 1rem; } .form-grid { grid-template-columns: 1fr; } .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; } }
+        @media (prefers-reduced-motion: reduce) { .v3-paper-plane { animation: none !important; } }
         @media print {
             body { background: #fff; color: #000; }
             .top-controls, .back-link, .tabs, .nav-row, .btn { display: none !important; }
@@ -116,19 +125,37 @@
     <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;padding:0.5rem;background:var(--accent-color);color:#fff;z-index:100;">Skip to content</a>
 
     <div class="container" id="main">
+        <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+            <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+            <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+            <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+            <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+        </svg>
         <a href="../index.html" class="back-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
             Back to ImpactMojo
         </a>
 
         <div class="header">
-            <div class="header-badge">Interactive Lab</div>
+            <div class="header-badge"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flag.svg" alt="" class="v3-inline-icon" loading="lazy" style="width:16px;height:16px;vertical-align:middle;filter:brightness(0) saturate(100%) invert(56%) sepia(72%) saturate(2840%) hue-rotate(177deg) brightness(97%) contrast(93%)"> Interactive Lab</div>
             <h1>Policy Advocacy Lab</h1>
             <p>Build an evidence-based advocacy strategy — analyze policy issues, gather evidence, develop strategies, and create action plans for meaningful policy change in South Asian development contexts.</p>
         </div>
 
         <div class="top-controls">
-            <button class="theme-toggle" onclick="toggleTheme()">Theme</button>
+            <div class="theme-selector" aria-label="Theme selection">
+                <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
             <button class="ctrl-btn" onclick="exportResults()">Export</button>
             <button class="ctrl-btn" onclick="window.print()">Print</button>
         </div>
@@ -380,9 +407,27 @@
 <script>
 const state = { decisionMakers: [], evidence: [], stakeholders: [], objectives: [], actions: [] };
 
-function toggleTheme() {
-    const t = document.documentElement.getAttribute('data-theme');
-    document.documentElement.setAttribute('data-theme', t === 'light' ? '' : 'light');
+/* THEME (3-button: system / light / dark) */
+(function initTheme() {
+    var saved = localStorage.getItem('impactmojo-theme') || 'system';
+    applyTheme(saved);
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var theme = btn.dataset.theme;
+            localStorage.setItem('impactmojo-theme', theme);
+            applyTheme(theme);
+        });
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+        if ((localStorage.getItem('impactmojo-theme') || 'system') === 'system') applyTheme('system');
+    });
+})();
+function applyTheme(theme) {
+    var root = document.documentElement;
+    if (theme === 'light') { root.setAttribute('data-theme', 'light'); }
+    else if (theme === 'dark') { root.removeAttribute('data-theme'); }
+    else { if (window.matchMedia('(prefers-color-scheme: light)').matches) root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme'); }
+    document.querySelectorAll('.theme-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.theme === theme); });
 }
 
 function switchTab(idx) {

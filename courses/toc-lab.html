@@ -76,11 +76,21 @@
         .header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 700px; margin: 0 auto; }
 
-        /* Theme toggle */
+        /* Top controls */
         .top-controls { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
-        .theme-toggle { padding: 0.6rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease; font-family: var(--font-sans); }
-        .theme-toggle:hover { border-color: var(--accent-color); background: var(--hover-bg); }
-        .theme-toggle svg { width: 16px; height: 16px; }
+
+        .v3-paper-plane { position: fixed; top: 15%; right: 8%; width: 140px; height: 140px; opacity: 0.25; z-index: 0; pointer-events: none; animation: v3-float-plane 25s ease-in-out infinite; }
+        @keyframes v3-float-plane { 0% { transform: translate(0, 0) rotate(0deg); } 20% { transform: translate(-60px, 40px) rotate(10deg); } 40% { transform: translate(120px, 30px) rotate(-8deg); } 60% { transform: translate(40px, 60px) rotate(15deg); } 80% { transform: translate(-30px, -40px) rotate(-12deg); } 100% { transform: translate(0, 0) rotate(0deg); } }
+        @media (max-width: 768px) { .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; } }
+        @media (prefers-reduced-motion: reduce) { .v3-paper-plane { animation: none !important; } }
+
+        .v3-inline-icon { width: 16px; height: 16px; vertical-align: middle; display: inline-block; }
+
+        .theme-selector { display: flex; gap: 4px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 4px; }
+        .theme-btn { background: transparent; border: none; color: var(--text-secondary); padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+        .theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+        .theme-btn.active { background: var(--accent-color); color: white; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .theme-btn svg { width: 18px; height: 18px; }
 
         /* Steps nav */
         .steps-nav { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -245,7 +255,7 @@
         /* Print-friendly */
         @media print {
             body { background: #fff; color: #000; }
-            .back-link, .top-controls, .steps-nav, .export-bar, .add-btn, .item-actions, .drag-handle, .theme-toggle { display: none !important; }
+            .back-link, .top-controls, .steps-nav, .export-bar, .add-btn, .item-actions, .drag-handle, .theme-selector { display: none !important; }
             .step-panel { display: block !important; page-break-inside: avoid; margin-bottom: 2rem; }
             .step-panel::before { content: attr(data-print-title); display: block; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; border-bottom: 2px solid #333; padding-bottom: 0.25rem; }
             .container { max-width: 100%; padding: 1rem; }
@@ -272,21 +282,36 @@
 </head>
 <body>
     <div class="container">
+        <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+            <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+            <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+            <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+            <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+        </svg>
         <a href="mel/" class="back-link">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             Back to MEL Course
         </a>
 
         <div class="top-controls">
-            <button class="theme-toggle" onclick="toggleTheme()">
-                <svg id="themeIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                <span id="themeLabel">Light</span>
-            </button>
+            <div class="theme-selector" aria-label="Theme selection">
+                <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
         </div>
 
         <header class="header">
             <div class="header-badge">
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_TreeStructure.svg" alt="" class="v3-inline-icon" loading="lazy" style="width:16px;height:16px;vertical-align:middle;filter:brightness(0) saturate(100%) invert(56%) sepia(72%) saturate(2840%) hue-rotate(177deg) brightness(97%) contrast(93%)">
                 Lab Tool
             </div>
             <h1>Theory of Change Workbench</h1>
@@ -1156,38 +1181,33 @@
             });
         }
 
-        // ==========================================
-        // Theme
-        // ==========================================
-        function initTheme() {
-            const saved = localStorage.getItem('impactmojo-theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const theme = saved || (prefersDark ? 'dark' : 'light');
-            setTheme(theme);
-        }
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('impactmojo-theme', theme);
-            const icon = document.getElementById('themeIcon');
-            const label = document.getElementById('themeLabel');
-            if (theme === 'dark') {
-                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>';
-                label.textContent = 'Light';
-            } else {
-                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>';
-                label.textContent = 'Dark';
-            }
-        }
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme') || 'dark';
-            setTheme(current === 'dark' ? 'light' : 'dark');
+        /* THEME (3-button: system / light / dark) */
+        (function initTheme() {
+            var saved = localStorage.getItem('impactmojo-theme') || 'system';
+            applyTheme(saved);
+            document.querySelectorAll('.theme-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var theme = btn.dataset.theme;
+                    localStorage.setItem('impactmojo-theme', theme);
+                    applyTheme(theme);
+                });
+            });
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+                if ((localStorage.getItem('impactmojo-theme') || 'system') === 'system') applyTheme('system');
+            });
+        })();
+        function applyTheme(theme) {
+            var root = document.documentElement;
+            if (theme === 'light') { root.setAttribute('data-theme', 'light'); }
+            else if (theme === 'dark') { root.removeAttribute('data-theme'); }
+            else { if (window.matchMedia('(prefers-color-scheme: light)').matches) root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme'); }
+            document.querySelectorAll('.theme-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.theme === theme); });
         }
 
         // ==========================================
         // Initialize
         // ==========================================
         document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
             updateStepCompletion();
         });
     </script>
