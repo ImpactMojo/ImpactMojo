@@ -679,12 +679,12 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 
     <!-- Tabs -->
     <div class="tab-nav">
-        <button class="tab-btn active" data-tab="members">Team Members</button>
-        <button class="tab-btn" data-tab="training">Training</button>
-        <button class="tab-btn" data-tab="paths">Learning Paths</button>
-        <button class="tab-btn" data-tab="progress">Progress & Reports</button>
-        <button class="tab-btn" data-tab="challenges">Team Challenges</button>
-        <button class="tab-btn" data-tab="settings">Settings</button>
+        <button class="tab-btn active" data-tab="members" onclick="switchTab(this)">Team Members</button>
+        <button class="tab-btn" data-tab="training" onclick="switchTab(this)">Training</button>
+        <button class="tab-btn" data-tab="paths" onclick="switchTab(this)">Learning Paths</button>
+        <button class="tab-btn" data-tab="progress" onclick="switchTab(this)">Progress & Reports</button>
+        <button class="tab-btn" data-tab="challenges" onclick="switchTab(this)">Team Challenges</button>
+        <button class="tab-btn" data-tab="settings" onclick="switchTab(this)">Settings</button>
     </div>
 
     <!-- Members Tab -->
@@ -2248,21 +2248,29 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         return d.innerHTML;
     }
 
-    // Tab switching
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.tab-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-                document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
-                btn.classList.add('active');
-                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-            });
-        });
+    // Tab switching (global so inline onclick works)
+    var analyticsLoaded = false;
+    var cohortsLoaded = false;
+    var challengesLoaded = false;
 
-        document.getElementById('memberSearch').addEventListener('input', function() {
-            renderMembers(this.value);
-        });
-    });
+    window.switchTab = function(btn) {
+        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+
+        // Lazy-load tab data on first view
+        var tab = btn.dataset.tab;
+        if (tab === 'progress' && !analyticsLoaded) { analyticsLoaded = true; loadAnalytics(); }
+        if (tab === 'training' && !cohortsLoaded) { cohortsLoaded = true; loadCohorts(); }
+        if (tab === 'challenges' && !challengesLoaded) { challengesLoaded = true; loadTeamChallenges(); loadChallengeRequests(); }
+    };
+
+    // Member search
+    var searchEl = document.getElementById('memberSearch');
+    if (searchEl) {
+        searchEl.addEventListener('input', function() { renderMembers(this.value); });
+    }
 
     // Modal functions
     window.openInviteModal = function() { document.getElementById('inviteModal').classList.add('active'); };
@@ -2605,18 +2613,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         a.click();
     };
 
-    // Load analytics when Progress tab is clicked
-    var analyticsLoaded = false;
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.tab-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                if (btn.dataset.tab === 'progress' && !analyticsLoaded) {
-                    analyticsLoaded = true;
-                    loadAnalytics();
-                }
-            });
-        });
-    });
+    // Analytics lazy-loading handled by switchTab()
 
     // ========== Training Tab ==========
     var PACKAGE_DETAILS = {
@@ -2960,18 +2957,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         renderCohorts();
     };
 
-    // Load cohorts when training tab is shown
-    var cohortsLoaded = false;
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.tab-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                if (btn.dataset.tab === 'training' && !cohortsLoaded) {
-                    cohortsLoaded = true;
-                    loadCohorts();
-                }
-            });
-        });
-    });
+    // Cohorts lazy-loading handled by switchTab()
 
     // ========== Team Challenges Tab ==========
     var challengesLoaded = false;
@@ -3082,18 +3068,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         }
     };
 
-    // Load challenges when tab is activated
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.tab-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                if (btn.dataset.tab === 'challenges' && !challengesLoaded) {
-                    challengesLoaded = true;
-                    loadTeamChallenges();
-                    loadChallengeRequests();
-                }
-            });
-        });
-    });
+    // Challenges lazy-loading handled by switchTab()
 
     // Initialize
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
