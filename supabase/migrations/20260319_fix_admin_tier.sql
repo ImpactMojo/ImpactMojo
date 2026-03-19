@@ -24,18 +24,8 @@ SET
 WHERE email IN (
     'varna.sr@gmail.com',
     'varna@pinpointventures.in',
-    'vandana@pinpointventures.in'
+    'vsoni.1986@gmail.com'
 );
-
--- Also match by display name in case email differs
-UPDATE public.profiles
-SET
-    subscription_tier   = 'organization',
-    subscription_status = 'active',
-    role                = 'admin',
-    updated_at          = NOW()
-WHERE (full_name ILIKE '%vandana soni%' OR display_name ILIKE '%vandana soni%')
-  AND role != 'admin';
 
 -- ============================================================
 -- 2. Protect admin tier from accidental downgrades

@@ -259,10 +259,30 @@ const ImpactMojoAuth = {
         return this._authReadyPromise || Promise.resolve();
     },
 
-    // Fetch user profile from database (with 5-second timeout)
+    // Fetch user profile from database (with 8-second timeout)
     // Deduplicates concurrent calls — multiple callers share one in-flight request
     _profileFetchPromise: null,
     _lastProfileFetchTime: 0,
+    _profileRetryTimer: null,
+
+    // Schedule a background retry after a failed profile fetch.
+    // This prevents stale cached profiles (e.g. wrong tier) from persisting.
+    _scheduleProfileRetry() {
+        if (this._profileRetryTimer) return; // already scheduled
+        var self = this;
+        this._profileRetryTimer = setTimeout(async function () {
+            self._profileRetryTimer = null;
+            if (!self.user) return;
+            console.log('Retrying profile fetch...');
+            // Clear the dedup guard so a fresh fetch runs
+            self._profileFetchPromise = null;
+            self._lastProfileFetchTime = 0;
+            try {
+                await self.fetchProfile();
+                self.updateUI();
+            } catch (_) { /* give up silently after retry */ }
+        }, 5000);
+    },
 
     async fetchProfile() {
         if (!this.user) return null;
@@ -298,14 +318,17 @@ const ImpactMojoAuth = {
                     .single();
 
                 var timeoutPromise = new Promise(function (_, reject) {
-                    setTimeout(function () { reject(new Error('Profile fetch timed out')); }, 5000);
+                    setTimeout(function () { reject(new Error('Profile fetch timed out')); }, 8000);
                 });
 
                 const { data, error } = await Promise.race([profilePromise, timeoutPromise]);
 
                 if (error) {
                     console.error('Error fetching profile:', error);
-                    return fallbackToCache();
+                    var cached = fallbackToCache();
+                    // Schedule a retry so stale cache doesn't persist
+                    this._scheduleProfileRetry();
+                    return cached;
                 }
 
                 this.profile = data;
@@ -316,7 +339,10 @@ const ImpactMojoAuth = {
                 return data;
             } catch (err) {
                 console.error('Profile fetch failed:', err);
-                return fallbackToCache();
+                var cached = fallbackToCache();
+                // Schedule a retry so stale cache doesn't persist
+                this._scheduleProfileRetry();
+                return cached;
             } finally {
                 this._profileFetchPromise = null;
             }
