@@ -143,4 +143,4 @@ Sliding scale is always available for grassroots organizations.
 | Handouts | [www.impactmojo.in/Handouts/](https://www.impactmojo.in/Handouts/) |
 | Blog | [www.impactmojo.in/blog.html](https://www.impactmojo.in/blog.html) |
 | Contact | [hello@impactmojo.in](mailto:hello@impactmojo.in) |
-| Field Notes: The Margin Muse | [marginmuse.space](https://marginmuse.space/themarginmuse) |
+| Field Notes Pro | [impactmojo-field-notes-pro.netlify.app](https://impactmojo-field-notes-pro.netlify.app/) |

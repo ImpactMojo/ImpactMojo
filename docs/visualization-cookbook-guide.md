@@ -6,7 +6,7 @@ The Visualization Cookbook is a **question-driven chart selection tool** with pr
 
 It includes **14 chart types** covering the most common data stories in development work.
 
-**Access:** Part of DevData Practice (Professional tier) — [Open Visualization Cookbook](https://varnasr.github.io/devdata-practice/charts.html)
+**Access:** Part of DevData Practice (Professional tier) — [Open Visualization Cookbook](https://impactmojo-devdata-pro.netlify.app/charts.html)
 
 ---
 

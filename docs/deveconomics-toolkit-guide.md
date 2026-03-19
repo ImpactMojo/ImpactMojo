@@ -6,7 +6,7 @@ The DevEconomics Toolkit is a collection of **11 interactive web applications** 
 
 You don't need to install anything. Each app runs in your web browser.
 
-**Access:** Professional tier (₹999/month) — [Open DevEconomics Toolkit](https://varnasr.github.io/deveconomics-toolkit/)
+**Access:** Professional tier (₹999/month) — [Open DevEconomics Toolkit](https://impactmojo-devecon-toolkit.netlify.app/)
 
 ---
 

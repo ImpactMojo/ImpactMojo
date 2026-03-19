@@ -227,13 +227,13 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 |---|------|------|-------------|------|
 | 1 | RQ Builder Pro | Practitioner | Guided research question builder with PICO/SPIDER framing | [Open](https://101.impactmojo.in/researchQ-pro) |
 | 2 | TOC Workbench Pro | Practitioner | Advanced ToC building with assumption mapping and PDF/PNG export | [Open](https://101.impactmojo.in/toc-workbench) |
-| 3 | Field Notes from a Development Economist | Professional | Behind-the-scenes analysis of real programs and trade-offs | [Open](https://marginmuse.space/themarginmuse) |
+| 3 | Field Notes from a Development Economist | Professional | Behind-the-scenes analysis of real programs and trade-offs | [Open](https://impactmojo-field-notes-pro.netlify.app/) |
 | 4 | Qualitative Research Lab | Professional | AI-assisted thematic coding and memo generation | [Open](https://101.impactmojo.in/qual-insights) |
 | 5 | Statistical Code Converter Pro | Professional | Translate code between R, Stata, SPSS & Python with regression diagnostics and power analysis | [Open](https://101.impactmojo.in/code-convert-pro) |
-| 6 | DevData Practice | Professional | 36 dataset generators with 840k+ rows of realistic development data | [Open](https://varnasr.github.io/devdata-practice/) |
+| 6 | DevData Practice | Professional | 36 dataset generators with 840k+ rows of realistic development data | [Open](https://impactmojo-devdata-pro.netlify.app/) |
 | 7 | VaniScribe: AI Transcription | Professional | Transcribe interviews in 10+ South Asian languages | [Open](https://101.impactmojo.in/vaniscribe) |
-| 8 | Visualization Cookbook | Professional | Question-driven chart recipes with production-ready Python code | [Open](https://varnasr.github.io/devdata-practice/charts.html) |
-| 9 | DevEconomics Toolkit | Professional | 11 interactive Shiny apps for impact evaluation and program design | [Open](https://varnasr.github.io/deveconomics-toolkit/) |
+| 8 | Visualization Cookbook | Professional | Question-driven chart recipes with production-ready Python code | [Open](https://impactmojo-devdata-pro.netlify.app/charts.html) |
+| 9 | DevEconomics Toolkit | Professional | 11 interactive Shiny apps for impact evaluation and program design | [Open](https://impactmojo-devecon-toolkit.netlify.app/) |
 
 ---
 
