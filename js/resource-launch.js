@@ -61,10 +61,15 @@
       return;
     }
 
+    // Open a blank tab immediately (must happen synchronously from the
+    // click event or browsers will block the popup)
+    var newTab = window.open('about:blank', '_blank');
+
     try {
       // 3. Get the user's current access token
       let { data: { session } } = await supabaseClient.auth.getSession();
       if (!session?.access_token) {
+        if (newTab) newTab.close();
         window.location.href = '/login.html';
         return;
       }
@@ -95,6 +100,7 @@
       if (res.status === 403) {
         const body = await res.json();
         if (body.code === 'TIER' || body.code === 'INACTIVE') {
+          if (newTab) newTab.close();
           window.location.href = '/premium.html';
           return;
         }
@@ -103,17 +109,31 @@
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         console.error('Token mint failed:', res.status, body);
-        alert('Unable to access this resource. Please try again or contact support.');
+        // Fallback: open the resource directly without a token
+        if (newTab) {
+          newTab.location.href = baseUrl;
+        } else {
+          window.open(baseUrl, '_blank');
+        }
         return;
       }
 
       const { token } = await res.json();
 
-      // 5. Open the resource in a new tab with the token
-      window.open(baseUrl + '?token=' + encodeURIComponent(token), '_blank');
+      // 5. Navigate the pre-opened tab to the resource with the token
+      if (newTab) {
+        newTab.location.href = baseUrl + '?token=' + encodeURIComponent(token);
+      } else {
+        window.open(baseUrl + '?token=' + encodeURIComponent(token), '_blank');
+      }
     } catch (err) {
       console.error('Resource launch error:', err);
-      alert('Something went wrong. Please check your connection and try again.');
+      // Fallback: open directly on any error
+      if (newTab) {
+        newTab.location.href = baseUrl;
+      } else {
+        window.open(baseUrl, '_blank');
+      }
     }
   }
 
