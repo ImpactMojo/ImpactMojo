@@ -37,6 +37,8 @@
 
   /**
    * Launch a premium resource.
+   * Waits for auth to initialise before checking login state,
+   * preventing the false-negative redirect loop.
    * @param {string} resourceId  — one of the keys in RESOURCE_URLS
    */
   function launch(resourceId) {
@@ -47,15 +49,32 @@
       return;
     }
 
-    // 2. Must be logged in
-    if (typeof ImpactMojoAuth === 'undefined' || !ImpactMojoAuth.isLoggedIn()) {
+    // 2. Auth may still be initialising — wait for it
+    if (typeof ImpactMojoAuth === 'undefined') {
       sessionStorage.setItem('authRedirect', window.location.href);
       window.location.href = '/login';
       return;
     }
 
-    // 3. Open the resource directly
-    window.open(baseUrl, '_blank');
+    // Open a blank tab synchronously (must be in the click handler
+    // or browsers will block the popup)
+    var newTab = window.open('about:blank', '_blank');
+
+    ImpactMojoAuth.waitForAuthReady().then(function () {
+      if (!ImpactMojoAuth.isLoggedIn()) {
+        // Close the blank tab and redirect to login
+        if (newTab) newTab.close();
+        sessionStorage.setItem('authRedirect', window.location.href);
+        window.location.href = '/login';
+        return;
+      }
+      // 3. Navigate the already-open tab to the resource
+      if (newTab) {
+        newTab.location.href = baseUrl;
+      } else {
+        window.open(baseUrl, '_blank');
+      }
+    });
   }
 
   // ── Public API ────────────────────────────────────────────────────
