@@ -1,19 +1,19 @@
 -- ============================================================
--- Fix admin tier for varna.sr@gmail.com and prevent future resets
+-- Fix admin tier for platform admins and prevent future resets
 -- Date: 2026-03-19
 --
--- Problem: Profile was created with default 'explorer' tier and
+-- Problem: Profiles were created with default 'explorer' tier and
 -- 'learner' role. The handle_new_user() trigger always inserts
 -- defaults, and there is no protection against tier downgrades.
 --
 -- This migration:
---   1. Sets varna.sr@gmail.com to organization tier + admin role
+--   1. Sets all admin accounts to organization tier + admin role
 --   2. Creates a trigger to prevent accidental tier downgrades for admins
 --   3. Makes handle_new_user() safe against duplicate inserts
 -- ============================================================
 
 -- ============================================================
--- 1. Fix the admin profile
+-- 1. Fix admin profiles
 -- ============================================================
 UPDATE public.profiles
 SET
@@ -21,7 +21,21 @@ SET
     subscription_status = 'active',
     role                = 'admin',
     updated_at          = NOW()
-WHERE email = 'varna.sr@gmail.com';
+WHERE email IN (
+    'varna.sr@gmail.com',
+    'varna@pinpointventures.in',
+    'vandana@pinpointventures.in'
+);
+
+-- Also match by display name in case email differs
+UPDATE public.profiles
+SET
+    subscription_tier   = 'organization',
+    subscription_status = 'active',
+    role                = 'admin',
+    updated_at          = NOW()
+WHERE (full_name ILIKE '%vandana soni%' OR display_name ILIKE '%vandana soni%')
+  AND role != 'admin';
 
 -- ============================================================
 -- 2. Protect admin tier from accidental downgrades
