@@ -63,21 +63,34 @@
 
     try {
       // 3. Get the user's current access token
-      const { data: { session } } = await supabaseClient.auth.getSession();
+      let { data: { session } } = await supabaseClient.auth.getSession();
       if (!session?.access_token) {
         window.location.href = '/login.html';
         return;
       }
 
+      // Helper: call the Edge Function with a given token
+      async function mintToken(accessToken) {
+        return fetch(EDGE_FN_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+          },
+          body: JSON.stringify({ resource: resourceId }),
+        });
+      }
+
       // 4. Call the Edge Function to mint a resource token
-      const res = await fetch(EDGE_FN_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + session.access_token,
-        },
-        body: JSON.stringify({ resource: resourceId }),
-      });
+      let res = await mintToken(session.access_token);
+
+      // If 401, the session may be stale — refresh and retry once
+      if (res.status === 401) {
+        const { data: refreshed } = await supabaseClient.auth.refreshSession();
+        if (refreshed?.session?.access_token) {
+          res = await mintToken(refreshed.session.access_token);
+        }
+      }
 
       if (res.status === 403) {
         const body = await res.json();
