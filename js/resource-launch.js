@@ -24,9 +24,9 @@
     'code-convert-pro':   'https://stats-assist.netlify.app/',
     'qual-insights':      'https://qual-lab.netlify.app/',
     'vaniscribe':         'https://vaniscribe.netlify.app/',
-    'devdata-practice':   'https://varnasr.github.io/devdata-practice/',
-    'viz-cookbook':        'https://varnasr.github.io/devdata-practice/charts.html',
-    'devecon-toolkit':    'https://varnasr.github.io/deveconomics-toolkit/',
+    'devdata-practice':   'https://impactmojo-devdata-pro.netlify.app/',
+    'viz-cookbook':        'https://impactmojo-devdata-pro.netlify.app/charts.html',
+    'devecon-toolkit':    'https://impactmojo-devecon-toolkit.netlify.app/',
     // Workshop Pro templates
     'toc-workshop-pro':   'https://impactmojo-workshop-pro.netlify.app/toc-pro.html',
     'logframe-pro':       'https://impactmojo-workshop-pro.netlify.app/logframe-pro.html',

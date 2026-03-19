@@ -247,7 +247,7 @@
 
     // DevData Practice
     { re: /devdata|dataset|data.*practice|realistic.*data|household.*survey|rct.*data/i,
-      a: "**DevData Practice** is our premium resource with 36 realistic dataset generators producing 840k+ rows of development economics data. Covers household surveys, RCTs, health, education, agriculture, gender, climate, WASH, humanitarian, IRT psychometrics, and more. Includes practice exercises. Visit: https://varnasr.github.io/devdata-practice/" },
+      a: "**DevData Practice** is our premium resource with 36 realistic dataset generators producing 840k+ rows of development economics data. Covers household surveys, RCTs, health, education, agriculture, gender, climate, WASH, humanitarian, IRT psychometrics, and more. Includes practice exercises. Visit: https://impactmojo-devdata-pro.netlify.app/" },
     // Constitution & Law
     { re: /constitution|law.*course|pil|article.*21|fundamental.*right|basic.*structure|rights.*based/i,
       a: "**Constitution & Law for Development Practice** is our flagship course on rights, institutions and justice in South Asia. 13 modules covering the Indian Constitution, fundamental rights, PIL, Article 21, reservations, rights-based legislation, criminal justice, environmental law, digital rights, and comparative constitutional systems. Visit: /courses/law/" },
@@ -259,9 +259,9 @@
       a: "**VaniScribe** is our premium AI transcription tool for development researchers. Transcribe field interviews, FGDs, and KIIs in Hindi, Tamil, Bengali, and 10+ South Asian languages using Sarvam AI. Features speaker diarization, auto-timestamping, and export to structured formats for qualitative analysis. Visit: https://101.impactmojo.in/vaniscribe" },
     // Visualization Cookbook
     { re: /viz.*cookbook|visualization.*cookbook|chart.*recipe|chart.*type|python.*chart|data.*viz.*code/i,
-      a: "The **Visualization Cookbook** is a premium resource with 14 chart types and production-ready Python code. Question-driven: pick the story your data tells (comparison, distribution, relationship, composition, time series, spatial) and get the right chart with code. Part of DevData Practice. Visit: https://varnasr.github.io/devdata-practice/charts.html" },
+      a: "The **Visualization Cookbook** is a premium resource with 14 chart types and production-ready Python code. Question-driven: pick the story your data tells (comparison, distribution, relationship, composition, time series, spatial) and get the right chart with code. Part of DevData Practice. Visit: https://impactmojo-devdata-pro.netlify.app/charts.html" },
     { re: /deveconomics.*toolkit|shiny.*app|rct.*power|did.*simulator|rdd.*explorer|synthetic.*control|gini.*tool|mpi.*explorer|logframe|wdi.*dashboard|poverty.*line.*analysis|cost.*benefit.*tool/i,
-      a: "**DevEconomics Toolkit** is our premium collection of 11 interactive Shiny apps for development economics. Includes RCT power calculator, DiD simulator, RDD explorer, synthetic control visualizer, Gini and Lorenz curve tool, MPI explorer, poverty line analysis, Theory of Change visualizer, cost-benefit analysis tool, LogFrame builder, and WDI dashboard. Visit: https://varnasr.github.io/deveconomics-toolkit/" }
+      a: "**DevEconomics Toolkit** is our premium collection of 11 interactive Shiny apps for development economics. Includes RCT power calculator, DiD simulator, RDD explorer, synthetic control visualizer, Gini and Lorenz curve tool, MPI explorer, poverty line analysis, Theory of Change visualizer, cost-benefit analysis tool, LogFrame builder, and WDI dashboard. Visit: https://impactmojo-devecon-toolkit.netlify.app/" }
   ];
 
   // Dynamic course objective matcher (covers "What's the objective of X?"  without listing all regexes)

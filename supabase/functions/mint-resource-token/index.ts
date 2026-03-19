@@ -60,6 +60,20 @@ const TIER_RESOURCES: Record<string, string[]> = {
   ],
 };
 
+// ── Resource → Site RESOURCE_ID mapping ──────────────────────────────
+// When multiple resources share a single Netlify site, the JWT `resource`
+// claim must match that site's RESOURCE_ID env var.
+const RESOURCE_SITE_ID: Record<string, string> = {
+  "viz-cookbook":        "devdata-practice",   // same Netlify site as devdata-practice
+  "toc-workshop-pro":   "workshop-pro",       // all workshop templates share one site
+  "logframe-pro":       "workshop-pro",
+  "chart-selector-pro": "workshop-pro",
+  "stakeholder-pro":    "workshop-pro",
+  "empathy-pro":        "workshop-pro",
+  "policy-canvas-pro":  "workshop-pro",
+  "ai-canvas-pro":      "workshop-pro",
+};
+
 // ── Allowed origins ─────────────────────────────────────────────────
 const ALLOWED_ORIGINS = [
   "https://www.impactmojo.in",
@@ -237,7 +251,7 @@ serve(async (req: Request) => {
       { alg: "HS256", typ: "JWT" },
       {
         sub: user.id,
-        resource,
+        resource: RESOURCE_SITE_ID[resource] ?? resource,
         iat: now,
         exp: getNumericDate(5 * 60), // 5 minutes from now
       },

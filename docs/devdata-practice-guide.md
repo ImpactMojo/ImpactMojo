@@ -6,7 +6,7 @@ DevData Practice is ImpactMojo's **synthetic dataset generator** — a tool that
 
 If you've ever needed practice data for a training session, a classroom exercise, or testing an analytical approach — but couldn't use real data because it's sensitive, restricted, or messy in ways that distract from learning — DevData Practice solves that problem.
 
-**Access:** Professional tier (₹999/month) — [Open DevData Practice](https://varnasr.github.io/devdata-practice/)
+**Access:** Professional tier (₹999/month) — [Open DevData Practice](https://impactmojo-devdata-pro.netlify.app/)
 
 ---
 

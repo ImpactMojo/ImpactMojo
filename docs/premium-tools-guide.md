@@ -44,7 +44,7 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 
 **Why synthetic data?** Real development data is often sensitive, restricted, or messy in ways that distract from learning. DevData Practice generates clean, realistic datasets so learners can focus on methods, not data cleaning.
 
-**Access:** Professional tier — [Open DevData Practice](https://varnasr.github.io/devdata-practice/)
+**Access:** Professional tier — [Open DevData Practice](https://impactmojo-devdata-pro.netlify.app/)
 
 ---
 
@@ -54,7 +54,7 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 
 **Who it's for:** Practitioners who need to create publication-quality charts for reports and presentations and want ready-to-use code rather than starting from scratch.
 
-**Access:** Part of DevData Practice — [Open Visualization Cookbook](https://varnasr.github.io/devdata-practice/charts.html)
+**Access:** Part of DevData Practice — [Open Visualization Cookbook](https://impactmojo-devdata-pro.netlify.app/charts.html)
 
 ---
 
@@ -78,7 +78,7 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 
 **Who it's for:** Development economists, evaluation specialists, and students learning econometric methods. Each app makes a complex method interactive — you adjust parameters and see results in real time.
 
-**Access:** Professional tier — [Open DevEconomics Toolkit](https://varnasr.github.io/deveconomics-toolkit/)
+**Access:** Professional tier — [Open DevEconomics Toolkit](https://impactmojo-devecon-toolkit.netlify.app/)
 
 ---
 
@@ -90,7 +90,7 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 | **TOC Workbench Pro** | Advanced Theory of Change building with assumption mapping, evidence linkage, and PDF/PNG export | Practitioner+ |
 | **Qualitative Research Lab (Qual Insights)** | AI-assisted qualitative coding and analysis | Professional |
 | **Statistical Code Converter Pro** | Translate code between R, Stata, SPSS & Python with regression diagnostics and power analysis | Professional |
-| **Field Notes from a Dev Economist** ([The Margin Muse](https://marginmuse.space/themarginmuse)) | Practical field observations from development work — not a blog, but grounded notes from real programme experiences | Professional |
+| **Field Notes from a Dev Economist** ([The Margin Muse](https://impactmojo-field-notes-pro.netlify.app/)) | Practical field observations from development work — not a blog, but grounded notes from real programme experiences | Professional |
 
 ---
 
