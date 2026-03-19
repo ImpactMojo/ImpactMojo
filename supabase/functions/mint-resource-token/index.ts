@@ -28,6 +28,16 @@ const TIER_RESOURCES: Record<string, string[]> = {
     "devdata-practice",
     "viz-cookbook",
     "devecon-toolkit",
+    // Workshop Pro templates
+    "toc-workshop-pro",
+    "logframe-pro",
+    "chart-selector-pro",
+    "stakeholder-pro",
+    "empathy-pro",
+    "policy-canvas-pro",
+    "ai-canvas-pro",
+    // Field Notes Pro
+    "field-notes-pro",
   ],
   organization: [
     "rq-builder",
@@ -37,6 +47,16 @@ const TIER_RESOURCES: Record<string, string[]> = {
     "devdata-practice",
     "viz-cookbook",
     "devecon-toolkit",
+    // Workshop Pro templates
+    "toc-workshop-pro",
+    "logframe-pro",
+    "chart-selector-pro",
+    "stakeholder-pro",
+    "empathy-pro",
+    "policy-canvas-pro",
+    "ai-canvas-pro",
+    // Field Notes Pro
+    "field-notes-pro",
   ],
 };
 

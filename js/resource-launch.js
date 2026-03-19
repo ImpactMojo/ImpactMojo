@@ -19,14 +19,24 @@
   // so the ?token= query param reaches the auth-gate / token-gate.
   const RESOURCE_URLS = {
     // Practitioner tier
-    'rq-builder':       'https://researchquestions.netlify.app/',
+    'rq-builder':         'https://researchquestions.netlify.app/',
     // Professional tier
-    'code-convert-pro': 'https://stats-assist.netlify.app/',
-    'qual-insights':    'https://qual-lab.netlify.app/',
-    'vaniscribe':       'https://vaniscribe.netlify.app/',
-    'devdata-practice': 'https://varnasr.github.io/devdata-practice/',
-    'viz-cookbook':      'https://varnasr.github.io/devdata-practice/charts.html',
-    'devecon-toolkit':  'https://varnasr.github.io/deveconomics-toolkit/',
+    'code-convert-pro':   'https://stats-assist.netlify.app/',
+    'qual-insights':      'https://qual-lab.netlify.app/',
+    'vaniscribe':         'https://vaniscribe.netlify.app/',
+    'devdata-practice':   'https://varnasr.github.io/devdata-practice/',
+    'viz-cookbook':        'https://varnasr.github.io/devdata-practice/charts.html',
+    'devecon-toolkit':    'https://varnasr.github.io/deveconomics-toolkit/',
+    // Workshop Pro templates
+    'toc-workshop-pro':   'https://impactmojo-workshop-pro.netlify.app/toc-pro.html',
+    'logframe-pro':       'https://impactmojo-workshop-pro.netlify.app/logframe-pro.html',
+    'chart-selector-pro': 'https://impactmojo-workshop-pro.netlify.app/chart-selector-pro.html',
+    'stakeholder-pro':    'https://impactmojo-workshop-pro.netlify.app/stakeholder-pro.html',
+    'empathy-pro':        'https://impactmojo-workshop-pro.netlify.app/empathy-pro.html',
+    'policy-canvas-pro':  'https://impactmojo-workshop-pro.netlify.app/policy-canvas-pro.html',
+    'ai-canvas-pro':      'https://impactmojo-workshop-pro.netlify.app/ai-canvas-pro.html',
+    // Field Notes Pro
+    'field-notes-pro':    'https://impactmojo-field-notes-pro.netlify.app/',
   };
 
   // Supabase Edge Function URL (auto-derived from the Supabase project URL in auth.js)
