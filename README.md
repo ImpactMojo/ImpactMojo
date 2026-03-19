@@ -329,8 +329,7 @@ Premium tools are hosted as separate Netlify sites, each protected by a JWT auth
 
 ```
 ImpactMojo/
-├── index.html              # Main site (desktop)
-├── mobile-index.html       # Mobile-optimized version
+├── index.html              # Main site (fully responsive)
 ├── _redirects              # Netlify clean URL routing
 ├── manifest.json           # PWA manifest
 ├── service-worker.js       # Offline PWA service worker (cache-first for courses)

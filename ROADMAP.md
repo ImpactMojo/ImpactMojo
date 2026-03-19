@@ -32,6 +32,11 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 - [x] **Old Netlify game sites deleted** — freed 12 slots
 - [x] **PolicyDhara workflow fix** — commit-msg prefix causing build failures
 - [x] **Gender Studies flagship course** — in progress
+- [x] **7 interactive workshop templates** — ToC, Logframe, Chart Selector, Stakeholder, Empathy Canvas, Policy Canvas, AI Canvas (premium)
+- [x] **Field Notes Pro** — 70 curated development economics field notes (premium)
+- [x] **Server-side auth-gate** on all premium Netlify resource sites
+- [x] **Removed mobile-index.html** — index.html is now fully responsive
+- [x] **Admin tier protection** — database trigger prevents client-side downgrades
 
 ## Q2 2026 (Apr-Jun) — Planned
 

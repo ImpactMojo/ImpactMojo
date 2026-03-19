@@ -2,6 +2,29 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.5.1 — March 19, 2026
+
+**What changed for you:** Admin accounts are now protected from accidental tier downgrades, and premium resource access is more reliable.
+
+### Premium Resource Gating
+- All premium tools now use server-side JWT auth-gate on Netlify Edge Functions
+- 7 new interactive workshop templates (ToC, Logframe, Chart Selector, Stakeholder Mapping, Empathy Canvas, Policy Canvas, AI Canvas) added to the premium listing
+- Field Notes Pro — 70 curated development economics field notes, now a premium tool
+
+### Admin Fixes
+- Admin tier protection: database trigger prevents client-side downgrades
+- Profile fetch timeout increased and auto-retry added for slow connections
+- Fixed JS syntax errors that broke the org dashboard
+
+### Labs & Design
+- 7 new interactive labs (Design Thinking, Impact Partnerships, Resource Sustainability, Policy Advocacy, MEL Design, MEL Plan Builder, Gender Analysis)
+- All 19 labs aligned to ImpactMojo standard design (theme selector, floating decorations, sargamicon badges)
+- Lab count updated from 12 to 19 across the platform
+
+### Housekeeping
+- Removed `mobile-index.html` — `index.html` is now fully responsive
+- Updated all documentation counts (labs 10→19, games 12→16, Dataverse 215→247)
+
 ## v10.1.0 — March 16, 2026
 
 **What changed for you:** The documentation you're reading right now was completely restructured to be useful for educators, not just developers. We also standardized code quality practices across all 29 ImpactMojo repositories.
