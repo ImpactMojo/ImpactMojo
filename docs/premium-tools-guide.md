@@ -86,11 +86,11 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 
 | Tool | What it does | Access |
 |------|-------------|--------|
+| **RQ Builder Pro** | Guided research question builder with PICO/SPIDER framing and method suggestions | Practitioner+ |
+| **TOC Workbench Pro** | Advanced Theory of Change building with assumption mapping, evidence linkage, and PDF/PNG export | Practitioner+ |
 | **Qualitative Research Lab (Qual Insights)** | AI-assisted qualitative coding and analysis | Professional |
-| **Statistical Analysis Assistant** | Statistical toolkit for development research | Professional |
-| **RQ Builder Pro** | Research question formulation framework | Practitioner+ |
-| **Code Converter Pro** | Translate code between R, Stata, SPSS, and Python | Professional |
-| **Field Notes from a Dev Economist** ([The Margin Muse](https://marginmuse.space/themarginmuse)) | Practical field observations from development work — not a blog, but grounded notes from real programme experiences | Free |
+| **Statistical Analysis Assistant** | Regression diagnostics, effect size calculators, and power analysis | Professional |
+| **Field Notes from a Dev Economist** ([The Margin Muse](https://marginmuse.space/themarginmuse)) | Practical field observations from development work — not a blog, but grounded notes from real programme experiences | Professional |
 
 ---
 
