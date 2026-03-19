@@ -70,6 +70,13 @@ When implementing major features, significant refactoring, or multi-file bug fix
 - Mobile-first responsive design
 - Prefer editing existing files over creating new ones
 
+## API Tokens (available in environment)
+
+- **GitHub**: Use `$GITHUB_PAT` for all GitHub API calls (PRs, merges, issues). Call `https://api.github.com/repos/Varnasr/ImpactMojo/...` with header `Authorization: token $GITHUB_PAT`.
+- **Supabase**: Use `$SUPABASE_PAT` for Supabase Management API calls (database queries, migrations). Call `https://api.supabase.com/v1/projects/ddyszmfffyedolkcugld/...` with header `Authorization: Bearer $SUPABASE_PAT`.
+- **Netlify**: Use `$NETLIFY_PAT` for Netlify API calls if needed.
+- Always prefer these tokens over `gh` CLI or local git proxy for creating PRs, merging, and managing issues.
+
 ## Git Practices
 
 - Write concise commit messages focused on "why" not "what"
