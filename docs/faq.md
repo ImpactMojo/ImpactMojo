@@ -270,7 +270,7 @@ ImpactMojo has 9 premium tools across two tiers:
 | **DevEconomics Toolkit** | 11 interactive web apps for development economics methods (sample size calculators, inequality tools, evaluation design simulators) | [Guide](deveconomics-toolkit-guide.md) |
 | **Visualization Cookbook** | Question-driven chart selection with production-ready Python code (14 chart types) | [Guide](visualization-cookbook-guide.md) |
 | **Qual Insights** | AI-assisted qualitative coding and analysis | [Guide](qual-insights-guide.md) |
-| **Statistical Analysis Assistant** | Regression diagnostics, effect size calculators, and power analysis across Stata, R, Python & SPSS | [Guide](code-converter-guide.md) |
+| **Statistical Code Converter Pro** | Translate code between R, Stata, SPSS & Python with regression diagnostics, effect size calculators, and power analysis | [Guide](code-converter-guide.md) |
 
 For detailed explanations of each tool, follow the guide links above.
 

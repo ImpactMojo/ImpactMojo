@@ -89,9 +89,9 @@
 
     // Premium / Pricing
     { re: /\bpremium\b(?!.*(what|include|benefit|price))/i,
-      a: "Premium offers two tiers. **Practitioner** includes RQ Builder Pro, TOC Workbench Pro, certificates, and community access. **Professional** adds Qualitative Research Lab, Statistical Analysis Assistant, VaniScribe AI Transcription (10+ South Asian languages), DevData Practice (36 generators, 840k+ rows), Visualization Cookbook (14 chart types), and the DevEconomics Toolkit (11 Shiny apps). Field Notes from a Dev Economist is free for everyone. Visit the Premium page for details." },
+      a: "Premium offers two tiers. **Practitioner** includes RQ Builder Pro, TOC Workbench Pro, certificates, and community access. **Professional** adds Qualitative Research Lab, Statistical Code Converter Pro, VaniScribe AI Transcription (10+ South Asian languages), DevData Practice (36 generators, 840k+ rows), Visualization Cookbook (14 chart types), and the DevEconomics Toolkit (11 Shiny apps). Field Notes from a Dev Economist is free for everyone. Visit the Premium page for details." },
     { re: /\b(what('| i)?s|about).+premium|\bpremium\b.+(include|cover|benefit)/i,
-      a: "**Practitioner Tier** includes RQ Builder Pro, TOC Workbench Pro, completion certificates, and community access. **Professional Tier** adds Qual Research Lab, Stats Assistant, VaniScribe AI Transcription, DevData Practice datasets, Visualization Cookbook, and the DevEconomics Toolkit with 11 interactive Shiny apps. Field Notes from a Dev Economist is free for all tiers. See the Premium page for current pricing." },
+      a: "**Practitioner Tier** includes RQ Builder Pro, TOC Workbench Pro, completion certificates, and community access. **Professional Tier** adds Qual Research Lab, Code Converter Pro, VaniScribe AI Transcription, DevData Practice datasets, Visualization Cookbook, and the DevEconomics Toolkit with 11 interactive Shiny apps. Field Notes from a Dev Economist is free for all tiers. See the Premium page for current pricing." },
     { re: /\b(price|cost|fee|paid|free).+premium|\bpremium.+(price|cost|fee)/i,
       a: "Premium has two tiers: **Practitioner** and **Professional**. Pricing and full details are on the live Premium page. All 9 flagship courses, 101-level courses, labs, and games remain **free** forever." },
 
