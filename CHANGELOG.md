@@ -5,6 +5,30 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.5.1] - 2026-03-19
+
+### Fixed
+- **Admin tier reset bug** — admin accounts (varna.sr@gmail.com, varna@pinpointventures.in, vsoni.1986@gmail.com) were intermittently shown as free/explorer tier due to stale localStorage cache when profile fetch timed out
+- **Profile fetch timeout** increased from 5s to 8s to reduce cache fallback on slow connections
+- **Profile fetch retry** — failed fetches now auto-retry after 5 seconds so stale cached tier doesn't persist
+
+### Added
+- **Admin tier protection trigger** (`protect_admin_tier`) — database trigger prevents client-side downgrades of admin role, subscription tier, or subscription status
+- **Idempotent profile creation** — `handle_new_user()` trigger now uses `ON CONFLICT DO NOTHING` to prevent overwriting existing profiles on re-authentication
+
+## [10.5.0] - 2026-03-19
+
+### Added
+- **RQ Builder Pro** premium card — Practitioner tier, guided research question builder with PICO/SPIDER framing
+- **TOC Workbench Pro** premium card — Practitioner tier, advanced Theory of Change building with assumption mapping and PDF/PNG export
+- Both new tools added to premium modal, mobile-index.html, and search index
+
+### Changed
+- **Premium tool count updated from 7 → 9** across all pages and docs (catalog.html, content-catalog.md, faq.md, architecture.md, premium-tools-guide.md)
+- **All 9 premium cards modernized with unique Sargam icons** — replaced generic si_Flare/imx-star badges with contextual icons (si_Search, si_Crosshair_detailed, si_Direction_alt, si_Library_books, si_Bar_chart, si_Database, si_Chat, si_Activity, si_Lightning)
+- **Compact premium cards reformatted** to consistent expanded multi-line style matching the rest of the section
+- **Tier access matrix updated** in architecture.md to include `toc-workbench-pro`
+
 ## [10.4.1] - 2026-03-19
 
 ### Changed

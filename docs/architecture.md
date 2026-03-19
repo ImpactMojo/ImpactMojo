@@ -108,14 +108,14 @@ No server-side env vars needed — Supabase credentials are in `js/auth.js` (pub
 | Variable | Description |
 |----------|-------------|
 | `RESOURCE_TOKEN_SECRET` | Same HMAC key as above |
-| `RESOURCE_ID` | Unique slug: `rq-builder`, `code-convert-pro`, `qual-insights`, `vaniscribe` |
+| `RESOURCE_ID` | Unique slug: `rq-builder`, `toc-workbench-pro`, `code-convert-pro`, `qual-insights`, `vaniscribe` |
 
 ## Tier Access Control
 
 ```
 explorer:      []  (free content only)
-practitioner:  [rq-builder]
-professional:  [rq-builder, code-convert-pro, qual-insights, vaniscribe, devdata-practice, viz-cookbook, devecon-toolkit]
+practitioner:  [rq-builder, toc-workbench-pro]
+professional:  [rq-builder, toc-workbench-pro, code-convert-pro, qual-insights, vaniscribe, devdata-practice, viz-cookbook, devecon-toolkit]
 organization:  [same as professional]
 ```
 

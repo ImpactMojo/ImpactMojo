@@ -251,18 +251,28 @@ For full details, see [Certificates and Progress](certificates-and-progress.md).
 
 ## What are ImpactMojo's premium tools?
 
-Professional-tier tools for research and analysis work:
+ImpactMojo has 9 premium tools across two tiers:
+
+**Practitioner Tier (₹399/month):**
 
 | Tool | What it does | Guide |
 |------|-------------|-------|
+| **RQ Builder Pro** | Guided research question builder with PICO/SPIDER framing, method suggestions, and worked examples | — |
+| **TOC Workbench Pro** | Advanced Theory of Change building with assumption mapping, evidence linkage, version history, and PDF/PNG export | — |
+
+**Professional Tier (₹999/month) — includes all Practitioner tools plus:**
+
+| Tool | What it does | Guide |
+|------|-------------|-------|
+| **Field Notes from a Development Economist** | Behind-the-scenes analysis of real programs, procurement dynamics, and implementation trade-offs | — |
 | **VaniScribe** | AI transcription of field interviews in 10+ South Asian languages | [Guide](vaniscribe-guide.md) |
 | **DevData Practice** | Generates realistic synthetic datasets for learning and practice (36 generators, 840K+ rows) | [Guide](devdata-practice-guide.md) |
 | **DevEconomics Toolkit** | 11 interactive web apps for development economics methods (sample size calculators, inequality tools, evaluation design simulators) | [Guide](deveconomics-toolkit-guide.md) |
 | **Visualization Cookbook** | Question-driven chart selection with production-ready Python code (14 chart types) | [Guide](visualization-cookbook-guide.md) |
 | **Qual Insights** | AI-assisted qualitative coding and analysis | [Guide](qual-insights-guide.md) |
-| **Code Converter** | Translates code between R, Python, Stata, and SPSS | [Guide](code-converter-guide.md) |
+| **Statistical Code Converter Pro** | Translate code between R, Stata, SPSS & Python with regression diagnostics, effect size calculators, and power analysis | [Guide](code-converter-guide.md) |
 
-All premium tools are included in the Professional tier (₹999/month). For detailed explanations of each tool, follow the guide links above.
+For detailed explanations of each tool, follow the guide links above.
 
 ---
 
