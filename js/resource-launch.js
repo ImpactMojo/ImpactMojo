@@ -1,6 +1,6 @@
 /**
  * ImpactMojo Premium Resource Launcher
- * Version: 1.0.0
+ * Version: 1.1.0
  *
  * Client-side helper that requests a short-lived JWT from the
  * Supabase Edge Function and opens the gated resource in a new tab.
@@ -8,15 +8,13 @@
  * Usage:
  *   <button onclick="ImpactMojoResource.launch('vaniscribe')">Open VaniScribe</button>
  *
- * Depends on: js/auth.js (provides `supabaseClient` and `ImpactMojoAuth`)
+ * Depends on: js/config.js, js/auth.js (provides `supabaseClient` and `ImpactMojoAuth`)
  */
 
 (function () {
   'use strict';
 
   // ── Map resource IDs to their REAL deployment URLs ─────────────────
-  // The launcher opens these directly (bypassing short.io cloaking)
-  // so the ?token= query param reaches the auth-gate / token-gate.
   const RESOURCE_URLS = {
     // Practitioner tier
     'rq-builder':         'https://researchquestions.netlify.app/',
@@ -39,25 +37,47 @@
     'field-notes-pro':    'https://impactmojo-field-notes-pro.netlify.app/',
   };
 
-  // Supabase Edge Function URL (auto-derived from the Supabase project URL in auth.js)
-  const EDGE_FN_URL = SUPABASE_URL + '/functions/v1/mint-resource-token';
+  // Resolve the Edge Function URL at call time (not parse time)
+  // so config.js and auth.js are guaranteed to have loaded first.
+  function getEdgeFnUrl() {
+    var base = (window.ImpactMojoConfig && window.ImpactMojoConfig.SUPABASE_URL)
+            || (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL)
+            || 'https://ddyszmfffyedolkcugld.supabase.co';
+    return base + '/functions/v1/mint-resource-token';
+  }
+
+  // Navigate a tab to a URL, with window.open fallback
+  function navigateTab(tab, url) {
+    if (tab && !tab.closed) {
+      tab.location.href = url;
+    } else {
+      window.open(url, '_blank');
+    }
+  }
 
   /**
    * Launch a premium resource.
    * @param {string} resourceId  — one of the keys in RESOURCE_URLS
    */
   async function launch(resourceId) {
-    // 1. Must be logged in
-    if (!ImpactMojoAuth.isLoggedIn()) {
-      sessionStorage.setItem('authRedirect', window.location.href);
-      window.location.href = '/login.html';
+    // 1. Resolve the resource URL first
+    var baseUrl = RESOURCE_URLS[resourceId];
+    if (!baseUrl) {
+      console.error('Unknown resource:', resourceId);
       return;
     }
 
-    // 2. Resolve the resource URL
-    const baseUrl = RESOURCE_URLS[resourceId];
-    if (!baseUrl) {
-      console.error('Unknown resource:', resourceId);
+    // 2. Must be logged in
+    if (typeof ImpactMojoAuth === 'undefined' || !ImpactMojoAuth.isLoggedIn()) {
+      sessionStorage.setItem('authRedirect', window.location.href);
+      window.location.href = '/login';
+      return;
+    }
+
+    // 3. Check supabaseClient is available
+    if (typeof supabaseClient === 'undefined') {
+      console.error('supabaseClient not available');
+      window.open(baseUrl, '_blank');
       return;
     }
 
@@ -66,88 +86,94 @@
     var newTab = window.open('about:blank', '_blank');
 
     try {
-      // 3. Get the user's current access token
-      let { data: { session } } = await supabaseClient.auth.getSession();
-      if (!session?.access_token) {
-        if (newTab) newTab.close();
-        window.location.href = '/login.html';
-        return;
+      // 4. Get the user's current access token — try getSession first,
+      //    fall back to refreshSession if stale
+      var accessToken = null;
+
+      var sessionResult = await supabaseClient.auth.getSession();
+      if (sessionResult.data && sessionResult.data.session) {
+        accessToken = sessionResult.data.session.access_token;
       }
 
-      // Helper: call the Edge Function with a given token
-      async function mintToken(accessToken) {
-        return fetch(EDGE_FN_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + accessToken,
-          },
-          body: JSON.stringify({ resource: resourceId }),
-        });
-      }
-
-      // 4. Call the Edge Function to mint a resource token
-      let res = await mintToken(session.access_token);
-
-      // If 401, the session may be stale — refresh and retry once
-      if (res.status === 401) {
-        const { data: refreshed } = await supabaseClient.auth.refreshSession();
-        if (refreshed?.session?.access_token) {
-          res = await mintToken(refreshed.session.access_token);
+      if (!accessToken) {
+        // Session cache empty — try refreshing
+        var refreshResult = await supabaseClient.auth.refreshSession();
+        if (refreshResult.data && refreshResult.data.session) {
+          accessToken = refreshResult.data.session.access_token;
         }
       }
 
+      if (!accessToken) {
+        // Auth is truly gone — open resource directly as fallback
+        console.warn('No valid session, opening resource directly');
+        navigateTab(newTab, baseUrl);
+        return;
+      }
+
+      // 5. Call the Edge Function to mint a resource token
+      var edgeFnUrl = getEdgeFnUrl();
+      var res = await fetch(edgeFnUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken,
+        },
+        body: JSON.stringify({ resource: resourceId }),
+      });
+
+      // If 401, the token may be stale — refresh and retry once
+      if (res.status === 401) {
+        var retry = await supabaseClient.auth.refreshSession();
+        if (retry.data && retry.data.session) {
+          accessToken = retry.data.session.access_token;
+          res = await fetch(edgeFnUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + accessToken,
+            },
+            body: JSON.stringify({ resource: resourceId }),
+          });
+        }
+      }
+
+      // 403 = tier too low or inactive subscription
       if (res.status === 403) {
-        const body = await res.json();
-        if (body.code === 'TIER' || body.code === 'INACTIVE') {
-          if (newTab) newTab.close();
-          window.location.href = '/premium.html';
+        var forbiddenBody = await res.json().catch(function () { return {}; });
+        if (forbiddenBody.code === 'TIER' || forbiddenBody.code === 'INACTIVE') {
+          if (newTab && !newTab.closed) newTab.close();
+          window.location.href = '/premium';
           return;
         }
       }
 
       if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        console.error('Token mint failed:', res.status, body);
-        // Fallback: open the resource directly without a token
-        if (newTab) {
-          newTab.location.href = baseUrl;
-        } else {
-          window.open(baseUrl, '_blank');
-        }
+        var errBody = await res.json().catch(function () { return {}; });
+        console.error('Token mint failed:', res.status, errBody);
+        // Fallback: open the resource directly
+        navigateTab(newTab, baseUrl);
         return;
       }
 
-      const { token } = await res.json();
+      var data = await res.json();
 
-      // 5. Navigate the pre-opened tab to the resource with the token
-      if (newTab) {
-        newTab.location.href = baseUrl + '?token=' + encodeURIComponent(token);
-      } else {
-        window.open(baseUrl + '?token=' + encodeURIComponent(token), '_blank');
-      }
+      // 6. Navigate the pre-opened tab to the resource with the token
+      navigateTab(newTab, baseUrl + '?token=' + encodeURIComponent(data.token));
     } catch (err) {
       console.error('Resource launch error:', err);
       // Fallback: open directly on any error
-      if (newTab) {
-        newTab.location.href = baseUrl;
-      } else {
-        window.open(baseUrl, '_blank');
-      }
+      navigateTab(newTab, baseUrl);
     }
   }
 
   // ── Public API ────────────────────────────────────────────────────
   window.ImpactMojoResource = {
-    launch,
-    RESOURCE_URLS,
-    version: '1.0.0',
+    launch: launch,
+    RESOURCE_URLS: RESOURCE_URLS,
+    version: '1.1.0',
   };
 
   // ── Auto-intercept clicks on links with data-resource-id ─────────
-  // Works with premium.js: when locked, premium.js captures the click
-  // first (capture phase) and shows the upgrade modal. When unlocked,
-  // this handler runs and routes through the JWT launcher.
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[data-resource-id]');
     if (!link) return;
