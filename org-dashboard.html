@@ -2119,6 +2119,18 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             }
 
             orgData = org;
+
+            // Auto-add the admin as an org member if not already present
+            await supabaseClient
+                .from('organization_members')
+                .upsert({
+                    org_id: org.id,
+                    user_id: profile.id,
+                    role: 'admin',
+                    status: 'active',
+                    joined_at: new Date().toISOString()
+                }, { onConflict: 'org_id,user_id', ignoreDuplicates: true });
+
             document.getElementById('dashboardContent').style.display = 'block';
             if (typeof DashboardTabs !== 'undefined') DashboardTabs.init('organization', profile);
             document.getElementById('orgName').textContent = org.name;
