@@ -503,6 +503,13 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
     </div>
 </header>
 
+<!-- Loading state (visible by default while init runs) -->
+<div id="loadingState" style="text-align:center; padding:5rem 2rem;">
+    <div style="width:40px; height:40px; border:3px solid var(--border-color); border-top-color:var(--accent-color); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 1rem;"></div>
+    <p style="color:var(--text-secondary); font-size:0.9rem;">Loading organization dashboard...</p>
+    <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+</div>
+
 <!-- Auth Gate (shown if not org admin) -->
 <div id="authGate" style="display:none;">
     <div class="empty-state" style="padding: 5rem 2rem;">
@@ -2051,29 +2058,67 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
     var members = [];
     var paths = [];
 
+    function hideLoading() {
+        var el = document.getElementById('loadingState');
+        if (el) el.style.display = 'none';
+    }
+
+    function showAuthGate() {
+        hideLoading();
+        document.getElementById('authGate').style.display = 'block';
+    }
+
+    function showDashboard() {
+        hideLoading();
+        document.getElementById('dashboardContent').style.display = 'block';
+    }
+
     async function init() {
         // Safety timeout: if init takes too long, show auth gate so page isn't blank
         var safetyTimer = setTimeout(function() {
             var dc = document.getElementById('dashboardContent');
-            var ag = document.getElementById('authGate');
-            if (dc.style.display === 'none' && ag.style.display === 'none') {
-                ag.style.display = 'block';
+            if (dc.style.display === 'none') {
+                console.warn('[OrgDash] Safety timeout — showing auth gate');
+                showAuthGate();
             }
-        }, 15000);
+        }, 5000);
 
         try {
-            await ImpactMojoAuth.init();
-            await ImpactMojoAuth.waitForAuthReady();
-
-            if (!ImpactMojoAuth.isLoggedIn()) {
-                document.getElementById('authGate').style.display = 'block';
+            // Wait for auth with a timeout
+            if (typeof ImpactMojoAuth === 'undefined') {
+                console.error('[OrgDash] ImpactMojoAuth not loaded');
+                showAuthGate();
                 clearTimeout(safetyTimer);
                 return;
             }
 
-            // Always fetch a fresh profile to get the latest subscription_tier from Supabase
-            var profile = await ImpactMojoAuth.fetchProfile();
-            console.log('[OrgDash] Profile:', profile ? { id: profile.id, tier: profile.subscription_tier } : null);
+            await ImpactMojoAuth.init();
+
+            // Wait for auth ready with a 6-second timeout
+            var authReady = ImpactMojoAuth.waitForAuthReady();
+            var authTimeout = new Promise(function(resolve) { setTimeout(function() { resolve('timeout'); }, 6000); });
+            var authResult = await Promise.race([authReady, authTimeout]);
+
+            if (authResult === 'timeout') {
+                console.warn('[OrgDash] Auth ready timed out');
+            }
+
+            if (!ImpactMojoAuth.isLoggedIn()) {
+                console.log('[OrgDash] Not logged in');
+                showAuthGate();
+                clearTimeout(safetyTimer);
+                return;
+            }
+
+            // Always fetch a fresh profile to get the latest subscription_tier
+            var profile = null;
+            try {
+                profile = await ImpactMojoAuth.fetchProfile();
+            } catch (e) {
+                console.warn('[OrgDash] Profile fetch failed, using cached:', e);
+                profile = ImpactMojoAuth.getProfile();
+            }
+            console.log('[OrgDash] Profile:', profile ? { id: profile.id, tier: profile.subscription_tier, role: profile.role } : null);
 
             // Show admin panel link for admin users
             if (profile && profile.role === 'admin') {
@@ -2081,9 +2126,11 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 if (adminLink) adminLink.style.display = 'inline-flex';
             }
 
-            if (!profile || profile.subscription_tier !== 'organization') {
-                console.warn('[OrgDash] Access denied: tier is', profile ? profile.subscription_tier : 'no profile');
-                document.getElementById('authGate').style.display = 'block';
+            // Allow access if tier is 'organization' OR role is 'admin'
+            var hasAccess = profile && (profile.subscription_tier === 'organization' || profile.role === 'admin');
+            if (!hasAccess) {
+                console.warn('[OrgDash] Access denied: tier is', profile ? profile.subscription_tier : 'no profile', ', role is', profile ? profile.role : 'none');
+                showAuthGate();
                 clearTimeout(safetyTimer);
                 return;
             }
@@ -2095,33 +2142,38 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 .eq('admin_id', profile.id)
                 .single();
 
-            console.log('[OrgDash] Org query result:', { org: org, error: orgError });
+            console.log('[OrgDash] Org query result:', { org: org, error: orgError ? orgError.message : null });
 
             if (!org) {
                 // Create org for first-time admin
-                var { data: newOrg, error: insertError } = await supabaseClient
-                    .from('organizations')
-                    .insert({
-                        name: profile.organization || 'My Organization',
-                        admin_id: profile.id,
-                        billing_email: ImpactMojoAuth.getUser().email
-                    })
-                    .select()
-                    .single();
-                console.log('[OrgDash] Org insert result:', { newOrg: newOrg, error: insertError });
-                org = newOrg;
+                try {
+                    var { data: newOrg, error: insertError } = await supabaseClient
+                        .from('organizations')
+                        .insert({
+                            name: profile.organization || 'My Organization',
+                            admin_id: profile.id,
+                            billing_email: ImpactMojoAuth.getUser().email
+                        })
+                        .select()
+                        .single();
+                    console.log('[OrgDash] Org insert result:', { newOrg: newOrg, error: insertError ? insertError.message : null });
+                    org = newOrg;
+                } catch (insertErr) {
+                    console.error('[OrgDash] Org insert failed:', insertErr);
+                }
             }
 
             if (!org) {
-                document.getElementById('authGate').style.display = 'block';
+                console.error('[OrgDash] No org found or created');
+                showAuthGate();
                 clearTimeout(safetyTimer);
                 return;
             }
 
             orgData = org;
 
-            // Auto-add the admin as an org member if not already present
-            await supabaseClient
+            // Auto-add the admin as an org member (non-blocking, don't let it break init)
+            supabaseClient
                 .from('organization_members')
                 .upsert({
                     org_id: org.id,
@@ -2129,21 +2181,24 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                     role: 'admin',
                     status: 'active',
                     joined_at: new Date().toISOString()
-                }, { onConflict: 'org_id,user_id', ignoreDuplicates: true });
+                }, { onConflict: 'org_id,user_id', ignoreDuplicates: true })
+                .then(function() { console.log('[OrgDash] Admin member ensured'); })
+                .catch(function(e) { console.warn('[OrgDash] Admin member upsert failed (non-critical):', e); });
 
-            document.getElementById('dashboardContent').style.display = 'block';
+            showDashboard();
             if (typeof DashboardTabs !== 'undefined') DashboardTabs.init('organization', profile);
             document.getElementById('orgName').textContent = org.name;
             document.getElementById('settingsOrgName').value = org.name || '';
             document.getElementById('settingsBillingEmail').value = org.billing_email || '';
             document.getElementById('settingsBillingAddress').value = org.billing_address || '';
 
-            // Load members and paths in parallel for faster dashboard load
-            await Promise.all([loadMembers(), loadPaths()]);
-            updateStats();
+            // Load members and paths in parallel (non-blocking for dashboard display)
+            Promise.all([loadMembers(), loadPaths()])
+                .then(function() { updateStats(); })
+                .catch(function(e) { console.error('[OrgDash] Data load failed:', e); });
         } catch (err) {
             console.error('Org dashboard init failed:', err);
-            document.getElementById('authGate').style.display = 'block';
+            showAuthGate();
         } finally {
             clearTimeout(safetyTimer);
         }
