@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Summaries | ImpactMojo</title>
+<meta name="description" content="Interactive book companions for development practitioners. Deep-dive summaries of key texts in social protection, development economics, and public policy.">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+<!-- Favicons -->
+<link href="/assets/images/favicon.png" rel="icon" type="image/png">
+<link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary-bg: #FFFFFF;
+    --secondary-bg: #F8FAFC;
+    --accent-color: #0EA5E9;
+    --accent-hover: #0284C7;
+    --secondary-accent: #6366F1;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --gradient-accent: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    --star-color: #FCD34D;
+}
+
+body.dark-mode {
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Amaranth', sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+body.dark-mode .header {
+    background: rgba(15, 23, 42, 0.95);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.logo-link img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.logo-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    font-family: 'Amaranth', sans-serif;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-outline:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Theme Selector */
+.theme-selector {
+    display: flex;
+    gap: 4px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 4px;
+}
+
+.theme-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+}
+
+.theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+.theme-btn.active { background: var(--accent-color); color: white; }
+.theme-btn svg { width: 18px; height: 18px; }
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(217, 119, 6, 0.15);
+    color: #D97706;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #D97706 0%, #EF4444 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero p {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Books Grid */
+.books-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+}
+
+.section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+}
+
+.book-card {
+    background: var(--card-bg);
+    border: 3px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 8px 8px 0 rgba(14, 165, 233, 0.12);
+    text-decoration: none;
+    color: var(--text-primary);
+    display: block;
+}
+
+.book-card:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 13px 13px 0 rgba(14, 165, 233, 0.18);
+    border-color: var(--accent-color);
+}
+
+.book-card-header {
+    background: linear-gradient(135deg, #D97706 0%, #EF4444 100%);
+    padding: 2rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.book-card-header::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.book-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+}
+
+.book-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+}
+
+.book-authors {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.book-card-body {
+    padding: 1.5rem 2rem 2rem;
+}
+
+.book-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+}
+
+.book-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--hover-bg);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+}
+
+.meta-tag svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+.book-cta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.book-cta svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.2s;
+}
+
+.book-card:hover .book-cta svg {
+    transform: translateX(4px);
+}
+
+/* Coming Soon Card */
+.book-card.coming-soon {
+    border-style: dashed;
+    opacity: 0.7;
+}
+
+.book-card.coming-soon:hover {
+    transform: none;
+    box-shadow: 8px 8px 0 rgba(14, 165, 233, 0.12);
+    border-color: var(--border-color);
+    cursor: default;
+}
+
+.book-card.coming-soon .book-card-header {
+    background: linear-gradient(135deg, #94A3B8 0%, #64748B 100%);
+}
+
+.coming-soon-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(245, 158, 11, 0.15);
+    color: #F59E0B;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* About Section */
+.about-section {
+    background: var(--secondary-bg);
+    padding: 4rem 2rem;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-content h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.about-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+.feature-list {
+    list-style: none;
+    margin: 1.5rem 0;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    color: var(--text-secondary);
+}
+
+.feature-list li svg {
+    flex-shrink: 0;
+    margin-top: 3px;
+    color: var(--success-color);
+}
+
+/* Footer */
+.footer {
+    background: var(--secondary-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 2rem;
+    text-align: center;
+}
+
+.footer p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.footer a:hover { text-decoration: underline; }
+
+/* Auth state */
+.auth-logged-in { display: none !important; }
+.auth-logged-out { display: flex !important; }
+body.user-authenticated .auth-logged-in { display: flex !important; }
+body.user-authenticated .auth-logged-out { display: none !important; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header { padding: 1rem; }
+    .hero { padding: 3rem 1rem 2rem; }
+    .books-section { padding: 0 1rem 3rem; }
+    .books-grid { grid-template-columns: 1fr; }
+    .about-section { padding: 3rem 1rem; }
+    .hero-stats { gap: 1.5rem; }
+    .header-actions .btn-outline span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <a href="/index.html" class="logo-link">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="40" height="40">
+            <span class="logo-text">ImpactMojo</span>
+        </a>
+        <div class="header-actions">
+            <a href="/index.html" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Back to Home</span>
+            </a>
+            <div class="theme-selector" aria-label="Theme selection">
+                <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+            <a href="/login.html" class="btn btn-outline auth-logged-out">Log In</a>
+            <a href="/signup.html" class="btn btn-primary auth-logged-out">Sign Up Free</a>
+            <a href="/account.html" class="btn btn-primary auth-logged-in">My Account</a>
+        </div>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-badge">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Book Summaries
+    </div>
+    <h1>Interactive Book Companions</h1>
+    <p>Deep-dive, interactive summaries of essential texts in development, social protection, and public policy. Navigate chapters, explore key concepts, and build real understanding.</p>
+    <div class="hero-stats">
+        <div class="stat-item">
+            <div class="stat-number">1</div>
+            <div class="stat-label">Book Available</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">30+</div>
+            <div class="stat-label">Chapters Covered</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">Free</div>
+            <div class="stat-label">Open Access</div>
+        </div>
+    </div>
+</section>
+
+<!-- Books Grid -->
+<section class="books-section">
+    <h2 class="section-title">Available Summaries</h2>
+    <p class="section-subtitle">Click on a book to explore its interactive companion</p>
+
+    <div class="books-grid">
+        <!-- Handbook of Social Protection -->
+        <a href="handbook-social-protection.html" class="book-card">
+            <div class="book-card-header">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Social Protection
+                </div>
+                <div class="book-title">Handbook of Social Protection and Inclusionary Development</div>
+                <div class="book-authors">Rema Hanna & Benjamin A. Olken (Eds.) &mdash; MIT Press 2026</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">A comprehensive guide covering cash transfers, public works, food subsidies, targeting methodologies, and the political economy of social protection across the developing world.</p>
+                <div class="book-meta">
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        30+ Chapters
+                    </span>
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        Interactive
+                    </span>
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        Free Access
+                    </span>
+                </div>
+                <div class="book-cta">
+                    Read Summary
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+            </div>
+        </a>
+
+        <!-- Coming Soon placeholder -->
+        <div class="book-card coming-soon">
+            <div class="book-card-header">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    Development Economics
+                </div>
+                <div class="book-title">More Book Summaries Coming Soon</div>
+                <div class="book-authors">Suggest a book &mdash; hello@impactmojo.in</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">We're working on interactive companions for more essential development texts. Have a book you'd love to see summarised? Let us know!</p>
+                <div class="book-meta">
+                    <span class="coming-soon-badge">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        Coming Soon
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section class="about-section">
+    <div class="about-content">
+        <h2>What Are Book Summaries?</h2>
+        <p>Book Summaries are interactive, chapter-by-chapter companions for essential development texts. Unlike traditional summaries, these are designed for practitioners who want to understand and apply the ideas, not just skim them.</p>
+        <ul class="feature-list">
+            <li>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Chapter-by-chapter navigation with key arguments and evidence
+            </li>
+            <li>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Interactive elements to test comprehension and connect ideas
+            </li>
+            <li>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Practitioner-focused takeaways for fieldwork and programme design
+            </li>
+            <li>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Completely free and open access &mdash; no login required
+            </li>
+        </ul>
+        <p>All Book Summaries are part of ImpactMojo's free <strong>Specials</strong> collection, alongside games, labs, and interactive tools.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2026 ImpactMojo. <a href="/index.html">Back to Home</a> | <a href="mailto:hello@impactmojo.in">Contact Us</a></p>
+    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Sponsored by PinPoint Ventures</p>
+</footer>
+
+<script>
+// Three-way theme system
+(function() {
+    function applyTheme(theme) {
+        if (theme === 'system') {
+            var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.body.classList.toggle('dark-mode', systemDark);
+        } else {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+        }
+    }
+
+    function updateActiveButton(theme) {
+        document.querySelectorAll('.theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.dataset.theme === theme);
+        });
+    }
+
+    var saved = localStorage.getItem('theme') || 'system';
+    applyTheme(saved);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateActiveButton(saved);
+        document.querySelectorAll('.theme-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var theme = btn.dataset.theme;
+                localStorage.setItem('theme', theme);
+                updateActiveButton(theme);
+                applyTheme(theme);
+            });
+        });
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+        if ((localStorage.getItem('theme') || 'system') === 'system') {
+            applyTheme('system');
+        }
+    });
+})();
+</script>
+<script defer src="/js/config.js"></script>
+<script defer src="/js/auth.js"></script>
+</body>
+</html>

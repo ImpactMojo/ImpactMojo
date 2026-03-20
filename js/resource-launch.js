@@ -130,6 +130,12 @@
     var card = link.closest('[data-locked-tier]');
     if (card) return;
 
+    // If the parent requires a premium tier but premium.js hasn't finished
+    // initializing yet (no data-locked-tier set), defer the click to avoid
+    // a race condition that redirects unauthenticated users to login
+    var gatedCard = link.closest('[data-required-tier]');
+    if (gatedCard && !gatedCard.classList.contains('premium-unlocked')) return;
+
     e.preventDefault();
     e.stopPropagation();
     launch(link.dataset.resourceId);
