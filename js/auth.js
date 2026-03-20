@@ -1,13 +1,19 @@
 /**
  * ImpactMojo Authentication System
  * Powered by Supabase
- * Version 2.2.0 - March 20, 2026
+ * Version 2.3.0 - March 20, 2026
  *
  * FEATURES:
  * - Cloud sync for bookmarks, notes, compare list, streak data
  * - Auto-sync on login/logout
  * - Manual sync function
  * - Intelligent data merging (newer/more complete wins)
+ *
+ * FIXED in v2.3.0:
+ * - Migrates sessions from old default Supabase key (sb-*-auth-token) to 'impactmojo-auth'
+ *   so existing users don't lose their session after the storageKey change
+ * - course-progress.js and challenges.js now reuse window.supabaseClient from auth.js
+ *   instead of creating their own GoTrueClient (prevents token refresh races)
  *
  * FIXED in v2.2.0:
  * - Supabase client now uses explicit storageKey ('impactmojo-auth') for consistent
@@ -39,6 +45,39 @@
 // =====================================================
 const SUPABASE_URL = window.ImpactMojoConfig.SUPABASE_URL;
 const SUPABASE_ANON_KEY = window.ImpactMojoConfig.SUPABASE_ANON_KEY;
+
+// Migrate session from old default Supabase storage key to 'impactmojo-auth'.
+// Before v2.2.0 each script used the default key (sb-<ref>-auth-token) or its own
+// key, so existing users may still have a valid session stored there.
+(function migrateOldSession() {
+    try {
+        // Already have a session under the new key — nothing to migrate
+        var existing = localStorage.getItem('impactmojo-auth');
+        if (existing) {
+            var parsed = JSON.parse(existing);
+            if (parsed && parsed.access_token) return;
+        }
+
+        // Look for a session under the old default key pattern (sb-<ref>-auth-token)
+        var keys = Object.keys(localStorage);
+        for (var i = 0; i < keys.length; i++) {
+            var k = keys[i];
+            if (k.indexOf('sb-') === 0 && k.indexOf('-auth-token') !== -1 && k !== 'impactmojo-auth') {
+                var val = localStorage.getItem(k);
+                if (val) {
+                    var obj = JSON.parse(val);
+                    if (obj && (obj.access_token || (obj.currentSession && obj.currentSession.access_token))) {
+                        // Copy to new key and remove old one so there's only one source of truth
+                        localStorage.setItem('impactmojo-auth', val);
+                        localStorage.removeItem(k);
+                        console.log('Migrated auth session from', k, 'to impactmojo-auth');
+                        break;
+                    }
+                }
+            }
+        }
+    } catch (e) { /* ignore migration errors */ }
+})();
 
 // Initialize Supabase client (using different name to avoid conflict with window.supabase library)
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
