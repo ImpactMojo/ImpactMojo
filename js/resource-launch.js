@@ -78,8 +78,9 @@
         window.open(baseUrl, '_blank');
         return;
       }
-      sessionStorage.setItem('authRedirect', window.location.href);
-      window.location.href = '/login';
+      // No session at all — send to premium page (not login) so user
+      // understands this is a premium feature, not just an auth issue
+      window.location.href = '/premium.html';
       return;
     }
 
@@ -99,10 +100,10 @@
           }
           return;
         }
-        // Truly not logged in — redirect to login
+        // Not logged in — send to premium page instead of login to avoid
+        // redirect loops and to communicate this is a premium feature
         if (newTab) newTab.close();
-        sessionStorage.setItem('authRedirect', window.location.href);
-        window.location.href = '/login';
+        window.location.href = '/premium.html';
         return;
       }
       // 3. Navigate the already-open tab to the resource
@@ -138,6 +139,18 @@
 
     e.preventDefault();
     e.stopPropagation();
+
+    // If premium.js has already verified the user's tier and unlocked the
+    // card, open the resource directly — no need for a second auth check
+    // which can fail due to auth timing issues and redirect to login
+    if (gatedCard && gatedCard.classList.contains('premium-unlocked')) {
+      var directUrl = RESOURCE_URLS[link.dataset.resourceId];
+      if (directUrl) {
+        window.open(directUrl, '_blank');
+        return;
+      }
+    }
+
     launch(link.dataset.resourceId);
   });
 })();
