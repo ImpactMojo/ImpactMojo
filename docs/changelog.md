@@ -2,6 +2,38 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.8.0 — March 20, 2026
+
+**What changed for you:** Two major new features — **cohort-based learning** and **notifications** — plus auth reliability improvements.
+
+### Cohort-Based Learning (#144)
+- Organization admins can now create training cohorts with start/end dates, member enrollment, and deadline tracking
+- Cohorts show per-member progress bars, average cohort progress, and a color-coded deadline countdown
+- **Discussion threads** within each cohort — members can post, view, and delete messages
+- Cohort status automatically updates (Upcoming → Active → Completed) based on dates
+- Database tables: `cohorts`, `cohort_members`, `cohort_discussions` with full row-level security
+
+### Notification System (#145)
+- **In-app notifications** on the account page with unread badges and mark-as-read
+- **Email notifications** via Resend (free 3K/month) with branded HTML templates
+- **Streak reminders** — automatic email when users with active streaks go inactive for 2+ days
+- **Cohort deadline alerts** — notifies enrolled members when cohorts end within 3 days
+- **Notification preferences** — per-user opt-in/out for 6 notification categories (course updates, streaks, cohort deadlines, cohort discussions, assignments, certificates) plus digest frequency (daily/weekly/never)
+- New Edge Function: `send-notification` with streak-reminders, cohort-deadlines, and manual notification endpoints
+
+### Auth & Login Fixes
+- Faster session recovery (1.5s + 4s safety nets, reduced from 3s)
+- Increased SIGNED_OUT debounce to 1000ms to handle slow token refresh
+- Aggressive session recovery from localStorage when in-memory state is lost
+- Window `load` event recovery for `defer` script timing on homepage
+
+### Other Fixes
+- Gender equity game: SVG viewBox expanded to prevent Madhubani art head clipping
+- Info asymmetry game: Pattachitra frame images now full-width on mobile
+- API token documentation added for Gemini, DeepSeek, Grok, Sarvan.ai, Gamma
+- Git standards verified across all 29 repos (29/29 compliant, dependabot active)
+- 3 stale Claude Code branches cleaned up
+
 ## v10.7.0 — March 20, 2026
 
 **What changed for you:** A brand new content type — **BookSummaries** — is now available under Specials. Developer tooling also improved with Claude Code skills and API key management built into the repo.

@@ -122,6 +122,42 @@ professional:  [rq-builder, toc-workbench-pro, code-convert-pro, qual-insights, 
 organization:  [same as professional]
 ```
 
+## Supabase Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `profiles` | User accounts, tier, streak, interests |
+| `user_progress` | Per-course progress tracking |
+| `bookmarks` | User bookmarks |
+| `user_notes` | Personal notes |
+| `certificates` | Issued certificates with badge metadata |
+| `payments` | Payment history |
+| `coaching_bookings` | Coaching session bookings |
+| `organizations` | Organization records |
+| `organization_members` | User ↔ org membership |
+| `learning_paths` | Custom org learning paths |
+| `learning_path_assignments` | Path ↔ user assignments with due dates |
+| `portfolio_items` | User portfolio entries |
+| `challenge_submissions` | Live case challenge submissions |
+| `challenge_requests` | Custom challenge requests from orgs |
+| `cohorts` | Training cohorts with start/end dates (v10.8.0) |
+| `cohort_members` | Cohort enrollment + progress tracking (v10.8.0) |
+| `cohort_discussions` | Discussion threads within cohorts (v10.8.0) |
+| `notifications` | In-app + email notification log (v10.8.0) |
+| `notification_preferences` | Per-user email opt-in/out (v10.8.0) |
+| `course_content` | Dynamic course HTML served via Edge Function |
+| `badge_shares` | Badge sharing tracking |
+
+## Supabase Edge Functions
+
+| Function | Purpose |
+|----------|---------|
+| `mint-resource-token` | JWT minting for premium resource access |
+| `issue-certificate` | Certificate issuance on course completion |
+| `game-agent` | MiroFish AI agent engine for games (multi-provider LLM) |
+| `serve-course-content` | Dynamic course content serving |
+| `send-notification` | Email notifications: streak reminders, cohort deadlines, manual (v10.8.0) |
+
 ## File Structure
 
 See [README → Project Structure](https://github.com/Varnasr/ImpactMojo#project-structure) for the full directory layout.

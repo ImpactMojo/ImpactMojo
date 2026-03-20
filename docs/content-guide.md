@@ -15,6 +15,7 @@ This page documents how educational content is structured in ImpactMojo, for con
 | Dev Case Studies | 200 | Curated library | Free |
 | DevDiscourses | 500+ | Curated papers/books | Free |
 | Handouts | 400+ | HTML pages | Free |
+| BookSummaries | Growing | Interactive book companions | Free (Specials) |
 | Blog posts | Ongoing | HTML articles | Free |
 | Podcast | Episodes | Audio (Spotify) | Free |
 
