@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qual Insights Lab Pro — ImpactMojo</title>
+<style>
+:root {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --bg-panel: #0f3460;
+  --bg-card: #1a1a3e;
+  --text-primary: #e8e8e8;
+  --text-secondary: #b0b0c8;
+  --accent: #e94560;
+  --accent-gold: #d4a843;
+  --accent-teal: #53868b;
+  --border: #2a2a4a;
+  --hover: #2a2a5a;
+  --success: #4caf50;
+  --font: 'Segoe UI', system-ui, sans-serif;
+  --radius: 6px;
+  --warli-color: rgba(212,168,67,0.15);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
+button { cursor: pointer; font-family: var(--font); border: none; border-radius: var(--radius); padding: 6px 12px; font-size: 0.85rem; transition: opacity 0.2s; }
+button:hover { opacity: 0.85; }
+input, textarea, select { font-family: var(--font); background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border); border-radius: var(--radius); padding: 6px 8px; font-size: 0.85rem; width: 100%; }
+textarea { resize: vertical; }
+
+/* Warli decorative border */
+.warli-border { position: relative; }
+.warli-border::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: repeating-linear-gradient(90deg, var(--accent-gold) 0 8px, transparent 8px 12px, var(--accent) 12px 20px, transparent 20px 24px);
+}
+.warli-border::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: repeating-linear-gradient(90deg, transparent 0 4px, var(--accent-gold) 4px 6px, transparent 6px 16px, var(--accent) 16px 18px, transparent 18px 28px);
+}
+
+/* Warli corner motifs via box-shadow triangles */
+.warli-corner { position: relative; }
+.warli-corner::before {
+  content: '◬ ◬ ◬';
+  position: absolute; top: -18px; right: 8px;
+  color: var(--accent-gold); font-size: 10px; letter-spacing: 4px; opacity: 0.5;
+}
+
+/* Top Nav */
+nav { background: var(--bg-secondary); padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--border); }
+nav h1 { font-size: 1.1rem; color: var(--accent-gold); font-weight: 700; }
+nav h1 span { color: var(--text-secondary); font-weight: 400; font-size: 0.85rem; }
+.tab-bar { display: flex; gap: 4px; }
+.tab-btn { background: transparent; color: var(--text-secondary); padding: 8px 14px; border-bottom: 2px solid transparent; border-radius: 0; }
+.tab-btn.active { color: var(--accent-gold); border-bottom-color: var(--accent-gold); }
+
+/* Layout */
+.app { display: grid; grid-template-columns: 240px 1fr 260px; height: calc(100vh - 50px); }
+.sidebar-left, .sidebar-right { background: var(--bg-secondary); border-right: 1px solid var(--border); overflow-y: auto; padding: 12px; }
+.sidebar-right { border-right: none; border-left: 1px solid var(--border); }
+.main-area { overflow-y: auto; padding: 16px; }
+
+.panel-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+
+/* Codebook */
+.code-item { display: flex; align-items: center; gap: 6px; padding: 5px 6px; border-radius: var(--radius); margin-bottom: 3px; cursor: pointer; font-size: 0.82rem; }
+.code-item:hover { background: var(--hover); }
+.code-item .swatch { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.code-item.child { padding-left: 22px; font-size: 0.78rem; }
+.code-item .del-btn { margin-left: auto; background: none; color: var(--text-secondary); padding: 0 4px; font-size: 0.75rem; opacity: 0; }
+.code-item:hover .del-btn { opacity: 1; }
+.add-code-form { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.add-code-form .row { display: flex; gap: 4px; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-secondary { background: var(--bg-panel); color: var(--text-primary); border: 1px solid var(--border); }
+.btn-gold { background: var(--accent-gold); color: #1a1a2e; font-weight: 600; }
+
+/* Transcript sidebar list */
+.transcript-item { padding: 6px 8px; border-radius: var(--radius); margin-bottom: 3px; cursor: pointer; font-size: 0.82rem; display: flex; justify-content: space-between; align-items: center; }
+.transcript-item:hover, .transcript-item.active { background: var(--hover); }
+.transcript-item .del-btn { opacity: 0; background: none; color: var(--text-secondary); padding: 0 4px; font-size: 0.75rem; }
+.transcript-item:hover .del-btn { opacity: 1; }
+
+/* Transcript display */
+.transcript-view { background: var(--bg-card); border-radius: var(--radius); padding: 16px; min-height: 300px; line-height: 1.7; font-size: 0.92rem; white-space: pre-wrap; word-wrap: break-word; }
+.coded-span { border-radius: 3px; padding: 1px 3px; cursor: pointer; position: relative; }
+.coded-span:hover::after { content: attr(data-code); position: absolute; bottom: 100%; left: 0; background: #000; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 0.7rem; white-space: nowrap; }
+
+/* Code assignment popup */
+.code-popup { position: fixed; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px; z-index: 100; box-shadow: 0 4px 16px rgba(0,0,0,0.4); max-height: 200px; overflow-y: auto; }
+.code-popup .code-option { padding: 4px 8px; cursor: pointer; border-radius: 3px; font-size: 0.82rem; display: flex; align-items: center; gap: 6px; }
+.code-popup .code-option:hover { background: var(--hover); }
+
+/* Memos */
+.memo-item { background: var(--bg-card); border-radius: var(--radius); padding: 8px; margin-bottom: 8px; font-size: 0.82rem; border-left: 3px solid var(--accent-gold); }
+.memo-item .memo-meta { color: var(--text-secondary); font-size: 0.72rem; margin-bottom: 4px; }
+.memo-item .memo-text { line-height: 1.5; }
+.memo-form textarea { min-height: 60px; margin-bottom: 6px; }
+
+/* Tab content */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Analysis Dashboard */
+.bar-chart { margin: 16px 0; }
+.bar-row { display: flex; align-items: center; margin-bottom: 6px; gap: 8px; }
+.bar-label { width: 120px; text-align: right; font-size: 0.8rem; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { flex: 1; background: var(--bg-secondary); height: 22px; border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; display: flex; align-items: center; padding-left: 6px; font-size: 0.72rem; color: #fff; font-weight: 600; min-width: 20px; transition: width 0.3s; }
+.bar-count { width: 30px; font-size: 0.8rem; color: var(--text-secondary); }
+
+/* Cross-case matrix */
+.matrix-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.matrix-table th, .matrix-table td { padding: 6px 8px; border: 1px solid var(--border); text-align: center; }
+.matrix-table th { background: var(--bg-secondary); color: var(--accent-gold); font-weight: 600; }
+.matrix-table td { background: var(--bg-card); }
+
+/* Co-occurrence */
+.coocc-item { font-size: 0.82rem; padding: 4px 0; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); }
+
+/* Export */
+.export-section { max-width: 500px; }
+.export-section p { margin-bottom: 12px; color: var(--text-secondary); font-size: 0.88rem; }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text-secondary); }
+.empty-state .icon { font-size: 2rem; margin-bottom: 8px; opacity: 0.4; }
+
+/* Upload area */
+.upload-area { border: 2px dashed var(--border); border-radius: var(--radius); padding: 16px; text-align: center; margin-bottom: 12px; cursor: pointer; transition: border-color 0.2s; }
+.upload-area:hover { border-color: var(--accent-gold); }
+.upload-area input { display: none; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; height: auto; }
+  .sidebar-left, .sidebar-right { border: none; border-bottom: 1px solid var(--border); max-height: 40vh; }
+  nav { flex-direction: column; gap: 8px; }
+  .tab-bar { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<nav class="warli-border">
+  <h1>Qual Insights Lab Pro <span>— ImpactMojo</span></h1>
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="coding">Coding</button>
+    <button class="tab-btn" data-tab="analysis">Analysis</button>
+    <button class="tab-btn" data-tab="crosscase">Cross-Case</button>
+    <button class="tab-btn" data-tab="export">Export</button>
+  </div>
+</nav>
+
+<div class="app" id="app">
+  <!-- Left Sidebar -->
+  <div class="sidebar-left">
+    <div id="codebook-panel">
+      <div class="panel-title warli-corner">Codebook</div>
+      <div id="codebook-list"></div>
+      <div class="add-code-form">
+        <input type="text" id="new-code-name" placeholder="New code name">
+        <div class="row">
+          <input type="color" id="new-code-color" value="#e94560" style="width:36px;padding:2px;height:30px;">
+          <select id="new-code-parent"><option value="">No parent</option></select>
+        </div>
+        <button class="btn-gold" onclick="addCode()">+ Add Code</button>
+      </div>
+    </div>
+    <hr style="border-color:var(--border);margin:12px 0;">
+    <div id="transcripts-panel">
+      <div class="panel-title warli-corner">Transcripts</div>
+      <div id="transcript-list"></div>
+      <div class="upload-area" onclick="document.getElementById('file-input').click()">
+        <input type="file" id="file-input" accept=".txt,.csv" multiple>
+        Drop or click to upload .txt
+      </div>
+      <button class="btn-secondary" onclick="showPasteModal()" style="width:100%">Paste Transcript</button>
+    </div>
+  </div>
+
+  <!-- Main Area -->
+  <div class="main-area">
+    <div id="tab-coding" class="tab-content active">
+      <div id="transcript-display">
+        <div class="empty-state"><div class="icon">&#9997;</div><p>Add or select a transcript to begin coding.</p></div>
+      </div>
+    </div>
+    <div id="tab-analysis" class="tab-content">
+      <h3 style="color:var(--accent-gold);margin-bottom:12px;" class="warli-corner">Code Frequencies</h3>
+      <div id="freq-chart" class="bar-chart"></div>
+      <h3 style="color:var(--accent-gold);margin:20px 0 12px;" class="warli-corner">Co-occurrence</h3>
+      <div id="coocc-list"></div>
+    </div>
+    <div id="tab-crosscase" class="tab-content">
+      <h3 style="color:var(--accent-gold);margin-bottom:12px;" class="warli-corner">Cross-Case Matrix</h3>
+      <div id="matrix-container"></div>
+    </div>
+    <div id="tab-export" class="tab-content">
+      <div class="export-section warli-corner">
+        <h3 style="color:var(--accent-gold);margin-bottom:12px;">Export Project</h3>
+        <p>Download your codebook, coded passages, and memos as a single JSON file.</p>
+        <button class="btn-gold" onclick="exportProject()" style="padding:10px 24px;font-size:1rem;">Download JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Sidebar -->
+  <div class="sidebar-right">
+    <div class="panel-title warli-corner">Memos</div>
+    <div class="memo-form">
+      <select id="memo-code-link"><option value="">Free-standing memo</option></select>
+      <textarea id="memo-text" placeholder="Write a memo..."></textarea>
+      <button class="btn-primary" onclick="addMemo()">Save Memo</button>
+    </div>
+    <div id="memo-list" style="margin-top:12px;"></div>
+  </div>
+</div>
+
+<!-- Paste modal -->
+<div id="paste-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;display:none;align-items:center;justify-content:center;">
+  <div style="background:var(--bg-secondary);padding:20px;border-radius:var(--radius);width:90%;max-width:500px;">
+    <h3 style="color:var(--accent-gold);margin-bottom:10px;">Paste Transcript</h3>
+    <input type="text" id="paste-name" placeholder="Transcript name" style="margin-bottom:8px;">
+    <textarea id="paste-content" rows="10" placeholder="Paste transcript text here..."></textarea>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="btn-gold" onclick="savePastedTranscript()">Save</button>
+      <button class="btn-secondary" onclick="closePasteModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Code assignment popup -->
+<div id="code-popup" class="code-popup" style="display:none;"></div>
+
+<script>
+/* ── State ── */
+let state = loadState();
+
+function defaultState() {
+  return { codes: [], transcripts: [], codings: [], memos: [], activeTranscript: null };
+}
+
+function loadState() {
+  try {
+    const s = JSON.parse(localStorage.getItem('qualInsightsState'));
+    return s && s.codes ? s : defaultState();
+  } catch { return defaultState(); }
+}
+
+function save() { localStorage.setItem('qualInsightsState', JSON.stringify(state)); }
+
+/* ── Tabs ── */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'analysis') renderAnalysis();
+    if (btn.dataset.tab === 'crosscase') renderMatrix();
+  });
+});
+
+/* ── Codebook ── */
+function addCode() {
+  const name = document.getElementById('new-code-name').value.trim();
+  if (!name) return;
+  const color = document.getElementById('new-code-color').value;
+  const parent = document.getElementById('new-code-parent').value || null;
+  state.codes.push({ id: Date.now().toString(36), name, color, parent });
+  document.getElementById('new-code-name').value = '';
+  save(); renderCodebook(); renderTranscript();
+}
+
+function deleteCode(id) {
+  state.codes = state.codes.filter(c => c.id !== id && c.parent !== id);
+  state.codings = state.codings.filter(c => c.codeId !== id);
+  save(); renderCodebook(); renderTranscript();
+}
+
+function renderCodebook() {
+  const list = document.getElementById('codebook-list');
+  const parentSel = document.getElementById('new-code-parent');
+  const memoSel = document.getElementById('memo-code-link');
+  const parents = state.codes.filter(c => !c.parent);
+  const children = state.codes.filter(c => c.parent);
+
+  let html = '';
+  parents.forEach(p => {
+    html += codeItemHtml(p, false);
+    children.filter(c => c.parent === p.id).forEach(c => {
+      html += codeItemHtml(c, true);
+    });
+  });
+  // orphan children (parent deleted)
+  children.filter(c => !parents.find(p => p.id === c.parent)).forEach(c => {
+    html += codeItemHtml(c, false);
+  });
+  list.innerHTML = html;
+
+  // Parent select
+  let opts = '<option value="">No parent</option>';
+  parents.forEach(p => { opts += `<option value="${p.id}">${esc(p.name)}</option>`; });
+  parentSel.innerHTML = opts;
+
+  // Memo code link
+  let mopts = '<option value="">Free-standing memo</option>';
+  state.codes.forEach(c => { mopts += `<option value="${c.id}">${esc(c.name)}</option>`; });
+  memoSel.innerHTML = mopts;
+}
+
+function codeItemHtml(c, isChild) {
+  return `<div class="code-item${isChild ? ' child' : ''}" title="${esc(c.name)}">
+    <span class="swatch" style="background:${c.color}"></span>
+    <span>${esc(c.name)}</span>
+    <button class="del-btn" onclick="event.stopPropagation();deleteCode('${c.id}')">x</button>
+  </div>`;
+}
+
+/* ── Transcripts ── */
+document.getElementById('file-input').addEventListener('change', e => {
+  Array.from(e.target.files).forEach(f => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      state.transcripts.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), name: f.name, text: ev.target.result });
+      save(); renderTranscriptList();
+    };
+    reader.readAsText(f);
+  });
+  e.target.value = '';
+});
+
+function showPasteModal() { document.getElementById('paste-modal').style.display = 'flex'; }
+function closePasteModal() { document.getElementById('paste-modal').style.display = 'none'; }
+
+function savePastedTranscript() {
+  const name = document.getElementById('paste-name').value.trim() || 'Transcript ' + (state.transcripts.length + 1);
+  const text = document.getElementById('paste-content').value;
+  if (!text.trim()) return;
+  state.transcripts.push({ id: Date.now().toString(36), name, text });
+  document.getElementById('paste-name').value = '';
+  document.getElementById('paste-content').value = '';
+  closePasteModal();
+  save(); renderTranscriptList();
+}
+
+function selectTranscript(id) {
+  state.activeTranscript = id;
+  save(); renderTranscriptList(); renderTranscript();
+}
+
+function deleteTranscript(id) {
+  state.transcripts = state.transcripts.filter(t => t.id !== id);
+  state.codings = state.codings.filter(c => c.transcriptId !== id);
+  if (state.activeTranscript === id) state.activeTranscript = null;
+  save(); renderTranscriptList(); renderTranscript();
+}
+
+function renderTranscriptList() {
+  const list = document.getElementById('transcript-list');
+  list.innerHTML = state.transcripts.map(t =>
+    `<div class="transcript-item${state.activeTranscript === t.id ? ' active' : ''}" onclick="selectTranscript('${t.id}')">
+      <span>${esc(t.name)}</span>
+      <button class="del-btn" onclick="event.stopPropagation();deleteTranscript('${t.id}')">x</button>
+    </div>`
+  ).join('');
+}
+
+/* ── Transcript Display + Coding ── */
+function renderTranscript() {
+  const container = document.getElementById('transcript-display');
+  const t = state.transcripts.find(t => t.id === state.activeTranscript);
+  if (!t) {
+    container.innerHTML = '<div class="empty-state"><div class="icon">&#9997;</div><p>Add or select a transcript to begin coding.</p></div>';
+    return;
+  }
+  const codings = state.codings.filter(c => c.transcriptId === t.id).sort((a, b) => a.start - b.start);
+  const text = t.text;
+
+  // Build non-overlapping segments
+  let segments = [];
+  let pos = 0;
+  codings.forEach(c => {
+    if (c.start > pos) segments.push({ text: text.slice(pos, c.start), code: null });
+    if (c.start >= pos) {
+      const code = state.codes.find(cd => cd.id === c.codeId);
+      segments.push({ text: text.slice(c.start, c.end), code, codingId: c.id });
+      pos = c.end;
+    }
+  });
+  if (pos < text.length) segments.push({ text: text.slice(pos), code: null });
+
+  let html = '<div class="transcript-view" id="transcript-text">';
+  segments.forEach(s => {
+    if (s.code) {
+      html += `<span class="coded-span" data-code="${esc(s.code.name)}" data-coding-id="${s.codingId}" style="background:${s.code.color}33;border-bottom:2px solid ${s.code.color};" onclick="removeCoding('${s.codingId}')">${esc(s.text)}</span>`;
+    } else {
+      html += esc(s.text);
+    }
+  });
+  html += '</div>';
+  container.innerHTML = html;
+
+  // Listen for text selection
+  document.getElementById('transcript-text').addEventListener('mouseup', onTextSelect);
+}
+
+function onTextSelect(e) {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || !sel.rangeCount) return;
+  const range = sel.getRangeAt(0);
+  const container = document.getElementById('transcript-text');
+
+  // Calculate offset relative to full text
+  const t = state.transcripts.find(t => t.id === state.activeTranscript);
+  if (!t) return;
+
+  const selText = sel.toString().trim();
+  if (!selText) return;
+
+  // Find start position in original text
+  const fullText = container.textContent;
+  const startInView = getTextOffset(container, range.startContainer, range.startOffset);
+  const endInView = startInView + sel.toString().length;
+
+  // Map view offsets back to original text offsets
+  // Since we use the same text content, offsets align
+  const codings = state.codings.filter(c => c.transcriptId === t.id).sort((a, b) => a.start - b.start);
+
+  // Simple: search original text for selected substring near expected position
+  const origStart = t.text.indexOf(selText, Math.max(0, startInView - 10));
+  if (origStart === -1) return;
+  const origEnd = origStart + selText.length;
+
+  // Check overlap
+  const overlaps = codings.some(c => origStart < c.end && origEnd > c.start);
+  if (overlaps) { sel.removeAllRanges(); return; }
+
+  showCodePopup(e.clientX, e.clientY, origStart, origEnd);
+}
+
+function getTextOffset(root, node, offset) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+  let total = 0;
+  while (walker.nextNode()) {
+    if (walker.currentNode === node) return total + offset;
+    total += walker.currentNode.length;
+  }
+  return total + offset;
+}
+
+function showCodePopup(x, y, start, end) {
+  const popup = document.getElementById('code-popup');
+  if (state.codes.length === 0) { popup.style.display = 'none'; return; }
+  popup.style.display = 'block';
+  popup.style.left = Math.min(x, window.innerWidth - 200) + 'px';
+  popup.style.top = Math.min(y, window.innerHeight - 200) + 'px';
+  popup.innerHTML = state.codes.map(c =>
+    `<div class="code-option" onclick="assignCode('${c.id}',${start},${end})">
+      <span class="swatch" style="background:${c.color};width:10px;height:10px;border-radius:50%;display:inline-block;"></span>
+      ${esc(c.name)}
+    </div>`
+  ).join('');
+}
+
+function assignCode(codeId, start, end) {
+  const t = state.activeTranscript;
+  if (!t) return;
+  state.codings.push({ id: Date.now().toString(36), transcriptId: t, codeId, start, end });
+  save(); renderTranscript(); hideCodePopup();
+}
+
+function removeCoding(codingId) {
+  if (!confirm('Remove this coding?')) return;
+  state.codings = state.codings.filter(c => c.id !== codingId);
+  save(); renderTranscript();
+}
+
+function hideCodePopup() { document.getElementById('code-popup').style.display = 'none'; }
+document.addEventListener('mousedown', e => {
+  if (!e.target.closest('#code-popup')) hideCodePopup();
+});
+
+/* ── Memos ── */
+function addMemo() {
+  const text = document.getElementById('memo-text').value.trim();
+  if (!text) return;
+  const codeId = document.getElementById('memo-code-link').value || null;
+  state.memos.push({ id: Date.now().toString(36), codeId, text, time: new Date().toISOString() });
+  document.getElementById('memo-text').value = '';
+  save(); renderMemos();
+}
+
+function renderMemos() {
+  const list = document.getElementById('memo-list');
+  list.innerHTML = state.memos.slice().reverse().map(m => {
+    const code = m.codeId ? state.codes.find(c => c.id === m.codeId) : null;
+    const label = code ? `<span style="color:${code.color}">${esc(code.name)}</span>` : 'Free-standing';
+    const time = new Date(m.time).toLocaleString();
+    return `<div class="memo-item">
+      <div class="memo-meta">${label} &middot; ${time}
+        <button class="del-btn" style="opacity:1;float:right;" onclick="deleteMemo('${m.id}')">&times;</button>
+      </div>
+      <div class="memo-text">${esc(m.text)}</div>
+    </div>`;
+  }).join('');
+}
+
+function deleteMemo(id) {
+  state.memos = state.memos.filter(m => m.id !== id);
+  save(); renderMemos();
+}
+
+/* ── Analysis ── */
+function renderAnalysis() {
+  // Code frequencies
+  const freq = {};
+  state.codes.forEach(c => { freq[c.id] = 0; });
+  state.codings.forEach(c => { freq[c.codeId] = (freq[c.codeId] || 0) + 1; });
+  const maxFreq = Math.max(1, ...Object.values(freq));
+
+  const chart = document.getElementById('freq-chart');
+  chart.innerHTML = state.codes.map(c => {
+    const count = freq[c.id] || 0;
+    const pct = (count / maxFreq * 100).toFixed(0);
+    return `<div class="bar-row">
+      <div class="bar-label">${esc(c.name)}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${c.color}">${count}</div></div>
+      <div class="bar-count">${count}</div>
+    </div>`;
+  }).join('') || '<p style="color:var(--text-secondary)">No codes yet.</p>';
+
+  // Co-occurrence (codes appearing in same transcript)
+  const coocc = {};
+  state.transcripts.forEach(t => {
+    const cIds = [...new Set(state.codings.filter(c => c.transcriptId === t.id).map(c => c.codeId))];
+    for (let i = 0; i < cIds.length; i++) {
+      for (let j = i + 1; j < cIds.length; j++) {
+        const key = [cIds[i], cIds[j]].sort().join('|');
+        coocc[key] = (coocc[key] || 0) + 1;
+      }
+    }
+  });
+
+  const cooccList = document.getElementById('coocc-list');
+  const entries = Object.entries(coocc).sort((a, b) => b[1] - a[1]);
+  if (entries.length === 0) {
+    cooccList.innerHTML = '<p style="color:var(--text-secondary)">Code at least two codes in the same transcript to see co-occurrence.</p>';
+  } else {
+    cooccList.innerHTML = entries.map(([key, count]) => {
+      const [a, b] = key.split('|');
+      const ca = state.codes.find(c => c.id === a);
+      const cb = state.codes.find(c => c.id === b);
+      if (!ca || !cb) return '';
+      return `<div class="coocc-item"><span>${esc(ca.name)} + ${esc(cb.name)}</span><span>${count} transcript(s)</span></div>`;
+    }).join('');
+  }
+}
+
+/* ── Cross-Case Matrix ── */
+function renderMatrix() {
+  const container = document.getElementById('matrix-container');
+  if (state.transcripts.length === 0 || state.codes.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-secondary)">Add transcripts and codes to see the matrix.</p>';
+    return;
+  }
+  let html = '<table class="matrix-table"><thead><tr><th>Code</th>';
+  state.transcripts.forEach(t => { html += `<th>${esc(t.name)}</th>`; });
+  html += '<th>Total</th></tr></thead><tbody>';
+
+  state.codes.forEach(c => {
+    html += `<tr><td style="text-align:left;color:${c.color}">${esc(c.name)}</td>`;
+    let total = 0;
+    state.transcripts.forEach(t => {
+      const count = state.codings.filter(cd => cd.codeId === c.id && cd.transcriptId === t.id).length;
+      total += count;
+      html += `<td>${count || '-'}</td>`;
+    });
+    html += `<td style="font-weight:600">${total}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+/* ── Export ── */
+function exportProject() {
+  const data = {
+    exportDate: new Date().toISOString(),
+    tool: 'Qual Insights Lab Pro — ImpactMojo',
+    codebook: state.codes,
+    transcripts: state.transcripts.map(t => ({ id: t.id, name: t.name })),
+    codedPassages: state.codings.map(c => {
+      const t = state.transcripts.find(tr => tr.id === c.transcriptId);
+      const code = state.codes.find(cd => cd.id === c.codeId);
+      return {
+        transcript: t ? t.name : 'unknown',
+        code: code ? code.name : 'unknown',
+        text: t ? t.text.slice(c.start, c.end) : '',
+        start: c.start,
+        end: c.end
+      };
+    }),
+    memos: state.memos.map(m => {
+      const code = m.codeId ? state.codes.find(c => c.id === m.codeId) : null;
+      return { code: code ? code.name : null, text: m.text, time: m.time };
+    })
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'qual-insights-export.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ── Util ── */
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+/* ── Init ── */
+renderCodebook();
+renderTranscriptList();
+renderTranscript();
+renderMemos();
+</script>
+</body>
+</html>
