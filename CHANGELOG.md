@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **BookSummaries** — New content type under Specials: interactive book summaries
 - **The Handbook of Social Protection** (Hanna & Olken, MIT Press 2026) — first interactive book companion with chapter navigator, evidence explorer, data playground, programme compare, glossary, South Asia lens, and AI-powered Q&A
 - BookSummaries entry added to Specials dropdown nav, catalog, sitemap, and search index
+- **Claude Code global skills** — 6 repo-level skills (github-ops, netlify-ops, supabase-ops, gemini-ai, gamma-ops, housekeeping) for Claude Code on the web
+- **SessionStart hook** — auto-loads API keys (Gemini, Gamma, DeepSeek, Grok, Sarvan.ai) from gitignored `.claude/.env.keys`
+- **API token documentation** — CLAUDE.md updated with all 8 environment tokens
+
+### Changed
+- **`.env.example` updated** with Grok, Sarvan.ai, and Gamma API key placeholders
+- **`.claude/settings.json`** now registers both SessionStart and Stop hooks
+- **`.gitignore`** updated to protect `.claude/.env.keys` from commits
 
 ## [10.6.0] - 2026-03-19
 
@@ -243,6 +251,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dojos skill session page
 - Blog (Learning Loops) and podcast (Between the Logframes)
 
+[10.7.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.6.0...v10.7.0
+[10.6.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.5.1...v10.6.0
+[10.5.1]: https://github.com/Varnasr/ImpactMojo/compare/v10.5.0...v10.5.1
+[10.5.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.4.1...v10.5.0
+[10.4.1]: https://github.com/Varnasr/ImpactMojo/compare/v10.4.0...v10.4.1
+[10.4.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.3.0...v10.4.0
+[10.3.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.2.0...v10.3.0
+[10.2.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.1.0...v10.2.0
 [10.1.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.0.0...v10.1.0
 [10.0.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.5.0...v10.0.0
 [9.5.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.1.0...v9.5.0

@@ -40,7 +40,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | Category | Description |
 |----------|-------------|
 | **48 Courses** | 9 flagship + 39 foundational courses across 6 learning tracks |
-| **19 Interactive Labs** | Hands-on workbenches for MEL, policy, partnerships, budgeting, gender analysis, and more |
+| **19+ Interactive Labs** | Hands-on workbenches for MEL, policy, partnerships, budgeting, gender analysis, and more |
 | **16 Learning Games** | Interactive simulations with MiroFish AI agents and Indian folk art (Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) |
 | **ImpactLex Dictionary** | 500+ development terms with contextual definitions (PWA) |
 | **Dev Case Studies** | 200 evidence-based case studies from 117 countries |
@@ -149,7 +149,7 @@ Shorter introductory courses covering the breadth of development practice:
 | **Health & Wellbeing** | Public Health 101, Climate Essentials, Social Emotional Learning, Decent Work for All, Livelihoods Fundamentals |
 | **Communication & Data** | English for Development, Visual Ethnography, Data Literacy for Development, BCC and Communications, Advocacy Fundamentals, Digital Development Ethics, Education and Pedagogy |
 
-### Interactive Labs (12)
+### Interactive Labs (19)
 
 - **Theory of Change Lab** — Guided ToC builder with real-time flowchart diagram and PNG export
 - **MEL Design Lab** — Monitoring, evaluation, and learning framework builder
@@ -161,8 +161,15 @@ Shorter introductory courses covering the breadth of development practice:
 - **Resource Sustainability Lab** — Resource mobilisation and sustainability planning
 - **Impact Partnerships Lab** — Partnership mapping and collaboration framework
 - **Community Engagement Lab** — Participatory assessment and action planning
+- **Gender Analysis Lab** — Gender analysis frameworks and assessment tools
 - **Sample Size Calculator** — Survey sample size for proportion, mean, two-group, and cluster designs
 - **Budget Template Generator** — Project budget builder with smart templates and CSV export
+- **Theory of Change Workbench** — Educational workbench with BCT annotations, worked examples, and sector guidance
+- **Theory of Change Builder** — Drag-and-drop canvas with 229 BCT techniques and PNG export
+- **RQ Builder Pro** — Guided research question formulation with PICO/SPIDER framing (Practitioner)
+- **TOC Workbench Pro** — Publication-ready theories of change with assumption mapping (Practitioner)
+- **Qual Insights Lab Pro** — AI-assisted qualitative analysis for transcripts (Professional)
+- **Code Convert Pro** — Script translation between Stata, R, Python, SPSS (Professional)
 
 ### Learning Games (16)
 
@@ -427,6 +434,13 @@ ImpactMojo/
 ├── tests/
 │   └── axe-accessibility.js # Automated WCAG 2.1 AA accessibility testing (axe-core + Puppeteer)
 │
+├── .claude/
+│   ├── CLAUDE.md              # Claude Code project instructions
+│   ├── settings.json          # SessionStart + Stop hooks
+│   ├── hooks/
+│   │   └── session-start.sh   # API key bootstrap from .env.keys
+│   └── skills/                # Claude Code skills (housekeeping, github-ops, etc.)
+│
 ├── .gitattributes          # Line ending normalization & binary file handling
 ├── .gitmessage             # Commit message template with prefix convention
 ├── .editorconfig           # Editor formatting standards (UTF-8, LF, 2-space)
@@ -461,9 +475,15 @@ Each premium tool is a separate Netlify site with a JWT auth-gate edge function:
 | Resource | RESOURCE_ID |
 |----------|-------------|
 | RQ Builder Pro | `rq-builder` |
+| TOC Workbench Pro | `toc-workbench-pro` |
 | Code Convert Pro | `code-convert-pro` |
 | Qual Insights Lab | `qual-insights` |
 | VaniScribe AI | `vaniscribe` |
+| DevData Practice | `devdata-practice` |
+| Visualization Cookbook | `visualization-cookbook` |
+| DevEconomics Toolkit | `deveconomics-toolkit` |
+| Field Notes Pro | `field-notes-pro` |
+| Workshop Pro | `workshop-pro` |
 
 Each site requires two environment variables:
 - `RESOURCE_TOKEN_SECRET` — shared HMAC signing key
@@ -652,7 +672,7 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 10.3.0
+**Version:** 10.7.0
 **Last Updated:** March 2026
 **License:** MIT (code) + CC BY-NC-ND 4.0 (content)
 **Hosting:** Netlify
