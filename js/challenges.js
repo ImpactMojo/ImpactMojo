@@ -42,6 +42,13 @@
     // ---- Supabase (optional) ----
     function getSupabase() {
         if (supabaseClient) return supabaseClient;
+        // Reuse the shared client created by auth.js to avoid multiple
+        // GoTrueClient instances racing on token refresh
+        if (window.supabaseClient) {
+            supabaseClient = window.supabaseClient;
+            return supabaseClient;
+        }
+        // Fallback: create our own only if auth.js hasn't loaded yet
         if (window.supabase && window.supabase.createClient) {
             supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
                 auth: { persistSession: true, storageKey: 'impactmojo-auth', storage: window.localStorage }
