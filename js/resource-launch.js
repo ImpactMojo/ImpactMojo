@@ -43,8 +43,9 @@
     try {
       var keys = Object.keys(localStorage);
       for (var i = 0; i < keys.length; i++) {
-        if (keys[i].indexOf('supabase.auth.token') !== -1 ||
-            keys[i].indexOf('sb-') !== -1 && keys[i].indexOf('-auth-token') !== -1) {
+        if (keys[i].indexOf('impactmojo-auth') !== -1 ||
+            keys[i].indexOf('supabase.auth.token') !== -1 ||
+            (keys[i].indexOf('sb-') !== -1 && keys[i].indexOf('-auth-token') !== -1)) {
           var val = JSON.parse(localStorage.getItem(keys[i]));
           if (val && (val.access_token || (val.currentSession && val.currentSession.access_token))) {
             return true;

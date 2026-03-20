@@ -1,13 +1,20 @@
 /**
  * ImpactMojo Authentication System
  * Powered by Supabase
- * Version 2.1.0 - March 16, 2026
+ * Version 2.2.0 - March 20, 2026
  *
  * FEATURES:
  * - Cloud sync for bookmarks, notes, compare list, streak data
  * - Auto-sync on login/logout
  * - Manual sync function
  * - Intelligent data merging (newer/more complete wins)
+ *
+ * FIXED in v2.2.0:
+ * - Supabase client now uses explicit storageKey ('impactmojo-auth') for consistent
+ *   session persistence across all scripts (auth.js, course-progress.js, challenges.js)
+ * - isLoggedIn() now checks localStorage as fallback when in-memory state is lost
+ * - Added 3-second safety net to recover session if onAuthStateChange didn't fire
+ * - persistSession, autoRefreshToken, detectSessionInUrl explicitly enabled
  *
  * FIXED in v2.1.0:
  * - TOKEN_REFRESHED now restores profile after transient SIGNED_OUT (fixes wrong tier)
@@ -34,7 +41,15 @@ const SUPABASE_URL = window.ImpactMojoConfig.SUPABASE_URL;
 const SUPABASE_ANON_KEY = window.ImpactMojoConfig.SUPABASE_ANON_KEY;
 
 // Initialize Supabase client (using different name to avoid conflict with window.supabase library)
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        storageKey: 'impactmojo-auth',
+        storage: window.localStorage
+    }
+});
 
 // =====================================================
 // LOCALSTORAGE KEYS
@@ -230,6 +245,24 @@ const ImpactMojoAuth = {
             });
 
             this.isInitialized = true;
+
+            // Safety net: if after 3 seconds auth is ready but user is null,
+            // try to recover from Supabase session (handles edge cases where
+            // onAuthStateChange didn't fire properly)
+            var self = this;
+            setTimeout(async function () {
+                if (self.isAuthReady && !self.user) {
+                    try {
+                        var session = await supabaseClient.auth.getSession();
+                        if (session?.data?.session?.user) {
+                            console.log('Recovering session from Supabase after init gap');
+                            self.user = session.data.session.user;
+                            await self.fetchProfile().catch(function () {});
+                            self.updateUI();
+                        }
+                    } catch (_) {}
+                }
+            }, 3000);
 
             // Re-fetch profile when page becomes visible again (back/forward navigation)
             // This fixes stale tier state when navigating back from org-dashboard
@@ -1042,9 +1075,24 @@ const ImpactMojoAuth = {
         }
     },
 
-    // Check if user is logged in
+    // Check if user is logged in (checks in-memory state + localStorage fallback)
     isLoggedIn() {
-        return !!this.user;
+        if (this.user) return true;
+        // Fallback: check if Supabase has a session in localStorage
+        // This handles cases where in-memory state was lost during token refresh
+        try {
+            var keys = Object.keys(localStorage);
+            for (var i = 0; i < keys.length; i++) {
+                if (keys[i].indexOf('impactmojo-auth') !== -1 ||
+                    (keys[i].indexOf('sb-') !== -1 && keys[i].indexOf('-auth-token') !== -1)) {
+                    var val = JSON.parse(localStorage.getItem(keys[i]));
+                    if (val && (val.access_token || (val.currentSession && val.currentSession.access_token))) {
+                        return true;
+                    }
+                }
+            }
+        } catch (_) {}
+        return false;
     },
 
     // Get current user

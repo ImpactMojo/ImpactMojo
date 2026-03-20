@@ -43,7 +43,9 @@
     function getSupabase() {
         if (supabaseClient) return supabaseClient;
         if (window.supabase && window.supabase.createClient) {
-            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                auth: { persistSession: true, storageKey: 'impactmojo-auth', storage: window.localStorage }
+            });
         }
         return supabaseClient;
     }
