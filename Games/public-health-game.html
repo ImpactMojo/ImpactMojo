@@ -356,7 +356,7 @@ body {
 }
 .epi-curve-svg {
   width: 100%;
-  height: 140px;
+  height: 160px;
 }
 
 /* Hospital & Trust bars */
@@ -797,7 +797,7 @@ body {
           <path d="M50,195 Q80,180 110,195 Q140,210 170,195 Q200,180 230,195 Q260,210 290,195 Q320,180 350,195 Q380,210 410,195 Q440,180 470,195 Q500,210 530,195 Q560,180 590,195 Q620,210 650,195"/>
         </g>
         <!-- Title -->
-        <text x="350" y="198" text-anchor="middle" fill="#FFF8E1" font-size="11" font-weight="600" letter-spacing="0.15em" opacity="0.6">THE EPIDEMIC CHRONICLE</text>
+        <text x="350" y="198" text-anchor="middle" fill="#FFF8E1" font-size="11" font-weight="600" letter-spacing="0.15em" opacity="0.6">The Epidemic Chronicle</text>
       </svg>
     </div>
 
@@ -881,7 +881,7 @@ body {
     <!-- Epidemic Curve -->
     <div class="epi-curve-container pattachitra-border">
       <h3>Epidemic Curve - Detected Cases Per Week</h3>
-      <svg class="epi-curve-svg" id="epi-curve" viewBox="0 0 500 140" preserveAspectRatio="none">
+      <svg class="epi-curve-svg" id="epi-curve" viewBox="0 0 500 160">
         <defs>
           <linearGradient id="curveGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#EF5350" stop-opacity="0.6"/>
@@ -889,9 +889,13 @@ body {
           </linearGradient>
         </defs>
         <!-- Grid lines -->
-        <line x1="0" y1="35" x2="500" y2="35" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
-        <line x1="0" y1="70" x2="500" y2="70" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
-        <line x1="0" y1="105" x2="500" y2="105" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+        <line x1="30" y1="35" x2="500" y2="35" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+        <line x1="30" y1="70" x2="500" y2="70" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+        <line x1="30" y1="105" x2="500" y2="105" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+        <!-- Y-axis label -->
+        <text x="4" y="70" fill="#64748B" font-size="8" text-anchor="middle" transform="rotate(-90,4,70)">Cases</text>
+        <!-- X-axis week labels (populated by JS) -->
+        <g id="epi-x-labels"></g>
         <path id="epi-area" d="" fill="url(#curveGrad)"/>
         <path id="epi-line" d="" fill="none" stroke="#EF5350" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -1158,15 +1162,17 @@ function updateEpiCurve() {
   const maxVal = Math.max(...data, 1);
   const w = 500;
   const h = 140;
+  const leftPad = 30;
   const pad = 5;
-  const usableH = h - pad * 2;
-  const barW = w / 10;
+  const usableW = w - leftPad;
+  const usableH = h - pad * 2 - 15;
+  const barW = usableW / 10;
 
   let linePts = [];
   let areaPts = [];
 
   data.forEach((val, i) => {
-    const x = barW * i + barW / 2;
+    const x = leftPad + barW * i + barW / 2;
     const y = pad + usableH - (val / maxVal) * usableH;
     linePts.push(`${i === 0 ? 'M' : 'L'}${x},${y}`);
     areaPts.push({ x, y });
@@ -1178,9 +1184,16 @@ function updateEpiCurve() {
   if (areaPts.length > 0) {
     const firstX = areaPts[0].x;
     const lastX = areaPts[areaPts.length - 1].x;
-    const areaD = `M${firstX},${h} ` + areaPts.map(p => `L${p.x},${p.y}`).join(' ') + ` L${lastX},${h} Z`;
+    const areaD = `M${firstX},${h - 15} ` + areaPts.map(p => `L${p.x},${p.y}`).join(' ') + ` L${lastX},${h - 15} Z`;
     document.getElementById('epi-area').setAttribute('d', areaD);
   }
+
+  // Week labels on x-axis
+  const labelsG = document.getElementById('epi-x-labels');
+  labelsG.innerHTML = data.map((_, i) => {
+    const x = leftPad + barW * i + barW / 2;
+    return `<text x="${x}" y="${h - 2}" text-anchor="middle" fill="#64748B" font-size="8">W${i + 1}</text>`;
+  }).join('');
 }
 
 function updateBars() {
