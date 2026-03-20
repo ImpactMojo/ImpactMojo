@@ -41,12 +41,16 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 - [x] **Handbook of Social Protection** — first interactive book summary (Hanna & Olken, MIT Press 2026)
 - [x] **Gamma API integration** — 23/38 course decks synced as Gamma presentations
 - [x] **Claude Code skills & hooks** — 6 global skills, SessionStart hook for API key bootstrap, multi-provider AI token support
+- [x] **Cohort-based learning** — Supabase-backed cohorts with discussion threads, deadlines, and progress tracking (#144)
+- [x] **Notification system** — Edge Function for email notifications (streak reminders, cohort deadlines), in-app notification feed, per-user preferences (#145)
+- [x] **Git standards verified** — all 29 repos confirmed compliant, dependabot PRs arriving (#162)
+- [x] **Auth persistence fixes** — faster session recovery, aggressive SIGNED_OUT debounce, window.load recovery
+- [x] **Game visual fixes** — gender equity SVG clipping, info asymmetry image sizing
+- [x] **API token documentation** — Gemini, DeepSeek, Grok, Sarvan.ai, Gamma added to CLAUDE.md and .env.example
 
 ## Q2 2026 (Apr-Jun) — Planned
 
 - [ ] **Vernacular Content** — Full courses in Hindi and Tamil (#29)
-- [ ] **Cohort-based learning** — Scheduled cohorts with discussion threads and deadlines (schema designed)
-- [ ] **Notification system** — Email digests for course updates, streak reminders, community activity
 - [ ] **Analytics dashboard v2** — Learner analytics with completion funnels, time-on-task, assessment scores
 - [ ] **Mobile app (PWA)** — Enhanced PWA with push notifications and background sync
 
