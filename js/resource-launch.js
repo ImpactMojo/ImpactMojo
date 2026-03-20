@@ -1,6 +1,6 @@
 /**
  * ImpactMojo Premium Resource Launcher
- * Version: 2.0.0
+ * Version: 2.1.0
  *
  * Opens premium resources directly for authenticated users.
  * No JWT minting — resource sites are access-gated at the platform level
@@ -25,6 +25,8 @@
     'viz-cookbook':        'https://impactmojo-devdata-pro.netlify.app/charts.html',
     'devecon-toolkit':    'https://impactmojo-devecon-toolkit.netlify.app/',
     'field-notes-pro':    'https://impactmojo-field-notes-pro.netlify.app/',
+    'qual-insights-lab':  '/premium-tools/qual-insights-lab.html',
+    'code-converter-pro': '/premium-tools/code-converter-pro.html',
     // Workshop Pro templates
     'toc-workshop-pro':   'https://impactmojo-workshop-pro.netlify.app/toc-pro.html',
     'logframe-pro':       'https://impactmojo-workshop-pro.netlify.app/logframe-pro.html',
@@ -35,10 +37,29 @@
     'ai-canvas-pro':      'https://impactmojo-workshop-pro.netlify.app/ai-canvas-pro.html',
   };
 
+  // Check if there is a Supabase session in localStorage (fallback for
+  // transient SIGNED_OUT states during token refresh)
+  function hasSupabaseSession() {
+    try {
+      var keys = Object.keys(localStorage);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].indexOf('supabase.auth.token') !== -1 ||
+            keys[i].indexOf('sb-') !== -1 && keys[i].indexOf('-auth-token') !== -1) {
+          var val = JSON.parse(localStorage.getItem(keys[i]));
+          if (val && (val.access_token || (val.currentSession && val.currentSession.access_token))) {
+            return true;
+          }
+        }
+      }
+    } catch (e) { /* ignore */ }
+    return false;
+  }
+
   /**
    * Launch a premium resource.
-   * Waits for auth to initialise before checking login state,
-   * preventing the false-negative redirect loop.
+   * Waits for auth to initialise before checking login state.
+   * Falls back to Supabase session check to prevent redirect loops
+   * caused by transient auth states during token refresh.
    * @param {string} resourceId  — one of the keys in RESOURCE_URLS
    */
   function launch(resourceId) {
@@ -51,6 +72,11 @@
 
     // 2. Auth may still be initialising — wait for it
     if (typeof ImpactMojoAuth === 'undefined') {
+      // Fallback: if Supabase has a session, open the resource directly
+      if (hasSupabaseSession()) {
+        window.open(baseUrl, '_blank');
+        return;
+      }
       sessionStorage.setItem('authRedirect', window.location.href);
       window.location.href = '/login';
       return;
@@ -62,7 +88,17 @@
 
     ImpactMojoAuth.waitForAuthReady().then(function () {
       if (!ImpactMojoAuth.isLoggedIn()) {
-        // Close the blank tab and redirect to login
+        // Double-check: Supabase may still have a valid session even if
+        // ImpactMojoAuth missed it during a token refresh race
+        if (hasSupabaseSession()) {
+          if (newTab) {
+            newTab.location.href = baseUrl;
+          } else {
+            window.open(baseUrl, '_blank');
+          }
+          return;
+        }
+        // Truly not logged in — redirect to login
         if (newTab) newTab.close();
         sessionStorage.setItem('authRedirect', window.location.href);
         window.location.href = '/login';
@@ -81,7 +117,7 @@
   window.ImpactMojoResource = {
     launch: launch,
     RESOURCE_URLS: RESOURCE_URLS,
-    version: '2.0.0',
+    version: '2.1.0',
   };
 
   // ── Auto-intercept clicks on links with data-resource-id ─────────
