@@ -70,6 +70,11 @@ When implementing major features, significant refactoring, or multi-file bug fix
 - **GitHub**: Use `$GITHUB_PAT` for all GitHub API calls (PRs, merges, issues). Call `https://api.github.com/repos/Varnasr/ImpactMojo/...` with header `Authorization: token $GITHUB_PAT`.
 - **Supabase**: Use `$SUPABASE_PAT` for Supabase Management API calls (database queries, migrations). Call `https://api.supabase.com/v1/projects/ddyszmfffyedolkcugld/...` with header `Authorization: Bearer $SUPABASE_PAT`.
 - **Netlify**: Use `$NETLIFY_PAT` for Netlify API calls if needed.
+- **Gemini**: Use `$GEMINI_API_KEY` for Google Gemini AI API calls. Pass as `?key=$GEMINI_API_KEY` query parameter.
+- **Gamma**: Use `$GAMMA_API_KEY` for Gamma presentation API. Header: `Authorization: Bearer $GAMMA_API_KEY`.
+- **DeepSeek**: Use `$DEEPSEEK_API_KEY` for DeepSeek LLM API calls.
+- **Grok**: Use `$GROK_API_KEY` for xAI Grok API calls.
+- **Sarvan.ai**: Use `$SARVAN_API_KEY` for Sarvan.ai Indic language model API calls.
 - Always prefer these tokens over `gh` CLI or local git proxy for creating PRs, merging, and managing issues.
 
 ## Git Practices

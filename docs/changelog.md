@@ -4,13 +4,27 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ## v10.7.0 — March 20, 2026
 
-**What changed for you:** A brand new content type — **BookSummaries** — is now available under Specials. The first interactive book companion covers *The Handbook of Social Protection* by Hanna & Olken (MIT Press 2026), featuring chapter-by-chapter navigation, evidence findings, data playgrounds with interactive simulators, programme comparison tools, a concept glossary, South Asia regional lens, and an AI-powered "Ask the Handbook" chat.
+**What changed for you:** A brand new content type — **BookSummaries** — is now available under Specials. Developer tooling also improved with Claude Code skills and API key management built into the repo.
 
 ### BookSummaries
 - New `BookSummaries/` directory for self-contained interactive book companions
 - First entry: The Handbook of Social Protection — 24 chapters, 17 evidence findings, 5 learning pathways, 40+ glossary concepts
 - Interactive data tools: SP Spending Explorer, Targeting Simulator, Transfer Size Calculator, Cost-Effectiveness chart
 - Added to Specials dropdown navigation, content catalog, sitemap, and search index
+
+### Claude Code Integration
+- 6 repo-level skills for Claude Code (github-ops, netlify-ops, supabase-ops, gemini-ai, gamma-ops, housekeeping)
+- SessionStart hook auto-loads API keys for Gemini, Gamma, DeepSeek, Grok, and Sarvan.ai
+- All API tokens documented in project config
+
+## v10.6.0 — March 19, 2026
+
+**What changed for you:** ImpactMojo courses are being converted to Gamma presentation decks for visual delivery.
+
+### Gamma API Integration
+- 23 of 38 course decks synced as Gamma presentations
+- Automated sync pipeline via `scripts/gamma-sync.js`
+- Premium tools (Field Notes Pro, Workshop Pro) launched with server-side auth-gate
 
 ## v10.5.1 — March 19, 2026
 
