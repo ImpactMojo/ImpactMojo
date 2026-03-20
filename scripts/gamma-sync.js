@@ -11,6 +11,7 @@
  *   --course SLUG   Regenerate a single course by slug
  *   --delay MS      Delay between API calls in ms (default: 5000)
  *   --resume        Skip courses already completed in gamma-sync-results.json
+ *   --force         Regenerate ALL courses, even previously completed ones
  */
 
 const { execSync } = require("child_process");
@@ -32,25 +33,24 @@ const THEME_ID = "cornflower";
 // ─── Art style per category ─────────────────────────────────────────────────
 
 const ART_STYLES = {
-  "MEL & Research": "Sepia-toned documentary photography of rural Indian communities, framed with Warli tribal art borders — geometric white dot-pattern margins on earthy terracotta edges",
-  "Data & Technology": "Sepia-toned documentary photography of Indian village data collection and technology use, framed with Gond art borders — intricate dot-and-line nature patterns on dark margins",
-  "Policy & Economics": "Sepia-toned documentary photography of Indian governance, markets, and public life, framed with Kalamkari art borders — flowing hand-drawn textile patterns in terracotta and indigo margins",
-  "Gender & Equity": "Sepia-toned documentary photography of Indian women, girls, and diverse communities, framed with Madhubani art borders — bold crosshatched patterns in vibrant primary colors on margins",
-  "Health & Communication": "Sepia-toned documentary photography of Indian rural health workers and community health settings, framed with Pattachitra art borders — ornamental narrative panels in jewel tones on margins",
-  "Philosophy & Governance": "Sepia-toned documentary photography of Indian democratic institutions and community gatherings, framed with Pichwai art borders — lotus and nature motifs in deep green and gold margins",
+  "MEL & Research": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: rural Indian villages, fields, community meetings, data collection. Framed with a VISIBLE Warli tribal art decorative border — geometric white dot-patterns on earthy terracotta edges surrounding the entire image",
+  "Data & Technology": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: Indian village technology use, notebooks, chalkboards, radio towers, mobile phones. Framed with a VISIBLE Gond art decorative border — intricate dot-and-line nature patterns on dark edges surrounding the entire image",
+  "Policy & Economics": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: Indian governance, markets, panchayat meetings, public life. Framed with a VISIBLE Kalamkari art decorative border — flowing hand-drawn textile patterns in terracotta and indigo edges surrounding the entire image",
+  "Gender & Equity": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES — women in sarees, men in kurtas, children, transgender individuals (hijra) — (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: Indian village schools, SHG meetings, handlooms, community spaces. Framed with a VISIBLE Madhubani art decorative border — bold crosshatched patterns in primary colors on edges surrounding the entire image",
+  "Health & Communication": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES — health workers, mothers, children — (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: Indian primary health centers, anganwadis, community health settings. Framed with a VISIBLE Pattachitra art decorative border — ornamental narrative panels in jewel tones on edges surrounding the entire image",
+  "Philosophy & Governance": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: Indian democratic institutions, community gatherings, temples, village assemblies. Framed with a VISIBLE Pichwai art decorative border — lotus and nature motifs in deep green and gold edges surrounding the entire image",
 };
 
 // ─── Shared image & content style ───────────────────────────────────────────
 
 const IMAGE_STYLE_BASE = [
-  "MANDATORY: All photographs must show ONLY brown-skinned South Asian / Indian people. NEVER generate white, East Asian, or Western-looking people.",
-  "MANDATORY: Settings must be rural Indian villages, peri-urban small towns, fields, mandis (markets), anganwadis, primary health centers, gram panchayat offices, community halls, river banks, farms. NEVER show glass offices, luxury interiors, Western cities, or affluent urban settings.",
-  "Sepia-toned warm documentary photography style — like archival National Geographic or PRADAN field documentation.",
-  "Show diverse people: women in sarees and salwar kameez, men in kurta-pyjama and dhotis, children in school uniforms, elders, transgender individuals (hijra community). Mixed ages and genders in every group shot.",
-  "Include working animals where contextually relevant: cows, buffaloes, goats, bullocks with carts, chickens, dogs, elephants in forest/tribal areas.",
-  "Activities: farming, hand-pumping water, SHG meetings, mid-day meals, ASHA workers visiting homes, children studying under trees, panchayat meetings, market days, brick kilns, handloom weaving, fishing.",
-  "Emotional tone: dignity, agency, warmth, resilience. NOT poverty-porn. People should look engaged and capable, not helpless.",
-  "Folk art borders from each category's tradition frame the photographs — visible decorative margins around the photo content.",
+  "CRITICAL RULE — HUMANS AS SILHOUETTES ONLY: Show people as solid dark silhouettes — no visible facial features, no teeth, no detailed fingers, no skin texture. Just dark human shapes in profile, walking, working, gathering, or in action poses. This avoids grotesque AI-generated faces. Show diverse silhouettes: women in sarees and salwar kameez, men in kurtas and dhotis, children, elders, transgender individuals (hijra community). Mixed ages and genders.",
+  "CRITICAL RULE — STRICTLY MONOCHROME SEPIA: Every photograph MUST be fully desaturated sepia-toned (brown/cream/black only, like a 1920s archival photograph). ZERO color anywhere. No blue skies, no green trees, no colored clothing. Only warm brown/cream/black tones with soft grain.",
+  "CRITICAL RULE — EVERY IMAGE MUST HAVE A DECORATIVE BORDER: Every generated image must be surrounded by a visible folk art decorative border/frame from the specified Indian art tradition. No borderless images allowed.",
+  "CRITICAL RULE — PHOTOREALISTIC ONLY: All images must look like real sepia photographs, not illustrations, not cartoons, not drawings, not digital art. Photorealistic with film grain.",
+  "MANDATORY: Settings must be rural Indian villages, peri-urban small towns, fields, mandis (markets), anganwadis, primary health centers, gram panchayat offices, temples, river banks, farms. NEVER show glass offices, luxury interiors, Western cities, or affluent urban settings.",
+  "Scenes: farming, hand-pumping water, SHG meetings, mid-day meals, ASHA workers visiting homes, children studying under trees, panchayat meetings, market days, handloom weaving, fishing. With animals: cows, buffaloes, goats, bullocks with carts.",
+  "Emotional tone: dignity, agency, warmth, resilience, beauty. NOT poverty-porn. Silhouettes should convey purposeful action and community.",
 ].join(" ");
 
 // ─── Footer config ──────────────────────────────────────────────────────────
@@ -96,8 +96,11 @@ const ADDITIONAL_INSTRUCTIONS = [
   "SECTION SEPARATORS: Use bold, visually distinct separator cards between major sections. Full-width background color or illustration. Section number + title only, no body text.",
   "",
   "LAYOUT: Clean layouts with generous whitespace. Use card-based sections.",
-  "DIVERSITY: All human illustrations must show South Asian / brown-skinned people.",
-  "IMAGERY: Use sepia-toned documentary photography of rural/peri-urban India. Frame photos with Indian folk art borders. All people MUST be brown-skinned South Asian. NO white people, NO Western/urban/luxury settings.",
+  "IMAGE RULES (CRITICAL — READ CAREFULLY):",
+  "1. Show people ONLY as dark SILHOUETTES — no facial features, no teeth, no detailed fingers, no skin. Solid dark human shapes in profile or action. Diverse: women in sarees, men in kurtas, children, elders, hijra community.",
+  "2. ALL images must be FULLY SEPIA MONOCHROME — brown/cream/black tones only, zero color. Like a 1920s archival photograph.",
+  "3. ALL images must be PHOTOREALISTIC photographs, not illustrations or drawings or cartoons.",
+  "4. EVERY image must have a VISIBLE decorative Indian folk art border/frame around it.",
   "CONTEXT: Rural India, community development, grassroots settings. Democratic and inclusive.",
   "ACCESSIBILITY: High contrast text. No text over busy backgrounds.",
 ].join("\n");
@@ -348,6 +351,7 @@ async function main() {
   const delay = delayIdx !== -1 ? parseInt(args[delayIdx + 1], 10) : 5000;
 
   const resume = args.includes("--resume");
+  const force = args.includes("--force");
 
   if (!API_KEY) {
     console.error("Error: GAMMA_API_KEY environment variable not set");
@@ -378,17 +382,21 @@ async function main() {
     }
   }
 
-  if (resume) {
+  if (force) {
+    console.log(`\n🔁 Force mode: regenerating ALL courses (ignoring previous completions)`);
+  } else if (resume) {
     const before = courses.length;
     courses = courses.filter((c) => !completedSlugs.has(c.slug));
     console.log(`\n🔄 Resume mode: skipping ${before - courses.length} already-completed courses`);
   }
 
+  const modeLabel = dryRun ? "DRY RUN" : "LIVE";
+  const flagLabel = force ? " (FORCE)" : resume ? " (RESUME)" : "";
   console.log(`\n🎓 ImpactMojo Gamma Sync`);
   console.log(`   Courses: ${courses.length}`);
   console.log(`   Theme: ${THEME_ID}`);
   console.log(`   Folder: ${FOLDER_ID} (101 Decks)`);
-  console.log(`   Mode: ${dryRun ? "DRY RUN" : "LIVE"}${resume ? " (RESUME)" : ""}\n`);
+  console.log(`   Mode: ${modeLabel}${flagLabel}\n`);
 
   const results = [];
 
