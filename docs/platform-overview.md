@@ -156,6 +156,37 @@ Resources cover poverty, health, education, gender, governance, climate, and mor
 
 ---
 
+## BookSummaries
+
+Interactive book companions that go far beyond a summary. Each BookSummary offers chapter-by-chapter navigation, evidence explorers, data playgrounds with interactive simulators, programme comparison tools, concept glossaries, and AI-powered Q&A. Currently available under Specials.
+
+**Current entries:**
+- *The Handbook of Social Protection* (Hanna & Olken, MIT Press 2026) — 24 chapters, 17 evidence findings, 5 learning pathways, 40+ glossary concepts
+
+---
+
+## Cohort-Based Learning
+
+Organization-tier admins can create **training cohorts** — scheduled group learning with start/end dates, member enrollment, progress tracking, and discussion threads. Available in the Training tab of the Organization Dashboard.
+
+**Features:**
+- Training package selection (MEL Officer, Program Manager, Field Staff, Governance, Custom)
+- Per-member and average progress bars
+- Deadline countdown with color-coded urgency
+- In-cohort discussion threads for peer learning
+
+---
+
+## Notifications
+
+Users receive in-app notifications on their account page and can opt into email notifications. Types include streak reminders, cohort deadline alerts, assignment updates, and certificate issuance.
+
+**Notification preferences** (per user):
+- Course updates, streak reminders, cohort deadlines, cohort discussions, assignments, certificates
+- Email digest frequency: daily, weekly, or never
+
+---
+
 ## Blog
 
 Regular articles on development practice, platform updates, sector trends, and reflections on teaching and learning in the development space. Written in the same accessible, practitioner-focused voice as the rest of the platform.

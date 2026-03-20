@@ -2464,9 +2464,213 @@ h1, h2, h3, h4, h5, h6 {
                     </div>
                 </div>
             </div>
+
+            <!-- Notification Preferences Card -->
+            <div class="card" id="notificationsCard">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        Notifications
+                    </h2>
+                    <span class="badge badge-free" id="notifUnreadBadge" style="display:none;">0 unread</span>
+                </div>
+                <div class="card-body">
+                    <!-- Recent Notifications -->
+                    <div id="notifRecentList" style="margin-bottom:1.25rem;">
+                        <p style="font-size:0.85rem; color:var(--text-muted); text-align:center; padding:1rem;">Loading notifications...</p>
+                    </div>
+
+                    <!-- Email Preferences -->
+                    <div style="border-top:1px solid var(--border-color); padding-top:1rem;">
+                        <h3 style="font-size:0.9rem; font-weight:600; margin-bottom:0.75rem; color:var(--text-secondary);">Email Preferences</h3>
+                        <div id="notifPrefsForm" style="display:grid; gap:0.5rem;">
+                            <label style="display:flex; align-items:center; gap:0.6rem; font-size:0.85rem; cursor:pointer;">
+                                <input type="checkbox" id="prefCourseUpdates" checked onchange="saveNotifPrefs()">
+                                Course updates and new content
+                            </label>
+                            <label style="display:flex; align-items:center; gap:0.6rem; font-size:0.85rem; cursor:pointer;">
+                                <input type="checkbox" id="prefStreakReminders" checked onchange="saveNotifPrefs()">
+                                Streak reminders (when inactive 2+ days)
+                            </label>
+                            <label style="display:flex; align-items:center; gap:0.6rem; font-size:0.85rem; cursor:pointer;">
+                                <input type="checkbox" id="prefCohortDeadlines" checked onchange="saveNotifPrefs()">
+                                Cohort deadline reminders
+                            </label>
+                            <label style="display:flex; align-items:center; gap:0.6rem; font-size:0.85rem; cursor:pointer;">
+                                <input type="checkbox" id="prefCohortDiscussions" onchange="saveNotifPrefs()">
+                                Cohort discussion replies
+                            </label>
+                            <label style="display:flex; align-items:center; gap:0.6rem; font-size:0.85rem; cursor:pointer;">
+                                <input type="checkbox" id="prefAssignments" checked onchange="saveNotifPrefs()">
+                                Learning path assignments
+                            </label>
+                            <label style="display:flex; align-items:center; gap:0.6rem; font-size:0.85rem; cursor:pointer;">
+                                <input type="checkbox" id="prefCertificates" checked onchange="saveNotifPrefs()">
+                                Certificate issuance
+                            </label>
+                            <div style="margin-top:0.5rem;">
+                                <label style="font-size:0.82rem; color:var(--text-secondary); font-weight:500;">Email Digest</label>
+                                <select id="prefDigestFreq" onchange="saveNotifPrefs()" style="margin-top:0.25rem; padding:0.4rem 0.6rem; border:1px solid var(--border-color); border-radius:6px; background:var(--primary-bg); color:var(--text-primary); font-size:0.82rem;">
+                                    <option value="daily">Daily summary</option>
+                                    <option value="weekly" selected>Weekly summary</option>
+                                    <option value="never">No digest emails</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="notifPrefsSaved" style="display:none; font-size:0.78rem; color:var(--success-color); margin-top:0.5rem;">Preferences saved</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
+
+<script>
+// ── Notification Preferences & In-App Notifications ──────────────────
+(function() {
+    var sb = window.supabaseClient;
+    if (!sb) return;
+
+    // Load notification preferences
+    window.loadNotifPrefs = async function() {
+        try {
+            var user = window.ImpactMojoAuth && ImpactMojoAuth.getUser();
+            if (!user) return;
+
+            var { data: prefs } = await sb.from('notification_preferences')
+                .select('*').eq('user_id', user.id).single();
+
+            if (prefs) {
+                document.getElementById('prefCourseUpdates').checked = prefs.email_course_updates;
+                document.getElementById('prefStreakReminders').checked = prefs.email_streak_reminders;
+                document.getElementById('prefCohortDeadlines').checked = prefs.email_cohort_deadlines;
+                document.getElementById('prefCohortDiscussions').checked = prefs.email_cohort_discussions;
+                document.getElementById('prefAssignments').checked = prefs.email_assignments;
+                document.getElementById('prefCertificates').checked = prefs.email_certificates;
+                document.getElementById('prefDigestFreq').value = prefs.email_digest_frequency || 'weekly';
+            }
+        } catch (e) {
+            console.warn('Could not load notification preferences:', e);
+        }
+    };
+
+    // Save notification preferences
+    window.saveNotifPrefs = async function() {
+        try {
+            var user = window.ImpactMojoAuth && ImpactMojoAuth.getUser();
+            if (!user) return;
+
+            var prefs = {
+                user_id: user.id,
+                email_course_updates: document.getElementById('prefCourseUpdates').checked,
+                email_streak_reminders: document.getElementById('prefStreakReminders').checked,
+                email_cohort_deadlines: document.getElementById('prefCohortDeadlines').checked,
+                email_cohort_discussions: document.getElementById('prefCohortDiscussions').checked,
+                email_assignments: document.getElementById('prefAssignments').checked,
+                email_certificates: document.getElementById('prefCertificates').checked,
+                email_digest_frequency: document.getElementById('prefDigestFreq').value,
+                updated_at: new Date().toISOString()
+            };
+
+            await sb.from('notification_preferences').upsert(prefs, { onConflict: 'user_id' });
+
+            var saved = document.getElementById('notifPrefsSaved');
+            saved.style.display = 'block';
+            setTimeout(function() { saved.style.display = 'none'; }, 2000);
+        } catch (e) {
+            console.error('Save notification prefs error:', e);
+        }
+    };
+
+    // Load recent notifications
+    window.loadRecentNotifications = async function() {
+        var container = document.getElementById('notifRecentList');
+        try {
+            var user = window.ImpactMojoAuth && ImpactMojoAuth.getUser();
+            if (!user) {
+                container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Sign in to see notifications.</p>';
+                return;
+            }
+
+            var { data: notifs } = await sb.from('notifications')
+                .select('*')
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false })
+                .limit(10);
+
+            if (!notifs || notifs.length === 0) {
+                container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted); text-align:center; padding:1rem;">No notifications yet.</p>';
+                return;
+            }
+
+            // Update unread badge
+            var unread = notifs.filter(function(n) { return !n.is_read; }).length;
+            var badge = document.getElementById('notifUnreadBadge');
+            if (unread > 0) {
+                badge.textContent = unread + ' unread';
+                badge.style.display = 'inline-flex';
+            }
+
+            container.innerHTML = notifs.map(function(n) {
+                var iconColor = n.type === 'streak_reminder' ? '#F59E0B' :
+                    n.type === 'cohort_deadline' ? '#EF4444' :
+                    n.type === 'certificate' ? '#10B981' : '#0EA5E9';
+                var timeAgo = formatNotifTime(new Date(n.created_at));
+                return '<div style="padding:0.6rem; border-radius:8px; cursor:pointer;' +
+                    (!n.is_read ? ' background:rgba(14,165,233,0.06); border-left:3px solid ' + iconColor + ';' : ' border-left:3px solid transparent;') +
+                    ' margin-bottom:0.4rem;" onclick="markNotifRead(\'' + n.id + '\'' + (n.link ? ', \'' + n.link + '\'' : '') + ')">' +
+                    '<div style="font-size:0.85rem; font-weight:' + (n.is_read ? '400' : '600') + '; color:var(--text-primary);">' + escHtml(n.title) + '</div>' +
+                    (n.body ? '<div style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.15rem;">' + escHtml(n.body).substring(0, 100) + '</div>' : '') +
+                    '<div style="font-size:0.7rem; color:var(--text-muted); margin-top:0.2rem;">' + timeAgo + '</div>' +
+                    '</div>';
+            }).join('');
+        } catch (e) {
+            console.warn('Could not load notifications:', e);
+            container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Could not load notifications.</p>';
+        }
+    };
+
+    window.markNotifRead = async function(notifId, link) {
+        try {
+            var user = window.ImpactMojoAuth && ImpactMojoAuth.getUser();
+            if (user) {
+                await sb.from('notifications').update({ is_read: true }).eq('id', notifId);
+            }
+            if (link) window.location.href = link;
+            else await window.loadRecentNotifications();
+        } catch (e) { console.error(e); }
+    };
+
+    function formatNotifTime(d) {
+        var s = Math.floor((new Date() - d) / 1000);
+        if (s < 60) return 'just now';
+        var m = Math.floor(s / 60); if (m < 60) return m + 'm ago';
+        var h = Math.floor(m / 60); if (h < 24) return h + 'h ago';
+        var days = Math.floor(h / 24); if (days < 7) return days + 'd ago';
+        return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+    }
+
+    function escHtml(s) {
+        var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML;
+    }
+
+    // Auto-load when auth ready
+    var origOnReady = window._accountOnReady;
+    window._accountOnReady = function(user, profile) {
+        if (origOnReady) origOnReady(user, profile);
+        window.loadNotifPrefs();
+        window.loadRecentNotifications();
+    };
+
+    // Fallback: load after delay if auth callback already fired
+    setTimeout(function() {
+        if (window.ImpactMojoAuth && ImpactMojoAuth.getUser()) {
+            window.loadNotifPrefs();
+            window.loadRecentNotifications();
+        }
+    }, 2000);
+})();
+</script>
 
 <!-- Footer -->
 <footer class="footer">

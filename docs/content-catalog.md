@@ -4,7 +4,7 @@ Complete catalog of all ImpactMojo learning resources with direct links. Everyth
 
 ---
 
-## Flagship Courses (8)
+## Flagship Courses (9)
 
 Deep, multi-module courses with 12–13 modules each, interactive lexicons, South Asian case studies, and AI study companions.
 
@@ -18,6 +18,17 @@ Deep, multi-module courses with 12–13 modules each, interactive lexicons, Sout
 | 6 | Politics of Aspiration: Rights, Insurance & Social Mobility | Policy & Economics | 13 | 60 terms | [Open](/courses/poa/) |
 | 7 | Media for Development: Communication, Power & Practice | Health & Communication | 12 | 65 terms | [Open](/courses/media/) |
 | 8 | Social-Emotional Learning for Development | Health & Communication | 12 | — | [Open](/courses/sel/) |
+| 9 | Law & Development: Constitution, Rights & Justice | Philosophy & Governance | 12 | — | [Open](/courses/law/) |
+
+---
+
+## BookSummaries (1)
+
+Interactive book companions under Specials — deep, chapter-by-chapter explorations with data tools and AI-powered Q&A.
+
+| # | Book | Features | Link |
+|---|------|----------|------|
+| 1 | The Handbook of Social Protection (Hanna & Olken, MIT Press 2026) | 24 chapters, evidence explorer, data playground, programme compare, glossary, South Asia lens, AI Q&A | [Open](/BookSummaries/handbook-social-protection.html) |
 
 ---
 
@@ -96,7 +107,7 @@ Single-page courses covering essential development topics. All free, no login re
 
 ---
 
-## Interactive Labs (10)
+## Interactive Labs (19)
 
 Hands-on workbenches where you build, design, and practice real skills.
 
@@ -244,7 +255,7 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 | **ImpactLex** | 500+ development terms dictionary (PWA) | Free |
 | **Dev Case Studies** | 200 curated cases from 117 countries | Free |
 | **DevDiscourses** | 500+ curated research papers and books | Free |
-| **Dataverse** | 215+ data tools, APIs, and datasets | Free — [Browse](/dataverse.html) |
+| **Dataverse** | 247 data tools, APIs, and datasets | Free — [Browse](/dataverse.html) |
 | **Blog: Learning Loops** | Articles on development practice | Free — [Read](/blog.html) |
 | **Podcast: Between the Logframes** | Audio episodes on Spotify | Free |
 | **Dojos** | 35+ practice-based skill sessions | Paid |
@@ -255,13 +266,14 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 
 | Category | Count |
 |----------|-------|
-| Flagship courses | 8 |
+| Flagship courses | 9 |
 | Foundational courses | 39 |
-| Interactive labs | 10 |
-| Learning games | 12 |
+| Interactive labs | 19 |
+| Learning games | 16 |
+| BookSummaries | 1 |
 | Premium tools | 9 |
 | Handout pages | 80+ |
-| Dataverse entries | 215+ |
+| Dataverse entries | 247 |
 | Dev case studies | 200 |
 | DevDiscourses entries | 500+ |
 | ImpactLex terms | 500+ |

@@ -241,9 +241,10 @@ const ImpactMojoAuth = {
                         return;
                     }
 
-                    // Debounce: wait 500ms before processing sign-out.
+                    // Debounce: wait 1000ms before processing sign-out.
                     // TOKEN_REFRESHED fires shortly after a transient SIGNED_OUT
                     // during token refresh and will cancel this timer.
+                    // Increased from 500ms to 1000ms to better handle slow networks.
                     var self = this;
                     if (this._signOutDebounce) clearTimeout(this._signOutDebounce);
                     this._signOutDebounce = setTimeout(async function () {
@@ -279,29 +280,49 @@ const ImpactMojoAuth = {
                             window.IMState.cachedProfile.clear();
                         }
                         self.updateUI();
-                    }, 500);
+                    }, 1000);
                 }
             });
 
             this.isInitialized = true;
 
-            // Safety net: if after 3 seconds auth is ready but user is null,
+            // Safety net: if after 1.5 seconds auth is ready but user is null,
             // try to recover from Supabase session (handles edge cases where
-            // onAuthStateChange didn't fire properly)
+            // onAuthStateChange didn't fire properly or token refresh caused
+            // a transient SIGNED_OUT)
             var self = this;
             setTimeout(async function () {
-                if (self.isAuthReady && !self.user) {
+                if (!self.user) {
                     try {
                         var session = await supabaseClient.auth.getSession();
                         if (session?.data?.session?.user) {
                             console.log('Recovering session from Supabase after init gap');
                             self.user = session.data.session.user;
                             await self.fetchProfile().catch(function () {});
+                            if (!self.isAuthReady) {
+                                self.isAuthReady = true;
+                                if (self._authReadyResolve) self._authReadyResolve();
+                            }
                             self.updateUI();
                         }
                     } catch (_) {}
                 }
-            }, 3000);
+            }, 1500);
+
+            // Second safety net at 4 seconds for slow connections
+            setTimeout(async function () {
+                if (!self.user) {
+                    try {
+                        var session = await supabaseClient.auth.getSession();
+                        if (session?.data?.session?.user) {
+                            console.log('Late session recovery (4s)');
+                            self.user = session.data.session.user;
+                            await self.fetchProfile().catch(function () {});
+                            self.updateUI();
+                        }
+                    } catch (_) {}
+                }
+            }, 4000);
 
             // Re-fetch profile when page becomes visible again (back/forward navigation)
             // This fixes stale tier state when navigating back from org-dashboard
@@ -1120,18 +1141,43 @@ const ImpactMojoAuth = {
         // Fallback: check if Supabase has a session in localStorage
         // This handles cases where in-memory state was lost during token refresh
         try {
+            var stored = localStorage.getItem('impactmojo-auth');
+            if (stored) {
+                var val = JSON.parse(stored);
+                if (val && val.access_token) {
+                    // Session exists in storage — trigger async recovery
+                    this._recoverSessionFromStorage();
+                    return true;
+                }
+            }
+            // Legacy key check
             var keys = Object.keys(localStorage);
             for (var i = 0; i < keys.length; i++) {
-                if (keys[i].indexOf('impactmojo-auth') !== -1 ||
-                    (keys[i].indexOf('sb-') !== -1 && keys[i].indexOf('-auth-token') !== -1)) {
-                    var val = JSON.parse(localStorage.getItem(keys[i]));
-                    if (val && (val.access_token || (val.currentSession && val.currentSession.access_token))) {
+                if (keys[i].indexOf('sb-') === 0 && keys[i].indexOf('-auth-token') !== -1) {
+                    var val2 = JSON.parse(localStorage.getItem(keys[i]));
+                    if (val2 && (val2.access_token || (val2.currentSession && val2.currentSession.access_token))) {
                         return true;
                     }
                 }
             }
         } catch (_) {}
         return false;
+    },
+
+    // Async session recovery when isLoggedIn() finds a stored session but user is null
+    async _recoverSessionFromStorage() {
+        if (this.user || this._recoveringSession) return;
+        this._recoveringSession = true;
+        try {
+            var session = await supabaseClient.auth.getSession();
+            if (session?.data?.session?.user) {
+                this.user = session.data.session.user;
+                await this.fetchProfile().catch(function () {});
+                this.updateUI();
+            }
+        } catch (_) {} finally {
+            this._recoveringSession = false;
+        }
     },
 
     // Get current user
@@ -1174,6 +1220,20 @@ document.addEventListener('DOMContentLoaded', () => {
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
     ImpactMojoAuth.init();
 }
+
+// Extra recovery: when page fully loads, if no user but localStorage has session,
+// aggressively retry auth recovery. Handles the case where defer scripts on the
+// homepage cause auth to not be ready when premium.js or UI code runs.
+window.addEventListener('load', function () {
+    if (!ImpactMojoAuth.user) {
+        try {
+            var stored = localStorage.getItem('impactmojo-auth');
+            if (stored && JSON.parse(stored).access_token) {
+                ImpactMojoAuth._recoverSessionFromStorage();
+            }
+        } catch (_) {}
+    }
+});
 
 // =====================================================
 // AUTO-SYNC ON PAGE VISIBILITY CHANGE

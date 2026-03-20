@@ -5,6 +5,25 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.8.0] - 2026-03-20
+
+### Added
+- **Cohort-based learning** — Supabase-backed cohorts with start/end dates, member enrollment, progress tracking, and deadline countdown (org dashboard Training tab)
+- **Cohort discussion threads** — Real-time discussion within cohorts with post/delete support
+- **Notification system** — `send-notification` Edge Function with streak reminders, cohort deadline alerts, and manual notification API
+- **Notification preferences** — Per-user email opt-in/out (course updates, streak reminders, cohort deadlines, discussions, assignments, certificates) with digest frequency
+- **In-app notification feed** — Recent notifications card on account page with unread badges and mark-as-read
+- **Database migration** — `cohorts`, `cohort_members`, `cohort_discussions`, `notifications`, `notification_preferences` tables with full RLS policies, indexes, and triggers
+
+### Changed
+- **Auth session recovery** — Faster safety-net (1.5s + 4s fallback), increased SIGNED_OUT debounce to 1000ms, aggressive `_recoverSessionFromStorage()` for stored sessions, window.load recovery
+- **API token documentation** — Added Gemini, DeepSeek, Grok, Sarvan.ai, Gamma to CLAUDE.md and .env.example
+
+### Fixed
+- **Gender equity game** — SVG viewBox too short, causing Madhubani art heads to be clipped
+- **Info asymmetry game** — Pattachitra frame and end-story-art missing `width:100%`, appearing too small on mobile
+- **Login persistence** — Session not surviving page navigation due to timing gaps in token refresh cycle
+
 ## [10.7.0] - 2026-03-20
 
 ### Added

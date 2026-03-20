@@ -6,7 +6,7 @@ Common questions from educators, facilitators, and practitioners.
 
 ## Is ImpactMojo really free?
 
-Yes. All 9 flagship courses (13 modules each), 39 foundational courses, 12 learning games, 10 interactive labs, 400+ handouts, the ImpactLex glossary (500+ terms), 200 Dev Case Studies, and 500+ DevDiscourses papers are completely free.
+Yes. All 9 flagship courses (13 modules each), 39 foundational courses, 16 learning games, 19 interactive labs, 400+ handouts, the ImpactLex glossary (500+ terms), 200 Dev Case Studies, 500+ DevDiscourses papers, and interactive BookSummaries are completely free.
 
 There are paid tiers (Practitioner, Professional, and Organization) that unlock additional tools — things like advanced lab features, PDF/PNG export, AI-powered tools, and team dashboards. But the core learning experience is free and always will be.
 
@@ -104,7 +104,7 @@ Here is a straightforward comparison:
 |---------|----------------|------------------------|------------------------|-------------------------------|
 | All 48 courses | Yes | Yes | Yes | Yes |
 | 16 games | Yes | Yes | Yes | Yes |
-| 10 labs | Yes | Yes | Yes | Yes |
+| 19 labs | Yes | Yes | Yes | Yes |
 | 400+ handouts | Yes | Yes | Yes | Yes |
 | ImpactLex, DevDiscourses, Case Studies | Yes | Yes | Yes | Yes |
 | Progress tracking and certificates | — | Yes | Yes | Yes |
@@ -148,7 +148,7 @@ To set up an organization account, contact the ImpactMojo team. Sliding-scale pr
 
 ## What is the Dataverse?
 
-The Dataverse is a curated library of **215+ data sources, tools, datasets, and APIs** relevant to development practice in South Asia.
+The Dataverse is a curated library of **247 data sources, tools, datasets, and APIs** relevant to development practice in South Asia.
 
 Think of it as a carefully organized reference shelf. Instead of searching the internet for "India poverty data" and wading through hundreds of results, you can browse the Dataverse to find:
 
