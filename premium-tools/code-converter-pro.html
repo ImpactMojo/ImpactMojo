@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistical Code Converter Pro — ImpactMojo</title>
+<style>
+:root {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --bg-panel: #0f3460;
+  --bg-input: #1a1a2e;
+  --text-primary: #e8e8e8;
+  --text-secondary: #b0b0b0;
+  --accent-gold: #e6a817;
+  --accent-red: #c0392b;
+  --accent-teal: #1abc9c;
+  --accent-blue: #3498db;
+  --border-art: #e6a817;
+  --btn-primary: #e6a817;
+  --btn-hover: #f1c40f;
+  --btn-text: #1a1a2e;
+  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-mono: 'Consolas', 'Courier New', monospace;
+  --radius: 6px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-main); background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
+
+/* Madhubani border pattern */
+.madhubani-border {
+  border: 3px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    90deg, var(--accent-gold) 0px, var(--accent-red) 8px,
+    var(--accent-teal) 16px, var(--accent-gold) 24px
+  ) 3;
+}
+.madhubani-top {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg, var(--accent-gold) 0px, var(--accent-gold) 12px,
+    var(--accent-red) 12px, var(--accent-red) 24px,
+    var(--accent-teal) 24px, var(--accent-teal) 36px,
+    var(--accent-blue) 36px, var(--accent-blue) 48px
+  );
+}
+.madhubani-dots::before {
+  content: '\25C6 \25C7 \25C6 \25C7 \25C6 \25C7 \25C6 \25C7 \25C6';
+  display: block; text-align: center; color: var(--accent-gold);
+  font-size: 10px; letter-spacing: 6px; padding: 4px 0;
+}
+
+/* Top Bar */
+.topbar {
+  background: var(--bg-secondary); padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+.topbar h1 { font-size: 1.2rem; color: var(--accent-gold); font-weight: 700; }
+.topbar .subtitle { font-size: 0.8rem; color: var(--text-secondary); }
+.badge { background: var(--accent-red); color: #fff; font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+
+/* Language Selector Row */
+.selector-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; padding: 14px 20px; background: var(--bg-secondary);
+  flex-wrap: wrap; border-bottom: 1px solid #2a2a4a;
+}
+.selector-row label { font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; }
+.selector-row select {
+  background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-art);
+  padding: 8px 14px; border-radius: var(--radius); font-size: 0.9rem; cursor: pointer;
+  min-width: 110px;
+}
+.swap-btn {
+  background: var(--btn-primary); color: var(--btn-text); border: none;
+  padding: 8px 16px; border-radius: var(--radius); cursor: pointer;
+  font-weight: 700; font-size: 1rem; transition: background 0.2s;
+}
+.swap-btn:hover { background: var(--btn-hover); }
+.convert-btn {
+  background: var(--accent-teal); color: #fff; border: none;
+  padding: 10px 28px; border-radius: var(--radius); cursor: pointer;
+  font-weight: 700; font-size: 0.95rem; transition: background 0.2s;
+}
+.convert-btn:hover { background: #16a085; }
+
+/* Editor Panels */
+.editor-container {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  min-height: 420px; border-bottom: 1px solid #2a2a4a;
+}
+.panel { display: flex; flex-direction: column; }
+.panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px; background: var(--bg-panel); border-bottom: 1px solid #2a2a4a;
+}
+.panel-header span { font-size: 0.85rem; font-weight: 700; color: var(--accent-gold); }
+.panel-actions { display: flex; gap: 6px; }
+.panel-actions button {
+  background: transparent; color: var(--text-secondary); border: 1px solid #3a3a5a;
+  padding: 4px 10px; border-radius: var(--radius); cursor: pointer;
+  font-size: 0.75rem; transition: all 0.2s;
+}
+.panel-actions button:hover { color: var(--accent-gold); border-color: var(--accent-gold); }
+.code-area {
+  flex: 1; width: 100%; background: var(--bg-input); color: var(--text-primary);
+  border: none; padding: 16px; font-family: var(--font-mono); font-size: 0.88rem;
+  line-height: 1.6; resize: none; outline: none;
+}
+.code-area::placeholder { color: #555; }
+.code-display {
+  flex: 1; overflow: auto; padding: 16px; background: var(--bg-input);
+  font-family: var(--font-mono); font-size: 0.88rem; line-height: 1.6; white-space: pre-wrap;
+}
+.code-display .kw { color: var(--accent-blue); }
+.code-display .fn { color: var(--accent-teal); }
+.code-display .str { color: var(--accent-gold); }
+.code-display .cmt { color: #6a6a8a; font-style: italic; }
+.divider { width: 1px; background: var(--border-art); }
+
+/* Bottom Tabs */
+.tabs { display: flex; background: var(--bg-secondary); border-bottom: 1px solid #2a2a4a; }
+.tab-btn {
+  padding: 10px 24px; background: transparent; border: none; color: var(--text-secondary);
+  cursor: pointer; font-weight: 600; font-size: 0.85rem; border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+.tab-btn.active { color: var(--accent-gold); border-bottom-color: var(--accent-gold); }
+.tab-btn:hover { color: var(--text-primary); }
+.tab-content { display: none; padding: 16px 20px; background: var(--bg-secondary); max-height: 380px; overflow-y: auto; }
+.tab-content.active { display: block; }
+
+/* Snippets */
+.snippet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.snippet-card {
+  background: var(--bg-panel); border: 1px solid #2a2a4a; border-radius: var(--radius);
+  padding: 12px 14px; cursor: pointer; transition: all 0.2s;
+}
+.snippet-card:hover { border-color: var(--accent-gold); transform: translateY(-1px); }
+.snippet-card h4 { color: var(--accent-gold); font-size: 0.85rem; margin-bottom: 4px; }
+.snippet-card p { color: var(--text-secondary); font-size: 0.75rem; }
+
+/* Reference Table */
+.ref-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.ref-table th {
+  background: var(--bg-panel); color: var(--accent-gold); padding: 10px 12px;
+  text-align: left; position: sticky; top: 0; border-bottom: 2px solid var(--accent-gold);
+}
+.ref-table td { padding: 8px 12px; border-bottom: 1px solid #2a2a4a; color: var(--text-primary); font-family: var(--font-mono); font-size: 0.78rem; }
+.ref-table tr:hover td { background: rgba(230, 168, 23, 0.05); }
+
+/* Footer */
+.footer { text-align: center; padding: 12px; color: var(--text-secondary); font-size: 0.75rem; background: var(--bg-secondary); }
+.footer a { color: var(--accent-gold); text-decoration: none; }
+
+/* Status bar */
+.status-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 16px; background: #0d0d1a; font-size: 0.75rem; color: var(--text-secondary);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .editor-container { grid-template-columns: 1fr; }
+  .divider { width: 100%; height: 1px; }
+  .topbar h1 { font-size: 1rem; }
+  .selector-row { gap: 8px; }
+  .snippet-grid { grid-template-columns: 1fr; }
+  .tab-btn { padding: 10px 14px; font-size: 0.8rem; }
+  .ref-table { font-size: 0.72rem; }
+  .ref-table td, .ref-table th { padding: 6px 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="madhubani-top"></div>
+<div class="madhubani-dots"></div>
+
+<div class="topbar">
+  <div>
+    <h1>Statistical Code Converter Pro</h1>
+    <div class="subtitle">ImpactMojo — Development Education Platform</div>
+  </div>
+  <span class="badge">PREMIUM TOOL</span>
+</div>
+
+<div class="selector-row">
+  <label for="srcLang">Source:</label>
+  <select id="srcLang">
+    <option value="r">R</option>
+    <option value="stata">Stata</option>
+    <option value="python">Python</option>
+    <option value="spss">SPSS</option>
+  </select>
+  <button class="swap-btn" onclick="swapLangs()" title="Swap languages">&#8644;</button>
+  <label for="tgtLang">Target:</label>
+  <select id="tgtLang">
+    <option value="r">R</option>
+    <option value="stata">Stata</option>
+    <option value="python" selected>Python</option>
+    <option value="spss">SPSS</option>
+  </select>
+  <button class="convert-btn" onclick="convertCode()">Convert</button>
+</div>
+
+<div class="editor-container">
+  <div class="panel">
+    <div class="panel-header">
+      <span id="srcLabel">Source (R)</span>
+      <div class="panel-actions">
+        <button onclick="clearSource()">Clear</button>
+        <button onclick="pasteClipboard()">Paste</button>
+      </div>
+    </div>
+    <textarea class="code-area" id="srcCode" placeholder="Paste or type your source code here..." spellcheck="false"></textarea>
+  </div>
+  <div class="divider"></div>
+  <div class="panel">
+    <div class="panel-header">
+      <span id="tgtLabel">Output (Python)</span>
+      <div class="panel-actions">
+        <button onclick="copyOutput()">Copy</button>
+        <button onclick="downloadOutput()">Download</button>
+      </div>
+    </div>
+    <div class="code-display" id="outDisplay"><span class="cmt"># Converted code will appear here</span></div>
+  </div>
+</div>
+
+<div class="status-bar">
+  <span id="statusMsg">Ready</span>
+  <span id="lineCount">Lines: 0</span>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('snippets', this)">Snippets</button>
+  <button class="tab-btn" onclick="switchTab('reference', this)">Quick Reference</button>
+</div>
+
+<div class="tab-content active" id="tab-snippets">
+  <div class="snippet-grid" id="snippetGrid"></div>
+</div>
+
+<div class="tab-content" id="tab-reference">
+  <table class="ref-table">
+    <thead>
+      <tr><th>Operation</th><th>R</th><th>Stata</th><th>Python</th><th>SPSS</th></tr>
+    </thead>
+    <tbody id="refBody"></tbody>
+  </table>
+</div>
+
+<div class="madhubani-dots"></div>
+<div class="footer">
+  <a href="https://impactmojo.in">ImpactMojo</a> — Free Development Education for South Asia
+</div>
+<div class="madhubani-top"></div>
+
+<script>
+/* ===== Data: Conversion Rules ===== */
+var LANG_NAMES = { r: 'R', stata: 'Stata', python: 'Python', spss: 'SPSS' };
+var LANG_EXT = { r: '.R', stata: '.do', python: '.py', spss: '.sps' };
+
+var RULES = [
+  {
+    name: 'data_import',
+    patterns: {
+      r: /^(\w+)\s*<-\s*read\.csv\(["'](.+?)["']\)/,
+      stata: /^import\s+delimited\s+(?:using\s+)?["']?(.+?)["']?(?:,.*)?$/i,
+      python: /^(\w+)\s*=\s*pd\.read_csv\(["'](.+?)["']\)/,
+      spss: /^GET\s+FILE\s*=?\s*["'](.+?)["']/i
+    },
+    convert: function(m, src, tgt) {
+      var varName, fileName;
+      if (src === 'r') { varName = m[1]; fileName = m[2]; }
+      else if (src === 'stata') { varName = 'df'; fileName = m[1]; }
+      else if (src === 'python') { varName = m[1]; fileName = m[2]; }
+      else { varName = 'df'; fileName = m[1]; }
+      var templates = {
+        r: varName + ' <- read.csv("' + fileName + '")',
+        stata: 'import delimited using "' + fileName + '", clear',
+        python: varName + ' = pd.read_csv("' + fileName + '")',
+        spss: 'GET FILE = "' + fileName + '".'
+      };
+      return templates[tgt];
+    }
+  },
+  {
+    name: 'descriptive',
+    patterns: {
+      r: /^summary\((\w+)\)/,
+      stata: /^summarize(?:\s+(\w+))?/i,
+      python: /^(?:print\()?(\w+)\.describe\(\)\)?/,
+      spss: /^DESCRIPTIVES\s+(?:VARIABLES\s*=\s*)?(.+?)(?:\s*\/|\.)/i
+    },
+    convert: function(m, src, tgt) {
+      var v = m[1] || 'df';
+      return { r: 'summary(' + v + ')', stata: 'summarize ' + v, python: 'print(' + v + '.describe())', spss: 'DESCRIPTIVES VARIABLES = ' + v + '.' }[tgt];
+    }
+  },
+  {
+    name: 'regression',
+    patterns: {
+      r: /^(\w+)\s*<-\s*lm\((\w+)\s*~\s*(.+?),\s*data\s*=\s*(\w+)\)/,
+      stata: /^reg(?:ress)?\s+(\w+)\s+(.+)/i,
+      python: /^(\w+)\s*=\s*sm\.OLS\((\w+)\[["'](\w+)["']\],\s*sm\.add_constant\((\w+)\[["'](.+?)["']\]\)\)\.fit\(\)/,
+      spss: /^REGRESSION\s+\/DEPENDENT\s+(\w+)\s+\/METHOD\s*=\s*ENTER\s+(.+?)(?:\.)/i
+    },
+    convert: function(m, src, tgt) {
+      var dv, ivs, data, mdl;
+      if (src === 'r') { mdl = m[1]; dv = m[2]; ivs = m[3].trim().split(/\s*\+\s*/); data = m[4]; }
+      else if (src === 'stata') { dv = m[1]; ivs = m[2].trim().split(/\s+/); data = 'df'; mdl = 'model'; }
+      else if (src === 'python') { mdl = m[1]; dv = m[3]; ivs = m[5].split(/["'],\s*["']/); data = m[4] || m[2]; }
+      else { dv = m[1]; ivs = m[2].trim().split(/\s+/); data = 'df'; mdl = 'model'; }
+      var t = {
+        r: mdl + ' <- lm(' + dv + ' ~ ' + ivs.join(' + ') + ', data = ' + data + ')\nsummary(' + mdl + ')',
+        stata: 'reg ' + dv + ' ' + ivs.join(' '),
+        python: mdl + ' = sm.OLS(' + data + '["' + dv + '"], sm.add_constant(' + data + '["' + ivs.join('", "') + '"])).fit()\nprint(' + mdl + '.summary())',
+        spss: 'REGRESSION\n  /DEPENDENT ' + dv + '\n  /METHOD = ENTER ' + ivs.join(' ') + '.'
+      };
+      return t[tgt];
+    }
+  },
+  {
+    name: 'ttest',
+    patterns: {
+      r: /^t\.test\((\w+)\s*~\s*(\w+),\s*data\s*=\s*(\w+)\)/,
+      stata: /^ttest\s+(\w+),\s*by\((\w+)\)/i,
+      python: /^(?:stat,\s*p\s*=\s*)?(?:stats\.)?ttest_ind\((.+?),\s*(.+?)\)/,
+      spss: /^T-TEST\s+GROUPS\s*=\s*(\w+).*\/VARIABLES\s*=\s*(\w+)/i
+    },
+    convert: function(m, src, tgt) {
+      var testVar, groupVar, data;
+      if (src === 'r') { testVar = m[1]; groupVar = m[2]; data = m[3]; }
+      else if (src === 'stata') { testVar = m[1]; groupVar = m[2]; data = 'df'; }
+      else if (src === 'python') { testVar = 'outcome'; groupVar = 'group'; data = 'df'; }
+      else { groupVar = m[1]; testVar = m[2]; data = 'df'; }
+      return {
+        r: 't.test(' + testVar + ' ~ ' + groupVar + ', data = ' + data + ')',
+        stata: 'ttest ' + testVar + ', by(' + groupVar + ')',
+        python: 'stat, p = stats.ttest_ind(\n    ' + data + '[' + data + '["' + groupVar + '"] == 0]["' + testVar + '"],\n    ' + data + '[' + data + '["' + groupVar + '"] == 1]["' + testVar + '"]\n)',
+        spss: 'T-TEST GROUPS = ' + groupVar + '(0 1)\n  /VARIABLES = ' + testVar + '.'
+      }[tgt];
+    }
+  },
+  {
+    name: 'correlation',
+    patterns: {
+      r: /^cor\((\w+)\[,\s*c\(["'](.+?)["']\)\]\)/,
+      stata: /^(?:pwcorr|correlate)\s+(.+)/i,
+      python: /^(\w+)\[?\[?["']?(.+?)["']?\]?\]?\.corr\(\)/,
+      spss: /^CORRELATIONS\s+\/VARIABLES\s*=\s*(.+?)(?:\.)/i
+    },
+    convert: function(m, src, tgt) {
+      var vars, data;
+      if (src === 'r') { data = m[1]; vars = m[2].split(/["'],\s*["']/); }
+      else if (src === 'stata') { vars = m[1].trim().split(/\s+/); data = 'df'; }
+      else if (src === 'python') { data = m[1]; vars = m[2].split(/["'],\s*["']/); }
+      else { vars = m[1].trim().split(/\s+/); data = 'df'; }
+      return {
+        r: 'cor(' + data + '[, c("' + vars.join('", "') + '")])',
+        stata: 'correlate ' + vars.join(' '),
+        python: 'print(' + data + '[["' + vars.join('", "') + '"]].corr())',
+        spss: 'CORRELATIONS\n  /VARIABLES = ' + vars.join(' ') + '.'
+      }[tgt];
+    }
+  },
+  {
+    name: 'variable_r',
+    patterns: {
+      r: /^(\w+)\$(\w+)\s*<-\s*(.+)/,
+      stata: /^gen(?:erate)?\s+(\w+)\s*=\s*(.+)/i,
+      python: /^(\w+)\[["'](\w+)["']\]\s*=\s*(.+)/,
+      spss: /^COMPUTE\s+(\w+)\s*=\s*(.+)\./i
+    },
+    convert: function(m, src, tgt) {
+      var data, varN, expr;
+      if (src === 'r') { data = m[1]; varN = m[2]; expr = m[3]; }
+      else if (src === 'stata') { varN = m[1]; expr = m[2]; data = 'df'; }
+      else if (src === 'python') { data = m[1]; varN = m[2]; expr = m[3]; }
+      else { varN = m[1]; expr = m[2]; data = 'df'; }
+      return {
+        r: data + '$' + varN + ' <- ' + expr,
+        stata: 'gen ' + varN + ' = ' + expr,
+        python: data + '["' + varN + '"] = ' + expr,
+        spss: 'COMPUTE ' + varN + ' = ' + expr + '.\nEXECUTE.'
+      }[tgt];
+    }
+  },
+  {
+    name: 'crosstab',
+    patterns: {
+      r: /^table\((\w+)\$(\w+),\s*(\w+)\$(\w+)\)/,
+      stata: /^tab(?:ulate)?\s+(\w+)\s+(\w+)/i,
+      python: /^pd\.crosstab\((\w+)\[["'](\w+)["']\],\s*(\w+)\[["'](\w+)["']\]\)/,
+      spss: /^CROSSTABS\s+\/TABLES\s*=\s*(\w+)\s+BY\s+(\w+)/i
+    },
+    convert: function(m, src, tgt) {
+      var data, v1, v2;
+      if (src === 'r') { data = m[1]; v1 = m[2]; v2 = m[4]; }
+      else if (src === 'stata') { v1 = m[1]; v2 = m[2]; data = 'df'; }
+      else if (src === 'python') { data = m[1]; v1 = m[2]; v2 = m[4]; }
+      else { v1 = m[1]; v2 = m[2]; data = 'df'; }
+      return {
+        r: 'table(' + data + '$' + v1 + ', ' + data + '$' + v2 + ')',
+        stata: 'tab ' + v1 + ' ' + v2,
+        python: 'pd.crosstab(' + data + '["' + v1 + '"], ' + data + '["' + v2 + '"])',
+        spss: 'CROSSTABS\n  /TABLES = ' + v1 + ' BY ' + v2 + '.'
+      }[tgt];
+    }
+  }
+];
+
+/* ===== Snippets ===== */
+var SNIPPETS = [
+  { title: 'Import CSV', cat: 'Data Import', lang: 'r', code: 'df <- read.csv("survey_data.csv")' },
+  { title: 'Descriptive Statistics', cat: 'Summary', lang: 'r', code: 'summary(df)' },
+  { title: 'Linear Regression', cat: 'Regression', lang: 'r', code: 'model <- lm(income ~ education + age, data = df)\nsummary(model)' },
+  { title: 'Independent T-Test', cat: 'T-Test', lang: 'stata', code: 'ttest income, by(gender)' },
+  { title: 'Correlation Matrix', cat: 'Correlation', lang: 'python', code: 'print(df[["income", "education"]].corr())' },
+  { title: 'Create Variable', cat: 'Variable', lang: 'r', code: 'df$income_log <- log(df$income)' },
+  { title: 'Cross Tabulation', cat: 'Crosstab', lang: 'stata', code: 'tab region gender' },
+  { title: 'Regression (SPSS)', cat: 'Regression', lang: 'spss', code: 'REGRESSION\n  /DEPENDENT income\n  /METHOD = ENTER education age.' },
+  { title: 'Import (Python)', cat: 'Data Import', lang: 'python', code: 'df = pd.read_csv("household_survey.csv")' },
+  { title: 'Descriptives (SPSS)', cat: 'Summary', lang: 'spss', code: 'DESCRIPTIVES VARIABLES = income education age.' }
+];
+
+/* ===== Reference ===== */
+var REF = [
+  ['Data Import', 'read.csv("f.csv")', 'import delimited "f.csv"', 'pd.read_csv("f.csv")', 'GET FILE = "f.csv".'],
+  ['Descriptives', 'summary(df)', 'summarize', 'df.describe()', 'DESCRIPTIVES VARIABLES = ALL.'],
+  ['Regression', 'lm(y ~ x, data=df)', 'reg y x', 'sm.OLS(y, X).fit()', 'REGRESSION /DEPENDENT y /METHOD=ENTER x.'],
+  ['T-Test', 't.test(y ~ g, data=df)', 'ttest y, by(g)', 'ttest_ind(g0, g1)', 'T-TEST GROUPS=g /VARIABLES=y.'],
+  ['Correlation', 'cor(df[,c("a","b")])', 'correlate a b', 'df[["a","b"]].corr()', 'CORRELATIONS /VARIABLES=a b.'],
+  ['New Variable', 'df$z <- expr', 'gen z = expr', 'df["z"] = expr', 'COMPUTE z = expr.'],
+  ['Crosstab', 'table(df$a, df$b)', 'tab a b', 'pd.crosstab(df["a"],df["b"])', 'CROSSTABS /TABLES=a BY b.'],
+  ['Frequency', 'table(df$x)', 'tab x', 'df["x"].value_counts()', 'FREQUENCIES VARIABLES=x.']
+];
+
+/* ===== Conversion Engine ===== */
+function convertLine(line, src, tgt) {
+  var trimmed = line.trim();
+  if (!trimmed) return '';
+  if (trimmed.startsWith('#') || trimmed.startsWith('//') || trimmed.startsWith('*')) {
+    return '# ' + trimmed.replace(/^[#/*]+\s*/, '');
+  }
+  for (var i = 0; i < RULES.length; i++) {
+    var rule = RULES[i];
+    var pat = rule.patterns[src];
+    if (!pat) continue;
+    var m = trimmed.match(pat);
+    if (m) {
+      return rule.convert(m, src, tgt);
+    }
+  }
+  return '# [no conversion rule] ' + trimmed;
+}
+
+function addImportHeader(tgt) {
+  var headers = {
+    r: '# R script\nlibrary(tidyverse)\n',
+    stata: '* Stata do-file\nclear all\nset more off\n',
+    python: '# Python script\nimport pandas as pd\nimport numpy as np\nimport statsmodels.api as sm\nfrom scipy import stats\n',
+    spss: '* SPSS Syntax.\nSET PRINTBACK = ON.\n'
+  };
+  return headers[tgt] || '';
+}
+
+function convertCode() {
+  var src = document.getElementById('srcLang').value;
+  var tgt = document.getElementById('tgtLang').value;
+  var code = document.getElementById('srcCode').value;
+  if (src === tgt) { setStatus('Source and target languages are the same.'); return; }
+  if (!code.trim()) { setStatus('Enter source code first.'); return; }
+
+  var lines = code.split('\n');
+  var output = addImportHeader(tgt) + '\n';
+  var converted = 0, skipped = 0;
+  for (var i = 0; i < lines.length; i++) {
+    var result = convertLine(lines[i], src, tgt);
+    if (result.indexOf('[no conversion rule]') === -1 && result.trim()) converted++;
+    else if (result.indexOf('[no conversion rule]') !== -1) skipped++;
+    output += result + '\n';
+  }
+  rawOutput = output;
+  renderHighlighted(output, tgt);
+  setStatus('Converted ' + converted + ' line(s). ' + (skipped > 0 ? skipped + ' line(s) unmatched.' : 'All lines matched.'));
+  document.getElementById('lineCount').textContent = 'Lines: ' + lines.length;
+}
+
+var rawOutput = '';
+
+function renderHighlighted(code, lang) {
+  var el = document.getElementById('outDisplay');
+  var escaped = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // Basic syntax highlighting
+  escaped = escaped.replace(/(#.*|\/\/.*|\*.*)/g, '<span class="cmt">$1</span>');
+  escaped = escaped.replace(/\b(library|import|from|set|clear|gen|reg|tab|summarize|print|COMPUTE|EXECUTE|REGRESSION|DESCRIPTIVES|CORRELATIONS|CROSSTABS|T-TEST|GET|FREQUENCIES)\b/g, '<span class="kw">$1</span>');
+  escaped = escaped.replace(/\b(read\.csv|read_csv|lm|summary|OLS|fit|add_constant|ttest_ind|crosstab|describe|corr|value_counts|t\.test|cor|table|log)\b/g, '<span class="fn">$1</span>');
+  escaped = escaped.replace(/"([^"]*)"/g, '"<span class="str">$1</span>"');
+  el.innerHTML = escaped;
+}
+
+/* ===== UI Functions ===== */
+function swapLangs() {
+  var s = document.getElementById('srcLang');
+  var t = document.getElementById('tgtLang');
+  var tmp = s.value; s.value = t.value; t.value = tmp;
+  updateLabels();
+}
+
+function updateLabels() {
+  var s = document.getElementById('srcLang').value;
+  var t = document.getElementById('tgtLang').value;
+  document.getElementById('srcLabel').textContent = 'Source (' + LANG_NAMES[s] + ')';
+  document.getElementById('tgtLabel').textContent = 'Output (' + LANG_NAMES[t] + ')';
+}
+
+function clearSource() {
+  document.getElementById('srcCode').value = '';
+  document.getElementById('outDisplay').innerHTML = '<span class="cmt"># Converted code will appear here</span>';
+  rawOutput = '';
+  setStatus('Cleared.');
+}
+
+function pasteClipboard() {
+  navigator.clipboard.readText().then(function(t) {
+    document.getElementById('srcCode').value = t;
+    setStatus('Pasted from clipboard.');
+  }).catch(function() { setStatus('Clipboard access denied.'); });
+}
+
+function copyOutput() {
+  if (!rawOutput) { setStatus('Nothing to copy.'); return; }
+  navigator.clipboard.writeText(rawOutput).then(function() {
+    setStatus('Copied to clipboard.');
+  }).catch(function() { setStatus('Copy failed.'); });
+}
+
+function downloadOutput() {
+  if (!rawOutput) { setStatus('Nothing to download.'); return; }
+  var tgt = document.getElementById('tgtLang').value;
+  var ext = LANG_EXT[tgt];
+  var blob = new Blob([rawOutput], { type: 'text/plain' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'converted_code' + ext;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  setStatus('Downloaded as converted_code' + ext);
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function setStatus(msg) {
+  document.getElementById('statusMsg').textContent = msg;
+}
+
+function loadSnippet(idx) {
+  var s = SNIPPETS[idx];
+  document.getElementById('srcLang').value = s.lang;
+  document.getElementById('srcCode').value = s.code;
+  updateLabels();
+  setStatus('Loaded snippet: ' + s.title);
+}
+
+/* ===== Init ===== */
+(function init() {
+  // Populate snippets
+  var grid = document.getElementById('snippetGrid');
+  SNIPPETS.forEach(function(s, i) {
+    var card = document.createElement('div');
+    card.className = 'snippet-card';
+    card.onclick = function() { loadSnippet(i); };
+    card.innerHTML = '<h4>' + s.title + '</h4><p>' + s.cat + ' &middot; ' + LANG_NAMES[s.lang] + '</p>';
+    grid.appendChild(card);
+  });
+
+  // Populate reference table
+  var tbody = document.getElementById('refBody');
+  REF.forEach(function(row) {
+    var tr = document.createElement('tr');
+    row.forEach(function(cell) {
+      var td = document.createElement('td');
+      td.textContent = cell;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  // Update labels on change
+  document.getElementById('srcLang').addEventListener('change', updateLabels);
+  document.getElementById('tgtLang').addEventListener('change', updateLabels);
+
+  // Line count on input
+  document.getElementById('srcCode').addEventListener('input', function() {
+    var lines = this.value.split('\n').length;
+    document.getElementById('lineCount').textContent = 'Lines: ' + lines;
+  });
+
+  updateLabels();
+})();
+</script>
+</body>
+</html>
