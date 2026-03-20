@@ -47,6 +47,9 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 - [x] **Auth persistence fixes** — faster session recovery, aggressive SIGNED_OUT debounce, window.load recovery
 - [x] **Game visual fixes** — gender equity SVG clipping, info asymmetry image sizing
 - [x] **API token documentation** — Gemini, DeepSeek, Grok, Sarvan.ai, Gamma added to CLAUDE.md and .env.example
+- [x] **BookSummaries landing page** — browsable index at `/BookSummaries/` replacing direct-to-book navigation
+- [x] **Premium design consistency** — premium.html and premium-tools pages aligned with main site design standards (fonts, borders, shadows)
+- [x] **RQ Premium redirect fix** — race condition in resource-launch.js preventing upgrade modal from showing
 
 ## Q2 2026 (Apr-Jun) — Planned
 
