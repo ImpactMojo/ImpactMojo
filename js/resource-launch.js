@@ -18,7 +18,7 @@
   // ── Map resource IDs to their deployment URLs ─────────────────────
   var RESOURCE_URLS = {
     // Practitioner tier
-    'rq-builder':         'https://researchquestions.netlify.app/',
+    'rq-builder':         '/premium-tools/rq-builder.html',
     // Professional tier
     'vaniscribe':         'https://vaniscribe.netlify.app/',
     'devdata-practice':   'https://impactmojo-devdata-pro.netlify.app/',

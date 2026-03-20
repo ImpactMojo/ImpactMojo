@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Question Builder Pro — ImpactMojo</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --bg-input: #F1F5F9;
+  --text: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --accent: #0EA5E9;
+  --accent-hover: #0284C7;
+  --secondary: #6366F1;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --border: #E2E8F0;
+  --gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+  --font: 'Amaranth', sans-serif;
+  --font-heading: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius: 12px;
+}
+body.dark-mode {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-input: #334155;
+  --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+  --border: #334155;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+
+/* Header */
+.header { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0.75rem 1.5rem; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+body.dark-mode .header { background: rgba(15,23,42,0.95); }
+.header-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.logo-link { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--text); }
+.logo-link img { width: 32px; height: 32px; border-radius: 6px; }
+.logo-text { font-family: var(--font-heading); font-weight: 700; font-size: 1rem; }
+.header-actions { display: flex; gap: 0.5rem; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.8rem; font-weight: 500; text-decoration: none; border: none; cursor: pointer; font-family: var(--font); transition: all 0.2s; }
+.btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.btn svg { width: 14px; height: 14px; }
+.badge { background: var(--gradient); color: #fff; font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-family: var(--font-heading); }
+
+/* Theme toggle */
+.theme-toggle { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 6px; cursor: pointer; color: var(--text-secondary); display: flex; }
+.theme-toggle:hover { color: var(--text); border-color: var(--accent); }
+.theme-toggle svg { width: 16px; height: 16px; }
+
+/* Main */
+.main { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+/* Hero */
+.hero { text-align: center; margin-bottom: 2rem; }
+.hero h1 { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+.hero p { color: var(--text-secondary); max-width: 500px; margin: 0 auto; font-size: 0.95rem; }
+
+/* Steps */
+.steps { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.step-pill { display: flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.75rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; background: var(--bg-card); border: 2px solid var(--border); color: var(--text-muted); transition: all 0.3s; font-family: var(--font-heading); }
+.step-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(14,165,233,0.08); }
+.step-pill.done { border-color: var(--success); color: var(--success); background: rgba(16,185,129,0.08); }
+.step-num { width: 20px; height: 20px; border-radius: 50%; background: var(--border); color: var(--text-muted); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; }
+.step-pill.active .step-num { background: var(--accent); color: #fff; }
+.step-pill.done .step-num { background: var(--success); color: #fff; }
+
+/* Card */
+.card { background: var(--bg-card); border: 3px solid var(--border); border-radius: 20px; padding: 2rem; box-shadow: 8px 8px 0 rgba(14,165,233,0.08); margin-bottom: 1.5rem; }
+.card h2 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.25rem; letter-spacing: -0.02em; }
+.card .subtitle { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.25rem; }
+
+/* Form */
+.form-group { margin-bottom: 1.25rem; }
+.form-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--text); }
+.form-group .hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem; }
+input[type="text"], textarea, select {
+  width: 100%; padding: 0.75rem 1rem; background: var(--bg-input); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-size: 0.9rem; font-family: var(--font); transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(14,165,233,0.1); }
+textarea { min-height: 80px; resize: vertical; }
+select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 16px; padding-right: 2.5rem; }
+
+/* Radio/checkbox pills */
+.option-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.option-pill { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.75rem; border: 2px solid var(--border); border-radius: 10px; cursor: pointer; font-size: 0.8rem; font-weight: 500; transition: all 0.2s; background: var(--bg-card); }
+.option-pill:hover { border-color: var(--accent); }
+.option-pill input { display: none; }
+.option-pill.selected { border-color: var(--accent); background: rgba(14,165,233,0.08); color: var(--accent); }
+
+/* Buttons */
+.btn-row { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
+.btn-primary { background: var(--gradient); color: #fff; padding: 0.65rem 1.5rem; font-size: 0.9rem; font-weight: 600; border-radius: 10px; }
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-secondary { background: var(--bg-input); color: var(--text); padding: 0.65rem 1.5rem; font-size: 0.9rem; font-weight: 500; border-radius: 10px; border: 1px solid var(--border); }
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Output */
+.output-section { display: none; }
+.output-section.visible { display: block; }
+.rq-output { background: var(--bg-input); border: 2px solid var(--accent); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; }
+.rq-output .rq-label { font-family: var(--font-heading); font-size: 0.75rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.rq-output .rq-text { font-size: 1.1rem; font-weight: 600; line-height: 1.5; color: var(--text); }
+.analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+.analysis-item { background: var(--bg-card); border: 2px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+.analysis-item h4 { font-family: var(--font-heading); font-size: 0.8rem; font-weight: 600; color: var(--accent); margin-bottom: 0.35rem; }
+.analysis-item p { font-size: 0.85rem; color: var(--text-secondary); }
+.methods-list { list-style: none; margin-top: 0.5rem; }
+.methods-list li { display: flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0; font-size: 0.85rem; color: var(--text-secondary); }
+.methods-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.copy-btn { background: var(--accent); color: #fff; font-size: 0.8rem; padding: 0.5rem 1rem; border-radius: 8px; }
+.copy-btn:hover { background: var(--accent-hover); }
+
+/* Hidden */
+.hidden { display: none !important; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .main { padding: 1.5rem 1rem 3rem; }
+  .card { padding: 1.25rem; }
+  .analysis-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 1.4rem; }
+  .btn-row { flex-direction: column; }
+  .btn-row .btn { width: 100%; justify-content: center; }
+}
+
+/* Kalamkari decorative element */
+.kalamkari-border { height: 4px; background: repeating-linear-gradient(90deg, #0EA5E9 0 8px, transparent 8px 12px, #6366F1 12px 20px, transparent 20px 24px, #10B981 24px 32px, transparent 32px 36px); border-radius: 2px; margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="/index.html" class="logo-link">
+      <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="32" height="32">
+      <span class="logo-text">ImpactMojo</span>
+      <span class="badge">PRO</span>
+    </a>
+    <div class="header-actions">
+      <a href="/index.html" class="btn btn-outline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Home
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="kalamkari-border"></div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Research Question Builder Pro</h1>
+    <p>Move from a vague idea to a testable, fundable research question using PICO and SPIDER frameworks.</p>
+  </div>
+
+  <!-- Progress Steps -->
+  <div class="steps" id="progressSteps">
+    <div class="step-pill active" data-step="1"><span class="step-num">1</span> Topic</div>
+    <div class="step-pill" data-step="2"><span class="step-num">2</span> Framework</div>
+    <div class="step-pill" data-step="3"><span class="step-num">3</span> Components</div>
+    <div class="step-pill" data-step="4"><span class="step-num">4</span> Refine</div>
+    <div class="step-pill" data-step="5"><span class="step-num">5</span> Output</div>
+  </div>
+
+  <!-- Step 1: Topic -->
+  <div class="card step-card" id="step1">
+    <h2>What are you investigating?</h2>
+    <p class="subtitle">Describe your research area in plain language. Don't worry about structure yet.</p>
+    <div class="form-group">
+      <label for="topic">Research Topic or Idea</label>
+      <textarea id="topic" placeholder="e.g., I want to understand how cash transfers affect school enrollment in rural India"></textarea>
+      <p class="hint">Be as specific as you can about the population, intervention, and outcome you're interested in.</p>
+    </div>
+    <div class="form-group">
+      <label>What type of research is this?</label>
+      <div class="option-grid" id="researchType">
+        <label class="option-pill"><input type="radio" name="rtype" value="quantitative"> Quantitative</label>
+        <label class="option-pill"><input type="radio" name="rtype" value="qualitative"> Qualitative</label>
+        <label class="option-pill"><input type="radio" name="rtype" value="mixed"> Mixed Methods</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Purpose</label>
+      <div class="option-grid" id="purpose">
+        <label class="option-pill"><input type="radio" name="purpose" value="proposal"> Proposal/Funding</label>
+        <label class="option-pill"><input type="radio" name="purpose" value="thesis"> Thesis/Dissertation</label>
+        <label class="option-pill"><input type="radio" name="purpose" value="evaluation"> Evaluation/MEL</label>
+        <label class="option-pill"><input type="radio" name="purpose" value="exploratory"> Exploratory</label>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goToStep(2)">Next: Choose Framework</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Framework -->
+  <div class="card step-card hidden" id="step2">
+    <h2>Choose Your Framework</h2>
+    <p class="subtitle">Select the framework that best fits your research type.</p>
+
+    <div class="form-group">
+      <div class="option-grid" id="frameworkChoice" style="flex-direction: column;">
+        <label class="option-pill" style="flex-direction: column; align-items: flex-start; padding: 1rem;">
+          <input type="radio" name="framework" value="pico">
+          <div style="font-weight: 700; font-family: var(--font-heading); margin-bottom: 0.25rem;">PICO — For Quantitative Research</div>
+          <div style="font-size: 0.8rem; color: var(--text-secondary);">Population, Intervention, Comparison, Outcome. Best for impact evaluations, RCTs, quasi-experiments.</div>
+        </label>
+        <label class="option-pill" style="flex-direction: column; align-items: flex-start; padding: 1rem;">
+          <input type="radio" name="framework" value="spider">
+          <div style="font-weight: 700; font-family: var(--font-heading); margin-bottom: 0.25rem;">SPIDER — For Qualitative Research</div>
+          <div style="font-size: 0.8rem; color: var(--text-secondary);">Sample, Phenomenon of Interest, Design, Evaluation, Research type. Best for qualitative and mixed-methods studies.</div>
+        </label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goToStep(1)">Back</button>
+      <button class="btn btn-primary" onclick="goToStep(3)">Next: Fill Components</button>
+    </div>
+  </div>
+
+  <!-- Step 3: PICO Components -->
+  <div class="card step-card hidden" id="step3-pico">
+    <h2>PICO Components</h2>
+    <p class="subtitle">Break your question into its core components.</p>
+
+    <div class="form-group">
+      <label for="pico-p">P — Population</label>
+      <input type="text" id="pico-p" placeholder="e.g., Rural households in Bihar with children aged 6-14">
+      <p class="hint">Who are you studying? Be specific about geography, demographics, and eligibility.</p>
+    </div>
+    <div class="form-group">
+      <label for="pico-i">I — Intervention</label>
+      <input type="text" id="pico-i" placeholder="e.g., Conditional cash transfers (₹500/month per child)">
+      <p class="hint">What treatment, programme, or exposure are you examining?</p>
+    </div>
+    <div class="form-group">
+      <label for="pico-c">C — Comparison</label>
+      <input type="text" id="pico-c" placeholder="e.g., Households receiving no transfer (control group)">
+      <p class="hint">What is the counterfactual? What happens without the intervention?</p>
+    </div>
+    <div class="form-group">
+      <label for="pico-o">O — Outcome</label>
+      <input type="text" id="pico-o" placeholder="e.g., Primary school enrollment rates">
+      <p class="hint">What measurable result are you looking for?</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goToStep(2)">Back</button>
+      <button class="btn btn-primary" onclick="goToStep(4)">Next: Refine</button>
+    </div>
+  </div>
+
+  <!-- Step 3: SPIDER Components -->
+  <div class="card step-card hidden" id="step3-spider">
+    <h2>SPIDER Components</h2>
+    <p class="subtitle">Break your question into its core components.</p>
+
+    <div class="form-group">
+      <label for="spider-s">S — Sample</label>
+      <input type="text" id="spider-s" placeholder="e.g., Female community health workers in Rajasthan">
+      <p class="hint">Who or what is your sample? Describe the group you're studying.</p>
+    </div>
+    <div class="form-group">
+      <label for="spider-pi">PI — Phenomenon of Interest</label>
+      <input type="text" id="spider-pi" placeholder="e.g., Experiences of workload and burnout during COVID-19">
+      <p class="hint">What phenomenon, behaviour, or experience are you investigating?</p>
+    </div>
+    <div class="form-group">
+      <label for="spider-d">D — Design</label>
+      <select id="spider-d">
+        <option value="">Select study design...</option>
+        <option value="phenomenology">Phenomenology</option>
+        <option value="grounded-theory">Grounded Theory</option>
+        <option value="case-study">Case Study</option>
+        <option value="ethnography">Ethnography</option>
+        <option value="narrative">Narrative Inquiry</option>
+        <option value="participatory">Participatory Action Research</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="spider-e">E — Evaluation</label>
+      <input type="text" id="spider-e" placeholder="e.g., Thematic analysis of semi-structured interviews">
+      <p class="hint">How will you evaluate or analyse the data?</p>
+    </div>
+    <div class="form-group">
+      <label for="spider-r">R — Research Type</label>
+      <select id="spider-r">
+        <option value="">Select research type...</option>
+        <option value="qualitative">Qualitative</option>
+        <option value="mixed-methods">Mixed Methods</option>
+      </select>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goToStep(2)">Back</button>
+      <button class="btn btn-primary" onclick="goToStep(4)">Next: Refine</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Refine -->
+  <div class="card step-card hidden" id="step4">
+    <h2>Refine Your Question</h2>
+    <p class="subtitle">Review and polish your research question. Edit it to be clear, specific, and feasible.</p>
+
+    <div class="form-group">
+      <label for="generatedRQ">Generated Research Question</label>
+      <textarea id="generatedRQ" rows="4" style="font-size: 1rem; font-weight: 500;"></textarea>
+      <p class="hint">Edit freely. A good RQ is specific, measurable, and answerable with available data.</p>
+    </div>
+
+    <div class="form-group">
+      <label>Quality Checklist</label>
+      <div id="checklist" style="margin-top: 0.5rem;"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goToStep(3)">Back</button>
+      <button class="btn btn-primary" onclick="goToStep(5)">Generate Full Output</button>
+    </div>
+  </div>
+
+  <!-- Step 5: Output -->
+  <div class="card step-card hidden" id="step5">
+    <h2>Your Research Question</h2>
+    <p class="subtitle">Here's your structured research question with analysis and method suggestions.</p>
+
+    <div class="rq-output">
+      <div class="rq-label">Research Question</div>
+      <div class="rq-text" id="finalRQ"></div>
+    </div>
+
+    <div class="analysis-grid" id="analysisGrid"></div>
+
+    <div style="margin-top: 1.5rem;">
+      <h3 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 0.75rem;">Suggested Methods</h3>
+      <ul class="methods-list" id="methodsList"></ul>
+    </div>
+
+    <div class="btn-row" style="margin-top: 2rem;">
+      <button class="btn btn-secondary" onclick="goToStep(1)">Start Over</button>
+      <button class="btn copy-btn" onclick="copyOutput()">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy to Clipboard
+      </button>
+    </div>
+  </div>
+</main>
+
+<script>
+var currentStep = 1;
+
+// Theme toggle
+(function() {
+  var saved = localStorage.getItem('theme') || 'system';
+  function apply(t) {
+    if (t === 'system') document.body.classList.toggle('dark-mode', window.matchMedia('(prefers-color-scheme: dark)').matches);
+    else document.body.classList.toggle('dark-mode', t === 'dark');
+  }
+  apply(saved);
+  document.getElementById('themeToggle').addEventListener('click', function() {
+    var isDark = document.body.classList.contains('dark-mode');
+    var next = isDark ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    apply(next);
+  });
+})();
+
+// Option pill selection
+document.querySelectorAll('.option-grid').forEach(function(grid) {
+  grid.addEventListener('click', function(e) {
+    var pill = e.target.closest('.option-pill');
+    if (!pill) return;
+    var input = pill.querySelector('input');
+    if (!input) return;
+    input.checked = true;
+    grid.querySelectorAll('.option-pill').forEach(function(p) { p.classList.remove('selected'); });
+    pill.classList.add('selected');
+  });
+});
+
+function getFramework() {
+  var el = document.querySelector('input[name="framework"]:checked');
+  return el ? el.value : 'pico';
+}
+
+function goToStep(step) {
+  // Validation
+  if (step > 1 && !document.getElementById('topic').value.trim()) {
+    document.getElementById('topic').focus();
+    return;
+  }
+
+  // Hide all step cards
+  document.querySelectorAll('.step-card').forEach(function(c) { c.classList.add('hidden'); });
+
+  // Show the right card
+  if (step === 3) {
+    var fw = getFramework();
+    document.getElementById('step3-' + fw).classList.remove('hidden');
+  } else if (step === 4) {
+    generateDraftRQ();
+    document.getElementById('step4').classList.remove('hidden');
+  } else if (step === 5) {
+    generateFinalOutput();
+    document.getElementById('step5').classList.remove('hidden');
+  } else {
+    document.getElementById('step' + step).classList.remove('hidden');
+  }
+
+  // Update progress pills
+  document.querySelectorAll('.step-pill').forEach(function(pill) {
+    var s = parseInt(pill.dataset.step);
+    pill.classList.remove('active', 'done');
+    if (s === step) pill.classList.add('active');
+    else if (s < step) pill.classList.add('done');
+  });
+
+  currentStep = step;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function generateDraftRQ() {
+  var fw = getFramework();
+  var rq = '';
+
+  if (fw === 'pico') {
+    var p = document.getElementById('pico-p').value.trim() || '[population]';
+    var i = document.getElementById('pico-i').value.trim() || '[intervention]';
+    var c = document.getElementById('pico-c').value.trim() || '[comparison]';
+    var o = document.getElementById('pico-o').value.trim() || '[outcome]';
+    rq = 'What is the effect of ' + i + ' on ' + o + ' among ' + p + ', compared to ' + c + '?';
+  } else {
+    var s = document.getElementById('spider-s').value.trim() || '[sample]';
+    var pi = document.getElementById('spider-pi').value.trim() || '[phenomenon]';
+    var d = document.getElementById('spider-d').value || '[design]';
+    var ev = document.getElementById('spider-e').value.trim() || '[evaluation method]';
+    rq = 'How do ' + s + ' experience ' + pi + ', as explored through ' + d + ' and analysed using ' + ev + '?';
+  }
+
+  document.getElementById('generatedRQ').value = rq;
+  generateChecklist();
+}
+
+function generateChecklist() {
+  var checks = [
+    { label: 'Is the population/sample clearly defined?', key: 'pop' },
+    { label: 'Is the question answerable with available data or feasible methods?', key: 'feasible' },
+    { label: 'Is the scope narrow enough for one study?', key: 'scope' },
+    { label: 'Does it avoid value-laden or leading language?', key: 'neutral' },
+    { label: 'Is the expected outcome measurable or observable?', key: 'measurable' }
+  ];
+
+  var html = checks.map(function(c) {
+    return '<label style="display:flex;align-items:center;gap:0.5rem;padding:0.4rem 0;font-size:0.85rem;cursor:pointer;">' +
+      '<input type="checkbox" style="width:16px;height:16px;accent-color:var(--success);cursor:pointer;"> ' +
+      c.label + '</label>';
+  }).join('');
+
+  document.getElementById('checklist').innerHTML = html;
+}
+
+function generateFinalOutput() {
+  var rq = document.getElementById('generatedRQ').value.trim();
+  document.getElementById('finalRQ').textContent = rq;
+
+  var fw = getFramework();
+  var rtype = (document.querySelector('input[name="rtype"]:checked') || {}).value || 'quantitative';
+  var purpose = (document.querySelector('input[name="purpose"]:checked') || {}).value || 'exploratory';
+
+  // Analysis grid
+  var grid = document.getElementById('analysisGrid');
+  var items = [];
+
+  if (fw === 'pico') {
+    items = [
+      { title: 'Population', text: document.getElementById('pico-p').value || '—' },
+      { title: 'Intervention', text: document.getElementById('pico-i').value || '—' },
+      { title: 'Comparison', text: document.getElementById('pico-c').value || '—' },
+      { title: 'Outcome', text: document.getElementById('pico-o').value || '—' }
+    ];
+  } else {
+    items = [
+      { title: 'Sample', text: document.getElementById('spider-s').value || '—' },
+      { title: 'Phenomenon', text: document.getElementById('spider-pi').value || '—' },
+      { title: 'Design', text: document.getElementById('spider-d').value || '—' },
+      { title: 'Evaluation', text: document.getElementById('spider-e').value || '—' }
+    ];
+  }
+
+  grid.innerHTML = items.map(function(it) {
+    return '<div class="analysis-item"><h4>' + it.title + '</h4><p>' + it.text + '</p></div>';
+  }).join('');
+
+  // Suggested methods
+  var methods = [];
+  if (rtype === 'quantitative') {
+    methods = [
+      'Randomised Controlled Trial (RCT)',
+      'Difference-in-Differences (DiD)',
+      'Regression Discontinuity Design (RDD)',
+      'Propensity Score Matching (PSM)',
+      'Instrumental Variables (IV)'
+    ];
+  } else if (rtype === 'qualitative') {
+    methods = [
+      'Semi-structured Interviews',
+      'Focus Group Discussions (FGDs)',
+      'Participatory Observation',
+      'Document/Policy Analysis',
+      'Thematic Analysis'
+    ];
+  } else {
+    methods = [
+      'Sequential Explanatory Design',
+      'Convergent Parallel Design',
+      'Survey + Follow-up Interviews',
+      'Quantitative analysis with qualitative case studies',
+      'Process tracing with statistical validation'
+    ];
+  }
+
+  if (purpose === 'evaluation') {
+    methods.push('Theory-based Evaluation');
+    methods.push('Most Significant Change (MSC)');
+  }
+
+  document.getElementById('methodsList').innerHTML = methods.map(function(m) {
+    return '<li>' + m + '</li>';
+  }).join('');
+}
+
+function copyOutput() {
+  var rq = document.getElementById('finalRQ').textContent;
+  var fw = getFramework();
+  var components = '';
+
+  if (fw === 'pico') {
+    components = '\n\nPICO Components:\n' +
+      'P (Population): ' + (document.getElementById('pico-p').value || '—') + '\n' +
+      'I (Intervention): ' + (document.getElementById('pico-i').value || '—') + '\n' +
+      'C (Comparison): ' + (document.getElementById('pico-c').value || '—') + '\n' +
+      'O (Outcome): ' + (document.getElementById('pico-o').value || '—');
+  } else {
+    components = '\n\nSPIDER Components:\n' +
+      'S (Sample): ' + (document.getElementById('spider-s').value || '—') + '\n' +
+      'PI (Phenomenon): ' + (document.getElementById('spider-pi').value || '—') + '\n' +
+      'D (Design): ' + (document.getElementById('spider-d').value || '—') + '\n' +
+      'E (Evaluation): ' + (document.getElementById('spider-e').value || '—');
+  }
+
+  var methods = Array.from(document.querySelectorAll('#methodsList li')).map(function(li) { return '- ' + li.textContent; }).join('\n');
+
+  var full = 'Research Question:\n' + rq + components + '\n\nSuggested Methods:\n' + methods + '\n\nGenerated by ImpactMojo Research Question Builder Pro';
+
+  navigator.clipboard.writeText(full).then(function() {
+    var btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy to Clipboard'; }, 2000);
+  });
+}
+</script>
+</body>
+</html>
