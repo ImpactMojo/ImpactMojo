@@ -32,25 +32,25 @@ const THEME_ID = "cornflower";
 // ─── Art style per category ─────────────────────────────────────────────────
 
 const ART_STYLES = {
-  "MEL & Research": "Warli tribal art style — geometric white figures on earthy backgrounds, dot-pattern borders, minimalist folk storytelling",
-  "Data & Technology": "Gond art style — intricate dot-and-line patterns, nature motifs with data elements, vibrant earth tones on dark backgrounds",
-  "Policy & Economics": "Kalamkari art style — flowing hand-drawn textile patterns, detailed narrative scenes, warm terracotta and indigo palette",
-  "Gender & Equity": "Madhubani art style — bold outlines with crosshatching fill, symmetric compositions, vibrant primary colors on natural backgrounds",
-  "Health & Communication": "Pattachitra art style — ornamental borders, narrative panel structure, rich jewel tones with fine line detail",
-  "Philosophy & Governance": "Pichwai art style — devotional painting traditions, lotus and nature motifs, deep greens and golds with fine brushwork",
+  "MEL & Research": "Sepia-toned documentary photography of rural Indian communities, framed with Warli tribal art borders — geometric white dot-pattern margins on earthy terracotta edges",
+  "Data & Technology": "Sepia-toned documentary photography of Indian village data collection and technology use, framed with Gond art borders — intricate dot-and-line nature patterns on dark margins",
+  "Policy & Economics": "Sepia-toned documentary photography of Indian governance, markets, and public life, framed with Kalamkari art borders — flowing hand-drawn textile patterns in terracotta and indigo margins",
+  "Gender & Equity": "Sepia-toned documentary photography of Indian women, girls, and diverse communities, framed with Madhubani art borders — bold crosshatched patterns in vibrant primary colors on margins",
+  "Health & Communication": "Sepia-toned documentary photography of Indian rural health workers and community health settings, framed with Pattachitra art borders — ornamental narrative panels in jewel tones on margins",
+  "Philosophy & Governance": "Sepia-toned documentary photography of Indian democratic institutions and community gatherings, framed with Pichwai art borders — lotus and nature motifs in deep green and gold margins",
 };
 
 // ─── Shared image & content style ───────────────────────────────────────────
 
 const IMAGE_STYLE_BASE = [
-  "Sargam-style clean line SVG illustrations.",
-  "Indian folk art inspired, South Asian context.",
-  "Show diverse brown-skinned South Asian people — women, men, children, transgender individuals, elders.",
-  "Include animals (cows, goats, birds, elephants) where relevant.",
-  "Rural and semi-urban Indian settings — villages, fields, markets, community spaces, schools, health centers.",
-  "No white/Western people. No luxury or upper-class settings.",
-  "Inclusive, democratic, warm. Community-centered compositions.",
-  "Flat illustration style with clean outlines, minimal gradients.",
+  "MANDATORY: All photographs must show ONLY brown-skinned South Asian / Indian people. NEVER generate white, East Asian, or Western-looking people.",
+  "MANDATORY: Settings must be rural Indian villages, peri-urban small towns, fields, mandis (markets), anganwadis, primary health centers, gram panchayat offices, community halls, river banks, farms. NEVER show glass offices, luxury interiors, Western cities, or affluent urban settings.",
+  "Sepia-toned warm documentary photography style — like archival National Geographic or PRADAN field documentation.",
+  "Show diverse people: women in sarees and salwar kameez, men in kurta-pyjama and dhotis, children in school uniforms, elders, transgender individuals (hijra community). Mixed ages and genders in every group shot.",
+  "Include working animals where contextually relevant: cows, buffaloes, goats, bullocks with carts, chickens, dogs, elephants in forest/tribal areas.",
+  "Activities: farming, hand-pumping water, SHG meetings, mid-day meals, ASHA workers visiting homes, children studying under trees, panchayat meetings, market days, brick kilns, handloom weaving, fishing.",
+  "Emotional tone: dignity, agency, warmth, resilience. NOT poverty-porn. People should look engaged and capable, not helpless.",
+  "Folk art borders from each category's tradition frame the photographs — visible decorative margins around the photo content.",
 ].join(" ");
 
 // ─── Footer config ──────────────────────────────────────────────────────────
@@ -97,7 +97,7 @@ const ADDITIONAL_INSTRUCTIONS = [
   "",
   "LAYOUT: Clean layouts with generous whitespace. Use card-based sections.",
   "DIVERSITY: All human illustrations must show South Asian / brown-skinned people.",
-  "IMAGERY: Prefer line-art SVG style illustrations over photographs. Indian folk art motifs.",
+  "IMAGERY: Use sepia-toned documentary photography of rural/peri-urban India. Frame photos with Indian folk art borders. All people MUST be brown-skinned South Asian. NO white people, NO Western/urban/luxury settings.",
   "CONTEXT: Rural India, community development, grassroots settings. Democratic and inclusive.",
   "ACCESSIBILITY: High contrast text. No text over busy backgrounds.",
 ].join("\n");
