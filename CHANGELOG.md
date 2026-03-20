@@ -5,6 +5,13 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.7.0] - 2026-03-20
+
+### Added
+- **BookSummaries** — New content type under Specials: interactive book summaries
+- **The Handbook of Social Protection** (Hanna & Olken, MIT Press 2026) — first interactive book companion with chapter navigator, evidence explorer, data playground, programme compare, glossary, South Asia lens, and AI-powered Q&A
+- BookSummaries entry added to Specials dropdown nav, catalog, sitemap, and search index
+
 ## [10.6.0] - 2026-03-19
 
 ### Added

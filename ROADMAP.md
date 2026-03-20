@@ -37,6 +37,8 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 - [x] **Server-side auth-gate** on all premium Netlify resource sites
 - [x] **Removed mobile-index.html** — index.html is now fully responsive
 - [x] **Admin tier protection** — database trigger prevents client-side downgrades
+- [x] **BookSummaries** — new content type under Specials with interactive book companions
+- [x] **Handbook of Social Protection** — first interactive book summary (Hanna & Olken, MIT Press 2026)
 
 ## Q2 2026 (Apr-Jun) — Planned
 
