@@ -672,8 +672,8 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 10.7.0
-**Last Updated:** March 2026
+**Version:** 10.8.1
+**Last Updated:** 2026-03-21
 **License:** MIT (code) + CC BY-NC-ND 4.0 (content)
 **Hosting:** Netlify
 
