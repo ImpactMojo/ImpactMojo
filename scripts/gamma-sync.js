@@ -125,56 +125,33 @@ const ADDITIONAL_INSTRUCTIONS = [
 ].join("\n");
 
 // ─── Course catalog ─────────────────────────────────────────────────────────
+// 26/38 completed — only the 12 remaining courses below need generation.
+// Completed slugs (for reference): mel-basics, research-ethics, visual-eth,
+// qual-methods, obs2insight, eng-dev, data-lit, data-feminism, eda-hhs,
+// bi-analysis, multivariate-basics, irt-basics, econometrics-101, digital-ethics,
+// climate-essentials, dev-economics, pol-economy, cost-effectiveness,
+// livelihood-basics, advocacy-basics, fundraising-basics, post-truth-101,
+// dev-architecture, edu-pedagogy, SRHR-basics, wee-studies
 
 const COURSES = [
-  // MEL & Research
-  { slug: "mel-basics", title: "MEAL 101 — Monitoring, Evaluation, Accountability and Learning", category: "MEL & Research", description: "Monitoring, Evaluation, Accountability and Learning frameworks for impact measurement. Build foundational skills in MEL systems that drive adaptive management and demonstrate program impact." },
-  { slug: "research-ethics", title: "Research Ethics 101", category: "MEL & Research", description: "Navigate ethical complexities of conducting research in development settings, from informed consent to data privacy and community benefit-sharing." },
-  { slug: "visual-eth", title: "Visual Ethnography 101", category: "MEL & Research", description: "Harness the power of visual methods in development research, from participatory photography to video documentation and visual storytelling." },
-  { slug: "obs2insight", title: "Getting to Insights from Field Observations 101", category: "MEL & Research", description: "Transform raw field observations into actionable insights through systematic observation techniques, pattern recognition, and analytical frameworks." },
-  { slug: "eng-dev", title: "English for Development Professionals 101", category: "MEL & Research", description: "Master specialized vocabulary and communication strategies for international development work, from policy briefs to stakeholder consultations." },
-  { slug: "qual-methods", title: "Qualitative Research Methods 101", category: "MEL & Research", description: "Master in-depth interviewing, focus group facilitation, and ethnographic techniques that capture rich contextual insights in development research." },
-
-  // Data & Technology
-  { slug: "data-lit", title: "Data Literacy 101", category: "Data & Technology", description: "Develop critical skills for understanding, interpreting, and communicating with data in development contexts, from survey design to visualization." },
-  { slug: "data-feminism", title: "Data Feminism 101", category: "Data & Technology", description: "Explore how power dynamics shape data collection, analysis, and interpretation through an intersectional feminist framework." },
-  { slug: "eda-hhs", title: "Exploratory Data Analysis for Household Surveys 101", category: "Data & Technology", description: "Develop skills for cleaning, exploring, and visualizing household survey data using statistical software and reproducible research practices." },
-  { slug: "bi-analysis", title: "Bivariate Analysis 101", category: "Data & Technology", description: "Master techniques for examining relationships between two variables, from correlation analysis to cross-tabulations and simple regression." },
-  { slug: "multivariate-basics", title: "Multivariate Analysis 101", category: "Data & Technology", description: "Master advanced statistical techniques for analyzing complex relationships among multiple variables, from factor analysis to structural equation modeling." },
-  { slug: "irt-basics", title: "Item Response Theory 101", category: "Data & Technology", description: "Learn advanced psychometric techniques for developing and validating measurement instruments, from poverty indices to learning assessments." },
-  { slug: "econometrics-101", title: "Econometrics 101", category: "Data & Technology", description: "Master statistical techniques for causal inference in development economics, from randomized controlled trials to quasi-experimental methods." },
-  { slug: "digital-ethics", title: "Digital Ethics 101", category: "Data & Technology", description: "Navigate ethical challenges in digital development, from data privacy and algorithmic bias to digital divides and surveillance concerns." },
-
-  // Policy & Economics
-  { slug: "climate-essentials", title: "Climate Essentials 101", category: "Policy & Economics", description: "Understand the science, economics, and politics of climate change through a development lens, exploring mitigation, adaptation, and climate justice." },
-  { slug: "dev-economics", title: "Development Economics 101", category: "Policy & Economics", description: "Master core theories of economic development from structural transformation to behavioral economics, examining why nations succeed or fail." },
-  { slug: "pol-economy", title: "Political Economy 101", category: "Policy & Economics", description: "Unpack how political institutions, power structures, and economic systems interact to shape development outcomes and policy choices." },
-  { slug: "cost-effectiveness", title: "Cost Effectiveness Analysis 101", category: "Policy & Economics", description: "Master economic evaluation techniques for comparing development interventions, from cost-benefit analysis to cost-utility assessments." },
-  { slug: "livelihood-basics", title: "Livelihoods 101", category: "Policy & Economics", description: "Understand sustainable livelihoods frameworks and design interventions that build resilient economic opportunities for vulnerable populations." },
-  { slug: "advocacy-basics", title: "Advocacy Basics 101", category: "Policy & Economics", description: "Develop skills for policy advocacy, from stakeholder mapping and message framing to campaign strategy and coalition building." },
-  { slug: "fundraising-basics", title: "Fundraising Basics 101", category: "Policy & Economics", description: "Develop skills for resource mobilization in development, from grant writing to donor engagement and partnership building." },
-  { slug: "post-truth-101", title: "Post Truth Politics 101", category: "Policy & Economics", description: "Analyze how misinformation, polarization, and erosion of institutional trust shape development outcomes in the digital age." },
-  { slug: "dev-architecture", title: "Global Development Governance and Architecture 101", category: "Policy & Economics", description: "Navigate the complex ecosystem of development institutions from the UN system to multilateral banks and bilateral agencies." },
-
-  // Gender & Equity
-  { slug: "edu-pedagogy", title: "Education and Pedagogy 101", category: "Gender & Equity", description: "Discover evidence-based teaching methodologies and learning theories that drive educational outcomes in diverse developmental contexts." },
-  { slug: "SRHR-basics", title: "Sexual and Reproductive Health and Rights 101", category: "Gender & Equity", description: "Understand fundamentals of SRHR, from clinical services to rights-based approaches and gender-transformative programming." },
-  { slug: "wee-studies", title: "Women's Economic Empowerment 101", category: "Gender & Equity", description: "Explore strategies for enhancing women's economic participation, from financial inclusion to entrepreneurship and labor market interventions." },
+  // Gender & Equity (remaining)
   { slug: "social-margins", title: "Marginalised Identities 101", category: "Gender & Equity", description: "Examine how caste, ethnicity, disability, sexuality, and other identity markers create overlapping systems of marginalization." },
   { slug: "decent-work", title: "Decent Work For All 101", category: "Gender & Equity", description: "Explore ILO frameworks for promoting productive employment, labor rights, social protection, and social dialogue." },
   { slug: "care-economy-101", title: "Care Economy 101", category: "Gender & Equity", description: "Understand the economic value of unpaid care work and explore policies that support care workers while redistributing care responsibilities." },
   { slug: "sel-basics", title: "Social and Emotional Learning 101", category: "Gender & Equity", description: "Understand SEL frameworks and their application in education and youth development programs worldwide." },
 
-  // Health & Communication
+  // Health & Communication (remaining)
   { slug: "pub-health-basics", title: "Public Health 101", category: "Health & Communication", description: "Navigate fundamentals of epidemiology, health systems, and disease prevention strategies that underpin global health interventions." },
   { slug: "bcc-comms", title: "Behaviour Change Communications 101", category: "Health & Communication", description: "Master the psychology and practice of designing communication interventions that shift behaviors, from health to environmental conservation." },
 
-  // Philosophy & Governance
+  // Philosophy & Governance (remaining)
   { slug: "ind-constitution", title: "Indian Constitution 101", category: "Philosophy & Governance", description: "Examine the constitutional framework guiding India's democracy, including fundamental rights, directive principles, and federal structure." },
   { slug: "inequality-basics", title: "Poverty and Inequality 101", category: "Philosophy & Governance", description: "Examine multidimensional poverty measurement, inequality indices, and structural drivers of economic disparities." },
   { slug: "decolonize-dev", title: "Decolonial Development 101", category: "Philosophy & Governance", description: "Challenge dominant development paradigms through postcolonial and decolonial frameworks questioning Western-centric approaches." },
   { slug: "community-dev", title: "Community Development 101", category: "Philosophy & Governance", description: "Master participatory approaches to community mobilization, from asset-based development to collective action and social capital." },
   { slug: "env-justice", title: "Environmental Justice 101", category: "Philosophy & Governance", description: "Explore how environmental degradation disproportionately impacts marginalized communities and frameworks for equitable environmental governance." },
+
+  // MEL & Research (remaining)
   { slug: "toc-workbench", title: "Theory of Change Workbench 101", category: "MEL & Research", description: "Build and test Theories of Change for development programs using logical frameworks and results chains." },
 ];
 
