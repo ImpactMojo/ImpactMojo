@@ -2,6 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.8.2 — March 21, 2026
+
+**What changed for you:** Housekeeping release — updated counts, fixed stale references, and refreshed documentation.
+
+### Documentation & Consistency
+- Updated README version to 10.8.1 and date
+- Fixed stale content counts across admin dashboard, analytics, transparency, and catalog pages (courses: 41→48, games: 11→16, labs: 15→19)
+- Updated Dataverse count from 215 to 247 in index.html and transparency page
+- Updated catalog.html header to reflect 9 flagship courses and 19 labs
+- Refreshed sitemap.xml lastmod dates to 2026-03-21
+- Created pre-housekeeping backup of index.html
+
 ## v10.8.1 — March 21, 2026
 
 **What changed for you:** All blog posts now display napkin.ai illustrations, and blog card thumbnails on the blog index page are fixed.
