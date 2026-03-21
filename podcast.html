@@ -1611,19 +1611,53 @@ body.light-mode {
 <!-- Footer -->
 <footer class="footer">
     <div class="footer-content">
-        <div class="footer-links">
-            <a href="index.html">Home</a>
-            <a href="catalog.html">Courses</a>
-            <a href="workshops.html">Workshops</a>
-            <a href="blog.html">Blog</a>
-            <a href="podcast.html">Podcast</a>
-            <a href="about.html">About</a>
-            <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="terms-of-service.html">Terms of Service</a>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="about.html">About ImpactMojo</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="community/community.html">Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal &amp; IT Act</h4>
+                <ul>
+                    <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="refund-policy.html">Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="catalog.html">Course Catalog</a></li>
+                    <li><a href="premium.html">Premium Access</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="podcast.html">Podcast</a></li>
+                    <li><a href="handouts.html">Handouts</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="footer-info">
-            <p>© 2026 ImpactMojo. All rights reserved.</p>
-            <p>Questions? Email us at <a href="mailto:hello@impactmojo.in">hello@impactmojo.in</a></p>
+        <div class="footer-bottom">
+            <p class="footer-copyright">&copy; 2026 ImpactMojo. All rights reserved. Made with &lt;3 in India.</p>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/company/impactmojo" target="_blank" rel="noopener" title="LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://www.instagram.com/impactmojo" target="_blank" rel="noopener" title="Instagram">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+                <a href="https://twitter.com/impactmojo" target="_blank" rel="noopener" title="X (Twitter)">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
         </div>
     </div>
 </footer>
@@ -1692,20 +1726,30 @@ body.light-mode {
 
 <!-- Theme & Chatbot Scripts -->
 <script>
-// Theme Management
-function toggleTheme() {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+// V3 Three-Way Theme System
+function getPreferredTheme() {
+    return localStorage.getItem('impactmojo-theme') || 'system';
 }
-
-function initTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        document.body.classList.add('dark-mode');
+function applyTheme(theme) {
+    var resolved = theme;
+    if (theme === 'system') {
+        resolved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
     }
+    document.documentElement.setAttribute('data-theme', resolved);
+    document.body.classList.toggle('light-mode', resolved === 'light');
+    document.body.classList.toggle('dark-mode', resolved === 'dark');
+    localStorage.setItem('impactmojo-theme', theme);
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+    });
 }
+applyTheme(getPreferredTheme());
+document.querySelectorAll('.theme-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { applyTheme(btn.getAttribute('data-theme')); });
+});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (getPreferredTheme() === 'system') applyTheme('system');
+});
 
 // Mobile Menu
 function toggleMobileMenu() {
@@ -1786,7 +1830,7 @@ function addBotMessage(text) {
 }
 
 // Initialize on page load
-document.addEventListener('DOMContentLoaded', initTheme);
+// Theme already initialized by applyTheme above
 </script>
 
 
