@@ -22,7 +22,7 @@
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- Supabase -->
 <link href="https://cdn.jsdelivr.net" rel="preconnect">
@@ -263,13 +263,47 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
 .empty-state svg { width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.4; }
 .empty-state p { margin-top: 0.5rem; }
 
-/* Footer */
-.footer {
-    text-align: center; padding: 2rem; margin-top: 3rem;
-    border-top: 1px solid var(--border-color); color: var(--text-muted);
-    font-size: 0.85rem;
+/* V3 Data Theme Light Mode */
+[data-theme="light"],
+body.light-mode {
+    --primary-bg: #F8FAFC;
+    --secondary-bg: #FFFFFF;
+    --accent-color: #0284C7;
+    --accent-hover: #0369A1;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --nav-bg: rgba(248, 250, 252, 0.95);
+    --nav-text: #0F172A;
 }
-.footer a { color: var(--accent-color); text-decoration: none; }
+
+/* V3 Decoration Container */
+.v3-decoration-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+.v3-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: pulseBlob 15s ease-in-out infinite; }
+.v3-blob-1 { top: 10%; right: 10%; width: 400px; height: 400px; background: var(--accent-color); }
+.v3-blob-2 { bottom: 20%; left: 5%; width: 300px; height: 300px; background: var(--secondary-accent, #6366F1); animation-delay: -5s; }
+@keyframes pulseBlob { 0%, 100% { transform: scale(1); opacity: 0.15; } 50% { transform: scale(1.1); opacity: 0.2; } }
+
+/* V3 Standard Footer */
+.footer { background: var(--secondary-bg); border-top: 1px solid var(--border-color); padding: 3rem 2rem 1.5rem; position: relative; z-index: 1; }
+.footer-content { max-width: 1200px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+.footer-section h4 { color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.footer-section ul { list-style: none; }
+.footer-section li { margin-bottom: 0.5rem; }
+.footer-section a { color: var(--text-secondary); font-size: 0.9rem; transition: color 0.2s ease; }
+.footer-section a:hover { color: var(--accent-color); }
+.footer-bottom { padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; }
+.footer-copyright { color: var(--text-muted); font-size: 0.85rem; }
+.footer-social { display: flex; gap: 1rem; }
+.footer-social a { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-secondary); transition: all 0.2s ease; }
+.footer-social a:hover { background: var(--accent-color); border-color: var(--accent-color); color: white; }
+.footer-social svg { width: 18px; height: 18px; fill: currentColor; }
+@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-bottom { flex-direction: column; text-align: center; } }
+@media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
 
 @media (max-width: 768px) {
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -488,6 +522,11 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 </style>
 </head>
 <body>
+<!-- V3 Decorative Elements -->
+<div class="v3-decoration-container">
+    <div class="v3-blob v3-blob-1"></div>
+    <div class="v3-blob v3-blob-2"></div>
+</div>
 <!-- V3 Floating Paper Plane -->
 <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2100,7 +2139,56 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2025-2026 ImpactMojo. <a href="index.html">Home</a> | <a href="premium.html">Premium</a> | <a href="mailto:hello@impactmojo.in">Contact</a></p>
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="about.html">About ImpactMojo</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="community/community.html">Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal &amp; IT Act</h4>
+                <ul>
+                    <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="refund-policy.html">Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="catalog.html">Course Catalog</a></li>
+                    <li><a href="premium.html">Premium Access</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="podcast.html">Podcast</a></li>
+                    <li><a href="handouts.html">Handouts</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copyright">&copy; 2026 ImpactMojo. All rights reserved. Made with &lt;3 in India.</p>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/company/impactmojo" target="_blank" rel="noopener" title="LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://www.instagram.com/impactmojo" target="_blank" rel="noopener" title="Instagram">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+                <a href="https://twitter.com/impactmojo" target="_blank" rel="noopener" title="X (Twitter)">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
 </footer>
 
 <script>

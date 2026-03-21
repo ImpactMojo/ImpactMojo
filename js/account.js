@@ -22,18 +22,30 @@
   // THEME
   // =========================================================================
 
-  function toggleTheme() {
-    document.body.classList.toggle('dark-mode');
-    var isDark = document.body.classList.contains('dark-mode');
-    IMState.theme.set(isDark ? 'dark' : 'light');
+  function getPreferredTheme() {
+    return localStorage.getItem('impactmojo-theme') || 'system';
   }
-
-  function initTheme() {
-    var saved = IMState.theme.get();
-    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (saved === 'dark' || (!saved && prefersDark)) {
-      document.body.classList.add('dark-mode');
+  function applyTheme(theme) {
+    var resolved = theme;
+    if (theme === 'system') {
+      resolved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
     }
+    document.documentElement.setAttribute('data-theme', resolved);
+    document.body.classList.toggle('light-mode', resolved === 'light');
+    document.body.classList.toggle('dark-mode', resolved === 'dark');
+    localStorage.setItem('impactmojo-theme', theme);
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+    });
+  }
+  function initTheme() {
+    applyTheme(getPreferredTheme());
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() { applyTheme(btn.getAttribute('data-theme')); });
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+      if (getPreferredTheme() === 'system') applyTheme('system');
+    });
   }
 
   // =========================================================================
@@ -684,7 +696,7 @@
   // EXPOSE GLOBALS (required for onclick="" attributes in HTML)
   // =========================================================================
 
-  window.toggleTheme       = toggleTheme;
+  window.applyTheme        = applyTheme;
   window.openChatbot       = openChatbot;
   window.closeChatbot      = closeChatbot;
   window.selectOption      = selectOption;

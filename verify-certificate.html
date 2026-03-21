@@ -80,7 +80,7 @@ function toggleMobileDropdown(event, element) {
 
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -126,6 +126,45 @@ body.light-mode {
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
+[data-theme="light"] {
+    --primary-bg: #F8FAFC;
+    --secondary-bg: #FFFFFF;
+    --accent-color: #0284C7;
+    --accent-hover: #0369A1;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --card-bg: #FFFFFF;
+    --hover-bg: #F1F5F9;
+    --border-color: #E2E8F0;
+    --nav-bg: rgba(248, 250, 252, 0.95);
+    --nav-text: #0F172A;
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] {
+    --primary-bg: #0F172A;
+    --secondary-bg: #1E293B;
+    --accent-color: #0EA5E9;
+    --accent-hover: #0284C7;
+    --secondary-accent: #6366F1;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --card-bg: #1E293B;
+    --hover-bg: #334155;
+    --border-color: #334155;
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --nav-bg: rgba(15, 23, 42, 0.95);
+    --nav-text: #F1F5F9;
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
 html { scroll-behavior: smooth; }
 body {
     font-family: 'Amaranth', sans-serif;
@@ -156,11 +195,12 @@ h1, h2, h3, h4 { font-family: 'Inter', sans-serif; font-weight: 700; }
 .dropdown-menu a { display: block; padding: 0.5rem 0.75rem; border-radius: 8px; white-space: nowrap; }
 .dropdown-divider { height: 1px; background: var(--border-color); margin: 0.25rem 0; }
 .nav-buttons { display: flex; align-items: center; gap: 0.5rem; }
-.theme-toggle { background: none; border: none; cursor: pointer; padding: 0.5rem; border-radius: 8px; color: var(--text-secondary); }
-.theme-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
-.icon-moon { display: none; }
-body.light-mode .icon-sun { display: none; }
-body.light-mode .icon-moon { display: block; }
+/* Three-way Theme Selector */
+.theme-selector { display: flex; gap: 4px; background: var(--hover-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 4px; }
+.theme-btn { background: transparent; border: none; color: var(--text-secondary); padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+.theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+.theme-btn.active { background: var(--accent-color); color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.theme-btn svg { width: 18px; height: 18px; }
 .mobile-menu-toggle { display: none; }
 .v3-inline-icon { width: 16px; height: 16px; vertical-align: middle; filter: invert(1); opacity: 0.7; }
 body.light-mode .v3-inline-icon { filter: none; }
@@ -348,6 +388,17 @@ body.light-mode .v3-inline-icon { filter: none; }
     .mobile-auth-login { background: var(--hover-bg); color: var(--text-primary); }
     .mobile-auth-signup { background: var(--gradient-primary); color: white; }
 }
+
+/* V3 Paper Plane & Decoration */
+.v3-decoration-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+.v3-paper-plane { position: fixed; top: 15%; right: 8%; width: 140px; height: 140px; opacity: 0.25; z-index: 0; pointer-events: none; animation: v3-float-plane 25s ease-in-out infinite; }
+@keyframes v3-float-plane { 0% { transform: translate(0, 0) rotate(0deg); } 20% { transform: translate(-60px, 40px) rotate(10deg); } 40% { transform: translate(120px, 30px) rotate(-8deg); } 60% { transform: translate(40px, 60px) rotate(15deg); } 80% { transform: translate(-30px, 20px) rotate(-5deg); } 100% { transform: translate(0, 0) rotate(0deg); } }
+@media (max-width: 768px) { .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; } }
+@media (prefers-reduced-motion: reduce) { .v3-paper-plane { animation: none !important; } }
+.v3-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: pulseBlob 15s ease-in-out infinite; }
+.v3-blob-1 { top: 10%; right: 10%; width: 400px; height: 400px; background: var(--accent-color); }
+.v3-blob-2 { bottom: 20%; left: 5%; width: 300px; height: 300px; background: var(--secondary-accent); animation-delay: -5s; }
+@keyframes pulseBlob { 0%, 100% { transform: scale(1); opacity: 0.15; } 50% { transform: scale(1.1); opacity: 0.2; } }
 </style>
 <script src="js/config.js"></script>
 </head>
@@ -415,10 +466,17 @@ body.light-mode .v3-inline-icon { filter: none; }
         </ul>
 
         <div class="nav-buttons">
-            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
-                <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            </button>
+            <div class="theme-selector" aria-label="Theme selection">
+                <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
         </div>
     </nav>
 </header>
@@ -606,17 +664,30 @@ body.light-mode .v3-inline-icon { filter: none; }
 </footer>
 
 <script>
-// Theme
-function toggleTheme() {
-    document.body.classList.toggle('light-mode');
-    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+// Theme Management
+function getPreferredTheme() {
+    return localStorage.getItem('impactmojo-theme') || 'system';
 }
-(function() {
-    var t = localStorage.getItem('theme');
-    if (t === 'light' || (!t && !window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.body.classList.add('light-mode');
+function applyTheme(theme) {
+    var resolved = theme;
+    if (theme === 'system') {
+        resolved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
     }
-})();
+    document.documentElement.setAttribute('data-theme', resolved);
+    document.body.classList.toggle('light-mode', resolved === 'light');
+    document.body.classList.toggle('dark-mode', resolved === 'dark');
+    localStorage.setItem('impactmojo-theme', theme);
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+    });
+}
+applyTheme(getPreferredTheme());
+document.querySelectorAll('.theme-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { applyTheme(btn.getAttribute('data-theme')); });
+});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (getPreferredTheme() === 'system') applyTheme('system');
+});
 
 // Supabase config (loaded from js/config.js)
 var SUPABASE_URL = window.ImpactMojoConfig.SUPABASE_URL;
