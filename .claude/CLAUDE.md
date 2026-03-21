@@ -1,4 +1,4 @@
-# ImpactMojo — Claude Code Instructions
+# ImpactMojo — Project-Specific Instructions
 
 ## Project Context
 
@@ -9,77 +9,29 @@ ImpactMojo is a free development education platform for South Asia. It covers ME
 - Docs: GitBook at `/docs/`
 - Games: Self-contained HTML files in `/Games/`
 
-## After Major Changes
-
-When implementing major features, significant refactoring, or multi-file bug fixes, always complete these housekeeping tasks before finishing:
-
-### 1. Git Cleanup
-- Delete merged/stale local branches (`git branch -d`)
-- Clean up remote tracking branches (`git fetch --prune`)
-- Ensure working tree is clean
-
-### 2. Documentation (GitBook)
-- Update relevant files in `docs/` if architecture, features, or workflows changed
-- Keep `docs/games-guide.md`, `docs/platform-overview.md`, `docs/content-guide.md` current
-- Update `docs/changelog.md` for user-facing changes
-
-### 3. GitHub Issues & Projects
-- Close resolved issues with a reference to the commit/PR
-- Update issue labels and milestones
-- Move completed items on project boards
-
-### 4. Roadmap
-- Update `ROADMAP.md` — move completed items, add new planned work
-- Update `CHANGELOG.md` with version-appropriate entries
-
-### 5. Wiki & Discussions
-- Document new architectural patterns or decisions in wiki
-- Post updates to relevant GitHub Discussions if applicable
-
-### 6. README & Meta
-- Update `README.md` if project structure, setup, or scope changed
-- Update `sitemap.xml` if new pages were added
-- Update `data/search-index.json` if new searchable content was added
-
-### 7. Backup
-- Copy current `index.html` to `Backups/` before major changes
-- Verify backups are not stale
-
-### 8. Counts & References
-- Verify game, lab, course counts are consistent across all pages and docs
-- Check for stale `101.impactmojo.in` links that should point to self-hosted files
-
-### 9. Quality Checks
-- Ensure no broken links in navigation (desktop and mobile)
-- Verify mobile responsiveness for new UI
-- Check text contrast/readability (WCAG AA minimum)
-- Test all forms submit to correct Formspree endpoint (`xpwdvgzp`)
-- No hardcoded secrets or credentials committed
-
-## Code Style
+## ImpactMojo Code Style
 
 - Games are single self-contained HTML files (HTML + CSS + JS, no build step)
-- Use CSS custom properties for theming
 - Indian folk art styles for game illustrations (Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra)
-- All card/badge text must have high contrast — no white text on light backgrounds
-- Mobile-first responsive design
-- Prefer editing existing files over creating new ones
 
-## API Tokens (available in environment)
+## ImpactMojo API Endpoints
 
-- **GitHub**: Use `$GITHUB_PAT` for all GitHub API calls (PRs, merges, issues). Call `https://api.github.com/repos/Varnasr/ImpactMojo/...` with header `Authorization: token $GITHUB_PAT`.
-- **Supabase**: Use `$SUPABASE_PAT` for Supabase Management API calls (database queries, migrations). Call `https://api.supabase.com/v1/projects/ddyszmfffyedolkcugld/...` with header `Authorization: Bearer $SUPABASE_PAT`.
-- **Netlify**: Use `$NETLIFY_PAT` for Netlify API calls if needed.
-- **Gemini**: Use `$GEMINI_API_KEY` for Google Gemini AI API calls. Pass as `?key=$GEMINI_API_KEY` query parameter.
-- **Gamma**: Use `$GAMMA_API_KEY` for Gamma presentation API. Header: `Authorization: Bearer $GAMMA_API_KEY`.
-- **DeepSeek**: Use `$DEEPSEEK_API_KEY` for DeepSeek LLM API calls.
-- **Grok**: Use `$GROK_API_KEY` for xAI Grok API calls.
-- **Sarvan.ai**: Use `$SARVAN_API_KEY` for Sarvan.ai Indic language model API calls.
-- Always prefer these tokens over `gh` CLI or local git proxy for creating PRs, merging, and managing issues.
+- **GitHub repo**: `https://api.github.com/repos/Varnasr/ImpactMojo/...`
+- **Supabase project**: `https://api.supabase.com/v1/projects/ddyszmfffyedolkcugld/...`
+- **Gamma**: Use `$GAMMA_API_KEY` for syncing course content to Gamma presentations
+- **Napkin.ai**: Use `$NAPKIN_API_KEY` for generating visual content from course material
+- **Formspree**: All forms submit to endpoint `xpwdvgzp`
 
-## Git Practices
+## ImpactMojo Documentation
 
-- Write concise commit messages focused on "why" not "what"
-- Never force-push to main
-- Never commit .env files or secrets
-- Stage files explicitly, avoid `git add -A`
+- Keep `docs/games-guide.md`, `docs/platform-overview.md`, `docs/content-guide.md` current
+- Update `docs/changelog.md` for user-facing changes
+- Update `data/search-index.json` if new searchable content was added
+
+## ImpactMojo Housekeeping
+
+- Copy current `index.html` to `Backups/` before major changes
+- Verify backups are not stale
+- Verify game, lab, course counts are consistent across all pages and docs
+- Check for stale `101.impactmojo.in` links that should point to self-hosted files
+- Test all forms submit to correct Formspree endpoint (`xpwdvgzp`)
