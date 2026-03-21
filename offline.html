@@ -5,46 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0F172A">
     <title>Offline - ImpactMojo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
+        /* CSS Variables */
+        :root {
+            --primary-bg: #0F172A;
+            --secondary-bg: #1E293B;
+            --accent-color: #0EA5E9;
+            --accent-hover: #0284C7;
+            --secondary-accent: #6366F1;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --card-bg: #1E293B;
+            --hover-bg: #334155;
+            --border-color: #334155;
+            --nav-bg: rgba(15, 23, 42, 0.95);
+            --nav-text: #F1F5F9;
+        }
+
+        [data-theme="light"],
+        body.light-mode {
+            --primary-bg: #F8FAFC;
+            --secondary-bg: #FFFFFF;
+            --accent-color: #0284C7;
+            --accent-hover: #0369A1;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --card-bg: #FFFFFF;
+            --hover-bg: #F1F5F9;
+            --border-color: #E2E8F0;
+            --nav-bg: rgba(248, 250, 252, 0.95);
+            --nav-text: #0F172A;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Amaranth', sans-serif;
-            background: #0F172A;
-            color: #E2E8F0;
+            background: var(--primary-bg);
+            color: var(--text-secondary);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 2rem;
         }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
         .offline-container {
             max-width: 480px;
+            position: relative;
+            z-index: 1;
         }
+
         .offline-icon {
             font-size: 4rem;
             margin-bottom: 1.5rem;
             opacity: 0.7;
         }
-        h1 {
-            font-family: 'Inter', 'Amaranth', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #F8FAFC;
-            margin-bottom: 0.75rem;
-        }
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #94A3B8;
-            margin-bottom: 1.5rem;
-        }
+
         .offline-actions {
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
             align-items: center;
         }
+
         .btn {
             display: inline-block;
             padding: 0.75rem 1.5rem;
@@ -56,32 +108,114 @@
             border: none;
             transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
+
         .btn:hover {
             transform: translateY(-1px);
         }
+
         .btn-primary {
-            background: #0EA5E9;
+            background: var(--accent-color);
             color: #FFF;
         }
+
         .btn-primary:hover {
             box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
         }
+
         .btn-secondary {
             background: transparent;
-            color: #0EA5E9;
-            border: 1px solid #1E293B;
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
         }
+
         .btn-secondary:hover {
-            border-color: #0EA5E9;
+            border-color: var(--accent-color);
         }
+
         .hint {
             margin-top: 2rem;
             font-size: 0.85rem;
-            color: #64748B;
+            color: var(--text-muted);
+        }
+
+        /* Theme Selector */
+        .theme-selector-wrapper {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+        }
+
+        .theme-selector { display: flex; gap: 4px; background: var(--hover-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 4px; }
+        .theme-btn { background: transparent; border: none; color: var(--text-secondary); padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+        .theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+        .theme-btn.active { background: var(--accent-color); color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .theme-btn svg { width: 18px; height: 18px; }
+
+        /* V3 Decorative Elements */
+        .v3-decoration-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .v3-paper-plane { position: fixed; top: 15%; right: 8%; width: 140px; height: 140px; opacity: 0.25; z-index: 0; pointer-events: none; animation: v3-float-plane 25s ease-in-out infinite; }
+        @keyframes v3-float-plane { 0% { transform: translate(0, 0) rotate(0deg); } 20% { transform: translate(-60px, 40px) rotate(10deg); } 40% { transform: translate(120px, 30px) rotate(-8deg); } 60% { transform: translate(40px, 60px) rotate(15deg); } 80% { transform: translate(-30px, 20px) rotate(-5deg); } 100% { transform: translate(0, 0) rotate(0deg); } }
+        @media (max-width: 768px) { .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; } }
+        @media (prefers-reduced-motion: reduce) { .v3-paper-plane { animation: none !important; } }
+        .v3-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: pulseBlob 15s ease-in-out infinite; }
+        .v3-blob-1 { top: 10%; right: 10%; width: 400px; height: 400px; background: var(--accent-color); }
+        .v3-blob-2 { bottom: 20%; left: 5%; width: 300px; height: 300px; background: var(--secondary-accent); animation-delay: -5s; }
+        @keyframes pulseBlob { 0%, 100% { transform: scale(1); opacity: 0.15; } 50% { transform: scale(1.1); opacity: 0.2; } }
+
+        /* Footer */
+        .offline-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            z-index: 1;
+        }
+
+        .offline-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .offline-footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
+<!-- V3 Decorative Elements -->
+<div class="v3-decoration-container">
+    <div class="v3-blob v3-blob-1"></div>
+    <div class="v3-blob v3-blob-2"></div>
+</div>
+<svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- Theme Selector -->
+<div class="theme-selector-wrapper">
+    <div class="theme-selector" aria-label="Theme selection">
+        <button class="theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </button>
+        <button class="theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </div>
+</div>
+
     <div class="offline-container">
         <div class="offline-icon">&#x1F4F6;</div>
         <h1>You are offline</h1>
@@ -92,5 +226,36 @@
         </div>
         <p class="hint">Tip: Use the "Download for Offline" button on any course page to make it available without internet.</p>
     </div>
+
+    <footer class="offline-footer">
+        <a href="https://www.impactmojo.in">ImpactMojo</a> &mdash; Free development education for South Asia
+    </footer>
+
+<script>
+// Theme Management
+function getPreferredTheme() {
+    return localStorage.getItem('impactmojo-theme') || 'system';
+}
+function applyTheme(theme) {
+    var resolved = theme;
+    if (theme === 'system') {
+        resolved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', resolved);
+    document.body.classList.toggle('light-mode', resolved === 'light');
+    document.body.classList.toggle('dark-mode', resolved === 'dark');
+    localStorage.setItem('impactmojo-theme', theme);
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+    });
+}
+applyTheme(getPreferredTheme());
+document.querySelectorAll('.theme-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { applyTheme(btn.getAttribute('data-theme')); });
+});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+    if (getPreferredTheme() === 'system') applyTheme('system');
+});
+</script>
 </body>
 </html>
