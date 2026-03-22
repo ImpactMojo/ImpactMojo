@@ -39,10 +39,15 @@ Free development education platform for South Asia. Static HTML/CSS/JS, Supabase
 
 See `.claude/rules/api-conventions.md` for endpoints and auth patterns.
 
+## Memory
+
+Persistent project context lives in `.claude/memory.md` — carries state, decisions, and session logs across Claude Code sessions. Use `/memory` to read, update, or query it.
+
 ## .claude/ Structure
 
+- **memory.md** — persistent context across sessions (project state, decisions, known issues, session log)
 - **rules/** — modular instructions (code-style, content-management, api-conventions, testing)
 - **commands/** — `/project:review`, `/project:fix-issue`, `/project:deploy-check`, `/project:audit`, `/project:add-game`
-- **skills/** — auto-invoked workflows (add-files, housekeeping, github-ops, netlify-ops, supabase-ops, gamma-ops, gemini-ai, grok-ai, deepseek-ai, sarvam-ai, napkin-ai, threads-writer, blog-writer, dojo-ops, book-summaries)
+- **skills/** — auto-invoked workflows (add-files, housekeeping, github-ops, netlify-ops, supabase-ops, gamma-ops, gemini-ai, grok-ai, deepseek-ai, sarvam-ai, napkin-ai, threads-writer, blog-writer, dojo-ops, book-summaries, memory)
 - **agents/** — subagent personas (code-reviewer, content-auditor)
-- **hooks/** — session-start (API key bootstrap), pre-tool-use (destructive command guard)
+- **hooks/** — session-start (API key bootstrap), pre-tool-use (destructive command guard), stop (memory sync prompt)
