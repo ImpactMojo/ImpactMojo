@@ -5,14 +5,19 @@ description: Read, update, or query Claude's persistent memory for this project.
 
 # Claude Memory Management
 
-Manage persistent project context stored in `.claude/memory.md`. This file carries knowledge across Claude Code sessions.
+Manage persistent context at two levels:
+- **Global** (`~/.claude/memory.md`): user preferences, cross-project notes
+- **Project** (`.claude/memory.md`): project-specific state, decisions, session logs
+
+Both files are read at session start for full context.
 
 ## Commands
 
 Based on the user's intent, perform ONE of these operations:
 
 ### 1. **Read memory** (default if no args, or "what do you remember")
-- Read `.claude/memory.md` and summarize the current state
+- Read both `~/.claude/memory.md` (global) and `.claude/memory.md` (project)
+- Summarize the current state from both levels
 - Highlight any stale entries (dates older than 30 days)
 
 ### 2. **Remember / Add** (user says "remember X" or "add to memory")
@@ -50,4 +55,7 @@ Based on the user's intent, perform ONE of these operations:
 - Keep entries concise — one line per item
 - Use ISO dates (YYYY-MM-DD)
 - Never store secrets, API keys, or credentials
-- Memory file is committed to git — keep it safe for version control
+- Project memory (`.claude/memory.md`) is committed to git — keep it safe for version control
+- Global memory (`~/.claude/memory.md`) is user-local, not committed
+- When adding cross-project notes, write to global; project-specific to project
+- Works on both local CLI and Claude Code web (web reads from repo files)
