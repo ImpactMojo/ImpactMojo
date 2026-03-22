@@ -35,7 +35,7 @@ Free development education platform for South Asia. Static HTML/CSS/JS, Supabase
 
 ## API Keys
 
-`$GITHUB_PAT` · `$SUPABASE_PAT` · `$NETLIFY_PAT` · `$GAMMA_API_KEY` · `$GEMINI_API_KEY` · `$NAPKIN_API_KEY`
+`$GITHUB_PAT` · `$SUPABASE_PAT` · `$NETLIFY_PAT` · `$GAMMA_API_KEY` · `$GEMINI_API_KEY` · `$NAPKIN_API_KEY` · `$GROK_API_KEY` · `$DEEPSEEK_API_KEY` · `$SARVAM_API_KEY`
 
 See `.claude/rules/api-conventions.md` for endpoints and auth patterns.
 
@@ -43,6 +43,6 @@ See `.claude/rules/api-conventions.md` for endpoints and auth patterns.
 
 - **rules/** — modular instructions (code-style, content-management, api-conventions, testing)
 - **commands/** — `/project:review`, `/project:fix-issue`, `/project:deploy-check`, `/project:audit`, `/project:add-game`
-- **skills/** — auto-invoked workflows (add-files, housekeeping, github-ops, netlify-ops, supabase-ops, gamma-ops, gemini-ai)
+- **skills/** — auto-invoked workflows (add-files, housekeeping, github-ops, netlify-ops, supabase-ops, gamma-ops, gemini-ai, grok-ai, deepseek-ai, sarvam-ai)
 - **agents/** — subagent personas (code-reviewer, content-auditor)
 - **hooks/** — session-start (API key bootstrap), pre-tool-use (destructive command guard)
