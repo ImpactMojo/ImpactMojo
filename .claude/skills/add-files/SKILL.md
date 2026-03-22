@@ -82,9 +82,6 @@ After creating the content file, update these locations:
 ### 3f. sitemap.xml
 - Add `<url>` entry for the new page
 
-### 3g. mobile-index.html
-- Mirror any changes made to `index.html` (links, counts, sections)
-
 ## Step 4 — Backup
 
 - Copy current `index.html` to `Backups/` before making changes:
@@ -99,8 +96,7 @@ Run these checks after adding content:
 1. **Count consistency**: Grep for old count numbers across all HTML files to ensure none were missed
 2. **Link validity**: Verify the new file path is correct and accessible
 3. **Search index**: Validate `data/search-index.json` is valid JSON
-4. **Mobile parity**: Confirm `mobile-index.html` matches `index.html` changes
-5. **No stale refs**: Check new content doesn't link to `101.impactmojo.in` when it should be self-hosted
+4. **No stale refs**: Check new content doesn't link to `101.impactmojo.in` when it should be self-hosted
 
 ## Quick Reference — Minimum Updates Per Type
 
@@ -109,7 +105,6 @@ Run these checks after adding content:
 | Create file | Y | Y | Y | Y |
 | index.html (link) | Y | Y | Y | — |
 | index.html (counts) | Y | Y | Y | — |
-| mobile-index.html | Y | Y | Y | — |
 | search-index.json | Y | Y | Y | Y |
 | catalog.html | — | — | Y | — |
 | catalog_data.json | — | — | Y | — |
