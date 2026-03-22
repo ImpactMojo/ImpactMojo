@@ -22,7 +22,7 @@ Deep, multi-module courses with 12–13 modules each, interactive lexicons, Sout
 
 ---
 
-## BookSummaries (3)
+## BookSummaries (5)
 
 Interactive book companions under Specials — deep, chapter-by-chapter explorations with data tools and AI-powered Q&A. See the [Book Summaries Guide](book-summaries-guide.md) for full details.
 
@@ -31,6 +31,8 @@ Interactive book companions under Specials — deep, chapter-by-chapter explorat
 | 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [Open](/BookSummaries/handbook-social-protection.html) |
 | 2 | Development Economics | Debraj Ray (Princeton 1998) | 18 | Development Economics | [Open](/BookSummaries/debraj-ray-companion.html) |
 | 3 | Design Thinking: A Guide to Creative Problem Solving | Andrew Pressman (Routledge 2019) | 10 | Design & Innovation | [Open](/BookSummaries/dt-companion.html) |
+| 4 | Basic Econometrics | Gujarati & Porter (McGraw-Hill) | 22 | Econometrics | [Open](/BookSummaries/basic-econometrics-companion.html) |
+| 5 | Econometrics by Example | Gujarati (Palgrave Macmillan) | 20 | Econometrics | [Open](/BookSummaries/econometrics-by-example-companion.html) |
 
 ---
 

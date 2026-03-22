@@ -41,6 +41,7 @@
 * [Why ImpactMojo](why-impactmojo.md)
 * [Transparency & Commitments](transparency-and-commitments.md)
 * [The Transparency Page (Detailed Guide)](transparency-page-guide.md)
+* [Press Kit](press-kit.md)
 
 ## Policies (Plain Language)
 
