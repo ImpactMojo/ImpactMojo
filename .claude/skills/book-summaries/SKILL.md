@@ -85,6 +85,26 @@ After creating the companion:
 5. **Update changelog** — `docs/changelog.md`
 6. **Link from related courses** — if the book maps to an existing course, add a link in the course page
 
+### 5. GitBook Documentation Updates
+
+7. **Update `docs/book-summaries-guide.md`** — add the new book to the "Available Books" table
+8. **Update `docs/content-catalog.md`** — add row to the BookSummaries table, update count in heading
+9. **Update `docs/platform-overview.md`** — update BookSummaries entry with new book count and title
+10. **Update `docs/content-guide.md`** — update BookSummaries count in the content types table
+11. **Update `docs/roadmap.md`** — if this was a roadmap item, mark it complete
+
+### 6. GitHub "Alive Docs" Updates
+
+12. **Create GitHub Discussion** (Announcements category) — announce the new book companion with title, author, chapter count, features, and link. Use GraphQL API:
+    ```bash
+    curl -s -X POST "https://api.github.com/graphql" \
+      -H "Authorization: bearer $GITHUB_PAT" \
+      -d '{"query": "mutation { createDiscussion(input: {repositoryId: \"...\", categoryId: \"...\", title: \"...\", body: \"...\"}) { discussion { url } } }"}'
+    ```
+13. **Update GitHub Issue #272** — check off the new book in the BookSummaries expansion tracking issue
+14. **Update GitHub Wiki** — clone `Varnasr/ImpactMojo.wiki.git`, update `Book-Summaries.md` and `Content-Guide.md` with the new entry, push
+15. **Comment on related discussions** — if Discussion #276 ("Which books should we summarise next?") listed this book, comment confirming it's now live
+
 ## Writing Guidelines
 
 - **Practitioner-first**: explain why each concept matters for fieldwork
