@@ -48,6 +48,8 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 - [x] **Game visual fixes** — gender equity SVG clipping, info asymmetry image sizing
 - [x] **API token documentation** — Gemini, DeepSeek, Grok, Sarvan.ai, Gamma added to CLAUDE.md and .env.example
 - [x] **BookSummaries landing page** — browsable index at `/BookSummaries/` replacing direct-to-book navigation
+- [x] **Development Economics companion** — Debraj Ray (Princeton 1998), 18 chapters with models, concepts, exercises
+- [x] **Design Thinking companion** — Andrew Pressman (Routledge 2019), 10 chapters on creative problem-solving
 - [x] **Premium design consistency** — premium.html and premium-tools pages aligned with main site design standards (fonts, borders, shadows)
 - [x] **RQ Premium redirect fix** — race condition in resource-launch.js preventing upgrade modal from showing
 
