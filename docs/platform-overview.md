@@ -27,11 +27,12 @@ Each flagship course includes:
 
 ### Foundational Courses (39 courses)
 
-Comprehensive study decks that cover a specific skill or concept in depth. These are self-paced reading materials — thorough in their coverage but simpler in format than flagship courses.
+Comprehensive study decks that cover a specific skill or concept in depth. These are self-paced reading materials — thorough in their coverage but simpler in format than flagship courses. **23 of these are now also available as visual 101 Course Decks** — 60-slide Gamma presentations with Indian folk art illustrations. See the [101 Course Decks Guide](101-decks-guide.md) for the full list and access links.
 
 **What they include:**
 - Comprehensive topic coverage — each one covers its subject thoroughly
 - Self-study format — read at your own pace, no interactive components
+- Visual presentation decks (23 courses and growing) with Indian folk art by track
 
 **What they don't include (yet):**
 - Interactive features, quizzes, or assessments
@@ -158,10 +159,12 @@ Resources cover poverty, health, education, gender, governance, climate, and mor
 
 ## BookSummaries
 
-Interactive book companions that go far beyond a summary. Each BookSummary offers chapter-by-chapter navigation, evidence explorers, data playgrounds with interactive simulators, programme comparison tools, concept glossaries, and AI-powered Q&A. Currently available under Specials.
+Interactive book companions that go far beyond a summary. Each BookSummary offers chapter-by-chapter navigation, evidence explorers, data playgrounds with interactive simulators, programme comparison tools, concept glossaries, and AI-powered Q&A. Currently available under Specials. See the [Book Summaries Guide](book-summaries-guide.md) for full details.
 
-**Current entries:**
-- *The Handbook of Social Protection* (Hanna & Olken, MIT Press 2026) — 24 chapters, 17 evidence findings, 5 learning pathways, 40+ glossary concepts
+**Current entries (3 books, 55+ chapters):**
+- *The Handbook of Social Protection and Inclusionary Development* (Hanna & Olken, MIT Press 2026) — 30+ chapters, evidence explorer, data playground, AI Q&A
+- *Development Economics* (Debraj Ray, Princeton 1998) — 18 chapters, rigorous models, exercises, AI-powered companion
+- *Design Thinking* (Andrew Pressman, Routledge 2019) — 10 chapters, creative problem-solving, case studies, interdisciplinary applications
 
 ---
 

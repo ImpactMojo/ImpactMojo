@@ -22,13 +22,15 @@ Deep, multi-module courses with 12–13 modules each, interactive lexicons, Sout
 
 ---
 
-## BookSummaries (1)
+## BookSummaries (3)
 
-Interactive book companions under Specials — deep, chapter-by-chapter explorations with data tools and AI-powered Q&A.
+Interactive book companions under Specials — deep, chapter-by-chapter explorations with data tools and AI-powered Q&A. See the [Book Summaries Guide](book-summaries-guide.md) for full details.
 
-| # | Book | Features | Link |
-|---|------|----------|------|
-| 1 | The Handbook of Social Protection (Hanna & Olken, MIT Press 2026) | 24 chapters, evidence explorer, data playground, programme compare, glossary, South Asia lens, AI Q&A | [Open](/BookSummaries/handbook-social-protection.html) |
+| # | Book | Author | Chapters | Category | Link |
+|---|------|--------|----------|----------|------|
+| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [Open](/BookSummaries/handbook-social-protection.html) |
+| 2 | Development Economics | Debraj Ray (Princeton 1998) | 18 | Development Economics | [Open](/BookSummaries/debraj-ray-companion.html) |
+| 3 | Design Thinking: A Guide to Creative Problem Solving | Andrew Pressman (Routledge 2019) | 10 | Design & Innovation | [Open](/BookSummaries/dt-companion.html) |
 
 ---
 

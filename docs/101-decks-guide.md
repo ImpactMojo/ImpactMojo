@@ -1,0 +1,212 @@
+# 101 Course Decks Guide
+
+## What Are the 101 Course Decks?
+
+ImpactMojo's **39 foundational courses** are available as visual presentation decks — 60-slide interactive decks generated via [Gamma](https://gamma.app) with Indian folk art illustrations, consistent branding, and South Asian context throughout.
+
+These aren't typical slide decks. Each one is a structured learning journey designed for self-study or facilitated workshops, with case studies drawn from development practice in India and South Asia. They are free to view, share, and use in educational settings.
+
+All decks are accessible at `https://101.impactmojo.in/{course-slug}` and require no login or download.
+
+---
+
+## What's in Each Deck
+
+Every 101 deck follows a consistent structure across approximately 60 slides:
+
+1. **Title card** — Course name, ImpactMojo branding, track identity
+2. **Agenda** — Overview of what the deck covers
+3. **10--12 content sections** — Core concepts with explanations, diagrams, and South Asian case studies
+4. **Quiz / Assessment** — Check-your-understanding questions embedded in the deck
+5. **Key Takeaways** — Summary of the most important points
+6. **Glossary** — Definitions of key terms used in the deck
+7. **Further Reading** — Curated references for deeper exploration
+8. **Thank You** — Closing slide with license and attribution
+
+### Branding and Design
+
+- **Fonts**: Inter (body) + Amaranth (headings)
+- **Theme**: Cornflower (consistent across all decks)
+- **Footer**: ImpactMojo branding on every slide
+- **License**: CC BY-NC-SA 4.0 — free to share and adapt for non-commercial use with attribution
+
+---
+
+## Indian Folk Art Styles by Track
+
+Each track uses a distinct Indian folk art tradition for its illustrations, grounding the learning content in South Asian visual culture.
+
+| Track | Art Style | Origin |
+|-------|-----------|--------|
+| **MEL & Research** | Warli | Maharashtra — white line art on terracotta backgrounds |
+| **Data & Technology** | Gond | Madhya Pradesh — dot patterns, vibrant nature-tech fusion |
+| **Policy & Economics** | Kalamkari | Andhra Pradesh — pen-drawn narrative scrolls |
+| **Gender & Equity** | Madhubani | Bihar — bold outlines, bright fills, nature motifs |
+| **Health & Communication** | Pattachitra | Odisha — scrollwork narrative art, bold outlines |
+| **Philosophy & Governance** | Pichwai | Rajasthan — devotional temple art, rich detail |
+
+---
+
+## Available Decks
+
+As of March 2026, **22 of 39** decks have been generated — 18 with full PDF exports available, and 4 with decks ready on Gamma (PDF export pending). The remaining courses are queued for generation once Gamma API credits are replenished.
+
+### MEL & Research
+
+| Course | Status | Access |
+|--------|--------|--------|
+| MEL Fundamentals | Available | [View deck](https://101.impactmojo.in/mel-basics) |
+| Qualitative Research Methods | Available | [View deck](https://101.impactmojo.in/qual-methods) |
+| Observation to Insight | Available | [View deck](https://101.impactmojo.in/obs2insight) |
+| Visual Ethnography | Available | [View deck](https://101.impactmojo.in/visual-eth) |
+| Research Ethics | Available | [View deck](https://101.impactmojo.in/research-ethics) |
+| Item Response Theory and Qualitative Assessment | Available | [View deck](https://101.impactmojo.in/irt-basics) |
+| BCC and Communications | Coming Soon | — |
+| Theory of Change Workbench | Coming Soon | — |
+
+### Data & Technology
+
+| Course | Status | Access |
+|--------|--------|--------|
+| Data Literacy for Development | Available | [View deck](https://101.impactmojo.in/data-lit) |
+| Data Feminism | Available | [View deck](https://101.impactmojo.in/data-feminism) |
+| EDA for Humanitarian/Health/Social Data | Available | [View deck](https://101.impactmojo.in/eda-hhs) |
+| Bivariate Analysis | Available | [View deck](https://101.impactmojo.in/bi-analysis) |
+| Multivariate Analysis | Available | [View deck](https://101.impactmojo.in/multivariate-basics) |
+| Econometrics 101 | Available | [View deck](https://101.impactmojo.in/econometrics-101) |
+| Digital Development Ethics | Available | [View deck](https://101.impactmojo.in/digital-ethics) |
+| Education and Pedagogy | Coming Soon | — |
+| Social Emotional Learning | Coming Soon | — |
+| Poverty and Inequality | Coming Soon | — |
+| Marginalized Identities and Development | Coming Soon | — |
+| Decent Work for All | Coming Soon | — |
+| Community-Led Development | Coming Soon | — |
+| Decolonizing Development | Coming Soon | — |
+| Environmental Justice | Coming Soon | — |
+
+### Policy & Economics
+
+| Course | Status | Access |
+|--------|--------|--------|
+| Development Economics | Available | [View deck](https://101.impactmojo.in/dev-economics) |
+| Political Economy | Available | [View deck](https://101.impactmojo.in/pol-economy) |
+| Cost-Effectiveness Analysis | Available | [View deck](https://101.impactmojo.in/cost-effectiveness) |
+| English for Development | Available | [View deck](https://101.impactmojo.in/eng-dev) |
+| Advocacy Fundamentals | Available | [View deck](https://101.impactmojo.in/advocacy-basics) |
+| Livelihoods Fundamentals | Available | [View deck](https://101.impactmojo.in/livelihood-basics) |
+| Climate Essentials | Available | [View deck](https://101.impactmojo.in/climate-essentials) |
+| Post-Truth Politics | Deck Ready (PDF pending) | [View on Gamma](https://gamma.app/docs/07twqrzjtsnf49j) |
+| Fundraising Fundamentals | Deck Ready (PDF pending) | [View on Gamma](https://gamma.app/docs/0j6oy9d9f60xevo) |
+| Global Development Architecture | Deck Ready (PDF pending) | [View on Gamma](https://gamma.app/docs/n6gze051jrfnllw) |
+| Indian Constitution and Development | Coming Soon | — |
+
+### Gender, Equity & Inclusion
+
+| Course | Status | Access |
+|--------|--------|--------|
+| Women's Economic Empowerment | Coming Soon | — |
+| Sexual Rights and Health Basics | Coming Soon | — |
+| Care Economy and Unpaid Work | Coming Soon | — |
+
+### Health & Communication
+
+| Course | Status | Access |
+|--------|--------|--------|
+| Public Health 101 | Coming Soon | — |
+
+---
+
+## How to Access the Decks
+
+### Primary access
+
+Visit `https://101.impactmojo.in/{course-slug}` in any browser. For example:
+- [https://101.impactmojo.in/data-lit](https://101.impactmojo.in/data-lit) — Data Literacy for Development
+- [https://101.impactmojo.in/mel-basics](https://101.impactmojo.in/mel-basics) — MEL Fundamentals
+- [https://101.impactmojo.in/dev-economics](https://101.impactmojo.in/dev-economics) — Development Economics
+
+### Gamma fallback
+
+For decks marked "Deck Ready (PDF pending)", use the Gamma link directly. These decks are fully viewable on Gamma's platform — the only difference is that a downloadable PDF has not yet been exported.
+
+### PDF downloads
+
+Completed decks have PDF exports available. These are useful for offline use, printing, or sharing in low-bandwidth contexts.
+
+---
+
+## For Educators
+
+### Using Decks in Workshops
+
+The 60-slide format maps well to a **90-minute workshop session**:
+
+1. **Introduction** (10 min) — Use the title card and agenda slides to frame the session
+2. **Content walk-through** (50 min) — Work through the content sections, pausing at case studies for group discussion
+3. **Quiz and discussion** (15 min) — Use the embedded quiz as a group activity
+4. **Takeaways and reflection** (15 min) — Review key takeaways, ask participants to identify one concept they will apply
+
+### Combining with Handouts
+
+ImpactMojo offers 400+ handouts in `/Handouts/` that pair well with the decks. For example:
+
+- Use the **Data Literacy deck** alongside the Data & Technology track handouts for a full-day workshop
+- Distribute the **MEL Fundamentals handouts** as pre-reading before presenting the deck
+- Assign **Further Reading** references from the deck as follow-up homework
+
+### Combining with Games
+
+Several 101 courses have companion interactive games on the platform:
+
+- **Development Economics** deck + **Public Good Game** or **Externality Game**
+- **Digital Development Ethics** deck + **Digital Ethics** scenarios
+- **Climate Essentials** deck + **Climate Action Challenge**
+- **Political Economy** deck + **Cooperation Paradox** or **Prisoners' Dilemma**
+
+Play the game first to create an experiential hook, then use the deck to build the conceptual framework.
+
+### Customizing for Local Context
+
+The decks are licensed CC BY-NC-SA 4.0, which means you can:
+
+- **Adapt** — Add local case studies, translate key terms, adjust examples for your state or region
+- **Share** — Distribute to participants, post on your organization's LMS
+- **Remix** — Combine slides from multiple decks for a custom workshop
+
+Please credit ImpactMojo and maintain the non-commercial, share-alike terms.
+
+---
+
+## Technical Details
+
+### How Decks Are Built
+
+Decks are generated programmatically using the **Gamma API** through an automated pipeline:
+
+1. **Course content** is structured into a prompt with section headings, case studies, and assessment items
+2. **Gamma API** generates the 60-slide deck with the cornflower theme and specified art style
+3. **PDF export** is triggered automatically after successful generation
+4. **Sync results** are logged to `data/gamma-sync-results.json` for tracking
+
+### Sync Pipeline
+
+- **Script**: `scripts/gamma-sync.js` handles the full generation and export workflow
+- **Recovery**: The pipeline supports recovery — if a generation succeeds but PDF export fails (e.g., due to credit limits), the Gamma URL is preserved and export can be retried later
+- **Status tracking**: Each course has a status in `gamma-sync-results.json`: `completed` (with or without export URL) or `error` (generation not yet attempted/failed)
+
+### Current Pipeline Status
+
+- **18 decks**: Fully completed with PDF export
+- **4 decks**: Generated on Gamma, PDF export pending (credit-limited)
+- **14 decks**: Awaiting generation (credit-limited)
+- **Recovery date**: 2026-03-19 — pipeline recovered previously generated decks that were missing from local tracking
+
+---
+
+## Tips
+
+- **Preview before presenting.** Walk through a deck yourself before using it in a workshop. Note which case studies resonate with your audience and which slides you might skip or expand on.
+- **Use the glossary.** Development jargon trips people up. Point participants to the glossary slide when introducing new terms.
+- **Don't rush the case studies.** The South Asian case studies are where abstract concepts become concrete. Budget time for participants to discuss how the example connects to their own work.
+- **Download PDFs for field settings.** If you are running a workshop in an area with unreliable internet, download the PDF in advance. The decks work well projected from a laptop without a live connection.
+- **Pair decks from the same track.** Running a multi-day training? Sequence two or three decks from the same track for cumulative learning — for example, Data Literacy followed by Bivariate Analysis followed by Multivariate Analysis.
