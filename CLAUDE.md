@@ -43,6 +43,6 @@ See `.claude/rules/api-conventions.md` for endpoints and auth patterns.
 
 - **rules/** — modular instructions (code-style, content-management, api-conventions, testing)
 - **commands/** — `/project:review`, `/project:fix-issue`, `/project:deploy-check`, `/project:audit`, `/project:add-game`
-- **skills/** — auto-invoked workflows (add-files, housekeeping, github-ops, netlify-ops, supabase-ops, gamma-ops, gemini-ai, grok-ai, deepseek-ai, sarvam-ai, napkin-ai, threads-writer)
+- **skills/** — auto-invoked workflows (add-files, housekeeping, github-ops, netlify-ops, supabase-ops, gamma-ops, gemini-ai, grok-ai, deepseek-ai, sarvam-ai, napkin-ai, threads-writer, blog-writer, dojo-ops, book-summaries)
 - **agents/** — subagent personas (code-reviewer, content-auditor)
 - **hooks/** — session-start (API key bootstrap), pre-tool-use (destructive command guard)
