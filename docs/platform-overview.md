@@ -161,10 +161,12 @@ Resources cover poverty, health, education, gender, governance, climate, and mor
 
 Interactive book companions that go far beyond a summary. Each BookSummary offers chapter-by-chapter navigation, evidence explorers, data playgrounds with interactive simulators, programme comparison tools, concept glossaries, and AI-powered Q&A. Currently available under Specials. See the [Book Summaries Guide](book-summaries-guide.md) for full details.
 
-**Current entries (3 books, 55+ chapters):**
+**Current entries (5 books, 100+ chapters):**
 - *The Handbook of Social Protection and Inclusionary Development* (Hanna & Olken, MIT Press 2026) — 30+ chapters, evidence explorer, data playground, AI Q&A
 - *Development Economics* (Debraj Ray, Princeton 1998) — 18 chapters, rigorous models, exercises, AI-powered companion
 - *Design Thinking* (Andrew Pressman, Routledge 2019) — 10 chapters, creative problem-solving, case studies, interdisciplinary applications
+- *Basic Econometrics* (Gujarati & Porter, McGraw-Hill) — 22 chapters, regression analysis, hypothesis testing, multicollinearity, simultaneous equations
+- *Econometrics by Example* (Gujarati, Palgrave Macmillan) — 20 chapters, hands-on approach with real-world examples, panel data, time series
 
 ---
 

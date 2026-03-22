@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.8.5 — March 22, 2026
+
+**What changed for you:** Two new econometrics book companions added, press kit page linked in site navigation and footer, and book summary counts updated to 5 books / 100+ chapters.
+
+### Book Summaries
+- Added **Basic Econometrics** (Gujarati & Porter, McGraw-Hill) — 22-chapter interactive companion covering regression, hypothesis testing, multicollinearity, and more
+- Added **Econometrics by Example** (Gujarati, Palgrave Macmillan) — 20-chapter hands-on companion with real-world examples
+- Updated BookSummaries landing page: 3→5 books, 55+→100+ chapters
+
+### Press Kit
+- Added Press Kit link to About Us navigation dropdown
+- Added Press Kit link to footer (About ImpactMojo section)
+- Added Press Kit to search index and sitemap
+
+### Documentation
+- Added Press Kit page to GitBook navigation (About section)
+- Updated content-catalog, platform-overview, and book-summaries-guide with new book entries
+
 ## v10.8.4 — March 22, 2026
 
 **What changed for you:** Two new interactive book companions added — Debraj Ray's *Development Economics* and Andrew Pressman's *Design Thinking*. BookSummaries page now matches site-wide theming.
