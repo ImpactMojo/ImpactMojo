@@ -2,6 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.8.3 — March 22, 2026
+
+**What changed for you:** Documentation consistency sweep — fixed stale content counts across all GitBook docs and added API key management template.
+
+### GitBook Documentation Fixes
+- Fixed stale lab counts (10→19) in 6 docs: why-impactmojo, getting-started, premium, transparency-and-commitments, mojini-guide, learning-design
+- Fixed stale game counts (12→16) in 3 docs: getting-started, premium, learning-design
+- Fixed stale Dataverse counts (215→247) in 3 docs: why-impactmojo, premium, dataverse-guide
+
+### Developer Experience
+- Added `.claude/.env.keys.example` template documenting all 6 API keys (GitHub, Supabase, Netlify, Gamma, Gemini, Napkin)
+
 ## v10.8.2 — March 21, 2026
 
 **What changed for you:** Housekeeping release — updated counts, fixed stale references, and refreshed documentation.
