@@ -98,6 +98,14 @@ Run these checks after adding content:
 3. **Search index**: Validate `data/search-index.json` is valid JSON
 4. **No stale refs**: Check new content doesn't link to `101.impactmojo.in` when it should be self-hosted
 
+## Step 6 — GitHub "Alive Docs" Updates
+
+After verifying the content:
+
+1. **GitHub Wiki** — clone `Varnasr/ImpactMojo.wiki.git`, update relevant pages (Content-Guide, Changelog, and type-specific pages like Book-Summaries or 101-Course-Decks), push
+2. **GitHub Discussion** — create an Announcements discussion for significant new content (games, courses, book summaries)
+3. **GitHub Issues** — close related tracking issues with links to the commit/PR
+
 ## Quick Reference — Minimum Updates Per Type
 
 | Update Location | Game | Lab | Course | Handout |
@@ -114,3 +122,5 @@ Run these checks after adding content:
 | CHANGELOG.md | Y | Y | Y | Y |
 | sitemap.xml | Y | Y | Y | — |
 | Backup index.html | Y | Y | Y | — |
+| GitHub Wiki | Y | — | Y | — |
+| GitHub Discussion | Y | — | Y | — |

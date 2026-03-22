@@ -17,6 +17,9 @@ When adding or modifying content:
 7. **Update catalog**: `catalog.html` / `catalog_data.json` for courses
 8. **Check stale links**: `grep -rn "101.impactmojo.in" index.html courses/` for refs that should be self-hosted
 9. **Validate forms**: all forms submit to Formspree endpoint `xpwdvgzp`
+10. **GitHub Wiki**: clone `Varnasr/ImpactMojo.wiki.git`, update affected pages (Content-Guide, Changelog, type-specific pages), push
+11. **GitHub Discussion**: create Announcements post for significant new content (games, courses, book summaries)
+12. **GitHub Issues**: close related tracking issues with commit/PR links
 
 ## Related
 
