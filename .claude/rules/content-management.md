@@ -2,11 +2,26 @@
 
 When adding or modifying content:
 
-- Backup `index.html` to `Backups/` before major changes
-- Update content counts in ALL locations (nav, hero, feature cards, sidebar) — grep to find them
-- Add new content to `data/search-index.json` with proper id, title, description, type, category, url, tags
-- Update relevant docs: `docs/games-guide.md`, `docs/labs-guide.md`, `docs/content-guide.md`
-- Update `docs/changelog.md` for user-facing changes
-- Update `sitemap.xml` for new pages
-- Check for stale `101.impactmojo.in` links that should point to self-hosted files
-- All forms must submit to Formspree endpoint `xpwdvgzp`
+1. **Backup first**: `cp index.html Backups/index-backup-$(date +%Y%m%d-%H%M).html`
+2. **Update content counts** in ALL locations — grep to find them:
+   ```bash
+   grep -rn "16 Games\|16 games" index.html catalog.html docs/
+   ```
+3. **Add to search index** (`data/search-index.json`):
+   ```json
+   {"id": "GAME017", "title": "...", "description": "...", "type": "game", "category": "...", "url": "/Games/...", "tags": [...]}
+   ```
+4. **Update docs**: `docs/games-guide.md`, `docs/labs-guide.md`, `docs/content-guide.md` as relevant
+5. **Update changelog**: `docs/changelog.md` for user-facing changes
+6. **Update sitemap**: add `<url>` entry to `sitemap.xml`
+7. **Update catalog**: `catalog.html` / `catalog_data.json` for courses
+8. **Check stale links**: `grep -rn "101.impactmojo.in" index.html courses/` for refs that should be self-hosted
+9. **Validate forms**: all forms submit to Formspree endpoint `xpwdvgzp`
+
+## Related
+
+- Skill `add-files` has a full matrix of which updates are needed per content type
+- Skill `housekeeping` runs the complete post-change checklist
+- Agent `content-auditor` verifies consistency across all files
+- Command `/project:deploy-check` validates everything before deploy
+- See `rules/testing.md` for grep commands and validation steps
