@@ -1,6 +1,6 @@
 ---
 name: housekeeping
-description: Run post-feature housekeeping — clean branches, update docs, issues, roadmap, README
+description: Run post-feature housekeeping — clean branches, update docs, issues, roadmap, README. Use when the user says "clean up", "housekeeping", "we're done with this feature", or after completing a major change.
 ---
 
 # Post-Change Housekeeping

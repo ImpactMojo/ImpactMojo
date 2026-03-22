@@ -1,6 +1,6 @@
 ---
 name: add-files
-description: Add new content files (games, labs, courses, handouts) to ImpactMojo with all required cross-references updated automatically. Use when the user wants to add a new game, lab, course, or handout to the platform.
+description: Add new content files (games, labs, courses, handouts) to ImpactMojo with all required cross-references updated automatically. Use when the user says "add a game", "create a new lab", "add a course", "new handout", or wants to add any content to the platform.
 ---
 
 # Add Files to ImpactMojo
