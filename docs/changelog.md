@@ -2,6 +2,21 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.8.4 — March 22, 2026
+
+**What changed for you:** Major GitBook documentation catch-up — all docs now reflect features shipped in v10.5–v10.8.
+
+### GitBook Documentation Updates
+- Updated docs version from 10.1.0 to 10.8.3
+- Fixed stale Dataverse counts (215→247) in README, welcome, and roadmap docs
+- Fixed stale game counts (12→16) and lab counts (10→19) in welcome.md
+- Added 4 missing games (Climate Action, Care Economy, Epidemic Response, Digital Ethics) to content catalog and games guide
+- Added Gender Studies Lab to labs guide and content catalog
+- Fixed all 101.impactmojo.in stale links in labs guide and content catalog → self-hosted /courses/ paths
+- Updated BookSummaries from 1 to 3 in content catalog and platform overview
+- Updated roadmap: moved completed features (cohorts, notifications) to "Recently Completed", added v10.5–v10.8 releases
+- Labs guide now documents all 11 self-hosted labs with correct links
+
 ## v10.8.3 — March 22, 2026
 
 **What changed for you:** Documentation consistency sweep — fixed stale content counts across all GitBook docs and added API key management template.

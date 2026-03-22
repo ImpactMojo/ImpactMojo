@@ -9,15 +9,10 @@ Professional translations of courses in Hindi, Tamil, Bengali, and Marathi. ([#2
 
 **What this means for you:** If you work with teams who are more comfortable in regional languages, full course translations (not just Google Translate) will be available soon. We're starting with the most-used flagship courses.
 
-### Cohort-Based Learning
-Scheduled cohorts with deadlines, discussion threads, and group progression. ([#144](https://github.com/Varnasr/ImpactMojo/issues/144))
+### Additional BookSummaries
+Expanding the interactive book companion library beyond the current 3 titles. More development economics and social policy texts planned.
 
-**What this means for you:** Instead of self-paced learning only, you'll be able to enrol your team in a cohort that progresses through a course together on a set schedule — like an online class, but built into the platform.
-
-### Notification System
-Email digests for course updates, streak reminders, and community activity. ([#145](https://github.com/Varnasr/ImpactMojo/issues/145))
-
-**What this means for you:** You'll get gentle reminders to keep learning, plus notifications when new courses, handouts, or tools are added.
+**What this means for you:** Deep, interactive companions for essential development texts — with data tools, glossaries, and AI-powered Q&A — so you can engage with key literature more effectively.
 
 ## Planned — Q2 2026 (April–June)
 
@@ -56,7 +51,22 @@ Email digests for course updates, streak reminders, and community activity. ([#1
 
 ## Recently Completed
 
+### v10.8.x — March 2026
+- **Cohort-based learning** — organization admins can create training cohorts with deadlines, progress tracking, and discussion threads (#144)
+- **Notification system** — in-app and email notifications for streaks, cohort deadlines, assignments, and certificates (#145)
+- **BookSummaries** — 3 interactive book companions (Social Protection, Development Economics, Design Thinking) with data tools and AI Q&A
+- **Blog illustrations** — all 25 blog posts now have napkin.ai illustrations
+- **7 new interactive labs** (Design Thinking, Impact Partnerships, Resource Sustainability, Policy Advocacy, MEL Design, MEL Plan Builder, Gender Studies) — 19 labs total
+- **4 new games** (Climate Action, Care Economy, Epidemic Response, Digital Ethics) — 16 games total
+- **Dataverse expanded** from 215 to 247 resources
+- **Premium tools** secured with server-side JWT auth-gate on Netlify Edge Functions
+- **7 interactive workshop templates** added to premium listing
+- **Field Notes Pro** — 70 curated development economics field notes
+- **Gamma API integration** — 23 of 38 course decks synced as Gamma presentations
+- Documentation consistency sweeps across all GitBook docs
+
 ### v10.1.0 — March 2026
+- Educator-friendly documentation overhaul (Welcome, Platform Overview, Getting Started, etc.)
 - Git best-practice standards across all 29 repos
 - GitBook docs sidebar link fix
 
@@ -75,9 +85,9 @@ Email digests for course updates, streak reminders, and community activity. ([#1
 - Interactive assessments for flagship courses
 - Full-text search (Ctrl+K)
 - Offline PWA support
-- ImpactMojo Dataverse (215+ tools and datasets)
+- ImpactMojo Dataverse (247 tools and datasets)
 - BCT Repository (203 behaviour change techniques)
-- 12 learning games, 10 interactive labs
+- 16 learning games, 19 interactive labs
 - Dark mode and high-contrast theme
 - Multilingual support (6 languages)
 

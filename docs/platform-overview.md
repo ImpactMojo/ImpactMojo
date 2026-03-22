@@ -162,6 +162,8 @@ Interactive book companions that go far beyond a summary. Each BookSummary offer
 
 **Current entries:**
 - *The Handbook of Social Protection* (Hanna & Olken, MIT Press 2026) — 24 chapters, 17 evidence findings, 5 learning pathways, 40+ glossary concepts
+- *Development Economics* (Debraj Ray) — chapter-by-chapter companion with interactive data tools
+- *Design Thinking for Development* — design thinking companion with practice exercises
 
 ---
 

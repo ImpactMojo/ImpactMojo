@@ -13,7 +13,7 @@ If you work at an NGO, a think tank, or a university department focused on devel
 ImpactMojo was built to close that gap. Everything here is:
 
 - **Rooted in South Asian realities** — examples from India, Bangladesh, Nepal, and Sri Lanka, not textbook cases from other contexts
-- **Free at the core** — all 48 courses, 12 simulation games, 10 interactive labs, and hundreds of handouts are available without paying a rupee
+- **Free at the core** — all 48 courses, 16 simulation games, 19 interactive labs, and hundreds of handouts are available without paying a rupee
 - **Designed for practitioners** — not abstract theory, but content you can use in your next workshop, field visit, or strategy meeting
 - **Available offline** — because we know internet connections in the field aren't always reliable
 - **Multilingual** — available in English, Hindi, Tamil, Bengali, Telugu, and Marathi
@@ -44,7 +44,7 @@ ImpactMojo is much more than a course library. Here's what's available:
 **16 interactive games** that let you experience economic and development concepts by making decisions — budget allocations, market dynamics, policy trade-offs, and more. Ideal for workshops and classrooms.
 
 ### Interactive Labs
-**10 browser-based workbenches** where you can build frameworks, analyse data, and produce real outputs (like a theory of change diagram or a research question) step by step.
+**19 browser-based workbenches** where you can build frameworks, analyse data, and produce real outputs (like a theory of change diagram or a research question) step by step.
 
 ### Handouts
 **400+ downloadable pages** organized by track — ready to print, share in a training, or assign as pre-reading.
@@ -59,7 +59,7 @@ A **dictionary of 500+ development terms** — from "attribution" to "zero-based
 **500+ curated academic papers, books, and reports** — the essential reading list for development professionals, organized so you can actually find what you need.
 
 ### Dataverse
-**215+ datasets, APIs, tools, and MCP servers** for development research. If you need data on poverty, health outcomes, governance indicators, or climate — start here.
+**247 datasets, APIs, tools, and MCP servers** for development research. If you need data on poverty, health outcomes, governance indicators, or climate — start here.
 
 ### Blog & Podcast
 Regular writing and audio on development practice, new platform features, and sector trends.

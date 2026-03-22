@@ -74,6 +74,7 @@ The art grounds each game in South Asian visual culture while making abstract co
 | **Climate Action Challenge** | Climate science | Allocate resources between mitigation and adaptation across decades — the lesson that both are needed together | — |
 | **Care Economy Challenge** | Gender equity | Experience the invisible burden of unpaid care work and how policy choices affect equity outcomes | — |
 | **Epidemic Response** | Public health | Manage a disease outbreak across surveillance, treatment, prevention, community health workers, and communication | — |
+| **Digital Ethics Challenge** | Digital ethics | Navigate AI bias, data consent, platform accountability, and surveillance — the ethical dilemmas of digital development | — |
 
 ---
 

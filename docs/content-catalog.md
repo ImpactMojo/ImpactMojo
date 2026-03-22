@@ -22,13 +22,15 @@ Deep, multi-module courses with 12–13 modules each, interactive lexicons, Sout
 
 ---
 
-## BookSummaries (1)
+## BookSummaries (3)
 
 Interactive book companions under Specials — deep, chapter-by-chapter explorations with data tools and AI-powered Q&A.
 
 | # | Book | Features | Link |
 |---|------|----------|------|
 | 1 | The Handbook of Social Protection (Hanna & Olken, MIT Press 2026) | 24 chapters, evidence explorer, data playground, programme compare, glossary, South Asia lens, AI Q&A | [Open](/BookSummaries/handbook-social-protection.html) |
+| 2 | Development Economics (Debraj Ray) | Chapter-by-chapter companion with interactive data tools | [Open](/BookSummaries/debraj-ray-companion.html) |
+| 3 | Design Thinking for Development | Design thinking companion with practice exercises | [Open](/BookSummaries/dt-companion.html) |
 
 ---
 
@@ -113,16 +115,17 @@ Hands-on workbenches where you build, design, and practice real skills.
 
 | # | Lab | Track | Link |
 |---|-----|-------|------|
-| 1 | Theory of Change Lab | MEL | [Open](https://101.impactmojo.in/toc-workbench) |
-| 2 | MLE Design Lab | MEL | [Open](https://101.impactmojo.in/mel-design-lab) |
-| 3 | MEL Plan Lab | MEL | [Open](https://101.impactmojo.in/mel-plan-lab) |
-| 4 | Storytelling Lab | Health & Communication | [Open](https://101.impactmojo.in/storytelling-lab) |
-| 5 | Design Thinking Lab | MEL | [Open](https://101.impactmojo.in/design-thinking-lab) |
-| 6 | Community Development Lab | MEL | [Open](https://101.impactmojo.in/community-lab) |
-| 7 | Policy & Advocacy Lab | Philosophy & Governance | [Open](https://101.impactmojo.in/policy-advocacy-lab) |
-| 8 | Risk and Mitigation Lab | MEL | [Open](https://101.impactmojo.in/risk-mitigation-lab) |
-| 9 | Resource and Sustainability Lab | MEL | [Open](https://101.impactmojo.in/resource-sustainability-lab) |
-| 10 | Impact and Partnerships Lab | MEL | [Open](https://101.impactmojo.in/impact-partnerships) |
+| 1 | Theory of Change Lab | MEL | [Open](/courses/toc-lab.html) |
+| 2 | MLE Design Lab | MEL | [Open](/courses/mel-design-lab.html) |
+| 3 | MEL Plan Lab | MEL | [Open](/courses/mel-plan-lab.html) |
+| 4 | Storytelling Lab | Health & Communication | [Open](/courses/storytelling-lab.html) |
+| 5 | Design Thinking Lab | MEL | [Open](/courses/design-thinking-lab.html) |
+| 6 | Community Development Lab | MEL | [Open](/courses/community-lab.html) |
+| 7 | Policy & Advocacy Lab | Philosophy & Governance | [Open](/courses/policy-advocacy-lab.html) |
+| 8 | Risk and Mitigation Lab | MEL | [Open](/courses/risk-mitigation-lab.html) |
+| 9 | Resource and Sustainability Lab | MEL | [Open](/courses/resource-sustainability-lab.html) |
+| 10 | Impact and Partnerships Lab | MEL | [Open](/courses/impact-partnerships-lab.html) |
+| 11 | Gender Studies Lab | Gender & Equity | [Open](/courses/gender-studies-lab.html) |
 
 ---
 
@@ -146,6 +149,10 @@ All games now feature **MiroFish AI agents** powered by Groq/Gemini/DeepSeek wit
 | 10 | Externality Game | Pigouvian tax and market failure | Ashok, Nalini, Bina | [Play](/Games/externality-game.html) |
 | 11 | The Real Middle | Income inequality dynamics in India | 5 simulated households | [Play](/Games/real-middle-india.html) |
 | 12 | Econ Concepts Puzzle | 12 economics brain-teasers | — | [Play](/Games/econ-concepts-game.html) |
+| 13 | Climate Action Challenge | Climate resource allocation across decades | — | [Play](/Games/climate-action-game.html) |
+| 14 | Care Economy Challenge | Invisible burden of unpaid care work and equity | — | [Play](/Games/gender-equity-game.html) |
+| 15 | Epidemic Response | Public health outbreak management simulation | — | [Play](/Games/public-health-game.html) |
+| 16 | Digital Ethics Challenge | AI bias, data consent, and digital surveillance | — | [Play](/Games/digital-ethics-game.html) |
 
 ---
 
@@ -270,7 +277,7 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 | Foundational courses | 39 |
 | Interactive labs | 19 |
 | Learning games | 16 |
-| BookSummaries | 1 |
+| BookSummaries | 3 |
 | Premium tools | 9 |
 | Handout pages | 80+ |
 | Dataverse entries | 247 |
