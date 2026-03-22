@@ -9,10 +9,10 @@ All external API calls use environment variables for authentication (loaded by `
 | Netlify | `$NETLIFY_PAT` | `Authorization: Bearer $NETLIFY_PAT` | `netlify-ops` |
 | Gamma | `$GAMMA_API_KEY` | `Authorization: Bearer $GAMMA_API_KEY` | `gamma-ops` |
 | Gemini | `$GEMINI_API_KEY` | Query param `?key=$GEMINI_API_KEY` | `gemini-ai` |
-| Napkin.ai | `$NAPKIN_API_KEY` | `Authorization: Bearer $NAPKIN_API_KEY` | — |
-| Grok | `$GROK_API_KEY` | `Authorization: Bearer $GROK_API_KEY` | — |
-| DeepSeek | `$DEEPSEEK_API_KEY` | `Authorization: Bearer $DEEPSEEK_API_KEY` | — |
-| Sarvam AI | `$SARVAM_API_KEY` | `Authorization: Bearer $SARVAM_API_KEY` | — |
+| Napkin.ai | `$NAPKIN_API_KEY` | `Authorization: Bearer $NAPKIN_API_KEY` | `napkin-ai` |
+| Grok | `$GROK_API_KEY` | `Authorization: Bearer $GROK_API_KEY` | `grok-ai` |
+| DeepSeek | `$DEEPSEEK_API_KEY` | `Authorization: Bearer $DEEPSEEK_API_KEY` | `deepseek-ai` |
+| Sarvam AI | `$SARVAM_API_KEY` | `Authorization: Bearer $SARVAM_API_KEY` | `sarvam-ai` |
 
 ## Rules
 
