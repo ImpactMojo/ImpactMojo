@@ -1,0 +1,2447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Thinking — Interactive Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --paper: #F3EDE3;
+    --warm-white: #FFFDF9;
+    --charcoal: #1C1A17;
+    --ink: #2D2A25;
+    --muted: #7A7268;
+    --border: #E0D8CC;
+    --border-strong: #C8BFB0;
+    --orange: #C85A1E;
+    --orange-light: #E8784A;
+    --orange-pale: #FAE8DC;
+    --teal: #1E7A6E;
+    --teal-light: #2BA898;
+    --teal-pale: #DCF0EE;
+    --gold: #B8860B;
+    --gold-pale: #FBF3DC;
+    --plum: #6E2F6E;
+    --plum-pale: #F4E8F4;
+    --indigo: #2B3A8C;
+    --indigo-pale: #E4E8F8;
+    --red: #B53030;
+    --red-pale: #FAECEC;
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(28,26,23,0.08);
+    --shadow-md: 0 4px 16px rgba(28,26,23,0.1);
+    --shadow-lg: 0 8px 32px rgba(28,26,23,0.12);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--orange);
+  }
+  .site-header .logo {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+  }
+  .site-header .logo span { color: var(--orange-light); font-style: italic; }
+  .header-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── Book banner ── */
+  .book-banner {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2D2520 60%, #3A1E08 100%);
+    color: var(--cream);
+    padding: 3.5rem 2rem 3rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .book-cover-art {
+    flex-shrink: 0;
+    width: 90px;
+    height: 120px;
+    background: var(--orange);
+    border-radius: 4px 10px 10px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: -4px 4px 0 rgba(0,0,0,0.4), var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .book-cover-art::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 8px;
+    background: rgba(0,0,0,0.3);
+  }
+  .book-cover-art .cover-icon {
+    font-size: 2.2rem;
+    margin-left: 6px;
+  }
+  .book-meta { flex: 1; min-width: 260px; }
+  .book-meta .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange-light);
+    margin-bottom: 0.4rem;
+  }
+  .book-meta h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+  .book-meta h1 em { color: var(--orange-light); font-style: italic; }
+  .book-meta .subtitle {
+    font-size: 0.95rem;
+    color: rgba(250,247,242,0.65);
+    margin-bottom: 1rem;
+  }
+  .book-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .book-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.65rem;
+    border: 1px solid rgba(250,247,242,0.2);
+    border-radius: 100px;
+    color: rgba(250,247,242,0.7);
+  }
+
+  /* ── Tabs ── */
+  .tabs-bar {
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    position: sticky;
+    top: 60px;
+    z-index: 90;
+    padding: 0 1.5rem;
+    scrollbar-width: none;
+  }
+  .tabs-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.85rem 1.15rem;
+    border: none;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+  .tab-icon { font-size: 0.95rem; }
+
+  /* ── Main layout ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── Section headings ── */
+  .section-heading {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--charcoal);
+    margin-bottom: 0.35rem;
+  }
+  .section-subheading {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+
+  /* ── Overview tab ── */
+  .overview-intro {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .overview-intro p {
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: var(--ink);
+    max-width: 75ch;
+  }
+  .overview-intro p + p { margin-top: 0.85rem; }
+
+  .author-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    background: var(--orange-pale);
+    border: 1px solid rgba(200,90,30,0.2);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .author-avatar {
+    width: 48px; height: 48px;
+    background: var(--orange);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .author-card .author-name {
+    font-weight: 700;
+    font-size: 0.97rem;
+    color: var(--charcoal);
+  }
+  .author-card .author-bio {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+    line-height: 1.5;
+  }
+
+  /* DT Loop Diagram */
+  .loop-section {
+    margin-bottom: 2.5rem;
+  }
+  .loop-section h2 {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--charcoal);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .loop-diagram {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+    justify-content: center;
+  }
+  .loop-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem 0.75rem;
+    min-width: 120px;
+    flex: 1;
+    max-width: 180px;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    position: relative;
+  }
+  .loop-block:hover { background: var(--paper); }
+  .loop-block .block-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .lb-1 .block-num { background: var(--teal-pale); color: var(--teal); }
+  .lb-2 .block-num { background: var(--indigo-pale); color: var(--indigo); }
+  .lb-3 .block-num { background: var(--orange-pale); color: var(--orange); }
+  .lb-4 .block-num { background: var(--gold-pale); color: var(--gold); }
+  .lb-5 .block-num { background: var(--plum-pale); color: var(--plum); }
+  .loop-block .block-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin-bottom: 0.35rem;
+  }
+  .loop-block .block-desc {
+    font-size: 0.74rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .loop-arrow {
+    font-size: 1.25rem;
+    color: var(--border-strong);
+    flex-shrink: 0;
+    padding: 0 0.25rem;
+  }
+  .loop-caption {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 1rem;
+    font-style: italic;
+    padding: 0 1rem;
+  }
+
+  /* Key principles grid */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .principle-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--border);
+  }
+  .principle-card.orange { border-left-color: var(--orange); }
+  .principle-card.teal { border-left-color: var(--teal); }
+  .principle-card.indigo { border-left-color: var(--indigo); }
+  .principle-card.gold { border-left-color: var(--gold); }
+  .principle-card.plum { border-left-color: var(--plum); }
+  .principle-card.red { border-left-color: var(--red); }
+  .principle-card h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .principle-card p {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── Chapters tab ── */
+  .part-section {
+    margin-bottom: 2.5rem;
+  }
+  .part-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .part-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    flex-shrink: 0;
+  }
+  .part-badge.p1 { background: var(--orange-pale); color: var(--orange); }
+  .part-badge.p2 { background: var(--teal-pale); color: var(--teal); }
+  .part-title {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--charcoal);
+  }
+
+  .chapter-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .chapter-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .chapter-header:hover { background: var(--paper); }
+  .ch-num {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--muted);
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+  }
+  .ch-num.orange-bg { background: var(--orange-pale); border-color: var(--orange); color: var(--orange); }
+  .ch-num.teal-bg { background: var(--teal-pale); border-color: var(--teal); color: var(--teal); }
+  .ch-title-block { flex: 1; }
+  .ch-title {
+    font-size: 0.97rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.15rem;
+  }
+  .ch-subtitle {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .ch-arrow {
+    color: var(--muted);
+    font-size: 0.85rem;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+
+  .chapter-body {
+    display: none;
+    padding: 0 1.25rem 1.5rem 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .chapter-card.open .chapter-body { display: block; }
+
+  .ch-summary {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 1rem 0;
+    max-width: 72ch;
+  }
+  .ch-sections {
+    margin-top: 1rem;
+  }
+  .ch-sections h4 {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .section-pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .section-pill {
+    font-size: 0.77rem;
+    padding: 0.25rem 0.7rem;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .key-quote {
+    background: var(--paper);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 0.9rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.84rem;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.65;
+  }
+  .key-quote .quote-attr {
+    font-style: normal;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    font-weight: 600;
+  }
+
+  /* ── Concepts tab ── */
+  .concepts-nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+  }
+  .concept-btn {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--warm-white);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .concept-btn:hover { border-color: var(--border-strong); color: var(--ink); }
+  .concept-btn.active { background: var(--charcoal); color: var(--cream); border-color: var(--charcoal); }
+
+  .concept-panel { display: none; }
+  .concept-panel.active { display: block; }
+
+  .concept-hero {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+  .concept-icon-large {
+    width: 64px; height: 64px;
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .concept-hero-text { flex: 1; min-width: 240px; }
+  .concept-hero-text h2 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--charcoal);
+    margin-bottom: 0.4rem;
+  }
+  .concept-hero-text p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--ink);
+    max-width: 65ch;
+  }
+
+  .concept-body {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.25rem;
+  }
+  .concept-body h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .tips-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .tips-list li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .tips-list li::before {
+    content: '→';
+    color: var(--orange);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+  .avoid-list li::before { content: '✗'; color: var(--red); }
+
+  .two-col-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 600px) { .two-col-grid { grid-template-columns: 1fr; } }
+
+  .mini-card {
+    background: var(--paper);
+    border-radius: var(--radius);
+    padding: 1rem;
+    border: 1px solid var(--border);
+  }
+  .mini-card h4 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.4rem;
+  }
+  .mini-card p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ── Cases tab ── */
+  .cases-filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+  }
+  .filter-btn {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--warm-white);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .filter-btn:hover { border-color: var(--border-strong); color: var(--ink); }
+  .filter-btn.active { background: var(--charcoal); color: var(--cream); border-color: var(--charcoal); }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 1.25rem;
+  }
+  .case-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.35rem;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .case-card:hover { box-shadow: var(--shadow-md); }
+  .case-card.hidden { display: none; }
+  .case-field-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    margin-bottom: 0.75rem;
+  }
+  .badge-politics { background: var(--indigo-pale); color: var(--indigo); }
+  .badge-business { background: var(--teal-pale); color: var(--teal); }
+  .badge-health { background: var(--red-pale); color: var(--red); }
+  .badge-law { background: var(--gold-pale); color: var(--gold); }
+  .badge-writing { background: var(--plum-pale); color: var(--plum); }
+  .case-card h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.4rem;
+    line-height: 1.35;
+  }
+  .case-card .case-person {
+    font-size: 0.78rem;
+    color: var(--orange);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+  .case-card p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .case-dt-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.85rem;
+  }
+  .case-dt-tag {
+    font-size: 0.68rem;
+    padding: 0.15rem 0.5rem;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* ── Toolkit tab ── */
+  .toolkit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .tool-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.35rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .tool-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .tool-icon {
+    width: 40px; height: 40px;
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+  .ti-teal { background: var(--teal-pale); }
+  .ti-orange { background: var(--orange-pale); }
+  .ti-gold { background: var(--gold-pale); }
+  .ti-indigo { background: var(--indigo-pale); }
+  .ti-plum { background: var(--plum-pale); }
+  .ti-red { background: var(--red-pale); }
+  .tool-header h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--charcoal);
+  }
+  .tool-card > p {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 0.85rem;
+  }
+  .tool-steps {
+    list-style: none;
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .tool-steps li {
+    counter-increment: step;
+    display: flex;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .tool-steps li::before {
+    content: counter(step);
+    min-width: 20px; height: 20px;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--muted);
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    margin-top: 0.1rem;
+  }
+
+  /* Quotes section */
+  .quotes-carousel {
+    margin-top: 2rem;
+  }
+  .quotes-carousel h2 {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--charcoal);
+    margin-bottom: 1.25rem;
+  }
+  .quotes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1rem;
+  }
+  .quote-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .quote-mark {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--orange-light);
+    line-height: 0.8;
+    margin-bottom: 0.5rem;
+  }
+  .quote-card blockquote {
+    font-size: 0.855rem;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+  .quote-card .quote-source {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Ask tab ── */
+  .ask-panel {
+    max-width: 720px;
+  }
+  .api-setup {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .api-setup h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .api-setup p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 0.85rem;
+    line-height: 1.55;
+  }
+  .api-input-row {
+    display: flex;
+    gap: 0.6rem;
+  }
+  .api-input-row input {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .api-input-row input:focus { border-color: var(--orange); }
+  .btn-primary {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.55rem 1.1rem;
+    background: var(--charcoal);
+    color: var(--cream);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { background: #3A3630; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .api-status {
+    font-size: 0.78rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    flex-shrink: 0;
+  }
+  .status-dot.connected { background: var(--teal); }
+  .status-dot.error { background: var(--red); }
+
+  .chat-area {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1rem;
+  }
+  .chat-messages {
+    min-height: 320px;
+    max-height: 460px;
+    overflow-y: auto;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .chat-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 2rem;
+    text-align: center;
+  }
+  .chat-empty .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .chat-empty h3 {
+    font-size: 0.97rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.35rem;
+  }
+  .chat-empty p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    max-width: 38ch;
+    line-height: 1.6;
+  }
+  .chat-message { display: flex; gap: 0.75rem; }
+  .msg-avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .user-avatar { background: var(--charcoal); }
+  .ai-avatar { background: var(--orange-pale); }
+  .msg-bubble {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border-radius: 0 var(--radius) var(--radius) var(--radius);
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--ink);
+    border: 1px solid var(--border);
+    background: var(--cream);
+    white-space: pre-wrap;
+  }
+  .user-msg .msg-bubble {
+    background: var(--charcoal);
+    color: var(--cream);
+    border-color: var(--charcoal);
+    border-radius: var(--radius) 0 var(--radius) var(--radius);
+  }
+  .ai-msg .msg-bubble { background: var(--warm-white); }
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 0.25rem 0;
+  }
+  .typing-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    animation: bounce 1.2s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+  }
+
+  .chat-input-area {
+    border-top: 1px solid var(--border);
+    padding: 1rem;
+    display: flex;
+    gap: 0.6rem;
+  }
+  .chat-input-area textarea {
+    flex: 1;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--cream);
+    color: var(--ink);
+    resize: none;
+    min-height: 42px;
+    max-height: 120px;
+    outline: none;
+    transition: border-color 0.15s;
+    line-height: 1.5;
+  }
+  .chat-input-area textarea:focus { border-color: var(--orange); }
+  .chat-input-area textarea::placeholder { color: var(--muted); }
+  .btn-send {
+    width: 42px; height: 42px;
+    border-radius: var(--radius);
+    background: var(--orange);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .btn-send:hover { background: var(--orange-light); }
+  .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .starter-prompts {
+    margin-top: 1rem;
+  }
+  .starter-prompts h4 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.65rem;
+  }
+  .starters-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .starter-chip {
+    font-size: 0.79rem;
+    padding: 0.4rem 0.85rem;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--font-sans);
+  }
+  .starter-chip:hover {
+    background: var(--orange-pale);
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+
+  /* ── Utility ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2rem 0;
+  }
+  .info-banner {
+    background: var(--teal-pale);
+    border: 1px solid rgba(30,122,110,0.2);
+    border-radius: var(--radius);
+    padding: 0.85rem 1.1rem;
+    font-size: 0.82rem;
+    color: var(--teal);
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    line-height: 1.55;
+  }
+  .info-banner span { flex-shrink: 0; }
+
+  /* ── Footer ── */
+  .site-footer {
+    background: var(--charcoal);
+    color: var(--muted);
+    text-align: center;
+    font-size: 0.78rem;
+    padding: 1.5rem;
+    margin-top: 4rem;
+    line-height: 1.7;
+  }
+  .site-footer a { color: var(--orange-light); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .book-banner { padding: 2rem 1.25rem; }
+    .main { padding: 1.5rem 1rem 3rem; }
+    .loop-diagram { padding: 1rem; }
+    .loop-block { min-width: 90px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="logo">Design Thinking <span>Companion</span></div>
+  <div class="header-badge">Interactive Guide</div>
+</header>
+
+<!-- Book Banner -->
+<div class="book-banner">
+  <div class="book-cover-art">
+    <div class="cover-icon">💡</div>
+  </div>
+  <div class="book-meta">
+    <div class="label">Interactive Companion</div>
+    <h1><em>Design Thinking:</em> A Guide to Creative Problem Solving for Everyone</h1>
+    <p class="subtitle">Andrew Pressman, FAIA — Routledge, 2019 · 177 pages</p>
+    <div class="book-tags">
+      <span class="book-tag">Creative Problem Solving</span>
+      <span class="book-tag">Innovation</span>
+      <span class="book-tag">Interdisciplinary</span>
+      <span class="book-tag">Empathy</span>
+      <span class="book-tag">Iterative Process</span>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<nav class="tabs-bar" role="tablist">
+  <button class="tab-btn active" onclick="switchTab('overview')" role="tab">
+    <span class="tab-icon">🗺</span> Overview
+  </button>
+  <button class="tab-btn" onclick="switchTab('chapters')" role="tab">
+    <span class="tab-icon">📖</span> Chapters
+  </button>
+  <button class="tab-btn" onclick="switchTab('concepts')" role="tab">
+    <span class="tab-icon">🧩</span> Core Concepts
+  </button>
+  <button class="tab-btn" onclick="switchTab('cases')" role="tab">
+    <span class="tab-icon">🔍</span> Case Studies
+  </button>
+  <button class="tab-btn" onclick="switchTab('toolkit')" role="tab">
+    <span class="tab-icon">🛠</span> Toolkit
+  </button>
+  <button class="tab-btn" onclick="switchTab('ask')" role="tab">
+    <span class="tab-icon">✨</span> Ask AI
+  </button>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- ═══════════ OVERVIEW ═══════════ -->
+  <section id="tab-overview" class="tab-panel active">
+    <h1 class="section-heading">What is this book about?</h1>
+    <p class="section-subheading">A primer on design thinking — its process, building blocks, and applications across diverse fields</p>
+
+    <div class="overview-intro">
+      <p>Design thinking is a process for creative problem solving that originated in architecture and design but has spread far beyond those fields. Andrew Pressman's book is one of the most accessible introductions available — it is written for <em>individuals</em>, not teams, and requires no prior design training. The central argument is that anyone can learn to think like a designer, and that doing so leads to better, more innovative, more empathy-driven solutions to almost any problem.</p>
+      <p>The book is organised into two parts. Part 1 lays out the process itself in careful detail — the five building blocks that form the design thinking loop, and the tools and strategies (diagramming, reflection, presentation) that support it. Part 2 demonstrates the process in action through a series of real-world vignettes drawn from politics, business, health, law, and writing, each based on interviews Pressman conducted with practitioners who have applied design thinking meaningfully in their work.</p>
+      <p>A distinctive feature of the book is its insistence that design thinking is <em>not a formula</em>. The process should be customised to the problem at hand. Building blocks can be merged, skipped, reordered, or weighted differently depending on context. The goal is always an optimal solution — not a perfect one, which does not exist — that addresses the highest-priority objectives while satisfying as many stakeholder requirements as possible.</p>
+      <div class="author-card">
+        <div class="author-avatar">🏛</div>
+        <div>
+          <div class="author-name">Andrew Pressman, FAIA</div>
+          <div class="author-bio">Architect, Professor Emeritus at the University of New Mexico, Adjunct Professor at the University of Maryland. Principal of an award-winning architectural firm in Washington, DC. Harvard GSD alumnus. Author of multiple books on design practice and collaboration.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DT Loop -->
+    <div class="loop-section">
+      <h2>🔄 The Design Thinking Loop</h2>
+      <div class="loop-diagram">
+        <div class="loop-block lb-1" onclick="switchTabAndConcept('concepts','info')">
+          <div class="block-num">1</div>
+          <div class="block-name">Information Gathering</div>
+          <div class="block-desc">Empathy, interviews, precedents, context analysis</div>
+        </div>
+        <div class="loop-arrow">→</div>
+        <div class="loop-block lb-2" onclick="switchTabAndConcept('concepts','problem')">
+          <div class="block-num">2</div>
+          <div class="block-name">Problem Analysis</div>
+          <div class="block-desc">Challenge the problem; reframe; identify root causes</div>
+        </div>
+        <div class="loop-arrow">→</div>
+        <div class="loop-block lb-3" onclick="switchTabAndConcept('concepts','ideas')">
+          <div class="block-num">3</div>
+          <div class="block-name">Idea Generation</div>
+          <div class="block-desc">Brainstorming; wild ideas welcome; quantity over quality</div>
+        </div>
+        <div class="loop-arrow">→</div>
+        <div class="loop-block lb-4" onclick="switchTabAndConcept('concepts','synthesis')">
+          <div class="block-num">4</div>
+          <div class="block-name">Synthesis & Modeling</div>
+          <div class="block-desc">Build prototypes; make it tangible; experiment and play</div>
+        </div>
+        <div class="loop-arrow">→</div>
+        <div class="loop-block lb-5" onclick="switchTabAndConcept('concepts','evaluation')">
+          <div class="block-num">5</div>
+          <div class="block-name">Critical Evaluation</div>
+          <div class="block-desc">Seek critique; embrace feedback; refine and repeat</div>
+        </div>
+      </div>
+      <p class="loop-caption">The loop is non-linear. Building blocks can be combined, skipped, or weighted differently depending on the problem. Click any block to explore it in depth.</p>
+    </div>
+
+    <!-- Key principles -->
+    <h2 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--charcoal);margin-bottom:1.25rem;">🧭 Six Defining Principles</h2>
+    <div class="principles-grid">
+      <div class="principle-card orange">
+        <h3>🔁 Iteration Over Perfection</h3>
+        <p>There is no single right answer. Solutions improve through successive loops of making, testing, and revising. The optimal solution — not the perfect one — is the goal.</p>
+      </div>
+      <div class="principle-card teal">
+        <h3>🤝 Empathy Is Central</h3>
+        <p>Deep understanding of stakeholders — their motivations, constraints, and unspoken needs — is what distinguishes design thinking from conventional analysis. You must immerse yourself in others' realities.</p>
+      </div>
+      <div class="principle-card indigo">
+        <h3>🎯 Define the Right Problem</h3>
+        <p>Never accept problems at face value. The real problem is often masked. Rigorous analysis, probing questions, and contextual investigation are required to find the problem worth solving.</p>
+      </div>
+      <div class="principle-card gold">
+        <h3>💥 Failure Is Information</h3>
+        <p>Bad ideas and failed prototypes are valuable. They surface constraints, generate unexpected insights, and push thinking toward more innovative alternatives. IDEO's mantra: "Fail often to succeed sooner."</p>
+      </div>
+      <div class="principle-card plum">
+        <h3>🌀 Embrace Ambiguity</h3>
+        <p>Comfort with uncertainty is a core skill. You will not have all the information when you start. That's fine — design thinking is built to operate productively in incomplete information conditions.</p>
+      </div>
+      <div class="principle-card red">
+        <h3>✨ The Goose Bump Factor</h3>
+        <p>Great design thinking reaches beyond the functional solution to something that stakeholders didn't know they needed — something that elicits an emotional response. Always look for this transcendence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CHAPTERS ═══════════ -->
+  <section id="tab-chapters" class="tab-panel">
+    <h1 class="section-heading">Chapter Navigator</h1>
+    <p class="section-subheading">Click any chapter to read a detailed summary with key insights and quotes</p>
+
+    <!-- Part 1 -->
+    <div class="part-section">
+      <div class="part-label">
+        <span class="part-badge p1">Part 1</span>
+        <span class="part-title">Processes — The Design Thinking Framework</span>
+      </div>
+
+      <div class="chapter-card" id="ch1">
+        <div class="chapter-header" onclick="toggleChapter('ch1')">
+          <div class="ch-num orange-bg">1</div>
+          <div class="ch-title-block">
+            <div class="ch-title">Design Thinking Overview</div>
+            <div class="ch-subtitle">Defining DT · Customizing the Process</div>
+          </div>
+          <span class="ch-arrow">›</span>
+        </div>
+        <div class="chapter-body">
+          <p class="ch-summary">This opening chapter frames the book's central question: what exactly is design thinking, and how is it different from other problem-solving approaches? Pressman resists offering a single definition, acknowledging that there is no general agreement across disciplines. Instead, he offers five characterisations: DT is a process, a skill, a tool, a mindset, and a series of actions structured by a loop. He distils the process into five building blocks — information gathering, problem analysis, idea generation, synthesis through modelling, and critical evaluation — that form a non-linear loop to be traversed as many times as the problem requires.</p>
+          <p class="ch-summary">The crucial insight of this chapter is that <em>design thinking must be customised</em>. A prescriptive step-by-step approach is itself a flaw. The building blocks can be cherry-picked, merged, reordered, or expanded. The process can be just as creative as the outcome it produces. Pressman also distinguishes DT from hypothesis testing and conventional research: unlike science problems, there is no single right answer, and solutions may actually change the initial question through the act of prototyping.</p>
+          <div class="key-quote">
+            "The process can be just as creative and unique as the outcome. Keep your eyes open and free your imagination in response to the challenge at hand."
+            <div class="quote-attr">— Andrew Pressman</div>
+          </div>
+          <div class="ch-sections">
+            <h4>Sections</h4>
+            <div class="section-pill-list">
+              <span class="section-pill">Defining Design Thinking</span>
+              <span class="section-pill">How DT differs from other approaches</span>
+              <span class="section-pill">Customizing the Process</span>
+              <span class="section-pill">Tim Brown's three spaces (IDEO)</span>
+              <span class="section-pill">The DT loop diagram</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chapter-card" id="ch2">
+        <div class="chapter-header" onclick="toggleChapter('ch2')">
+          <div class="ch-num orange-bg">2</div>
+          <div class="ch-title-block">
+            <div class="ch-title">Building Blocks of Design Thinking</div>
+            <div class="ch-subtitle">Information Gathering · Problem Analysis · Idea Generation · Synthesis · Critical Evaluation</div>
+          </div>
+          <span class="ch-arrow">›</span>
+        </div>
+        <div class="chapter-body">
+          <p class="ch-summary">This is the book's most substantial chapter, walking through each of the five building blocks in depth. <strong>Information gathering</strong> is discussed through the lens of empathy — drawing on ethnographic methods and Clifford Geertz's "thick description" to argue for deep immersion in stakeholders' realities. Pressman provides detailed guidance on conducting effective interviews (preparation, rapport, active listening, probing questions, observation, avoiding leading questions). He also covers precedents (analysing prior solutions to similar problems) and context (the full environmental, social, and historical backdrop of the problem).</p>
+          <p class="ch-summary"><strong>Problem analysis and definition</strong> challenges readers not to accept problems at face value. The right problem is often not the stated problem. Analysis should yield a clear, multi-dimensional understanding of root causes, stakeholder conflicts, and constraints before brainstorming begins. <strong>Idea generation</strong> is treated at length: brainstorming tips, the importance of withholding judgement, generating "wild and crazy" ideas, working in baby steps, using constraints as creative fuel, the "what if" game, and the danger of typical brainstorming mistakes. A distinctive concept is the <em>goose bump factor</em> — the magical intangible that separates a competent solution from a great one.</p>
+          <p class="ch-summary"><strong>Synthesis through modelling</strong> covers prototyping — taking the best ideas to higher resolution. The prototype is both a design tool (a "conversation" between the thinker and the project) and a testing vehicle (to elicit the most constructive critique). <strong>Critical evaluation</strong> emphasises seeking diverse feedback, cultivating self-criticism, and responding constructively to challenges without becoming defensive.</p>
+          <div class="key-quote">
+            "Never accept problems at face value — always challenge them to either affirm their validity or recast them after further investigation."
+            <div class="quote-attr">— Andrew Pressman</div>
+          </div>
+          <div class="key-quote">
+            "Bad ideas are great because they often trigger exceptional ideas. The bad idea must be appreciated; that is, all ideas need to be considered, nurtured, then rejected, accepted, or built upon — not immediately crushed."
+            <div class="quote-attr">— Andrew Pressman</div>
+          </div>
+          <div class="ch-sections">
+            <h4>Sections</h4>
+            <div class="section-pill-list">
+              <span class="section-pill">Empathy & ethnography</span>
+              <span class="section-pill">Interview techniques (8 tips)</span>
+              <span class="section-pill">Precedents</span>
+              <span class="section-pill">Context analysis</span>
+              <span class="section-pill">Problem redefinition</span>
+              <span class="section-pill">Brainstorming</span>
+              <span class="section-pill">Design thinking attitude</span>
+              <span class="section-pill">Alternative solutions</span>
+              <span class="section-pill">Baby steps</span>
+              <span class="section-pill">Goose bump factor</span>
+              <span class="section-pill">Prototyping</span>
+              <span class="section-pill">External & self-criticism</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chapter-card" id="ch3">
+        <div class="chapter-header" onclick="toggleChapter('ch3')">
+          <div class="ch-num orange-bg">3</div>
+          <div class="ch-title-block">
+            <div class="ch-title">Tools and Strategies</div>
+            <div class="ch-subtitle">Diagramming · Reflecting · Presenting</div>
+          </div>
+          <span class="ch-arrow">›</span>
+        </div>
+        <div class="chapter-body">
+          <p class="ch-summary">This shorter chapter describes three supporting tools that advance the design thinking process. <strong>Diagramming</strong> is treated broadly — bubble diagrams, mind maps, flow charts, Post-its, outlines, and any visual representation of information that helps design thinkers understand problems and communicate ideas. Pressman argues that sketching is the most immediate brain-to-hand means of expression and quotes Donald Schön's concept of "reflective conversation with the situation." He cautions against over-reliance on digital tools in early stages.</p>
+          <p class="ch-summary"><strong>Reflecting</strong> is perhaps the chapter's most charming section, organised around the metaphor of walking your dog. The creative pause — stepping away from intensive work to let ideas incubate — is essential. Sleep, walks, showers, coffee shops, and unstructured time all serve this function. "Time for reflection is crucial for making sense of all the information, and for discovering meaningful insights."</p>
+          <p class="ch-summary"><strong>Presenting</strong> covers both verbal and graphic presentation skills. Pressman draws on Weld Coxe's view that the presentation is itself a design problem, and Roger Fisher and William Ury's concept of "principled negotiation" to frame stakeholder conversations not as battles to win but as collaborative processes of mutual enlightenment. Tips cover projecting confidence, grabbing the audience, speaking without jargon, and creating graphic focus.</p>
+          <div class="key-quote">
+            "New ideas may become apparent as a function of simply utilizing the appropriate tool."
+            <div class="quote-attr">— Andrew Pressman</div>
+          </div>
+          <div class="ch-sections">
+            <h4>Sections</h4>
+            <div class="section-pill-list">
+              <span class="section-pill">Diagramming & visual thinking</span>
+              <span class="section-pill">Post-its and bubble diagrams</span>
+              <span class="section-pill">The dog walk (reflection)</span>
+              <span class="section-pill">Creative pause</span>
+              <span class="section-pill">Verbal presentation tips</span>
+              <span class="section-pill">Graphic presentation tips</span>
+              <span class="section-pill">Principled negotiation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Part 2 -->
+    <div class="part-section">
+      <div class="part-label">
+        <span class="part-badge p2">Part 2</span>
+        <span class="part-title">Applications — Design Thinking Across Disciplines</span>
+      </div>
+
+      <div class="chapter-card" id="ch4">
+        <div class="chapter-header" onclick="toggleChapter('ch4')">
+          <div class="ch-num teal-bg">4</div>
+          <div class="ch-title-block">
+            <div class="ch-title">Politics and Society</div>
+            <div class="ch-subtitle">Civic Engagement · Managing Gridlocked Debates</div>
+          </div>
+          <span class="ch-arrow">›</span>
+        </div>
+        <div class="chapter-body">
+          <p class="ch-summary">This chapter argues that design thinking is a critical leadership tool in the political arena. Through interviews with two practitioners — former US Congressman and Ambassador Richard Swett, and Carmel City Councillor Victoria Beach — Pressman shows how design thinking can expand civic participation, break deadlocked debates, and create solutions that were previously unimaginable.</p>
+          <p class="ch-summary">Swett describes how he co-authored the <strong>Congressional Accountability Act</strong> — landmark legislation requiring Congress to abide by the laws it passes — by literally approaching it "like designing a building": taking a blank piece of paper to all interested groups, listening to their designs, and then integrating and synthesising their input into alternative schemes for review. The process, entirely foreign to Congress at the time, ultimately passed 97-3 in the Senate and 433-3 in the House. He also describes using team-based management to transform morale at the US embassy in Denmark — replacing siloed agency structures with cross-agency project teams.</p>
+          <p class="ch-summary">Beach's two vignettes illustrate different tactics. In the <strong>Flanders Mansion</strong> case, she broke a decade-long intractable dispute between pro-sale and pro-preservation factions by presenting newly uncovered facts that reframed the cost-benefit calculus, then proposing a third option — essentially, doing nothing — that neither side had previously considered. In a transportation board meeting, she secured a $20 million trail project not by advocating for it directly, but through a tactically timed procedural amendment that redirected the debate.</p>
+          <div class="key-quote">
+            "Design thinking is not a luxury for society — it's a necessity."
+            <div class="quote-attr">— Victoria Beach</div>
+          </div>
+          <div class="ch-sections">
+            <h4>Vignettes</h4>
+            <div class="section-pill-list">
+              <span class="section-pill">Congressional Accountability Act</span>
+              <span class="section-pill">US Embassy, Denmark — team restructuring</span>
+              <span class="section-pill">Flanders Mansion, Carmel</span>
+              <span class="section-pill">$20M trail project (procedure as design)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chapter-card" id="ch5">
+        <div class="chapter-header" onclick="toggleChapter('ch5')">
+          <div class="ch-num teal-bg">5</div>
+          <div class="ch-title-block">
+            <div class="ch-title">Business</div>
+            <div class="ch-subtitle">Strategy · Culinary Arts · Pharma · University · Fast-Fail · Interviews</div>
+          </div>
+          <span class="ch-arrow">›</span>
+        </div>
+        <div class="chapter-body">
+          <p class="ch-summary">The book's richest application chapter, spanning six vignettes from a personal chef to a university president. <strong>Michael Tardif</strong> (Building Informatics Group) describes two examples: a "strategic plan as jigsaw puzzle" — implementing a technology plan non-linearly by inserting puzzle pieces opportunistically rather than following a linear sequence — and a business venture that arose from a Eureka moment: realising that building owners don't need the BIM model, they need the information inside it, structured in a form useful to facility managers from day one of occupancy.</p>
+          <p class="ch-summary"><strong>Francesco Crocenzi</strong> (chef, Frankie's Table, Seattle) walks through the design thinking analogy in cooking: analysis and vision drive dish development, iteration and client feedback refine it, and the most important creative lesson is not to take criticism personally. <strong>Meredith Kauffman</strong> describes a pharmaceutical case where a designer embedded in an R&D team used a jury-rigged arthritic glove to generate empathy for elderly denture-adhesive users, ultimately identifying the real problem (over-application, not denture fit) and driving an innovative metered-dose delivery device.</p>
+          <p class="ch-summary"><strong>James Barker</strong> (former Clemson University President) credits design thinking — especially visioning, listening, and diagramming — for transforming Clemson from ranked 74th to a top-25 public university, raising $1 billion in private funding, and managing the 2008 financial crisis with creativity. <strong>Diego Ruzzarin</strong> (Foodlosofia) describes the "fast-fail and iterative" approach to food innovation, including a case where reconnecting with lapsed adult cheese-snack consumers required abandoning the children's market entirely — a decision discovered through empathic interviews revealing that sticky fingers interfere with smartphone use. <strong>Scott Phillips</strong> (SearchLite) offers a masterclass on interview methodology as design thinking, using dinner-conversation dynamics, active listening, confirmation bias avoidance, and iterative question refinement.</p>
+          <div class="key-quote">
+            "You must listen to that little touch of feedback — it could be a key to the best solution!"
+            <div class="quote-attr">— Francesco Crocenzi</div>
+          </div>
+          <div class="ch-sections">
+            <h4>Vignettes</h4>
+            <div class="section-pill-list">
+              <span class="section-pill">Strategic plan as jigsaw puzzle (Tardif)</span>
+              <span class="section-pill">BIM data delivery venture (Tardif)</span>
+              <span class="section-pill">Culinary design thinking (Crocenzi)</span>
+              <span class="section-pill">Denture adhesive innovation (Kauffman)</span>
+              <span class="section-pill">Clemson University transformation (Barker)</span>
+              <span class="section-pill">Cheese snack fast-fail (Ruzzarin)</span>
+              <span class="section-pill">Interview as design problem (Phillips)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chapter-card" id="ch6">
+        <div class="chapter-header" onclick="toggleChapter('ch6')">
+          <div class="ch-num teal-bg">6</div>
+          <div class="ch-title-block">
+            <div class="ch-title">Health and Science</div>
+            <div class="ch-subtitle">Healthcare Delivery · A Design Approach to Cancer Treatment</div>
+          </div>
+          <span class="ch-arrow">›</span>
+        </div>
+        <div class="chapter-body">
+          <p class="ch-summary">This chapter examines the convergence of design thinking and medicine, framed by Peter Lloyd Jones's claim that training doctors to see the world through a designer's eyes improves clinical skills and empathy. <strong>Dr. Bon Ku</strong> leads the first design curriculum in US medical schools, at Thomas Jefferson University. He describes using design thinking to make the emergency department less stressful — having students conduct interviews, prototype app solutions, and map patient journeys to understand how people with different social circumstances navigate the healthcare system when suddenly ill. The central finding: "not all patients are the same," and treatment plans should be designed with that in mind.</p>
+          <p class="ch-summary">The second vignette is more speculative but conceptually powerful. Pressman traces a case of cancer treatment innovation derived from a design-thinking mindset: reframing the question from "how do we destroy cancer cells?" to "what if there is a better means to achieve remission without destroying them?" This led to research on transforming cancer cells into healthy mature cells using retinoic acid — an approach inspired by the researcher's reading of Confucius on education versus punishment. The creative trigger came from an entirely unrelated domain.</p>
+          <div class="key-quote">
+            "If you train doctors to look at the world through the eyes of a designer, their clinical skills and empathy improve."
+            <div class="quote-attr">— Peter Lloyd Jones, PhD, Thomas Jefferson University</div>
+          </div>
+          <div class="ch-sections">
+            <h4>Vignettes</h4>
+            <div class="section-pill-list">
+              <span class="section-pill">Jefferson medical design program (Dr. Ku)</span>
+              <span class="section-pill">Emergency department patient journey mapping</span>
+              <span class="section-pill">Appointment reminder app prototype</span>
+              <span class="section-pill">Cancer cell transformation research</span>
+              <span class="section-pill">Reframing the treatment question</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chapter-card" id="ch7">
+        <div class="chapter-header" onclick="toggleChapter('ch7')">
+          <div class="ch-num teal-bg">7</div>
+          <div class="ch-title-block">
+            <div class="ch-title">Law</div>
+            <div class="ch-subtitle">Problem Definition · Alternatives and the Big Idea</div>
+          </div>
+          <span class="ch-arrow">›</span>
+        </div>
+        <div class="chapter-body">
+          <p class="ch-summary">Two lawyers demonstrate how design thinking transforms legal practice. <strong>Charles Heuer</strong> (The Heuer Law Group) argues that legal methodology is often too rigid: lawyers prepare complaints, list every legal wrong, and pursue all of them — spending $50 to protect against a $5 problem. Design thinking reframes this. When a client presents a problem, the first response should be: "Is that really the problem?" Heuer insists that identifying the right problem is as much a creative act as solving it. He also discusses "dialogue as iteration" — how successive rounds of conversation with adversaries progressively illuminate core interests.</p>
+          <p class="ch-summary"><strong>Jay Wickersham</strong> (Noble, Wickersham & Heart LLP, Harvard law and architecture) identifies three ways design training enriches legal work: synthesising information from diverse sources (the opposite of legal training's narrowing impulse), visual and graphic thinking (translating legal complexity into simple diagrams), and the concept of alternatives. Wickersham never gives clients just one answer — he presents multiple alternatives with their pros and cons, because the final solution usually borrows from all of them and clients are more invested in solutions they've helped select. He also draws a powerful analogy: just as you don't jump to construction documents before concept design, you shouldn't move to a final legal agreement before doing concept-level work on the structure of the arrangement.</p>
+          <div class="key-quote">
+            "Design thinking in a legal context is as much about problem definition as problem solving."
+            <div class="quote-attr">— Charles R. Heuer</div>
+          </div>
+          <div class="key-quote">
+            "The power of visual thinking is immense, and has the potential to help everybody."
+            <div class="quote-attr">— Jay Wickersham</div>
+          </div>
+          <div class="ch-sections">
+            <h4>Vignettes</h4>
+            <div class="section-pill-list">
+              <span class="section-pill">Right problem vs. stated problem (Heuer)</span>
+              <span class="section-pill">Dialogue as iteration</span>
+              <span class="section-pill">Synthesising multidisciplinary input (Wickersham)</span>
+              <span class="section-pill">Visual thinking in law</span>
+              <span class="section-pill">Alternatives and the big idea</span>
+              <span class="section-pill">Concept design before contract drafting</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chapter-card" id="ch8">
+        <div class="chapter-header" onclick="toggleChapter('ch8')">
+          <div class="ch-num teal-bg">8</div>
+          <div class="ch-title-block">
+            <div class="ch-title">Writing</div>
+            <div class="ch-subtitle">Draft as Prototype · Rolling the Snowball Downhill</div>
+          </div>
+          <span class="ch-arrow">›</span>
+        </div>
+        <div class="chapter-body">
+          <p class="ch-summary">The final chapter treats writing as a design thinking process. <strong>Mark Childs</strong> (University of New Mexico, author of multiple award-winning books) offers the most fully theorised treatment: the draft is a prototype, and every draft is a test that may actually change the question being asked. He describes writing as iterative and non-linear — you start without knowing where you'll end up, and the act of writing itself reveals the real question. He advises splitting the mind into writer and editor modes, using trusted and untrusted reviewers at different stages, and understanding that closure is a matter of aesthetic judgement rather than objective completion.</p>
+          <p class="ch-summary"><strong>Michael Tardif</strong> contributes a memorable metaphor: "rolling the snowball downhill." Don't start with Chapter 1, Page 1 — start with the easiest material and build momentum. This reframes writing from a daunting linear task into a non-linear accumulation of manageable wins, consistent with his strategic-plan-as-jigsaw-puzzle approach. <strong>Charles Linn</strong> (former Deputy Editor, Architectural Record) adds the importance of metaphor as a brainstorming tool in writing — finding an image that makes readers' imaginations "take a leap with you" — and underscores that early drafts are brush strokes, not final statements; infatuation with early writing must not block revision.</p>
+          <div class="key-quote">
+            "Every time you test a draft (or prototype) you may actually change the question you're working on — and that's what makes it design thinking, as opposed to straight hypothesis testing or research."
+            <div class="quote-attr">— Mark Childs</div>
+          </div>
+          <div class="ch-sections">
+            <h4>Vignettes</h4>
+            <div class="section-pill-list">
+              <span class="section-pill">Draft as prototype (Childs)</span>
+              <span class="section-pill">Two-mode writing (writer vs. editor)</span>
+              <span class="section-pill">Rolling the snowball downhill (Tardif)</span>
+              <span class="section-pill">Getting to the aha moment (Linn)</span>
+              <span class="section-pill">Metaphor as brainstorming tool</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CONCEPTS ═══════════ -->
+  <section id="tab-concepts" class="tab-panel">
+    <h1 class="section-heading">Core Concepts Explorer</h1>
+    <p class="section-subheading">Select a building block or concept to explore it in depth</p>
+
+    <div class="concepts-nav">
+      <button class="concept-btn active" onclick="switchConcept('info')">🔎 Information Gathering</button>
+      <button class="concept-btn" onclick="switchConcept('problem')">🎯 Problem Analysis</button>
+      <button class="concept-btn" onclick="switchConcept('ideas')">💡 Idea Generation</button>
+      <button class="concept-btn" onclick="switchConcept('synthesis')">🔧 Synthesis & Modeling</button>
+      <button class="concept-btn" onclick="switchConcept('evaluation')">📋 Critical Evaluation</button>
+      <button class="concept-btn" onclick="switchConcept('tools')">🛠 Tools & Strategies</button>
+      <button class="concept-btn" onclick="switchConcept('empathy')">🤝 Empathy</button>
+    </div>
+
+    <!-- 1. Information Gathering -->
+    <div class="concept-panel active" id="concept-info">
+      <div class="concept-hero">
+        <div class="concept-icon-large" style="background:var(--teal-pale)">🔎</div>
+        <div class="concept-hero-text">
+          <h2>Information Gathering</h2>
+          <p>Building Block 1 of the DT loop. Design thinking begins with immersive discovery — deep research into the problem's context, stakeholders, and history. Pressman borrows from anthropology, journalism, and social science to describe this phase.</p>
+        </div>
+      </div>
+      <div class="concept-body">
+        <h3>What it involves</h3>
+        <ul class="tips-list">
+          <li><strong>Empathy and ethnography:</strong> Spending time with stakeholders in their natural environment; going beyond what they consciously articulate to understand what drives and motivates them. Think of Clifford Geertz's "thick description."</li>
+          <li><strong>Effective interviews:</strong> The most important tool. Done well, an interview reveals emotional connections, unspoken problems, and creative triggers unavailable through any other method.</li>
+          <li><strong>Precedent analysis:</strong> Studying prior solutions to similar problems. Not to copy them, but to extract underlying principles that might transfer — or to understand what not to do. "Use the great idea but tweak and purposefully apply it."</li>
+          <li><strong>Context investigation:</strong> Every problem has a unique mosaic of physical, social, cultural, and historical factors. Without contextual knowledge, assumptions about solutions are likely to be wrong.</li>
+        </ul>
+      </div>
+      <div class="concept-body">
+        <h3>Interview: 8 tips from the book</h3>
+        <ul class="tips-list">
+          <li><strong>Do your homework.</strong> Form hypotheses about the issues before meeting. Prepare questions as background — not a script to read from.</li>
+          <li><strong>Establish rapport.</strong> Share your own story. Be genuine. Cultivate a respectful alliance where the stakeholder feels taken seriously.</li>
+          <li><strong>Listen actively.</strong> Process everything being said; test hypotheses by paraphrasing; discover what is said "between the lines."</li>
+          <li><strong>Formulate probing questions.</strong> Ask: Why did you do that? How did it work out? How do you feel? What did you expect? Dig deeply.</li>
+          <li><strong>Observe sensitively.</strong> Note body language, emotional state, environment, furnishings, artefacts. The surroundings reveal as much as the words.</li>
+          <li><strong>Maintain a sense of humour.</strong> It establishes rapport and helps stakeholders open up. Steve Martin on Carl Reiner: "a gentle way of speaking difficult truths."</li>
+          <li><strong>Don't interrupt.</strong> You could miss an important nuance. Silence is productive.</li>
+          <li><strong>Avoid leading questions and yes/no questions.</strong> Don't manipulate the interviewee toward the answer you want to hear.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2. Problem Analysis -->
+    <div class="concept-panel" id="concept-problem">
+      <div class="concept-hero">
+        <div class="concept-icon-large" style="background:var(--indigo-pale)">🎯</div>
+        <div class="concept-hero-text">
+          <h2>Problem Analysis and Definition</h2>
+          <p>Building Block 2. Perhaps counterintuitively, defining the right problem is itself a creative act. Design thinking insists that the stated problem is rarely the real problem — rigorous analysis is required to uncover what actually needs solving.</p>
+        </div>
+      </div>
+      <div class="concept-body">
+        <h3>The core challenge</h3>
+        <ul class="tips-list">
+          <li><strong>Challenge every problem statement.</strong> The real problem may be masked by an immediately visible symptom. Stakeholders often misdiagnose their own situation.</li>
+          <li><strong>Ask the right questions.</strong> IBM in the 1960s framed the photocopying market question too narrowly ("copies from originals") and missed the larger opportunity of "copies of copies of copies."</li>
+          <li><strong>Reframe continuously.</strong> Continue the dialogue, diagnosis, and reframing throughout the process — not just at the start. Each loop of the DT cycle can produce new information that shifts the problem definition.</li>
+          <li><strong>Avoid the status quo.</strong> Even in the questions you ask initially, resist business-as-usual framing. The design-thinking mindset starts before any analysis.</li>
+        </ul>
+      </div>
+      <div class="concept-body">
+        <h3>Analytical tasks before idea generation</h3>
+        <ul class="tips-list">
+          <li>Document specific and frequently expressed stakeholder comments, emphasising different sides of the problem</li>
+          <li>Identify areas for further research to complement interviews</li>
+          <li>Develop lists, diagrams, and images highlighting key context observations</li>
+          <li>Formulate new questions about the validity of the initial problem statement</li>
+          <li>Note unexpected patterns, relationships, or insights</li>
+          <li>Eliminate extraneous material (carefully)</li>
+          <li>Uncover fundamental causes of the problem</li>
+          <li>Collapse an overwhelming problem into smaller, manageable components</li>
+          <li>Filter information into general and specific categories for complex problems</li>
+          <li>Set forth design criteria: constraints, challenges, objectives, hopes, and dreams</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. Idea Generation -->
+    <div class="concept-panel" id="concept-ideas">
+      <div class="concept-hero">
+        <div class="concept-icon-large" style="background:var(--orange-pale)">💡</div>
+        <div class="concept-hero-text">
+          <h2>Idea Generation</h2>
+          <p>Building Block 3. Once analysis is complete and knowledge internalised, "the real fun begins." This is the most creative phase — where imagination, epiphany, and structured brainstorming combine to generate a rich pool of ideas, good and bad alike.</p>
+        </div>
+      </div>
+      <div class="concept-body">
+        <h3>Brainstorming essentials</h3>
+        <ul class="tips-list">
+          <li><strong>Do not judge ideas during the session.</strong> Evaluation comes after — not during — brainstorming. The natural tendency to evaluate is the biggest enemy of creativity here.</li>
+          <li><strong>Generate wild and crazy ideas.</strong> Standard and obvious solutions are fine, but quantity and imagination matter more than quality at this stage.</li>
+          <li><strong>Develop as many ideas as possible.</strong> Sheer quantity improves the odds of finding something special. Perfection is not the goal.</li>
+          <li><strong>Combine and build upon ideas.</strong> Synthesising, subdividing, and recombining ideas is part of the natural progression. Post-its under different headings help organise this.</li>
+        </ul>
+      </div>
+      <div class="concept-body">
+        <h3>The right attitude</h3>
+        <div class="two-col-grid">
+          <div class="mini-card">
+            <h4>✓ Embrace ambiguity</h4>
+            <p>There will be many unknowns. New information will arrive mid-process. Expect it. Comfort with uncertainty is a fundamental design skill.</p>
+          </div>
+          <div class="mini-card">
+            <h4>✓ Confidence in the process</h4>
+            <p>Assume success. Initial ideas are especially delicate — protect them from premature criticism while they develop.</p>
+          </div>
+          <div class="mini-card">
+            <h4>✓ Have fun</h4>
+            <p>Approaching ideation as play unlocks creativity. If the work feels like play, you brainstorm more freely and take more risks.</p>
+          </div>
+          <div class="mini-card">
+            <h4>✓ View constraints as fuel</h4>
+            <p>"With a bit of creativity, problems can be transformed into unique assets." Constraints force more inventive solutions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="concept-body">
+        <h3>Brainstorming tips</h3>
+        <ul class="tips-list">
+          <li>Withhold judgement — archive all ideas, even ones that seem bad</li>
+          <li>Focus sessions on specific aspects, big picture, or process design</li>
+          <li>Engage in trial, error, and refinement — take action; it provides a basis for further exploration</li>
+          <li>Become immersed — ideas emerge as the issues are understood more deeply</li>
+          <li>Do something different; take a risk</li>
+          <li>Treat bad ideas and failure as opportunities, not embarrassments</li>
+          <li>Play "what if" — develop questions before worrying about answers</li>
+          <li>Be passionate — find personal connection to the problem</li>
+          <li>Use words deliberately — vague words like "cluster," "layer," "intersect" can spark images</li>
+          <li>Work in multiple scales simultaneously</li>
+        </ul>
+      </div>
+      <div class="concept-body">
+        <h3>The Goose Bump Factor</h3>
+        <p style="font-size:0.875rem;line-height:1.7;color:var(--ink);">One feature that distinguishes great design thinking is striving to integrate a magical element — a critical intangible that separates a <em>competent</em> solution from a <em>great</em> one. Not all problems are amenable to this, but always look for the opportunity to transcend the practical problem. Honor the problem but also create something beyond the immediate utility of the solution — something that stakeholders might never have imagined. Reach for the greatest potential within the constraints, hopefully eliciting an emotional response. This is design thinking at its best.</p>
+      </div>
+    </div>
+
+    <!-- 4. Synthesis -->
+    <div class="concept-panel" id="concept-synthesis">
+      <div class="concept-hero">
+        <div class="concept-icon-large" style="background:var(--gold-pale)">🔧</div>
+        <div class="concept-hero-text">
+          <h2>Synthesis Through Modeling</h2>
+          <p>Building Block 4. Take the best ideas from brainstorming to a higher degree of resolution by building a prototype — a model, draft, or operational demonstration of the idea. This phase involves convergent thinking: narrowing down from many ideas to the most promising ones.</p>
+        </div>
+      </div>
+      <div class="concept-body">
+        <h3>Two goals of building a model</h3>
+        <ul class="tips-list">
+          <li><strong>Develop the idea into a coherent solution.</strong> Making things — whether a physical model, a narrative, a business model, or a draft — is crucial to innovation. Cogitating only gets you so far. "Sometimes it takes building a prototype to have that Eureka moment."</li>
+          <li><strong>Generate feedback through testing and evaluation.</strong> The model should be a close enough embodiment of the proposed solution to elicit the most constructive critique from stakeholders and peers.</li>
+        </ul>
+      </div>
+      <div class="concept-body">
+        <h3>What counts as a prototype?</h3>
+        <p style="font-size:0.875rem;line-height:1.7;color:var(--ink);margin-bottom:0.75rem;">A prototype or model is not necessarily an object. It can be:</p>
+        <ul class="tips-list">
+          <li>A strategy or business plan</li>
+          <li>A written draft or narrative description</li>
+          <li>An app, experience, or service flow</li>
+          <li>A cardboard model, ripped apart and rebuilt</li>
+          <li>A diagram, outline, or set of annotated Post-its</li>
+          <li>A storyboard or journey map</li>
+          <li>A spreadsheet or data structure</li>
+        </ul>
+      </div>
+      <div class="concept-body">
+        <h3>Key axioms during synthesis</h3>
+        <ul class="tips-list">
+          <li>Consider stakeholders' perspectives at every step of prototype development</li>
+          <li>Pursue several alternatives concurrently for critical evaluation — don't commit to one prematurely</li>
+          <li>Responses to early prototypes may alter the direction of subsequent development — stay open</li>
+          <li>Build quickly and keep the dialogue flowing; avoid striving for perfection in early iterations</li>
+          <li>Do not underestimate the power of serendipity when making the prototype</li>
+          <li>A functioning prototype is more persuasive than a brilliant idea on paper</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 5. Critical Evaluation -->
+    <div class="concept-panel" id="concept-evaluation">
+      <div class="concept-hero">
+        <div class="concept-icon-large" style="background:var(--plum-pale)">📋</div>
+        <div class="concept-hero-text">
+          <h2>Critical Evaluation</h2>
+          <p>Building Block 5. Frequent conversations about the work — exposing it to criticism from diverse sources — amplify ideas, eliminate weak alternatives, and suggest new directions. Pressman argues that valid criticism is an opportunity, not a threat.</p>
+        </div>
+      </div>
+      <div class="concept-body">
+        <h3>Why feedback matters</h3>
+        <p style="font-size:0.875rem;line-height:1.7;color:var(--ink);margin-bottom:0.75rem;">"When you have to articulate an idea and respond to criticism you are forced to think through more aspects of an issue, and ideas tend to become more concrete. On the other hand, if you keep something locked inside your head without having a dialogue, the reflection phase is neglected as you charge forward, with potential loss of opportunities and insights." — Madlen Simon</p>
+      </div>
+      <div class="concept-body">
+        <h3>Responding well to criticism</h3>
+        <ul class="tips-list">
+          <li>Avoid the natural propensity for defensiveness — resist it consciously</li>
+          <li>Try to understand precisely what the critic is asserting; form a hypothesis and restate it back to them</li>
+          <li>Extract the best of feedback and build on it; dismiss what is clearly off base</li>
+          <li>Consider adjustment as an opportunity to make the project more sensitive and responsive — not as compromise</li>
+          <li>Respond to stakeholder suggestions explicitly; show how their input was incorporated. This builds ownership ("sweat equity") in the solution</li>
+          <li>Sometimes think of the project as a completely different assignment — this demonstrates that there are many valid approaches</li>
+        </ul>
+      </div>
+      <div class="concept-body">
+        <h3>The art of self-criticism</h3>
+        <p style="font-size:0.875rem;line-height:1.7;color:var(--ink);">Be your own devil's advocate. Test the strength of initial ideas against the problem definition. Once their value is proven, continue testing to ensure coherent development. When critically reflecting on a solution, ensure that every decision relates to the bigger concept in some way. "Criticism can make us see familiar things from new perspectives, shake us out of our shopworn habits, and provoke us into thinking about problems we might otherwise overlook." — Christopher Mead</p>
+      </div>
+    </div>
+
+    <!-- 6. Tools -->
+    <div class="concept-panel" id="concept-tools">
+      <div class="concept-hero">
+        <div class="concept-icon-large" style="background:var(--red-pale)">🛠</div>
+        <div class="concept-hero-text">
+          <h2>Tools and Strategies</h2>
+          <p>Three supporting tools that advance the design thinking process: diagramming (visual thinking), reflecting (incubation), and presenting (communication and dialogue).</p>
+        </div>
+      </div>
+      <div class="concept-body">
+        <h3>Diagramming</h3>
+        <ul class="tips-list">
+          <li>Converting information into visual forms is analytically illuminating and inspires creativity</li>
+          <li>Types include: bubble diagrams, mind maps, flow charts, decision trees, concept maps, outlines, Post-its, annotated sketches</li>
+          <li>Sketching is the most immediate brain-to-hand means of expression (Donald Schön: "reflective conversation with the situation")</li>
+          <li>Digital tools are powerful but may make you less flexible in early stages; rough freehand lines carry creative ambiguity</li>
+          <li>The goal is exploration and idea capture — not how the diagram looks</li>
+        </ul>
+      </div>
+      <div class="concept-body">
+        <h3>Reflecting</h3>
+        <ul class="tips-list">
+          <li>The creative pause is essential — step away after intensive work sessions to let ideas incubate</li>
+          <li>Take a walk (the "dog walk" metaphor); leave the smartphone behind</li>
+          <li>Ideas take time to grow; working on an unrelated task can yield insights later</li>
+          <li>If frozen, come back to the problem at a later time from a different viewpoint, change medium, alter routine, vary environment</li>
+          <li>Not everything has to be billable time: "Time for reflection is crucial for making sense of all the information"</li>
+        </ul>
+      </div>
+      <div class="concept-body">
+        <h3>Presenting</h3>
+        <ul class="tips-list">
+          <li>Think of the presentation as a design problem: how do you tailor it for maximum reception by this audience?</li>
+          <li>Show some of the process since inception; justify major design decisions</li>
+          <li>Apply principled negotiation (Fisher and Ury): everyone is on the same team; the goal is mutual understanding, not winning</li>
+          <li>Verbal: project confidence and passion; grab the audience; speak clearly without jargon; maintain eye contact</li>
+          <li>Graphic: never let format overshadow content; annotate drawings; create a focal point; be judicious with colour</li>
+          <li>Prepare a compelling take-away summary package</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 7. Empathy -->
+    <div class="concept-panel" id="concept-empathy">
+      <div class="concept-hero">
+        <div class="concept-icon-large" style="background:var(--teal-pale)">🤝</div>
+        <div class="concept-hero-text">
+          <h2>Empathy</h2>
+          <p>Arguably the most important concept in the entire book. Empathy runs through every building block of design thinking — it is not a single phase but a continuous orientation toward understanding others' realities, motivations, and unspoken needs.</p>
+        </div>
+      </div>
+      <div class="concept-body">
+        <h3>What empathy means in practice</h3>
+        <ul class="tips-list">
+          <li>Spending time with stakeholders in their natural environment — not just talking to them</li>
+          <li>Going beyond conscious wants to what really drives, excites, and motivates a person, group, or company</li>
+          <li>Listening for emotional shifts in conversation — when you've touched on something someone feels deeply about</li>
+          <li>Creating an emotional connection to the problem: "Once you get inside the minds of people or groups, the universe starts to open up"</li>
+          <li>Assuming the role of stakeholder advocate — acting as a proxy for the user rather than speaking on their behalf without immersing yourself first</li>
+        </ul>
+      </div>
+      <div class="concept-body">
+        <h3>The pharmaceutical empathy example (Meredith Kauffman)</h3>
+        <p style="font-size:0.875rem;line-height:1.7;color:var(--ink);">A designer embedded in a pharmaceutical R&D team made a jury-rigged gardening glove with hard plastic bits on the fingers to simulate arthritic hands. By wearing the glove while trying to use the denture adhesive product, the team felt — rather than just heard — the problem: the product was too viscous and too difficult to apply for the elderly consumers it was designed for. This led to an entirely new delivery mechanism (a metered-dose click device), and the recognition that the real problem was over-application — not the denture fit that everyone had assumed.</p>
+        <p style="font-size:0.875rem;line-height:1.7;color:var(--ink);margin-top:0.75rem;">"The better we can get to know the people who will be using the spaces, solutions, or products that we design, the better problem solvers we can become."</p>
+      </div>
+      <div class="concept-body">
+        <h3>Empathy and travel</h3>
+        <p style="font-size:0.875rem;line-height:1.7;color:var(--ink);">Madlen Simon offers an unexpected application: design thinking has enhanced her travel experiences. "Now that I'm armed with empathy skills, I find that I'm much more able to reach out to people; to start conversations and learn a lot more about the place I'm visiting, rather than just walking around by myself. I'm really trying to see places through other people's eyes — that's an incredible way to enrich the travel experience."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CASES ═══════════ -->
+  <section id="tab-cases" class="tab-panel">
+    <h1 class="section-heading">Case Study Browser</h1>
+    <p class="section-subheading">Filter by field to explore all 14 real-world applications of design thinking from the book</p>
+
+    <div class="cases-filter-bar">
+      <button class="filter-btn active" onclick="filterCases('all')">All</button>
+      <button class="filter-btn" onclick="filterCases('politics')">🏛 Politics</button>
+      <button class="filter-btn" onclick="filterCases('business')">📊 Business</button>
+      <button class="filter-btn" onclick="filterCases('health')">🏥 Health</button>
+      <button class="filter-btn" onclick="filterCases('law')">⚖ Law</button>
+      <button class="filter-btn" onclick="filterCases('writing')">✍ Writing</button>
+    </div>
+
+    <div class="cases-grid">
+      <div class="case-card" data-field="politics">
+        <span class="case-field-badge badge-politics">🏛 Politics</span>
+        <h3>Congressional Accountability Act</h3>
+        <div class="case-person">Richard Swett, US Congressman &amp; Ambassador</div>
+        <p>Co-authored landmark legislation by approaching it like designing a building — taking a blank piece of paper to all interested stakeholder groups and synthesising their inputs. Passed 97-3 in the Senate, 433-3 in the House.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Inclusive participation</span>
+          <span class="case-dt-tag">Synthesis</span>
+          <span class="case-dt-tag">Stakeholder ownership</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="politics">
+        <span class="case-field-badge badge-politics">🏛 Politics</span>
+        <h3>US Embassy, Denmark — Team Restructuring</h3>
+        <div class="case-person">Richard Swett, US Ambassador</div>
+        <p>Transformed morale in a siloed 16-agency embassy by replacing individual agency structures with cross-agency project teams — modelled on architectural firm practice. Morale rose dramatically as staff found genuine problem-solving engagement.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Team design</span>
+          <span class="case-dt-tag">Empowerment</span>
+          <span class="case-dt-tag">Reframing</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="politics">
+        <span class="case-field-badge badge-politics">🏛 Politics</span>
+        <h3>Flanders Mansion, Carmel</h3>
+        <div class="case-person">Victoria Beach, City Councillor</div>
+        <p>Broke a decade-long dispute between pro-sale and pro-preservation factions by presenting newly uncovered facts and proposing a third option neither side had imagined: simply treat it as a "folly in the park" and stop spending money discussing it.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Third option</span>
+          <span class="case-dt-tag">Research-based</span>
+          <span class="case-dt-tag">Reframing</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="politics">
+        <span class="case-field-badge badge-politics">🏛 Politics</span>
+        <h3>$20M Trail Project — Procedural Creativity</h3>
+        <div class="case-person">Victoria Beach, City Councillor</div>
+        <p>Secured approval for a major trail project not by advocating for it directly, but by proposing a "friendly amendment" at the last moment that redirected procedural debate and avoided a deadlocking subcommittee. The cause's advocates were briefly confused — but the project was funded.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Strategic patience</span>
+          <span class="case-dt-tag">Tactical creativity</span>
+          <span class="case-dt-tag">Process as design</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="business">
+        <span class="case-field-badge badge-business">📊 Business</span>
+        <h3>Strategic Plan as Jigsaw Puzzle</h3>
+        <div class="case-person">Michael Tardif, Building Informatics Group</div>
+        <p>Implemented a technology plan for a construction company non-linearly — inserting puzzle pieces opportunistically rather than following a linear rollout. The "jigsaw puzzle" metaphor gave staff a shared language for a messy but visionary process.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Non-linear execution</span>
+          <span class="case-dt-tag">Vision + iteration</span>
+          <span class="case-dt-tag">Metaphor as tool</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="business">
+        <span class="case-field-badge badge-business">📊 Business</span>
+        <h3>BIM Data: Eureka on Information Delivery</h3>
+        <div class="case-person">Michael Tardif, Building Informatics Group</div>
+        <p>Discovered that building owners never use the BIM model — they want the information inside it, structured usefully for facility managers from day one of occupancy. This reframe launched an entirely new business venture.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Problem reframe</span>
+          <span class="case-dt-tag">Eureka moment</span>
+          <span class="case-dt-tag">User empathy</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="business">
+        <span class="case-field-badge badge-business">📊 Business</span>
+        <h3>Creativity in the Culinary Arts</h3>
+        <div class="case-person">Francesco Crocenzi, Chef/Owner, Frankie's Table</div>
+        <p>Design thinking applied to cooking: analysis of flavour relationships drives dish creation; client feedback refines it; and dietary constraints (no salt, low cholesterol) become creative challenges. "All of this reinforces the story of design thinking."</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Constraints as fuel</span>
+          <span class="case-dt-tag">Iterative refinement</span>
+          <span class="case-dt-tag">Precedent use</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="business">
+        <span class="case-field-badge badge-business">📊 Business</span>
+        <h3>Denture Adhesive Innovation</h3>
+        <div class="case-person">Meredith Kauffman, PhD — Consumer Products R&D</div>
+        <p>An embedded designer wore a jury-rigged arthritic glove to demonstrate that the real problem for elderly users wasn't denture fit but difficulty applying the adhesive. Led to a metered-dose click device. Empathy, not market research, drove the breakthrough.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Physical empathy</span>
+          <span class="case-dt-tag">Problem redefition</span>
+          <span class="case-dt-tag">Cross-disciplinary team</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="business">
+        <span class="case-field-badge badge-business">📊 Business</span>
+        <h3>Clemson University Transformation</h3>
+        <div class="case-person">James Barker, Former President, Clemson University</div>
+        <p>Used visioning, listening, and diagramming to transform Clemson from ranked 74th to top-25, raise $1 billion, and navigate the 2008 financial crisis. Sketching — diagrams of overlapping and disconnected circles — drove key strategic insights.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Visioning</span>
+          <span class="case-dt-tag">Listening</span>
+          <span class="case-dt-tag">Diagramming</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="business">
+        <span class="case-field-badge badge-business">📊 Business</span>
+        <h3>Cheese Snack Fast-Fail</h3>
+        <div class="case-person">Diego Ruzzarin, CEO, Foodlosofia</div>
+        <p>A shrinking cheese snack market was revived by abandoning the children's target audience entirely — discovered through interviews revealing that sticky fingers interfere with smartphone use. Empathic research, not conventional analytics, revealed the real barrier.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Fast-fail iterative</span>
+          <span class="case-dt-tag">Consumer empathy</span>
+          <span class="case-dt-tag">Market reframe</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="business">
+        <span class="case-field-badge badge-business">📊 Business</span>
+        <h3>Dinner Conversation as Interview Method</h3>
+        <div class="case-person">Scott Phillips, CEO, SearchLite</div>
+        <p>SearchLite conducts 30-minute "dinner conversations" (not structured interviews) to discover market fit for university inventions. Active listening, confirmation-bias avoidance, iterative question refinement, and progressive referral to better experts are central to the method.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Active listening</span>
+          <span class="case-dt-tag">Iterative questions</span>
+          <span class="case-dt-tag">Confirmation bias</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="health">
+        <span class="case-field-badge badge-health">🏥 Health</span>
+        <h3>Medical Design Program — Thomas Jefferson University</h3>
+        <div class="case-person">Dr. Bon Ku, Emergency Physician</div>
+        <p>The first US medical school design curriculum covering all four years. Students use design thinking to address overcrowding, patient stress, and provider frustration — including prototyping a text-reminder app and creating patient journey maps to understand social determinants of care.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Empathy in medicine</span>
+          <span class="case-dt-tag">Rapid prototyping</span>
+          <span class="case-dt-tag">Journey mapping</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="health">
+        <span class="case-field-badge badge-health">🏥 Health</span>
+        <h3>Cancer Cell Transformation (Retinoic Acid)</h3>
+        <div class="case-person">Research from Shanghai; reported by Jerome Groopman</div>
+        <p>A researcher reframed the cancer treatment question from "how do we destroy cancer cells?" to "what if we educate them?" — inspired by a passage in Confucius. Retinoic acid can transform certain cancer cells to healthy maturity. Creative trigger came from an entirely unrelated domain.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Reframing the question</span>
+          <span class="case-dt-tag">Cross-domain inspiration</span>
+          <span class="case-dt-tag">Bold assumption challenge</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="law">
+        <span class="case-field-badge badge-law">⚖ Law</span>
+        <h3>Problem Definition Before Legal Strategy</h3>
+        <div class="case-person">Charles R. Heuer, The Heuer Law Group</div>
+        <p>Argues that lawyers often pursue the stated legal problem without questioning whether it's the right one. Design thinking starts with "Is that really the problem?" — and uses research, reflection, and dialogue as iteration to uncover the issue worth solving. Wedding dancing video: unrelated detail discovered the real issue.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Right problem</span>
+          <span class="case-dt-tag">Dialogue as iteration</span>
+          <span class="case-dt-tag">Skeptical reception</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="law">
+        <span class="case-field-badge badge-law">⚖ Law</span>
+        <h3>Alternatives and the Big Idea in Legal Practice</h3>
+        <div class="case-person">Jay Wickersham, Nobel Wickersham &amp; Heart LLP</div>
+        <p>Harvard law + architecture. Always presents clients with multiple alternatives (with pros and cons) rather than a single "right" answer. Uses diagrams to translate legal complexity into simple visuals. Applies concept design before contract drafting. Maintains the "big idea" through all iterations.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Alternatives</span>
+          <span class="case-dt-tag">Visual thinking</span>
+          <span class="case-dt-tag">Concept design first</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="writing">
+        <span class="case-field-badge badge-writing">✍ Writing</span>
+        <h3>Draft as Prototype</h3>
+        <div class="case-person">Mark Childs, Professor and Author, University of New Mexico</div>
+        <p>Every draft is a prototype to be tested. Writing iteratively reveals the real question you're working on — the act of writing itself changes what you think you're doing. Two-mode approach: pure writing mode, then editor mode. Not linear; not a math problem with a correct answer.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Draft as prototype</span>
+          <span class="case-dt-tag">Iterative revision</span>
+          <span class="case-dt-tag">Two-mode writing</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="writing">
+        <span class="case-field-badge badge-writing">✍ Writing</span>
+        <h3>Rolling the Snowball Downhill</h3>
+        <div class="case-person">Michael Tardif, Building Informatics Group</div>
+        <p>Don't start with Chapter 1, Page 1. Start with the easiest material; build momentum and knowledge before tackling harder sections. Quickly builds accomplishment and sharpens thinking. The process is messy and non-linear — but the jigsaw puzzle vision keeps it oriented.</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Non-linear start</span>
+          <span class="case-dt-tag">Jigsaw metaphor</span>
+          <span class="case-dt-tag">Momentum building</span>
+        </div>
+      </div>
+
+      <div class="case-card" data-field="writing">
+        <span class="case-field-badge badge-writing">✍ Writing</span>
+        <h3>Getting to the Aha Moment</h3>
+        <div class="case-person">Charles Linn, Former Deputy Editor, Architectural Record</div>
+        <p>"You don't necessarily know what the idea is; you know there is an idea somewhere but you have to try all these iterations in order to discover it." Early drafts are brush strokes. Metaphor is a key brainstorming tool — it makes readers' imaginations "take a leap with you."</p>
+        <div class="case-dt-tags">
+          <span class="case-dt-tag">Iteration to discover</span>
+          <span class="case-dt-tag">Metaphor as tool</span>
+          <span class="case-dt-tag">Layering</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TOOLKIT ═══════════ -->
+  <section id="tab-toolkit" class="tab-panel">
+    <h1 class="section-heading">Practical Toolkit</h1>
+    <p class="section-subheading">Actionable tools, templates, and techniques drawn directly from the book</p>
+
+    <div class="info-banner">
+      <span>ℹ</span>
+      <span>These tools are extracted from Pressman's framework. They are most effective when adapted to your specific problem — the book emphasises that no process should be applied mechanically.</span>
+    </div>
+
+    <div class="toolkit-grid">
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon ti-teal">🔎</div>
+          <h3>Empathic Interview Framework</h3>
+        </div>
+        <p>A structured approach to stakeholder interviews that goes beyond surface-level information to surface motivations, emotions, and unspoken needs.</p>
+        <ol class="tool-steps">
+          <li>Before the interview: form hypotheses about the issues; prepare questions as imprinting, not a script</li>
+          <li>Open with rapport-building: share your own story; find common ground; model the behaviour you want</li>
+          <li>Listen actively: process what is said; paraphrase to invite clarification; note what is said "between the lines"</li>
+          <li>Ask probing follow-ups: "Why did you do that?" "How did it work out?" "What did you expect?" "How do you feel?"</li>
+          <li>Observe the environment: body language, emotional state, surroundings, artefacts — all are data</li>
+          <li>After the interview: write your impressions immediately while still fresh; do not leave note-taking to memory</li>
+          <li>Look for patterns across multiple interviews; use secondary research to validate or challenge what you heard</li>
+        </ol>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon ti-indigo">🎯</div>
+          <h3>Problem Redefinition Checklist</h3>
+        </div>
+        <p>Use this when the problem has been presented to you. Never proceed directly to solutions without working through these questions.</p>
+        <ol class="tool-steps">
+          <li>Ask: "Is this really the problem?" What evidence supports the stated problem definition?</li>
+          <li>Identify who stands to benefit or lose from different problem framings — whose definition is this?</li>
+          <li>List all the underlying causes you can identify. Which is the root?</li>
+          <li>Ask: "What would solving this look like in ten different ways?" (widens the solution space)</li>
+          <li>Reframe the problem as a question: "How might we..." rather than "We need to..."</li>
+          <li>Collapse the problem into smaller components; tackle the most salient one first</li>
+          <li>Set design criteria: what are the constraints, challenges, and hopes? These become your evaluation framework</li>
+        </ol>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon ti-orange">💡</div>
+          <h3>Brainstorming Session Guide</h3>
+        </div>
+        <p>Run a productive individual or group brainstorming session using Pressman's principles and Alex Osborn's foundational techniques.</p>
+        <ol class="tool-steps">
+          <li>Separate brainstorming time from evaluation time — never critique during generation</li>
+          <li>Set a time limit (e.g., 20 minutes) and commit to generating as many ideas as possible — quantity over quality</li>
+          <li>Use Post-its, index cards, or a whiteboard; allow free movement and physical arrangement of ideas</li>
+          <li>Invite wild and crazy ideas explicitly — they often trigger the most innovative directions</li>
+          <li>Combine, build upon, and recombine ideas as they accumulate</li>
+          <li>After the session: review against the problem definition; categorise; identify the most promising for prototyping</li>
+          <li>Archive all ideas — including bad ones. You may revisit them later in a new light</li>
+        </ol>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon ti-gold">🧩</div>
+          <h3>The Jigsaw Puzzle Method</h3>
+        </div>
+        <p>For large complex projects where a linear implementation plan would be too rigid or disruptive. Based on Michael Tardif's strategic technology planning approach.</p>
+        <ol class="tool-steps">
+          <li>Define a clear vision of what the "completed picture" looks like — the end state, in measurable terms</li>
+          <li>Resist the urge to map out every detailed step before starting. You don't need all the pieces placed to make progress</li>
+          <li>Identify opportunities to advance the vision opportunistically, inserting "puzzle pieces" wherever they fit</li>
+          <li>Synthesise new information as it becomes available and adjust the approach — maintain the vision, not the plan</li>
+          <li>Use the metaphor actively with your team: "What piece of the puzzle is that?" keeps everyone oriented</li>
+          <li>Revisit the overall picture regularly to ensure the non-linear progress adds up to coherent progress</li>
+        </ol>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon ti-plum">📋</div>
+          <h3>Presenting Alternatives</h3>
+        </div>
+        <p>Rather than delivering a single "right" answer, present multiple alternatives with their pros and cons. Based on Jay Wickersham's legal practice approach — equally applicable to policy, business, and design.</p>
+        <ol class="tool-steps">
+          <li>Generate at least 3 meaningfully different alternative approaches (not variations on the same idea)</li>
+          <li>For each alternative, list its advantages, disadvantages, and trade-offs clearly</li>
+          <li>Indicate which you recommend and why — but leave the choice visible</li>
+          <li>Present alternatives visually where possible: a simple diagram often communicates what prose cannot</li>
+          <li>Invite discussion: "Which elements from each option are most important to you?"</li>
+          <li>Expect the final solution to borrow from multiple alternatives — this is the most common outcome</li>
+          <li>Document how stakeholder input shaped the final direction; build ownership ("sweat equity")</li>
+        </ol>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-icon ti-red">🖊</div>
+          <h3>Draft-as-Prototype Writing Process</h3>
+        </div>
+        <p>Apply design thinking to writing. Based on Mark Childs's and Michael Tardif's approaches to non-linear, iterative writing as a design process.</p>
+        <ol class="tool-steps">
+          <li>Start with the easiest material — not Chapter 1, Page 1. Build momentum by knocking off manageable sections first</li>
+          <li>Put your internal editor away while writing. Use brackets, asterisks, or margin notes for unresolved questions — keep moving</li>
+          <li>After a draft: switch to editor mode. Does it make logical sense? Emotional sense? Can readers follow the arguments?</li>
+          <li>Test with a sympathetic reader first; only when stronger, expose to unsympathetic critique</li>
+          <li>Understand critics' context — their agenda, expertise, and relationship to your target audience — before deciding how much weight to give their feedback</li>
+          <li>Look for the aha moment: the insight that restructures everything. Be ready for early drafts to reveal that your real question is different from your starting one</li>
+          <li>Closure is aesthetic, not algorithmic. Has the piece gelled? Does it have resonance? Trust your judgement</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Key Quotes -->
+    <div class="divider"></div>
+    <div class="quotes-carousel">
+      <h2>📣 Essential Quotations from the Book</h2>
+      <div class="quotes-grid">
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <blockquote>The process can be just as creative and unique as the outcome. Keep your eyes open and free your imagination in response to the challenge at hand.</blockquote>
+          <div class="quote-source">— Andrew Pressman</div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <blockquote>Never accept problems at face value — always challenge them to either affirm their validity or recast them after further investigation.</blockquote>
+          <div class="quote-source">— Andrew Pressman</div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <blockquote>What you're really looking for in addition to the facts is the emotions. If you can put up sensitive antennae and listen for emotional shifts in the conversation, you can begin to know when you've touched on something that the person feels deeply about.</blockquote>
+          <div class="quote-source">— Madlen Simon, Professor, University of Maryland</div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <blockquote>Design thinking has taught me to know when it is time for patience and when it is time for urgency.</blockquote>
+          <div class="quote-source">— James Barker, Former President, Clemson University</div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <blockquote>Criticism can make us see familiar things from new perspectives, shake us out of our shopworn habits, and provoke us into thinking about problems we might otherwise overlook.</blockquote>
+          <div class="quote-source">— Christopher Mead, University of New Mexico</div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <blockquote>Design thinking amplifies the standard algorithms that we use.</blockquote>
+          <div class="quote-source">— Dr. Bon Ku, Thomas Jefferson University Medical College</div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <blockquote>Design thinking is not a luxury for society — it's a necessity.</blockquote>
+          <div class="quote-source">— Victoria Beach, Carmel City Councillor</div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <blockquote>The solution favors the prepared mind.</blockquote>
+          <div class="quote-source">— Charles Linn, paraphrasing Louis Pasteur</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ASK ═══════════ -->
+  <section id="tab-ask" class="tab-panel">
+    <div class="ask-panel">
+      <h1 class="section-heading">Ask AI About This Book</h1>
+      <p class="section-subheading">Use Google Gemini to ask any question about Design Thinking by Andrew Pressman</p>
+
+      <div class="api-setup">
+        <h3>🔑 Gemini API Key</h3>
+        <p>This companion uses Google Gemini to answer your questions. Get a free API key from <strong>Google AI Studio</strong> (aistudio.google.com), then paste it below. Your key is used only in your browser and is never stored.</p>
+        <div class="api-input-row">
+          <input type="password" id="apiKeyInput" placeholder="AIza..." autocomplete="off">
+          <button class="btn-primary" onclick="saveApiKey()">Connect</button>
+        </div>
+        <div class="api-status">
+          <div class="status-dot" id="statusDot"></div>
+          <span id="statusText">No API key provided</span>
+        </div>
+      </div>
+
+      <div class="chat-area">
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-empty" id="chatEmpty">
+            <div class="empty-icon">💬</div>
+            <h3>Ask anything about the book</h3>
+            <p>Ask about concepts, case studies, building blocks, practical applications, or how design thinking applies to your field.</p>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <textarea id="chatInput" placeholder="Ask a question about Design Thinking..." rows="1"
+            onkeydown="handleEnter(event)" oninput="autoResize(this)"></textarea>
+          <button class="btn-send" id="sendBtn" onclick="sendMessage()" disabled>→</button>
+        </div>
+      </div>
+
+      <div class="starter-prompts">
+        <h4>Suggested questions</h4>
+        <div class="starters-grid">
+          <button class="starter-chip" onclick="useStarter(this)">What are the five building blocks of design thinking?</button>
+          <button class="starter-chip" onclick="useStarter(this)">How does the book define empathy and why does it matter?</button>
+          <button class="starter-chip" onclick="useStarter(this)">What is the "goose bump factor"?</button>
+          <button class="starter-chip" onclick="useStarter(this)">How did Richard Swett apply design thinking in Congress?</button>
+          <button class="starter-chip" onclick="useStarter(this)">What is the difference between brainstorming dos and don'ts?</button>
+          <button class="starter-chip" onclick="useStarter(this)">How can a lawyer use design thinking to improve their practice?</button>
+          <button class="starter-chip" onclick="useStarter(this)">What does the book say about failure and fast-fail?</button>
+          <button class="starter-chip" onclick="useStarter(this)">How is writing like a design thinking process?</button>
+          <button class="starter-chip" onclick="useStarter(this)">What is the "jigsaw puzzle" metaphor about?</button>
+          <button class="starter-chip" onclick="useStarter(this)">How does design thinking apply to healthcare?</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>Design Thinking: A Guide to Creative Problem Solving for Everyone</strong> by Andrew Pressman, FAIA</p>
+  <p>Published by Routledge, 2019 · This companion is for educational reference use only.</p>
+</footer>
+
+<script>
+// ── Tab switching ──
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const btns = document.querySelectorAll('.tab-btn');
+  const map = { overview:0, chapters:1, concepts:2, cases:3, toolkit:4, ask:5 };
+  btns[map[name]].classList.add('active');
+}
+function switchTabAndConcept(tab, concept) {
+  switchTab(tab);
+  setTimeout(() => switchConcept(concept), 50);
+}
+
+// ── Chapter accordion ──
+function toggleChapter(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+// ── Concepts ──
+function switchConcept(name) {
+  document.querySelectorAll('.concept-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.concept-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('concept-' + name);
+  if (panel) panel.classList.add('active');
+  const conceptMap = { info:0, problem:1, ideas:2, synthesis:3, evaluation:4, tools:5, empathy:6 };
+  const btns = document.querySelectorAll('.concept-btn');
+  if (conceptMap[name] !== undefined) btns[conceptMap[name]].classList.add('active');
+}
+
+// ── Cases filter ──
+function filterCases(field) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.querySelectorAll('.case-card').forEach(card => {
+    if (field === 'all' || card.dataset.field === field) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+// ── AI Chat ──
+let apiKey = '';
+const BOOK_CONTEXT = `You are an expert companion for the book "Design Thinking: A Guide to Creative Problem Solving for Everyone" by Andrew Pressman (Routledge, 2019). You have deep knowledge of the book's content.
+
+Book structure:
+- PART 1 (Processes): Ch.1 Design Thinking Overview, Ch.2 Building Blocks (Information Gathering, Problem Analysis & Definition, Idea Generation, Synthesis through Modeling, Critical Evaluation), Ch.3 Tools & Strategies (Diagramming, Reflecting, Presenting)
+- PART 2 (Applications): Ch.4 Politics & Society (Richard Swett on civic engagement & Congressional Accountability Act, Victoria Beach on Flanders Mansion and trail project), Ch.5 Business (Michael Tardif on strategic plan as jigsaw puzzle and BIM data, Francesco Crocenzi on culinary arts, Meredith Kauffman on pharmaceutical empathy, James Barker on Clemson University, Diego Ruzzarin on fast-fail and food innovation, Scott Phillips on interview methodology), Ch.6 Health & Science (Dr. Bon Ku on medical design curriculum, cancer cell transformation via retinoic acid), Ch.7 Law (Charles Heuer on problem definition, Jay Wickersham on alternatives and visual thinking), Ch.8 Writing (Mark Childs on draft as prototype, Michael Tardif on rolling the snowball downhill, Charles Linn on getting to the aha moment)
+
+Key concepts: 5 building blocks forming a non-linear loop; empathy as the central orientation; the goose bump factor; embracing failure; the jigsaw puzzle metaphor; fast-fail iterative; brainstorming dos and don'ts; customising the process; dialogue as iteration; draft as prototype; alternatives with pros and cons; presenting as a design problem; the "right problem" vs stated problem.
+
+Answer questions accurately and specifically based on this book. When relevant, cite specific chapters, vignettes, or interviewees. Be intellectually rigorous and helpful. If asked about something not in the book, say so clearly.`;
+
+function saveApiKey() {
+  const input = document.getElementById('apiKeyInput');
+  apiKey = input.value.trim();
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  const btn = document.getElementById('sendBtn');
+  if (apiKey.startsWith('AIza')) {
+    dot.className = 'status-dot connected';
+    text.textContent = 'API key saved — ready to chat';
+    btn.disabled = false;
+    input.value = '••••••••••••••••••••';
+  } else {
+    dot.className = 'status-dot error';
+    text.textContent = 'Invalid key — should start with AIza';
+    btn.disabled = true;
+  }
+}
+
+let messages = [];
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || !apiKey) return;
+  input.value = '';
+  autoResize(input);
+
+  const emptyEl = document.getElementById('chatEmpty');
+  if (emptyEl) emptyEl.remove();
+
+  appendMessage('user', text);
+  messages.push({ role: 'user', parts: [{ text }] });
+
+  const typingId = appendTyping();
+  document.getElementById('sendBtn').disabled = true;
+
+  try {
+    const systemMsg = { role: 'user', parts: [{ text: BOOK_CONTEXT + '\n\nUser question: ' + text }] };
+    const conversationHistory = messages.length > 1
+      ? messages.slice(0, -1).map(m => ({ role: m.role, parts: m.parts }))
+      : [];
+    const requestMessages = messages.length === 1
+      ? [systemMsg]
+      : [...conversationHistory.slice(-6), { role: 'user', parts: [{ text }] }];
+
+    const response = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + apiKey,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: BOOK_CONTEXT }] },
+          contents: [{ role: 'user', parts: [{ text }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 1200 }
+        })
+      }
+    );
+    removeTyping(typingId);
+    if (!response.ok) throw new Error('API error ' + response.status);
+    const data = await response.json();
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received.';
+    appendMessage('ai', reply);
+    messages.push({ role: 'model', parts: [{ text: reply }] });
+  } catch (e) {
+    removeTyping(typingId);
+    appendMessage('ai', 'Error: ' + e.message + '. Please check your API key and try again.');
+  }
+  document.getElementById('sendBtn').disabled = false;
+}
+
+function appendMessage(role, text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'chat-message ' + role + '-msg';
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar ' + (role === 'user' ? 'user-avatar' : 'ai-avatar');
+  avatar.textContent = role === 'user' ? '👤' : '✨';
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.textContent = text;
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function appendTyping() {
+  const msgs = document.getElementById('chatMessages');
+  const id = 'typing-' + Date.now();
+  const div = document.createElement('div');
+  div.className = 'chat-message ai-msg';
+  div.id = id;
+  div.innerHTML = '<div class="msg-avatar ai-avatar">✨</div><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function handleEnter(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function useStarter(btn) {
+  const input = document.getElementById('chatInput');
+  input.value = btn.textContent;
+  autoResize(input);
+  input.focus();
+}
+</script>
+</body>
+</html>
