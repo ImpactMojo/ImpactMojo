@@ -468,25 +468,121 @@ body.dark-mode .header {
     color: var(--success-color);
 }
 
+/* Paper Airplane */
+.v3-paper-plane {
+    position: fixed;
+    top: 15%;
+    right: 8%;
+    width: 140px;
+    height: 140px;
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+    animation: v3-float-plane 25s ease-in-out infinite;
+}
+@keyframes v3-float-plane {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(-60px, 40px) rotate(10deg); }
+    40% { transform: translate(120px, 30px) rotate(-8deg); }
+    60% { transform: translate(40px, 60px) rotate(15deg); }
+    80% { transform: translate(-30px, 20px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
 /* Footer */
 .footer {
     background: var(--secondary-bg);
     border-top: 1px solid var(--border-color);
-    padding: 2rem;
-    text-align: center;
+    padding: 3rem 2rem 1.5rem;
+    position: relative;
+    z-index: 1;
 }
 
-.footer p {
-    color: var(--text-muted);
-    font-size: 0.875rem;
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.footer a {
-    color: var(--accent-color);
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-.footer a:hover { text-decoration: underline; }
+.footer-section a:hover {
+    color: var(--accent-color);
+}
+
+.footer-bottom {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-copyright {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-social a {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.footer-social a:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+.footer-social svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
 
 /* Auth state */
 .auth-logged-in { display: none !important; }
@@ -503,6 +599,13 @@ body.user-authenticated .auth-logged-out { display: none !important; }
     .about-section { padding: 3rem 1rem; }
     .hero-stats { gap: 1.5rem; }
     .header-actions .btn-outline span { display: none; }
+    .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .v3-paper-plane { animation: none !important; }
 }
 </style>
 </head>
@@ -548,11 +651,11 @@ body.user-authenticated .auth-logged-out { display: none !important; }
     <p>Deep-dive, interactive summaries of essential texts in development, social protection, and public policy. Navigate chapters, explore key concepts, and build real understanding.</p>
     <div class="hero-stats">
         <div class="stat-item">
-            <div class="stat-number">1</div>
-            <div class="stat-label">Book Available</div>
+            <div class="stat-number">3</div>
+            <div class="stat-label">Books Available</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">30+</div>
+            <div class="stat-number">55+</div>
             <div class="stat-label">Chapters Covered</div>
         </div>
         <div class="stat-item">
@@ -584,6 +687,72 @@ body.user-authenticated .auth-logged-out { display: none !important; }
                     <span class="meta-tag">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                         30+ Chapters
+                    </span>
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        Interactive
+                    </span>
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        Free Access
+                    </span>
+                </div>
+                <div class="book-cta">
+                    Read Summary
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+            </div>
+        </a>
+
+        <!-- Development Economics — Debraj Ray -->
+        <a href="debraj-ray-companion.html" class="book-card">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #B8860B 0%, #D97706 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Development Economics
+                </div>
+                <div class="book-title">Development Economics</div>
+                <div class="book-authors">Debraj Ray &mdash; Princeton University Press, 1998</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">The definitive textbook covering economic development theory — inequality, poverty traps, credit markets, land reform, migration, and trade — with rigorous models and South Asian case studies.</p>
+                <div class="book-meta">
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        18 Chapters
+                    </span>
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        Interactive
+                    </span>
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        Free Access
+                    </span>
+                </div>
+                <div class="book-cta">
+                    Read Summary
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+            </div>
+        </a>
+
+        <!-- Design Thinking — Andrew Pressman -->
+        <a href="dt-companion.html" class="book-card">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #1E7A6E 0%, #2BA898 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    Design &amp; Innovation
+                </div>
+                <div class="book-title">Design Thinking: A Guide to Creative Problem Solving for Everyone</div>
+                <div class="book-authors">Andrew Pressman, FAIA &mdash; Routledge, 2019</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">A practical guide to design thinking as a creative problem-solving methodology — covering empathy, iteration, interdisciplinary collaboration, and applications from healthcare to civic engagement.</p>
+                <div class="book-meta">
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        10 Chapters
                     </span>
                     <span class="meta-tag">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -651,10 +820,68 @@ body.user-authenticated .auth-logged-out { display: none !important; }
     </div>
 </section>
 
+<!-- V3 Floating Paper Plane -->
+<svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2026 ImpactMojo. <a href="/index.html">Back to Home</a> | <a href="mailto:hello@impactmojo.in">Contact Us</a></p>
-    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Sponsored by PinPoint Ventures</p>
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="/about">About ImpactMojo</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                    <li><a href="/community/community">Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal &amp; IT Act</h4>
+                <ul>
+                    <li><a href="/terms-of-service">Terms of Service</a></li>
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/refund-policy">Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/catalog">Course Catalog</a></li>
+                    <li><a href="/premium">Premium Access</a></li>
+                    <li><a href="/faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/podcast">Podcast</a></li>
+                    <li><a href="/handouts">Handouts</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copyright">&copy; 2026 ImpactMojo. All rights reserved. Made with &#9829; in India.</p>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/company/impactmojo" target="_blank" rel="noopener" title="LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://www.instagram.com/impactmojo" target="_blank" rel="noopener" title="Instagram">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+                <a href="https://twitter.com/impactmojo" target="_blank" rel="noopener" title="X (Twitter)">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
 </footer>
 
 <script>
