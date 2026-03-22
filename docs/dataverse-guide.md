@@ -2,7 +2,7 @@
 
 ## What Is the Dataverse?
 
-The ImpactMojo Dataverse is a **curated collection of 215+ data sources, tools, and services** organized into 16 categories — designed specifically for development researchers and practitioners working in South Asia and beyond.
+The ImpactMojo Dataverse is a **curated collection of 247+ data sources, tools, and services** organized into 16 categories — designed specifically for development researchers and practitioners working in South Asia and beyond.
 
 Think of it as a map to the world's most useful data for development work, organized so you can actually find what you need. Instead of spending hours searching for the right dataset or tool, the Dataverse puts vetted, relevant resources at your fingertips.
 
@@ -78,7 +78,7 @@ A **Skill** is a pre-built command for the Claude AI assistant that performs a s
 
 ## The 16 Categories
 
-The Dataverse organizes its 215+ resources into 16 categories. Here's what each one contains and who it's most useful for.
+The Dataverse organizes its 247+ resources into 16 categories. Here's what each one contains and who it's most useful for.
 
 ### 1. India Government Data
 
