@@ -10,6 +10,9 @@ All external API calls use environment variables for authentication (loaded by `
 | Gamma | `$GAMMA_API_KEY` | `Authorization: Bearer $GAMMA_API_KEY` | `gamma-ops` |
 | Gemini | `$GEMINI_API_KEY` | Query param `?key=$GEMINI_API_KEY` | `gemini-ai` |
 | Napkin.ai | `$NAPKIN_API_KEY` | `Authorization: Bearer $NAPKIN_API_KEY` | — |
+| Grok | `$GROK_API_KEY` | `Authorization: Bearer $GROK_API_KEY` | — |
+| DeepSeek | `$DEEPSEEK_API_KEY` | `Authorization: Bearer $DEEPSEEK_API_KEY` | — |
+| Sarvam AI | `$SARVAM_API_KEY` | `Authorization: Bearer $SARVAM_API_KEY` | — |
 
 ## Rules
 
