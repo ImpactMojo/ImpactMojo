@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Radical Candor — ImpactMojo Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
+  --accent:#1A3C34;--accent-light:#EBF5F2;--teal:#1A6B5A;--teal-light:#EBF5F2;
+  --radius:8px;
+}
+body{background:var(--bg);font-family:'Lora','Georgia',serif;color:var(--text)}
+.app{min-height:100vh;display:flex;flex-direction:column}
+nav{background:#1C1C1C;display:flex;align-items:center;gap:20px;padding:0 20px;min-height:52px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.brand{display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.brand-name{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:.05em;text-transform:uppercase}
+.tabs{display:flex;gap:2px;flex-wrap:wrap}
+.tab-btn{background:none;border:none;padding:6px 13px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;transition:all .15s}
+.tab-btn:hover{color:rgba(255,255,255,.85)}
+.tab-btn.active{color:#fff;background:var(--accent)}
+main{flex:1;padding:32px 20px;max-width:860px;margin:0 auto;width:100%}
+.h1{font-family:Inter,sans-serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.sub{color:var(--muted);font-size:15px;margin-bottom:24px;font-family:Inter,sans-serif;line-height:1.5}
+.panel{display:none}.panel.active{display:block}
+
+/* HERO */
+.hero{background:#1C1C1C;color:#fff;border-radius:12px;padding:32px;margin-bottom:20px}
+.day-badge{display:inline-block;background:var(--accent);font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:4px;margin-bottom:14px}
+.hero h1{font-size:34px;font-weight:700;margin-bottom:4px}
+.hero .auth{font-family:Inter,sans-serif;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:14px}
+.hero .tagline{font-size:15px;color:rgba(255,255,255,.8);line-height:1.6;max-width:620px;margin-bottom:18px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-family:Inter,sans-serif;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 14px;text-align:center}
+.stat-n{font-size:30px;font-weight:700;color:var(--accent);font-family:Inter,sans-serif}
+.stat-l{font-family:Inter,sans-serif;font-size:12px;color:var(--muted);margin-top:4px}
+.arg{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px;margin-bottom:24px}
+.arg p{font-size:15px;line-height:1.75}
+.arg p+p{margin-top:1rem}
+.nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.nav-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:left;cursor:pointer;transition:all .15s}
+.nav-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.nav-card-label{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.nav-card-desc{font-family:Inter,sans-serif;font-size:12px;color:var(--muted)}
+
+/* PATHWAYS */
+.pw-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.pw-btn{font-family:Inter,sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s}
+.pw-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pw-desc{font-family:Inter,sans-serif;font-size:14px;color:var(--muted);padding:12px 14px;background:var(--accent-light);border-radius:6px;margin-bottom:20px;line-height:1.5}
+.pw-steps{display:flex;flex-direction:column;gap:10px}
+.pw-step{display:flex;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-family:Inter,sans-serif;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-title{font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:3px}
+.step-focus{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);line-height:1.5}
+
+/* SECTIONS */
+.sec-card{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.sec-header{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;cursor:pointer;background:none;border:none;text-align:left;width:100%}
+.sec-num{font-family:Inter,sans-serif;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;min-width:24px;padding-top:2px}
+.sec-title{font-family:Inter,sans-serif;font-size:15px;font-weight:700;margin-bottom:2px}
+.sec-sub{font-family:Inter,sans-serif;font-size:12px;color:var(--muted)}
+.sec-chev{font-size:16px;color:var(--muted);padding-top:2px;margin-left:auto}
+.sec-body{padding:0 18px 18px 56px;border-top:1px solid var(--border)}
+.sec-summary{font-size:15px;line-height:1.75;padding-top:14px;margin-bottom:18px}
+.ideas-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.idea-item{display:flex;gap:8px;margin-bottom:7px;font-family:Inter,sans-serif;font-size:13px;line-height:1.55}
+.idea-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px}
+blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px solid var(--accent);padding-left:12px;margin-bottom:8px;line-height:1.6}
+.dev-toggle{font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:var(--teal);background:var(--teal-light);border:none;padding:7px 12px;border-radius:4px;cursor:pointer;margin-top:10px}
+.dev-text{margin-top:10px;font-family:Inter,sans-serif;font-size:13px;line-height:1.65;background:var(--teal-light);padding:12px;border-radius:6px}
+
+/* CONCEPTS */
+.concept-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.concept-card:hover,.concept-card.open{border-color:var(--accent)}
+.concept-term{font-family:Inter,sans-serif;font-size:15px;font-weight:700}
+.concept-def{font-family:Inter,sans-serif;font-size:14px;line-height:1.7;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.prac-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-top:10px;margin-bottom:4px}
+.prac-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:var(--muted)}
+
+/* TOOLKIT */
+.tool-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.tool-btn{font-family:Inter,sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s}
+.tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tool-panel{display:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px}
+.tool-panel.active{display:block}
+.tool-intro{font-family:Inter,sans-serif;font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.fld-label{font-family:Inter,sans-serif;font-size:13px;font-weight:600;margin-bottom:5px;display:block}
+.fld{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;outline:none;background:var(--bg);margin-bottom:12px}
+.fld:focus{border-color:var(--accent)}
+.output-box{background:var(--accent-light);padding:14px;border-radius:6px;margin-top:16px;font-family:Inter,sans-serif;font-size:14px;line-height:1.65}
+.output-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:8px}
+
+/* CONTEXT */
+.conn-card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:16px 18px;margin-bottom:10px}
+.conn-book{font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:5px}
+.conn-text{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);line-height:1.65}
+.crit-item{display:flex;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:8px}
+.crit-n{width:24px;height:24px;border-radius:50%;background:#FFF8E6;color:#C8910A;font-family:Inter,sans-serif;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.crit-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65}
+.context-h{font-family:Inter,sans-serif;font-size:16px;font-weight:700;margin-bottom:14px;margin-top:6px}
+
+/* ASK */
+.ask-setup{}
+.setup-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.setup-step{display:flex;gap:12px;font-family:Inter,sans-serif;font-size:14px;line-height:1.5}
+.setup-num{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.setup-step a{color:var(--accent)}
+.key-row{display:flex;gap:10px}
+.key-input{flex:1;max-width:400px;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;outline:none}
+.key-btn{padding:9px 22px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-family:Inter,sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.key-btn:disabled{opacity:.4;cursor:not-allowed}
+.ask-ui{display:flex;flex-direction:column;height:calc(100vh - 180px)}
+.ask-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ask-hdr-title{font-family:Inter,sans-serif;font-size:18px;font-weight:700}
+.ask-reset{background:none;border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-family:Inter,sans-serif;font-size:12px;color:var(--muted);cursor:pointer}
+.msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px;margin-bottom:10px}
+.suggested-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+.sug-btn{display:block;width:100%;text-align:left;padding:9px 12px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;cursor:pointer;margin-bottom:6px;transition:all .15s}
+.sug-btn:hover{border-color:var(--accent);background:var(--accent-light)}
+.msg{max-width:85%}
+.msg.user{align-self:flex-end}
+.msg.assistant{align-self:flex-start}
+.msg-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65;padding:10px 14px;border-radius:8px;white-space:pre-wrap}
+.msg.user .msg-text{background:var(--accent);color:#fff}
+.msg.assistant .msg-text{background:var(--card);border:1px solid var(--border)}
+.typing{display:flex;gap:4px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.ask-input-row{display:flex;gap:8px;border-top:1px solid var(--border);padding-top:10px}
+.ask-input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;resize:none;outline:none;background:var(--bg)}
+.ask-input:focus{border-color:var(--accent)}
+.ask-send{padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-family:Inter,sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.ask-send:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:640px){.stat-grid{grid-template-columns:repeat(2,1fr)}.nav-grid{grid-template-columns:1fr 1fr}.sec-body{padding-left:18px}}
+</style>
+</head>
+<body>
+<div class="app">
+<nav>
+  <div class="brand"><div class="dot"></div><span class="brand-name">ImpactMojo</span></div>
+  <div class="tabs" id="tabbar"></div>
+</nav>
+<main id="main-content">
+  <div class="panel active" id="p-overview"></div>
+  <div class="panel" id="p-pathways"></div>
+  <div class="panel" id="p-sections"></div>
+  <div class="panel" id="p-concepts"></div>
+  <div class="panel" id="p-toolkit"></div>
+  <div class="panel" id="p-context"></div>
+  <div class="panel" id="p-ask"></div>
+</main>
+</div>
+<script>
+const DATA = {"title": "Radical Candor", "dayBadge": "Day 20 of 30", "author": "Kim Scott · 2017 · St. Martin's Press", "tagline": "Scott's management framework for building relationships that allow honest, caring feedback — and the tools for implementing guidance, team management, and results-driven communication.", "pills": ["Management", "Leadership", "Feedback", "Communication"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Scott's central claim is that the most damaging management failure is not harshness but excessive niceness — what she calls ruinous empathy. Withholding honest feedback to protect feelings produces stagnation, resentment, and eventual failure. Radical Candor is the alternative: feedback that is both caring personally (the relationship matters) and challenging directly (the performance standard matters). Both dimensions are required simultaneously; either alone fails.", "The framework covers three responsibilities of every manager: guidance (soliciting and giving feedback), team (identifying and developing the right people in the right roles), and results (creating the conditions for the team to deliver). All three depend on trusting relationships built through Radical Candor."], "accent": "#1A3C34", "accent_light": "#EBF5F2", "pathways": [{"label": "Development Practitioner", "desc": "Apply this book to programme management, community engagement, and field practice.", "steps": [{"section": "The Radical Candor Framework", "focus": "The two-dimensional framework: caring personally (being a whole person at work, knowing your people as whole people) and challenging directly (giving honest, specific feedback that..."}, {"section": "Guidance — Soliciting and Giving Feedback", "focus": "Guidance should be impromptu and specific, not only formal and periodic. Praise should be specific and explain why the work mattered; vague praise ('great job!') has minimal develo..."}, {"section": "Team — Understanding People to Motivate Them", "focus": "Scott rejects the traditional distinction between high-potential and low-potential employees. Instead she distinguishes between people on steep growth trajectories (superstars — wa..."}, {"section": "Results — The GSD Wheel", "focus": "The Get Stuff Done wheel: listen (create systems for ideas and concerns), clarify (help people articulate and refine their thinking), debate (create a culture where ideas are chall..."}]}, {"label": "Development Researcher", "desc": "Apply this book to research practice, evidence generation, and academic work.", "steps": [{"section": "The Radical Candor Framework", "focus": "The two-dimensional framework: caring personally (being a whole person at work, knowing your people as whole people) and challenging directly (giving honest, specific feedback that..."}, {"section": "Guidance — Soliciting and Giving Feedback", "focus": "Guidance should be impromptu and specific, not only formal and periodic. Praise should be specific and explain why the work mattered; vague praise ('great job!') has minimal develo..."}, {"section": "Team — Understanding People to Motivate Them", "focus": "Scott rejects the traditional distinction between high-potential and low-potential employees. Instead she distinguishes between people on steep growth trajectories (superstars — wa..."}, {"section": "Results — The GSD Wheel", "focus": "The Get Stuff Done wheel: listen (create systems for ideas and concerns), clarify (help people articulate and refine their thinking), debate (create a culture where ideas are chall..."}]}, {"label": "Personal Growth", "desc": "Direct personal and professional application.", "steps": [{"section": "The Radical Candor Framework", "focus": "The two-dimensional framework: caring personally (being a whole person at work, knowing your people as whole people) and challenging directly (giving honest, specific feedback that..."}, {"section": "Guidance — Soliciting and Giving Feedback", "focus": "Guidance should be impromptu and specific, not only formal and periodic. Praise should be specific and explain why the work mattered; vague praise ('great job!') has minimal develo..."}, {"section": "Team — Understanding People to Motivate Them", "focus": "Scott rejects the traditional distinction between high-potential and low-potential employees. Instead she distinguishes between people on steep growth trajectories (superstars — wa..."}, {"section": "Results — The GSD Wheel", "focus": "The Get Stuff Done wheel: listen (create systems for ideas and concerns), clarify (help people articulate and refine their thinking), debate (create a culture where ideas are chall..."}]}], "sections": [{"title": "The Radical Candor Framework", "subtitle": "Care personally, challenge directly", "summary": "The two-dimensional framework: caring personally (being a whole person at work, knowing your people as whole people) and challenging directly (giving honest, specific feedback that serves the person's growth). Four failure modes result from missing one or both dimensions: Manipulative Insincerity (low care, low challenge — fake praise, empty flattery), Ruinous Empathy (high care, low challenge — withholding criticism to protect feelings), Obnoxious Aggression (low care, high challenge — honesty without humanity), and Radical Candor (high care, high challenge — the goal). The most common failure mode in development organisations is ruinous empathy: we care about colleagues so much that we fail to give the honest feedback that would help them grow.", "ideas": ["Ruinous empathy, not obnoxious aggression, is the most common management failure — and the hardest to diagnose because it feels kind.", "Caring personally means bringing your whole self to work and creating space for others to do the same — not being friends.", "Challenging directly means giving specific, honest feedback in service of the other person's growth, not your own comfort.", "The framework describes behaviours, not personalities: no one is always radically candid, and everyone occasionally falls into all four quadrants."], "quotes": ["\"If nobody is ever mad at you, you probably aren't challenging your team enough.\"", "\"Caring personally is the antidote to both robotic professionalism and managerial arrogance.\""], "devEcon": "Development organisations routinely underperform on honest feedback because the culture values collaboration and sensitivity. Staff receive annual performance reviews with largely positive evaluations regardless of actual performance, which deprives them of the developmental feedback that would allow them to improve. Scott's framework names this precisely: it is ruinous empathy, not effective management."}, {"title": "Guidance — Soliciting and Giving Feedback", "subtitle": "Practical tools for honest communication", "summary": "Guidance should be impromptu and specific, not only formal and periodic. Praise should be specific and explain why the work mattered; vague praise ('great job!') has minimal developmental impact. Criticism should be immediate (while details are fresh), specific (what exactly happened and what the impact was), focused on the work not the person, and delivered privately (never criticise in public). The situation-behaviour-impact framework: describe the specific situation, the observed behaviour, and its specific impact — this makes feedback precise without being personal. Soliciting feedback from your own team requires active persistence: most people need multiple invitations before they trust the manager enough to be honest.", "ideas": ["Praise is not enough: vague positive feedback is nearly as useless as vague negative feedback.", "Criticise the work and behaviour, not the person. 'That report was unclear' not 'You communicated poorly.'", "Situation-behaviour-impact: specific and observable, not evaluative and global.", "Praising in public and criticising in private is not just courtesy — it is what works for learning."], "quotes": ["\"The single most important thing a boss can do is focus on guidance: giving it, receiving it, and encouraging it.\"", "\"Almost nothing will erode trust more quickly than using one's insights into what makes another person tick to hurt them.\""], "devEcon": "MEL in development programmes produces data about programme performance but rarely creates feedback loops to individual staff whose decisions drove that performance. Scott's guidance framework applied at the institutional level would mean connecting programme performance data to specific staff behaviours and decisions, and giving honest, specific feedback about what worked and what did not."}, {"title": "Team — Understanding People to Motivate Them", "subtitle": "Superstars, rock stars, and growth management", "summary": "Scott rejects the traditional distinction between high-potential and low-potential employees. Instead she distinguishes between people on steep growth trajectories (superstars — want increasing challenges and rapid development) and people on gradual growth trajectories (rock stars — have mastered their craft and provide stability). Both are essential. The management error is to treat steep trajectory as universally superior: rock stars who are pushed into management roles they do not want become unhappy and underperform. Growth management means understanding what each person wants now and matching it to what the team needs.", "ideas": ["Rock stars (stable excellence) are as valuable as superstars (steep growth) — organisations need both.", "Do not put permanent labels on people: trajectory changes at different life stages.", "Managing superstars: find them their next challenge before they look for it themselves.", "Managing rock stars: recognise and reward expertise and stability, not just advancement."], "quotes": ["\"To build a great team, you need to understand how each person's job fits into their life goals.\"", "\"Growth management helps you to motivate individuals to deliver the best possible results based on what they want.\""], "devEcon": "Development organisations face the growth management challenge acutely: most senior roles require generalist management skills, but many of the most valuable staff are deep specialists (subject matter experts, data analysts, community mobilisers) who do not want to manage. Creating career tracks that reward expertise without requiring management is a Scott prescription that most development organisations have not implemented."}, {"title": "Results — The GSD Wheel", "subtitle": "Collaborative execution without micromanagement", "summary": "The Get Stuff Done wheel: listen (create systems for ideas and concerns), clarify (help people articulate and refine their thinking), debate (create a culture where ideas are challenged rigorously), decide (make decisions based on facts, not politics), persuade (bring the people who weren't in the room along), execute (create conditions for the team to get things done), and learn (review, adjust, start again). The manager's job is to orchestrate this cycle, not to be the decision-maker at every step. Over-involvement at the decision stage produces disempowerment; under-involvement at the debate stage produces poor decisions.", "ideas": ["Every step of the GSD wheel must happen; skipping any step creates predictable failure modes.", "The manager is not the chief decision-maker — the manager creates conditions for good decisions.", "Debate before decision produces better decisions and more genuine buy-in than decisions without debate.", "Execution time (thinking and doing) and meeting time (coordinating) must both be protected explicitly."], "quotes": ["\"The ultimate goal of Radical Candor is to achieve results collaboratively that you could never achieve individually.\"", "\"Debate takes time and requires emotional energy. But lack of debate saps a team of more time and emotional energy in the long run.\""], "devEcon": "The GSD wheel is the management equivalent of PDIA at the team level: listen (what problem are we trying to solve?), debate (what are the options?), decide (what do we try first?), execute (do it), learn (what happened?), repeat. The parallel is not coincidental — both are applications of iterative, collaborative, learning-oriented problem-solving to institutional challenges."}], "concepts": [{"term": "Radical Candor", "definition": "Feedback and management behaviour that is simultaneously high on caring personally (treating the other person as a whole human being) and high on challenging directly (giving honest, specific feedback in service of their growth). The quadrant all managers should aim for.", "practitionerNote": "In development organisations, Radical Candor often requires explicitly naming the culture shift: 'I am going to give you honest feedback because I believe you can do this work well and I want to help you get there' as a frame that distinguishes caring directness from insensitive criticism."}, {"term": "Ruinous Empathy", "definition": "The most common management failure mode: high caring personally, low challenging directly. Withholding honest feedback to protect the other person's feelings. Produces stagnation, resentment, and eventual failure while feeling kind in the moment.", "practitionerNote": "This is the default mode in most development organisations. Annual performance reviews that describe everyone as 'meeting expectations' without honest developmental feedback are ruinous empathy institutionalised."}, {"term": "Situation-Behaviour-Impact", "definition": "A feedback framework: describe the specific situation, the specific observable behaviour, and its specific impact. Produces feedback that is precise and actionable rather than evaluative and personal.", "practitionerNote": "'In yesterday's community meeting (situation), you interrupted the community leader three times before they finished (behaviour), which visibly closed down the discussion and reduced participation for the rest of the session (impact).' This is more useful than 'you need to work on your facilitation skills.'"}, {"term": "Rock Stars vs Superstars", "definition": "Scott's distinction between people on gradual growth trajectories (rock stars — stable excellence) and steep growth trajectories (superstars — rapid development). Both are essential; forcing rock stars into steep-trajectory paths and expecting superstars to stay in stable roles both produce failure.", "practitionerNote": "Development organisations that create only one career track (generalist programme management) lose their specialists and frustrate their subject matter experts. Building expertise tracks alongside management tracks is a structural application of this principle."}, {"term": "The GSD Wheel", "definition": "The seven-step cycle for collaborative execution: listen, clarify, debate, decide, persuade, execute, learn. Every step must occur for the cycle to work. The manager's role is to facilitate the cycle, not to perform every step personally.", "practitionerNote": "Development programme cycles (design, implementation, evaluation, adaptation) are a version of the GSD wheel. The most common failure is skipping the debate and learn steps under time pressure — producing decisions without adequate challenge and repeating the same mistakes across implementation cycles."}], "tools": [{"label": "Reflection Journal", "intro": "Use these prompts to connect the book's ideas to your own context.", "html": "<label class=\"fld-label\">What is the single most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"r1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where do you see this book's core argument playing out in a specific programme or research challenge you face?</label>\n<textarea class=\"fld\" id=\"r2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">What is one concrete change you will make this week based on reading this?</label>\n<textarea class=\"fld\" id=\"r3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Reflections stay in your browser only and are not sent anywhere.</div>"}], "connections": [{"book": "Influence — Cialdini", "text": "The liking principle (we comply more readily with people we like) is the psychological foundation of Scott's care personally dimension. Building genuine personal relationships with direct reports is both an ethical management practice (Scott) and a compliance-facilitating strategy (Cialdini). The two books use different language for the same underlying mechanism."}, {"book": "Grit — Duckworth", "text": "Duckworth's wise parenting model (simultaneously supportive and demanding) is structurally identical to Scott's Radical Candor: high care, high challenge. Both argue that the combination is more effective than either alone, and that excessive niceness (low challenge) is a more common failure than excessive harshness."}, {"book": "The 21 Irrefutable Laws of Leadership — Maxwell", "text": "Maxwell's Law of Connection ('Leaders touch a heart before they ask for a hand') is the care-personally dimension of Radical Candor. Maxwell's Law of Solid Ground (trust as the foundation) is the relational prerequisite for challenging directly. The two books are complementary: Maxwell provides the principles, Scott provides the practical tools."}], "critiques": ["Scott's framework was developed in Silicon Valley technology companies with specific cultural norms (directness valued, hierarchy relatively flat, career mobility high). Application to development organisations with more hierarchical structures, different cultural norms around directness, and limited staff mobility requires significant adaptation.", "The framework does not adequately address power differentials beyond the direct manager-report relationship. In development organisations with complex multi-tier accountability (field staff → programme manager → country director → donor), the Radical Candor model is difficult to apply consistently upward in the hierarchy.", "The rock star/superstar distinction, while useful, can become a fixed label that managers apply prematurely. In development work with high unpredictability, what looks like stable rock-star performance in a stable environment may be constrained superstar potential in a more enabling environment."], "suggested": ["How does Radical Candor apply to feedback in culturally diverse development teams?", "What is the GSD wheel and how does it relate to PDIA in development?", "How do you give Radically Candid feedback about a colleague's field facilitation skills?", "What is ruinous empathy and why is it the most common management failure in development organisations?", "How do you build a growth management plan for a team with both specialists and generalists?"], "systemPrompt": "You are an expert reading companion for 'Radical Candor' by Kim Scott. Your audience is development practitioners, programme managers, and ImpactMojo learners who manage teams in complex, cross-cultural environments. Answer questions about the framework, its tools, its application to development contexts, and its limits for hierarchical or culturally diverse organisations."};
+
+// Tab management
+const TABS = [
+  {id:"overview",label:"Overview"},
+  {id:"pathways",label:"Pathways"},
+  {id:"sections",label:"Sections"},
+  {id:"concepts",label:"Concepts"},
+  {id:"toolkit",label:"Toolkit"},
+  {id:"context",label:"Context"},
+  {id:"ask",label:"Ask"},
+];
+
+const tabbar = document.getElementById("tabbar");
+TABS.forEach(t => {
+  const btn = document.createElement("button");
+  btn.className = "tab-btn" + (t.id === "overview" ? " active" : "");
+  btn.textContent = t.label;
+  btn.onclick = () => switchTab(t.id);
+  tabbar.appendChild(btn);
+});
+
+function switchTab(id) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("p-" + id).classList.add("active");
+  tabbar.querySelectorAll(".tab-btn")[TABS.findIndex(t=>t.id===id)].classList.add("active");
+}
+
+// OVERVIEW
+(function() {
+  const el = document.getElementById("p-overview");
+  el.innerHTML = `
+    <div class="hero">
+      <div class="day-badge">${DATA.dayBadge}</div>
+      <h1>${DATA.title}</h1>
+      <div class="auth">${DATA.author}</div>
+      <div class="tagline">${DATA.tagline}</div>
+      <div class="pills">${DATA.pills.map(p=>`<span class="pill">${p}</span>`).join("")}</div>
+    </div>
+    <div class="stat-grid">
+      ${DATA.stats.map(s=>`<div class="stat"><div class="stat-n">${s.n}</div><div class="stat-l">${s.l}</div></div>`).join("")}
+    </div>
+    <div class="arg">
+      <div class="h1">The central argument</div>
+      ${DATA.argument.map(p=>`<p>${p}</p>`).join("")}
+    </div>
+    <div class="h1" style="margin-top:24px">What's in this companion</div>
+    <div class="nav-grid">
+      ${[["pathways","Learning Pathways","Structured reading routes by role"],["sections","Section by Section","Full analysis with dev econ connections"],["concepts","Concepts & Frameworks","Key terms with practitioner notes"],["toolkit","Practitioner Toolkit","Interactive tools"],["context","Book in Context","Connections and assessment"],["ask","Ask the Book","Gemini-powered Q&A"]].map(([id,label,desc])=>`<button class="nav-card" onclick="switchTab('${id}')" ><div class="nav-card-label">${label}</div><div class="nav-card-desc">${desc}</div></button>`).join("")}
+    </div>
+  `;
+})();
+
+// PATHWAYS
+(function() {
+  const el = document.getElementById("p-pathways");
+  let active = 0;
+  function render() {
+    const pw = DATA.pathways[active];
+    el.innerHTML = `
+      <div class="h1">Learning Pathways</div>
+      <div class="sub">Three structured routes through the book based on your role.</div>
+      <div class="pw-tabs">
+        ${DATA.pathways.map((p,i)=>`<button class="pw-btn ${i===active?"active":""}" onclick="__pw(${i})">${p.label}</button>`).join("")}
+      </div>
+      <div class="pw-desc">${pw.desc}</div>
+      <div class="pw-steps">
+        ${pw.steps.map((s,i)=>`<div class="pw-step"><div class="step-n">${i+1}</div><div><div class="step-title">${s.section}</div><div class="step-focus">${s.focus}</div></div></div>`).join("")}
+      </div>
+    `;
+  }
+  window.__pw = (i) => { active = i; render(); };
+  render();
+})();
+
+// SECTIONS
+(function() {
+  const el = document.getElementById("p-sections");
+  let openId = null;
+  let showDev = {};
+  function render() {
+    el.innerHTML = `
+      <div class="h1">Section by Section</div>
+      <div class="sub">All sections with full analysis and development economics connections.</div>
+      ${DATA.sections.map((s,i)=>`
+        <div class="sec-card">
+          <button class="sec-header" onclick="__sec(${i})">
+            <div class="sec-num">§${i+1}</div>
+            <div class="sec-title-block"><div class="sec-title">${s.title}</div><div class="sec-sub">${s.subtitle}</div></div>
+            <div class="sec-chev">${openId===i?"−":"+"}</div>
+          </button>
+          ${openId===i?`<div class="sec-body">
+            <div class="sec-summary">${s.summary}</div>
+            <div class="ideas-label">Key ideas</div>
+            ${s.ideas.map(idea=>`<div class="idea-item"><span class="idea-dot"></span><span>${idea}</span></div>`).join("")}
+            <div class="ideas-label" style="margin-top:14px">Key quotes</div>
+            ${s.quotes.map(q=>`<blockquote>${q}</blockquote>`).join("")}
+            <button class="dev-toggle" onclick="__dev(${i})">${showDev[i]?"Hide":"Show"} development economics connection</button>
+            ${showDev[i]?`<div class="dev-text">${s.devEcon}</div>`:""}
+          </div>`:""}
+        </div>
+      `).join("")}
+    `;
+  }
+  window.__sec = (i) => { openId = openId===i?null:i; render(); };
+  window.__dev = (i) => { showDev[i]=!showDev[i]; render(); };
+  render();
+})();
+
+// CONCEPTS
+(function() {
+  const el = document.getElementById("p-concepts");
+  let open = null;
+  function render() {
+    el.innerHTML = `
+      <div class="h1">Concepts & Frameworks</div>
+      <div class="sub">Key terms with definitions and practitioner notes. Click to expand.</div>
+      ${DATA.concepts.map((c,i)=>`
+        <div class="concept-card ${open===i?"open":""}" onclick="__con(${i})">
+          <div class="concept-term">${c.term}</div>
+          ${open===i?`<div class="concept-def">${c.definition}</div><div class="prac-label">Practitioner note</div><div class="prac-text">${c.practitionerNote}</div>`:""}
+        </div>
+      `).join("")}
+    `;
+  }
+  window.__con = (i) => { open = open===i?null:i; render(); };
+  render();
+})();
+
+// TOOLKIT  
+(function() {
+  const el = document.getElementById("p-toolkit");
+  el.innerHTML = `
+    <div class="h1">Practitioner Toolkit</div>
+    <div class="sub">Interactive tools derived from the book. Use for personal practice or programme design.</div>
+    <div class="tool-tabs">
+      ${DATA.tools.map((t,i)=>`<button class="tool-btn ${i===0?"active":""}" onclick="__tool(${i})">${t.label}</button>`).join("")}
+    </div>
+    ${DATA.tools.map((t,i)=>`
+      <div class="tool-panel ${i===0?"active":""}" id="toolp-${i}">
+        <div class="tool-intro">${t.intro}</div>
+        ${t.html}
+      </div>
+    `).join("")}
+  `;
+  window.__tool = (i) => {
+    document.querySelectorAll(".tool-btn").forEach((b,j)=>b.classList.toggle("active",i===j));
+    document.querySelectorAll(".tool-panel").forEach((p,j)=>p.classList.toggle("active",i===j));
+  };
+})();
+
+// CONTEXT
+(function() {
+  const el = document.getElementById("p-context");
+  el.innerHTML = `
+    <div class="h1">Book in Context</div>
+    <div class="sub">How this book fits within the broader literature, and an honest assessment of its limits.</div>
+    <div class="context-h">Connected works</div>
+    ${DATA.connections.map(c=>`<div class="conn-card"><div class="conn-book">${c.book}</div><div class="conn-text">${c.text}</div></div>`).join("")}
+    <div class="context-h" style="margin-top:24px">Honest assessment</div>
+    <div class="sub">Limits and qualifications for the ImpactMojo context:</div>
+    ${DATA.critiques.map((c,i)=>`<div class="crit-item"><div class="crit-n">${i+1}</div><div class="crit-text">${c}</div></div>`).join("")}
+  `;
+})();
+
+// ASK
+(function() {
+  const el = document.getElementById("p-ask");
+  let apiKey = "", msgs = [], loading = false;
+  
+  function renderSetup() {
+    el.innerHTML = `
+      <div class="ask-setup">
+        <div class="h1">Ask the Book</div>
+        <div class="sub">AI-powered Q&A using Gemini 2.0 Flash (free). Requires a Google AI Studio API key.</div>
+        <div class="setup-steps">
+          <div class="setup-step"><span class="setup-num">1</span><span>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a> and create a free API key.</span></div>
+          <div class="setup-step"><span class="setup-num">2</span><span>Paste it below. The key stays in your browser only and is never stored.</span></div>
+        </div>
+        <div class="key-row">
+          <input class="key-input" type="password" id="key-in" placeholder="AIza..." oninput="document.getElementById('key-submit').disabled=!this.value.trim()"/>
+          <button class="key-btn" id="key-submit" disabled onclick="__setKey()">Connect</button>
+        </div>
+      </div>
+    `;
+  }
+  
+  function renderChat() {
+    el.innerHTML = `
+      <div class="ask-ui">
+        <div class="ask-hdr"><span class="ask-hdr-title">Ask the Book</span><button class="ask-reset" onclick="__resetKey()">Change key</button></div>
+        <div class="msgs" id="msgs-box">
+          ${msgs.length===0?`<div><div class="suggested-label">Suggested questions</div>${DATA.suggested.map(q=>`<button class="sug-btn" onclick="__ask('${q.replace(/'/g,"\'")}')">${q}</button>`).join("")}</div>`:""}
+          ${msgs.map(m=>`<div class="msg ${m.role}"><div class="msg-text">${m.content}</div></div>`).join("")}
+          ${loading?`<div class="msg assistant"><div class="typing"><span></span><span></span><span></span></div></div>`:""}
+        </div>
+        <div class="ask-input-row">
+          <textarea class="ask-input" id="ask-in" rows="2" placeholder="Ask about the book..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();__sendAsk()}"></textarea>
+          <button class="ask-send" id="ask-send" onclick="__sendAsk()">Send</button>
+        </div>
+      </div>
+    `;
+    const box = document.getElementById("msgs-box");
+    if(box) box.scrollTop = box.scrollHeight;
+  }
+  
+  window.__setKey = () => {
+    const v = document.getElementById("key-in").value.trim();
+    if(v) { apiKey = v; renderChat(); }
+  };
+  window.__resetKey = () => { apiKey=""; msgs=[]; renderSetup(); };
+  window.__ask = (q) => {
+    document.getElementById("ask-in").value = q;
+    __sendAsk();
+  };
+  window.__sendAsk = async () => {
+    const inp = document.getElementById("ask-in");
+    if(!inp) return;
+    const q = inp.value.trim();
+    if(!q || loading) return;
+    inp.value = "";
+    msgs.push({role:"user",content:q});
+    loading = true; renderChat();
+    try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          system_instruction:{parts:[{text:DATA.systemPrompt}]},
+          contents: msgs.map(m=>{return{role:m.role==="assistant"?"model":"user",parts:[{text:m.content}]}}).slice(0,-1).concat([{role:"user",parts:[{text:q}]}]),
+          generationConfig:{maxOutputTokens:1200,temperature:0.3}
+        })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error?.message||"API error");
+      const reply = data?.candidates?.[0]?.content?.parts?.map(p=>p.text).join("")||"No response.";
+      msgs.push({role:"assistant",content:reply});
+    } catch(e) {
+      msgs.push({role:"assistant",content:"Error: "+e.message});
+    }
+    loading = false; renderChat();
+  };
+  
+  renderSetup();
+})();
+</script>
+</body>
+</html>

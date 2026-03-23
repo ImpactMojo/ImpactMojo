@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>To Sell Is Human — ImpactMojo Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
+  --accent:#B7410E;--accent-light:#FDF0EB;--teal:#1A6B5A;--teal-light:#EBF5F2;
+  --radius:8px;
+}
+body{background:var(--bg);font-family:'Lora','Georgia',serif;color:var(--text)}
+.app{min-height:100vh;display:flex;flex-direction:column}
+nav{background:#1C1C1C;display:flex;align-items:center;gap:20px;padding:0 20px;min-height:52px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.brand{display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.brand-name{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:.05em;text-transform:uppercase}
+.tabs{display:flex;gap:2px;flex-wrap:wrap}
+.tab-btn{background:none;border:none;padding:6px 13px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;transition:all .15s}
+.tab-btn:hover{color:rgba(255,255,255,.85)}
+.tab-btn.active{color:#fff;background:var(--accent)}
+main{flex:1;padding:32px 20px;max-width:860px;margin:0 auto;width:100%}
+.h1{font-family:Inter,sans-serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.sub{color:var(--muted);font-size:15px;margin-bottom:24px;font-family:Inter,sans-serif;line-height:1.5}
+.panel{display:none}.panel.active{display:block}
+
+/* HERO */
+.hero{background:#1C1C1C;color:#fff;border-radius:12px;padding:32px;margin-bottom:20px}
+.day-badge{display:inline-block;background:var(--accent);font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:4px;margin-bottom:14px}
+.hero h1{font-size:34px;font-weight:700;margin-bottom:4px}
+.hero .auth{font-family:Inter,sans-serif;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:14px}
+.hero .tagline{font-size:15px;color:rgba(255,255,255,.8);line-height:1.6;max-width:620px;margin-bottom:18px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-family:Inter,sans-serif;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 14px;text-align:center}
+.stat-n{font-size:30px;font-weight:700;color:var(--accent);font-family:Inter,sans-serif}
+.stat-l{font-family:Inter,sans-serif;font-size:12px;color:var(--muted);margin-top:4px}
+.arg{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px;margin-bottom:24px}
+.arg p{font-size:15px;line-height:1.75}
+.arg p+p{margin-top:1rem}
+.nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.nav-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:left;cursor:pointer;transition:all .15s}
+.nav-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.nav-card-label{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.nav-card-desc{font-family:Inter,sans-serif;font-size:12px;color:var(--muted)}
+
+/* PATHWAYS */
+.pw-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.pw-btn{font-family:Inter,sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s}
+.pw-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pw-desc{font-family:Inter,sans-serif;font-size:14px;color:var(--muted);padding:12px 14px;background:var(--accent-light);border-radius:6px;margin-bottom:20px;line-height:1.5}
+.pw-steps{display:flex;flex-direction:column;gap:10px}
+.pw-step{display:flex;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-family:Inter,sans-serif;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-title{font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:3px}
+.step-focus{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);line-height:1.5}
+
+/* SECTIONS */
+.sec-card{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.sec-header{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;cursor:pointer;background:none;border:none;text-align:left;width:100%}
+.sec-num{font-family:Inter,sans-serif;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;min-width:24px;padding-top:2px}
+.sec-title{font-family:Inter,sans-serif;font-size:15px;font-weight:700;margin-bottom:2px}
+.sec-sub{font-family:Inter,sans-serif;font-size:12px;color:var(--muted)}
+.sec-chev{font-size:16px;color:var(--muted);padding-top:2px;margin-left:auto}
+.sec-body{padding:0 18px 18px 56px;border-top:1px solid var(--border)}
+.sec-summary{font-size:15px;line-height:1.75;padding-top:14px;margin-bottom:18px}
+.ideas-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.idea-item{display:flex;gap:8px;margin-bottom:7px;font-family:Inter,sans-serif;font-size:13px;line-height:1.55}
+.idea-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px}
+blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px solid var(--accent);padding-left:12px;margin-bottom:8px;line-height:1.6}
+.dev-toggle{font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:var(--teal);background:var(--teal-light);border:none;padding:7px 12px;border-radius:4px;cursor:pointer;margin-top:10px}
+.dev-text{margin-top:10px;font-family:Inter,sans-serif;font-size:13px;line-height:1.65;background:var(--teal-light);padding:12px;border-radius:6px}
+
+/* CONCEPTS */
+.concept-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.concept-card:hover,.concept-card.open{border-color:var(--accent)}
+.concept-term{font-family:Inter,sans-serif;font-size:15px;font-weight:700}
+.concept-def{font-family:Inter,sans-serif;font-size:14px;line-height:1.7;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.prac-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-top:10px;margin-bottom:4px}
+.prac-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:var(--muted)}
+
+/* TOOLKIT */
+.tool-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.tool-btn{font-family:Inter,sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s}
+.tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tool-panel{display:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px}
+.tool-panel.active{display:block}
+.tool-intro{font-family:Inter,sans-serif;font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.fld-label{font-family:Inter,sans-serif;font-size:13px;font-weight:600;margin-bottom:5px;display:block}
+.fld{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;outline:none;background:var(--bg);margin-bottom:12px}
+.fld:focus{border-color:var(--accent)}
+.output-box{background:var(--accent-light);padding:14px;border-radius:6px;margin-top:16px;font-family:Inter,sans-serif;font-size:14px;line-height:1.65}
+.output-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:8px}
+
+/* CONTEXT */
+.conn-card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:16px 18px;margin-bottom:10px}
+.conn-book{font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:5px}
+.conn-text{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);line-height:1.65}
+.crit-item{display:flex;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:8px}
+.crit-n{width:24px;height:24px;border-radius:50%;background:#FFF8E6;color:#C8910A;font-family:Inter,sans-serif;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.crit-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65}
+.context-h{font-family:Inter,sans-serif;font-size:16px;font-weight:700;margin-bottom:14px;margin-top:6px}
+
+/* ASK */
+.ask-setup{}
+.setup-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.setup-step{display:flex;gap:12px;font-family:Inter,sans-serif;font-size:14px;line-height:1.5}
+.setup-num{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.setup-step a{color:var(--accent)}
+.key-row{display:flex;gap:10px}
+.key-input{flex:1;max-width:400px;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;outline:none}
+.key-btn{padding:9px 22px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-family:Inter,sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.key-btn:disabled{opacity:.4;cursor:not-allowed}
+.ask-ui{display:flex;flex-direction:column;height:calc(100vh - 180px)}
+.ask-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ask-hdr-title{font-family:Inter,sans-serif;font-size:18px;font-weight:700}
+.ask-reset{background:none;border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-family:Inter,sans-serif;font-size:12px;color:var(--muted);cursor:pointer}
+.msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px;margin-bottom:10px}
+.suggested-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+.sug-btn{display:block;width:100%;text-align:left;padding:9px 12px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;cursor:pointer;margin-bottom:6px;transition:all .15s}
+.sug-btn:hover{border-color:var(--accent);background:var(--accent-light)}
+.msg{max-width:85%}
+.msg.user{align-self:flex-end}
+.msg.assistant{align-self:flex-start}
+.msg-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65;padding:10px 14px;border-radius:8px;white-space:pre-wrap}
+.msg.user .msg-text{background:var(--accent);color:#fff}
+.msg.assistant .msg-text{background:var(--card);border:1px solid var(--border)}
+.typing{display:flex;gap:4px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.ask-input-row{display:flex;gap:8px;border-top:1px solid var(--border);padding-top:10px}
+.ask-input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;resize:none;outline:none;background:var(--bg)}
+.ask-input:focus{border-color:var(--accent)}
+.ask-send{padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-family:Inter,sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.ask-send:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:640px){.stat-grid{grid-template-columns:repeat(2,1fr)}.nav-grid{grid-template-columns:1fr 1fr}.sec-body{padding-left:18px}}
+</style>
+</head>
+<body>
+<div class="app">
+<nav>
+  <div class="brand"><div class="dot"></div><span class="brand-name">ImpactMojo</span></div>
+  <div class="tabs" id="tabbar"></div>
+</nav>
+<main id="main-content">
+  <div class="panel active" id="p-overview"></div>
+  <div class="panel" id="p-pathways"></div>
+  <div class="panel" id="p-sections"></div>
+  <div class="panel" id="p-concepts"></div>
+  <div class="panel" id="p-toolkit"></div>
+  <div class="panel" id="p-context"></div>
+  <div class="panel" id="p-ask"></div>
+</main>
+</div>
+<script>
+const DATA = {"title": "To Sell Is Human", "dayBadge": "Day 27 of 30", "author": "Daniel H. Pink · 2012 · Riverhead", "tagline": "Pink's argument that everyone spends 40% of their work time in non-sales selling — influencing, persuading, and moving others — and the ABCs (Attunement, Buoyancy, Clarity) that make this effective.", "pills": ["Persuasion", "Influence", "Communication", "Leadership"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Pink's central claim is that the traditional conception of sales as a specialist activity has been made obsolete by two forces: the internet has eliminated information asymmetry (the source of manipulative selling), and the rise of elasticity in organisational roles means that everyone now spends significant time doing what used to be called selling — influencing, convincing, and moving others to take action.", "The book's prescriptive model replaces 'Always Be Closing' with the ABCs: Attunement (stepping outside your own perspective to understand others'), Buoyancy (the resilience and optimism needed to sustain selling through rejection), and Clarity (the ability to identify problems and reframe situations, not just solve known problems). The final section presents Pitch, Improvise, and Serve as the three things you must do to move people effectively."], "accent": "#B7410E", "accent_light": "#FDF0EB", "pathways": [{"label": "Development Practitioner", "desc": "Programme management, community engagement, field practice.", "steps": [{"section": "Everyone Sells Now", "focus": "Pink presents survey data showing that knowledge workers spend approximately 40% of their time doing 'non-sales selling': convincing colleagues, persuading bosses, influencing partners, enrolling bene..."}, {"section": "Attunement", "focus": "Attunement is the ability to align yourself with others and with the context — to see the world through their eyes before presenting your own perspective. Three principles: reduce your power to amplif..."}, {"section": "Buoyancy", "focus": "The hardest aspect of non-sales selling is sustaining effort through persistent rejection, scepticism, and indifference. Pink presents three buoyancy tools: interrogative self-talk before the engageme..."}, {"section": "Clarity and the Pitch", "focus": "Clarity in the information-abundant world is about problem-finding, not problem-solving — helping people see a situation in a new way and identify problems they did not know they had. Tools for framin..."}]}, {"label": "Development Researcher", "desc": "Research practice, evidence, and academic work.", "steps": [{"section": "Everyone Sells Now", "focus": "Pink presents survey data showing that knowledge workers spend approximately 40% of their time doing 'non-sales selling': convincing colleagues, persuading bosses, influencing partners, enrolling bene..."}, {"section": "Attunement", "focus": "Attunement is the ability to align yourself with others and with the context — to see the world through their eyes before presenting your own perspective. Three principles: reduce your power to amplif..."}, {"section": "Buoyancy", "focus": "The hardest aspect of non-sales selling is sustaining effort through persistent rejection, scepticism, and indifference. Pink presents three buoyancy tools: interrogative self-talk before the engageme..."}, {"section": "Clarity and the Pitch", "focus": "Clarity in the information-abundant world is about problem-finding, not problem-solving — helping people see a situation in a new way and identify problems they did not know they had. Tools for framin..."}]}, {"label": "Personal Growth", "desc": "Personal and professional application.", "steps": [{"section": "Everyone Sells Now", "focus": "Pink presents survey data showing that knowledge workers spend approximately 40% of their time doing 'non-sales selling': convincing colleagues, persuading bosses, influencing partners, enrolling bene..."}, {"section": "Attunement", "focus": "Attunement is the ability to align yourself with others and with the context — to see the world through their eyes before presenting your own perspective. Three principles: reduce your power to amplif..."}, {"section": "Buoyancy", "focus": "The hardest aspect of non-sales selling is sustaining effort through persistent rejection, scepticism, and indifference. Pink presents three buoyancy tools: interrogative self-talk before the engageme..."}, {"section": "Clarity and the Pitch", "focus": "Clarity in the information-abundant world is about problem-finding, not problem-solving — helping people see a situation in a new way and identify problems they did not know they had. Tools for framin..."}]}], "sections": [{"title": "Everyone Sells Now", "subtitle": "The rise of non-sales selling", "summary": "Pink presents survey data showing that knowledge workers spend approximately 40% of their time doing 'non-sales selling': convincing colleagues, persuading bosses, influencing partners, enrolling beneficiaries. The three forces behind this: entrepreneurship (solo and micro-business owners must handle every function), elasticity (flat organisations require everyone to sell across functional boundaries), and Ed-Med (healthcare and education, the fastest-growing sectors, are fundamentally about moving people to change behaviour). The fundamental shift from buyer-beware (sellers had more information) to seller-beware (buyers have equal or better information) means that old-school persuasion — manipulation through information asymmetry — no longer works.", "ideas": ["Non-sales selling is 40% of most knowledge workers' time — it is a core professional competency, not a specialist function.", "Caveat Emptor is dead; Caveat Venditor — seller beware — is the new operating condition.", "In a world of information parity, the salesperson's value is as a curator and clarifier of information, not a provider of it.", "The three Es: entrepreneurship, elasticity, and Ed-Med have all increased non-sales selling as a proportion of professional time."], "quotes": ["\"Like it or not, we're all in sales now.\"", "\"To sell well is to convince someone else to part with resources — not to deprive that person, but to leave them better off in the end.\""], "devEcon": "Development practitioners are fundamentally in the non-sales selling business: convincing governments to adopt evidence-based policies, persuading communities to change health behaviours, enrolling beneficiaries in programmes, influencing donors to fund new approaches. Pink's framework is more accurate than the traditional programme implementation framing for describing what successful development practitioners actually do."}, {"title": "Attunement", "subtitle": "Stepping outside your own perspective", "summary": "Attunement is the ability to align yourself with others and with the context — to see the world through their eyes before presenting your own perspective. Three principles: reduce your power to amplify it (people with lower perceived power are better at reading others — assuming low power improves perspective-taking); use both head (analytical understanding of their interests) and heart (empathetic understanding of their emotions); and use strategic mimicry (natural, not artificial — mirror language patterns, body language, and communication style to build rapport). Research finds that ambiverts (neither strongly introverted nor extroverted) outperform both extremes at moving others — they balance listening with advocating at the right moments.", "ideas": ["Perspective-taking is more important than empathy alone: knowing what someone is thinking (cognitive) complements feeling what they are feeling (affective).", "Strategic mimicry — naturally mirroring language and style — builds rapport and improves persuasion outcomes.", "Ambiverts outperform both introverts and extroverts in non-sales selling: they know when to talk and when to listen.", "The empty chair technique (leaving a chair for the customer/stakeholder) keeps the decision about them, not about you."], "quotes": ["\"Attunement is the ability to bring one's actions and outlook into harmony with other people and with the context you're in.\"", "\"The ability to move people now depends on power's inverse: understanding another person's perspective, getting inside his head, and seeing the world through his eyes.\""], "devEcon": "Community engagement in development is an attunement exercise. The most common failure mode — presenting the programme's theory of change rather than starting from the community's own framing of their situation — is an attunement failure. Participatory rapid appraisal, community needs assessments, and beneficiary focus groups are all attunement tools. The difference between consultation theatre and genuine participation is whether the practitioner actually adjusts their approach based on what they hear."}, {"title": "Buoyancy", "subtitle": "Resilience and optimism in the face of rejection", "summary": "The hardest aspect of non-sales selling is sustaining effort through persistent rejection, scepticism, and indifference. Pink presents three buoyancy tools: interrogative self-talk before the engagement (ask 'Can I do this?' rather than affirm 'I can do this' — the question prompts the brain to generate its own reasons, which are more durable than external affirmations); positivity ratio during the engagement (a 3:1 ratio of positive to negative emotions produces the broadened awareness and creative thinking that enables effective persuasion); and explanatory style after rejection (treat failures as temporary, specific, and external rather than permanent, pervasive, and personal).", "ideas": ["Interrogative self-talk ('Can I do this?' followed by generating your own reasons) outperforms positive affirmations.", "The 3:1 positivity ratio: positive emotions broaden attention and enable creative problem-solving; some negative experience maintains accuracy.", "Explanatory style: resilient people explain setbacks as temporary (this will pass), specific (this was unusual), and external (this was about the situation, not about me).", "Optimism is not naive: it is the catalyst for persistence that sustains performance through difficulty."], "quotes": ["\"The most effective self-talk doesn't merely shift emotions. It shifts linguistic categories. It moves from making statements to asking questions.\"", "\"Optimism, it turns out, isn't a hollow sentiment. It's a catalyst that can stir persistence, steady us during challenges, and stoke the confidence that we can influence our surroundings.\""], "devEcon": "Development practitioners face persistent rejection: government officials who do not return calls, communities that do not enrol, donors that do not fund. The buoyancy tools Pink describes are the psychological foundation for sustained field effectiveness. Explanatory style — treating a community's initial resistance as temporary and situational rather than permanent and personal — predicts which practitioners persist and adapt versus which ones disengage."}, {"title": "Clarity and the Pitch", "subtitle": "Problem-finding and persuasive communication", "summary": "Clarity in the information-abundant world is about problem-finding, not problem-solving — helping people see a situation in a new way and identify problems they did not know they had. Tools for framing solutions: the experience frame (sell experiences, not products), the potential frame (what I could achieve trumps what I have already achieved in persuasion), the blemish frame (adding a small honest flaw to a list of positives increases credibility of the positives), and labels (people live up to positive labels). The six modern pitches: one-word pitch, question pitch, rhyming pitch, subject-line pitch, Twitter pitch, and Pixar pitch. The three rules for improvisation: listen for offers (treat apparent rejections as partial acceptances), say 'yes, and' rather than 'no' or 'yes, but', and make the other person look good.", "ideas": ["Problem-finding (identifying problems the other person didn't know they had) is more valuable than problem-solving in information-abundant contexts.", "The potential frame: people are more persuaded by what you could become than what you have already achieved.", "Pitches are conversation starters, not closing devices: their goal is to create a dialogue, not end one.", "'Yes, and' keeps possibilities open; 'yes, but' closes them."], "quotes": ["\"Clarity is the capacity to help others see their situations in fresh and more revealing ways and to identify problems they didn't realize they had.\"", "\"The purpose of a pitch is to offer something so compelling that it begins a conversation.\""], "devEcon": "The problem-finding principle is the most direct application of Pink's framework to development advocacy. The most effective development advocacy does not present solutions (the programme you already have) but reframes the problem in a way that makes the existing solution seem obvious. This is how BRAC positioned graduation (reframing chronic poverty as a solvable problem of asset and capability threshold, not a permanent condition), how CCTs were positioned (reframing school non-attendance as a present-bias problem, not a preference problem), and how CLTS was positioned (reframing sanitation as a social norm problem, not a technology access problem)."}], "concepts": [{"term": "Non-Sales Selling", "definition": "The activity of influencing, persuading, and moving others without a direct monetary transaction — convincing a colleague, enrolling a beneficiary, persuading a government official, advocating to a donor. Pink estimates this accounts for approximately 40% of most knowledge workers' professional time.", "practitionerNote": "Development practitioners are predominantly in the non-sales selling business. Reframing their role from programme implementers (executing predefined activities) to movers (creating the conditions for behaviour change) produces a more accurate model of what successful development practice actually requires."}, {"term": "Attunement", "definition": "The ability to bring your perspective into alignment with others' and with the context — to understand what they think, feel, and want before presenting your own message. Includes perspective-taking, strategic mimicry, and contextual reading.", "practitionerNote": "Community engagement that starts from the community's own framing of their situation (not the programme's theory of change) is attunement in practice. The practitioner who asks 'what problem are you trying to solve?' before explaining the programme is more attuned — and more effective — than the one who presents the programme and asks for enrolment."}, {"term": "Buoyancy", "definition": "The resilience and optimism needed to sustain non-sales selling through persistent rejection. Built through interrogative self-talk before, a positive emotional ratio during, and a constructive explanatory style after engagements.", "practitionerNote": "Staff retention in field-based development is a buoyancy problem. Practitioners who interpret community resistance as permanent and personal disengage; those who interpret it as temporary and situational adapt and persist. Buoyancy is trainable — it is a skill, not a disposition."}, {"term": "Clarity (Problem-Finding)", "definition": "The ability to help others see their situation in a new way and identify problems they did not know they had. More valuable than problem-solving in information-abundant environments because it changes the frame through which solutions are evaluated.", "practitionerNote": "The most effective development advocacy reframes problems rather than presenting solutions. CLTS reframed sanitation as a dignity and norm problem (not a technology access problem). CCTs reframed school non-attendance as a present-bias problem. These framings created clarity that made the proposed solution obvious."}, {"term": "The Pixar Pitch", "definition": "A six-part narrative structure: Once upon a time... Every day... One day... Because of that... Because of that... Until finally... Used to frame complex information as a compelling story that creates emotional investment and logical structure simultaneously.", "practitionerNote": "Donor proposals and government briefings that use Pixar-style narrative structure (here is who is affected, here is their daily challenge, here is the moment of change, here is the causal chain, here is the outcome) are more persuasive than those that begin with logframe tables or outcome targets."}], "tools": [{"label": "Reflection Journal", "intro": "Use these prompts to connect the book to your practice.", "html": "<label class=\"fld-label\">What is the most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"r1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where does this book's argument apply to a specific challenge you face?</label>\n<textarea class=\"fld\" id=\"r2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">One concrete change you will make this week based on reading this:</label>\n<textarea class=\"fld\" id=\"r3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Reflections stay in your browser only.</div>"}], "connections": [{"book": "Influence — Cialdini", "text": "Pink's ABCs are the practitioner's version of Cialdini's six principles applied to non-commercial influence. Attunement activates the liking and similarity principles; clarity with the blemish frame activates the candor principle from the 22 Laws of Marketing; the serve orientation activates reciprocity. Pink's contribution is the motivational frame (everyone sells now) rather than the psychological mechanisms (Cialdini's territory)."}, {"book": "TED Talks — Anderson", "text": "The Pitch section of To Sell Is Human and Anderson's guidance on throughlines and narrative structure are addressing the same problem: how to communicate an idea in a way that moves people to believe and act. Anderson focuses on the full talk; Pink focuses on the initial pitch. The Pixar Pitch structure works equally well as a talk throughline."}, {"book": "Pre-Suasion — Cialdini", "text": "Pink's Clarity (problem-finding and reframing) is the temporal pre-suasion step applied to selling: change the frame before making the request. Cialdini's privileged moments are the conditions where this reframing is most effective. Pink tells you to find the problem; Cialdini tells you when to reveal it."}], "critiques": ["Pink's 40% claim about non-sales selling time is based on a single survey rather than systematic time-use research. The figure is directionally plausible but presented with more precision than the evidence supports.", "The shift from Caveat Emptor to Caveat Venditor is overstated. Information parity is far from universal: in many markets, including those where most development practitioners work, significant information asymmetries between service providers and communities persist. The framework requires adaptation for contexts where the old power dynamics have not shifted.", "The buoyancy chapter's positivity ratio (3:1) cites research that has been substantially challenged on replication grounds (Fredrickson & Losada 2005). The directional claim (excessive negative affect impairs functioning) is robust; the precise ratio is not."], "suggested": ["How does Pink's problem-finding principle apply to development policy advocacy?", "What is the Pixar Pitch and how can development practitioners use it in donor proposals?", "How does Caveat Venditor apply to community engagement in development?", "What is interrogative self-talk and why does it outperform positive affirmations?", "What are the limits of the ABCs framework for practitioners in cultures with different communication norms?"], "systemPrompt": "You are an expert reading companion for 'To Sell Is Human' by Daniel H. Pink. Your audience is development practitioners, researchers, and ImpactMojo learners. Answer questions about the ABCs, the pitch formats, and the book's application to development communication, policy advocacy, and community engagement."};
+
+// Tab management
+const TABS = [
+  {id:"overview",label:"Overview"},
+  {id:"pathways",label:"Pathways"},
+  {id:"sections",label:"Sections"},
+  {id:"concepts",label:"Concepts"},
+  {id:"toolkit",label:"Toolkit"},
+  {id:"context",label:"Context"},
+  {id:"ask",label:"Ask"},
+];
+
+const tabbar = document.getElementById("tabbar");
+TABS.forEach(t => {
+  const btn = document.createElement("button");
+  btn.className = "tab-btn" + (t.id === "overview" ? " active" : "");
+  btn.textContent = t.label;
+  btn.onclick = () => switchTab(t.id);
+  tabbar.appendChild(btn);
+});
+
+function switchTab(id) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("p-" + id).classList.add("active");
+  tabbar.querySelectorAll(".tab-btn")[TABS.findIndex(t=>t.id===id)].classList.add("active");
+}
+
+// OVERVIEW
+(function() {
+  const el = document.getElementById("p-overview");
+  el.innerHTML = `
+    <div class="hero">
+      <div class="day-badge">${DATA.dayBadge}</div>
+      <h1>${DATA.title}</h1>
+      <div class="auth">${DATA.author}</div>
+      <div class="tagline">${DATA.tagline}</div>
+      <div class="pills">${DATA.pills.map(p=>`<span class="pill">${p}</span>`).join("")}</div>
+    </div>
+    <div class="stat-grid">
+      ${DATA.stats.map(s=>`<div class="stat"><div class="stat-n">${s.n}</div><div class="stat-l">${s.l}</div></div>`).join("")}
+    </div>
+    <div class="arg">
+      <div class="h1">The central argument</div>
+      ${DATA.argument.map(p=>`<p>${p}</p>`).join("")}
+    </div>
+    <div class="h1" style="margin-top:24px">What's in this companion</div>
+    <div class="nav-grid">
+      ${[["pathways","Learning Pathways","Structured reading routes by role"],["sections","Section by Section","Full analysis with dev econ connections"],["concepts","Concepts & Frameworks","Key terms with practitioner notes"],["toolkit","Practitioner Toolkit","Interactive tools"],["context","Book in Context","Connections and assessment"],["ask","Ask the Book","Gemini-powered Q&A"]].map(([id,label,desc])=>`<button class="nav-card" onclick="switchTab('${id}')" ><div class="nav-card-label">${label}</div><div class="nav-card-desc">${desc}</div></button>`).join("")}
+    </div>
+  `;
+})();
+
+// PATHWAYS
+(function() {
+  const el = document.getElementById("p-pathways");
+  let active = 0;
+  function render() {
+    const pw = DATA.pathways[active];
+    el.innerHTML = `
+      <div class="h1">Learning Pathways</div>
+      <div class="sub">Three structured routes through the book based on your role.</div>
+      <div class="pw-tabs">
+        ${DATA.pathways.map((p,i)=>`<button class="pw-btn ${i===active?"active":""}" onclick="__pw(${i})">${p.label}</button>`).join("")}
+      </div>
+      <div class="pw-desc">${pw.desc}</div>
+      <div class="pw-steps">
+        ${pw.steps.map((s,i)=>`<div class="pw-step"><div class="step-n">${i+1}</div><div><div class="step-title">${s.section}</div><div class="step-focus">${s.focus}</div></div></div>`).join("")}
+      </div>
+    `;
+  }
+  window.__pw = (i) => { active = i; render(); };
+  render();
+})();
+
+// SECTIONS
+(function() {
+  const el = document.getElementById("p-sections");
+  let openId = null;
+  let showDev = {};
+  function render() {
+    el.innerHTML = `
+      <div class="h1">Section by Section</div>
+      <div class="sub">All sections with full analysis and development economics connections.</div>
+      ${DATA.sections.map((s,i)=>`
+        <div class="sec-card">
+          <button class="sec-header" onclick="__sec(${i})">
+            <div class="sec-num">§${i+1}</div>
+            <div class="sec-title-block"><div class="sec-title">${s.title}</div><div class="sec-sub">${s.subtitle}</div></div>
+            <div class="sec-chev">${openId===i?"−":"+"}</div>
+          </button>
+          ${openId===i?`<div class="sec-body">
+            <div class="sec-summary">${s.summary}</div>
+            <div class="ideas-label">Key ideas</div>
+            ${s.ideas.map(idea=>`<div class="idea-item"><span class="idea-dot"></span><span>${idea}</span></div>`).join("")}
+            <div class="ideas-label" style="margin-top:14px">Key quotes</div>
+            ${s.quotes.map(q=>`<blockquote>${q}</blockquote>`).join("")}
+            <button class="dev-toggle" onclick="__dev(${i})">${showDev[i]?"Hide":"Show"} development economics connection</button>
+            ${showDev[i]?`<div class="dev-text">${s.devEcon}</div>`:""}
+          </div>`:""}
+        </div>
+      `).join("")}
+    `;
+  }
+  window.__sec = (i) => { openId = openId===i?null:i; render(); };
+  window.__dev = (i) => { showDev[i]=!showDev[i]; render(); };
+  render();
+})();
+
+// CONCEPTS
+(function() {
+  const el = document.getElementById("p-concepts");
+  let open = null;
+  function render() {
+    el.innerHTML = `
+      <div class="h1">Concepts & Frameworks</div>
+      <div class="sub">Key terms with definitions and practitioner notes. Click to expand.</div>
+      ${DATA.concepts.map((c,i)=>`
+        <div class="concept-card ${open===i?"open":""}" onclick="__con(${i})">
+          <div class="concept-term">${c.term}</div>
+          ${open===i?`<div class="concept-def">${c.definition}</div><div class="prac-label">Practitioner note</div><div class="prac-text">${c.practitionerNote}</div>`:""}
+        </div>
+      `).join("")}
+    `;
+  }
+  window.__con = (i) => { open = open===i?null:i; render(); };
+  render();
+})();
+
+// TOOLKIT  
+(function() {
+  const el = document.getElementById("p-toolkit");
+  el.innerHTML = `
+    <div class="h1">Practitioner Toolkit</div>
+    <div class="sub">Interactive tools derived from the book. Use for personal practice or programme design.</div>
+    <div class="tool-tabs">
+      ${DATA.tools.map((t,i)=>`<button class="tool-btn ${i===0?"active":""}" onclick="__tool(${i})">${t.label}</button>`).join("")}
+    </div>
+    ${DATA.tools.map((t,i)=>`
+      <div class="tool-panel ${i===0?"active":""}" id="toolp-${i}">
+        <div class="tool-intro">${t.intro}</div>
+        ${t.html}
+      </div>
+    `).join("")}
+  `;
+  window.__tool = (i) => {
+    document.querySelectorAll(".tool-btn").forEach((b,j)=>b.classList.toggle("active",i===j));
+    document.querySelectorAll(".tool-panel").forEach((p,j)=>p.classList.toggle("active",i===j));
+  };
+})();
+
+// CONTEXT
+(function() {
+  const el = document.getElementById("p-context");
+  el.innerHTML = `
+    <div class="h1">Book in Context</div>
+    <div class="sub">How this book fits within the broader literature, and an honest assessment of its limits.</div>
+    <div class="context-h">Connected works</div>
+    ${DATA.connections.map(c=>`<div class="conn-card"><div class="conn-book">${c.book}</div><div class="conn-text">${c.text}</div></div>`).join("")}
+    <div class="context-h" style="margin-top:24px">Honest assessment</div>
+    <div class="sub">Limits and qualifications for the ImpactMojo context:</div>
+    ${DATA.critiques.map((c,i)=>`<div class="crit-item"><div class="crit-n">${i+1}</div><div class="crit-text">${c}</div></div>`).join("")}
+  `;
+})();
+
+// ASK
+(function() {
+  const el = document.getElementById("p-ask");
+  let apiKey = "", msgs = [], loading = false;
+  
+  function renderSetup() {
+    el.innerHTML = `
+      <div class="ask-setup">
+        <div class="h1">Ask the Book</div>
+        <div class="sub">AI-powered Q&A using Gemini 2.0 Flash (free). Requires a Google AI Studio API key.</div>
+        <div class="setup-steps">
+          <div class="setup-step"><span class="setup-num">1</span><span>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a> and create a free API key.</span></div>
+          <div class="setup-step"><span class="setup-num">2</span><span>Paste it below. The key stays in your browser only and is never stored.</span></div>
+        </div>
+        <div class="key-row">
+          <input class="key-input" type="password" id="key-in" placeholder="AIza..." oninput="document.getElementById('key-submit').disabled=!this.value.trim()"/>
+          <button class="key-btn" id="key-submit" disabled onclick="__setKey()">Connect</button>
+        </div>
+      </div>
+    `;
+  }
+  
+  function renderChat() {
+    el.innerHTML = `
+      <div class="ask-ui">
+        <div class="ask-hdr"><span class="ask-hdr-title">Ask the Book</span><button class="ask-reset" onclick="__resetKey()">Change key</button></div>
+        <div class="msgs" id="msgs-box">
+          ${msgs.length===0?`<div><div class="suggested-label">Suggested questions</div>${DATA.suggested.map(q=>`<button class="sug-btn" onclick="__ask('${q.replace(/'/g,"\'")}')">${q}</button>`).join("")}</div>`:""}
+          ${msgs.map(m=>`<div class="msg ${m.role}"><div class="msg-text">${m.content}</div></div>`).join("")}
+          ${loading?`<div class="msg assistant"><div class="typing"><span></span><span></span><span></span></div></div>`:""}
+        </div>
+        <div class="ask-input-row">
+          <textarea class="ask-input" id="ask-in" rows="2" placeholder="Ask about the book..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();__sendAsk()}"></textarea>
+          <button class="ask-send" id="ask-send" onclick="__sendAsk()">Send</button>
+        </div>
+      </div>
+    `;
+    const box = document.getElementById("msgs-box");
+    if(box) box.scrollTop = box.scrollHeight;
+  }
+  
+  window.__setKey = () => {
+    const v = document.getElementById("key-in").value.trim();
+    if(v) { apiKey = v; renderChat(); }
+  };
+  window.__resetKey = () => { apiKey=""; msgs=[]; renderSetup(); };
+  window.__ask = (q) => {
+    document.getElementById("ask-in").value = q;
+    __sendAsk();
+  };
+  window.__sendAsk = async () => {
+    const inp = document.getElementById("ask-in");
+    if(!inp) return;
+    const q = inp.value.trim();
+    if(!q || loading) return;
+    inp.value = "";
+    msgs.push({role:"user",content:q});
+    loading = true; renderChat();
+    try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          system_instruction:{parts:[{text:DATA.systemPrompt}]},
+          contents: msgs.map(m=>{return{role:m.role==="assistant"?"model":"user",parts:[{text:m.content}]}}).slice(0,-1).concat([{role:"user",parts:[{text:q}]}]),
+          generationConfig:{maxOutputTokens:1200,temperature:0.3}
+        })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error?.message||"API error");
+      const reply = data?.candidates?.[0]?.content?.parts?.map(p=>p.text).join("")||"No response.";
+      msgs.push({role:"assistant",content:reply});
+    } catch(e) {
+      msgs.push({role:"assistant",content:"Error: "+e.message});
+    }
+    loading = false; renderChat();
+  };
+  
+  renderSetup();
+})();
+</script>
+</body>
+</html>
