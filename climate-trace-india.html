@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Climate Emissions Dashboard — Climate TRACE Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --border: #334155;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --accent: #38bdf8;
+            --green: #4ade80;
+            --orange: #fb923c;
+            --red: #f87171;
+            --purple: #a78bfa;
+            --yellow: #facc15;
+            --pink: #f472b6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        header h1 span { color: var(--accent); }
+
+        header p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 0.2rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            margin-top: 0.75rem;
+        }
+
+        main {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* KPI strip */
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .kpi .value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .kpi .label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+        }
+
+        .kpi.rank .value { color: var(--orange); }
+        .kpi.share .value { color: var(--yellow); }
+
+        /* Section */
+        section {
+            margin-bottom: 2.5rem;
+        }
+
+        section h2 {
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Charts grid */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .chart-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .chart-card h3 {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .chart-wrap {
+            position: relative;
+            width: 100%;
+            max-height: 350px;
+        }
+
+        /* Tables */
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.6rem 0.75rem;
+            background: rgba(56, 189, 248, 0.08);
+            color: var(--accent);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+        }
+
+        tr:hover td { background: rgba(56, 189, 248, 0.04); }
+
+        .bar-cell {
+            position: relative;
+        }
+
+        .bar-bg {
+            position: absolute;
+            left: 0; top: 4px; bottom: 4px;
+            background: rgba(56, 189, 248, 0.12);
+            border-radius: 4px;
+        }
+
+        .bar-cell span { position: relative; z-index: 1; }
+
+        /* Insights */
+        .insights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1rem;
+        }
+
+        .insight {
+            background: var(--card);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.25rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .insight strong { color: var(--accent); }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            color: var(--muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover { border-color: var(--accent); color: var(--text); }
+        .tab-btn.active { background: rgba(56,189,248,0.15); border-color: var(--accent); color: var(--accent); }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4rem; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .kpis { grid-template-columns: repeat(2, 1fr); }
+            .insights { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🇮🇳 India <span>Climate Emissions</span> Dashboard</h1>
+    <p>Greenhouse gas emissions data from Climate TRACE — satellite-verified, facility-level tracking</p>
+    <div class="badge">Data Year: 2022 · Source: Climate TRACE API v6</div>
+</header>
+
+<main>
+
+    <!-- KPIs -->
+    <div class="kpis">
+        <div class="kpi">
+            <div class="value">3.89 Bt</div>
+            <div class="label">Total CO₂e (100-yr GWP)</div>
+        </div>
+        <div class="kpi">
+            <div class="value">2.62 Bt</div>
+            <div class="label">CO₂ Emissions</div>
+        </div>
+        <div class="kpi">
+            <div class="value">34.6 Mt</div>
+            <div class="label">Methane (CH₄)</div>
+        </div>
+        <div class="kpi rank">
+            <div class="value">#3</div>
+            <div class="label">Global Rank</div>
+        </div>
+        <div class="kpi share">
+            <div class="value">6.6%</div>
+            <div class="label">Share of Global Emissions</div>
+        </div>
+    </div>
+
+    <!-- Sector Charts -->
+    <section>
+        <h2>Emissions by Sector</h2>
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>Sector Breakdown (Mt CO₂e)</h3>
+                <div class="chart-wrap">
+                    <canvas id="sectorBar"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3>Sector Share of Total</h3>
+                <div class="chart-wrap">
+                    <canvas id="sectorDoughnut"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subsector Deep Dives -->
+    <section>
+        <h2>Subsector Deep Dive</h2>
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="agri">Agriculture</button>
+            <button class="tab-btn" data-tab="mfg">Manufacturing</button>
+            <button class="tab-btn" data-tab="transport">Transportation</button>
+            <button class="tab-btn" data-tab="fossil">Fossil Fuel Ops</button>
+            <button class="tab-btn" data-tab="waste">Waste</button>
+        </div>
+
+        <div id="tab-agri" class="tab-panel active">
+            <div class="chart-card">
+                <h3>Agriculture Subsectors (Mt CO₂e)</h3>
+                <div class="chart-wrap"><canvas id="agriChart"></canvas></div>
+            </div>
+        </div>
+        <div id="tab-mfg" class="tab-panel">
+            <div class="chart-card">
+                <h3>Manufacturing Subsectors (Mt CO₂e)</h3>
+                <div class="chart-wrap"><canvas id="mfgChart"></canvas></div>
+            </div>
+        </div>
+        <div id="tab-transport" class="tab-panel">
+            <div class="chart-card">
+                <h3>Transportation Subsectors (Mt CO₂e)</h3>
+                <div class="chart-wrap"><canvas id="transportChart"></canvas></div>
+            </div>
+        </div>
+        <div id="tab-fossil" class="tab-panel">
+            <div class="chart-card">
+                <h3>Fossil Fuel Operations Subsectors (Mt CO₂e)</h3>
+                <div class="chart-wrap"><canvas id="fossilChart"></canvas></div>
+            </div>
+        </div>
+        <div id="tab-waste" class="tab-panel">
+            <div class="chart-card">
+                <h3>Waste Subsectors (Mt CO₂e)</h3>
+                <div class="chart-wrap"><canvas id="wasteChart"></canvas></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Polluters -->
+    <section>
+        <h2>Top 10 Most Polluting Coal Power Plants</h2>
+        <div class="chart-card">
+            <div class="table-wrap">
+                <table id="powerTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Plant</th>
+                            <th>Owner</th>
+                            <th>State</th>
+                            <th>Capacity (MW)</th>
+                            <th>CO₂e (Mt/yr)</th>
+                            <th>Generation (TWh)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Top 10 Steel Plants by Emissions</h2>
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-wrap"><canvas id="steelChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <div class="table-wrap">
+                    <table id="steelTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Plant</th>
+                                <th>Owner</th>
+                                <th>Capacity (Mt)</th>
+                                <th>CO₂e (Mt/yr)</th>
+                                <th>Process</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Insights -->
+    <section>
+        <h2>Key Insights</h2>
+        <div class="insights" id="insightsGrid"></div>
+    </section>
+
+</main>
+
+<footer>
+    Data source: <a href="https://climatetrace.org" target="_blank">Climate TRACE</a> API v6 ·
+    Built by <a href="https://impactmojo.in" target="_blank">ImpactMojo</a> ·
+    <a href="https://api.climatetrace.org/v6/swagger/index.html" target="_blank">API Docs</a>
+</footer>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────────────
+
+const DATA = {
+    sectors: [
+        { name: 'Power', value: 1232, color: '#f87171' },
+        { name: 'Agriculture', value: 540, color: '#4ade80' },
+        { name: 'Manufacturing', value: 413, color: '#fb923c' },
+        { name: 'Transportation', value: 219, color: '#38bdf8' },
+        { name: 'Fossil Fuel Ops', value: 178, color: '#a78bfa' },
+        { name: 'Waste', value: 14, color: '#f472b6' }
+    ],
+    agriculture: [
+        { name: 'Cattle (Enteric, Pasture)', value: 212.5 },
+        { name: 'Rice Cultivation', value: 114.7 },
+        { name: 'Synthetic Fertilizer', value: 68.7 },
+        { name: 'Cattle (Enteric, Operation)', value: 61.9 },
+        { name: 'Manure on Pasture', value: 54.4 },
+        { name: 'Crop Residues', value: 10.9 },
+        { name: 'Manure Applied to Soils', value: 9.8 },
+        { name: 'Cropland Fires', value: 4.4 },
+        { name: 'Manure Mgmt (Cattle)', value: 3.2 }
+    ],
+    manufacturing: [
+        { name: 'Iron & Steel', value: 183.2 },
+        { name: 'Cement', value: 157.7 },
+        { name: 'Chemicals', value: 39.9 },
+        { name: 'Aluminum', value: 20.7 },
+        { name: 'Petrochemicals', value: 10.6 },
+        { name: 'Textiles/Leather', value: 0.65 },
+        { name: 'Pulp & Paper', value: 0.43 }
+    ],
+    transportation: [
+        { name: 'Road', value: 176.0 },
+        { name: 'Intl Shipping', value: 16.2 },
+        { name: 'Domestic Aviation', value: 11.7 },
+        { name: 'Intl Aviation', value: 9.2 },
+        { name: 'Domestic Shipping', value: 6.0 }
+    ],
+    fossil: [
+        { name: 'Oil & Gas Refining', value: 67.4 },
+        { name: 'Coal Mining', value: 65.6 },
+        { name: 'Oil & Gas Production', value: 40.1 },
+        { name: 'Oil & Gas Transport', value: 5.4 }
+    ],
+    waste: [
+        { name: 'Solid Waste Disposal', value: 7.8 },
+        { name: 'Domestic Wastewater', value: 5.8 },
+        { name: 'Industrial Wastewater', value: 0.5 }
+    ],
+    powerPlants: [
+        { name: 'Vindhyachal', owner: 'NTPC Ltd', state: 'Madhya Pradesh', mw: 4760, co2e: 34.73, twh: 37.06 },
+        { name: 'Sasan Ultra Mega', owner: 'Reliance Power', state: 'Madhya Pradesh', mw: 3960, co2e: 29.14, twh: 31.10 },
+        { name: 'Anpara', owner: 'UPRVUNL', state: 'Uttar Pradesh', mw: 3830, co2e: 26.02, twh: 27.76 },
+        { name: 'Mundra (Adani)', owner: 'Adani Power', state: 'Gujarat', mw: 4620, co2e: 24.12, twh: 25.74 },
+        { name: 'Rihand', owner: 'NTPC Ltd', state: 'Uttar Pradesh', mw: 3003, co2e: 21.85, twh: 23.32 },
+        { name: 'Talcher Kaniha', owner: 'NTPC Ltd', state: 'Odisha', mw: 3000, co2e: 21.76, twh: 23.22 },
+        { name: 'Korba', owner: 'NTPC Ltd', state: 'Chhattisgarh', mw: 2600, co2e: 19.35, twh: 20.65 },
+        { name: 'Sipat', owner: 'NTPC Ltd', state: 'Chhattisgarh', mw: 2980, co2e: 19.08, twh: 20.36 },
+        { name: 'Tiroda', owner: 'Adani Power', state: 'Maharashtra', mw: 3300, co2e: 17.23, twh: 18.39 },
+        { name: 'Tamnar', owner: 'Jindal Steel', state: 'Chhattisgarh', mw: 3400, co2e: 15.96, twh: 17.03 }
+    ],
+    steelPlants: [
+        { name: 'JSW Dolvi', owner: 'JSW Steel', mt: 10.2, co2e: 15.17, tech: 'BF/BOF, DRI-EAF' },
+        { name: 'AM/NS Hazira', owner: 'ArcelorMittal Nippon', mt: 9.6, co2e: 13.97, tech: 'DRI-EAF, BF/BOF' },
+        { name: 'Tata Jamshedpur', owner: 'Tata Steel', mt: 11.0, co2e: 13.41, tech: 'BF/BOF' },
+        { name: 'JSW Vijayanagar', owner: 'JSW Steel', mt: 11.9, co2e: 13.38, tech: 'DRI-EAF, BF/BOF' },
+        { name: 'SAIL Bhilai', owner: 'SAIL', mt: 7.0, co2e: 10.94, tech: 'BF/BOF' },
+        { name: 'RINL Vizag', owner: 'RINL', mt: 7.3, co2e: 10.80, tech: 'BF/BOF' },
+        { name: 'JSPL Angul', owner: 'Jindal Steel', mt: 6.0, co2e: 9.33, tech: 'DRI-EAF, BF/BOF' },
+        { name: 'Tata BSL Meramandali', owner: 'Tata Steel', mt: 5.51, co2e: 8.84, tech: 'DRI-EAF, BF/BOF' },
+        { name: 'SAIL Bokaro', owner: 'SAIL', mt: 4.65, co2e: 6.34, tech: 'BF/BOF' },
+        { name: 'JSPL Raigarh', owner: 'Jindal Steel', mt: 3.6, co2e: 6.14, tech: 'DRI-EAF' }
+    ],
+    insights: [
+        'India ranks <strong>3rd globally</strong> in greenhouse gas emissions, producing ~6.6% of world CO₂e.',
+        '<strong>Coal power</strong> is the single largest sector at 1.23 Bt CO₂e — nearly a third of India\'s total.',
+        'The <strong>top 10 coal plants alone emit 229 Mt</strong> CO₂e — equivalent to the entire emissions of many countries.',
+        '<strong>NTPC Ltd</strong> operates 5 of India\'s 10 most polluting power plants.',
+        '<strong>Cattle emissions (328 Mt)</strong> exceed India\'s entire manufacturing sector excluding steel & cement.',
+        'India\'s <strong>rice paddies (115 Mt)</strong> emit more than all aviation + shipping combined.',
+        '<strong>Steel + Cement = 341 Mt</strong> — 83% of manufacturing emissions.',
+        '<strong>Road transport (176 Mt)</strong> is 80% of transportation; railways show zero direct emissions.',
+        '<strong>Coal mining ≈ oil refining</strong> — nearly identical fossil fuel operation footprints (~66 Mt each).',
+        'The <strong>waste sector (14 Mt)</strong> is small but growing, with solid waste and wastewater as key concerns.'
+    ]
+};
+
+// ── CHART DEFAULTS ──────────────────────────────────────────────────────
+
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.borderColor = 'rgba(51,65,85,0.5)';
+Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+
+const barOpts = (horizontal = true) => ({
+    indexAxis: horizontal ? 'y' : 'x',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+        x: { grid: { color: 'rgba(51,65,85,0.3)' }, ticks: { callback: v => v + ' Mt' } },
+        y: { grid: { display: false } }
+    }
+});
+
+function makeBarData(items, color = '#38bdf8') {
+    return {
+        labels: items.map(i => i.name),
+        datasets: [{
+            data: items.map(i => i.value),
+            backgroundColor: Array.isArray(color) ? color : items.map(() => color + '99'),
+            borderColor: Array.isArray(color) ? color : items.map(() => color),
+            borderWidth: 1,
+            borderRadius: 4
+        }]
+    };
+}
+
+// ── SECTOR CHARTS ───────────────────────────────────────────────────────
+
+new Chart(document.getElementById('sectorBar'), {
+    type: 'bar',
+    data: {
+        labels: DATA.sectors.map(s => s.name),
+        datasets: [{
+            data: DATA.sectors.map(s => s.value),
+            backgroundColor: DATA.sectors.map(s => s.color + 'cc'),
+            borderColor: DATA.sectors.map(s => s.color),
+            borderWidth: 1,
+            borderRadius: 6
+        }]
+    },
+    options: {
+        ...barOpts(false),
+        scales: {
+            y: { grid: { color: 'rgba(51,65,85,0.3)' }, ticks: { callback: v => v + ' Mt' } },
+            x: { grid: { display: false } }
+        }
+    }
+});
+
+new Chart(document.getElementById('sectorDoughnut'), {
+    type: 'doughnut',
+    data: {
+        labels: DATA.sectors.map(s => s.name),
+        datasets: [{
+            data: DATA.sectors.map(s => s.value),
+            backgroundColor: DATA.sectors.map(s => s.color + 'cc'),
+            borderColor: DATA.sectors.map(s => s.color),
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { position: 'right', labels: { padding: 16, usePointStyle: true } },
+            tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} Mt CO₂e` } }
+        }
+    }
+});
+
+// ── SUBSECTOR CHARTS ────────────────────────────────────────────────────
+
+const subsectorCharts = {
+    agriChart: { data: DATA.agriculture, color: '#4ade80' },
+    mfgChart: { data: DATA.manufacturing, color: '#fb923c' },
+    transportChart: { data: DATA.transportation, color: '#38bdf8' },
+    fossilChart: { data: DATA.fossil, color: '#a78bfa' },
+    wasteChart: { data: DATA.waste, color: '#f472b6' }
+};
+
+Object.entries(subsectorCharts).forEach(([id, { data, color }]) => {
+    new Chart(document.getElementById(id), {
+        type: 'bar',
+        data: makeBarData(data, color),
+        options: barOpts(true)
+    });
+});
+
+// ── STEEL CHART ─────────────────────────────────────────────────────────
+
+new Chart(document.getElementById('steelChart'), {
+    type: 'bar',
+    data: makeBarData(DATA.steelPlants.map(p => ({ name: p.name, value: p.co2e })), '#fb923c'),
+    options: {
+        ...barOpts(true),
+        plugins: { legend: { display: false }, title: { display: true, text: 'CO₂e Emissions (Mt/yr)', color: '#94a3b8' } }
+    }
+});
+
+// ── TABLES ──────────────────────────────────────────────────────────────
+
+const maxPower = Math.max(...DATA.powerPlants.map(p => p.co2e));
+document.querySelector('#powerTable tbody').innerHTML = DATA.powerPlants.map((p, i) => `
+    <tr>
+        <td>${i + 1}</td>
+        <td><strong>${p.name}</strong></td>
+        <td>${p.owner}</td>
+        <td>${p.state}</td>
+        <td>${p.mw.toLocaleString()}</td>
+        <td class="bar-cell">
+            <div class="bar-bg" style="width:${(p.co2e / maxPower * 100).toFixed(0)}%"></div>
+            <span><strong>${p.co2e}</strong></span>
+        </td>
+        <td>${p.twh}</td>
+    </tr>
+`).join('');
+
+document.querySelector('#steelTable tbody').innerHTML = DATA.steelPlants.map((p, i) => `
+    <tr>
+        <td>${i + 1}</td>
+        <td><strong>${p.name}</strong></td>
+        <td>${p.owner}</td>
+        <td>${p.mt}</td>
+        <td><strong>${p.co2e}</strong></td>
+        <td>${p.tech}</td>
+    </tr>
+`).join('');
+
+// ── INSIGHTS ────────────────────────────────────────────────────────────
+
+document.getElementById('insightsGrid').innerHTML = DATA.insights.map(text => `
+    <div class="insight">${text}</div>
+`).join('');
+
+// ── TABS ────────────────────────────────────────────────────────────────
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+</script>
+</body>
+</html>
