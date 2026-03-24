@@ -21,7 +21,7 @@
 
 ImpactMojo is a free learning platform providing rigorous, practical educational content on MEAL, Theory of Change, research methods, gender studies, and development economics for NGOs, impact practitioners, and students across South Asia.
 
-**Live:** [impactmojo.in](https://www.impactmojo.in) · **Wiki:** [Documentation & Discussion](https://github.com/Varnasr/ImpactMojo/wiki) · **Issues:** [Bug Tracker](https://github.com/Varnasr/ImpactMojo/issues)
+**Live:** [impactmojo.in](https://www.impactmojo.in) · **Docs:** [GitBook Documentation](https://impactmojo.gitbook.io/impactmojo) · **Wiki:** [GitHub Wiki](https://github.com/Varnasr/ImpactMojo/wiki) · **Issues:** [Bug Tracker](https://github.com/Varnasr/ImpactMojo/issues)
 
 ---
 

@@ -56,6 +56,11 @@ Email digests for course updates, streak reminders, and community activity. ([#1
 
 ## Recently Completed
 
+### v10.9.0 — March 2026
+- Sitewide design audit: 242 pages updated with ImpactMojo fonts, 3-mode theme toggle, paper plane SVG, sticky topbar, and footer
+- Full mobile responsiveness across all BookSummaries, Games, Handouts, Blog, Courses, Labs, Templates, and Premium Tools
+- GitBook documentation link added to footer across all pages
+
 ### v10.1.0 — March 2026
 - Git best-practice standards across all 29 repos
 - GitBook docs sidebar link fix
