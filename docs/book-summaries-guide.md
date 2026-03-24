@@ -25,6 +25,8 @@ All book summaries are **free, browser-based, and require no login**. They are s
 | **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | Social Protection | `/BookSummaries/handbook-social-protection.html` |
 | **Development Economics** | Debraj Ray, Princeton University Press 1998 | 18 | Development Economics | `/BookSummaries/debraj-ray-companion.html` |
 | **Design Thinking: A Guide to Creative Problem Solving for Everyone** | Andrew Pressman, FAIA, Routledge 2019 | 10 | Design & Innovation | `/BookSummaries/dt-companion.html` |
+| **Basic Econometrics** | Damodar N. Gujarati & Dawn C. Porter, McGraw-Hill | 22 | Econometrics | `/BookSummaries/basic-econometrics-companion.html` |
+| **Econometrics by Example** | Damodar N. Gujarati, Palgrave Macmillan | 20 | Econometrics | `/BookSummaries/econometrics-by-example-companion.html` |
 
 ---
 

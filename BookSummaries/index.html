@@ -584,6 +584,92 @@ body.dark-mode .header {
     fill: currentColor;
 }
 
+/* Category Filters */
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Amaranth', sans-serif;
+}
+
+.filter-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.filter-btn.active {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.filter-btn .count {
+    background: rgba(0,0,0,0.1);
+    padding: 0.1rem 0.4rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+}
+
+.filter-btn.active .count {
+    background: rgba(255,255,255,0.25);
+}
+
+.book-card[data-hidden="true"] {
+    display: none;
+}
+
+/* Category Section Headers */
+.category-section-header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 0 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.category-section-header:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.category-section-header h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.category-section-header .category-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.category-section-header .category-count {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
 /* Auth state */
 .auth-logged-in { display: none !important; }
 .auth-logged-out { display: flex !important; }
@@ -598,6 +684,8 @@ body.user-authenticated .auth-logged-out { display: none !important; }
     .books-grid { grid-template-columns: 1fr; }
     .about-section { padding: 3rem 1rem; }
     .hero-stats { gap: 1.5rem; }
+    .category-filters { gap: 0.4rem; }
+    .filter-btn { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
     .header-actions .btn-outline span { display: none; }
     .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; }
     .footer-grid { grid-template-columns: repeat(2, 1fr); }
@@ -648,15 +736,15 @@ body.user-authenticated .auth-logged-out { display: none !important; }
         Book Summaries
     </div>
     <h1>Interactive Book Companions</h1>
-    <p>Deep-dive, interactive summaries of essential texts in development, social protection, and public policy. Navigate chapters, explore key concepts, and build real understanding.</p>
+    <p>Deep-dive, interactive summaries of essential texts in development economics, data visualisation, productivity, and public policy. Navigate chapters, explore key concepts, and build real understanding.</p>
     <div class="hero-stats">
         <div class="stat-item">
-            <div class="stat-number">3</div>
+            <div class="stat-number">28</div>
             <div class="stat-label">Books Available</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">55+</div>
-            <div class="stat-label">Chapters Covered</div>
+            <div class="stat-number">7</div>
+            <div class="stat-label">Categories</div>
         </div>
         <div class="stat-item">
             <div class="stat-number">Free</div>
@@ -670,9 +758,19 @@ body.user-authenticated .auth-logged-out { display: none !important; }
     <h2 class="section-title">Available Summaries</h2>
     <p class="section-subtitle">Click on a book to explore its interactive companion</p>
 
+    <div class="category-filters">
+        <button class="filter-btn active" data-category="all">All <span class="count">28</span></button>
+        <button class="filter-btn" data-category="data-viz">Data Visualization <span class="count">7</span></button>
+        <button class="filter-btn" data-category="dev-econ">Development Economics <span class="count">5</span></button>
+        <button class="filter-btn" data-category="productivity">Productivity <span class="count">6</span></button>
+        <button class="filter-btn" data-category="leadership">Leadership & Communication <span class="count">7</span></button>
+        <button class="filter-btn" data-category="policy">Policy & Social Protection <span class="count">2</span></button>
+        <button class="filter-btn" data-category="design">Design & Innovation <span class="count">1</span></button>
+    </div>
+
     <div class="books-grid">
         <!-- Handbook of Social Protection -->
-        <a href="handbook-social-protection.html" class="book-card">
+        <a href="handbook-social-protection.html" class="book-card" data-category="policy">
             <div class="book-card-header">
                 <div class="book-category">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -705,7 +803,7 @@ body.user-authenticated .auth-logged-out { display: none !important; }
         </a>
 
         <!-- Development Economics — Debraj Ray -->
-        <a href="debraj-ray-companion.html" class="book-card">
+        <a href="debraj-ray-companion.html" class="book-card" data-category="dev-econ">
             <div class="book-card-header" style="background: linear-gradient(135deg, #B8860B 0%, #D97706 100%);">
                 <div class="book-category">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
@@ -738,7 +836,7 @@ body.user-authenticated .auth-logged-out { display: none !important; }
         </a>
 
         <!-- Design Thinking — Andrew Pressman -->
-        <a href="dt-companion.html" class="book-card">
+        <a href="dt-companion.html" class="book-card" data-category="design">
             <div class="book-card-header" style="background: linear-gradient(135deg, #1E7A6E 0%, #2BA898 100%);">
                 <div class="book-category">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -770,26 +868,555 @@ body.user-authenticated .auth-logged-out { display: none !important; }
             </div>
         </a>
 
-        <!-- Coming Soon placeholder -->
-        <div class="book-card coming-soon">
-            <div class="book-card-header">
+        <!-- Basic Econometrics — Gujarati & Porter -->
+        <a href="basic-econometrics-companion.html" class="book-card" data-category="dev-econ">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);">
                 <div class="book-category">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    Development Economics
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Econometrics
                 </div>
-                <div class="book-title">More Book Summaries Coming Soon</div>
-                <div class="book-authors">Suggest a book &mdash; hello@impactmojo.in</div>
+                <div class="book-title">Basic Econometrics</div>
+                <div class="book-authors">Damodar N. Gujarati &amp; Dawn C. Porter &mdash; McGraw-Hill</div>
             </div>
             <div class="book-card-body">
-                <p class="book-description">We're working on interactive companions for more essential development texts. Have a book you'd love to see summarised? Let us know!</p>
+                <p class="book-description">The classic introductory econometrics textbook — regression analysis, hypothesis testing, multicollinearity, heteroscedasticity, autocorrelation, and simultaneous equations with real-world examples.</p>
                 <div class="book-meta">
-                    <span class="coming-soon-badge">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                        Coming Soon
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        22 Chapters
+                    </span>
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        Interactive
+                    </span>
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        Free Access
                     </span>
                 </div>
+                <div class="book-cta">
+                    Read Summary
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
             </div>
-        </div>
+        </a>
+
+        <!-- Econometrics by Example — Gujarati -->
+        <a href="econometrics-by-example-companion.html" class="book-card" data-category="dev-econ">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Econometrics
+                </div>
+                <div class="book-title">Econometrics by Example</div>
+                <div class="book-authors">Damodar N. Gujarati &mdash; Palgrave Macmillan</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">A hands-on approach to econometrics through real-world examples — covering linear regression, panel data, logit/probit models, time series, and more with practical applications.</p>
+                <div class="book-meta">
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        20 Chapters
+                    </span>
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        Interactive
+                    </span>
+                    <span class="meta-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        Free Access
+                    </span>
+                </div>
+                <div class="book-cta">
+                    Read Summary
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+            </div>
+        </a>
+
+        <!-- Storytelling with Data -->
+        <a href="swd-companion.html" class="book-card" data-category="data-viz">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Data Visualization
+                </div>
+                <div class="book-title">Storytelling with Data</div>
+                <div class="book-authors">Cole Nussbaumer Knaflic &mdash; Wiley, 2015</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">A practical guide to effective data communication — decluttering visuals, choosing the right chart, using preattentive attributes, and crafting narratives that drive action.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 10 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- The Truthful Art -->
+        <a href="truthful-art-companion.html" class="book-card" data-category="data-viz">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #0891B2 0%, #0EA5E9 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Data Visualization
+                </div>
+                <div class="book-title">The Truthful Art</div>
+                <div class="book-authors">Alberto Cairo &mdash; New Riders, 2016</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Data, charts, and maps for communication — covering truthfulness in visualisation, statistical reasoning, and how to create graphics that inform rather than mislead.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 12 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Visual Display of Quantitative Information -->
+        <a href="tufte-companion.html" class="book-card" data-category="data-viz">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Data Visualization
+                </div>
+                <div class="book-title">The Visual Display of Quantitative Information</div>
+                <div class="book-authors">Edward Tufte &mdash; Graphics Press, 2001</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">The seminal work on statistical graphics — data-ink ratio, chartjunk, sparklines, and principles for displaying data with clarity, precision, and efficiency.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 9 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Naked Statistics -->
+        <a href="naked-stats-companion.html" class="book-card" data-category="data-viz">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Data Visualization
+                </div>
+                <div class="book-title">Naked Statistics</div>
+                <div class="book-authors">Charles Wheelan &mdash; W. W. Norton, 2013</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Stripping the dread from data — an entertaining guide to probability, regression, central limit theorem, and how statistics can illuminate or deceive.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 13 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Damned Lies and Statistics -->
+        <a href="damned-lies-companion.html" class="book-card" data-category="data-viz">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #DC2626 0%, #F87171 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Data Visualization
+                </div>
+                <div class="book-title">Damned Lies and Statistics</div>
+                <div class="book-authors">Joel Best &mdash; University of California Press, 2001</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">How bad statistics are created, spread, and used to mislead — a guide to becoming a critical consumer of numbers in media, policy, and everyday life.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 8 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- The Information We Trust -->
+        <a href="info-we-trust-companion.html" class="book-card" data-category="data-viz">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #059669 0%, #34D399 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Data Visualization
+                </div>
+                <div class="book-title">Info We Trust</div>
+                <div class="book-authors">RJ Andrews &mdash; Wiley, 2019</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">How to inspire the world with data — the history of data visualization, storytelling principles, and how to create graphics that people actually trust and remember.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 12 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- IPCC Climate Communication -->
+        <a href="ipcc-climate-communication-companion.html" class="book-card" data-category="data-viz">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #15803D 0%, #4ADE80 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Data Visualization
+                </div>
+                <div class="book-title">IPCC Climate Communication Report</div>
+                <div class="book-authors">IPCC &mdash; Intergovernmental Panel on Climate Change</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">How climate science is communicated to policymakers and the public — visual strategies, uncertainty framing, and effective data presentation for climate action.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Report</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Geography of Growth -->
+        <a href="gog-companion.html" class="book-card" data-category="dev-econ">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #92400E 0%, #D97706 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Development Economics
+                </div>
+                <div class="book-title">The Geography of Growth</div>
+                <div class="book-authors">Lant Pritchett &mdash; Brookings Institution</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Why some countries grow and others don't — spatial economics, agglomeration effects, institutional quality, and what geography means for development trajectories.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Thinking in Systems -->
+        <a href="thinking-in-systems-companion.html" class="book-card" data-category="dev-econ">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    Development Economics
+                </div>
+                <div class="book-title">Thinking in Systems</div>
+                <div class="book-authors">Donella H. Meadows &mdash; Chelsea Green, 2008</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">A primer on systems thinking — feedback loops, stocks and flows, leverage points, and how to understand complex systems from ecosystems to economies.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 8 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Atomic Habits -->
+        <a href="atomic-habits-companion.html" class="book-card" data-category="productivity">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #EA580C 0%, #FB923C 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    Productivity
+                </div>
+                <div class="book-title">Atomic Habits</div>
+                <div class="book-authors">James Clear &mdash; Avery, 2018</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Tiny changes, remarkable results — the four laws of behaviour change, habit stacking, identity-based habits, and practical strategies for building good habits and breaking bad ones.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 20 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Deep Work -->
+        <a href="deep-work-companion.html" class="book-card" data-category="productivity">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #1D4ED8 0%, #60A5FA 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    Productivity
+                </div>
+                <div class="book-title">Deep Work</div>
+                <div class="book-authors">Cal Newport &mdash; Grand Central, 2016</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Rules for focused success in a distracted world — why deep work matters, how to cultivate it, and strategies to produce at an elite level in the knowledge economy.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 14 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Eat That Frog -->
+        <a href="eat-frog-companion.html" class="book-card" data-category="productivity">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #16A34A 0%, #4ADE80 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    Productivity
+                </div>
+                <div class="book-title">Eat That Frog!</div>
+                <div class="book-authors">Brian Tracy &mdash; Berrett-Koehler, 2017</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">21 great ways to stop procrastinating and get more done in less time — prioritisation techniques, time management, and the discipline of tackling your hardest task first.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 21 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- The 4-Hour Workweek -->
+        <a href="four-hour-workweek-companion.html" class="book-card" data-category="productivity">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #B45309 0%, #FBBF24 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    Productivity
+                </div>
+                <div class="book-title">The 4-Hour Workweek</div>
+                <div class="book-authors">Timothy Ferriss &mdash; Crown, 2007</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Escape the 9-5, live anywhere, and join the new rich — automation, outsourcing, lifestyle design, and the DEAL framework for redefining work and productivity.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 15 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Ultralearning -->
+        <a href="ultralearning-companion.html" class="book-card" data-category="productivity">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    Productivity
+                </div>
+                <div class="book-title">Ultralearning</div>
+                <div class="book-authors">Scott H. Young &mdash; Harper Business, 2019</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Master hard skills, outsmart the competition, and accelerate your career — nine principles for aggressive, self-directed learning projects.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 14 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Grit -->
+        <a href="grit-companion.html" class="book-card" data-category="productivity">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #BE185D 0%, #F472B6 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    Productivity
+                </div>
+                <div class="book-title">Grit</div>
+                <div class="book-authors">Angela Duckworth &mdash; Scribner, 2016</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">The power of passion and perseverance — why talent alone isn't enough, how grit predicts success, and practical strategies for cultivating resilience and long-term determination.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 13 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- 21 Irrefutable Laws of Leadership -->
+        <a href="21-laws-leadership-companion.html" class="book-card" data-category="leadership">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #991B1B 0%, #DC2626 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Leadership
+                </div>
+                <div class="book-title">The 21 Irrefutable Laws of Leadership</div>
+                <div class="book-authors">John C. Maxwell &mdash; HarperCollins, 2007</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Follow them and people will follow you — the foundational laws of leadership from influence and navigation to sacrifice and legacy, with real-world examples.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 21 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Radical Candor -->
+        <a href="radical-candor-companion.html" class="book-card" data-category="leadership">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #C2410C 0%, #F97316 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Leadership
+                </div>
+                <div class="book-title">Radical Candor</div>
+                <div class="book-authors">Kim Scott &mdash; St. Martin's Press, 2017</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Be a kick-ass boss without losing your humanity — caring personally while challenging directly, giving and receiving feedback, and building a culture of open communication.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 8 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- TED Talks -->
+        <a href="ted-talks-companion.html" class="book-card" data-category="leadership">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #E11D48 0%, #FB7185 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Communication
+                </div>
+                <div class="book-title">TED Talks: The Official Guide</div>
+                <div class="book-authors">Chris Anderson &mdash; Mariner Books, 2016</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">The official guide to public speaking from the TED curator — finding your throughline, storytelling, explanation, persuasion, and the art of presenting ideas worth spreading.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 21 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- 22 Immutable Laws of Marketing -->
+        <a href="22-laws-marketing-companion.html" class="book-card" data-category="leadership">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #4338CA 0%, #818CF8 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Marketing
+                </div>
+                <div class="book-title">The 22 Immutable Laws of Marketing</div>
+                <div class="book-authors">Al Ries &amp; Jack Trout &mdash; HarperBusiness, 1993</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Violate them at your own risk — the timeless laws of marketing from leadership and category to perception, focus, and the law of resources.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 22 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Influence -->
+        <a href="influence-companion.html" class="book-card" data-category="leadership">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #7E22CE 0%, #A855F7 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Persuasion
+                </div>
+                <div class="book-title">Influence: The Psychology of Persuasion</div>
+                <div class="book-authors">Robert B. Cialdini &mdash; Harper Business, 2006</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">The six universal principles of persuasion — reciprocity, commitment, social proof, authority, liking, and scarcity — and how they shape decisions in policy, marketing, and everyday life.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 8 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- Pre-Suasion -->
+        <a href="presuasion-companion.html" class="book-card" data-category="leadership">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #6D28D9 0%, #8B5CF6 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Persuasion
+                </div>
+                <div class="book-title">Pre-Suasion</div>
+                <div class="book-authors">Robert Cialdini &mdash; Simon &amp; Schuster, 2016</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">A revolutionary way to influence and persuade — the art of capturing attention, priming audiences, and setting the stage before delivering your message.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 14 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- To Sell Is Human -->
+        <a href="to-sell-is-human-companion.html" class="book-card" data-category="leadership">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #0369A1 0%, #38BDF8 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Persuasion
+                </div>
+                <div class="book-title">To Sell Is Human</div>
+                <div class="book-authors">Daniel H. Pink &mdash; Riverhead Books, 2012</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">The surprising truth about moving others — why everyone is in sales now, the new ABCs (attunement, buoyancy, clarity), and how to pitch, improvise, and serve.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 9 Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
+        <!-- RSOE -->
+        <a href="rsoe-companion.html" class="book-card" data-category="policy">
+            <div class="book-card-header" style="background: linear-gradient(135deg, #065F46 0%, #10B981 100%);">
+                <div class="book-category">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Policy
+                </div>
+                <div class="book-title">Repairing the Social Opioid Ecosystem</div>
+                <div class="book-authors">Various Authors</div>
+            </div>
+            <div class="book-card-body">
+                <p class="book-description">Understanding and rebuilding social ecosystems damaged by the opioid crisis — policy frameworks, community interventions, and evidence-based recovery approaches.</p>
+                <div class="book-meta">
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Chapters</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Interactive</span>
+                    <span class="meta-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Free Access</span>
+                </div>
+                <div class="book-cta">Read Summary <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+        </a>
+
     </div>
 </section>
 
@@ -839,7 +1466,7 @@ body.user-authenticated .auth-logged-out { display: none !important; }
                 <ul>
                     <li><a href="/about">About ImpactMojo</a></li>
                     <li><a href="/contact">Contact Us</a></li>
-                    <li><a href="/community/community">Community</a></li>
+                    <li><a href="/community">Community</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -923,6 +1550,27 @@ body.user-authenticated .auth-logged-out { display: none !important; }
         }
     });
 })();
+</script>
+<script>
+// Category filter
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var cat = btn.dataset.category;
+            document.querySelectorAll('.book-card').forEach(function(card) {
+                if (cat === 'all' || card.dataset.category === cat) {
+                    card.setAttribute('data-hidden', 'false');
+                    card.style.display = '';
+                } else {
+                    card.setAttribute('data-hidden', 'true');
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+});
 </script>
 <script defer src="/js/config.js"></script>
 <script defer src="/js/auth.js"></script>

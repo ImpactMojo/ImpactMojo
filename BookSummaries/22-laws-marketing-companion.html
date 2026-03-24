@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The 22 Immutable Laws of Marketing — ImpactMojo Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
+  --accent:#1B4F72;--accent-light:#EBF5FB;--teal:#1A6B5A;--teal-light:#EBF5F2;
+  --radius:8px;
+}
+body{background:var(--bg);font-family:'Lora','Georgia',serif;color:var(--text)}
+.app{min-height:100vh;display:flex;flex-direction:column}
+nav{background:#1C1C1C;display:flex;align-items:center;gap:20px;padding:0 20px;min-height:52px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.brand{display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.brand-name{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:.05em;text-transform:uppercase}
+.tabs{display:flex;gap:2px;flex-wrap:wrap}
+.tab-btn{background:none;border:none;padding:6px 13px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;transition:all .15s}
+.tab-btn:hover{color:rgba(255,255,255,.85)}
+.tab-btn.active{color:#fff;background:var(--accent)}
+main{flex:1;padding:32px 20px;max-width:860px;margin:0 auto;width:100%}
+.h1{font-family:Inter,sans-serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.sub{color:var(--muted);font-size:15px;margin-bottom:24px;font-family:Inter,sans-serif;line-height:1.5}
+.panel{display:none}.panel.active{display:block}
+
+/* HERO */
+.hero{background:#1C1C1C;color:#fff;border-radius:12px;padding:32px;margin-bottom:20px}
+.day-badge{display:inline-block;background:var(--accent);font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:4px;margin-bottom:14px}
+.hero h1{font-size:34px;font-weight:700;margin-bottom:4px}
+.hero .auth{font-family:Inter,sans-serif;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:14px}
+.hero .tagline{font-size:15px;color:rgba(255,255,255,.8);line-height:1.6;max-width:620px;margin-bottom:18px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-family:Inter,sans-serif;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 14px;text-align:center}
+.stat-n{font-size:30px;font-weight:700;color:var(--accent);font-family:Inter,sans-serif}
+.stat-l{font-family:Inter,sans-serif;font-size:12px;color:var(--muted);margin-top:4px}
+.arg{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px;margin-bottom:24px}
+.arg p{font-size:15px;line-height:1.75}
+.arg p+p{margin-top:1rem}
+.nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.nav-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:left;cursor:pointer;transition:all .15s}
+.nav-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.nav-card-label{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.nav-card-desc{font-family:Inter,sans-serif;font-size:12px;color:var(--muted)}
+
+/* PATHWAYS */
+.pw-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.pw-btn{font-family:Inter,sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s}
+.pw-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pw-desc{font-family:Inter,sans-serif;font-size:14px;color:var(--muted);padding:12px 14px;background:var(--accent-light);border-radius:6px;margin-bottom:20px;line-height:1.5}
+.pw-steps{display:flex;flex-direction:column;gap:10px}
+.pw-step{display:flex;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-family:Inter,sans-serif;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-title{font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:3px}
+.step-focus{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);line-height:1.5}
+
+/* SECTIONS */
+.sec-card{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.sec-header{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;cursor:pointer;background:none;border:none;text-align:left;width:100%}
+.sec-num{font-family:Inter,sans-serif;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;min-width:24px;padding-top:2px}
+.sec-title{font-family:Inter,sans-serif;font-size:15px;font-weight:700;margin-bottom:2px}
+.sec-sub{font-family:Inter,sans-serif;font-size:12px;color:var(--muted)}
+.sec-chev{font-size:16px;color:var(--muted);padding-top:2px;margin-left:auto}
+.sec-body{padding:0 18px 18px 56px;border-top:1px solid var(--border)}
+.sec-summary{font-size:15px;line-height:1.75;padding-top:14px;margin-bottom:18px}
+.ideas-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.idea-item{display:flex;gap:8px;margin-bottom:7px;font-family:Inter,sans-serif;font-size:13px;line-height:1.55}
+.idea-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px}
+blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px solid var(--accent);padding-left:12px;margin-bottom:8px;line-height:1.6}
+.dev-toggle{font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:var(--teal);background:var(--teal-light);border:none;padding:7px 12px;border-radius:4px;cursor:pointer;margin-top:10px}
+.dev-text{margin-top:10px;font-family:Inter,sans-serif;font-size:13px;line-height:1.65;background:var(--teal-light);padding:12px;border-radius:6px}
+
+/* CONCEPTS */
+.concept-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.concept-card:hover,.concept-card.open{border-color:var(--accent)}
+.concept-term{font-family:Inter,sans-serif;font-size:15px;font-weight:700}
+.concept-def{font-family:Inter,sans-serif;font-size:14px;line-height:1.7;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.prac-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-top:10px;margin-bottom:4px}
+.prac-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:var(--muted)}
+
+/* TOOLKIT */
+.tool-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.tool-btn{font-family:Inter,sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s}
+.tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tool-panel{display:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px}
+.tool-panel.active{display:block}
+.tool-intro{font-family:Inter,sans-serif;font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.fld-label{font-family:Inter,sans-serif;font-size:13px;font-weight:600;margin-bottom:5px;display:block}
+.fld{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;outline:none;background:var(--bg);margin-bottom:12px}
+.fld:focus{border-color:var(--accent)}
+.output-box{background:var(--accent-light);padding:14px;border-radius:6px;margin-top:16px;font-family:Inter,sans-serif;font-size:14px;line-height:1.65}
+.output-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:8px}
+
+/* CONTEXT */
+.conn-card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:16px 18px;margin-bottom:10px}
+.conn-book{font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:5px}
+.conn-text{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);line-height:1.65}
+.crit-item{display:flex;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:8px}
+.crit-n{width:24px;height:24px;border-radius:50%;background:#FFF8E6;color:#C8910A;font-family:Inter,sans-serif;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.crit-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65}
+.context-h{font-family:Inter,sans-serif;font-size:16px;font-weight:700;margin-bottom:14px;margin-top:6px}
+
+/* ASK */
+.ask-setup{}
+.setup-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.setup-step{display:flex;gap:12px;font-family:Inter,sans-serif;font-size:14px;line-height:1.5}
+.setup-num{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.setup-step a{color:var(--accent)}
+.key-row{display:flex;gap:10px}
+.key-input{flex:1;max-width:400px;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;outline:none}
+.key-btn{padding:9px 22px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-family:Inter,sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.key-btn:disabled{opacity:.4;cursor:not-allowed}
+.ask-ui{display:flex;flex-direction:column;height:calc(100vh - 180px)}
+.ask-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ask-hdr-title{font-family:Inter,sans-serif;font-size:18px;font-weight:700}
+.ask-reset{background:none;border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-family:Inter,sans-serif;font-size:12px;color:var(--muted);cursor:pointer}
+.msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px;margin-bottom:10px}
+.suggested-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+.sug-btn{display:block;width:100%;text-align:left;padding:9px 12px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;cursor:pointer;margin-bottom:6px;transition:all .15s}
+.sug-btn:hover{border-color:var(--accent);background:var(--accent-light)}
+.msg{max-width:85%}
+.msg.user{align-self:flex-end}
+.msg.assistant{align-self:flex-start}
+.msg-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65;padding:10px 14px;border-radius:8px;white-space:pre-wrap}
+.msg.user .msg-text{background:var(--accent);color:#fff}
+.msg.assistant .msg-text{background:var(--card);border:1px solid var(--border)}
+.typing{display:flex;gap:4px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.ask-input-row{display:flex;gap:8px;border-top:1px solid var(--border);padding-top:10px}
+.ask-input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;resize:none;outline:none;background:var(--bg)}
+.ask-input:focus{border-color:var(--accent)}
+.ask-send{padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-family:Inter,sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.ask-send:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:640px){.stat-grid{grid-template-columns:repeat(2,1fr)}.nav-grid{grid-template-columns:1fr 1fr}.sec-body{padding-left:18px}}
+</style>
+</head>
+<body>
+<div class="app">
+<nav>
+  <div class="brand"><div class="dot"></div><span class="brand-name">ImpactMojo</span></div>
+  <div class="tabs" id="tabbar"></div>
+</nav>
+<main id="main-content">
+  <div class="panel active" id="p-overview"></div>
+  <div class="panel" id="p-pathways"></div>
+  <div class="panel" id="p-sections"></div>
+  <div class="panel" id="p-concepts"></div>
+  <div class="panel" id="p-toolkit"></div>
+  <div class="panel" id="p-context"></div>
+  <div class="panel" id="p-ask"></div>
+</main>
+</div>
+<script>
+const DATA = {"title": "The 22 Immutable Laws of Marketing", "dayBadge": "Day 23 of 30", "author": "Al Ries & Jack Trout · 1993 · HarperBusiness", "tagline": "Ries and Trout's field guide to 22 principles that determine success or failure in marketing — rooted in the fundamental insight that marketing is a battle for perception, not product quality.", "pills": ["Marketing", "Strategy", "Brand", "Communication"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Ries and Trout's central claim is that marketing is fundamentally a battle for perceptions, not products. What determines competitive success is not which product is objectively better but which product owns the strongest position in the prospect's mind. The best product does not automatically win; the first product to establish a strong mental position almost always wins.", "The 22 laws are observations derived from decades of marketing consulting experience. They violate common business intuitions (being first matters more than being better; expanding your product line weakens your brand; honest admission of weakness can be more persuasive than claiming strength) and provide a diagnostic framework for evaluating marketing strategies."], "accent": "#1B4F72", "accent_light": "#EBF5FB", "pathways": [{"label": "Development Practitioner", "desc": "Apply this book to programme management, community engagement, and field practice.", "steps": [{"section": "Laws 1–3: Leadership, Category, and Mind", "focus": "The Law of Leadership: it is better to be first in a market than to have a better product. The leading brand in any category is almost always the first one in the prospect's mind. ..."}, {"section": "Laws 4–7: Perception, Focus, Exclusivity, Ladder", "focus": "Law of Perception: marketing is a battle of perceptions, not products. What's 'real' to consumers is what they perceive, not what is objectively true. Law of Focus: the most powerf..."}, {"section": "Laws 8–13: Duality, Sacrifice, Line Extensions", "focus": "Law of Duality: in mature markets, competition always narrows to two players. Law of the Opposite: if you are #2, position yourself as the alternative to #1, exploiting their weakn..."}, {"section": "Laws 14–22: Attributes, Candor, Resources", "focus": "Law of Attributes: find the attribute that is the opposite of the market leader's strength and own it. Law of Candor: admitting a weakness disarms the audience and creates credibil..."}]}, {"label": "Development Researcher", "desc": "Apply this book to research practice, evidence generation, and academic work.", "steps": [{"section": "Laws 1–3: Leadership, Category, and Mind", "focus": "The Law of Leadership: it is better to be first in a market than to have a better product. The leading brand in any category is almost always the first one in the prospect's mind. ..."}, {"section": "Laws 4–7: Perception, Focus, Exclusivity, Ladder", "focus": "Law of Perception: marketing is a battle of perceptions, not products. What's 'real' to consumers is what they perceive, not what is objectively true. Law of Focus: the most powerf..."}, {"section": "Laws 8–13: Duality, Sacrifice, Line Extensions", "focus": "Law of Duality: in mature markets, competition always narrows to two players. Law of the Opposite: if you are #2, position yourself as the alternative to #1, exploiting their weakn..."}, {"section": "Laws 14–22: Attributes, Candor, Resources", "focus": "Law of Attributes: find the attribute that is the opposite of the market leader's strength and own it. Law of Candor: admitting a weakness disarms the audience and creates credibil..."}]}, {"label": "Personal Growth", "desc": "Direct personal and professional application.", "steps": [{"section": "Laws 1–3: Leadership, Category, and Mind", "focus": "The Law of Leadership: it is better to be first in a market than to have a better product. The leading brand in any category is almost always the first one in the prospect's mind. ..."}, {"section": "Laws 4–7: Perception, Focus, Exclusivity, Ladder", "focus": "Law of Perception: marketing is a battle of perceptions, not products. What's 'real' to consumers is what they perceive, not what is objectively true. Law of Focus: the most powerf..."}, {"section": "Laws 8–13: Duality, Sacrifice, Line Extensions", "focus": "Law of Duality: in mature markets, competition always narrows to two players. Law of the Opposite: if you are #2, position yourself as the alternative to #1, exploiting their weakn..."}, {"section": "Laws 14–22: Attributes, Candor, Resources", "focus": "Law of Attributes: find the attribute that is the opposite of the market leader's strength and own it. Law of Candor: admitting a weakness disarms the audience and creates credibil..."}]}], "sections": [{"title": "Laws 1–3: Leadership, Category, and Mind", "subtitle": "Why being first is better than being best", "summary": "The Law of Leadership: it is better to be first in a market than to have a better product. The leading brand in any category is almost always the first one in the prospect's mind. Law of the Category: if you are not first in a category, create a new category you can be first in. Think in terms of categories rather than brands. Law of the Mind: being first in the prospect's mind is more important than being first to market. A name that is easier to remember (Apple versus Commodore Pet, MITS Altair) can win a race against earlier entrants through stronger mental positioning.", "ideas": ["People remember firsts, not seconds — in almost every category, people can name the first entrant but not the second.", "Creating a new category is more valuable than competing in an existing one: compete where you can be first.", "Simple names and clear mental positioning win the race for mind share.", "The goal is not to improve a product but to find a category in which you can be perceived as the leader."], "quotes": ["\"It is better to be first to market than to wait for a better product.\"", "\"The leading brand in any category is almost always the first brand in the prospects' mind.\""], "devEcon": "The category creation principle has direct application to development organisations competing for donor funding and policy influence. An organisation that defines a new category ('child-sensitive social protection' rather than 'social protection') can own that category before larger competitors enter it. This is the positioning logic behind most successful advocacy campaigns: create the category before others realise it exists."}, {"title": "Laws 4–7: Perception, Focus, Exclusivity, Ladder", "subtitle": "Marketing as a battle for mental position", "summary": "Law of Perception: marketing is a battle of perceptions, not products. What's 'real' to consumers is what they perceive, not what is objectively true. Law of Focus: the most powerful concept in marketing is owning a word in the prospect's mind (safety for Volvo, overnight for FedEx, cavities for Crest). Law of Exclusivity: two companies cannot own the same word. Law of the Ladder: your strategy must account for your position on the competitive hierarchy in the prospect's mind — you can be #1, #2, or you can be a niche. Avis's 'We're No. 2, so we try harder' succeeded because it acknowledged reality and turned it into a strength.", "ideas": ["Marketing does not create reality; it creates and reinforces perception.", "Owning a word in the prospect's mind is more valuable than owning a product feature.", "Once someone's mind is made up, it is very hard to change — position first, adjust later.", "Even being #2 is a viable strategy, so long as you acknowledge and leverage it."], "quotes": ["\"There is no objective reality. The perception is the reality.\"", "\"The essence of marketing is narrowing the focus. You can't stand for something if you chase after everything.\""], "devEcon": "Development organisations competing for community trust and government engagement face the same perception dynamics. An organisation known for one thing (credible evidence, community mobilisation, nutrition expertise) is more trustworthy and accessible than one that claims to do everything equally well. Focused positioning produces more influence than breadth, in development as in commercial marketing."}, {"title": "Laws 8–13: Duality, Sacrifice, Line Extensions", "subtitle": "Long-term strategic thinking in marketing", "summary": "Law of Duality: in mature markets, competition always narrows to two players. Law of the Opposite: if you are #2, position yourself as the alternative to #1, exploiting their weaknesses. Law of Division: categories divide over time into subcategories — computers into mainframes, PCs, tablets, phones. Law of Line Extensions: the single most violated law. Extending a successful brand into new product categories dilutes the brand's focused position and weakens the original franchise. IBM extended from mainframes into everything and lost competitive position in most categories. Law of Sacrifice: to gain one thing, you must give up another. Specialist brands outperform generalist brands.", "ideas": ["The strongest temptation in successful organisations is line extension — and it is almost always a strategic mistake.", "Long-term effects are often opposite to short-term effects: promotions boost short-term sales while training customers not to pay full price.", "Categories divide, not converge: the assumption that industries are merging is almost always wrong.", "Sacrifice: the discipline to say no to products, markets, and activities that dilute focus."], "quotes": ["\"When you try to be all things to all people, you inevitably wind up in trouble.\"", "\"The more products, the more markets, the more alliances a company makes, the less money it makes.\""], "devEcon": "Development organisations consistently violate the line extension law: successful programmes are expanded to cover more sectors, more geographies, and more target populations, often diluting the focused expertise that made them successful. A nutrition organisation that adds livelihoods, WASH, and education to its portfolio typically weakens its nutrition positioning without achieving comparable expertise in the new areas."}, {"title": "Laws 14–22: Attributes, Candor, Resources", "subtitle": "Bold moves, failure, and honest communication", "summary": "Law of Attributes: find the attribute that is the opposite of the market leader's strength and own it. Law of Candor: admitting a weakness disarms the audience and creates credibility for the subsequent positive claim. Law of Singularity: in a given situation, there is one bold move that produces decisive results — not many small improvements but one concentrated force. Law of Unpredictability: you cannot predict the future, so build flexibility into your plans rather than committing to rigid long-term forecasts. Law of Success: ego corrupts marketing judgment — success breeds arrogance, which breeds line extension, which breeds decline. Law of Resources: without adequate funding, good ideas do not reach prospects' minds.", "ideas": ["Admitting to a weakness creates credibility that amplifies subsequent positive claims.", "The Law of Singularity: marketing resources concentrated on one bold move outperform the same resources spread across many small improvements.", "Failure is inevitable and valuable: organisations that punish failure create cultures that hide it rather than learn from it.", "Trend versus fad: sustainable marketing strategy is built on long-term trends, not transient enthusiasm."], "quotes": ["\"Candor is very disarming. Every negative statement you make about yourself is instantly accepted as truth.\"", "\"The only thing that works in marketing is the single, bold stroke.\""], "devEcon": "The candor law has powerful implications for development communication: organisations that openly acknowledge where their programmes have not worked and what they have learned build more credibility with sophisticated donors and government partners than organisations that present uniform success narratives. The evidence base for this is strong — honest systematic reviews and transparent evaluations produce more lasting reputational capital than positive reporting."}], "concepts": [{"term": "Law of Leadership", "definition": "It is better to be first in a market than to have a better product. The first brand in a category nearly always retains the leading position because it establishes the reference point against which all subsequent entrants are judged.", "practitionerNote": "Development organisations that pioneer a new approach (community-led total sanitation, cash transfers, graduation programmes) often retain credibility and influence even when later entrants produce more rigorous evidence. First-mover advantage in developing the methodology creates category ownership."}, {"term": "Law of the Mind", "definition": "Being first in the prospect's mind is more important than being first in the market. A product or idea that is easier to remember, simpler to explain, and more memorable will often displace technically earlier entrants.", "practitionerNote": "A simple, clear programme name and theory of change ('livelihoods graduation') is more memorably positioned than a complex, technically accurate programme description. Development organisations underinvest in the simplicity and memorability of their programme positioning."}, {"term": "Law of Focus", "definition": "The most powerful concept in marketing is owning a word in the prospect's mind. The more precisely focused and single-minded a brand's association, the stronger the competitive position.", "practitionerNote": "The most influential development organisations typically own one clear association: J-PAL (rigorous evaluation), BRAC (scale at quality), IRC (humanitarian evidence). This focus is not narrow — it is what produces credibility, and credibility extends the organisation's influence beyond the immediate focus area."}, {"term": "Law of Line Extension", "definition": "Extending a successful brand into new product categories dilutes the original focused position without establishing a comparable position in the new area. The most common marketing mistake in successful organisations.", "practitionerNote": "Development organisations that expand from a successful focused programme into adjacent sectors routinely experience this dynamic: the new areas are never as good as the original, the original begins to lose its edge, and the organisation's overall credibility weakens despite the surface appearance of growth."}, {"term": "Law of Candor", "definition": "Admitting a weakness or limitation creates credibility that amplifies subsequent positive claims. Counterintuitive but robust: negative statements are immediately believed; positive statements are viewed with suspicion.", "practitionerNote": "Development evaluation reports that openly present negative findings build more credibility with sophisticated donors and partners than reports that minimise or contextualise all poor results. The organisations most trusted for their evidence are those known for honest reporting, including when the evidence is uncomfortable."}], "tools": [{"label": "Reflection Journal", "intro": "Use these prompts to connect the book's ideas to your own context.", "html": "<label class=\"fld-label\">What is the single most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"r1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where do you see this book's core argument playing out in a specific programme or research challenge you face?</label>\n<textarea class=\"fld\" id=\"r2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">What is one concrete change you will make this week based on reading this?</label>\n<textarea class=\"fld\" id=\"r3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Reflections stay in your browser only and are not sent anywhere.</div>"}], "connections": [{"book": "Pre-Suasion — Cialdini", "text": "Ries and Trout's Law of the Mind is the marketing version of Cialdini's pre-suasion: the first idea that occupies a mental category shapes all subsequent evaluation of competitors. Pre-Suasion explains the psychological mechanism (association networks, attention direction) through which the marketing laws operate."}, {"book": "To Sell Is Human — Pink", "text": "Pink's Clarity principle (helping people see their situation in new ways) is the practitioner's application of the Law of Category and the Law of the Mind. Reframing a client's problem to fit your solution's category is both good selling (Pink) and good marketing positioning (Ries and Trout)."}, {"book": "Influence — Cialdini", "text": "The Law of Candor is the marketing application of Cialdini's finding that admitting a limitation before presenting strengths is more persuasive than presenting strengths alone. The psychological mechanism is the same: apparent honesty about weakness creates trust that amplifies the subsequent positive message."}], "critiques": ["The laws were derived primarily from consumer products marketing in the US in the 1970s-1990s. Their applicability to B2B, services, digital products, and non-commercial contexts (development, advocacy, policy) requires significant adaptation and is less empirically grounded than the book implies.", "The book's empirical base is essentially case study evidence selected to support the laws. The authors do not systematically consider cases where the laws were violated without apparent negative consequences, which is a significant limitation for drawing strong causal conclusions.", "The Law of Leadership (first mover advantage) has been substantially challenged by subsequent marketing research showing that late entrants with significantly better products regularly displace first movers. The law is directionally useful but overstated."], "suggested": ["How does the Law of Category apply to development organisations competing for donor funding?", "What is the Law of Line Extension and why do development organisations routinely violate it?", "How can development organisations apply the Law of Candor in their communication with donors?", "What does 'owning a word in the prospect's mind' mean for advocacy organisations?", "How do the 22 Laws apply to the marketing of evidence-based development programmes to governments?"], "systemPrompt": "You are an expert reading companion for 'The 22 Immutable Laws of Marketing' by Al Ries and Jack Trout. Your audience is development practitioners, programme communications staff, and ImpactMojo learners. Answer questions about the 22 laws, their application to development sector communication and positioning, and their limits and caveats for non-commercial contexts."};
+
+// Tab management
+const TABS = [
+  {id:"overview",label:"Overview"},
+  {id:"pathways",label:"Pathways"},
+  {id:"sections",label:"Sections"},
+  {id:"concepts",label:"Concepts"},
+  {id:"toolkit",label:"Toolkit"},
+  {id:"context",label:"Context"},
+  {id:"ask",label:"Ask"},
+];
+
+const tabbar = document.getElementById("tabbar");
+TABS.forEach(t => {
+  const btn = document.createElement("button");
+  btn.className = "tab-btn" + (t.id === "overview" ? " active" : "");
+  btn.textContent = t.label;
+  btn.onclick = () => switchTab(t.id);
+  tabbar.appendChild(btn);
+});
+
+function switchTab(id) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("p-" + id).classList.add("active");
+  tabbar.querySelectorAll(".tab-btn")[TABS.findIndex(t=>t.id===id)].classList.add("active");
+}
+
+// OVERVIEW
+(function() {
+  const el = document.getElementById("p-overview");
+  el.innerHTML = `
+    <div class="hero">
+      <div class="day-badge">${DATA.dayBadge}</div>
+      <h1>${DATA.title}</h1>
+      <div class="auth">${DATA.author}</div>
+      <div class="tagline">${DATA.tagline}</div>
+      <div class="pills">${DATA.pills.map(p=>`<span class="pill">${p}</span>`).join("")}</div>
+    </div>
+    <div class="stat-grid">
+      ${DATA.stats.map(s=>`<div class="stat"><div class="stat-n">${s.n}</div><div class="stat-l">${s.l}</div></div>`).join("")}
+    </div>
+    <div class="arg">
+      <div class="h1">The central argument</div>
+      ${DATA.argument.map(p=>`<p>${p}</p>`).join("")}
+    </div>
+    <div class="h1" style="margin-top:24px">What's in this companion</div>
+    <div class="nav-grid">
+      ${[["pathways","Learning Pathways","Structured reading routes by role"],["sections","Section by Section","Full analysis with dev econ connections"],["concepts","Concepts & Frameworks","Key terms with practitioner notes"],["toolkit","Practitioner Toolkit","Interactive tools"],["context","Book in Context","Connections and assessment"],["ask","Ask the Book","Gemini-powered Q&A"]].map(([id,label,desc])=>`<button class="nav-card" onclick="switchTab('${id}')" ><div class="nav-card-label">${label}</div><div class="nav-card-desc">${desc}</div></button>`).join("")}
+    </div>
+  `;
+})();
+
+// PATHWAYS
+(function() {
+  const el = document.getElementById("p-pathways");
+  let active = 0;
+  function render() {
+    const pw = DATA.pathways[active];
+    el.innerHTML = `
+      <div class="h1">Learning Pathways</div>
+      <div class="sub">Three structured routes through the book based on your role.</div>
+      <div class="pw-tabs">
+        ${DATA.pathways.map((p,i)=>`<button class="pw-btn ${i===active?"active":""}" onclick="__pw(${i})">${p.label}</button>`).join("")}
+      </div>
+      <div class="pw-desc">${pw.desc}</div>
+      <div class="pw-steps">
+        ${pw.steps.map((s,i)=>`<div class="pw-step"><div class="step-n">${i+1}</div><div><div class="step-title">${s.section}</div><div class="step-focus">${s.focus}</div></div></div>`).join("")}
+      </div>
+    `;
+  }
+  window.__pw = (i) => { active = i; render(); };
+  render();
+})();
+
+// SECTIONS
+(function() {
+  const el = document.getElementById("p-sections");
+  let openId = null;
+  let showDev = {};
+  function render() {
+    el.innerHTML = `
+      <div class="h1">Section by Section</div>
+      <div class="sub">All sections with full analysis and development economics connections.</div>
+      ${DATA.sections.map((s,i)=>`
+        <div class="sec-card">
+          <button class="sec-header" onclick="__sec(${i})">
+            <div class="sec-num">§${i+1}</div>
+            <div class="sec-title-block"><div class="sec-title">${s.title}</div><div class="sec-sub">${s.subtitle}</div></div>
+            <div class="sec-chev">${openId===i?"−":"+"}</div>
+          </button>
+          ${openId===i?`<div class="sec-body">
+            <div class="sec-summary">${s.summary}</div>
+            <div class="ideas-label">Key ideas</div>
+            ${s.ideas.map(idea=>`<div class="idea-item"><span class="idea-dot"></span><span>${idea}</span></div>`).join("")}
+            <div class="ideas-label" style="margin-top:14px">Key quotes</div>
+            ${s.quotes.map(q=>`<blockquote>${q}</blockquote>`).join("")}
+            <button class="dev-toggle" onclick="__dev(${i})">${showDev[i]?"Hide":"Show"} development economics connection</button>
+            ${showDev[i]?`<div class="dev-text">${s.devEcon}</div>`:""}
+          </div>`:""}
+        </div>
+      `).join("")}
+    `;
+  }
+  window.__sec = (i) => { openId = openId===i?null:i; render(); };
+  window.__dev = (i) => { showDev[i]=!showDev[i]; render(); };
+  render();
+})();
+
+// CONCEPTS
+(function() {
+  const el = document.getElementById("p-concepts");
+  let open = null;
+  function render() {
+    el.innerHTML = `
+      <div class="h1">Concepts & Frameworks</div>
+      <div class="sub">Key terms with definitions and practitioner notes. Click to expand.</div>
+      ${DATA.concepts.map((c,i)=>`
+        <div class="concept-card ${open===i?"open":""}" onclick="__con(${i})">
+          <div class="concept-term">${c.term}</div>
+          ${open===i?`<div class="concept-def">${c.definition}</div><div class="prac-label">Practitioner note</div><div class="prac-text">${c.practitionerNote}</div>`:""}
+        </div>
+      `).join("")}
+    `;
+  }
+  window.__con = (i) => { open = open===i?null:i; render(); };
+  render();
+})();
+
+// TOOLKIT  
+(function() {
+  const el = document.getElementById("p-toolkit");
+  el.innerHTML = `
+    <div class="h1">Practitioner Toolkit</div>
+    <div class="sub">Interactive tools derived from the book. Use for personal practice or programme design.</div>
+    <div class="tool-tabs">
+      ${DATA.tools.map((t,i)=>`<button class="tool-btn ${i===0?"active":""}" onclick="__tool(${i})">${t.label}</button>`).join("")}
+    </div>
+    ${DATA.tools.map((t,i)=>`
+      <div class="tool-panel ${i===0?"active":""}" id="toolp-${i}">
+        <div class="tool-intro">${t.intro}</div>
+        ${t.html}
+      </div>
+    `).join("")}
+  `;
+  window.__tool = (i) => {
+    document.querySelectorAll(".tool-btn").forEach((b,j)=>b.classList.toggle("active",i===j));
+    document.querySelectorAll(".tool-panel").forEach((p,j)=>p.classList.toggle("active",i===j));
+  };
+})();
+
+// CONTEXT
+(function() {
+  const el = document.getElementById("p-context");
+  el.innerHTML = `
+    <div class="h1">Book in Context</div>
+    <div class="sub">How this book fits within the broader literature, and an honest assessment of its limits.</div>
+    <div class="context-h">Connected works</div>
+    ${DATA.connections.map(c=>`<div class="conn-card"><div class="conn-book">${c.book}</div><div class="conn-text">${c.text}</div></div>`).join("")}
+    <div class="context-h" style="margin-top:24px">Honest assessment</div>
+    <div class="sub">Limits and qualifications for the ImpactMojo context:</div>
+    ${DATA.critiques.map((c,i)=>`<div class="crit-item"><div class="crit-n">${i+1}</div><div class="crit-text">${c}</div></div>`).join("")}
+  `;
+})();
+
+// ASK
+(function() {
+  const el = document.getElementById("p-ask");
+  let apiKey = "", msgs = [], loading = false;
+  
+  function renderSetup() {
+    el.innerHTML = `
+      <div class="ask-setup">
+        <div class="h1">Ask the Book</div>
+        <div class="sub">AI-powered Q&A using Gemini 2.0 Flash (free). Requires a Google AI Studio API key.</div>
+        <div class="setup-steps">
+          <div class="setup-step"><span class="setup-num">1</span><span>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a> and create a free API key.</span></div>
+          <div class="setup-step"><span class="setup-num">2</span><span>Paste it below. The key stays in your browser only and is never stored.</span></div>
+        </div>
+        <div class="key-row">
+          <input class="key-input" type="password" id="key-in" placeholder="AIza..." oninput="document.getElementById('key-submit').disabled=!this.value.trim()"/>
+          <button class="key-btn" id="key-submit" disabled onclick="__setKey()">Connect</button>
+        </div>
+      </div>
+    `;
+  }
+  
+  function renderChat() {
+    el.innerHTML = `
+      <div class="ask-ui">
+        <div class="ask-hdr"><span class="ask-hdr-title">Ask the Book</span><button class="ask-reset" onclick="__resetKey()">Change key</button></div>
+        <div class="msgs" id="msgs-box">
+          ${msgs.length===0?`<div><div class="suggested-label">Suggested questions</div>${DATA.suggested.map(q=>`<button class="sug-btn" onclick="__ask('${q.replace(/'/g,"\'")}')">${q}</button>`).join("")}</div>`:""}
+          ${msgs.map(m=>`<div class="msg ${m.role}"><div class="msg-text">${m.content}</div></div>`).join("")}
+          ${loading?`<div class="msg assistant"><div class="typing"><span></span><span></span><span></span></div></div>`:""}
+        </div>
+        <div class="ask-input-row">
+          <textarea class="ask-input" id="ask-in" rows="2" placeholder="Ask about the book..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();__sendAsk()}"></textarea>
+          <button class="ask-send" id="ask-send" onclick="__sendAsk()">Send</button>
+        </div>
+      </div>
+    `;
+    const box = document.getElementById("msgs-box");
+    if(box) box.scrollTop = box.scrollHeight;
+  }
+  
+  window.__setKey = () => {
+    const v = document.getElementById("key-in").value.trim();
+    if(v) { apiKey = v; renderChat(); }
+  };
+  window.__resetKey = () => { apiKey=""; msgs=[]; renderSetup(); };
+  window.__ask = (q) => {
+    document.getElementById("ask-in").value = q;
+    __sendAsk();
+  };
+  window.__sendAsk = async () => {
+    const inp = document.getElementById("ask-in");
+    if(!inp) return;
+    const q = inp.value.trim();
+    if(!q || loading) return;
+    inp.value = "";
+    msgs.push({role:"user",content:q});
+    loading = true; renderChat();
+    try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          system_instruction:{parts:[{text:DATA.systemPrompt}]},
+          contents: msgs.map(m=>{return{role:m.role==="assistant"?"model":"user",parts:[{text:m.content}]}}).slice(0,-1).concat([{role:"user",parts:[{text:q}]}]),
+          generationConfig:{maxOutputTokens:1200,temperature:0.3}
+        })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error?.message||"API error");
+      const reply = data?.candidates?.[0]?.content?.parts?.map(p=>p.text).join("")||"No response.";
+      msgs.push({role:"assistant",content:reply});
+    } catch(e) {
+      msgs.push({role:"assistant",content:"Error: "+e.message});
+    }
+    loading = false; renderChat();
+  };
+  
+  renderSetup();
+})();
+</script>
+</body>
+</html>
