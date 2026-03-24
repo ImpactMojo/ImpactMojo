@@ -2,6 +2,25 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.9.0 — March 24, 2026
+
+**What changed for you:** Every page on ImpactMojo now has a consistent look and feel — unified fonts, mobile-responsive design, 3-mode theme toggle (System/Light/Dark), floating paper plane, standardized footer, and a sticky navigation bar with a home link and Premium button.
+
+### Design System — Sitewide Audit & Fix (242 pages)
+- Applied **ImpactMojo font stack** (Amaranth body, Inter headings, JetBrains Mono code) with `!important` global overrides across all 242 inner pages
+- Added **3-mode theme toggle** (System / Light / Dark) with `localStorage` persistence and device-default loading
+- Added **floating paper plane SVG** matching the homepage design to every page
+- Added **sticky top bar** with ImpactMojo home link and Premium button on all inner pages
+- Added **full 4-section footer** (About, Legal, Quick Links, Resources) to all pages missing it
+- Fixed **mobile viewport meta tag** on BookSummary React pages that were missing it
+- Added **dark mode CSS variables** and light/dark theme support across the entire site
+- Added **GitBook documentation** link to the footer (Resources section) across all pages
+
+### Documentation
+- Updated typography docs to reflect 242-page coverage
+- Updated roadmap: moved sitewide font/theme audit to Recently Completed
+- Added GitBook docs link to index.html footer and all inner page footers
+
 ## v10.8.5 — March 22, 2026
 
 **What changed for you:** Two new econometrics book companions added, press kit page linked in site navigation and footer, and book summary counts updated to 5 books / 100+ chapters.

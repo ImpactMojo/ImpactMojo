@@ -2,7 +2,7 @@
 
 ## Font Stack
 
-ImpactMojo uses a standardized three-font system across all 80+ pages:
+ImpactMojo uses a standardized three-font system across all 242+ pages:
 
 | Role | Font | Weights | Fallback |
 |------|------|---------|----------|
