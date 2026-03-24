@@ -3,10 +3,9 @@
  * Version: 1.0.0
  * Date: March 16, 2026
  *
- * Protects admin pages behind ADMIN role authentication.
- * Only users with profile.role === 'admin' can access admin pages.
- * This is separate from subscription_tier (organization users are NOT admins
- * unless they also have the admin role).
+ * Protects admin pages behind ADMIN role + ORGANIZATION tier authentication.
+ * Only users with profile.role === 'admin' AND
+ * profile.subscription_tier === 'organization' can access admin pages.
  *
  * USAGE:
  *   AdminGate.protect({
@@ -74,8 +73,13 @@
 
       function checkAdmin(user, profile) {
         if (!user) { deny('not logged in'); return; }
-        if (!profile || profile.role !== 'admin') {
-          deny('role is ' + (profile ? profile.role : 'no profile'));
+        if (!profile) { deny('no profile'); return; }
+        if (profile.role !== 'admin') {
+          deny('role is ' + profile.role);
+          return;
+        }
+        if (profile.subscription_tier !== 'organization') {
+          deny('tier is ' + (profile.subscription_tier || 'none') + ' (organization required)');
           return;
         }
         succeed(user, profile);
@@ -147,7 +151,11 @@
      * @returns {boolean}
      */
     isAdmin: function () {
-      return !!(ImpactMojoAuth.profile && ImpactMojoAuth.profile.role === 'admin');
+      return !!(
+        ImpactMojoAuth.profile &&
+        ImpactMojoAuth.profile.role === 'admin' &&
+        ImpactMojoAuth.profile.subscription_tier === 'organization'
+      );
     }
   };
 
