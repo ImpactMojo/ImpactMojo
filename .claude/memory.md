@@ -12,6 +12,7 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 ## Recent Decisions
 
 <!-- Append new decisions at the top -->
+- **2026-03-24**: Added 4 new skills (frontend-design, seo, deep-research, debugging) inspired by @zodchiii's curated AI tools roundup. Added community resources section to CLAUDE.md with GitHub repos to watch and notable community skills. Total skills now: 20.
 
 ## Known Issues
 
