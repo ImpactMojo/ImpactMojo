@@ -246,7 +246,11 @@
 <header>
     <h1>🇮🇳 India <span>Climate Emissions</span> Dashboard</h1>
     <p>Greenhouse gas emissions data from Climate TRACE — satellite-verified, facility-level tracking</p>
-    <div class="badge">Data Year: 2022 · Source: Climate TRACE API v6</div>
+    <div class="badge" id="yearBadge">Data Year: 2024 · Source: Climate TRACE API v6</div>
+    <div style="margin-top:0.75rem">
+        <button class="tab-btn active" id="btn2024" onclick="switchYear(2024)">2024</button>
+        <button class="tab-btn" id="btn2025" onclick="switchYear(2025)">2025 (Preliminary)</button>
+    </div>
 </header>
 
 <main>
@@ -254,15 +258,15 @@
     <!-- KPIs -->
     <div class="kpis">
         <div class="kpi">
-            <div class="value">3.89 Bt</div>
+            <div class="value" id="kpiTotal">4.25 Bt</div>
             <div class="label">Total CO₂e (100-yr GWP)</div>
         </div>
         <div class="kpi">
-            <div class="value">2.62 Bt</div>
+            <div class="value" id="kpiCo2">2.94 Bt</div>
             <div class="label">CO₂ Emissions</div>
         </div>
         <div class="kpi">
-            <div class="value">34.6 Mt</div>
+            <div class="value" id="kpiCh4">35.7 Mt</div>
             <div class="label">Methane (CH₄)</div>
         </div>
         <div class="kpi rank">
@@ -270,7 +274,7 @@
             <div class="label">Global Rank</div>
         </div>
         <div class="kpi share">
-            <div class="value">6.6%</div>
+            <div class="value" id="kpiShare">7.0%</div>
             <div class="label">Share of Global Emissions</div>
         </div>
     </div>
@@ -296,7 +300,7 @@
 
     <!-- Subsector Deep Dives -->
     <section>
-        <h2>Subsector Deep Dive</h2>
+        <h2>Subsector Deep Dive <span style="font-size:0.75rem;color:var(--muted);font-weight:400">(2022 data — latest available granularity)</span></h2>
         <div class="tabs">
             <button class="tab-btn active" data-tab="agri">Agriculture</button>
             <button class="tab-btn" data-tab="mfg">Manufacturing</button>
@@ -403,15 +407,43 @@
 <script>
 // ── DATA ────────────────────────────────────────────────────────────────
 
-const DATA = {
-    sectors: [
-        { name: 'Power', value: 1232, color: '#f87171' },
-        { name: 'Agriculture', value: 540, color: '#4ade80' },
-        { name: 'Manufacturing', value: 413, color: '#fb923c' },
-        { name: 'Transportation', value: 219, color: '#38bdf8' },
-        { name: 'Fossil Fuel Ops', value: 178, color: '#a78bfa' },
-        { name: 'Waste', value: 14, color: '#f472b6' }
-    ],
+const YEARS = {
+    2024: {
+        status: 'full',
+        total: '4.25 Bt', co2: '2.94 Bt', ch4: '35.7 Mt', share: '7.0%',
+        sectors: [
+            { name: 'Power', value: 1446, color: '#f87171' },
+            { name: 'Agriculture', value: 898, color: '#4ade80' },
+            { name: 'Manufacturing', value: 792, color: '#fb923c' },
+            { name: 'Buildings', value: 324, color: '#facc15' },
+            { name: 'Transportation', value: 270, color: '#38bdf8' },
+            { name: 'Fossil Fuel Ops', value: 264, color: '#a78bfa' },
+            { name: 'Waste', value: 158, color: '#f472b6' },
+            { name: 'Forestry & Land Use', value: 126, color: '#34d399' },
+            { name: 'Fluorinated Gases', value: 80, color: '#c084fc' },
+            { name: 'Mineral Extraction', value: 13, color: '#fbbf24' }
+        ]
+    },
+    2025: {
+        status: 'preliminary',
+        total: '4.22 Bt', co2: '2.91 Bt', ch4: '35.5 Mt', share: '7.0%',
+        sectors: [
+            { name: 'Power', value: 1409, color: '#f87171' },
+            { name: 'Agriculture', value: 898, color: '#4ade80' },
+            { name: 'Manufacturing', value: 792, color: '#fb923c' },
+            { name: 'Buildings', value: 330, color: '#facc15' },
+            { name: 'Transportation', value: 281, color: '#38bdf8' },
+            { name: 'Fossil Fuel Ops', value: 257, color: '#a78bfa' },
+            { name: 'Waste', value: 158, color: '#f472b6' },
+            { name: 'Forestry & Land Use', value: 213, color: '#34d399' },
+            { name: 'Fluorinated Gases', value: 80, color: '#c084fc' },
+            { name: 'Mineral Extraction', value: 13, color: '#fbbf24' }
+        ]
+    }
+};
+
+// Subsector data preserved from 2022 (latest available granularity)
+const SUBSECTORS = {
     agriculture: [
         { name: 'Cattle (Enteric, Pasture)', value: 212.5 },
         { name: 'Rice Cultivation', value: 114.7 },
@@ -449,7 +481,10 @@ const DATA = {
         { name: 'Solid Waste Disposal', value: 7.8 },
         { name: 'Domestic Wastewater', value: 5.8 },
         { name: 'Industrial Wastewater', value: 0.5 }
-    ],
+    ]
+};
+
+const DATA = {
     powerPlants: [
         { name: 'Vindhyachal', owner: 'NTPC Ltd', state: 'Madhya Pradesh', mw: 4760, co2e: 34.73, twh: 37.06 },
         { name: 'Sasan Ultra Mega', owner: 'Reliance Power', state: 'Madhya Pradesh', mw: 3960, co2e: 29.14, twh: 31.10 },
@@ -474,18 +509,32 @@ const DATA = {
         { name: 'SAIL Bokaro', owner: 'SAIL', mt: 4.65, co2e: 6.34, tech: 'BF/BOF' },
         { name: 'JSPL Raigarh', owner: 'Jindal Steel', mt: 3.6, co2e: 6.14, tech: 'DRI-EAF' }
     ],
-    insights: [
-        'India ranks <strong>3rd globally</strong> in greenhouse gas emissions, producing ~6.6% of world CO₂e.',
-        '<strong>Coal power</strong> is the single largest sector at 1.23 Bt CO₂e — nearly a third of India\'s total.',
-        'The <strong>top 10 coal plants alone emit 229 Mt</strong> CO₂e — equivalent to the entire emissions of many countries.',
-        '<strong>NTPC Ltd</strong> operates 5 of India\'s 10 most polluting power plants.',
-        '<strong>Cattle emissions (328 Mt)</strong> exceed India\'s entire manufacturing sector excluding steel & cement.',
-        'India\'s <strong>rice paddies (115 Mt)</strong> emit more than all aviation + shipping combined.',
-        '<strong>Steel + Cement = 341 Mt</strong> — 83% of manufacturing emissions.',
-        '<strong>Road transport (176 Mt)</strong> is 80% of transportation; railways show zero direct emissions.',
-        '<strong>Coal mining ≈ oil refining</strong> — nearly identical fossil fuel operation footprints (~66 Mt each).',
-        'The <strong>waste sector (14 Mt)</strong> is small but growing, with solid waste and wastewater as key concerns.'
-    ]
+    insights: {
+        2024: [
+            'India ranks <strong>3rd globally</strong> in greenhouse gas emissions, producing ~7.0% of world CO₂e (2024).',
+            'Total emissions rose <strong>9.2% from 3.89 Bt (2022) to 4.25 Bt</strong> CO₂e in just two years.',
+            '<strong>Coal power</strong> is the single largest sector at 1.45 Bt CO₂e — 34% of India\'s total.',
+            '<strong>Agriculture (898 Mt)</strong> is the 2nd largest sector — cattle and rice cultivation dominate.',
+            '<strong>Manufacturing (792 Mt)</strong> accounts for 19% — steel and cement are the main contributors.',
+            'The <strong>top 10 coal plants alone emit 229 Mt</strong> CO₂e — equivalent to the entire emissions of many countries.',
+            '<strong>NTPC Ltd</strong> operates 5 of India\'s 10 most polluting power plants.',
+            '<strong>Buildings (324 Mt)</strong> and <strong>transportation (270 Mt)</strong> each represent 6-8% of emissions.',
+            'India now covers <strong>all 10 Climate TRACE sectors</strong> including fluorinated gases and mineral extraction.',
+            '<strong>Fossil fuel operations (264 Mt)</strong> — coal mining and oil refining remain nearly equal contributors.'
+        ],
+        2025: [
+            'India ranks <strong>3rd globally</strong> in greenhouse gas emissions, producing ~7.0% of world CO₂e (2025 preliminary).',
+            '2025 shows a <strong>slight decrease to 4.22 Bt</strong> CO₂e from 4.25 Bt in 2024 (−0.65%).',
+            '<strong>Power sector dropped</strong> from 1.45 Bt to 1.41 Bt CO₂e — a 2.6% decrease year-on-year.',
+            '<strong>Forestry & Land Use surged 68%</strong> from 126 Mt (2024) to 213 Mt (2025) — high volatility in land-use estimates.',
+            '<strong>Transportation grew 3.7%</strong> from 270 Mt to 281 Mt — continuing upward trend.',
+            '<strong>Fluorinated gases (80 Mt)</strong> and <strong>mineral extraction (13 Mt)</strong> show identical values to 2024 — likely projected.',
+            '<strong>Agriculture remains stable</strong> at ~898 Mt CO₂e across both years.',
+            '<strong>Buildings sector grew 1.8%</strong> to 330 Mt — steady increase in residential/commercial energy use.',
+            'Some sectors show <strong>carried-forward estimates</strong> — full verification expected later in 2026.',
+            '<strong>Manufacturing (792 Mt)</strong> is essentially unchanged — India\'s industrial base holds steady.'
+        ]
+    }
 };
 
 // ── CHART DEFAULTS ──────────────────────────────────────────────────────
@@ -518,58 +567,94 @@ function makeBarData(items, color = '#38bdf8') {
     };
 }
 
-// ── SECTOR CHARTS ───────────────────────────────────────────────────────
+// ── SECTOR CHARTS (year-switchable) ─────────────────────────────────────
 
-new Chart(document.getElementById('sectorBar'), {
-    type: 'bar',
-    data: {
-        labels: DATA.sectors.map(s => s.name),
+let currentYear = 2024;
+let sectorBarChart, sectorDoughnutChart;
+
+function buildSectorCharts(year) {
+    const sectors = YEARS[year].sectors;
+    const barData = {
+        labels: sectors.map(s => s.name),
         datasets: [{
-            data: DATA.sectors.map(s => s.value),
-            backgroundColor: DATA.sectors.map(s => s.color + 'cc'),
-            borderColor: DATA.sectors.map(s => s.color),
+            data: sectors.map(s => s.value),
+            backgroundColor: sectors.map(s => s.color + 'cc'),
+            borderColor: sectors.map(s => s.color),
             borderWidth: 1,
             borderRadius: 6
         }]
-    },
-    options: {
-        ...barOpts(false),
-        scales: {
-            y: { grid: { color: 'rgba(51,65,85,0.3)' }, ticks: { callback: v => v + ' Mt' } },
-            x: { grid: { display: false } }
-        }
-    }
-});
-
-new Chart(document.getElementById('sectorDoughnut'), {
-    type: 'doughnut',
-    data: {
-        labels: DATA.sectors.map(s => s.name),
+    };
+    const doughnutData = {
+        labels: sectors.map(s => s.name),
         datasets: [{
-            data: DATA.sectors.map(s => s.value),
-            backgroundColor: DATA.sectors.map(s => s.color + 'cc'),
-            borderColor: DATA.sectors.map(s => s.color),
+            data: sectors.map(s => s.value),
+            backgroundColor: sectors.map(s => s.color + 'cc'),
+            borderColor: sectors.map(s => s.color),
             borderWidth: 2
         }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: { position: 'right', labels: { padding: 16, usePointStyle: true } },
-            tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} Mt CO₂e` } }
-        }
-    }
-});
+    };
 
-// ── SUBSECTOR CHARTS ────────────────────────────────────────────────────
+    if (sectorBarChart) {
+        sectorBarChart.data = barData;
+        sectorBarChart.update();
+        sectorDoughnutChart.data = doughnutData;
+        sectorDoughnutChart.update();
+    } else {
+        sectorBarChart = new Chart(document.getElementById('sectorBar'), {
+            type: 'bar', data: barData,
+            options: {
+                ...barOpts(false),
+                scales: {
+                    y: { grid: { color: 'rgba(51,65,85,0.3)' }, ticks: { callback: v => v + ' Mt' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+        sectorDoughnutChart = new Chart(document.getElementById('sectorDoughnut'), {
+            type: 'doughnut', data: doughnutData,
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { padding: 16, usePointStyle: true } },
+                    tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} Mt CO₂e` } }
+                }
+            }
+        });
+    }
+}
+
+function switchYear(year) {
+    currentYear = year;
+    const y = YEARS[year];
+    // Update KPIs
+    document.getElementById('kpiTotal').textContent = y.total;
+    document.getElementById('kpiCo2').textContent = y.co2;
+    document.getElementById('kpiCh4').textContent = y.ch4;
+    document.getElementById('kpiShare').textContent = y.share;
+    // Update badge
+    const status = y.status === 'preliminary' ? ' (Preliminary)' : '';
+    document.getElementById('yearBadge').textContent = `Data Year: ${year}${status} · Source: Climate TRACE API v6`;
+    // Update buttons
+    document.getElementById('btn2024').classList.toggle('active', year === 2024);
+    document.getElementById('btn2025').classList.toggle('active', year === 2025);
+    // Update charts
+    buildSectorCharts(year);
+    // Update insights
+    document.getElementById('insightsGrid').innerHTML = DATA.insights[year].map(text =>
+        `<div class="insight">${text}</div>`
+    ).join('');
+}
+
+buildSectorCharts(2024);
+
+// ── SUBSECTOR CHARTS (2022 historical data) ─────────────────────────────
 
 const subsectorCharts = {
-    agriChart: { data: DATA.agriculture, color: '#4ade80' },
-    mfgChart: { data: DATA.manufacturing, color: '#fb923c' },
-    transportChart: { data: DATA.transportation, color: '#38bdf8' },
-    fossilChart: { data: DATA.fossil, color: '#a78bfa' },
-    wasteChart: { data: DATA.waste, color: '#f472b6' }
+    agriChart: { data: SUBSECTORS.agriculture, color: '#4ade80' },
+    mfgChart: { data: SUBSECTORS.manufacturing, color: '#fb923c' },
+    transportChart: { data: SUBSECTORS.transportation, color: '#38bdf8' },
+    fossilChart: { data: SUBSECTORS.fossil, color: '#a78bfa' },
+    wasteChart: { data: SUBSECTORS.waste, color: '#f472b6' }
 };
 
 Object.entries(subsectorCharts).forEach(([id, { data, color }]) => {
@@ -622,7 +707,7 @@ document.querySelector('#steelTable tbody').innerHTML = DATA.steelPlants.map((p,
 
 // ── INSIGHTS ────────────────────────────────────────────────────────────
 
-document.getElementById('insightsGrid').innerHTML = DATA.insights.map(text => `
+document.getElementById('insightsGrid').innerHTML = DATA.insights[currentYear].map(text => `
     <div class="insight">${text}</div>
 `).join('');
 
