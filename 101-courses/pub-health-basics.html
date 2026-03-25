@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Public Health 101 | ImpactMojo</title>
+<meta name="description" content="Public Health 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #B8860B;
+  --border-art: #DAA520;
+  --bg-slide: #FFFDF7;
+  --bg-section: #DAA520;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">Public Health 101</p>
+<h1>Epidemiology, Health Systems &amp; Disease Preventionin South Asia</h1>
+<p class="subtitle">IMPACTMOJO 101 SERIES HEALTH &amp; COMMUNICATIONwww.impactmojo.in</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover</h2>
+<p>Astructuredjourneythroughthefoundationsofpublichealth — from coreconceptstoreal-worldapplications.</p>
+<p>What Is Public Health?</p>
+<p>Definitions, scope, andcoreprinciples02</p>
+<p>Epidemiology Fundamentals</p>
+<p>Diseasedistribution, burden, and measurement</p>
+<p>Health Determinants</p>
+<p>Social, economic, andenvironmentaldrivers04</p>
+<p>Health Systems</p>
+<p>Structure, function, andfinancingin South Asia</p>
+<p>Disease Prevention Levels</p>
+<p>Primary, secondary, andtertiaryprevention06</p>
+<p>Communicable Diseases</p>
+<p>Transmission, surveillance, andcontrol</p>
+<p>Non-Communicable Diseases</p>
+<p>Risingburdenandintegratedresponses08</p>
+<p>Nutrition &amp; Maternal Health</p>
+<p>Malnutrition, MNCH, andlife-courseapproach</p>
+<p>Health Communication</p>
+<p>Behaviorchangeandcom munityengagement10</p>
+<p>Data &amp; Evidence</p>
+<p>Surveys, indicators, andhealthinformationsystem s</p>
+<p>Global Health Architecture</p>
+<p>SDGs, UHC, andglobalactors12</p>
+<p>Action &amp; Advocacy</p>
+<p>Policy, ethics, andprofessionalpractice</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<ul>
+<li><strong>1Define &amp; Explain</strong></li>
+</ul>
+<p>Corepublichealthconceptsincludingepidemiology, healthsystem s, anddeterminantsofhealth</p>
+<ul>
+<li><strong>2Analyze</strong></li>
+</ul>
+<p>Diseasepatternsandhealthdatausingbasicepidemiologicalframeworksandindicators</p>
+<ul>
+<li><strong>3Apply</strong></li>
+</ul>
+<p>Preventionandcontrolframeworkstoreal-worldhealthchallengesin South Asiancontexts</p>
+<ul>
+<li><strong>4Evaluate</strong></li>
+</ul>
+<p>Healthinterventionsandprogram susingevidence-basedcriteriaandequitylenses</p>
+<ul>
+<li><strong>5Engage</strong></li>
+</ul>
+<p>Criticallywithglobalhealthagendasincluding SDGs, UHC, andhealthcom municationstrategies</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">Section 1</p>
+<h2>What Is Public</h2>
+<h2>Health?</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>Defining Public Health</h2>
+<blockquote>&quot;Thescienceandartofpreventingdisease, prolonginglife, andpromotinghealththroughtheorganizedeffortsof</blockquote>
+<p>society.&quot;</p>
+<p>— C.E.A. Winslow, 1920</p>
+<p>Publichealthshiftsfocusfrom theindividualpatienttoentirepopulations. Itasks: Whydosom ecom munitiesstay</p>
+<p>healthierthanothers? Whatsystem s, policies, andbehaviorsdrivehealthoutcomesatscale?</p>
+<p>Population Focus</p>
+<p>Groups, notindividualsPrevention First</p>
+<p>BeforeillnessoccursEquity Lens</p>
+<p>Whoisleftbehind?Collective Action</p>
+<p>Government +</p>
+<p>com munity</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>Core Disciplinesof Public Health</h2>
+<p>Epidemiology</p>
+<p>Diseasepatterns &amp; causesHealth Systems</p>
+<p>Services &amp; financing</p>
+<p>Nutrition</p>
+<p>Diet &amp; malnutrition</p>
+<p>Health Communication</p>
+<p>Behavior &amp; messagingEnvironmental Health</p>
+<p>Water, air &amp; sanitationHealth Policy</p>
+<p>Law, governance &amp; equity</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>Public Healthvs. Clinical</h2>
+<p>Medicine</p>
+<p>Clinical Medicine</p>
+<p>Treatssickindividuals</p>
+<p>Diagnosisandcure</p>
+<p>Hospital/clinicsetting</p>
+<p>Doctor–patientrelationship</p>
+<p>ReactivetoillnessPublic Health</p>
+<p>Protectswholecommunities</p>
+<p>Preventionandpromotion</p>
+<p>Community/fieldsetting</p>
+<p>Government + civilsociety</p>
+<p>Proactiveandpreventive</p>
+<p>Bothareessential — butpublichealthreachesthose whonevermake</p>
+<p>ittotheclinic.</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Case Study: India&#x27;s Pulse Polio Program me</h2>
+<p>The Challenge</p>
+<p>In 1995, Indiahadover 50,000 poliocasesannually —</p>
+<p>amongthehighestintheworld. Reachingeverychild</p>
+<p>underfivein acountryof abillionrequired</p>
+<p>unprecedentedcoordination.</p>
+<p>The Response</p>
+<p><strong>National Im munization Days:</strong> door-to-doorvaccination</p>
+<p>by ASHAsandanganwadiworkers, boothcampaigns,</p>
+<p>and mediablitz. Over 172 millionchildrenreachedper</p>
+<p>round.The Result</p>
+<p>Indiawasdeclaredpolio-freein 2014 — alandmarkin</p>
+<p>globalpublichealth. Thissuccessdemonstratedthat</p>
+<p>population-levelprevention, com munity mobilization,</p>
+<p>andpoliticalwillcandefeatevendeeplyentrenched</p>
+<p>diseases.</p>
+<p>💡 Re f le c ti o n : What madethis apublichealth</p>
+<p>successratherthanjust a medicalone?</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>🤔 Reflection: Public Healthin Your Context</h2>
+<p>Thinkaboutyourowncom munityorworksetting. Whatisonehealthproblem thatcannotbesolvedbydoctors</p>
+<p>alone — andrequirescollectiveaction, policy, orbehaviorchange?</p>
+<p>Whatistheproblem?</p>
+<p>Nam ethehealthissueaffecting</p>
+<p>yourcom munityWhoismostaffected?</p>
+<p>Whichgroupscarrythegreatest</p>
+<p>burden?Whatwould apublic</p>
+<p>healthresponselooklike?</p>
+<p>Beyondtreatment — what</p>
+<p>systemicchangesareneeded?</p>
+<p>Shareyourresponsewith apeerorwriteitinyourlearningjournal.</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">Section 2</p>
+<h2>Epidemiology</h2>
+<h2>Fundamentals</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>What Is Epidemiology?</h2>
+<p>Epidemiologyisthestudyofhowdiseasesaredistributedinpopulationsandwhatfactorsinfluencethat</p>
+<p>distribution. Itanswersthreekeyquestions:</p>
+<p>Who?</p>
+<p>Whichpeopleareaffected — age,</p>
+<p>sex, caste, geographyWhere?</p>
+<p>Geographicpatterns — urban/rural,</p>
+<p>region, districtWhen?</p>
+<p>Tim etrends — seasonalspikes,</p>
+<p>outbreaks, long-term change</p>
+<p>Thesepatternsrevealcauses, guideinterventions, andhelpusallocateresourcesfairlyandeffectively.</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>Key Epidemiological Measures</h2>
+<p>Measure Definition Example</p>
+<p>Prevalence Proportionof apopulationwith acondition</p>
+<p>at agiventimeTBprevalencein Bihar</p>
+<p>Incidence Newcasesoccurringin apopulationover a</p>
+<p>definedperiodNewmalariacasesper</p>
+<p>1,000/year</p>
+<p>Mortality Rate Deathsperpopulationin agivenperiod Under-5 mortalityper 1,000 live</p>
+<p>births</p>
+<p>Case Fatality Rate Proportionofdiagnosedcaseswhodie C OVID-19 CFRin India, 2021</p>
+<p>Morbidity Illnessburden — disabilityordiseasein a</p>
+<p>populationDALYburdenfromdiarrheal</p>
+<p>disease</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>The Epidemiological Triad</h2>
+<p>Interactions</p>
+<p>Environment HostAgent</p>
+<p>Diseaseoccurswhenagent, host, andenvironmentintersectunfavorably. Changinganyoneelement — vaccinatinghosts, removingagents, or</p>
+<p>improvingenvironments — canbreakthechainoftransmission.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Case Study: Cholera</h2>
+<p>Outbreaksin Bangladesh</p>
+<p>Bangladesh&#x27;sannualcholeracyclesillustratethetria dinaction: the</p>
+<p>Vibriocholeraeagent thrivesinfloodwaters (environment), while</p>
+<p>malnourishedpopulationswithlowimmunity (host) face highestrisk.</p>
+<p>ORSdistributionandwaterpurification — notantibioticsalone —</p>
+<p>brokethecycle. icddr,b&#x27;s Matlabfieldstationpioneeredthis</p>
+<p>community-levelepidemiology, reducingmortalitybyover 50%</p>
+<p>throughsurveillanceandrapidresponse.</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Typesof Epidemiological Studies</h2>
+<p>Descriptive</p>
+<p>Who, where, when? Cross-</p>
+<p>sectionalsurveysandcase</p>
+<p>reportsAnalytical</p>
+<p>Why? Cohort, case-control, and</p>
+<p>ecologicalstudiesExperimental</p>
+<p>Doesthisinterventionwork?</p>
+<p>Randomizedcontrolledtrials</p>
+<p>💡 Inresource-limited South Asiansettings, cross-sectionalsurveys (like NFHSin India) andsurveillance</p>
+<p>systemsaretheworkhorsesofpublichealthevidence.</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">Section 3</p>
+<h2>Health</h2>
+<h2>Determinants</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>The Social Determinantsof Health</h2>
+<p>Healthisshapedfar morebywhereweareborn, grow, live, work, andagethanbythehealthcarewereceive. The W HOcallsthesethe Social</p>
+<p>Determinantsof Health (SDOH).</p>
+<ul>
+<li><strong>1Healthcare Access</strong></li>
+<li><strong>2 Lifestyle &amp; Behavior</strong></li>
+<li><strong>3 Social &amp; Community Networks</strong></li>
+<li><strong>4 Living &amp; Working Conditions</strong></li>
+<li><strong>5 Socioeconomic, Cultural &amp; Environmental Conditions</strong></li>
+</ul>
+<p>Dahlgren &amp; Whitehead&#x27;srainbow modelshowshowindividualfactorssitwithinlayeredsocialstructures — theoutermostlayersarethe mostpowerful</p>
+<p>andhardesttochange.</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Equityvs. Equalityin Health</h2>
+<p>Equality</p>
+<p>Givingeveryonethesameresourcesortreatment</p>
+<p>regardlessofneed.</p>
+<p>Everyonegetsonevaccinedose — eventhosewho</p>
+<p>alreadyhadthedisease.Equity</p>
+<p>Givingpeoplewhatthey ne e dtoreachthesam ehealth</p>
+<p>outcomes.</p>
+<p>Prioritizingunvaccinated, high-riskcom munitiesfirst —</p>
+<p>andreachingthehardesttoreach.</p>
+<p>Healthequity meansstrivingtoeliminateavoidablehealthdifferencesdrivenbysocialdisadvantage — caste, gender,</p>
+<p>incom e, orgeography.</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>SDOHin South Asia: A Snapshot</h2>
+<p>Caste &amp; Discrimination</p>
+<p>Scheduled Castehouseholdsin Indiahave 30% higherchild</p>
+<p>mortalitythanupper-castehouseholds, evenafter</p>
+<p>controllingforincom eGender</p>
+<p>Girlsin South Asiafacenutritionaldeprivation, early</p>
+<p>marriage, andlimitedhealthautonom y — driving maternal</p>
+<p>mortalityandstunting</p>
+<p>Poverty &amp; Housing</p>
+<p>Overcrowdedhousingdrives TBtransmission; lackof</p>
+<p>sanitationdrivesdiarrhealdisease — theleadingkillerof</p>
+<p>childrenunderfiveEducation</p>
+<p>Amother&#x27;syearsofschoolingisoneofthestrongest</p>
+<p>predictorsofchildsurvival — morepowerfulthan</p>
+<p>householdincom ealone</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Case Study: Stunting &amp; Sanitationin Nepal</h2>
+<p>Nepal&#x27;sstuntingrate (36%) farexceedswhatpovertyalonecanexplain. Research</p>
+<p>fromthe Teraiplainsshowedthatopendefecation — notjustfoodinsecurity — was</p>
+<p>theprimarydriver. Childrenabsorbpathogensintheirenvironment, triggering</p>
+<p>chronicgutinflammationthatblocksnutrientabsorption.</p>
+<p>The WASH + nutritionintegration model, pilotedby UNICEFandgovernment,</p>
+<p>reducedstuntingby 10 percentagepointsintargeted districts — byaddressing</p>
+<p>sanitationanddietsimultaneously.</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>📊 Discussion: Mapping Determinants</h2>
+<p>Chooseoneofthefollowingconditions: TB, anemia, diarrhea, ormaternalmortality. Mapoutthekeysocial,</p>
+<p>economic, andenvironmentaldeterminantsdrivingitinyourstateordistrict.</p>
+<p>Biological Factors</p>
+<p>Age, sex, genetics,</p>
+<p>im munestatusBehavioral Factors</p>
+<p>Diet, hygiene,</p>
+<p>healthcare-seekingSocial Factors</p>
+<p>Caste, gendernorm s,</p>
+<p>educationStructural Factors</p>
+<p>Policy, infrastructure,</p>
+<p>incom e</p>
+<p>Whichdeterminantwouldyouprioritizeifyouhadoneinterventiontodesign?</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="22">
+<div class="slide-content">
+<p class="section-number">Section 4</p>
+<h2>Health Systems</h2>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>What Is a Health System ?</h2>
+<p>Ahealthsystem isalltheorganizations, people, andactionswhoseprimarypurposeistopromote, restore, ormaintainhealth — from villagehealth</p>
+<p>workerstonationalpolicy. The W HOidentifiessixcorebuildingblocks:</p>
+<p>Service Delivery</p>
+<p>Clinics, hospitals, com munityhealthHealth Workforce</p>
+<p>Doctors, nurses, ASHAs, paramedics</p>
+<p>Health Information</p>
+<p>HMIS, surveys, surveillanceMedical Products</p>
+<p>Medicines, vaccines, equipment</p>
+<p>Financing</p>
+<p>Taxes, insurance, out-of-pocketLeadership</p>
+<p>Policy, regulation, accountability</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>India&#x27;s Three-Tier Health System</h2>
+<p>Tertiary Tier</p>
+<p>District &amp; Medical College</p>
+<p>hospitals; specialised</p>
+<p>inpatientcar e</p>
+<p>Secondary Tier</p>
+<p>PHCand CHC; outpatient</p>
+<p>car eand 30-bed referral</p>
+<p>Primary Tier</p>
+<p>Sub-Centr e &amp; ASHA; first</p>
+<p>contactvillagecar e</p>
+<p>Most South Asiansfirstencounterthehealthsystem atthesub-centreor ASHAlevel. Strengtheningthisprimarytieriscentraltoachieving</p>
+<p>Universal Health Coverage.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Health Financingin South Asia</h2>
+<p>63%</p>
+<p>Out-of-Pocket</p>
+<p>Shareoftotalhealthspendingpaid</p>
+<p>directlybyhouseholdsin India1.3%</p>
+<p>Public Spend</p>
+<p>India&#x27;spublichealthexpenditureas %</p>
+<p>of GDP (target: 2.5% by 2025)55M</p>
+<p>Pushedto Poverty</p>
+<p>Indianspushedintopovertyannually</p>
+<p>bycatastrophichealthexpenditure</p>
+<p>Highout-of-pocketspendingisboth acauseandconsequenceofpoverty — and a majorbarrierto Universal Health</p>
+<p>Coverageacrosstheregion.</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>Case Study: ASHA Workers</h2>
+<p>in India</p>
+<p>Launchedunderthe National Rural Health Mission (2005), India&#x27;s ~1</p>
+<p>million ASHAworkers arethebackboneofcommunityhealth.</p>
+<p>Trainedvillagewomenwhoaccompanypregnantmothersto</p>
+<p>facilities, distributemedicines, counselonnutrition, andmobilize</p>
+<p>immunizationdrives. Studiesshow ASHAsreducedinstitutional</p>
+<p>deliverydelaysandimprovedimmunizationcoverage — butface</p>
+<p>chronicunder-paymentandlackofrecognitionasformalhealth</p>
+<p>workers.</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>🧩 Exercise: Map Your Local Health System</h2>
+<p>Drawordescribethehealthsystem inyourblockordistrict. Startfrom the ASHAorcom munityhealthworkerand</p>
+<p>tracethereferralpathwaytotertiarycare.</p>
+<p>Whoisthefirstcontact?</p>
+<p>ASHA, ANM, private</p>
+<p>practitioner, orinformal</p>
+<p>healer?Wheredoesreferralgo?</p>
+<p>Isthe PHCfunctional? Does</p>
+<p>the CHChave adoctor?Whatbreaksdown?</p>
+<p>Wheredopeoplefalloutofthe</p>
+<p>system orchoosetopay</p>
+<p>privately?</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="28">
+<div class="slide-content">
+<p class="section-number">Section 5</p>
+<h2>Disease Prevention</h2>
+<h2>Levels</h2>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>Three Levelsof Prevention</h2>
+<p>Primary</p>
+<p>Preventdisease:</p>
+<p>vaccines, sanitation,</p>
+<p>education.Secondary</p>
+<p>Earlydetection:</p>
+<p>screening, diagnosis,</p>
+<p>prompttreatment.</p>
+<p>Tertiary</p>
+<p><strong>Reduceharm:</strong> rehab,</p>
+<p>chroniccar e,</p>
+<p>palliativesupport.</p>
+<p>Theearlierweinterveneinthediseaseprocess, the morelivesandresourceswesave. Mosthealthsystem sover-investintertiarycareandunder-investin</p>
+<p>primaryprevention.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>Preventionin Practice</h2>
+<p>Level Goal Example Setting</p>
+<p>Primary Preventonsetofdisease Immunization, WASH,</p>
+<p>tobaccotaxCommunity, School</p>
+<p>Secondary Earlydetection, limitprogression TBsputumtes t, cervical</p>
+<p>cancerscreeningPHC, CHC</p>
+<p>Tertiary Reduceimpactofestablisheddisease Dialysis, physiotherapy,</p>
+<p>cardiacrehabHospital</p>
+<p>Primordial Preventriskfactorsfromemerging Urbanplanning, food</p>
+<p>policy, anti-povertyPolicylevel</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>The Immunization Imperative</h2>
+<p>92%</p>
+<p>Full Immunization</p>
+<p>Shareof Indianchildrenfullyimmunized</p>
+<p>byage 2 (NFHS-5, 2021) — upfrom 62% in</p>
+<p>201680%</p>
+<p>Vaccine-Preventable</p>
+<p>Proportionofchilddeathsthatcouldbe</p>
+<p>preventedthroughexistingvaccines35%</p>
+<p>Cost Savings</p>
+<p>Estimatedreductionintreatmentcosts</p>
+<p>whenimmunizationratesreach 90%+</p>
+<p>Universal Immunisation Programme (UIP) — covering BCG, DPT, polio, measles, hepatitis Bandmore — is India&#x27;smostcost-effective</p>
+<p>publichealthinvestment.</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Case Study: Cervical Cancer Screeningin India</h2>
+<p>The Problem</p>
+<p>Indiaaccountsfor 25% ofglobalcervicalcancer</p>
+<p>deaths. Yet 80% ofcasesarediagnosedatlatestage —</p>
+<p>whentreatmentiscostlyandoutcomespoor. Mostare</p>
+<p>preventablewith HPVvaccine + earlyscreening.The Response</p>
+<p>Tamil Naduand Gujaratpiloted VIAscreening (visual</p>
+<p>inspectionwithaceticacid) at PHClevel — nolabs, no</p>
+<p>equipment, nurse-led. Earlypilotdatashowed 40%</p>
+<p>reductioninlate-stagedetection. Indiaapprovedthe</p>
+<p>indigenous Cervavac HPVvaccinein 2022 forgirls</p>
+<p>aged 9–14.</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="33">
+<div class="slide-content">
+<p class="section-number">Section 6</p>
+<h2>Communicable</h2>
+<h2>Diseases</h2>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>How Communicable Diseases Spread</h2>
+<p>Infectious</p>
+<p>Agent</p>
+<p>Bacteria, virus, or</p>
+<p>parasite.Reservoir</p>
+<p>Human, animal, or</p>
+<p>environmenthosts.</p>
+<p>Portalof Exit</p>
+<p>Cough, stool, blood</p>
+<p>from reservoir.Modeof</p>
+<p>Transmission</p>
+<p>Droplet, fecal-oral,</p>
+<p>vector, contact.</p>
+<p>Breakinganylinkinthechain — throughvaccination, hygiene, vectorcontrol, orisolation — preventsinfection. Publichealthinterventionstarget multiplelinks</p>
+<p>simultaneouslyfor maximum impact.</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>Com municable Disease Burdenin South Asia</h2>
+<p>Tuberculosis</p>
+<p>Indiacarries 28% oftheglobal TBburden. 2.8</p>
+<p>millionnewcasesannually. TBremainstheleading</p>
+<p>infectiousdiseasekillerofadults.Dengue &amp; Malaria</p>
+<p>South Asiaaccountsfor 70% ofglobaldengue</p>
+<p>burden. Climatechangeisexpandingvectorrange</p>
+<p>intonewhighlandareasof Nepaland Bhutan.</p>
+<p>Diarrheal Diseases</p>
+<p>Leadingcauseofunder-five mortality. Drivenby</p>
+<p>contaminatedwater, opendefecation, andpoorfood</p>
+<p>safety — highlypreventablewith W ASH.COVID-19 &amp; Zoonoses</p>
+<p>South Asia&#x27;sdensehuman-animalinterfacescreate</p>
+<p>ongoingspilloverrisk. India&#x27;ssecondwavein 2021</p>
+<p>killedanestimated 4–5 million — farexceedingofficial</p>
+<p>figures.</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>Disease Surveillance: The Early Warning System</h2>
+<p>Detect</p>
+<p>Identifyunusualdiseaseclustersthroughreportingfrom</p>
+<p>PHCs, hospitals, andcom munityworkers2</p>
+<p>Report</p>
+<p>Notifydistrictandstatehealthauthoritiesthrough IDSP</p>
+<p>(Integrated Disease Surveillance Program me)</p>
+<p>Investigate</p>
+<p>Rapid Response Team scollectsamples, tracecontacts, and</p>
+<p>identifysource4</p>
+<p>Respond</p>
+<p>Containment, treatment, vectorcontrol, andpublic</p>
+<p>com munication</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>Case Study: TB</h2>
+<p>Eliminationin India —</p>
+<p>Nikshay Programme</p>
+<p>India&#x27;stargetof TBeliminationby 2025 (fiveyearsaheadofglobal</p>
+<p>target) spurredthe Nikshay Poshan Yojana — providing ₹500/month</p>
+<p>nutritionalsupportto TBpatients. Analysisshowedmalnutrition</p>
+<p>drives 55% of India&#x27;s TBburden. Bycombining DOTStreatmentwith</p>
+<p>cashtransfers , treatmentcompletionroseandrelapseratesfell.</p>
+<p>Communityvolunteers — Nikshay Mitras — linkedpatient stocare. A</p>
+<p>modelthatmarriesclinicalandsocialdeterminantsthinking.</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>📋 Exercise: Outbreak Investigation Scenario</h2>
+<p>Aclusterof 40 diarrheacasesappearsin aslum in Patnaover 72 hours. Asthepublichealthofficer, whatstepswould</p>
+<p>youtake?</p>
+<ul>
+<li><strong>1 Confirm the Outbreak</strong></li>
+</ul>
+<p>Isthisabovetheexpected</p>
+<p>baseline? Collectcase</p>
+<p>definitionsandinitialdata.2 Identifythe Source</p>
+<p>Interviewcases — sharedwater</p>
+<p>source? Foodvendor? Recent</p>
+<p>gathering?3 Controland</p>
+<p>Com municate</p>
+<p>ORSdistribution, water</p>
+<p>chlorination, andcom munity</p>
+<p>messaging — simultaneously.</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="39">
+<div class="slide-content">
+<p class="section-number">Section 7</p>
+<h2>Non-</h2>
+<h2>Communicable</h2>
+<h2>Diseases</h2>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>The Double Burdenof Disease</h2>
+<p>South Asiafaces auniquedoubleburden: com municablediseasesarestillunfinishedbusiness, while NCDsarerising</p>
+<p>sharply. Thisstrainssystem sbuiltforinfectiousdiseasealone.</p>
+<p>Cardiovascular Disease</p>
+<p>Leadingcauseofadultdeathin</p>
+<p>India — accountingfor 28% ofall</p>
+<p>mortality. Indianshave a</p>
+<p>geneticpredispositiontoearlier-</p>
+<p>onsetheartdisease.Diabetes</p>
+<p>Indiaisthediabetescapital</p>
+<p>oftheworld — 77 million</p>
+<p>adults. Urbanization,</p>
+<p>processedfood, andphysical</p>
+<p>inactivityareprimarydrivers.Cancer &amp; Chronic Lung</p>
+<p>Tobaccousecauses 1 in 3</p>
+<p>cancersin South Asia. Indoorair</p>
+<p>pollutionfrom biomasscooking</p>
+<p>driveschronicobstructive</p>
+<p>pulmonarydisease (COPD)</p>
+<p>amongruralwomen.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>NCD Risk Factor Framework</h2>
+<p>NCD Risk</p>
+<p>Factor</p>
+<p>Framewor</p>
+<p>kTobaccouse</p>
+<p>Drives CVD, cancer,</p>
+<p>CRDCancer</p>
+<p>Major NCDoutcome</p>
+<p>Harmfulalcohol</p>
+<p>use</p>
+<p>Drives CVD, cancer,</p>
+<p>diabetesPhysical</p>
+<p>inactivity</p>
+<p>Drives CVD, diabetes,</p>
+<p>somecancersUnhealthydiet</p>
+<p>Drives CVD, cancer,</p>
+<p>diabetesCardiovascular</p>
+<p>disease</p>
+<p>Major NCDoutcome</p>
+<p>Fourriskfactorsdrivefour major NCDsresponsiblefor 80% of NCDdeaths. Thisconvergence means asingleintegratedstrategy — taxingtobacco, improvingfood</p>
+<p>environments, promotingactivity — canprevent multiplediseasessimultaneously.</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>Case Study: NCD Controlin Sri Lanka</h2>
+<p>Sri Lanka&#x27;s Strength</p>
+<p>Sri Lankaachievesnear-universalprimarycare</p>
+<p>coveragethrough adensenetworkoffreegovernment</p>
+<p>hospitals. NCDscreeningisintegratedintoallroutine</p>
+<p>antenatalandoutpatientcare. Thecountry&#x27;stobacco</p>
+<p>taxpolicy — among South Asia&#x27;shighest — reduced male</p>
+<p>smokingfrom 37% to 22% in adecade.The Lesson</p>
+<p>NCDsare manageablewithinprimarycarewhen</p>
+<p>screening, medication, andfollow-upareintegrated</p>
+<p>intoexistingplatform s — notsiloedinspecialisthospitals.</p>
+<p>Sri Lanka&#x27;s modelisinstructivefor India&#x27;s Ayushman</p>
+<p>Bharat Healthand Wellness Centres.</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="43">
+<div class="slide-content">
+<p class="section-number">Section 8</p>
+<h2>Nutrition &amp;</h2>
+<h2>Maternal Health</h2>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>The 1,000-Day Window</h2>
+<p>The 1,000 daysfrom conceptionto achild&#x27;ssecondbirthdayarethemostcriticalwindowfornutrition. Deprivationduringthisperiodcausesirreversible</p>
+<p>damagetobraindevelopment, im munefunction, andphysicalgrowth.</p>
+<ul>
+<li><strong>1 Conception</strong></li>
+</ul>
+<p>Folate, iron, andiodinecriticalforneuraltubedevelopment</p>
+<ul>
+<li><strong>2 Pregnancy (270 days)</strong></li>
+</ul>
+<p>Adequateweightgain, antenatalcare, iron-folicacid</p>
+<p>supplementation</p>
+<ul>
+<li><strong>3 Birth</strong></li>
+</ul>
+<p>Exclusivebreastfeedingwithin 1 hour; noprelactealfeeds</p>
+<p>4 0–6 Months</p>
+<p>Exclusivebreastfeeding — nowater, nootherfood</p>
+<p>5 6–24 Months</p>
+<p>Complementaryfeeding + continuedbreastfeeding; micronutrient</p>
+<p>supplementation</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>Formsof Malnutritionin South Asia</h2>
+<p>Form Definition South Asia Context</p>
+<p>Stunting Lowheight-for-age (chronic</p>
+<p>undernutrition)34% of Indianchildrenunder 5 (NFHS-5)</p>
+<p>Wasting Lowweight-for-height (acute</p>
+<p>undernutrition)19% — highestwastingburdenglobally</p>
+<p>Underweight Lowweight-for-age 33% in India; drivenbypovertyand WASH</p>
+<p>Micronutrientdeficiency Hiddenhunger — vitamins/minerals 57% of Indianwomenanaemic; iodine, Vit A</p>
+<p>deficits</p>
+<p>Overweight/Obesity Excessweight-for-height Risingrapidlyinurban South Asia; fueling</p>
+<p>diabetes</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>Maternal Mortalityin South Asia</h2>
+<p>103</p>
+<p>India MMR</p>
+<p>Maternaldeathsper 100,000 live</p>
+<p>births (2020) — downfrom 556 in</p>
+<p>1990, butstillfarfrom SDGtargetof</p>
+<p>70638</p>
+<p>Pakistan MMR</p>
+<p>Maternaldeathsper 100,000 —</p>
+<p>among South Asia&#x27;shighest, drivenby</p>
+<p>pooremergencyobstetriccareaccess70%</p>
+<p>Preventable</p>
+<p>Proportionof maternaldeaths</p>
+<p>preventablewithskilledattendance,</p>
+<p>emergencycare, andantenatalvisits</p>
+<p>Thethreedelays modelexplains most maternaldeaths: delayindecidingtoseekcare, reaching afacility, and</p>
+<p>receivingqualitycareonarrival.</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="47">
+<div class="slide-content">
+<h2>Case Study: Janani</h2>
+<p>Suraksha Yojana (JSY)</p>
+<p>JSY (2005) offeredcashincentivesforinstitutionaldeliveriesto Below</p>
+<p>Poverty Linemothers. By 2012, institutionalbirthsrosefrom 39%</p>
+<p>to 74% nationally. Evaluationsshowed JSYreducedneonatal</p>
+<p>mortalityby 3.7 deathsper 1,000 birthsintargeted districts.</p>
+<p><strong>However, qualitygapspersist:</strong> facilitydeliverywithoutskilledcare</p>
+<p>offerslimitedprotection. Theprogrammehighlightsbot hthepower</p>
+<p>ofdemand-sidefinancingandthedangerofmeasuring processover</p>
+<p>outcomes.</p>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="48">
+<div class="slide-content">
+<p class="section-number">Section 9</p>
+<h2>Health</h2>
+<h2>Communication</h2>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>Behavior Change Communication (BCC)</h2>
+<p>Healthbehaviorisshapedbyknowledge, attitudes, socialnorm s, andstructuralfactors. BCCaim stoshiftthese — but mustberootedinunderstandingwhy</p>
+<p>peoplebehaveastheydo, notjustwhattheyshoulddo.</p>
+<p>Knowledge</p>
+<p>AttitudePractice</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="50">
+<div class="slide-content">
+<h2>Com munication Channelsin South Asia</h2>
+<p>Community Radio</p>
+<p>Sangham Radio (Andhra Pradesh) and Radio Namaskar</p>
+<p>(Odisha) reachfarmersandwomenintribalareaswith</p>
+<p>health messaginginlocallanguagesMobile &amp; mHealth</p>
+<p>India&#x27;s 700M+ smartphoneusersenabletargeted SMS</p>
+<p>campaigns, IVRShealth messages, and WhatsAppgroup</p>
+<p>counselingby ASHAs</p>
+<p>Street Theatre &amp; Nukkad Natak</p>
+<p>Grassrootsperformanceartremainsoneofthe most</p>
+<p>effectivechannelsforsensitivetopicslike menstrual</p>
+<p>hygiene, familyplanning, andvaccinehesitancyMahila Mandals &amp; SHGs</p>
+<p>Women&#x27;sself-helpgroupsactastrustedcom munication</p>
+<p>platform s — peer-to-peerhealth messagingthrough</p>
+<p>existingsocialstructuresis moredurablethan mass media</p>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>Case Study: Swachh Bharat &amp; ODF Campaigns</h2>
+<p>The Com munication Challenge</p>
+<p>Opendefecationisnotjust alackoftoilets — itis adeep</p>
+<p>behavioralnorm tiedtohygienebeliefs, caste, space,</p>
+<p>andhabit. Buildingtoiletswithoutbehaviorchange</p>
+<p>leavesthem unused.The Communication Solution</p>
+<p>Swachh Bharat Missionusedshame, pride, and</p>
+<p>aspiration messaging — linkingtoiletusetowomen&#x27;s</p>
+<p>dignityandcom munitystatus. Village-leveltriggering</p>
+<p>workshops (adaptedfrom CLTS) usedcom munityself-</p>
+<p>assessmentto motivatebehaviorchange. ODF</p>
+<p>verificationbypeercom munitiesreinforcednorm s.</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="52">
+<div class="slide-content">
+<p class="section-number">Section 10</p>
+<h2>Data &amp; Evidencein</h2>
+<h2>Public Health</h2>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Key Health Data Sourcesin South Asia</h2>
+<p>NFHS / DHS</p>
+<p>National Family Health Survey — India&#x27;s most</p>
+<p>comprehensivehouseholdhealthsurvey, tracking</p>
+<p>nutrition, fertility, childhealth, andgenderindicators</p>
+<p>since 1992HMIS / DHIS2</p>
+<p>Health Management Information System — facility-level</p>
+<p>reportingofservicesdelivered. Real-tim ebutproneto</p>
+<p>under-reportinganddataqualityissues</p>
+<p>IDSP</p>
+<p>Integrated Disease Surveillance Program me — weekly</p>
+<p>reportsofdiseasealertsfrom alldistrictsandstates.</p>
+<p>India&#x27;searlywarningsystem foroutbreaksCensus &amp; SRS</p>
+<p>Decennial Censusand Sample Registration System</p>
+<p>providepopulationdenominatorsandvitalstatistics</p>
+<p>(birth, deathrates) essentialforindicatorcalculation</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>Reading a Health Indicator</h2>
+<p>Data Source Tim e PeriodDenominato</p>
+<p>rNumeratorNam e</p>
+<p>Indicator</p>
+<p>Everyindicatortells astoryonlywhendisaggregated — nationalaverages maskthesufferingofthepoorestquintile, most</p>
+<p>marginalizedcastes, and mostremotedistricts.</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="55">
+<div class="slide-content">
+<p class="section-number">Section 11</p>
+<h2>Global Health</h2>
+<h2>Architecture</h2>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>SDGs &amp; Universal Health Coverage</h2>
+<p><strong>SDG 3:</strong> Good Health &amp; Well-Being</p>
+<p>Thecentralhealthgoalofthe 2030 Agenda — 13 targets</p>
+<p>covering maternalhealth, com municableand NCDs,</p>
+<p>substanceabuse, roadsafety, UHC, andhealthsecurity.</p>
+<p>South Asiaisoff-trackon mosttargets.Universal Health Coverage (UHC)</p>
+<p>UHCmeansallpeoplereceivequalityessentialhealth</p>
+<p>serviceswithoutfinancialhardship. The UHC Service</p>
+<p>Coverage Indexscorescountrieson 14 tracerindicators.</p>
+<p>Indiascores 58/100 — strongonvaccinationand TB, weak</p>
+<p>on NCDcoverageandfinancialprotection.</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>🧠 Quiz: Test Your Understanding</h2>
+<p>1. Which measure</p>
+<p>countsnew cases</p>
+<p>in adefined</p>
+<p>period?</p>
+<p>a) Prevalence   b)</p>
+<p>Incidence   c) Mortality</p>
+<p>rate   d) CFR2. The 1,000-day</p>
+<p>window startsat:</p>
+<p>a) Birth   b) Age 1   c)</p>
+<p>Conception   d) Weaning3. Whichis NOTa</p>
+<p>W HOhealth</p>
+<p>system building</p>
+<p>block?</p>
+<p>a) Healthworkforce   b)</p>
+<p>Financing   c) Political</p>
+<p>parties   d) Service</p>
+<p>delivery4. Tertiary</p>
+<p>preventionfocuses</p>
+<p>on:</p>
+<p>a) Preventingdisease</p>
+<p>onset   b) Earlydetection</p>
+<p>c) Reducingdisability</p>
+<p>from existingdisease   d)</p>
+<p>Improvingdiet</p>
+<p>5. India&#x27;s TBprogram melinkstreatment</p>
+<p>with:</p>
+<p>a) Surgery   b) Cashtransfersfornutrition   c) Yoga   d)</p>
+<p>Urbanrelocation6. Healthequity means:</p>
+<p>a) Everyonegetsidenticalcare   b) Removingavoidable</p>
+<p>healthdifferences   c) Freehospitalsforall   d) Equal</p>
+<p>diseaseburden</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>Populationthinking</p>
+<p>Publichealthprotectscom munities — notjustindividuals — throughprevention, policy, andcollectiveaction.</p>
+<p>Determinantsmattermost</p>
+<p>Incom e, caste, gender, andsanitationshapehealth morethanhealthcare — addressrootcauses.</p>
+<p>Systemsmustbestrengthened</p>
+<p>Frontlineworkerslike ASHAsarethebackboneofhealthequity — investinpeople, notjustfacilities.</p>
+<p>Preventionpays</p>
+<p>Primarypreventionisalwayscheaperand morehumanethantreatment. The 1,000-daywindowisirreplaceable.</p>
+<p>Datadrivesdecisions</p>
+<p>Disaggregatebycaste, gender, andgeography — aggregatedatahidesinequality.</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>Epidemiology Studyofdiseasedistributionanddeterminants inpopulations</p>
+<p>Incidence Numberofnewcasesin apopulationover adefinedtimeperiod</p>
+<p>Prevalence Proportionof apopulationwith aconditionat a givenpointintime</p>
+<p>SDOH Social Determinantsof Health — economic, social, andenvironmentalconditionsshapinghealth</p>
+<p>UHC Universal Health Coverage — qualityservicesforallwithoutfinancialhardship</p>
+<p>DALY Disability-Adjusted Life Year — measureofdisease burdencombiningdeathanddisability</p>
+<p>CFR Case Fatality Rate — proportionofdiagnosedpatients whodie</p>
+<p>Stunting Lowheight-for-ageinchildren — indicatorofchroni cundernutrition</p>
+<p>BCC Behavior Change Communication — strategicmessagin gtoshifthealthbehaviors</p>
+<p>MMR Maternal Mortality Ratio — deathsper 100,000 livebirths</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

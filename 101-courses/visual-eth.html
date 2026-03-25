@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Ethnography 101 | ImpactMojo</title>
+<meta name="description" content="Visual Ethnography 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #A0522D;
+  --border-art: #8B4513;
+  --bg-slide: #FFFDF7;
+  --bg-section: #8B4513;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">MEL &amp; RESEARCH IMPACTMOJO 101 SERIES</p>
+<h1>Visual Ethnography 101</h1>
+<p class="subtitle">Harnessthepowerofvisualmethodsindevelopmentresearch — from participatoryphotographytovideodocumentationandvisua l storytellingin South Asiancommunities.</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover Today</h2>
+<p>Ajourneythroughvisual methodsfordevelopmentresearch — practical, participatory, androotedin South Asiancontexts.</p>
+<p>Whatis Visual Ethnography?</p>
+<p>Origins, definitions, andwhyit matters02</p>
+<p>Ethics &amp; Powerin Visual Research</p>
+<p>Consent, representation, andresponsibility</p>
+<p>Participatory Photography</p>
+<p>Photovoiceandcom munity-leddocumentation04</p>
+<p>Video &amp; Film Methods</p>
+<p>Documentaryapproachesandparticipatoryvideo</p>
+<p>Visual Mapping &amp; Drawing</p>
+<p>Com munity maps, timelines, andbody mapping06</p>
+<p>Analyzing Visual Data</p>
+<p>Coding, interpretation, and meaning-making</p>
+<p>Digital Tools &amp; Technology</p>
+<p>Mobile methodsanddigitalstorytelling08</p>
+<p>Visual Storytellingfor Impact</p>
+<p>Reporting, advocacy, andcom munication</p>
+<p>Quality &amp; Rigor</p>
+<p>Validity, reliability, andtrustworthiness10</p>
+<p>Integrationwith MEL Systems</p>
+<p>Embeddingvisual methodsin monitoringandevaluation</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Defineandcontextualize</p>
+<p>Explainwhatvisualethnographyisandhowitdiffersfrom conventionalresearch methods</p>
+<p>Designvisualresearch</p>
+<p>Planandimplementparticipatoryphotography, video, and mappingexercisesinfieldsettings</p>
+<p>Navigateethics</p>
+<p>Applyethicalprotocolsaroundconsent, representation, andpowerinvisualresearch</p>
+<p>Analyzevisualdata</p>
+<p>Usesystematicapproachestocodeandinterpretphotographs, videos, anddrawings</p>
+<p>Com municateforimpact</p>
+<p>Translatevisualdataintocompellingstoriesforadvocacy, reports, anddonorcom munication</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 01</p>
+<h2>Whatis Visual</h2>
+<h2>Ethnography?</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>Defining Visual Ethnography</h2>
+<p>Visual Ethnographyis…</p>
+<p>Aqualitativeresearchapproachthatusesimages —</p>
+<p>photographs, video, drawings, maps — asprimarydata</p>
+<p>andastoolsforinquiry, documentation, and</p>
+<p>com munication.Itgoesbeyondpictures</p>
+<p>Visual methodscapturewhatwordsoftencannot — the</p>
+<p>textureofdailylife, spatialrelationships, emotional</p>
+<p>experiences, andcom munity meaningsthatresistverbal</p>
+<p>description.</p>
+<p>Indevelopmentresearch, this meansunderstandinghow</p>
+<p>peoplelive, notjustwhattheyreport.</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>Visualvs. Conventional Research</h2>
+<p>Dimension Conventional Methods Visual Ethnography</p>
+<p>Primarydata Words, numbers Images, video, drawings</p>
+<p>Whoproducesdata Researcher Oftenthecommunity</p>
+<p>Whatitcaptures Reportedbehavior Livedexperience</p>
+<p>Powerdynamic Researcher-led Participatory, shared</p>
+<p>Output Reports, datasets Stories, exhibitions, films</p>
+<p>Bestfor Scale &amp; generalization Depth &amp; meaning</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>A Short Historyof Visual Methods</h2>
+<p>1890s</p>
+<p>Colonial-eraanthropologistsusephotography — oftenextractiveand</p>
+<p>exploitative</p>
+<p>1950s</p>
+<p>Documentaryphotographyenterssociology; Robert Flaherty&#x27;searly</p>
+<p>ethnographicfilm s</p>
+<p>1970s–80s</p>
+<p>Participatoryactionresearchshiftspower — com munitiesdocument</p>
+<p>theirownlives</p>
+<p>1990s</p>
+<p>Photovoicedevelopedby Wang &amp; Burris; videobecomesaccessible</p>
+<p>2000s–Now</p>
+<p>Mobilephones, drones, andsocial mediatransform visualresearch</p>
+<p>globally</p>
+<p>In South Asia, visual methodshavedeeprootsindocumentarytraditions — from thefilm sof Satyajit Raytograssrootsvideo movementslike SEW A&#x27;s</p>
+<p>women&#x27;s mediacollectivesin Gujarat.</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>The Visual Research Spectrum</h2>
+<p>Visualethnographyisnotone method — it&#x27;safamilyofapproaches. Choosebasedonyourresearchquestionand</p>
+<p>com munitycontext.</p>
+<p>📷 Photography</p>
+<p>Researcher- orparticipant-generatedimages</p>
+<p>documentinglife, spaces, andevents🎥 Video &amp; Film</p>
+<p>Movingimagecaptureofprocesses, interviews, and</p>
+<p>com munitystorytelling</p>
+<p>✏ Drawing &amp; Mapping</p>
+<p>Participant-createdillustrations, com munity maps,</p>
+<p>body maps, timelines🗣 Photo-elicitation</p>
+<p>Usingimagesasinterviewpromptstodeepen</p>
+<p>discussionandunlock memory</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Why Visual Methodsin</h2>
+<p>South Asia?</p>
+<p>Bridgingliteracygaps</p>
+<p>Withsignificantoralandvisual</p>
+<p>traditionsacross South Asia,</p>
+<p>imagesoftencommunicate</p>
+<p>moreeffectivelythanwritten</p>
+<p>surveys — especiallywith</p>
+<p>women, elderly, and</p>
+<p>marginalizedcommunities.Amplifyingsilenced</p>
+<p>voices</p>
+<p>Visualtoolsgiveagencyto</p>
+<p>communitieswhoarerarelythe</p>
+<p>authorsofdevelopment</p>
+<p>narratives. When a Dalitwoman</p>
+<p>inrural Rajasthanphotographs</p>
+<p>herowncommunity, she</p>
+<p>becomestheresearcher, not</p>
+<p>justthesubject.</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 02</p>
+<h2>Ethics &amp; Powerin</h2>
+<h2>Visual Research</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>The Ethicsofthe Camera</h2>
+<p>Everyimageisanactofpower. Theresearcherwhoholdsthecamera — orwhodesignswhoholdsit — makeschoicesthat</p>
+<p>affectdignity, safety, andtruth.</p>
+<p>Informed Consent</p>
+<p>Isconsenttrulyfreeandinformed? Inhierarchicalrural</p>
+<p>settings, com munity members mayfeelunabletorefuse</p>
+<p>aresearcherfrom an NGOorgovernmentbody.Image Ownership</p>
+<p>Whoownsthephotographs? Doestheorganization, the</p>
+<p>researcher, orthecom munity memberwhotookor</p>
+<p>appearsintheimageholdrights?</p>
+<p>Riskof Harm</p>
+<p>Imagescanexposesubjectstostigm a, violence, orlegal</p>
+<p>risk — particularlyfor marginalizedgroupslike LGBTQ+</p>
+<p>com munities, survivorsofviolence, orundocumented</p>
+<p>persons.Representation</p>
+<p>Doestheimagereinforcedeficitnarratives — poverty,</p>
+<p>suffering, helplessness? Ordoesitshowagency, dignity,</p>
+<p>andcomplexity?</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>The Ethics Decision Framework</h2>
+<p>Protect Dignity</p>
+<p>Reviewbefor epublishing</p>
+<p>Agreed Image Use</p>
+<p>Storageandsharingterms</p>
+<p>Informed Consent</p>
+<p>Plain, documentedconsent</p>
+<p>Voluntary Participation</p>
+<p>Checkforpowerdynamics</p>
+<p>Applythisfour-stageframeworkbefore, during, andaftereveryvisualresearchactivity. Returntoitwhenindoubt — especiallybeforepublishingor</p>
+<p>sharingimages.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Case Study: Consentin</h2>
+<p>Practice</p>
+<p>BANGLADESH</p>
+<p>BRAC&#x27;s Community Health Program developedvisualconsent</p>
+<p>protocolsforitsvillagehealthworkers. Ratherthanwrittenforms</p>
+<p>(inaccessibleformanyparticipants), researchersusedillustrated</p>
+<p>consentcards showingexactlyhowimageswouldbeused — in</p>
+<p>reports, onwebsites, orintrainingmaterials.</p>
+<p>Communitymembersselectedcoloredstickerstoindicate theirlevel</p>
+<p>ofconsent: green (fulluse), yellow (blurface), orred (internaluse</p>
+<p>only). Thissimplesystemdramaticallyincreasedtrust and</p>
+<p>participation.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Power, Positionality &amp; the Researcher</h2>
+<p>Whoareyouinthisspace?</p>
+<p>Yourcaste, class, gender, language, andinstitutional</p>
+<p>affiliationshapewhatcom munitiessharewithyou —</p>
+<p>andwhattheydon&#x27;t.</p>
+<p>Reflexivity meansacknowledginganddocumenting</p>
+<p>thesedynamics, notpretendingtheydon&#x27;texist.Practicalreflexivitytools</p>
+<p>Keep aresearcherjournalnotingyourassumptions</p>
+<p>beforeenteringthefield</p>
+<p>Ask acom munity membertoreviewyourimages</p>
+<p>beforeanalysis</p>
+<p>Conductmember-checking — shareinterpretations</p>
+<p>forvalidation</p>
+<p>Practicethe &quot;whobenefits?&quot; questionafterevery</p>
+<p>session</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="15">
+<div class="slide-content">
+<p class="section-number">SECTION 03</p>
+<h2>Participatory</h2>
+<h2>Photography &amp;</h2>
+<h2>Photovoice</h2>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="16">
+<div class="slide-content">
+<h2>Whatis Photovoice?</h2>
+<p>Photovoiceis aparticipatoryresearch methoddevelopedby Caroline Wangand Mary Ann Burris (1994) inwhich</p>
+<p>com munity membersusecamerastodocumenttheirlivesandadvocateforchange.</p>
+<p>Document</p>
+<p>Participantsphotographtheir</p>
+<p>everydayrealities — assets,</p>
+<p>challenges, relationships, and</p>
+<p>aspirationsDiscuss</p>
+<p>Groupdiscussionsuseimagesas</p>
+<p>prompts — aprocesscalled</p>
+<p>SHOWeD (Whatdoyou See?</p>
+<p>What&#x27;sreally Happening? How</p>
+<p>doesitaffect Ourlives? Why? What</p>
+<p>canwe Do?)Act</p>
+<p>Selectedimagesarepresentedto</p>
+<p>policymakers, funders, orthepublic</p>
+<p>toadvocateforcom munity-</p>
+<p>identifiedpriorities</p>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>The SHOWeD Framework</h2>
+<p>Do Why Our Lives Happening See</p>
+<p>SHOWeDtransform sasimplephotographinto astructuredanalyticalconversation. Facilitatorsguidewithoutleading — the</p>
+<p>meaning mustemergefrom thecom munity, nottheresearcher.</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Running a Photovoice Project</h2>
+<p>Recruitparticipants</p>
+<p>Select 8–15 com munity members; ensurediversitybygender, age, andsocialposition</p>
+<p>Trainonphotography</p>
+<p>Basiccameraskills, framing, ethicsofphotographingothers, andconsent</p>
+<p>Assign atheme</p>
+<p><strong>Give abroad, openprompt:</strong> &quot;Showuswhat makesyourcom munitystrong&quot; or &quot;Documentwhatyouwantchanged&quot;</p>
+<p>Facilitate SHOWeD</p>
+<p>Meetingroupstodiscussselectedimagesusingthe SHOWeDframework</p>
+<p>Create &amp; exhibit</p>
+<p>Co-curateanexhibitionorreport; presenttopolicymakersorfunders</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>Case Study: Photovoicein</h2>
+<p>Rajasthan</p>
+<p>INDIA</p>
+<p>The Anganwadi Documentation Project (Jaipur, 2019) trained 22</p>
+<p>womenfrommarginalizedcommunitiestophotographthei r</p>
+<p>children&#x27;slearningenvironments. Participantsdocumentedbroken</p>
+<p>infrastructure, absentteachers, and — crucially — momentsofjoyand</p>
+<p>learningthatformalinspectionsmissedentirely.</p>
+<p>Theirexhibitioninthedistrictcollector&#x27;sofficeprompteddirect</p>
+<p>budgetallocationsforthreevillages. Theimagesdid what a 40-page</p>
+<p>reporthadnot.</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Reflection Exercise</h2>
+<p>🎯 Try This: Ifyouhadonehourinyourcurrentfieldsitewith acamera, whatsinglephotographwouldyoutake</p>
+<p>totellthestoryofthiscom munity&#x27;sgreateststrength? Andwhatphotographwouldtellthestoryofits</p>
+<p>greatestunmetneed? Writebothcaptionsbeforeyoutaketheimages.</p>
+<p>Thisexercisebuildsyour &quot;visualintention&quot; — thehabitofseeingwithpurposebeforephotographing. Strongvisual</p>
+<p>ethnographersalwayshaveananswerto: &quot;Whatam Itryingtoshow, andwhy?&quot;</p>
+<p>💡 Discuss</p>
+<p>What might acom munity memberphotographthat</p>
+<p>you, asanoutsider, wouldneverthinktocapture?⚠ Caution</p>
+<p>Arethereimagesinyourfieldsitethatshould NOTbe</p>
+<p>taken, regardlessofconsent? Why?</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="21">
+<div class="slide-content">
+<p class="section-number">SECTION 04</p>
+<h2>Video &amp; Film</h2>
+<h2>Methodsin</h2>
+<h2>Development</h2>
+<h2>Research</h2>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="22">
+<div class="slide-content">
+<h2>Videoas Research Tool</h2>
+<p>Videocaptureswhatphotographscannot — movement, voice, sequence, interaction, andthepassageoftim e. Indevelopment</p>
+<p>research, this meansdocumentingprocesses, notjust moments.</p>
+<p>Researcher-led Documentary</p>
+<p>Theresearcherdirectsandedits. Bestforexternal</p>
+<p>com munication, donorreporting, andevidencesynthesis.Participatory Video (PV)</p>
+<p>Com munity membersscript, film , andedit. Theprocessitself</p>
+<p>isanintervention — buildingskills, confidence, andcollective</p>
+<p>voice.</p>
+<p>Video-recorded Interviews</p>
+<p>Recordedconversationsthatcapturetone, emotion, andnon-</p>
+<p>verbalcuesoftenlostintranscription.Video Observation</p>
+<p>Recordingnaturallyoccurringevents — markets, meetings,</p>
+<p>rituals — for micro-levelbehavioralanalysis.</p>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>Participatory Video: The Process</h2>
+<p>Community</p>
+<p>ScopingStoryboarding</p>
+<p>Filming</p>
+<p>TrainingScreening &amp;</p>
+<p>Dissemination</p>
+<p>Unlikeextractivefilm making, participatoryvideotreatstheproductionprocessasequallyimportantasthefinalproduct. The</p>
+<p>learninghappensinthe making.</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>Case Study: Video Sebha,</h2>
+<p>Nepal</p>
+<p>NEPAL</p>
+<p>InsightShare Nepal workedwith Dalitwomen&#x27;sgroupsin Kaski</p>
+<p>districttoproduceshortfilmsaboutlandrights. Participants — most</p>
+<p>withnopriormediaexperience — filmed, scripted, andnarrated 8-</p>
+<p>minutedocumentariesshowntolocalgovernmentofficials.</p>
+<p>Theprocessrevealedthatparticipantswhofilmedstorie sbecame</p>
+<p>strongeradvocatesbecausetheyhadinternalizedthe narrative.</p>
+<p>Threeparticipantslaterbecamecommunitymediaproducers,</p>
+<p>runningtheirownlocalnewsservice.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Video Ethics: Special Considerations</h2>
+<p>Videoishardertoanonymize</p>
+<p>Unlikeinterviewtranscripts, videoof aperson&#x27;sface,</p>
+<p>voice, andhom eenvironmentisnearlyimpossibleto</p>
+<p>anonymize. Thisraisesthestakessignificantlyfor</p>
+<p>consent.Beforeyoufilm , ask:</p>
+<p>Canparticipantswithdrawtheirfootageafterfilming?</p>
+<p>Willthevideobeaccessibleonline — andtowhom ?</p>
+<p>Arechildreninvolved? Separateparentalconsentis</p>
+<p>essential.</p>
+<p>Couldthisfootagebeusedagainstanyonein alegal</p>
+<p>orpoliticalcontext?</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="26">
+<div class="slide-content">
+<p class="section-number">SECTION 05</p>
+<h2>Visual Mapping &amp;</h2>
+<h2>Community</h2>
+<h2>Drawing Methods</h2>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Why Draw Together?</h2>
+<p>Com munitydrawing methodsinviteparticipantstorepresenttheirworldonpaper — spaces, relationships, timelines, and</p>
+<p>bodies. Theactofdrawingtogetherisitself aform ofshared meaning-making.</p>
+<p>Com munity Maps</p>
+<p>Participantsdrawtheirvillage, neighborhood, or</p>
+<p>watershed — locatingassets, hazards, andinstitutions</p>
+<p>theyconsidersignificantTransect Walks</p>
+<p>Walkingwithcom munity memberswhiledocumenting</p>
+<p>observationsacrosszones — forest, farm , market, hom e</p>
+<p>Seasonal Calendars</p>
+<p>Visualrepresentationsofhowwork, incom e, health, or</p>
+<p>foodsecurityvariesacrosstheyearBody Mapping</p>
+<p>Participantstraceandannotatebodyoutlinesto</p>
+<p>documenthealth, traum a, orwellbeing — usedin</p>
+<p>HIV/healthprogram sacross South Asia</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="28">
+<div class="slide-content">
+<h2>Community Mappingin Practice</h2>
+<p>Settingthe</p>
+<p>scene</p>
+<p>Introducepurpose</p>
+<p>andgroundrulesDebrief</p>
+<p>discussion</p>
+<p>Discussinclusions,</p>
+<p>absences, and</p>
+<p>perspectivesDrawing</p>
+<p>together</p>
+<p>Participantsadd</p>
+<p>features; researcher</p>
+<p>observes</p>
+<p>The mostvaluableinsightsoftencom efrom whatcom munitiesleaveoffthe map, orwheretheydisagreeaboutplacement — these moments</p>
+<p>revealcontested meaningsandpowerdynamics.</p>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>Case Study: Flood</h2>
+<p>Mappingin Bangladesh</p>
+<p>BANGLADESH</p>
+<p>Practical Action Bangladesh facilitatedcommunityfloodhazard</p>
+<p>mappingwith 14 villagesin Sylhet. Women — oftenexcludedfrom</p>
+<p>officialplanningmeetings — producedthemostdetailed maps,</p>
+<p>includingsafeshelterroutesandareassafeforchildrenduringfloods.</p>
+<p>Theirmaps, digitizedwithsimple GPStools, wereincorporatedinto</p>
+<p>thedistrict Disaster Management Plan — afirstinth eregion. The</p>
+<p>mapsoutsiderengineershadproducedwerefoundtomiss over 30%</p>
+<p>ofat-riskhouseholds.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>Seasonal Calendar: Example</h2>
+<p>Activity Jan Fe</p>
+<p>bMa</p>
+<p>rApr Ma</p>
+<p>yJun Jul Au</p>
+<p>gSe</p>
+<p>pOct No</p>
+<p>vDec</p>
+<p>Agricultural</p>
+<p>workLo</p>
+<p>wLo</p>
+<p>wHig</p>
+<p>hHig</p>
+<p>hLo</p>
+<p>wLo</p>
+<p>wHig</p>
+<p>hHig</p>
+<p>hHig</p>
+<p>hLo</p>
+<p>wLo</p>
+<p>wLo</p>
+<p>w</p>
+<p>Food</p>
+<p>availabilityLo</p>
+<p>wLo</p>
+<p>wMe</p>
+<p>dMe</p>
+<p>dLo</p>
+<p>wLo</p>
+<p>wLo</p>
+<p>wMe</p>
+<p>dHig</p>
+<p>hHig</p>
+<p>hMe</p>
+<p>dMe</p>
+<p>d</p>
+<p>Children&#x27;s</p>
+<p>schoolHig</p>
+<p>hHig</p>
+<p>hHig</p>
+<p>hLo</p>
+<p>wHig</p>
+<p>hHig</p>
+<p>hLo</p>
+<p>wHig</p>
+<p>hHig</p>
+<p>hHig</p>
+<p>hHig</p>
+<p>hLo</p>
+<p>w</p>
+<p>Seasonalcalendarsrevealstructuralvulnerabilitiesinvisibletoannualsurveys. Afamilyreporting &quot;adequat efood&quot; in</p>
+<p>Octobertells averydifferentstoryin June — but asinglehouseholdsurveymissesthisentirely.</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="31">
+<div class="slide-content">
+<p class="section-number">SECTION 06</p>
+<h2>Analyzing Visual</h2>
+<h2>Data</h2>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Visual Datais Still Data</h2>
+<p>Imagesandvideosrequiresystematicanalysisjustlikeinterviewtranscriptsorsurveyresponses. Thekeydifference:</p>
+<p>visualdatacarries multiplelayersof meaningsimultaneously.</p>
+<p>Denotativelevel</p>
+<p>Whatisliterallyintheimage?</p>
+<p>Who, what, where?2</p>
+<p>Connotativelevel</p>
+<p>Whatdoestheimagesuggestor</p>
+<p>symbolize? Whatfeelingsdoesit</p>
+<p>evoke?3</p>
+<p>Ideologicallevel</p>
+<p>Whatassumptions, power</p>
+<p>relations, orculturalnorm sdoes</p>
+<p>theimagereinforceorchallenge?</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="33">
+<div class="slide-content">
+<h2>Approachesto Visual Analysis</h2>
+<p>Approach Whatitdoes Bestfor</p>
+<p>Content Analysis Countsandcategorizesvisualelements</p>
+<p>systematicallyLargeimagesets, quantitative</p>
+<p>patterns</p>
+<p>Thematic Analysis Identifiesrecurringthemesacrossimagesand</p>
+<p>narrativesPhotovoice, communitydatasets</p>
+<p>Semiotics Analyzessigns, symbols, andcultural</p>
+<p>meaningsAdvertising, media, visualculture</p>
+<p>Discourse Analysis Examineshowimagesconstructand</p>
+<p>communicatepowerPolicy, advocacy, media</p>
+<p>Grounded Theory Letscategoriesemergefromtheimages</p>
+<p>themselvesExploratory, community-led</p>
+<p>research</p>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>Coding Visual Data: A Simple Protocol</h2>
+<p>Interpretive</p>
+<p>mem oThematic</p>
+<p>groupingOpencoding Firstpass</p>
+<p>Alwayscodewith aresearchassistantorcom munity memberforatleast aportionofthedataset. Comparingyourcodes</p>
+<p>revealsyourownblindspotsandassumptions.</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>Member-Checkingin Visual Research</h2>
+<p>Whatis member-checking?</p>
+<p>Sharingyourinterpretationsbackwithparticipantsto</p>
+<p>verifythatyouranalysisreflectstheirintended</p>
+<p>meanings — notjustyourprojections.Howtodoitwell</p>
+<p>Presentthemesasquestions, notconclusions: &quot;We</p>
+<p>noticed X — doesthatringtrue?&quot;</p>
+<p>Allowparticipantstorejector modifyyour</p>
+<p>interpretations</p>
+<p>Documentdisagreements — theyarefindings, not</p>
+<p>errors</p>
+<p>Ingroupsettings, allowindividualresponsestoavoid</p>
+<p>groupthink</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="36">
+<div class="slide-content">
+<p class="section-number">SECTION 07</p>
+<h2>Digital Tools &amp;</h2>
+<h2>Mobile Methods</h2>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>The Mobile Phone Revolution</h2>
+<p>Withover 750 millionsmartphoneusersin Indiaalone, mobiletechnologyhasfundamentallydemocratizedvisual</p>
+<p>research. Com munity memberswhoonceneededexpensivecamerasnowcarrycapableimagingtoolsintheirpockets.</p>
+<p>750M</p>
+<p>Smartphoneusersin India78%</p>
+<p>Ruralmobilepenetrationin</p>
+<p>Bangladesh4x</p>
+<p>Growthinmobilevideo</p>
+<p>consumptionin South Asia</p>
+<p>(2018–2023)</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>Digital Toolsfor Visual Research</h2>
+<p>KoboToolbox / ODK</p>
+<p>Open-sourceplatform sfor mobiledatacollection</p>
+<p>includinggeo-taggedphotocapture. Free, offline-capable,</p>
+<p>andwidelyusedby NGOs.CapCut / InShot</p>
+<p>Free mobilevideoeditingtoolsaccessibletocom munity</p>
+<p>memberswithbasicliteracy. Supportsubtitles, voice-over,</p>
+<p>and multi-clipediting.</p>
+<p>QGIS / Google Earth</p>
+<p>Free GISplatform stovisualizecom munity maps, transect</p>
+<p>walkroutes, andgeo-taggedimagesinspatialcontext.Google Drive / Nextcloud</p>
+<p>Securecloudstorageforlargevisualdatasets. Nextcloud</p>
+<p>offersself-hostedoptionfororganizationswithdata</p>
+<p>sovereigntyconcerns.</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>Digital Ethics: New Risks</h2>
+<p>Metadataexposure</p>
+<p>Smartphonephotosembed GPS</p>
+<p>coordinates, timestamps, and</p>
+<p>device IDsintheimagefile. A</p>
+<p>photosharedinnocentlycan</p>
+<p>revealexactlywhereandwhen a</p>
+<p>vulnerablepersonwaslocated.Cloudstoragerisks</p>
+<p>Storingsensitiveimagesonfree</p>
+<p>cloudplatform s (Google Drive,</p>
+<p>iCloud) meansyourdatais</p>
+<p>subjectto USor EUjurisdiction —</p>
+<p>which mayconflictwith Indian</p>
+<p>dataprotectionlawsand</p>
+<p>com munityexpectations.Deepfakeand</p>
+<p>manipulation</p>
+<p>AItoolscanalterimagesand</p>
+<p>video. Maintaining aclearchain</p>
+<p>ofcustodyforyourvisualdatais</p>
+<p>increasinglyimportantfor</p>
+<p>researchintegrity.</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>Case Study: Mobile</h2>
+<p>Monitoringin Pakistan</p>
+<p>PAKISTAN</p>
+<p>AMAN Foundation&#x27;s Community Health Worker Program in</p>
+<p>Karachiequipped 800 Lady Health Workerswithsmartphonesloaded</p>
+<p>with avisualdocumentationprotocol. Workersphotographed</p>
+<p>householdconditions, childnutritionstatus, andsanitationfacilities</p>
+<p>alongsidestructuredsurveyresponses.</p>
+<p>Thevisualdataidentified apatternofsevereunderreportingofopen</p>
+<p>defecationthatsurveyshadsystematicallymissed — becausewomen</p>
+<p>feltshameansweringverballybutcoulddocumentthereality</p>
+<p>photographically.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="41">
+<div class="slide-content">
+<p class="section-number">SECTION 08</p>
+<h2>Visual Storytelling</h2>
+<h2>for Impact</h2>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>From Datato Story</h2>
+<p>Collectingvisualdataisonlyhalfthework. Theotherhalfistranslatingthatdataintostoriesthat movepeople —</p>
+<p>funders, policymakers, andcom munitiesthemselves — towardaction.</p>
+<p>Evidence</p>
+<p>Images, video, maps — yourrawvisualdata2</p>
+<p>Meaning</p>
+<p>Analysis — themes, patterns, contradictions</p>
+<p>Narrative</p>
+<p>Astorywith aprotagonist, tension, andresolution4</p>
+<p>Impact</p>
+<p>Changeindecision, behavior, orpolicy</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="43">
+<div class="slide-content">
+<h2>The Visual Story Arc</h2>
+<p>Beginning</p>
+<p>Introducepeople</p>
+<p>andtheirworld</p>
+<p>Risingtension</p>
+<p>Revealthevisible</p>
+<p>problemorgapIntervention</p>
+<p>Showpeopleactively</p>
+<p>makingchange</p>
+<p>Resolution</p>
+<p>Evidenceofchange</p>
+<p>withparticipant</p>
+<p>voice</p>
+<p>Thestrongestdevelopmentstoriescenteronhumanagency , notorganizationalachievement. Yourvisualsshouldshowpeoplemaking</p>
+<p>change, notreceivingit.</p>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>Formatsfor Visual Storytelling</h2>
+<p>Photo Essay</p>
+<p>8–15 imageswithextendedcaptionsthatbuild a</p>
+<p>narrativearc. Bestforprintedreportsandlongform</p>
+<p>webcontent.Photo Exhibition</p>
+<p>Physicalordigitaldisplayofcom munityimages.</p>
+<p>Exhibitionscreatedialogue — viewersrespond,</p>
+<p>com munitiesseethemselves.</p>
+<p>Short Documentary</p>
+<p>3–10 minutefilm sforsocial media, organizational</p>
+<p>websites, ordonorbriefings. Highemotionalimpact.Illustrated Report</p>
+<p>Annualorevaluationreportsthatintegratevisualdata</p>
+<p>alongsidetextfindings. Increasinglyexpectedby</p>
+<p>DFID, USAID, and Gates Foundation.</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>Avoidingthe &quot;Poverty Porn&quot; Trap</h2>
+<p>Whatispovertyporn?</p>
+<p>Imagesthatexploitsuffering — particularlyofchildren —</p>
+<p>toprovokedonorsympathywithoutcontext, dignity, or</p>
+<p>thesubject&#x27;s meaningfulconsent. Itisbothethically</p>
+<p>wrongandstrategicallycounterproductive.Thealternative: Asset-basedvisual</p>
+<p>storytelling</p>
+<p>Showcompetenceandagencyalongside</p>
+<p>vulnerability</p>
+<p>Includecaptionsoraudiowrittenorspokenbythe</p>
+<p>subjectsthemselves</p>
+<p>Neverphotographorfilm childrenindistresswithout</p>
+<p>extrem ejustification</p>
+<p><strong>Ask:</strong> &quot;Wouldthispersonbeproudtosharethisimage</p>
+<p>intheirowncom munity?&quot;</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="46">
+<div class="slide-content">
+<p class="section-number">SECTION 09</p>
+<h2>Quality &amp; Rigorin</h2>
+<h2>Visual Research</h2>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="47">
+<div class="slide-content">
+<h2>Is Visual Research &quot;Rigorous&quot;?</h2>
+<p>Visualethnographyissometimesdismissedassubjectiveoranecdotal. Inreality, itappliesrigorousqualitycriteria — butthesecriteria</p>
+<p>differfrom quantitativebenchmarks.</p>
+<p>Credibility</p>
+<p>Equivalenttointernalvalidity. Achievedthroughprolonged</p>
+<p>engagement, triangulation, and member-checking.Transferability</p>
+<p>Equivalenttoexternalvalidity. Achievedthroughthick</p>
+<p>descriptionthatallowsreaderstojudgeapplicabilitytotheir</p>
+<p>context.</p>
+<p>Dependability</p>
+<p>Equivalenttoreliability. Achievedthroughanaudittrail</p>
+<p>documentingall methodologicaldecisions.Confirmability</p>
+<p>Equivalenttoobjectivity. Achievedthroughreflexivityand</p>
+<p>transparencyabouttheresearcher&#x27;spositionality.</p>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Triangulationin Visual Research</h2>
+<p>Contextual Data</p>
+<p>Visual Data Verbal DataVisual +</p>
+<p>ContextVerbal +</p>
+<p>Context</p>
+<p>Visual +</p>
+<p>VerbalRobust,</p>
+<p>Credible</p>
+<p>Findings</p>
+<p>Neverrelysolelyonimages. The mostpowerfulvisualethnographiespairwhatisseenwithwhatissaidandwhatisobserved — buildingevidencethatisgreaterthanthesum ofitsparts.</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>The Audit Trail</h2>
+<p>Anaudittrailis asystematicrecordofallyour methodologicaldecisions. Itallowsexternalreviewerstounderstand —</p>
+<p>andchallenge — howyou movedfrom imagestoconclusions.</p>
+<ul>
+<li><strong>1 Researchdesignlog</strong></li>
+</ul>
+<p>Recordeverychangetoyourresearchdesignand</p>
+<p>whyitwas made2 Consentdocumentation</p>
+<p>Storeallconsentform s, includingphotosof</p>
+<p>visual/oralconsentprocesses</p>
+<ul>
+<li><strong>3 Codebook</strong></li>
+</ul>
+<p>Documentallcodes, theirdefinitions, andexample</p>
+<p>imagesforeach4 Reflexivityjournal</p>
+<p>Regularentriesdocumentingyourassumptions,</p>
+<p>reactions, andpositionality</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="50">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Integrating Visual</h2>
+<h2>Methodsinto MEL</h2>
+<h2>Systems</h2>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>Where Visual Methods Fitin MEL</h2>
+<p>MEL Stage Visual Method Whatitcaptures Output</p>
+<p>Baseline Communitymapping,</p>
+<p>photographyStartingconditions, assets,</p>
+<p>gapsVisualbaselinedocument</p>
+<p>Processmonitoring Participatoryvideo,</p>
+<p>observationQualityofimplementation,</p>
+<p>fidelityProgressphotolog</p>
+<p>Outcomeevaluation Photovoice, before/after</p>
+<p>setsChangeinconditions,</p>
+<p>behavior, wellbeingComparativephotoessay</p>
+<p>Learning Photoelicitation, visual</p>
+<p>FGDsWhythingsworkedor</p>
+<p>didn&#x27;tIllustratedlearningbrief</p>
+<p>Communication Documentary, exhibitions Humanstoryof impact Film, exhibition, report</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Designing a Visual MEL System</h2>
+<p>Learning Protocols Roles Methods Indicators</p>
+<p>The mosteffectivevisual MELsystem sarenotadd-ons — theyaredesignedfrom thestart, withvisualindicatorsbuiltintothe</p>
+<p>Theoryof Changeitself.</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Case Study: SEWA&#x27;s Visual</h2>
+<p>MEL</p>
+<p>INDIA</p>
+<p>SEWA (Self-Employed Women&#x27;s Association) haslongusedvisual</p>
+<p>documentationasanorganizingandmonitoringtool. Fieldworkers</p>
+<p>photographworkingconditions, marketaccess, andhousehold</p>
+<p>changesmonthly — imagesfeeddirectlyintoadvocacy dossiers.</p>
+<p>Theirvisualarchives, maintainedsincethe 1990s, nowserveas a</p>
+<p>longitudinaldatasetshowingchangesinwomen&#x27;seconomic status</p>
+<p>acrossthreedecades — aresourcethatquantitative surveyssimply</p>
+<p>couldnotreplicate.</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>Quiz: Test Your Understanding</h2>
+<p>📝 Self-Assessment — 6 Questions</p>
+<p>Q1</p>
+<p><strong>Photovoicewasdevelopedby:</strong> a) Paulo Freire, b) Caroline Wang</p>
+<p>&amp; Mary Ann Burris, c) Robert Chambers, d) John DeweyQ2</p>
+<p>Inthe SHOWeDframework, the &quot;D&quot; standsfor: a) Document, b)</p>
+<p>Describe, c) Do, d) Debate</p>
+<p>Q3</p>
+<p>Whichqualitycriterioninvisualresearchisequivalentto &quot;internal</p>
+<p>validity&quot;? a) Transferability, b) Credibility, c) Dependability, d)</p>
+<p>ConfirmabilityQ4</p>
+<p>Whatdoes &quot;positionality&quot; meaninvisualresearch? a) Camera</p>
+<p>angle, b) Researcher&#x27;ssocialidentityandhowitshapesthe</p>
+<p>research, c) Locationofthefieldwork, d) Positionofsubjectsin</p>
+<p>photographs</p>
+<p>Q5</p>
+<p>Whichofthefollowingis NOTaform ofvisualethnography? a)</p>
+<p>Com munity mapping, b) Randomizedcontroltrial, c)</p>
+<p>Participatoryvideo, d) Body mappingQ6</p>
+<p><strong>Trueor False:</strong> Smartphonephotosautomaticallycontain GPS</p>
+<p>metadatathatcouldexposeparticipants&#x27; locations.</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>Quiz: Reflection Questions</h2>
+<p>Reflection A</p>
+<p>Thinkof arecentevaluationor</p>
+<p>researchprojectyouworkedon.</p>
+<p>Whatwouldhavebeendifferent —</p>
+<p>inyourfindingsoryourprocess — if</p>
+<p>youhadused avisual method?</p>
+<p>Whatwouldyouhaveseenthatyou</p>
+<p>didn&#x27;t?Reflection B</p>
+<p>Recall adevelopmentimageyou</p>
+<p>haveseenusedin areportor</p>
+<p>campaign. Usingthethreelevelsof</p>
+<p>analysis (denotative, connotative,</p>
+<p>ideological), whatistheimage</p>
+<p>actuallysaying? Whobenefitsfrom</p>
+<p>that message?Reflection C</p>
+<p>Ifyouweretodesign avisual MEL</p>
+<p>componentforyourcurrent</p>
+<p>organization, whichsingle method</p>
+<p>wouldyouintroducefirst, andwhy?</p>
+<p>Whatbarrierswouldyouneedto</p>
+<p>overcom e?</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>🔍 Visualmethodsreveal</p>
+<p>whatwordsmiss</p>
+<p>Livedexperience, spatial</p>
+<p>relationships, emotion, and</p>
+<p>com munity meaningareallbetter</p>
+<p>capturedvisuallythanverbally🤝 Participation</p>
+<p>transformspower</p>
+<p>Whencom munitiesholdthe</p>
+<p>camera, theybecom eresearchers</p>
+<p>— notsubjects. Thisshiftisboth</p>
+<p>ethicalandepistemological⚖ Ethicsisnotoptional</p>
+<p>Consent, dignity, andimage</p>
+<p>ownership mustbeactively</p>
+<p>designedintoeveryvisual</p>
+<p>researchprocess — nottreatedas</p>
+<p>acheckbox</p>
+<p>📊 Rigorlooksdifferent, notless</p>
+<p>Visualresearchappliescredibility, transferability,</p>
+<p>dependability, andconfirmability — justasrobustlyas</p>
+<p>quantitative methods🔗 Visualmethodsbelongin MEL</p>
+<p>Integratevisualindicatorsfrom the Theoryof Change</p>
+<p>outward — visual MELisnotanadd-onbut acore</p>
+<p>evidencestrategy</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Glossaryof Key Term s</h2>
+<p>Visual Ethnography</p>
+<p>Aqualitativeresearchapproachusingimagesasprimarydata</p>
+<p>andinquirytoolstounderstandlivedexperienceandsocial</p>
+<p>meaningPhotovoice</p>
+<p>Aparticipatory methodwherecom munity membersphotograph</p>
+<p>theirlivesanduse SHOWeDdiscussionstoadvocateforchange</p>
+<p>(Wang &amp; Burris, 1994)</p>
+<p>Positionality</p>
+<p>Theresearcher&#x27;ssocialidentity — caste, class, gender, language</p>
+<p>— andhowitshapeswhattheysee, ask, andconcludeMember-checking</p>
+<p>Thepracticeofsharinganalyticalinterpretationswith</p>
+<p>participantstoverifyaccuracyandcom munityresonance</p>
+<p>Triangulation</p>
+<p>Using multipledatasourcesor methodstostrengthenthe</p>
+<p>credibilityandcompletenessoffindingsPhoto-elicitation</p>
+<p>Usingphotographsasinterviewpromptstostimulatedeeper</p>
+<p>reflectionanddiscussionthanverbalquestioningalone</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Glossary: More Key Term s</h2>
+<p>Participatory Video (PV)</p>
+<p>Avisual methodwherecom munity membersscript, film , and</p>
+<p>editvideos — makingtheproductionprocessitselfan</p>
+<p>interventionBody Mapping</p>
+<p>Aparticipatorydrawing methodinwhichparticipantstraceand</p>
+<p>annotatebodyoutlinestodocumenthealth, experience, or</p>
+<p>wellbeing</p>
+<p>SHOWeD</p>
+<p>Astructureddiscussionframeworkfor Photovoice: See,</p>
+<p>Happening, Ourlives, Why, DoAudit Trail</p>
+<p>Adocumentedrecordofall methodologicaldecisions, allowing</p>
+<p>externalverificationofhowconclusionswerereached</p>
+<p>Thick Description</p>
+<p>Detailedcontextualdocumentation (Geertz) thatallowsreaders</p>
+<p>tojudgewhetherfindingstransfertotheirownsettingsAsset-based Storytelling</p>
+<p>Visualnarrativesthatcentercom munitystrengths, agency, and</p>
+<p>capability — incontrasttodeficit-focused &quot;povertyporn&quot;</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>📚 Foundational Books</p>
+<p>Visual Ethnography — Sarah Pink (2007). Thedefinitive</p>
+<p>methodologicaltext.</p>
+<p><strong>Photovoice:</strong> Using Camerasto Promote Health — Caroline</p>
+<p>Wang (1999)</p>
+<p>Doing Visual Ethnography — Sarah Pink (3rded., 2013)</p>
+<p>Visual Methodsin Social Research — Marcus Banks (2001)</p>
+<p>Participatory Video — Nickand Chris Lunch, InsightShare</p>
+<p>(2006)</p>
+<p>📄 Key Papers</p>
+<p>Wang, C. &amp; Burris, M.A. (1994). &quot;Empowermentthrough</p>
+<p>Photo Novella.&quot; Health Education Quarterly</p>
+<p>Mannay, D. (2010). &quot;Makingthefamiliarstrange.&quot; Qualitative</p>
+<p>Research🌐 Online Resources</p>
+<p>InsightShare.org — Participatoryvideotrainingand</p>
+<p>resources</p>
+<p>PhotoVoice.org — Photovoicepracticeglobally</p>
+<p>KoboToolbox.org — Free mobiledatacollectionwithvisual</p>
+<p>support</p>
+<p>VisualSociologyAssociation.org — Academiccom munity</p>
+<p>andpublications</p>
+<p>󰏝 South Asia Specific</p>
+<p>PRIA International — Participatoryresearchresourcesfor</p>
+<p>India</p>
+<p>DRIK Picture Library — Bangladesh&#x27;sethicalvisualarchive</p>
+<p>SEWA Academy — Archivalfilm sanddocumentationtools</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

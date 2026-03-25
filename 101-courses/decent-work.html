@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decent Work For All 101 | ImpactMojo</title>
+<meta name="description" content="Decent Work For All 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #DC143C;
+  --border-art: #B22222;
+  --bg-slide: #FFFDF7;
+  --bg-section: #B22222;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">Decent Work For All 101</p>
+<h1>Understanding ILOframeworksforproductiveemployment, labor</h1>
+<p class="subtitle">rights, socialprotection, andsocialdialoguein South Asia. IMPACTMOJO 101 SERIES GENDER &amp; EQUITYwww.impactmojo.in</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover Today</h2>
+<p>What Is Decent Work?</p>
+<p>ILOdefinitionandthefourpillarsframework02</p>
+<p>Employment &amp; Productive Work</p>
+<p>Qualityjobs, informality, andthe South Asiancontext</p>
+<p>Labor Rights &amp; Standards</p>
+<p>Coreconventions, rightsatwork, andenforcement04</p>
+<p>Social Protection</p>
+<p>Floors, schemes, andcoveragegaps</p>
+<p>Social Dialogue</p>
+<p>Tripartism , collectivebargaining, andvoice06</p>
+<p>Gender &amp; Decent Work</p>
+<p>Careeconom y, paygaps, andwomen&#x27;slaborrights</p>
+<p>Informality &amp; Precarious Work</p>
+<p>Streetvendors, domesticworkers, giglabor02</p>
+<p>Child Labor &amp; Forced Labor</p>
+<p>Definitions, causes, andinterventions</p>
+<p>Migration &amp; Decent Work</p>
+<p>Internalandcross-borderlabor migration04</p>
+<p>Green Jobs &amp; Just Transition</p>
+<p>Climate, livelihoods, andsustainability</p>
+<p>Measuring Decent Work</p>
+<p>Indicators, SDGs, andnationalpolicies06</p>
+<p>Taking Action</p>
+<p>Advocacy, program s, andpractitionertools</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Define &amp; Apply</p>
+<p>Explainthe ILO&#x27;s Decent Work Agendaanditsfour</p>
+<p>pillarswithlocal South Asianexamples.Analyze &amp; Evaluate</p>
+<p>Assesslabor marketconditions, identifydecentwork</p>
+<p>deficits, andusekeyindicatorsfrom India,</p>
+<p>Bangladesh, Nepal, Sri Lanka, and Pakistan.</p>
+<p>Connect &amp; Link</p>
+<p>Connectdecentworktogenderequity, informality,</p>
+<p>migration, andclimate — andseehowtheseoverlapin</p>
+<p>realcom munities.Design &amp; Advocate</p>
+<p>Sketchsimpleprogram interventionsandadvocacy</p>
+<p>strategiesrootedinrights-basedandevidence-based</p>
+<p>approaches.</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 01</p>
+<h2>What Is Decent Work?</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>The ILOandthe Decent Work Agenda</h2>
+<p>Foundedin 1919</p>
+<p>The International Labour Organization (ILO) isthe UN&#x27;s</p>
+<p>agencyfortheworldofwork. Itbringstogether</p>
+<p>governments, employers, andworkerstosetlabor</p>
+<p>standards.</p>
+<p>In 1999, Director-General Juan Somaviaintroducedthe</p>
+<p>Decent Work Agenda — makingdecentworkthe</p>
+<p>primarygoalofnationalandinternationallaborpolicy.Why &quot;Decent&quot;?</p>
+<p>Workthatisproductive, fairlycompensated, safe,</p>
+<p>andfree — carriedoutunderconditionsofliberty, equity,</p>
+<p>security, andhumandignity.</p>
+<p>Decentworkisnotjustabouthaving ajob. Itisabout</p>
+<p>having agoodjob — onethatrespectsyourrightsand</p>
+<p>supportsyourfamily.</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>The Four Pillarsof Decent Work</h2>
+<p>Employment Creation</p>
+<p>Opportunitiesforalltowork — productive, freelychosen, and</p>
+<p>sustainable.Rightsat Work</p>
+<p>Recognitionandenforcementofcorelaborstandardsand</p>
+<p>rightsforallworkers.</p>
+<p>Social Protection</p>
+<p>Measurestoprotectworkersfrom risk: illness, injury, oldage,</p>
+<p>unemployment.Social Dialogue</p>
+<p>Freedom ofassociation, collectivebargaining, andtripartite</p>
+<p>consultation.</p>
+<p>Genderequalityandnon-discriminationcutacrossallfourpillars — theyarenot afifthpillarbut across-cuttingfoundation.</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>Decent Workas a Framework</h2>
+<p>Employment</p>
+<p>Creation</p>
+<p>Quality, productiveand</p>
+<p>decentjobsRightsat Work</p>
+<p>Cor estandardsand</p>
+<p>freedomfromforced</p>
+<p>labour</p>
+<p>Social Protection</p>
+<p>Health, pensionsand</p>
+<p>unemploymentbenefitsSocial Dialogue</p>
+<p>Unions, collective</p>
+<p>bargainingand</p>
+<p>tripartism</p>
+<p>Thefourpillarsare mutuallyreinforcing: strongsocialdialogueproducesbetterlaborrights; robustsocialprotection makesworkerslessvulnerableto</p>
+<p>exploitation; qualityemploymentgeneratesresourcesforprotectionsystem s.</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Decent Workin South Asia: The Numbers</h2>
+<p>90%</p>
+<p>Informal Workers</p>
+<p>Nearly 9 in 10 South Asian</p>
+<p>workersareininformal</p>
+<p>employment, lackinglegal</p>
+<p>protections.18%</p>
+<p>Womenin Formal</p>
+<p>Jobs</p>
+<p>Only 18% ofwomenin</p>
+<p>South Asiaparticipatein</p>
+<p>formal, protected</p>
+<p>employment.600M</p>
+<p>Working Poor</p>
+<p>Over 600 millionpeoplein</p>
+<p>South Asiaworkbutcannot</p>
+<p>affordbasicneeds.1.8B</p>
+<p>Youth Workforce</p>
+<p>South Asiawillneed 1.8</p>
+<p>billionnewjobsby 2030 to</p>
+<p>absorbyoungjob-seekers.</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Reflection: What Does</h2>
+<blockquote>&quot;Decent&quot; Meanto You?</blockquote>
+<p>Thinkofsomeoneyouknow — afamilymember, neighbor, or</p>
+<p>communitymember — whoworkshardeveryday. Doestheirwork</p>
+<p>feel &quot;decent&quot;? Whatismissing? Whatwouldneedtochange?</p>
+<p>Discusswith apartnerorwrite ashortreflection (5 minutes). This</p>
+<p>exercisehelpsgroundabstract ILOconceptsinlivedreality.</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 02</p>
+<h2>Employment &amp; Productive</h2>
+<h2>Work</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>What Makes Employment &quot;Productive&quot;?</h2>
+<p>Beyond &quot;Having a Job&quot;</p>
+<p>Employmentquality mattersas muchasemployment</p>
+<p>quantity. Apersonworking 14 hours adayinunsafe</p>
+<p>conditionsforlessthan minimum wageisemployed —</p>
+<p>butnotdecentlyemployed.</p>
+<p>Fairwagesthatcoverbasicneeds</p>
+<p>Safeandhealthyworkingconditions</p>
+<p>Reasonableworkinghours</p>
+<p>SecurityandprospectsforadvancementThe ILO Employment Goal</p>
+<p>The ILOpromotesfull, productive, andfreelychosen</p>
+<p>employment — meaningworkersarenotcoerced, can</p>
+<p>choosetheiroccupation, andtheirworkcontributes</p>
+<p>meaningfullytotheeconom y.</p>
+<p>SDG 8 directlylinksdecentworktosustained, inclusive</p>
+<p>economicgrowth.</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>The Informal Econom yin South Asia</h2>
+<p>Fully</p>
+<p>informalSem i-formalFormal</p>
+<p>Informalityisnot achoicefor most South Asianworkers — itreflectsstructuralbarriers: lackofregistration, weakenforcement, and</p>
+<p>employerswhobenefitfrom keepingworkersunprotected.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Case Study: Garment</h2>
+<p>Workersin Bangladesh</p>
+<p>Bangladesh&#x27;sgarmentsectoremploys 4.2 millionworkers — 80%</p>
+<p>women. Afterthe 2013 Rana Plazacollapse (1,134 deaths), the Accord</p>
+<p>on Fireand Building Safetywassignedby 220+ brands , improving</p>
+<p>safetyfor 2 millionworkers. Yetwagesremainbelowlivingwage</p>
+<p>estimates, andunionrightsarestillsuppressed.</p>
+<p><strong>Keylesson:</strong> Physicalsafetyimprovedthroughbinding</p>
+<p>agreements — butwagejusticeandvoicerequiredeeper</p>
+<p>structuralchange.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Employment Quality Matrix</h2>
+<p>Dimension Low Quality Medium Quality High Quality</p>
+<p>Wages Belowsubsistence Atminimumwage Livingwage +</p>
+<p>Security Dailyhire, nocontract Short-termcontract Permanent,</p>
+<p>protected</p>
+<p>Safety Hazardous, nogear Someprotections Full OSHcompliance</p>
+<p>Hours Excessive, unpredictable Regulatedbutlong Reasonable, flexible</p>
+<p>Voice Nounion, retaliation Partialrepresentation Freebargaining</p>
+<p>Usethismatrixtoassessemploymentconditionsinanysectororworkplace — itis apracticalscreeningtoolfo rdevelopment</p>
+<p>practitioners.</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Exercise: Mapping Your Local Labor Market</h2>
+<p>Identify Key Sectors</p>
+<p>Listthethreelargestemployingsectorsinyour</p>
+<p>districtorstate. Aretheyformalorinformal?2</p>
+<p>Check Wage Levels</p>
+<p>Lookupthestate minimum wage. Isit alivingwage?</p>
+<p>Whoenforcesit?</p>
+<p>Findthe Gaps</p>
+<p>Whichgroups — women, Dalits, migrants, personswith</p>
+<p>disabilities — areconcentratedinthelowest-quality</p>
+<p>jobs?4</p>
+<p>Ask Who Benefits</p>
+<p>Whoprofitsfrom low-qualityemploymentinthis</p>
+<p>sector? Whatincentiveswouldshiftbehavior?</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">SECTION 03</p>
+<h2>Labor Rights &amp; Standards</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>ILO Core Labor Standards</h2>
+<p>The ILOhasidentifiedeight Fundamental Conventions — groupedintofourcategories — thatall memberstatesare</p>
+<p>expectedtorespect, regardlessofratification.</p>
+<p>🚫 Forced Labor</p>
+<p>Noforcedorcompulsorylabor (C029, C105)👶 Child Labor</p>
+<p>Minimum ageandworstform seliminated (C138, C182)</p>
+<p>⚖ Discrimination</p>
+<p>Equalpayandnon-discriminationinemployment (C100,</p>
+<p>C111)🗣 Freedom of Association</p>
+<p>Righttoorganizeandbargaincollectively (C087, C098)</p>
+<p>In 2022, the ILOaddedsafeandhealthyworkingconditionsas afifthfundamentalprinciple, reflectingthe</p>
+<p>importanceofoccupationalhealth.</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Rightsat Work: From Paperto Practice</h2>
+<p>International</p>
+<p>Standards</p>
+<p>ILOconventionsand</p>
+<p>government ratificationNational Law</p>
+<p>Laborcodes, factory</p>
+<p>acts, andenforcement</p>
+<p>agenciesWorkplace Reality</p>
+<p>Conditions, worker</p>
+<p>awareness, compliance</p>
+<p>andinspections</p>
+<p>Thegapbetweeninternationalstandardsandworkplacerealityisthecentralchallengeoflaborgovernance. Development</p>
+<p>practitionersoftenworkinthisgap — buildingawareness, strengtheningenforcement, andsupportingworkerstoclaim rights.</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>Labor Lawin South Asia: A Snapshot</h2>
+<p>Country Key Labor Law Min. Wage? Union Rights Enforcement Gap</p>
+<p>India Labour Codes</p>
+<p>2019320Yes (state-level) Restrictedin EPZs Large 4 inspectors</p>
+<p>few</p>
+<p>Bangladesh Labour Act 2006</p>
+<p>(amended)Sector-specific Restrictedin EPZs Post-Rana Plaza</p>
+<p>reforms</p>
+<p>Nepal Labour Act 2017 Yes Relativelyopen Weakinagriculture</p>
+<p>Pakistan Industrial Relations</p>
+<p>ActYes Provincialvariation Significant</p>
+<p>Sri Lanka Terminationof</p>
+<p>Employment ActYes Moderate Moderate</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Case Study: MNREGAand Labor Rightsin</h2>
+<p>India</p>
+<p>Mahatm a Gandhi NREGS</p>
+<p>India&#x27;sflagshipemploymentguaranteeschem egives</p>
+<p>ruralworkers alegalrightto 100 daysofwage</p>
+<p>employmentperyear. As aright — notcharity — it</p>
+<p>transform sthestate-workerrelationship.Achievements &amp; Gaps</p>
+<p>Over 250 millionhouseholdsenrolled</p>
+<p>Womenconstitute 57% ofperson-days</p>
+<p>Wagedelaysandcorruptionremainchallenges</p>
+<p>Socialauditshavebeentransformativefor</p>
+<p>accountability</p>
+<p>MNREGAshowshow arights-basedframeworkcanshift</p>
+<p>power — evenwithimplementationgaps.</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>Discussion: When Rights Are Not Enforced</h2>
+<blockquote>&quot;Thelawsays Ishouldearn ₹ 400 aday. Mycontractorpays ₹ 200 andthreatenstoreplace meif Icomplain.&quot;</blockquote>
+<p>— Dailywagelaborer, constructionsite, Rajasthan</p>
+<p>Whydoesthisgapexist?</p>
+<p>Weakinspectionsystem s, worker</p>
+<p>dependence, lackofawareness,</p>
+<p>politicaleconom yof</p>
+<p>enforcement.Whatcanpractitioners</p>
+<p>do?</p>
+<p>Legalliteracytraining, grievance</p>
+<p>mechanism support, alliances</p>
+<p>withunions, com munity</p>
+<p>monitoringsystem s.Yourturn</p>
+<p>Inyourcontext, whatisthe</p>
+<p>single mostviolatedlaborright?</p>
+<p>Whatwouldittaketochange</p>
+<p>that?</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="22">
+<div class="slide-content">
+<p class="section-number">SECTION 04</p>
+<h2>Social Protection</h2>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>What Is Social Protection?</h2>
+<p>Socialprotectionis asetofpoliciesandprogram sthatreducepoverty, vulnerability, andsocialexclusionacrossthelife</p>
+<p>cycle — from birthtooldage.</p>
+<p>Child &amp; Family Benefits</p>
+<p>Cashtransfers, nutritionsupport, school mealsHealth Protection</p>
+<p>Healthinsurance, subsidizedcare, maternitybenefits</p>
+<p>Employment Protection</p>
+<p>Unemploymentbenefits, jobguarantees, severanceOld Age &amp; Disability</p>
+<p>Pensions, disabilityallowances, socialpensions</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>The Social Protection Floor</h2>
+<p>Enhanced Protection</p>
+<p>Supplementaryvoluntary</p>
+<p>schemesbuiltafter</p>
+<p>universality</p>
+<p>Contributory</p>
+<p>Schemes</p>
+<p>Socialinsurance,</p>
+<p>employmentinjury,</p>
+<p>maternity Universal Guarantees</p>
+<p>Healthcar e; childandbasic</p>
+<p>incomesecurity</p>
+<p>ILO Recom mendation 202 (2012) callsonallcountriestoestablish asocialprotectionfloor — abasicsetofguaranteesaccessibletoeveryone.</p>
+<p>South Asiancountriesarestillfarfrom universalfloors, especiallyforinformalworkers.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Social Protection Coveragein South Asia</h2>
+<p>24%</p>
+<p>India Coverage</p>
+<p>Only 1 in 4 peoplecoveredbyatleastonesocialprotectionbenefit15%</p>
+<p>Bangladesh Coverage</p>
+<p>Despitelargesafetynetprogram s, coverageremainslimited</p>
+<p>22%</p>
+<p>Pakistan Coverage</p>
+<p>BISPreaches millions, butgapsremainvastforinformalworkers8%</p>
+<p>Nepal Coverage</p>
+<p>Amongthelowestintheregion, thoughreform sareunderway</p>
+<p><strong>Data:</strong> ILO World Social Protection Report 2022. Coverageisevenlowerforwomen, informalworkers, andruralpopulations.</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>Case Study: PM-JAYand</h2>
+<p>Health Protectionin India</p>
+<p>Pradhan Mantri Jan Arogya Yojana (PM-JAY) provides ₹5 lakhhealth</p>
+<p>coverage perfamilyannuallyto 500 millionpeople — theworld&#x27;s</p>
+<p>largestgovernment-fundedhealthinsuranceprogram. However,</p>
+<p>coverageofinformalworkers, utilizationrates, andqualityof</p>
+<p>empaneledhospitalsremainunevenchallenges.</p>
+<p>Socialprotectionwithoutqualityservicesisincomplete.</p>
+<p>Accessandutilizationgapsoftenhitwomenand</p>
+<p>marginalizedcommunitieshardest.</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Reflection: Who Falls Throughthe Cracks?</h2>
+<p>Domestic Workers</p>
+<p>Oftenexcludedfrom laborlawsandsocialsecurity</p>
+<p>bydefinition, doinginvisibleworkinprivatehomes.Migrant Workers</p>
+<p>Inter-stateandcross-border migrantsrarelyaccess</p>
+<p>socialprotectionindestinationstates.</p>
+<p>Home-Based Workers</p>
+<p>Piece-rateworkersinhomes — mostlywomen — sit</p>
+<p>outsidebothlaborlawandinsuranceschemes.Gig &amp; Platform Workers</p>
+<p>Classifiedas &quot;partners&quot; or &quot;contractors,&quot; theylack</p>
+<p>employmentprotectionsentirely.</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="28">
+<div class="slide-content">
+<p class="section-number">SECTION 05</p>
+<h2>Social Dialogue</h2>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>What Is Social Dialogue?</h2>
+<p>Definition</p>
+<p>Socialdialogueisallform sofnegotiation,</p>
+<p>consultation, andexchangeofinformationbetween</p>
+<p>governments, employers, andworkersonissuesof</p>
+<p>com moninterest — from wagestoworkingconditionsto</p>
+<p>economicpolicy.Three Form s</p>
+<p><strong>Bipartite:</strong> Workersandemployersnegotiatedirectly</p>
+<p><strong>Tripartite:</strong> Governmentjoinsas athirdparty</p>
+<p><strong>Broaderconsultation:</strong> Advisorybodies, national</p>
+<p>economiccouncils</p>
+<p>Strongsocialdialogueproduces moredurable, fair, and</p>
+<p>legitimatelabor marketoutcomesthantop-downpolicy</p>
+<p>alone.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>The Tripartism Triangle</h2>
+<p>Social</p>
+<p>Dialogue</p>
+<p>OutcomesGovernment</p>
+<p>Setsrules, enforces,</p>
+<p>ratifies ILOconventions</p>
+<p>Employers</p>
+<p>Negotiatewages,</p>
+<p>conditions, investinjobs</p>
+<p>Workers</p>
+<p>Representinterests,</p>
+<p>bargaincollectively,</p>
+<p>advocaterights</p>
+<p>Whenallthreepartiesengageingoodfaith, tripartism producesoutcomesnosingleactorcouldachievealone. Whenonepartydominates — asiscom monin</p>
+<p>South Asia — outcomesareskewed.</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Collective Bargainingin Practice</h2>
+<p>Organize</p>
+<p>Workersform orjoin aunion — legallyprotectedunder ILO</p>
+<p>C0872</p>
+<p>Demand</p>
+<p><strong>Unionpresentsdemands:</strong> wages, hours, safety, benefits</p>
+<p>Negotiate</p>
+<p>Good-faithtalksbetweenunionand management4</p>
+<p>Agree</p>
+<p>Collective Bargaining Agreement (CBA) signedandenforced</p>
+<p>In South Asia, collectivebargainingcoverageisamongthelowestglobally — fewerthan 5% ofworkersin mostcountriesarecovered</p>
+<p>by a CBA. Informality, fragmentedunions, andweaklegalprotectionsexplainthisgap.</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Case Study: SEWA — A</h2>
+<p>Modelof Worker Voice</p>
+<p>The Self-Employed Women&#x27;s Association (SEWA) , foundedin</p>
+<p>Ahmedabadin 1972, organizesinformalwomenworkers — street</p>
+<p>vendors, home-basedworkers, constructionlaborers. With 2 million</p>
+<p>members, SEWAhaswonminimumwages, socialsecurity, identity</p>
+<p>cards, andchildcare — provinginformalworkerscanorganize</p>
+<p>effectively.</p>
+<p>SEWAisboth atradeunion ANDacooperative — blurring the</p>
+<p>linebetweeneconomicandlabororganizing.</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="33">
+<div class="slide-content">
+<h2>Discussion: Barriersto Social Dialogue</h2>
+<p>Legal Barriers</p>
+<p>Many South Asiancountriesrestrictunionformation</p>
+<p>inexportzones, agriculture, anddomesticwork.Power Imbalances</p>
+<p>Employersthreatentermination; workersfear</p>
+<p>retaliation; governmentssidewithcapital.</p>
+<p>Fragmentation</p>
+<p>Multiplecompetingunionssplitalongpartylines</p>
+<p>weakencollectivebargainingpower.Informality</p>
+<p>Mostinformalworkershavenolegalemployerto</p>
+<p>bargainwith — requiringnew modelsoforganization.</p>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="34">
+<div class="slide-content">
+<p class="section-number">SECTION 06</p>
+<h2>Gender &amp; Decent Work</h2>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>The Gender Decent Work Deficit</h2>
+<p>Womenin South Asiaface atripleburden: lowerparticipation, worsejobquality, andinvisibleunpaidworkthat</p>
+<p>subsidizestheentireeconom y.</p>
+<p>Participation Gap</p>
+<p>Femalelaborforceparticipationin South Asia (~25%)</p>
+<p>isamongthelowestglobally. Men: ~77%.Wage Gap</p>
+<p>Womenearn 30–40% lessthan menforcomparable</p>
+<p>workacrossall South Asiancountries.</p>
+<p>Occupational Segregation</p>
+<p>Womenconcentratedinlower-paidsectors: domestic</p>
+<p>work, garments, agriculture, teaching.Unpaid Care Work</p>
+<p>Womendo 5–10x moreunpaidcareanddomesticwork</p>
+<p>than men — invisiblein GDPandlaborstatistics.</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>The Care Economy</h2>
+<p>Whodoesit?</p>
+<p>Mostlywomenand</p>
+<p>girlsWhy?</p>
+<p>Socialnorms, lackof</p>
+<p>services, poverty</p>
+<p>Whatisthe</p>
+<p>cost?</p>
+<p>Timepoverty, lost</p>
+<p>income, nopensionSolutions</p>
+<p>Recognize, Reduce,</p>
+<p>Redistribute,</p>
+<p>Represent</p>
+<p>The ILOestimatesthatunpaidcareworkwouldequal $10.8 trillion ifvaluedatminimumwageglobally — morethantheentireglobaltechsector. Redistributingthiswork</p>
+<p>isessentialtoachievinggender-equitabledecentwork.</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>Case Study: Kudumbashree, Kerala</h2>
+<p>What Is Kudumbashree?</p>
+<p>Kerala&#x27;s Kudumbashreeprogram organizeswomeninto</p>
+<p>neighborhoodgroups (NHGs) linkedtolocal</p>
+<p>government, running 30,000+ micro-enterprisesand</p>
+<p>providingsocialsupportnetworksto 4.5 millionwomen.Decent Work Gains</p>
+<p>Collectiveenterprisesgivewomencontroloverwork</p>
+<p>andincom e</p>
+<p>Linktogram panchayatscreatesvoiceinlocal</p>
+<p>governance</p>
+<p>Childcareintegrationreducescareburden</p>
+<p>Socialauditculturebuildsaccountability</p>
+<p>Kudumbashreeshowshowcom munityorganizingcan</p>
+<p>simultaneouslyaddressemployment, voice, andcare.</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>Maternity Protection &amp; Women&#x27;s Work</h2>
+<p>ILO Standard (C183)</p>
+<p>14 weekspaid maternityleave,</p>
+<p>breastfeedingbreaks, protection</p>
+<p>from dismissal — fundedbysocial</p>
+<p>insurance, notemployer.India&#x27;s Maternity Benefit</p>
+<p>Act 2017</p>
+<p>26 weekspaidleavefor</p>
+<p>organizedsector — oneofthe</p>
+<p>mostgenerousin Asia. But</p>
+<p>coversonly ~13% ofwomen</p>
+<p>workersinformalemployment.The Informal Gap</p>
+<p>Domesticworkers, hom e-based</p>
+<p>workers, agriculturallaborers —</p>
+<p>the majorityofwomen — haveno</p>
+<p>maternityprotectionatall.</p>
+<p><strong>Discussion:</strong> Should maternityprotectionbefundedbyemployers, thestate, or asocialinsurancefund? Who</p>
+<p>bearsthecost makes abigdifferenceforwomen&#x27;semployment.</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="39">
+<div class="slide-content">
+<p class="section-number">SECTION 07</p>
+<h2>Informality &amp; Precarious</h2>
+<h2>Work</h2>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>Defining Informality</h2>
+<p>Informal Employment</p>
+<p>Workwithoutlegalorsocialprotection — nowritten</p>
+<p>contract, nopaidleave, nosocialsecurity, noenforceable</p>
+<p>rights. Canbeinformalorinformalenterprises.Informal Econom y</p>
+<p>Economicactivitiesnotcoveredbyformal</p>
+<p>arrangements — streetvending, hom e-based</p>
+<p>production, domesticwork, dailyconstructionlabor.</p>
+<p>Estimatedat 90% of South Asianemployment.</p>
+<p>Precarious Work</p>
+<p>Eveninformalenterprises, &quot;casualization&quot; creates</p>
+<p>precarity: short-term contracts, contractlabor, zero-</p>
+<p>hourarrangements, outsourcing — alldesignedto</p>
+<p>minimizeemployerobligations.The Gig Econom y</p>
+<p>Platform work (Uber, Swiggy, Urban Company) adds a</p>
+<p>newlayerofinformality — algorithm sreplace managers,</p>
+<p>and &quot;flexibility&quot; maskstotalabsenceoflaborrights.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Pathways Outof Informality</h2>
+<p>Decent</p>
+<p>Work</p>
+<p>Skills &amp;</p>
+<p>productivity</p>
+<p>Vocationaltraining</p>
+<p>andtechaccessSocial</p>
+<p>protection</p>
+<p>Portablebenefits</p>
+<p>andinsuranceCollectivevoice</p>
+<p>Unionsandworker</p>
+<p>cooperativesRegistration &amp;</p>
+<p>recognition</p>
+<p>Enterprise</p>
+<p>registrationand IDs</p>
+<p>Nosinglepathwayissufficient. Effectivetransitionsfrom informalitytodecentworkrequiresimultaneousprogressonregistration, skills,</p>
+<p>protection, andvoice — supportedbyenablingpolicyenvironments.</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>Case Study: Domestic</h2>
+<p>Workersin India</p>
+<p>Indiahasanestimated 50 milliondomesticworkers — 80% women,</p>
+<p>mostly Dalitandadivasi. Theyareexcludedfromthe Factories Act</p>
+<p>andmoststatelaborlaws. The National Domestic Workers Policy</p>
+<p>(draft 2019) hasnotbeenenacted. SEWAandotherorganizations</p>
+<p>haveadvocatedfor adedicated Domestic Workers Act, ILO C189</p>
+<p>ratification, andtripartitewageboards.</p>
+<p>ILO Convention 189 on Decent Workfor Domestic Workers</p>
+<p>(2011) — Indiahasnotratifiedit. Advocacyforratificationis</p>
+<p>alivepolicycampaign.</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="43">
+<div class="slide-content">
+<p class="section-number">SECTION 08</p>
+<h2>Child Labor &amp; Forced</h2>
+<h2>Labor</h2>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>Defining Child Labor</h2>
+<p>Notallworkbychildrenischildlabor. The ILOdraws aclearline:</p>
+<p>Acceptable Child Labor Worst Forms</p>
+<p>Lightwork, age-appropriate, not</p>
+<p>harmfultohealthorschoolingWorkthatdepriveschildrenof</p>
+<p>childhood, potential, anddignitySlavery, trafficking, debtbondage,</p>
+<p>prostitution, hazardouswork</p>
+<p><strong>Age 12–14:</strong> som elighttaskswith</p>
+<p>parentalconsentUnder minimum agefortypeof</p>
+<p>work (C138)Allunderage 18 — unconditional</p>
+<p>prohibition (C182)</p>
+<p>Householdchores, familyfarm</p>
+<p>lighttasksBrickkilns, garments, domestic</p>
+<p>service, agricultureMining, arm s, sexualexploitation,</p>
+<p>armedconflict</p>
+<p>South Asiaaccountsforapproximately 5.5 millionchildlaborers — thelargestregionalconcentrationgloballyafter</p>
+<p>Sub-Saharan Africa.</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>Root Causes &amp; Interventions</h2>
+<p>Interventions mustaddressthefullcycle: conditionalcashtransfersreducepovertypull, schoolqualityreform changes</p>
+<p>thecalculus, enforcementraisescostsforemployers, andsocialnorm scampaignsshiftcom munityexpectations.</p>
+<p>Familiessendchildrentowork</p>
+<p>becausetheyneedincom eto</p>
+<p>survivePoor School Quality</p>
+<p>Whenschoolsaredistant, costly, or</p>
+<p>lowquality, workseem s more</p>
+<p>rational</p>
+<p>Social Norm s</p>
+<p>Som ecom munitiesseechildwork</p>
+<p>asnormal, skill-building, or</p>
+<p>inevitableWeak Enforcement</p>
+<p>Employersfacelittlerisk; inspectors</p>
+<p>arefew; familiesfaceno</p>
+<p>alternatives</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="46">
+<div class="slide-content">
+<p class="section-number">SECTION 09</p>
+<h2>Migration &amp; Decent Work</h2>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="47">
+<div class="slide-content">
+<h2>Labor Migrationin South Asia</h2>
+<p>Internal Migration</p>
+<p>200M+ internal migrantsin Indiaalone — from Bihar,</p>
+<p>UP, Odishato Delhi, Mumbai, Surat. Seasonal, circular,</p>
+<p>andpermanentpatterns.Cross-Border Migration</p>
+<p>Nepalto India (3.5M+); Bangladeshto India; Sri Lanka</p>
+<p>and Philippinesto Gulfcountries.</p>
+<p>Remittances</p>
+<p><strong>Nepal:</strong> remittances = 27% of GDP. Bangladesh: $21</p>
+<p>billionannually. Migrationdriveshouseholdpoverty</p>
+<p>reduction — butatwhatcost?Decent Work Risks</p>
+<p>Migrantsfacewagetheft, unsafeconditions,</p>
+<p>trafficking, exclusionfrom socialprotection, and</p>
+<p>extrem evulnerabilityatdestination.</p>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Migration &amp; Decent Work Framework</h2>
+<p>Origin</p>
+<p>Poverty,</p>
+<p>recruitment, debt,</p>
+<p>predeparture</p>
+<p>training</p>
+<p>Corridor</p>
+<p>Safechannelsvs.</p>
+<p>irregulardangerous</p>
+<p>routesDestination</p>
+<p>Decentworkor</p>
+<p>exploitation, wage</p>
+<p>theft, forcedlabor</p>
+<p>Return</p>
+<p>Skillsrecognition,</p>
+<p>savings, community</p>
+<p>reintegration</p>
+<p>The ILO&#x27;s Fair Recruitment Initiativeworkstoensure migrantsarenotchargedexcessivefees, areinformedoftheirrights, andhaveaccessto</p>
+<p>grievancemechanisms — addressingrecruitmentas akey momentofvulnerability.</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="49">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Green Jobs &amp; Just</h2>
+<h2>Transition</h2>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="50">
+<div class="slide-content">
+<h2>What Are Green Jobs?</h2>
+<p>Greenjobsaredecentjobsthatcontributetopreservingorrestoringtheenvironment — intraditionalsectorslike</p>
+<p>agriculture, industry, andservices, andinnewsectorslikerenewableenergyandsustainableconstruction.</p>
+<p>Renewable Energy</p>
+<p>Solarinstallers, windturbinetechnicians, biogas</p>
+<p>operators — growingrapidlyacross South AsiaWaste Management</p>
+<p>Wastepickersformalizedintocooperative</p>
+<p>enterprisesrepresent ahugegreenjobpotential</p>
+<p>Sustainable Agriculture</p>
+<p>Organicfarming, agroforestry, water-smart</p>
+<p>practices — creatinggreenjobsinrural South AsiaGreen Construction</p>
+<p>Energy-efficientbuildings, retrofitting, green</p>
+<p>infrastructure — millionsofpotentialjobs</p>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>Just Transition: Leaving No Worker Behind</h2>
+<p>Jobsat Risk</p>
+<p>Coalminers, fossil</p>
+<p>fuelworkers,</p>
+<p>traditional</p>
+<p>manufacturing</p>
+<p>Jobsto Be</p>
+<p>Created</p>
+<p>Solar, wind,</p>
+<p>sustainable</p>
+<p>agricultur e, green</p>
+<p>construction</p>
+<p>India&#x27;scoalsectoremploys 400,000 workersdirectly. As Indiatransitionstorenewables (500GW solartargetby 2030), ajusttransitionplan must</p>
+<p>ensurecoal minersarenotsimplyabandoned — thisisboth alaborrightsandclimatejusticeissue.</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="52">
+<div class="slide-content">
+<p class="section-number">SECTION 11</p>
+<h2>Measuring Decent Work</h2>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Decent Work Indicators</h2>
+<p>The ILOdeveloped 11 substantiveelementsand 22 statisticalindicatorsto measuredecentworknationally. Keyindicatorsinclude:</p>
+<p>Employment Opportunities</p>
+<p>Employment-to-populationratio; unemploymentrate; youth NEETrate</p>
+<p>Adequate Earnings</p>
+<p>Meanwages; proportionearningbelow 50% of medianwage</p>
+<p>Decent Hours</p>
+<p>% workingexcessivehours (&gt;48/week); underemploymentrate</p>
+<p>Stability &amp; Security</p>
+<p>% informalemployment; % ontemporarycontracts</p>
+<p>Social Protection</p>
+<p>% coveredbyhealthinsurance; % contributingtopension</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>SDG 8 and Decent Work</h2>
+<p>Target Goal South Asia Status</p>
+<p>8.1 Sustain 7% GDPgrowthinleastdevelopedcountries Mixed — Bangladeshontrack, othersvariable</p>
+<p>8.3 Promotedevelopment-orientedpolicies; decentjob</p>
+<p>creation; entrepreneurshipPoliciesexist; implementationgapslarge</p>
+<p>8.5 Fullandproductiveemployment, equalpayforequal</p>
+<p>workSignificantgaps, especiallyforwomen</p>
+<p>8.7 Eliminateforcedlabor, modernslavery, childlabor</p>
+<p>by 2025Offtrack — significantnumbersremain</p>
+<p>8.8 Protectlaborrights; promotesafeandsecure</p>
+<p>workingenvironmentsLegalframeworksexist; enforcementweak</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>Quiz: Test Your Understanding</h2>
+<p><strong>Q 1:</strong> Four Pillars</p>
+<p>Nam ethefourpillarsofthe ILO Decent Work Agenda.</p>
+<p>Whichpillardoyouthinkisweakestinyourcountry?2</p>
+<p><strong>Q 2:</strong> Informalvs. Formal</p>
+<p><strong>Trueor False:</strong> Informalworkerscannotbeinformal</p>
+<p>enterprises. Explainthedifferencebetweeninformal</p>
+<p>employmentandtheinformaleconom y.</p>
+<p><strong>Q 3:</strong> Social Protection Floor</p>
+<p>Whatdoes a &quot;socialprotectionfloor&quot; mean? Giveone</p>
+<p>exampleof aprogram thatcontributestoitin South</p>
+<p>Asia.4</p>
+<p><strong>Q 4:</strong> Gender &amp; Care</p>
+<p>Whatisthe &quot;4Rframework&quot; forthecareeconom y? Why</p>
+<p>doesit matterforwomen&#x27;slaborforceparticipation?</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Quiz (continued)</h2>
+<p><strong>Q 5:</strong> Social Dialogue</p>
+<p>Whatisthedifferencebetweenbipartiteand</p>
+<p>tripartitesocialdialogue? Giveoneexampleofeach</p>
+<p>from South Asia.Q 6: Child Labor</p>
+<p>Under ILO Convention 182, whatarethe &quot;worstform s&quot;</p>
+<p>ofchildlabor? Areallform sofchildworkprohibited</p>
+<p>underinternationalstandards?</p>
+<p><strong>Q 7:</strong> Just Transition</p>
+<p>Whatis a &quot;justtransition&quot;? Whyisitrelevantto South</p>
+<p>Asiancoal-miningcom munities?Q 8: Case Analysis</p>
+<p>Reflecton SEW A. What madeiteffective? Could a</p>
+<p>similar modelworkinyoursectororcom munity?</p>
+<p>Whatwouldneedtoadapt?</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>Decent Work Is a Framework, Not Just a Goal</p>
+<p>The ILO&#x27;sfourpillars — employment, rights, protection, dialogue — mustbepursuedtogether. Progressononealoneisinsufficient.</p>
+<p>Informality Isthe Central Challenge</p>
+<p>90% of South Asianworkersareinformal. Extendingrightsandprotectiontothem isthedefiningtaskoflaborpolicyintheregion.</p>
+<p>Gender Cannot Bean Afterthought</p>
+<p>Women&#x27;slabordisadvantages — inparticipation, wages, careburden — arestructuralandrequiretargeted, cross-cuttingstrategies.</p>
+<p>Worker Voice Changes Everything</p>
+<p>Whereworkerscanorganize — like SEW A, orgarmentunionspost-Rana Plaza — outcomesimprove. Socialdialogueisnotoptional.</p>
+<p>Rights Without Enforcement Are Hollow</p>
+<p>South Asiahasgoodlaborlawonpaper. Thegapbetweenlawandpracticeistheterrainwheredevelopmentpractitionerswork.</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>Decent Work Productiveworkforwomenandmeninconditionsoffreedom, equity, security, andhumandignity</p>
+<p>(ILO, 1999)</p>
+<p>Informality Employmentoreconomicactivitywithoutlegalorsocialprotectioncoverage</p>
+<p>Social Protection Floor Basicsetofsocialsecurityguaranteesaccessibletoall, asper ILO Recommendation 202</p>
+<p>Tripartism Systemwheregovernment, employers, andworkersjointlynegotiatelaborandeconomicpolicy</p>
+<p>Collective Bargaining Negotiationbetweenorganizedworkers (union) andemployertosetwagesandworkingconditions</p>
+<p>Care Economy Unpaiddomesticandcarework — cooking, cleaning, childandeldercare — mostlyperformedby</p>
+<p>women</p>
+<p>Just Transition Processofshiftingtogreeneconomywhile protectingworkersandcommunitiesfromdisruption</p>
+<p>Core Labor Standards ILO&#x27;seight Fundamental Conventionscoveringforcedlabor, childlabor, discrimination, andfreedom</p>
+<p>ofassociation</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>📚 Foundational Texts</p>
+<p>Decent Workandthe Sustainable Development Goals —</p>
+<p>ILO, 2023</p>
+<p>World Social Protection Report 2022–24 — ILO</p>
+<p>Womenand Meninthe Informal Econom y — ILO, 2018</p>
+<p><strong>We Are All Workers:</strong> Trade Unionsand Decent Work —</p>
+<p>ITUC</p>
+<p>🌐 Key Websiteswww.ilo.org — ILOglobaldataandconventionswww.ilostat.org — Labourstatisticsbycountrywww.sewa.org — SEW A&#x27;sworkandpublications🎓 Reports &amp; Journals</p>
+<p>Economicand Political Weekly — for Indialaborstudies</p>
+<p>IDS Bulletin — developmentandlaborresearch</p>
+<p>Journalof Development Studies</p>
+<p>W IEGO Working Papers — informaleconom yresearch</p>
+<p>🔍 South Asia-Specific</p>
+<p>India Labourand Employment Report — Institutefor</p>
+<p>Human Development</p>
+<p>South Asia Labour Conferenceproceedings — ILO ROAP</p>
+<p>Centrefor Workers Management, Delhi</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

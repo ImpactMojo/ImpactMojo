@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livelihoods 101 | ImpactMojo</title>
+<meta name="description" content="Livelihoods 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #8B0000;
+  --border-art: #800020;
+  --bg-slide: #FFFDF7;
+  --bg-section: #800020;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">POLICY &amp; ECONOMICS</p>
+<h1>Livelihoods 101</h1>
+<p class="subtitle">Understanding Sustainable Livelihoods Frameworksfor Resilient Economic Opportunities IMPACTMOJO 101 SERIES</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover Today</h2>
+<p>Astructuredjourneythroughsustainablelivelihoods — from theorytopractice</p>
+<p>What Are Livelihoods?</p>
+<p>Definitions, dimensions, andwhythey matter02</p>
+<p>The SLA Framework</p>
+<p>Sustainable Livelihoods Approachunpacked</p>
+<p>The Five Capital Assets</p>
+<p>Human, social, natural, physical, financial04</p>
+<p>Vulnerability Context</p>
+<p>Shocks, trends, andseasonality</p>
+<p>Institutions &amp; Policies</p>
+<p>Structuresthatshapelivelihoodoutcomes06</p>
+<p>Livelihood Strategies</p>
+<p>Diversification, migration, andintensification</p>
+<p>Gender &amp; Livelihoods</p>
+<p>Intersectionsofidentityandeconomicaccess08</p>
+<p>Program Design</p>
+<p>Designingeffectivelivelihoodinterventions</p>
+<p>Monitoring &amp; Evaluation</p>
+<p>Measuringlivelihoodoutcomes10</p>
+<p>Case Studies</p>
+<p>Lessonsfrom South Asia</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Defineandexplain</p>
+<p>Thekeyconceptsandframeworksinsustainablelivelihoods, including</p>
+<p>the SLApentagonandcapitalassets</p>
+<p>Analyzevulnerability</p>
+<p>Identifyshocks, trends, andseasonalfactorsthataffectcommunities</p>
+<p>in South Asiancontexts</p>
+<p>Applyframeworks</p>
+<p>Usethe Sustainable Livelihoods Approachtoassessrealcommunities</p>
+<p>anddesignappropriateinterventions</p>
+<p>Designprograms</p>
+<p>Developgender-sensitive, context-appropriatelivelihoodprograms</p>
+<p>withclear M&amp;Eframeworks</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 01</p>
+<h2>What Are Livelihoods?</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>Defining Livelihoods</h2>
+<p>The Classic Definition</p>
+<blockquote>&quot;Alivelihoodcomprisesthecapabilities, assets, and</blockquote>
+<p>activitiesrequiredfor a meansofliving.&quot; — Chambers &amp;</p>
+<p>Conway, 1992What Makes It Sustainable?</p>
+<p>Cancopewithandrecoverfrom shocksandstresses</p>
+<p>Maintainscapabilitiesandassetstodayandinthe</p>
+<p>future</p>
+<p>Doesnotunderminenaturalresourcebase</p>
+<p>Contributestolivelihoodsofothersatlocalandglobal</p>
+<p>levels</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>Beyond Incom e: The Five Dimensions</h2>
+<p>Livelihoodsare multidimensional. Incom eisjustonepartofthepicture.</p>
+<p>🌾 Material</p>
+<p>Food, shelter, incom e, and</p>
+<p>physicalassetsthatsustaindaily</p>
+<p>life🤝 Social</p>
+<p>Networks, trust, reciprocity, and</p>
+<p>com munitybelonging🌿 Ecological</p>
+<p>Accesstoland, water, forests, and</p>
+<p>naturalresources</p>
+<p>💬 Political</p>
+<p>Voice, agency, accesstogovernanceanddecision-</p>
+<p>making📚 Cultural</p>
+<p>Identity, dignity, traditions, andsenseofplace</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>Who Are &quot;Vulnerable</h2>
+<p>Populations&quot;?</p>
+<p>Smallholderfarmers</p>
+<p>Dependentonrain-fedagriculture, exposedtoclimate shocks</p>
+<p>Landlesslaborers</p>
+<p>Relyonwagelabor, faceseasonalunemployment</p>
+<p>Women &amp; girls</p>
+<p>Facestructuralbarrierstoassets, credit, andmobility</p>
+<p>Marginalizedcastes &amp; tribes</p>
+<p>Excludedbysocialnormsandinstitutionaldiscrimination</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Livelihoodsvs. Employment</h2>
+<p><strong>Acommonmisconception:</strong> &quot;livelihoods = jobs.&quot; Inreality, theyaremuchbroader.</p>
+<p>Dimension Employment Livelihoods</p>
+<p>Scope Formalwagework Allincome-generatingactivities</p>
+<p>Assets Skills &amp; labor Fivecapitals (H, S, N, P, F)</p>
+<p>Context Market-oriented Includessubsistence &amp; carework</p>
+<p>Vulnerability Jobloss Shocks, trends, seasonality</p>
+<p>Goal Income Well-being &amp; resilience</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>🔍 Reflection: Map a Livelihood</h2>
+<p>Thinkof ahouseholdin arural South Asiancom munityyouknoworhavereadabout. Sketchtheirlivelihood</p>
+<p>portfolio — whatincom esourcesdotheyhave? Whatassets? Whataretheirbiggestrisks?</p>
+<p>Consider...</p>
+<p>Dotheyfarm ? Dothey migrate</p>
+<p>seasonally? Dowomenand men</p>
+<p>havedifferentincom esources?Askyourself...</p>
+<p>Whatwouldhappenifthe</p>
+<p>monsoonfailedthisyear? Which</p>
+<p>assetscouldtheydrawon?</p>
+<p>Which mighttheylose?Connect...</p>
+<p>Howdoescaste, gender, orland</p>
+<p>ownershipshapetheiroptions?</p>
+<p>Whohasfewerchoicesandwhy?</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 02</p>
+<h2>The Sustainable</h2>
+<h2>Livelihoods Approach</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>Originsofthe SLA</h2>
+<p>1 1987</p>
+<p>Brundtland Com missionintroduces &quot;sustainable</p>
+<p>development&quot; — linkspovertytoresourceuse</p>
+<p>2 1992</p>
+<p>Chambers &amp; Conwaydefine &quot;sustainablelivelihoods&quot; —</p>
+<p>beyondincom etocapabilitiesandassets</p>
+<p>3 1998</p>
+<p>DFIDformalizesthe Sustainable Livelihoods Frameworkfor</p>
+<p>internationaldevelopmentprogram s</p>
+<p>4 2000s</p>
+<p>Widelyadoptedby UNDP, CARE, Oxfam , and NGOsacross</p>
+<p>South Asiaand Sub-Saharan Africa</p>
+<ul>
+<li><strong>5 Today</strong></li>
+</ul>
+<p>Integratedintoclimateadaptation, gender, andresilience</p>
+<p>program mingglobally</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>The SLA Frameworkat a Glance</h2>
+<p>The Sustainable Livelihoods Frameworkconnectsassets, context, structures, strategies, andoutcomesin adynamicsystem .</p>
+<p>Vulnerability</p>
+<p>Context</p>
+<p>Shocks, trends, and</p>
+<p>seasonality</p>
+<p>affecting</p>
+<p>livelihoods.Livelihood</p>
+<p>Assets</p>
+<p>Fivecapitals</p>
+<p>(human, social,</p>
+<p>natural, physical,</p>
+<p>financial).</p>
+<p>Structures &amp;</p>
+<p>Processes</p>
+<p>Institutions, policies,</p>
+<p>andorganizations</p>
+<p>shapingaccess.Livelihood</p>
+<p>Strategies</p>
+<p>Diversification,</p>
+<p>migration,</p>
+<p>intensification</p>
+<p>choicespeople</p>
+<p>make.</p>
+<p>Theframeworkisnon-linear — arrowsflowin multipledirections, reflectingreal-worldcomplexityandfeedbackloops.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Why Usethe SLA?</h2>
+<p>People-Centred</p>
+<p>Startswithpeople&#x27;sownstrengthsandstrategies, not</p>
+<p>program assumptions</p>
+<p>Holistic</p>
+<p>Captureseconomic, social, ecological, andpolitical</p>
+<p>dimensionstogetherStrengthsvs. Deficits</p>
+<p>Focusesonwhatcom munitieshave, notjustwhatthey</p>
+<p>lack — enablingdignityandagency</p>
+<p>Dynamic</p>
+<p>Accountsforchangeovertim e — seasonality, migration,</p>
+<p>policyshifts — ratherthan astaticsnapshot</p>
+<p>Practical</p>
+<p>Translatesintoconcreteassessments, program designs,</p>
+<p>and M&amp;Eframeworks</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Limitationsofthe SLA</h2>
+<p>The SLAispowerful, butpractitionersshouldbeawareofitsblindspots.</p>
+<p>Complexity</p>
+<p>Thefullframeworkcanbeoverwhelmingforrapid</p>
+<p>assessmentsorcom munity-levelusePower &amp; politics</p>
+<p>Tendstounderplaystructuralinequality,</p>
+<p>discrimination, andpoliticaleconom y</p>
+<p>Macrofactors</p>
+<p>Misseslargerforceslikeglobaltrade, climatechange,</p>
+<p>and macro-economicshocksMeasurementgaps</p>
+<p>Difficulttooperationalizeallfivecapitalswith</p>
+<p>consistent, comparable metrics</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Case Study: SLAin Action</h2>
+<p>— BRAC, Bangladesh</p>
+<p><strong>Program:</strong> Ultra-Poor</p>
+<p>Graduation</p>
+<p>BRAC&#x27;s Targetingthe Ultra Poor</p>
+<p>(TUP) programusedthe SLAto</p>
+<p>identifyasset-poorhouseholds</p>
+<p>andprovide a &quot;bigpush&quot; across</p>
+<p>allfivecapitalssimultaneously.SLAin Practice</p>
+<p><strong>Humancapital:</strong> Training,</p>
+<p>healthsupport</p>
+<p><strong>Financialcapital:</strong> Asset</p>
+<p>transfer + savings</p>
+<p><strong>Socialcapital:</strong> Group</p>
+<p>formation, mentoring</p>
+<p>Physicalcapital:</p>
+<p>Productiveasset (cow, goat)</p>
+<p><strong>Naturalcapital:</strong> Kitchen</p>
+<p>gardeninputs</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">SECTION 03</p>
+<h2>The Five Capital Assets</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>The Livelihood Pentagon</h2>
+<p>Fiveinterdependentassettypesformthefoundationof anyhousehold&#x27;slivelihoodstrategy.</p>
+<p>Human Capital</p>
+<p>Skills, education, health, labor</p>
+<p>powerSocial Capital</p>
+<p>Networks, trust, group</p>
+<p>membership, norms</p>
+<p>Natural Capital</p>
+<p>Land, water, forests, soil,</p>
+<p>biodiversity</p>
+<p>Physical Capital</p>
+<p>Infrastructure, tools, equipment,</p>
+<p>housingFinancial Capital</p>
+<p>Savings, credit, remittances,</p>
+<p>insurance</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Human Capitalin South Asia</h2>
+<p>What It Includes</p>
+<p>Education, vocationalskills, healthstatus, nutritional</p>
+<p>status, tim eavailableforproductivework, andcognitive</p>
+<p>capacityKey Barriersin South Asia</p>
+<p>First-generationlearnerswithlimitedliteracy</p>
+<p>Highburdenofunpaidcareworkonwomen</p>
+<p>Malnutritionaffectingcognitivedevelopment</p>
+<p>Limitedaccesstovocationaltraininginruralareas</p>
+<p>Example</p>
+<p>In Bihar, adolescentgirls&#x27; participationin Kishorigroups</p>
+<p>buildshealthliteracyandfinancialskillssimultaneously.</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>Social Capitalin South Asia</h2>
+<p>Bonding Capital</p>
+<p>Tieswithingroups — family, caste,</p>
+<p>village. Providessafetynetsbut</p>
+<p>canalsoreinforceexclusion.Bridging Capital</p>
+<p>Tiesacrossgroups — linkingfarmers</p>
+<p>to markets, migrantworkersto</p>
+<p>urbannetworks.Linking Capital</p>
+<p>Verticaltiestoinstitutions —</p>
+<p>governmentschemes, banks,</p>
+<p>NGOs. Oftenthe mostscarcefor</p>
+<p>thepoorest.</p>
+<p>In South Asiancontexts, SHGs (Self-Help Groups) are apowerful mechanism forbuildingallthreetypesof</p>
+<p>socialcapitalsimultaneously — particularlyforwomen.</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Natural &amp; Physical Capital</h2>
+<p>Natural Capital</p>
+<p>Landquality &amp; tenure</p>
+<p>security</p>
+<p>Accesstowaterfor</p>
+<p>irrigation &amp; drinking</p>
+<p>Commonpoolresources:</p>
+<p>forests, fisheries</p>
+<p>Ecosystemservices</p>
+<p>(pollination, soilhealth)Physical Capital</p>
+<p>Roadsconnectingfarmsto</p>
+<p>markets</p>
+<p>Storagefacilitiesforgrain</p>
+<p>Irrigationinfrastructure</p>
+<p>Mobilephones &amp; internet</p>
+<p>access</p>
+<p>Cookingfuel &amp; cleanenergy</p>
+<p>access</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>Financial Capital: The Access Gap</h2>
+<p>Financialcapitalencompassesbothstocks (savings, assets) andflows (incom e, credit, remittances).</p>
+<p>190M</p>
+<p>Unbanked Adults</p>
+<p>Estimatedadultswithoutformalbank</p>
+<p>accountsin South Asia (World Bank,</p>
+<p>2021)70%</p>
+<p>Rural Credit Gap</p>
+<p>Shareofsmallfarmersrelyingon</p>
+<p>informal moneylendersathigh</p>
+<p>interestratesin India$87B</p>
+<p>Remittances</p>
+<p>Annualremittanceflowsinto South</p>
+<p>Asia — acriticalfinancialcapital</p>
+<p>sourcefor millions</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="22">
+<div class="slide-content">
+<h2>💡 Exercise: Asset Mapping</h2>
+<p><strong>Group Activity (20 minutes):</strong> Choose acom munitytype (e.g., afishingvillagein Odisha, atea-garden</p>
+<p>com munityin Assam , or aperi-urbanslum in Lahore). Maptheirassetpentagon — whichcapitalsarestrong?</p>
+<p>Whichareweak? Wherearethebiggestvulnerabilities?</p>
+<p>Identify</p>
+<p>List 2-3 specificassetsundereach</p>
+<p>ofthefivecapitalsforyour</p>
+<p>chosencom munity2</p>
+<p>Score</p>
+<p>Rateeachcapitalfrom 1 (very</p>
+<p>low) to 5 (veryhigh) basedon</p>
+<p>accessibilityforthepoorest</p>
+<p>households3</p>
+<p>Connect</p>
+<p>Drawarrowsshowingwhich</p>
+<p>assetsreinforceeachother — and</p>
+<p>whichdeficitscompoundeach</p>
+<p>other</p>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="23">
+<div class="slide-content">
+<p class="section-number">SECTION 04</p>
+<h2>Vulnerability Context</h2>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>The Vulnerability Triangle</h2>
+<p>Threecategoriesofexternalstressesthreatenlivelihoodassetsandstrategies.</p>
+<p>⚡ Shocks</p>
+<p>Sudden, severedisruptions:</p>
+<p>floods, droughts, cropdisease,</p>
+<p>illness, jobloss, com munal</p>
+<p>conflict. Destroyassetsrapidly</p>
+<p>andsethouseholdsbackyears.📈 Trends</p>
+<p>Slow, directionalchanges:</p>
+<p>populationgrowth, decliningsoil</p>
+<p>fertility, risinginputcosts,</p>
+<p>technologychange, political</p>
+<p>shifts. Reshapelivelihoodoptions</p>
+<p>overtim e.🌧 Seasonality</p>
+<p>Predictablebutdifficultcycles:</p>
+<p>monsoonvariability, agricultural</p>
+<p>leanseasons, seasonal migration,</p>
+<p>festivaldebtcycles. The &quot;hidden</p>
+<p>hunger&quot; oftheagricultural</p>
+<p>calendar.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Climate Vulnerabilityin South Asia</h2>
+<p>0 1 0 2 0 3 0 4 0 5 0 6 0 7 0 8 0 9 0</p>
+<p>Cl i ma te Vu l ne ra b i li t y In de x  0  1 0 0 Ba n g la de s h</p>
+<p>Pa k i s ta n</p>
+<p>In di a</p>
+<p>Ne pa l</p>
+<p>Sr i La n k aCo u n t r y</p>
+<p>South Asiaisamongtheworld&#x27;s mostclimate-vulnerableregions. Bangladeshand Pakistanfaceacuterisksfrom floods, extrem eheat, andsea-levelrise — directlythreatening</p>
+<p>agriculturallivelihoods.</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>Seasonality: The Hidden Driver</h2>
+<p><strong>Kharif:</strong> Planting</p>
+<p>&amp; MonsoonHarvest: Peak</p>
+<p>Income</p>
+<p><strong>Rabi:</strong> Winter</p>
+<p>CropsLean Season:</p>
+<p>Food Stress</p>
+<p>Theleanseason (March–June) iswhenfoodinsecurity, debt, anddistress migrationpeak. Program timing mustalignwith</p>
+<p>theserealities, notadministrativecalendars.</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Case Study: Floods &amp;</h2>
+<p>Livelihoodsin Bihar</p>
+<p>The Context</p>
+<p>Biharfacesannualflooding</p>
+<p>fromthe Kosiand Gandak</p>
+<p>rivers, affectingover 10 million</p>
+<p>people. Forsmallholderfarmers,</p>
+<p>onefloodcaneraseanentire</p>
+<p>agriculturalcycle.Livelihood Impacts</p>
+<p>Croploss &amp; livestockdeaths</p>
+<p>Destructionofstoredgrain</p>
+<p>Schooldropoutasfamilies</p>
+<p>cope</p>
+<p>Debtcyclesfrom</p>
+<p>moneylenders</p>
+<p>Women&#x27;sassets (jewelry,</p>
+<p>utensils) soldfirst</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="28">
+<div class="slide-content">
+<h2>Building Resilienceto Vulnerability</h2>
+<p>Absorb</p>
+<p>Usesavings, socialnetworks, and</p>
+<p>safetynetstosurviveshocks</p>
+<p>withoutlosingcoreassetsAdapt</p>
+<p>Changelivelihoodstrategiesin</p>
+<p>responsetotrends — diversify</p>
+<p>crops, shift markets, migrate</p>
+<p>seasonallyTransform</p>
+<p>Changetheunderlyingstructures</p>
+<p>thatcreatevulnerability — land</p>
+<p>rights, socialnorm s, policyaccess</p>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="29">
+<div class="slide-content">
+<p class="section-number">SECTION 05</p>
+<h2>Institutions, Structures &amp;</h2>
+<h2>Policies</h2>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>Transforming Structures &amp; Processes</h2>
+<p>Inthe SLA, &quot;structures&quot; and &quot;processes&quot; mediatehowassetsareconvertedintooutcomes.</p>
+<p>Structures</p>
+<p><strong>Privatesector:</strong> Markets, employers, agri-input</p>
+<p>suppliers</p>
+<p><strong>Publicsector:</strong> Governmentdepartments, localbodies,</p>
+<p>courts</p>
+<p><strong>Civilsociety:</strong> NGOs, cooperatives, com munity</p>
+<p>organizationsProcesses</p>
+<p><strong>Laws &amp; policies:</strong> MGNREGA, PM-Kisan, landreform acts</p>
+<p><strong>Culture &amp; norms:</strong> Genderroles, castehierarchies,</p>
+<p>marriagecustom s</p>
+<p><strong>Marketrules:</strong> Pricecontrols, MSP, traderegulations</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Government Schemesas Livelihood Levers</h2>
+<p>MGNREGA</p>
+<p>100 daysofguaranteedwageemployment. Particularly</p>
+<p>importantduringleanseasonsandforwomen&#x27;sfinancial</p>
+<p>inclusionin India.PM-Kisan</p>
+<p>Directincom esupportof ₹ 6,000/yeartosmallholder</p>
+<p>farmers, providing abasicfinancialcushionagainstinput</p>
+<p>costshocks.</p>
+<p>PMJDY</p>
+<p>Jan Dhanaccountsbroughtformalbankingto 400M+</p>
+<p>previouslyunbanked Indians, unlockingdigitalfinancial</p>
+<p>capital.NRLM / Aajeevika</p>
+<p>National Rural Livelihoods Missionorganized 90M+</p>
+<p>womeninto SHGs, buildingsocialandfinancialcapitalat</p>
+<p>scale.</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Markets &amp; Access Barriers</h2>
+<p>Low market</p>
+<p>power</p>
+<p>LowfinanceHighaccess</p>
+<p>costsHighinformation</p>
+<p>Financegap — no</p>
+<p>creditforinputsPowergap — elite</p>
+<p>captur e &amp; middlemenInfrastructur egap —</p>
+<p>poor roads &amp; storageInformationgap — no</p>
+<p>pricetransparency</p>
+<p>Marketaccessisrarelyneutral. Structuralbarrierssystematicallyexcludethepoorest — especiallywomen, landlesslaborers, and marginalizedcastegroups</p>
+<p>— from economicopportunity.</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="33">
+<div class="slide-content">
+<h2>🗣 Discussion: Policy Mapping</h2>
+<p><strong>Discussion Prompt:</strong> Chooseonegovernmentschem erelevanttolivelihoodsinyourcountry (India,</p>
+<p>Bangladesh, Nepal, Sri Lanka, or Pakistan). Whodoesitreachwell? Whofallsthroughthecracks? What</p>
+<p>structuralbarrierspreventthepoorestfrom accessingit?</p>
+<p>Reach</p>
+<p>Whatpercentageofeligible</p>
+<p>householdsactuallyreceivethis</p>
+<p>benefit? Whatareexclusionerrors?Capture</p>
+<p>Arebenefitscapturedby</p>
+<p>intermediaries? Dolocalpower</p>
+<p>dynamicsshapewhobenefits?Reform</p>
+<p>Ifyoucouldchangeonething</p>
+<p>abouttheschem e&#x27;sdesignor</p>
+<p>implementation, whatwoulditbe?</p>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="34">
+<div class="slide-content">
+<p class="section-number">SECTION 06</p>
+<h2>Livelihood Strategies</h2>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>Three Core Livelihood Strategies</h2>
+<p>🌱 Intensification</p>
+<p>Increaseproductivityfrom</p>
+<p>existingresources — betterseeds,</p>
+<p>inputs, techniques. Classic &quot;Green</p>
+<p>Revolution&quot; approach.</p>
+<p><strong>Ri s k :</strong> Environmentaldegradation,</p>
+<p>inputdependency, diminishing</p>
+<p>returns🔀 Diversification</p>
+<p>Spreadactivitiesacross multiple</p>
+<p>incom esourcestoreducerisk —</p>
+<p>off-farm work, hom e-based</p>
+<p>enterprises, livestock,</p>
+<p>remittances.</p>
+<p><strong>Ri s k :</strong> Thinspreadingofassets,</p>
+<p>tim epovertyforwomen🚌 Migration</p>
+<p>Movetemporarilyorpermanently</p>
+<p>forbetteropportunities — circular,</p>
+<p>seasonal, orpermanent. Com mon</p>
+<p>in South Asia.</p>
+<p><strong>Ri s k :</strong> Exploitation, family</p>
+<p>separation, housingprecarity</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>Diversificationin Practice</h2>
+<p>Crop farming · 30%</p>
+<p>Agricultural wagelabor · 22%</p>
+<p>Non-far m wagelabor · 18%</p>
+<p>Remit tances · 14%</p>
+<p>Livestock &amp; dair y · 10%</p>
+<p>Self -employment · 6%</p>
+<p>For mostrural South Asianhouseholds, incom eisalreadydiversifiedacross multiplesources. Effectiveprogram sworkwiththisrealityratherthanassuming asingle &quot;primary&quot; livelihood.</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>Migrationas a Livelihood</h2>
+<p>Strategy</p>
+<p>Scaleof Migration</p>
+<p>Anestimated 100M+ internal</p>
+<p>migrantsin Indiaalone. Mostare</p>
+<p>circularmigrantswhoreturn</p>
+<p>seasonally — maintainingtiesto</p>
+<p>farmingandfamily.Opportunities</p>
+<p>Higherwagesindestination</p>
+<p>cities</p>
+<p>Remittancesfundschoolfees,</p>
+<p>medicalcare</p>
+<p>Skillacquisitioninnewtrades</p>
+<p>Risks</p>
+<p>Hazardousworkingconditions</p>
+<p>Nolaborprotections</p>
+<p>Childrenleftbehindwithout</p>
+<p>care</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>Case Study: SEW Aand Diversification</h2>
+<p>Whois SEW A?</p>
+<p>The Self-Employed Women&#x27;s Association (SEW A),</p>
+<p>foundedin Gujaratin 1972, organizesinformalwomen</p>
+<p>workers — hom e-basedproducers, streetvendors,</p>
+<p>agriculturallaborers — into apowerfulcollective.Livelihood Strategy Insights</p>
+<p>SEW Afoundthat memberstypicallyjuggle 3-5 incom e</p>
+<p>sourcessimultaneously. Their modelsupports</p>
+<p>diversificationbyprovidingaccessto:</p>
+<p>Creditandsavings (financialcapital)</p>
+<p>Collectivebargaining (socialcapital)</p>
+<p>Skillstraining (humancapital)</p>
+<p>Marketlinkages (physicalinfrastructure)</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="39">
+<div class="slide-content">
+<p class="section-number">SECTION 07</p>
+<h2>Gender &amp; Livelihoods</h2>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>Gender Shapes Every Dimensionof Livelihoods</h2>
+<p>Asset Access</p>
+<p>Womenownlessthan 15% ofagriculturallandin India.</p>
+<p>Inheritancenorm s, notlawsalone, determineassetcontrol.Time Poverty</p>
+<p>Womenspend 5-6x morehoursonunpaidcareworkthan</p>
+<p>men, severelyconstrainingproductivelivelihoodtim e.</p>
+<p>Mobility Constraints</p>
+<p>Socialnorm srestrictwomen&#x27;s movementto markets, training</p>
+<p>centers, andfinancialinstitutions — especiallyinruralareas.Voice &amp; Agency</p>
+<p>Womenareoftenexcludedfrom householdandcom munity</p>
+<p>decision-makingaboutproductiveassetsandlivelihood</p>
+<p>choices.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>The Triple Burden</h2>
+<p>Com munity Work</p>
+<p>Productive Work Reproductive WorkProductive +</p>
+<p>Com munityReproductiv</p>
+<p>e +</p>
+<p>Com munity</p>
+<p>Tim e</p>
+<p>Conflic</p>
+<p>tCompetingfor</p>
+<p>24h</p>
+<p>Livelihoodprogram sthatignorewomen&#x27;sunpaidworkburdencaninadvertentlyincreasetotalworkloadwithoutincreasingwell-being. Alwaysask: whatwillshestopdoingtodothis?</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>SHGs: Social Capitalfor</h2>
+<p>Women</p>
+<ul>
+<li><strong>12M</strong></li>
+</ul>
+<p>SHGsin India</p>
+<p>Active Self-Help</p>
+<p>Groupsunder NRLM,</p>
+<p>comprising ~90</p>
+<p>millionwomen₹4.5T</p>
+<p>Credit</p>
+<p>Mobilized</p>
+<p>Cumulativebank</p>
+<p>creditlinkedto SHGs</p>
+<p>— transforming</p>
+<p>financialcapital</p>
+<p>access65%</p>
+<p>Empowerment</p>
+<p>SHGmembersreport</p>
+<p>higherdecision-</p>
+<p>makingpowerin</p>
+<p>householdspending</p>
+<p>(NRLMevaluation,</p>
+<p>2020)</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="43">
+<div class="slide-content">
+<h2>Gender-Responsive Program Design</h2>
+<p>Checklistfor makinglivelihoodprogram sgenuinelygender-transformative:</p>
+<p>Start with women&#x27;spriorities</p>
+<p>Useparticipatorytoolstounderstandwhatwomen</p>
+<p>themselveswant, notwhatprogram sassum ethey</p>
+<p>needAddresstim econstraintsexplicitly</p>
+<p>Providechildcareduringtrainings; schedule</p>
+<p>activitiesaroundwomen&#x27;sworkday, notoffice</p>
+<p>hours</p>
+<p>Buildassetsin women&#x27;snames</p>
+<p>Ensurelandtitles, bankaccounts, andlivestock</p>
+<p>ownershipareregisteredtowomendirectlyEngage menandcom munitynorm s</p>
+<p>Changedoesn&#x27;tlastifonlywomen&#x27;sbehavior</p>
+<p>changes — addressstructuralbarriers</p>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="44">
+<div class="slide-content">
+<p class="section-number">SECTION 08</p>
+<h2>Designing Livelihood</h2>
+<h2>Interventions</h2>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>The Program Design Cycle</h2>
+<p>Assess</p>
+<p>Community</p>
+<p>NeedsDesign</p>
+<p>Interventions</p>
+<p>Implement</p>
+<p>Programs Learn &amp; Adapt</p>
+<p>Goodprogram designisiterative. Com munitieschange, shockshappen, andlearning mustfeedbackintodesigncontinuously</p>
+<p>— notjustatend-of-projectevaluation.</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>Targeting: Reachingthe Poorest</h2>
+<p>Method Strengths Limitations</p>
+<p>Proxy Means Testing Objective, scalable, reduceselit e</p>
+<p>captureMissessocialexclusion, ignores</p>
+<p>assets</p>
+<p>Community-basedtargeting Locallylegitimate, contextual</p>
+<p>knowledgeElitecapture, socialdynamicsbias</p>
+<p>Geographictargeting Simple, reachespoorareas Missespoor H Hsinnon-poorareas</p>
+<p>Self-targeting Lowcost, reducesinclusionerrors Stigmamaydeterpoorest; excludes</p>
+<p>ill</p>
+<p>Categorical (gender, caste) Addressesstructuralexclusion</p>
+<p>directlyMissespooroutsidecategory</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="47">
+<div class="slide-content">
+<h2>Theoryof Change: A Practical Tool</h2>
+<p>Whatis a ToC?</p>
+<p>A Theoryof Change mapsthepathwayfrom inputsand</p>
+<p>activitiestooutputs, outcomes, andultimateimpact —</p>
+<p>makingprogram assumptionsexplicitandtestable.Key Questions</p>
+<p>Whoarewetargetingandwhy?</p>
+<p>Whatchangedoweexpectandbywhen?</p>
+<p>Whatassumptionsarewe making?</p>
+<p>Whatcouldpreventchangefrom happening?</p>
+<p>Howwillweknowifitworked?</p>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Case Study: Jeevika, Bihar</h2>
+<p>Bihar Rural Livelihoods</p>
+<p>Project</p>
+<p>Jeevika (BRLPS) mobilizedover</p>
+<p>10 millionwomeninto SHGs</p>
+<p>across Bihar&#x27;spoorestdistricts,</p>
+<p>combiningfinancialinclusion</p>
+<p>withlivelihoodpromotionand</p>
+<p>socialdevelopment.Key Design Features</p>
+<p>Community Resource</p>
+<p>Personsaspeermobilizers</p>
+<p>Village Organization</p>
+<p>federationsforcollective</p>
+<p>voice</p>
+<p>Convergencewith</p>
+<p>governmentschemes (PDS,</p>
+<p>MGNREGA)</p>
+<p>Graduatedapproach:</p>
+<p>savings → credit →</p>
+<p>enterprise</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="49">
+<div class="slide-content">
+<p class="section-number">SECTION 09</p>
+<h2>Monitoring &amp; Evaluationof</h2>
+<h2>Livelihoods</h2>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="50">
+<div class="slide-content">
+<h2>What Should We Measure?</h2>
+<p>Livelihood M&amp;Emustgobeyondincom etocapturethefullrangeofoutcomes.</p>
+<p>📈 Economic</p>
+<p>Incom elevels, consumption,</p>
+<p>savings, assetownership, debt</p>
+<p>burden🛡 Resilience</p>
+<p>Abilitytocopewithshocks, food</p>
+<p>security months, diversification</p>
+<p>index⚖ Equity</p>
+<p>Gendergapsinassetownership,</p>
+<p>caste/ethnicinclusion, intra-</p>
+<p>householddistribution</p>
+<p>🌿 Sustainability</p>
+<p>Naturalresourcehealth, program dependency</p>
+<p>indicators, com munityownership💬 Agency</p>
+<p>Women&#x27;sdecision-making, voiceincom munity</p>
+<p>forum s, civicparticipation</p>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>Common M&amp;E Pitfallsin Livelihood Programs</h2>
+<p>Countingoutputs, notoutcomes</p>
+<p>Measuring &quot;trainingsconducted&quot; insteadof &quot;skills</p>
+<p>acquiredandapplied&quot; tellsyounothingaboutimpactIgnoringseasonality</p>
+<p>Abaselineinharvestseasonandendlineinlean</p>
+<p>seasonwillshowfalsedecline — timing matters</p>
+<p>enormously</p>
+<p>Excludingwomen&#x27;sperspectives</p>
+<p>Surveysconductedwith malehouseholdheads miss</p>
+<p>women&#x27;sincom esources, assets, andexperiences</p>
+<p>entirelyAttributionwithoutcomparison</p>
+<p>Without acontrolgrouporcomparison, itis</p>
+<p>impossibletoknowwhetherchangesareduetothe</p>
+<p>program</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="52">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Case Studies Across South</h2>
+<h2>Asia</h2>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Four Inspiring Livelihood Models</h2>
+<p>Grameen Bank,</p>
+<p>Bangladesh</p>
+<p>Pioneeredmicrocreditfor</p>
+<p>landlesswomen, reaching</p>
+<ul>
+<li><strong>9M+ borrowers. Provedthat</strong></li>
+</ul>
+<p>thepoorarecreditworthy.</p>
+<p>Amul, Gujarat</p>
+<p>Cooperativedairymodel</p>
+<p>thattransformed 3.6M</p>
+<p>smallholderfarmersinto</p>
+<p>globalbrandowners</p>
+<p>throughcollectiveaction.</p>
+<p>Community Forestry,</p>
+<p>Nepal</p>
+<p>Over 19,000 Community</p>
+<p>Forest User Groupsmanage</p>
+<p>1.7Mha, linkingnatural</p>
+<p>capitaltosustainable</p>
+<p>livelihoods.</p>
+<p>Sarvodaya, Sri Lanka</p>
+<p>Grassrootsmovement</p>
+<p>linking Buddhistethicswith</p>
+<p>ruralenterprise, self-</p>
+<p>reliance, andcommunity-</p>
+<p>owneddevelopment.</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>Comparingthe Models</h2>
+<p>Program Primary Capital Key Strategy Scale Gender Focus</p>
+<p>Grameen Bank Financial Microcredit</p>
+<p>groupsNational</p>
+<p>(Bangladesh)Very High</p>
+<p>Amul Cooperative Financial + Social Collective</p>
+<p>marketingNational (India) Medium</p>
+<p>Nepal CFUG Natural + Social Commonpool</p>
+<p>governanceNational (Nepal) Growing</p>
+<p>BRAC TUP Allfivecapitals Graduationmodel National + globa l Very High</p>
+<p>SEWA Social + Financial Collective</p>
+<p>bargainingMulti-state (India) Corefocus</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>🧠 Quiz: Test Your Understanding</h2>
+<p>Reflectonthefollowingquestions. Therearenotrickquestions — theanswersallcom efrom whatwe&#x27;vecovered!</p>
+<p>Question 1</p>
+<p>Nam ethefivecapitalassetsin</p>
+<p>the SLApentagon. Whichis most</p>
+<p>constrainedforwomenin South</p>
+<p>Asianruralcontexts?2</p>
+<p>Question 2</p>
+<p>Whatisthedifferencebetween a</p>
+<blockquote>&quot;shock&quot; and a &quot;trend&quot; inthe</blockquote>
+<p>vulnerabilitycontext? Giveone</p>
+<p>exampleofeachfrom South Asia.3</p>
+<p>Question 3</p>
+<p>Whatdoes &quot;livelihood</p>
+<p>diversification&quot; mean, andwhy</p>
+<p>mightitbe moreimportantthan</p>
+<p>intensificationforthepoorest</p>
+<p>households?</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>🧠 Quiz Continued</h2>
+<p>Question 4</p>
+<p>Whatisthe &quot;tripleburden&quot; facedbywomen? Howshould</p>
+<p>program designersrespondtoit?2</p>
+<p>Question 5</p>
+<p>Aprogram achieves 10,000 trainingsbutshowsno</p>
+<p>incom eincreaseatendline. What M&amp;Emistakes might</p>
+<p>explainthis? Whatquestionswouldyouask?</p>
+<p>Question 6</p>
+<blockquote>&quot;Structuresandprocesses&quot; inthe SLAincludebothformal</blockquote>
+<p>policiesandinformalnorm s. Giveoneexampleofeach</p>
+<p>thataffectslivelihoodsinyourcontext.4</p>
+<p>Question 7</p>
+<p>Whyisthe SLAconsidered &quot;people-centred&quot;? Howdoes</p>
+<p>thisdifferfrom aconventionaleconomicdevelopment</p>
+<p>approach?</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>Livelihoodsare multidimensional</p>
+<p>Incom e matters, butresilience, agency, dignity, andecologicalsustainabilityareequallyimportantoutcomes</p>
+<p>Assets, notdeficits</p>
+<p>The SLAstartswithwhatcom munitieshave — thefivecapitals — andbuildsonstrengthsratherthancataloguingneeds</p>
+<p>Contextiseverything</p>
+<p>Vulnerabilitycontext (shocks, trends, seasonality) andtransformingstructures (policies, markets, norm s) shapeeverylivelihood</p>
+<p>outcom e</p>
+<p>Genderisstructural</p>
+<p>Women&#x27;slivelihoodconstraintsarerootedinpowerandnorm s, notindividualcapacity. Program s mustaddressboth.</p>
+<p>Designforlearning</p>
+<p>Goodprogram sbuildinfeedbackloops, measureoutcomesnotjustoutputs, andadapttowhatcom munitiesteachus</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>Sustainable Livelihoods Thecapabilities, assets, andactivitiesrequiredfor ameansoflivingthatcancopewithshocksandstresses</p>
+<p>SLA / SLF Sustainable Livelihoods Approach / Framework — atoolforanalyzinganddesigninglivelihoodprograms</p>
+<p>developedby DFID</p>
+<p><strong>Five Capitals Thefiveassettypes:</strong> Human, Social, Natural, Physical, and Financialcapital</p>
+<p>Vulnerability Context Theexternalenvironmentofshocks, trends, andseasonalfactorsthataffectlivelihoodassets</p>
+<p>Livelihood Diversification Spreadingincomeandactivityacrossmultiplesourcestoreducerisk</p>
+<p>Graduation Model Amulti-stageapproachthatcombine sassettransfers, training, andsupporttomoveultra-poorhouseholds</p>
+<p>onto asustainablelivelihoodpathway</p>
+<p>SHG Self-Help Group — asmallgroup (typically 10-20 women) thatmeetsregularlyforsavings, credit, an d</p>
+<p>collectiveaction</p>
+<p>Triple Burden Thecombinedloadofproductive, reproductive, andcommunityworkcarrieddisproportionatelybywomen</p>
+<p>Theoryof Change Amapofthecausalpathwayfromprograminputstodesiredlong-termimpact, includingassumptions</p>
+<p>Resilience Thecapacitytoabsorb, adaptto, andtransforminresponsetoshocksandstresses</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>Essential Reading</p>
+<p>Sustainable Rural Livelihoods — Chambers &amp; Conway</p>
+<p>(1992), IDS Discussion Paper</p>
+<p>The DFID Sustainable Livelihoods Guidance Sheets</p>
+<p>— Departmentfor International Development (1999)</p>
+<p>Portfoliosofthe Poor — Collins, Morduch, Rutherford</p>
+<p>&amp; Ruthven (2009)</p>
+<p>Poor Economics — Banerjee &amp; Duflo (2011)Online Resources</p>
+<p>IFAD Rural Development Report — ifad.org</p>
+<p>BRAC Research Publications — brac.net/research</p>
+<p>J-PAL South Asia — south-asia.jpal.org</p>
+<p>FAO Livelihoods Resources — fao.org</p>
+<p>NRLM / Aajeevika Mission — aajeevika.gov.in</p>
+<p>Journals</p>
+<p>World Development</p>
+<p>Journalof Rural Studies</p>
+<p>Economic &amp; Political Weekly</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

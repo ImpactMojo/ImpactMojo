@@ -11,6 +11,7 @@
  *   --course SLUG   Regenerate a single course by slug
  *   --delay MS      Delay between API calls in ms (default: 5000)
  *   --resume        Skip courses already completed in gamma-sync-results.json
+ *   --force         Regenerate ALL courses, even previously completed ones
  */
 
 const { execSync } = require("child_process");
@@ -32,25 +33,24 @@ const THEME_ID = "cornflower";
 // ─── Art style per category ─────────────────────────────────────────────────
 
 const ART_STYLES = {
-  "MEL & Research": "Warli tribal art style — geometric white figures on earthy backgrounds, dot-pattern borders, minimalist folk storytelling",
-  "Data & Technology": "Gond art style — intricate dot-and-line patterns, nature motifs with data elements, vibrant earth tones on dark backgrounds",
-  "Policy & Economics": "Kalamkari art style — flowing hand-drawn textile patterns, detailed narrative scenes, warm terracotta and indigo palette",
-  "Gender & Equity": "Madhubani art style — bold outlines with crosshatching fill, symmetric compositions, vibrant primary colors on natural backgrounds",
-  "Health & Communication": "Pattachitra art style — ornamental borders, narrative panel structure, rich jewel tones with fine line detail",
-  "Philosophy & Governance": "Pichwai art style — devotional painting traditions, lotus and nature motifs, deep greens and golds with fine brushwork",
+  "MEL & Research": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: rural Indian villages, fields, community meetings, data collection. Framed with a VISIBLE Warli tribal art decorative border — geometric white dot-patterns on earthy terracotta edges surrounding the entire image",
+  "Data & Technology": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: Indian village technology use, notebooks, chalkboards, radio towers, mobile phones. Framed with a VISIBLE Gond art decorative border — intricate dot-and-line nature patterns on dark edges surrounding the entire image",
+  "Policy & Economics": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: Indian governance, markets, panchayat meetings, public life. Framed with a VISIBLE Kalamkari art decorative border — flowing hand-drawn textile patterns in terracotta and indigo edges surrounding the entire image",
+  "Gender & Equity": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES — women in sarees, men in kurtas, children, transgender individuals (hijra) — (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: Indian village schools, SHG meetings, handlooms, community spaces. Framed with a VISIBLE Madhubani art decorative border — bold crosshatched patterns in primary colors on edges surrounding the entire image",
+  "Health & Communication": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES — health workers, mothers, children — (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: Indian primary health centers, anganwadis, community health settings. Framed with a VISIBLE Pattachitra art decorative border — ornamental narrative panels in jewel tones on edges surrounding the entire image",
+  "Philosophy & Governance": "STRICTLY MONOCHROME sepia-toned photograph (zero color, only brown/cream/black tones like a 1920s film photo). Show South Asian people as dark SILHOUETTES (no facial detail, no fingers, no teeth — only solid dark human shapes in profile or action poses). Scene: Indian democratic institutions, community gatherings, temples, village assemblies. Framed with a VISIBLE Pichwai art decorative border — lotus and nature motifs in deep green and gold edges surrounding the entire image",
 };
 
 // ─── Shared image & content style ───────────────────────────────────────────
 
 const IMAGE_STYLE_BASE = [
-  "Sargam-style clean line SVG illustrations.",
-  "Indian folk art inspired, South Asian context.",
-  "Show diverse brown-skinned South Asian people — women, men, children, transgender individuals, elders.",
-  "Include animals (cows, goats, birds, elephants) where relevant.",
-  "Rural and semi-urban Indian settings — villages, fields, markets, community spaces, schools, health centers.",
-  "No white/Western people. No luxury or upper-class settings.",
-  "Inclusive, democratic, warm. Community-centered compositions.",
-  "Flat illustration style with clean outlines, minimal gradients.",
+  "CRITICAL RULE — HUMANS AS SILHOUETTES ONLY: Show people as solid dark silhouettes — no visible facial features, no teeth, no detailed fingers, no skin texture. Just dark human shapes in profile, walking, working, gathering, or in action poses. This avoids grotesque AI-generated faces. Show diverse silhouettes: women in sarees and salwar kameez, men in kurtas and dhotis, children, elders, transgender individuals (hijra community). Mixed ages and genders.",
+  "CRITICAL RULE — STRICTLY MONOCHROME SEPIA: Every photograph MUST be fully desaturated sepia-toned (brown/cream/black only, like a 1920s archival photograph). ZERO color anywhere. No blue skies, no green trees, no colored clothing. Only warm brown/cream/black tones with soft grain.",
+  "CRITICAL RULE — EVERY IMAGE MUST HAVE A THICK DECORATIVE BORDER: Every generated image MUST be surrounded by a clearly visible, thick folk art decorative border/frame (at least 5% of image width on each side) from the specified Indian art tradition. The border must be unmistakable. No borderless images allowed. If you generate an image without a folk art border, regenerate it.",
+  "CRITICAL RULE — PHOTOREALISTIC ONLY: All images must look like real sepia photographs, not illustrations, not cartoons, not drawings, not digital art. Photorealistic with film grain.",
+  "MANDATORY: Settings must be rural Indian villages, peri-urban small towns, fields, mandis (markets), anganwadis, primary health centers, gram panchayat offices, temples, river banks, farms. NEVER show glass offices, luxury interiors, Western cities, or affluent urban settings.",
+  "Scenes: farming, hand-pumping water, SHG meetings, mid-day meals, ASHA workers visiting homes, children studying under trees, panchayat meetings, market days, handloom weaving, fishing. With animals: cows, buffaloes, goats, bullocks with carts.",
+  "Emotional tone: dignity, agency, warmth, resilience, beauty. NOT poverty-porn. Silhouettes should convey purposeful action and community.",
 ].join(" ");
 
 // ─── Footer config ──────────────────────────────────────────────────────────
@@ -74,19 +74,36 @@ const HEADER_FOOTER = {
 // ─── Additional instructions for font & style enforcement ───────────────────
 
 const ADDITIONAL_INSTRUCTIONS = [
-  "FONTS: Use Inter for all headings and titles (bold/semibold). Use Amaranth for all body text and descriptions.",
+  "CRITICAL FONT RULES:",
+  "- ALL headings, titles, and section headers MUST use the font 'Inter' (bold or semibold weight).",
+  "- ALL body text, descriptions, bullet points, and captions MUST use the font 'Amaranth' (regular weight).",
+  "- Do NOT use any other fonts. Only Inter for headings and Amaranth for body text throughout the entire deck.",
+  "",
   "BRANDING: This is an ImpactMojo course — a free development education platform for South Asia.",
   "AUDIENCE: Development professionals, students, researchers, and practitioners in South Asia.",
   "TONE: Educational, accessible, warm, rigorous but not academic. Avoid jargon where possible.",
   "",
+  "NOTE: Slide numbers, website URL, and license are already handled by the deck footer — do NOT duplicate them in the slide body content.",
+  "",
   "STRUCTURE (follow this order strictly):",
-  "1. TITLE CARD — Course name, subtitle, ImpactMojo branding, category label",
+  "1. TITLE CARD — Course name, subtitle, 'ImpactMojo 101 Series' branding, category label, www.impactmojo.in",
   "2. AGENDA / OUTLINE CARD — Numbered list of all sections covered in the deck, styled as a visual table of contents",
   "3-N. CONTENT SECTIONS (10-12 major sections) — Each major topic gets:",
   "   - A SECTION SEPARATOR CARD with the section number, title, and a relevant folk art illustration (full-bleed)",
   "   - 4-6 content cards for that section with concepts, case studies, diagrams, exercises",
   "CLOSING: Quiz/Self-Assessment, Key Takeaways, Glossary, Further Reading",
-  "LAST CARD: Thank You — 'Thank You for Learning with ImpactMojo' with contact email: hello@impactmojo.in and link to www.impactmojo.in. Suggest 2-3 related courses to explore next.",
+  "",
+  "FINAL SLIDE (MANDATORY — DO NOT SKIP):",
+  "The very last slide (slide 60) MUST be a 'Thank You' branded closing card with:",
+  "  - Large heading: 'Thank You for Learning with ImpactMojo'",
+  "  - Subheading: 'Keep exploring. Keep questioning. Keep building.'",
+  "  - Contact: hello@impactmojo.in",
+  "  - Website: www.impactmojo.in",
+  "  - License: CC BY-NC-SA 4.0",
+  "  - '🎓 Explore More ImpactMojo 101 Courses:' followed by 2-3 related course suggestions",
+  "  - A sepia silhouette image with folk art border as the background",
+  "This Thank You slide is REQUIRED. Do not end the deck without it.",
+  "",
   "TARGET: 60 slides (the maximum). Do NOT compress. Every concept deserves its own slide.",
   "",
   "DIAGRAMS & CHARTS: Use plenty of diagrams, flowcharts, comparison tables, process flows, frameworks, and data visualizations.",
@@ -96,64 +113,56 @@ const ADDITIONAL_INSTRUCTIONS = [
   "SECTION SEPARATORS: Use bold, visually distinct separator cards between major sections. Full-width background color or illustration. Section number + title only, no body text.",
   "",
   "LAYOUT: Clean layouts with generous whitespace. Use card-based sections.",
-  "DIVERSITY: All human illustrations must show South Asian / brown-skinned people.",
-  "IMAGERY: Prefer line-art SVG style illustrations over photographs. Indian folk art motifs.",
+  "",
+  "IMAGE RULES (CRITICAL — READ CAREFULLY):",
+  "1. Show people ONLY as dark SILHOUETTES — no facial features, no teeth, no detailed fingers, no skin. Solid dark human shapes in profile or action. Diverse: women in sarees, men in kurtas, children, elders, hijra community.",
+  "2. ALL images must be FULLY SEPIA MONOCHROME — brown/cream/black tones only, zero color. Like a 1920s archival photograph.",
+  "3. ALL images must be PHOTOREALISTIC photographs, not illustrations or drawings or cartoons.",
+  "4. EVERY image MUST have a VISIBLE, THICK decorative Indian folk art border/frame around it. The border must be clearly visible — at least 5% of the image width on each side. No borderless images. If an image does not have a folk art border, it is WRONG.",
+  "",
   "CONTEXT: Rural India, community development, grassroots settings. Democratic and inclusive.",
   "ACCESSIBILITY: High contrast text. No text over busy backgrounds.",
 ].join("\n");
 
 // ─── Course catalog ─────────────────────────────────────────────────────────
+// 26/38 completed — only the 12 remaining courses below need generation.
+// Completed slugs (for reference): mel-basics, research-ethics, visual-eth,
+// qual-methods, obs2insight, eng-dev, data-lit, data-feminism, eda-hhs,
+// bi-analysis, multivariate-basics, irt-basics, econometrics-101, digital-ethics,
+// climate-essentials, dev-economics, pol-economy, cost-effectiveness,
+// livelihood-basics, advocacy-basics, fundraising-basics, post-truth-101,
+// dev-architecture, edu-pedagogy, SRHR-basics, wee-studies
 
 const COURSES = [
-  // MEL & Research
-  { slug: "mel-basics", title: "MEAL 101 — Monitoring, Evaluation, Accountability and Learning", category: "MEL & Research", description: "Monitoring, Evaluation, Accountability and Learning frameworks for impact measurement. Build foundational skills in MEL systems that drive adaptive management and demonstrate program impact." },
-  { slug: "research-ethics", title: "Research Ethics 101", category: "MEL & Research", description: "Navigate ethical complexities of conducting research in development settings, from informed consent to data privacy and community benefit-sharing." },
-  { slug: "visual-eth", title: "Visual Ethnography 101", category: "MEL & Research", description: "Harness the power of visual methods in development research, from participatory photography to video documentation and visual storytelling." },
-  { slug: "obs2insight", title: "Getting to Insights from Field Observations 101", category: "MEL & Research", description: "Transform raw field observations into actionable insights through systematic observation techniques, pattern recognition, and analytical frameworks." },
-  { slug: "eng-dev", title: "English for Development Professionals 101", category: "MEL & Research", description: "Master specialized vocabulary and communication strategies for international development work, from policy briefs to stakeholder consultations." },
-  { slug: "qual-methods", title: "Qualitative Research Methods 101", category: "MEL & Research", description: "Master in-depth interviewing, focus group facilitation, and ethnographic techniques that capture rich contextual insights in development research." },
-
-  // Data & Technology
-  { slug: "data-lit", title: "Data Literacy 101", category: "Data & Technology", description: "Develop critical skills for understanding, interpreting, and communicating with data in development contexts, from survey design to visualization." },
-  { slug: "data-feminism", title: "Data Feminism 101", category: "Data & Technology", description: "Explore how power dynamics shape data collection, analysis, and interpretation through an intersectional feminist framework." },
-  { slug: "eda-hhs", title: "Exploratory Data Analysis for Household Surveys 101", category: "Data & Technology", description: "Develop skills for cleaning, exploring, and visualizing household survey data using statistical software and reproducible research practices." },
-  { slug: "bi-analysis", title: "Bivariate Analysis 101", category: "Data & Technology", description: "Master techniques for examining relationships between two variables, from correlation analysis to cross-tabulations and simple regression." },
-  { slug: "multivariate-basics", title: "Multivariate Analysis 101", category: "Data & Technology", description: "Master advanced statistical techniques for analyzing complex relationships among multiple variables, from factor analysis to structural equation modeling." },
-  { slug: "irt-basics", title: "Item Response Theory 101", category: "Data & Technology", description: "Learn advanced psychometric techniques for developing and validating measurement instruments, from poverty indices to learning assessments." },
-  { slug: "econometrics-101", title: "Econometrics 101", category: "Data & Technology", description: "Master statistical techniques for causal inference in development economics, from randomized controlled trials to quasi-experimental methods." },
-  { slug: "digital-ethics", title: "Digital Ethics 101", category: "Data & Technology", description: "Navigate ethical challenges in digital development, from data privacy and algorithmic bias to digital divides and surveillance concerns." },
-
-  // Policy & Economics
-  { slug: "climate-essentials", title: "Climate Essentials 101", category: "Policy & Economics", description: "Understand the science, economics, and politics of climate change through a development lens, exploring mitigation, adaptation, and climate justice." },
-  { slug: "dev-economics", title: "Development Economics 101", category: "Policy & Economics", description: "Master core theories of economic development from structural transformation to behavioral economics, examining why nations succeed or fail." },
-  { slug: "pol-economy", title: "Political Economy 101", category: "Policy & Economics", description: "Unpack how political institutions, power structures, and economic systems interact to shape development outcomes and policy choices." },
-  { slug: "cost-effectiveness", title: "Cost Effectiveness Analysis 101", category: "Policy & Economics", description: "Master economic evaluation techniques for comparing development interventions, from cost-benefit analysis to cost-utility assessments." },
-  { slug: "livelihood-basics", title: "Livelihoods 101", category: "Policy & Economics", description: "Understand sustainable livelihoods frameworks and design interventions that build resilient economic opportunities for vulnerable populations." },
-  { slug: "advocacy-basics", title: "Advocacy Basics 101", category: "Policy & Economics", description: "Develop skills for policy advocacy, from stakeholder mapping and message framing to campaign strategy and coalition building." },
-  { slug: "fundraising-basics", title: "Fundraising Basics 101", category: "Policy & Economics", description: "Develop skills for resource mobilization in development, from grant writing to donor engagement and partnership building." },
-  { slug: "post-truth-101", title: "Post Truth Politics 101", category: "Policy & Economics", description: "Analyze how misinformation, polarization, and erosion of institutional trust shape development outcomes in the digital age." },
-  { slug: "dev-architecture", title: "Global Development Governance and Architecture 101", category: "Policy & Economics", description: "Navigate the complex ecosystem of development institutions from the UN system to multilateral banks and bilateral agencies." },
-
-  // Gender & Equity
-  { slug: "edu-pedagogy", title: "Education and Pedagogy 101", category: "Gender & Equity", description: "Discover evidence-based teaching methodologies and learning theories that drive educational outcomes in diverse developmental contexts." },
-  { slug: "SRHR-basics", title: "Sexual and Reproductive Health and Rights 101", category: "Gender & Equity", description: "Understand fundamentals of SRHR, from clinical services to rights-based approaches and gender-transformative programming." },
-  { slug: "wee-studies", title: "Women's Economic Empowerment 101", category: "Gender & Equity", description: "Explore strategies for enhancing women's economic participation, from financial inclusion to entrepreneurship and labor market interventions." },
+  // Gender & Equity (remaining)
   { slug: "social-margins", title: "Marginalised Identities 101", category: "Gender & Equity", description: "Examine how caste, ethnicity, disability, sexuality, and other identity markers create overlapping systems of marginalization." },
   { slug: "decent-work", title: "Decent Work For All 101", category: "Gender & Equity", description: "Explore ILO frameworks for promoting productive employment, labor rights, social protection, and social dialogue." },
   { slug: "care-economy-101", title: "Care Economy 101", category: "Gender & Equity", description: "Understand the economic value of unpaid care work and explore policies that support care workers while redistributing care responsibilities." },
   { slug: "sel-basics", title: "Social and Emotional Learning 101", category: "Gender & Equity", description: "Understand SEL frameworks and their application in education and youth development programs worldwide." },
 
-  // Health & Communication
+  // Health & Communication (remaining)
   { slug: "pub-health-basics", title: "Public Health 101", category: "Health & Communication", description: "Navigate fundamentals of epidemiology, health systems, and disease prevention strategies that underpin global health interventions." },
   { slug: "bcc-comms", title: "Behaviour Change Communications 101", category: "Health & Communication", description: "Master the psychology and practice of designing communication interventions that shift behaviors, from health to environmental conservation." },
 
-  // Philosophy & Governance
+  // Philosophy & Governance (remaining)
   { slug: "ind-constitution", title: "Indian Constitution 101", category: "Philosophy & Governance", description: "Examine the constitutional framework guiding India's democracy, including fundamental rights, directive principles, and federal structure." },
   { slug: "inequality-basics", title: "Poverty and Inequality 101", category: "Philosophy & Governance", description: "Examine multidimensional poverty measurement, inequality indices, and structural drivers of economic disparities." },
   { slug: "decolonize-dev", title: "Decolonial Development 101", category: "Philosophy & Governance", description: "Challenge dominant development paradigms through postcolonial and decolonial frameworks questioning Western-centric approaches." },
   { slug: "community-dev", title: "Community Development 101", category: "Philosophy & Governance", description: "Master participatory approaches to community mobilization, from asset-based development to collective action and social capital." },
   { slug: "env-justice", title: "Environmental Justice 101", category: "Philosophy & Governance", description: "Explore how environmental degradation disproportionately impacts marginalized communities and frameworks for equitable environmental governance." },
+
+  // MEL & Research (remaining)
   { slug: "toc-workbench", title: "Theory of Change Workbench 101", category: "MEL & Research", description: "Build and test Theories of Change for development programs using logical frameworks and results chains." },
+
+  // Phase II regenerations — recovered decks missing PDFs/latest branding
+  { slug: "edu-pedagogy", title: "Education and Pedagogy 101", category: "Health & Communication", description: "Discover evidence-based teaching methodologies, learning theories, and pedagogical approaches for development education contexts." },
+  { slug: "SRHR-basics", title: "Sexual and Reproductive Health and Rights 101", category: "Health & Communication", description: "Navigate SRHR frameworks, rights-based approaches, and evidence-based programming for sexual and reproductive health." },
+  { slug: "wee-studies", title: "Women's Economic Empowerment 101", category: "Gender & Equity", description: "Understand frameworks, evidence, and interventions for advancing women's economic participation, agency, and empowerment." },
+
+  // Phase II — decks with broken PDF export URLs needing fresh generation
+  { slug: "fundraising-basics", title: "Fundraising Basics 101", category: "Policy & Economics", description: "Develop essential skills for resource mobilization, donor engagement, and sustainable funding strategies in the development sector." },
+  { slug: "post-truth-101", title: "Post-Truth Politics 101", category: "Philosophy & Governance", description: "Analyze how misinformation, polarization, and post-truth narratives shape public discourse and development outcomes." },
+  { slug: "dev-architecture", title: "Global Development Governance 101", category: "Policy & Economics", description: "Navigate the complex ecosystem of multilateral development institutions, bilateral aid, and global governance frameworks." },
 ];
 
 // ─── HTTP helpers (using curl for DNS reliability) ───────────────────────────
@@ -348,6 +357,7 @@ async function main() {
   const delay = delayIdx !== -1 ? parseInt(args[delayIdx + 1], 10) : 5000;
 
   const resume = args.includes("--resume");
+  const force = args.includes("--force");
 
   if (!API_KEY) {
     console.error("Error: GAMMA_API_KEY environment variable not set");
@@ -378,17 +388,21 @@ async function main() {
     }
   }
 
-  if (resume) {
+  if (force) {
+    console.log(`\n🔁 Force mode: regenerating ALL courses (ignoring previous completions)`);
+  } else if (resume) {
     const before = courses.length;
     courses = courses.filter((c) => !completedSlugs.has(c.slug));
     console.log(`\n🔄 Resume mode: skipping ${before - courses.length} already-completed courses`);
   }
 
+  const modeLabel = dryRun ? "DRY RUN" : "LIVE";
+  const flagLabel = force ? " (FORCE)" : resume ? " (RESUME)" : "";
   console.log(`\n🎓 ImpactMojo Gamma Sync`);
   console.log(`   Courses: ${courses.length}`);
   console.log(`   Theme: ${THEME_ID}`);
   console.log(`   Folder: ${FOLDER_ID} (101 Decks)`);
-  console.log(`   Mode: ${dryRun ? "DRY RUN" : "LIVE"}${resume ? " (RESUME)" : ""}\n`);
+  console.log(`   Mode: ${modeLabel}${flagLabel}\n`);
 
   const results = [];
 

@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sexual and Reproductive Health and Rights 101 | ImpactMojo</title>
+<meta name="description" content="Sexual and Reproductive Health and Rights 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #B8860B;
+  --border-art: #DAA520;
+  --bg-slide: #FFFDF7;
+  --bg-section: #DAA520;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">HEALTH &amp; COMMUNICATION</p>
+<h1>Sexualand Reproductive</h1>
+<p class="subtitle">Healthand Rights 101 Navigate SRHRframeworks, rights-basedapproaches, andevidence- basedprogrammingforsexualandreproductivehealthin South Asia. ImpactMojo 101 Series · www.impactmojo.in</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover Today</h2>
+<p>Acomprehensivejourneythrough SRHR — from foundationalconceptstopracticalapplicationin South Asiandevelopmentcontexts.</p>
+<p>Foundationsof SRHR</p>
+<p>Definitions, history, andcoreprinciples02</p>
+<p>Rights-Based Approaches</p>
+<p>Humanrightsframeworksandentitlements</p>
+<p>Sexual Health</p>
+<p>STIs, HIV, pleasure, andconsent04</p>
+<p>Reproductive Rights</p>
+<p>Contraception, fertility, andbodilyautonom y</p>
+<p>Maternal Health</p>
+<p>Safe motherhoodandcontinuum ofcare06</p>
+<p>Gender &amp; SRHR</p>
+<p>Intersectionsofgender, power, andhealth</p>
+<p>Adolescent SRHR</p>
+<p>Youth-focusedprogram mingand CSE02</p>
+<p>Marginalized Populations</p>
+<p>LGBTQ+, disability, migrantcom munities</p>
+<p>Policy &amp; Law</p>
+<p>Legallandscapeacross South Asia04</p>
+<p>Programming &amp; M&amp;E</p>
+<p>Evidence-baseddesignandevaluation</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Defineanddistinguish</p>
+<p>Core SRHRconcepts, includingsexualhealth, reproductiverights, andbodilyautonom y</p>
+<p>Applyrights-basedframeworks</p>
+<p>Usehumanrightsprinciplestodesignandevaluate SRHRprogram s</p>
+<p>Analyze South Asiancontexts</p>
+<p>Recognizehowculture, law, andpolicyshape SRHRintheregion</p>
+<p>Identifymarginalizedgroups</p>
+<p>Understandintersectionalityanddesigninclusiveinterventions</p>
+<p>Evaluateprograms</p>
+<p>Applyevidence-basedapproachesand M&amp;Eframeworksto SRHRwork</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">Section 1</p>
+<h2>Foundationsof</h2>
+<h2>SRHR</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>What Is SRHR?</h2>
+<p>Sexualand Reproductive Healthand Rights (SRHR) isanintegratedconceptlinkinghealthoutcomeswithhumanrights.</p>
+<p>Itgoesbeyond medicine — itisaboutdignity, choice, andjustice.</p>
+<p>Sexual Health</p>
+<p>Apositive, respectfulapproachtosexuality,</p>
+<p>relationships, andpleasure — freefrom coercion,</p>
+<p>discrimination, andviolenceReproductive Health</p>
+<p>Theabilitytohave asatisfyingandsafesexlife,</p>
+<p>reproduce, anddecideif, when, andhowoftentodo</p>
+<p>so</p>
+<p>Sexual Rights</p>
+<p>Therighttodecidefreelyaboutone&#x27;ssexuality,</p>
+<p>includingaccesstoinformationandprotectionfrom</p>
+<p>harmReproductive Rights</p>
+<p>Therighttodecidefreelyaboutreproduction,</p>
+<p>supportedbyaccesstoservices, information, and</p>
+<p>education</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>A Brief Historyof SRHR</h2>
+<p>1 1948</p>
+<p>Universal Declarationof Human Rights — foundationforrights-based</p>
+<p>health</p>
+<p>2 1968</p>
+<p>Teheran Conference — firstinternationalrecognitionoffamily</p>
+<p>planningas aright</p>
+<p>3 1994</p>
+<p>ICPD Cairo Program meof Action — landmarkshifttoindividualrights</p>
+<p>overdemographictargets</p>
+<p>4 1995</p>
+<p>Beijing Platform for Action — genderequalityandwomen&#x27;s</p>
+<p>empowermentcentralto SRHR</p>
+<p>5 2015</p>
+<p>SDG 3 &amp; 5 — Universalhealthcoverageandgenderequalityembedded</p>
+<p>inglobalgoals</p>
+<p>Each milestoneshiftedtheglobalconversationfrom populationcontroltowardindividualrightsanddignity — atransformationstillunfoldingacross South Asia.</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>The ICPD Shift: A Turning Point</h2>
+<p>Before ICPD 1994</p>
+<p>Focusonpopulationcontrolandreducingbirthrates</p>
+<p>Top-down, target-drivensterilizationprogram s</p>
+<p>Womenasobjectsofdemographicpolicy</p>
+<p>Coercivepracticesin India, BangladeshAfter ICPD 1994</p>
+<p>Focusonindividualrights, dignity, andchoice</p>
+<p>Voluntary, informeddecision-making</p>
+<p>Womenasrights-holdersandagents</p>
+<p>Comprehensive, integratedservices</p>
+<p>India&#x27;s Emergency-eraforcedsterilizationprogram (1975–77) remains acautionarytale. ICPDdirectly</p>
+<p>respondedtoabuseslikethese.</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Core Principlesof SRHR</h2>
+<p>Bodily Autonomy</p>
+<p>EverypersoncontrolstheirownbodyNon-Discrimination</p>
+<p>Servicesforall, regardlessofgender,</p>
+<p>caste, oridentity</p>
+<p>Information Access</p>
+<p>Accurate, evidence-based</p>
+<p>knowledgeis aright</p>
+<p>Privacy &amp; Confidentiality</p>
+<p>Protectionofpersonalhealth</p>
+<p>informationParticipation</p>
+<p>Communitiesshapeservicesthatserve</p>
+<p>them</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Case Study: ICPDin</h2>
+<p>Practice — India</p>
+<p>Post-ICPD, Indiareplaceditstarget-drivensterilizationapproach</p>
+<p>with a Reproductiveand Child Health (RCH) programmein 1997,</p>
+<p>shiftingfocustoqualityofcare, informedconsent, and abasketof</p>
+<p>contraceptivechoices. Frontlineworkers (ASHAs) weretrainedto</p>
+<p>counsel — notcoerce. However, sterilizationincentivespersistedin</p>
+<p>somestates, showinghowrightslanguageandimplementationcan</p>
+<p>diverge.</p>
+<p><strong>Reflection:</strong> Inyourworkcontext, doprogramincentives</p>
+<p>everconflictwithinformedchoice? Howwouldyouidentify</p>
+<p>thistension?</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">Section 2</p>
+<h2>Rights-Based</h2>
+<h2>Approachesto</h2>
+<h2>SRHR</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>What Is a Rights-Based Approach?</h2>
+<p>A Rights-Based Approach (RBA) to SRHRintegrateshumanrightsnorm sintoprogram ming, policy, andservicedelivery.</p>
+<p>Itasksnotjust &quot;whatworks?&quot; but &quot;whoholdsrights, andwhoholdsduties?&quot;</p>
+<p>Rights-Holders</p>
+<p>Individualsandcom munities</p>
+<p>whoareentitledto SRHR</p>
+<p>services, information, and</p>
+<p>protectionsunderinternational</p>
+<p>andnationallawDuty-Bearers</p>
+<p>Governments, institutions, and</p>
+<p>providerswhoareobligatedto</p>
+<p>respect, protect, andfulfill SRHR</p>
+<p>entitlementsAccountability</p>
+<p>Mechanism sthatallowrights-</p>
+<p>holderstoclaim theirrightsand</p>
+<p>holdduty-bearersresponsible —</p>
+<p>includinggrievanceredressaland</p>
+<p>monitoring</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>The AAAQ Framework</h2>
+<p>The AAAQframeworkisthegoldstandardforassessingwhether SRHRservices meethumanrightsobligations.</p>
+<p>Availability</p>
+<p>Sufficientfacilities, services, andtrainedproviders</p>
+<p>mustexistinadequatenumbersAccessibility</p>
+<p>Physical, economic, andinformationaccesswithout</p>
+<p>discrimination — especiallyfor marginalizedgroups</p>
+<p>Acceptability</p>
+<p>Services mustbeculturallysensitive, confidential,</p>
+<p>andgender-responsivetothecom munitiesthey</p>
+<p>serveQuality</p>
+<p>Scientificallyappropriate, ofgoodquality, and</p>
+<p>deliveredwithdignityandinformedconsent</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Human Rights Instruments Relevantto SRHR</h2>
+<p>CEDAW (1979)</p>
+<p>Conventionon Eliminationof Discrimination Against</p>
+<p>Women — requiresstatestoeliminatebarriersto</p>
+<p>reproductivehealthcareCRC (1989)</p>
+<p>Conventionon Rightsofthe Child — includesadolescents&#x27;</p>
+<p>righttohealthinformationandservices</p>
+<p>ICCPR &amp; ICESCR</p>
+<p>Civil-politicalandsocioeconomicrightscovenants</p>
+<p>coveringprivacy, non-discrimination, andrighttohealthSDG Framework (2015)</p>
+<p>SDG 3.7 — universalaccessto SRHRservices; SDG 5.6 —</p>
+<p>reproductiverightsforall</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Case Study: Rights-Based FPin Bangladesh</h2>
+<p>Bangladesh&#x27;scom munityhealthworker model — through BRAC</p>
+<p>andgovernmentcollaboration — transformedfamily</p>
+<p>planningdelivery. Workersweretrainedtoprovidefullinformed</p>
+<p>consentcounseling, offer multiple methodchoices, andactively</p>
+<p>followupwithoutcoercion.</p>
+<p>Between 1975 and 2020, contraceptiveprevalencerosefrom 8%</p>
+<p>toover 62%, drivenbydemand-siderespectforwomen&#x27;s</p>
+<p>autonom yratherthansupply-sidetargets.62%</p>
+<p>CPRin 2020</p>
+<p>Upfrom 8% in 19754.7→2.2</p>
+<p>TFRdecline</p>
+<p>1975 to 2020</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Discussion: Rightsvs.</h2>
+<p>Culture</p>
+<blockquote>&quot;Culturalnormscannotoverrideuniversalrights — buttheymust</blockquote>
+<p>beengagedwith, notdismissed, forprogramstosuccee d.&quot;</p>
+<p><strong>Reflection Prompt:</strong> Thinkof a SRHRpracticeinyour</p>
+<p>communitythatisculturallyacceptedbutmayconflict with</p>
+<p>rights. Howwouldyouapplythe AAAQframeworkto</p>
+<p>addressitwithoutalienatingcommunities?</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">Section 3</p>
+<h2>Sexual Health:</h2>
+<h2>Consent, STIs &amp;</h2>
+<h2>Pleasure</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>Understanding Sexual Health</h2>
+<p>Sexualhealthisnotmerelytheabsenceofdisease — itencompassesphysical, emotional, mental, andsocialwell-</p>
+<p>beinginrelationtosexuality. The W HOdefinitionexplicitlyincludespositiveexperiences.</p>
+<p>Physical Well-being</p>
+<p>Freedom from STIs, safesex, and</p>
+<p>accesstosexualhealthcareEmotional Well-being</p>
+<p>Positivebodyimage, self-</p>
+<p>acceptance, andhealthy</p>
+<p>relationships</p>
+<p>Social Well-being</p>
+<p>Freedom from violence,</p>
+<p>discrimination, andstigm aConsent &amp; Pleasure</p>
+<p>Affirmingandrespectfulsexual</p>
+<p>experiences</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Consent: The Foundationof Sexual Health</h2>
+<p>Freely Given</p>
+<p>Notunderpressure, coercion, or</p>
+<p>threatReversible</p>
+<p>Canbewithdrawnatanytim e, even</p>
+<p>mid-encounterInformed</p>
+<p>Basedonfullknowledgeofwhatis</p>
+<p>beingagreedto</p>
+<p>Enthusiastic</p>
+<p>Active, positiveparticipation — not mereabsenceof &quot;no&quot;Specific</p>
+<p>Agreementtooneactisnotagreementtoallacts</p>
+<p>The FRIESmodelofconsentisincreasinglyusedin South Asianeducationalcontextsto movebeyondsilence-as-consent</p>
+<p>norm s.</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>STIsand HIVin South Asia</h2>
+<p>Key Facts</p>
+<p>Indiaaccountsforthethirdlargest HIVburden</p>
+<p>globally — 2.4 millionpeoplelivingwith HIV</p>
+<p>Highratesof STIslikesyphilisandgonorrhearemain</p>
+<p>underreportedduetostigm a</p>
+<p>Treatmentgapspersistamongkeypopulations: sex</p>
+<p>workers, MSM, transgenderpersonsPrevention Approaches</p>
+<p>Condom promotionanddistribution</p>
+<p>Voluntarycounselingandtesting (VCT)</p>
+<p>Antiretroviraltherapy (ART) access</p>
+<p>Preventionof Motherto Child Transmission (PMTCT)</p>
+<p>Harm reductionfor PW ID</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Case Study: India&#x27;s Avahan</h2>
+<p>HIV Initiative</p>
+<p>Fundedbythe Gates Foundation, Avahan (2003–2013) reachedover</p>
+<p>300,000 femalesexworkersand MSMacrosssixhigh-prevalence</p>
+<p><strong>Indianstates. Keyinnovations:</strong> peer-ledoutreach, community-based</p>
+<p>organizationsledbyaffectedcommunities, integration of STI</p>
+<p>treatmentandcondompromotion. HIVincidenceamong F SWs</p>
+<p>droppedbyover 50% inprogramareas.</p>
+<p><strong>Lesson:</strong> Communityownershipandpeereducationdrive</p>
+<p>behaviorchangemoreeffectivelythantop-down</p>
+<p>messaging.</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>Exercise: Mapping Sexual Health Services</h2>
+<p>Map Your Area</p>
+<p>Listallsexualhealthservicesavailablewithin 10 km of</p>
+<p>ahypotheticalruralcom munityyouworkin2</p>
+<p>Apply AAAQ</p>
+<p><strong>Foreachservice, assess:</strong> Isit Available? Accessible?</p>
+<p>Acceptable? Quality-assured?</p>
+<p>Identify Gaps</p>
+<p>Whoisleftout? Whichpopulationsfacethelargest</p>
+<p>barriers?4</p>
+<p>Design One Solution</p>
+<p>Proposeonelow-cost, com munity-basedintervention</p>
+<p>toaddressthe mostcriticalgap</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="22">
+<div class="slide-content">
+<p class="section-number">Section 4</p>
+<h2>Reproductive</h2>
+<h2>Rights &amp;</h2>
+<h2>Contraception</h2>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>What Are Reproductive Rights?</h2>
+<p>Reproductiverightsaretherightsofindividualstodecide — freelyandresponsibly — thenumber, spacing, andtimingof</p>
+<p>children, andtohavetheinformationand meanstodoso.</p>
+<p>Therighttodecide</p>
+<p>Whether, when, andhowoftentohavechildren —</p>
+<p>withoutcoercionfrom thestate, partners, orfamilyTherighttoaccess</p>
+<p>Safe, effective, affordablecontraceptionand</p>
+<p>fertilityservices</p>
+<p>Therighttoinformation</p>
+<p>Comprehensive, accurateinformationabout</p>
+<p>reproductiveoptionsinlocallanguagesTherighttosafeabortion</p>
+<p>Wherelegallypermissible, accesstosafe, dignified</p>
+<p>abortioncarewithoutjudgment</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>Contraceptive Method Mix</h2>
+<p>Low</p>
+<p>Accessibility</p>
+<p>Low EffectivenessHigh</p>
+<p>AccessibilityHigh Effectiveness</p>
+<p>Permanent:</p>
+<p>SterilizationEmergency</p>
+<p>ContraceptionLong-acting</p>
+<p><strong>Reversible:</strong> IUDs,</p>
+<p><strong>ImplantsShort-acting:</strong> Pills,</p>
+<p>Condoms, Injectables</p>
+<p>Adiversemethodmixis a markerofqualityfamilyplanningprogram s — program sthatprioritizethe methodthatsuitseachperson, notthecheapestto</p>
+<p>deliveratscale.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Unmet Needfor Family Planning</h2>
+<p>Unmetneedreferstowomenwhowanttoavoidpregnancybutarenotusingcontraception. Itis akeyindicatorof</p>
+<p>rightsgapsin SRHRsystem s.</p>
+<p>In South Asia, unmetneedishighestamong:</p>
+<p>Youngwomenaged 15–24</p>
+<p>Rural, low-incom ewomen</p>
+<p>Womenwithnoformaleducation</p>
+<p>Newly marriedwomenfacingsocialpressure 12%</p>
+<p>India</p>
+<p>Unmetneedfor FP</p>
+<p>17%</p>
+<p>Pakistan</p>
+<p>Unmetneedfor FP</p>
+<p>11%</p>
+<p>Nepal</p>
+<p>Unmetneedfor FP</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>Abortion Law Across South Asia</h2>
+<p>Country Legal Status Key Conditions</p>
+<p>India Legalupto 24 weeks (MTP Act,</p>
+<p>amended 2021)Extendedforsurvivorsanddisabled</p>
+<p>persons; providerdiscretionremains a</p>
+<p>barrier</p>
+<p>Bangladesh Illegalexcepttosavelife; MRservices</p>
+<p>existMenstrual Regulation (MR) iswidely</p>
+<p>practicedas aworkaround</p>
+<p>Nepal Legalupto 12 weeksonrequest; 18</p>
+<p>weeksforrapeProgressivelaw; accessvarieswidelyby</p>
+<p>geography</p>
+<p>Pakistan Illegalexcepttosavelifeorpreserve</p>
+<p>healthWidespreadunsafeabortion; significant</p>
+<p>unmetneed</p>
+<p>Sri Lanka Illegalexcepttosavelife Debateongoing; highratesofunsafe</p>
+<p>abortionreported</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Case Study: Nepal&#x27;s</h2>
+<p>Abortion Reform</p>
+<p>Nepaldecriminalizedabortionin 2002 — oneof Asia&#x27;smos t</p>
+<p>progressivereforms. Safeabortionservicesexpandedthroughpublic</p>
+<p>facilitiesandtrainedproviders. Maternaldeathsfrom unsafeabortion</p>
+<p>felldramatically. Keysuccessfactors: politicalwill, civilsociety</p>
+<p>advocacy, trainedcadreofmid-levelproviders, andintegrationinto</p>
+<p>thepublichealthsystem.</p>
+<p><strong>Discussion:</strong> Whatconditionsenabled Nepal&#x27;sreform? How</p>
+<p>dothesecomparetobarriersin Pakistanor Sri Lanka?</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="28">
+<div class="slide-content">
+<p class="section-number">Section 5</p>
+<h2>Maternal Health &amp;</h2>
+<h2>Safe Motherhood</h2>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>The Maternal Health Continuum</h2>
+<p>Postnatal</p>
+<p>CareChildbirthDuring</p>
+<p>PregnancyPre‐pregnancy</p>
+<p>Improving maternalhealthrequires co n ti nu i t y — fragmentedinterventionsatsinglepointsfailtoaddressthefulljourneyof</p>
+<p>pregnancyand motherhood.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>Three Delays Framework</h2>
+<p>Most maternaldeathsarepreventable. The Three Delays Modelexplainswheresystem sfailwomen.</p>
+<p>Delay 1</p>
+<p>Delayindecidingtoseekcare —</p>
+<p>duetolackofrecognitionofdanger</p>
+<p>signs, gendernorm s, orcost</p>
+<p>concerns2</p>
+<p>Delay 2</p>
+<p>Delayinreachingcare — poor</p>
+<p>roads, notransport, distant</p>
+<p>facilities, especiallyinrural South</p>
+<p>Asia3</p>
+<p>Delay 3</p>
+<p>Delayinreceivingadequatecare</p>
+<p>— understaffedfacilities, stock-</p>
+<p>outs, poorqualityofcare</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Maternal Mortalityin South Asia</h2>
+<p>Despitesignificantprogress, South Asiastillaccountsfor</p>
+<p>adisproportionateshareofglobal maternaldeaths. Key</p>
+<p>causesinclude:</p>
+<p>Hemorrhage (mostcom mon)</p>
+<p>Hypertensionandeclampsia</p>
+<p>Sepsisandinfection</p>
+<p>Obstructedlabor</p>
+<p>Unsafeabortion113</p>
+<p>India MMR 2020</p>
+<p>Per 100,000 livebirths</p>
+<p>(downfrom 254 in 2004)638</p>
+<p>Pakistan MMR</p>
+<p>Per 100,000 livebirths —</p>
+<p>amonghighestin Asia</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Case Study: Janani Suraksha Yojana, India</h2>
+<p>India&#x27;s Janani Suraksha Yojana (JSY) conditionalcashtransferschem e (2005) incentivizedinstitutionaldeliveries. It</p>
+<p>rapidlyincreasedfacilitybirths — from 39% (2004) toover 78% (2015). However, qualityofcaredidnotalwaysfollow.</p>
+<p>Womenreported mistreatment, disrespect, andabandonmentatfacilities — raisingimportantrights-basedconcerns.</p>
+<p>✅ Success</p>
+<p>Massivescale-upofinstitutional</p>
+<p>deliveries, especiallyamong BPL</p>
+<p>women⚠ Gap</p>
+<p>Qualityanddignityofcarelagged</p>
+<p>behindcoveragegains📌 Lesson</p>
+<p>Coverage metricsaloneare</p>
+<p>insufficient — respectful maternity</p>
+<p>careis arightsissue</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="33">
+<div class="slide-content">
+<p class="section-number">Section 6</p>
+<h2>Gender, Power &amp;</h2>
+<h2>SRHR</h2>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>How Gender Shapes SRHR</h2>
+<p>Gendernorm s — sociallyconstructedexpectationsofhow menandwomenshouldbehave — profoundlyshapewho</p>
+<p>accessessexualandreproductivehealthservices, onwhoseterm s, andwithwhatoutcomes.</p>
+<p>For Women &amp; Girls</p>
+<p>Norm saround modesty, silence</p>
+<p>aboutsexuality, early marriage,</p>
+<p>sonpreference, andrestricted</p>
+<p>mobilitylimitaccessto SRHR</p>
+<p>informationandservicesFor Men &amp; Boys</p>
+<p>Masculinitynorm sdiscourage</p>
+<p>help-seeking, normalize multiple</p>
+<p>partners, andreduce</p>
+<p>contraceptiveresponsibility —</p>
+<p>increasingriskforallPower Dynamics</p>
+<p>Unequalpowerinrelationships</p>
+<p>underminesconsent, reduces</p>
+<p>women&#x27;sabilitytonegotiate</p>
+<p>condom use, andperpetuates</p>
+<p>gender-basedviolence</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>Gender &amp; SRHR: A Power Analysis Matrix</h2>
+<p>Domain How Power Operates Impacton SRHR Intervention Entr y</p>
+<p>Point</p>
+<p>Householddecision-</p>
+<p>makingMencontrolresources</p>
+<p>andmobilityWomencannotaccess</p>
+<p>contraceptionor ANC</p>
+<p>withoutpermissionMen&#x27;sengagement</p>
+<p>programs</p>
+<p>Socialnorms Shamearoundfemale</p>
+<p>sexualityGirlsavoidseeking STIor</p>
+<p>FPservicesCommunitydialogue,</p>
+<p>genderchampions</p>
+<p>Legalframeworks Maritalrapenot</p>
+<p>criminalizedeverywhereSurvivorshavenolegal</p>
+<p>recourseLawreformadvocacy</p>
+<p>Healthsystem Maleprovidersin</p>
+<p>conservativeareasWomenavoidfacility-</p>
+<p>basedcareTrainanddeployfemale</p>
+<p>healthworkers</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>Gender-Based Violenceand SRHR</h2>
+<p>GBVand SRHRaredeeplyinterconnected. Violence —</p>
+<p>physical, sexual, psychological — directlydamages</p>
+<p>reproductivehealthoutcomes:</p>
+<p>Unintendedpregnancyfrom rape</p>
+<p>STIsincluding HIVfrom coercedsex</p>
+<p>Unsafeabortionaftersexualviolence</p>
+<p>Pregnancycomplicationsfrom intimatepartner</p>
+<p>violenceResponse Framework</p>
+<p><strong>Medical:</strong> emergencycontraception, STIprophylaxis,</p>
+<p>treatment</p>
+<p><strong>Psychosocial:</strong> traum a-informedcounseling</p>
+<p><strong>Legal:</strong> documentation, referraltolawenforcement</p>
+<p><strong>Safety:</strong> shelter, protectionplanning</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>Case Study: Gender-</h2>
+<p>Transformative</p>
+<p>Programmingin India</p>
+<p>ICRW&#x27;s GEMS (Gender Equity Movementin Schools) program</p>
+<p>engagedadolescentboysin Mumbaitochallengerigid masculinity</p>
+<p>norms. Boyswhoparticipatedshowedimprovedattitudestoward</p>
+<p>genderequality, reducedacceptanceofviolence, and greatersupport</p>
+<p>forgirls&#x27; schoolingandagency. Theprogramdemonstrate dthat</p>
+<p>engagingmenandboysiscritical — notoptional — forsustainable</p>
+<p>SRHRchange.</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="38">
+<div class="slide-content">
+<p class="section-number">Section 7</p>
+<h2>Adolescent SRHR &amp;</h2>
+<h2>Comprehensive</h2>
+<h2>Sexuality</h2>
+<h2>Education</h2>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>Why Adolescent SRHR Matters</h2>
+<p>South Asiahastheworld&#x27;slargestadolescentpopulation. Yetyoungpeoplefacepersistentbarriers: silenceathom e,</p>
+<p>sham eatschool, andabsentorinaccessibleservices.</p>
+<p>45%</p>
+<p>Girlsin India</p>
+<p>Marriedbeforeage 18 (declining, but</p>
+<p>stillhighinruralstates)26%</p>
+<p>Adolescentbirths</p>
+<p>Proportionof maternaldeathsamong</p>
+<p>girlsunder 181-in-5</p>
+<p>Adolescentgirls</p>
+<p>In South Asiaexperiencesexual</p>
+<p>violencebeforeage 18</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>Comprehensive Sexuality Education (CSE)</h2>
+<ul>
+<li><strong>1 Values, Rights &amp; Culture</strong></li>
+<li><strong>2 Consent, Safety &amp; Relationships</strong></li>
+<li><strong>3 Gender Identity &amp; Expression</strong></li>
+<li><strong>4 Body, Development &amp; Puberty</strong></li>
+</ul>
+<p>CSEisnotsexeducation — itis arights-based, age-appropriatecurriculum coveringrelationships, values, gender, and</p>
+<p>bodilyautonom y. UNESCO&#x27;s International Technical Guidanceon CSE (2018) istheglobalstandard.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Case Study: Kishori Shakti Yojana, India</h2>
+<p>India&#x27;s Kishori Shakti Yojanaprogram workedwithadolescentgirlsthrough Anganwadicenterstobuildlifeskills,</p>
+<p>healthliteracy, andnutritionalawareness. Combinedwiththe SABLAschem e, itreachedover 100 milliongirls.</p>
+<p>Evaluationsshowedimprovementsinknowledgeof menstrualhealth, reproductiverights, anddelayed marriage</p>
+<p>intentionsamongparticipants.</p>
+<p><strong>Critical Question:</strong> KSYfocusedongirlsonly. Whatarethelimitationsofthisapproachforachievinggender</p>
+<p>equalityin SRHR? Howwouldyouredesigntheprogram ?</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>Barriersto Adolescent SRHRin South Asia</h2>
+<p>School Silence</p>
+<p>CSEisabsentorheavilycensoredin most South Asian</p>
+<p>nationalcurricula — tabootopicsareskippedentirelyFamily Gatekeeping</p>
+<p>Parentsoftenrestrictadolescentgirls&#x27; mobilityand</p>
+<p>informationaccessundertheguiseofprotection</p>
+<p>Unfriendly Services</p>
+<p>Healthworkersoftenjudgeunmarriedyouthseeking</p>
+<p>contraception, creatingdeterrenceLegal Barriers</p>
+<p>Consentage mismatchesand POCSO-typelawscan</p>
+<p>criminalizepeerrelationshipsanddeterhelp-seeking</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="43">
+<div class="slide-content">
+<p class="section-number">Section 8</p>
+<h2>SRHRfor</h2>
+<h2>Marginalized</h2>
+<h2>Populations</h2>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>Intersectionalityand SRHR</h2>
+<p>Intersectionality — aconceptfrom feministtheory — recognizesthatpeoplehold multipleidentities (gender, caste,</p>
+<p>class, sexuality, disability) thatintersecttocreateuniqueexperiencesofprivilegeor marginalization.</p>
+<p>1 2</p>
+<p>3 4</p>
+<p>Dalitandtribalwomenface</p>
+<p>discriminationinhealthfacilities</p>
+<p>andhigherunmetneedSexual Orientation</p>
+<p>LGBTQ+ personsfacestigm a,</p>
+<p>providerdiscrimination, and</p>
+<p>criminalizationrisks</p>
+<p>Disability</p>
+<p>Personswithdisabilitiesare</p>
+<p>desexualizedanddenied</p>
+<p>reproductiveautonom yMigration</p>
+<p>Migrantworkersfacenoaccess, no</p>
+<p>documentation, andextrem e</p>
+<p>vulnerability</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>SRHRandthe Hijra/Transgender Com munity</h2>
+<p>India&#x27;s Suprem e Courtrecognizedtransgenderidentityin</p>
+<p>the NALSAjudgment (2014), affirmingrightsto</p>
+<p>healthcare. Yetimplementationremainsweak. Hijraand</p>
+<p>transcom munitiesface:</p>
+<p>Providerrefusalanddiscriminationinhospitals</p>
+<p>Exclusionfrom maternalhealthprogram s (relevant</p>
+<p>fortrans men)</p>
+<p>High HIVriskwithnegligibletargetedservices</p>
+<p>Mentalhealthcrisesfrom socialexclusionRights-Based Responses</p>
+<p>Trainprovidersingender-affirmingcare</p>
+<p>Com munity-ledhealthoutreachbyhijra</p>
+<p>organizations</p>
+<p>Legalaidfordiscriminationcases</p>
+<p>Inclusivedatacollection (non-binarygender</p>
+<p>options)</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>Case Study: Sex Workers&#x27;</h2>
+<p>Rightsin India</p>
+<p>The Durbar Mahila Samanwaya Committee in Kolkata — a</p>
+<p>collectiveof 65,000 sexworkers — developedcommunity-le d STI</p>
+<p>prevention, crisisresponse, andchildwelfareprograms. Bycentering</p>
+<p>sexworkersasexpertsandrights-holdersratherthanvictims, Durbar</p>
+<p>achievedoutcomesnotop-downprogramcouldreplicate: peer-</p>
+<p>drivencondomuse, violencereporting, andpoliticalmobilizationfor</p>
+<p>decriminalization.</p>
+<p><strong>Principle:</strong> Nothingaboutus, withoutus. Community</p>
+<p>participationisnot anice-to-have — itis arightsobligation.</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="47">
+<div class="slide-content">
+<p class="section-number">Section 9</p>
+<h2>Policy, Law &amp; SRHR</h2>
+<h2>in South Asia</h2>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Legal Landscapefor SRHR</h2>
+<p>Issue India Bangladesh Nepal Pakistan Sri Lanka</p>
+<p>Abortion (on</p>
+<p>request)Upto 20/24</p>
+<p>wksNo (MR</p>
+<p>allowed)Upto 12 wks No No</p>
+<p>Same-sexrelations Decriminalized</p>
+<p>2018Criminalized Legal Criminalized Criminalized</p>
+<p>Maritalrape Not</p>
+<p>criminalizedNot</p>
+<p>criminalizedCriminalized Not</p>
+<p>criminalizedNot</p>
+<p>criminalized</p>
+<p>Ageofmarriage 18/21 18/21 20 16/18 18</p>
+<p>Legalframeworkscreatetheenabling (ordisabling) environmentfor SRHR. Advocacyforlegalreformisinseparabl e</p>
+<p>fromprogrammaticwork.</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>Enablingvs. Restrictive Policy Environments</h2>
+<p>Enabling Environment</p>
+<p>Stronglegalprotections, funded SRHRservices, trained</p>
+<p>providers, com munityaccountability mechanism s, and</p>
+<p>politicalwilltoimplementinternationalcom mitmentsRestrictive Environment</p>
+<p>Criminalizationofabortion/sam e-sexrelations,</p>
+<p>underfundedfacilities, providergatekeeping, social</p>
+<p>stigm a, andpoliticalbacklashagainst &quot;Western&quot; rights</p>
+<p>agendas</p>
+<p><strong>Di s cu s si o n :</strong> Yourcountryhasratified CEDAW buthasnotcriminalized maritalrape. As adevelopment</p>
+<p>practitioner, whatstrategieswouldyouusetoadvancethisrightsgapwithin apoliticallyrestrictivecontext?</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="50">
+<div class="slide-content">
+<h2>Advocacyfor SRHR: Entry Points</h2>
+<p>Evidence Generation</p>
+<p>Documentneeds, gaps, andviolationsthrough</p>
+<p>com munity-basedresearchandsurveysCoalition Building</p>
+<p>Link SRHRadvocateswithhealth, legal, women&#x27;srights,</p>
+<p>anddisabilityorganizations</p>
+<p>Policy Engagement</p>
+<p>Use CEDAW shadowreports, parliamentaryengagement,</p>
+<p>and mediatopressureduty-bearersCom munity Mobilization</p>
+<p>Supportrights-holderstoclaim entitlementsthrough</p>
+<p>self-helpgroups, legalaid, andsocialaccountability</p>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="51">
+<div class="slide-content">
+<p class="section-number">Section 10</p>
+<h2>SRHR</h2>
+<h2>Programming,</h2>
+<h2>M&amp;E &amp; Evidence</h2>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Evidence-Based SRHR Programming</h2>
+<p>Effective SRHRprogram saregroundedinevidence, designedwithcom munities, andcontinuouslyadaptedbasedondata. The</p>
+<p>program cycleintegratesrightsthroughout.</p>
+<p>Situation</p>
+<p>AnalysisProgram</p>
+<p>Design</p>
+<p>Implementatio</p>
+<p>nMonitor &amp;</p>
+<p>Learn</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Key SRHR Indicators</h2>
+<p>Coverage</p>
+<p>Contraceptive Prevalence Rate (CPR), ANCcoverage</p>
+<p>(4+ visits), skilledbirthattendance, HIVtestingratesEquity</p>
+<p>Disaggregateddatabygender, caste, geography, age</p>
+<p>— toidentifywhoisleftbehind</p>
+<p>Quality</p>
+<p>Clientsatisfaction, providercompetency, rights-based</p>
+<p>carescores, reductionindisrespectandabuseOutcomes</p>
+<p>Maternal mortalityratio (MMR), infant mortalityrate</p>
+<p>(IMR), unmetneed, adolescentbirthrate</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>Theoryof Change: SRHR Program s</h2>
+<ul>
+<li><strong>1Inputs</strong></li>
+</ul>
+<p>Trainedproviders, supplies, com munityhealthworkers, IECmaterials, funding</p>
+<ul>
+<li><strong>2Activities</strong></li>
+</ul>
+<p>Outreach, servicedelivery, behaviorchangecom munication, advocacy, capacitybuilding</p>
+<ul>
+<li><strong>3Outputs</strong></li>
+</ul>
+<p>Peoplereached, servicesdelivered, policiesengaged, com munities mobilized</p>
+<ul>
+<li><strong>4Outcomes</strong></li>
+</ul>
+<p>Improvedknowledge, changednorm s, increasedserviceuptake, reducedviolence</p>
+<ul>
+<li><strong>5Impact</strong></li>
+</ul>
+<p>Reduced MMR, unintendedpregnancy, STIs; increasedgenderequityandbodilyautonom y</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>Self-Assessment Quiz</h2>
+<p>Testyourunderstandingofthekeyconceptsfrom thiscourse.</p>
+<p>Q1</p>
+<p><strong>The AAAQframeworkstandsfor:</strong> (a) Access, Accountability,</p>
+<p>Adequacy, Quality (b) Availability, Accessibility, Acceptability,</p>
+<p>Quality (c) Awareness, Affordability, Accountability, Quantity2</p>
+<p>Q2</p>
+<p>Which 1994 conference markedtheshiftfrom populationcontrol</p>
+<p>toindividualreproductiverights? (a) MDG Sum mit (b) ICPD</p>
+<p>Cairo (c) Beijing Women&#x27;s Conference</p>
+<p>Q3</p>
+<p>Unmetneedforfamilyplanningrefersto: (a) Womenwhodon&#x27;t</p>
+<p>knowaboutcontraception (b) Womenwhowanttoavoid</p>
+<p>pregnancybutaren&#x27;tusingcontraception (c) Womenwhohave</p>
+<p>nochildren4</p>
+<p>Q4</p>
+<p>The Three Delays Modelidentifiesbarriersin: (a) Deciding,</p>
+<p>reaching, andreceivingcare (b) Funding, staffing, andbuilding</p>
+<p>facilities (c) Diagnosis, treatment, andfollow-up</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Self-Assessment: Continued</h2>
+<p>Q5</p>
+<p>Whichcountryin South Asiahasthe mostprogressiveabortionlaw?</p>
+<p>(a) Pakistan (b) Sri Lanka (c) Nepal2</p>
+<p>Q6</p>
+<p>Comprehensive Sexuality Education (CSE) primarilyfocuseson: (a)</p>
+<p>Biologicalreproductiononly (b) Rights, relationships, gender, and</p>
+<p>bodilyautonom y (c) STIpreventiononly</p>
+<p>Q7</p>
+<p><strong>Intersectionalityin SRHRmeans:</strong> (a) Connectinghealthfacilitiesto</p>
+<p>eachother (b) Recognizinghow multipleidentitiescreateunique</p>
+<p>experiencesof marginalization (c) Integratingsexualand maternal</p>
+<p>healthprogram s4</p>
+<p>Q8</p>
+<p><strong>Re f le c ti o n :</strong> Nam eone SRHRrightsgapinyourownworkcontext</p>
+<p>anddescribeoneprogram maticresponsegroundedintherights-</p>
+<p>basedapproach.</p>
+<p><strong>An s we r s :</strong> Q1: b · Q2: b · Q3: b · Q4: a · Q5: c · Q6: b · Q7: b</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>SRHRis arightsissue</p>
+<p>Notjust ahealthissue — itconnectsbodilyautonomy, dignity, and</p>
+<p>justice</p>
+<p>Contextshapesaccess</p>
+<p>Gendernorms, caste, law, andpovertydeterminewhocanclaim their</p>
+<p>SRHRentitlements</p>
+<p>Intersectionalityisessential</p>
+<p>Marginalizedcommunitiesneedtargeted, community-ledapproaches</p>
+<p>— notone-size-fits-allprogramming</p>
+<p>Evidenceandrightsgotogether</p>
+<p>Good SRHRprogramsusedatatoensurenooneisleftbehind — and</p>
+<p>communityvoicestodesignsolutions</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>SRHR Sexualand Reproductive Healthand Rights — integrateshealthoutcomeswithhumanrightsentitlements</p>
+<p>AAAQ Availability, Accessibility, Acceptability, Quality — WHOframeworkforassessinghealthserviceobligations</p>
+<p>ICPD International Conferenceon Populationand Development (Cairo 1994) — shiftedglobalframeworkto</p>
+<p>individualrights</p>
+<p>CPR Contraceptive Prevalence Rate — percentageofwomenusinganycontraceptivemethod</p>
+<p>MMR Maternal Mortality Ratio — deathsper 100,000 liv ebirths</p>
+<p>CSE Comprehensive Sexuality Education — rights-based , age-appropriateeducationonrelationships, gende r,</p>
+<p>andhealth</p>
+<p>GBV Gender-Based Violence — violencedirectedatindividualsbasedontheirgenderidentityorroles</p>
+<p>Three Delays Modelexplainingmaternaldeath: delayindeciding, reaching, andreceivingadequatecare</p>
+<p>Unmet Need Womenwhowanttoavoidpregnancybutare notusinganyformofcontraception</p>
+<p>Intersectionality Thewaymultiplesocialidentitiesinteracttocreateoverlappingexperiencesofdiscriminationorprivilege</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>Foundational Texts</p>
+<p>ICPD Programmeof Action (UNFPA, 1994) — the</p>
+<p>foundationalglobal SRHRdocument</p>
+<p>International Technical Guidanceon CSE (UNESCO,</p>
+<p>2018) — comprehensivesexualityeducationstandards</p>
+<p>Human Rightsin Patient Care — Open Society</p>
+<p>Foundations</p>
+<p>Guttmacher-Lancet Commissionon SRHR (2018) —</p>
+<p>latestglobalevidencereview</p>
+<p>South Asia Specific</p>
+<p>ICRW South Asia Officepublications — genderandhealth</p>
+<p>Population Foundationof India — srhr.org</p>
+<p>CREHPA (Nepal) — reproductivehealthresearchOnline Platformswww.unfpa.org — SRHRdataandpolicybriefswww.who.int/reproductivehealth — W HOguidelineswww.guttmacher.org — globalreproductivehealthdatawww.ippf.org — sexualrightsframeworks</p>
+<p>Key Journals</p>
+<p>Reproductive Health Matters</p>
+<p><strong>Global Health:</strong> Scienceand Practice</p>
+<p>The Lancet — Sexual Health</p>
+<p>Indian Journalof Medical Ethics</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

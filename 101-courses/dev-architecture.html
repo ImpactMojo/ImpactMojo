@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Development Governance 101 | ImpactMojo</title>
+<meta name="description" content="Global Development Governance 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #8B0000;
+  --border-art: #800020;
+  --bg-slide: #FFFDF7;
+  --bg-section: #800020;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">Global Development</p>
+<h1>Governance 101</h1>
+<p class="subtitle">Navigatingmultilateralinstitutions, bilateralaid, andglobal governanceframeworks — through a South Asianlens. IMPACTMOJO 101 SERIES POLICY &amp; ECONOMICSwww.impactmojo.in</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover</h2>
+<p>Ajourneythroughthearchitectureofglobaldevelopment — from Bretton Woodstothe Sustainable Development Goals.</p>
+<p>The Architectureof Global Governance02</p>
+<p>The United Nations System</p>
+<p>Bretton Woods Institutions04</p>
+<p>Regional Development Banks</p>
+<p>Bilateral Aid &amp; Donor Countries06</p>
+<p>Civil Society &amp; NGOs</p>
+<p>The SDG Framework08</p>
+<p>Aid Effectiveness &amp; Conditionality</p>
+<p>South-South Cooperation10</p>
+<p>Power, Politics &amp; Reform</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Maptheecosystem</p>
+<p>Identifyanddifferentiatekey</p>
+<p>multilateral, bilateral, andnon-</p>
+<p>stateactorsinglobaldevelopment</p>
+<p>governance.Trace moneyflows</p>
+<p>Understandhow Official</p>
+<p>Development Assistance (ODA)</p>
+<p>movesfrom donortorecipientand</p>
+<p>whatshapesthosedecisions.Analyzeframeworks</p>
+<p>Criticallyassess majorframeworks</p>
+<p>likethe SDGs, Paris Declaration,</p>
+<p>and Accra Agendafor Action.</p>
+<p>Apply South Asiancontext</p>
+<p>Connectglobalgovernance</p>
+<p>structurestorealpolicyand</p>
+<p>program decisionsin India,</p>
+<p>Bangladesh, Nepal, Sri Lanka, and</p>
+<p>Pakistan.Engagecritically</p>
+<p>Articulatedebatesaround</p>
+<p>conditionality, powerasym metries,</p>
+<p>andreform oftheinternational</p>
+<p>developmentarchitecture.</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 1</p>
+<h2>The Architectureof Global</h2>
+<h2>Governance</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>What Is Global Governance?</h2>
+<p>Definition</p>
+<p>Globalgovernancereferstothecollectionofrules,</p>
+<p>norm s, institutions, andprocessesthroughwhich</p>
+<p>collectivedecisionsare madeattheinternationallevel —</p>
+<p>without asingleworldgovernment.Key Features</p>
+<p>Nosingleauthority — multilateralcooperation</p>
+<p>Bindingandnon-bindingagreements</p>
+<p>Mixofstateandnon-stateactors</p>
+<p>Contestedlegitimacyandaccountability</p>
+<p>Indevelopment, globalgovernanceshapeswhogetsresources, onwhatterm s, andtowardwhatgoals — decisionsthat</p>
+<p>deeplyaffect South Asiannations.</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>The Development Governance Ecosystem</h2>
+<p>Global</p>
+<p>Development</p>
+<p>Goals</p>
+<p>Sharedobjectives</p>
+<p>guidingdiverseactorsRegional Bodies</p>
+<p>ADB, SAARC</p>
+<p>Bilateral Donors</p>
+<p>USAID, DFID, JICAMultilateral</p>
+<p>UN, World Bank, IMF</p>
+<p>Civil Society</p>
+<p>NGOs, Foundations,</p>
+<p>Academia</p>
+<p>Developmentgovernanceisnot asinglesystem — itis alayered, overlappingecosystem ofactorswithdifferent mandates, incentives, andaccountabilities.</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>Historical Foundations</h2>
+<p>1 1944</p>
+<p>Bretton Woods Conference — birthof IMFand World Bank</p>
+<p>2 1945</p>
+<p>United Nationsfounded — 51 original members</p>
+<p>3 1960s</p>
+<p>Eraofdecolonization — newlyindependentnationsjoinglobal</p>
+<p>institutions</p>
+<p>4 1970s</p>
+<p>New International Economic Order (NIEO) demandby Global South</p>
+<p>5 2000</p>
+<p>Millennium Development Goals — firstglobaldevelopmentframework</p>
+<p>6 2015</p>
+<p>SDGsand Paris Agreement — neweraof multilateralism</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Typesof Development Actors</h2>
+<p>Multilateral</p>
+<p>Institutionsownedby manycountries: UNagencies,</p>
+<p>World Bank, IMF, W TO, regionaldevelopmentbanksBilateral</p>
+<p><strong>Government-to-governmentaid:</strong> USAID (USA),</p>
+<p>DFID/FCDO (UK), JICA (Japan), GIZ (Germany)</p>
+<p>Civil Society</p>
+<p>NGOs, foundations, social movements, advocacy</p>
+<p>networksoperatinglocallyandgloballyPrivate Sector</p>
+<p>Corporations, impactinvestors, blendedfinance</p>
+<p>vehicles, philanthropieslike Gates Foundation</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Reflection: Who Governs</h2>
+<p>Whom?</p>
+<p>/g64E Discussion Prompt: Thinkabout adevelopmentprogramyou</p>
+<p>know — aroad, aschool, ahealthscheme. Whichinstitutions</p>
+<p>fundedit? Whichsettherules? Whohad asayinthe design?</p>
+<p>Whatdoesthistellusaboutpowerindevelopmentgovernance?</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 2</p>
+<h2>The United Nations</h2>
+<h2>System</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>The UN Family Tree</h2>
+<p>Specialized Agencies</p>
+<p>UNDP, UNICEF, WHO,</p>
+<p>UNESCO, UNHCR, WFP, UN</p>
+<p>Women, FAO</p>
+<p>Main Branches</p>
+<p>ECOSOC, Secretariat, ICJ</p>
+<p>UN Core Bodies</p>
+<p>General Assembly &amp; Security</p>
+<p>Council</p>
+<p>The UNsystem isvast — over 40 specializedagenciesandprogram s, eachwithdistinct mandatesthatoftenoverlap, requiringconstant</p>
+<p>coordination.</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>Key UN Bodiesfor Development</h2>
+<p>UNDP</p>
+<p>UN Development Programme —</p>
+<p>coordinateshumandevelopment</p>
+<p>work, fundsnationaldevelopment</p>
+<p>plansacross 170 countries.</p>
+<p>UNICEF</p>
+<p>Children&#x27;srights, nutrition, education,</p>
+<p>andchildprotection — majorpresence</p>
+<p>in South Asia&#x27;smostvulnerable</p>
+<p>communities.</p>
+<p>WFP &amp; FAO</p>
+<p>World Food Programmetackles</p>
+<p>hungeremergencies; FAOsupports</p>
+<p>agriculturalpolicyandfoodsystems</p>
+<p>transformation.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Case Study: UN DPin Nepal</h2>
+<p>Context</p>
+<p>Nepal&#x27;s 2015 earthquakekillednearly 9,000 peopleand</p>
+<p>displaced millions. UNDPcoordinatedrecovery</p>
+<p>alongsidethe Nepalesegovernment.UN DP&#x27;s Role</p>
+<p>Livelihoodsrecoveryfor 200,000 households</p>
+<p>Rebuildinglocalgovernancecapacity</p>
+<p>Coordinating 60+ internationalagencies</p>
+<p>Federalism transitionsupport (2017)</p>
+<p><strong>Le s so n :</strong> The UNsystem worksbestwhenitamplifies</p>
+<p>nationalsystem sratherthanreplacingthem .</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Strengths &amp; Limitationsofthe UN System</h2>
+<p>Strengths Limitations</p>
+<p>Universallegitimacy — 193 members Security Councilvetopowerdistortspriorities</p>
+<p>Normativestandard-setting (humanrights, SDGs) Bureaucratic, slow, andfragmentedcoordination</p>
+<p>Neutralconveningplatform Underfundedrelativeto mandate</p>
+<p>Technicalexpertiseacrosssectors Donordependenceshapespriorities</p>
+<p>Humanitarianaccessinconflictzones Limitedenforcement mechanism s</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="15">
+<div class="slide-content">
+<p class="section-number">SECTION 3</p>
+<h2>Bretton Woods</h2>
+<h2>Institutions</h2>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="16">
+<div class="slide-content">
+<h2>The World Bank &amp; IMF: Origins</h2>
+<p>World Bank Group</p>
+<p>Foundedtorebuildwar-torn Europe, laterpivotedto</p>
+<p>developingworld. Nowthelargestsourceof multilateral</p>
+<p>developmentfinance — $100B+ peryearacross 5 affiliated</p>
+<p>institutions.</p>
+<p>IBRD — loansto middle-incom ecountries</p>
+<p>IDA — concessionalloanstopoorestnations</p>
+<p>IFC — privatesectorinvestmentarmIMF</p>
+<p>International Monetary Fund — focusedon</p>
+<p>macroeconomicstability, exchangerates, andbalance</p>
+<p>ofpayments. Knownforstructuraladjustment</p>
+<p>program sandcrisislending.</p>
+<p>Surveillanceofglobaleconom y</p>
+<p>Emergencylendingfacilities</p>
+<p>Technicalassistanceonfiscalpolicy</p>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>Howthe World Bank Works</h2>
+<p>ImplementationApproval &amp;</p>
+<p>DisbursementProject</p>
+<p>RequestBond</p>
+<p>RaisingDonor</p>
+<p>Capital</p>
+<p>Understandingtheprojectcyclehelpspractitionersknowwhenandhowtoengage — from projectidentificationtoevaluation,</p>
+<p>everystagehasentrypointsforcivilsocietyandgovernment.</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Case Study: IMF &amp; Sri</h2>
+<p>Lanka 2022</p>
+<p>Sri Lanka&#x27;s 2022 economiccrisis — foreignexchangecollapse, fuel</p>
+<p>shortages, foodinsecurity — ledto a $2.9 billion IMFbailout (2023).</p>
+<p>Conditionsincludedtaxreform, subsidycuts, anddebt restructuring.</p>
+<p>Thecasereigniteddebatesaboutconditionality : whobenefits, who</p>
+<p>bearsthecost, andwhetherausteritydeepensinequality.</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>Governance &amp; Voting Power</h2>
+<p>17%</p>
+<p>US Voting Share</p>
+<p>World Bank IBRD — enoughforan</p>
+<p>effectivevetoon majordecisions2.9%</p>
+<p>India&#x27;s Share</p>
+<p>Indiaisthesecond-largestborrower</p>
+<p>buthaslimitedgovernanceinfluence85%</p>
+<p>Supermajority</p>
+<p>Requiredfor majordecisions —</p>
+<p>effectivelygives USvetopower</p>
+<p>Votingsharesareroughlyproportionaltoeconomicsize — meaningwealthynationssettherulesforinstitutionsthat</p>
+<p>primarilyservepoorerones. Thisis acentraltensionindevelopmentgovernancereform .</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="20">
+<div class="slide-content">
+<p class="section-number">SECTION 4</p>
+<h2>Regional Development</h2>
+<h2>Banks</h2>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>The ADB &amp; South Asia</h2>
+<p>Asian Development Bank (ADB)</p>
+<p>Founded 1966, Manila-based. 68 membercountries.</p>
+<p>Focusesoninfrastructure, povertyreduction, and</p>
+<p>regionalintegrationin Asia-Pacific.</p>
+<p><strong>Annuallending:</strong> ~$23 billion. South Asiareceives ~30% of</p>
+<p>totallending.ADB Prioritiesin South Asia</p>
+<p>Transportconnectivity (roads, rail)</p>
+<p>Energyaccessandcleanenergytransition</p>
+<p>Urbandevelopmentandwater</p>
+<p>Climateresilienceprogram s</p>
+<p>Regionaleconomiccorridors</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="22">
+<div class="slide-content">
+<h2>New Development Bank &amp; AIIB</h2>
+<p>New Development Bank (NDB)</p>
+<p>BRICSbankfounded 2015. Headquarteredin</p>
+<p>Shanghai. Focusoninfrastructureandsustainable</p>
+<p>developmentwithout Western-styleconditionality.</p>
+<p>Indiais afounding memberand majorborrower.Asian Infrastructure Investment Bank</p>
+<p>(AIIB)</p>
+<p>China-led, 2016. 106 membercountries. Fills</p>
+<p>infrastructurefinancegap. Bangladesh, India, Nepal,</p>
+<p>Pakistan, and Sri Lankaareall membersand</p>
+<p>borrowers.</p>
+<p>Thesenewerinstitutionschallengethe Western-dominateddevelopmentfinanceorderandgive South Asian</p>
+<p>nations morechoices — butalso morecomplexityinnavigatingterm sandconditions.</p>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>Comparing Development Finance Institutions</h2>
+<p>Feature World Bank ADB AIIB NDB</p>
+<p>Founded 1944 1966 2016 2015</p>
+<p>HQ Washington DC Manila Beijing Shanghai</p>
+<p>Members 189 68 106 9</p>
+<p>Annual Lending $100B+ $23B $10B $5B</p>
+<p>Conditionality High Moderate Low Low</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>Case Study: ADB&#x27;s</h2>
+<p>Bangladesh Energy</p>
+<p>Projects</p>
+<p>ADBhasinvestedover $4 billionin Bangladesh&#x27;senergy sectorsince</p>
+<p>the 1990s. Itssupportforcoalpowerplantsdrewsignificantcriticism</p>
+<p>fromenvironmentalgroupsandcommunitiesnearproject sites. The</p>
+<p>caseillustratesthetensionbetweenenergyaccess (adevelopment</p>
+<p>imperative) andclimatecommitments — andhowdevelopment</p>
+<p>banksarenowbeingpushedtoalignwith Paris Agreementtargets.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="25">
+<div class="slide-content">
+<p class="section-number">SECTION 5</p>
+<h2>Bilateral Aid &amp; Donor</h2>
+<h2>Countries</h2>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>What Is Bilateral Aid?</h2>
+<p>Official Development Assistance (ODA)</p>
+<p>Government-to-governmentgrantsandconcessional</p>
+<p>loanswithatleast 25% grantelement. Totalglobal ODA</p>
+<p>in 2023: ~$223 billion.</p>
+<p><strong>Keydonors:</strong> USA, Germany, Japan, UK, France, Sweden,</p>
+<p>Netherlands.How Aid Flows</p>
+<p>Budgetsupporttogovernments</p>
+<p>Project-specificfunding</p>
+<p>Technicalassistance (personnel, training)</p>
+<p>In-kindassistance (com modities)</p>
+<p>Throughpooledfundsandtrustfunds</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Major Bilateral Donorsin South Asia</h2>
+<p>USAID</p>
+<p>Largestbilateraldonorglobally. Majorpresencein</p>
+<p>Bangladesh, Pakistan, India. Focusonhealth,</p>
+<p>democracy, foodsecurity.FCDO (UK)</p>
+<p>Formerly DFID — transformedinto Foreign</p>
+<p>Com monwealth &amp; Development Office 2020.</p>
+<p>Strong South Asiaportfolioespeciallyin</p>
+<p>Bangladesh.</p>
+<p>GIZ (Germany)</p>
+<p>Germandevelopmentagency. Knownfortechnical</p>
+<p>assistanceandcapacitybuilding — strongin</p>
+<p>vocationaltrainingandgovernance.JICA (Japan)</p>
+<p>Japan International Cooperation Agency. Major</p>
+<p>infrastructurefunderacross South Asia — metro</p>
+<p>rail, highways, andwaterprojects.</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="28">
+<div class="slide-content">
+<h2>Aid Modalities Explained</h2>
+<p>Low Donor</p>
+<p>Control</p>
+<p>Low Government System sHigh Donor</p>
+<p>ControlHigh Government System s</p>
+<p>Humanitarian ReliefProject Aid / Technical</p>
+<p>AssistanceSector Budget</p>
+<p>SupportGeneral Budget</p>
+<p>Support</p>
+<p>Differentaid modalitieshaveverydifferentimplicationsfornationalownership, efficiency, andaccountability. Budgetsupportisthe mostalignedwith</p>
+<p>nationalsystem s; projectaidgivesdonors morecontrolbut mayfragmentplanning.</p>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>Case Study: USAIDin Pakistan</h2>
+<p>Kerry-Lugar-Berman Act (2009)</p>
+<p>Alandmark $7.5 billion, 5-yearcivilianaidpackagefor</p>
+<p>Pakistan — thelargestin UShistorytothecountry. Aimed</p>
+<p>toshiftfrom militarytociviliandevelopmentassistance.Key Tensions</p>
+<p>Conditionalitiesaround militaryoversightsparked</p>
+<p>Pakistanibacklash</p>
+<p>Geopolitical motivations (Afghanistanwar) shaped</p>
+<p>priorities</p>
+<p>Energy, education, andgovernancecomponents</p>
+<p>Aideffectivenessquestionedby Pakistanicivil</p>
+<p>society</p>
+<p><strong>Le s so n :</strong> Bilateralaidisrarelypurelydevelopmental — foreignpolicyandsecurityinterestsoftenshapewhatgetsfunded</p>
+<p>andonwhatterm s.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>Reflection: Tied Aid &amp;</h2>
+<p>Phantom Aid</p>
+<p>/g64E Exercise: Researchonebilateralaidprojectinyourcountry.</p>
+<p><strong>Ask:</strong> (1) Whatisthedonorcountry&#x27;sstrategicinterest? (2) Isthe</p>
+<p>aid &quot;tied&quot; tousingthedonor&#x27;sgoodsorconsultants? ( 3) How</p>
+<p>muchreachesthefinalbeneficiary? Thisanalysisrevealsthe</p>
+<p>differencebetweenaidasdevelopment andaidasforeignpolicy .</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="31">
+<div class="slide-content">
+<p class="section-number">SECTION 6</p>
+<h2>Civil Society &amp; NGOsin</h2>
+<h2>Development</h2>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>The Civil Society Landscape</h2>
+<p>Community Organizations</p>
+<p>Self-helpgroups, village</p>
+<p>com mittees, usergroups —</p>
+<p>grassrootsdemocracyinactionInternational NGOs</p>
+<p>Oxfam , Savethe Children, Care —</p>
+<p>largeglobalorganizationswith</p>
+<p>South Asiaoperations</p>
+<p>National NGOs</p>
+<p>BRAC (Bangladesh), Pratham</p>
+<p>(India), Aga Khan Foundation —</p>
+<p>majordevelopmentactors</p>
+<p>Advocacy Networks</p>
+<p>Policyinfluencers, humanrights</p>
+<p>watchdogs, social movements</p>
+<p>shapingnorm sThink Tanks &amp; Academia</p>
+<p>CPR, IDS, BIDS — researchand</p>
+<p>knowledgeproductionshaping</p>
+<p>policy</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="33">
+<div class="slide-content">
+<h2>Case Study: BRAC — The World&#x27;s Largest N GO</h2>
+<p>Founded 1972, Bangladesh</p>
+<p>Startedasrelieforganizationpost-Liberation War.</p>
+<p>Evolvedinto acomprehensivedevelopmentinstitution</p>
+<p>operatingin 11 countries.</p>
+<p><strong>Program s:</strong> education, health, microfinance, legalaid,</p>
+<p>climate, genderempowerment.Why BRAC Mattersfor Governance</p>
+<p>Servicedeliverywheregovernmentscan&#x27;treach</p>
+<p>Innovates modelslateradoptedbygovernment</p>
+<p>Self-financingthroughsocialenterprises (~80%)</p>
+<p>Challengestraditionaldonor-NGOpowerdynamics</p>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>NGO Accountability: The Missing Piece</h2>
+<p>Upward Accountability</p>
+<p>NGOsareaccountabletodonors</p>
+<p>whofundthem — reporting</p>
+<p>requirements, audits, logframes.</p>
+<p>Thisoftenshapesprogram</p>
+<p>design morethancom munity</p>
+<p>needs.Downward</p>
+<p>Accountability</p>
+<p>Accountabilitytobeneficiaries</p>
+<p>andcom munitiesisweaker —</p>
+<p>feedback mechanism s,</p>
+<p>complaintsystem s, and</p>
+<p>participatoryevaluationare</p>
+<p>oftenunderdeveloped.The Accountability Gap</p>
+<p>Developmenteffectiveness</p>
+<p>dependsonclosingthisgap.</p>
+<p><strong>Tools:</strong> com munityscorecards,</p>
+<p>participatoryplanning, social</p>
+<p>audits, andgrievanceredress</p>
+<p>system s.</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="35">
+<div class="slide-content">
+<p class="section-number">SECTION 7</p>
+<h2>The Sustainable</h2>
+<h2>Development Goals</h2>
+<h2>Framework</h2>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>From MDGsto SDGs</h2>
+<p>MDGs (2000–2015)</p>
+<p>8 goalsfocusedondevelopingcountries. Setby</p>
+<p>experts, notparticipatory. Largely metsom etargets</p>
+<p>(poverty, child mortality) butcriticizedfor missingroot</p>
+<p>causes.SDGs (2015–2030)</p>
+<p>17 goals, 169 targets — universalframeworkfor ALL</p>
+<p>countries. Moreparticipatorydesign. Coversinequality,</p>
+<p>climate, institutions, andpeace — farbroaderthan</p>
+<p>MDGs.</p>
+<p>Theshiftfrom MDGsto SDGsreflects asignificantevolution: developmentisnolongerjustaboutpoor</p>
+<p>countries. Itis auniversalchallengerequiringtransformationinrichandpoornationsalike.</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>The 17 SDGsat a Glance</h2>
+<p>1. No Poverty 2. Zero Hunger 3. Good Health 4. Quality Education</p>
+<p>5. Gender Equality 6. Clean Water 7. Clean Energy 8. Decent Work</p>
+<p>9. Infrastructure 10. Reduced Inequality 11. Sustainable Cities 12. Responsible Consumption</p>
+<p>13. Climate Action 14. Life Below Water 15. Lifeon Land 16. Peace &amp; Justice</p>
+<p>17. Partnerships</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>SDG Progressin South Asia</h2>
+<p>45%</p>
+<p>India SDG Index</p>
+<p>Indiascored 66/100 on NITI Aayog</p>
+<p>SDG Index 2023 — roughly 45% of</p>
+<p>targetsontrack30%</p>
+<p>Off Track Goals</p>
+<p>Approximately 30% of South Asian</p>
+<p>SDGtargetsassessedasregressingor</p>
+<p>stalledpost-COVID17%</p>
+<p>SDG Finance Gap</p>
+<p>South Asiafaces a $17 trillion SDG</p>
+<p>financinggapthrough 2030 —</p>
+<p>requiringmassivemobilization</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>Critiqueofthe SDG Framework</h2>
+<p>Too Many Goals</p>
+<p>169 targets makeprioritizationnearlyimpossible</p>
+<p>forresource-constrainedgovernments. Everything</p>
+<p>isurgent — nothingis.Weak Accountability</p>
+<p>Voluntarynationalreviewswithnoenforcement</p>
+<p>mechanism . Countriesself-reportprogresswith</p>
+<p>limitedexternalverification.</p>
+<p>Finance Gap</p>
+<p>Goalswithoutguaranteedfundingareaspirations,</p>
+<p>notplans. Thefinancingarchitectureremains</p>
+<p>inadequateandfragmented.Structural Silence</p>
+<p>The SDGsdon&#x27;taddresstraderules, taxhavens, or</p>
+<p>debtarchitecture — rootcausesofglobalinequality</p>
+<p>arelargelyoffthetable.</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="40">
+<div class="slide-content">
+<p class="section-number">SECTION 8</p>
+<h2>Aid Effectiveness &amp;</h2>
+<h2>Conditionality</h2>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>The Aid Effectiveness Agenda</h2>
+<p>1 2002 — Monterrey</p>
+<p>Financingfor Development Conference: shared</p>
+<p>responsibilitiesbetweendonorsandrecipients</p>
+<p>2 2005 — Paris</p>
+<p><strong>Paris Declaration:</strong> 5 principles — ownership,</p>
+<p>alignment, harmonization, results, mutual</p>
+<p>accountability 3 2008 — Accra</p>
+<p><strong>Accra Agenda:</strong> deepened Pariscom mitments,</p>
+<p>strongercivilsocietyrole</p>
+<p>4 2011 — Busan</p>
+<p><strong>Busan Partnership:</strong> acknowledged South-South</p>
+<p>cooperationandprivatesector; created Global</p>
+<p>Partnershipfor Effective Development Co-operation</p>
+<p>(GPEDC)</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>The 5 Paris Principles</h2>
+<ul>
+<li><strong>1Mutual Accountability</strong></li>
+<li><strong>2 Managingfor Results</strong></li>
+<li><strong>3 Harmonization</strong></li>
+<li><strong>4 Alignment</strong></li>
+<li><strong>5 Ownership</strong></li>
+</ul>
+<p>The Parispyramidbuildsfrom ownership — theprinciplethatrecipientcountries mustleadtheirowndevelopment — up</p>
+<p>throughalignmentandharmonizationtomutualaccountability. Eachleveldependsontheonebelowit.</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="43">
+<div class="slide-content">
+<h2>Conditionality: What Is It?</h2>
+<p>Definition</p>
+<p>Conditionalityreferstotherequirementsattachedto</p>
+<p>developmentloansorgrants — policychanges,</p>
+<p>governancereform s, oreconomicadjustments a</p>
+<p>country mustimplementtoreceiveorcontinue</p>
+<p>receivingfunds.Typesof Conditions</p>
+<p><strong>Economic:</strong> Fiscaldeficitlimits, privatization, tariff</p>
+<p>reform</p>
+<p><strong>Governance:</strong> Anti-corruption measures, procurement</p>
+<p>rules</p>
+<p><strong>Social:</strong> Socialprotectionfloors, gender</p>
+<p>mainstreaming</p>
+<p><strong>Environmental:</strong> Safeguardsondisplacement,</p>
+<p>biodiversity</p>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>Case Study: World Bank</h2>
+<p>Conditionalityin India</p>
+<p>Inthe 1990s, India&#x27;s World Bank-backed Structural Adjustment</p>
+<p>Programmerequiredeconomicliberalization — reducedtariffs,</p>
+<p>privatization, andreducedsubsidies. Whilemacroeconomi cstability</p>
+<p>improved, criticsdocumentedrisinginequality, displacementfrom</p>
+<p>publicsectorjoblosses, andincreasedcostsforessentialservices.</p>
+<p>India&#x27;sexperiencepromptedglobaldebatesaboutwhose</p>
+<p>development structuraladjustmentreallyserves.</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="45">
+<div class="slide-content">
+<p class="section-number">SECTION 9</p>
+<h2>South-South Cooperation</h2>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>What Is South-South Cooperation?</h2>
+<p>Core Concept</p>
+<p>South-South Cooperation (SSC) referstotheexchange</p>
+<p>ofresources, technology, andknowledgebetween</p>
+<p>developingcountries — withoutthetraditional North-</p>
+<p>Southdonor-recipientdynamic.</p>
+<p><strong>Key SSCactors:</strong> China, India, Brazil, Turkey, UAE, South</p>
+<p>Africa.Principlesof SSC</p>
+<p>Mutualbenefit (notcharity)</p>
+<p>Non-interferenceininternalaffairs</p>
+<p>Nopoliticalconditionality</p>
+<p>Demand-driven — recipientsetspriorities</p>
+<p>Knowledgesharingovercashtransfer</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="47">
+<div class="slide-content">
+<h2>Indiaas a Development Partner</h2>
+<p>ITEC Programme</p>
+<p>Indian Technical &amp; Economic</p>
+<p>Cooperation — training 12,000+</p>
+<p>professionalsannuallyfrom 160</p>
+<p>countriesinagriculture, IT,</p>
+<p>management.</p>
+<p>Linesof Credit</p>
+<p>India&#x27;s Exim Bankhasextended</p>
+<p>$30B+ inlinesofcreditto 65 countries</p>
+<p>forinfrastructure, mostlyin Africa</p>
+<p>and South Asia.</p>
+<p>Vaccine Diplomacy</p>
+<p>During COVID-19, Indiasupplied 66</p>
+<p>milliondosesto 95 countriesunder</p>
+<p>the &quot;Vaccine Maitri&quot; initiative — before</p>
+<p>domesticshortfallsforced apause.</p>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>China&#x27;s Beltand Road Initiative (BRI) in South Asia</h2>
+<p>China</p>
+<p><strong>BRIhub:</strong> infrastructur e</p>
+<p>expansion, debt</p>
+<p>concernsBangladesh</p>
+<p>Portandpowerprojects;</p>
+<p>loanrisks</p>
+<p>Sri Lanka</p>
+<p>Hambantota &amp; Colombo</p>
+<p>port; leasedebatePakistan</p>
+<p>CPEC $62Bcorridor; debt</p>
+<p>concerns</p>
+<p>Nepal</p>
+<p>Trans - Himalayan</p>
+<p>connectivity; financing</p>
+<p>worry</p>
+<p>BRIpromisesinfrastructurewithoutconditionality — butcriticsraiseconcernsaboutdebtsustainability, strategicintent, andlimitedlocalemployment. Sri</p>
+<p>Lanka&#x27;s Hambantota Portleasebecam ethedefiningcautionarytale.</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>SSC: Promise &amp; Pitfalls</h2>
+<p>Promisesof SSC Pitfalls &amp; Critiques</p>
+<p>Shareddevelopmentcontextandexperience Canreplicate Northernpatternsofextractivism</p>
+<p>Nopoliticalconditionality Debttrapsandtiedcontract sareconcerns</p>
+<p>Fasterdisbursement Limitedtransparencyandaccountability</p>
+<p>Technologytransferbetweenpeers Laborandenvironmental standardsvarywidely</p>
+<p>Geopoliticalcounterweight Mayundermineaideffectivenessnorms</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="50">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Power, Politics &amp; Reform</h2>
+<h2>ofthe Development</h2>
+<h2>Architecture</h2>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>The Power Asym metry Problem</h2>
+<p>G7 Countries</p>
+<p>Setagendas, controlvotingshares, hostheadquarters, shapenorm s</p>
+<p>Emerging Powers</p>
+<p>BRICSnationsgaininginfluencebutstilloutsidecoregovernancecircles</p>
+<p>Middle-Incom e Countries</p>
+<p>Squeezedoutofconcessionalfinancebutstillfacestructuralvulnerabilities</p>
+<p>Least Developed Countries</p>
+<p>Greatestneed, leastvoiceingovernancestructuresthat</p>
+<p>determinetheirfutures</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Callsfor Reform</h2>
+<p>Voting Reform</p>
+<p>Increasedevelopingcountryvotingsharesin IMFand</p>
+<p>World Banktoreflect 21st-centuryeconomicrealitiesClimate Finance</p>
+<p>Developedcountriespromised $100B/yearinclimate</p>
+<p>financeby 2020 — targetwas metlateanddisputedin</p>
+<p>quality</p>
+<p>Debt Architecture</p>
+<p>Reform sovereigndebtrestructuring — theabsenceof</p>
+<p>aglobalbankruptcy mechanism leavespoorcountries</p>
+<p>atcreditors&#x27; mercyTax Justice</p>
+<p>Internationaltaxreform tocurbillicitfinancialflows —</p>
+<p>developingcountrieslose $500B+ annuallytotax</p>
+<p>avoidance</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>The G20 &amp; South Asia&#x27;s Voice</h2>
+<p>India&#x27;s G20 Presidency (2023)</p>
+<p>Indiausedits G20 Presidencytochampionthe &quot;Global</p>
+<p>South&quot; agenda — debtrelief, climatefinance, food</p>
+<p>security, anddigitalpublicinfrastructureas a</p>
+<p>development model.</p>
+<p><strong>Keyachievement:</strong> African Unionadmittedaspermanent</p>
+<p>G20 member.Limitsof G20 Influence</p>
+<p>G20 hasnoenforcement mechanism s</p>
+<p>SAARCnations (except India) notatthetable</p>
+<p>Consensusrequirementswaterdowncom mitments</p>
+<p>Bangladesh, Nepal, Sri Lankaremainspectators</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>Quiz: Test Your Understanding</h2>
+<ul>
+<li><strong>1Q1</strong></li>
+</ul>
+<p>Whichinstitutionwascreatedatthe Bretton Woodsconferenceprimarilytosupport macroeconomicstability?</p>
+<p>A) World Bank B) IMF C) W TO D) UNDP</p>
+<ul>
+<li><strong>2Q2</strong></li>
+</ul>
+<p>The Paris Declaration (2005) introducedwhichkeyprincipleplacingrecipientcountriesinthelead?</p>
+<p>A) Harmonization B) Alignment C) Ownership D) Conditionality</p>
+<ul>
+<li><strong>3Q3</strong></li>
+</ul>
+<p>Whichorganizationdescribesitselfas &quot;demand-driven, noconditionality&quot; andisheadquarteredin Beijing?</p>
+<p>A) ADB B) AIIB C) NDB D) World Bank</p>
+<ul>
+<li><strong>4Q4</strong></li>
+</ul>
+<p>BRAC, theworld&#x27;slargest NGO, originatedinwhichcountry?</p>
+<p>A) India B) Nepal C) Bangladesh D) Pakistan</p>
+<ul>
+<li><strong>5Q5</strong></li>
+</ul>
+<p>How many SDGsarethereinthe 2030 Agenda?</p>
+<p>A) 8 B) 12 C) 17 D) 21</p>
+<p><strong>Answers:</strong> 1-B, 2-C, 3-B, 4-C, 5-C</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>Reflection Questions</h2>
+<p>On Power</p>
+<p>Ifyouwererepresenting Indiaatan IMFvote, what</p>
+<p>governancereformswouldyouprioritizeandwhy?</p>
+<p>On Aid</p>
+<p>Isiteverpossibleforbilateralaidtobepurelydevelopmental,</p>
+<p>freefromthedonor&#x27;sforeignpolicyinterests?</p>
+<p>On Civil Society</p>
+<p>Whoshould NGOsbeaccountableto — donors, governments ,</p>
+<p>orcommunities? Howwouldyoudesignanaccountability</p>
+<p>system?</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<ul>
+<li><strong>1Developmentgovernanceismulti-actor</strong></li>
+</ul>
+<p>Nosingleinstitutioncontrolsdevelopment — the</p>
+<p>ecosystem includes multilaterals, bilaterals, NGOs,</p>
+<p>privateactors, and South-Southpartners.2Powershapespriorities</p>
+<p>Whofunds, whovotes, andwhosetstheagenda</p>
+<p>determineswhatdevelopmenthappensandfor</p>
+<p>whom . South Asiahassignificantneedsbutlimited</p>
+<p>governancepower.</p>
+<ul>
+<li><strong>3Aideffectivenessrequiresownership</strong></li>
+</ul>
+<p><strong>The Paris Principlesremindus:</strong> developmentworks</p>
+<p>bestwhenrecipientcountrieslead. Conditionality</p>
+<p>anddonorfragmentationundermineeffectiveness.4Thearchitectureisinflux</p>
+<p>Newinstitutions (AIIB, NDB), South-South</p>
+<p>cooperation, andthe SDGframeworkarereshaping</p>
+<p>globaldevelopment — creatingbothopportunities</p>
+<p>andrisksfor South Asia.</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>ODA Official Development Assistance 4 concessional government-to-governmentgrantsandloans</p>
+<p>Conditionality Policyrequirementsattachedtodevelopmentloansorgrants</p>
+<p>South-South Cooperation Developmentexchangesbetwee ndevelopingcountriesoutsidethetraditional Nort h-South</p>
+<p>framework</p>
+<p>Bretton Woods 1944 conferencethatcreatedthe World Bankand IMF</p>
+<p>SDGs 17 Sustainable Development Goalsagreedatthe UNin 2015 astheglobaldevelopmentagendato</p>
+<p>2030</p>
+<p>IBRD / IDA World Bank&#x27;stwomainlendingarms 4 formiddle-incomeandlow-incomecountriesrespectively</p>
+<p>Aid Effectiveness Principlesandpracticesthatmake developmentassistancemoreimpactful 4 including Paris</p>
+<p>Declarationnorms</p>
+<p>Structural Adjustment IMF/World Bank-backedeconomicpolicyreformsrequiredforcrisislendingin 1980s3 90s</p>
+<p>BRI Beltand Road Initiative 4 China&#x27;sglobalinfrastructureinvestmentprogramme</p>
+<p>GPEDC Global Partnershipfor Effective Development Co-operation 4 multi-stakeholderplatformonaid</p>
+<p>norms</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>📚 Books</p>
+<p>The Tyrannyof Experts —</p>
+<p>William Easterly</p>
+<p>Dead Aid — Dambisa Moyo</p>
+<p>Portfoliosofthe Poor —</p>
+<p>Collins, Morduch, Rutherford &amp;</p>
+<p>Ruthven</p>
+<p>The Ageof Sustainable</p>
+<p>Development — Jeffrey Sachs🌐 Online Resources</p>
+<p>World Bank Open Data —</p>
+<p>data.worldbank.org</p>
+<p>OECD DAC Statistics —</p>
+<p>oecd.org/dac</p>
+<p>AidData — aiddata.org</p>
+<p>UNDP Human Development</p>
+<p>Reports — hdr.undp.org📄 Key Documents</p>
+<p>Paris Declarationon Aid</p>
+<p>Effectiveness (2005)</p>
+<p>UN 2030 Agendafor</p>
+<p>Sustainable Development</p>
+<p>Busan Partnershipfor</p>
+<p>Effective Development Co-</p>
+<p>operation (2011)</p>
+<p>NITI Aayog India SDG Index</p>
+<p>2023</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="59">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>
