@@ -15,11 +15,11 @@
     <meta name="description" content="A comprehensive free course on public policy, fiscal federalism, regulatory governance, and Indian development. How policy gets made, implemented, and why it often doesn't work.">
     <meta name="keywords" content="public policy India, fiscal federalism, Planning Commission, NITI Aayog, regulatory governance, budgeting India, GST, ImpactMojo, free course">
     <meta name="author" content="ImpactMojo">
-    <link rel="canonical" href="https://www.impactmojo.in/courses/publicpolicy/">
+    <link rel="canonical" href="https://www.impactmojo.in/courses/pubpol/">
     <meta property="og:title" content="Public Policy: Process, Design &amp; Governance in India | ImpactMojo">
     <meta property="og:description" content="How policy gets made, implemented, and why it often doesn't work.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.impactmojo.in/courses/publicpolicy/">
+    <meta property="og:url" content="https://www.impactmojo.in/courses/pubpol/">
     <meta property="og:site_name" content="ImpactMojo">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2175,6 +2175,189 @@
 <script src="/js/pwa.js" defer></script>
 <script src="/js/offline.js" defer></script>
 <script defer src="../../js/auto-refresh.js"></script>
+
+<!-- Course Interactive JS -->
+<script>
+    // ============================================
+    // MOBILE SIDEBAR
+    // ============================================
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeSidebarBtn = document.getElementById('close-sidebar');
+
+    function openSidebar() {
+        if (sidebar) sidebar.classList.add('open');
+        if (sidebarOverlay) sidebarOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+        if (sidebar) sidebar.classList.remove('open');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openSidebar);
+    if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
+    if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) closeSidebar();
+        });
+    });
+
+    // ============================================
+    // SIDEBAR COLLAPSE (Desktop)
+    // ============================================
+    const collapseBtn = document.getElementById('sidebar-collapse-btn');
+    const mainContent = document.querySelector('.main-content');
+    const footer = document.querySelector('.footer');
+
+    if (collapseBtn) {
+        collapseBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            document.body.classList.toggle('sidebar-collapsed');
+            if (mainContent) mainContent.style.marginLeft = sidebar.classList.contains('collapsed') ? '0' : '';
+            if (footer) footer.style.marginLeft = sidebar.classList.contains('collapsed') ? '0' : '';
+        });
+    }
+
+    // ============================================
+    // READING PROGRESS BAR
+    // ============================================
+    const progressBar = document.getElementById('reading-progress');
+
+    function updateProgress() {
+        if (!progressBar) return;
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = progress + '%';
+    }
+
+    window.addEventListener('scroll', updateProgress);
+    updateProgress();
+
+    // ============================================
+    // REVEAL ANIMATIONS
+    // ============================================
+    const revealElements = document.querySelectorAll('.reveal');
+
+    function revealInViewport() {
+        revealElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('revealed');
+            }
+        });
+    }
+
+    revealInViewport();
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Fallback: reveal all after 1.5s
+    setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('revealed'));
+    }, 1500);
+
+    // ============================================
+    // ACTIVE NAV HIGHLIGHTING
+    // ============================================
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active',
+                        link.getAttribute('href') === '#' + entry.target.id);
+                });
+            }
+        });
+    }, {
+        threshold: 0.2,
+        rootMargin: '-20% 0px -60% 0px'
+    });
+
+    sections.forEach(section => navObserver.observe(section));
+
+    // ============================================
+    // SMOOTH SCROLL
+    // ============================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // ============================================
+    // QUIZ FUNCTIONALITY
+    // ============================================
+    function checkAnswer(button) {
+        const question = button.closest('.quiz-question');
+        const correct = question.dataset.correct;
+        const selected = button.dataset.answer;
+        const feedback = question.querySelector('.quiz-feedback');
+
+        question.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.disabled = true;
+            opt.classList.remove('selected');
+        });
+        button.classList.add('selected');
+
+        if (selected === correct) {
+            button.style.borderColor = 'var(--success-color)';
+            button.style.background = 'rgba(16, 185, 129, 0.1)';
+            if (feedback) {
+                feedback.textContent = 'Correct!';
+                feedback.style.color = 'var(--success-color)';
+                feedback.style.display = 'block';
+            }
+        } else {
+            button.style.borderColor = 'var(--danger-color)';
+            button.style.background = 'rgba(239, 68, 68, 0.1)';
+            if (feedback) {
+                feedback.textContent = 'Not quite. Try reviewing the section above.';
+                feedback.style.color = 'var(--danger-color)';
+                feedback.style.display = 'block';
+            }
+        }
+    }
+
+    // ============================================
+    // COACH CALLOUT POPUP ANIMATION
+    // ============================================
+    const coachCallouts = document.querySelectorAll('.coach-callout');
+
+    const popupObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.3 });
+
+    coachCallouts.forEach(callout => popupObserver.observe(callout));
+</script>
 
 <!-- ImpactMojo Theme Toggle JS -->
 <script>
