@@ -125,10 +125,8 @@
     var headers = {
       'Content-Type': 'application/json',
       'apikey': cfg.SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + (token || cfg.SUPABASE_ANON_KEY),
     };
-    if (token) {
-      headers['Authorization'] = 'Bearer ' + token;
-    }
 
     fetch(EDGE_FN_URL, {
       method: 'POST',
