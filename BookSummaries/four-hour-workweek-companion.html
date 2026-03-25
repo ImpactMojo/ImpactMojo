@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -7,6 +9,132 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
+/* === ImpactMojo Design System === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; stroke: #0EA5E9; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important; -webkit-text-fill-color: #fff;
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+}
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg);
+    border: 1px solid var(--im-border);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: var(--im-accent); color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-paper-plane {
+    position: fixed; top: 15%; right: 8%;
+    width: 120px; height: 120px;
+    opacity: 0.15; z-index: 0;
+    pointer-events: none;
+    animation: im-fly 25s ease-in-out infinite;
+}
+@keyframes im-fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, -15px) rotate(-3deg); }
+    50% { transform: translate(10px, -25px) rotate(2deg); }
+    75% { transform: translate(-10px, 10px) rotate(-1deg); }
+}
+.im-footer {
+    background: var(--im-secondary-bg);
+    border-top: 1px solid var(--im-border);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-secondary);
+}
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted);
+}
+.im-footer-made a { color: var(--im-accent); text-decoration: none; }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-primary);
+    font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary);
+    text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border);
+    font-size: 0.8rem; color: var(--im-text-muted);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: none; }
+@media (max-width: 640px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-topbar-home span { display: none; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 400px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+}
+/* === End ImpactMojo Design System === */
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
@@ -158,6 +286,51 @@ blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px s
   <div class="panel" id="p-ask"></div>
 </main>
 </div>
+
+<!-- Sargam Icon Sprites -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="si_Direction_alt" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m3 3 18 7.92-7.987 2.093L10.92 21z"/></symbol>
+<symbol id="si_Flare" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip_si_Flare)"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M7 12H1m22 0h-6m-5 5v6m3.536-7.464 1.414 1.414m-9.9-9.9 1.414 1.414m7.072 0L16.95 7.05m-9.9 9.9 1.414-1.414M12 1v6m2 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></g><defs><clipPath id="clip_si_Flare"><path fill="#fff" d="M0 0h24v24H0z"/></clipPath></defs></symbol>
+<symbol id="si_Info" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 8h.008M12 16v-5m10 1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10"/></symbol>
+<symbol id="si_Lock" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 10V7c0-2.21 1.79-4 4-4s4 1.79 4 4v3m-4 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 0v3m-5.4-8h10.8c.88 0 1.6.72 1.6 1.6v7c0 1.32-1.08 2.4-2.4 2.4H7.4C6.08 21 5 19.92 5 18.6v-7c0-.88.72-1.6 1.6-1.6"/></symbol>
+<symbol id="si_Lightning" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m12.667 10.5 1.25-7.5L6 13h5l-1.25 7.5 7.917-10z" clip-rule="evenodd"/></symbol>
+<symbol id="si_Library_books" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 11h8m-8 3h4m-4-6h8m2 14H8.4C5.42 22 3 19.58 3 16.6V5m5.4-2h11.2A2.4 2.4 0 0 1 22 5.4v11.2a2.4 2.4 0 0 1-2.4 2.4H8.4A2.4 2.4 0 0 1 6 16.6V5.4A2.4 2.4 0 0 1 8.4 3"/></symbol>
+<symbol id="si_Book" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 7.333C12 5.5 10.5 4 8.667 4H2v12h6.708C12 16 12 19.334 12 19.334m0-12C12 5.5 13.5 4 15.333 4H22v12h-6.667C12 16 12 19.334 12 19.334m0-12v12m1.875 1.124A2.58 2.58 0 0 1 16.167 19H21m-10.875 1.458A2.54 2.54 0 0 0 7.833 19H3"/></symbol>
+<symbol id="si_Article" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 12h8m-8 3h4M8 9h8M4.4 4h15.2A2.4 2.4 0 0 1 22 6.4v11.2a2.4 2.4 0 0 1-2.4 2.4H4.4A2.4 2.4 0 0 1 2 17.6V6.4A2.4 2.4 0 0 1 4.4 4"/></symbol>
+<symbol id="si_Mail" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5 7.06 6.87 5.89c.07.06.19.06.26 0L19 7.06M3.2 4h17.6c.66 0 1.2.54 1.2 1.2v12.4c0 1.32-1.08 2.4-2.4 2.4H4.4C3.08 20 2 18.92 2 17.6V5.2C2 4.54 2.54 4 3.2 4"/></symbol>
+<symbol id="si_Help" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M11.83 14v-.621a2.33 2.33 0 0 1 1.164-2.02c1.126-.66 1.514-2.057.854-3.183s-2.057-1.514-3.183-.854C9.965 7.75 9.5 8.487 9.5 9.341M12 17h-.008M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10 10-4.477 10-10"/></symbol>
+<symbol id="si_Heart" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.696 3C14.652 3 12.887 4.197 12 5.943 11.113 4.197 9.348 3 7.304 3 4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/></symbol>
+<symbol id="si_Globe_detailed" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M22 12c0 5.523-4.477 10-10 10m10-10c0-5.523-4.477-10-10-10m10 10H2m10 10C6.477 22 2 17.523 2 12m10 10 .66-.31c2.1-2.71 3.34-6.14 3.34-9.78s-1.22-7-3.27-9.69L12 2m0 20-.73-.31A15.94 15.94 0 0 1 8 12c0-3.64 1.24-7.07 3.34-9.78L12 2M2 12C2 6.477 6.477 2 12 2m7.14 17c-1.82-1.85-4.34-3-7.14-3s-5.33 1.15-7.14 3M19.14 5C17.33 6.85 14.8 8 12 8S6.68 6.85 4.86 5"/></symbol>
+</svg>
+
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" style="stroke:currentColor;"><use href="#si_Direction_alt"/></svg>
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" style="stroke:currentColor;"><use href="#si_Flare"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="root"></div>
 <script>
 const DATA = {"title": "The 4-Hour Workweek", "dayBadge": "Day 21 of 30", "author": "Timothy Ferriss · 2007 · Crown", "tagline": "Ferriss's contrarian guide to redesigning work life: eliminate the 80% of activities that produce 20% of results, automate income generation, and liberate yourself from location and time constraints.", "pills": ["Productivity", "Entrepreneurship", "Lifestyle Design", "Time Management"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Ferriss's central argument is that the conventional work-hard-now-retire-later model is both inefficient and unnecessary. The DEAL framework — Definition (redefine what you want), Elimination (remove what is unproductive), Automation (build systems that generate income without your direct involvement), and Liberation (geographic and temporal freedom) — is presented as a replicable path to what he calls the New Rich lifestyle.", "The book's most durable contribution is the elimination chapter: the application of Pareto's 80/20 principle and Parkinson's Law (work expands to fill available time) to professional productivity. Even practitioners who reject the lifestyle design framing find the prioritisation and time management tools directly applicable."], "accent": "#C8910A", "accent_light": "#FFF8E6", "pathways": [{"label": "Development Practitioner", "desc": "Apply this book to programme management, community engagement, and field practice.", "steps": [{"section": "Definition — The New Rich and Lifestyle Design", "focus": "Ferriss challenges the deferred-life plan: working intensely now in order to eventually earn enough to do what you want. He argues that the goal is not a large absolute income but ..."}, {"section": "Elimination — Productivity Through Subtraction", "focus": "Ferriss applies two laws to professional productivity. Pareto's Law: 80% of outputs come from 20% of inputs. Identify the 20% of activities, clients, and tasks that produce 80% of ..."}, {"section": "Automation — Building Systems That Work Without You", "focus": "Ferriss argues that building income-generating systems (he calls them 'muses') that require minimal ongoing attention is the way to achieve financial independence without a traditi..."}, {"section": "Liberation — Geographic and Temporal Freedom", "focus": "Liberation means decoupling income from physical presence and fixed hours. For employees, this requires building the business case for remote work through demonstrated results — no..."}]}, {"label": "Development Researcher", "desc": "Apply this book to research practice, evidence generation, and academic work.", "steps": [{"section": "Definition — The New Rich and Lifestyle Design", "focus": "Ferriss challenges the deferred-life plan: working intensely now in order to eventually earn enough to do what you want. He argues that the goal is not a large absolute income but ..."}, {"section": "Elimination — Productivity Through Subtraction", "focus": "Ferriss applies two laws to professional productivity. Pareto's Law: 80% of outputs come from 20% of inputs. Identify the 20% of activities, clients, and tasks that produce 80% of ..."}, {"section": "Automation — Building Systems That Work Without You", "focus": "Ferriss argues that building income-generating systems (he calls them 'muses') that require minimal ongoing attention is the way to achieve financial independence without a traditi..."}, {"section": "Liberation — Geographic and Temporal Freedom", "focus": "Liberation means decoupling income from physical presence and fixed hours. For employees, this requires building the business case for remote work through demonstrated results — no..."}]}, {"label": "Personal Growth", "desc": "Direct personal and professional application.", "steps": [{"section": "Definition — The New Rich and Lifestyle Design", "focus": "Ferriss challenges the deferred-life plan: working intensely now in order to eventually earn enough to do what you want. He argues that the goal is not a large absolute income but ..."}, {"section": "Elimination — Productivity Through Subtraction", "focus": "Ferriss applies two laws to professional productivity. Pareto's Law: 80% of outputs come from 20% of inputs. Identify the 20% of activities, clients, and tasks that produce 80% of ..."}, {"section": "Automation — Building Systems That Work Without You", "focus": "Ferriss argues that building income-generating systems (he calls them 'muses') that require minimal ongoing attention is the way to achieve financial independence without a traditi..."}, {"section": "Liberation — Geographic and Temporal Freedom", "focus": "Liberation means decoupling income from physical presence and fixed hours. For employees, this requires building the business case for remote work through demonstrated results — no..."}]}], "sections": [{"title": "Definition — The New Rich and Lifestyle Design", "subtitle": "Reframing what success means", "summary": "Ferriss challenges the deferred-life plan: working intensely now in order to eventually earn enough to do what you want. He argues that the goal is not a large absolute income but time freedom, mobility, and the ability to do meaningful things now — which he calls relative income. The freedom multiplier: the value of money depends entirely on whether you control what you do, when you do it, where you do it, and with whom. Dreamlining is the practical tool: setting 6-month and 12-month goals for what you want to have, be, and do, calculating the actual monthly cost, and working backward to the required income.", "ideas": ["Relative income (money × time freedom) is a better measure of financial wellbeing than absolute income.", "The deferred-life plan assumes you will want to do at retirement what you want to do now — this is rarely true.", "Dreamlining: make your dreams concrete by calculating their actual cost. Most turn out to be less expensive than feared.", "Inaction has costs too: the cost of not taking a risk is not zero."], "quotes": ["\"The New Rich are those who abandon the deferred-life plan and create luxury lifestyles in the present.\"", "\"Options — the ability to choose — is real power.\""], "devEcon": "The relative income concept has a direct parallel in development economics: Amartya Sen's capability approach measures wellbeing not by income but by what people can actually do and be. Ferriss is applying a similar insight to professional life design: the question is not how much you earn but what freedom and meaningful activity your earning enables. The dreamlining exercise is also a practical application of backward-mapping from desired outcomes to required inputs."}, {"title": "Elimination — Productivity Through Subtraction", "subtitle": "The 80/20 rule and Parkinson's Law", "summary": "Ferriss applies two laws to professional productivity. Pareto's Law: 80% of outputs come from 20% of inputs. Identify the 20% of activities, clients, and tasks that produce 80% of your value — and the 20% of inputs that cause 80% of your problems — and act accordingly. Parkinson's Law: tasks expand to fill the available time. Artificially compressing time limits forces ruthless prioritisation and reveals that most tasks are less important than they seem. Practical tools: a not-to-do list (as important as a to-do list), low-information diet (selective consumption of news and data), and strict batch processing of email and communications.", "ideas": ["The 80/20 audit applied to clients and activities often reveals that 80% of revenue comes from 20% of clients, and 80% of problems come from 20% of clients — typically not the same 20%.", "Parkinson's Law applied to email: checking twice daily instead of continuously does not reduce work quality but dramatically reduces time spent.", "A low-information diet: selective, intentional consumption of only the information that is directly actionable.", "Multi-tasking reduces output quality: sequential, single-task focus produces better results in less time."], "quotes": ["\"Being busy is most often used as a guise for avoiding the few critically important but uncomfortable actions.\"", "\"Efficiency is still important, but it is useless unless applied to the right things.\""], "devEcon": "The 80/20 analysis is directly applicable to development programme design. Most programmes track many indicators but most information value is concentrated in a few key measures. Most programme activities produce most of the impact (often not the activities with the most budget). An honest 80/20 audit of most development programmes would produce a dramatically leaner, more focused programme design."}, {"title": "Automation — Building Systems That Work Without You", "subtitle": "Delegation, outsourcing, and the muse", "summary": "Ferriss argues that building income-generating systems (he calls them 'muses') that require minimal ongoing attention is the way to achieve financial independence without a traditional retirement age. The principles: eliminate unnecessary processes before automating or delegating (delegating a wasteful process creates a more expensive wasteful process); use virtual assistants for low-complexity, high-time-consuming tasks; build products (especially information products) that can be sold repeatedly without proportional additional effort; keep the customer decision surface minimal to reduce service complexity.", "ideas": ["Eliminate before you delegate. Never delegate something that should not be done at all.", "A muse is an income-generating system that does not require your daily presence to function.", "Information products have the best automation potential: create once, sell many times.", "Customer management: fewer, better customers producing less complexity is almost always preferable to more, varied customers."], "quotes": ["\"Becoming a member of the NR is not just about working smarter. It's about building a system to replace yourself.\"", "\"Unless something is well-defined and important, no one should do it.\""], "devEcon": "The elimination-before-delegation principle maps directly to development programme streamlining. Many donor reporting requirements, coordination meetings, and activity schedules exist by inertia rather than necessity. Eliminating unnecessary processes before building M&E systems around them produces dramatically better programme monitoring than building comprehensive tracking systems for activities that should not exist."}, {"title": "Liberation — Geographic and Temporal Freedom", "subtitle": "Remote work, mini-retirements, and meaning", "summary": "Liberation means decoupling income from physical presence and fixed hours. For employees, this requires building the business case for remote work through demonstrated results — not through asking permission but through demonstrating that working remotely produces better outcomes. For entrepreneurs, it requires building the automated systems before expanding to assume constant presence. Mini-retirements — intensive periods of travel or different activity taken throughout a career — are presented as superior to the deferred-life retirement model both psychologically and financially. The final challenge: once you have designed freedom, fill it with things that are genuinely meaningful.", "ideas": ["The business case for remote work: demonstrate results from home before proposing it as a permanent arrangement.", "Mini-retirements: intensive sabbaticals throughout a career are psychologically healthier than one deferred retirement.", "Freedom is not an end state: too much unstructured time produces boredom and existential drift.", "The question after liberation: what do you actually want to do?"], "quotes": ["\"Decreasing income-driven work isn't the end goal. Living more — and becoming more — is.\"", "\"Too much free time is no more than fertilizer for self-doubt.\""], "devEcon": "The liberation model Ferriss describes has significant tension with the demands of field-based development work, where presence and embeddedness in communities are often prerequisites for programme effectiveness. The remote-work principles apply more directly to research, writing, and analytical roles than to community mobilisation or field implementation. The mini-retirement concept, however, has strong support from burnout research in development: periodic extended breaks from field work produce better long-term practitioner capacity than continuous deployment."}], "concepts": [{"term": "Relative Income", "definition": "The concept that financial wellbeing is better measured by income adjusted for time freedom and mobility than by absolute income. A person working 20 hours per week at $50,000 may be richer in the relevant sense than a person working 80 hours per week at $200,000.", "practitionerNote": "Development practitioners regularly sacrifice relative income for absolute income — taking high-paying consulting assignments that eliminate all time freedom over absolute salary packages that require far less. Ferriss's framework prompts the question: what is the time-freedom cost of this income, and is it worth it?"}, {"term": "Parkinson's Law", "definition": "Tasks expand to fill the available time. The practical implication: artificially compressing time limits forces prioritisation and reveals that most tasks are less important than they seem when given unlimited time.", "practitionerNote": "Development programmes with open-ended implementation timelines consistently experience scope creep and activity expansion that is driven by available funding rather than theory of change logic. Parkinson's Law predicts this. Tight, explicit time boundaries with clear prioritisation criteria counteract it."}, {"term": "The 80/20 Audit", "definition": "A systematic analysis of which 20% of activities, clients, products, or inputs produce 80% of outputs (positive) or problems (negative). The analytical foundation for the elimination step.", "practitionerNote": "Apply this to your programme activity list: which 20% of activities produce 80% of observable beneficiary change? Which 20% of coordination meetings produce 80% of actionable decisions? The answers are usually surprising and almost always suggest significant elimination opportunities."}, {"term": "Dreamlining", "definition": "Ferriss's goal-setting method: identify what you want to have, be, and do over the next 6 and 12 months; calculate the actual monthly income required to achieve these goals; work backward to what needs to change in your current situation.", "practitionerNote": "Many development practitioners have significant life and career goals that remain vague because they have never been costed. Dreamlining converts vague aspirations ('work on something more meaningful') into specific monthly income and time requirements, which makes the gap to the goal calculable rather than opaque."}, {"term": "Elimination (DEAL)", "definition": "The second step of Ferriss's DEAL framework: removing or reducing the 80% of activities that produce only 20% of results before attempting to improve efficiency or automate. The sequence matters: automating waste produces more expensive waste.", "practitionerNote": "Development programme reviews almost never ask 'which of these activities should we stop doing?' They ask 'how can we do these activities better?' The elimination question, asked honestly, often produces a more significant efficiency improvement than any process optimisation."}], "tools": [{"label": "Reflection Journal", "intro": "Use these prompts to connect the book's ideas to your own context.", "html": "<label class=\"fld-label\">What is the single most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"r1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where do you see this book's core argument playing out in a specific programme or research challenge you face?</label>\n<textarea class=\"fld\" id=\"r2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">What is one concrete change you will make this week based on reading this?</label>\n<textarea class=\"fld\" id=\"r3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Reflections stay in your browser only and are not sent anywhere.</div>"}], "connections": [{"book": "Eat That Frog — Brian Tracy", "text": "Tracy and Ferriss both apply the 80/20 principle to professional productivity, arriving at the same prescription from different directions: focus on the small number of activities that produce most of your value, and deliberately avoid or eliminate the rest. Tracy's frog is Ferriss's 20%."}, {"book": "Deep Work — Cal Newport", "text": "Newport and Ferriss are in tension but also complementary. Newport argues for maximal deep productivity within a conventional professional structure; Ferriss argues for redesigning the structure. But both agree that most modern professional time is wasted on low-value shallow activities. Ferriss's elimination step and Newport's shallow work quota address the same problem."}, {"book": "Atomic Habits — Clear", "text": "Ferriss's DEAL framework is a macro-level redesign; Clear's habit system is the micro-level execution. Ferriss tells you what to eliminate and automate; Clear tells you how to make the remaining high-value activities automatic. Ferriss's virtual assistant is Clear's habit design for delegation."}], "critiques": ["The 4-Hour Workweek was written by a solo entrepreneur with no dependents, significant risk tolerance, and exceptional network access. The prescriptions for employees in large organisations, parents with childcare responsibilities, or practitioners in locations where virtual assistant and muse models are not viable require substantial adaptation.", "The book's automation prescriptions are US-centric and assume access to Anglophone virtual assistants, a functional e-commerce infrastructure, and information product markets that do not exist equally everywhere.", "Ferriss's lifestyle design framing has been criticised for excessive individualism: the book optimises relentlessly for individual freedom without accounting for the interdependencies (family, team, community) that make most professional work valuable and sustainable.", "The mini-retirement model has empirical support in burnout research but Ferriss presents it without this grounding. Development practitioners would benefit from the concept framed as a burnout-prevention strategy rather than a lifestyle aspiration."], "suggested": ["How does the 80/20 principle apply to development programme activity design?", "What is Parkinson's Law and how does it affect programme implementation timelines?", "What are the limits of the 4-Hour Workweek model for development field practitioners?", "How do you build a business case for remote work within a development organisation?", "What is dreamlining and how can it help development practitioners set meaningful professional goals?"], "systemPrompt": "You are an expert reading companion for 'The 4-Hour Workweek' by Timothy Ferriss. Your audience is development practitioners, researchers, and ImpactMojo learners. Answer questions about the DEAL framework, the 80/20 and Parkinson's Law applications, and the limits and adaptations needed for development sector contexts."};
 
@@ -405,5 +578,97 @@ function switchTab(id) {
   renderSetup();
 })();
 </script>
+
+<!-- ImpactMojo Paper Plane -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- ImpactMojo Footer -->
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;color:#EF4444;"><use href="#si_Heart"/></svg> by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Info"/></svg> About ImpactMojo</h4>
+<ul>
+<li><a href="../about.html">About Us</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="https://github.com/Varnasr/ImpactMojo" rel="noopener noreferrer" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Globe_detailed"/></svg> GitHub</a></li>
+<li><a href="../transparency.html">Transparency</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Lock"/></svg> Legal</h4>
+<ul>
+<li><a href="../privacy-policy.html">Privacy Policy</a></li>
+<li><a href="../terms-of-service.html">Terms of Service</a></li>
+<li><a href="../disclaimer.html">Disclaimer</a></li>
+<li><a href="../data-protection.html">Data Protection</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Lightning"/></svg> Quick Links</h4>
+<ul>
+<li><a href="../catalog.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Library_books"/></svg> All Courses</a></li>
+<li><a href="../premium.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Flare"/></svg> Premium Content</a></li>
+<li><a href="../coaching.html">Coaching</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Book"/></svg> Resources</h4>
+<ul>
+<li><a href="../handouts.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Article"/></svg> Handouts</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../faq.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Help"/></svg> FAQ</a></li>
+<li><a href="../sitemap.html">Sitemap</a></li>
+<li><a href="https://impactmojo.gitbook.io/impactmojo" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+<p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+</div>
+</div>
+</footer>
+
+<script>
+// ImpactMojo 3-way theme system
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+            document.body.classList.toggle('dark-mode', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+})();
+</script>
+
 </body>
 </html>

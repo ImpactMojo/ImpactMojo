@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -7,6 +9,132 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
+/* === ImpactMojo Design System === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; stroke: #0EA5E9; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important; -webkit-text-fill-color: #fff;
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+}
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg);
+    border: 1px solid var(--im-border);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: var(--im-accent); color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-paper-plane {
+    position: fixed; top: 15%; right: 8%;
+    width: 120px; height: 120px;
+    opacity: 0.15; z-index: 0;
+    pointer-events: none;
+    animation: im-fly 25s ease-in-out infinite;
+}
+@keyframes im-fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, -15px) rotate(-3deg); }
+    50% { transform: translate(10px, -25px) rotate(2deg); }
+    75% { transform: translate(-10px, 10px) rotate(-1deg); }
+}
+.im-footer {
+    background: var(--im-secondary-bg);
+    border-top: 1px solid var(--im-border);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-secondary);
+}
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted);
+}
+.im-footer-made a { color: var(--im-accent); text-decoration: none; }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-primary);
+    font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary);
+    text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border);
+    font-size: 0.8rem; color: var(--im-text-muted);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: none; }
+@media (max-width: 640px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-topbar-home span { display: none; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 400px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+}
+/* === End ImpactMojo Design System === */
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
@@ -158,6 +286,51 @@ blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px s
   <div class="panel" id="p-ask"></div>
 </main>
 </div>
+
+<!-- Sargam Icon Sprites -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="si_Direction_alt" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m3 3 18 7.92-7.987 2.093L10.92 21z"/></symbol>
+<symbol id="si_Flare" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip_si_Flare)"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M7 12H1m22 0h-6m-5 5v6m3.536-7.464 1.414 1.414m-9.9-9.9 1.414 1.414m7.072 0L16.95 7.05m-9.9 9.9 1.414-1.414M12 1v6m2 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></g><defs><clipPath id="clip_si_Flare"><path fill="#fff" d="M0 0h24v24H0z"/></clipPath></defs></symbol>
+<symbol id="si_Info" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 8h.008M12 16v-5m10 1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10"/></symbol>
+<symbol id="si_Lock" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 10V7c0-2.21 1.79-4 4-4s4 1.79 4 4v3m-4 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 0v3m-5.4-8h10.8c.88 0 1.6.72 1.6 1.6v7c0 1.32-1.08 2.4-2.4 2.4H7.4C6.08 21 5 19.92 5 18.6v-7c0-.88.72-1.6 1.6-1.6"/></symbol>
+<symbol id="si_Lightning" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m12.667 10.5 1.25-7.5L6 13h5l-1.25 7.5 7.917-10z" clip-rule="evenodd"/></symbol>
+<symbol id="si_Library_books" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 11h8m-8 3h4m-4-6h8m2 14H8.4C5.42 22 3 19.58 3 16.6V5m5.4-2h11.2A2.4 2.4 0 0 1 22 5.4v11.2a2.4 2.4 0 0 1-2.4 2.4H8.4A2.4 2.4 0 0 1 6 16.6V5.4A2.4 2.4 0 0 1 8.4 3"/></symbol>
+<symbol id="si_Book" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 7.333C12 5.5 10.5 4 8.667 4H2v12h6.708C12 16 12 19.334 12 19.334m0-12C12 5.5 13.5 4 15.333 4H22v12h-6.667C12 16 12 19.334 12 19.334m0-12v12m1.875 1.124A2.58 2.58 0 0 1 16.167 19H21m-10.875 1.458A2.54 2.54 0 0 0 7.833 19H3"/></symbol>
+<symbol id="si_Article" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 12h8m-8 3h4M8 9h8M4.4 4h15.2A2.4 2.4 0 0 1 22 6.4v11.2a2.4 2.4 0 0 1-2.4 2.4H4.4A2.4 2.4 0 0 1 2 17.6V6.4A2.4 2.4 0 0 1 4.4 4"/></symbol>
+<symbol id="si_Mail" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5 7.06 6.87 5.89c.07.06.19.06.26 0L19 7.06M3.2 4h17.6c.66 0 1.2.54 1.2 1.2v12.4c0 1.32-1.08 2.4-2.4 2.4H4.4C3.08 20 2 18.92 2 17.6V5.2C2 4.54 2.54 4 3.2 4"/></symbol>
+<symbol id="si_Help" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M11.83 14v-.621a2.33 2.33 0 0 1 1.164-2.02c1.126-.66 1.514-2.057.854-3.183s-2.057-1.514-3.183-.854C9.965 7.75 9.5 8.487 9.5 9.341M12 17h-.008M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10 10-4.477 10-10"/></symbol>
+<symbol id="si_Heart" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.696 3C14.652 3 12.887 4.197 12 5.943 11.113 4.197 9.348 3 7.304 3 4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/></symbol>
+<symbol id="si_Globe_detailed" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M22 12c0 5.523-4.477 10-10 10m10-10c0-5.523-4.477-10-10-10m10 10H2m10 10C6.477 22 2 17.523 2 12m10 10 .66-.31c2.1-2.71 3.34-6.14 3.34-9.78s-1.22-7-3.27-9.69L12 2m0 20-.73-.31A15.94 15.94 0 0 1 8 12c0-3.64 1.24-7.07 3.34-9.78L12 2M2 12C2 6.477 6.477 2 12 2m7.14 17c-1.82-1.85-4.34-3-7.14-3s-5.33 1.15-7.14 3M19.14 5C17.33 6.85 14.8 8 12 8S6.68 6.85 4.86 5"/></symbol>
+</svg>
+
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" style="stroke:currentColor;"><use href="#si_Direction_alt"/></svg>
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" style="stroke:currentColor;"><use href="#si_Flare"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="root"></div>
 <script>
 const DATA = {"title": "Pre-Suasion", "dayBadge": "Day 19 of 30", "author": "Robert Cialdini · 2016 · Simon & Schuster", "tagline": "Cialdini's argument that what happens immediately before a persuasion attempt — attention channelling, association priming, and identity activation — determines success at least as much as the persuasion itself.", "pills": ["Persuasion", "Attention", "Priming", "Behaviour Change"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Pre-Suasion is the practice of creating, in the moment before a persuasion attempt, psychological conditions that make the audience maximally receptive to the forthcoming message. The core mechanism is attention: we assign more importance to whatever we are focusing on at the moment of decision. By strategically guiding attention before making a request, communicators can shift the probability of compliance without changing the request itself.", "Cialdini identifies three pre-suasive mechanisms: the focusing illusion (whatever we are attending to seems more important), privileged moments (observable points where attention is already open to specific messages), and association networks (concepts, images, and settings that prime related thoughts and feelings). The seventh principle of influence — Unity (shared identity) — is introduced as a companion to the original six."], "accent": "#7B4F2E", "accent_light": "#FDF5EE", "pathways": [{"label": "Development Practitioner", "desc": "Application to programme design, management, and field practice.", "steps": [{"section": "The Importance of Attention and Focusing Illusion", "focus": "Human attention can only hold one thing at a time. Whatever fills that space is treated as more important than it would otherwise seem. This means that strategic direction of attention — toward a spec..."}, {"section": "Channelling Attention — What Attracts and Holds It", "focus": "Three categories of stimuli reliably capture and hold attention: environmental change (we are wired to notice shifts — this is why movement in advertising is so effective), self-relevance (our own nam..."}, {"section": "The Power of Association", "focus": "Every idea in our minds is connected to a network of associated concepts, feelings, and memories. By introducing specific words, images, or environmental cues before a communication, we activate that ..."}, {"section": "The 7th Principle: Unity", "focus": "Beyond the original six principles, Cialdini introduces Unity: the sense of shared identity that makes another person feel like 'one of us.' This is more than liking — it is the experience of self-oth..."}]}, {"label": "Development Researcher", "desc": "Application to research, evidence, and academic work.", "steps": [{"section": "The Importance of Attention and Focusing Illusion", "focus": "Human attention can only hold one thing at a time. Whatever fills that space is treated as more important than it would otherwise seem. This means that strategic direction of attention — toward a spec..."}, {"section": "Channelling Attention — What Attracts and Holds It", "focus": "Three categories of stimuli reliably capture and hold attention: environmental change (we are wired to notice shifts — this is why movement in advertising is so effective), self-relevance (our own nam..."}, {"section": "The Power of Association", "focus": "Every idea in our minds is connected to a network of associated concepts, feelings, and memories. By introducing specific words, images, or environmental cues before a communication, we activate that ..."}, {"section": "The 7th Principle: Unity", "focus": "Beyond the original six principles, Cialdini introduces Unity: the sense of shared identity that makes another person feel like 'one of us.' This is more than liking — it is the experience of self-oth..."}]}, {"label": "Personal Growth", "desc": "Direct personal application.", "steps": [{"section": "The Importance of Attention and Focusing Illusion", "focus": "Human attention can only hold one thing at a time. Whatever fills that space is treated as more important than it would otherwise seem. This means that strategic direction of attention — toward a spec..."}, {"section": "Channelling Attention — What Attracts and Holds It", "focus": "Three categories of stimuli reliably capture and hold attention: environmental change (we are wired to notice shifts — this is why movement in advertising is so effective), self-relevance (our own nam..."}, {"section": "The Power of Association", "focus": "Every idea in our minds is connected to a network of associated concepts, feelings, and memories. By introducing specific words, images, or environmental cues before a communication, we activate that ..."}, {"section": "The 7th Principle: Unity", "focus": "Beyond the original six principles, Cialdini introduces Unity: the sense of shared identity that makes another person feel like 'one of us.' This is more than liking — it is the experience of self-oth..."}]}], "sections": [{"title": "The Importance of Attention and Focusing Illusion", "subtitle": "What you focus on determines what seems important", "summary": "Human attention can only hold one thing at a time. Whatever fills that space is treated as more important than it would otherwise seem. This means that strategic direction of attention — toward a specific product feature, a shared value, a positive self-image — changes decisions without changing underlying facts or preferences. Single-chute questions (biased questions that guide respondents to confirm a specific view) exploit this: 97% of people who answered yes to 'are you adventurous?' subsequently agreed to a request framed as an adventure, versus 33% who were asked without the prime.", "ideas": ["The focusing illusion (Kahneman): nothing is as important as it seems while you are thinking about it.", "Single-chute questions are highly effective pre-suasion tools: ask a question that prompts people to confirm an identity, then make a request consistent with that identity.", "Media agenda-setting exploits the focusing illusion: what is covered extensively feels important regardless of actual significance.", "Assumed causality: we attribute causation to whatever is in our visual attention at the moment an event occurs."], "quotes": ["\"The guiding factor in a decision is often not the one that counsels most wisely; it's one that has recently been brought to mind.\"", "\"Nothing in life is as important as you think it is while you are thinking about it.\" — Kahneman"], "devEcon": "Development communication that fronts the beneficiary's own stated priorities (rather than the organisation's programme priorities) before making a request exploits pre-suasion correctly. Community meeting structures that open with community member voices before presenting programme information are using the focusing illusion productively. The political economy implication: decisions about programme priorities made in rooms full of programme staff are pre-suaded toward the organisation's model, not the community's."}, {"title": "Channelling Attention — What Attracts and Holds It", "subtitle": "Survival salience, self-relevance, and the Zeigarnik effect", "summary": "Three categories of stimuli reliably capture and hold attention: environmental change (we are wired to notice shifts — this is why movement in advertising is so effective), self-relevance (our own names, pronouns, and relevant personal information demand attention automatically), and incompleteness (the Zeigarnik effect: unfinished tasks linger in working memory more persistently than completed ones). Teachers who begin class with an unresolved mystery, writers who end chapters mid-action, and communicators who open with a 'did you know that...?' are all exploiting the Zeigarnik effect.", "ideas": ["Environmental change is the most primitive attention trigger — movement, contrast, novelty.", "Self-relevance is automatic: information framed as being about 'you' receives more attention than the same information framed impersonally.", "Zeigarnik effect: uncompleted tasks are held in working memory and generate continued attention. Mystery structures exploit this.", "Counter-arguments are often more effective than arguments: present the opposing view and dismantle it, rather than simply asserting your own."], "quotes": ["\"When recipients get a message that is self-relevant, they are more likely to lend it attention, find it interesting, take it seriously, remember it.\"", "\"Not completing an activity can make everything about it more memorable.\""], "devEcon": "Programme communication that uses mystery structures ('why are the healthiest children in this village also the poorest?' followed by a reveal) creates attention and retention more effectively than summary-first formats. Self-relevance framing in community health communication ('in families like yours...') outperforms generic population-level messaging. These are not manipulations but design principles that any development communicator should use deliberately."}, {"title": "The Power of Association", "subtitle": "Language, metaphors, and environmental priming", "summary": "Every idea in our minds is connected to a network of associated concepts, feelings, and memories. By introducing specific words, images, or environmental cues before a communication, we activate that network and make associated ideas more accessible in the subsequent decision. Language metaphors are particularly powerful: describing crime as a beast to be caged versus a virus to be treated produced systematically different policy preferences — not through new arguments but through different association networks. Physical environments also prime: people in a university library wrote in a more formal academic register than when writing in a neighbourhood café.", "ideas": ["Metaphor choice is a pre-suasion decision: the metaphor that frames a problem activates an association network that shapes what solutions feel appropriate.", "Physical environments prime cognition: work environments should be designed to activate the associations appropriate to the work being done.", "If-when-then plans (implementation intentions) that link a situational cue to a specific action use pre-suasion to automate desired behaviour.", "Togetherness priming (images of people close together) increases helpful behaviour by activating association networks linking proximity to cooperation."], "quotes": ["\"The brain's operations arise fundamentally and inescapably from raw associations.\"", "\"If you want to change the world, change the metaphor.\" — Joseph Campbell"], "devEcon": "Development organisations spend enormous effort crafting arguments for policy change but rarely think about the metaphors that frame those arguments. Describing food insecurity as a 'crisis' activates emergency-response associations; describing it as a 'poverty trap' activates structural-investment associations. These metaphors prime different political responses. Meadows (Thinking in Systems) makes the same point about leverage points: changing the paradigm (the metaphor) is the highest-leverage intervention in any system."}, {"title": "The 7th Principle: Unity", "subtitle": "Shared identity as the deepest compliance trigger", "summary": "Beyond the original six principles, Cialdini introduces Unity: the sense of shared identity that makes another person feel like 'one of us.' This is more than liking — it is the experience of self-other merger, where another's outcomes feel like our own. Unity operates through two channels: being together (kinship ties, physical proximity, living in the same place) and acting together (synchronised movement, co-creation, joint problem-solving). The unity effect produces compliance and cooperation that goes beyond what any of the other six principles can achieve, because it transforms the other party from 'them' to 'us.'", "ideas": ["Unity is not liking: liking is an attitude toward someone different; unity is the experience of shared identity.", "Acting in synchrony (marching, singing, dancing, solving a problem together) reliably increases cooperation and willingness to sacrifice.", "Co-creation builds unity: asking for someone's advice (rather than their opinion) creates a sense of shared ownership of the resulting solution.", "Asking for advice exploits co-creation: advisors feel invested in the outcome they helped shape."], "quotes": ["\"Our ability to create change in others is often and importantly grounded in shared personal relationships.\"", "\"When people act in unitary ways, they become unitized.\""], "devEcon": "Participatory development methodology is partly an intuitive application of Cialdini's unity principle: communities that co-design programmes develop a sense of ownership (unity with the programme) that produces better implementation and sustainability than externally designed and delivered programmes. PDIA explicitly builds co-creation into problem diagnosis as a way of activating the unity effect. Duflo's work on social capital and collective action has analogous findings at the village level."}], "concepts": [{"term": "Pre-Suasion", "definition": "The practice of creating, in the moment before a persuasion attempt, psychological conditions that make the audience maximally receptive to the forthcoming message. Operates through attention direction, association activation, and identity priming.", "practitionerNote": "Every community meeting, donor presentation, and government briefing begins with pre-suasion conditions that were either designed deliberately or created accidentally. Designing them deliberately — what will participants be thinking about as I begin my request? — is a high-leverage communication skill."}, {"term": "The Focusing Illusion", "definition": "The cognitive tendency to assign greater importance to whatever is in current focus. Nothing is as important as it seems while you are thinking about it. Strategic direction of attention changes the perceived importance of options without changing the options themselves.", "practitionerNote": "The order of agenda items in a meeting is a series of focusing decisions. Topics discussed first receive more attention and weight than topics discussed after participants are fatigued. Development organisations that put budget discussions at the end of long meetings are accidentally pre-suading participants toward approval."}, {"term": "Privileged Moments", "definition": "Observable points in time when a person becomes especially receptive to a specific message — when their attention is open and their prior associations are temporarily suspended. Single-chute questions create privileged moments by guiding people to confirm an identity.", "practitionerNote": "The moment immediately after a community member has shared a problem — when they feel heard and open — is a privileged moment for presenting a programme as a solution. Training facilitators to recognise and use privileged moments improves programme communication effectiveness."}, {"term": "The Zeigarnik Effect", "definition": "The tendency for uncompleted tasks and unresolved questions to persist in working memory and generate continued attention, more than completed tasks. Named after Soviet psychologist Bluma Zeigarnik.", "practitionerNote": "Development field reports that begin with an unresolved puzzle rather than a summary of findings use the Zeigarnik effect to maintain reader attention. This is a simple design change with measurable impact on how thoroughly reports are read."}, {"term": "Unity (7th Principle)", "definition": "Cialdini's seventh principle: the sense of shared identity that produces a self-other merger, making another's outcomes feel like our own. More powerful than liking because it changes self-definition rather than attitudes toward an external person.", "practitionerNote": "Community ownership of development programmes is not just a normative goal — it is a pre-suasion strategy. Communities that feel genuine ownership (through co-design, not consultation theatre) activate the unity principle and produce more sustained programme engagement."}], "tools": [{"label": "Reflection Tool", "intro": "Use these prompts to connect the book's ideas to your own practice.", "html": "<label class=\"fld-label\">What is the most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"rt1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where does this book's argument apply most directly to a current challenge you face?</label>\n<textarea class=\"fld\" id=\"rt2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">What is one specific change you will make this week based on reading this?</label>\n<textarea class=\"fld\" id=\"rt3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Your reflections stay in your browser only.</div>"}], "connections": [{"book": "Influence — Cialdini", "text": "Pre-Suasion is the temporal prequel to Influence. Influence describes what to ask for and how; Pre-Suasion describes how to prepare the ground before asking. Together they constitute Cialdini's complete theory of compliance."}, {"book": "Thinking, Fast and Slow — Kahneman", "text": "The focusing illusion is Kahneman's term. Cialdini operationalises it into practical pre-suasion techniques. The association network model Cialdini uses is consistent with Kahneman's spreading activation model of how System 1 retrieves information. Pre-Suasion is substantially a practitioner's guide to System 1 priming."}, {"book": "TED Talks — Chris Anderson", "text": "Anderson's advice on openings is implicit pre-suasion: the first 60 seconds of a talk are an attention-direction and association-priming exercise. Anderson prescribes drama, curiosity, and strong visuals — all of which are pre-suasive devices in Cialdini's framework. The two books address the same phenomenon from different perspectives."}], "critiques": ["Pre-suasion's empirical base is primarily laboratory experiments and structured field tests. The magnitudes of effects outside controlled conditions are less well established, and the 'what actually works in practice' question is harder to answer than the book implies.", "The framework assumes that persuasion attempt and target audience are clearly defined. Development communication often occurs in complex multi-stakeholder environments where it is not obvious who is being pre-suaded toward what, and where unintended pre-suasion effects may be as significant as intended ones.", "The ethics section is brief relative to the practical application sections. For development practitioners working in power-imbalanced contexts (NGO vis-à-vis community, government vis-à-vis citizen), the ethical limits of pre-suasion — when does it become manipulation? — deserve more systematic treatment."], "suggested": ["How do single-chute questions work and when should development communicators use them?", "What is the Zeigarnik effect and how can it improve development field reports?", "How does Cialdini's Unity principle relate to participatory development methodology?", "What is the ethical line between pre-suasion and manipulation in community engagement?", "How can development communicators use metaphor choice to pre-suade policy audiences?"], "systemPrompt": "You are an expert reading companion for 'Pre-Suasion' by Robert Cialdini. Your audience is development practitioners, researchers, and ImpactMojo learners who design communications and interventions for diverse audiences. Answer questions about the book's mechanisms, their application to development communication and programme design, and their ethical limits."};
 
@@ -405,5 +578,97 @@ function switchTab(id) {
   renderSetup();
 })();
 </script>
+
+<!-- ImpactMojo Paper Plane -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- ImpactMojo Footer -->
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;color:#EF4444;"><use href="#si_Heart"/></svg> by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Info"/></svg> About ImpactMojo</h4>
+<ul>
+<li><a href="../about.html">About Us</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="https://github.com/Varnasr/ImpactMojo" rel="noopener noreferrer" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Globe_detailed"/></svg> GitHub</a></li>
+<li><a href="../transparency.html">Transparency</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Lock"/></svg> Legal</h4>
+<ul>
+<li><a href="../privacy-policy.html">Privacy Policy</a></li>
+<li><a href="../terms-of-service.html">Terms of Service</a></li>
+<li><a href="../disclaimer.html">Disclaimer</a></li>
+<li><a href="../data-protection.html">Data Protection</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Lightning"/></svg> Quick Links</h4>
+<ul>
+<li><a href="../catalog.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Library_books"/></svg> All Courses</a></li>
+<li><a href="../premium.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Flare"/></svg> Premium Content</a></li>
+<li><a href="../coaching.html">Coaching</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Book"/></svg> Resources</h4>
+<ul>
+<li><a href="../handouts.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Article"/></svg> Handouts</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../faq.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Help"/></svg> FAQ</a></li>
+<li><a href="../sitemap.html">Sitemap</a></li>
+<li><a href="https://impactmojo.gitbook.io/impactmojo" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+<p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+</div>
+</div>
+</footer>
+
+<script>
+// ImpactMojo 3-way theme system
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+            document.body.classList.toggle('dark-mode', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+})();
+</script>
+
 </body>
 </html>

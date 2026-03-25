@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -7,6 +9,132 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
+/* === ImpactMojo Design System === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; stroke: #0EA5E9; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important; -webkit-text-fill-color: #fff;
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+}
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg);
+    border: 1px solid var(--im-border);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: var(--im-accent); color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-paper-plane {
+    position: fixed; top: 15%; right: 8%;
+    width: 120px; height: 120px;
+    opacity: 0.15; z-index: 0;
+    pointer-events: none;
+    animation: im-fly 25s ease-in-out infinite;
+}
+@keyframes im-fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, -15px) rotate(-3deg); }
+    50% { transform: translate(10px, -25px) rotate(2deg); }
+    75% { transform: translate(-10px, 10px) rotate(-1deg); }
+}
+.im-footer {
+    background: var(--im-secondary-bg);
+    border-top: 1px solid var(--im-border);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-secondary);
+}
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted);
+}
+.im-footer-made a { color: var(--im-accent); text-decoration: none; }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-primary);
+    font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary);
+    text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border);
+    font-size: 0.8rem; color: var(--im-text-muted);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: none; }
+@media (max-width: 640px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-topbar-home span { display: none; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 400px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+}
+/* === End ImpactMojo Design System === */
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
@@ -158,6 +286,51 @@ blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px s
   <div class="panel" id="p-ask"></div>
 </main>
 </div>
+
+<!-- Sargam Icon Sprites -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="si_Direction_alt" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m3 3 18 7.92-7.987 2.093L10.92 21z"/></symbol>
+<symbol id="si_Flare" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip_si_Flare)"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M7 12H1m22 0h-6m-5 5v6m3.536-7.464 1.414 1.414m-9.9-9.9 1.414 1.414m7.072 0L16.95 7.05m-9.9 9.9 1.414-1.414M12 1v6m2 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></g><defs><clipPath id="clip_si_Flare"><path fill="#fff" d="M0 0h24v24H0z"/></clipPath></defs></symbol>
+<symbol id="si_Info" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 8h.008M12 16v-5m10 1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10"/></symbol>
+<symbol id="si_Lock" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 10V7c0-2.21 1.79-4 4-4s4 1.79 4 4v3m-4 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 0v3m-5.4-8h10.8c.88 0 1.6.72 1.6 1.6v7c0 1.32-1.08 2.4-2.4 2.4H7.4C6.08 21 5 19.92 5 18.6v-7c0-.88.72-1.6 1.6-1.6"/></symbol>
+<symbol id="si_Lightning" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m12.667 10.5 1.25-7.5L6 13h5l-1.25 7.5 7.917-10z" clip-rule="evenodd"/></symbol>
+<symbol id="si_Library_books" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 11h8m-8 3h4m-4-6h8m2 14H8.4C5.42 22 3 19.58 3 16.6V5m5.4-2h11.2A2.4 2.4 0 0 1 22 5.4v11.2a2.4 2.4 0 0 1-2.4 2.4H8.4A2.4 2.4 0 0 1 6 16.6V5.4A2.4 2.4 0 0 1 8.4 3"/></symbol>
+<symbol id="si_Book" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 7.333C12 5.5 10.5 4 8.667 4H2v12h6.708C12 16 12 19.334 12 19.334m0-12C12 5.5 13.5 4 15.333 4H22v12h-6.667C12 16 12 19.334 12 19.334m0-12v12m1.875 1.124A2.58 2.58 0 0 1 16.167 19H21m-10.875 1.458A2.54 2.54 0 0 0 7.833 19H3"/></symbol>
+<symbol id="si_Article" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 12h8m-8 3h4M8 9h8M4.4 4h15.2A2.4 2.4 0 0 1 22 6.4v11.2a2.4 2.4 0 0 1-2.4 2.4H4.4A2.4 2.4 0 0 1 2 17.6V6.4A2.4 2.4 0 0 1 4.4 4"/></symbol>
+<symbol id="si_Mail" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5 7.06 6.87 5.89c.07.06.19.06.26 0L19 7.06M3.2 4h17.6c.66 0 1.2.54 1.2 1.2v12.4c0 1.32-1.08 2.4-2.4 2.4H4.4C3.08 20 2 18.92 2 17.6V5.2C2 4.54 2.54 4 3.2 4"/></symbol>
+<symbol id="si_Help" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M11.83 14v-.621a2.33 2.33 0 0 1 1.164-2.02c1.126-.66 1.514-2.057.854-3.183s-2.057-1.514-3.183-.854C9.965 7.75 9.5 8.487 9.5 9.341M12 17h-.008M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10 10-4.477 10-10"/></symbol>
+<symbol id="si_Heart" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.696 3C14.652 3 12.887 4.197 12 5.943 11.113 4.197 9.348 3 7.304 3 4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/></symbol>
+<symbol id="si_Globe_detailed" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M22 12c0 5.523-4.477 10-10 10m10-10c0-5.523-4.477-10-10-10m10 10H2m10 10C6.477 22 2 17.523 2 12m10 10 .66-.31c2.1-2.71 3.34-6.14 3.34-9.78s-1.22-7-3.27-9.69L12 2m0 20-.73-.31A15.94 15.94 0 0 1 8 12c0-3.64 1.24-7.07 3.34-9.78L12 2M2 12C2 6.477 6.477 2 12 2m7.14 17c-1.82-1.85-4.34-3-7.14-3s-5.33 1.15-7.14 3M19.14 5C17.33 6.85 14.8 8 12 8S6.68 6.85 4.86 5"/></symbol>
+</svg>
+
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" style="stroke:currentColor;"><use href="#si_Direction_alt"/></svg>
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" style="stroke:currentColor;"><use href="#si_Flare"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="root"></div>
 <script>
 const DATA = {"title": "Grit", "dayBadge": "Day 17 of 30", "author": "Angela Duckworth · 2016 · Scribner", "tagline": "Duckworth's empirical argument that passion combined with perseverance — not talent — predicts who achieves at the highest levels, and a framework for developing both.", "pills": ["Psychology", "Achievement", "Resilience", "Character"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Duckworth's thesis is that talent, as measured by aptitude tests and first impressions, is a poor predictor of high achievement. What predicts it reliably is grit: a combination of passion (sustained, direction-giving commitment to a long-term goal) and perseverance (effort applied consistently despite setbacks). The formula she presents — Talent × Effort = Skill, Skill × Effort = Achievement — means effort counts twice, talent once.", "The second claim is that grit is developable, not fixed. From inside (cultivating interest, building deliberate practice habits, connecting work to purpose, developing growth mindset) and from outside (wise parenting, demanding-and-supportive teachers, gritty cultures). Both arguments carry policy implications: identifying talent early and investing in it, while ignoring perseverance, is the wrong model for education, workforce development, and leadership selection."], "accent": "#1A6B5A", "accent_light": "#EBF5F2", "pathways": [{"label": "Development Practitioner", "desc": "Application to programme design, management, and field practice.", "steps": [{"section": "Why Grit Matters More Than Talent", "focus": "West Point's Whole Candidate Score — the most predictive admissions instrument available — predicted graduation less well than a simple 12-item grit scale. Duckworth's research across multiple high-st..."}, {"section": "What Grit Actually Is", "focus": "Grit is not intensity of effort or volatility of enthusiasm. It is directional consistency over time. Gritty people have a clear top-level goal that organises their entire goal hierarchy — all lower-l..."}, {"section": "Growing Grit from the Inside", "focus": "Four psychological assets constitute grit, each developable: interest (loving what you do — passion is cultivated through years of exploration, not discovered in a single eureka moment); deliberate pr..."}, {"section": "Growing Grit from the Outside", "focus": "Grit develops in response to environmental demands. Wise parenting — simultaneously supportive and demanding, setting high expectations backed by genuine care — produces grittier children than either ..."}]}, {"label": "Development Researcher", "desc": "Application to research, evidence, and academic work.", "steps": [{"section": "Why Grit Matters More Than Talent", "focus": "West Point's Whole Candidate Score — the most predictive admissions instrument available — predicted graduation less well than a simple 12-item grit scale. Duckworth's research across multiple high-st..."}, {"section": "What Grit Actually Is", "focus": "Grit is not intensity of effort or volatility of enthusiasm. It is directional consistency over time. Gritty people have a clear top-level goal that organises their entire goal hierarchy — all lower-l..."}, {"section": "Growing Grit from the Inside", "focus": "Four psychological assets constitute grit, each developable: interest (loving what you do — passion is cultivated through years of exploration, not discovered in a single eureka moment); deliberate pr..."}, {"section": "Growing Grit from the Outside", "focus": "Grit develops in response to environmental demands. Wise parenting — simultaneously supportive and demanding, setting high expectations backed by genuine care — produces grittier children than either ..."}]}, {"label": "Personal Growth", "desc": "Direct personal application.", "steps": [{"section": "Why Grit Matters More Than Talent", "focus": "West Point's Whole Candidate Score — the most predictive admissions instrument available — predicted graduation less well than a simple 12-item grit scale. Duckworth's research across multiple high-st..."}, {"section": "What Grit Actually Is", "focus": "Grit is not intensity of effort or volatility of enthusiasm. It is directional consistency over time. Gritty people have a clear top-level goal that organises their entire goal hierarchy — all lower-l..."}, {"section": "Growing Grit from the Inside", "focus": "Four psychological assets constitute grit, each developable: interest (loving what you do — passion is cultivated through years of exploration, not discovered in a single eureka moment); deliberate pr..."}, {"section": "Growing Grit from the Outside", "focus": "Grit develops in response to environmental demands. Wise parenting — simultaneously supportive and demanding, setting high expectations backed by genuine care — produces grittier children than either ..."}]}], "sections": [{"title": "Why Grit Matters More Than Talent", "subtitle": "The talent trap and effort's double role", "summary": "West Point's Whole Candidate Score — the most predictive admissions instrument available — predicted graduation less well than a simple 12-item grit scale. Duckworth's research across multiple high-stakes domains (spelling bees, sales, military training, education) consistently finds grit predicting performance over talent measures. The talent myth persists because: (a) we find natural talent narratives more compelling and exciting than effort narratives, and (b) attributing others' success to innate talent lets us off the hook for our own lower achievement. Duckworth's formula: Talent × Effort = Skill; Skill × Effort = Achievement. Effort counts twice, talent once.", "ideas": ["The talent myth: we systematically overvalue talent and undervalue effort in our assessments of potential.", "The effort-doubles formula: talent produces skill only if effort is applied; skill produces achievement only if effort is applied again.", "West Point evidence: the military's comprehensive admissions process predicted graduation less accurately than a 12-item grit scale.", "The costly consequence of talent overvaluation: organisations invest in selecting for talent and then are surprised when retention and performance are predicted by perseverance, not aptitude."], "quotes": ["\"What we eventually accomplish may depend more on our passion and perseverance than on our innate talent.\"", "\"With effort, talent becomes skill and, at the very same time, effort makes skill productive.\""], "devEcon": "Development organisations select staff and leaders based heavily on credentials and aptitude (the talent signal), rarely assessing perseverance in challenging field conditions. Duckworth's evidence would suggest this is the wrong hiring criterion. The selection challenge in development is compounded by the fact that fieldwork routinely requires sustained effort in demoralising conditions — exactly the setting where grit matters most and where aptitude tests are least predictive."}, {"title": "What Grit Actually Is", "subtitle": "Passion as direction, perseverance as fuel", "summary": "Grit is not intensity of effort or volatility of enthusiasm. It is directional consistency over time. Gritty people have a clear top-level goal that organises their entire goal hierarchy — all lower-level goals serve the top-level goal, and when lower-level goals stop serving it, gritty people change them without changing the top-level direction. The Grit Scale measures two dimensions: consistency of interests (how often attention shifts to new projects) and perseverance of effort (how hard you work despite setbacks). Both are needed; either without the other produces different failure modes.", "ideas": ["Grit is not stubbornness: gritty people change how they pursue their goals, not which ultimate goal they pursue.", "Goal hierarchy: a top-level purpose organises mid-level goals (strategies) and low-level goals (daily tasks). Grit is loyalty to the top-level goal while remaining flexible about the lower levels.", "The passion component is often misunderstood: it is not excitement but direction — a deep, stable sense of what you are trying to do with your life.", "Enthusiasm is common, endurance is rare: many people begin things with high enthusiasm; gritty people maintain consistent effort long after the initial excitement fades."], "quotes": ["\"Enthusiasm is common. Endurance is rare.\"", "\"Grit is about moving in the same direction consistently and with endurance, like having a clear inner compass.\""], "devEcon": "Development organisations face a structural grit challenge: high staff turnover, donor funding cycles that create short time horizons, and sector-wide cultures that value versatility over depth all work against the kind of sustained, directional commitment that Duckworth's research identifies as grit. Designing career structures that reward long-term specialisation over frequent switching is a structural application of Duckworth's findings."}, {"title": "Growing Grit from the Inside", "subtitle": "Interest, practice, purpose, and hope", "summary": "Four psychological assets constitute grit, each developable: interest (loving what you do — passion is cultivated through years of exploration, not discovered in a single eureka moment); deliberate practice (Ericsson's model: set a stretch goal just beyond current ability, give it full attention, seek immediate feedback, repeat with new stretch goals); purpose (the belief that your work matters beyond yourself — this typically emerges after years of developing interest and skill, not before); and hope (growth mindset plus learned optimism — the belief that effort can improve outcomes and that setbacks are temporary and specific rather than permanent and pervasive).", "ideas": ["Interest is cultivated through repeated exposure and positive feedback, not discovered whole.", "Deliberate practice is uncomfortable but produces far faster skill development than undirected practice.", "Purpose amplifies grit: believing your work benefits others sustains effort through demoralising periods.", "Growth mindset (Dweck): the belief that abilities can be developed through effort. Fixed mindset makes failure an identity threat; growth mindset makes it information."], "quotes": ["\"Passion for your work is a little bit of discovery, followed by a lot of development, and then a lifetime of deepening.\"", "\"Deliberate practice is for preparation, and flow is for performance.\""], "devEcon": "BRAC's graduation programme is an implicit application of Duckworth's inside-out grit framework: it builds beneficiaries' sense of purpose (through asset transfer and community membership), deliberate practice (through structured activity requirements), and hope (through visible progress). The programme's success may partly reflect its effectiveness at building the psychological assets Duckworth identifies."}, {"title": "Growing Grit from the Outside", "subtitle": "Parenting, culture, and the training ground", "summary": "Grit develops in response to environmental demands. Wise parenting — simultaneously supportive and demanding, setting high expectations backed by genuine care — produces grittier children than either permissive or authoritarian approaches. Extracurricular activities with multi-year commitment requirements (sports teams, music programmes, debate clubs) build grit through the experience of persisting through difficulty. Cultures of grit — environments where sustained effort is the norm and celebrated — accelerate individual grit development through social spillover. The Hard Thing Rule: every family member must do one hard thing that requires daily deliberate practice.", "ideas": ["Wise parenting is the most consistent predictor of child grit outside the child themselves.", "Follow-through in extracurricular activities is the best external predictor of adult grit.", "Cultural environment shapes grit: surroundings that normalise sustained effort make sustained effort feel achievable.", "Grit begets grit: the experience of persisting through one hard thing strengthens the capacity to persist through the next."], "quotes": ["\"Following through on our commitments while we grow up both requires grit and, at the very same time, builds it.\"", "\"If you want to be grittier, find a gritty culture and join it.\""], "devEcon": "Duckworth's outside-in grit development is the individual-level version of what PDIA calls adaptive learning in organisations: the capacity to learn from failure and persist in pursuit of goals develops through structured exposure to manageable difficulty with adequate support. Development programmes that scaffold beneficiaries through progressively harder challenges — rather than providing fixed support indefinitely — are building the psychological infrastructure that Duckworth's research identifies."}], "concepts": [{"term": "Grit", "definition": "The combination of passion (sustained, direction-giving commitment to a long-term goal) and perseverance (consistent effort over time, especially in the face of setbacks). Predicts high achievement more reliably than talent measures in domains studied by Duckworth.", "practitionerNote": "Staff selection and performance management in development organisations rarely assess grit explicitly. Duckworth's research suggests that persistence in difficult field conditions, consistency of effort despite setbacks, and long-term commitment to a programme or topic are more predictive of contribution than the credentials typically used for hiring."}, {"term": "Deliberate Practice", "definition": "Ericsson's model for skill acquisition: set a stretch goal just beyond current ability, apply full focused attention to reaching it, seek immediate and informative feedback, adjust based on the feedback, set the next stretch goal. Produces faster skill development than equivalent time in undirected practice.", "practitionerNote": "Most on-the-job learning in development organisations is undirected — people do their tasks and hope to improve over time. Building deliberate practice into programme cycles (setting explicit skill stretch goals, designing feedback mechanisms, reviewing improvement regularly) would accelerate the capacity building that most programmes aspire to but rarely achieve."}, {"term": "Purpose", "definition": "The belief that your work matters to people beyond yourself. Duckworth finds that purpose amplifies grit: practitioners who see their work as a calling (contributing to others) sustain effort through demoralising periods more reliably than those who see it as a job or career.", "practitionerNote": "Development organisations that manage the purpose component well — connecting field staff to visible evidence of beneficiary impact — retain staff and sustain effort better than those that manage only financial and career incentives."}, {"term": "Growth Mindset", "definition": "Dweck's concept: the belief that abilities, intelligence, and character can be developed through effort and learning, as opposed to fixed mindset (abilities are fixed). Growth mindset predicts willingness to seek feedback, persist after failure, and invest in skill development.", "practitionerNote": "Evaluation findings that reveal programme underperformance are treated as threats in fixed-mindset organisational cultures and as information in growth-mindset cultures. Building growth mindset into M&E culture — so negative results are celebrated as learning, not suppressed as reputation risks — is a structural application of Duckworth's finding."}, {"term": "The Goal Hierarchy", "definition": "Duckworth's model of how goals are organised: top-level goals (ultimate purposes), mid-level goals (strategies), and low-level goals (daily tasks). Grit is loyalty to the top-level goal while remaining flexible about the lower levels.", "practitionerNote": "Theory of change in development programmes is a goal hierarchy. Gritty implementation means staying loyal to the top-level theory while adjusting activities (low-level goals) when they are not working, rather than either rigidly pursuing failing activities or abandoning the theory when results are slow."}], "tools": [{"label": "Reflection Tool", "intro": "Use these prompts to connect the book's ideas to your own practice.", "html": "<label class=\"fld-label\">What is the most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"rt1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where does this book's argument apply most directly to a current challenge you face?</label>\n<textarea class=\"fld\" id=\"rt2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">What is one specific change you will make this week based on reading this?</label>\n<textarea class=\"fld\" id=\"rt3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Your reflections stay in your browser only.</div>"}], "connections": [{"book": "Mindset — Carol Dweck", "text": "Dweck's growth mindset is one of the four pillars of Duckworth's grit framework. The two books are most valuable together: Dweck provides the cognitive mechanism (what you believe about your abilities determines how you respond to failure); Duckworth provides the longitudinal evidence (what the belief produces in achievement over years and decades)."}, {"book": "Ultralearning — Scott H. Young", "text": "Young's deliberate practice principle (Principle 4: Drill) and Duckworth's deliberate practice model are both drawn from Ericsson's research. Young focuses on the design of practice sessions; Duckworth focuses on the disposition (grit) that sustains practice over time. Both are needed: the right practice design without grit produces abandonment; grit without good practice design produces slow improvement."}, {"book": "Atomic Habits — James Clear", "text": "Clear's habit system is the infrastructure for Duckworth's deliberate practice: the implementation intention creates the cue, the identity-based framing ('I am a practitioner of X') provides the purpose, and the immediate reward system sustains the practice loop. Clear provides the daily mechanism; Duckworth provides the multi-year context."}], "critiques": ["The grit framework is empirically strong within the populations Duckworth studied (students, soldiers, sales professionals in the US) but the cultural transferability is contested. Cross-cultural research on perseverance, failure attribution, and achievement norms shows substantial variation that Duckworth's framework does not fully address.", "The inside-out framework for developing grit assumes that individuals have sufficient agency over their choice of work, social environment, and time allocation to implement the prescribed changes. Development practitioners in institutional contexts with high external demands may have less of this agency than Duckworth assumes.", "Duckworth acknowledges but underweights the structural dimensions of achievement. Grit predicts performance among people who have access to the same resources, opportunities, and institutional support. The framework does not address how structural disadvantage interacts with individual grit — a critical gap for development applications."], "suggested": ["How does Duckworth's grit framework relate to poverty trap models in development economics?", "What does deliberate practice look like for development practitioners developing MEL skills?", "How can development organisations build gritty cultures rather than selecting for individual grit?", "What is the relationship between growth mindset and learning from evaluation failures?", "What are the limits of the grit framework for beneficiaries in resource-constrained contexts?"], "systemPrompt": "You are an expert reading companion for 'Grit' by Angela Duckworth. Your audience is development practitioners, researchers, and ImpactMojo learners. Answer questions about the book's framework, its empirical evidence base, and its application to and limits for development contexts. Be precise about what Duckworth's research actually shows versus what is more speculative."};
 
@@ -405,5 +578,97 @@ function switchTab(id) {
   renderSetup();
 })();
 </script>
+
+<!-- ImpactMojo Paper Plane -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- ImpactMojo Footer -->
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;color:#EF4444;"><use href="#si_Heart"/></svg> by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Info"/></svg> About ImpactMojo</h4>
+<ul>
+<li><a href="../about.html">About Us</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="https://github.com/Varnasr/ImpactMojo" rel="noopener noreferrer" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Globe_detailed"/></svg> GitHub</a></li>
+<li><a href="../transparency.html">Transparency</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Lock"/></svg> Legal</h4>
+<ul>
+<li><a href="../privacy-policy.html">Privacy Policy</a></li>
+<li><a href="../terms-of-service.html">Terms of Service</a></li>
+<li><a href="../disclaimer.html">Disclaimer</a></li>
+<li><a href="../data-protection.html">Data Protection</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Lightning"/></svg> Quick Links</h4>
+<ul>
+<li><a href="../catalog.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Library_books"/></svg> All Courses</a></li>
+<li><a href="../premium.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Flare"/></svg> Premium Content</a></li>
+<li><a href="../coaching.html">Coaching</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Book"/></svg> Resources</h4>
+<ul>
+<li><a href="../handouts.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Article"/></svg> Handouts</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../faq.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Help"/></svg> FAQ</a></li>
+<li><a href="../sitemap.html">Sitemap</a></li>
+<li><a href="https://impactmojo.gitbook.io/impactmojo" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+<p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+</div>
+</div>
+</footer>
+
+<script>
+// ImpactMojo 3-way theme system
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+            document.body.classList.toggle('dark-mode', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+})();
+</script>
+
 </body>
 </html>

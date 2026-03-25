@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -7,6 +9,132 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
+/* === ImpactMojo Design System === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; stroke: #0EA5E9; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important; -webkit-text-fill-color: #fff;
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+}
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg);
+    border: 1px solid var(--im-border);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: var(--im-accent); color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-paper-plane {
+    position: fixed; top: 15%; right: 8%;
+    width: 120px; height: 120px;
+    opacity: 0.15; z-index: 0;
+    pointer-events: none;
+    animation: im-fly 25s ease-in-out infinite;
+}
+@keyframes im-fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, -15px) rotate(-3deg); }
+    50% { transform: translate(10px, -25px) rotate(2deg); }
+    75% { transform: translate(-10px, 10px) rotate(-1deg); }
+}
+.im-footer {
+    background: var(--im-secondary-bg);
+    border-top: 1px solid var(--im-border);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-secondary);
+}
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted);
+}
+.im-footer-made a { color: var(--im-accent); text-decoration: none; }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-primary);
+    font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary);
+    text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border);
+    font-size: 0.8rem; color: var(--im-text-muted);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: none; }
+@media (max-width: 640px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-topbar-home span { display: none; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 400px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+}
+/* === End ImpactMojo Design System === */
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
@@ -158,6 +286,51 @@ blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px s
   <div class="panel" id="p-ask"></div>
 </main>
 </div>
+
+<!-- Sargam Icon Sprites -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="si_Direction_alt" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m3 3 18 7.92-7.987 2.093L10.92 21z"/></symbol>
+<symbol id="si_Flare" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip_si_Flare)"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M7 12H1m22 0h-6m-5 5v6m3.536-7.464 1.414 1.414m-9.9-9.9 1.414 1.414m7.072 0L16.95 7.05m-9.9 9.9 1.414-1.414M12 1v6m2 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></g><defs><clipPath id="clip_si_Flare"><path fill="#fff" d="M0 0h24v24H0z"/></clipPath></defs></symbol>
+<symbol id="si_Info" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 8h.008M12 16v-5m10 1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10"/></symbol>
+<symbol id="si_Lock" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 10V7c0-2.21 1.79-4 4-4s4 1.79 4 4v3m-4 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 0v3m-5.4-8h10.8c.88 0 1.6.72 1.6 1.6v7c0 1.32-1.08 2.4-2.4 2.4H7.4C6.08 21 5 19.92 5 18.6v-7c0-.88.72-1.6 1.6-1.6"/></symbol>
+<symbol id="si_Lightning" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m12.667 10.5 1.25-7.5L6 13h5l-1.25 7.5 7.917-10z" clip-rule="evenodd"/></symbol>
+<symbol id="si_Library_books" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 11h8m-8 3h4m-4-6h8m2 14H8.4C5.42 22 3 19.58 3 16.6V5m5.4-2h11.2A2.4 2.4 0 0 1 22 5.4v11.2a2.4 2.4 0 0 1-2.4 2.4H8.4A2.4 2.4 0 0 1 6 16.6V5.4A2.4 2.4 0 0 1 8.4 3"/></symbol>
+<symbol id="si_Book" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 7.333C12 5.5 10.5 4 8.667 4H2v12h6.708C12 16 12 19.334 12 19.334m0-12C12 5.5 13.5 4 15.333 4H22v12h-6.667C12 16 12 19.334 12 19.334m0-12v12m1.875 1.124A2.58 2.58 0 0 1 16.167 19H21m-10.875 1.458A2.54 2.54 0 0 0 7.833 19H3"/></symbol>
+<symbol id="si_Article" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 12h8m-8 3h4M8 9h8M4.4 4h15.2A2.4 2.4 0 0 1 22 6.4v11.2a2.4 2.4 0 0 1-2.4 2.4H4.4A2.4 2.4 0 0 1 2 17.6V6.4A2.4 2.4 0 0 1 4.4 4"/></symbol>
+<symbol id="si_Mail" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5 7.06 6.87 5.89c.07.06.19.06.26 0L19 7.06M3.2 4h17.6c.66 0 1.2.54 1.2 1.2v12.4c0 1.32-1.08 2.4-2.4 2.4H4.4C3.08 20 2 18.92 2 17.6V5.2C2 4.54 2.54 4 3.2 4"/></symbol>
+<symbol id="si_Help" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M11.83 14v-.621a2.33 2.33 0 0 1 1.164-2.02c1.126-.66 1.514-2.057.854-3.183s-2.057-1.514-3.183-.854C9.965 7.75 9.5 8.487 9.5 9.341M12 17h-.008M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10 10-4.477 10-10"/></symbol>
+<symbol id="si_Heart" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.696 3C14.652 3 12.887 4.197 12 5.943 11.113 4.197 9.348 3 7.304 3 4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/></symbol>
+<symbol id="si_Globe_detailed" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M22 12c0 5.523-4.477 10-10 10m10-10c0-5.523-4.477-10-10-10m10 10H2m10 10C6.477 22 2 17.523 2 12m10 10 .66-.31c2.1-2.71 3.34-6.14 3.34-9.78s-1.22-7-3.27-9.69L12 2m0 20-.73-.31A15.94 15.94 0 0 1 8 12c0-3.64 1.24-7.07 3.34-9.78L12 2M2 12C2 6.477 6.477 2 12 2m7.14 17c-1.82-1.85-4.34-3-7.14-3s-5.33 1.15-7.14 3M19.14 5C17.33 6.85 14.8 8 12 8S6.68 6.85 4.86 5"/></symbol>
+</svg>
+
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" style="stroke:currentColor;"><use href="#si_Direction_alt"/></svg>
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" style="stroke:currentColor;"><use href="#si_Flare"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="root"></div>
 <script>
 const DATA = {"title": "Thinking in Systems", "dayBadge": "Day 30 of 30", "author": "Donella H. Meadows · 2008 · Chelsea Green", "tagline": "Meadows's accessible introduction to systems thinking: how stocks, flows, and feedback loops produce the complex behaviours we observe in social, economic, and natural systems — and how to intervene effectively.", "pills": ["Systems Thinking", "Complexity", "Policy", "Development Economics"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Meadows's central claim is that most of the problems we cannot solve persist because we misidentify their causes. We respond to events (symptoms) rather than the feedback loop structures that generate them. We attribute system behaviour to external forces (blaming individuals, policies, or shocks) when the behaviour emerges from the system's own internal structure. Systems thinking provides the tools to identify these structures and intervene at the leverage points where small changes produce large, lasting effects.", "The practical framework centres on three concepts: stocks (the accumulated quantities we care about), flows (the rates of change that raise or lower stocks), and feedback loops (the causal connections between stocks and the flows that change them). Balancing loops produce stability and goal-seeking behaviour; reinforcing loops produce exponential growth or collapse. Understanding which loops dominate a system at which point in time explains almost any complex behaviour pattern."], "accent": "#1A5276", "accent_light": "#EAF2FB", "pathways": [{"label": "Development Practitioner", "desc": "Programme management, community engagement, field practice.", "steps": [{"section": "Systems Concepts: Stocks, Flows, Feedback", "focus": "A system is a set of elements organised to achieve a goal — everything from a thermostat to a national economy to an ecosystem. Stocks are the measurable quantities that change over time (inventory, p..."}, {"section": "System Behaviours and Archetypes", "focus": "Common system failure modes: the tragedy of the commons (shared resources eroded because individual benefit from use exceeds individual cost of depletion), the drift to low performance (standards decl..."}, {"section": "System Characteristics: Resilience, Self-Organisation, Hierarchy", "focus": "Resilient systems can recover from disruption — they have multiple feedback loops, so when one fails, others compensate. We sacrifice resilience for productivity and stability constantly: growth hormo..."}, {"section": "Thinking Gaps and Leverage Points", "focus": "Systems thinking reveals the gaps between how we think and how systems actually work: we assume linear relationships when most are non-linear; we draw boundaries that ignore important connections; we ..."}]}, {"label": "Development Researcher", "desc": "Research practice, evidence, and academic work.", "steps": [{"section": "Systems Concepts: Stocks, Flows, Feedback", "focus": "A system is a set of elements organised to achieve a goal — everything from a thermostat to a national economy to an ecosystem. Stocks are the measurable quantities that change over time (inventory, p..."}, {"section": "System Behaviours and Archetypes", "focus": "Common system failure modes: the tragedy of the commons (shared resources eroded because individual benefit from use exceeds individual cost of depletion), the drift to low performance (standards decl..."}, {"section": "System Characteristics: Resilience, Self-Organisation, Hierarchy", "focus": "Resilient systems can recover from disruption — they have multiple feedback loops, so when one fails, others compensate. We sacrifice resilience for productivity and stability constantly: growth hormo..."}, {"section": "Thinking Gaps and Leverage Points", "focus": "Systems thinking reveals the gaps between how we think and how systems actually work: we assume linear relationships when most are non-linear; we draw boundaries that ignore important connections; we ..."}]}, {"label": "Personal Growth", "desc": "Personal and professional application.", "steps": [{"section": "Systems Concepts: Stocks, Flows, Feedback", "focus": "A system is a set of elements organised to achieve a goal — everything from a thermostat to a national economy to an ecosystem. Stocks are the measurable quantities that change over time (inventory, p..."}, {"section": "System Behaviours and Archetypes", "focus": "Common system failure modes: the tragedy of the commons (shared resources eroded because individual benefit from use exceeds individual cost of depletion), the drift to low performance (standards decl..."}, {"section": "System Characteristics: Resilience, Self-Organisation, Hierarchy", "focus": "Resilient systems can recover from disruption — they have multiple feedback loops, so when one fails, others compensate. We sacrifice resilience for productivity and stability constantly: growth hormo..."}, {"section": "Thinking Gaps and Leverage Points", "focus": "Systems thinking reveals the gaps between how we think and how systems actually work: we assume linear relationships when most are non-linear; we draw boundaries that ignore important connections; we ..."}]}], "sections": [{"title": "Systems Concepts: Stocks, Flows, Feedback", "subtitle": "The basic vocabulary of complex systems", "summary": "A system is a set of elements organised to achieve a goal — everything from a thermostat to a national economy to an ecosystem. Stocks are the measurable quantities that change over time (inventory, population, trust, skills). Flows are the rates that change stocks (production, birth rates, learning). Feedback loops form when a change in a stock affects the flows that control it. Balancing loops are goal-seeking: they push a stock toward a target state (a thermostat maintains room temperature). Reinforcing loops amplify whatever is happening: they produce virtuous cycles (skills → better work → more skills) or vicious cycles (poverty → worse health → poverty). The most common analytical error is treating complex outcomes as simple cause-effect chains rather than as products of interlocking feedback structures.", "ideas": ["Stocks change only at the rate that flows allow — you cannot change a stock instantly, only the flows that affect it.", "System behaviour is determined primarily by structure (feedback loops), not by events (shocks or actions).", "A single stock with two feedback loops produces much more complex behaviour than either loop alone.", "Delays in feedback loops produce oscillation: the system overshoots and undershoots its target because the information arrives too late to calibrate the response."], "quotes": ["\"The behavior of a system cannot be known just by knowing the elements of which the system is made.\"", "\"Systems happen all at once. They are interconnected not just in one direction, but in many directions simultaneously.\""], "devEcon": "The feedback loop framework is one of the most powerful analytical tools available to development economists and practitioners. Poverty traps are reinforcing feedback loops (low assets → low productivity → low savings → low assets). Institutional persistence (Acemoglu, Robinson) is a balancing loop maintaining an equilibrium that resists external disruption. The most important development policy question — why do well-designed interventions fail to sustain change? — is almost always a feedback structure question."}, {"title": "System Behaviours and Archetypes", "subtitle": "Traps, patterns, and why systems resist change", "summary": "Common system failure modes: the tragedy of the commons (shared resources eroded because individual benefit from use exceeds individual cost of depletion), the drift to low performance (standards decline gradually as people adjust expectations to declining outcomes), escalation (competing parties' reinforcing loops of one-upmanship spiral into mutual destruction), winning by outcompeting (reinforcing loops that widen winner-loser gaps), and addiction (solutions that provide relief from symptoms without addressing root causes, progressively reducing the system's own problem-solving capacity). Each trap has structural remedies: the commons requires either privatisation of the resource or regulated access; drift requires standards anchored to historical performance; escalation requires one party unilaterally reducing its stock.", "ideas": ["The tragedy of the commons arises when individual incentives diverge from collective welfare — a structural problem, not a character problem.", "Drift to low performance is insidious: the standard declines gradually alongside performance, so the gap always looks acceptable.", "Addiction to interventions progressively reduces the system's own capacity to address problems.", "Policy resistance occurs when subsystems have conflicting goals — the policy that works against one goal activates the subsystem defending the other."], "quotes": ["\"The tragedy of the commons arises from missing (or too long delayed) feedback from the resource to the growth of the users of that resource.\"", "\"Addiction is finding a quick and dirty solution to the symptom of the problem, which prevents or distracts from the harder and longer-term task of solving the real problem.\""], "devEcon": "Development interventions routinely create addiction dynamics. Food aid that substitutes for local food market development, health programme inputs that reduce government investment in health systems, and NGO service delivery that crowds out state provision all produce the classic addiction pattern: short-term relief with long-term capacity reduction. Sustainable development — building rather than substituting for local system capacity — is the structural remedy for the addiction archetype."}, {"title": "System Characteristics: Resilience, Self-Organisation, Hierarchy", "subtitle": "What makes systems survive and thrive", "summary": "Resilient systems can recover from disruption — they have multiple feedback loops, so when one fails, others compensate. We sacrifice resilience for productivity and stability constantly: growth hormones increase a cow's milk production but reduce its immune resilience; pesticides increase crop yield but destroy the ecosystem's self-regulating capacity. Self-organisation is the highest form of resilience: the ability to learn, evolve, and create new structures to address new challenges. Hierarchy is necessary for complex systems to function without overwhelming information loads — sub-systems managing themselves while serving the larger system. Suboptimisation occurs when sub-system goals override the whole system's goals.", "ideas": ["Resilience is invisible until it is absent — systems appear maximally productive just before they collapse.", "Sacrificing resilience for efficiency is the most common systemic error in both organisations and ecosystems.", "Self-organisation requires freedom to experiment, fail, and adapt — it cannot be mandated.", "Hierarchy is not oppression but information management: it reduces the complexity any single node must process."], "quotes": ["\"Systems need to be managed not only for productivity or stability, they also need to be managed for resilience.\"", "\"The ability to self-organize is the strongest form of system resilience. A system that can evolve can survive almost any change, by changing itself.\""], "devEcon": "Development programme design that builds resilience — adaptive capacity, multiple feedback mechanisms, local problem-solving capacity — rather than only optimising for short-term output metrics is the systems thinking equivalent of Meadows's resilience principle. PDIA is explicitly a self-organisation framework: it provides structure within which local actors can evolve their own solutions. The most common failure in development is building efficient delivery systems that lack resilience when conditions change."}, {"title": "Thinking Gaps and Leverage Points", "subtitle": "Where to intervene for lasting change", "summary": "Systems thinking reveals the gaps between how we think and how systems actually work: we assume linear relationships when most are non-linear; we draw boundaries that ignore important connections; we attribute system behaviour to single causes when it is always multi-causal; we underestimate delays. The most important analytical tools: time-lapse perspective (watch behaviour over long time periods, not just recent events), scenario analysis (what would happen if different driving factors evolved differently?), and leverage point identification. Leverage points, ranked from lowest to highest impact: numbers (usually ineffective), stocks and flows (structural but difficult to change), feedback loop strength, feedback loop information structure, rules, self-organisation capacity, goals, paradigms, and — the highest — the ability to transcend paradigms.", "ideas": ["The lowest leverage interventions are the ones most commonly attempted: adjusting numbers (tax rates, subsidies, program budgets).", "The highest leverage interventions challenge paradigms — the shared beliefs and assumptions that define what a system is for.", "All system boundaries are imaginary: drawing them in the wrong place misses the most important causal connections.", "Bounded rationality: we all make good decisions within the information we can see, but no one can see the whole system."], "quotes": ["\"Structure is the key to understanding not just what is happening, but why.\"", "\"The future can't be predicted, but it can be envisioned and brought lovingly into being.\"", "\"If no paradigm is right, you can choose whatever one will help to achieve your purpose.\""], "devEcon": "The leverage point hierarchy is one of the most important analytical tools for development policy. Adjusting numbers (transfer amounts, subsidy rates, budget allocations) — the lowest leverage intervention — is what most development policy consists of. Challenging paradigms (the assumptions about what causes poverty, what effective institutions look like, how markets work) — the highest leverage intervention — is what produces transformative change. The most durable development successes involve paradigm shifts: from 'aid transfers' to 'cash and markets', from 'training delivery' to 'capability building', from 'project implementation' to 'adaptive management'."}], "concepts": [{"term": "Stocks", "definition": "The measurable accumulated quantities in a system that change over time — inventory, population, trust, skills, savings, forest cover. Stocks change only at the rate that flows allow; they cannot be changed instantaneously.", "practitionerNote": "In development programmes, the stocks that matter are often slow-moving and invisible: community trust, household asset levels, institutional capacity, social cohesion. Measuring only fast-moving output indicators misses the most important dynamics."}, {"term": "Feedback Loops", "definition": "Causal circuits in which a change in a stock affects the flows that change it. Balancing loops are goal-seeking (push toward a target state). Reinforcing loops amplify whatever is happening (produce exponential growth or collapse). All complex behaviour emerges from feedback loop interactions.", "practitionerNote": "Understanding whether a programme is trying to create a new reinforcing loop, strengthen a balancing loop, or break an existing reinforcing loop is the most important systems diagnosis in development programme design. Most programmes are designed without this analysis."}, {"term": "Tragedy of the Commons", "definition": "A feedback structure in which individuals benefit directly from using a shared resource but share the costs of its depletion. Produces overuse and eventual collapse of common resources. Structural solutions: privatisation, regulated access, or community-enforced quotas.", "practitionerNote": "Overuse of shared natural resources (fisheries, groundwater, forests) in development contexts is almost always a tragedy of the commons, not a moral failure. Structural solutions (community management systems, regulated access) work; exhortation and information campaigns without structural change do not."}, {"term": "Addiction (System Archetype)", "definition": "A pattern in which a relief-providing intervention becomes a substitute for addressing the root cause, progressively eroding the system's own problem-solving capacity and increasing dependence on the intervention.", "practitionerNote": "Food aid, humanitarian cash, and NGO service delivery can all produce addiction dynamics when they substitute for rather than build local capacity. The test: is this intervention building or substituting for the system's own problem-solving capacity?"}, {"term": "Leverage Points", "definition": "Meadows's hierarchy of points in a system where interventions produce disproportionate change. Ranked from lowest (numbers) to highest (paradigms). The most commonly attempted interventions (adjusting budgets and prices) are the lowest leverage; the most transformative interventions (challenging shared assumptions about what a system is for) are the highest.", "practitionerNote": "Most development policy operates at the lowest leverage levels (adjusting transfer amounts, changing subsidy structures). The most durable development changes involve paradigm shifts — changes in shared beliefs about what causes poverty and what effective institutions look like. Identifying the paradigm level intervention for a given problem is the most important systems thinking exercise for development policy."}], "tools": [{"label": "Reflection Journal", "intro": "Use these prompts to connect the book to your practice.", "html": "<label class=\"fld-label\">What is the most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"r1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where does this book's argument apply to a specific challenge you face?</label>\n<textarea class=\"fld\" id=\"r2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">One concrete change you will make this week based on reading this:</label>\n<textarea class=\"fld\" id=\"r3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Reflections stay in your browser only.</div>"}], "connections": [{"book": "Thinking, Fast and Slow — Kahneman", "text": "Kahneman's bounded rationality (System 1's cognitive shortcuts) is the individual-level mechanism that produces the bounded rationality Meadows describes at the system level. We each make locally rational decisions that produce globally irrational system behaviour because no individual can see the whole system. The two books are the micro and macro levels of the same insight."}, {"book": "Influence — Cialdini", "text": "Cialdini's fixed-action patterns are the feedback loops of social behaviour — automatic responses triggered by specific cues that produce predictable outcomes. Meadows's systems thinking provides the structural framework for understanding why Cialdini's principles work: they are balancing loops maintaining social equilibrium."}, {"book": "Grit — Duckworth", "text": "Duckworth's deliberate practice loop (stretch goal → focused attention → feedback → next stretch goal) is a reinforcing feedback loop: each cycle raises skill level, which changes what the next stretch goal looks like. The virtuous cycle of skill development is a self-organising system that Meadows's framework describes precisely."}], "critiques": ["Meadows's framework is primarily analytical — it explains why things are the way they are more clearly than it prescribes what to do about them. The leverage point hierarchy is intuitive but the practical challenge of actually shifting paradigms is not addressed in the detail the concept deserves.", "Systems thinking has been criticised for a conservatism bias: by emphasising feedback structures and equilibria, it can inadvertently suggest that existing systems are hard-wired and resistant to change. The revolutionary changes in social systems (abolition, democratisation, market transitions) that were not predicted by systems models are underdiscussed.", "The book's policy examples are dated (1990s-era issues) and its most important section (leverage points) is the shortest and least developed. Practitioners seeking practical guidance for applying systems thinking to specific development problems will need to supplement with more recent work (e.g., Sterman 2001, Senge 1990)."], "suggested": ["How do reinforcing and balancing feedback loops explain poverty trap dynamics?", "What is the tragedy of the commons and how does it apply to natural resource management in development?", "How does Meadows's addiction archetype explain why food aid sometimes makes food insecurity worse?", "What are the highest-leverage points for development policy intervention according to Meadows?", "How does PDIA relate to Meadows's concept of self-organisation?"], "systemPrompt": "You are an expert reading companion for 'Thinking in Systems' by Donella H. Meadows. Your audience is development economists, practitioners, and ImpactMojo learners. Answer questions about feedback loops, system archetypes, leverage points, and the application of systems thinking to development economics, programme design, and policy. Reference poverty trap models, PDIA, and adaptive management where relevant."};
 
@@ -405,5 +578,97 @@ function switchTab(id) {
   renderSetup();
 })();
 </script>
+
+<!-- ImpactMojo Paper Plane -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- ImpactMojo Footer -->
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;color:#EF4444;"><use href="#si_Heart"/></svg> by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Info"/></svg> About ImpactMojo</h4>
+<ul>
+<li><a href="../about.html">About Us</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="https://github.com/Varnasr/ImpactMojo" rel="noopener noreferrer" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Globe_detailed"/></svg> GitHub</a></li>
+<li><a href="../transparency.html">Transparency</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Lock"/></svg> Legal</h4>
+<ul>
+<li><a href="../privacy-policy.html">Privacy Policy</a></li>
+<li><a href="../terms-of-service.html">Terms of Service</a></li>
+<li><a href="../disclaimer.html">Disclaimer</a></li>
+<li><a href="../data-protection.html">Data Protection</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Lightning"/></svg> Quick Links</h4>
+<ul>
+<li><a href="../catalog.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Library_books"/></svg> All Courses</a></li>
+<li><a href="../premium.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Flare"/></svg> Premium Content</a></li>
+<li><a href="../coaching.html">Coaching</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Book"/></svg> Resources</h4>
+<ul>
+<li><a href="../handouts.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Article"/></svg> Handouts</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../faq.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Help"/></svg> FAQ</a></li>
+<li><a href="../sitemap.html">Sitemap</a></li>
+<li><a href="https://impactmojo.gitbook.io/impactmojo" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+<p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+</div>
+</div>
+</footer>
+
+<script>
+// ImpactMojo 3-way theme system
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+            document.body.classList.toggle('dark-mode', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+})();
+</script>
+
 </body>
 </html>
