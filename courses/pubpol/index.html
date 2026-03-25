@@ -135,7 +135,85 @@
         .v3-blob-4{width:350px;height:350px;background:var(--warning-color);bottom:-80px;right:30%;animation-delay:-3s;}
         [data-theme="light"] .v3-blob-1,[data-theme="light"] .v3-blob-2{opacity:0.04;}
         [data-theme="light"] .v3-blob-3,[data-theme="light"] .v3-blob-4{opacity:0.03;}
-        @keyframes blob-morph{0%,100%{transform:scale(1) translate(0,0);border-radius:50%;}33%{transform:scale(1.1) translate(20px,-20px);border-radius:40% 60% 70% 30%/30% 50% 60% 70%;}66%{transform:scale(0.95) translate(-10px,15px);border-radius:60% 40% 30% 70%/60% 30% 70% 40%;}}
+        @keyframes blob-morph{0%,100%{transform:scale(1) translate(0,0);border-radius:50%;}
+        /* FLOATING SPARKLES */
+        /* ==========================================
+           FLOATING SPARKLES
+           ========================================== */
+        .v3-floating-elements {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .v3-sparkle {
+            position: absolute;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            opacity: 0.4;
+            animation: v3-sparkle-float 15s ease-in-out infinite;
+        }
+        
+        .v3-sparkle-1 {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .v3-sparkle-2 {
+            top: 60%;
+            right: 15%;
+            animation-delay: -5s;
+            color: var(--secondary-accent);
+        }
+        
+        .v3-sparkle-3 {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: -10s;
+            color: var(--success-color);
+        }
+        
+        @keyframes v3-sparkle-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 0.7; }
+        }
+        
+        /* Additional floating planes */
+        .v3-big-plane {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0.22;
+            animation: v3-plane-float 30s ease-in-out infinite;
+        }
+        
+        .v3-big-plane-1 {
+            top: 30%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .v3-big-plane-2 {
+            bottom: 20%;
+            right: 10%;
+            animation-delay: -10s;
+        }
+        
+        .v3-big-plane-3 {
+            top: 70%;
+            left: 70%;
+            animation-delay: -20s;
+        }
+        
+        @keyframes v3-plane-float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -30px) rotate(10deg); }
+            50% { transform: translate(80px, 40px) rotate(-5deg); }
+            75% { transform: translate(20px, 50px) rotate(8deg); }
+        }33%{transform:scale(1.1) translate(20px,-20px);border-radius:40% 60% 70% 30%/30% 50% 60% 70%;}66%{transform:scale(0.95) translate(-10px,15px);border-radius:60% 40% 30% 70%/60% 30% 70% 40%;}}
         /* Sidebar */
         .sidebar{position:fixed;top:var(--topbar-height);left:0;width:var(--sidebar-width);height:calc(100vh - var(--topbar-height));height:calc(100dvh - var(--topbar-height));background:var(--color-bg-secondary);border-right:1px solid var(--color-border);display:flex;flex-direction:column;z-index:1001;transition:transform 0.3s ease,width 0.3s ease;}
         .sidebar-header{padding:var(--spacing-lg);border-bottom:1px solid var(--color-border);}
@@ -342,7 +420,9 @@
         body{font-family:'Amaranth',sans-serif!important;}
         h1,h2,h3,h4,h5,h6{font-family:'Inter',sans-serif!important;}
         code,pre,.monospace,kbd,samp{font-family:'JetBrains Mono',monospace!important;}
-    </style>
+    
+        .module-content-placeholder { min-height: 200px; }
+        </style>
 </head>
 <body>
 
@@ -388,6 +468,32 @@
 <div class="v3-blob v3-blob-2"></div>
 <div class="v3-blob v3-blob-3"></div>
 <div class="v3-blob v3-blob-4"></div>
+    
+    <!-- V3 FLOATING ELEMENTS -->
+    <div class="v3-floating-elements" aria-hidden="true">
+        <div class="v3-sparkle v3-sparkle-1">✦</div>
+        <div class="v3-sparkle v3-sparkle-2">✧</div>
+        <div class="v3-sparkle v3-sparkle-3">✦</div>
+        
+        <!-- Additional floating planes -->
+        <svg class="v3-big-plane v3-big-plane-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#6366F1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M80,130 L150,50" stroke="#0EA5E9" stroke-width="2" stroke-dasharray="4,4"/>
+            <circle cx="150" cy="50" r="4" fill="#10B981"/>
+        </svg>
+        
+        <svg class="v3-big-plane v3-big-plane-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/>
+            <circle cx="150" cy="50" r="4" fill="#0EA5E9"/>
+        </svg>
+        
+        <svg class="v3-big-plane v3-big-plane-3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#F59E0B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M80,130 L150,50" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,4"/>
+            <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+        </svg>
+    </div>
 <div class="reading-progress" id="reading-progress"></div>
 
 <!-- MOBILE HEADER -->
@@ -570,37 +676,9 @@
     <h2 class="module-title">What is Public Policy?</h2>
     <p class="module-intro">Why policy matters, what distinguishes it from politics, and the tools governments use to change social outcomes.</p>
   </div>
-  <div class="prose">
-    <p>Public policy is government action — and equally, government inaction — directed at a social problem. A policy can take the form of a law, a regulation, a spending programme, a tax, or a decision to do nothing when a problem exists. Understanding this last form matters: the absence of a minimum wage is a policy choice. The failure to regulate air quality is a policy choice. Policy analysis requires examining both what governments do and what they deliberately or negligently decline to do.</p>
-    <p>The standard way to teach policy is through the "policy cycle" — agenda-setting, formulation, adoption, implementation, evaluation — moving in a tidy loop. This model is analytically useful for organising concepts. It is empirically misleading for understanding how policy actually works. Real policy is not sequential. Problems are defined mid-implementation. Adoption happens before formulation is complete. Evaluation is political, not just technical. India's experience is particularly instructive: the Mahatma Gandhi National Rural Employment Guarantee Act was evaluated by civil society organisations before the government had conducted any formal assessment. The Right to Education Act was implemented in states that had not yet trained enough teachers to comply with its own norms.</p>
-
-    <h3>Policy Instruments: The Government's Toolkit</h3>
-    <p>Governments have five broad categories of instruments available when they decide to act:</p>
-    <div class="card-grid">
-      <div class="card"><div class="card-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Activity.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Regulation</div><div class="card-text">Rules backed by legal enforcement — environmental standards, financial licensing, food safety norms. Effective where compliance is observable and enforcement is credible.</div></div>
-      <div class="card"><div class="card-icon indigo"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Bar_chart.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Taxation &amp; Subsidies</div><div class="card-text">Changing the price of behaviour — carbon taxes, tobacco duty, fertiliser subsidies. Efficient in theory; prone to capture and distortion in practice.</div></div>
-      <div class="card"><div class="card-icon green"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Check_circle.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Public Provision</div><div class="card-text">Direct government production — public schools, government hospitals, the PDS. Addresses market failure but creates bureaucratic principal-agent problems.</div></div>
-      <div class="card"><div class="card-icon orange"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Globe_detailed.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Information</div><div class="card-text">Disclosure requirements, public awareness campaigns, nutritional labelling. Addresses information asymmetry at low cost; often underused.</div></div>
-    </div>
-
-    <h3>Why Governments Intervene: Market Failures</h3>
-    <p>Standard economics provides the foundational rationale for policy intervention: markets fail in predictable ways, and government action can improve on market outcomes. The main failure types are:</p>
-
-    <div class="callout callout-blue">
-            <div class="callout-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon"></div>
-            <div class="callout-content"><strong>Core Framework</strong><br><p><strong>Public goods</strong> are non-excludable (you can't prevent free-riding) and non-rival (one person's use doesn't reduce availability). National defence, street lighting, flood control. Private firms won't provide them because they can't charge for them. <strong>Externalities</strong> arise when the full costs or benefits of an action fall on parties not involved in the transaction — industrial pollution, vaccine herd immunity. Without intervention, markets produce too much pollution and too few vaccines. <strong>Natural monopolies</strong> occur where unit costs fall so sharply with scale that a single firm is most efficient — electricity transmission, water pipelines. Unregulated, these firms charge monopoly prices. <strong>Information asymmetries</strong> — the buyer of health insurance knows more about their own health than the insurer — lead to adverse selection, moral hazard, and market unravelling.</p></div>
-        </div>
-
-    <h3>Government Failure: The Other Side</h3>
-    <p>Every justification for intervention must be weighed against a realistic account of what governments can actually do. The public choice tradition, associated with Buchanan and Tullock, argues that politicians and bureaucrats pursue their own interests — votes, rents, career advancement — and that political processes systematically distort policy away from efficiency. Three mechanisms are especially relevant for India:</p>
-    <div class="two-col">
-      <div class="card"><div class="card-title">Rent-Seeking</div><div class="card-text">Private actors invest resources not to create value but to influence policy in their favour — industrial lobbying for import protection, contractors bribing procurement officials. Bardhan's analysis shows how India's "dominant proprietary classes" (industrial capital, rich farmers, professionals) captured planning to protect their own rents.</div></div>
-      <div class="card"><div class="card-title">Information Problems</div><div class="card-text">Governments rarely know what citizens need, what frontline workers actually do, or whether programmes are reaching their targets. The PDS leakage problem — 40–50% of subsidised grain diverted before reaching beneficiaries in some states — reflects how information asymmetry between Delhi and village-level fair price shops made accountability nearly impossible.</div></div>
-    </div>
-
-    <h3>Normative vs. Positive Policy Analysis</h3>
-    <p>Positive analysis describes what is: what does this policy do, who gains, who loses, how large are the effects. Normative analysis asks what should be: which policy is best, according to what values. Development practitioners often conflate the two. Identifying a "policy gap" (positive) is not the same as knowing what to do about it (normative), and the normative question always involves a value judgement about whose welfare counts, how much, and over what time horizon.</p>
-  </div>
+  <div id="module1-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -677,44 +755,9 @@
     <h2 class="module-title">The Indian State: Architecture &amp; Capacity</h2>
     <p class="module-intro">How the Indian state is structured, where its capacities lie, and where it characteristically fails.</p>
   </div>
-  <div class="prose">
-    <p>The Indian state is not one thing. It is a layered, overlapping assemblage of institutions operating across three tiers of government, drawing on different legal authorities, staffed by different services, and accountable — often simultaneously — to elected officials, courts, audit institutions, and citizens. Understanding this architecture is a prerequisite for understanding why any given policy works, fails, or produces unintended consequences.</p>
-
-    <h3>Constitutional Architecture</h3>
-    <p>The Seventh Schedule of the Constitution divides legislative competence into three lists. The Union List (97 subjects: defence, foreign affairs, railways, banking, income tax) gives Parliament exclusive power. The State List (66 subjects: agriculture, police, public health, land) gives state legislatures exclusive power — though even here the centre can intervene in national interest under Article 249. The Concurrent List (47 subjects: education, forests, bankruptcy, marriage) gives both Parliament and state legislatures power, with central law prevailing in case of conflict.</p>
-
-    <div class="alert alert-info">
-      <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Alert_triangle.svg" alt="" class="sargam-icon" style="width:20px;height:20px;">
-      <div>India's design is often called "quasi-federal" — formally federal in structure but with a strong central tilt. Emergency provisions (Articles 352, 356, 360) allow the centre to assume state powers. Residual powers lie with the Union, not the states (unlike in the US, where residual powers are with states). The Governor, appointed by the President on the advice of the central government, can delay state legislation and play a partisan role in government formation.</div>
-    </div>
-
-    <h3>The Civil Service: Structure and Pathologies</h3>
-    <p>India's civil service is organised into All India Services (IAS, IPS, IFS) that serve both at Union and state levels, Central Services (IRS, IFS-Group A, etc.), and State Services. The IAS dominates generalist administration across most of the country.</p>
-
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-value">~5,000</div><div class="stat-label">IAS officers at cadre strength<br>(2023)</div></div>
-      <div class="stat-card"><div class="stat-value indigo">~3 lakh</div><div class="stat-label">Central government civilian employees (excluding defence)</div></div>
-      <div class="stat-card"><div class="stat-value green">~50 lakh</div><div class="stat-label">Total state government employees</div></div>
-      <div class="stat-card"><div class="stat-value orange">23%</div><div class="stat-label">IAS vacancy rate, cadre-wise average (2022)</div></div>
-    </div>
-
-    <p>The IAS generalist model has two structural problems. First, officers rotate across departments — often every 12 to 18 months in some states — making it impossible to develop sectoral expertise or hold officials accountable for long-term outcomes. A health secretary who knows they will move to revenue in a year has weak incentives to fix a broken immunisation system. Second, postings and transfers are controlled by politicians, creating a patronage dynamic where compliant officers get preferred postings and independent officers get punished through remote rural transfers.</p>
-
-    <h3>State Capacity: What India Has and What It Lacks</h3>
-    <p>Lant Pritchett's 2009 paper "Is India a Flailing State?" made a distinction that has become central to understanding Indian governance: India has strong capacity in its "head" — elite institutions, macro-economic management, large infrastructure projects — but weak and unreliable capacity in its "arms and legs" — frontline delivery of education, health, and social protection services.</p>
-
-    <div class="callout callout-blue">
-            <div class="callout-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon"></div>
-            <div class="callout-content"><strong>The Pritchett Thesis</strong><br><p>A flailing state is not a failed state. India designs sophisticated programmes, enacts complex legislation, and runs credible macroeconomic policy. But it consistently fails to translate these into reliable service delivery at scale. The IIT system and the government primary school exist in the same state. The same government that launched ISRO has not managed to staff its primary health centres reliably. This bifurcation — elite competence and mass failure — is the defining feature of the Indian state.</p></div>
-        </div>
-
-    <h3>The Judiciary as Policy Actor</h3>
-    <p>India's judiciary, particularly the Supreme Court, has become a significant policy-making institution through Public Interest Litigation. Beginning in the early 1980s, the Court expanded standing to allow any citizen to petition on behalf of diffuse public interests. Since then, PILs have produced: the right to food orders (2001, generating mid-day meals and NREGA's precursor), air quality regulations for Delhi (CNG order, 1998), and the recognition of sexual minority rights (Navtej Johar, 2018).</p>
-    <p>This judicial policy-making is contested. Critics argue courts lack the information, expertise, and accountability for sustained policy management. The right to food PIL generated hundreds of orders over fifteen years that state governments selectively implemented — court orders are not self-executing. Supporters argue that in a context of legislative failure and bureaucratic indifference, judicial intervention is necessary to enforce constitutional rights.</p>
-
-    <h3>Regulatory Bodies: Independence and Accountability</h3>
-    <p>Post-1991 liberalisation required independent regulators to oversee privatised or partially privatised sectors. SEBI (1992, capital markets), TRAI (1997, telecom), CERC (1998, electricity), and CCI (2002, competition) are the key examples. All face a common tension: independence from government is necessary for credibility, but accountability to some democratic authority is necessary for legitimacy. Most Indian regulators have been created by statute with formal independence but in practice face government pressure through appointments, budget dependence, and regulatory overlap.</p>
-  </div>
+  <div id="module2-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -779,46 +822,9 @@
     <h2 class="module-title">History of Indian Planning</h2>
     <p class="module-intro">From Nehruvian central planning to NITI Aayog — and the question of what, if anything, replaced planning.</p>
   </div>
-  <div class="prose">
-    <p>No other democracy has attempted anything as ambitious as India's planning experiment. From 1951 to 2014, the Planning Commission produced twelve Five Year Plans that set national investment targets, allocated public resources across sectors and states, licensed private investment, and defined the acceptable boundaries of economic activity. Understanding this history is not antiquarian — it shaped the institutional architecture, fiscal relationships, and policy culture within which contemporary practitioners work.</p>
-
-    <h3>The Nehruvian Settlement (1947–1966)</h3>
-    <p>Jawaharlal Nehru's economic vision combined three elements that he considered mutually reinforcing: parliamentary democracy, socialist economics, and scientific rationalism. The Planning Commission, established in 1950 by executive order (not legislation, which itself tells you something about India's comfort with informal power), combined all three. It had no constitutional basis, answered to the Prime Minister, and drew its authority from Nehru's personal intellectual dominance.</p>
-
-    <div class="timeline">
-      <div class="timeline-item"><div class="timeline-year">1951</div><div class="timeline-text">First Five Year Plan. Emphasis on agriculture and irrigation — pragmatic given post-Partition food crisis.</div></div>
-      <div class="timeline-item"><div class="timeline-year">1956</div><div class="timeline-text">Second Plan. P.C. Mahalanobis model — heavy industry, capital goods, import substitution. Industrial Policy Resolution formalises the public sector's commanding heights role.</div></div>
-      <div class="timeline-item"><div class="timeline-year">1956–1991</div><div class="timeline-text">Licence Raj. Industrial licensing, import quotas, MRTP Act, FERA constrain private investment. Firms spend resources on obtaining licences, not on productive activity.</div></div>
-      <div class="timeline-item"><div class="timeline-year">1966</div><div class="timeline-text">Plan holiday — three annual plans replace the Fifth Plan amid drought and foreign exchange crisis. Growth slows to what Raj Krishna would later term the "Hindu rate of growth."</div></div>
-    </div>
-
-    <div class="callout callout-blue">
-            <div class="callout-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon"></div>
-            <div class="callout-content"><strong>The Mahalanobis Model</strong><br><p>P.C. Mahalanobis, India's leading statistician and architect of the Second Plan, drew on Feldman's Soviet growth model. The logic: invest heavily in capital goods industries now, which will enable greater investment capacity later, which will produce mass consumption goods much later. The strategy generated industrial growth but neglected agriculture, generated urban industrial employment without mass consumption, and required import controls that kept productivity low. By the 1960s, Sukhamoy Chakravarty and other economists had identified its limitations — but the political economy of protected industries made it impossible to dismantle.</p></div>
-        </div>
-
-    <h3>The 1991 Crisis and Liberalisation</h3>
-    <p>India's balance of payments crisis in 1991 — reserves fell to three weeks of imports, gold was pledged to the IMF, the rupee devalued by 18% in two tranches — was the proximate trigger for liberalisation. Finance Minister Manmohan Singh's 1991 budget and the subsequent industrial policy statement dismantled the core of the Licence Raj: industrial licensing was abolished for most sectors, import licensing was replaced by tariffs that were progressively reduced, FDI caps were raised, and the financial sector was opened to private competition.</p>
-
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-value">3.5%</div><div class="stat-label">Average GDP growth 1965–1980 ("Hindu rate")</div></div>
-      <div class="stat-card"><div class="stat-value indigo">6%+</div><div class="stat-label">Average growth 1992–2012 post-liberalisation</div></div>
-      <div class="stat-card"><div class="stat-value green">₹247 Cr</div><div class="stat-label">Foreign exchange reserves, June 1991 (crisis level)</div></div>
-      <div class="stat-card"><div class="stat-value orange">$600B+</div><div class="stat-label">Foreign exchange reserves, 2023</div></div>
-    </div>
-
-    <h3>The Planning Commission to NITI Aayog Transition</h3>
-    <p>Prime Minister Narendra Modi dissolved the Planning Commission and replaced it with NITI Aayog (National Institution for Transforming India) in January 2015. The stated rationale was threefold: the Planning Commission's centralised, top-down model was inappropriate for a market economy; states should be partners in development, not recipients of centrally-directed allocations; and the Commission had become a bureaucratic bottleneck.</p>
-    <p>The transition had three concrete effects. First, NITI Aayog has no financial allocative power — it cannot give money to states or ministries. The Finance Commission does this through devolution; ministries do it through Centrally Sponsored Schemes. Planning's resource allocation function was effectively distributed and fragmented. Second, the distinction between "Plan" and "Non-Plan" expenditure — which had structured Indian budgeting for sixty years — was abolished in 2017. Third, NITI produces strategy documents (Three-Year Action Agenda, National Development Agenda, Vision 2047) that are aspirational rather than binding.</p>
-
-    <div class="alert alert-warning">
-      <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Alert_triangle.svg" alt="" class="sargam-icon" style="width:20px;height:20px;">
-      <div><strong>What was lost:</strong> The Planning Commission, whatever its failures, served as an institutional space for multi-year thinking, inter-ministerial coordination, and the generation of development statistics. NITI Aayog has not fully replaced these functions. India's medium-term fiscal and sectoral planning has become more fragmented as a result.</div>
-    </div>
-
-    <h3>District Planning and the 73rd/74th Amendments</h3>
-    <p>The 73rd and 74th Constitutional Amendments (1992) mandated democratic decentralisation to panchayats and urban local bodies, including the formation of District Planning Committees to consolidate plans at the district level. In practice, this third tier of planning has largely failed to materialise. States were reluctant to transfer financial and administrative powers to local bodies. District Planning Committees exist on paper in most states but have no meaningful budget authority. The gap between constitutional aspiration and administrative reality here is one of the widest in Indian governance.</p>
-  </div>
+  <div id="module3-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -883,36 +889,9 @@
     <h2 class="module-title">How Policy Gets Made in India</h2>
     <p class="module-intro">The formal and informal channels through which ideas become law, budgets, and administrative action.</p>
   </div>
-  <div class="prose">
-    <p>A policy idea travels a long and discontinuous path before it changes what a frontline worker does. Understanding that path — its formal stages, its informal shortcuts, its veto points, and its political drivers — is essential for anyone trying to change policy. This module maps the terrain.</p>
-
-    <h3>The Formal Legislative Process</h3>
-    <p>Major legislation in India follows a process with several stages. A Ministry identifies a policy need and prepares a Cabinet Note — a formal document circulated to all concerned ministries for comment. After inter-ministerial consultation, the Law Ministry reviews the draft for constitutional and legal consistency. The Cabinet approves the bill, which is then introduced in Parliament. Most bills go to a Parliamentary Standing Committee or a joint committee for detailed examination. After committee report, the bill returns for floor vote in each House. Presidential assent completes the formal process.</p>
-
-    <div class="callout callout-blue">
-            <div class="callout-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon"></div>
-            <div class="callout-content"><strong>The Ordinance Route</strong><br><p>Article 123 allows the President to promulgate ordinances when Parliament is not in session, with the same force as law. Ordinances must be approved by Parliament within six weeks of its next session or they lapse. The government has increasingly used ordinances for significant policy changes — the Land Acquisition Amendment Ordinance (2014–15, promulgated three times after Parliament failed to pass it) is the most prominent recent example. This route bypasses the committee scrutiny and deliberation that characterise the normal legislative process.</p></div>
-        </div>
-
-    <h3>The Role of the Prime Minister's Office</h3>
-    <p>In contemporary India, the PMO is a central node in policy formulation — not just coordination. Under both Manmohan Singh and Narendra Modi, key economic and security decisions were driven from the PMO rather than from line ministries. This concentration has advantages (speed, coordination) and disadvantages (bypassing sectoral expertise, reducing Cabinet deliberation). The PMO's effective power over the civil service — through the Cabinet Secretary who controls IAS postings — means that officers who challenge PMO preferences face career costs.</p>
-
-    <h3>Political Economy of the Policy Agenda</h3>
-    <p>What gets on the policy agenda is not determined by objective problem severity. Several mechanisms shape agenda-setting:</p>
-
-    <div class="card-grid">
-      <div class="card"><div class="card-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Activity.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Electoral Competition</div><div class="card-text">Competitive party politics drives scheme proliferation — especially in coalition governments. Welfare schemes are announced to attract vote blocs. Populist naming (PM-prefix schemes) increases since 2014.</div></div>
-      <div class="card"><div class="card-icon indigo"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Article.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Crisis and Windows</div><div class="card-text">Policy windows (Kingdon) open when a problem stream, political stream, and solution stream align. The 1991 BOP crisis opened a window for liberalisation. The 2001 starvation deaths PIL opened the right to food window.</div></div>
-      <div class="card"><div class="card-icon green"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Chat.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Civil Society Pressure</div><div class="card-text">MKSS's RTI campaign, the National Campaign for People's Right to Information, and the Anti-Corruption movement of 2011 show how sustained civil society pressure can force legislative agenda shifts.</div></div>
-      <div class="card"><div class="card-icon orange"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Judicial Mandates</div><div class="card-text">PILs have forced legislative action — mid-day meals, the right to food, air pollution norms, rights of transgender persons. Courts can force issues onto the legislative agenda.</div></div>
-    </div>
-
-    <h3>Parliamentary Oversight: Reality vs. Design</h3>
-    <p>Parliament's primary oversight mechanisms are Question Hour (oral and written questions to Ministers), the Public Accounts Committee (reviews CAG reports), Departmentally Related Standing Committees (examine legislation and budgets), and the Estimates Committee. In practice, Parliament's oversight function has weakened. The number of sitting days has declined from an average of over 120 days in the 1950s to under 70 days in recent Parliaments. Many bills pass without committee referral. Question Hour is frequently disrupted. The Standing Committee system — introduced in 1993 — remains Parliament's most effective oversight mechanism but its reports are advisory, not binding.</p>
-
-    <h3>Actors Beyond the State: Think Tanks, Lobbies, and Media</h3>
-    <p>Indian policy formation involves multiple non-state actors. Think tanks — NIPFP, CPR, CSDS, IDFC Institute, ORF, Gateway House — have grown significantly since 2000 and influence policy through research, secondments, and direct advisory relationships. Industry associations (CII, FICCI, ASSOCHAM) have formal consultation roles in budget preparation and regulatory design. The media sets the agenda for public issues — the role of television news in making demonetisation appear popular in its immediate aftermath, or investigative reporting in forcing action on scams, shows both the power and the limitations of media as a policy actor.</p>
-  </div>
+  <div id="module4-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -978,37 +957,9 @@
     <h2 class="module-title">Federalism &amp; Centre-State Relations</h2>
     <p class="module-intro">India's quasi-federal design, the Finance Commission, GST, and the ongoing contest between central control and state autonomy.</p>
   </div>
-  <div class="prose">
-    <p>India's federalism is one of the most contested features of its political system. The Constitution's formal design gives the centre substantial leverage over states — through the emergency provisions, Governor appointments, Concurrent List dominance, and historically, the Planning Commission's resource allocation power. Yet states have always pushed back, and since 2014 the political landscape has made Centre-state relations more explicitly contested than at any time since the 1980s.</p>
-
-    <h3>The Finance Commission: Constitutional Architecture</h3>
-    <p>Article 280 mandates a Finance Commission every five years to recommend the distribution of central tax revenues between the Union and states, and among states. The Commission is the primary constitutional mechanism for fiscal federalism — everything else (grants, schemes, plan transfers) is discretionary and politically negotiable.</p>
-    <div class="callout callout-blue">
-            <div class="callout-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon"></div>
-            <div class="callout-content"><strong>Vertical and Horizontal Devolution</strong><br><p><strong>Vertical devolution</strong> is the share of central taxes given to states as a whole. The 14th Finance Commission (2015–20) raised this to 42% of the divisible pool — the highest ever — from 32%. The 15th FC (2020–26) set it at 41%, one percentage point lower to account for Jammu &amp; Kashmir's reorganisation as a Union Territory. <strong>Horizontal devolution</strong> is how that pool is divided among states. The formula weights income distance (poorer states get more), area, population, forest cover, and demographic performance. Southern states with better demographic outcomes have consistently argued the formula penalises them for having smaller, better-educated populations.</p></div>
-        </div>
-
-    <h3>Centrally Sponsored Schemes: Conditional Federalism</h3>
-    <p>Centrally Sponsored Schemes (CSS) are programmes designed and funded jointly by the Centre and states — the Centre sets the framework, states implement and co-fund. As of 2023, there are over 130 CSS across all sectors, with Union government expenditure exceeding ₹4.5 lakh crore annually.</p>
-    <p>CSS have been a source of persistent friction. States complain that CSS conditions constrain their policy choices — they must follow central design even when local circumstances differ. The Centre uses CSS to extend its reach into Concurrent and State List subjects. States must commit matching funds that they may not have, and releases are often delayed, making planning impossible. The Sub-Group of Chief Ministers on Rationalisation of CSS (2015) recommended cutting CSS from 66 to 30 — implementation has been partial.</p>
-
-    <h3>GST: Cooperative Federalism in Practice</h3>
-    <p>The Goods and Services Tax, implemented in July 2017, is the most significant fiscal federalism reform since 1991. It replaced a fragmented indirect tax structure — 17 different central and state levies, cascading tax-on-tax, no input tax credit across the value chain — with a unified system covering most of the country.</p>
-    <div class="two-col">
-      <div class="card"><div class="card-title">What Changed</div><div class="card-text">States surrendered their VAT-setting power in exchange for a guaranteed 14% annual growth in GST revenue for five years (the compensation mechanism). The GST Council — with Finance Ministers of all states and the Union Finance Minister — became the joint governing body. Constitutional amendment required two-thirds Parliamentary majority plus ratification by half the states.</div></div>
-      <div class="card"><div class="card-title">What Didn't Work</div><div class="card-text">Compensation cess disputes erupted when pandemic-year revenues fell below guaranteed levels. States accused the Centre of delaying compensation payments. Petroleum and alcohol — the two largest state revenue sources — were excluded from GST. Multiple rates (0%, 5%, 12%, 18%, 28%) created classification disputes. The promised revenue neutrality was not achieved for all states.</div></div>
-    </div>
-
-    <h3>State-Level Policy Innovation</h3>
-    <p>India's federal structure, despite central dominance, has enabled significant state-level policy experimentation. Kerala's health and education model, Tamil Nadu's welfare state architecture, Chhattisgarh's PDS reform, and Andhra Pradesh's social audit model all demonstrate what states can do when they have political will and administrative capacity. The question of how state innovations travel — or fail to travel — to other states is central to understanding Indian policy dynamics.</p>
-
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-value">41%</div><div class="stat-label">15th FC vertical devolution to states (2020–26)</div></div>
-      <div class="stat-card"><div class="stat-value indigo">₹4.5L Cr</div><div class="stat-label">Annual CSS expenditure (approximate, 2023–24)</div></div>
-      <div class="stat-card"><div class="stat-value green">130+</div><div class="stat-label">Active Centrally Sponsored Schemes</div></div>
-      <div class="stat-card"><div class="stat-value orange">29</div><div class="stat-label">States that ratified the GST constitutional amendment</div></div>
-    </div>
-  </div>
+  <div id="module5-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1072,33 +1023,9 @@
     <h2 class="module-title">Bureaucracy &amp; Implementation</h2>
     <p class="module-intro">Why the same law produces different outcomes across Indian states — and what determines frontline delivery quality.</p>
   </div>
-  <div class="prose">
-    <p>Implementation is where policy lives or dies. India has some of the world's most sophisticated social legislation and some of the world's weakest frontline delivery systems. The gap between law-on-paper and law-in-practice is not accidental — it reflects specific institutional pathologies that are well-documented and, in principle, addressable. This module examines those pathologies and the evidence on what has worked to overcome them.</p>
-
-    <h3>Street-Level Bureaucracy</h3>
-    <p>Michael Lipsky's 1980 concept of "street-level bureaucracy" — the frontline workers who interact directly with citizens — is indispensable for understanding Indian implementation. Lipsky showed that frontline workers (teachers, police, social workers) do not merely execute policy — they make policy through their discretionary decisions. The ASHA worker who decides which households to visit, the ration shop dealer who decides whose card to process, the revenue official who decides which land claim to register — these are all policy decisions made far below the level of formal authority.</p>
-
-    <div class="callout callout-blue">
-            <div class="callout-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon"></div>
-            <div class="callout-content"><strong>Discretion as a Design Problem</strong><br><p>In contexts of weak oversight, discretion becomes the primary mechanism for both corruption and exclusion. India's welfare delivery failures are substantially failures of discretionary frontline behaviour: PDS dealers diverting grain, NREGA officials not registering demand, ASHA workers skipping marginalized households. The design question is not whether to give frontline workers discretion (they will always have some) but how to structure accountability around it. Andhra Pradesh's social audit model attempts exactly this — using community-level verification to check whether official records match ground-level reality.</p></div>
-        </div>
-
-    <h3>State Capacity Variation: Why Bihar and Tamil Nadu Are Different</h3>
-    <p>The same NREGA law, the same NFSA entitlements, the same Right to Education Act — implemented very differently across India's states. Research has identified several explanatory factors:</p>
-    <div class="card-grid">
-      <div class="card"><div class="card-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Activity.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Political Will</div><div class="card-text">Left-governed states (Kerala, West Bengal under Left Front) prioritised social sector delivery. Tamil Nadu's welfare state reflects a specific political economy of Dravidian party competition for social constituencies. Bihar's improvement since 2005 reflects Nitish Kumar's strategic investment in state capacity.</div></div>
-      <div class="card"><div class="card-icon indigo"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Globe_detailed.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Administrative Capacity</div><div class="card-text">Tamil Nadu's district-level cadres are more stable (lower transfer rates), better trained, and operating in a context of higher baseline literacy that makes monitoring easier. These are path-dependent advantages that accumulated over decades.</div></div>
-      <div class="card"><div class="card-icon green"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Check_circle.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Civil Society Density</div><div class="card-text">States with active civil society — Rajasthan (MKSS), Andhra Pradesh (SSAAT), Maharashtra (urban NGOs) — have more effective accountability mechanisms. Civil society can monitor what government cannot self-monitor.</div></div>
-      <div class="card"><div class="card-icon orange"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Bar_chart.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Fiscal Capacity</div><div class="card-text">States with higher own-tax revenues have more fiscal space to invest in administration. Bihar's relatively low tax-GSDP ratio limits its administrative investment. This is partly why Finance Commission transfers matter so much for low-income states.</div></div>
-    </div>
-
-    <h3>Mission Mode and Digital Governance</h3>
-    <p>India has experimented with "mission mode" governance — creating dedicated institutional structures outside normal departmental hierarchies for priority programmes. The National Health Mission's State Health Societies, the PMGSY's National Rural Roads Authority, and the Smart Cities Mission's Special Purpose Vehicles are examples. These structures have more financial and administrative flexibility but create parallel bureaucracies that undermine coordination with line departments.</p>
-    <p>Digital governance — e-governance, Direct Benefit Transfer, Aadhaar-based authentication — has genuinely reduced some forms of leakage. DBT for LPG subsidies (PAHAL) is the most documented success: ghost connections were eliminated, saving an estimated ₹14,000 crore in the first year. But digital governance has also created new exclusion — biometric failures at fair price shops excluding genuine beneficiaries, Aadhaar seeding errors, connectivity failures in remote areas.</p>
-
-    <h3>The Transfer Problem</h3>
-    <p>Iyer and Mani (2012) used Indian administrative data to show that IAS officers posted in districts with upcoming elections face higher transfer rates — suggesting political use of transfers as a reward/punishment mechanism. Their finding — that higher transfer rates are associated with worse public goods provision — empirically demonstrates what qualitative accounts had long suggested: political interference in postings undermines the administrative continuity that effective implementation requires.</p>
-  </div>
+  <div id="module6-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1162,44 +1089,9 @@
     <h2 class="module-title">Public Finance &amp; Fiscal Federalism</h2>
     <p class="module-intro">The architecture of government revenue and expenditure in India — who collects what, who spends what, and how money moves between levels of government.</p>
   </div>
-  <div class="prose">
-    <p>Public finance is the structural foundation of policy. Every programme, every service, every regulation rests ultimately on the state's ability to raise revenue and spend it effectively. India's public finance architecture is one of the most complex in the world — multi-level, historically fragmented, and undergoing rapid change through GST and DBT. This module builds the conceptual vocabulary and empirical knowledge that development practitioners need to navigate it.</p>
-
-    <h3>Sources of Government Revenue</h3>
-    <p>India's public revenues come from three main sources: tax revenues (Union and state), non-tax revenues (fees, dividends from PSUs, interest receipts), and capital receipts (borrowing, disinvestment). The most important distinction for fiscal federalism is between taxes that the Centre collects and shares (the divisible pool) and taxes that each tier keeps.</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Revenue Source</th><th>Collected by</th><th>Shared?</th><th>Scale (approx.)</th></tr></thead>
-        <tbody>
-          <tr><td>Income Tax (personal + corporate)</td><td>Centre</td><td>Yes — divisible pool</td><td>~₹16 lakh crore (2023–24)</td></tr>
-          <tr><td>GST (Central component)</td><td>Centre + States jointly</td><td>IGST shared; CGST/SGST retained by respective levels</td><td>~₹18 lakh crore total collections</td></tr>
-          <tr><td>Customs Duty</td><td>Centre</td><td>Yes — divisible pool</td><td>~₹2.3 lakh crore</td></tr>
-          <tr><td>Excise (Non-GST: petroleum, alcohol)</td><td>Centre (petroleum) / States (alcohol)</td><td>Petroleum in divisible pool</td><td>Significant — states depend heavily on alcohol excise</td></tr>
-          <tr><td>Stamp Duty &amp; Registration</td><td>States</td><td>No</td><td>Major state own-tax source</td></tr>
-          <tr><td>Land Revenue</td><td>States</td><td>No</td><td>Declining importance historically</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>The Deficit Architecture</h3>
-    <p>Three deficit concepts are essential for reading Indian government finances:</p>
-    <div class="card-grid">
-      <div class="card"><div class="card-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Bar_chart.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Fiscal Deficit</div><div class="card-text">Total expenditure minus total revenue receipts (including borrowing). Measures the government's total borrowing requirement. The FRBM Act sets a 3% of GDP target. The Centre was at 5.8% in 2023–24 after COVID-era expansion.</div></div>
-      <div class="card"><div class="card-icon indigo"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Activity.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Revenue Deficit</div><div class="card-text">Revenue expenditure minus revenue receipts. Measures how much current spending exceeds current income — borrowing to meet day-to-day expenses. High revenue deficits "crowd out" capital formation. India's revenue deficit has been chronically positive.</div></div>
-      <div class="card"><div class="card-icon green"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Primary Deficit</div><div class="card-text">Fiscal deficit minus interest payments. Measures the deficit excluding the legacy cost of past debt. A useful indicator of current fiscal policy choices, stripped of inherited debt service obligations.</div></div>
-    </div>
-
-    <h3>Subsidies: Scale, Design, and Political Economy</h3>
-    <p>India's subsidy architecture is large, poorly targeted, and politically entrenched. The Union government's explicit subsidies — food, fertiliser, petroleum — amounted to approximately ₹3.8 lakh crore in 2022–23. Implicit subsidies (underpriced electricity, water, below-market land for industry) are much larger. The political economy of subsidies follows a consistent pattern: beneficiaries are concentrated and organised (fertiliser companies, PDS dealers, electricity consumers in farmer-dominant states); those who bear the cost (taxpayers, fiscal discipline advocates, future generations bearing debt) are diffuse. This asymmetry makes subsidy rationalisation politically costly even when economically obvious.</p>
-
-    <h3>Off-Budget Financing: The Hidden Debt</h3>
-    <p>India's official fiscal deficit numbers understate the true fiscal position because of off-budget financing — government borrowing routed through PSUs, NSSF, Food Corporation of India's borrowing, and state guarantees. The National Infrastructure Pipeline routes infrastructure spending through SPVs that don't appear on the budget. CAG has repeatedly flagged that these off-budget liabilities represent contingent claims on government resources that fiscal reporting does not fully capture.</p>
-
-    <div class="alert alert-warning">
-      <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Alert_triangle.svg" alt="" class="sargam-icon" style="width:20px;height:20px;">
-      <div><strong>The subsidy-investment trade-off:</strong> India spends substantially more on subsidies (consumption support) than on capital investment (infrastructure, education, health). Redirecting even a portion of untargeted subsidies towards public investment has been shown to have larger poverty reduction effects — but faces the political obstacle that subsidy beneficiaries vote and future investment beneficiaries don't yet.</div>
-    </div>
-  </div>
+  <div id="module7-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1263,33 +1155,9 @@
     <h2 class="module-title">Budgeting in India</h2>
     <p class="module-intro">Reading the Union Budget: documents, process, political economy, and what the numbers actually mean.</p>
   </div>
-  <div class="prose">
-    <p>The Union Budget is India's most important annual policy statement — not in terms of implementation fidelity, but in terms of signalling priorities, allocating resources, and setting the fiscal framework within which everything else operates. Reading it critically — distinguishing announcements from allocations, allocations from releases, releases from expenditure, expenditure from outcomes — is a core skill for development practitioners.</p>
-
-    <h3>Budget Documents: What to Read and Why</h3>
-    <div class="card-grid">
-      <div class="card"><div class="card-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Article.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Budget Speech</div><div class="card-text">The Finance Minister's speech is political communication. It announces schemes and initiatives but is not a legal document. Many announcements in budget speeches are never implemented. Read it, but verify against the actual numbers in the Statements.</div></div>
-      <div class="card"><div class="card-icon indigo"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Bar_chart.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Annual Financial Statement</div><div class="card-text">The legal core of the budget — receipts and expenditures. Revenue Account and Capital Account. This is what Parliament votes on and what carries legal force under Article 112.</div></div>
-      <div class="card"><div class="card-icon green"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Demand for Grants</div><div class="card-text">Ministry-by-ministry expenditure requests. The most granular public document for tracking allocations to specific schemes. Compare Revised Estimates (RE) vs. Budget Estimates (BE) to see how schemes actually perform mid-year.</div></div>
-      <div class="card"><div class="card-icon orange"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Finance Bill</div><div class="card-text">Contains all tax changes — the legally binding part of the Budget on the revenue side. Amendments to the Income Tax Act, Customs Act, etc. are embedded here.</div></div>
-    </div>
-
-    <h3>Budget Estimates, Revised Estimates, and Actuals</h3>
-    <p>A critical skill is tracking allocations through the year. Budget Estimates (BE) are the initial allocations presented in February. Revised Estimates (RE), presented in the following Budget or mid-year review, show what is actually expected to be spent. Actuals, published in the Finance Accounts after the year ends, show what was actually spent. The gap between BE and Actuals is systematically large in India — particularly in capital expenditure and social sector schemes. This means that headline budget announcements routinely overstate actual resource commitments.</p>
-
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-value">~20–30%</div><div class="stat-label">Typical under-utilisation of capital expenditure in many schemes (BE vs. Actuals)</div></div>
-      <div class="stat-card"><div class="stat-value indigo">February 1</div><div class="stat-label">Union Budget presentation date (moved from February 28 in 2017)</div></div>
-      <div class="stat-card"><div class="stat-value green">Article 112</div><div class="stat-label">Constitutional provision requiring Annual Financial Statement</div></div>
-      <div class="stat-card"><div class="stat-value orange">PAC</div><div class="stat-label">Public Accounts Committee — primary Parliamentary body reviewing actual expenditure against budget</div></div>
-    </div>
-
-    <h3>Gender Budgeting</h3>
-    <p>India introduced Gender Budgeting in 2005–06 with the Gender Budget Statement (Statement 13 in Union Budget documents), which disaggregates allocations into Part A (100% for women) and Part B (30%+ for women). The initiative was internationally significant — India was among the earliest large democracies to institutionalise gender-responsive budgeting. In practice, its limitations are well-documented: classification into Part A and B is often arbitrary (the entire Integrated Child Development Services allocation is classified as Part A, inflating the headline figure); it measures inputs, not outcomes; and there is no enforcement mechanism for stated allocations.</p>
-
-    <h3>Parliamentary Oversight of the Budget</h3>
-    <p>Parliament's budget oversight role has weakened over time. The Appropriation Bill (authorising expenditure) is typically passed with minimal debate due to time constraints. The Finance Bill (authorising tax changes) receives more attention but is frequently amended at the last minute, reducing scrutiny quality. The Public Accounts Committee reviews past expenditure against CAG audit reports — this is Parliament's most effective oversight role, but its reports receive limited follow-up. The Estimates Committee, examining future budget estimates, has reduced effectiveness because it reports after grants are voted.</p>
-  </div>
+  <div id="module8-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1353,36 +1221,9 @@
     <h2 class="module-title">Taxation &amp; Revenue</h2>
     <p class="module-intro">India's tax architecture, its chronic underperformance, the political economy of exemptions, and the demonetisation episode as a case study.</p>
   </div>
-  <div class="prose">
-    <p>India collects less tax relative to the size of its economy than almost any comparable country. This is not primarily a technical failure — it is a political and institutional one. The tax system's design reflects accumulated compromises with powerful interests, the exclusion of agriculture from income tax, a large informal economy, and chronic enforcement capacity deficits.</p>
-
-    <h3>India's Tax-GDP Ratio: The Comparison That Matters</h3>
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-value">~11%</div><div class="stat-label">India's tax-GDP ratio (Centre + States, 2022–23)</div></div>
-      <div class="stat-card"><div class="stat-value indigo">20–25%</div><div class="stat-label">Tax-GDP ratio of comparable middle-income economies (Brazil, South Africa)</div></div>
-      <div class="stat-card"><div class="stat-value green">~30–35%</div><div class="stat-label">OECD average tax-GDP ratio</div></div>
-      <div class="stat-card"><div class="stat-value orange">~80M</div><div class="stat-label">Income tax return filers out of 1.4 billion population</div></div>
-    </div>
-
-    <h3>Direct Taxes: Structure and Anomalies</h3>
-    <p>Personal income tax in India applies to individuals, HUFs, and firms. Corporate tax was reduced from 30% to 22% (new domestic companies: 15%) in September 2019 — a significant revenue concession that the government argued would attract investment. Capital gains taxation distinguishes between short-term (taxed as income) and long-term (taxed at lower rates) — a structure that benefits asset holders over wage earners. Agricultural income is completely exempt from income tax — a provision originally intended to protect subsistence farmers that now protects wealthy landowners, agribusinesses, and individuals who route income through agricultural firms.</p>
-
-    <div class="callout callout-blue">
-            <div class="callout-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon"></div>
-            <div class="callout-content"><strong>Tax Expenditures: The Invisible Subsidy</strong><br><p>Tax expenditures are revenue forgone through exemptions, deductions, and preferential rates. India's revenue foregone statement (part of budget documents) estimated total tax expenditures at over ₹8 lakh crore in 2022–23 — more than the entire defence budget. The largest categories are corporate exemptions, SEZ benefits, and personal income tax deductions. Unlike spending subsidies, tax expenditures face no annual Parliamentary vote and tend to accumulate without scrutiny. The GST reform attempted to eliminate cascading tax exemptions in indirect taxation; direct tax exemptions remain largely intact.</p></div>
-        </div>
-
-    <h3>GST: Architecture and Political Economy</h3>
-    <p>GST replaced approximately 17 central and state levies with a unified structure. The Dual GST model means both Centre and States levy tax on the same base — CGST goes to the Centre, SGST to states, IGST (on inter-state transactions) goes to the Centre and is then apportioned. Input Tax Credit allows businesses to offset tax paid on inputs against tax due on outputs, eliminating the cascading effect of the old system.</p>
-    <p>The four-rate structure (5%, 12%, 18%, 28% plus a 0% essential goods category) was a political compromise — a revenue-neutral single rate was economically superior but politically impossible given states' concerns about losing revenue on specific goods. The 28% rate with a compensation cess on sin goods (tobacco, luxury cars) reflects both revenue and regulatory intent.</p>
-
-    <h3>Demonetisation as a Case Study</h3>
-    <p>Prime Minister Modi's November 2016 announcement — that ₹500 and ₹1000 notes (86% of currency in circulation by value) would be withdrawn with 50-day exchange windows — was the most dramatic peacetime fiscal intervention in India's history. The stated objectives were eliminating black money, counterfeit currency, and terror financing, and moving India towards a digital economy. The evidence on outcomes is unambiguous:</p>
-    <div class="two-col">
-      <div class="card"><div class="card-title">What Did Not Happen</div><div class="card-text">98.96% of demonetised notes returned to banks — the anticipated permanent extinguishment of black money reserves did not occur. Counterfeit currency detected was a fraction of circulating notes. There is no evidence of reduced terror financing. GDP growth fell from 8.1% to 6.8% in the demonetisation quarter (RBI, CSO data).</div></div>
-      <div class="card"><div class="card-title">What Did Happen</div><div class="card-text">Digital payments surged (UPI transactions grew dramatically). Tax return filings increased in the following year. Cash-dependent sectors (real estate, informal construction, agriculture) faced severe short-term disruption. The episode generated debate about the role of technocratic policy advice — the RBI's Governor was reportedly not consulted.</div></div>
-    </div>
-  </div>
+  <div id="module9-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1447,40 +1288,9 @@
     <h2 class="module-title">Regulatory Governance</h2>
     <p class="module-intro">How India's independent regulators work, the capture problem, and sector-by-sector analysis.</p>
   </div>
-  <div class="prose">
-    <p>Regulation is government action that changes the rules of the game for private actors — without directly providing services or spending money. India's regulatory architecture has expanded dramatically since 1991, as liberalisation required independent oversight of sectors where the government had previously been both owner and regulator. The quality of this regulatory architecture is central to whether liberalisation actually produces competitive markets or merely transfers monopoly rents from public to private actors.</p>
-
-    <h3>What Regulators Do</h3>
-    <p>Regulatory functions cluster around five activities: licensing entry and exit (who can operate in the sector), setting prices or approving tariff structures, establishing technical and safety standards, adjudicating disputes between regulated entities and between companies and consumers, and promoting competition. Different Indian regulators perform different combinations of these functions, with varying degrees of independence and expertise.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Regulator</th><th>Year</th><th>Sector</th><th>Key Functions</th><th>Noted Challenge</th></tr></thead>
-        <tbody>
-          <tr><td><strong>SEBI</strong></td><td>1992</td><td>Capital markets</td><td>Market oversight, investor protection, disclosure norms</td><td>Enforcement speed; consent orders</td></tr>
-          <tr><td><strong>TRAI</strong></td><td>1997</td><td>Telecom</td><td>Tariff regulation, spectrum allocation advice, interconnect</td><td>Advisory vs. adjudicatory role confusion</td></tr>
-          <tr><td><strong>CERC / SERCs</strong></td><td>1998/2003</td><td>Electricity</td><td>Tariff setting, grid standards, open access</td><td>Discoms' financial health; state capture of SERCs</td></tr>
-          <tr><td><strong>CCI</strong></td><td>2002</td><td>Competition</td><td>Merger review, anti-competitive practices, market investigation</td><td>Capacity; digital markets regulation</td></tr>
-          <tr><td><strong>IRDAI</strong></td><td>1999</td><td>Insurance</td><td>Solvency norms, product approval, consumer protection</td><td>Low insurance penetration despite regulation</td></tr>
-          <tr><td><strong>PFRDA</strong></td><td>2003</td><td>Pensions</td><td>NPS management, fund manager oversight</td><td>Coverage gaps in informal sector</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>Regulatory Capture: Theory and Indian Evidence</h3>
-    <p>George Stigler's capture theory argues that regulated industries will tend to capture their regulators over time — using the revolving door (former industry executives become regulators and vice versa), lobbying, and information provision (regulators depend on industry for the data they need to regulate). Indian evidence supports partial capture in several sectors. The TRAI's evolution reflects industry preferences in tariff matters on multiple occasions. SEBI's consent order mechanism — allowing firms to settle enforcement actions without admitting guilt — was criticised as undermining deterrence. State Electricity Regulatory Commissions are particularly prone to state government influence given their budget dependence.</p>
-
-    <div class="callout callout-blue">
-            <div class="callout-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon"></div>
-            <div class="callout-content"><strong>The Independence-Accountability Trade-Off</strong><br><p>Independent regulators are insulated from electoral politics to prevent short-term political interference in technical decisions. But independence from politics should not mean absence of accountability. India's regulators face questions on both fronts: Are appointment processes sufficiently merit-based and transparent? Are regulatory decisions subject to appropriate judicial review without becoming unreviewable? Is regulatory performance assessed systematically? The Competition Commission's early years illustrated the problem — technically capable but so cautious about judicial overruling that deterrence suffered.</p></div>
-        </div>
-
-    <h3>The Electricity Sector: A Deep Dive</h3>
-    <p>Electricity regulation illustrates all the challenges of sectoral governance. The Electricity Act 2003 created a sophisticated framework: independent SERCs, cost-reflective tariffs, open access for large consumers, distribution company unbundling. Twenty years later: distribution companies (DISCOMs) collectively owe ₹6+ lakh crore to generating companies and banks. Political pressure prevents SERCs from setting cost-reflective tariffs. Agricultural subsidies are massive, untargeted, and drive DISCOMs to insolvency. AT&C (Aggregate Technical and Commercial) losses remain high in most states. Successive central schemes — UDAY, RDSS — have provided bailouts without structural reform. The electricity sector is a case study in regulatory capture, political economy of subsidies, and the limits of technocratic institutional design.</p>
-
-    <h3>Regulatory Impact Assessment: India's Weak Practice</h3>
-    <p>Most OECD countries require Regulatory Impact Assessments (RIAs) before major new regulations — structured analysis of costs, benefits, and alternatives. India has no systematic RIA requirement. Regulations are often promulgated without cost-benefit analysis, without stakeholder consultation, and without sunset clauses that would require periodic review. This contributes to regulatory accumulation — old regulations pile up alongside new ones, creating compliance burden and legal uncertainty without corresponding benefit.</p>
-  </div>
+  <div id="module10-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1544,34 +1354,9 @@
     <h2 class="module-title">Social Policy Architecture</h2>
     <p class="module-intro">India's health, education, nutrition, and social protection systems — design, performance, and the convergence failure.</p>
   </div>
-  <div class="prose">
-    <p>India's social policy architecture is simultaneously extensive and incomplete. It covers more people through more programmes than any comparably-sized democracy — and fails more people through more implementation gaps than most. Understanding both dimensions is necessary for anyone trying to work within it or improve it.</p>
-
-    <h3>National Health Mission: Architecture and Performance</h3>
-    <p>The National Health Mission (NHM), launched in 2005 as the National Rural Health Mission and expanded to include urban in 2013, is India's primary vehicle for public health financing and delivery. Its architecture — State Health Societies, district health action plans, ASHA community health workers, accredited hospital incentives (JSSK, JSY) — represented a genuine institutional innovation. NHM increased health spending, trained a million-plus ASHAs, and drove down maternal and infant mortality significantly.</p>
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-value">~1M+</div><div class="stat-label">ASHA workers under NHM</div></div>
-      <div class="stat-card"><div class="stat-value indigo">97 → 28</div><div class="stat-label">MMR reduction per 100,000 live births (2005–2020)</div></div>
-      <div class="stat-card"><div class="stat-value green">~1.3%</div><div class="stat-label">India's public health spending as % of GDP (still below comparable countries)</div></div>
-      <div class="stat-card"><div class="stat-value orange">63%</div><div class="stat-label">Out-of-pocket share of total health expenditure — among world's highest</div></div>
-    </div>
-
-    <p>NHM's persistent weaknesses are the same as those of Indian public administration generally: staffing shortfalls (particularly doctors in rural areas), infrastructure gaps, underfunding relative to targets, and the ASHA incentive model which classifies community health workers as "volunteers," denying them regular wages and statutory worker rights.</p>
-
-    <h3>Ayushman Bharat PM-JAY: The Insurance Approach</h3>
-    <p>Launched in 2018, PM-JAY covers hospitalisation costs up to ₹5 lakh per family per year for the bottom 40% of the population (approximately 500 million people). It is the world's largest publicly-funded health insurance scheme by coverage. PM-JAY is a demand-side intervention — it funds hospitalisation without building supply (hospitals). Evidence shows high utilisation for surgical procedures, high private hospital participation, and significant concerns about over-provision of unnecessary procedures (particularly Caesarean sections) and fraudulent claims by private providers. The supply-side gap — insufficient public hospitals — means PM-JAY predominantly subsidises private healthcare for people who previously went untreated or incurred catastrophic debt.</p>
-
-    <h3>National Education Policy 2020: Ambition and Implementation Gap</h3>
-    <p>NEP 2020 is India's most comprehensive education reform document since the 1986 National Policy on Education. Its main provisions include: a 5+3+3+4 curricular structure replacing 10+2, foundational literacy and numeracy as the primary goal by Grade 3, mother tongue as medium of instruction in early years, a Multidisciplinary Education and Research Universities (MERU) structure for higher education, and a target of 6% of GDP for education spending. NEP 2020 is a central government policy document — implementation is a state responsibility, and states have adopted it at varying pace and with varying fidelity. The 6% GDP spending target (India currently spends approximately 3%) requires either a massive tax effort or a substantial reallocation from other sectors that no budget has reflected.</p>
-
-    <h3>The Convergence Failure</h3>
-    <p>India's child nutrition crisis illustrates the convergence problem. Stunting affects approximately 35% of under-five children (NFHS-5) — one of the highest rates globally for a country at India's income level. The determinants of stunting are multi-sectoral: food security (NFSA), water quality (Jal Jeevan Mission), sanitation (Swachh Bharat), women's nutrition (ICDS, health services), infant feeding practices (ASHAs, anganwadis), and maternal education. Each determinant sits in a different Ministry with different targets, different monitoring systems, and no formal accountability for cross-sectoral outcomes. The POSHAN Abhiyaan (2018) attempted to create convergence governance but has not resolved the underlying structural problem of siloed ministries with no incentive to coordinate.</p>
-
-    <div class="callout callout-blue">
-            <div class="callout-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon"></div>
-            <div class="callout-content"><strong>Tamil Nadu as Social Policy Outlier</strong><br><p>Tamil Nadu consistently outperforms other large states on health, nutrition, and education indicators relative to its income level. Explanations include: a robust public distribution system since the 1960s, early investments in girl's education, strong anganwadi and school meal networks, relatively stable district-level administration, and the political competition between DMK and AIADMK that drove welfare spending as a vote-winning strategy. Tamil Nadu demonstrates what is possible within India's institutional constraints — but also how deeply political the "technical" question of social policy performance is.</p></div>
-        </div>
-  </div>
+  <div id="module11-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1635,33 +1420,9 @@
     <h2 class="module-title">Environmental &amp; Land Policy</h2>
     <p class="module-intro">Environmental regulation, land acquisition, tribal rights, and the development-environment tension in India.</p>
   </div>
-  <div class="prose">
-    <p>Land and environment are where the fundamental tensions of Indian development policy are most visible. Land is simultaneously the source of livelihoods for two-thirds of the population, the input for industrialisation and infrastructure, the site of adivasi and forest-dependent communities' survival, and the most politically contested asset in the Indian economy. Environmental regulation governs the conditions under which land and resources can be used, and has been shaped by judicial activism, international commitments, and industrial lobbying in roughly equal measure.</p>
-
-    <h3>Environmental Regulation: The Institutional Architecture</h3>
-    <p>India's environmental governance is built on the Environment Protection Act 1986 (an umbrella statute passed in the aftermath of Bhopal), with specific acts for forests (Forest Conservation Act 1980), water (Water Pollution Act 1974), air (Air Prevention and Control of Pollution Act 1981), and coastal zones (Coastal Regulation Zone Notification). The Ministry of Environment, Forest and Climate Change (MoEFCC) is the primary regulatory body, with the Central and State Pollution Control Boards handling implementation.</p>
-    <p>Environmental clearance under the EIA Notification (2006) is required for a large range of projects — mining, thermal power, industrial estates, highways, ports. The clearance process involves screening, scoping, public consultation, and appraisal by Expert Appraisal Committees. In practice, this process has been criticised from both sides: environmentalists argue clearances are granted too freely with inadequate scrutiny; industry argues the process is slow, unpredictable, and adds unnecessary costs.</p>
-
-    <h3>Land Acquisition: LARR Act 2013 and Its Political Economy</h3>
-    <p>The Right to Fair Compensation and Transparency in Land Acquisition, Rehabilitation and Resettlement Act (2013) replaced the colonial Land Acquisition Act of 1894. Its key innovations: mandatory 80% (private) or 70% (PPP) consent of affected landowners; compensation at 2x market value in rural areas; comprehensive rehabilitation and resettlement package; social impact assessment before acquisition; restrictions on agricultural land acquisition.</p>
-
-    <div class="timeline">
-      <div class="timeline-item"><div class="timeline-year">1894</div><div class="timeline-text">Colonial Land Acquisition Act. Government could acquire any land for "public purpose" with minimal compensation and no consent.</div></div>
-      <div class="timeline-item"><div class="timeline-year">1984–2004</div><div class="timeline-text">Liberalisation-era acquisitions. SEZs, industrial corridors, dams. Massive displacement without adequate resettlement — Narmada, POSCO, Singur.</div></div>
-      <div class="timeline-item"><div class="timeline-year">2013</div><div class="timeline-text">LARR Act passed after 10 years of civil society campaigning. Comprehensive consent, compensation, and R&amp;R framework.</div></div>
-      <div class="timeline-item"><div class="timeline-year">2014–15</div><div class="timeline-text">Land Acquisition Amendment Ordinance — attempts to weaken consent and SIA provisions for five categories of projects. Promulgated three times; fails in Parliament. States pass their own amendments.</div></div>
-      <div class="timeline-item"><div class="timeline-year">2020–present</div><div class="timeline-text">Multiple states amend LARR for industrial purposes. Labour and land reform packages during COVID. Ongoing tension between Act's protections and development pressures.</div></div>
-    </div>
-
-    <h3>Tribal Land Rights and Resource Extraction</h3>
-    <p>Schedule V of the Constitution applies to scheduled areas with significant tribal populations, requiring a separate administrative structure (Tribal Advisory Councils, Governor's special powers). The PESA Act (1996) extended panchayat provisions to Schedule V areas with stronger gram sabha powers. Despite these protections, tribal areas contain India's largest reserves of coal, iron ore, bauxite, and other minerals — creating a direct conflict between extraction-led development and tribal land rights. The Forest Rights Act (Module 11 of the PoA course) provides individual and community forest rights, but clearance processes regularly override FRA rights by the expedient of not completing the titling process before issuing mining approvals.</p>
-
-    <h3>Urban Land Policy and Housing</h3>
-    <p>India's urban land markets are among the most distorted in the developing world. High Floor Space Index (FSI) restrictions in Indian cities — compared to global norms — force artificial scarcity and drive up formal housing prices while pushing the poor into informal settlements. RERA (Real Estate Regulation and Development Act, 2016) attempted to protect homebuyers from builder defaults and bring transparency to real estate transactions. Implementation has been uneven — state RERA authorities vary enormously in capacity and aggressiveness.</p>
-
-    <h3>India's Climate Commitments</h3>
-    <p>India's Nationally Determined Contributions (NDCs, updated 2022) include: 500 GW of non-fossil electricity capacity by 2030, 50% of cumulative electricity from non-fossil sources by 2030, reducing emissions intensity of GDP by 45% from 2005 levels, and net zero by 2070. These are significant commitments relative to India's development stage. The domestic legislative gap — India has no national climate law and no carbon pricing mechanism — means implementation relies entirely on sectoral programmes, renewable energy procurement, and state-level action.</p>
-  </div>
+  <div id="module12-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1725,29 +1486,9 @@
     <h2 class="module-title">Evidence, Evaluation &amp; Policy Learning</h2>
     <p class="module-intro">What counts as evidence in Indian policy, how governments use (and ignore) evaluation, and how policy learning happens across states.</p>
   </div>
-  <div class="prose">
-    <p>One of the most persistent frustrations in development practice is that good evidence does not automatically produce good policy. Governments commission evaluations they don't act on. Randomised trials demonstrate that an intervention works at small scale, and the intervention still doesn't get adopted at national scale. Policy "learning" is often selective — governments learn what confirms what they already want to do. This module examines why, and what practitioners can do about it.</p>
-
-    <h3>The Evidence Hierarchy and Its Limits</h3>
-    <p>The randomised controlled trial (RCT) became the gold standard of development policy evidence in the 2000s, driven by the J-PAL movement, the 2019 Nobel Prize, and donor pressure towards "what works" evidence. RCTs have generated genuine insights — the ineffectiveness of conventional deworming protocols, the effectiveness of teaching at the right level, the modest long-run effects of some microfinance interventions. But RCTs face intrinsic limits for policy:</p>
-    <div class="card-grid">
-      <div class="card"><div class="card-icon orange"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Alert_triangle.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Scale</div><div class="card-text">An RCT tests an intervention in one or a few sites. Policy implementation is national. What works in selected project villages may not replicate when implemented by a cadre of unmotivated government workers across 640 districts.</div></div>
-      <div class="card"><div class="card-icon indigo"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Activity.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Political Feasibility</div><div class="card-text">An RCT can show that crop insurance should be compulsory and priced actuarially — and this may be politically impossible. Evidence about what works technically cannot override evidence about what is politically achievable.</div></div>
-      <div class="card"><div class="card-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Globe_detailed.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Equilibrium Effects</div><div class="card-text">When a small fraction of farmers receive a cash transfer, their behaviour changes. When all farmers receive it, market prices adjust. The equilibrium effects of universal programmes differ from small-scale experiment effects.</div></div>
-    </div>
-
-    <h3>CAG as Evidence Institution</h3>
-    <p>India's Comptroller and Auditor General is constitutionally mandated (Articles 148–151) and produces performance and financial audits that are among the richest sources of policy evidence available. CAG performance audits — on NREGA implementation, PDS leakage, health infrastructure, skill development programmes — systematically document what government programmes actually achieve vs. what they claim. They are not widely read by practitioners, which is a significant gap. Key CAG audit reports should be part of any evidence review of a government programme.</p>
-
-    <h3>NITI Aayog's SDG India Index and State Rankings</h3>
-    <p>NITI Aayog's SDG India Index (annual since 2018) ranks all states on 115+ indicators mapped to the SDGs. It is useful as a comparative benchmarking tool and has created incentives for state-level improvement on measured indicators. Its limitations are those of any composite index: indicator selection reflects data availability rather than pure policy relevance, composite scores obscure large within-state variation, and states may improve their scores without improving outcomes for the most marginalised populations.</p>
-
-    <h3>Parliamentary Standing Committees as Oversight</h3>
-    <p>Twenty-four Departmentally Related Standing Committees examine budget demands, review legislation, and investigate administrative failures. Their reports are public documents and often contain more frank assessment of programme failure than executive evaluations. The quality varies: some committees (Finance, External Affairs) produce rigorous analysis; others are more cursory. No committee has a mandate specifically focused on social sector programme evaluation — this is an institutional gap.</p>
-
-    <h3>Policy Learning Across States: How Good Practice Travels</h3>
-    <p>Indian federalism creates natural policy experiments — states implementing the same law differently. The challenge is converting this variation into learning. Three mechanisms operate: formal learning (NITI Aayog's Best Practices documentation, Ministry-level review meetings), informal learning (civil servants moving between states, conferences), and political learning (opposition parties adopting welfare schemes that win elections). Andhra Pradesh's social audit model spread to other states through a combination of formal documentation, civil society advocacy, and Ministry of Rural Development pressure. Tamil Nadu's PDS model has been studied but rarely replicated because the political conditions for it are specific to Tamil Nadu's history.</p>
-  </div>
+  <div id="module13-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1811,26 +1552,9 @@
     <h2 class="module-title">Political Economy of Reform</h2>
     <p class="module-intro">Why good policies fail to get adopted, why bad ones persist, and how reforms actually happen in India.</p>
   </div>
-  <div class="prose">
-    <p>If the world were governed by technocrats optimising for social welfare, this module would be unnecessary. The world is not. Policy reform requires overcoming resistance from interests that benefit from the status quo, navigating institutional veto points, managing political time horizons, and finding coalitions willing to bear short-term costs for long-term gains. Understanding these dynamics — not just for cynical reasons but for realistic ones — is essential for anyone trying to change policy.</p>
-
-    <h3>The Logic of Collective Action and Reform Resistance</h3>
-    <p>Mancur Olson's insight is the starting point: concentrated, well-organised interests defeat diffuse, poorly-organised ones in the political arena. Fertiliser subsidy reform would benefit 1.4 billion consumers through slightly lower food prices and reduced fiscal deficit — but the gains are diffuse and small per person. The fertiliser industry, its workers, and large farmers who benefit from input subsidies are concentrated and organised. Their political opposition to reform is credible and effective. This logic explains why obvious inefficiencies persist: they persist because their beneficiaries are organised and their critics are not.</p>
-
-    <div class="callout callout-blue">
-            <div class="callout-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Flare.svg" alt="" class="sargam-icon"></div>
-            <div class="callout-content"><strong>Veto Players and Reform Windows</strong><br><p>Tsebelis's veto player theory is useful for understanding Indian reform: the more veto players (coalition partners, state governments, courts, bureaucratic agencies, organised interests), the harder reform is. India's shift from coalition government to single-party majority in 2014 reduced the number of legislative veto players — making legislative reform faster but also reducing the deliberation that coalition politics sometimes forced. The GST is an example where a quasi-federal veto player (states) was brought inside the reform through the GST Council, converting a potential blocker into a co-owner of the reform.</p></div>
-        </div>
-
-    <h3>Indian Reform Episodes: What They Share</h3>
-    <p>Looking across India's major reform episodes — 1991 liberalisation, RTI 2005, NREGA 2005, LARR 2013, GST 2017 — several patterns emerge. Crisis or political transition opens a window (1991 BOP crisis; UPA 2004 election mandate; BJP 2014 majority). A workable solution exists in the policy community before the window opens (Manmohan Singh's industrial policy ideas; MKSS's RTI draft; NREGA's precursor states). A political entrepreneur champions the reform (Manmohan Singh; NAC under Sonia Gandhi; Arun Jaitley for GST). Veto players are accommodated, bought off, or bypassed. And the reform, once enacted, creates its own constituency — NREGA workers who vote, RTI applicants who advocate.</p>
-
-    <h3>Labour Law Reform: A Case Study in Reform Failure</h3>
-    <p>India's labour market is governed by over 40 central laws and hundreds of state laws, many dating from the 1940s. Industrial Disputes Act provisions — requiring government permission for plant closures above 100 workers — have been widely documented as reducing formal employment creation. Multiple governments since 1991 have attempted to simplify and rationalise labour law. The 2020 Labour Codes — consolidating 44 laws into 4 — were enacted but largely not notified by states, meaning they did not come into force. The political economy: organised labour opposes any reform that reduces job security; formal sector employers want flexibility; informal workers are unorganised and not represented in the bargaining. The result: formal labour law remains unreformed while the informal economy absorbs 90% of the workforce without its protection.</p>
-
-    <h3>Reform by Stealth vs. Reform by Consensus</h3>
-    <p>India has sometimes achieved reform through administrative action that avoids legislative visibility — DBT replacing PDS cash flows, UIDAI's Aadhaar expansion, LPG subsidy transfer. These stealth reforms are faster but less durable — they can be reversed by administrative order and lack the legitimacy of legislative sanction. The tension between speed (stealth) and durability (consensus-based legislation) is a real design trade-off in reform strategy.</p>
-  </div>
+  <div id="module14-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1894,39 +1618,9 @@
     <h2 class="module-title">Comparative Policy: South Asia</h2>
     <p class="module-intro">What India can learn from Bangladesh, Pakistan, Sri Lanka, and Nepal — and what the regional comparison reveals about Indian policy.</p>
   </div>
-  <div class="prose">
-    <p>Comparative analysis is the most underused tool in Indian policy discussion. India's policy debates are largely self-referential — we compare districts and states but rarely look systematically at what neighbouring countries have done differently and with what results. This module builds that comparative frame, covering Bangladesh, Pakistan, Sri Lanka, and Nepal in sufficient depth to draw actionable lessons.</p>
-
-    <h3>Bangladesh: The Development Paradox</h3>
-    <p>Bangladesh now ranks higher than India on the UNDP Human Development Index despite lower per-capita income — a striking inversion that demands explanation. Bangladesh has achieved lower infant mortality, better female secondary education enrollment, higher female labour force participation, and comparable or better nutrition outcomes compared to India. Three factors are most important:</p>
-    <div class="card-grid">
-      <div class="card"><div class="card-icon green"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Heart.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">NGO Infrastructure</div><div class="card-text">BRAC, Grameen, and hundreds of smaller organisations built delivery systems for health, microfinance, and education that operated where the state was absent. BRAC's non-formal primary schools, health worker model, and microfinance reached populations the state could not. This is both a strength (coverage) and a risk (donor-dependent sustainability).</div></div>
-      <div class="card"><div class="card-icon"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Activity.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Female Empowerment Model</div><div class="card-text">Female secondary stipend programme (since 1994) drove dramatic increases in girls' enrollment. Garment sector employment — 4M+ workers, 80% women — transformed female economic independence and bargaining power within households. These two factors reinforced each other across a generation.</div></div>
-      <div class="card"><div class="card-icon indigo"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Globe_detailed.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"></div><div class="card-title">Targeted Social Protection</div><div class="card-text">Bangladesh's social protection system — Old Age Allowance, Widow Allowance, Food for Work, Vulnerable Group Development — is smaller than India's but more consistently targeted and delivered. The administrative apparatus, though limited, has focused on actual delivery rather than scheme proliferation.</div></div>
-    </div>
-
-    <h3>Pakistan: Structural Obstacles to Social Policy</h3>
-    <p>Pakistan's policy challenges are significantly deeper than India's — involving military dominance over civilian government, acute fiscal constraints (IMF programme dependence), and ethnic and provincial fragmentation. The 18th Amendment (2010) devolved major social sector responsibilities to provinces without commensurate fiscal transfer — creating an implementation gap where provinces have mandate but insufficient revenue. Pakistan's most successful social protection programme, BISP (Benazir Income Support Programme, now Ehsaas), is internationally recognised for its targeting quality and female-focused beneficiary design. India's DBT architecture and BISP's transfer mechanisms represent convergent design innovations in South Asian social protection.</p>
-
-    <h3>Sri Lanka: The Welfare State Under Fiscal Stress</h3>
-    <p>Sri Lanka built one of South Asia's most comprehensive welfare states — universal health, high literacy, social protection — on the back of plantation agriculture exports. By 2022, this welfare state had become fiscally unsustainable: the combination of tax cuts (2019), COVID revenue collapse, and imported commodity price spikes produced a sovereign default, foreign exchange crisis, and political collapse. Sri Lanka's crisis is a cautionary tale about fiscal sustainability of welfare commitments — but equally about the consequences of reckless tax reduction for a state that had historically derived its development outcomes from public investment. The IMF programme (2023) is attempting stabilisation while preserving core welfare commitments.</p>
-
-    <h3>Nepal: Federalism and Social Policy</h3>
-    <p>Nepal's 2015 Constitution created a three-tier federal structure — federal, provincial, and local governments — in a country that had been centrally administered for centuries. The federalism transition has been deeply challenging: local governments have new powers but inadequate administrative capacity and often insufficient revenue. Nepal's social protection programmes (old age pension, disability allowance) are relatively well-implemented. The challenge is building provincial and local capacity fast enough to absorb the devolved functions.</p>
-
-    <h3>What India Can Learn</h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Country</th><th>Lesson for India</th><th>Where India Already Does This Better</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Bangladesh</strong></td><td>Female secondary stipend design; NGO-government delivery partnerships; garment sector as female empowerment driver</td><td>Scale of rights-based legislation; judicial accountability mechanisms; fiscal capacity</td></tr>
-          <tr><td><strong>Pakistan (BISP)</strong></td><td>Targeting quality in cash transfers; female-focused beneficiary registration</td><td>Fiscal stability; constitutional rights framework; civil society density</td></tr>
-          <tr><td><strong>Sri Lanka</strong></td><td>Universal health system architecture; literacy investment long-term dividends</td><td>Fiscal sustainability; political stability; economic size and diversification</td></tr>
-          <tr><td><strong>Nepal</strong></td><td>Genuine third-tier devolution attempt; local government empowerment</td><td>Administrative capacity; fiscal depth; economic resilience</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <div id="module15-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="reading-list">
     <div class="reading-list-title"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Book.svg" alt="" class="sargam-icon" style="width:20px;height:20px;"> Essential Reading</div>
@@ -1993,9 +1687,9 @@
     <h2 class="module-title">Capstone Project</h2>
     <p class="module-intro">Apply the full policy analysis framework to produce a rigorous, practitioner-relevant policy brief or governance assessment.</p>
   </div>
-  <div class="prose">
-    <p>The capstone is where the course becomes your work. Choose a policy problem you care about — one connected to your professional context. Apply the analytical toolkit built across sixteen modules: policy instrument choice, institutional architecture, fiscal constraints, implementation analysis, political economy of reform, and comparative evidence. Produce something you could actually use.</p>
-  </div>
+  <div id="module16-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
 
   <div class="capstone-block">
     <h3 style="margin-bottom:20px;">Project Architecture</h3>
