@@ -25,7 +25,7 @@ Each flagship course includes:
 
 **How to use them:** Work through a course at your own pace (one module per week is a comfortable rhythm). Assign modules to your team as pre-reading before a planning session. Use them as the curriculum backbone for a university course or NGO training programme.
 
-### Foundational Courses (39 courses)
+### Foundational Courses (47 courses)
 
 Comprehensive study decks that cover a specific skill or concept in depth. These are self-paced reading materials — thorough in their coverage but simpler in format than flagship courses. **23 of these are now also available as visual 101 Course Decks** — 60-slide Gamma presentations with Indian folk art illustrations. See the [101 Course Decks Guide](101-decks-guide.md) for the full list and access links.
 

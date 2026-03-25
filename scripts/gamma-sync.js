@@ -153,6 +153,11 @@ const COURSES = [
 
   // MEL & Research (remaining)
   { slug: "toc-workbench", title: "Theory of Change Workbench 101", category: "MEL & Research", description: "Build and test Theories of Change for development programs using logical frameworks and results chains." },
+
+  // Phase II regenerations — recovered decks missing PDFs/latest branding
+  { slug: "edu-pedagogy", title: "Education and Pedagogy 101", category: "Health & Communication", description: "Discover evidence-based teaching methodologies, learning theories, and pedagogical approaches for development education contexts." },
+  { slug: "SRHR-basics", title: "Sexual and Reproductive Health and Rights 101", category: "Health & Communication", description: "Navigate SRHR frameworks, rights-based approaches, and evidence-based programming for sexual and reproductive health." },
+  { slug: "wee-studies", title: "Women's Economic Empowerment 101", category: "Gender & Equity", description: "Understand frameworks, evidence, and interventions for advancing women's economic participation, agency, and empowerment." },
 ];
 
 // ─── HTTP helpers (using curl for DNS reliability) ───────────────────────────
