@@ -705,12 +705,25 @@ a:hover { text-decoration: underline; }
 .coach-callout {
   background: var(--coach-bg);
   border: 1px solid var(--coach-border);
+  border-left: 4px solid var(--accent-secondary, #BE185D);
   border-radius: 10px;
   padding: 18px 20px;
-  margin: 24px 0;
+  margin: 28px 0;
   display: flex;
   gap: 14px;
   align-items: flex-start;
+  box-shadow: 0 2px 12px rgba(190, 24, 93, 0.12);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.2s ease;
+}
+.coach-callout.popup-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.coach-callout:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(190, 24, 93, 0.18);
 }
 
 .coach-avatar {
@@ -1121,31 +1134,405 @@ a:hover { text-decoration: underline; }
 section, .module, .lexicon-section, .founders-section {
   scroll-margin-top: 72px;
 }
+
+
+/* Reading Progress Bar */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--gradient-primary);
+            z-index: 1000;
+            transition: width 0.1s linear;
+        }
+
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg, rgba(15, 23, 42, 0.95));
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border, #334155);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left {
+    display: flex; align-items: center; gap: 0.75rem;
+}
+.im-topbar-home {
+    display: flex; align-items: cent
+
+/* ==========================================
+           V3 FLOATING PAPER PLANE
+           ========================================== */
+        .v3-paper-plane {
+            position: fixed;
+            top: 15%;
+            right: 8%;
+            width: 140px;
+            height: 140px;
+            opacity: 0.35;
+            z-index: 0;
+            pointer-events: none;
+            animation: v3-fly 25s ease-in-out infinite;
+        }
+        
+        @keyframes v3-fly {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            20% { transform: translate(60px, -40px) rotate(12deg); }
+            40% { transform: translate(120px, 30px) rotate(-8deg); }
+            60% { transform: translate(40px, 60px) rotate(15deg); }
+            80% { transform: translate(-30px, 20px) rotate(-5deg); }
+        }
+        
+        [data-theme="light"] .v3-paper-plane {
+            opacity: 0.25;
+        }
+        
+        /* ==========================================
+           V3 ORGANIC BACKGROUND BLOBS
+           ========================================== */
+        .v3-organic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .v3-blob {
+            position: absolute;
+            border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+            animation: v3-morph 20s ease-in-out infinite;
+        }
+        
+        .v3-blob-1 {
+            top: -120px;
+            right: -120px;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, transparent 70%);
+            animation-delay: 0s;
+        }
+        
+        .v3-blob-2 {
+            bottom: -180px;
+            left: -180px;
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.10) 0%, transparent 70%);
+            border-radius: 41% 59% 38% 62% / 67% 44% 56% 33%;
+            animation-delay: -5s;
+            animation-direction: reverse;
+        }
+        
+        .v3-blob-3 {
+            top: 40%;
+            left: 60%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+            border-radius: 52% 48% 61% 39% / 43% 58% 42% 57%;
+            animation-delay: -10s;
+        }
+        
+        .v3-blob-4 {
+            top: 60%;
+            right: 20%;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.06) 0%, transparent 70%);
+            border-radius: 38% 62% 45% 55% / 61% 39% 61% 39%;
+            animation-delay: -15s;
+            animation-direction: reverse;
+        }
+        
+        @keyframes v3-morph {
+            0%, 100% { 
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+            }
+            25% { 
+                transform: translate(30px, -25px) rotate(5deg) scale(1.05);
+                border-radius: 41% 59% 48% 52% / 47% 53% 47% 53%;
+            }
+            50% { 
+                transform: translate(-20px, 35px) rotate(-3deg) scale(0.95);
+                border-radius: 54% 46% 38% 62% / 62% 38% 62% 38%;
+            }
+            75% { 
+                transform: translate(25px, 15px) rotate(8deg) scale(1.02);
+                border-radius: 48% 52% 59% 41% / 53% 47% 53% 47%;
+            }
+        }
+        
+        [data-theme="light"] .v3-blob-1 {
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+        }
+        
+        [data-theme="light"] .v3-blob-2 {
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.06) 0%, transparent 70%);
+        }
+        
+        [data-theme="light"] .v3-blob-3 {
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+        }
+        
+        [data-theme="light"] .v3-blob-4 {
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.04) 0%, transparent 70%);
+        }
+        
+        /* ==========================================
+           FLOATING SPARKLES
+           ========================================== */
+        .v3-floating-elements {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .v3-sparkle {
+            position: absolute;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            opacity: 0.4;
+            animation: v3-sparkle-float 15s ease-in-out infinite;
+        }
+        
+        .v3-sparkle-1 {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .v3-sparkle-2 {
+            top: 60%;
+            right: 15%;
+            animation-delay: -5s;
+            color: var(--secondary-accent);
+        }
+        
+        .v3-sparkle-3 {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: -10s;
+            color: var(--success-color);
+        }
+        
+        @keyframes v3-sparkle-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 0.7; }
+        }
+        
+        /* Additional floating planes */
+        .v3-big-plane {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0.22;
+            animation: v3-plane-float 30s ease-in-out infinite;
+        }
+        
+        .v3-big-plane-1 {
+            top: 30%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .v3-big-plane-2 {
+            bottom: 20%;
+            right: 10%;
+            animation-delay: -10s;
+        }
+        
+        .v3-big-plane-3 {
+            top: 70%;
+            left: 70%;
+            animation-delay: -20s;
+        }
+        
+        @keyframes v3-plane-float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -30px) rotate(10deg); }
+            50% { transform: translate(80px, 40px) rotate(-5deg); }
+            75% { transform: translate(20px, 50px) rotate(8deg); }
+        }
+
+.quiz-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, rgba(99, 102, 241, 0.05) 100%);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            border-left: 4px solid var(--indigo);
+        }
+        .quiz-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+        .quiz-header svg { width: 28px; height: 28px; color: var(--indigo); }
+        .quiz-header h4 { margin: 0; font-size: 1.25rem; color: var(--text-primary); }
+        .quiz-intro { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-light); }
+        .quiz-question { margin-bottom: 1.5rem; padding: 1.25rem; background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-light); }
+        .quiz-question:last-child { margin-bottom: 0; }
+        .question-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: var(--indigo); color: white; font-size: 0.75rem; font-weight: 600; border-radius: 50%; margin-right: 0.75rem; }
+        .question-text { font-weight: 500; color: var(--text-primary); margin-bottom: 1rem; line-height: 1.6; }
+        .question-type { display: inline-block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.2rem 0.5rem; background: var(--bg-tertiary); color: var(--text-muted); border-radius: 4px; margin-left: 0.5rem; }
+        .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
+        .quiz-option { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+        .quiz-option:hover { border-color: var(--indigo); background: rgba(99, 102, 241, 0.05); }
+        .quiz-option input[type="radio"] { margin-top: 0.2rem; accent-color: var(--indigo); }
+        .quiz-option label { cursor: pointer; line-height: 1.5; color: var(--text-secondary); }
+        .quiz-option.correct { border-color: var(--success); background: rgba(16, 185, 129, 0.1); }
+        .quiz-option.incorrect { border-color: var(--orange); background: rgba(245, 158, 11, 0.1); }
+        .quiz-feedback { margin-top: 1rem; padding: 1rem; border-radius: 8px; font-size: 0.9rem; display: none; }
+        .quiz-feedback.show { display: block; }
+        .quiz-feedback.correct { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); color: var(--success); }
+        .quiz-feedback.incorrect { background: rgba(245, 158, 11, 0.1); border: 1px solid var(--orange); color: var(--text-primary); }
+        .reflection-prompt { padding: 1rem 1.25rem; background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%); border: 1px dashed var(--cyan); border-radius: 8px; margin-top: 0.75rem; }
+        .reflection-prompt p { margin: 0; font-style: italic; color: var(--text-secondary); line-height: 1.6; }
+        .check-answer-btn { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; padding: 0.6rem 1.25rem; background: var(--indigo); color: white; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
+        .check-answer-btn:hover { background: #4f46e5; transform: translateY(-1px); }
+        .check-answer-btn svg { width: 16px; height: 16px; }
+        .capstone-box { background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(14, 165, 233, 0.08) 100%); border: 2px solid var(--indigo); border-radius: 16px; padding: 2rem; margin-top: 2rem; }
+        .capstone-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .capstone-icon { width: 48px; height: 48px; background: var(--indigo); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .capstone-icon svg { width: 24px; height: 24px; color: white; stroke: white; }
+        .capstone-title { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+        .capstone-timeline { display: grid; gap: 1rem; margin: 1.5rem 0; }
+        .capstone-phase { display: flex; gap: 1rem; padding: 1.25rem; background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-light); }
+        .phase-number { width: 32px; height: 32px; background: var(--cyan); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.9rem; flex-shrink: 0; }
+        .phase-content h5 { margin: 0 0 0.5rem 0; color: var(--text-primary); }
+        .phase-content p { margin: 0; font-size: 0.9rem; color: var(--text-secondary); }
+        .deliverables-list { list-style: none; padding: 0; margin: 1rem 0; }
+        .deliverables-list li { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border-light); }
+        .deliverables-list li:last-child { border-bottom: none; }
+        .deliverables-list svg { width: 20px; height: 20px; color: var(--success); stroke: var(--success); flex-shrink: 0; margin-top: 0.1rem; }
+
+
+    
+        /* Coach Callout Popup Animation - Robust Version */
+        .coach-callout:not(.popup-visible) {
+            opacity: 0 !important;
+            transform: translateY(40px) scale(0.9) !important;
+        }
+        
+        .coach-callout {
+            transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        
+        .coach-callout.popup-visible {
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) !important;
+        }
+        
+        .coach-callout:not(.popup-visible) .coach-photo {
+            opacity: 0 !important;
+            transform: scale(0.5) !important;
+        }
+        
+        .coach-callout:not(.popup-visible) .coach-content {
+            opacity: 0 !important;
+            transform: translateX(-30px) !important;
+        }
+        
+        .coach-callout .coach-photo,
+        .coach-callout .coach-content {
+            transition: opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s !important;
+        }
+        
+        .coach-callout.popup-visible .coach-photo {
+            opacity: 1 !important;
+            transform: scale(1) !important;
+        }
+        
+        .coach-callout.popup-visible .coach-content {
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+        }
 </style>
 </head>
 <body>
 
-<!-- TOP NAV -->
-<nav class="top-nav">
-  <a href="https://www.impactmojo.in/" class="nav-logo">
-    <span>ImpactMojo</span>
-  </a>
-  <div class="nav-right">
-    <a href="https://www.impactmojo.in/premium" class="nav-premium">Premium</a>
-    <div class="theme-selector">
-      <button class="theme-btn" id="theme-system" onclick="setTheme('system')" title="System">
-        <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Monitor.svg" alt="">
-      </button>
-      <button class="theme-btn" id="theme-light" onclick="setTheme('light')" title="Light">
-        <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Sun.svg" alt="">
-      </button>
-      <button class="theme-btn active" id="theme-dark" onclick="setTheme('dark')" title="Dark">
-        <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Moon.svg" alt="">
-      </button>
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>ImpactMojo</span>
+        </a>
     </div>
-  </div>
-</nav>
+    <div class="im-topbar-right">
+        <a href="../../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
 
+<!-- Reading Progress Bar -->
+    <div class="reading-progress" id="reading-progress"></div>
+    <!-- V3 FLOATING PAPER PLANE -->
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+        <!-- Trailing sparkles -->
+        <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+        <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+        <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+    </svg>
+    <!-- V3 ORGANIC BACKGROUND BLOBS -->
+    <div class="v3-organic-bg" aria-hidden="true">
+        <div class="v3-blob v3-blob-1"></div>
+        <div class="v3-blob v3-blob-2"></div>
+        <div class="v3-blob v3-blob-3"></div>
+        <div class="v3-blob v3-blob-4"></div>
+    </div>
+    
+    <!-- V3 FLOATING ELEMENTS -->
+    <div class="v3-floating-elements" aria-hidden="true">
+        <div class="v3-sparkle v3-sparkle-1">✦</div>
+        <div class="v3-sparkle v3-sparkle-2">✧</div>
+        <div class="v3-sparkle v3-sparkle-3">✦</div>
+        
+        <!-- Additional floating planes -->
+        <svg class="v3-big-plane v3-big-plane-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#6366F1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M80,130 L150,50" stroke="#0EA5E9" stroke-width="2" stroke-dasharray="4,4"/>
+            <circle cx="150" cy="50" r="4" fill="#10B981"/>
+        </svg>
+        
+        <svg class="v3-big-plane v3-big-plane-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/>
+            <circle cx="150" cy="50" r="4" fill="#0EA5E9"/>
+        </svg>
+        
+        <svg class="v3-big-plane v3-big-plane-3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#F59E0B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M80,130 L150,50" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,4"/>
+            <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+        </svg>
+    </div>
+    
 <!-- LAYOUT -->
 <div class="layout">
 
@@ -1325,119 +1712,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Foundations</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          Most people enter a gender studies course assuming they already know what gender is — it is about men and women, perhaps with some acknowledgment that there are more categories. This module argues that this assumption needs to be entirely dismantled before anything useful can be built. Gender is not a description of biological difference. It is a <strong>social, political, and historical system</strong> that assigns meaning, value, labour, and power on the basis of perceived sex. The distinction matters enormously for practice.
-        </p>
-
-        <h3>Sex, Gender, and the Biology Trap</h3>
-        <p>
-          The sex/gender distinction — sex as biological, gender as social — was enormously productive when feminist scholars first articulated it in the 1970s. Ann Oakley's 1972 work <em>Sex, Gender and Society</em> established that what we take to be natural female or male behaviour is almost entirely learned. Cross-cultural anthropology showed that the labour, temperament, and social roles assigned to men and women varied so substantially across societies that biology could not explain them.
-        </p>
-        <p>
-          But the distinction has limits. Judith Butler's <em>Gender Trouble</em> (1990) made the more unsettling argument that sex itself is not a pre-social fact — that the category of biological sex is produced through discourse and regulation. What counts as male or female anatomy, which bodies get assigned to which category, which chromosomal patterns are treated as standard — all of these involve interpretation and social norm. This does not mean bodies are not real. It means that the significance we attach to bodily difference is always already shaped by power.
-        </p>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Key Concept — Performativity</div>
-          <p>Butler's concept of gender performativity holds that gender is not something you <em>have</em> but something you <em>do</em> — repeated acts that produce the illusion of a stable inner gender identity. This is not a claim that gender is a free choice or a costume. The repetition is compelled, and deviation carries real social costs. The point is that gender norms must be continually re-enacted to persist, which also means they can be destabilised.</p>
-        </div>
-
-        <h3>Gender as a System of Power</h3>
-        <p>
-          Raewyn Connell's concept of the <strong>gender order</strong> describes gender as a structure of social relations organised around reproductive distinctions — but extending far beyond reproduction into economic production, symbolic meaning, emotional life, and political authority. Within any society's gender order, particular configurations of masculinity and femininity are ranked. Connell's concept of <strong>hegemonic masculinity</strong> refers to the dominant form that legitimates men's power over women and over other men who fail to embody it. This is not about individual men being dominant but about how the gender system reproduces inequality structurally.
-        </p>
-        <p>
-          For development practitioners, this matters because gender inequality is not primarily a problem of bad attitudes that training can fix. It is embedded in property regimes, labour markets, legal systems, cultural production, and political institutions. Changing it requires working on structures, not just on minds.
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">66%</div>
-            <div class="stat-label">of the world's unpaid work is done by women</div>
-            <div class="stat-source">ILO, 2018</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">10¢</div>
-            <div class="stat-label">Women own less than 10% of the world's property</div>
-            <div class="stat-source">UN Women, 2020</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">27%</div>
-            <div class="stat-label">Women in national parliaments globally</div>
-            <div class="stat-source">IPU, 2024</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">1 in 3</div>
-            <div class="stat-label">Women experience physical or sexual violence in their lifetime</div>
-            <div class="stat-source">WHO, 2021</div>
-          </div>
-        </div>
-
-        <h3>Gender in South Asia: What the Local Data Shows</h3>
-        <p>
-          India's National Family Health Survey (NFHS-5, 2019–21) provides some of the most detailed gender data available for a large developing country. The numbers are striking. Female labour force participation in India is around 25% — among the lowest in the world and lower than many poorer countries. Son preference remains measurable: India's sex ratio at birth is 110.5 males per 100 females. Nearly 57% of women aged 15–49 are anaemic. And 29% of ever-married women have experienced spousal physical or sexual violence.
-        </p>
-        <p>
-          These are not random statistics. They are connected. Son preference, anaemia, low labour force participation, and domestic violence are all expressions of a single underlying gender order — one in which female bodies, labour, and lives are systematically valued less. Addressing any one of them in isolation will have limited impact without understanding the system they are part of.
-        </p>
-
-        <div class="pull-quote">
-          <blockquote>"The personal is political. It means that what we thought were purely personal experiences are in fact politically structured."</blockquote>
-          <cite>— Carol Hanisch, "The Personal is Political" (1969)</cite>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">V</div>
-          <div class="coach-body">
-            <div class="coach-name">Varna</div>
-            <div class="coach-text">When I first started working in rural Maharashtra, the standard programme framing was "women's empowerment" — as if women lacked power because of some internal deficit. What became clear over time was that women were doing enormous amounts of skilled and strategic work, but within a structure that rendered it invisible and uncompensated. Butler and Connell gave me better analytical tools than most development frameworks do. Start with the theory before you start with the indicators.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-1-1">
-            <div class="mcq-question">1. Judith Butler's concept of gender performativity argues that:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-1-1" value="a"> (a) Gender is a theatrical performance that individuals consciously choose</label>
-              <label class="mcq-option"><input type="radio" name="mcq-1-1" value="b"> (b) Gender identity is produced through compelled repetition of acts, not a pre-existing inner essence</label>
-              <label class="mcq-option"><input type="radio" name="mcq-1-1" value="c"> (c) Biological sex determines gender expression in most cases</label>
-              <label class="mcq-option"><input type="radio" name="mcq-1-1" value="d"> (d) Gender only becomes meaningful in the context of economic production</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Butler argues gender is performative — constituted through repeated acts — not a reflection of some pre-given identity. The compelled nature of the repetition is crucial: this is not free performance but socially enforced re-enactment.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-1-2">
-            <div class="mcq-question">2. Connell's concept of "hegemonic masculinity" refers to:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-1-2" value="a"> (a) The most physically aggressive form of masculinity in a society</label>
-              <label class="mcq-option"><input type="radio" name="mcq-1-2" value="b"> (b) The dominant configuration of masculinity that legitimates men's collective power, often without direct coercion</label>
-              <label class="mcq-option"><input type="radio" name="mcq-1-2" value="c"> (c) Masculinity among elite or upper-class men specifically</label>
-              <label class="mcq-option"><input type="radio" name="mcq-1-2" value="d"> (d) A fixed biological disposition toward dominance</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Hegemonic masculinity is the culturally dominant ideal that justifies the gender order — it operates through consent and cultural production as much as through force. Most men do not embody it fully but benefit from a patriarchal dividend.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-1-3">
-            <div class="mcq-question">3. India's NFHS-5 (2019–21) data on female labour force participation shows approximately:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-1-3" value="a"> (a) 45% — comparable to East Asian economies</label>
-              <label class="mcq-option"><input type="radio" name="mcq-1-3" value="b"> (b) 25% — among the lowest in the world</label>
-              <label class="mcq-option"><input type="radio" name="mcq-1-3" value="c"> (c) 38% — declining from a peak in the 1980s</label>
-              <label class="mcq-option"><input type="radio" name="mcq-1-3" value="d"> (d) 15% — a recent post-pandemic collapse</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. India\'s female labour force participation rate is around 25%, paradoxically low for a middle-income economy. It is lower than Bangladesh and many Sub-Saharan African countries — a fact that cannot be explained by poverty alone and requires a gender-structural analysis.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module1-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 02 -->
@@ -1449,120 +1726,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Foundations</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          Feminist thought is not a single tradition. It is a set of competing and sometimes contradictory intellectual and political projects, shaped by the specific material conditions and power structures each wave of feminism was responding to. Understanding that history is necessary to evaluate contemporary debates — and to avoid reinventing wheels or repeating mistakes.
-        </p>
-
-        <h3>First Wave: Rights and Suffrage (1840s–1920s)</h3>
-        <p>
-          The first wave focused on formal legal equality — the right to vote, to own property, to be educated, and to hold public office. In Britain, the suffragette movement and the work of Mary Wollstonecraft; in the United States, the Seneca Falls Convention of 1848 and the long struggle for the 19th Amendment. In India, the debates were different: reform movements in the 19th century, led predominantly by men like Ram Mohan Roy, addressed practices like sati and child marriage — but on terms that often preserved upper-caste patriarchal authority while reforming specific practices.
-        </p>
-        <p>
-          The critical limitation of first-wave feminism, visible in retrospect, is that its universalism masked a particular subject: the educated, middle-class, often white or upper-caste woman. The suffrage movements in Britain and the US were starkly racialised — Black women were excluded from or sidelined in campaigns that claimed to speak for all women.
-        </p>
-
-        <h3>Second Wave: The Personal is Political (1960s–1980s)</h3>
-        <p>
-          Second-wave feminism — associated in the US with the National Organization for Women, consciousness-raising groups, and scholars like Betty Friedan, Kate Millett, and Shulamith Firestone — moved the analysis beyond formal rights to the structures of everyday life: the family, sexuality, reproductive rights, domestic violence, and the division of labour in the home. The slogan "the personal is political" captured the insight that private arrangements are maintained by public power.
-        </p>
-        <p>
-          Socialist and Marxist feminists within the second wave — including Juliet Mitchell, Sheila Rowbotham, and later Silvia Federici — connected women's oppression to capitalism, arguing that the unpaid domestic labour women performed was essential to the reproduction of labour power, and therefore to capitalist accumulation. This analysis anticipates the contemporary care work literature directly.
-        </p>
-        <p>
-          In India, the second wave took shape around specific political ruptures: the 1972–73 Mathura rape case verdict, the 1978 Rameeza Bee case, and the 1980s campaigns against dowry deaths. These galvanised a women's movement that was simultaneously engaged with anti-caste politics, labour rights, and anti-communalism — making it distinct from Western second-wave feminism in important ways.
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">1974</div>
-            <div class="stat-label">Year of India's Towards Equality report — landmark state assessment of women's status</div>
-            <div class="stat-source">CSWI Report</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">1979</div>
-            <div class="stat-label">CEDAW adopted by the UN General Assembly</div>
-            <div class="stat-source">UN</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">1993</div>
-            <div class="stat-label">Vienna Declaration — gender-based violence recognised as a human rights violation</div>
-            <div class="stat-source">OHCHR</div>
-          </div>
-        </div>
-
-        <h3>Third Wave and Postcolonial Feminism (1990s–2000s)</h3>
-        <p>
-          Third-wave feminism — associated with Kimberle Crenshaw's intersectionality framework, bell hooks, and the backlash against second wave's homogenising tendencies — centred the differences among women: race, class, sexuality, disability, caste. It also engaged with popular culture, sexuality positivity, and queer theory in ways the second wave had not.
-        </p>
-        <p>
-          Postcolonial feminist critique, articulated most sharply by Chandra Talpade Mohanty in "Under Western Eyes" (1984), challenged the way Western feminist scholarship constructed "Third World women" as a monolithic, victimised category — an analytical move that produced patronising policy and bad development practice. Mohanty argued for grounded, historically specific analysis rather than universal feminist categories.
-        </p>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Key Concept — Postcolonial Feminism</div>
-          <p>Postcolonial feminism holds that gender analysis must be situated within histories of colonialism, racism, and imperial power. "Women" is not a universal category — what it means to be a woman in rural Bihar, in Nairobi, and in Amsterdam involves entirely different structural conditions. Gender-blind universalism in development policy often reproduces colonial knowledge hierarchies even when it claims to be liberatory.</p>
-        </div>
-
-        <h3>Contemporary Feminism in India</h3>
-        <p>
-          Contemporary feminist scholarship in India — the work of Nivedita Menon, Uma Chakravarti, Flavia Agnes, Gopal Guru, Sharmila Rege, and Vrinda Nabar — is marked by several tensions the earlier literature does not resolve: the relationship between anti-caste and feminist politics, the limits of the criminal law as a tool for feminist ends, the politics of the veil and religious identity, and the question of what feminist solidarity means across caste and class lines.
-        </p>
-        <p>
-          Uma Chakravarti's concept of <strong>Brahmanical patriarchy</strong> is essential here: she argues that in the Indian context, caste and gender are not parallel oppressions but are structurally intertwined — the regulation of women's sexuality is the mechanism through which caste endogamy is maintained. This means gender and caste cannot be analysed separately without distorting both.
-        </p>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">VS</div>
-          <div class="coach-body">
-            <div class="coach-name">Vandana Soni</div>
-            <div class="coach-text">One of the most common errors in gender mainstreaming work is treating feminist theory as a purely Western import that needs to be "translated" for Indian contexts. The reality is that some of the sharpest analyses of gender-caste-class interlinkages come from Indian scholars — Chakravarti, Rege, Agnes, Guru — who were writing from direct political engagement with Indian women's movements. Start with them, not with Western frameworks that you then apply downward.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-2-1">
-            <div class="mcq-question">1. Chandra Mohanty's "Under Western Eyes" (1984) critiques Western feminist scholarship for:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-2-1" value="a"> (a) Being too focused on economic inequality rather than cultural oppression</label>
-              <label class="mcq-option"><input type="radio" name="mcq-2-1" value="b"> (b) Constructing "Third World women" as a homogeneous, victimised category that erases their agency and diversity</label>
-              <label class="mcq-option"><input type="radio" name="mcq-2-1" value="c"> (c) Ignoring the importance of the state in producing gender inequality</label>
-              <label class="mcq-option"><input type="radio" name="mcq-2-1" value="d"> (d) Overemphasising sexual violence at the expense of economic analysis</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Mohanty\'s critique is specifically directed at the discursive production of the "average Third World woman" as poor, uneducated, domestically confined, and tradition-bound — a construct that serves Western feminist self-representation as much as it describes any actual women.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-2-2">
-            <div class="mcq-question">2. Uma Chakravarti's concept of "Brahmanical patriarchy" argues that:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-2-2" value="a"> (a) Upper-caste Brahmin men are the primary perpetrators of gender violence in India</label>
-              <label class="mcq-option"><input type="radio" name="mcq-2-2" value="b"> (b) Caste and gender are structurally intertwined — the control of women's sexuality is the mechanism through which caste purity is maintained</label>
-              <label class="mcq-option"><input type="radio" name="mcq-2-2" value="c"> (c) Brahmanical religious texts are the main source of women's subordination in India</label>
-              <label class="mcq-option"><input type="radio" name="mcq-2-2" value="d"> (d) Indian feminism must reject caste analysis to build cross-caste solidarity</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Chakravarti\'s argument is structural, not about individual perpetrators. Caste endogamy requires that women\'s sexual choices be controlled — hence the regulation of women\'s bodies is built into the reproduction of caste hierarchy itself.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-2-3">
-            <div class="mcq-question">3. Socialist feminists of the second wave argued that unpaid domestic labour:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-2-3" value="a"> (a) Is a private arrangement with no systematic connection to capitalist production</label>
-              <label class="mcq-option"><input type="radio" name="mcq-2-3" value="b"> (b) Should be abolished as incompatible with women's liberation</label>
-              <label class="mcq-option"><input type="radio" name="mcq-2-3" value="c"> (c) Is essential to reproducing labour power and therefore subsidises capitalist accumulation</label>
-              <label class="mcq-option"><input type="radio" name="mcq-2-3" value="d"> (d) Became more equal between men and women during the industrial revolution</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'c', 'Correct. The domestic labour debate — associated with Mariarosa Dalla Costa, Selma James, and Silvia Federici — argued that cooking, cleaning, child-rearing, and emotional support reproduce workers who can show up to work the next day. This labour is essential to capitalism but unpaid and assigned to women.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module2-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 03 -->
@@ -1574,97 +1740,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Foundations</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          Intersectionality is one of the most cited and most misunderstood concepts in contemporary social science. In its original formulation — Kimberle Crenshaw's 1989 article "Demarginalizing the Intersection of Race and Sex" — it was a precise legal argument about why anti-discrimination frameworks failed Black women in the United States. In development practice, it has sometimes been reduced to a synonym for "multiple identities" or used decoratively without changing any analytical or programmatic logic. This module recovers the original argument and extends it to the Indian context.
-        </p>
-
-        <h3>Crenshaw's Original Argument</h3>
-        <p>
-          Crenshaw was analysing three employment discrimination cases in which Black women's claims were dismissed because they could not identify a disadvantage that applied to all Black people (including Black men) or to all women (including white women). The courts treated race and sex as separate tracks — but Black women's specific disadvantage existed precisely at the intersection. A workplace that discriminated against Black women while hiring Black men and white women could escape both race and sex discrimination law.
-        </p>
-        <p>
-          The theoretical point is not that Black women face a "double burden" — more oppression because they are both Black and female. It is that the combination produces qualitatively different experiences that cannot be derived by adding race-oppression to sex-oppression. The intersection is its own structural location, with its own specific dynamics.
-        </p>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Key Concept — Intersectionality</div>
-          <p>Intersectionality, in Crenshaw's formulation, holds that race, class, gender, sexuality, caste, disability, and other axes of power do not operate independently — they interact to produce distinct social positions and experiences of both advantage and disadvantage. A gender analysis that ignores caste will misidentify which women are most vulnerable and why. A caste analysis that ignores gender will misidentify what caste oppression looks like for women versus men.</p>
-        </div>
-
-        <h3>Caste, Gender, and Class in South Asia</h3>
-        <p>
-          In the Indian context, the analytically equivalent framework has been developed through Dalit feminist scholarship — particularly the work of Sharmila Rege, Gopal Guru, and activists like Ruth Manorama. The caste-gender nexus operates differently at different social locations. Dalit women face violence that is simultaneously sexual and caste-based — rape as a form of caste humiliation, used deliberately to punish communities that challenge the social order. This violence is qualitatively different from what Savarna women experience and cannot be understood through a gender lens alone.
-        </p>
-        <p>
-          The Khairlanji massacre of 2006 — in which four members of a Dalit family, including two women, were killed and the women sexually assaulted — illustrates this. Mainstream women's organisations were initially slow to respond, partly because the caste dimension was initially underplayed. Dalit feminist organisations had to insist that the violence was simultaneously about caste domination and about gender, not one or the other.
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">3x</div>
-            <div class="stat-label">Dalit women face roughly 3x higher rates of sexual violence than Savarna women</div>
-            <div class="stat-source">NCRB, 2022</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">45%</div>
-            <div class="stat-label">Muslim women's literacy rate vs 71% for Hindu women</div>
-            <div class="stat-source">NFHS-5</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">13%</div>
-            <div class="stat-label">Women with disabilities employed in the formal sector</div>
-            <div class="stat-source">ILO, 2023</div>
-          </div>
-        </div>
-
-        <h3>Intersectionality in Development Practice</h3>
-        <p>
-          Development programmes frequently use gender disaggregation — breaking data down by male/female — as a proxy for gender analysis. This is necessary but not sufficient. It assumes that "women" are a homogeneous group whose interests and vulnerabilities can be represented by any woman's data. In practice, a self-help group programme that reaches upper-caste rural women while missing Dalit women and Muslim women has not "reached women" — it has reinforced the existing hierarchy among women.
-        </p>
-        <p>
-          Meaningful intersectional programme design requires disaggregating data by multiple axes simultaneously: gender × caste × religion × disability × age. It requires asking whose interests are represented in women's collective forums. And it requires acknowledging that some women hold power over other women — that the category "women" is not internally solidary.
-        </p>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">V</div>
-          <div class="coach-body">
-            <div class="coach-name">Varna</div>
-            <div class="coach-text">I've reviewed dozens of gender assessments for development programmes that report all women's data as a single number — average age at marriage, average income, percentage accessing health services. These numbers can show improvement for the "average woman" while Dalit and Adivasi women get systematically worse off. Intersectional data analysis is not more complicated — it just requires thinking about whose average you're computing. Ask this question for every indicator in your M&E framework.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-3-1">
-            <div class="mcq-question">1. Crenshaw's intersectionality framework was originally developed to address:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-3-1" value="a"> (a) The exclusion of women of colour from academic feminist theory</label>
-              <label class="mcq-option"><input type="radio" name="mcq-3-1" value="b"> (b) Why anti-discrimination law failed to protect Black women whose specific disadvantages fell at the intersection of race and sex</label>
-              <label class="mcq-option"><input type="radio" name="mcq-3-1" value="c"> (c) The need to add more identity categories to social science research</label>
-              <label class="mcq-option"><input type="radio" name="mcq-3-1" value="d"> (d) How poverty intersects with gender across different countries</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. The original argument was specifically legal: anti-discrimination frameworks based on single-axis categories (race OR sex) could not capture the compound disadvantage Black women faced — and courts were using this gap to dismiss their claims.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-3-2">
-            <div class="mcq-question">2. In South Asian development practice, a meaningful intersectional approach would require:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-3-2" value="a"> (a) Including more women in programme leadership positions</label>
-              <label class="mcq-option"><input type="radio" name="mcq-3-2" value="b"> (b) Reporting gender-disaggregated data as a sufficient measure of gender equity</label>
-              <label class="mcq-option"><input type="radio" name="mcq-3-2" value="c"> (c) Disaggregating data by multiple axes (gender, caste, religion, disability) simultaneously and examining whose interests are represented in collective forums</label>
-              <label class="mcq-option"><input type="radio" name="mcq-3-2" value="d"> (d) Using feminist theory to replace development economics in programme design</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'c', 'Correct. Gender disaggregation alone can mask inequality among women — showing improvement for the "average woman" while marginalised women fall further behind. Intersectional practice requires multiple simultaneous axes of disaggregation and explicit attention to intra-group power dynamics.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module3-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 04 -->
@@ -1676,94 +1754,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Bodies, Labour &amp; Economy</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          The political economy of gender asks: how does the organisation of gender relations shape economic outcomes — and vice versa? This is not simply about whether women are paid less than men. It is about how the entire structure of markets, households, institutions, and policy is shaped by gender hierarchies — and how those hierarchies are reproduced through economic arrangements.
-        </p>
-
-        <h3>Bina Agarwal and the Economics of Land</h3>
-        <p>
-          Bina Agarwal's <em>A Field of One's Own</em> (1994) remains the most comprehensive political economy analysis of gender and land rights in South Asia. Agarwal's argument is that women's lack of independent land rights is not just a welfare problem but a structural source of their vulnerability across multiple dimensions: bargaining power within marriage, risk of destitution in widowhood or divorce, susceptibility to domestic violence, and ability to access formal credit. Land ownership is a structural asset that activates agency across multiple domains.
-        </p>
-        <p>
-          Agarwal's concept of <strong>bargaining power</strong> — drawing on cooperative conflict theory — holds that outcomes within households are negotiated between members with different interests, and that the terms of negotiation are shaped by what each party can credibly threaten to exit to. A woman with no independent land, no income, and no social support for separation has very weak exit options — and this weakness shapes every negotiation, including over her own bodily autonomy.
-        </p>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Key Concept — Fallback Position</div>
-          <p>In bargaining theory, the fallback position is what each party gets if negotiations break down. For women, this includes: independent income, land or property ownership, legal entitlements, social support networks, and cultural legitimacy for exit. Development interventions that improve women's fallback positions — through asset transfers, legal aid, SHG membership — change the terms of household bargaining even without directly targeting intra-household dynamics.</p>
-        </div>
-
-        <h3>Naila Kabeer and the Three Dimensions of Empowerment</h3>
-        <p>
-          Naila Kabeer's framework for women's empowerment — developed in her work on Bangladesh and later applied across South Asia — identifies three interlinked dimensions: <strong>resources</strong> (material and social inputs), <strong>agency</strong> (the ability to make meaningful choices), and <strong>achievements</strong> (the outcomes that follow from resources and agency). The framework emphasises that resources without agency do not produce empowerment — and that agency without resources is similarly limited.
-        </p>
-        <p>
-          Kabeer's work on the garment industry in Bangladesh challenged the assumption that formal employment automatically empowers women. She found that while factory work gave women independent income and weakened family control over their mobility, it also exposed them to new forms of exploitation and did not necessarily change gender norms in the household. The relationship between economic participation and empowerment is mediated by the structural conditions under which participation occurs.
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">13%</div>
-            <div class="stat-label">Women who own land in India with independent title</div>
-            <div class="stat-source">NFHS-5, 2021</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">19%</div>
-            <div class="stat-label">Women with a bank account they use independently</div>
-            <div class="stat-source">Findex 2021</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">$10T</div>
-            <div class="stat-label">Estimated value of unpaid care work globally per year</div>
-            <div class="stat-source">Oxfam, 2020</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">51%</div>
-            <div class="stat-label">Women in MGNREGS workforce — legal requirement driving this</div>
-            <div class="stat-source">MGNREGA MIS, 2023</div>
-          </div>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">VS</div>
-          <div class="coach-body">
-            <div class="coach-name">Vandana Soni</div>
-            <div class="coach-text">Agarwal's land rights work is directly applicable to programme design in a way that is often missed. When we build women's collectives or SHGs, we focus on savings and credit — but the women with the least bargaining power at home are often those with no property. A land titling programme for married women is a gender programme. A legal aid programme that helps women enforce inheritance rights is a gender programme. Interventions that change fallback positions are often more structural than interventions that directly target "gender attitudes".</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-4-1">
-            <div class="mcq-question">1. Bina Agarwal's concept of "bargaining power" within households holds that outcomes for women are shaped primarily by:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-4-1" value="a"> (a) Their education levels and exposure to feminist ideas</label>
-              <label class="mcq-option"><input type="radio" name="mcq-4-1" value="b"> (b) Their fallback position — what they can credibly exit to if negotiations break down</label>
-              <label class="mcq-option"><input type="radio" name="mcq-4-1" value="c"> (c) The benevolence of male household members</label>
-              <label class="mcq-option"><input type="radio" name="mcq-4-1" value="d"> (d) National-level gender equality indicators</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. The fallback position — shaped by independent land, income, legal rights, and social support — determines the strength of a woman\'s negotiating position within the household. Weak exit options translate into weak bargaining power across all intra-household negotiations.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-4-2">
-            <div class="mcq-question">2. Naila Kabeer's empowerment framework argues that resources alone are insufficient for empowerment because:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-4-2" value="a"> (a) Resources must be converted to cash to be useful to women</label>
-              <label class="mcq-option"><input type="radio" name="mcq-4-2" value="b"> (b) Resources without agency — the capacity to make meaningful choices — do not change structural power</label>
-              <label class="mcq-option"><input type="radio" name="mcq-4-2" value="c"> (c) Women in developing countries are unable to use resources effectively without training</label>
-              <label class="mcq-option"><input type="radio" name="mcq-4-2" value="d"> (d) Economic resources are less important than cultural change for gender equality</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Kabeer\'s three-part framework — resources, agency, achievements — insists that all three must be addressed. Transferring assets to women who lack the agency to control them (due to intra-household power dynamics) may simply transfer resources to male household members through women.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module4-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 05 -->
@@ -1775,94 +1768,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Bodies, Labour &amp; Economy</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          Care work — cooking, cleaning, child-rearing, elder care, emotional labour — is the largest single economic activity in the world by time spent. It is also systematically excluded from GDP measurement, underpaid when monetised, and assigned overwhelmingly to women. Understanding care work as a political economy issue — not a cultural preference — is essential to designing development policy that does not simply transfer the costs of public sector retrenchment onto women's bodies and time.
-        </p>
-
-        <h3>What Is Social Reproduction?</h3>
-        <p>
-          Social reproduction refers to the work required to reproduce labour power across generations: bearing and raising children, maintaining adult workers' physical and emotional capacity, caring for the ill and elderly. Feminist economists and sociologists — Silvia Federici, Nancy Folbre, Arlie Hochschild — have argued that this work is the foundation on which the formal economy rests, and that its invisibility in economic accounting is not an oversight but a structural feature.
-        </p>
-        <p>
-          GDP measures production, not reproduction. When a woman cooks a meal at home, it contributes nothing to GDP. If she pays someone else to cook it, that transaction enters GDP — but the underlying work is identical. This asymmetry means that economic growth statistics systematically undercount the economic contribution of women and overcount the productivity of marketised economies relative to care-dependent ones.
-        </p>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Key Concept — The Care Penalty</div>
-          <p>The care penalty describes the economic disadvantage that accrues to workers who take on care responsibilities — typically women. It shows up as wage penalties for motherhood, reduced working hours, career interruptions, lower lifetime earnings and pensions, and reduced social security entitlements. In India, the care penalty is compounded by the almost complete absence of public childcare infrastructure and elder care provision, meaning that family care falls almost entirely on women.</p>
-        </div>
-
-        <h3>Time Use and the Indian Evidence</h3>
-        <p>
-          India's Time Use Survey (2019) — the first national time use survey in nearly two decades — provides the most comprehensive picture of unpaid work in India. The findings are stark: women spend an average of 299 minutes per day on unpaid domestic and care work, compared to 97 minutes for men. The gap is 200 minutes — over three hours — per day. This is time that is not available for formal employment, education, rest, or political participation.
-        </p>
-        <p>
-          The gap is larger in rural areas, among women with less education, and among women in households with young children or elderly dependents. It is also larger in states with less public infrastructure for care — fewer functioning anganwadis, less piped water (which alone saves women hours of daily water collection), and less access to fuel-efficient cooking technologies.
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">299 min</div>
-            <div class="stat-label">Daily unpaid care work by Indian women</div>
-            <div class="stat-source">India TUS, 2019</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">97 min</div>
-            <div class="stat-label">Daily unpaid care work by Indian men</div>
-            <div class="stat-source">India TUS, 2019</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">3.2%</div>
-            <div class="stat-label">Unpaid care work as % of India's GDP (conservative estimate)</div>
-            <div class="stat-source">ILO, 2018</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">90%</div>
-            <div class="stat-label">Of global home-based care workers are women</div>
-            <div class="stat-source">ILO, 2021</div>
-          </div>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">V</div>
-          <div class="coach-body">
-            <div class="coach-name">Varna</div>
-            <div class="coach-text">The Time Use Survey data is one of the most powerful tools in gender-responsive budgeting work. When you can show policymakers that women are working an equivalent of 1.5 full working days more than men in unpaid activities, and that this work is invisible in the budget, it changes the conversation. The question to ask of every public expenditure decision is: does this reduce or increase women's unpaid work burden? Subsidised LPG, anganwadis, and piped water are as much gender policies as anything in a "women's budget" head.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-5-1">
-            <div class="mcq-question">1. According to India's Time Use Survey (2019), the daily gap in unpaid care work between women and men is approximately:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-5-1" value="a"> (a) 45 minutes — a modest gap that is declining</label>
-              <label class="mcq-option"><input type="radio" name="mcq-5-1" value="b"> (b) 200 minutes — over three hours per day</label>
-              <label class="mcq-option"><input type="radio" name="mcq-5-1" value="c"> (c) 120 minutes — exactly double the male burden</label>
-              <label class="mcq-option"><input type="radio" name="mcq-5-1" value="d"> (d) 400 minutes — the majority of women's waking hours</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Women spend 299 minutes per day on unpaid care work versus 97 minutes for men — a gap of 202 minutes, over three hours. This translates to a massive structural disadvantage in time available for paid work, education, and rest.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-5-2">
-            <div class="mcq-question">2. The "care penalty" in employment refers to:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-5-2" value="a"> (a) The emotional cost of working in caring professions like nursing</label>
-              <label class="mcq-option"><input type="radio" name="mcq-5-2" value="b"> (b) The wage and career disadvantages that accrue to workers who take on care responsibilities</label>
-              <label class="mcq-option"><input type="radio" name="mcq-5-2" value="c"> (c) The tax penalty on dual-income households with children</label>
-              <label class="mcq-option"><input type="radio" name="mcq-5-2" value="d"> (d) The lower pay in feminised occupations like teaching and nursing</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. The care penalty captures the earnings and career cost of care responsibilities — lower wages (the motherhood penalty), career interruptions, reduced hours, and lower lifetime earnings and pensions. It is distinct from, though related to, occupational segregation.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module5-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 06 -->
@@ -1874,84 +1782,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Bodies, Labour &amp; Economy</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          Labour markets are among the most gender-stratified institutions in any economy. Women are concentrated in particular sectors, paid less for equivalent work, less likely to hold supervisory or managerial positions, and more likely to be in informal and precarious employment. These patterns are not explained by differences in productivity or human capital — they reflect the gender order operating through markets.
-        </p>
-
-        <h3>Occupational Segregation</h3>
-        <p>
-          Horizontal segregation — the concentration of women and men in different occupations — is remarkably persistent across economies at different development levels. Women are overrepresented in care, cleaning, and clerical work; men in construction, heavy industry, and management. Vertical segregation — the concentration of men at higher levels within any given field — means that even in feminised professions, men disproportionately hold leadership roles.
-        </p>
-        <p>
-          A key insight from feminist labour economics is that feminisation of an occupation tends to precede or accompany a wage decline — not because women's entry causes wages to fall, but because occupations lose social prestige and wage bargaining power as their gender composition changes. This has been documented for teaching, clerical work, and medical practice in several contexts.
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">19%</div>
-            <div class="stat-label">Gender pay gap in India — women earn ~81 cents for every rupee men earn</div>
-            <div class="stat-source">ILO, 2022</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">89%</div>
-            <div class="stat-label">Women workers in India in informal employment</div>
-            <div class="stat-source">ILO, 2021</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">13%</div>
-            <div class="stat-label">Women in senior management positions in Indian firms</div>
-            <div class="stat-source">IFC, 2020</div>
-          </div>
-        </div>
-
-        <h3>Informal Work and Homebased Labour</h3>
-        <p>
-          In India, the majority of women workers are in informal employment — as agricultural labourers, homebased workers, domestic workers, street vendors, and piece-rate workers in garment and incense stick production. These workers are largely outside the protections of formal labour law: minimum wage enforcement is weak, they lack social security, and organising is difficult. The invisibility of homebased work — which often takes place within the domestic sphere — makes it particularly hard to regulate and count.
-        </p>
-        <p>
-          SEWA (Self-Employed Women's Association), founded in 1972 by Ela Bhatt in Ahmedabad, built the first major union for informal women workers in India. SEWA's model — combining trade union functions with cooperative development and social security provision — demonstrated that informal workers could organise collectively and that "empowerment" and "labour rights" were not separable projects.
-        </p>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">VS</div>
-          <div class="coach-body">
-            <div class="coach-name">Vandana Soni</div>
-            <div class="coach-text">The invisibility of homebased work in labour statistics has direct policy consequences. When the NFHS asks women whether they are "working," many say no — because they define "work" as employment outside the home. Their actual labour — in agriculture, in piece-rate production, in domestic service — goes uncounted. This distorts every labour policy built on that data. Field practitioners need to probe well beyond the standard employment question to get an accurate picture of women's economic activity.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-6-1">
-            <div class="mcq-question">1. "Vertical segregation" in labour markets refers to:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-6-1" value="a"> (a) Women and men concentrated in different occupational fields</label>
-              <label class="mcq-option"><input type="radio" name="mcq-6-1" value="b"> (b) The concentration of men in higher-level and managerial roles within any given occupation or sector</label>
-              <label class="mcq-option"><input type="radio" name="mcq-6-1" value="c"> (c) The wage difference between formal and informal sectors</label>
-              <label class="mcq-option"><input type="radio" name="mcq-6-1" value="d"> (d) Regional variation in women's labour force participation</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Vertical segregation is the "glass ceiling" phenomenon — even in feminised fields, men disproportionately occupy senior and managerial positions. Horizontal segregation refers to the distribution of men and women across different occupational fields.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-6-2">
-            <div class="mcq-question">2. SEWA (Self-Employed Women's Association) was significant as a labour organisation because it:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-6-2" value="a"> (a) Lobbied for equal pay legislation at the national level</label>
-              <label class="mcq-option"><input type="radio" name="mcq-6-2" value="b"> (b) Demonstrated that informal women workers could organise collectively, combining union functions with cooperative development</label>
-              <label class="mcq-option"><input type="radio" name="mcq-6-2" value="c"> (c) Brought homebased workers into the formal sector through employment contracts</label>
-              <label class="mcq-option"><input type="radio" name="mcq-6-2" value="d"> (d) Was the first women's trade union in a developing country</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. SEWA\'s model was innovative precisely because it organised workers whom mainstream labour movements had written off as unorganisable — street vendors, homebased workers, agricultural labourers — and demonstrated that collective action was possible outside formal employment.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module6-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 07 -->
@@ -1963,89 +1796,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Law, Rights &amp; the State</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          India has a system of legal pluralism in family law that is distinctive globally: different religious communities are governed by different personal laws — Hindu, Muslim, Christian, and Parsi — on matters of marriage, divorce, maintenance, inheritance, and adoption. This system was inherited from colonial administration and has been preserved in independent India as a concession to minority community autonomy. Feminist legal scholars have argued that this system systematically disadvantages women across all communities while framing community autonomy as justification for denying women equal rights.
-        </p>
-
-        <h3>The Personal Law System</h3>
-        <p>
-          Hindu personal law was codified and partially reformed in the 1950s through the Hindu Code Bills — after intense resistance from the right wing and from conservative members of the Constituent Assembly. The Hindu Succession Act (1956) gave daughters rights to parental property for the first time, though it excluded agricultural land in many states. The 2005 amendment to the Hindu Succession Act made daughters coparceners in joint family property — a significant legal advance, though implementation has been uneven.
-        </p>
-        <p>
-          Muslim personal law in India is governed largely by uncodified customary practice and by the Shariat Application Act 1937. Triple talaq — the practice of instant divorce by a husband pronouncing "talaq" three times — was declared unconstitutional by a five-judge bench of the Supreme Court in 2017 (Shayara Bano v. Union of India). The subsequent Muslim Women (Protection of Rights on Marriage) Act 2019, which criminalised triple talaq, was contested by many Muslim women's organisations who argued that criminalisation of the husband would leave women in worse positions — separated but with husbands in jail and no maintenance.
-        </p>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Key Concept — Legal Pluralism and Gender</div>
-          <p>Legal pluralism — the coexistence of multiple legal systems within a single state — is often defended as respect for minority cultural autonomy. Feminist legal scholars like Flavia Agnes argue that this framing obscures the fact that the "communities" claiming autonomy are internally hierarchical, and that the members whose interests are sacrificed to community autonomy are almost invariably women. The Uniform Civil Code debate in India turns on this tension.</p>
-        </div>
-
-        <h3>Flavia Agnes and the Limits of Legal Reform</h3>
-        <p>
-          Flavia Agnes's work — from her organisation MAJLIS and her legal scholarship — offers perhaps the most rigorous analysis of personal law, gender, and the limits of legal reform in India. Her argument is not simply that personal laws are discriminatory (they are) but that the criminal law is a blunt and often counterproductive instrument for addressing domestic relations. Women who use legal remedies frequently find that the system re-traumatises them, that cases drag for years, that they face community pressure to withdraw, and that even successful prosecutions often leave them worse off materially.
-        </p>
-        <p>
-          Agnes's alternative framework focuses on practical remedies — maintenance, protection orders, custody — over criminal prosecution; and on building legal literacy and support systems so women can navigate an adversarial system that was not designed for them.
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">2005</div>
-            <div class="stat-label">Hindu Succession Act amended to give daughters equal coparcenary rights</div>
-            <div class="stat-source">GoI</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">2006</div>
-            <div class="stat-label">Protection of Women from Domestic Violence Act came into force</div>
-            <div class="stat-source">GoI</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">2017</div>
-            <div class="stat-label">Supreme Court declared instant triple talaq unconstitutional</div>
-            <div class="stat-source">SC, Shayara Bano</div>
-          </div>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">V</div>
-          <div class="coach-body">
-            <div class="coach-name">Varna</div>
-            <div class="coach-text">The PWDVA (Protection of Women from Domestic Violence Act, 2005) is one of the most practically important pieces of gender legislation in India — and one of the least known in development practice. It gives civil remedies (protection orders, residence orders, maintenance) to women in domestic violence situations without requiring criminal prosecution. Understanding what rights women actually have — and the gap between legal rights and practical access to them — is essential for anyone doing GBV work in India.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-7-1">
-            <div class="mcq-question">1. The feminist critique of India's personal law system primarily argues that:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-7-1" value="a"> (a) All communities should be subject to a single secular family law without exception</label>
-              <label class="mcq-option"><input type="radio" name="mcq-7-1" value="b"> (b) Community religious autonomy is being used to justify denying women equal rights — women pay the price of "cultural autonomy"</label>
-              <label class="mcq-option"><input type="radio" name="mcq-7-1" value="c"> (c) Muslim personal law is uniquely discriminatory compared to Hindu law</label>
-              <label class="mcq-option"><input type="radio" name="mcq-7-1" value="d"> (d) The colonial origins of personal law make it illegitimate and requiring immediate abolition</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Scholars like Flavia Agnes argue that the "community autonomy" framing obscures intra-community hierarchy — the members whose interests are sacrificed to defend community customs are women, whose voices are often absent from the community bodies claiming to represent them.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-7-2">
-            <div class="mcq-question">2. The 2005 amendment to the Hindu Succession Act was significant because it:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-7-2" value="a"> (a) Gave Hindu widows the right to remarry for the first time</label>
-              <label class="mcq-option"><input type="radio" name="mcq-7-2" value="b"> (b) Made daughters coparceners in Hindu joint family property — giving them equal inheritance rights alongside sons</label>
-              <label class="mcq-option"><input type="radio" name="mcq-7-2" value="c"> (c) Established a uniform minimum age of marriage across all religious communities</label>
-              <label class="mcq-option"><input type="radio" name="mcq-7-2" value="d"> (d) Created a special court system for family law disputes</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. The 2005 amendment was a major legal advance — giving daughters equal coparcenary rights in Hindu Undivided Family property. The original 1956 Act had excluded this. Implementation remains uneven due to social pressure, women\'s lack of awareness of their rights, and ongoing litigation.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module7-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 08 -->
@@ -2057,81 +1810,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Law, Rights &amp; the State</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          Sexual violence is among the most documented and most contested sites of feminist legal engagement in India. From the Mathura rape case of 1972 to the Nirbhaya case of 2012 and its aftermath, the criminal law on sexual violence has been substantially reformed under feminist pressure — yet the experience of survivors within the legal system remains marked by secondary victimisation, institutional failure, and impunity for influential perpetrators.
-        </p>
-
-        <h3>The Mathura Case and Law Reform</h3>
-        <p>
-          The Mathura rape case — in which a sixteen-year-old Adivasi girl was raped by two police constables in a police station in Maharashtra — became a landmark in Indian feminist legal history not because of its legal outcome but because of its failure. The Supreme Court acquitted the accused in 1979 on the grounds that Mathura had not cried out and therefore had consented. Four law professors — including Upendra Baxi — wrote an open letter to the Chief Justice challenging the judgment, which galvanised the women's movement and directly led to the 1983 amendments to the rape law, including the reversal of the burden of proof in custodial rape cases.
-        </p>
-        <p>
-          The 2012 Delhi gang rape and murder — and the subsequent Justice Verma Committee report — produced the most comprehensive overhaul of sexual offences law in Indian history. The Criminal Law (Amendment) Act 2013 expanded the definition of rape, created new offences (stalking, voyeurism, acid attack), and strengthened penalties. But Justice Verma's committee also made recommendations — on marital rape, on police reforms, on fast-track courts — that the government did not implement.
-        </p>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Key Concept — Secondary Victimisation</div>
-          <p>Secondary victimisation refers to the additional trauma inflicted on survivors by the institutional response — police disbelief, intrusive medical examination, character assassination in court, family and community pressure to withdraw complaints, and the sheer duration of legal proceedings. Feminist legal reformers argue that secondary victimisation is not incidental but structural — the adversarial system is not designed to protect complainants, and police and judicial culture frequently blames survivors rather than perpetrators.</p>
-        </div>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">31,677</div>
-            <div class="stat-label">Rape cases registered in India in 2021</div>
-            <div class="stat-source">NCRB, 2021</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">27.8%</div>
-            <div class="stat-label">Conviction rate in rape cases — well below other IPC offences</div>
-            <div class="stat-source">NCRB, 2021</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">94%</div>
-            <div class="stat-label">Of rape perpetrators are known to the survivor — not stranger rape</div>
-            <div class="stat-source">NCRB, 2021</div>
-          </div>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">VS</div>
-          <div class="coach-body">
-            <div class="coach-name">Vandana Soni</div>
-            <div class="coach-text">The gap between law on paper and law in practice on sexual violence is enormous. India has substantially improved its legal framework since 2013 — but conviction rates remain low, police response remains erratic, and survivors from Dalit and Adivasi communities receive far worse institutional treatment. For development practitioners working on GBV, legal awareness is necessary but not sufficient. Building survivor-centred support systems — legal aid, shelter, economic support, psychological care — is equally critical, because the formal system will fail a significant proportion of survivors regardless of what the law says.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-8-1">
-            <div class="mcq-question">1. The Mathura rape case verdict of 1979 was significant in Indian feminist legal history because:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-8-1" value="a"> (a) It established custodial rape as a specific criminal offence for the first time</label>
-              <label class="mcq-option"><input type="radio" name="mcq-8-1" value="b"> (b) The Supreme Court's acquittal, premised on implied consent from the survivor's silence, galvanised the women's movement and led directly to the 1983 rape law amendments</label>
-              <label class="mcq-option"><input type="radio" name="mcq-8-1" value="c"> (c) It was the first rape case in India involving police personnel as accused</label>
-              <label class="mcq-option"><input type="radio" name="mcq-8-1" value="d"> (d) It resulted in the first successful prosecution of a police officer for rape in India</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. The Mathura verdict\'s reasoning — that absence of physical resistance implied consent — was precisely the logic the open letter by Baxi and others challenged. The case became a mobilising catalyst for rape law reform, particularly on the burden of proof in custodial rape situations.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-8-2">
-            <div class="mcq-question">2. NCRB data shows that approximately what proportion of rape perpetrators are known to the survivor?</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-8-2" value="a"> (a) Around 40% — roughly equal between known and unknown perpetrators</label>
-              <label class="mcq-option"><input type="radio" name="mcq-8-2" value="b"> (b) Around 94% — the vast majority are family members, acquaintances, or intimate partners</label>
-              <label class="mcq-option"><input type="radio" name="mcq-8-2" value="c"> (c) Around 60% — a majority but with a significant stranger rape component</label>
-              <label class="mcq-option"><input type="radio" name="mcq-8-2" value="d"> (d) Under 20% — most reported rape is perpetrated by strangers</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. NCRB data consistently shows that the overwhelming majority of registered rape cases involve perpetrators known to the survivor. This has important implications for survivor support, reporting, and why public-space safety campaigns, while important, do not address the most prevalent form of sexual violence.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module8-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 09 -->
@@ -2143,81 +1824,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Law, Rights &amp; the State</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          Women's participation in formal political institutions — legislatures, local government, the executive — is one of the most tracked gender indicators globally. Yet the relationship between formal representation and substantive policy change for women is complex and contested. This module examines the evidence on what representation achieves, the particular case of panchayati raj reservations in India, and the limits of a purely representational framework.
-        </p>
-
-        <h3>The 73rd Amendment and Panchayat Reservations</h3>
-        <p>
-          The 73rd Constitutional Amendment (1993) mandated one-third reservation for women in panchayati raj institutions — local self-government bodies at the village, intermediate, and district levels. Many states subsequently raised this to 50%. The scale of this intervention is extraordinary: India now has the largest number of elected women representatives in the world at the local level — over 1.3 million, representing roughly 46% of total panchayat members.
-        </p>
-        <p>
-          The research literature on the effects of panchayat reservations is extensive. Raghabendra Chattopadhyay and Esther Duflo's seminal study (2004) found that in West Bengal and Rajasthan, villages with women pradhans invested more in public goods preferred by women (drinking water, roads) and had higher rates of women reporting crime to police. This is the strongest evidence that descriptive representation can affect substantive policy outcomes.
-        </p>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Key Concept — Sarpanch Pati Syndrome</div>
-          <p>The "sarpanch pati" (headman's husband) problem refers to cases where reserved seats produce nominal women representatives whose husbands effectively exercise the powers of the position. Research shows this is more prevalent in early rounds of reservation, in more conservative social contexts, and where women have lower education and political experience. Longitudinal studies show the syndrome weakens over time as women gain experience and confidence — but it remains a challenge requiring active support and legal enforcement.</p>
-        </div>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">1.3M+</div>
-            <div class="stat-label">Elected women representatives in Indian panchayats</div>
-            <div class="stat-source">MoPR, 2023</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">15.2%</div>
-            <div class="stat-label">Women in Lok Sabha (18th Lok Sabha, 2024)</div>
-            <div class="stat-source">Lok Sabha Secretariat</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">2029</div>
-            <div class="stat-label">Earliest implementation of 33% parliamentary reservation under the Nari Shakti Vandan Act (2023)</div>
-            <div class="stat-source">GoI</div>
-          </div>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">V</div>
-          <div class="coach-body">
-            <div class="coach-name">Varna</div>
-            <div class="coach-text">The parliamentary reservation debate often focuses on whether women will vote as a bloc for women's interests — which misunderstands how representation works. The evidence from panchayats is that women representatives bring different information, different priorities, and different local knowledge into planning processes. They also change who women in the community feel they can approach. These are indirect and structural effects of representation, not dependent on women forming a unified interest bloc. The Nari Shakti Vandan Act is a step forward but the conditionality on delimitation means it will not be implemented before 2029 at the earliest.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-9-1">
-            <div class="mcq-question">1. Chattopadhyay and Duflo's (2004) study of panchayat reservations found that villages with women pradhans:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-9-1" value="a"> (a) Had lower levels of corruption but similar public goods provision</label>
-              <label class="mcq-option"><input type="radio" name="mcq-9-1" value="b"> (b) Invested more in public goods preferred by women (water, roads) and had more women reporting crime to police</label>
-              <label class="mcq-option"><input type="radio" name="mcq-9-1" value="c"> (c) Had worse economic outcomes due to inexperienced governance</label>
-              <label class="mcq-option"><input type="radio" name="mcq-9-1" value="d"> (d) Showed no statistically significant differences from male-led panchayats</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. This is one of the most cited pieces of evidence that descriptive representation (who holds office) can affect substantive outcomes (what policies are implemented). The study used the random assignment of reserved seats across villages as a natural experiment.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-9-2">
-            <div class="mcq-question">2. The "Nari Shakti Vandan Act" (2023) reserves what proportion of Lok Sabha seats for women, and when is its earliest implementation?</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-9-2" value="a"> (a) 50% reservation, from the 2024 general elections</label>
-              <label class="mcq-option"><input type="radio" name="mcq-9-2" value="b"> (b) 33% reservation, contingent on delimitation — earliest implementation 2029</label>
-              <label class="mcq-option"><input type="radio" name="mcq-9-2" value="c"> (c) 25% reservation, from the 2024 state elections</label>
-              <label class="mcq-option"><input type="radio" name="mcq-9-2" value="d"> (d) 33% reservation, immediate implementation from the 2024 general election</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. The Act reserves 33% of seats in the Lok Sabha and state legislative assemblies for women — but implementation is tied to the completion of delimitation, which will not occur before 2026 and requires a census (not yet conducted), making 2029 the earliest realistic date.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module9-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 10 -->
@@ -2229,78 +1838,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Movements &amp; Resistance</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          India has one of the longest and most internally diverse women's movement histories in the world. From the 19th-century social reform debates through the freedom struggle, the post-independence mobilisations around rape law and dowry deaths, and the contemporary intersections of feminist with anti-caste and environmental movements — the Indian women's movement is a set of contested, sometimes contradictory political projects rather than a unified campaign.
-        </p>
-
-        <h3>The Chipko Movement and Environmental Feminism</h3>
-        <p>
-          The Chipko movement (1973–) — in which women in Uttarakhand embraced trees to prevent their felling by commercial contractors — is often cited as a landmark of environmental feminism. Women's dependence on forests for fuel, fodder, and water made them the primary stakeholders in forest conservation. Vandana Shiva and other ecofeminist scholars drew on Chipko to argue that women have a special relationship to nature rooted in their subsistence labour — a claim that has been critiqued for essentialising gender but that captured something real about the gendered distribution of environmental risk.
-        </p>
-
-        <h3>Anti-Dowry and Rape Law Campaigns (1970s–80s)</h3>
-        <p>
-          The 1970s and 80s saw sustained women's movement campaigns around two specific issues: dowry deaths (wives killed for insufficient dowry, framed as "kitchen accidents") and rape law reform (following the Mathura case). These campaigns were significant not just for the legal changes they produced but as the moment when autonomous women's organisations — not attached to political parties or the Congress — became a major political force. Forums like the National Federation of Indian Women, CREA, and local autonomous groups organised marches, public trials, and legislative lobbying simultaneously.
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">6,450</div>
-            <div class="stat-label">Dowry deaths registered in India in 2021</div>
-            <div class="stat-source">NCRB, 2021</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">1972</div>
-            <div class="stat-label">Year SEWA was founded by Ela Bhatt in Ahmedabad</div>
-            <div class="stat-source">SEWA</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">1997</div>
-            <div class="stat-label">Vishaka guidelines issued by Supreme Court on sexual harassment at workplace</div>
-            <div class="stat-source">SC, Vishaka v. State of Rajasthan</div>
-          </div>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">VS</div>
-          <div class="coach-body">
-            <div class="coach-name">Vandana Soni</div>
-            <div class="coach-text">The history of women's movements in India is also a history of internal debates about caste, class, and religion — not just unity against patriarchy. The debates between autonomous feminist groups and party-affiliated women's organisations about electoral strategy; between Dalit and Savarna women's groups about whose issues get centred; between those who see the state as an ally and those who see it as an adversary — these are live tensions in contemporary practice. Knowing this history helps you navigate the politics of coalition-building in gender work today.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-10-1">
-            <div class="mcq-question">1. The Vishaka guidelines (1997) are significant in Indian gender law because they:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-10-1" value="a"> (a) Established the first national commission for women's rights</label>
-              <label class="mcq-option"><input type="radio" name="mcq-10-1" value="b"> (b) Created India's first legally binding framework on sexual harassment in the workplace, pending parliamentary legislation</label>
-              <label class="mcq-option"><input type="radio" name="mcq-10-1" value="c"> (c) Defined dowry as a criminal offence for the first time</label>
-              <label class="mcq-option"><input type="radio" name="mcq-10-1" value="d"> (d) Gave women the right to file FIRs without male family members present</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Vishaka v. State of Rajasthan (1997) — a PIL arising from the gang rape of Bhanwari Devi, a saathin (village-level worker) in Rajasthan — led the Supreme Court to issue guidelines on workplace sexual harassment that served as binding law until the POSH Act was enacted in 2013.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-10-2">
-            <div class="mcq-question">2. Ecofeminist analyses of movements like Chipko have been critiqued primarily for:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-10-2" value="a"> (a) Overemphasising the role of external development organisations</label>
-              <label class="mcq-option"><input type="radio" name="mcq-10-2" value="b"> (b) Essentialising gender — implying women have a natural, biological connection to environment rather than a historically produced material interest</label>
-              <label class="mcq-option"><input type="radio" name="mcq-10-2" value="c"> (c) Being too closely associated with the national government's forestry policy</label>
-              <label class="mcq-option"><input type="radio" name="mcq-10-2" value="d"> (d) Focusing on environment at the expense of women's labour rights</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. The ecofeminist claim that women have a special relationship to nature has been critiqued by socialist and postcolonial feminists for essentialising gender — treating as natural what is actually a historically specific product of the sexual division of labour and unequal resource access.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module10-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 11 -->
@@ -2312,76 +1852,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Movements &amp; Resistance</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          The relationship between caste and gender in South Asia is one of the most theoretically important — and most politically contested — areas of feminist scholarship. This module draws primarily on Dalit feminist scholarship to argue that gender and caste cannot be treated as parallel oppressions that happen to co-occur in some individuals. They are structurally co-produced: the maintenance of caste endogamy requires the control of women's sexuality, and this structural linkage means that caste-based violence is almost always simultaneously sexual violence and vice versa.
-        </p>
-
-        <h3>Brahmanical Patriarchy</h3>
-        <p>
-          Uma Chakravarti's concept of Brahmanical patriarchy — developed in her 1993 essay "Conceptualising Brahmanical Patriarchy in Early India" and her later work — provides the analytical foundation. Drawing on textual, inscriptional, and anthropological evidence, Chakravarti argues that the Brahmanical order was constituted through a dual structure: the caste hierarchy (ranking of varnas) and the regulation of women (particularly sexual fidelity and endogamy). These two structures are not merely concurrent — each requires the other. Caste purity requires pure women. Pure women require caste endogamy. The system reproduces itself through the control of women's sexual and reproductive choices.
-        </p>
-
-        <h3>Dalit Feminist Perspectives</h3>
-        <p>
-          Sharmila Rege's <em>Writing Caste, Writing Gender</em> (2006) brings Dalit women's voices into feminist analysis that had largely focused on Savarna women's experiences. Rege argues that Dalit women's testimony is a form of counter-memory — a challenge to hegemonic narratives about both gender and caste that are produced without them. The experience of Dalit women is not simply "more oppressed" than Savarna women — it is qualitatively different, shaped by the specific intersection of caste humiliation and gendered exploitation.
-        </p>
-        <p>
-          The political implication is that feminist solidarity across caste lines requires Savarna women to acknowledge their own complicity in caste privilege — not just to extend sympathy to Dalit women. This is a demand that has been resisted within mainstream feminist movements, producing ongoing tensions about whose experiences define "women's issues."
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">45,935</div>
-            <div class="stat-label">Crimes against Scheduled Caste women registered in 2021</div>
-            <div class="stat-source">NCRB, 2021</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">2x</div>
-            <div class="stat-label">Dalit women's maternal mortality rate relative to non-SC/ST women</div>
-            <div class="stat-source">NFHS-5</div>
-          </div>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">V</div>
-          <div class="coach-body">
-            <div class="coach-name">Varna</div>
-            <div class="coach-text">The caste-gender nexus shows up in field work in very specific ways: who gets included in and who gets excluded from women's SHGs; who is elected to leadership in women's federations; whose complaints of domestic violence get taken seriously by local officials. These are not just cultural patterns — they are reflections of Brahmanical patriarchy operating in development spaces. Naming this clearly is necessary for designing programmes that do not simply reproduce caste hierarchy within gender programming.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-11-1">
-            <div class="mcq-question">1. Sharmila Rege's concept of Dalit women's testimony as "counter-memory" means that:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-11-1" value="a"> (a) Dalit women remember caste injustice more accurately than men</label>
-              <label class="mcq-option"><input type="radio" name="mcq-11-1" value="b"> (b) Dalit women's narratives challenge hegemonic accounts of both gender and caste — producing knowledge that is suppressed in mainstream feminist and anti-caste discourse</label>
-              <label class="mcq-option"><input type="radio" name="mcq-11-1" value="c"> (c) Oral history is the primary method for studying Dalit women's experiences</label>
-              <label class="mcq-option"><input type="radio" name="mcq-11-1" value="d"> (d) Dalit women's experiences should be treated as more authentic than Savarna women's for political purposes</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Counter-memory in Rege\'s usage means testimony that disrupts dominant knowledge formations — both the feminist canon (which centred Savarna women) and anti-caste discourse (which centred men). Dalit women\'s testimony is epistemically productive precisely because it falls outside both dominant frames.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-11-2">
-            <div class="mcq-question">2. Chakravarti's "Brahmanical patriarchy" argues that caste and gender are structurally linked because:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-11-2" value="a"> (a) Upper-caste men are the primary beneficiaries of both systems simultaneously</label>
-              <label class="mcq-option"><input type="radio" name="mcq-11-2" value="b"> (b) The reproduction of caste hierarchy requires the control of women's sexuality — caste endogamy is enforced through the regulation of women's reproductive choices</label>
-              <label class="mcq-option"><input type="radio" name="mcq-11-2" value="c"> (c) Both systems emerged from the same Vedic texts and therefore have common origins</label>
-              <label class="mcq-option"><input type="radio" name="mcq-11-2" value="d"> (d) Patriarchy in India is uniquely severe because of its combination with caste</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. The structural argument is that caste purity — the basis of the varna hierarchy — requires that women reproduce within caste boundaries. This means women\'s sexual choices must be controlled. Gender regulation is not an addition to caste hierarchy — it is its mechanism of reproduction.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module11-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 12 -->
@@ -2393,71 +1866,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Movements &amp; Resistance</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          Gender systems do not only constrain women. They constrain all people — including men — by mandating particular performances of masculinity and femininity and imposing costs on those who fail to conform. This module examines the politics of masculinity, the specific vulnerabilities of gender non-conforming people, and the legal framework around LGBTQ+ rights in India following Navtej Singh Johar v. Union of India (2018).
-        </p>
-
-        <h3>The Costs of Hegemonic Masculinity</h3>
-        <p>
-          Connell's framework of hegemonic masculinity distinguishes between the cultural ideal of masculinity (which most men do not embody) and the "patriarchal dividend" that men receive from the gender order even without being at the top of the masculine hierarchy. The costs of hegemonic masculinity are borne by men who fail to conform — men who are insufficiently aggressive, insufficiently heterosexual, insufficiently economically productive — and by all men who are pushed toward dangerous, unhealthy, and emotionally constrained modes of being.
-        </p>
-        <p>
-          Men's health data in India shows specific patterns connected to hegemonic masculinity norms: higher rates of tobacco and alcohol use, lower rates of health-seeking behaviour, higher occupational accident rates, and near-total absence from health programmes that would benefit them. These are not random — they reflect the male gender role's demands for toughness, invulnerability, and self-reliance.
-        </p>
-
-        <h3>Section 377 and Its Aftermath</h3>
-        <p>
-          Section 377 of the Indian Penal Code — inherited from British colonial law — criminalised "carnal intercourse against the order of nature," effectively criminalising same-sex intimacy. The Navtej Singh Johar judgment of 2018 declared Section 377 unconstitutional to the extent that it applied to consensual same-sex acts between adults. The five-judge bench specifically cited constitutional values of dignity, autonomy, and non-discrimination.
-        </p>
-        <p>
-          The judgment has been celebrated as a landmark, but its limitations are equally important: it does not provide any positive rights for LGBTQ+ people — no right to marry, adopt, or access relationship recognition. The Supreme Court's 2023 rejection of petitions for same-sex marriage, while noting Parliament's authority to legislate, illustrated the gap between decriminalisation and equality.
-        </p>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Key Concept — Hijra and Third Gender Recognition</div>
-          <p>The National Legal Services Authority v. Union of India judgment (2014) recognised transgender persons as a "third gender" under the Constitution and directed the government to provide reservations in education and employment. The Transgender Persons (Protection of Rights) Act 2019 was criticised by transgender rights organisations for requiring medical certification for gender recognition and for failing to provide adequate social security protections — demonstrating the gap between legal recognition and substantive equality.</p>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">VS</div>
-          <div class="coach-body">
-            <div class="coach-name">Vandana Soni</div>
-            <div class="coach-text">Development practice has been slow to incorporate LGBTQ+ rights and non-binary gender identities into gender programming. Most gender assessments still assume a male/female binary. This is not just an equity failure — it produces analytical errors. Transgender and gender non-conforming people face specific patterns of labour market exclusion, housing insecurity, family rejection, and healthcare denial that need specific programme responses. Working with local LGBTQ+ organisations to understand community-specific needs is a necessary starting point.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-12-1">
-            <div class="mcq-question">1. The Navtej Singh Johar v. Union of India (2018) judgment:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-12-1" value="a"> (a) Legalised same-sex marriage in India</label>
-              <label class="mcq-option"><input type="radio" name="mcq-12-1" value="b"> (b) Decriminalised consensual same-sex acts between adults by reading down Section 377</label>
-              <label class="mcq-option"><input type="radio" name="mcq-12-1" value="c"> (c) Established a constitutional right to non-discrimination on grounds of sexual orientation</label>
-              <label class="mcq-option"><input type="radio" name="mcq-12-1" value="d"> (d) Extended reservation benefits to LGBTQ+ communities</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Navtej Johar decriminalised consensual same-sex acts but did not establish positive rights. It did not legalise same-sex marriage (rejected by the Supreme Court in 2023), nor did it create reservation entitlements or explicit non-discrimination protections in employment or housing.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-12-2">
-            <div class="mcq-question">2. According to Connell, men who fail to embody hegemonic masculinity:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-12-2" value="a"> (a) Still benefit from the "patriarchal dividend" — the structural advantages men receive from the gender order as a whole</label>
-              <label class="mcq-option"><input type="radio" name="mcq-12-2" value="b"> (b) Are disadvantaged equally to women within the gender hierarchy</label>
-              <label class="mcq-option"><input type="radio" name="mcq-12-2" value="c"> (c) Are the primary agents of feminist change because they have less stake in the system</label>
-              <label class="mcq-option"><input type="radio" name="mcq-12-2" value="d"> (d) Form a separate gender category between hegemonic masculinity and femininity</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'a', 'Correct. Connell distinguishes hegemonic masculinity (the cultural ideal, embodied by few) from complicit masculinity (men who benefit from the system without embodying the ideal). Most men receive a patriarchal dividend — advantages in wages, authority, and safety — without being at the top of the masculine hierarchy.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module12-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 13 -->
@@ -2469,79 +1880,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Applied &amp; Contemporary</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          The mainstreaming of gender into development practice has a specific institutional history — from the Women in Development (WID) approach of the 1970s, to the Gender and Development (GAD) approach of the 1980s, to contemporary "gender transformative" programming. Understanding these shifts matters because they represent different assumptions about what gender inequality is, how it can be changed, and what development organisations can do about it.
-        </p>
-
-        <h3>From WID to GAD to Gender Transformative</h3>
-        <p>
-          WID (Women in Development) — associated with Ester Boserup's work and the 1975 Mexico City conference — argued that women were being left out of development, and that including them in existing economic processes would both benefit women and improve development outcomes. The limitation of this approach was that it accepted existing economic structures and sought to integrate women into them, without questioning whether those structures were themselves gendered.
-        </p>
-        <p>
-          GAD (Gender and Development) — emerging in the 1980s from feminist scholars and practitioners including Caroline Moser — argued that the problem was not women's exclusion but the gender relations that produced it. The analytical shift was from "women" as a category to "gender" as a relational system — asking not just what women need but how power relations between men and women need to change. This required working with men and with institutions, not just with women.
-        </p>
-        <p>
-          "Gender transformative" approaches — now endorsed by USAID, UN Women, and most major development organisations — aim to change the gender norms and power structures that produce inequality, not just their symptoms. In practice, this is difficult: programmes that challenge gender norms face resistance, and organisations face pressure to show short-term measurable outcomes that transformative approaches rarely produce.
-        </p>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Key Concept — Gender Mainstreaming</div>
-          <p>Gender mainstreaming is the strategy of ensuring that gender perspectives are integrated into all development policies, programmes, and evaluations — not just in designated "women's programmes." Adopted at the Beijing Platform for Action (1995), it is now standard policy across UN agencies and most bilateral donors. Critics argue it has been institutionalised in ways that hollow out its transformative intent — producing box-ticking rather than structural change.</p>
-        </div>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">$47B</div>
-            <div class="stat-label">Estimated annual gender equality-focused ODA globally</div>
-            <div class="stat-source">OECD, 2022</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">41%</div>
-            <div class="stat-label">Of bilateral ODA that has gender equality as a principal or significant objective</div>
-            <div class="stat-source">OECD DAC, 2022</div>
-          </div>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">V</div>
-          <div class="coach-body">
-            <div class="coach-name">Varna</div>
-            <div class="coach-text">The standard gender analysis tool in most development organisations is a gender assessment that describes who does what, who has access to what, and who makes decisions. This is useful baseline data — but it often stops short of asking why these patterns exist and what would change them. A good gender analysis needs a theory of change that connects the structural factors you identify to the programme interventions you're proposing. "We will train women in leadership" is not a theory of change — it's an activity. The theory of change needs to explain which structural barrier that activity addresses and through what mechanism.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-13-1">
-            <div class="mcq-question">1. The shift from WID to GAD in development practice represented a change in:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-13-1" value="a"> (a) Which UN agencies were responsible for gender programming</label>
-              <label class="mcq-option"><input type="radio" name="mcq-13-1" value="b"> (b) The analytical focus from integrating women into existing structures to changing the gender relations that produce inequality</label>
-              <label class="mcq-option"><input type="radio" name="mcq-13-1" value="c"> (c) The primary funding source for gender programmes from bilateral to multilateral</label>
-              <label class="mcq-option"><input type="radio" name="mcq-13-1" value="d"> (d) Whether men were permitted to participate in gender programmes</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. WID accepted existing development structures and sought to include women in them. GAD questioned those structures as themselves gendered — shifting the analysis from women as a target group to gender relations as the object of transformation.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-13-2">
-            <div class="mcq-question">2. A common critique of gender mainstreaming as implemented in development organisations is that:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-13-2" value="a"> (a) It focuses too much on changing gender norms and too little on women's access to resources</label>
-              <label class="mcq-option"><input type="radio" name="mcq-13-2" value="b"> (b) It has been institutionalised in ways that produce box-ticking compliance rather than structural change</label>
-              <label class="mcq-option"><input type="radio" name="mcq-13-2" value="c"> (c) It is too expensive for smaller development organisations to implement</label>
-              <label class="mcq-option"><input type="radio" name="mcq-13-2" value="d"> (d) It was developed for Western contexts and does not translate to South Asian development practice</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Feminist scholars including Aruna Rao and David Kelleher have documented how mainstreaming is frequently reduced to adding a gender section to project documents without changing programme logic. The transformative intent is preserved in the language but lost in the implementation.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module13-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 14 -->
@@ -2553,59 +1894,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Applied &amp; Contemporary</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          Media — from print and television to social media and algorithm-driven platforms — is one of the primary sites through which gender norms are produced, circulated, and contested. The relationship between media representation and social change is not simple or direct, but media environments shape what is imaginable and what is visible. This module examines gender in Indian media, online gender-based violence, and the gender digital divide.
-        </p>
-
-        <h3>Representation and Stereotype</h3>
-        <p>
-          Content analyses of Indian advertising, Bollywood, and television consistently find that women are represented primarily in domestic and relational roles; that female sexuality is either controlled (the good wife/mother) or stigmatised (the vamp); and that the cast of visible women is heavily skewed toward upper-caste and light-skinned actors. These are not merely reflections of social reality — they actively produce norms by making certain images of womanhood seem natural and others seem transgressive.
-        </p>
-        <p>
-          The MeToo movement in India (2018) demonstrated both the power of digital platforms for amplifying women's voices and their limits. The initial wave of public accusations — particularly in media, publishing, and the arts — produced firings and resignations. But most accusations against men in less prominent industries went nowhere, legal cases proceeded slowly, and there was a significant backlash. The movement also exposed the caste and class dynamics of which women's complaints were heard.
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">57%</div>
-            <div class="stat-label">Men vs 33% women using internet in India — the gender digital divide</div>
-            <div class="stat-source">IAMAI, 2023</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">79%</div>
-            <div class="stat-label">Women journalists report online harassment</div>
-            <div class="stat-source">UNESCO, 2021</div>
-          </div>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">VS</div>
-          <div class="coach-body">
-            <div class="coach-name">Vandana Soni</div>
-            <div class="coach-text">The gender digital divide is not just about who owns a phone. It's about who controls internet access within households, who has privacy to use digital platforms, and who faces harassment when they do. In many rural areas, women have mobile phones registered in their husbands' names, meaning their digital identity and financial access is mediated through male household members. Digital inclusion programmes need to address control and safety, not just access — and this requires understanding household-level power dynamics, not just infrastructure gaps.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-14-1">
-            <div class="mcq-question">1. The gender digital divide in India is primarily characterised by:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-14-1" value="a"> (a) Men preferring different platforms than women but with equal overall access</label>
-              <label class="mcq-option"><input type="radio" name="mcq-14-1" value="b"> (b) A significant gap in internet use (57% men vs 33% women) compounded by issues of control, privacy, and safety rather than access alone</label>
-              <label class="mcq-option"><input type="radio" name="mcq-14-1" value="c"> (c) Rural men and women having equal access, with gaps concentrated in urban areas</label>
-              <label class="mcq-option"><input type="radio" name="mcq-14-1" value="d"> (d) Women using the internet more for social media and less for productive economic purposes</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. The raw access gap (57% men vs 33% women using internet) understates the problem. Control of devices within households, safety from harassment, privacy, and the framing of internet use as appropriate or inappropriate for women all compound the basic infrastructure gap.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module14-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 15 -->
@@ -2617,66 +1908,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Applied &amp; Contemporary</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          A comparative lens across South Asia reveals both the common structural features of gender inequality in the region — rooted in shared histories of colonialism, patriarchal property regimes, and religious personal laws — and significant variation that cannot be explained by these shared factors. Bangladesh's faster progress on women's education and labour force participation than India despite lower per capita income; Sri Lanka's consistently high gender development indicators relative to regional neighbours; Nepal's constitutional gender provisions that go beyond India's — these require explanation beyond the standard poverty-equality relationship.
-        </p>
-
-        <h3>Bangladesh: The Garment Sector and Female Employment</h3>
-        <p>
-          Bangladesh's ready-made garment (RMG) sector employs approximately 4 million workers, of whom roughly 80% are women. The growth of female employment in the RMG sector from the 1980s has been associated with significant changes in marriage age, fertility, girls' education, and women's mobility and self-reported decision-making. This is not a simple story of liberation through employment — working conditions in the RMG sector are often hazardous (Rana Plaza, 2013), wages are at or near minimum, and organising is difficult. But the labour market integration has demonstrably changed gender norms in ways that persist beyond the workplace.
-        </p>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-number">43%</div>
-            <div class="stat-label">Female labour force participation in Bangladesh — nearly double India's</div>
-            <div class="stat-source">ILO, 2023</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">0.722</div>
-            <div class="stat-label">India's Gender Development Index score vs 0.863 for Sri Lanka</div>
-            <div class="stat-source">UNDP, 2023</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">33%</div>
-            <div class="stat-label">Women in Pakistan's Senate — higher than in India's Parliament</div>
-            <div class="stat-source">IPU, 2024</div>
-          </div>
-        </div>
-
-        <h3>Nepal's Constitutional Gender Provisions</h3>
-        <p>
-          Nepal's 2015 Constitution contains some of the most progressive gender provisions in South Asia — including criminalisation of caste-based discrimination, provisions for gender identity, and mandatory 33% representation of women in legislative bodies. Implementation has been uneven and elite capture in women's political representation is documented. But the constitutional framework creates legal ground that the Indian Constitution's more limited provisions do not.
-        </p>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">V</div>
-          <div class="coach-body">
-            <div class="coach-name">Varna</div>
-            <div class="coach-text">The South Asia comparison is consistently instructive because it challenges the assumption that poverty is the primary determinant of gender inequality. Bangladesh is poorer than India by per capita income but has significantly higher female labour force participation and faster improvement on many gender indicators. Sri Lanka has lower income than most OECD countries but among the highest maternal and female education indicators globally. These anomalies are where the interesting explanatory work happens — and they point to the role of public investment, programme design, and political will in shaping gender outcomes independently of aggregate economic growth.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Check Your Understanding
-          </div>
-
-          <div class="mcq" id="mcq-15-1">
-            <div class="mcq-question">1. Bangladesh's higher female labour force participation rate compared to India (43% vs ~25%) is most instructively explained by:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-15-1" value="a"> (a) Bangladesh's higher per capita income providing more economic opportunities for women</label>
-              <label class="mcq-option"><input type="radio" name="mcq-15-1" value="b"> (b) The rapid growth of the ready-made garment sector creating large-scale female employment and changing gender norms over time</label>
-              <label class="mcq-option"><input type="radio" name="mcq-15-1" value="c"> (c) Bangladesh's progressive legal framework on women's rights established after independence</label>
-              <label class="mcq-option"><input type="radio" name="mcq-15-1" value="d"> (d) Lower levels of caste discrimination in Bangladesh compared to India</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Bangladesh\'s RMG sector created mass formal employment for women at a scale and with geographic concentration that changed household bargaining, marriage age, girls\' education, and women\'s mobility. This is a sector-specific economic story, not primarily a legal or cultural one — though the economic changes have produced cultural change over time.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module15-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- MODULE 16 -->
@@ -2688,82 +1922,9 @@ section, .module, .lexicon-section, .founders-section {
           <span class="module-tag">Applied &amp; Contemporary</span>
         </div>
       </div>
-      <div class="module-content">
-        <p>
-          The capstone for this course asks you to apply the frameworks developed across all sixteen modules to a specific policy, programme, or social phenomenon of your choice. The exercise is designed to test whether you can move from theory to analysis to recommendation — and whether you can do so with the specificity and structural rigour the course has been building toward.
-        </p>
-
-        <h3>What the Capstone Requires</h3>
-        <p>
-          You will choose one of the following options and produce a 2,000–3,000 word analysis:
-        </p>
-        <ul>
-          <li><strong>Policy analysis:</strong> Choose a specific Indian or South Asian government policy with significant gender dimensions (MGNREGS, PMJDY, the Beti Bachao Beti Padhao scheme, the POSH Act, the 2005 Hindu Succession Act amendment, or another of your choice). Analyse it using at least three frameworks from this course — political economy, intersectionality, and one additional framework of your choosing.</li>
-          <li><strong>Programme critique:</strong> Choose a gender programme run by an NGO, multilateral, or government that you have direct knowledge of. Identify which WID/GAD framework it implicitly uses, what theory of change it operates with, and what structural factors it addresses and omits.</li>
-          <li><strong>Case study:</strong> Choose a specific episode of gender-based violence, political mobilisation, or legal contest from South Asia (it can be contemporary or historical). Analyse it using intersectionality, the political economy of gender, and the relevant legal framework.</li>
-        </ul>
-
-        <h3>Assessment Criteria</h3>
-        <p>
-          Strong capstone submissions will:
-        </p>
-        <ul>
-          <li>Name the analytical frameworks being used explicitly and apply them with precision — not as buzzwords</li>
-          <li>Use specific evidence (statistics, court judgments, field data, academic references) rather than general claims</li>
-          <li>Engage with the intersectional dimensions of the case — whose interests, which women, which structures</li>
-          <li>Distinguish between symptoms and structural causes, and propose recommendations that address the latter</li>
-          <li>Acknowledge the limits of the analysis — what the chosen frameworks illuminate and what they miss</li>
-        </ul>
-
-        <div class="concept-box">
-          <div class="concept-box-title">Synthesis: What This Course Has Built</div>
-          <p>Across sixteen modules, this course has given you: a theory of gender as a system of power (not a binary attribute); a history of feminist thought and its internal debates; an intersectional framework for analysing compound disadvantage; a political economy of care work, land rights, and labour markets; a map of India's gender legal architecture and its gaps; a history of the Indian women's movement and its caste tensions; and a set of tools for gender analysis in development practice. These are not separate topics — they are interconnected analytical registers for understanding a single, complex system.</p>
-        </div>
-
-        <div class="pull-quote">
-          <blockquote>"Feminism is not a single answer. It is a persistent question — about power, about whose knowledge counts, about what has to change and who gets to decide."</blockquote>
-          <cite>— Paraphrased from Nivedita Menon, <em>Seeing Like a Feminist</em> (2012)</cite>
-        </div>
-
-        <div class="coach-callout">
-          <div class="coach-avatar">VS</div>
-          <div class="coach-body">
-            <div class="coach-name">Vandana Soni</div>
-            <div class="coach-text">The best capstone submissions we've seen don't try to cover everything — they go deep on one specific thing. Pick a case you know well, where you have access to real evidence, and where the stakes are clear. The goal is not to demonstrate that you've memorised the course — it's to show that you can think with these frameworks about a real situation. That shift — from describing frameworks to thinking through them — is what this course is trying to produce.</div>
-          </div>
-        </div>
-
-        <div class="mcq-section">
-          <div class="mcq-section-title">
-            <img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Crosshair_detailed.svg" alt="">
-            Final Check: Synthesising the Course
-          </div>
-
-          <div class="mcq" id="mcq-16-1">
-            <div class="mcq-question">1. A programme that addresses gender inequality by training women in vocational skills without changing household asset ownership, male mobility norms, or institutional barriers is best described as:</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-16-1" value="a"> (a) A gender transformative approach addressing structural inequality</label>
-              <label class="mcq-option"><input type="radio" name="mcq-16-1" value="b"> (b) A WID-style approach integrating women into existing structures without challenging gender relations</label>
-              <label class="mcq-option"><input type="radio" name="mcq-16-1" value="c"> (c) A GAD approach focused on relational change</label>
-              <label class="mcq-option"><input type="radio" name="mcq-16-1" value="d"> (d) An intersectional programme addressing compound disadvantage</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. Skills training without addressing structural barriers — asset ownership, mobility norms, discriminatory hiring — is classic WID logic: treat women as a category to be empowered without questioning the gender relations that produce their disadvantage. A GAD or gender-transformative approach would need to address the relational and institutional structures.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-
-          <div class="mcq" id="mcq-16-2">
-            <div class="mcq-question">2. Which of the following MOST accurately captures the course's central argument about gender?</div>
-            <div class="mcq-options">
-              <label class="mcq-option"><input type="radio" name="mcq-16-2" value="a"> (a) Gender inequality is primarily a problem of bad individual attitudes that education can change</label>
-              <label class="mcq-option"><input type="radio" name="mcq-16-2" value="b"> (b) Gender is a structural system of power embedded in property regimes, labour markets, legal institutions, and cultural production — requiring structural rather than purely behavioural change</label>
-              <label class="mcq-option"><input type="radio" name="mcq-16-2" value="c"> (c) Economic development will automatically reduce gender inequality as societies grow wealthier</label>
-              <label class="mcq-option"><input type="radio" name="mcq-16-2" value="d"> (d) Feminist theory provides a universal framework that can be applied without contextual adaptation</label>
-            </div>
-            <button class="mcq-check-btn" onclick="checkMCQ(this, 'b', 'Correct. This is the core analytical claim running across all sixteen modules. Gender inequality is not a problem of attitudes, culture, or insufficient development — it is a structural system reproduced through material institutions. This is why it requires structural analysis and structural intervention, not just sensitisation or inclusion.')">Check Answer</button>
-            <div class="mcq-feedback"></div>
-          </div>
-        </div>
-      </div>
+      <div id="module16-content" class="module-content-placeholder">
+    <!-- Content loaded dynamically by course-loader.js -->
+</div>
     </section>
 
     <!-- LEXICON SECTION -->
@@ -2842,84 +2003,88 @@ section, .module, .lexicon-section, .founders-section {
   </main>
 </div>
 
+
+
 <script>
-/* ============================================================
-   THEME SYSTEM
-   ============================================================ */
-function setTheme(theme) {
-  if (theme === 'system') {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-  } else {
-    document.documentElement.setAttribute('data-theme', theme);
-  }
-  localStorage.setItem('impactmojo-theme', theme);
-  document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-  document.getElementById('theme-' + theme).classList.add('active');
-}
+        // Coach Callout Popup Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            var coachCallouts = document.querySelectorAll('.coach-callout');
+            
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('popup-visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.15,
+                    rootMargin: '0px 0px -30px 0px'
+                });
+                
+                coachCallouts.forEach(function(callout) {
+                    observer.observe(callout);
+                });
+            } else {
+                // Fallback for older browsers
+                coachCallouts.forEach(function(callout) {
+                    callout.classList.add('popup-visible');
+                });
+            }
+        });
 
-// Init theme on load
+    </script>
+<!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
+<script defer src="../../js/translate.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
+<script defer src="../../js/config.js"></script>
+<script defer src="../../js/course-loader.js"></script>
+<script defer src="../../js/course-progress.js"></script>
+<script src="/js/search.js" defer></script>
+<script src="/js/pwa.js" defer></script>
+<script src="/js/offline.js" defer></script>
+<script defer src="../../js/auto-refresh.js"></script>
+<!-- ImpactMojo Theme Toggle JS -->
+<script>
 (function() {
-  const saved = localStorage.getItem('impactmojo-theme') || 'dark';
-  setTheme(saved);
-})();
-
-/* ============================================================
-   MCQ CHECK FUNCTION
-   ============================================================ */
-function checkMCQ(btn, correctAnswer, explanation) {
-  const mcq = btn.closest('.mcq');
-  const selected = mcq.querySelector('input[type="radio"]:checked');
-  const feedback = mcq.querySelector('.mcq-feedback');
-
-  if (!selected) {
-    feedback.style.display = 'block';
-    feedback.className = 'mcq-feedback incorrect';
-    feedback.textContent = 'Please select an answer before checking.';
-    return;
-  }
-
-  feedback.style.display = 'block';
-  if (selected.value === correctAnswer) {
-    feedback.className = 'mcq-feedback correct';
-    feedback.textContent = explanation;
-  } else {
-    feedback.className = 'mcq-feedback incorrect';
-    feedback.textContent = 'Not quite. ' + explanation;
-  }
-
-  // Disable further changes
-  mcq.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
-  btn.disabled = true;
-  btn.style.opacity = '0.5';
-}
-
-/* ============================================================
-   ACTIVE SIDEBAR TRACKING
-   ============================================================ */
-const sections = document.querySelectorAll('[id]');
-const sidebarLinks = document.querySelectorAll('.sidebar-link[data-section]');
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.getAttribute('id');
-      sidebarLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('data-section') === id) {
-          link.classList.add('active');
-        }
-      });
+    function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
-  });
-}, {
-  rootMargin: '-52px 0px -60% 0px',
-  threshold: 0
-});
-
-sections.forEach(section => {
-  if (section.id) observer.observe(section);
-});
+    function applyTheme(theme) {
+        var resolved = theme === 'system' ? getSystemTheme() : theme;
+        document.documentElement.setAttribute('data-theme', resolved);
+        // Also handle legacy body classes
+        document.body.classList.remove('dark-mode', 'light-mode');
+        if (resolved === 'light') document.body.classList.add('light-mode');
+        else document.body.classList.add('dark-mode');
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    // Apply immediately before render
+    applyTheme(saved);
+    document.addEventListener('DOMContentLoaded', function() {
+        applyTheme(saved);
+        updateButtons(saved);
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var t = this.getAttribute('data-imtheme');
+                localStorage.setItem('im-theme', t);
+                applyTheme(t);
+                updateButtons(t);
+            });
+        });
+    });
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function() {
+        if ((localStorage.getItem('im-theme') || 'system') === 'system') {
+            applyTheme('system');
+        }
+    });
+})();
 </script>
 </body>
 </html>
