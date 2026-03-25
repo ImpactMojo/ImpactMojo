@@ -13,7 +13,7 @@ Free development education platform for South Asia. Static HTML/CSS/JS, Supabase
 
 - **Site**: impactmojo.in
 - **Games**: Self-contained HTML in `/Games/` (single file, no deps)
-- **Labs**: Browser-based in `/courses/*-lab.html`
+- **Labs**: Browser-based in `/Labs/*-lab.html`
 - **Courses**: 9 flagship (`/courses/{name}/`), 39 foundational (catalog)
 - **Handouts**: 400+ in `/Handouts/{Track}/`
 - **Data**: JSON in `/data/` (search-index, dataverse, BCT repository)
