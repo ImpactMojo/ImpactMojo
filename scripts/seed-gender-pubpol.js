@@ -19,13 +19,15 @@ if (!SERVICE_KEY) {
   process.exit(1);
 }
 
+// Use original (pre-shell) files if available, otherwise fall back to current
 const COURSES = [
-  { id: 'gender', file: 'courses/gender/index.html', sectionClass: 'module' },
-  { id: 'pubpol', file: 'courses/pubpol/index.html', sectionClass: 'section reveal' },
+  { id: 'gender', file: process.env.GENDER_SRC || 'courses/gender/index.html', sectionClass: 'module' },
+  { id: 'pubpol', file: process.env.PUBPOL_SRC || 'courses/pubpol/index.html', sectionClass: 'section reveal' },
 ];
 
 function extractModules(courseId, htmlPath, sectionClass) {
-  const html = fs.readFileSync(path.join(__dirname, '..', htmlPath), 'utf8');
+  const absPath = path.isAbsolute(htmlPath) ? htmlPath : path.join(__dirname, '..', htmlPath);
+  const html = fs.readFileSync(absPath, 'utf8');
   const modules = [];
 
   // Find all module sections
@@ -73,20 +75,8 @@ function extractModules(courseId, htmlPath, sectionClass) {
       : '';
 
     // For gender: content is inside <div class="module-content">...</div>
-    // For pubpol: content is directly inside the section (after section-header)
+    // Keep the full module HTML including headers (matches how other 9 courses store content)
     let contentHtml = moduleHtml;
-
-    // Remove the header block
-    // Gender: module-header div
-    contentHtml = contentHtml.replace(
-      /<div\s+class="module-header">[\s\S]*?<\/div>\s*<\/div>/i,
-      ''
-    );
-    // Pubpol: section-header div
-    contentHtml = contentHtml.replace(
-      /<div\s+class="section-header">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>/i,
-      ''
-    );
 
     // Split content from quiz (MCQ section)
     let quizHtml = null;
