@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -7,6 +9,132 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
+/* === ImpactMojo Design System === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; stroke: #0EA5E9; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important; -webkit-text-fill-color: #fff;
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+}
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg);
+    border: 1px solid var(--im-border);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: var(--im-accent); color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-paper-plane {
+    position: fixed; top: 15%; right: 8%;
+    width: 120px; height: 120px;
+    opacity: 0.15; z-index: 0;
+    pointer-events: none;
+    animation: im-fly 25s ease-in-out infinite;
+}
+@keyframes im-fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, -15px) rotate(-3deg); }
+    50% { transform: translate(10px, -25px) rotate(2deg); }
+    75% { transform: translate(-10px, 10px) rotate(-1deg); }
+}
+.im-footer {
+    background: var(--im-secondary-bg);
+    border-top: 1px solid var(--im-border);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-secondary);
+}
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted);
+}
+.im-footer-made a { color: var(--im-accent); text-decoration: none; }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-primary);
+    font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary);
+    text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border);
+    font-size: 0.8rem; color: var(--im-text-muted);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: none; }
+@media (max-width: 640px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-topbar-home span { display: none; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 400px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+}
+/* === End ImpactMojo Design System === */
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
@@ -158,6 +286,35 @@ blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px s
   <div class="panel" id="p-ask"></div>
 </main>
 </div>
+
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="root"></div>
 <script>
 const DATA = {"title": "Influence", "dayBadge": "Day 18 of 30", "author": "Robert B. Cialdini · 1984/2021 · HarperBusiness", "tagline": "Cialdini's research-based framework of six universal principles of persuasion — the psychological shortcuts that cause automatic compliance — and how to use and defend against them.", "pills": ["Persuasion", "Psychology", "Behaviour Change", "Communication"], "stats": [{"n": "5", "l": "Core sections"}, {"n": "6", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Cialdini's central claim is that human compliance behaviour is largely automatic, not deliberate. Under conditions of information overload and time pressure — which describes most modern decision-making — people rely on fixed-action patterns triggered by specific environmental cues. Six principles reliably trigger these patterns: reciprocity, commitment and consistency, social proof, liking, authority, and scarcity.", "The book has two audiences simultaneously: those who want to influence others more effectively (the principles are learnable and applicable) and those who want to defend against manipulation (understanding the principles is the primary defence). Cialdini is explicit that the principles can be used ethically or exploitatively — what distinguishes them is the alignment between the cue and the genuine value being offered."], "accent": "#5C2D91", "accent_light": "#F5EEF8", "pathways": [{"label": "Development Practitioner", "desc": "Application to programme design, management, and field practice.", "steps": [{"section": "Fixed-Action Patterns and Compliance", "focus": "Animals have fixed-action patterns: pre-programmed behavioural sequences triggered by specific cues regardless of context. Humans do too, and with good reason — the world is too information-dense for ..."}, {"section": "Principle 1: Reciprocity", "focus": "The reciprocity principle: we feel obligated to return favours, gifts, and concessions. It is one of the most powerful norms in human society — violating it produces social sanctions, and complying wi..."}, {"section": "Principle 2: Commitment and Consistency", "focus": "Once we take a stand or make a commitment, we feel strong psychological pressure to behave consistently with it. This is amplified when the commitment is active (written down or acted on), public (wit..."}, {"section": "Principle 3: Social Proof", "focus": "In uncertain situations, we look to what others are doing as a guide to correct behaviour — and we are particularly influenced by the behaviour of people similar to us. This is a generally adaptive sh..."}, {"section": "Principles 4–6: Liking, Authority, Scarcity", "focus": "Liking: we comply more readily with people we like — and likability is predicted by physical attractiveness, similarity, familiarity (exposure and cooperation), and positive associations (we like the ..."}]}, {"label": "Development Researcher", "desc": "Application to research, evidence, and academic work.", "steps": [{"section": "Fixed-Action Patterns and Compliance", "focus": "Animals have fixed-action patterns: pre-programmed behavioural sequences triggered by specific cues regardless of context. Humans do too, and with good reason — the world is too information-dense for ..."}, {"section": "Principle 1: Reciprocity", "focus": "The reciprocity principle: we feel obligated to return favours, gifts, and concessions. It is one of the most powerful norms in human society — violating it produces social sanctions, and complying wi..."}, {"section": "Principle 2: Commitment and Consistency", "focus": "Once we take a stand or make a commitment, we feel strong psychological pressure to behave consistently with it. This is amplified when the commitment is active (written down or acted on), public (wit..."}, {"section": "Principle 3: Social Proof", "focus": "In uncertain situations, we look to what others are doing as a guide to correct behaviour — and we are particularly influenced by the behaviour of people similar to us. This is a generally adaptive sh..."}, {"section": "Principles 4–6: Liking, Authority, Scarcity", "focus": "Liking: we comply more readily with people we like — and likability is predicted by physical attractiveness, similarity, familiarity (exposure and cooperation), and positive associations (we like the ..."}]}, {"label": "Personal Growth", "desc": "Direct personal application.", "steps": [{"section": "Fixed-Action Patterns and Compliance", "focus": "Animals have fixed-action patterns: pre-programmed behavioural sequences triggered by specific cues regardless of context. Humans do too, and with good reason — the world is too information-dense for ..."}, {"section": "Principle 1: Reciprocity", "focus": "The reciprocity principle: we feel obligated to return favours, gifts, and concessions. It is one of the most powerful norms in human society — violating it produces social sanctions, and complying wi..."}, {"section": "Principle 2: Commitment and Consistency", "focus": "Once we take a stand or make a commitment, we feel strong psychological pressure to behave consistently with it. This is amplified when the commitment is active (written down or acted on), public (wit..."}, {"section": "Principle 3: Social Proof", "focus": "In uncertain situations, we look to what others are doing as a guide to correct behaviour — and we are particularly influenced by the behaviour of people similar to us. This is a generally adaptive sh..."}, {"section": "Principles 4–6: Liking, Authority, Scarcity", "focus": "Liking: we comply more readily with people we like — and likability is predicted by physical attractiveness, similarity, familiarity (exposure and cooperation), and positive associations (we like the ..."}]}], "sections": [{"title": "Fixed-Action Patterns and Compliance", "subtitle": "Why we comply automatically", "summary": "Animals have fixed-action patterns: pre-programmed behavioural sequences triggered by specific cues regardless of context. Humans do too, and with good reason — the world is too information-dense for fully deliberate decision-making at every point. The contrast principle (we evaluate options relative to what we have just seen, not in absolute terms) is the foundational shortcut that all six principles exploit. The expensive product shown first makes the moderately expensive product seem cheap. The terrible apartment shown first makes the mediocre apartment seem fine. Compliance professionals design environments to trigger the right contrast and the right cue.", "ideas": ["Fixed-action patterns are essential cognitive shortcuts, not weaknesses — they are appropriate under most conditions.", "We become more dependent on cognitive shortcuts when tired, stressed, distracted, or under time pressure.", "The contrast principle is the mechanism beneath most pricing, negotiation, and sales techniques.", "Understanding the shortcut being exploited is the most reliable defence against manipulation."], "quotes": ["\"We must very often use our stereotypes, our rules of thumb to classify things according to a few features and then to respond mindlessly when one or another of these trigger features is present.\""], "devEcon": "The automatic compliance patterns Cialdini describes are the micro-level mechanisms through which behavioural interventions in development work. CCT design exploits commitment and consistency; community health worker social proof exploits the social validation shortcut; WASH campaigns that use authority (respected community figures) exploit the authority shortcut. Understanding these mechanisms allows better intervention design."}, {"title": "Principle 1: Reciprocity", "subtitle": "The rule that rules social exchange", "summary": "The reciprocity principle: we feel obligated to return favours, gifts, and concessions. It is one of the most powerful norms in human society — violating it produces social sanctions, and complying with it produces cooperation. The principle applies even to uninvited gifts (receiving creates a sense of obligation regardless of whether you wanted the gift), can be used to generate larger concessions (reject-then-retreat: make a large request, then retreat to a smaller one, which feels like a concession that demands reciprocity), and works even between people who dislike each other.", "ideas": ["Reciprocity creates obligation regardless of whether you liked or wanted the initial gift.", "Reject-then-retreat: making a large request first, then retreating to a smaller one, triggers reciprocity for the apparent concession.", "The obligation to reciprocate is so strong that it can produce a larger return than the initial gift.", "Defence: mentally redefine manipulative gifts as sales tactics, which dissolves the sense of obligation."], "quotes": ["\"A favor is to be met with another favor; it is not to be met with neglect.\"", "\"The rule says that favors are to be met with favors; it does not require that tricks be met with favors.\""], "devEcon": "Development organisations use reciprocity extensively: community meetings that open with a gift (refreshments, materials); beneficiary selection processes that include all who show up; government relationships built on providing small resources in advance of larger asks. Cialdini's research explains why these work, and his ethics framework suggests they are appropriate when the reciprocal obligation aligns with what the other party genuinely wants."}, {"title": "Principle 2: Commitment and Consistency", "subtitle": "The need to appear consistent with our past behaviour", "summary": "Once we take a stand or make a commitment, we feel strong psychological pressure to behave consistently with it. This is amplified when the commitment is active (written down or acted on), public (witnessed by others), effortful (required work to make), and internally motivated (made without large external inducements). The principle explains why small initial commitments (foot-in-the-door technique) reliably produce larger subsequent compliance — each compliance shifts self-image slightly, making subsequent compliance feel like consistency rather than new behaviour.", "ideas": ["Active, public, effortful commitments produce the strongest consistency effects.", "Inner choice: commitments made without coercion shift self-image and produce long-term behaviour change; coerced compliance does not.", "Foot-in-the-door: a small initial commitment creates consistency pressure that makes larger subsequent requests more likely to succeed.", "Defence: recognise the feeling of commitment pressure and explicitly ask whether you would make the same choice without the prior commitment."], "quotes": ["\"Once we have made a choice or taken a stand, we will encounter personal and interpersonal pressures to behave consistently with that commitment.\""], "devEcon": "CCTs exploit commitment and consistency: by requiring school attendance, they create a commitment that shifts parents' self-image as educational investors. BRAC's savings groups use public commitment (each member announces their savings target to the group) to exploit the consistency principle. Community-based monitoring programmes that ask community members to set their own standards (rather than imposing external ones) are using inner-choice commitment to produce more durable accountability."}, {"title": "Principle 3: Social Proof", "subtitle": "Looking to others to know what is correct", "summary": "In uncertain situations, we look to what others are doing as a guide to correct behaviour — and we are particularly influenced by the behaviour of people similar to us. This is a generally adaptive shortcut: if many people in our reference group are doing something, it probably is appropriate. The shortcut misfires in situations of deliberate manipulation (canned laughter, manufactured queues, fake testimonials), pluralistic ignorance (everyone looks to each other and no one acts), and contagion effects (widely publicised suicides produce copycat effects).", "ideas": ["Social proof is most powerful when we are uncertain and when the models are similar to us.", "Pluralistic ignorance: in emergencies, the crowd's apparent calm causes everyone to underrespond — specifically requesting one person to act breaks this.", "Canned laughter works even when people know it is artificial — the shortcut is automatic.", "Defence: distinguish between naturally occurring and deliberately manufactured social proof."], "quotes": ["\"In general, when we are unsure of ourselves, when the situation is unclear or ambiguous, we are most likely to look to and accept the actions of others as correct.\""], "devEcon": "Social proof is one of the most well-evidenced behaviour change mechanisms in development. Community-led total sanitation (CLTS) works primarily through social proof — making open defecation publicly visible and disgusting creates the normative pressure that drives adoption. Peer-to-peer health messaging in community health programmes exploits social proof more effectively than authority-based messaging. Duflo et al.'s work on social learning in technology adoption is the rigorous econometric version of Cialdini's mechanism."}, {"title": "Principles 4–6: Liking, Authority, Scarcity", "subtitle": "The final three compliance weapons", "summary": "Liking: we comply more readily with people we like — and likability is predicted by physical attractiveness, similarity, familiarity (exposure and cooperation), and positive associations (we like the messenger who delivers good news). Authority: we are conditioned to comply with figures of authority, a generally adaptive shortcut that can be exploited by symbols of authority (titles, clothes, trappings) that may not reflect genuine expertise. Scarcity: things become more desirable when they are less available — because scarcity correlates with value, and because loss aversion makes the prospect of missing out more motivating than the prospect of gaining something.", "ideas": ["Liking can be engineered: similarity, compliments, contact, and positive associations are all learnable techniques.", "Authority symbols (titles, uniforms, trappings) trigger compliance even when the underlying expertise is absent.", "Loss aversion amplifies scarcity: 'you will lose X' is more motivating than 'you will gain X' for equivalent outcomes.", "Combined application: all six principles often appear together in sophisticated persuasion contexts (sales, politics, fundraising)."], "quotes": ["\"A halo effect occurs when one positive characteristic of a person dominates the way that person is viewed by others.\"", "\"Not only do we want the same item more when it is scarce, we want it most when we are in competition for it.\""], "devEcon": "Authority is the mechanism behind community health worker programmes: a community member given a title, some training, and a uniform (authority trappings) becomes more influential on health behaviours than an outsider with genuine expertise but no social embeddedness. Scarcity is used in development service delivery design — limited-time offers for enrollment in programmes, or signalling that a programme slot is one of few available, increases take-up rates. Both effects are real and measurable."}], "concepts": [{"term": "Reciprocity", "definition": "The social norm requiring that favours, gifts, and concessions be returned in kind. Creates obligation regardless of whether the initial gift was wanted. One of the most cross-culturally universal norms in human societies.", "practitionerNote": "Development organisations can design reciprocity intentionally into community engagement: providing something of genuine value before making any ask creates the reciprocal obligation that facilitates programme enrollment and participation."}, {"term": "Commitment and Consistency", "definition": "The tendency to behave consistently with prior commitments, especially when those commitments are active, public, effortful, and internally motivated. The mechanism that makes small initial compliance a reliable predictor of subsequent larger compliance.", "practitionerNote": "Programme enrollment commitment devices (signing up in front of peers, making a public declaration of intent) exploit this principle to improve follow-through. Design them for inner choice (not coerced) to produce the self-image shift that creates lasting behaviour change."}, {"term": "Social Proof", "definition": "The tendency to look to others' behaviour, especially similar others, to determine correct action in uncertain situations. The shortcut is adaptive in most conditions and misfires under manipulation and pluralistic ignorance.", "practitionerNote": "Community-based health norms change fastest when early adopters are visible and similar to the target population. Development programmes that identify and spotlight respected community members who have already adopted a desired behaviour are using social proof correctly."}, {"term": "Liking", "definition": "The tendency to comply more readily with people we like. Likability is predicted by physical attractiveness, similarity, familiarity, and positive association. Can be cultivated and exploited.", "practitionerNote": "Development practitioners who invest time in building genuine personal relationships with government counterparts before making programme proposals are applying the liking principle ethically. The principle works best when the liking reflects genuine shared purpose rather than manufactured similarity."}, {"term": "Authority", "definition": "The tendency to comply with figures of authority — including people who display the symbols of authority (titles, uniforms, trappings) even when genuine expertise is absent.", "practitionerNote": "Community health workers are authority figures within their communities — their compliance-generating capacity comes from social embeddedness, not technical expertise. Designing CHW programmes that build this social authority (by involving communities in selection and by giving CHWs visible markers of their role) enhances programme effectiveness."}, {"term": "Scarcity", "definition": "The tendency to value things more when they are less available, driven by loss aversion (the prospect of losing access is more motivating than the prospect of gaining something) and by the heuristic that scarce things are more valuable.", "practitionerNote": "Limited-enrollment windows for development programmes, or signalling that services are available to a restricted number of eligible beneficiaries, can increase take-up through scarcity effects. The ethical application requires that the scarcity is genuine rather than manufactured."}], "tools": [{"label": "Reflection Tool", "intro": "Use these prompts to connect the book's ideas to your own practice.", "html": "<label class=\"fld-label\">What is the most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"rt1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where does this book's argument apply most directly to a current challenge you face?</label>\n<textarea class=\"fld\" id=\"rt2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">What is one specific change you will make this week based on reading this?</label>\n<textarea class=\"fld\" id=\"rt3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Your reflections stay in your browser only.</div>"}], "connections": [{"book": "Pre-Suasion — Cialdini", "text": "Cialdini's follow-up book extends the Influence framework by adding the temporal dimension: how you prepare people before making a request. Pre-Suasion argues that the moment immediately before a compliance request is at least as important as the request itself. The two books together provide the complete Cialdini system."}, {"book": "Thinking, Fast and Slow — Kahneman", "text": "Cialdini's six principles are the practical application of Kahneman's System 1: the fast, automatic, heuristic-driven processing that dominates compliance behaviour. Kahneman provides the cognitive science mechanism; Cialdini provides the specific triggers and their consequences. Together they are the most complete picture available of how people actually make decisions."}, {"book": "Nudge — Thaler and Sunstein", "text": "Nudge theory is the policy application of Cialdini's principles: social proof (descriptive norms), commitment devices, authority (default settings by trusted institutions), and scarcity framing are all tools in the nudge toolkit. Thaler and Sunstein add the ethical framework (libertarian paternalism) that Cialdini sketches but does not fully develop."}], "critiques": ["Cialdini's experimental evidence is almost entirely based on laboratory studies and structured field experiments in Western, educated, industrialised, rich, democratic (WEIRD) populations. Cross-cultural applicability of the specific magnitudes is not well established, though the direction of effects appears broadly consistent.", "The book's treatment of the authority principle underestimates how different authority structures work in different institutional contexts. In hierarchical bureaucracies common in South Asia and sub-Saharan Africa, authority effects may be stronger and more difficult to challenge than Cialdini's prescriptions for resistance assume.", "Cialdini presents the principles as symmetric between use and defence, but this is not empirically supported. Evidence on inoculation against persuasion (knowing about a technique in advance reduces its effectiveness somewhat) suggests that awareness provides partial but not complete protection."], "suggested": ["How does social proof work in community health behaviour change programmes?", "What is the reject-then-retreat technique and when is it appropriate to use?", "How do commitment devices in development programmes exploit the commitment principle?", "What is pluralistic ignorance and how does it affect community responses to social problems?", "What are the ethical limits of using the six principles in development communication?"], "systemPrompt": "You are an expert reading companion for 'Influence' by Robert Cialdini. Your audience is development practitioners, researchers, and ImpactMojo learners who design and evaluate behaviour change interventions. Answer questions about the six principles, their mechanisms, their application to development programming, and their ethical limits. Reference Kahneman's dual-process theory and nudge theory where relevant."};
 
@@ -405,5 +562,97 @@ function switchTab(id) {
   renderSetup();
 })();
 </script>
+
+<!-- ImpactMojo Paper Plane -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- ImpactMojo Footer -->
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4>About ImpactMojo</h4>
+<ul>
+<li><a href="../about.html">About Us</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="https://github.com/Varnasr/ImpactMojo" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+<li><a href="../transparency.html">Transparency</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Legal</h4>
+<ul>
+<li><a href="../privacy-policy.html">Privacy Policy</a></li>
+<li><a href="../terms-of-service.html">Terms of Service</a></li>
+<li><a href="../disclaimer.html">Disclaimer</a></li>
+<li><a href="../data-protection.html">Data Protection</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Quick Links</h4>
+<ul>
+<li><a href="../catalog.html">All Courses</a></li>
+<li><a href="../premium.html">Premium Content</a></li>
+<li><a href="../coaching.html">Coaching</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Resources</h4>
+<ul>
+<li><a href="../handouts.html">Handouts</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../faq.html">FAQ</a></li>
+<li><a href="../sitemap.html">Sitemap</a></li>
+<li><a href="https://impactmojo.gitbook.io/impactmojo" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+<p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+</div>
+</div>
+</footer>
+
+<script>
+// ImpactMojo 3-way theme system
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+            document.body.classList.toggle('dark-mode', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+})();
+</script>
+
 </body>
 </html>

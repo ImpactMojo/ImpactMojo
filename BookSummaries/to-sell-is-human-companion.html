@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -7,6 +9,132 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
+/* === ImpactMojo Design System === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; stroke: #0EA5E9; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important; -webkit-text-fill-color: #fff;
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+}
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg);
+    border: 1px solid var(--im-border);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: var(--im-accent); color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-paper-plane {
+    position: fixed; top: 15%; right: 8%;
+    width: 120px; height: 120px;
+    opacity: 0.15; z-index: 0;
+    pointer-events: none;
+    animation: im-fly 25s ease-in-out infinite;
+}
+@keyframes im-fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, -15px) rotate(-3deg); }
+    50% { transform: translate(10px, -25px) rotate(2deg); }
+    75% { transform: translate(-10px, 10px) rotate(-1deg); }
+}
+.im-footer {
+    background: var(--im-secondary-bg);
+    border-top: 1px solid var(--im-border);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-secondary);
+}
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted);
+}
+.im-footer-made a { color: var(--im-accent); text-decoration: none; }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-primary);
+    font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary);
+    text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border);
+    font-size: 0.8rem; color: var(--im-text-muted);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: none; }
+@media (max-width: 640px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-topbar-home span { display: none; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 400px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+}
+/* === End ImpactMojo Design System === */
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
@@ -158,6 +286,35 @@ blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px s
   <div class="panel" id="p-ask"></div>
 </main>
 </div>
+
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="root"></div>
 <script>
 const DATA = {"title": "To Sell Is Human", "dayBadge": "Day 27 of 30", "author": "Daniel H. Pink · 2012 · Riverhead", "tagline": "Pink's argument that everyone spends 40% of their work time in non-sales selling — influencing, persuading, and moving others — and the ABCs (Attunement, Buoyancy, Clarity) that make this effective.", "pills": ["Persuasion", "Influence", "Communication", "Leadership"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Pink's central claim is that the traditional conception of sales as a specialist activity has been made obsolete by two forces: the internet has eliminated information asymmetry (the source of manipulative selling), and the rise of elasticity in organisational roles means that everyone now spends significant time doing what used to be called selling — influencing, convincing, and moving others to take action.", "The book's prescriptive model replaces 'Always Be Closing' with the ABCs: Attunement (stepping outside your own perspective to understand others'), Buoyancy (the resilience and optimism needed to sustain selling through rejection), and Clarity (the ability to identify problems and reframe situations, not just solve known problems). The final section presents Pitch, Improvise, and Serve as the three things you must do to move people effectively."], "accent": "#B7410E", "accent_light": "#FDF0EB", "pathways": [{"label": "Development Practitioner", "desc": "Programme management, community engagement, field practice.", "steps": [{"section": "Everyone Sells Now", "focus": "Pink presents survey data showing that knowledge workers spend approximately 40% of their time doing 'non-sales selling': convincing colleagues, persuading bosses, influencing partners, enrolling bene..."}, {"section": "Attunement", "focus": "Attunement is the ability to align yourself with others and with the context — to see the world through their eyes before presenting your own perspective. Three principles: reduce your power to amplif..."}, {"section": "Buoyancy", "focus": "The hardest aspect of non-sales selling is sustaining effort through persistent rejection, scepticism, and indifference. Pink presents three buoyancy tools: interrogative self-talk before the engageme..."}, {"section": "Clarity and the Pitch", "focus": "Clarity in the information-abundant world is about problem-finding, not problem-solving — helping people see a situation in a new way and identify problems they did not know they had. Tools for framin..."}]}, {"label": "Development Researcher", "desc": "Research practice, evidence, and academic work.", "steps": [{"section": "Everyone Sells Now", "focus": "Pink presents survey data showing that knowledge workers spend approximately 40% of their time doing 'non-sales selling': convincing colleagues, persuading bosses, influencing partners, enrolling bene..."}, {"section": "Attunement", "focus": "Attunement is the ability to align yourself with others and with the context — to see the world through their eyes before presenting your own perspective. Three principles: reduce your power to amplif..."}, {"section": "Buoyancy", "focus": "The hardest aspect of non-sales selling is sustaining effort through persistent rejection, scepticism, and indifference. Pink presents three buoyancy tools: interrogative self-talk before the engageme..."}, {"section": "Clarity and the Pitch", "focus": "Clarity in the information-abundant world is about problem-finding, not problem-solving — helping people see a situation in a new way and identify problems they did not know they had. Tools for framin..."}]}, {"label": "Personal Growth", "desc": "Personal and professional application.", "steps": [{"section": "Everyone Sells Now", "focus": "Pink presents survey data showing that knowledge workers spend approximately 40% of their time doing 'non-sales selling': convincing colleagues, persuading bosses, influencing partners, enrolling bene..."}, {"section": "Attunement", "focus": "Attunement is the ability to align yourself with others and with the context — to see the world through their eyes before presenting your own perspective. Three principles: reduce your power to amplif..."}, {"section": "Buoyancy", "focus": "The hardest aspect of non-sales selling is sustaining effort through persistent rejection, scepticism, and indifference. Pink presents three buoyancy tools: interrogative self-talk before the engageme..."}, {"section": "Clarity and the Pitch", "focus": "Clarity in the information-abundant world is about problem-finding, not problem-solving — helping people see a situation in a new way and identify problems they did not know they had. Tools for framin..."}]}], "sections": [{"title": "Everyone Sells Now", "subtitle": "The rise of non-sales selling", "summary": "Pink presents survey data showing that knowledge workers spend approximately 40% of their time doing 'non-sales selling': convincing colleagues, persuading bosses, influencing partners, enrolling beneficiaries. The three forces behind this: entrepreneurship (solo and micro-business owners must handle every function), elasticity (flat organisations require everyone to sell across functional boundaries), and Ed-Med (healthcare and education, the fastest-growing sectors, are fundamentally about moving people to change behaviour). The fundamental shift from buyer-beware (sellers had more information) to seller-beware (buyers have equal or better information) means that old-school persuasion — manipulation through information asymmetry — no longer works.", "ideas": ["Non-sales selling is 40% of most knowledge workers' time — it is a core professional competency, not a specialist function.", "Caveat Emptor is dead; Caveat Venditor — seller beware — is the new operating condition.", "In a world of information parity, the salesperson's value is as a curator and clarifier of information, not a provider of it.", "The three Es: entrepreneurship, elasticity, and Ed-Med have all increased non-sales selling as a proportion of professional time."], "quotes": ["\"Like it or not, we're all in sales now.\"", "\"To sell well is to convince someone else to part with resources — not to deprive that person, but to leave them better off in the end.\""], "devEcon": "Development practitioners are fundamentally in the non-sales selling business: convincing governments to adopt evidence-based policies, persuading communities to change health behaviours, enrolling beneficiaries in programmes, influencing donors to fund new approaches. Pink's framework is more accurate than the traditional programme implementation framing for describing what successful development practitioners actually do."}, {"title": "Attunement", "subtitle": "Stepping outside your own perspective", "summary": "Attunement is the ability to align yourself with others and with the context — to see the world through their eyes before presenting your own perspective. Three principles: reduce your power to amplify it (people with lower perceived power are better at reading others — assuming low power improves perspective-taking); use both head (analytical understanding of their interests) and heart (empathetic understanding of their emotions); and use strategic mimicry (natural, not artificial — mirror language patterns, body language, and communication style to build rapport). Research finds that ambiverts (neither strongly introverted nor extroverted) outperform both extremes at moving others — they balance listening with advocating at the right moments.", "ideas": ["Perspective-taking is more important than empathy alone: knowing what someone is thinking (cognitive) complements feeling what they are feeling (affective).", "Strategic mimicry — naturally mirroring language and style — builds rapport and improves persuasion outcomes.", "Ambiverts outperform both introverts and extroverts in non-sales selling: they know when to talk and when to listen.", "The empty chair technique (leaving a chair for the customer/stakeholder) keeps the decision about them, not about you."], "quotes": ["\"Attunement is the ability to bring one's actions and outlook into harmony with other people and with the context you're in.\"", "\"The ability to move people now depends on power's inverse: understanding another person's perspective, getting inside his head, and seeing the world through his eyes.\""], "devEcon": "Community engagement in development is an attunement exercise. The most common failure mode — presenting the programme's theory of change rather than starting from the community's own framing of their situation — is an attunement failure. Participatory rapid appraisal, community needs assessments, and beneficiary focus groups are all attunement tools. The difference between consultation theatre and genuine participation is whether the practitioner actually adjusts their approach based on what they hear."}, {"title": "Buoyancy", "subtitle": "Resilience and optimism in the face of rejection", "summary": "The hardest aspect of non-sales selling is sustaining effort through persistent rejection, scepticism, and indifference. Pink presents three buoyancy tools: interrogative self-talk before the engagement (ask 'Can I do this?' rather than affirm 'I can do this' — the question prompts the brain to generate its own reasons, which are more durable than external affirmations); positivity ratio during the engagement (a 3:1 ratio of positive to negative emotions produces the broadened awareness and creative thinking that enables effective persuasion); and explanatory style after rejection (treat failures as temporary, specific, and external rather than permanent, pervasive, and personal).", "ideas": ["Interrogative self-talk ('Can I do this?' followed by generating your own reasons) outperforms positive affirmations.", "The 3:1 positivity ratio: positive emotions broaden attention and enable creative problem-solving; some negative experience maintains accuracy.", "Explanatory style: resilient people explain setbacks as temporary (this will pass), specific (this was unusual), and external (this was about the situation, not about me).", "Optimism is not naive: it is the catalyst for persistence that sustains performance through difficulty."], "quotes": ["\"The most effective self-talk doesn't merely shift emotions. It shifts linguistic categories. It moves from making statements to asking questions.\"", "\"Optimism, it turns out, isn't a hollow sentiment. It's a catalyst that can stir persistence, steady us during challenges, and stoke the confidence that we can influence our surroundings.\""], "devEcon": "Development practitioners face persistent rejection: government officials who do not return calls, communities that do not enrol, donors that do not fund. The buoyancy tools Pink describes are the psychological foundation for sustained field effectiveness. Explanatory style — treating a community's initial resistance as temporary and situational rather than permanent and personal — predicts which practitioners persist and adapt versus which ones disengage."}, {"title": "Clarity and the Pitch", "subtitle": "Problem-finding and persuasive communication", "summary": "Clarity in the information-abundant world is about problem-finding, not problem-solving — helping people see a situation in a new way and identify problems they did not know they had. Tools for framing solutions: the experience frame (sell experiences, not products), the potential frame (what I could achieve trumps what I have already achieved in persuasion), the blemish frame (adding a small honest flaw to a list of positives increases credibility of the positives), and labels (people live up to positive labels). The six modern pitches: one-word pitch, question pitch, rhyming pitch, subject-line pitch, Twitter pitch, and Pixar pitch. The three rules for improvisation: listen for offers (treat apparent rejections as partial acceptances), say 'yes, and' rather than 'no' or 'yes, but', and make the other person look good.", "ideas": ["Problem-finding (identifying problems the other person didn't know they had) is more valuable than problem-solving in information-abundant contexts.", "The potential frame: people are more persuaded by what you could become than what you have already achieved.", "Pitches are conversation starters, not closing devices: their goal is to create a dialogue, not end one.", "'Yes, and' keeps possibilities open; 'yes, but' closes them."], "quotes": ["\"Clarity is the capacity to help others see their situations in fresh and more revealing ways and to identify problems they didn't realize they had.\"", "\"The purpose of a pitch is to offer something so compelling that it begins a conversation.\""], "devEcon": "The problem-finding principle is the most direct application of Pink's framework to development advocacy. The most effective development advocacy does not present solutions (the programme you already have) but reframes the problem in a way that makes the existing solution seem obvious. This is how BRAC positioned graduation (reframing chronic poverty as a solvable problem of asset and capability threshold, not a permanent condition), how CCTs were positioned (reframing school non-attendance as a present-bias problem, not a preference problem), and how CLTS was positioned (reframing sanitation as a social norm problem, not a technology access problem)."}], "concepts": [{"term": "Non-Sales Selling", "definition": "The activity of influencing, persuading, and moving others without a direct monetary transaction — convincing a colleague, enrolling a beneficiary, persuading a government official, advocating to a donor. Pink estimates this accounts for approximately 40% of most knowledge workers' professional time.", "practitionerNote": "Development practitioners are predominantly in the non-sales selling business. Reframing their role from programme implementers (executing predefined activities) to movers (creating the conditions for behaviour change) produces a more accurate model of what successful development practice actually requires."}, {"term": "Attunement", "definition": "The ability to bring your perspective into alignment with others' and with the context — to understand what they think, feel, and want before presenting your own message. Includes perspective-taking, strategic mimicry, and contextual reading.", "practitionerNote": "Community engagement that starts from the community's own framing of their situation (not the programme's theory of change) is attunement in practice. The practitioner who asks 'what problem are you trying to solve?' before explaining the programme is more attuned — and more effective — than the one who presents the programme and asks for enrolment."}, {"term": "Buoyancy", "definition": "The resilience and optimism needed to sustain non-sales selling through persistent rejection. Built through interrogative self-talk before, a positive emotional ratio during, and a constructive explanatory style after engagements.", "practitionerNote": "Staff retention in field-based development is a buoyancy problem. Practitioners who interpret community resistance as permanent and personal disengage; those who interpret it as temporary and situational adapt and persist. Buoyancy is trainable — it is a skill, not a disposition."}, {"term": "Clarity (Problem-Finding)", "definition": "The ability to help others see their situation in a new way and identify problems they did not know they had. More valuable than problem-solving in information-abundant environments because it changes the frame through which solutions are evaluated.", "practitionerNote": "The most effective development advocacy reframes problems rather than presenting solutions. CLTS reframed sanitation as a dignity and norm problem (not a technology access problem). CCTs reframed school non-attendance as a present-bias problem. These framings created clarity that made the proposed solution obvious."}, {"term": "The Pixar Pitch", "definition": "A six-part narrative structure: Once upon a time... Every day... One day... Because of that... Because of that... Until finally... Used to frame complex information as a compelling story that creates emotional investment and logical structure simultaneously.", "practitionerNote": "Donor proposals and government briefings that use Pixar-style narrative structure (here is who is affected, here is their daily challenge, here is the moment of change, here is the causal chain, here is the outcome) are more persuasive than those that begin with logframe tables or outcome targets."}], "tools": [{"label": "Reflection Journal", "intro": "Use these prompts to connect the book to your practice.", "html": "<label class=\"fld-label\">What is the most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"r1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where does this book's argument apply to a specific challenge you face?</label>\n<textarea class=\"fld\" id=\"r2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">One concrete change you will make this week based on reading this:</label>\n<textarea class=\"fld\" id=\"r3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Reflections stay in your browser only.</div>"}], "connections": [{"book": "Influence — Cialdini", "text": "Pink's ABCs are the practitioner's version of Cialdini's six principles applied to non-commercial influence. Attunement activates the liking and similarity principles; clarity with the blemish frame activates the candor principle from the 22 Laws of Marketing; the serve orientation activates reciprocity. Pink's contribution is the motivational frame (everyone sells now) rather than the psychological mechanisms (Cialdini's territory)."}, {"book": "TED Talks — Anderson", "text": "The Pitch section of To Sell Is Human and Anderson's guidance on throughlines and narrative structure are addressing the same problem: how to communicate an idea in a way that moves people to believe and act. Anderson focuses on the full talk; Pink focuses on the initial pitch. The Pixar Pitch structure works equally well as a talk throughline."}, {"book": "Pre-Suasion — Cialdini", "text": "Pink's Clarity (problem-finding and reframing) is the temporal pre-suasion step applied to selling: change the frame before making the request. Cialdini's privileged moments are the conditions where this reframing is most effective. Pink tells you to find the problem; Cialdini tells you when to reveal it."}], "critiques": ["Pink's 40% claim about non-sales selling time is based on a single survey rather than systematic time-use research. The figure is directionally plausible but presented with more precision than the evidence supports.", "The shift from Caveat Emptor to Caveat Venditor is overstated. Information parity is far from universal: in many markets, including those where most development practitioners work, significant information asymmetries between service providers and communities persist. The framework requires adaptation for contexts where the old power dynamics have not shifted.", "The buoyancy chapter's positivity ratio (3:1) cites research that has been substantially challenged on replication grounds (Fredrickson & Losada 2005). The directional claim (excessive negative affect impairs functioning) is robust; the precise ratio is not."], "suggested": ["How does Pink's problem-finding principle apply to development policy advocacy?", "What is the Pixar Pitch and how can development practitioners use it in donor proposals?", "How does Caveat Venditor apply to community engagement in development?", "What is interrogative self-talk and why does it outperform positive affirmations?", "What are the limits of the ABCs framework for practitioners in cultures with different communication norms?"], "systemPrompt": "You are an expert reading companion for 'To Sell Is Human' by Daniel H. Pink. Your audience is development practitioners, researchers, and ImpactMojo learners. Answer questions about the ABCs, the pitch formats, and the book's application to development communication, policy advocacy, and community engagement."};
 
@@ -405,5 +562,97 @@ function switchTab(id) {
   renderSetup();
 })();
 </script>
+
+<!-- ImpactMojo Paper Plane -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- ImpactMojo Footer -->
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4>About ImpactMojo</h4>
+<ul>
+<li><a href="../about.html">About Us</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="https://github.com/Varnasr/ImpactMojo" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+<li><a href="../transparency.html">Transparency</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Legal</h4>
+<ul>
+<li><a href="../privacy-policy.html">Privacy Policy</a></li>
+<li><a href="../terms-of-service.html">Terms of Service</a></li>
+<li><a href="../disclaimer.html">Disclaimer</a></li>
+<li><a href="../data-protection.html">Data Protection</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Quick Links</h4>
+<ul>
+<li><a href="../catalog.html">All Courses</a></li>
+<li><a href="../premium.html">Premium Content</a></li>
+<li><a href="../coaching.html">Coaching</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Resources</h4>
+<ul>
+<li><a href="../handouts.html">Handouts</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../faq.html">FAQ</a></li>
+<li><a href="../sitemap.html">Sitemap</a></li>
+<li><a href="https://impactmojo.gitbook.io/impactmojo" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+<p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+</div>
+</div>
+</footer>
+
+<script>
+// ImpactMojo 3-way theme system
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+            document.body.classList.toggle('dark-mode', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+})();
+</script>
+
 </body>
 </html>

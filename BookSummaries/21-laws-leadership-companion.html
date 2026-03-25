@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -7,6 +9,132 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
+/* === ImpactMojo Design System === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; stroke: #0EA5E9; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important; -webkit-text-fill-color: #fff;
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+}
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg);
+    border: 1px solid var(--im-border);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: var(--im-accent); color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-paper-plane {
+    position: fixed; top: 15%; right: 8%;
+    width: 120px; height: 120px;
+    opacity: 0.15; z-index: 0;
+    pointer-events: none;
+    animation: im-fly 25s ease-in-out infinite;
+}
+@keyframes im-fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, -15px) rotate(-3deg); }
+    50% { transform: translate(10px, -25px) rotate(2deg); }
+    75% { transform: translate(-10px, 10px) rotate(-1deg); }
+}
+.im-footer {
+    background: var(--im-secondary-bg);
+    border-top: 1px solid var(--im-border);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-secondary);
+}
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted);
+}
+.im-footer-made a { color: var(--im-accent); text-decoration: none; }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-primary);
+    font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary);
+    text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border);
+    font-size: 0.8rem; color: var(--im-text-muted);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: none; }
+@media (max-width: 640px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-topbar-home span { display: none; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 400px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+}
+/* === End ImpactMojo Design System === */
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
@@ -158,6 +286,35 @@ blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px s
   <div class="panel" id="p-ask"></div>
 </main>
 </div>
+
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="root"></div>
 <script>
 const DATA = {"title": "The 21 Irrefutable Laws of Leadership", "dayBadge": "Day 25 of 30", "author": "John C. Maxwell · 1998/2007 · HarperBusiness", "tagline": "Maxwell's 21 principles of effective leadership — from the Law of the Lid (leadership ability multiplies effectiveness) to the Law of Legacy (a leader's lasting value is measured by succession).", "pills": ["Leadership", "Influence", "Character", "Team Building"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Maxwell's thesis is that leadership is influence — nothing more and nothing less. Title and position are not leadership; genuine leadership is earned through consistent demonstration of character, competence, and the ability to move people toward shared goals. The 21 laws are not sequential but cumulative: a leader must eventually develop all 21 to reach their full potential.", "The book's prescriptive model centres on three linked claims: leadership ability is the primary multiplier of personal effectiveness (Law of the Lid), leadership is developed through daily habits rather than dramatic single events (Law of Process), and the measure of a leader's success is what they leave behind in the people they developed (Law of Legacy)."], "accent": "#4A235A", "accent_light": "#F5EEF8", "pathways": [{"label": "Development Practitioner", "desc": "Programme management, community engagement, field practice.", "steps": [{"section": "Laws 1–4: Influence, Process, Navigation, Addition", "focus": "Law of the Lid: leadership ability is the ceiling on personal and organisational effectiveness. As your leadership ability rises, your overall effectiveness rises with it — a multiplier effect, not an..."}, {"section": "Laws 5–10: Addition, Solid Ground, Respect, Magnetism, Intuition, Empowerment", "focus": "Law of Addition: leaders create value by serving others — the orientation toward service rather than self-advancement defines genuine leadership. Law of Solid Ground: trust is built through consistent..."}, {"section": "Laws 11–17: Connection, Inner Circle, Picture, Buy-in, Big Mo, Victory, Priorities", "focus": "Law of Connection: leaders touch a heart before asking for a hand — emotional connection precedes productive direction. Law of the Inner Circle: a leader's potential is determined by those closest to ..."}, {"section": "Laws 18–21: Sacrifice, Timing, Explosive Growth, Legacy", "focus": "Law of Sacrifice: leaders give up to go up — leadership at every level requires trading something valuable now for something more valuable later. Law of Timing: when to lead is as important as what to..."}]}, {"label": "Development Researcher", "desc": "Research practice, evidence, and academic work.", "steps": [{"section": "Laws 1–4: Influence, Process, Navigation, Addition", "focus": "Law of the Lid: leadership ability is the ceiling on personal and organisational effectiveness. As your leadership ability rises, your overall effectiveness rises with it — a multiplier effect, not an..."}, {"section": "Laws 5–10: Addition, Solid Ground, Respect, Magnetism, Intuition, Empowerment", "focus": "Law of Addition: leaders create value by serving others — the orientation toward service rather than self-advancement defines genuine leadership. Law of Solid Ground: trust is built through consistent..."}, {"section": "Laws 11–17: Connection, Inner Circle, Picture, Buy-in, Big Mo, Victory, Priorities", "focus": "Law of Connection: leaders touch a heart before asking for a hand — emotional connection precedes productive direction. Law of the Inner Circle: a leader's potential is determined by those closest to ..."}, {"section": "Laws 18–21: Sacrifice, Timing, Explosive Growth, Legacy", "focus": "Law of Sacrifice: leaders give up to go up — leadership at every level requires trading something valuable now for something more valuable later. Law of Timing: when to lead is as important as what to..."}]}, {"label": "Personal Growth", "desc": "Personal and professional application.", "steps": [{"section": "Laws 1–4: Influence, Process, Navigation, Addition", "focus": "Law of the Lid: leadership ability is the ceiling on personal and organisational effectiveness. As your leadership ability rises, your overall effectiveness rises with it — a multiplier effect, not an..."}, {"section": "Laws 5–10: Addition, Solid Ground, Respect, Magnetism, Intuition, Empowerment", "focus": "Law of Addition: leaders create value by serving others — the orientation toward service rather than self-advancement defines genuine leadership. Law of Solid Ground: trust is built through consistent..."}, {"section": "Laws 11–17: Connection, Inner Circle, Picture, Buy-in, Big Mo, Victory, Priorities", "focus": "Law of Connection: leaders touch a heart before asking for a hand — emotional connection precedes productive direction. Law of the Inner Circle: a leader's potential is determined by those closest to ..."}, {"section": "Laws 18–21: Sacrifice, Timing, Explosive Growth, Legacy", "focus": "Law of Sacrifice: leaders give up to go up — leadership at every level requires trading something valuable now for something more valuable later. Law of Timing: when to lead is as important as what to..."}]}], "sections": [{"title": "Laws 1–4: Influence, Process, Navigation, Addition", "subtitle": "The foundation of leadership", "summary": "Law of the Lid: leadership ability is the ceiling on personal and organisational effectiveness. As your leadership ability rises, your overall effectiveness rises with it — a multiplier effect, not an additive one. Law of Influence: true leadership is measured by influence, not position. People follow leaders for seven reasons (character, relationships, knowledge, intuition, experience, past success, ability) — position is not on the list. Law of Process: leadership compounds over time like an investment. The five phases of leadership growth move from unconscious incompetence through conscious competence to unconscious competence. Law of Navigation: leaders set direction, prepare thoroughly, and balance optimism (confidence to make the journey) with realism (accurate understanding of what it requires).", "ideas": ["Leadership ability is a multiplier, not an adder: a person with average potential but exceptional leadership can outperform a genius with poor leadership.", "True leadership comes only from influence, which must be earned through demonstrated competence and character.", "Leadership growth is not dramatic but gradual: daily habits and consistent choices compound into capability over years.", "Navigation requires looking inward (past experience), outward (current conditions), and forward (anticipated obstacles) — all three."], "quotes": ["\"Everything rises and falls on leadership.\"", "\"When the real leader speaks, people listen. Leadership is influence — nothing more, nothing less.\"", "\"See what a person is doing every day, day after day, and you'll know who that person is and what he or she is becoming.\""], "devEcon": "The Law of the Lid has direct implications for development programme performance. The most common binding constraint on programme quality in field-based development organisations is not technical design but management capacity. Investing in programme manager leadership development typically produces higher returns than investing in technical advisors who lack management authority."}, {"title": "Laws 5–10: Addition, Solid Ground, Respect, Magnetism, Intuition, Empowerment", "subtitle": "Character, trust, and intuition", "summary": "Law of Addition: leaders create value by serving others — the orientation toward service rather than self-advancement defines genuine leadership. Law of Solid Ground: trust is built through consistent competence, connection, and character. Trust is the only foundation on which lasting leadership can be built. Law of Respect: people naturally follow leaders who are stronger than themselves — the six ways leaders earn respect. Law of Magnetism: you attract people who are similar to you; if you want better people around you, become better yourself. Law of Intuition: informed intuition — natural ability combined with learned skill — allows leaders to read situations, resources, and people before explicit data arrives. Law of Empowerment: secure leaders give power to others; insecure leaders hoard it — and only secure leaders can empower.", "ideas": ["Service orientation is not subordination but the foundation of lasting influence.", "Trust is built slowly through consistent behaviour and destroyed quickly through inconsistency.", "The quality of people you attract reveals your own leadership level.", "Intuition in leadership is not mystical but trained pattern recognition that develops through experience."], "quotes": ["\"Character makes trust possible. And trust makes leadership possible.\"", "\"Who you attract is not determined by what you want. It's determined by who you are.\"", "\"Only if you reach your potential as a leader do your people have a chance to reach their potential.\""], "devEcon": "The Law of Solid Ground (trust) is the mechanism through which development programme credibility with communities is built. Trust in development practice is built the same way Maxwell describes: consistent demonstration of competence (doing what you say you will do), connection (genuine relationship with community members), and character (honesty about limitations and failures). NGOs that have demonstrated consistency over years have far greater programme influence than technically superior organisations that lack established trust."}, {"title": "Laws 11–17: Connection, Inner Circle, Picture, Buy-in, Big Mo, Victory, Priorities", "subtitle": "Communication, momentum, and focus", "summary": "Law of Connection: leaders touch a heart before asking for a hand — emotional connection precedes productive direction. Law of the Inner Circle: a leader's potential is determined by those closest to them. Law of the Picture: people do what people see — modelling is more influential than instruction. Law of Buy-in: people follow the leader before they follow the vision — credibility must precede the message. Law of the Big Mo: momentum is easier to sustain than to start — small early wins build the compounding energy that makes large change possible. Law of Victory: victorious leaders find a way to win even under difficult conditions. Law of Priorities: effective leaders distinguish between what is required, what gives the greatest return, and what brings the greatest personal reward.", "ideas": ["Connection: people care how much you know only after they know how much you care.", "The inner circle is not self-selected by your preferences but carefully built for complementary strengths.", "Leadership modelling is more powerful than instruction: followers observe inconsistencies between what leaders say and do.", "Momentum magnifies both obstacles and possibilities — it is the leader's job to create and sustain it."], "quotes": ["\"People buy into the leader, then the vision.\"", "\"When you have no momentum, even the simplest tasks seem impossible. When you have momentum on your side, the future looks bright.\"", "\"Leaders should get out of their comfort zone but stay in their strength zone.\""], "devEcon": "The Law of Buy-in has direct implications for development programme advocacy. Government officials adopt programme models endorsed by people they trust, not because of the technical quality of the evidence. The sequence matters: invest in the relationship first, then present the evidence. This is the mechanism through which most successful policy change in development occurs — through trusted messengers, not just compelling evidence."}, {"title": "Laws 18–21: Sacrifice, Timing, Explosive Growth, Legacy", "subtitle": "Long-term leadership and succession", "summary": "Law of Sacrifice: leaders give up to go up — leadership at every level requires trading something valuable now for something more valuable later. Law of Timing: when to lead is as important as what to do and where to go — the right action at the wrong time is still the wrong outcome. Law of Explosive Growth: to add growth, lead followers; to multiply growth, lead leaders — developing other leaders produces exponential organisational capacity. Law of Legacy: a leader's lasting value is measured by what they leave behind — specifically in the people who carry the work forward after them.", "ideas": ["Sacrifice is not one-time but ongoing: sustained leadership requires continuous trade-offs.", "Timing failures are as common as action failures: correct action at the wrong moment fails.", "Developing leaders multiplies because each leader developed also develops others.", "The ultimate measure is not what was accomplished during your leadership but what continues after."], "quotes": ["\"Leadership development compounds. The more you invest in people and the longer you do it, the greater the growth and the higher the return.\"", "\"Our ability as leaders will not be measured by the buildings we built... You and I will be judged by how well the people we invested in carried on after we are gone.\""], "devEcon": "The Law of Legacy is the leadership equivalent of programme sustainability in development. The most common development sector failure is programmes that function effectively while external expertise and funding are present and collapse when they leave. Leaders who invest in building local leadership capacity — who lead leaders rather than followers — produce sustainable development impact. This is the organisational design implication of Maxwell's Law of Explosive Growth."}], "concepts": [{"term": "Law of the Lid", "definition": "Leadership ability determines the ceiling of personal and organisational effectiveness. A person with high talent but limited leadership ability cannot achieve at their full potential. Raising leadership ability raises the lid on everything else.", "practitionerNote": "The binding constraint in most development programmes is not technical design quality but the management and leadership capacity of the people implementing it. Investing in leadership development for programme managers produces higher returns than additional technical input."}, {"term": "Law of Process", "definition": "Leadership develops daily, not in a day. It compounds over time through consistent habits and deliberate development, like an investment. The five phases of growth move from not knowing what you don't know to leading almost automatically.", "practitionerNote": "Development organisations that send staff to leadership training programmes expecting transformation in three days are not applying the Law of Process. Sustained leadership development requires structured daily habits and feedback over months and years."}, {"term": "Law of Solid Ground", "definition": "Trust is the foundation of leadership, and trust is built through consistent demonstration of competence, connection, and character. A single breach of character can destroy trust built over years.", "practitionerNote": "Community trust in development organisations is the Law of Solid Ground in practice. Organisations that have demonstrated consistent presence, honest communication, and follow-through on commitments over years have earned influence that cannot be purchased or claimed."}, {"term": "Law of the Big Mo", "definition": "Momentum is the leader's best friend. It is easier to sustain than to start, it amplifies both obstacles and possibilities, and it is the leader's responsibility to generate and maintain it.", "practitionerNote": "Programme momentum in development is real and important. Early visible wins — even small ones — generate the community and staff energy that makes subsequent phases easier. Programme designs that delay visible results until the third year of implementation miss the momentum window."}, {"term": "Law of Legacy", "definition": "A leader's lasting value is measured by succession — by the quality of the leaders they developed and the capacity of those leaders to sustain and grow the work after the original leader departs.", "practitionerNote": "Development programme sustainability is the Law of Legacy applied institutionally. Programmes that build local leadership capacity produce sustainable impact. Those that rely on external expert delivery collapse when the experts leave, regardless of how good the programme was during implementation."}], "tools": [{"label": "Reflection Journal", "intro": "Use these prompts to connect the book to your practice.", "html": "<label class=\"fld-label\">What is the most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"r1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where does this book's argument apply to a specific challenge you face?</label>\n<textarea class=\"fld\" id=\"r2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">One concrete change you will make this week based on reading this:</label>\n<textarea class=\"fld\" id=\"r3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Reflections stay in your browser only.</div>"}], "connections": [{"book": "Radical Candor — Kim Scott", "text": "Scott's care personally and challenge directly dimensions are the management-level operationalisation of Maxwell's Law of Connection and Law of Solid Ground. Maxwell describes what effective leadership looks like; Scott provides the practical feedback tools that build the relationships and trust that Maxwell identifies as foundational."}, {"book": "Grit — Duckworth", "text": "Maxwell's Law of Victory (leaders find a way to win under pressure) and Law of Sacrifice require the perseverance that Duckworth identifies as grit. The dispositional traits Duckworth studies are the personal foundation for the leadership behaviours Maxwell prescribes."}, {"book": "Influence — Cialdini", "text": "Maxwell's seven reasons people follow leaders (character, relationships, knowledge, intuition, experience, success, ability) map almost exactly onto Cialdini's influence principles. Authority (expertise), liking (relationships), social proof (past success and reputation), and commitment (character consistency) are all present. Maxwell is describing leadership; Cialdini is describing compliance — they are studying the same mechanism from different angles."}], "critiques": ["The 21 Laws are presented as universal and timeless but were derived primarily from Western, largely American, corporate and religious leadership contexts. Cross-cultural leadership research (Hofstede, House et al. GLOBE study) consistently finds significant variation in what constitutes effective leadership across cultural contexts.", "Maxwell's framework is heavily weighted toward individual leader attributes and dispositions. Structural and institutional factors that constrain or enable leadership — organisational design, incentive structures, power relationships — receive minimal attention.", "Several of the 21 laws are circular or unfalsifiable as stated: 'people follow leaders who are stronger than themselves' (Law of Respect) is true by definition if 'stronger' is measured by who people follow. This limits the laws' predictive value."], "suggested": ["How does Maxwell's Law of the Lid apply to development programme performance?", "What is the Law of Buy-in and how does it explain policy adoption processes?", "How do you apply the Law of Legacy to development programme sustainability design?", "What is the relationship between Maxwell's Law of Solid Ground and community trust in development?", "What are the cultural limits of Maxwell's leadership framework for practitioners working across cultural contexts?"], "systemPrompt": "You are an expert reading companion for 'The 21 Irrefutable Laws of Leadership' by John C. Maxwell. Your audience is development practitioners, programme managers, and ImpactMojo learners. Answer questions about the 21 laws, their application to development leadership and programme management, and their cultural and structural limits."};
 
@@ -405,5 +562,97 @@ function switchTab(id) {
   renderSetup();
 })();
 </script>
+
+<!-- ImpactMojo Paper Plane -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- ImpactMojo Footer -->
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4>About ImpactMojo</h4>
+<ul>
+<li><a href="../about.html">About Us</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="https://github.com/Varnasr/ImpactMojo" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+<li><a href="../transparency.html">Transparency</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Legal</h4>
+<ul>
+<li><a href="../privacy-policy.html">Privacy Policy</a></li>
+<li><a href="../terms-of-service.html">Terms of Service</a></li>
+<li><a href="../disclaimer.html">Disclaimer</a></li>
+<li><a href="../data-protection.html">Data Protection</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Quick Links</h4>
+<ul>
+<li><a href="../catalog.html">All Courses</a></li>
+<li><a href="../premium.html">Premium Content</a></li>
+<li><a href="../coaching.html">Coaching</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Resources</h4>
+<ul>
+<li><a href="../handouts.html">Handouts</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../faq.html">FAQ</a></li>
+<li><a href="../sitemap.html">Sitemap</a></li>
+<li><a href="https://impactmojo.gitbook.io/impactmojo" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+<p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+</div>
+</div>
+</footer>
+
+<script>
+// ImpactMojo 3-way theme system
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+            document.body.classList.toggle('dark-mode', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+})();
+</script>
+
 </body>
 </html>

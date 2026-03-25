@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -7,6 +9,132 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
+/* === ImpactMojo Design System === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; stroke: #0EA5E9; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important; -webkit-text-fill-color: #fff;
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+}
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg);
+    border: 1px solid var(--im-border);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: var(--im-accent); color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-paper-plane {
+    position: fixed; top: 15%; right: 8%;
+    width: 120px; height: 120px;
+    opacity: 0.15; z-index: 0;
+    pointer-events: none;
+    animation: im-fly 25s ease-in-out infinite;
+}
+@keyframes im-fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, -15px) rotate(-3deg); }
+    50% { transform: translate(10px, -25px) rotate(2deg); }
+    75% { transform: translate(-10px, 10px) rotate(-1deg); }
+}
+.im-footer {
+    background: var(--im-secondary-bg);
+    border-top: 1px solid var(--im-border);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-secondary);
+}
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted);
+}
+.im-footer-made a { color: var(--im-accent); text-decoration: none; }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-primary);
+    font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary);
+    text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border);
+    font-size: 0.8rem; color: var(--im-text-muted);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: none; }
+@media (max-width: 640px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-topbar-home span { display: none; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 400px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+}
+/* === End ImpactMojo Design System === */
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
@@ -158,6 +286,35 @@ blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px s
   <div class="panel" id="p-ask"></div>
 </main>
 </div>
+
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="root"></div>
 <script>
 const DATA = {"title": "Radical Candor", "dayBadge": "Day 20 of 30", "author": "Kim Scott · 2017 · St. Martin's Press", "tagline": "Scott's management framework for building relationships that allow honest, caring feedback — and the tools for implementing guidance, team management, and results-driven communication.", "pills": ["Management", "Leadership", "Feedback", "Communication"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Scott's central claim is that the most damaging management failure is not harshness but excessive niceness — what she calls ruinous empathy. Withholding honest feedback to protect feelings produces stagnation, resentment, and eventual failure. Radical Candor is the alternative: feedback that is both caring personally (the relationship matters) and challenging directly (the performance standard matters). Both dimensions are required simultaneously; either alone fails.", "The framework covers three responsibilities of every manager: guidance (soliciting and giving feedback), team (identifying and developing the right people in the right roles), and results (creating the conditions for the team to deliver). All three depend on trusting relationships built through Radical Candor."], "accent": "#1A3C34", "accent_light": "#EBF5F2", "pathways": [{"label": "Development Practitioner", "desc": "Apply this book to programme management, community engagement, and field practice.", "steps": [{"section": "The Radical Candor Framework", "focus": "The two-dimensional framework: caring personally (being a whole person at work, knowing your people as whole people) and challenging directly (giving honest, specific feedback that..."}, {"section": "Guidance — Soliciting and Giving Feedback", "focus": "Guidance should be impromptu and specific, not only formal and periodic. Praise should be specific and explain why the work mattered; vague praise ('great job!') has minimal develo..."}, {"section": "Team — Understanding People to Motivate Them", "focus": "Scott rejects the traditional distinction between high-potential and low-potential employees. Instead she distinguishes between people on steep growth trajectories (superstars — wa..."}, {"section": "Results — The GSD Wheel", "focus": "The Get Stuff Done wheel: listen (create systems for ideas and concerns), clarify (help people articulate and refine their thinking), debate (create a culture where ideas are chall..."}]}, {"label": "Development Researcher", "desc": "Apply this book to research practice, evidence generation, and academic work.", "steps": [{"section": "The Radical Candor Framework", "focus": "The two-dimensional framework: caring personally (being a whole person at work, knowing your people as whole people) and challenging directly (giving honest, specific feedback that..."}, {"section": "Guidance — Soliciting and Giving Feedback", "focus": "Guidance should be impromptu and specific, not only formal and periodic. Praise should be specific and explain why the work mattered; vague praise ('great job!') has minimal develo..."}, {"section": "Team — Understanding People to Motivate Them", "focus": "Scott rejects the traditional distinction between high-potential and low-potential employees. Instead she distinguishes between people on steep growth trajectories (superstars — wa..."}, {"section": "Results — The GSD Wheel", "focus": "The Get Stuff Done wheel: listen (create systems for ideas and concerns), clarify (help people articulate and refine their thinking), debate (create a culture where ideas are chall..."}]}, {"label": "Personal Growth", "desc": "Direct personal and professional application.", "steps": [{"section": "The Radical Candor Framework", "focus": "The two-dimensional framework: caring personally (being a whole person at work, knowing your people as whole people) and challenging directly (giving honest, specific feedback that..."}, {"section": "Guidance — Soliciting and Giving Feedback", "focus": "Guidance should be impromptu and specific, not only formal and periodic. Praise should be specific and explain why the work mattered; vague praise ('great job!') has minimal develo..."}, {"section": "Team — Understanding People to Motivate Them", "focus": "Scott rejects the traditional distinction between high-potential and low-potential employees. Instead she distinguishes between people on steep growth trajectories (superstars — wa..."}, {"section": "Results — The GSD Wheel", "focus": "The Get Stuff Done wheel: listen (create systems for ideas and concerns), clarify (help people articulate and refine their thinking), debate (create a culture where ideas are chall..."}]}], "sections": [{"title": "The Radical Candor Framework", "subtitle": "Care personally, challenge directly", "summary": "The two-dimensional framework: caring personally (being a whole person at work, knowing your people as whole people) and challenging directly (giving honest, specific feedback that serves the person's growth). Four failure modes result from missing one or both dimensions: Manipulative Insincerity (low care, low challenge — fake praise, empty flattery), Ruinous Empathy (high care, low challenge — withholding criticism to protect feelings), Obnoxious Aggression (low care, high challenge — honesty without humanity), and Radical Candor (high care, high challenge — the goal). The most common failure mode in development organisations is ruinous empathy: we care about colleagues so much that we fail to give the honest feedback that would help them grow.", "ideas": ["Ruinous empathy, not obnoxious aggression, is the most common management failure — and the hardest to diagnose because it feels kind.", "Caring personally means bringing your whole self to work and creating space for others to do the same — not being friends.", "Challenging directly means giving specific, honest feedback in service of the other person's growth, not your own comfort.", "The framework describes behaviours, not personalities: no one is always radically candid, and everyone occasionally falls into all four quadrants."], "quotes": ["\"If nobody is ever mad at you, you probably aren't challenging your team enough.\"", "\"Caring personally is the antidote to both robotic professionalism and managerial arrogance.\""], "devEcon": "Development organisations routinely underperform on honest feedback because the culture values collaboration and sensitivity. Staff receive annual performance reviews with largely positive evaluations regardless of actual performance, which deprives them of the developmental feedback that would allow them to improve. Scott's framework names this precisely: it is ruinous empathy, not effective management."}, {"title": "Guidance — Soliciting and Giving Feedback", "subtitle": "Practical tools for honest communication", "summary": "Guidance should be impromptu and specific, not only formal and periodic. Praise should be specific and explain why the work mattered; vague praise ('great job!') has minimal developmental impact. Criticism should be immediate (while details are fresh), specific (what exactly happened and what the impact was), focused on the work not the person, and delivered privately (never criticise in public). The situation-behaviour-impact framework: describe the specific situation, the observed behaviour, and its specific impact — this makes feedback precise without being personal. Soliciting feedback from your own team requires active persistence: most people need multiple invitations before they trust the manager enough to be honest.", "ideas": ["Praise is not enough: vague positive feedback is nearly as useless as vague negative feedback.", "Criticise the work and behaviour, not the person. 'That report was unclear' not 'You communicated poorly.'", "Situation-behaviour-impact: specific and observable, not evaluative and global.", "Praising in public and criticising in private is not just courtesy — it is what works for learning."], "quotes": ["\"The single most important thing a boss can do is focus on guidance: giving it, receiving it, and encouraging it.\"", "\"Almost nothing will erode trust more quickly than using one's insights into what makes another person tick to hurt them.\""], "devEcon": "MEL in development programmes produces data about programme performance but rarely creates feedback loops to individual staff whose decisions drove that performance. Scott's guidance framework applied at the institutional level would mean connecting programme performance data to specific staff behaviours and decisions, and giving honest, specific feedback about what worked and what did not."}, {"title": "Team — Understanding People to Motivate Them", "subtitle": "Superstars, rock stars, and growth management", "summary": "Scott rejects the traditional distinction between high-potential and low-potential employees. Instead she distinguishes between people on steep growth trajectories (superstars — want increasing challenges and rapid development) and people on gradual growth trajectories (rock stars — have mastered their craft and provide stability). Both are essential. The management error is to treat steep trajectory as universally superior: rock stars who are pushed into management roles they do not want become unhappy and underperform. Growth management means understanding what each person wants now and matching it to what the team needs.", "ideas": ["Rock stars (stable excellence) are as valuable as superstars (steep growth) — organisations need both.", "Do not put permanent labels on people: trajectory changes at different life stages.", "Managing superstars: find them their next challenge before they look for it themselves.", "Managing rock stars: recognise and reward expertise and stability, not just advancement."], "quotes": ["\"To build a great team, you need to understand how each person's job fits into their life goals.\"", "\"Growth management helps you to motivate individuals to deliver the best possible results based on what they want.\""], "devEcon": "Development organisations face the growth management challenge acutely: most senior roles require generalist management skills, but many of the most valuable staff are deep specialists (subject matter experts, data analysts, community mobilisers) who do not want to manage. Creating career tracks that reward expertise without requiring management is a Scott prescription that most development organisations have not implemented."}, {"title": "Results — The GSD Wheel", "subtitle": "Collaborative execution without micromanagement", "summary": "The Get Stuff Done wheel: listen (create systems for ideas and concerns), clarify (help people articulate and refine their thinking), debate (create a culture where ideas are challenged rigorously), decide (make decisions based on facts, not politics), persuade (bring the people who weren't in the room along), execute (create conditions for the team to get things done), and learn (review, adjust, start again). The manager's job is to orchestrate this cycle, not to be the decision-maker at every step. Over-involvement at the decision stage produces disempowerment; under-involvement at the debate stage produces poor decisions.", "ideas": ["Every step of the GSD wheel must happen; skipping any step creates predictable failure modes.", "The manager is not the chief decision-maker — the manager creates conditions for good decisions.", "Debate before decision produces better decisions and more genuine buy-in than decisions without debate.", "Execution time (thinking and doing) and meeting time (coordinating) must both be protected explicitly."], "quotes": ["\"The ultimate goal of Radical Candor is to achieve results collaboratively that you could never achieve individually.\"", "\"Debate takes time and requires emotional energy. But lack of debate saps a team of more time and emotional energy in the long run.\""], "devEcon": "The GSD wheel is the management equivalent of PDIA at the team level: listen (what problem are we trying to solve?), debate (what are the options?), decide (what do we try first?), execute (do it), learn (what happened?), repeat. The parallel is not coincidental — both are applications of iterative, collaborative, learning-oriented problem-solving to institutional challenges."}], "concepts": [{"term": "Radical Candor", "definition": "Feedback and management behaviour that is simultaneously high on caring personally (treating the other person as a whole human being) and high on challenging directly (giving honest, specific feedback in service of their growth). The quadrant all managers should aim for.", "practitionerNote": "In development organisations, Radical Candor often requires explicitly naming the culture shift: 'I am going to give you honest feedback because I believe you can do this work well and I want to help you get there' as a frame that distinguishes caring directness from insensitive criticism."}, {"term": "Ruinous Empathy", "definition": "The most common management failure mode: high caring personally, low challenging directly. Withholding honest feedback to protect the other person's feelings. Produces stagnation, resentment, and eventual failure while feeling kind in the moment.", "practitionerNote": "This is the default mode in most development organisations. Annual performance reviews that describe everyone as 'meeting expectations' without honest developmental feedback are ruinous empathy institutionalised."}, {"term": "Situation-Behaviour-Impact", "definition": "A feedback framework: describe the specific situation, the specific observable behaviour, and its specific impact. Produces feedback that is precise and actionable rather than evaluative and personal.", "practitionerNote": "'In yesterday's community meeting (situation), you interrupted the community leader three times before they finished (behaviour), which visibly closed down the discussion and reduced participation for the rest of the session (impact).' This is more useful than 'you need to work on your facilitation skills.'"}, {"term": "Rock Stars vs Superstars", "definition": "Scott's distinction between people on gradual growth trajectories (rock stars — stable excellence) and steep growth trajectories (superstars — rapid development). Both are essential; forcing rock stars into steep-trajectory paths and expecting superstars to stay in stable roles both produce failure.", "practitionerNote": "Development organisations that create only one career track (generalist programme management) lose their specialists and frustrate their subject matter experts. Building expertise tracks alongside management tracks is a structural application of this principle."}, {"term": "The GSD Wheel", "definition": "The seven-step cycle for collaborative execution: listen, clarify, debate, decide, persuade, execute, learn. Every step must occur for the cycle to work. The manager's role is to facilitate the cycle, not to perform every step personally.", "practitionerNote": "Development programme cycles (design, implementation, evaluation, adaptation) are a version of the GSD wheel. The most common failure is skipping the debate and learn steps under time pressure — producing decisions without adequate challenge and repeating the same mistakes across implementation cycles."}], "tools": [{"label": "Reflection Journal", "intro": "Use these prompts to connect the book's ideas to your own context.", "html": "<label class=\"fld-label\">What is the single most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"r1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where do you see this book's core argument playing out in a specific programme or research challenge you face?</label>\n<textarea class=\"fld\" id=\"r2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">What is one concrete change you will make this week based on reading this?</label>\n<textarea class=\"fld\" id=\"r3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Reflections stay in your browser only and are not sent anywhere.</div>"}], "connections": [{"book": "Influence — Cialdini", "text": "The liking principle (we comply more readily with people we like) is the psychological foundation of Scott's care personally dimension. Building genuine personal relationships with direct reports is both an ethical management practice (Scott) and a compliance-facilitating strategy (Cialdini). The two books use different language for the same underlying mechanism."}, {"book": "Grit — Duckworth", "text": "Duckworth's wise parenting model (simultaneously supportive and demanding) is structurally identical to Scott's Radical Candor: high care, high challenge. Both argue that the combination is more effective than either alone, and that excessive niceness (low challenge) is a more common failure than excessive harshness."}, {"book": "The 21 Irrefutable Laws of Leadership — Maxwell", "text": "Maxwell's Law of Connection ('Leaders touch a heart before they ask for a hand') is the care-personally dimension of Radical Candor. Maxwell's Law of Solid Ground (trust as the foundation) is the relational prerequisite for challenging directly. The two books are complementary: Maxwell provides the principles, Scott provides the practical tools."}], "critiques": ["Scott's framework was developed in Silicon Valley technology companies with specific cultural norms (directness valued, hierarchy relatively flat, career mobility high). Application to development organisations with more hierarchical structures, different cultural norms around directness, and limited staff mobility requires significant adaptation.", "The framework does not adequately address power differentials beyond the direct manager-report relationship. In development organisations with complex multi-tier accountability (field staff → programme manager → country director → donor), the Radical Candor model is difficult to apply consistently upward in the hierarchy.", "The rock star/superstar distinction, while useful, can become a fixed label that managers apply prematurely. In development work with high unpredictability, what looks like stable rock-star performance in a stable environment may be constrained superstar potential in a more enabling environment."], "suggested": ["How does Radical Candor apply to feedback in culturally diverse development teams?", "What is the GSD wheel and how does it relate to PDIA in development?", "How do you give Radically Candid feedback about a colleague's field facilitation skills?", "What is ruinous empathy and why is it the most common management failure in development organisations?", "How do you build a growth management plan for a team with both specialists and generalists?"], "systemPrompt": "You are an expert reading companion for 'Radical Candor' by Kim Scott. Your audience is development practitioners, programme managers, and ImpactMojo learners who manage teams in complex, cross-cultural environments. Answer questions about the framework, its tools, its application to development contexts, and its limits for hierarchical or culturally diverse organisations."};
 
@@ -405,5 +562,97 @@ function switchTab(id) {
   renderSetup();
 })();
 </script>
+
+<!-- ImpactMojo Paper Plane -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- ImpactMojo Footer -->
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4>About ImpactMojo</h4>
+<ul>
+<li><a href="../about.html">About Us</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="https://github.com/Varnasr/ImpactMojo" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+<li><a href="../transparency.html">Transparency</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Legal</h4>
+<ul>
+<li><a href="../privacy-policy.html">Privacy Policy</a></li>
+<li><a href="../terms-of-service.html">Terms of Service</a></li>
+<li><a href="../disclaimer.html">Disclaimer</a></li>
+<li><a href="../data-protection.html">Data Protection</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Quick Links</h4>
+<ul>
+<li><a href="../catalog.html">All Courses</a></li>
+<li><a href="../premium.html">Premium Content</a></li>
+<li><a href="../coaching.html">Coaching</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Resources</h4>
+<ul>
+<li><a href="../handouts.html">Handouts</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../faq.html">FAQ</a></li>
+<li><a href="../sitemap.html">Sitemap</a></li>
+<li><a href="https://impactmojo.gitbook.io/impactmojo" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+<p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+</div>
+</div>
+</footer>
+
+<script>
+// ImpactMojo 3-way theme system
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+            document.body.classList.toggle('dark-mode', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+})();
+</script>
+
 </body>
 </html>

@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -7,6 +9,132 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
+/* === ImpactMojo Design System === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; stroke: #0EA5E9; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important; -webkit-text-fill-color: #fff;
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+}
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg);
+    border: 1px solid var(--im-border);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: var(--im-accent); color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-paper-plane {
+    position: fixed; top: 15%; right: 8%;
+    width: 120px; height: 120px;
+    opacity: 0.15; z-index: 0;
+    pointer-events: none;
+    animation: im-fly 25s ease-in-out infinite;
+}
+@keyframes im-fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, -15px) rotate(-3deg); }
+    50% { transform: translate(10px, -25px) rotate(2deg); }
+    75% { transform: translate(-10px, 10px) rotate(-1deg); }
+}
+.im-footer {
+    background: var(--im-secondary-bg);
+    border-top: 1px solid var(--im-border);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-secondary);
+}
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted);
+}
+.im-footer-made a { color: var(--im-accent); text-decoration: none; }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-primary);
+    font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary);
+    text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border);
+    font-size: 0.8rem; color: var(--im-text-muted);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: none; }
+@media (max-width: 640px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-topbar-home span { display: none; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 400px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+}
+/* === End ImpactMojo Design System === */
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
@@ -158,6 +286,35 @@ blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px s
   <div class="panel" id="p-ask"></div>
 </main>
 </div>
+
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="root"></div>
 <script>
 const DATA = {"title": "The 22 Immutable Laws of Marketing", "dayBadge": "Day 23 of 30", "author": "Al Ries & Jack Trout · 1993 · HarperBusiness", "tagline": "Ries and Trout's field guide to 22 principles that determine success or failure in marketing — rooted in the fundamental insight that marketing is a battle for perception, not product quality.", "pills": ["Marketing", "Strategy", "Brand", "Communication"], "stats": [{"n": "4", "l": "Core sections"}, {"n": "5", "l": "Key concepts"}, {"n": "3", "l": "Learning pathways"}, {"n": "3", "l": "Connected works"}], "argument": ["Ries and Trout's central claim is that marketing is fundamentally a battle for perceptions, not products. What determines competitive success is not which product is objectively better but which product owns the strongest position in the prospect's mind. The best product does not automatically win; the first product to establish a strong mental position almost always wins.", "The 22 laws are observations derived from decades of marketing consulting experience. They violate common business intuitions (being first matters more than being better; expanding your product line weakens your brand; honest admission of weakness can be more persuasive than claiming strength) and provide a diagnostic framework for evaluating marketing strategies."], "accent": "#1B4F72", "accent_light": "#EBF5FB", "pathways": [{"label": "Development Practitioner", "desc": "Apply this book to programme management, community engagement, and field practice.", "steps": [{"section": "Laws 1–3: Leadership, Category, and Mind", "focus": "The Law of Leadership: it is better to be first in a market than to have a better product. The leading brand in any category is almost always the first one in the prospect's mind. ..."}, {"section": "Laws 4–7: Perception, Focus, Exclusivity, Ladder", "focus": "Law of Perception: marketing is a battle of perceptions, not products. What's 'real' to consumers is what they perceive, not what is objectively true. Law of Focus: the most powerf..."}, {"section": "Laws 8–13: Duality, Sacrifice, Line Extensions", "focus": "Law of Duality: in mature markets, competition always narrows to two players. Law of the Opposite: if you are #2, position yourself as the alternative to #1, exploiting their weakn..."}, {"section": "Laws 14–22: Attributes, Candor, Resources", "focus": "Law of Attributes: find the attribute that is the opposite of the market leader's strength and own it. Law of Candor: admitting a weakness disarms the audience and creates credibil..."}]}, {"label": "Development Researcher", "desc": "Apply this book to research practice, evidence generation, and academic work.", "steps": [{"section": "Laws 1–3: Leadership, Category, and Mind", "focus": "The Law of Leadership: it is better to be first in a market than to have a better product. The leading brand in any category is almost always the first one in the prospect's mind. ..."}, {"section": "Laws 4–7: Perception, Focus, Exclusivity, Ladder", "focus": "Law of Perception: marketing is a battle of perceptions, not products. What's 'real' to consumers is what they perceive, not what is objectively true. Law of Focus: the most powerf..."}, {"section": "Laws 8–13: Duality, Sacrifice, Line Extensions", "focus": "Law of Duality: in mature markets, competition always narrows to two players. Law of the Opposite: if you are #2, position yourself as the alternative to #1, exploiting their weakn..."}, {"section": "Laws 14–22: Attributes, Candor, Resources", "focus": "Law of Attributes: find the attribute that is the opposite of the market leader's strength and own it. Law of Candor: admitting a weakness disarms the audience and creates credibil..."}]}, {"label": "Personal Growth", "desc": "Direct personal and professional application.", "steps": [{"section": "Laws 1–3: Leadership, Category, and Mind", "focus": "The Law of Leadership: it is better to be first in a market than to have a better product. The leading brand in any category is almost always the first one in the prospect's mind. ..."}, {"section": "Laws 4–7: Perception, Focus, Exclusivity, Ladder", "focus": "Law of Perception: marketing is a battle of perceptions, not products. What's 'real' to consumers is what they perceive, not what is objectively true. Law of Focus: the most powerf..."}, {"section": "Laws 8–13: Duality, Sacrifice, Line Extensions", "focus": "Law of Duality: in mature markets, competition always narrows to two players. Law of the Opposite: if you are #2, position yourself as the alternative to #1, exploiting their weakn..."}, {"section": "Laws 14–22: Attributes, Candor, Resources", "focus": "Law of Attributes: find the attribute that is the opposite of the market leader's strength and own it. Law of Candor: admitting a weakness disarms the audience and creates credibil..."}]}], "sections": [{"title": "Laws 1–3: Leadership, Category, and Mind", "subtitle": "Why being first is better than being best", "summary": "The Law of Leadership: it is better to be first in a market than to have a better product. The leading brand in any category is almost always the first one in the prospect's mind. Law of the Category: if you are not first in a category, create a new category you can be first in. Think in terms of categories rather than brands. Law of the Mind: being first in the prospect's mind is more important than being first to market. A name that is easier to remember (Apple versus Commodore Pet, MITS Altair) can win a race against earlier entrants through stronger mental positioning.", "ideas": ["People remember firsts, not seconds — in almost every category, people can name the first entrant but not the second.", "Creating a new category is more valuable than competing in an existing one: compete where you can be first.", "Simple names and clear mental positioning win the race for mind share.", "The goal is not to improve a product but to find a category in which you can be perceived as the leader."], "quotes": ["\"It is better to be first to market than to wait for a better product.\"", "\"The leading brand in any category is almost always the first brand in the prospects' mind.\""], "devEcon": "The category creation principle has direct application to development organisations competing for donor funding and policy influence. An organisation that defines a new category ('child-sensitive social protection' rather than 'social protection') can own that category before larger competitors enter it. This is the positioning logic behind most successful advocacy campaigns: create the category before others realise it exists."}, {"title": "Laws 4–7: Perception, Focus, Exclusivity, Ladder", "subtitle": "Marketing as a battle for mental position", "summary": "Law of Perception: marketing is a battle of perceptions, not products. What's 'real' to consumers is what they perceive, not what is objectively true. Law of Focus: the most powerful concept in marketing is owning a word in the prospect's mind (safety for Volvo, overnight for FedEx, cavities for Crest). Law of Exclusivity: two companies cannot own the same word. Law of the Ladder: your strategy must account for your position on the competitive hierarchy in the prospect's mind — you can be #1, #2, or you can be a niche. Avis's 'We're No. 2, so we try harder' succeeded because it acknowledged reality and turned it into a strength.", "ideas": ["Marketing does not create reality; it creates and reinforces perception.", "Owning a word in the prospect's mind is more valuable than owning a product feature.", "Once someone's mind is made up, it is very hard to change — position first, adjust later.", "Even being #2 is a viable strategy, so long as you acknowledge and leverage it."], "quotes": ["\"There is no objective reality. The perception is the reality.\"", "\"The essence of marketing is narrowing the focus. You can't stand for something if you chase after everything.\""], "devEcon": "Development organisations competing for community trust and government engagement face the same perception dynamics. An organisation known for one thing (credible evidence, community mobilisation, nutrition expertise) is more trustworthy and accessible than one that claims to do everything equally well. Focused positioning produces more influence than breadth, in development as in commercial marketing."}, {"title": "Laws 8–13: Duality, Sacrifice, Line Extensions", "subtitle": "Long-term strategic thinking in marketing", "summary": "Law of Duality: in mature markets, competition always narrows to two players. Law of the Opposite: if you are #2, position yourself as the alternative to #1, exploiting their weaknesses. Law of Division: categories divide over time into subcategories — computers into mainframes, PCs, tablets, phones. Law of Line Extensions: the single most violated law. Extending a successful brand into new product categories dilutes the brand's focused position and weakens the original franchise. IBM extended from mainframes into everything and lost competitive position in most categories. Law of Sacrifice: to gain one thing, you must give up another. Specialist brands outperform generalist brands.", "ideas": ["The strongest temptation in successful organisations is line extension — and it is almost always a strategic mistake.", "Long-term effects are often opposite to short-term effects: promotions boost short-term sales while training customers not to pay full price.", "Categories divide, not converge: the assumption that industries are merging is almost always wrong.", "Sacrifice: the discipline to say no to products, markets, and activities that dilute focus."], "quotes": ["\"When you try to be all things to all people, you inevitably wind up in trouble.\"", "\"The more products, the more markets, the more alliances a company makes, the less money it makes.\""], "devEcon": "Development organisations consistently violate the line extension law: successful programmes are expanded to cover more sectors, more geographies, and more target populations, often diluting the focused expertise that made them successful. A nutrition organisation that adds livelihoods, WASH, and education to its portfolio typically weakens its nutrition positioning without achieving comparable expertise in the new areas."}, {"title": "Laws 14–22: Attributes, Candor, Resources", "subtitle": "Bold moves, failure, and honest communication", "summary": "Law of Attributes: find the attribute that is the opposite of the market leader's strength and own it. Law of Candor: admitting a weakness disarms the audience and creates credibility for the subsequent positive claim. Law of Singularity: in a given situation, there is one bold move that produces decisive results — not many small improvements but one concentrated force. Law of Unpredictability: you cannot predict the future, so build flexibility into your plans rather than committing to rigid long-term forecasts. Law of Success: ego corrupts marketing judgment — success breeds arrogance, which breeds line extension, which breeds decline. Law of Resources: without adequate funding, good ideas do not reach prospects' minds.", "ideas": ["Admitting to a weakness creates credibility that amplifies subsequent positive claims.", "The Law of Singularity: marketing resources concentrated on one bold move outperform the same resources spread across many small improvements.", "Failure is inevitable and valuable: organisations that punish failure create cultures that hide it rather than learn from it.", "Trend versus fad: sustainable marketing strategy is built on long-term trends, not transient enthusiasm."], "quotes": ["\"Candor is very disarming. Every negative statement you make about yourself is instantly accepted as truth.\"", "\"The only thing that works in marketing is the single, bold stroke.\""], "devEcon": "The candor law has powerful implications for development communication: organisations that openly acknowledge where their programmes have not worked and what they have learned build more credibility with sophisticated donors and government partners than organisations that present uniform success narratives. The evidence base for this is strong — honest systematic reviews and transparent evaluations produce more lasting reputational capital than positive reporting."}], "concepts": [{"term": "Law of Leadership", "definition": "It is better to be first in a market than to have a better product. The first brand in a category nearly always retains the leading position because it establishes the reference point against which all subsequent entrants are judged.", "practitionerNote": "Development organisations that pioneer a new approach (community-led total sanitation, cash transfers, graduation programmes) often retain credibility and influence even when later entrants produce more rigorous evidence. First-mover advantage in developing the methodology creates category ownership."}, {"term": "Law of the Mind", "definition": "Being first in the prospect's mind is more important than being first in the market. A product or idea that is easier to remember, simpler to explain, and more memorable will often displace technically earlier entrants.", "practitionerNote": "A simple, clear programme name and theory of change ('livelihoods graduation') is more memorably positioned than a complex, technically accurate programme description. Development organisations underinvest in the simplicity and memorability of their programme positioning."}, {"term": "Law of Focus", "definition": "The most powerful concept in marketing is owning a word in the prospect's mind. The more precisely focused and single-minded a brand's association, the stronger the competitive position.", "practitionerNote": "The most influential development organisations typically own one clear association: J-PAL (rigorous evaluation), BRAC (scale at quality), IRC (humanitarian evidence). This focus is not narrow — it is what produces credibility, and credibility extends the organisation's influence beyond the immediate focus area."}, {"term": "Law of Line Extension", "definition": "Extending a successful brand into new product categories dilutes the original focused position without establishing a comparable position in the new area. The most common marketing mistake in successful organisations.", "practitionerNote": "Development organisations that expand from a successful focused programme into adjacent sectors routinely experience this dynamic: the new areas are never as good as the original, the original begins to lose its edge, and the organisation's overall credibility weakens despite the surface appearance of growth."}, {"term": "Law of Candor", "definition": "Admitting a weakness or limitation creates credibility that amplifies subsequent positive claims. Counterintuitive but robust: negative statements are immediately believed; positive statements are viewed with suspicion.", "practitionerNote": "Development evaluation reports that openly present negative findings build more credibility with sophisticated donors and partners than reports that minimise or contextualise all poor results. The organisations most trusted for their evidence are those known for honest reporting, including when the evidence is uncomfortable."}], "tools": [{"label": "Reflection Journal", "intro": "Use these prompts to connect the book's ideas to your own context.", "html": "<label class=\"fld-label\">What is the single most important idea in this book for your current work?</label>\n<textarea class=\"fld\" id=\"r1\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">Where do you see this book's core argument playing out in a specific programme or research challenge you face?</label>\n<textarea class=\"fld\" id=\"r2\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<label class=\"fld-label\">What is one concrete change you will make this week based on reading this?</label>\n<textarea class=\"fld\" id=\"r3\" rows=\"3\" placeholder=\"Your reflection...\"></textarea>\n<div style=\"margin-top:12px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)\">Reflections stay in your browser only and are not sent anywhere.</div>"}], "connections": [{"book": "Pre-Suasion — Cialdini", "text": "Ries and Trout's Law of the Mind is the marketing version of Cialdini's pre-suasion: the first idea that occupies a mental category shapes all subsequent evaluation of competitors. Pre-Suasion explains the psychological mechanism (association networks, attention direction) through which the marketing laws operate."}, {"book": "To Sell Is Human — Pink", "text": "Pink's Clarity principle (helping people see their situation in new ways) is the practitioner's application of the Law of Category and the Law of the Mind. Reframing a client's problem to fit your solution's category is both good selling (Pink) and good marketing positioning (Ries and Trout)."}, {"book": "Influence — Cialdini", "text": "The Law of Candor is the marketing application of Cialdini's finding that admitting a limitation before presenting strengths is more persuasive than presenting strengths alone. The psychological mechanism is the same: apparent honesty about weakness creates trust that amplifies the subsequent positive message."}], "critiques": ["The laws were derived primarily from consumer products marketing in the US in the 1970s-1990s. Their applicability to B2B, services, digital products, and non-commercial contexts (development, advocacy, policy) requires significant adaptation and is less empirically grounded than the book implies.", "The book's empirical base is essentially case study evidence selected to support the laws. The authors do not systematically consider cases where the laws were violated without apparent negative consequences, which is a significant limitation for drawing strong causal conclusions.", "The Law of Leadership (first mover advantage) has been substantially challenged by subsequent marketing research showing that late entrants with significantly better products regularly displace first movers. The law is directionally useful but overstated."], "suggested": ["How does the Law of Category apply to development organisations competing for donor funding?", "What is the Law of Line Extension and why do development organisations routinely violate it?", "How can development organisations apply the Law of Candor in their communication with donors?", "What does 'owning a word in the prospect's mind' mean for advocacy organisations?", "How do the 22 Laws apply to the marketing of evidence-based development programmes to governments?"], "systemPrompt": "You are an expert reading companion for 'The 22 Immutable Laws of Marketing' by Al Ries and Jack Trout. Your audience is development practitioners, programme communications staff, and ImpactMojo learners. Answer questions about the 22 laws, their application to development sector communication and positioning, and their limits and caveats for non-commercial contexts."};
 
@@ -405,5 +562,97 @@ function switchTab(id) {
   renderSetup();
 })();
 </script>
+
+<!-- ImpactMojo Paper Plane -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- ImpactMojo Footer -->
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4>About ImpactMojo</h4>
+<ul>
+<li><a href="../about.html">About Us</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="https://github.com/Varnasr/ImpactMojo" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+<li><a href="../transparency.html">Transparency</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Legal</h4>
+<ul>
+<li><a href="../privacy-policy.html">Privacy Policy</a></li>
+<li><a href="../terms-of-service.html">Terms of Service</a></li>
+<li><a href="../disclaimer.html">Disclaimer</a></li>
+<li><a href="../data-protection.html">Data Protection</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Quick Links</h4>
+<ul>
+<li><a href="../catalog.html">All Courses</a></li>
+<li><a href="../premium.html">Premium Content</a></li>
+<li><a href="../coaching.html">Coaching</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Resources</h4>
+<ul>
+<li><a href="../handouts.html">Handouts</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../faq.html">FAQ</a></li>
+<li><a href="../sitemap.html">Sitemap</a></li>
+<li><a href="https://impactmojo.gitbook.io/impactmojo" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+<p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+</div>
+</div>
+</footer>
+
+<script>
+// ImpactMojo 3-way theme system
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+            document.body.classList.toggle('dark-mode', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+})();
+</script>
+
 </body>
 </html>
