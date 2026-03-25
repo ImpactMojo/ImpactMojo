@@ -14,7 +14,7 @@ Ask the user what they want to add:
 | Type | Location | Naming Convention |
 |---|---|---|
 | **Game** | `/Games/{game-name}.html` | Kebab-case, descriptive name |
-| **Lab** | `/courses/{lab-name}-lab.html` | Kebab-case with `-lab` suffix |
+| **Lab** | `/Labs/{lab-name}-lab.html` | Kebab-case with `-lab` suffix |
 | **Flagship Course** | `/courses/{name}/index.html` | Folder per course |
 | **Foundational Course** | Catalog entry (may link externally) | — |
 | **Handout** | `/Handouts/{Track}/{name}.html` | Organized by track folder |
@@ -29,10 +29,10 @@ Ask the user what they want to add:
 - Reference existing games for structure: `/Games/prisoners-dilemma-game.html`
 
 ### For Labs
-- Create HTML file in `/courses/` with `-lab.html` suffix
+- Create HTML file in `/Labs/` with `-lab.html` suffix
 - Include guided workflow with step-by-step prompts
 - Browser-based, client-side only
-- Reference existing labs for structure: `/courses/mel-design-lab.html`
+- Reference existing labs for structure: `/Labs/mel-design-lab.html`
 
 ### For Courses
 - **Flagship**: Create folder `/courses/{name}/` with `index.html` and supporting files
