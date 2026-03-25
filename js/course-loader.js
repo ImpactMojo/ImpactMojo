@@ -28,9 +28,14 @@
   var EDGE_FN_URL = cfg.SUPABASE_URL + '/functions/v1/serve-course-content';
 
   // ── Detect course ID ────────────────────────────────────────────
+  // Map URL slugs to DB course_ids (handles case mismatches)
+  var COURSE_ID_MAP = { 'sel': 'SEL' };
+
   function detectCourseId() {
     var match = window.location.pathname.match(/\/courses\/([^/]+)/);
-    return match ? match[1] : null;
+    if (!match) return null;
+    var slug = match[1];
+    return COURSE_ID_MAP[slug] || slug;
   }
 
   var courseId = detectCourseId();
