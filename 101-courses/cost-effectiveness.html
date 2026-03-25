@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cost-Effectiveness Analysis 101 | ImpactMojo</title>
+<meta name="description" content="Cost-Effectiveness Analysis 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #8B0000;
+  --border-art: #800020;
+  --bg-slide: #FFFDF7;
+  --bg-section: #800020;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">POLICY &amp; ECONOMICS</p>
+<h1>Cost Effectiveness Analysis</h1>
+<p class="subtitle">101 Mastereconomicevaluationtechniquesforcomparingdevelopment interventions — fromcost-benefitanalysistocost-utility assessments. IMPACTMOJO 101 SERIES</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover Today</h2>
+<p>Aguidedjourneythroughthecoretoolsofeconomicevaluationindevelopmentcontexts.</p>
+<p>Why Cost Analysis Matters</p>
+<p>Thecaseforeconomicevaluationindevelopment02</p>
+<p>Key Concepts &amp; Definitions</p>
+<p>CEA, CBA, CUA — what&#x27;sthedifference?</p>
+<p>Measuring Costs</p>
+<p>Identifying, valuing, andcategorizingcosts04</p>
+<p>Measuring Effects</p>
+<p>Outcomes, indicators, and DALYs/QALYs</p>
+<p>Conducting a CEA</p>
+<p>Step-by-step methodology06</p>
+<p>Interpreting Results</p>
+<p>Leaguetables, thresholds, decisionrules</p>
+<p>Cost-Benefit Analysis</p>
+<p>Monetizingbenefitsand NPVframeworks08</p>
+<p>Cost-Utility Analysis</p>
+<p>QALYs, DALYs, andhealthapplications</p>
+<p>Common Pitfalls</p>
+<p>Biases, limitations, andhonestcaveats10</p>
+<p>South Asian Case Studies</p>
+<p>Realexamplesfrom India, Bangladesh, Nepal</p>
+<p>Applying CEAin Practice</p>
+<p>Tools, templates, anddecisioncontexts12</p>
+<p>Ethics &amp; Equity</p>
+<p>Whogetscounted? Distributionalconcerns</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Define &amp; Distinguish</p>
+<p>Explain CEA, CBA, and CUA — and</p>
+<p>choosetheright methodfor a</p>
+<p>givenproblemIdentify &amp; Measure</p>
+<p>Systematicallyidentifyandvalue</p>
+<p>bothdirectandindirectcostsof</p>
+<p>adevelopmentprogramCalculate &amp; Interpret</p>
+<p>Computeincrementalcost-</p>
+<p>effectivenessratios (ICERs) and</p>
+<p>interpretleaguetables</p>
+<p>Apply Critically</p>
+<p>Applyeconomicevaluation</p>
+<p>methodstoreal South Asian</p>
+<p>developmentchallenges — and</p>
+<p>recognizetheirlimitsCommunicate Findings</p>
+<p>Present CEAresultsclearlyto</p>
+<p>policymakers, donors, and</p>
+<p>com munitystakeholders</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 1</p>
+<h2>Why Cost Analysis Matters</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>The Resource Allocation Problem</h2>
+<p>The Core Challenge</p>
+<p>Developmentbudgetsarealwayslimited. Governments,</p>
+<p>NGOs, anddonors mustchoosewhichinterventions</p>
+<p>tofund — andwhichtoforgo.</p>
+<p>Everyrupeespentononeprogram is arupeenotspent</p>
+<p>onanother. Thisistheopportunitycostof</p>
+<p>developmentspending.Why Gut Instinct Isn&#x27;t Enough</p>
+<p>Well-intentionedprogram scanbeineffectiveorvery</p>
+<p>costlyrelativetotheirimpact. Systematiceconomic</p>
+<p>evaluationhelpsus:</p>
+<p>Compareinterventionsfairly</p>
+<p>Justifyresourceallocationtofunders</p>
+<p>Scalewhatworks, stopwhatdoesn&#x27;t</p>
+<p>Protectequityinpublicspending</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>The Familyof Economic Evaluation Methods</h2>
+<p>Differentquestionscallfordifferenttools. Here&#x27;showthe main methodsrelate:</p>
+<p>Cost‐EffectivenessCost‐Benefit</p>
+<p>Cost‐Utility</p>
+<p>Cost‐Minimization</p>
+<p>CEAisthe mostcom mon methodinlow- and middle-incom ecountry (LMIC) healthanddevelopmentprogram sbecauseitavoidsthedifficulttaskofputting a</p>
+<p>monetaryvalueonhumanlifeorwellbeing.</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>A Quick Comparison</h2>
+<p>Method Costs Measured Effects Measured Best For</p>
+<p>CEA Monetary ( ₹ ) Naturalunits (livessaved,</p>
+<p>casestreated)Comparingsimilar</p>
+<p>program s</p>
+<p>CBA Monetary ( ₹ ) Monetary ( ₹ benefits) Cross-sector</p>
+<p>comparisons</p>
+<p>CUA Monetary ( ₹ ) QALYsor DALYs Healthprogram</p>
+<p>comparisons</p>
+<p>CMA Monetary ( ₹ ) Assumedequal Choosingcheapest</p>
+<p>equivalentoption</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Case Study: India&#x27;s PMGSY</h2>
+<p>Road Program</p>
+<p>The Pradhan Mantri Gram Sadak Yojana (PMGSY) builtruralroads</p>
+<p>across India. Aclassicpolicyquestion: Isthis acost-effectiveuse</p>
+<p>ofpublicfunds?</p>
+<p>Cost</p>
+<p>₹1–2 croreper</p>
+<p>kmofroad</p>
+<p>constructedEffect</p>
+<p>Accessto</p>
+<p>markets,</p>
+<p>schools, health</p>
+<p>centersfor</p>
+<p>thousandsof</p>
+<p>householdsQuestion</p>
+<p>Howdowe</p>
+<p>comparethisto,</p>
+<p>say, building a</p>
+<p>ruralhealth</p>
+<p>clinic?</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Reflection: Where Do You Allocate?</h2>
+<p>Imagineyouare adistrictcollectorinrural Bihar. Youhave ₹ 5 crore. You mustchoosebetween: (A) anewprimary</p>
+<p>healthcenter, (B) agirls&#x27; secondaryschoolscholarshipprogram , or (C) drinkingwatersupplyto 20 villages. How</p>
+<p>wouldyoudecide — andwhatinformationwouldyouneed?</p>
+<p>Thisispreciselytheproblem CEAhelpsstructure. Writedownyourinstinctiveanswerfirst — we&#x27;llreturntoitattheend</p>
+<p>ofthecoursetoseehowyourthinkinghaschanged.</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 2</p>
+<h2>Key Concepts &amp;</h2>
+<h2>Definitions</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>What Is Cost-Effectiveness Analysis?</h2>
+<p>Core Definition</p>
+<p>CEAis a methodofcomparingtherelativecostsand</p>
+<p>outcomesoftwoor moreinterventions. Itasks: How</p>
+<p>muchdoesitcosttoachieveoneunitof adesired</p>
+<p>outcom e?</p>
+<p>Theresultisanaveragecost-effectivenessratio</p>
+<p>(ACER) oranincrementalcost-effectivenessratio</p>
+<p>(ICER).The Basic Formula</p>
+<p>ACER = Total Cost ÷ Total Effect</p>
+<p>e.g., ₹ 500 perchildfullyim munized</p>
+<p>ICER = Δ Cost ÷ Δ Effect</p>
+<p>e.g., ₹ 2,000 moreperadditionalchildim munizedvs.</p>
+<p>standardprogram</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>The CEA Conceptual Framework</h2>
+<p>CEA</p>
+<p>Conceptua</p>
+<p>l</p>
+<p>Framewor</p>
+<p>kInputs</p>
+<p>Money, staff, timeCEA Metric</p>
+<p>Costperunitof</p>
+<p>outcome</p>
+<p>Outcomes</p>
+<p>Behaviorchange,</p>
+<p>healthimprovementOutputs</p>
+<p>ServicesdeliveredActivities</p>
+<p>Training, outreach,</p>
+<p>treatmentImpact</p>
+<p>Livessaved, poverty</p>
+<p>reduced</p>
+<p>CEAoperatesatthe o u t co me slevel — notoutputs. Delivering 1,000 bednetsisanoutput. Reducing malariaincidenceby 30% isanoutcom e. Good CEAmeasures</p>
+<p>thecostofachieving meaningfulchange, notjustactivity.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Key Term s You Must Know</h2>
+<p>Opportunity Cost</p>
+<p>Thevalueofthebestalternativeforegonewhen aresourceisused</p>
+<p>Comparator</p>
+<p>Thealternativeintervention (or &quot;donothing&quot;) againstwhich aprogram iscompared</p>
+<p>Perspective</p>
+<p>Whosecostscount? Provider? Patient? Society? Theanswerchangesyourresultssignificantly</p>
+<p>Incremental Analysis</p>
+<p>Comparingtheadditionalcostandeffectofoneoptionversusanother</p>
+<p>Discounting</p>
+<p>Adjustingfuturecostsandbenefitstopresentvalues, because ₹ 100 todayisworth morethan ₹ 100 in 5 years</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Perspectives Matter Enormously</h2>
+<p>Perspective Costs Included Whento Use</p>
+<p>Provider/Program Salaries, supplies, facilities, training Budgetdecisionsby NGOsor</p>
+<p>government</p>
+<p>Patient/Household Out-of-pocketfees, travel, lostwages Equityandaffordabilityassessments</p>
+<p>Societal Alloftheabove + externalities,</p>
+<p>productivityFullsocialwelfareanalysis</p>
+<p>Government/Payer Publicexpenditureonly Government budgetimpactanalysis</p>
+<p>Alwaysstateyourperspectiveclearly. Aprogramthatlookscost-effectivefromtheprovider&#x27;sviewmayimposelarge</p>
+<p>hiddencostsonpatientsandfamilies.</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Exercise: Definethe Comparator</h2>
+<p>Astategovernmentin Maharashtraisevaluating anewschoolfeedingprogram . Whatshouldthecomparatorbe?</p>
+<p><strong>Option A:</strong> Noprogram (statusquo). Option B: Theexisting mid-day mealschem e. Option C: Acashtransferof</p>
+<p>equivalentvalue. Howdoesthechoiceofcomparatorchangewhatthe CEAactually measures?</p>
+<p><strong>Discussinpairs:</strong> Whatarethepoliticalandpracticalimplicationsofeachcomparatorchoice? Isthere a &quot;right&quot; answer?</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">SECTION 3</p>
+<h2>Measuring Costs</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>The Cost Identification Framework</h2>
+<p>Lowdirect</p>
+<p>budgetimpact</p>
+<p>LowsocietalimpactHighdirect</p>
+<p>budgetimpactHighsocietalimpact</p>
+<p>Intangible Costs —</p>
+<p>pain, stigma, quality</p>
+<p>oflifeCross-cutting —</p>
+<p>household &amp; donated</p>
+<p>resourcesIndirect Costs —</p>
+<p>patienttime,</p>
+<p>productivitylossDirect Costs —</p>
+<p>supplies, salaries,</p>
+<p>training</p>
+<p>Mostdevelopmentprogram sundercountcosts. Arigorous CEAcapturesallresourceuse — includingvolunteertim e, donatedgoods, andhouseholdcosts</p>
+<p>— notjustlineitem sin abudget.</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Step-by-Step Cost Measurement</h2>
+<p><strong>Step 1:</strong> Identifyallresourcesused</p>
+<p>Staff, supplies, equipment, space, volunteertim e, patienttim e</p>
+<p><strong>Step 2:</strong> Measurequantities</p>
+<p>How manyunitsofeachresource? Useactivitylogs, tim esheets, invoices</p>
+<p><strong>Step 3:</strong> Assignunitprices</p>
+<p>Use marketprices, shadowprices, orgovernmentcostschedules</p>
+<p><strong>Step 4:</strong> Calculatetotalcost</p>
+<p>Quantity × Unit Price = Costperresource. Sum acrossallresources.</p>
+<p><strong>Step 5:</strong> Allocatesharedcosts</p>
+<p>Divideoverhead, vehicles, andinfrastructureproportionallyacrossprogram s</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>Fixedvs. Variable Costs</h2>
+<p>Fixed Costs</p>
+<p>Donotchangewiththenumberofpeopleserved.</p>
+<p>Examples:</p>
+<p>Building aclinicortrainingcenter</p>
+<p>Purchasingequipment</p>
+<p>Staffsalaries (coreteam )</p>
+<p>Softwaresystem s</p>
+<p>Relevantforscale-updecisions — fixedcostsspread</p>
+<p>across morebeneficiaries = lowercostperperson.Variable Costs</p>
+<p>Changedirectlywithscaleofdelivery. Examples:</p>
+<p>Medicinesandvaccines</p>
+<p>Printed materialsperstudent</p>
+<p>Com munityworkertravelallowances</p>
+<p>Mealsin anutritionprogram</p>
+<p>Relevantforbudgeting — scalingup meansthesecosts</p>
+<p>growproportionally.</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Case Study: Costingan</h2>
+<p>ASHA Worker Program</p>
+<p>India&#x27;s ASHA (Accredited Social Health Activist) programisoneofthe</p>
+<p>world&#x27;slargestcommunityhealthworkerinitiatives. A propercosting</p>
+<p>exercisemustinclude:</p>
+<p>Direct Costs</p>
+<p>Incentive</p>
+<p>payments, drug</p>
+<p>kits, training,</p>
+<p>supervisionvisitsIndirect Costs</p>
+<p>ASHA&#x27;sowntime</p>
+<p>opportunitycost,</p>
+<p>householddata</p>
+<p>collectionburdenSystem Costs</p>
+<p>District-level</p>
+<p>coordination, MIS,</p>
+<p>monitoringstaff</p>
+<p>time</p>
+<p>Studiesshowfullprogramcostsareoften 2–3xhigher thanthebudget</p>
+<p>linefor ASHAincentivesalone.</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>Practical Exercise: Build a Cost Matrix</h2>
+<p>Resource Unit Quantity Unit Cost ( ₹) Total ( ₹)</p>
+<p>Communityhealthworkersalary Permonth 12 5,000 60,000</p>
+<p>Trainingworkshop Persession 2 15,000 30,000</p>
+<p>Medicines &amp; supplies Perpatient 500 200 1,00,000</p>
+<p>Supervisionvisits Pervisit 24 1,500 36,000</p>
+<p>IECmaterials Pervillage 20 500 10,000</p>
+<p><strong>Practiceexercise:</strong> Usethistemplatewith arealprogramyouknow. Whatcostsareyoumostlikelytomiss? Discuss</p>
+<p>with acolleague.</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="22">
+<div class="slide-content">
+<p class="section-number">SECTION 4</p>
+<h2>Measuring Effects &amp;</h2>
+<h2>Outcomes</h2>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>What Countsasan &quot;Effect&quot;?</h2>
+<p>Thedenominatorofyourcost-effectivenessratio — the &quot;effect&quot; — mustbe:</p>
+<p>Meaningful</p>
+<p>Directlylinkedtotheprogram &#x27;sgoal — not aproxythat</p>
+<p>mightnot matterMeasurable</p>
+<p>Operationalizedintoanindicatoryoucanactuallycountor</p>
+<p>observe</p>
+<p>Comparable</p>
+<p>Consistentacrossprogram sandcontextssoyoucan</p>
+<p>actuallycompareratiosTime-bound</p>
+<p>Measuredover adefinedperiod — short-term outputsvs.</p>
+<p>long-term outcomesneeddifferenttreatment</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>Com mon Outcom e Measuresby Sector</h2>
+<p>Sector Common Effect Measures Example CEA Result</p>
+<p>Health Livessaved, casestreated, DALYsaverted ₹8,000 per DALYaverted</p>
+<p>Education Enrollmentrate, learningoutcomes, years</p>
+<p>ofschooling₹1,200 perchildcompletingprimary</p>
+<p>school</p>
+<p>Nutrition Stuntingreduced, weight-for-ageimproved ₹4,500 perstuntingcaseaverted</p>
+<p>W ASH Opendefecation-freevillages, diarrhea</p>
+<p>casesreduced₹350 perdiarrheaepisodeprevented</p>
+<p>Livelihoods Incom eincrease, daysofemployment ₹2.50 incom egainper ₹ 1 invested</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Understanding DALYs &amp; QALYs</h2>
+<p>DALY — Disability-Adjusted Life Year</p>
+<p>One DALY = oneyearofhealthylifelostduetoillness,</p>
+<p>disability, orprematuredeath.</p>
+<p>DALY = Yearsof Life Lost (YLL) + Years Livedwith</p>
+<p>Disability (YLD)</p>
+<p>Usedheavilyby W HOandglobalhealthprogram s. Lower</p>
+<p>DALYs = betterhealthoutcom e.QALY — Quality-Adjusted Life Year</p>
+<p>One QALY = oneyearofperfecthealth. Combines</p>
+<p>quantityandqualityoflife.</p>
+<p>QALY = Life Years × Health Utility Score (0–1)</p>
+<p>Used mainlyinhigh-incom ecountryhealthtechnology</p>
+<p>assessment. Morepatient-centeredbutharderto</p>
+<p>measureinfieldsettings.</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>Case Study: Polio</h2>
+<p>Eradicationin India</p>
+<p>India&#x27;spolioeradicationprogramis alandmark CEAsuccessstory. By</p>
+<p>2014, Indiawasdeclaredpolio-free.</p>
+<p>$1.1B</p>
+<p>Totalprogram</p>
+<p>cost</p>
+<p>Overthepulse</p>
+<p>immunization</p>
+<p>campaignperiod$40–…</p>
+<p>Per DALYaverted</p>
+<p>Wellbelow WHOcost-</p>
+<p>effectiveness</p>
+<p>threshold200…</p>
+<p>Children</p>
+<p>immunized</p>
+<p>Perroundatpeak</p>
+<p>campaignintensity</p>
+<p>Theprogramisconsideredhighlycost-effective byanystandard — a</p>
+<p>powerfulexamplefordevelopmentpractitioners.</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="27">
+<div class="slide-content">
+<p class="section-number">SECTION 5</p>
+<h2>Conducting a CEA: Stepby</h2>
+<h2>Step</h2>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="28">
+<div class="slide-content">
+<h2>The CEA Methodology Roadmap</h2>
+<p>Measure CostsIdentify ComparatorChoose PerspectiveDefine Scope</p>
+<p>Arigorous CEAfollowsalleightstepsinorder. Skippingsteps — especiallyperspective-settingandsensitivityanalysis — isthe mostcom mon</p>
+<p>sourceofunreliableresultsindevelopmentevaluations.</p>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>Setting Up: The Analytic Fram e</h2>
+<p>Research</p>
+<p>Question</p>
+<p>Isintervention Xmore</p>
+<p>cost-effectivethan Y</p>
+<p>forachievingoutcom e</p>
+<p>Zinpopulation P?Tim e Horizon</p>
+<p>Howfarintothefuture</p>
+<p>dowetrackcostsand</p>
+<p>effects? Short (1 year)</p>
+<p>vs. lifetim e? Longer =</p>
+<p>morecompletebut</p>
+<p>moreuncertain.Target Population</p>
+<p>Whoistheintervention</p>
+<p>for? Defineage,</p>
+<p>geography, riskgroup.</p>
+<p>Thisaffectsbothcosts</p>
+<p>andeffects</p>
+<p>dramatically.Data Sources</p>
+<p>Primarydatacollection</p>
+<p>vs. secondarydata</p>
+<p>from literature.</p>
+<p>Documentall</p>
+<p>assumptions</p>
+<p>transparently.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>Calculatingthe ICER</h2>
+<p>The ICER Formula</p>
+<p>ICER = (Cost A − Cost B) ÷ (Effect A − Effect B)</p>
+<p>Where A = newintervention, B = comparator</p>
+<p><strong>Thistellsyou:</strong> how muchextradoyoupayforeach</p>
+<p>additionalunitofeffectfrom thenewprogram ?Worked Example</p>
+<p><strong>Program A (new):</strong> Costs ₹ 10,00,000 andprevents 80</p>
+<p>casesof TB</p>
+<p><strong>Program B (current):</strong> Costs ₹ 6,00,000 andprevents 50</p>
+<p>cases</p>
+<p>ICER = (10,00,000 − 6,00,000) ÷ (80 − 50)</p>
+<p>= ₹13,333 peradditional TBcaseprevented</p>
+<p>Isthisworthit? Thatdependsonyourwillingness-to-pay</p>
+<p>threshold.</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Sensitivity Analysis: Testing Your Assumptions</h2>
+<p>Every CEArestsonassumptions. Sensitivityanalysisasks: Ifmyassumptionsarewrong, domyconclusions</p>
+<p>change?</p>
+<p>One-Way Sensitivity Analysis</p>
+<p>Varyoneparameterat atim e (e.g., drugcost ±</p>
+<p>20%) andseehowthe ICERchangesMulti-Way Analysis</p>
+<p>Varyseveralparameterssimultaneously — more</p>
+<p>realisticbuthardertovisualize</p>
+<p>Probabilistic Sensitivity Analysis</p>
+<p>Assignprobabilitydistributionstouncertain</p>
+<p>parametersandrunthousandsofsimulationsThreshold Analysis</p>
+<p>Atwhatvalueof akeyparameterdoesthe</p>
+<p>conclusionflip? Thisisoftenthe mostpolicy-</p>
+<p>relevantresult.</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Practice: Run a Simple CEA</h2>
+<p>Adistrictin Uttar Pradeshischoosingbetweentwosanitationprogram s. Program A (IHHLsubsidy): Costs ₹ 12,000</p>
+<p>perhousehold, reducesopendefecationby 60%. Program B (Com munity CLTS): Costs ₹ 3,500 perhousehold, reduces</p>
+<p>opendefecationby 35%. Calculatethe ACERforeach. Thencalculatethe ICERof Avs. B. Whichwouldyou</p>
+<p>recom mend — andwhy?</p>
+<p><strong>Hint:</strong> ACERfor A = 12,000/0.60 = ₹ 20,000 per % point. For B = 3,500/0.35 = ₹ 10,000 per % point. ICERof Avs B =</p>
+<p>(12,000 − 3,500)/(0.60 − 0.35) = ₹ 34,000 perpercentagepoint. Isthatincrementalgainworththeextracost?</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="33">
+<div class="slide-content">
+<p class="section-number">SECTION 6</p>
+<h2>Interpreting Results:</h2>
+<h2>Thresholds &amp; League</h2>
+<h2>Tables</h2>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>What Makesan Intervention &quot;Cost-Effective&quot;?</h2>
+<p>The Willingness-to-Pay Threshold</p>
+<p>Thereisnouniversalrule — butwidelyusedbenchmarks</p>
+<p>exist. Forhealthinterventions:</p>
+<p><strong>WHO-CHOICE:</strong> Costper DALYavertedbelow 1× GDP</p>
+<p>percapita = verycost-effective</p>
+<p>India GDPpercapita ≈ ₹ 1.7 lakh (2023) →</p>
+<p>threshold ≈ ₹ 1.7 lakhper DALY</p>
+<p>Below 3× GDPpercapita = cost-effective</p>
+<p>Above 3× GDPpercapita = poorvalueContext Matters</p>
+<p>Thresholdsareguides, notlaws. Decision-makers may</p>
+<p>accepthighercostsfor:</p>
+<p>High-equityimpact (reachingthepoorest)</p>
+<p>Catastrophicdiseaseprevention</p>
+<p>Politicalcom mitments</p>
+<p>Diseaseswithnoalternatives</p>
+<p>Alwaysdiscussthethresholdalongsideequityand</p>
+<p>feasibility.</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>The Cost-Effectiveness Plane</h2>
+<p>Lower</p>
+<p>Incremental</p>
+<p>Effect</p>
+<p>Lower Incremental CostHigher</p>
+<p>Incremental</p>
+<p>EffectHigher Incremental Cost</p>
+<p>Mor eeffectiveand</p>
+<p>cheaper (dominant -</p>
+<p>adopt)Lesseffectivebut</p>
+<p>cheaper (ICER</p>
+<p>decision)Mor eeffectivebut</p>
+<p>costlier (ICER</p>
+<p>decision)Lesseffectiveand</p>
+<p>costlier (dominated -</p>
+<p>reject)</p>
+<p>The CEplaneisthe mostpowerfulvisualtoolin CEA. Interventionsinthebottom-rightquadrantaredominant — alwaysadoptthem . Interventionsin</p>
+<p>thetop-leftaredominated — alwaysrejectthem .</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>League Tables: Ranking Interventions</h2>
+<p>Intervention Costper DALY Averted ( ₹) Assessment</p>
+<p>Oral Rehydration Therapy (ORT) 80031,200 Highlycost-effective</p>
+<p>Childhoodimmunization (DPT) 1,50033,000 Highlycost-effective</p>
+<p>DOTSfortuberculosis 5,00038,000 Cost-effective</p>
+<p>Insecticide-treatedbednets</p>
+<p>(malaria)3,00036,000 Cost-effective</p>
+<p>Antiretroviraltherapy (HIV) 25,000360,000 Moderate 4 butlife-saving</p>
+<p>Tertiarycardiacsurgery 2,00,000+ Poorvalueatscale (equit ycaveat</p>
+<p>applies)</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>Case Study: Bangladesh&#x27;s</h2>
+<p>EPI Program</p>
+<p>Bangladesh&#x27;s Expanded Programmeon Immunization (EPI) achieved</p>
+<p>near-universalcoverageatamongthelowestper-childcosts in South</p>
+<p>Asia.</p>
+<p>Costper</p>
+<p>Child</p>
+<p>Immunized</p>
+<p>~$18322 perfully</p>
+<p>immunizedchild</p>
+<p>4 aglobal</p>
+<p>benchmarkfor</p>
+<p>efficiencyKey Driver</p>
+<p>Strong</p>
+<p>community</p>
+<p>mobilization</p>
+<p>through BRAC</p>
+<p>andgovernment</p>
+<p>outreach</p>
+<p>workersLesson</p>
+<p>Deliverymodel</p>
+<p>mattersasmuch</p>
+<p>asthe</p>
+<p>intervention</p>
+<p>itselfforcost-</p>
+<p>effectiveness</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="38">
+<div class="slide-content">
+<p class="section-number">SECTION 7</p>
+<h2>Cost-Benefit Analysis</h2>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>From Effectsto Money: The CBA Approach</h2>
+<p>What Is CBA?</p>
+<p>Cost-Benefit Analysisconvertsallcostsandbenefits</p>
+<p>intomonetaryvaluesandasks: dobenefitsoutweigh</p>
+<p>costs?</p>
+<p>Key metrics:</p>
+<p>Net Present Value (NPV) = Total Benefits − Total</p>
+<p>Costs (bothdiscounted)</p>
+<p>Benefit-Cost Ratio (BCR) = Total Benefits ÷ Total</p>
+<p>Costs</p>
+<p>Internal Rateof Return (IRR) = discountrateat</p>
+<p>which NPV = 0Whento Use CBA</p>
+<p>CBAis mostappropriatewhen:</p>
+<p>Comparingprogram sacrossverydifferentsectors</p>
+<p>Justifyinginvestmenttofinance ministries</p>
+<p>Evaluatinglargeinfrastructureprojects</p>
+<p>Donorreportingrequires monetary ROI</p>
+<p>CBAisnotrecommendedwhen monetizinghumanlife</p>
+<p>orsufferingisethicallyproblematicor methodologically</p>
+<p>unreliable.</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>The CBA Process Flow</h2>
+<p>Compute</p>
+<p>NPV &amp; BCRDiscount</p>
+<p>FlowsMonetize</p>
+<p>ItemsIdentify</p>
+<p>BenefitsIdentify</p>
+<p>Costs</p>
+<p>Thehardeststepis monetizingbenefits — especiallyforhealth, education, andwellbeing. Com mon methodsincludehumancapital</p>
+<p>approach (valuinglivesbyproductivity) andwillingness-to-paysurveys. Bothhavesignificantethicaland methodological</p>
+<p>debates.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Case Study: Returnsto</h2>
+<p>Educationin India</p>
+<p>World Bankstudiesof India&#x27;seducationinvestmentsshow:</p>
+<p>8–10%</p>
+<p>Privatereturn</p>
+<p>peryear</p>
+<p>Ofadditional</p>
+<p>schoolingfor</p>
+<p>individualsin India</p>
+<p>(wagepremium)₹3–5</p>
+<p>Socialreturnper</p>
+<p>₹1</p>
+<p>Investedingirls&#x27;</p>
+<p>secondaryeducation</p>
+<p>(long-term BCR)15%</p>
+<p>Wagegainper</p>
+<p>year</p>
+<p>Ofschoolingfor</p>
+<p>womeninformal</p>
+<p>sectoremployment</p>
+<p>CBAmakesthecaseforeducationinvestmentpowerfully — butnotethe</p>
+<p>debatearoundwhoseproductivitygetscountedandwhethermarket</p>
+<p>wagesreflectsocialvalue.</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>Discounting: Why Future Benefits Are Worth</h2>
+<p>Less</p>
+<p>Why We Discount</p>
+<p>Peopleandsocietiespreferbenefitsnowoverbenefits</p>
+<p>later (tim epreference). Also, ₹ 100 investedtodayearns</p>
+<p>returns. Futurevalues mustbeadjusted.</p>
+<p>Present Value = Future Value ÷ (1 + r) ᵗ</p>
+<p>Where r = discountrate, t = yearsinfutureChoosingthe Discount Rate</p>
+<p>Standardratesfordevelopmentprogram s:</p>
+<p>3 – 5 %: W HOguidelinesforhealth</p>
+<p>8 – 1 2 %: Governmentof Indiaplanningcom mission</p>
+<p>rate</p>
+<p>3 %: Stern Reviewforclimatechange</p>
+<p>Higherdiscountratesfavorim mediatebenefits. Lower</p>
+<p>ratesfavorlong-term investmentslikeeducationand</p>
+<p>prevention.</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="43">
+<div class="slide-content">
+<p class="section-number">SECTION 8</p>
+<h2>Cost-Utility Analysis</h2>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>Why CUA? The Qualityof Life Dimension</h2>
+<p>Standard CEAmeasuresquantityofoutcomes. Butwhataboutqualityoflife? Twoyearsofpain-freehealth ≠ two</p>
+<p>yearsofseveredisability. CUAcapturesthisdistinction.</p>
+<p>Standard CEA</p>
+<p>Costperoutcom eunit (e.g., ₹ per</p>
+<p>TBcasecured). Ignoresqualityof</p>
+<p>healthgained.Cost-Utility Analysis</p>
+<p>Costper QALYor DALY. Combines</p>
+<p>lengthandqualityoflifeinone</p>
+<p>measure.Key Advantage</p>
+<p>Allowscomparisonacrossvery</p>
+<p>differenthealthconditionsusing a</p>
+<p>com monunit.</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>Measuring Health Utility: The EQ -5D</h2>
+<p>Mobility</p>
+<p>Canyouwalk?Self-care</p>
+<p>Canyouwashor</p>
+<p>dress?</p>
+<p>Usual Activities</p>
+<p>Work, study,</p>
+<p>housework?Pain / Anxiety</p>
+<p>Painoranxietylevels?</p>
+<p>The EQ-5Disthe mostwidelyusedhealthutilityinstrumentglobally. Respondentsratethemselvesonfivedimensions. Scoresarecombinedinto autilityindex (0–1) using</p>
+<p>population-specificvaluesets — including Indianvaluesetsnowavailable.</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>Case Study: Mental Health</h2>
+<p>Interventionin Nepal</p>
+<p>Astudyofthe Healthy Activity Program (HAP) 4 abriefpsychological</p>
+<p>treatmentfordepressioninprimarycarein India/Nepa l 4 found:</p>
+<p>Costper</p>
+<p>QALY Gained</p>
+<p>~$1003200 per</p>
+<p>QALY 4 well</p>
+<p>within LMICcost-</p>
+<p>effectiveness</p>
+<p>thresholdsDelivery</p>
+<p>Model</p>
+<p>Layhealth</p>
+<p>counselors (not</p>
+<p>psychiatrists)</p>
+<p>dramatically</p>
+<p>reducedcost</p>
+<p>while</p>
+<p>maintaining</p>
+<p>effectivenessPolicy</p>
+<p>Implication</p>
+<p>Task-shiftingin</p>
+<p>mentalhealthis</p>
+<p>bothclinically</p>
+<p>effective AND</p>
+<p>economically</p>
+<p>justifiedby CUA</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="47">
+<div class="slide-content">
+<p class="section-number">SECTION 9</p>
+<h2>Common Pitfalls &amp; Honest</h2>
+<h2>Limitations</h2>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>The Most Com mon CEA Mistakes</h2>
+<ul>
+<li><strong>1 Incompletecostidentification</strong></li>
+</ul>
+<p>Onlycountingbudgetlineitem sand missinghouseholdcosts, volunteertim e, oroverhead</p>
+<ul>
+<li><strong>2 Ignoringperspective</strong></li>
+</ul>
+<p>Failingtostateorjustifywhosecostsandbenefitsareincluded</p>
+<ul>
+<li><strong>3 Cherry-pickingthecomparator</strong></li>
+</ul>
+<p>Choosing aweakcomparatorto makeyourprogram lookgood</p>
+<ul>
+<li><strong>4 Nosensitivityanalysis</strong></li>
+</ul>
+<p>Presentingpointestimatesascertainwhenkeyparametersarehighlyuncertain</p>
+<ul>
+<li><strong>5 Confusingefficacywitheffectiveness</strong></li>
+</ul>
+<p>Usingtrial-basedeffectsizesthatdon&#x27;tholdupinreal-worlddeliveryconditions</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>Fundamental Limitationsof CEA</h2>
+<p>What CEA Cannot Do</p>
+<p>Tellyoutheabsolutevalueof ahumanlife</p>
+<p>Capturecomplex, long-term system schange</p>
+<p>Replacepoliticaljudgmentaboutpriorities</p>
+<p>Accountforimplementationchallenges</p>
+<p>Reflectcom munitypreferencesautomaticallyThe Ethical Blind Spots</p>
+<p>Standard CEAisaggregative — itaddsupeffectsacross</p>
+<p>peoplewithoutasking:</p>
+<p>Whobenefits? Whobearscosts?</p>
+<p>Aretheworst-offincluded?</p>
+<p>Does maximizingefficiencyreinforceinequality?</p>
+<p>Alwayscomplement CEAfindingswithequityanalysis.</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="50">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>South Asian Case Studies</h2>
+<h2>in Depth</h2>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>Four Landmark South Asian CEA Studies</h2>
+<p><strong>India:</strong> Pratham&#x27;s</p>
+<p>Read India</p>
+<p>CEAshowedremedial</p>
+<p>readingcampscost ~₹200</p>
+<p>perchild gainingone</p>
+<p>readinglevel — 5× more</p>
+<p>cost-effectivethan</p>
+<p>standardschoolingper</p>
+<p>learningunit.</p>
+<p><strong>Bangladesh:</strong> BRAC</p>
+<p>Microfinance +</p>
+<p>Health</p>
+<p>Combinedmicrofinanceand</p>
+<p>healtheducationshowed a</p>
+<p><strong>BCRof 3.5–5:</strong> 1 whenlong-</p>
+<p>termincomeandhealth</p>
+<p>improvementswere</p>
+<p>monetized.</p>
+<p><strong>Sri Lanka:</strong> Water &amp;</p>
+<p>Sanitation</p>
+<p>Pipedwatersupplytorural</p>
+<p>households: ₹1,200–1,800</p>
+<p>per DALYaverted from</p>
+<p>waterbornedisease</p>
+<p>reduction — highlycost-</p>
+<p>effective.</p>
+<p><strong>Pakistan:</strong> Nutrition</p>
+<p>Supplementation</p>
+<p>Community-based</p>
+<p>managementofacute</p>
+<p>malnutritionin KPK: $42–</p>
+<p>65 perchild treated, with</p>
+<p><strong>BCRof 16:</strong> 1 over alifetime</p>
+<p>earningshorizon.</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Comparing Program Models: Pratham vs. Government Schools</h2>
+<p>0 2 0 0 4 0 0 6 0 0 8 0 0 1 k</p>
+<p>Co s t pe r Le a r ni n g Le v e l Ga i ne d  ₹ Pr a t ha m Re a d In di a</p>
+<p>Go v e r n me n t p ri ma r y s c ho o l ( pe r le v e l )</p>
+<p>Pr i v a te tu i ti o n ( a v e ra ge )</p>
+<p>N G O b le n de d p ro g ra mPr o g ra m</p>
+<p>Thisillustrativecomparisonshowswhy CEA-informeddecisionscandramaticallyimprovelearningoutcomesperrupeespent. Pratham &#x27;sapproachisnotjustcheaper — it&#x27;sdesigned</p>
+<p>aroundremediallearningoutcomes, makingthecomparisongenuinely meaningful.</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="53">
+<div class="slide-content">
+<p class="section-number">SECTION 11</p>
+<h2>Applying CEAin Practice &amp;</h2>
+<h2>Ethics</h2>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>Equity Weighting: Who Counts More?</h2>
+<p>Standard CEAtreatsallpeopleequally — one DALYisone DALY. Butequity-weighted CEAadjustsfor w hobenefits:</p>
+<p>Age Weighting</p>
+<p>W HO-CHOICEoriginallyweightedproductive-age</p>
+<p>adults moreheavily. Controversial — nowlargely</p>
+<p>abandoned.Income Weighting</p>
+<p>Ahealthgainfor apoorhousehold maybe &quot;worth</p>
+<p>more&quot; sociallythanthesam egainfor awealthy</p>
+<p>household.</p>
+<p>Gender Equity</p>
+<p>Program sbenefitingwomenandgirls mayreceive</p>
+<p>equitybonusesinsocialcost-benefitanalysesto</p>
+<p>correctforhistoricalunderinvestment.Distributional CEA</p>
+<p>New methodsexplicitlytrackwhogainsandloses</p>
+<p>acrossincom equintiles, notjustaggregateeffects.</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>A Practical CEA Toolkitfor Field Team s</h2>
+<p>Excel Cost Templates</p>
+<p>W HO-CHOICEand GiveWellbothofferfree,</p>
+<p>downloadablecosttrackingspreadsheetsadapted</p>
+<p>for LMICsiDSI Reference Case</p>
+<p>Theinternational Decision Support Initiative</p>
+<p>provides aglobalreferencecaseforeconomic</p>
+<p>evaluationin LMICs — freeonline</p>
+<p>Disease Control Priorities</p>
+<p>DCP3 providescost-effectivenessdatafor 200+</p>
+<p>healthinterventionsacross LMICsincluding South</p>
+<p>AsiaCom munity Validation</p>
+<p>Alwaysverifycostassumptionsandoutcom e</p>
+<p>metricswithcom munity membersandfrontline</p>
+<p>workers — dataqualitybeginsinthefield</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Quiz &amp; Self-Assessment</h2>
+<p>Testyourunderstanding — answerbeforereadingthehints</p>
+<ul>
+<li><strong>1Q 1: ICERvs. ACER</strong></li>
+</ul>
+<p>Whatisthekeydifferencebetweenan ACERandan ICER? Whenwouldyouuseeach?</p>
+<ul>
+<li><strong>2Q 2: Perspective</strong></li>
+</ul>
+<p>Avaccinationprogram costs ₹ 500 perchildfrom theprovider&#x27;sviewbut ₹ 1,200 from thehouseholdview. Whythedifference? Whichshouldyouuse?</p>
+<ul>
+<li><strong>3Q 3: Dominant Option</strong></li>
+</ul>
+<p>Program Aischeaper ANDmoreeffectivethan Program B. Wheredoes Asitonthe CEplane? Shouldyouadoptit?</p>
+<ul>
+<li><strong>4Q 4: Discounting</strong></li>
+</ul>
+<p>Whydowediscountfuturecostsandbenefits? Whathappenstolong-term preventionprogram swhenweuse ahighdiscountrate?</p>
+<ul>
+<li><strong>5Q 5: DALYs</strong></li>
+</ul>
+<p>Aprogram averts 500 DALYsat acostof ₹ 25,00,000. Whatisthecostper DALY? Isthiscost-effectiveinthe Indiancontext?</p>
+<ul>
+<li><strong>6Q 6: Equity</strong></li>
+</ul>
+<p>Standard CEAtreatsall DALYsequally. Giveoneargumentforequityweightingandoneagainstitinthe South Asiancontext.</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>Economicevaluationis adecisiontool, not averdict</p>
+<p>CEAhelpsstructuredifficultresourceallocationchoices — itdoesn&#x27;treplacejudgmentorvalues</p>
+<p>Perspectiveandcomparatordefineyouranalysis</p>
+<p>Alwaysstatethem explicitly. Differentchoicesyieldverydifferent — andalldefensible — results</p>
+<p>The ICERisyourcoreresult</p>
+<p>Incrementalanalysisisalmostalways moreusefulthanaverageratiosforrealdecisions</p>
+<p>Sensitivityanalysisisnotoptional</p>
+<p>Everyassumption mustbetested. Robustnessearnscredibilitywithdecision-makers</p>
+<p>Equitymatters — and CEAcanmissit</p>
+<p>Complementall CEAfindingswithdistributionalanalysistoprotectthe mostvulnerable</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>ACER Average Cost-Effectiveness Ratio — totalcost dividedbytotaleffectof asingleprogram</p>
+<p>ICER Incremental Cost-Effectiveness Ratio — additional costdividedbyadditionaleffectvs. comparator</p>
+<p>DALY Disability-Adjusted Life Year — oneyearofhealthylifelosttodisease, disability, orprematuredeath</p>
+<p>QALY Quality-Adjusted Life Year — oneyearoflife weightedbyhealthutility (0=death, 1=perfecthealth )</p>
+<p>Opportunity Cost Thevalueofthebestalternative foregonewhen aresourceisallocatedelsewhere</p>
+<p>Discounting Adjustingfuturecostsandbenefitsto present-dayvalueusing adiscountrate</p>
+<p>Perspective Theviewpointfromwhichcostsandbenefitsaremeasured (provider, patient, societal, payer)</p>
+<p>Comparator Thealternativeinterventionorstatusqu oagainstwhich anewprogramisevaluated</p>
+<p>Sensitivity Analysis Testinghow CEAresultschangewhenkeyassumptionsarevaried</p>
+<p>League Table Arankedlistofinterventionsbycostperunitofeffect, usedtoprioritizeprograms</p>
+<p>Shadow Price Anestimatedmonetaryvalueforresourcesthatlackmarketprices (e.g., volunteertime)</p>
+<p>BCR Benefit-Cost Ratio — totalmonetizedbenefitsdividedbytotalcostsin a CBA</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>Foundational Texts</p>
+<p>Drummondetal. — Methodsforthe Economic</p>
+<p>Evaluationof Health Care Program mes (Oxford) — the</p>
+<p>standardtextbook</p>
+<p>Gertler &amp; Molyneaux — Impact Evaluationin Practice</p>
+<p>(World Bank) — free PDFonline</p>
+<p>DCP3 — Disease Control Priorities, 3rd Edition —</p>
+<p>comprehensive LMICcost-effectivenessdata</p>
+<p>South Asia Specific</p>
+<p>J-PAL South Asia — jpal.org/southasia — evidenceand</p>
+<p>CEAsum mariesfor India/Bangladeshprogram s</p>
+<p>PHFI India — Healtheconomicspublicationsfor Indian</p>
+<p>healthsystem sOnline Tools &amp; Databases</p>
+<p>WHO-CHOICE — who.int/choice — cost-effectiveness</p>
+<p>datafor 191 countries</p>
+<p>GiveWell — givewell.org — rigorous CEAofglobal</p>
+<p>developmentcharities</p>
+<p>iDSI Reference Case — idsihealth.org — LMIC</p>
+<p>evaluationguidelines</p>
+<p>NICE International — evidencestandardsadaptableto</p>
+<p>LMICs</p>
+<p>Open Courses</p>
+<p><strong>Coursera:</strong> Health Economics &amp; Outcomes Research</p>
+<p>(Duke)</p>
+<p>edX: Evaluationof Social Program s (MIT/J-PAL)</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

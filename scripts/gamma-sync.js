@@ -158,6 +158,11 @@ const COURSES = [
   { slug: "edu-pedagogy", title: "Education and Pedagogy 101", category: "Health & Communication", description: "Discover evidence-based teaching methodologies, learning theories, and pedagogical approaches for development education contexts." },
   { slug: "SRHR-basics", title: "Sexual and Reproductive Health and Rights 101", category: "Health & Communication", description: "Navigate SRHR frameworks, rights-based approaches, and evidence-based programming for sexual and reproductive health." },
   { slug: "wee-studies", title: "Women's Economic Empowerment 101", category: "Gender & Equity", description: "Understand frameworks, evidence, and interventions for advancing women's economic participation, agency, and empowerment." },
+
+  // Phase II — decks with broken PDF export URLs needing fresh generation
+  { slug: "fundraising-basics", title: "Fundraising Basics 101", category: "Policy & Economics", description: "Develop essential skills for resource mobilization, donor engagement, and sustainable funding strategies in the development sector." },
+  { slug: "post-truth-101", title: "Post-Truth Politics 101", category: "Philosophy & Governance", description: "Analyze how misinformation, polarization, and post-truth narratives shape public discourse and development outcomes." },
+  { slug: "dev-architecture", title: "Global Development Governance 101", category: "Policy & Economics", description: "Navigate the complex ecosystem of multilateral development institutions, bilateral aid, and global governance frameworks." },
 ];
 
 // ─── HTTP helpers (using curl for DNS reliability) ───────────────────────────

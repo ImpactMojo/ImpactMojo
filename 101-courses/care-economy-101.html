@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Care Economy 101 | ImpactMojo</title>
+<meta name="description" content="Care Economy 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #DC143C;
+  --border-art: #B22222;
+  --bg-slide: #FFFDF7;
+  --bg-section: #B22222;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">IMPACTMOJO 101 SERIES GENDER &amp; EQUITY</p>
+<h1>Care Economy 101</h1>
+<p class="subtitle">Understandingthe Economic Valueof Unpaid Care Work — and Policies That Support Care Workers Across South Asiawww.impactmojo.in</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover Today</h2>
+<p>Aguidedjourneythroughthecareeconom y — from definitionstopolicyaction.</p>
+<p>Definingthe Care Economy</p>
+<p>Whatcountsascareworkandwhyit matters02</p>
+<p>Measuring Unpaid Care</p>
+<p>Tim e-usesurveys, GDPgaps, andvaluation methods</p>
+<p>The 3Rs Framework</p>
+<p>Recognize, Reduce, Redistribute04</p>
+<p>Gender &amp; Powerin Care</p>
+<p>Whodoescareworkandwhy</p>
+<p>Care Infrastructure</p>
+<p>Publicservices, childcare, eldercare06</p>
+<p>Care Workers&#x27; Rights</p>
+<p>Domesticworkers, pay, protection</p>
+<p>Policy Frameworks</p>
+<p>Globaland South Asianpolicylandscape08</p>
+<p>Private Sector &amp; Employers</p>
+<p>Workplacepoliciesandbusinesscase</p>
+<p>Climate &amp; Care</p>
+<p>Howclimatestress multipliescareburdens10</p>
+<p>Transformative Change</p>
+<p>Pathwaysto acaring, equitableeconom y</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Define &amp; Identify</p>
+<p>Definethecareeconom yand</p>
+<p>identifyunpaid, paid, and</p>
+<p>volunteercareworkineveryday</p>
+<p>contextsMeasure &amp; Value</p>
+<p>Explain methodsusedto measure</p>
+<p>andvalueunpaidcare — including</p>
+<p>tim e-usesurveysand GDP</p>
+<p>estimatesAnalyze Inequality</p>
+<p>Analyzehowgender, caste, class,</p>
+<p>andgeographyshapewhodoes</p>
+<p>careworkin South Asia</p>
+<p>Evaluate Policy</p>
+<p>Evaluatecarepoliciesusingthe 3Rsframeworkand</p>
+<p>applythem toreal South AsiancasesAdvocate &amp; Act</p>
+<p>Identifypracticalactionsthatdevelopment</p>
+<p>practitioners, employers, andgovernmentscantake</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 01</p>
+<h2>Definingthe Care</h2>
+<h2>Economy</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>What Isthe Care Econom y?</h2>
+<p>Thecareeconomyencompassesallactivitiesinvolvedincaringforpeople — children, elders, thesick, andthehousehold</p>
+<p>— whetherpaidorunpaid.</p>
+<p>Unpaid Care Work</p>
+<p>Cooking, cleaning, childcare,</p>
+<p>eldercaredonewithinhouseholds</p>
+<p>— invisibleto GDPbutessentialto</p>
+<p>societyPaid Care Work</p>
+<p>Domesticworkers, nurses, ASHA</p>
+<p>workers, anganwadistaff — often</p>
+<p>underpaidandundervaluedVolunteer Care</p>
+<p><strong>Com munity-basedcare:</strong> self-help</p>
+<p>groupsupport, neighborhood</p>
+<p>child minding, informalelder</p>
+<p>supportnetworks</p>
+<p><strong>Key Insight:</strong> Ifunpaidcareworkwerecountedin GDP, itwouldrepresent 10–39% of GDPdependingonthe</p>
+<p>country. In India, estimatessuggestitcouldaddover 20% tonationalincom e.</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>The Care Econom y Ecosystem</h2>
+<p>Careworktoucheseverysectorofsociety. Thisdiagram showshowunpaid, paid, andstatecareareinterconnected.</p>
+<p>State &amp; Community Care</p>
+<p>Unpaid Household</p>
+<p>CarePaid Care WorkforcePublic</p>
+<p>Supportto</p>
+<p>HouseholdsServices &amp;</p>
+<p>Jobs</p>
+<p>Care</p>
+<p>Deliver</p>
+<p>yEconomi</p>
+<p>c &amp;</p>
+<p>Social</p>
+<p>Wellbein</p>
+<p>g</p>
+<p>Whenpublicsystem sfail, unpaidhouseholdcare — overwhelminglydonebywomen — expandstofillthegap. Thisiscalledthecaredeficitfallback.</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>Why Doesthe Care Econom y Matter?</h2>
+<p>The Hidden Engine</p>
+<p>Withoutcarework, noeconom yfunctions. Children</p>
+<p>wouldnotberaised, workerswouldnotbefed, thesick</p>
+<p>wouldnotrecover. Careisnot asideissue — itisthe</p>
+<p>foundation.The Equity Problem</p>
+<p>Womenin South Asiaspend 5–6xmoretimeon</p>
+<p>unpaidcarethan men</p>
+<p>Thisconstrainswomen&#x27;spaidwork, education, and</p>
+<p>civicparticipation</p>
+<p>Lower-casteandruralwomenbearthehighest</p>
+<p>burden</p>
+<p>Caredeficitsworsenduringeconomicshocks,</p>
+<p>disasters, andpandemics</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Case Study: Anganwadi</h2>
+<p>Workersin India</p>
+<p>India&#x27;s Integrated Child Development Services (ICDS) runsover</p>
+<p>1.3 millionanganwadicentersstaffedalmostentirelyby women.</p>
+<p>Theseworkersprovidenutrition, earlychildhoodcare, and health</p>
+<p>education 4 yetareclassifiedas &quot;honoraryvolunteers&quot; andpaid</p>
+<p>honorariaof ₹3,000310,000/month, farbelowminimumwage.</p>
+<p><strong>Discussion:</strong> Ifanganwadiworkersaredeliveringessential</p>
+<p>publiccareservices, whyaretheynotclassifiedas</p>
+<p>governmentemployees? Whatdoesthisrevealabouthow</p>
+<p>thestatevaluescarework?</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Reflection: Mapping Your Ow n Care Day</h2>
+<p>Before movingforward, take 5 minutesto mapyourowncareactivities.</p>
+<p>Listcaretasks</p>
+<p>Writedowneverycaretaskyouperformedyesterday —</p>
+<p>cooking, childcare, cleaning, supporting afamily member2</p>
+<p>Estimatetim e</p>
+<p>How manyhoursdidthesetaskstake? Weretheyshared</p>
+<p>withothers, ordonealone?</p>
+<p>Considerinvisibility</p>
+<p>Wouldthesetasksappearon aresum e, apayslip, or a</p>
+<p>nationalincom eaccount? Whyorwhynot?4</p>
+<p>Reflectongender</p>
+<p>Whoelseinyourhouseholddoescarework? Isthere a</p>
+<p>pattern? Whatshapesthatpattern?</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 02</p>
+<h2>Measuring Unpaid Care</h2>
+<h2>Work</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>Why Measuring Care Work Is Hard</h2>
+<p>Traditionaleconomic measurementtoolswerebuilttocapture markettransactions. Unpaidcare — happeninginhomes,</p>
+<p>informally, withoutwages — slipsthroughthecracks.</p>
+<p>GDP Blindness</p>
+<p>Gross Domestic Productcounts</p>
+<p>only markettransactions. If a</p>
+<p>mothercooksforherfamily, it</p>
+<p>doesn&#x27;tcount. Ifshehires a</p>
+<p>cook, itdoes.National Accounts Gap</p>
+<p>Standardnationalaccounts</p>
+<p>excludehouseholdproduction,</p>
+<p>makingwomen&#x27;seconomic</p>
+<p>contributionsstatistically</p>
+<p>invisibleLabor Market Distortion</p>
+<p>Without measuringunpaid</p>
+<p>care, wecannotaccurately</p>
+<p>modellaborsupply, poverty, or</p>
+<p>women&#x27;seconomicautonom y</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>Tim e-Use Surveys: The Key Tool</h2>
+<p>A Time-Use Survey (TUS) asksrespondentstorecordallactivitiesacross a 24-hourperiod — paidwork, unpaidcare, leisure, andsleep. This makesinvisiblecare</p>
+<p>visible.</p>
+<p>Activity Diary</p>
+<p>Recor devery 15-</p>
+<p>minuteactivityAnalysis</p>
+<p>Compar eby</p>
+<p>gender, age,</p>
+<p>caste, locationSampling</p>
+<p>Random</p>
+<p>households</p>
+<p>selectedCoding</p>
+<p>Classifyaswork,</p>
+<p>car e, personal,</p>
+<p>leisur e</p>
+<p>Indiaconductednational TUSsurveysin 1998–99 and 2019. The 2019 surveyrevealedthatwomenspendanaverageof 299 minutes/dayonunpaidworkversus</p>
+<p>97 minutes/dayfor men.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Tim e-Use Data: India 2019</h2>
+<p>Women ( min/da y)</p>
+<p>Men ( min/da y)</p>
+<p>0 1 0 0 2 0 0 3 0 0 4 0 0 5 0 0 6 0 0Un pa i d Ca re Wo r k</p>
+<p>Pa i d Em p lo y me n t</p>
+<p>Pe r so na l Ca re</p>
+<p>Le i su re</p>
+<p>Vo lu n te e ri n gAc ti v i t y</p>
+<p>299</p>
+<p>185</p>
+<p>324</p>
+<p>612</p>
+<p>615</p>
+<p>184</p>
+<p>252</p>
+<p><strong>Source:</strong> National Statistical Office, India Tim e Use Survey 2019. Women&#x27;sunpaidcareburdenis 3xthatof men — tim ewomencannotspendonpaidwork, education, orrest.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>How Do We Value Unpaid Care?</h2>
+<p>Replacement Cost</p>
+<p>Method</p>
+<p>Whatwoulditcosttohire</p>
+<p>someonetodothesetasks? Uses</p>
+<p>marketwagesforequivalentpaid</p>
+<p>roles (cook, nurse, childcare</p>
+<p>worker)Opportunity Cost Method</p>
+<p>Whatearningsdidthecaregiver</p>
+<p>forgobydoingunpaidcare</p>
+<p>insteadofpaidwork? Reflects</p>
+<p>thepersonaleconomicsacrificeInput-Output Method</p>
+<p>Integratescareintonational</p>
+<p>accountsbycreating asatellite</p>
+<p>account — asrecom mendedby</p>
+<p>the UN System of National</p>
+<p>Accounts</p>
+<p><strong>Globalestimate:</strong> The ILOvaluesunpaidcareworkat $11 trillionannuallyworldwide — nearly 9% ofglobal GDP.</p>
+<p>In South Asia, thisisdisproportionatelybornebywomenandgirls.</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Case Study: Nepal&#x27;s Tim e-Use Survey</h2>
+<p>What Nepal Found</p>
+<p>Nepal&#x27;s 2008 TUSrevealedthatwomenspent 10.8</p>
+<p>hours/dayontotalwork (paid + unpaid) comparedto</p>
+<p>7.5 hours/dayfor men. Women&#x27;sunpaidcarewas</p>
+<p>valuedat 23% of GDPusingreplacementcost methods.</p>
+<p>Thesefindingswereusedbycivilsocietytoadvocatefor</p>
+<p>constitutionalrecognitionofunpaidcare — and</p>
+<p>succeededin Nepal&#x27;s 2015 Constitution.The Policy Impact</p>
+<p>Nepal&#x27;s Constitution Article 38(4) explicitlyrecognizes</p>
+<p>women&#x27;slaborincludingunpaidcare, andcom mitsthe</p>
+<p>statetoprovidecompensation — alandmark</p>
+<p>achievementin South Asia.</p>
+<p><strong>Le s so n :</strong> Dataplusadvocacyequalspolicychange.</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">SECTION 03</p>
+<h2>The 3Rs Framework</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>Recognize, Reduce, Redistribute</h2>
+<p>The 3Rs Framework — developedby Diane Elsonandadoptedby OXFAM, UN Women, andthe ILO — isthe mostwidely</p>
+<p>usedtoolforcareeconom ypolicydesign.</p>
+<p>RECOGNIZE</p>
+<p>Makeunpaidcareworkvisible</p>
+<p>throughdata, legal</p>
+<p>acknowledgment, andcultural</p>
+<p>recognition2</p>
+<p>REDUCE</p>
+<p>Decreasethetim eandburdenof</p>
+<p>carethroughinfrastructure,</p>
+<p>technology, andservices3</p>
+<p>REDISTRIBUTE</p>
+<p>Sharecareresponsibilities more</p>
+<p>equally — between menandwomen,</p>
+<p>householdsandthestate</p>
+<p><strong>Som epractitionersadd afourth R:</strong> Represent — ensuringcareworkershavevoiceandagencyinpolicydecisionsthat</p>
+<p>affectthem .</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Applyingthe 3Rs: A Practical Matrix</h2>
+<p>Level Recognize Reduce Redistribute</p>
+<p>Household Nameandvaluedailycare</p>
+<p>tasksBuytime-saving</p>
+<p>appliances; hirehelpSharetasksequitably</p>
+<p>betweenpartners</p>
+<p>Community Documentcarethrough</p>
+<p>participatoryresearchCommunitycrèches, water</p>
+<p>tapsnearbyMen&#x27;scaregroups;</p>
+<p>collectivechildcare</p>
+<p>State Time-usesurveys; national</p>
+<p>accountsreformPublicchildcare, eldercare,</p>
+<p>healthservicesPaternityleave; care</p>
+<p>allowances; taxationreform</p>
+<p>Market Countcaresectorin</p>
+<p>economicstatisticsCare-techinnovation;</p>
+<p>labor-savinggoodsLivingwagesforcare</p>
+<p>workers; supplychains</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>3Rsin Action: Bangladesh</h2>
+<p>BRAC&#x27;s Ultra-Poor Graduation Programme explicitlyintegrates</p>
+<p>careintoitsdesign. Alongsidelivelihoodssupport, itprovides</p>
+<p>childcareduringtrainingsessions, usesfemalecommunityvolunteers</p>
+<p>paidfortheirtime, andtrainsmalehouseholdmembers inshared</p>
+<p>careresponsibilities.</p>
+<p><strong>Result:</strong> Womenintheprogrammereported a 40-minute</p>
+<p>dailyreductioninunpaidcaretimeand asignificant increase</p>
+<p>inhoursavailableforincome-generatingactivities —</p>
+<p>demonstratingthat Reduceand Redistributeworktogether.</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Discussion: Where Does Your Work Fit?</h2>
+<p>Thinkabout aprogram orpolicyyouworkon, study, orarefamiliarwith.</p>
+<ul>
+<li><strong>1 Doesit Recognize?</strong></li>
+</ul>
+<p>Doestheprogram countoracknowledgecare</p>
+<p>work? Doesitcollecttim e-usedataorincludecare</p>
+<p>activitiesinitstheoryofchange?2 Doesit Reduce?</p>
+<p>Doesitreducethetim eorphysicalburdenofcare —</p>
+<p>throughinfrastructure, services, ortechnology?</p>
+<ul>
+<li><strong>3 Doesit Redistribute?</strong></li>
+</ul>
+<p>Doesitshiftcareresponsibilities — toward men,</p>
+<p>towardthestate, ortowardcom munitysystem s?4 What&#x27;s Missing?</p>
+<p>Which Ris mostabsentfrom theprogram syou</p>
+<p>know? Whatwouldittaketoaddit?</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="21">
+<div class="slide-content">
+<p class="section-number">SECTION 04</p>
+<h2>Gender &amp; Powerin Care</h2>
+<h2>Work</h2>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="22">
+<div class="slide-content">
+<h2>Why Women Do Most Care Work</h2>
+<p>Theunequaldistributionofcareisnotnaturalorinevitable — itisproducedbyintersectingsocialsystems.</p>
+<p>Patriarchal Norms</p>
+<p>Culturalscriptsthatdefinecareas &quot;women&#x27;s</p>
+<p>work&quot; — embeddedinfamilies, religion, and</p>
+<p>lawInstitutional Gaps</p>
+<p>Absentpublicservices (crèches, elderhomes)</p>
+<p>pushcarebackintohomes — andonto</p>
+<p>women</p>
+<p>Wage Inequality</p>
+<p>Women&#x27;slowerwagesmakeit &quot;rational&quot;</p>
+<p>forhouseholdstoassigncaretowomen</p>
+<p>— reinforcingthegap</p>
+<p>Caste &amp; Class</p>
+<p>Lower-casteandpoorerwomenfacedouble</p>
+<p>burdens — doingtheirownhouseholdcare</p>
+<p>pluspaidcareinwealthierhomesLegal Frameworks</p>
+<p>Lawsonmarriage, property, andlaboroften</p>
+<p>reinforcewomen&#x27;sprimaryresponsibilityfor</p>
+<p>care</p>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>Intersectionality: Not All Women Are Equal</h2>
+<p>Careburdensarenotdistributedequallyamongwomen. Intersectingidentitiesshapewhocarriestheheaviestload.</p>
+<p>Dalit &amp; Adivasi Women</p>
+<p><strong>Facetripleburden:</strong> caste</p>
+<p>discrimination, genderinequality, and</p>
+<p>poverty — oftendoingcareworkfor</p>
+<p>upper-castehouseholdsinadditionto</p>
+<p>theirown</p>
+<p>Rural &amp; Remote Women</p>
+<p>Distancefromwater, fuel, and</p>
+<p>marketsaddshoursofdailylabor.</p>
+<p>Climatestressandlackof</p>
+<p>infrastructureintensifycareburdens</p>
+<p>Girls &amp; Young Women</p>
+<p>Girlsfrequentlytakeoncare</p>
+<p>responsibilitiesthatdisruptschooling</p>
+<p>— perpetuatingintergenerational</p>
+<p>cyclesoflimitedopportunity</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>The Time Poverty Trap</h2>
+<p>Womendo</p>
+<p>moreunpaid</p>
+<p>careLesstimefor</p>
+<p>paidwork</p>
+<p>Lowerincome</p>
+<p>andvoiceHousehold &amp;</p>
+<p>statereinforce</p>
+<p>care</p>
+<p>Tim epovertyisnotjustaboutfatigue — itisaboutstructuralexclusion. Breakingthecyclerequiressimultaneousactionatall</p>
+<p>fourstages, notjustone.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Case Study: Pakistan&#x27;s Patriarchal Bargain</h2>
+<p>The Context</p>
+<p>Pakistanhasoneoftheworld&#x27;slowestfemalelabor</p>
+<p>forceparticipationrates — under 25%. Researchshows</p>
+<p>thateveneducatedwomennegotiate a &quot;stay-hom e&quot;</p>
+<p>arrangementinexchangeforhouseholdsecurity.What&#x27;s Happening</p>
+<p>Sociologist Deniz Kandiyoti&#x27;sconceptofthe</p>
+<blockquote>&quot;patriarchalbargain&quot; explainsthis: womenacceptcare</blockquote>
+<p>constraintsinexchangeforsocialprotectionandstatus.</p>
+<p>Breakingthisbargainrequireschangingbothincentives</p>
+<p>andnorm ssimultaneously.</p>
+<p>Program sthatonlyfocusonwomen&#x27;seconomic</p>
+<p>empowerment — withoutaddressingcare — oftenfailor</p>
+<p>createhouseholdconflict.</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="26">
+<div class="slide-content">
+<p class="section-number">SECTION 05</p>
+<h2>Care Infrastructure &amp;</h2>
+<h2>Public Services</h2>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>What Is Care Infrastructure?</h2>
+<p>Justasroadsandpowergridsenableeconomicactivity, careinfrastructureenablespeople — especiallywomen — to</p>
+<p>participatefullyintheeconom yandpubliclife.</p>
+<p>Early Childhood Care</p>
+<p>Crèches, anganwadis, preschools — enabling mothers</p>
+<p>toworkwhilechildrenaresafelycaredforElder &amp; Disability Care</p>
+<p>Day-carecenters, hom e-visitprogram s, com munity</p>
+<p>supportforaginganddisabledfamily members</p>
+<p>Health Infrastructure</p>
+<p>Accessibleclinics, ASHAworkers, com munityhealth</p>
+<p>volunteersreducehouseholdcareburdensduring</p>
+<p>illnessTime-Saving Infrastructure</p>
+<p>Pipedwater, cleancookingfuel, reliableelectricity —</p>
+<p>eachdirectlyreduceswomen&#x27;sdailycarelaborby</p>
+<p>hours</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="28">
+<div class="slide-content">
+<h2>The Public-Private Care Mix</h2>
+<p>Fully Public</p>
+<p>State-rununiversal</p>
+<p>car efundedbytaxesPublic-</p>
+<p>Com munity Mix</p>
+<p>Govt-funded</p>
+<p>communitycr èches</p>
+<p>runbyself-help</p>
+<p>groupsMarket-Based</p>
+<p>Privatechildcar eand</p>
+<p>eldercar epaidby</p>
+<p>familiesFully Private</p>
+<p>Householdsbearall</p>
+<p>car ecosts, burden</p>
+<p>onwomen</p>
+<p>Whenstateswithdrawfrom careprovision — throughausterity, privatization, orneglect — theburdenfallsbackonto</p>
+<p>householdsandontowomen. Careisnot aprivateproblem; itis apublicgood.</p>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>Case Study: Tamil Nadu&#x27;s</h2>
+<p>Crèche Revolution</p>
+<p>Tamil Nadu&#x27;s Working Women&#x27;s Hostelsand Crèchescheme</p>
+<p>providessubsidizedchildcareforwomenintheunorganizedsector.</p>
+<p>By 2022, over 4,000 crècheswereoperationalacrossthe state.</p>
+<p>Studiesshowthataccesstocrèchesincreasedwomen&#x27;slaborforce</p>
+<p>participationby 12–18 percentagepoints indistrictswithcoverage —</p>
+<p>oneofthestrongesteffectsmeasuredforanycarepolicy in India.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>The Infrastructure-Care Connection</h2>
+<p>0 2 0 4 0 6 0 8 0 1 0 0 1 2 0</p>
+<p>Av g . Ti me Sa v e d pe r Da y ( mi nu te s )Pi pe d Wa te r Ac ce s s</p>
+<p>Cl e a n Co o k i n g Fu e l  L P G </p>
+<p>Ne a r b y Ch i l d ca re Ce n te r</p>
+<p>Re li a b le El e c t ri ci t y</p>
+<p>Lo ca l He a l t h Fa ci li t yIn f ra s t ru c tu re</p>
+<p>120</p>
+<p>Eachinfrastructureinvestmentdirectlytranslatesintotim efreedfrom carelabor. Thebiggestgainscom efrom childcareaccessandcleanwater — bothchronicdeficitsinrural South</p>
+<p>Asia.</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Exercise: Infrastructure Audit</h2>
+<p>Thinkof acommunityyouworkwithorknowwell. Use thisquickaudittoassesscareinfrastructuregaps.</p>
+<p>Infrastructure Present? Accessibletoall? Whobenefitsmost?</p>
+<p>Communitycrèche / childcare Y / N Y / N</p>
+<p>Pipedwaterwithin 200m Y / N Y / N</p>
+<p>LPGorcleancookingfuel Y / N Y / N</p>
+<p>Reliableelectricity (8+ hrs) Y / N Y / N</p>
+<p>Elder / disabilityday-care Y / N Y / N</p>
+<p>Localhealthworker (ASHA/ANM) Y / N Y / N</p>
+<p><strong>Reflection:</strong> Whichgapsmostaffectwomen&#x27;stime? Whatwouldbethe mostimpactfulsingleinvestmentforthis</p>
+<p>community?</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="32">
+<div class="slide-content">
+<p class="section-number">SECTION 06</p>
+<h2>Care Workers: Rights &amp;</h2>
+<h2>Recognition</h2>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="33">
+<div class="slide-content">
+<h2>Who Are Care Workers?</h2>
+<p>Thepaidcareworkforceisvast, diverse, andsystematicallyundervalued — concentratedattheintersectionofgender, caste,</p>
+<p>andinformality.</p>
+<p>Childcare Workers</p>
+<p>Anganwadiworkers, crèchestaff, privatenannies — 1.3M+ in</p>
+<p>India&#x27;s ICDSalone, mostearningbelow minimum wageDomestic Workers</p>
+<ul>
+<li><strong>50M+ domesticworkersin India, predominantlywomenfrom</strong></li>
+</ul>
+<p>marginalizedcom munities — almostentirelyintheinformal</p>
+<p>sector</p>
+<p>Community Health Workers</p>
+<p>ASHAworkers, ANMs, Lady Health Visitors — frontlinehealth</p>
+<p>careclassifiedas &quot;volunteers&quot; despiteessentialservicesElder &amp; Disability Carers</p>
+<p>Growingsectoras South Asiaages — largelyinformal,</p>
+<p>unregulated, andwithoutsocialprotection</p>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>The Decent Work Deficitin Care</h2>
+<p>81%</p>
+<p>Informal</p>
+<p>Employment</p>
+<p>Ofcareworkersin South</p>
+<p>Asiaworkwithoutformal</p>
+<p>contractsorsocial</p>
+<p>protection50M +</p>
+<p>Domestic Workers</p>
+<p>In Indiaalone — oneofthe</p>
+<p>world&#x27;slargestcare</p>
+<p>workforces, largelywithout</p>
+<p>legalprotection₹4,500</p>
+<p>Avg. Monthly Pay</p>
+<p>For ASHAworkersin many</p>
+<p>Indianstates — wellbelow</p>
+<p>thenational minimum wage3/10</p>
+<p>States with Law s</p>
+<p>Onlyabout 3 in 10 Indian</p>
+<p>stateshavespecific</p>
+<p>domesticworkerprotection</p>
+<p>regulations</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>ILO Convention C189: Domestic Workers</h2>
+<p>What C189 Requires</p>
+<p>Writtenemploymentcontracts</p>
+<p>Minimum wagecoverage</p>
+<p>Socialsecurityaccess</p>
+<p>Limitsonworkinghours</p>
+<p>Protectionfrom violenceandabuse</p>
+<p>RighttoorganizeandbargaincollectivelySouth Asia&#x27;s Record</p>
+<p>Asof 2024, noneofthemajor South Asiannations</p>
+<p>(India, Pakistan, Bangladesh, Nepal) haveratified C189 —</p>
+<p>leaving 50M+ domesticworkerswithoutinternational</p>
+<p>legalprotection.</p>
+<p>Civilsocietyorganizationslikethe National Domestic</p>
+<p>Workers Movement (NDWM) in Indiacontinueto</p>
+<p>advocateforratificationanddomesticlegislation.</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>Case Study: NDWM &amp;</h2>
+<p>Collective Voice</p>
+<p>The National Domestic Workers Movement (NDWM) organizes</p>
+<p>over 200,000 domesticworkersacross 18 Indianstates. Through</p>
+<p>collectivebargaining, legalliteracytraining, andpublicadvocacy,</p>
+<p>NDWMhassecured:</p>
+<p>Inclusionofdomesticworkersinstateminimumwageschedules</p>
+<p>in 5 states</p>
+<p>Identitycardsandaccesstosocialprotectionschemes</p>
+<p>Anationalcampaignfor adedicateddomesticworkersprotection</p>
+<p>law</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="37">
+<div class="slide-content">
+<p class="section-number">SECTION 07</p>
+<h2>Policy Frameworksforthe</h2>
+<h2>Care Economy</h2>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>A Spectrum of Care Policies</h2>
+<p>Carepoliciesrangefrom im mediateprotectionsforworkerstotransformativestructuralreform s. Effectivecarepolicyworksacrossthefullspectrum .</p>
+<p>Transformative</p>
+<p>Constitutional recognition,</p>
+<p>universalservices, car e</p>
+<p>budgeting, redistribution</p>
+<p>Enabling</p>
+<p>Publicchildcar e, parental</p>
+<p>leave, eldercar e, time-use</p>
+<p>dataFoundational</p>
+<p>Laborlaws, minimum</p>
+<p>wages, socialprotectionfor</p>
+<p>car eworkers</p>
+<p>Most South Asiangovernmentsoperateprimarilyatthefoundationallevel. Thetransformativetierrequirespoliticalwillandcoalition-buildingacross</p>
+<p>women&#x27;s movements, laborunions, andfiscalreformers.</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>Parental Leave: A Comparative View</h2>
+<p>Country Maternity Leave Paternity Leave Paid? Coverage</p>
+<p>India 26 weeks 15 days (centralgovt) Yes (formalsector) Formal workersonly</p>
+<p>Bangladesh 16 weeks None (law) Yes (partial) Formalworkersonly</p>
+<p>Pakistan 12 weeks None (federal) Yes (partial) Verylimited</p>
+<p>Nepal 14 weeks 15 days Yes Formalsector</p>
+<p>Sri Lanka 12 weeks 3 days Yes Formalworkers</p>
+<p><strong>Key Gap:</strong> Informalworkers 4 whomakeup 80390% of South Asianworkers 4 arelargelyexcludedfromtheseprotections.</p>
+<p>Maternityandpaternityleaveforinformalworkersremainsthefrontierchallenge.</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>Gender-Responsive Budgetingfor Care</h2>
+<p>Gender-Responsive Budgeting (GRB) analyzespublicspendingforitsdifferentialimpactonwomenand men — and</p>
+<p>can makecarespendingvisibleandaccountable.</p>
+<p>Care Spending Audit</p>
+<p>Mapallbudgetlinesthatfund</p>
+<p>careinfrastructure: ICDS, ASHA,</p>
+<p>midday meals, elderlywelfare —</p>
+<p>andtrackyear-on-yeartrendsTim e-Cost Analysis</p>
+<p>Calculatehowpubliccare</p>
+<p>investmentstranslateintotim e</p>
+<p>savingsforwomen — andinclude</p>
+<p>thisincost-benefitanalysesof</p>
+<p>allsocialprogram sCare Budget Benchmarks</p>
+<p>OXFAMrecom mendsinvestingat</p>
+<p>least 2% of GDPincare</p>
+<p>infrastructure. Indiacurrently</p>
+<p>spendsunder 0.5% of GDPon</p>
+<p>childcareandeldercare</p>
+<p>combined</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Case Study: Kerala&#x27;s Care Model</h2>
+<p>What Makes Kerala Different</p>
+<p>Keralahasconsistentlyoutperformedother Indian</p>
+<p>statesongenderequityindicators — dueinpartto</p>
+<p>decadesofpublicinvestmentincareinfrastructure:</p>
+<p>universalhealthcenters, subsidizedchildcare, strong</p>
+<p>ICDSimplementation, andcom munityhealthworkers</p>
+<p>withgenuinestatesupport.The Results</p>
+<p><strong>Femaleliteracyrate:</strong> 95.2% vs. national 70%</p>
+<p>Maternal mortalityamong India&#x27;slowest</p>
+<p>Women&#x27;slaborforceparticipationhigherthan</p>
+<p>nationalaverage</p>
+<p>Strongerlocalgovernancewithwomen&#x27;sparticipation</p>
+<p><strong>Le s so n :</strong> Sustainedpublicinvestmentincarecompounds</p>
+<p>overgenerations.</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="42">
+<div class="slide-content">
+<p class="section-number">SECTION 08</p>
+<h2>The Private Sector &amp;</h2>
+<h2>Employer Responsibility</h2>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="43">
+<div class="slide-content">
+<h2>The Business Casefor Care</h2>
+<p>Employerinvestmentincareisnotcharity — itissmartbusinessstrategy.</p>
+<p>Retain Talent</p>
+<p>Care-supportiveworkplacesretainwomen — reducingcostly</p>
+<p>turnoverandpreservinginstitutionalknowledgeBoost Productivity</p>
+<p>Employeeswithcaresupportarelessabsent, morefocused,</p>
+<p>and moreengaged — measurableproductivitygains</p>
+<p>Drive Diversity</p>
+<p>Carepoliciesenablewomentoadvanceintoleadership —</p>
+<p>strengtheningorganizationaldiversityanddecision-making</p>
+<p>qualityBuild Reputation</p>
+<p>ESG-consciousinvestorsandconsumersincreasinglyreward</p>
+<p>companieswithstrongcarepoliciesandworkerwelfare</p>
+<p>records</p>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>Employer Care Policy Toolkit</h2>
+<ul>
+<li><strong>1 Flexible Work</strong></li>
+</ul>
+<p>Flexiblehours, remoteworkoptions, andshiftadjustments</p>
+<p>toaccom modatecareresponsibilities</p>
+<ul>
+<li><strong>2 Workplace Crèche</strong></li>
+</ul>
+<p>On-siteornear-sitechildcare — legallyrequiredfor</p>
+<p>establishmentswith 30+ womenemployeesunder Maternity</p>
+<p>Benefit Act 3 Extended Leave</p>
+<p>Paternityandsecondarycaregiverleave — normalizing</p>
+<p>men&#x27;scareresponsibilities</p>
+<ul>
+<li><strong>4 Care Allowances</strong></li>
+</ul>
+<p>Monthlystipendsforchildcareoreldercareexpenses —</p>
+<p>especiallyvaluableforinformalandfield-basedworkers</p>
+<ul>
+<li><strong>5 Equal Pay Audit</strong></li>
+</ul>
+<p>Regularauditstoidentifyandclosegenderpaygapsthat</p>
+<p>undervaluecare-heavyroles</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>Case Study: Garment</h2>
+<p>Industryin Bangladesh</p>
+<p>Bangladesh&#x27;sready-madegarmentindustryemploys 4 millionworkers,</p>
+<p>80% women. Manyfactoriesnowoperateon-sitecrèchesand</p>
+<p>breastfeedingrooms followingadvocacyby BGMEAandinternational</p>
+<p>buyers.</p>
+<p>Studiesbythe International Finance Corporationfoundthatfactories</p>
+<p>withchildcarehad 28% lowerabsenteeism and 17% lowerturnover —</p>
+<p>makingthebusinesscaseundeniable.</p>
+<p><strong>Challenge:</strong> Mostsmallandmediumenterprisescannotafford</p>
+<p>stand-alonecrèches. Collectivemodels — sharedcrèchesfor</p>
+<p>factoryclusters — areemergingas amorescalablesolution.</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="46">
+<div class="slide-content">
+<p class="section-number">SECTION 09</p>
+<h2>Climate Change &amp; Care</h2>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="47">
+<div class="slide-content">
+<h2>How Climate Stress Multiplies Care Burdens</h2>
+<p>Climatechangeisnotgender-neutral. In South Asia, climateshocksconsistentlyincreasewomen&#x27;sunpaidcarework — oftendrastically.</p>
+<p>Drought — Longer</p>
+<p>FetchingFlooding —</p>
+<p>Rebuilding Care</p>
+<p>Heatwaves —</p>
+<p>More Nursing</p>
+<p>Crop Failure —</p>
+<p>Extra WorkAir</p>
+<p>Pollution —</p>
+<p>Respiratory</p>
+<p>Care</p>
+<p>Eachclimateeventeffectivelytransferscostsfromth eenvironmentandeconomyontowomen&#x27;sbodiesandtime. Thisiscalledtheclimate-carenexus .</p>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Case Study: Floodsin Bihar</h2>
+<p>What Happens During Floods</p>
+<p>During Bihar&#x27;sannualfloods, schoolsandanganwadis</p>
+<p>close, healthcentersflood, and menleaveforlabor</p>
+<p>migration. Womenareleft managingcareforchildren,</p>
+<p>elders, andlivestock — withnoexternalsupport.The Care Spike</p>
+<p>A 2020 ActionAidstudyfoundthatwomeninflood-</p>
+<p>affected Biharspentanaverageof 14 hours/dayoncare</p>
+<p>anddomesticlaborduringfloodevents — comparedto</p>
+<p>7.5 hoursinnormalperiods.</p>
+<p>Yetdisasterresponseprogram salmostnevercountor</p>
+<p>compensatethislabor.</p>
+<p><strong>Recommendation:</strong> Climateadaptationplans must</p>
+<p>includecareinfrastructureresilience — crèchesinelevated</p>
+<p>safezones, ASHAworkercontinuityfunds, and</p>
+<p>com munitycarenetworks.</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>Climate-Care Integration Checklist</h2>
+<p>Isyourclimateadaptationor DRRprogram care-sensitive? Usethischecklist.</p>
+<p>✅ Data</p>
+<p>Doesyourclimate</p>
+<p>vulnerability</p>
+<p>assessmentinclude</p>
+<p>tim e-usedataandcare</p>
+<p>burden mapping?✅ Infrastructure</p>
+<p>Arecrèches, health</p>
+<p>posts, andwaterpoints</p>
+<p>includedinclimate-</p>
+<p>resilientinfrastructure</p>
+<p>plans?✅ Response</p>
+<p>Doesdisasterresponse</p>
+<p>includecareworkers</p>
+<p>andcom munityhealth</p>
+<p>volunteersasessential</p>
+<p>personnel?✅ Finance</p>
+<p>Isclimatefinancebeing</p>
+<p>usedtofundcare</p>
+<p>infrastructurein</p>
+<p>vulnerable</p>
+<p>com munities?</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="50">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Pathwaysto a Caring,</h2>
+<h2>Equitable Economy</h2>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>A Transformative Vision</h2>
+<p>Transformingthecareeconom yrequiresactionacrossfourinterdependentspheres — nosingleactorcandoitalone.</p>
+<p>State</p>
+<p>Universalcareservices, legal</p>
+<p>reform , GRB, recognitionofcarein</p>
+<p>nationalaccountsMarket</p>
+<p>Decentworkforcareworkers,</p>
+<p>employercarepolicies, livingwages,</p>
+<p>care-techinvestment</p>
+<p>Community</p>
+<p>Collectivecare models, men&#x27;s</p>
+<p>engagement, socialnorm change,</p>
+<p>carecooperativesHousehold</p>
+<p>Equitablesharingofcaretasks,</p>
+<p>challenginggendernorm s,</p>
+<p>supportinggirls&#x27; tim e</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Men &amp; Care: Breakingthe</h2>
+<p>Mold</p>
+<p>Men&#x27;sincreasedengagementincareisboth ameans andanendof</p>
+<p>careeconomytransformation. Programsthatwork:</p>
+<p>MenCarecampaign (global, including India): Engagesmenas</p>
+<p>fathersandcaregiversthroughmediaandcommunity</p>
+<p>mobilization</p>
+<p><strong>ICRW&#x27;s Yaari Dostiprogram :</strong> Engagesyoungmeningender-</p>
+<p>equitablenormsincludingcaresharing</p>
+<p>Hausarbeit (Homework) campaigns : Makingmen&#x27;sdomestic</p>
+<p>contributionvisibleandvalued</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Care Econom y: A Policy Roadmap</h2>
+<p>Immediate (1–2 yrs)</p>
+<p>Ratify ILO C189, extend minimum wagetocare</p>
+<p>workers, mandateworkplacecrèches, launchnational</p>
+<p>TUS</p>
+<p>Medium-Term (3–5 yrs)</p>
+<p>Universalchildcaresystem , paidpaternityleavefor</p>
+<p>informalworkers, carein NDCsandclimateplansLong-Term (5–10 yrs)</p>
+<p>Constitutionalrecognition, satelliteaccountsfor</p>
+<p>unpaidcare, 2% GDPcareinvestmentbenchmark, care</p>
+<p>econom y ministry</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>Final Reflection: Your Role</h2>
+<p>As adevelopmentprofessional, student, orpractitioner, youoperateat multiplelevels. Wherewillyouact?</p>
+<p>Inyourorganization</p>
+<p>Advocateforcare-sensitive HRpolicies. Pushfor</p>
+<p>tim e-usedatainprojectassessments. Challenge</p>
+<p>program designsthatassum ewomenhave &quot;free</p>
+<p>tim e.&quot;Inyourresearchorfieldwork</p>
+<p>Includecareburden mappingincom munity</p>
+<p>assessments. Askwhodoescare. Makeitcount —</p>
+<p>literally.</p>
+<p>Inpolicyspaces</p>
+<p>Usethe 3Rsframeworktoauditbudgets, laws, and</p>
+<p>program s. Advocateforratifying C189. Build</p>
+<p>coalitionsacrosslabor, gender, andfiscal</p>
+<p>advocates.Inyourownlife</p>
+<p>Sharecareathom e. Modelequitablecare. The</p>
+<p>personalispolitical — andthehouseholdiswhere</p>
+<p>transformationbegins.</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>Quiz: Test Your Understanding</h2>
+<p>Reflectonordiscussthesequestionswith acolleagueorpeergroup.</p>
+<p>Q1</p>
+<p>Whydoes GDPundercountwomen&#x27;seconomiccontributions? Givetwo</p>
+<p>specificexamplesfrom South Asia.2</p>
+<p>Q2</p>
+<p>Whichofthe 3Rsis mostneglectedin India&#x27;scurrentcarepolicies? Provide</p>
+<p>evidenceforyouranswer.</p>
+<p>Q3</p>
+<p>Afactoryemploys 200 women. Whatthreecare-supportiveemployer</p>
+<p>policieswouldhavethegreatestimpact, andwhy?4</p>
+<p>Q4</p>
+<p>Howdoesclimatechangeinteractwithcareburdensinrural South Asia?</p>
+<p>Use aspecificexample.</p>
+<p>Q5</p>
+<p>Whatisthe &quot;tim epovertytrap&quot; andwhatpolicyinterventionscanbreakit?</p>
+<p>Whichis mostfeasibleinyourcontext?6</p>
+<p>Q6</p>
+<p>Whydo most South Asiandomesticworkerslacklegalprotection? What</p>
+<p>wouldchangeif C189 wereratified?</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>Care Work Is Economic</p>
+<p>Work</p>
+<p>Unpaidcareisworthtrillions</p>
+<p>globally — excludingitfrom GDPis</p>
+<p>apoliticalchoice, not atechnical</p>
+<p>inevitabilityInequality Is Structural</p>
+<p>Women&#x27;scareburdenisproduced</p>
+<p>bynorm s, institutions, markets,</p>
+<p>andlaws — notbiology. Itcanbe</p>
+<p>changed.Usethe 3Rs</p>
+<p>Recognize, Reduce, Redistribute —</p>
+<p>apracticalframeworkapplicable</p>
+<p>from householdtoconstitutional</p>
+<p>level</p>
+<p>Workers Need Rights</p>
+<ul>
+<li><strong>50M+ careworkersin South Asialackdecentwork.</strong></li>
+</ul>
+<p>Policychangestartswithlegalrecognitionand</p>
+<p>minimum wagecoverageCare Is Climate-Critical</p>
+<p>Climateadaptationwithoutcare-sensitivitywillfail</p>
+<p>women. Integratecareintoeveryclimateplan.</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Care Economy Thesystemofpaidandunpaidactivitiesthatcareforpeopleandmaintainhouseholdsand</p>
+<p>communities</p>
+<p>Unpaid Care Work Careactivitiesperformedwithoutfinancialcompensation, typicallywithinhouseholds — cooking,</p>
+<p>cleaning, childcare, eldercare</p>
+<p>Time-Use Survey (TUS) Aresearchtoolthatcaptureshowpeoplespendthei rtimeacross 24 hours, makingunpaidcare</p>
+<p>visible</p>
+<ul>
+<li><strong>3Rs Framework Recognize, Reduce, Redistribute — apolicyframeworkforaddressingcareinequality, developedby</strong></li>
+</ul>
+<p>Diane Elson</p>
+<p>Care Infrastructure Publicservicesandsystems (crèches, water, health) thatreducehouseholdcareburdens</p>
+<p>ILO C189 International Labour Organization Conventionon Decent Workfor Domestic Workers (2011)</p>
+<p>Gender-Responsive Budgeting Analyzinganddesigningpublicbudgetsfortheirdifferentialimpactonwomenandmen</p>
+<p>Patriarchal Bargain Women&#x27;sstrategicacceptanceofcareconstraintsin exchangeforsocialprotectionandsecurity</p>
+<p>(Kandiyoti)</p>
+<p>Time Poverty Insufficientdiscretionarytimeduetoexcessivecar eburdens — adimensionofpovertyoften</p>
+<p>invisibletostandardmeasures</p>
+<p>Climate-Care Nexus Thedynamicwherebyclimateshocksdisproportionatelyincreasewomen&#x27;sunpaidcareburdens</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>📚 Foundational Texts</p>
+<p>Diane Elson — &quot;Unpaidand Paid Work&quot; (2017, UNRISD)</p>
+<p>Arlie Hochschild — &quot;The Second Shift&quot; (1989)</p>
+<p>Nirmala Banerjeeetal. — &quot;We Dothe Work: The Political</p>
+<p>Econom yof Domestic Labour&quot; (2013)</p>
+<p>ILO — &quot;Care Workand Care Jobs&quot; (2018, Geneva)</p>
+<p>📊 Data &amp; Reports</p>
+<p>National Statistical Office — India Tim e Use Survey 2019</p>
+<p>OXFAM — &quot;Tim eto Care&quot; (2020)</p>
+<p>UN Women — &quot;Familiesin a Changing World&quot; (Progressofthe</p>
+<p>World&#x27;s Women 2019–20)🌐 Websites &amp; Organizationswww.caringeconomy.org — Care Econom yresourcehubwww.wiego.org — Womenin Informal Employment:</p>
+<p>Globalizingand Organizingwww.ndwm.org — National Domestic Workers Movement</p>
+<p>Indiawww.icrw.org — International Centerfor Researchon</p>
+<p>Womenwww.impactmojo.in — ImpactMojofreedevelopment</p>
+<p>education</p>
+<p>🎥 Watch</p>
+<p><strong>UN Women:</strong> &quot;The Valueof Care&quot; (shortfilm )</p>
+<p><strong>ILO:</strong> &quot;Care Work — The Invisible Econom y&quot; (documentary)</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Self-Assessment: How Far Have You Com e?</h2>
+<p>Rateyourconfidenceoneachlearningobjective — beforeandafterthiscourse.</p>
+<p>Learning Objective Before (1–5) After (1–5)</p>
+<p>Definethecareeconom yanditscomponents</p>
+<p>Explainhowunpaidcareis measuredandvalued</p>
+<p>Applythe 3Rsframeworkto apolicyorprogram</p>
+<p>Analyzegender, caste, andclassdimensionsofcareinequality</p>
+<p>Identifycareinfrastructuregapsin aspecificcom munity</p>
+<p>Connectcareworktoclimatevulnerability</p>
+<p>Proposeatleastonepracticalactioninyourcontext</p>
+<p>Shareyourreflectionswith apeeror mentor. Growthinunderstandingisthebeginningofadvocacy.</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

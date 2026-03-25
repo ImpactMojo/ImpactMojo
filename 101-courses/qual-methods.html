@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qualitative Research Methods 101 | ImpactMojo</title>
+<meta name="description" content="Qualitative Research Methods 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #A0522D;
+  --border-art: #8B4513;
+  --bg-slide: #FFFDF7;
+  --bg-section: #8B4513;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">MEL &amp; RESEARCH</p>
+<h1>Qualitative Research</h1>
+<p class="subtitle">Methods 101 Masterin-depthinterviewing, focusgroupfacilitation, and ethnographictechniquesthatcapturerichcontextual insightsin developmentresearch. IMPACTMOJO 101 SERIES</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover Today</h2>
+<p>Acomprehensivejourneythroughqualitativeresearch — from foundationalconceptstoreal-worldapplicationin South Asiandevelopmentcontexts.</p>
+<p>Foundationsof Qualitative Research</p>
+<p>Whatitis, whyit matters, andwhentouseit02</p>
+<p>Research Design &amp; Sampling</p>
+<p>Planningyourstudyandselectingparticipants</p>
+<p>In-Depth Interviewing</p>
+<p>Techniques, probing, andbuildingrapport04</p>
+<p>Focus Group Facilitation</p>
+<p>Groupdynamics, guidedesign, andanalysis</p>
+<p>Ethnographic Methods</p>
+<p>Observation, fieldnotes, andim mersiveinquiry06</p>
+<p>Data Collection Tools</p>
+<p>Guides, checklists, anddocumentation</p>
+<p>Qualitative Data Analysis</p>
+<p>Coding, thematicanalysis, andinterpretation02</p>
+<p>Rigour &amp; Trustworthiness</p>
+<p>Validity, reliability, andethicalpractice</p>
+<p>Participatory Methods</p>
+<p>Com munity-ledinquiryindevelopmentsettings04</p>
+<p>Reporting &amp; Dissemination</p>
+<p>Writingupandsharingqualitativefindings</p>
+<p>Mixed Methods Integration</p>
+<p>Combiningqualitativeandquantitativeapproaches06</p>
+<p><strong>Closing:</strong> Quiz, Takeaways &amp; Resources</p>
+<p>Self-assessment, glossary, andfurtherreading</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Designqualitativestudies</p>
+<p>Selectappropriate methodsandsamplingstrategiesfordevelopmentresearchquestions</p>
+<p>Conductinterviews &amp; focusgroups</p>
+<p>Applyskilledfacilitationtechniquestogatherrich, contextualdatafrom com munities</p>
+<p>Analyzequalitativedata</p>
+<p>Usecodingandthematicanalysisto movefrom rawdatato meaningfulinsights</p>
+<p>Ensurerigour &amp; ethics</p>
+<p>Applyvaliditychecksandupholdethicalstandardsinfieldworkandreporting</p>
+<p>Communicatefindings</p>
+<p>Writeandpresentqualitativeresultsinwaysthatinfluencepolicyandpractice</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 01</p>
+<h2>Foundationsof Qualitative</h2>
+<h2>Research</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>What Is Qualitative Research?</h2>
+<p>Qualitativeresearchexploresthemeanings, experiences, andsocialprocessesbehindhumanbehavior — the &quot;why&quot;</p>
+<p>and &quot;how&quot; thatnumbersalonecannottellus.</p>
+<p>🔍 Exploratory</p>
+<p>Uncoversnewquestions, patterns, andphenomena</p>
+<p>notyet measured🗣 Contextual</p>
+<p>Capturesvoices, livedexperiences, andlocal meanings</p>
+<p>intheirnaturalsettings</p>
+<p>📖 Interpretive</p>
+<p>Researcher makessenseofdatathroughsystematic</p>
+<p>analysisandreflexivity🌱 Iterative</p>
+<p>Designevolvesasunderstandingdeepens — flexible,</p>
+<p>adaptive, responsive</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>Qualitativevs. Quantitative: A Comparison</h2>
+<p>Dimension Qualitative Quantitative</p>
+<p>Purpose Exploremeanings, processes, context Measure, count, testhypotheses</p>
+<p>Data Type Words, images, observations Numbers, statistics</p>
+<p>Sample Size Small, purposivelyselected Large, randomlyselected</p>
+<p>Flexibility Emergent, adaptivedesign Fixed, pre-specifieddesign</p>
+<p>Output Themes, narratives, theories Correlations, frequencie s, averages</p>
+<p>Bestfor &quot;Why?&quot; and &quot;How?&quot; questions &quot;Howmany?&quot; and &quot;Howmuch?&quot; questions</p>
+<p>Neitherapproachissuperior — thebestmethoddependson yourresearchquestion. Manydevelopmentstudiesbenefi tfrom</p>
+<p>both.</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>Whento Choose Qualitative</h2>
+<p>Methods</p>
+<p>Neworunderstudiedtopics</p>
+<p>Whenlittleisknownandyouneedtogeneratehypotheses beforemeasuring</p>
+<p>Complexsocialphenomena</p>
+<p>Genderdynamics, caste, power, socialnorms — thingsthatresisteasy</p>
+<p>quantification</p>
+<p>Explainingunexpectedfindings</p>
+<p>Whensurveydataraises &quot;why?&quot; questionsthatdemanddeeperinvestigation</p>
+<p>Participatoryprogramdesign</p>
+<p>Co-creatingsolutionswithcommunitiesrequireslistenin gdeeplyfirst</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Epistemological Roots: How Do We Know</h2>
+<p>What We Know?</p>
+<p>Interpretivism</p>
+<p>Realityissociallyconstructed.</p>
+<p>Multipletruthsexist. Researcherand</p>
+<p>participantco-createmeaning.</p>
+<p>Constructivism</p>
+<p>Knowledgeisbuiltthroughinteraction</p>
+<p>andexperience. Contextshapes</p>
+<p>understandingprofoundly.</p>
+<p>Critical Theory</p>
+<p>Researchcan — andshould —</p>
+<p>challengepowerstructuresand</p>
+<p>advocateformarginalizedvoices.</p>
+<p>Understandingyourphilosophicalstanceshapeseverydecision: whatyouask, howyoulisten, andhowyouinterpret</p>
+<p>whatyoufind.</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Case Study: Understanding M GNREGA Non-</h2>
+<p>Participation</p>
+<p>The Puzzle</p>
+<p>Surveydatain Rajasthanshowedlowfemaleenrollment</p>
+<p>in MGNREGAworksitesdespitelegalentitlement.</p>
+<p>Numberstoldus &quot;what&quot; — butnot &quot;why.&quot;The Qualitative Insight</p>
+<p>In-depthinterviewswithwomenrevealedthat</p>
+<p>household-level mobilityrestrictions, fearofharassment</p>
+<p>atworksites, andlackofchildcare madeparticipation</p>
+<p>effectivelyimpossible — invisibleinanysurvey.</p>
+<p><strong>Methodused:</strong> Sem i-structuredinterviewswith 40</p>
+<p>womenacross 6 villagesin Barmerdistrict.</p>
+<p>Thisstudyledtotargetedpolicyrecom mendations: on-sitecrèches, gender-segregatedtoilets, andfemalework</p>
+<p>supervisors. Qualitativedatadroverealprogram change.</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 02</p>
+<h2>Research Design &amp;</h2>
+<h2>Sampling</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>The Qualitative Research Design Process</h2>
+<p>Define</p>
+<p>Research</p>
+<p>QuestionChoose</p>
+<p>Methodology</p>
+<p>Select Sample Collect Data</p>
+<p>Unlikequantitativeresearch, qualitativedesignisiterative — you mayrevisitearlierstagesasnewinsightsemerge. This</p>
+<p>flexibilityis astrength, not aweakness.</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>Writing a Good Qualitative Research Question</h2>
+<p>❌ Too Broad</p>
+<blockquote>&quot;Whatispovertyin India?&quot; — Vague,</blockquote>
+<p>unfocused, impossibleto</p>
+<p>investigate meaningfully❌ Too Narrow</p>
+<blockquote>&quot;How manyrupeesdowomen</blockquote>
+<p>earn?&quot; — Quantitative, not</p>
+<p>qualitative✅ Just Right</p>
+<blockquote>&quot;Howdo Dalitwomenin Bihar</blockquote>
+<p>experienceandnavigatebarriersto</p>
+<p>accessinggovernmentwelfare</p>
+<p>schemes?&quot; — Specific, exploratory,</p>
+<p>context-rich</p>
+<p>Goodqualitativeresearchquestionsusewordslikehow, why, whatdoesitmean, whataretheexperiencesof — they</p>
+<p>inviteexploration, not measurement.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Sampling Strategiesin Qualitative Research</h2>
+<p>Qualitativesamplingis pu r po si v e — youselectparticipantsbecauseofwhattheycanteachyou, notforstatistical</p>
+<p>representativeness.</p>
+<p>Purposive Sampling</p>
+<p>Selectinformation-richcases. Example: Womenwhodropped</p>
+<p>outof ahealthprogram — whatcantheytellusabout</p>
+<p>barriers?Snowball Sampling</p>
+<p>Participantsreferothers. Usefulforhard-to-reachgroupslike</p>
+<p>migrantlaborersorsurvivorsofviolence.</p>
+<p>Maximum Variation</p>
+<p>Deliberatelyincludediversecasestocapturethefullrangeof</p>
+<p>experiences — differentcastes, districts, oragegroups.Theoretical Sampling</p>
+<p>Collectdata, developtheory, thensamplefurthertorefineit.</p>
+<p>Com moningroundedtheoryapproaches.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Sample Size: How Many Is Enough?</h2>
+<p>Qualitativeresearchdoesn&#x27;tfollowfixedsample-sizeformulas.</p>
+<p>Instead, aim fordatasaturation — thepointwherenew</p>
+<p>interviewsstopproducingnewthemes.</p>
+<p><strong>In-depthinterviews:</strong> typically 15–30 participants</p>
+<p><strong>Focusgroups:</strong> 4–6 groupsof 6–8 participants</p>
+<p><strong>Ethnographicstudy:</strong> 1–3 sites, several months</p>
+<p><strong>Casestudies:</strong> 1–5 casesindepth</p>
+<p>Depthoverbreadth. Tenhonest, reflectiveinterviews</p>
+<p>areworth morethan 100 rushedones.Saturation</p>
+<p>Stopwhennew</p>
+<p>datanolonger</p>
+<p>changesyour</p>
+<p>themesSufficiency</p>
+<p>Canyoufully</p>
+<p>answeryour</p>
+<p>researchquestion?</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Exercise: Design Your</h2>
+<p>Sample</p>
+<p>/g110 Scenario</p>
+<p>Youarestudyingwhy</p>
+<p>adolescentgirlsinrural Nepal</p>
+<p>dropoutofsecondaryschool.</p>
+<p>Youhave 4 weeksand ateam</p>
+<p>of 2 researchers./g64E Reflect</p>
+<p>Whowouldyouincludeinyour</p>
+<p>sample? Girlswhodropped</p>
+<p>out? Thosewhostayed?</p>
+<p>Teachers? Parents? Village</p>
+<p>leaders?</p>
+<p>✏ Your Task</p>
+<p>Write 3 inclusioncriteria, choose 1 samplingstrategy, an djustify</p>
+<p>yourchoice. Discusswith apartner: whosevoicemightbemissing?</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">SECTION 03</p>
+<h2>In-Depth Interviewing</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>The Artofthe In-Depth Interview</h2>
+<p>Anin-depthinterviewis aguidedconversation — structuredenoughtostayfocused, flexibleenoughtofollowthe</p>
+<p>participant&#x27;slead. It&#x27;sthe mostwidelyusedqualitative methodindevelopmentresearch.</p>
+<p>Unstructured</p>
+<p>Open, conversational. Nofixed</p>
+<p>questions. Highflexibility, harderto</p>
+<p>analyze.2</p>
+<p>Semi-Structured</p>
+<p>Topicguidewithopenquestions.</p>
+<p>Mostcom mon. Balances</p>
+<p>consistencyanddepth.3</p>
+<p>Structured</p>
+<p>Fixedquestions, sam eorder. Less</p>
+<p>depth. Closertosurvey. Usedfor</p>
+<p>comparability.</p>
+<p>For mostdevelopmentresearch, semi-structuredinterviewsoffertheidealbalanceofcomparabilityandexploration.</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Buildingan Interview Topic Guide</h2>
+<p>Opening</p>
+<p>Build rapport, intros,</p>
+<p>consentClosing</p>
+<p>Summary, final</p>
+<p>thoughts, nextstepsCore</p>
+<p>Mainthemes,</p>
+<p>probes, follow-ups</p>
+<p>Atopicguideisnot ascript — it&#x27;sa map. You maynotfolloweveryroad, andyoushouldbereadytotakedetourswhenparticipantsreveal</p>
+<p>somethingunexpectedandimportant.</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>The Probing Toolkit</h2>
+<p>Probingistheskillthatseparates agoodinterviewfrom agreatone. Usethesetechniquestogodeeperwithoutleading</p>
+<p>theparticipant.</p>
+<p>Elaboration Probe</p>
+<blockquote>&quot;Canyoutell me moreabout</blockquote>
+<p>that?&quot; — invitesdeeperreflectionClarification Probe</p>
+<blockquote>&quot;Whatdoyou meanby [word]?&quot; —</blockquote>
+<p>unpacksassumptionsExample Probe</p>
+<blockquote>&quot;Canyougive meanexample?&quot; —</blockquote>
+<p>groundsabstractstatementsin</p>
+<p>reality</p>
+<p>Contrast Probe</p>
+<blockquote>&quot;Howisthatdifferentfrom before?&quot; — surfaceschange</blockquote>
+<p>andcomparisonSilence</p>
+<p>Comfortablepausesgiveparticipantsspacetothink</p>
+<p>andsay more</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Building Rapportin South</h2>
+<p>Asian Contexts</p>
+<p>Cultural Considerations</p>
+<p>Matchresearchergender</p>
+<p>whendiscussingsensitive</p>
+<p>topics</p>
+<p>Beginwithsmalltalk —</p>
+<p>chai, family, localevents</p>
+<p>Respecthierarchieswhile</p>
+<p>creatingsafetyfordissent</p>
+<p>Conductinthe</p>
+<p>participant&#x27;slanguageor</p>
+<p>dialectPractical Rapport</p>
+<p>Builders</p>
+<p>Arriveearly, spendtimein</p>
+<p>thespacebeforestarting</p>
+<p>Explainthepurposeclearly</p>
+<p>andhonestly</p>
+<p>Reassurethatthereareno</p>
+<p>rightorwronganswers</p>
+<p>Dressandspeakinways</p>
+<p>thatfeelfamiliar, not</p>
+<p>foreign</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>Case Study: Interviewing Female Sanitation</h2>
+<p>Workersin Pune</p>
+<p>A 2019 studyonoccupationalhealthexaminedexperiencesofwomen manualscavengingworkersin Maharashtra.</p>
+<p>Initialstructuredquestionnairesyielded minimaldata — womengaveshort, guardedanswers.</p>
+<p>What Changed</p>
+<p>Researchersshiftedtoin-depth</p>
+<p>interviewsconductedbyfemale</p>
+<p>interviewersfrom similar</p>
+<p>backgrounds. Sessions moved</p>
+<p>from officestoparticipants&#x27;</p>
+<p>homes.What Emerged</p>
+<p>Richaccountsofstigm a, physical</p>
+<p>harm , caste-basedcoercion, and</p>
+<p>dignityviolations — noneof</p>
+<p>whichappearedinpriorsurveys.The Lesson</p>
+<p>Context, trust, andinterviewer</p>
+<p>identityshapedataqualityas</p>
+<p>muchasquestiondesign.</p>
+<p>Relationalsafetyunlockshonest</p>
+<p>testimony.</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="22">
+<div class="slide-content">
+<p class="section-number">SECTION 04</p>
+<h2>Focus Group Facilitation</h2>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>What Is a Focus Group?</h2>
+<p>Afocusgroupbringstogether 6–8 purposivelyselectedparticipantstodiscuss atopictogether. Thepowerliesnotin</p>
+<p>individualviewsbutintheinteraction — howpeopleagree, disagree, andbuildoneachother&#x27;sideas.</p>
+<p>Best For</p>
+<p>Exploringsharednorm s, com munityperceptions,</p>
+<p>andgroupattitudestowardprogram sorservicesNot Ideal For</p>
+<p>Sensitivepersonaltopics, highlyhierarchicalgroups,</p>
+<p>or measuringindividualopinionsprecisely</p>
+<p>In South Asiancontexts, caste, gender, andagehierarchiescansilence minorityvoicesingroups. Designgroups</p>
+<p>carefully — homogeneitywithingroupsoftenproducesricherdiscussion.</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>The Focus Group Process</h2>
+<p>Manage</p>
+<p>DynamicsFacilitate Warm ‐UpDesign</p>
+<p>GuideRecruit</p>
+<p>Thefacilitator&#x27;sroleistoguidewithoutleading — keepingdiscussionontrackwhileensuringallvoicesareheard, especially</p>
+<p>quieterparticipantswho mayholdcrucialinsights.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Designing Your Discussion Guide</h2>
+<ul>
+<li><strong>1Warm-Up (5 min)</strong></li>
+</ul>
+<p>Easyintroductoryquestion. Everyone</p>
+<p>answers. Buildssafetyandequal</p>
+<p>participation.</p>
+<p>Transition (10 min)</p>
+<p>Bridgefrom easytopicstowardthecore</p>
+<p>them e. Introducesthe mainsubject</p>
+<p>naturally.3Key Questions (30 min)</p>
+<p>3–5 mainquestions. Open-ended. Allow</p>
+<p>andencouragedisagreementanddebate.</p>
+<p>Ending (10 min)</p>
+<p><strong>Sum maryquestion:</strong> &quot;Isthereanything</p>
+<p>importantwehaven&#x27;tdiscussed?&quot; Closing</p>
+<p>thanks.</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>Managing Group Dynamics</h2>
+<p>Com mon Challenges</p>
+<p>The Dominant Voice — oneperson monopolizes</p>
+<p>discussion</p>
+<p>The Silent Member — someonedisengagesorstays</p>
+<p>quiet</p>
+<p>Group Think — everyoneagreeswiththeloudest</p>
+<p>speaker</p>
+<p>Topic Drift — discussion movesawayfrom research</p>
+<p>focusFacilitation Responses</p>
+<blockquote>&quot;Let&#x27;shearfrom others — whatdopeopleinyour</blockquote>
+<p>villagethink?&quot;</p>
+<blockquote>&quot;You&#x27;vebeenquiet — isthereanythingyou&#x27;dliketo</blockquote>
+<p>add?&quot;</p>
+<blockquote>&quot;Doeseveryoneagree? Aretheredifferentviewsor</blockquote>
+<p>experiences?&quot;</p>
+<blockquote>&quot;That&#x27;sinteresting — let&#x27;sbringitbacktoourtopic...&quot;</blockquote>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Case Study: FGDson</h2>
+<p>Immunization Hesitancyin UP</p>
+<p>In a 2021 UNICEF-supportedstudyin Uttar Pradesh, focusgroupswithmothers</p>
+<p>andcommunityhealthworkersrevealedthatvaccine hesitancywasn&#x27;taboutlack</p>
+<p>ofinformation — itwasabouttrustinthehealthcaresystem .</p>
+<p>What FGDs Revealed</p>
+<p>Mothershadexperienceddisrespectfultreatmentathealthcenters. They</p>
+<p>fearedsideeffectsbutwouldn&#x27;tsaysoto ANMs. Socialpressurefrom</p>
+<p>mothers-in-lawwastherealbarrier.</p>
+<p>Program Response</p>
+<p>Community-basedmobilizationbytrustedfemaleleader s, notjust</p>
+<p>informationcampaigns. Trust-building, notmessaging, becamethe</p>
+<p>intervention.</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="28">
+<div class="slide-content">
+<p class="section-number">SECTION 05</p>
+<h2>Ethnographic Methods</h2>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>What Is Ethnography?</h2>
+<p>Ethnography meansstudyingpeopleintheirownenvironmentovertime. Ratherthanaskingpeoplewhattheydo,</p>
+<p>youobservewhattheyactuallydo — capturingthegapbetweenstatedbehaviorandlivedpractice.</p>
+<p>Participant</p>
+<p>Observation</p>
+<p>Researcherjoinsin</p>
+<p>com munitylifewhile</p>
+<p>observing. The most</p>
+<p>im mersiveform — you&#x27;re</p>
+<p>insidetheworldyoustudy.Transect Walks</p>
+<p>Walkingthrough acom munity</p>
+<p>systematicallywithkey</p>
+<p>informantstoobserve</p>
+<p>physical, social, andeconomic</p>
+<p>conditions.Field Notes</p>
+<p>Detailedwrittenrecordsof</p>
+<p>observations, conversations,</p>
+<p>andreflections — theprimary</p>
+<p>datasourceinethnographic</p>
+<p>work.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>Writing Field Notes: A Framework</h2>
+<p>📝 Descriptive Notes</p>
+<p>Whathappened? Whowasthere?</p>
+<p>Whatwassaid? Recordexactly</p>
+<p>whatyouobserved — no</p>
+<p>interpretationyet.💭 Reflective Notes</p>
+<p>Whatdidit mean? Whatsurprised</p>
+<p>you? Recordyourreactions,</p>
+<p>emergingquestions, and</p>
+<p>tentativeinterpretations.🔗 Analytical Memos</p>
+<p>Connectionsbetween</p>
+<p>observations. Linkstotheory.</p>
+<p>Emergingcodesandthemes.</p>
+<p>Writtenregularlyduring</p>
+<p>fieldwork.</p>
+<p>Writefieldnotesassoonaspossibleafterobservation — ideallywithin 2 hours. Memoryfadesfastandcontext</p>
+<p>mattersenormouslyinqualitativework.</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Positionality: The Researcherinthe Field</h2>
+<p>What Is Positionality?</p>
+<p>Youridentity — caste, gender, language, class,</p>
+<p>nationality — shapeshowparticipantsrespondto</p>
+<p>youandhowyouinterpretwhatyousee.</p>
+<p>Thereisno &quot;neutral&quot; researcher. Acknowledging</p>
+<p>thisis astrength, not aweakness.Reflexivityin Practice</p>
+<p>Keep areflexivityjournalthroughoutfieldwork</p>
+<p><strong>Ask:</strong> &quot;What mightparticipantsbenotsayingto me, and</p>
+<p>why?&quot;</p>
+<p>Discusspositionalityopenlyinyour methodssection</p>
+<p>Usepeerdebrieftosurfaceblindspots</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Case Study: Ethnographic</h2>
+<p>Researchon Child Laborin</p>
+<p>Brick Kilns, Bihar</p>
+<p>Researchersspent 6 weeksembeddedinbrickkilncommunitiesin Biharto</p>
+<p>understandwhyfamiliessentchildrentoworkdespiteknowingitwasillegal.</p>
+<p>What Emerged</p>
+<p>Debtbondagetokilnowners, lackofseasonalschoolalternatives, and</p>
+<p>familysurvivaleconomicswereinterlocked. Surveyshadonlycaptured</p>
+<blockquote>&quot;poverty&quot; as asinglevariable.</blockquote>
+<p>Why Ethnography Worked</p>
+<p>Onlysustainedpresencerevealedthepowerdynamicsbetweenkiln</p>
+<p>ownersandworkers — impossibletocapturein asingleintervieworsurvey.</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="33">
+<div class="slide-content">
+<p class="section-number">SECTION 06</p>
+<h2>Data Collection Tools</h2>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>Key Data Collection Instruments</h2>
+<p>Interview Guide</p>
+<p>Semi-structuredlistof</p>
+<p>topicsandquestions.</p>
+<p>Ensuresconsistencyacross</p>
+<p>interviewswhileallowing</p>
+<p>flexibility.</p>
+<p>Observation</p>
+<p>Checklist</p>
+<p>Structuredtoolfor</p>
+<p>systematicobservation.</p>
+<p>Guideswhattolookfor</p>
+<p>duringsitevisitsand</p>
+<p>fieldwork.</p>
+<p>Audio Recording</p>
+<p>Withinformedconsent.</p>
+<p>Enablesverbatim</p>
+<p>transcriptionandaccurate</p>
+<p>analysis. Essentialfor</p>
+<p>interview-basedresearch.</p>
+<p>Field Diary</p>
+<p>Dailylogcombining</p>
+<p>descriptiveobservations,</p>
+<p>reflections, andemerging</p>
+<p>analyticalmemos. The</p>
+<p>ethnographer&#x27;scoretool.</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>Informed Consent: A Non-Negotiable</h2>
+<p>Begin</p>
+<p>CollectionObtain</p>
+<p>ConsentConfirm</p>
+<p>UnderstandingExplain</p>
+<p>RightsIntroduce</p>
+<p>Purpose</p>
+<p>Inlow-literacycontexts, verbalconsentwith awitnessisbothethicalandpractical. Inallcontexts, consent mustbe</p>
+<p>voluntary, informed, andongoing — participantscanwithdrawatanytim e.</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>Language, Translation &amp; Interpretation</h2>
+<p>Conductin Local Language</p>
+<p>Wheneverpossible, conductinterviewsinthe</p>
+<p>participant&#x27;sprimarylanguage. Nuanceislostinreal-</p>
+<p>tim etranslation.Transcribe Before Translating</p>
+<p>Createverbatim transcriptsintheoriginallanguage</p>
+<p>first. Translateafterwardtopreserveoriginal</p>
+<p>meaningandtone.</p>
+<p>Back-Translation</p>
+<p>Have asecondbilingualpersontranslatethe</p>
+<p>transcriptbacktoverifyaccuracy. Catches meaning</p>
+<p>distortionsearly.Use Interpreters Carefully</p>
+<p>Briefinterpretersonthedifferencebetween</p>
+<p>translatingwordsandinterpreting meaning.</p>
+<p>Interpretersshouldnotsum marize.</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="37">
+<div class="slide-content">
+<p class="section-number">SECTION 07</p>
+<h2>Qualitative Data Analysis</h2>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>The Qualitative Analysis Journey</h2>
+<p>Transcription &amp; Familiarization</p>
+<p>Transcribeinterviews. Readalltranscripts multipletimes.</p>
+<p>Im merseyourselfinthedatabeforecoding.Initial Coding</p>
+<p>Labelsegmentsoftextwithdescriptivecodes. Stayclose</p>
+<p>toparticipants&#x27; ownwords (in-vivocoding).</p>
+<p>Thematic Analysis</p>
+<p>Grouprelatedcodesintobroaderthemes. Lookfor</p>
+<p>patternsacrossinterviews, cases, andparticipants.Interpretation &amp; Theory</p>
+<p>Movefrom descriptiontoexplanation. Whatdoesthis</p>
+<p>mean? Connecttotheoryandresearchquestions.</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>Coding: From Datato Meaning</h2>
+<p>What Is a Code?</p>
+<p>Acodeis ashortlabelappliedto apieceofdatathat</p>
+<p>capturesitsessence. Codesarethebuildingblocksof</p>
+<p>qualitativeanalysis.</p>
+<p>Example:</p>
+<blockquote>&quot;Myhusbandwouldneverallow metogotothehealth</blockquote>
+<p>centeralone.&quot; → Code: spousalpermissionTypesof Codes</p>
+<p>Descriptive</p>
+<p>WhatishappeningIn-Vivo</p>
+<p>Participant&#x27;sown</p>
+<p>words</p>
+<p>Analytical</p>
+<p>Researcher&#x27;sinterpretation</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>Thematic Analysis: Buildingthe Map</h2>
+<p>Initial Codes</p>
+<p>Labelmeaningful</p>
+<p>segmentsSub-Themes</p>
+<p>Refinepatterns</p>
+<p>ofmeaningRaw Quotes</p>
+<p>Collected</p>
+<p>participant</p>
+<p>excerptsMain Themes</p>
+<p>Definecor e</p>
+<p>patternsCode Groups</p>
+<p>Cluster related</p>
+<p>codes</p>
+<p>Themesarenotjusttopics — theycapture apatternofmeaningthatsayssomethingimportantabouttheresearchquestion. Agoodthem e</p>
+<p>has anam e, acleardefinition, and multiplecodedexamplessupportingit.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Practical Exercise: Code This Transcript</h2>
+<blockquote>&quot;The Ashaworkercomestoourvillagebutshealwaystalkstoourhusbandsfirst. Wefeellikeshedoesn&#x27;tthinkour</blockquote>
+<p>opinions matter. Whenshegivesinformation, sheuseswordswedon&#x27;tunderstand. Wejustnodandthendowhatwe</p>
+<p>weregoingtodoanyway.&quot;</p>
+<p>🔍 Identify Codes</p>
+<p>Readthequote. Whatpatternsdo</p>
+<p>yousee? Suggest 3–5 codes.</p>
+<p><strong>Example:</strong> genderhierarchyin</p>
+<p>healthdelivery, healthliteracy</p>
+<p>gap, passivecompliance.💬 Discuss</p>
+<p>Comparecodeswith apeer. Are</p>
+<p>theydescriptiveoranalytical? Do</p>
+<p>theystayclosetothedataor</p>
+<p>interpretit?🌿 What Them e Emerges?</p>
+<p>Ifthispatternappearedacross 20</p>
+<p>interviews, what mainthem e</p>
+<p>wouldyounam e? Howwouldthis</p>
+<p>them eansweryourresearch</p>
+<p>question?</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="42">
+<div class="slide-content">
+<p class="section-number">SECTION 08</p>
+<h2>Rigour &amp; Trustworthiness</h2>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="43">
+<div class="slide-content">
+<h2>Establishing Trustworthinessin Qualitative</h2>
+<p>Research</p>
+<p>Qualitativeresearchusesdifferentbutequallyimportantstandardsofrigour. Lincolnand Guba&#x27;sframeworkreplaces</p>
+<blockquote>&quot;validityandreliability&quot; withfourparallelconcepts.</blockquote>
+<p>Credibility</p>
+<p>Arefindingsaccuratelyrepresentingparticipants&#x27;</p>
+<p>realities? (Paralleltointernalvalidity)Transferability</p>
+<p>Canfindingsapplytoothercontexts? Richdescription</p>
+<p>enablesreaderstojudge. (Paralleltoexternalvalidity)</p>
+<p>Dependability</p>
+<p>Wouldtheprocessyieldsimilarfindingsifrepeated?</p>
+<p>Audittrailensuresthis. (Paralleltoreliability)Confirmability</p>
+<p>Arefindingsgroundedindata, notjustresearcher</p>
+<p>opinion? (Paralleltoobjectivity)</p>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>Techniquesto Strengthen Rigour</h2>
+<p>Triangulation</p>
+<p>Use multipledatasources (interviews + observation +</p>
+<p>documents) or multipleresearcherstocross-check</p>
+<p>findingsMember Checking</p>
+<p>Sharefindingswithparticipantstoverifyaccuracy.</p>
+<p>Essentialforcredibility — didyougettheirrealityright?</p>
+<p>Negative Case Analysis</p>
+<p>Activelyseekcasesthatcontradictyouremergingthemes.</p>
+<p>Strengthensthefinalanalysis.Thick Description</p>
+<p>Describecontext, meaning, andinterpretationinrich</p>
+<p>detailsoreaderscanassesstransferabilitythemselves</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>Research Ethicsin South Asian</h2>
+<p>Field Contexts</p>
+<p>Do No Harm</p>
+<p>Researchinvulnerablecommunities — survivorsof violence, migrants, Dalit</p>
+<p>communities — canretraumatize. Buildpsychological safetyintoyourdesign.</p>
+<p>Power Awareness</p>
+<p>Researchersoftenholdmorepowerthanparticipants . Betransparentabouthowdata</p>
+<p>willbeusedandwhobenefits.</p>
+<p>Data Protection</p>
+<p>Anonymizetranscripts. Storerecordingssecurely. Destroyidentifyinginformationafter</p>
+<p>analysis. Neversharerawtranscriptsexternally.</p>
+<p>Community Reciprocity</p>
+<p>Whatdoesthecommunitygetfromthisresearch? Sharefindingsbackinaccessible</p>
+<p>formats — notjustjournalarticles.</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="46">
+<div class="slide-content">
+<p class="section-number">SECTION 09</p>
+<h2>Participatory Methods</h2>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="47">
+<div class="slide-content">
+<h2>What Are Participatory Methods?</h2>
+<p>Participatory methodspositioncom munity membersasco-researchers, notjustdatasources. Theyactivelydesign, collect,</p>
+<p>andanalyzedata — centeringcom munityknowledgeandagency.</p>
+<p>Com munity Identifies Issues</p>
+<p>Questionsemergefrom within, not</p>
+<p>imposedfrom outsideCollective Research Design</p>
+<p>Com munityshapes methods, tools,</p>
+<p>andprocess</p>
+<p>Participatory Data Collection</p>
+<p>Membersgatherdatausingvisual</p>
+<p>andoraltools</p>
+<p>Joint Analysis</p>
+<p>Findingsinterpretedtogether,</p>
+<p>debated, validatedCom munity-Led Action</p>
+<p>Researchfeedsdirectlyintolocal</p>
+<p>advocacyandplanning</p>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Participatory Rural Appraisal (PRA) Toolkit</h2>
+<p>🗺 Community Mapping</p>
+<p>Participantsdrawtheirvillage — resources, hazards,</p>
+<p>services. Surfacesspatialknowledgeinvisibleto</p>
+<p>outsiders.📅 Seasonal Calendar</p>
+<p>Com munities mapactivities, incom e, illness, andfood</p>
+<p>security monthby month. Revealsvulnerability</p>
+<p>patterns.</p>
+<p>🏛 Venn Diagrams</p>
+<p>Circlesrepresentinstitutionsincom munitylife.</p>
+<p>Proximityandoverlapshowrelationshipsandtrust</p>
+<p>levels.🌳 Problem Tree</p>
+<p>Visualrootcauseanalysis. Roots = causes, trunk =</p>
+<p>problem , branches = effects. Powerfulplanningtool.</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>Case Study: PRAfor Water Managementin</h2>
+<p>Bangladesh</p>
+<p>Context</p>
+<p>BRACfacilitated PRAsessionsinchars (riverislands) of</p>
+<p>northern Bangladeshtounderstandseasonalflooding</p>
+<p>impactsonlivelihoods. Externalexpertshadproposed</p>
+<p>embankmentsolutions.Com munity Insight</p>
+<p>Com munity mapsrevealedthatembankmentswould</p>
+<p>blockseasonalfish migrationroutes — acriticalfood</p>
+<p>sourceforwomenandchildren. Thecom munityproposed</p>
+<p>a modifieddrainagesystem instead. Theirsolutionwas</p>
+<p>adoptedandproved moresustainable.</p>
+<p>PRAmethodscansurfacelocallyappropriatesolutionsthatoutsideexperts missentirely. Com munity</p>
+<p>knowledgeis aresearchresource, notjust avalidationstep.</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="50">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Reporting &amp;</h2>
+<h2>Dissemination</h2>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>Writing Up Qualitative Findings</h2>
+<p>Goodqualitativereportingshowsandtells — itpresentsevidence (quotes, fieldnoteexcerpts) alongsideinterpretation,</p>
+<p>andsituatesfindingsincontext.</p>
+<p>Leadwithkeyfindings</p>
+<p>Stateyour mainthemesclearlyupfront — don&#x27;tbury</p>
+<p>them in methodologicalnarrativeUsedirectquotesgenerously</p>
+<p>Letparticipantsspeak. Selectquotesthatarevivid,</p>
+<p>specific, andrepresentativeofthethem e</p>
+<p>Contextualizeeveryquote</p>
+<p>Neverdrop aquotewithoutexplainingwhosaidit,</p>
+<p>when, andwhyit mattersfortheanalysisAddressdisconfirmingevidence</p>
+<p>Acknowledgecomplexityandcontradiction — this</p>
+<p>strengthens, notweakens, yourcredibility</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="52">
+<div class="slide-content">
+<p class="section-number">Section 11: Mixed Methods</p>
+<h2>Integration</h2>
+<p class="section-number">SECTION 11</p>
+<h2>Mixed Methods</h2>
+<h2>Integration</h2>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Combining Qualitativeand Quantitative</h2>
+<p>Methods</p>
+<p>Mixed methodsresearchusesbothqualitativeandquantitativeapproacheswithin asinglestudy. Eachapproach</p>
+<p>compensatesfortheweaknessesoftheother.</p>
+<p>Sequential Explanatory</p>
+<p>Quantitativefirst → Qualitative</p>
+<p>followstoexplainsurprisingresults.</p>
+<p>Com moninevaluationresearch.Sequential Exploratory</p>
+<p>Qualitativefirst → Findingsinform</p>
+<p>surveydesign. Com moninprogram</p>
+<p>developmentandscale-up.Concurrent Triangulation</p>
+<p>Both methodsrunsimultaneously.</p>
+<p>Findingscomparedand merged.</p>
+<p>Providesstrongestoverallevidence.</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>When Qualitativeand Quantitative Data</h2>
+<p>Diverge</p>
+<p>The Survey Says...</p>
+<p>In anutritionprogram evaluationin Odisha, surveys</p>
+<p>showedthat 80% ofwomenreportedconsumingiron</p>
+<p>tabletsasdirected.The Interview s Revealed...</p>
+<p>In-depthinterviewsrevealedthatwomenwerefeeding</p>
+<p>thetabletstochildrenorlivestockbecausetheycaused</p>
+<p>nauseaandtheyfeltsocialpressuretocomplywith</p>
+<p>program workerswithoutdisclosingnon-compliance.</p>
+<p>Whendatatypesdiverge, don&#x27;tpanic — investigate. Divergenceisoftenthe mostimportantfinding. Itreveals a</p>
+<p>gapbetweenreportedandactualbehaviorthatonlyqualitative methodscanunpack.</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>🧠 Quiz: Test Your Understanding</h2>
+<p>Reflectonthesequestionsindividually, thendiscusswith apeer. Therearenotrickquestions — thesearedesignedtoconsolidateyour</p>
+<p>learning.</p>
+<p>Whentogoqualitative?</p>
+<p>Youwanttounderstandwhywomenin adistrictarenotusing</p>
+<p>antenatalcare. Wouldyouchoose asurveyorin-depth</p>
+<p>interviewsfirst? Why?2</p>
+<p>Samplesizelogic</p>
+<p>Acolleaguesays &quot;Weneedatleast 200 interviewsfortheresults</p>
+<p>tobevalid.&quot; Howwouldyourespond? Whatisthecorrect</p>
+<p>principle?</p>
+<p>Probingpractice</p>
+<p>Aparticipantsays &quot;Thingshaveimproved.&quot; Whatprobewould</p>
+<p>youusenext, andwhy?4</p>
+<p>Ethicsinthefield</p>
+<p>Aparticipantbeginscryingduringyourinterviewaboutdomestic</p>
+<p>violence. Whatdoyoudo? Whatshouldyourresearchprotocol</p>
+<p>say?</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Quiz Continued: Check Your Analysis Skills</h2>
+<p>Triangulation</p>
+<p>Youobservethatwomendon&#x27;tattendhealth meetings, but</p>
+<p>whenaskedtheysaytheyparticipate &quot;sometimes.&quot; How</p>
+<p>wouldyoutriangulatetounderstandtherealsituation?2</p>
+<p>Codingexercise</p>
+<p><strong>Afarmersays:</strong> &quot;The NGOpeoplecom eonce ayear, takeour</p>
+<p>photos, andleave. Nothingchangesforus.&quot; Whatcode(s)</p>
+<p>wouldyouapply? Whatthem e mightthiscontributeto?</p>
+<p>Positionality</p>
+<p>Youareanurban, upper-casteresearcherstudying Dalit</p>
+<p>agriculturalworkers. Nam etwowaysyourpositionality</p>
+<p>mightaffectthedatayoucollect, andtwostepstoaddress</p>
+<p>this.4</p>
+<p>Focusgroupdynamics</p>
+<p>Inyour FGD, avillageelderanswersallquestionsbefore</p>
+<p>otherscanspeak. Whatthreetechniqueswouldyouuseto</p>
+<p>managethisdynamic?</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>🔍 Qualitative ≠ Less Rigorous</p>
+<p>Itfollowsdifferentbutequallyvalidstandards: credibility,</p>
+<p>transferability, dependability, andconfirmability.🗣 Method Follows Question</p>
+<p>Chooseyour methodbasedonyourresearchquestion —</p>
+<p>nothabitorconvenience. Ask &quot;why&quot; → goqualitative.</p>
+<p>👂 Depth Over Breadth</p>
+<p>Smaller, purposivesampleswithskilledprobinggenerate</p>
+<p>moreinsightthanlarge, shallowdatasets.🌍 Context Is Everything</p>
+<p>In South Asiandevelopmentresearch, socialnorm s,</p>
+<p>power, caste, andgendershapeeveryconversation.</p>
+<p>Designforthis.</p>
+<p>🤝 Com munityas Co-Creators</p>
+<p>Participatory methodsproduce moreethical, more</p>
+<p>accurate, and moreactionableresearchfindings.✍ Analysis Is Iterative</p>
+<p>Movefrom codestothemestotheory. Letthedataspeak</p>
+<p>— theninterpretitinserviceofyourresearchquestion.</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>Coding Labelingsegmentsofqualitativedatawithshortdescriptorsthatcapturemeaning</p>
+<p>Credibility Thedegreetowhichfindingsaccuratelyrepresentparticipants&#x27; realities</p>
+<p>Data Saturation Thepointatwhichnewdatanolonge rproducesnewthemesorinsights</p>
+<p>Ethnography Immersiveobservationofpeopleintheirnaturalenvironmentover asustainedperiod</p>
+<p>Focus Group Discussion (FGD) Afacilitatedgroupinterviewexploringsharedperceptionson aspecific topic</p>
+<p>In-Vivo Coding Usingparticipants&#x27; ownwordsascodelabelstostayclosetothedata</p>
+<p>Member Checking Sharingfindingswithparticipants toverifyaccuracyandinterpretation</p>
+<p>Participatory Rural Appraisal (PRA) Asetofvisualandparticipatorytoolsusedincommunity-basedresearchandplanning</p>
+<p>Positionality Theresearcher&#x27;ssocialidentityand howitshapestheirrelationshiptotheresearch</p>
+<p>Purposive Sampling Selectingparticipantsbecauseof whattheycancontributetoansweringtheresearch question</p>
+<p>Reflexivity Ongoingcriticalreflectionbytheresearcheronhowtheiridentityandassumptionsshape theresearch</p>
+<p>Triangulation Usingmultipledatasources, methods, or researcherstocross-checkandstrengthenfindings</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>📚 Essential Books</p>
+<p>Qualitative Research &amp; Evaluation Methods — Michael</p>
+<p>Quinn Patton. Thedefinitivepractitioner&#x27;sguideto</p>
+<p>qualitative methods.</p>
+<p>Basicsof Qualitative Research — Strauss &amp; Corbin.</p>
+<p>Accessibleintroductiontogroundedtheoryandcoding.</p>
+<p>Participatory Researchin Development — Robert</p>
+<p>Chambers. PRAmethodsforgrassrootsdevelopment</p>
+<p>contexts.</p>
+<p>Braun &amp; Clarke (2006) — &quot;Using Thematic Analysisin</p>
+<p>Psychology.&quot; Thefoundationalpaperonthematicanalysis</p>
+<p>methods.🌐 Online Resources</p>
+<p>BetterEvaluation.org — Extensiverepositoryofqualitative</p>
+<p>evaluation methodswith South Asiacaseexamples</p>
+<p>SAGE Research Methods Online — Videoguides, case</p>
+<p>studies, and methoddescriptionsforqualitativeapproaches</p>
+<p>3ie POPD Database — Realdevelopmentresearchstudies</p>
+<p>includingqualitativecomponentsfrom South Asia</p>
+<p>ImpactMojo.in — Free MELandresearchcoursesfor South</p>
+<p>Asiandevelopmentpractitioners</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

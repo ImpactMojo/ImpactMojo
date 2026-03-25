@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multivariate Analysis 101 | ImpactMojo</title>
+<meta name="description" content="Multivariate Analysis 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #556B2F;
+  --border-art: #2F4F4F;
+  --bg-slide: #FFFDF7;
+  --bg-section: #2F4F4F;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">DATA &amp; TECHNOLOGY</p>
+<h1>Multivariate</h1>
+<p class="subtitle">Analysis 101 Understanding Complex Relationships Among Multiple Variables Fromfactoranalysistostructuralequationmodeling — a comprehensiveguidefordevelopmentpractitionersin Sout h Asia. IMPACTMOJO 101 SERIES</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>Course Agenda</h2>
+<p>Aguidedjourneythrough multivariateanalysis — from foundationstoadvancedtechniques.</p>
+<p>Foundationsof Multivariate Analysis02</p>
+<p>Data Preparation &amp; Assumptions</p>
+<p>Multiple Regression Analysis04</p>
+<p>Factor Analysis</p>
+<p>Cluster Analysis06</p>
+<p>Discriminant Analysis</p>
+<p>Principal Component Analysis08</p>
+<p>Canonical Correlation</p>
+<p>Structural Equation Modeling10</p>
+<p>Multivariate Visualization</p>
+<p>Case Studiesin South Asia12</p>
+<p>Ethics, Limitations &amp; Next Steps</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Understand Core Concepts</p>
+<p>Explainwhat multivariateanalysisisandwhentouse</p>
+<p>itoversimplertechniques.Apply Key Methods</p>
+<p>Useregression, factoranalysis, clustering, PCA, and</p>
+<p>SEMappropriatelyindevelopmentresearch.</p>
+<p>Interpret Results</p>
+<p>Readandcom municatestatisticaloutputs</p>
+<p>meaningfullyfornon-technicalaudiences.Contextualizefor South Asia</p>
+<p>Connecttechniquestoreal-worlddevelopment</p>
+<p>challengesin India, Bangladesh, Nepal, andbeyond.</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 01</p>
+<h2>Foundationsof</h2>
+<h2>Multivariate</h2>
+<h2>Analysis</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>What Is Multivariate Analysis?</h2>
+<p>The Core Idea</p>
+<p>Multivariateanalysis (MVA) referstostatistical</p>
+<p>methodsthatanalyzemorethantwovariables</p>
+<p>simultaneouslytounderstandpatterns, relationships,</p>
+<p>andstructureincomplexdata.Why Does It Matter?</p>
+<p>Real-worlddevelopmentproblem sareneversimple.</p>
+<p>Povertyislinkedtoeducation, health, geography,</p>
+<p>gender, andcaste — allatonce. MVAhelpsus modelthis</p>
+<p>complexityhonestly.</p>
+<p>Captures multiplecausessimultaneously</p>
+<p>Reduces misleadingsingle-variableconclusions</p>
+<p>Revealshiddenstructuresindata</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>Univariatevs. Bivariatevs. Multivariate</h2>
+<p>Univariate</p>
+<p>Onevariableat atim e. Describes</p>
+<p>distributions. Example: Average</p>
+<p>householdincom ein Bihar.2</p>
+<p>Bivariate</p>
+<p>Relationshipbetweentwo</p>
+<p>variables. Example: Incom evs.</p>
+<p>schoolenrollmentrate.3</p>
+<p>Multivariate</p>
+<p>Multiplevariablestogether.</p>
+<p>Uncoverscomplex, simultaneous</p>
+<p>relationships. Example:</p>
+<p>Determinantsofchild malnutrition.</p>
+<p>Mostdevelopmentquestionsrequire multivariatethinking — movingfrom &quot;whathappened?&quot; to &quot;why, andunderwhat</p>
+<p>conditions?&quot;</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>A Typologyof Multivariate</h2>
+<p>Methods</p>
+<p>Dependence Methods</p>
+<p>Oneormoredependent</p>
+<p>variables predictedby</p>
+<p>independentvariables.</p>
+<p>Includesregression,</p>
+<p>discriminantanalysis,</p>
+<p>MANOVA.Interdependence</p>
+<p>Methods</p>
+<p>Nodependentvariable — all</p>
+<p>variablesanalyzedtogether.</p>
+<p>Includesfactoranalysis,</p>
+<p>clusteranalysis, PCA.</p>
+<p>Structural Methods</p>
+<p>Testhypothesizedrelationshipsamongvariables. Include sstructural</p>
+<p>equationmodeling (SEM) andpathanalysis.</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Whento Use Multivariate Analysis</h2>
+<p>Interdependence Method</p>
+<p>PCA, cluster, or EFA</p>
+<p>Dependence Method</p>
+<p>Regressionordiscriminant</p>
+<p>Outcom e Count?</p>
+<p>Oneoutcomeormultiple?</p>
+<p>Define Question</p>
+<p>Clarify researchaim</p>
+<p>Choosingtheright methodbeginswith aclearresearchquestion. Thestructureofyourdataandtheorywillguideyoutotheappropriatetechnique.</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Case Study: Dimensionsof Deprivationin</h2>
+<p>Rural India</p>
+<p>The Challenge</p>
+<p>Researchersstudyingruralpovertyin Odishafoundthat</p>
+<p>incom ealonefailedtocaptureliveddeprivation.</p>
+<p>Householdswithsimilarincomesdifferedsharplyin</p>
+<p>nutrition, housingquality, andaccesstoservices.</p>
+<p>The Approach</p>
+<p>Amultivariateindexwasbuiltusing 10 indicatorsacross 3</p>
+<p>domains. Factoranalysisrevealedthatdeprivation</p>
+<p>loadedontotwounderlyingdimensions: material</p>
+<p>povertyandsocialexclusion.Key Finding</p>
+<p>Socialexclusion (caste, accesstoinstitutions) was a</p>
+<p>separatedimensionfrom materialpoverty — and</p>
+<p>requireddifferentpolicyresponses. Aunivariateincom e</p>
+<p>measurewouldhave missedthisentirely.</p>
+<p><strong>Thisiswhy MVAmatters:</strong> itsurfacesstructure</p>
+<p>thatsimpleranalysiscannotsee.</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 02</p>
+<h2>Data Preparation &amp;</h2>
+<h2>Assumptions</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>The Data Quality Imperative</h2>
+<p>Multivariateanalysisispowerful — butonlyasgoodasthedataitrunson. Garbagein, garbageoutapplieswithextra</p>
+<p>forcewhen manyvariablesinteract.</p>
+<p>Missing Data</p>
+<p>Identifypatternsof missingness. Isdata missing</p>
+<p>atrandom (MAR) ornot? Useimputation methods</p>
+<p>carefully.Outliers</p>
+<p>Extrem evaluesdistort multivariateresults. Use</p>
+<p>Mahalanobisdistancetoidentify multivariate</p>
+<p>outliers.</p>
+<p>Normality</p>
+<p>Manytechniquesassum enormality. Check</p>
+<p>skewnessandkurtosis; applylogor Box-Cox</p>
+<p>transformations.Scale &amp; Measurement</p>
+<p>Ensurevariablesareoncomparablescales.</p>
+<p>Standardize (z-score) whencombiningindicators</p>
+<p>withdifferentunits.</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>Key Statistical Assumptions</h2>
+<p>Linearity</p>
+<p>Most MVAmethodsassum elinearrelationships</p>
+<p>betweenvariables. Plotscatterplots; consider</p>
+<p>polynomialterm sforcurvedrelationships.Multicollinearity</p>
+<p>Whenpredictorsaretoohighlycorrelated,</p>
+<p>coefficientsbecom eunstable. Check Variance</p>
+<p>Inflation Factor (VIF) — valuesabove 10 are</p>
+<p>problematic.</p>
+<p>Homoscedasticity</p>
+<p>Varianceofresidualsshouldbeconstantacrossall</p>
+<p>levelsofpredictors. Violationsleadtobiased</p>
+<p>standarderrors.Sample Size</p>
+<p>Multivariate methodsdemandlargersamples. Ruleof</p>
+<p>thum b: atleast 10–20 observationspervariablein</p>
+<p>regression; 300+ for SEM.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Data Preparation Workflow</h2>
+<p>Check</p>
+<p>CollinearityNormalize/TransformTreat</p>
+<p>OutliersHandle</p>
+<p>MissingImport Data</p>
+<p>Followingthisworkflowbeforerunninganyanalysissavestim e, preventserrors, andensuresyourresultsareinterpretableand</p>
+<p>defensible.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Reflection: Data Challengesin South Asian</h2>
+<p>Surveys</p>
+<p>Surveydatafrom rural South Asiaoftenhashighratesof missingresponsesonincom e, casteidentity, andsensitive</p>
+<p>householdindicators. Howwouldyouapproachimputationand missingdatainsuch acontext?</p>
+<p>Discuss</p>
+<p>Whatassumptionsdoeslistwise</p>
+<p>deletion make? Isitvalidhere?Consider</p>
+<p>Multipleimputationvs. mean</p>
+<p>substitution — trade-offsfor</p>
+<p>developmentdata.Reflect</p>
+<p>How mightdatacollectiondesign</p>
+<p>itselfreduce missingness?</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="15">
+<div class="slide-content">
+<p class="section-number">SECTION 03</p>
+<h2>Multiple</h2>
+<h2>Regression</h2>
+<h2>Analysis</h2>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="16">
+<div class="slide-content">
+<h2>What Is Multiple Regression?</h2>
+<p>The Model</p>
+<p>Y = β ₀ + β ₁ X ₁ + β ₂ X ₂ + ... + β ₙ X ₙ + ε</p>
+<p>Multipleregressionestimatestherelationshipbetween</p>
+<p>onecontinuousoutcom e (Y) andtwoor morepredictors</p>
+<p>(X ₁ …X ₙ ), holdingallothersconstant.Why Use It?</p>
+<p>Controlforconfoundingvariables</p>
+<p>Estimatetheuniquecontributionofeachpredictor</p>
+<p>Predictoutcomesfrom multipleinputs</p>
+<p>Testhypothesesaboutcausal mechanism s</p>
+<p><strong>Indevelopment, itanswers:</strong> &quot;Whatexplainsvariationin</p>
+<p>thisoutcom e, afteraccountingforeverythingelse?&quot;</p>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>Interpreting Regression Output</h2>
+<p>Term What It Tells You Example Good Range</p>
+<p>β (Coefficient) Changein Yperunitof X +2.3 yearsschoolingper</p>
+<p>incomedecileContext-dependent</p>
+<p>p-value Statisticalsignificance p &lt; 0.05 &lt; 0.05 or 0.01</p>
+<p>R² Varianceexplained R² = 0.62 Higherisbetter</p>
+<p>VIF Multicollinearitycheck VIF = 2.1 &lt; 10</p>
+<p>Alwaysreportbothcoefficientsandtheirconfidenceintervals. Statisticalsignificancedoe snotequalpractical</p>
+<p>significance.</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Case Study: Determinantsof</h2>
+<p>Women&#x27;s Workforce</p>
+<p>Participationin Bangladesh</p>
+<p>Research Question</p>
+<p>Whatfactorspredictwhether a</p>
+<p>womanparticipatesinformal</p>
+<p>employmentinurban Bangladesh?</p>
+<p>Variables</p>
+<p><strong>Outcome:</strong> Employmentstatus (binary,</p>
+<p>usinglogisticregression). Predictors:</p>
+<p>Education, householdincome, number</p>
+<p>ofchildren, husband&#x27;soccupation,</p>
+<p>districtofresidence.Key Findings</p>
+<p>Educationbeyondsecondarylevel</p>
+<p>doubledtheprobabilityof</p>
+<p>employment</p>
+<p>Eachadditionalchildunder 5</p>
+<p>reducedprobabilityby 18%</p>
+<p>Husband&#x27;soppositionwasthe</p>
+<p>strongestnegativepredictor</p>
+<p>Controllingforincome</p>
+<p>revealededucation&#x27;s</p>
+<p>independenteffect — hidden</p>
+<p>in abivariateanalysis.</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>Typesof Regressionin Practice</h2>
+<p>OLS Regression</p>
+<p>Continuousoutcomes. Predictingtestscores, incom e</p>
+<p>levels, nutritionalintake.Logistic Regression</p>
+<p>Binaryoutcomes (yes/no). Predictingschool</p>
+<p>enrollment, program uptake, mortality.</p>
+<p>Poisson Regression</p>
+<p>Countoutcomes. Predictingnumberofclinicvisits,</p>
+<p>diseaseincidencecounts.Hierarchical Regression</p>
+<p>Entervariablesinblockstotestincremental</p>
+<p>explanatorypowerofeachset.</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="20">
+<div class="slide-content">
+<p class="section-number">SECTION 04</p>
+<h2>Factor Analysis</h2>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>What Is Factor Analysis?</h2>
+<p>Factoranalysisidentifiesunderlyinglatentdimensions — factors — thatexplainthepatternofcorrelationsamong</p>
+<p>manyobservedvariables. Itreducescomplexitybyfindinghiddenstructure.</p>
+<p>Many Observed Variables</p>
+<p>E.g., 20 surveyitem sonhousehold</p>
+<p>wellbeing2</p>
+<p>Correlation Analysis</p>
+<p>Whichvariablesclustertogether?3</p>
+<p>Latent Factors Emerge</p>
+<p><strong>E.g., Factor 1:</strong> Economicsecurity;</p>
+<p><strong>Factor 2:</strong> Socialconnectedness</p>
+<p>Usedwidelyinindexconstruction — includingthe Human Development Indexand multidimensionalpoverty measures.</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="22">
+<div class="slide-content">
+<h2>EFAvs. CFA: Tw o Approaches</h2>
+<p>Exploratory Factor Analysis (EFA)</p>
+<p>Nopriortheory. Letdatarevealthefactorstructure.</p>
+<p>Usedinearly-stageresearchorscaledevelopment.</p>
+<p>How manyfactorsexist?</p>
+<p>Whichitem sloadonwhichfactor?Confirmatory Factor Analysis (CFA)</p>
+<p>Theory-driven. Testwhether ahypothesizedfactor</p>
+<p>structurefitsthedata. Usedinvalidationstudies.</p>
+<p>Does m yproposed 3-factor modelfit?</p>
+<p>Arefactorloadingssignificant?</p>
+<p>Isthe modelbetterthanalternatives?</p>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>Reading a Factor Loading Matrix</h2>
+<p><strong>Survey Item Factor 1:</strong> Assets Factor 2: Services Factor 3: Social</p>
+<p>Ownsland 0.81 0.12 0.05</p>
+<p>Hassavings 0.76 0.20 0.08</p>
+<p>Pipedwateraccess 0.11 0.84 0.07</p>
+<p>Healthcarewithin 5 km 0.09 0.79 0.14</p>
+<p>Participatesin SHG 0.07 0.10 0.88</p>
+<p>Knowslocalgovt. reps 0.04 0.15 0.82</p>
+<p>Loadingsabove 0.6 areconsideredstrong. Eachitemclearlybelongstoonefactor — thisiscalledsimplestructure , anideal</p>
+<p>outcomeinfactoranalysis.</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>Case Study: Constructing a</h2>
+<p>Women&#x27;s Empowerment</p>
+<p>Indexin Nepal</p>
+<p>Researchersin Nepaladministered a 24-itemsurveyonwomen&#x27;s</p>
+<p>agency, mobility, anddecision-making. EFArevealedfour</p>
+<p>underlyingfactors : economicautonomy, reproductivechoices,</p>
+<p>socialmobility, andpoliticalvoice. Thesebecamethe foursub-indices</p>
+<p>ofthe Women&#x27;s Empowermentin Nepal (WEN) Index — nowusedto</p>
+<p>trackprogressacross 77 districtsandinformprogram design.</p>
+<p>Factoranalysispreventedtheresearchersfromtreating all</p>
+<p>24 itemsasequallyimportant. Thefactorstructurerevealed</p>
+<p>whichdimensionsweretrulydistinct.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="25">
+<div class="slide-content">
+<p class="section-number">SECTION 05</p>
+<h2>Cluster Analysis</h2>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>What Is Cluster Analysis?</h2>
+<p>Clusteranalysisgroupsobservations (people, villages, districts) intohomogeneousclustersbasedonsimilarityacross</p>
+<p>multiplevariables — without apredefinedoutcom evariable.</p>
+<p>The Goal</p>
+<p>Findnaturalgroupingsinthedata. Objectswithin a</p>
+<p>clustershouldbemoresimilartoeachotherthanto</p>
+<p>objectsinotherclusters.Development Applications</p>
+<p>Segmentvillagesbyservicedeprivationprofile</p>
+<p>Profilebeneficiaryhouseholdsfortargeting</p>
+<p>Identifytypologiesofcom munityhealthworkers</p>
+<p>Groupdistrictsbynutritionalburden</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Hierarchicalvs. K-Means Clustering</h2>
+<p>Hierarchical Clustering</p>
+<p>Builds atree (dendrogram ) by</p>
+<p>successively mergingsimilar</p>
+<p>cases. Noneedtoprespecifythe</p>
+<p>numberofclusters. Bestforsmall</p>
+<p>datasetsandexploration.K-Means Clustering</p>
+<p>Partitionsdatainto Kclustersby</p>
+<p>minimizingwithin-cluster</p>
+<p>variance. Requiresspecifying Kin</p>
+<p>advance. Efficientforlarge</p>
+<p>datasets.Choosing K</p>
+<p>Usetheelbow method — plot</p>
+<p>within-clustersum ofsquares</p>
+<p>against K. The &quot;elbow&quot; point</p>
+<p>suggeststheoptimalnumberof</p>
+<p>clusters.</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="28">
+<div class="slide-content">
+<h2>Case Study: Targeting Social Protectionin</h2>
+<p>Pakistan</p>
+<p>Context</p>
+<p>Pakistan&#x27;s Benazir Incom e Support Program meneeded</p>
+<p>toimprovebeneficiaryidentificationacross 80,000</p>
+<p>villages. Simpleincom e-basedtargetingwas missing</p>
+<p>vulnerablenon-poorhouseholds.</p>
+<p>Method</p>
+<p>K-meansclusteranalysison 12 variables — includingasset</p>
+<p>ownership, infrastructureaccess, female-headedstatus,</p>
+<p>anddisability — identifiedfivedistinctvulnerability</p>
+<p>profiles.Outcomes</p>
+<p>Cluster 4 (female-headed, lowassets, highdisability)</p>
+<p>was mostvulnerablebutlowincom eonpaper</p>
+<p>Program redesignedtotargetallhigh-vulnerability</p>
+<p>clusters</p>
+<p>Coverageofchronicallyvulnerableincreasedby 23%</p>
+<p>Clusteranalysisrevealedthatvulnerabilityis</p>
+<p>multidimensional — incom ealonewas</p>
+<p>insufficientfortargeting.</p>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>Visualizing Cluster Profiles</h2>
+<p>Cl u s te r 1  Th ri v i n g Cl u s te r 2  St a b le Cl u s te r 3  St ru g g li n g Cl u s te r 4  Vu l ne ra b leCl u s te r</p>
+<p>In co me</p>
+<p>As se t s</p>
+<p>Ed u ca ti o n</p>
+<p>He a l t h Ac ce s s</p>
+<p>So ci a l Ca pi ta l</p>
+<p>Heatmaps makeclusterprofilesim mediatelylegible. Darkercellsindicatelowerscores — pinpointingexactlywhichdimensionsdefineeachcluster&#x27;scharacter.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="30">
+<div class="slide-content">
+<p class="section-number">SECTION 06</p>
+<h2>Discriminant</h2>
+<h2>Analysis</h2>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>What Is Discriminant Analysis?</h2>
+<p>Discriminant Analysis (DA) identifieswhichcombinationofvariablesbestdistinguishesbetweenpre-defined</p>
+<p>groups. Unlikeclusteranalysis, groupsareknowninadvance.</p>
+<p>Classification Goal</p>
+<p>Predictgroup membershipfor</p>
+<p>newobservationsbasedon aset</p>
+<p>ofpredictorvariables.Understanding Goal</p>
+<p>Identifywhichvariables most</p>
+<p>powerfullyseparatethegroups —</p>
+<p>andbyhow much.Validation</p>
+<p>Evaluateclassificationaccuracy</p>
+<p>using aconfusion matrixandhit</p>
+<p>ratio — comparetochance.</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Discriminant Analysisvs. Logistic Regression</h2>
+<p>Feature Discriminant Analysis Logistic Regression</p>
+<p>Outcometype Categorical (2+ groups) Binaryormultinomial</p>
+<p>Assumptions Multivariatenormalityrequired Fewerdistributionalassumptions</p>
+<p>Focus Maximizesgroupseparation Estimatesprobabilities</p>
+<p>Whentouse Clean, normallydistributeddata Messy, real- worldsurveydata</p>
+<p>Output Discriminantfunctions Log-oddscoefficients</p>
+<p>In South Asiansurveydatawithnon-normaldistribution s, logisticregressionisoftenthesaferchoice — but DA provides</p>
+<p>uniqueinsightsintogroupseparationgeometry.</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="33">
+<div class="slide-content">
+<h2>Case Study: Predicting</h2>
+<p>Program Dropoutin Sri</p>
+<p>Lanka</p>
+<p>Aconditionalcashtransferprogramin Sri Lankatracked 2,400</p>
+<p>beneficiaryhouseholdsover 3 years. Discriminantanalysison 8</p>
+<p>baselinevariablesrevealedthatdistancetoschool, mother&#x27;s</p>
+<p>literacy, andnumberofearningadults togethercorrectly</p>
+<p>classified 84% ofdropoutvs. continuinghouseholds. The</p>
+<p>discriminantfunctionwasthenusedtoflaghigh-riskhouseholdsfor</p>
+<p>proactiveoutreach — reducingdropoutby 31% inthe pilotdistrict.</p>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="34">
+<div class="slide-content">
+<p class="section-number">SECTION 07</p>
+<h2>Principal</h2>
+<h2>Component</h2>
+<h2>Analysis</h2>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>PCA: From Many Variablesto Key</h2>
+<p>Components</p>
+<p>The Core Idea</p>
+<p>PCAtransform salargesetofcorrelatedvariablesinto a</p>
+<p>smallersetofuncorrelatedcomponentsthatcapture</p>
+<p>maximum variance. Eachcomponentis alinear</p>
+<p>combinationoftheoriginalvariables.Why It Matters</p>
+<p>Reducesdatadimensionalitywithoutlosing much</p>
+<p>information</p>
+<p>Removes multicollinearitybeforerunningregression</p>
+<p>Enablesvisualizationofhigh-dimensionaldata</p>
+<p>Foundationforwealthindexconstructionin DHS</p>
+<p>surveys</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>PCA Stepby Step</h2>
+<p>Select &amp; InterpretEigen DecompositionCorrelationStandardize</p>
+<p>Thefirstprincipalcomponentcapturesthe mostvariance; eachsubsequentcomponentcapturesdecreasingamounts. Retaincomponents</p>
+<p>thattogetherexplain 70–80% oftotalvariance.</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>PCAin Action: DHS Wealth Index</h2>
+<p>The Problem</p>
+<p>Demographicand Health Surveys (DHS) collectdataon</p>
+<p>householdassets (TV, bike, livestock, floor material,</p>
+<p>watersource) butnotincom e. Howdoyou measure</p>
+<p>wealth?</p>
+<p>The Solution</p>
+<p>Apply PCAto 25–40 assetvariables. Thefirstprincipal</p>
+<p>component (PC1) consistentlyloadshighestonassets</p>
+<p>associatedwithwealth — andbecomesthehousehold</p>
+<p>wealthindex, nowusedin 90+ countries.Why PC1 Works</p>
+<p>PC1 capturesthedominantaxisofvariation — in</p>
+<p>householddata, thisaxisisalmostalways materialliving</p>
+<p>standards. It&#x27;sabrilliantuseofunsupervised</p>
+<p>dimensionalityreductionintheabsenceofdirect</p>
+<p>incom edata.</p>
+<p>India&#x27;s NFHS (National Family Health Survey)</p>
+<p>usesthisapproachacrossallfiverounds.</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>PCAvs. Factor Analysis: Key Differences</h2>
+<p>PCA</p>
+<p>Explainstotalvariance (including</p>
+<p>uniqueanderrorvariance). No</p>
+<p>latentvariableassumption.</p>
+<p>Componentsare mathematical</p>
+<p>constructs. Bestfordata</p>
+<p>reduction.Factor Analysis</p>
+<p>Explainsonlysharedvariance</p>
+<p>(com monvariance). Assumes</p>
+<p>latentfactorscauseobserved</p>
+<p>variables. Bestfor measuring</p>
+<p>underlyingconstructslike</p>
+<blockquote>&quot;empowerment&quot; or &quot;deprivation.&quot;Whento Choose</blockquote>
+<p>Use PCAforindexconstruction</p>
+<p>and multicollinearitytreatment.</p>
+<p>Use FAwhenyoubelievetrue</p>
+<p>latentconstructsexistandwant</p>
+<p>to measurethem .</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="39">
+<div class="slide-content">
+<p class="section-number">SECTION 08</p>
+<h2>Canonical</h2>
+<h2>Correlation</h2>
+<h2>Analysis</h2>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>What Is Canonical Correlation?</h2>
+<p>Canonical Correlation Analysis (CCA) examinestherelationshipbetweentwosetsofvariablessimultaneously —</p>
+<p>ratherthanonevariableat atim e. Itfindsthelinearcombinationsofeachsetthatare maximallycorrelated.</p>
+<p>Variable Set 1</p>
+<p><strong>Healthoutcomes:</strong> childstunting,</p>
+<p>maternalanemia, infant mortality</p>
+<p>rate2</p>
+<p>Canonical Functions</p>
+<p>Findcombinationsofbothsets</p>
+<p>with maximum correlation — the</p>
+<p>canonicalvariates3</p>
+<p>Variable Set 2</p>
+<p><strong>Program inputs:</strong> nutrition</p>
+<p>counseling, W ASHcoverage, health</p>
+<p>workervisits</p>
+<p>CCAisthe mostgeneralofall multivariate methods — manyothers (MANOVA, regression) arespecialcasesofit.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Interpreting CCA Results</h2>
+<p>Output What It Means Practical Use</p>
+<p>Canonical Correlation (Rc) Strengthofrelationship</p>
+<p>betweenvariatepairsRc &gt; 0.3 consideredmeaningful</p>
+<p>Canonical Variate Loadings Eachvariable&#x27;scontributionto</p>
+<p>itsvariateIdentifykeyvariablesdrivingthe</p>
+<p>relationship</p>
+<p>Redundancy Index Varianceinonesetexplained</p>
+<p>bytheotherAssesspracticalsignificance</p>
+<p>Wilks&#x27; Lambda Significancetestforeach</p>
+<p>canonicalfunctionRetainsignificantfunctionsonly</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>Exercise: Applying CCAin Development</h2>
+<p>Research</p>
+<p>Aresearchteam studyingadolescentgirlsin Biharhastwosetsofsurveydata: (1) educationaloutcomes —</p>
+<p>attendance, testscores, dropoutrisk; (2) householdenvironment — parentaleducation, incom e, genderattitudes,</p>
+<p>accesstosanitation. Howwouldyouusecanonicalcorrelationtostudytherelationshipbetweenthesesets?</p>
+<p>Step 1</p>
+<p>Identifywhichvariablesbelongto</p>
+<p>eachset. Areanyvariables</p>
+<p>ambiguous?Step 2</p>
+<p><strong>Hypothesize:</strong> whichhousehold</p>
+<p>variableswillload moststrongly</p>
+<p>onthefirstcanonicalfunction?Step 3</p>
+<p><strong>Discuss:</strong> whatpolicyinsightwould</p>
+<p>ahigh Rcbetweenthesetwosets</p>
+<p>provide?</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="43">
+<div class="slide-content">
+<p class="section-number">SECTION 09</p>
+<h2>Structural</h2>
+<h2>Equation Modeling</h2>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>What Is Structural Equation Modeling?</h2>
+<p>SEMisthe mostpowerful multivariatetechnique — itsimultaneouslytestsanentiresystemofrelationshipsamong</p>
+<p>latentandobservedvariables. Itcombinesfactoranalysisandregressionin asingleframework.</p>
+<p>Measurement Model</p>
+<p>Defineshowlatentvariables</p>
+<p>(e.g., &quot;empowerment&quot;) are</p>
+<p>measuredbyobserved</p>
+<p>indicators. Thisisthe CFA</p>
+<p>componentof SEM.Structural Model</p>
+<p>Testsdirectionalpathsbetween</p>
+<p>constructs — equivalentto</p>
+<p>runningregressionamonglatent</p>
+<p>variables, accountingfor</p>
+<p>measurementerror.Fit Indices</p>
+<p>CFI &gt; 0.95, RMSEA &lt; 0.06, SRMR</p>
+<p>&lt; 0.08. Modelfittellsyou</p>
+<p>whetherthehypothesized</p>
+<p>structureisconsistentwiththe</p>
+<p>data.</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>An SEM Path Diagram</h2>
+<p>Economic Resources</p>
+<p>4 observedindicatorsSocial Capital</p>
+<p>3 observedindicatorsChild Wellbeing</p>
+<p>3 observedindicatorsPaths</p>
+<p>Directandmediatedarrows</p>
+<p>Rectanglesrepresentobservedvariables; ovalsrepresentlatentconstructs; single-headedarrowsshowdirectionaleffects; double-</p>
+<p>headedarrowsshowcorrelations. Thisvisualgrammarisuniversalin SEMliterature.</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>Case Study: SEMfor WASH</h2>
+<p>and Child Healthin India</p>
+<p>The Model</p>
+<p>Researchersin Rajasthantested</p>
+<p>whethertheeffectof WASH</p>
+<p>infrastructureonchildhealth</p>
+<p>wasmediatedbymaternal</p>
+<p>hygieneknowledgeand</p>
+<p>behavior — using SEMondata</p>
+<p>from 1,800 households.Key Finding</p>
+<p>WASHinfrastructurealonehad</p>
+<p>asmalldirecteffecton</p>
+<p>stunting. Butwhenmaternal</p>
+<p>behaviorwasincludedas a</p>
+<p>mediator, thetotaleffect</p>
+<p>doubled . Hardwarewithout</p>
+<p>behaviorchangewas</p>
+<p>insufficient. SEMmadethe</p>
+<p>mediationpathway</p>
+<p>quantifiableandvisible.</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="47">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Multivariate</h2>
+<h2>Visualization</h2>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Visualizing Multiple Variablesat Once</h2>
+<p>Good multivariatevisualizationdoestheanalyticalworkvisually — revealingpatterns, clusters, andrelationshipsthat</p>
+<p>tablesandnumberscannotconveyefficiently.</p>
+<p>Scatterplot Matrix</p>
+<p>Plotsallpairwiserelationshipsin agrid. Quickly</p>
+<p>revealscorrelations, outliers, andnon-linearity</p>
+<p>across manyvariablesatonce.Correlation Heatmap</p>
+<p>Color-codes acorrelation matrix. Idealfor</p>
+<p>identifyingclustersofrelatedvariablesbefore</p>
+<p>runningfactoranalysisorregression.</p>
+<p>Parallel Coordinates</p>
+<p>Plotseachcaseas alineacross multiplevariable</p>
+<p>axes. Excellentforcomparingclusterprofiles</p>
+<p>across manydimensionssimultaneously.Biplot (PCA)</p>
+<p>Displaysbothobservationsandvariableloadings</p>
+<p>intwo-dimensional PCAspace. Thegoldstandard</p>
+<p>forvisualizing PCAresults.</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>District-Level Development: Bubble Chart</h2>
+<p>Heal t h Inde x Population (000s) 200</p>
+<p>500</p>
+<p>3 04 05 06 07 0He a l t h In de x</p>
+<p>3 6 3 8 4 0 4 2 4 4 4 6 4 8 5 0 5 2 5 4 5 6 5 8 6 0 6 2 6 4 6 6 6 8 7 0 7 2 7 4</p>
+<p>Ed u ca ti o n In de x</p>
+<p>Bubblechartsencodethreevariablessimultaneously — position (X, Y) andsize. Thisplotrevealsthatsmaller, remotedistrictsclusterinthelow-education, low-healthquadrant, guiding</p>
+<p>resourceallocationpriorities.</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="50">
+<div class="slide-content">
+<p class="section-number">SECTION 11</p>
+<h2>Case Studiesfrom</h2>
+<h2>South Asia</h2>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>MVAin South Asian Development: An</h2>
+<p>Overview</p>
+<p><strong>India:</strong> Self-Help</p>
+<p>Group Impact</p>
+<p>SEMusedtotestwhether</p>
+<p>SHGmembership</p>
+<p>improvedwomen&#x27;s</p>
+<p>empowermentvia</p>
+<p>economicandsocial</p>
+<p>pathways — revealingthat</p>
+<p>socialcapitalmediated</p>
+<p>economicgains.</p>
+<p><strong>Bangladesh:</strong> Health</p>
+<p>Worker Performance</p>
+<p>Factoranalysisidentified</p>
+<p>threedimensionsof</p>
+<p>communityhealthworker</p>
+<p>effectiveness: technical</p>
+<p>competence, motivation,</p>
+<p>andcommunitytrust —</p>
+<p>eachrequiringdifferent</p>
+<p>management</p>
+<p>interventions.</p>
+<p><strong>Nepal:</strong> Education</p>
+<p>Equity</p>
+<p>Clusteranalysison 650</p>
+<p>schoolsrevealedfive</p>
+<p>distinctschoolquality</p>
+<p>profiles, enablingthe</p>
+<p>governmenttotailor</p>
+<p>supportpackagestoeach</p>
+<p>cluster&#x27;sspecific</p>
+<p>weaknesses.</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Choosingthe Right MVA Method: Decision Matrix</h2>
+<p>Research Question Outcome Type Method Example</p>
+<p>Whatpredicts Y? Continuous Multiple Regression Determinant sofchildheight</p>
+<p>Whatpredictsgroup</p>
+<p>membership?Categorical Discriminant Analysis</p>
+<p>/ LogisticWhodropsoutofschool?</p>
+<p>Whatlatentconstructs</p>
+<p>exist?None Factor Analysis / PCA Dimensionsofpoverty</p>
+<p>Whatnaturalgroupsexist? None Cluster Analysis Villagetypologies</p>
+<p>Howdotwosetsrelate? Twosets Canonical Correlation Inputsvs. outcomes</p>
+<p>Doesmytheoryfitthedata? Hypothesizedpaths SEM Causal mechanismtesting</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="53">
+<div class="slide-content">
+<p class="section-number">SECTION 12</p>
+<h2>Ethics, Limitations</h2>
+<h2>&amp; Next Steps</h2>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>Ethical Dimensionsof</h2>
+<p>Multivariate Analysis</p>
+<p>Data Sovereignty</p>
+<p>Whoownscommunitydata?</p>
+<p>Ensureinformedconsentand</p>
+<p>communitybenefitfrom</p>
+<p>analysis, especiallywhen</p>
+<p>profilingvulnerablegroups.Algorithmic Bias</p>
+<p>Clusteringandtargeting</p>
+<p>modelscanencodeexisting</p>
+<p>discrimination. Auditmodels</p>
+<p>fordifferentialaccuracyacross</p>
+<p>gender, caste, andreligion.</p>
+<p>Misrepresentation</p>
+<p>Complexmodelscanbemisusedtoproduceanydesiredresult. Pre-</p>
+<p>registeranalysisplans; betransparentaboutmodeling choices.</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>Limitationsto Keepin Mind</h2>
+<p>Correlation ≠ Causation</p>
+<p>Evensophisticatedregressioncannotestablish</p>
+<p>causalityfrom observationaldata. Behonestabout</p>
+<p>whatyour modelcanandcannotclaim .Model Dependence</p>
+<p>Differentanalyticalchoices (numberoffactors, K</p>
+<p>clusters, modelspecification) producedifferent</p>
+<p>results. Alwaystestrobustness.</p>
+<p>Sample Requirements</p>
+<p>MVArequireslarge, representativesamples. Small</p>
+<p>NGOdatasetsoftenlackthepowerforreliable</p>
+<p>multivariateanalysis.Context Stripping</p>
+<p>Statistical modelscannotcapturequalitative</p>
+<p>dimensionsofcom munitylife. Combinewith</p>
+<p>ethnographicandparticipatory methods.</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Quiz: Test Your Understanding</h2>
+<p>Whichmethodgroups</p>
+<p>observationswithout a</p>
+<p>predefinedoutcome?</p>
+<p>A) Multiple Regression   B) Cluster</p>
+<p>Analysis   C) Discriminant Analysis   D)</p>
+<p>CCA2</p>
+<p>Whatdoes afactorloadingof</p>
+<p>0.82 indicate?</p>
+<p>A) Weakassociation   B) Moderate</p>
+<p>correlation   C) Strongassociationwith</p>
+<p>thatfactor   D) Negativerelationship3</p>
+<p>VIFvaluesabove 10 signal</p>
+<p>whichproblem?</p>
+<p>A) Heteroscedasticity   B)</p>
+<p>Multicollinearity   C) Non-normality   D)</p>
+<p>Outliers</p>
+<p>SEMcombineswhichtwotechniques?</p>
+<p>A) PCA + Cluster Analysis   B) CFA + Regression   C) EFA +</p>
+<p>Discriminant   D) MANOVA + Canonical5</p>
+<p>The DHS Wealth Indexiscreatedusingwhich</p>
+<p>method?</p>
+<p>A) Factor Analysis   B) K-Means Clustering   C) PCA   D) SEM</p>
+<p><strong>Answers:</strong> B, C, B, B, C</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<ul>
+<li><strong>1Developmentproblemsareinherentlymultivariate</strong></li>
+</ul>
+<p>Single-variableanalysisalmostalwaysmissestherealstory. Embrace</p>
+<p>complexity.</p>
+<ul>
+<li><strong>2Methodselectionfollowsyourresearchquestion</strong></li>
+</ul>
+<p>Nosingletechniqueisbest. Matchthemethodtowhat you&#x27;retryingto</p>
+<p>learn.</p>
+<ul>
+<li><strong>3Dataqualityisfoundational</strong></li>
+</ul>
+<p>Assumptionstestinganddatapreparationarenotoptiona l — they</p>
+<p>determinewhetherresultsaremeaningful.</p>
+<ul>
+<li><strong>4Contextandethicscannotbeoutsourcedtostatistics</strong></li>
+</ul>
+<p>MVAis atoolinserviceofhumanunderstanding — not asubstitutefor</p>
+<p>it.</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>Latent Variable Anunobservedconstruct (e.g., &quot;poverty&quot;) measuredindirectlythroughobservedindicators.</p>
+<p>Factor Loading Correlationbetweenanobservedvariableand a latentfactor. Valuesabove 0.6 arestrong.</p>
+<p>Eigenvalue Amountofvarianceexplainedby afactororprincipalcomponent. Usedtodecidehowmany</p>
+<p>toretain.</p>
+<p>VIF Variance Inflation Factor 4 measuresmulticollinearity. Values &gt;10 indicate aseriousproblem.</p>
+<p>RMSEA Root Mean Square Errorof Approximation 4 SEMfitindex . Values &lt;0.06 indicategoodfit.</p>
+<p>Canonical Variate Linearcombinationofvariableswithin aset, createdtomaximizecorrelationwiththeother</p>
+<p>set&#x27;svariate.</p>
+<p>Dendrogram Treediagramshowingthehierarchicalmerging ofclustersinhierarchicalclusteranalysis.</p>
+<p>Communality Proportionof avariable&#x27;svarianceexplainedbyallextractedfactors. Range: 031.</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>/g67C Books</p>
+<p>Hairetal. — Multivariate Data Analysis (7th Ed.) —</p>
+<p>thestandardreference</p>
+<p>Tabachnick &amp; Fidell — Using Multivariate Statistics —</p>
+<p>highlypractical</p>
+<p>Kline — Principlesand Practiceof Structural Equation</p>
+<p>Modeling</p>
+<p>/g666 Key Papers</p>
+<p>Filmer &amp; Pritchett (2001) — Original DHS Wealth Index</p>
+<p>paperusing PCA</p>
+<p>Alkire &amp; Foster (2011) — Multidimensional Poverty</p>
+<p>Indexmethodology/g71 Online Resources</p>
+<p><strong>IDRE UCLA — freestatstutorials:</strong> stats.oarc.ucla.edu</p>
+<p>DHS Program — opendatasetsandmethodological</p>
+<p>guides: dhsprogram.com</p>
+<p>World Bank Open Data — data.worldbank.org</p>
+<p>NSSO / MOSPI India — mospi.gov.in</p>
+<p>/g8CE Software</p>
+<p><strong>R (free):</strong> lavaan, psych, clusterpackages</p>
+<p><strong>SPSS:</strong> comprehensive MVAmenus</p>
+<p><strong>Stata:</strong> powerfulsurvey-weightedanalysis</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

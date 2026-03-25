@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Environmental Justice 101 | ImpactMojo</title>
+<meta name="description" content="Environmental Justice 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #228B22;
+  --border-art: #006400;
+  --bg-slide: #FFFDF7;
+  --bg-section: #006400;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">Environmental Justice 101</p>
+<h1>Understandinghowenvironmentaldegradationdisproportionately</h1>
+<p class="subtitle">impactsmarginalizedcommunities — andframeworksforequitable governance. IMPACTMOJO 101 SERIES PHILOSOPHY &amp; GOVERNANCEwww.impactmojo.in</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover</h2>
+<p>Ajourneythrough 10 majorsections — from foundationalconceptstopracticalframeworksforchange.</p>
+<p>Foundationsof Environmental Justice02</p>
+<p>Who Bearsthe Burden?</p>
+<p>Environmental Racism &amp; Caste04</p>
+<p>Climate Justice &amp; Vulnerability</p>
+<p>Legal &amp; Policy Frameworks06</p>
+<p>Community Rights &amp; Forest Governance</p>
+<p>Water Justice08</p>
+<p>Urban Environmental Justice</p>
+<p>Grassroots Movements &amp; Advocacy10</p>
+<p>Building Equitable Governance</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Define &amp; Apply</p>
+<p>Articulatecoreenvironmentaljusticeconceptsand</p>
+<p>applythem to South Asiancontexts.Analyze Disparities</p>
+<p>Identifyhowcaste, class, gender, andgeography</p>
+<p>shapeenvironmentalburdens.</p>
+<p>Evaluate Frameworks</p>
+<p>Assesslegal, policy, andcom munity-based</p>
+<p>frameworksforenvironmentalgovernance.Engage Critically</p>
+<p>Criticallyexaminedevelopmentprojectsthroughan</p>
+<p>environmentaljusticelens.</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 01</p>
+<h2>Foundationsof</h2>
+<h2>Environmental Justice</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>What Is Environmental Justice?</h2>
+<p>Environmental Justice</p>
+<p>Thefairtreatmentand meaningfulinvolvementofall</p>
+<p>people — regardlessofrace, caste, class, orincom e — in</p>
+<p>environmentallaws, policies, anddecisions.Two Core Pillars</p>
+<p><strong>Distributive Justice:</strong> Whobearsenvironmental</p>
+<p>burdens? Whogetsenvironmentalbenefits?</p>
+<p><strong>Procedural Justice:</strong> Whogets avoicein</p>
+<p>environmentaldecisions?</p>
+<p>Environmentaljusticeasksustoexaminetheintersectionofecology, power, andequity — andtoquestionwhopaysthe</p>
+<p>truecostofdevelopment.</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>The EJ Triangle: Three Dimensions</h2>
+<ul>
+<li><strong>1Recognition</strong></li>
+<li><strong>2 Procedural Justice</strong></li>
+<li><strong>3 Distributive Justice</strong></li>
+</ul>
+<p><strong>Distributive:</strong> Equitablesharingofenvironmentalrisksandbenefits. Procedural: Inclusivedecision-makingprocesses.</p>
+<p><strong>Recognition:</strong> Respectingdiverseculturalrelationshipswithnatureandacknowledginghistoricalinjustices.</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>Originsofthe Concept</h2>
+<p>1 1970s USA</p>
+<p>Civilrightsactivistsconnectracewithtoxicwaste</p>
+<p>sitingin Blackcom munities.</p>
+<p>2 1980s</p>
+<p>Warren County, NCprotestslaunchformal</p>
+<p>Environmental Justice movementglobally.</p>
+<p>3 1992</p>
+<p>Rio Earth Sum mitintroducesenvironmental</p>
+<p>equitylanguagein Agenda 21.</p>
+<p>4 2000s South Asia</p>
+<p>Chipko, Narmada, andfisherrights movements</p>
+<p>refram e EJinlocalterm s.</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Why Does Environmental</h2>
+<p>Justice Matterin South</p>
+<p>Asia?</p>
+<p>1.4 Billion People</p>
+<p>Themajoritydependenton</p>
+<p>naturalresourcesfor</p>
+<p>livelihoods.Deep Inequalities</p>
+<p>Caste, class, gender, and</p>
+<p>tribalidentityshapewho</p>
+<p>suffersmost.</p>
+<p>Rapid Development</p>
+<p>Infrastructureandindustrygrowthacceleratedisplacementand</p>
+<p>pollution.</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Reflection: Who Is &quot;The Environment&quot; For?</h2>
+<blockquote>&quot;Theenvironmentisnotjusttreesandrivers. Itistheairwebreathe, thewaterwedrink, thelandweliveon — and</blockquote>
+<p>whogetstodecidewhathappenstoit.&quot;</p>
+<p><strong>Discussion Prompt:</strong> Thinkofanenvironmentalissueinyourcom munityorregion. Who makesdecisionsaboutit? Who</p>
+<p>is mostaffected? Arethesethesam epeople?</p>
+<p>Writedown 3 groupsinyourcontextwhoare mostaffectedbyenvironmentaldecisions — andassesswhether</p>
+<p>theyhave aseatatthetable.</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 02</p>
+<h2>Who Bearsthe Burden?</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>Environmental Burdens Are Not Equally</h2>
+<p>Shared</p>
+<p>Across South Asia, thecom munitiesleastresponsibleforenvironmentaldegradationare mostexposedtoitsharm s.</p>
+<p>Industrial Pollution</p>
+<p>Tanneries, textile mills, andchemical</p>
+<p>plantsclusternearlow-incom e Dalit</p>
+<p>and Adivasisettlements.Flood &amp; Climate Risk</p>
+<p>Chardwellersin Bangladeshand</p>
+<p>coastalfisherfolkfacethehighest</p>
+<p>climateexposure.Resource Extraction</p>
+<p>Coal, sand, and mineral mining</p>
+<p>overwhelminglydisplacestribaland</p>
+<p>indigenouscom munities.</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>The Burden Matrix: Who Suffers Most?</h2>
+<p>Community Group Primary Risk Exposure Level Political Voice</p>
+<p>Adivasi / Tribal Displacement,</p>
+<p>miningVery High Very Low</p>
+<p>Dalitcommunities Hazardouswaste,</p>
+<p>sanitationHigh Low</p>
+<p>Coastalfisherfolk Sealevelrise,</p>
+<p>overfishingHigh Low</p>
+<p>Urbanslumdwellers Air/waterpollution High Medium</p>
+<p>Landlessruralpoor Drought, land</p>
+<p>degradationMedium-High Low</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Case Study: The Tannery Crisisin Kanpur</h2>
+<p>What Happened</p>
+<p>Kanpur&#x27;sleathertanneriesdischargedchromium -laden</p>
+<p>effluentsintothe Gangafordecades. Com munitiesin</p>
+<p>Jajmau — predominantly Dalitandlow-incom e — faced</p>
+<p>severehealthimpactsincludingcancer, skindisease, and</p>
+<p>groundwatercontamination.The EJ Lens</p>
+<p>Tanneriesbenefitedhigher-casteleathertraders</p>
+<p>Pollutionburdenfellonriverside Dalitsettlements</p>
+<p>Regulatoryenforcementwasweakinpoorareas</p>
+<p>Com munityvoicewassystematicallyexcluded</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>The Vulnerability Cycle</h2>
+<p>Poverty Limited</p>
+<p>Political Power</p>
+<p>Weak</p>
+<p>Environmental</p>
+<p>ProtectionsGreater</p>
+<p>Pollution</p>
+<p>Exposure</p>
+<p>Environmentalinjusticeisself-reinforcing. Povertyreducespoliticalpower, whichweakensenvironmentalprotections, which</p>
+<p>worsenshealthandlivelihoods — creating acyclethatdemandssystemicintervention.</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Exercise: Mappingthe Burdenin Your Context</h2>
+<p><strong>Practical Exercise:</strong> Draw asimple mapofyourdistrictor municipality. Mark: (1) majorpollutionsourcesor</p>
+<p>environmentalrisks, (2) whichcom munitiesliveclosesttothem , (3) who makesdecisionsaboutthosesites.</p>
+<p>Whatpatternsdoyounotice?</p>
+<p>Thisexercisehelps maketheabstractconcrete — environmentalinjusticeoftenbecomesvisibleonlywhenwe mapit.</p>
+<p>Participatory mappingisitself atoolforadvocacy.</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">SECTION 03</p>
+<h2>Environmental Racism &amp;</h2>
+<h2>Caste</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>Environmental Racism : Definingthe Concept</h2>
+<blockquote>&quot;Environmentalracism isthedisproportionateimpactofenvironmentalhazardsonpeopleofcolorand marginalized</blockquote>
+<p>ethnicgroups — resultingfrom deliberatetargeting, discriminatorypolicies, orsystemicneglect.&quot;</p>
+<p>In South Asia, theconceptofcaste-basedenvironmentaldiscriminationoperatessimilarly. Castelocation</p>
+<p>determineswholivesnearwastedumps, whocleanssewers, andwhoisdisplacedbydam s.</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Caste, Labor &amp; Environmental Harm</h2>
+<p>Manual Scavenging</p>
+<p>Assignedexclusivelyto Dalitsub-</p>
+<p>castesbyhistoricalconvention.</p>
+<p>Handlinghumanwastewithout</p>
+<p>protectionremainswidespread</p>
+<p>despitelegalbansin India.Waste Picking</p>
+<p>Rag-pickersat municipallandfills</p>
+<p>areoverwhelminglyfrom</p>
+<p>scheduledcastes, exposedto</p>
+<p>toxinsdailywithzeroformal</p>
+<p>protection.Hazardous Industries</p>
+<p>Fireworks, chemicalplants, and</p>
+<p>brickkilnsdependoncaste-</p>
+<p>differentiatedlabor marketsto</p>
+<p>filldangerous, low-paidroles.</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>The Caste-Environment Nexus: A Framework</h2>
+<p>Caste Hierarchy</p>
+<p>Assignscertaingroupsto &quot;polluting&quot; laborandliving</p>
+<p>spaces2</p>
+<p>Spatial Segregation</p>
+<p>Low-castesettlementslocatednearwastesites, rivers,</p>
+<p>cremationgrounds</p>
+<p>Differential Exposure</p>
+<p><strong>Cumulativeenvironmentalburdens:</strong> pollution, flooding,</p>
+<p>poorsanitation4</p>
+<p>Weak Redress</p>
+<p>Limitedaccesstocourts, media, andpolitical</p>
+<p>representation</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Case Study: Sivakasi &amp; Child Laborin</h2>
+<p>Fireworks</p>
+<p>Context</p>
+<p>Sivakasi, Tamil Nadu, produces 90% of India&#x27;sfireworks.</p>
+<p>Theindustryemploystensofthousandsofworkers,</p>
+<p>includingchildren, predominantlyfrom Dalitand OBC</p>
+<p>com munities, inhighlyhazardousconditions.Key Findings</p>
+<p>Explosionaccidentsdisproportionatelykilllow-caste</p>
+<p>workers</p>
+<p>Chemicalexposurelinkedtorespiratoryandskin</p>
+<p>disease</p>
+<p>Regulatoryoversight minimalincaste-segregated</p>
+<p>industrialzones</p>
+<p>Profitsaccruetodominant-casteownersandtraders</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>Discussion: Is Caste Environmental Policy?</h2>
+<p><strong>Reflection Prompt:</strong> Inyourview, shouldenvironmentalpolicyexplicitlynam ecasteas avariable — thewayit</p>
+<p>namesincom eorgeography? Whataretheargumentsforandagainstdoingso?</p>
+<p>Som epolicy makersarguethatuniversalistenvironmentalpoliciesarecaste-neutral. EJadvocatesarguetheopposite —</p>
+<p>thatwithoutnamingcaste, policyreproducesexistinginequalities. Wheredoyoustand?</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="22">
+<div class="slide-content">
+<p class="section-number">SECTION 04</p>
+<h2>Climate Justice &amp;</h2>
+<h2>Vulnerability</h2>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>Climate Justice: Why &quot;Just Climate Action&quot;</h2>
+<p>Matters</p>
+<p>Climatechangeisnotjustanenvironmentalissue — itis ajusticeissue. Thosewhocontributedleasttogreenhousegas</p>
+<p>emissionssufferthe mostfrom climateimpacts.</p>
+<p>Contribution Gap</p>
+<p>South Asiacontributes ~7% of</p>
+<p>globalhistoricalemissionsbut</p>
+<p>hosts 25%+ ofpeople mostatrisk.Intra-National Inequality</p>
+<p>Within South Asiancountries, the</p>
+<p>ruralpoor, women, andtribal</p>
+<p>com munitiesbearthehighest</p>
+<p>climateburden.Adaptation Deficit</p>
+<p>Poorestcom munitieshavethe</p>
+<p>fewestresourcestoadapt — no</p>
+<p>insurance, nosavings, no</p>
+<p>mobility.</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>Climate Vulnerability Index: South Asia</h2>
+<p>71%</p>
+<p>Bangladesh</p>
+<p>Populationlivinginhighflood-riskzones60%</p>
+<p>Pakistan</p>
+<p>Agriculturallandunderclimatestress</p>
+<p>55%</p>
+<p>India</p>
+<p>Districtsclassifiedasclimatehotspots80%</p>
+<p>Nepal</p>
+<p>Glaciallakeoutburstfloodriskzones</p>
+<p>Theseareindicativefiguresillustratingdifferentialvulnerability — theexactnumbersvarybysourceand methodology,</p>
+<p>butthepatternisconsistent.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Case Study: Char Dwellers</h2>
+<p>of Bangladesh</p>
+<p>Bangladesh&#x27;schars — riverislandsformedbysilt — arehometo</p>
+<p>millionsofthepoorestcitizens. Theyfaceannualflooding, erosion,</p>
+<p>andclimate-induceddisplacement. Chardwellersreceiveminimal</p>
+<p>stateservicesandhavenolandtitles, makingthem invisibletopolicy.</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>The Loss &amp; Damage Framework</h2>
+<p>Mitigation</p>
+<p>Reduceglobal</p>
+<p>greenhouse</p>
+<p>emissionsLoss &amp; Damage</p>
+<p>Compensate</p>
+<p>unavoidableharms</p>
+<p>to South Asian</p>
+<p>communitiesAdaptation</p>
+<p>Strengthenlocal</p>
+<p>resilienceand</p>
+<p>planning</p>
+<p>Loss &amp; Damage — formallyrecognizedat COP27 — acknowledgesthatsom eharm sfrom climatechangeareunavoidable. South Asiannations</p>
+<p>championedthisframeworkas a matterofclimatejustice, notcharity.</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Exercise: Climate Storiesfrom Your Region</h2>
+<p><strong>Storytelling Exercise:</strong> Identifyoneclimate-affectedcom munityinyourregion. Document: (1) Whatclimatic</p>
+<p>changestheyexperience, (2) Whobearsthegreatestburdenwithinthatcom munity (women? farmers?</p>
+<p>fisherfolk?), (3) Whatexistingcoping mechanism stheyuse, (4) Whatpoliciessupportorfailthem .</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="28">
+<div class="slide-content">
+<p class="section-number">SECTION 05</p>
+<h2>Legal &amp; Policy Frameworks</h2>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>The Legal Architectureof Environmental</h2>
+<p>Justice</p>
+<p>Constitutional Provisions</p>
+<p>Articles 21, 48A, and 51A(g) in India; similarprovisionsin</p>
+<p>Bangladesh, Nepal, and Pakistanconstitutionsguarantee</p>
+<p>environmentalrights.02</p>
+<p>Environmental Legislation</p>
+<p>Environment Protection Act (1986 India), Forest</p>
+<p>Conservation Act, Water Acts — theformalframework.</p>
+<p>International Law</p>
+<p>Stockholm Declaration (1972), Rio Principles (1992), Paris</p>
+<p>Agreement (2015), UN SDGs.04</p>
+<p>Com munity Rights Law</p>
+<p>Forest Rights Act (2006 India), FPICunder ILO 169 —</p>
+<p>recognizingcom munityenvironmentalentitlements.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>The Policy-Practice Gap</h2>
+<p>Whatthe Law Says</p>
+<p>Mandatory Environmental Impact Assessments</p>
+<p>Publichearingsbefore majorprojects</p>
+<p>Righttoinformationonpollutiondata</p>
+<p>TribalconsentforforestlanduseWhat Often Happens</p>
+<p>EIAsoutsourcedtoproject-friendlyconsultants</p>
+<p>Publichearingsheldwithoutnoticetoaffected</p>
+<p>com munities</p>
+<p>Pollutiondataclassifiedorsuppressed</p>
+<p>Consentbypassedthroughadministrative</p>
+<p>reclassification</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Case Study: Vedanta &amp; the Dongria Kondh</h2>
+<p>In Odisha, the Dongria Kondh Adivasicom munitysuccessfullyresisted abauxite mineon Niyamgiri Hillby Vedanta</p>
+<p>Resources — asacredsitecentraltotheirculturalidentity.</p>
+<p>Village Council Vote</p>
+<p>Under India&#x27;s Forest Rights Act,</p>
+<p>gram sabhas (villagecouncils)</p>
+<p>votedunanimouslyagainstthe</p>
+<p>minein 2013.2</p>
+<p>Supreme Court Ruling</p>
+<p>The Suprem e Courtupheldthe</p>
+<p>gram sabhadecision — a</p>
+<p>landmarkprecedentfor</p>
+<p>indigenousenvironmental</p>
+<p>consent.3</p>
+<p>Global Solidarity</p>
+<p>Amnesty International</p>
+<p>campaignslinkedglobalinvestor</p>
+<p>pressuretothelocalrights</p>
+<p>struggle.</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Toolsfor Legal Advocacy</h2>
+<p>PIL (Public Interest Litigation)</p>
+<p>India&#x27;scourtshaveaccepted PILs</p>
+<p>from ordinarycitizenson</p>
+<p>environmental matters, bypassing</p>
+<p>expensiveformallegalprocesses.Gram Sabha Resolutions</p>
+<p>Villagecouncildecisionscarrylegal</p>
+<p>weightunderthe Forest Rights Act</p>
+<p>and PESA — adirectdemocracytool.RTI (Rightto Information)</p>
+<p>Activistshaveused RTItoexpose</p>
+<p>pollutiondata, approvals, and EIA</p>
+<p>violationsin Indiasince 2005.</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="33">
+<div class="slide-content">
+<h2>Reflection: Law as Shieldand Sword</h2>
+<p><strong>Discussion Question:</strong> Cancom munitiesusethesam elegalsystem thatenablesdisplacementtoresistit?</p>
+<p>Whataretheopportunitiesandlimitsof alegalstrategyforenvironmentaljustice? Thinkofoneexamplefrom</p>
+<p>yourcountry.</p>
+<blockquote>&quot;Thelawis atool. Inwhosehandsitisheld — andwhetherthepowerlesscanwieldit — isthecentralquestionof</blockquote>
+<p>environmentaljustice.&quot;</p>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="34">
+<div class="slide-content">
+<p class="section-number">SECTION 06</p>
+<h2>Community Rights &amp;</h2>
+<h2>Forest Governance</h2>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>Forestsas Hom e, Not Just Resource</h2>
+<p>Forover 200 millionforest-dependentpeoplein South Asia, forestsarenotjusttimberandbiodiversity — theyarethe</p>
+<p>foundationoflivelihoods, culture, andidentity.</p>
+<p>Food Security</p>
+<p>Minorforestproduce (tendu</p>
+<p>leaves, mahua, bamboo) form s</p>
+<p>30–50% ofincom efor many</p>
+<p>Adivasifamilies.Cultural Identity</p>
+<p>Sacredgroves, burialsites, and</p>
+<p>seasonalfestivalsaretiedto</p>
+<p>specificforestlandscapes.Ecosystem Services</p>
+<p>Com munity-managedforests</p>
+<p>oftenoutperform stateforestsin</p>
+<p>biodiversityandcarbonstorage.</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>India&#x27;s Forest Rights Act 2006: A Landmark Law</h2>
+<p>Developmenta</p>
+<p>l Rights</p>
+<p>Forest</p>
+<p>Resource</p>
+<p>RightsCom munity</p>
+<p>Forest RightsIndividual</p>
+<p>Forest Rights</p>
+<p>The FRAwasdesignedtocorrectthe &quot;historicalinjustice&quot; ofcolonial-eraforestalienation. Implementationremainsuneven — butwherecom munitieshave</p>
+<p>claimedrights, outcomesaretransformative.</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>Case Study: Mendha-Lekha Village,</h2>
+<p>Maharashtra</p>
+<p>The Story</p>
+<p>Mendha-Lekha, a Gond Adivasivillage, becam ethefirst</p>
+<p>in Indiatoreceivecom munityforestresourcerights</p>
+<p>under FRAin 2009. Thevillagenowgoverns 1,800</p>
+<p>hectaresofforestautonomously.What Changed</p>
+<p>Villagersharvestbambooandselldirectlyat market</p>
+<p>price</p>
+<p>Foresthealthimprovedundercom munity</p>
+<p>management</p>
+<p>Villageassembly (gram sabha) holdsrealauthority</p>
+<p>Modelreplicatedacross Maharashtraandbeyond</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>Communityvs. State Forestry: A Comparison</h2>
+<p>Dimension State Forest Management Community Forest Rights</p>
+<p>Whodecides Forest Departmentofficers Gram Sabha / community</p>
+<p>Revenuesharing Minimaltocommunity Fullormajoritytocommunity</p>
+<p>Conservationoutcome Variable, oftenpoor Generallystrong</p>
+<p>Accountability Upwardtogovernment Downwardtocommunity</p>
+<p>Recognitionofculture Weakornone Centraltomanagement</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>Exercise: Forest Rights Mapping</h2>
+<p><strong>Field Exercise:</strong> Ifyouworkinornear aforestedarea, identify: (1) Whocurrentlygovernsthisforest — state,</p>
+<p>com munity, orjoint? (2) Aretherepending FRAclaim s? (3) Whatconflictsexistbetweenforest-dependent</p>
+<p>com munitiesandthe Forest Department? (4) Whatwouldgenuinecom munityforestgovernancelooklike</p>
+<p>here?</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="40">
+<div class="slide-content">
+<p class="section-number">SECTION 07</p>
+<h2>Water Justice</h2>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Water: A Rightor a Com modity?</h2>
+<p>The Human Right View</p>
+<p>The UNrecognizedwaterandsanitationas ahuman</p>
+<p>rightin 2010. This meansstateshaveobligationsto</p>
+<p>ensureuniversalaccessregardlessofabilitytopay.The Com modity View</p>
+<p>Market-basedapproachestreatwaterasaneconomic</p>
+<p>good. Proponentsarguepricingdrivesefficiency; critics</p>
+<p>argueitexcludesthepoorandcom modifies acom mon</p>
+<p>resource.</p>
+<p>In South Asia, bothframeworkscoexist — andconflict — withdeepimplicationsforequityinaccesstosafewater.</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>Who Controls Waterin South Asia?</h2>
+<p>State Utilities</p>
+<p>Managepipedwaterinurbanareas;</p>
+<p>oftenunderfundedandinequitable.Irrigation Departments</p>
+<p>Allocateriverwaterprimarilyto</p>
+<p>largefarmers; canal-tail</p>
+<p>com munitieslastinline.</p>
+<p>Private Companies</p>
+<p>Bottledwaterandtanker markets</p>
+<p>extractprofitfrom urbanpoor&#x27;s</p>
+<p>inabilitytoaccess mains.Com munity System s</p>
+<p>Traditionaltanks, step-wells, and</p>
+<p>johads managedlocally — often</p>
+<p>moreequitablebutunder-</p>
+<p>supported.</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="43">
+<div class="slide-content">
+<h2>Case Study: The Narmada</h2>
+<p>Dam Conflict</p>
+<p>The Sardar Sarovar Damonthe Narmada Riverdisplacedover</p>
+<p>200,000 people — predominantly Adivasiand Dalitcommunitiesin</p>
+<p>MP, Maharashtra, and Gujarat. The Narmada Bachao Andolan (NBA),</p>
+<p>ledinpartby Medha Patkar, became aglobalsymbolof community</p>
+<p>resistancetolargedamdisplacement.</p>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>The Water-Gender-Justice Nexus</h2>
+<p>Womenas Primary Water</p>
+<p>Collectors</p>
+<p>Inrural South Asia, womenand</p>
+<p>girlsspend 2–6 hoursdaily</p>
+<p>collectingwater — tim etaken</p>
+<p>from education, incom e, and</p>
+<p>rest.Water Scarcity Multiplies</p>
+<p>Burden</p>
+<p>Assourcesdryup, womenwalk</p>
+<p>further. Climatechangedirectly</p>
+<p>worsensgenderinequality</p>
+<p>throughwater.Water Governanceis</p>
+<p>Gendered</p>
+<p>Mostwatercom mitteesand</p>
+<p>irrigationboardsare male-</p>
+<p>dominated. Women&#x27;sknowledge</p>
+<p>oflocalwatersystem sis</p>
+<p>systematicallyexcluded.</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="45">
+<div class="slide-content">
+<p class="section-number">SECTION 08</p>
+<h2>Urban Environmental</h2>
+<h2>Justice</h2>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>The Cityasan Unequal Environmental Space</h2>
+<p>South Asiancitiesareamongthe mostenvironmentallyunequalspacesintheworld. Whereyoulivewithin acity</p>
+<p>determinesyourexposuretopollution, greenspace, floodrisk, andtoxicwaste.</p>
+<p>Air Quality</p>
+<p>Slum areasnearindustrial</p>
+<p>corridorsrecord PM2.5 levels 3–5x</p>
+<p>higherthanupper-class</p>
+<p>neighborhoodsinthesam ecity.Green Space</p>
+<p>Urbanforestsandparksclusterin</p>
+<p>wealthierzones. Informal</p>
+<p>settlementshavetheleastaccess</p>
+<p>tocooling, greenery, and</p>
+<p>recreation.Flood Risk</p>
+<p>Informalsettlementsoccupy</p>
+<p>flood-proneland — notbychoice</p>
+<p>butbecauseallotherlandis</p>
+<p>unaffordableorinaccessible.</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="47">
+<div class="slide-content">
+<h2>Case Study: Dharavi &amp; Mumbai&#x27;s</h2>
+<p>Environmental Burden</p>
+<p>Dharaviin Context</p>
+<p>Dharavi — hom eto 700,000–1 millionpeople — is</p>
+<p>surroundedbythe Mithi River, anindustrialestate, and</p>
+<p>anairport. Flooding, industrialpollution, andinadequate</p>
+<p>sanitationcompounddailyforresidents.Justice Questions</p>
+<p>Whobenefitsfrom Dharavi&#x27;slocationfordevelopers?</p>
+<p>Doresidentshave meaningfulvoicein</p>
+<p>redevelopment?</p>
+<p>Whatenvironmentalrightsdoinformalresidents</p>
+<p>hold?</p>
+<p>Howdoes &quot;slum upgrading&quot; oftendeepen</p>
+<p>displacement?</p>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Urban EJ Framework: Rights, Risks &amp; Recognition</h2>
+<p>Urbanenvironmentaljusticerequiresguaranteeingallfiverightssimultaneously — forallurbanresidents, notjustthosewithformal</p>
+<p>tenureorpoliticalpower.</p>
+<p>Rightto Safe Water</p>
+<p>Rightto Green SpaceRightto Voice</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="49">
+<div class="slide-content">
+<p class="section-number">SECTION 09</p>
+<h2>Grassroots Movements &amp;</h2>
+<h2>Advocacy</h2>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="50">
+<div class="slide-content">
+<h2>South Asia&#x27;s Environmental Movement Tradition</h2>
+<p>1 1973 — Chipko</p>
+<p>Uttarakhandwomenembracetreestoprevent</p>
+<p>com mercialfelling. Aglobalsymbolofnon-violent</p>
+<p>environmentalresistance.2 1985 — Appiko</p>
+<p>Karnatakaversionof Chipko — fisherfolkandforest</p>
+<p>com munitiesuniteagainstdestructivelogging.</p>
+<p>3 1985–2000 — NBA</p>
+<p>Narmada Bachao Andolanlinksdam displacement</p>
+<p>withhumanrights, transformingtheinternational</p>
+<p>debateonlargedam s. 4 2000s — Plachimada</p>
+<p>Kerala&#x27;stribalcom munitywinsagainst Coca-Cola</p>
+<p>overgroundwaterdepletion — Davidvs. Goliathfor</p>
+<p>com munitywaterrights.</p>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>Anatomyof a Successful Environmental Campaign</h2>
+<p>Document</p>
+<p>HarmBuild</p>
+<p>Consensus</p>
+<p>Legal &amp; Media</p>
+<p>StrategySustained</p>
+<p>Pressure</p>
+<p>Successfulcampaignsrarelywinononefrontalone. The mostdurablevictoriescombinelegalaction, com munityorganizing, media</p>
+<p>pressure, andcoalitionbuildingacrossdifferentsectors.</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Womenas Environmental</h2>
+<p>Leaders</p>
+<p>From Chipko&#x27;s Gaura Devito Medha Patkarand Bangladesh&#x27;sclimate</p>
+<p>activists, womenhaveconsistentlybeenattheforefron tof South</p>
+<p>Asianenvironmentaljusticemovements — oftendespitefacingthe</p>
+<p>doubleburdenofenvironmentalharmandgenderdiscriminationin</p>
+<p>leadership.</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Discussion: From Protestto Power</h2>
+<p><strong>Group Discussion:</strong> Whatdistinguishesenvironmental movementsthatachievelastingchangefrom thosethat</p>
+<p>don&#x27;t? Thinkof a movementinyourcontext. Whatwereitsstrengths? Itslimitations? Whatwould &quot;winning&quot;</p>
+<p>actuallylooklikeforthatcom munity?</p>
+<p>Environmentaladvocacyoftenfocusesonstoppingharm . Butenvironmentaljusticealsorequiresbuildingnew</p>
+<p>governancesystem s — notjustresistingbadones.</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="54">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Building Equitable</h2>
+<h2>Environmental</h2>
+<h2>Governance</h2>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>What Does Equitable Governance Look Like?</h2>
+<p>Recognition</p>
+<p>Acknowledgetherights, knowledge, andcultural</p>
+<p>relationshipsof marginalizedcom munitieswiththeir</p>
+<p>environments.Participation</p>
+<p>Meaningfulinclusionofaffectedcom munitiesin</p>
+<p>planning, regulation, andenforcement — notjusttoken</p>
+<p>consultation.</p>
+<p>Accountability</p>
+<p>Independent monitoring, redress mechanism s, andreal</p>
+<p>consequencesforenvironmentalviolations.Redistribution</p>
+<p>Equitablesharingofenvironmentalbenefitsand</p>
+<p>consciousreductionofburdenson marginalized</p>
+<p>com munities.</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>The EJ Governance Matrix</h2>
+<p>Governance Level Current Failure EJ Transformation</p>
+<p>National Policy Growth-first, equitysecondary Explicit equitymandatesin</p>
+<p>environmentallaw</p>
+<p>State/Province Patronage-basedenforcement Independent pollutionregulators</p>
+<p>withcommunityoversight</p>
+<p>Local Government Exclusionofinformalsettlers Participatoryurbanplanningwith</p>
+<p>tenuresecurity</p>
+<p>Project Level EIAasrubberstamp Free, Prior, Informed Consentasnon-</p>
+<p>negotiable</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Quiz: Test Your Understanding</h2>
+<p>Reflectonthesequestions — discusswith apeerorwriteyouranswers:</p>
+<p>Q1</p>
+<p>Whatarethethree</p>
+<p>dimensionsof</p>
+<p>environmentaljustice?</p>
+<p>Giveanexampleofeach</p>
+<p>from South Asia.Q2</p>
+<p>Howdoescasteshape</p>
+<p>environmentalburdenin</p>
+<p>India? Nam etwospecific</p>
+<p>mechanism s.Q3</p>
+<p>Whatisthedifference</p>
+<p>betweenclimatechange</p>
+<p>adaptationand Loss &amp;</p>
+<p>Damage? Whydoesit</p>
+<p>matterpolitically?Q4</p>
+<p>Whatdid India&#x27;s Forest</p>
+<p>Rights Act 2006 change</p>
+<p>— andwhatareits</p>
+<p>implementationgaps?</p>
+<p>Q5</p>
+<p>Nam etwotoolsthatcom munitiescanusetolegally</p>
+<p>challengeenvironmentalinjusticein India.Q6</p>
+<p>Why might a &quot;universalist&quot; environmentalpolicystill</p>
+<p>produceunequaloutcomes?</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<ul>
+<li><strong>1EJ Has Three Dimensions</strong></li>
+</ul>
+<p>Distributive, procedural, andrecognitionjustice mustallbeaddressedtogether.</p>
+<ul>
+<li><strong>2Marginalization Compounds Exposure</strong></li>
+</ul>
+<p>Caste, class, gender, andtribalidentitydeterminewhobearsenvironmentalburdens.</p>
+<ul>
+<li><strong>3Law Is Necessary But Not Sufficient</strong></li>
+</ul>
+<p>Stronglawsexist — butimplementationgapsrequirecom munityorganizingandpoliticalwill.</p>
+<ul>
+<li><strong>4Community Knowledge Is Central</strong></li>
+</ul>
+<p>Localandindigenousknowledgeofecosystem s mustbeembeddedingovernance — notjustconsulted.</p>
+<ul>
+<li><strong>5Justice Requires Redistribution</strong></li>
+</ul>
+<p>Reducingenvironmentalharm forthefew mustaccompanyexpandingenvironmentalbenefitsforthe many.</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>Environmental Justice Fairtreatmentandmeaningfulparticipationofallpeopleinenvironmentaldecisions, regardles sof</p>
+<p>identityorincome.</p>
+<p>Distributive Justice Equitablesharingofenvironmentalbenefitsandburdensacrosssociety.</p>
+<p>Procedural Justice Inclusionofaffectedcommunitiesin environmentaldecision-makingprocesses.</p>
+<p>FPIC Free, Prior, Informed Consent — therightofcommunitiestoconsentbeforeprojectsaffectingtheir</p>
+<p>landbegin.</p>
+<p>Loss &amp; Damage Climatecompensationframeworkforunavoidableharmssufferedbyvulnerablenations.</p>
+<p>Forest Rights Act India&#x27;s 2006 lawrecognizingtherightsofforest-dependentcommunitiesoverlandandresource s.</p>
+<p>PIL Public Interest Litigation — legalpetitionsfiledin India&#x27;scourtsonbehalfofpublicinterestbyany</p>
+<p>citizen.</p>
+<p>Gram Sabha Villageassemblythatholdsformaldecision-making authorityunder India&#x27;s PESAand Forest Rights</p>
+<p>Act.</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

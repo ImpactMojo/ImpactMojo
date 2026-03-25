@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Item Response Theory 101 | ImpactMojo</title>
+<meta name="description" content="Item Response Theory 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #556B2F;
+  --border-art: #2F4F4F;
+  --bg-slide: #FFFDF7;
+  --bg-section: #2F4F4F;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">DATA &amp; TECHNOLOGY IMPACTMOJO 101 SERIES</p>
+<h1>Item Response Theory 101</h1>
+<p class="subtitle">Advancedpsychometrictechniquesfordevelopingandvalidating measurementinstruments — frompovertyindicestolearning assessmentsin South Asia.</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover Today</h2>
+<p>Astructuredjourneythrough Item Response Theory — from foundationalconceptstoreal-worldapplicationin South Asiandevelopmentcontexts.</p>
+<p>Foundationsof Measurement</p>
+<p>Whyclassicalapproachesfallshort02</p>
+<p>Core IRT Concepts</p>
+<p>Parameters, models, andthelatenttrait</p>
+<p>IRT Models</p>
+<ul>
+<li><strong>1PL, 2PL, 3PLandpolytomous models04</strong></li>
+</ul>
+<p>Item Characteristic Curves</p>
+<p>Readingandinterpreting ICCs</p>
+<p>Item Fitand Model Fit</p>
+<p>Diagnosingproblem sinyourinstrument06</p>
+<p>Test Information &amp; Reliability</p>
+<p>Precisionacrosstheabilitycontinuum</p>
+<p>Differential Item Functioning</p>
+<p>Fairnessandbiasdetection08</p>
+<p>Computer Adaptive Testing</p>
+<p>Efficiencythroughadaptivedesign</p>
+<p>Practical Scale Development</p>
+<p>From item writingtofinalinstrument10</p>
+<p>IRTin Development Practice</p>
+<p>Povertyindices, welfarescores, andassessments</p>
+<p>Software &amp; Tools</p>
+<p>R, Python, andopen-sourceworkflows12</p>
+<p>Ethicsand Limitations</p>
+<p>What IRTcannot — andshouldnot — do</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Explainthecoreprinciples</p>
+<p>Articulatehow IRTdiffersfrom Classical Test Theoryandwhyit mattersfordevelopment measurement</p>
+<p>Interpret IRToutputs</p>
+<p>Readitem characteristiccurves, identifyitem parameters, andunderstandtestinformationfunctions</p>
+<p>Applytorealinstruments</p>
+<p>Design, evaluate, andrefinesurveysandassessmentsusing IRTprinciples</p>
+<p>Detectbiasandunfairness</p>
+<p>Use Differential Item Functioninganalysistoidentifyandaddress measurementinequity</p>
+<p>Userelevantsoftware</p>
+<p>Runbasic IRTanalysesusing Ror Pythonindevelopmentresearchworkflows</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 1</p>
+<h2>Foundationsof</h2>
+<h2>Measurement</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>Why Measurement Mattersin Development</h2>
+<p>Beforewecanevaluateprogram s, allocateresources, ortrackprogress, weneedtomeasurewhatwecareabout — and</p>
+<p>measureitwell.</p>
+<p>🎓 Learning</p>
+<p>Is achildactuallylearningtoread, orjustpassing a</p>
+<p>poorly-designedtest?💰 Poverty</p>
+<p>Doesourwealthindexaccuratelyrankhouseholdsby</p>
+<p>deprivation?</p>
+<p>🏥 Health</p>
+<p>Areour mentalhealthscreeningtoolsvalidacross</p>
+<p>differentcom munities?🤝 Empowerment</p>
+<p>Canwereliably measurewomen&#x27;sagencyacrossruraland</p>
+<p>urbancontexts?</p>
+<p>Bad measurementleadstobaddecisions — evenwiththebestintentions.</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>Classical Test Theory: The Starting Point</h2>
+<p>The CTT Model</p>
+<p>Observed Score = True Score + Error</p>
+<p>Simple, intuitive, andwidelyused — butbuilton</p>
+<p>assumptionsthatoftenbreakdowninpractice.Core Limitations</p>
+<p>Personabilityestimatesdependonwhichitemswere</p>
+<p>administered</p>
+<p>Item difficultydependsonwhichpeopletookthe</p>
+<p>test</p>
+<p>Reliabilityis asinglenumber — notsensitivetowhere</p>
+<p>onthescaleprecisionvaries</p>
+<p>Assumesequal measurementerrorforeveryone</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>CTTvs. IRT: A Fundamental Shift</h2>
+<p>Classical Test</p>
+<p>Theory</p>
+<p>Sample-</p>
+<p>dependent, test-</p>
+<p>dependent, single</p>
+<p>reliabilityItem</p>
+<p>Response</p>
+<p>Theory</p>
+<p>Sample-invariant,</p>
+<p>test-independent,</p>
+<p>conditional</p>
+<p>precision</p>
+<p>IRTseparatespersonabilityfrom item difficultyonto asinglesharedscale — enablingcomparisonsacrossdifferenttestsanddifferent</p>
+<p>populations.</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>The Latent Trait Concept</h2>
+<p>IRTassumesthatobservableresponsesaredrivenbyanunderlying, unobservablecharacteristic — thelatenttrait (θ ,</p>
+<p>theta).</p>
+<p>Latent Trait ( θ )</p>
+<p>Thehiddenabilityorattribute</p>
+<p>you&#x27;retryingto measure —</p>
+<p>e.g., numeracy, foodsecurity,</p>
+<p>women&#x27;sempowermentObservable Response</p>
+<p>Whatweactuallysee —</p>
+<p>correct/incorrectanswers,</p>
+<p>Likertscaleratings, multiple-</p>
+<p>choiceselectionsThe IRT Link</p>
+<p>Amathematicalfunction</p>
+<p>connectingtheprobabilityof</p>
+<p>aresponsetotheperson&#x27;s</p>
+<p>latenttraitlevel</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Reflection: Measuring What Matters</h2>
+<p>Thinkabout a measurementinstrumentyouhaveusedorencounteredinyourwork — ahouseholdsurvey, alearning</p>
+<p>assessment, or abeneficiarysatisfactiontool. Whatassumptionsdidit make? Werethoseassumptionsvalid?</p>
+<p>Consider</p>
+<p>Didthedifficultyofthequestions</p>
+<p>feelappropriateforyour</p>
+<p>respondents?Consider</p>
+<p>Wouldresultslookdifferentif a</p>
+<p>differentgrouphadansweredthe</p>
+<p>sam equestions?Consider</p>
+<p>Howdidyouinterpretscores — as</p>
+<p>absolutevaluesorrelative</p>
+<p>rankings?</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 2</p>
+<h2>Core IRT Concepts</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>Key Parametersin IRT</h2>
+<p>Everyitem inan IRTmodelischaracterizedbyparametersthatdescribehowitbehavesinrelationtothelatenttrait.</p>
+<p>Difficulty (b)</p>
+<p>Thepointonthe θ scalewhere a</p>
+<p>personhas a 50% chanceof</p>
+<p>answeringcorrectly. Higher b =</p>
+<p>harderitem .2</p>
+<p>Discrimination (a)</p>
+<p>Howsharplytheitem</p>
+<p>distinguishesbetweenpeoplejust</p>
+<p>aboveandjustbelowthe</p>
+<p>difficultythreshold. Higher a =</p>
+<p>steepercurve.3</p>
+<p>Guessing (c)</p>
+<p>Thelowerasymptote — the</p>
+<p>probabilityof acorrectresponse</p>
+<p>evenforverylow-abilitypersons</p>
+<p>(relevantfor MCQtests).</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>The Theta Scale ( θ )</h2>
+<p>Understandingthe Scale</p>
+<p>θ isstandardized: mean = 0, SD = 1</p>
+<p><strong>Rangetypically:</strong> − 3 to +3</p>
+<p>Negativevalues = belowaverage</p>
+<p>Positivevalues = aboveaverage</p>
+<p>Item sandpersonsonthesam escaleWhy This Is Powerful</p>
+<p>Whenpersonsanditem sshare ascale, wecanask: &quot;Is</p>
+<p>thisitem tooeasyortoohardforthispopulation?&quot;</p>
+<p>In alearningassessmentin Bihar, if moststudentshave θ</p>
+<p>between − 1 and +1, item swith b = 2.5 providealmostno</p>
+<p>informationforthatgroup.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>The Logistic Function: IRT&#x27;s Core Engine</h2>
+<p>LowabilityInflectionat</p>
+<p>bHighability</p>
+<p>Thelogisticfunction mapsanylevelofabilityto aprobabilityofcorrectresponse. Thesteeperthecurve, the morediscriminatingtheitem — it</p>
+<p>clearlyseparatesthosewhoknowfrom thosewhodon&#x27;t.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Case Study: ASER</h2>
+<p>Learning Assessments</p>
+<p>ASER (Annual Statusof Education Report) administerssimple oral</p>
+<p>readingandarithmetictaskstomillionsofchildrenacrossrural India</p>
+<p>and Pakistan. Using IRTprinciples, researchershaveanalyzed</p>
+<p>whetheritemsthatare &quot;easy&quot; in Punjabareequallyeasyin Odisha —</p>
+<p>andfoundsignificantvariation, pointingtotheneedforlocation-</p>
+<p>calibratedinstruments.</p>
+<p><strong>Keyinsight:</strong> Itemdifficultyisnotuniversal — itmustbe</p>
+<p>calibratedtothepopulationbeingassessed.</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Discussion: What Is Your Latent Trait?</h2>
+<blockquote>&quot;Beforeyoucan measuresomething, you mustbeabletodefineitclearlyenoughtorecognizeitwhenyouseeit.&quot; —</blockquote>
+<p>adaptedfrom measurementtheory</p>
+<p>Choose aconstruct</p>
+<p>Foodsecurity? Numeracy?</p>
+<p>Women&#x27;sdecision-making</p>
+<p>power? Sanitationbehavior?Defineitprecisely</p>
+<p>Whatdoes &quot;high&quot; and &quot;low&quot; onthis</p>
+<p>traitlooklikeinyourcontext?Identifyobservable</p>
+<p>indicators</p>
+<p>Whatquestionsortaskswould</p>
+<p>revealwheresomeonesitsonthis</p>
+<p>trait?</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">SECTION 3</p>
+<h2>IRT Models: 1PL, 2PL, 3PL &amp;</h2>
+<h2>Beyond</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>The Three Classic IRT Models</h2>
+<ul>
+<li><strong>1PL (Rasch)</strong></li>
+</ul>
+<p>Onlydifficultyvaries. Allitem s</p>
+<p>discriminateequally. Elegantand</p>
+<p>parsimonious.2</p>
+<ul>
+<li><strong>2PL</strong></li>
+</ul>
+<p>Difficulty + Discriminationvary.</p>
+<p>Moreflexible — som eitem sare</p>
+<p>sharperdiscriminatorsthanothers.3</p>
+<ul>
+<li><strong>3PL</strong></li>
+</ul>
+<p>Adds aguessingparameter. Critical</p>
+<p>for multiple-choiceexam swhere</p>
+<p>low-abilitytest-takerscanguess</p>
+<p>correctly.</p>
+<p>Choosing a modelis atrade-offbetweensimplicityandfit. The Rasch modeliswidelyfavoredinlow-resourcesettings</p>
+<p>foritstransparencyandinterpretability.</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Model Comparisonat a Glance</h2>
+<p>Feature 1PL (Rasch) 2PL 3PL Polytomous</p>
+<p>Difficulty (b) ✅ ✅ ✅ ✅</p>
+<p>Discrimination (a) Fixed = 1 ✅ ✅ ✅</p>
+<p>Guessing (c) ❌ ❌ ✅ ❌</p>
+<p>Orderedcategories ❌ ❌ ❌ ✅</p>
+<p>Bestfor Scales, surveys Cognitivetests High-stakes</p>
+<p>MCQLikertscales</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>Polytomous IRT Models</h2>
+<p>Whenresponseshaveorderedcategories (e.g., Never / Sometimes / Always), standardbinary modelsdon&#x27;tapply.</p>
+<p>Polytomous modelshandlethisgracefully.</p>
+<p>Graded Response Model</p>
+<p>(GRM)</p>
+<p>Item shaveorderedresponse</p>
+<p>categorieswithvaryingdifficulty</p>
+<p>betweencategories. Com monin</p>
+<p>attitudescalesandwelfare</p>
+<p>indices.Partial Credit Model</p>
+<p>(PCM)</p>
+<p>A Raschextensionforpartial</p>
+<p>credit — partialknowledgeearns</p>
+<p>partialcredit. Usedineducational</p>
+<p>assessmentswithconstructed</p>
+<p>responses.Rating Scale Model (RSM)</p>
+<p>Like PCMbutassumesthesam e</p>
+<p>spacingbetweencategories</p>
+<p>acrossallitem s. Usefulfor Likert</p>
+<p>scalesinsurveys.</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Case Study: Women&#x27;s</h2>
+<p>Empowerment Index,</p>
+<p>Bangladesh</p>
+<p>BRACresearchersdeveloping a Women&#x27;s Empowerment Index used</p>
+<p>the Graded Response Modeltoanalyze Likert-scaleitemson</p>
+<p>decision-making, mobility, andeconomiccontrol. The GRMrevealed</p>
+<p>thatitemson &quot;financialdecision-making&quot; werehighly discriminating,</p>
+<p>whileitemson &quot;socialmobility&quot; showedpoorfit — leading to</p>
+<p>instrumentrevisionbeforethefinalscalewasdeployedacross 8</p>
+<p>districts.</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>Choosingthe Right IRT Model</h2>
+<p>Polytomous Item s?</p>
+<p>Ar ecategoriesordered?</p>
+<p>Discrimination Varies?</p>
+<p>Doitemsdifferinslope?</p>
+<p>Guessing Likely?</p>
+<p>Is randomguessingexpected?</p>
+<p>Binary Item s?</p>
+<p>Ar e responsesyes/no?</p>
+<p>Theright modelbalancestheoreticalfitwithpracticalinterpretability. Inresource-limitedsettings, simpler modelsareoftenpreferred — providedfitis</p>
+<p>acceptable.</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="22">
+<div class="slide-content">
+<p class="section-number">SECTION 4</p>
+<h2>Item Characteristic Curves</h2>
+<h2>(ICCs)</h2>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>Readingan Item Characteristic Curve</h2>
+<p>Easy Item (b = -1)</p>
+<p>Medium Item (b = 0)</p>
+<p>Hard Item (b = +1)</p>
+<p>The ICCis IRT&#x27;ssignaturevisualization. Ittellsyou, foreverylevelofability, exactlyhowlikely apersonistoanswer</p>
+<p>correctly. Together, asetof ICCsdescribestheentirebehaviorofyourinstrument.</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>What ICCs Tell Us</h2>
+<p>Item Location</p>
+<p>Wherethecurvesitsonthe θ axis = item difficulty. Left-</p>
+<p>shifted = easy; right-shifted = hard.Item Slope</p>
+<p>Thesteepnessofthe S-curve = discrimination. Aflat</p>
+<p>curvebarelydistinguishesabilitylevels.</p>
+<p>Lower Asymptote</p>
+<p>Thefloorofthecurve = guessingparameter (c). Evenvery</p>
+<p>low-abilityrespondentshave cprobabilityof &quot;correct.&quot;Optimal Range</p>
+<p>Item sare mostinformativewherethecurveissteepest —</p>
+<p>nearthedifficultyparameter b.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Comparing Item s Visually</h2>
+<p>A Well-Discriminating Item</p>
+<p>Steep S-curve, centeredaroundthepopulation&#x27;sability</p>
+<p>range. Clearlyseparatesthosewhocanfrom thosewho</p>
+<p>cannot.</p>
+<p><strong>Us e :</strong> Coreitem sinyourinstrumentA Poorly Discriminating Item</p>
+<p>Flat, gradualslope — barely morelikelytobeanswered</p>
+<p>correctlybyhigh-abilityrespondents.</p>
+<p><strong>Ac ti o n :</strong> Reviewwording, context, orremovefrom final</p>
+<p>instrument</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>Case Study: PISA-Din Sri</h2>
+<p>Lanka</p>
+<p>Sri Lankaparticipatedin PISAfor Development (PISA-D), whichused</p>
+<p>IRTtoplaceitemsandstudentson asharedinternationalscale. ICC</p>
+<p>analysisrevealedthatseveral &quot;medium&quot; difficulty itemsfrom OECD</p>
+<p>contextsbehavedas &quot;easy&quot; itemsfor Sri Lankanstudent s — not</p>
+<p>becausestudentsweremorecapable, butbecausethe itemcontent</p>
+<p>referencedscenariosmorefamiliarinthe South Asian context. This</p>
+<p>ledtocontext-sensitiveitemrevisionprotocols.</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Exercise: Sketch Your ICC</h2>
+<p>Imagineyouaredesigning afinancialliteracyassessmentforruralself-helpgroup membersin Maharashtra. Sketch</p>
+<p>(mentallyoronpaper) theexpected ICCforeachitem :</p>
+<blockquote>&quot;Canyounameone</blockquote>
+<p>savingschemeofferedby</p>
+<p>yourbank?&quot;</p>
+<p>Easyitem — expectedcurve</p>
+<p>location?2</p>
+<blockquote>&quot;Calculatethemonthly</blockquote>
+<p>intereston a ₹10,000 loan</p>
+<p>at 2% permonth.&quot;</p>
+<p>Harderitem — expectedcurve</p>
+<p>location?3</p>
+<blockquote>&quot;Whatiscompound</blockquote>
+<p>interest?&quot;</p>
+<p>How mighturbanvs. rural</p>
+<p>membershipchangethiscurve?</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="28">
+<div class="slide-content">
+<p class="section-number">SECTION 5</p>
+<h2>Item Fitand Model Fit</h2>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>What Is Item Fit?</h2>
+<p>Anitem &quot;fits&quot; the modelwhenrespondents&#x27; actualbehavior matcheswhatthe IRTmodelpredicts. Misfitindicates</p>
+<p>somethingiswrong — withtheitem , the model, ortheassumptionof asinglelatenttrait.</p>
+<p>Underfit (Noisy)</p>
+<p>Too muchunexpectedvariation. High-ability</p>
+<p>respondentssometimesgetitwrong; low-ability</p>
+<p>sometimesright. Oftencausedbyambiguouswording</p>
+<p>orcontentoverlap.Overfit (Too Predictable)</p>
+<p>Lessvariationthanexpected. Responsesaretoo</p>
+<p>mechanical — possiblyduetoitem dependencyor</p>
+<p>teachingtothetest.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>Fit Statistics: Infitand Outfit</h2>
+<p>Statistic What It Measures Acceptable Range Red Flags</p>
+<p>Infit (MNSQ) Weightedfit 4 emphasizes</p>
+<p>personsnearitemdifficulty0.7 3 1.3 &gt;1.5 = noisyitem</p>
+<p>Outfit (MNSQ) Unweightedfit 4 sensitiveto</p>
+<p>outliersatextremes0.7 3 1.3 &lt;0.5 = Guttman-like</p>
+<p>Infit t (ZSTD) Standardizedinfitforlarge</p>
+<p>samples−2 to +2 ±2.5 = investigate</p>
+<p>Outfit t (ZSTD) Standardizedoutfitforlarge</p>
+<p>samples−2 to +2 ±2.5 = investigate</p>
+<p>Withlargesamples (N &gt; 500), ZSTDstatisticsarehypersensitive. Prioritize MNSQover ZSTDwhensamplesarelarge.</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Model Fit: The Bigger Picture</h2>
+<p>Fit Assessment</p>
+<p>Compar e ICCs, check</p>
+<p>residuals, examine</p>
+<p>M2/RMSEA</p>
+<p>IRT Model</p>
+<p>Rasch / 2PLfittedtothe</p>
+<p>responsedata</p>
+<p>Data</p>
+<p>Observed responsesfrom</p>
+<p>500 respondents</p>
+<p><strong>Modelfitasks:</strong> &quot;Doestheoverall IRTmodeladequatelydescribethedata?&quot; Com monindicesinclude M2, RMSEA, andlikelihoodratiotests</p>
+<p>comparingnested models.</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Case Study:</h2>
+<p>Multidimensional Poverty</p>
+<p>Index Validation, Nepal</p>
+<p>Aresearchteamat Tribhuvan Universitytestedwhetherthe Nepal</p>
+<p>MPIquestionnairefit aunidimensional Raschmodel. Fit analysis</p>
+<p>revealedthatitemson &quot;nutrition&quot; and &quot;schoolattendanc e&quot; formed a</p>
+<p>coherentsub-scale, while &quot;cookingfuel&quot; and &quot;flooringmaterial&quot;</p>
+<p>showedmisfit — notbecausetheitemswerepoor, butbecausethey</p>
+<p>loadedonto aseparate &quot;housingquality&quot; dimension. Thisfinding</p>
+<p>supported atwo-dimensional IRTmodelandimprovedconstruct</p>
+<p>validity.</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="33">
+<div class="slide-content">
+<h2>What To Do When Item s Misfit</h2>
+<p>Diagnose First</p>
+<p>Is misfitduetoitem wording, translationerror, response</p>
+<p>scaleconfusion, or agenuinelydifferentconstruct?Reviseand Retest</p>
+<p>Rewordambiguousitem s, simplifylanguage, pilotwith</p>
+<p>newsample</p>
+<p>Remove If Necessary</p>
+<p>Item swithpersistent misfitreducevalidity. Removing</p>
+<p>them improvesscalecoherence.Consider Multidimensionality</p>
+<p>If manyitem s misfit, yourconstruct maybe</p>
+<p>multidimensional — explorebifactorortwo-dimensional</p>
+<p>IRTmodels</p>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="34">
+<div class="slide-content">
+<p class="section-number">SECTION 6</p>
+<h2>Test Information &amp;</h2>
+<h2>Reliabilityin IRT</h2>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>The Test Information Function (TIF)</h2>
+<p>Unlike CTT&#x27;ssinglereliabilitycoefficient, IRTprovidesconditionalprecision — how muchinformationthetestprovidesateverylevelofability.</p>
+<p>Low InfoHigh</p>
+<p>PrecisionMax Info</p>
+<p>Atestdesignedforaveragelearnersprovideslittleinformationattheextremes. IRTmakesthisexplicit — andhelpsyoudesignbetter.</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>Informationvs. Reliability</h2>
+<p>CTT Reliability</p>
+<p>Asinglenumber (e.g., Cronbach&#x27;s α = 0.78)</p>
+<p>Assumesequalprecisionacrosstheentirescorerange.</p>
+<p>Usefulbutblunt.IRT Conditional Reliability</p>
+<p>Precisionvariesacross θ . Youknowwhereyourtestis</p>
+<p>strongandwhereitisweak.</p>
+<p>Standard Errorof Measurement = 1 / √ I( θ )</p>
+<p>Morehonest. Moreactionable.</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>Item Information Functions</h2>
+<p>Each Item Contributes</p>
+<p>Everyitem hasitsown</p>
+<p>informationfunction, peaking</p>
+<p>nearitsdifficultyparameter bAdditive Property</p>
+<p>Testinformation = sum of</p>
+<p>individualitem information</p>
+<p>functions. Addingitem s</p>
+<p>increasesprecision.Targeted Design</p>
+<p>Selectitem swhose bvalues</p>
+<p>clusterwhereyouneed</p>
+<p>precision — e.g., near a</p>
+<p>pass/failcutscore</p>
+<p>Ashortertestwithwell-targeteditem scanoutperform alongertestwithpoorlytargeteditem s.</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>Case Study: SEALEY</h2>
+<p>Literacy Assessment,</p>
+<p>Pakistan</p>
+<p>The SEALEY (Southand East Asia Literacyand Early Years)</p>
+<p>assessmentbatteryused Item Information Functionstodesign a 30-</p>
+<p>itemliteracyscreenerfor Grade 2 studentsin Sindh. Byselecting</p>
+<p>itemswhoseinformationfunctionspeakedbetween θ = −1.5 and +0.5</p>
+<p>(theabilityrangeofmost Grade 2 students), thetea machieved a</p>
+<p>standarderrorbelow 0.4 acrossthetargetrange — equivalentto a</p>
+<p>CTTreliabilityof 0.84 — usinghalftheoriginalitembank.</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>Designingfor Information: Practical Tips</h2>
+<p>Mapyourtarget</p>
+<p>populationfirst</p>
+<p>Estimatetheexpected θ range</p>
+<p>ofyourrespondentsbefore</p>
+<p>finalizingitem sAvoiditem redundancy</p>
+<p>Twoitem swiththesam e</p>
+<p>difficultyaddlittlenew</p>
+<p>information. Spreaditem s</p>
+<p>acrossthe θ range.Usethe TIFtojustify</p>
+<p>testlength</p>
+<p>Ifthe TIFisalreadyhighat</p>
+<p>yourcutscore, adding more</p>
+<p>item sbringsdiminishing</p>
+<p>returns</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="40">
+<div class="slide-content">
+<p class="section-number">SECTION 7</p>
+<h2>Differential Item</h2>
+<h2>Functioning (DIF)</h2>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>What Is DIF?</h2>
+<p>Differential Item Functioningoccurswhentwogroupswiththesam eunderlyingabilityhavedifferentprobabilitiesof</p>
+<p>answeringanitem correctly. DIF = potentialbias.</p>
+<p>Uniform DIF</p>
+<p>Onegroupconsistentlyoutperform stheother</p>
+<p>acrossallabilitylevels. ICCsareparallelbutoffset.Non-Uniform DIF</p>
+<p>Thegroupdifferencereversesatdifferentability</p>
+<p>levels. ICCscross — theitem favorsdifferentgroups</p>
+<p>atdifferentpointson θ .</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>DIF Detection Methods</h2>
+<p>Method Approach Best For</p>
+<p>Mantel-Haenszel Comparesoddsratiosacross</p>
+<p>matchedabilitygroupsBinaryitems, largesamples, easyto</p>
+<p>implement</p>
+<p>Logistic Regression Modelsresponseasfunctionof</p>
+<p>ability + groupmembershipUniformandnon-uniform DIF</p>
+<p>detection</p>
+<p>Lord&#x27;s Chi-Square Compares IRTparametersacross</p>
+<p>groups2PLand 3PLmodels</p>
+<p>Raju&#x27;s Area Measuresareabetweengroup ICCs Continuousmeasureof DIF</p>
+<p>magnitude</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="43">
+<div class="slide-content">
+<h2>Case Study: Gender DIFin</h2>
+<p>ASER India</p>
+<p>Asecondaryanalysisof ASER Indiadataexaminedwhether</p>
+<p>arithmeticitemsshowedgender-based DIF. Amongchildrenwith</p>
+<p>equivalentnumeracyability, boysoutperformedgirlsonword</p>
+<p>problemsinvolvingmoney, trade, andmarkettransactions — contexts</p>
+<p>inwhichboyshadmorelivedexposure. Girlsperformed equivalently</p>
+<p>onabstractcalculationitems. Findingstriggered a recommendation</p>
+<p>toreviewitemcontextdiversityinfuture ASERinstrumentstoensure</p>
+<p>gender-neutralframing.</p>
+<p>DIFisnotalwaysaboutitembias — itcanrevealgenuine</p>
+<p>differentialexperience. Theinterpretationmattersas much</p>
+<p>asthedetection.</p>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>Actingon DIF Findings</h2>
+<p>Action &amp; Outputs</p>
+<p>Reviseinstrumentand report</p>
+<p>Construct-Irrelevant?</p>
+<p>Duetoirrelevantvariance?</p>
+<p>Substantive?</p>
+<p>Expert reviewofmeaning</p>
+<p>DIF Detected</p>
+<p>Statisticalsignalpresent</p>
+<p>Notall DIFisharmful. Sometimesitreflectsgenuinedifferencesinconstructexpressionacrossgroups. Thekeyisexpertreviewalongsidestatistical</p>
+<p>detection — neverstatisticsalone.</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="45">
+<div class="slide-content">
+<p class="section-number">SECTION 8</p>
+<h2>Computer Adaptive</h2>
+<h2>Testing (CAT)</h2>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>The Logicof Adaptive Testing</h2>
+<p>In atraditionaltest, everyoneseesthesam eitem s. In a Computer Adaptive Test, thealgorithm selectsitem sinrealtim e</p>
+<p>basedontherespondent&#x27;sestimatedability — targetingitem sneartheir θ estimateateachstep.</p>
+<p>Stop &amp;</p>
+<p>ReportSelect Next</p>
+<p>ItemUpdate θAdminister</p>
+<p>ItemStart</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="47">
+<div class="slide-content">
+<h2>CAT Benefitsand Trade-offs</h2>
+<p>✅ Efficiency</p>
+<p>CATcanachieveequivalentprecisionusing 30–60%</p>
+<p>feweritem sthan afixed-form test — reducing</p>
+<p>respondentburdensignificantly✅ Precision</p>
+<p>Everyrespondentgetsitem stargetedtotheirability —</p>
+<p>more measurementprecisionwhereit matters most</p>
+<p>⚠ Requires Technology</p>
+<p>Needs adevice (tablet, phone) andofteninternet</p>
+<p>connectivity — arealconstraintinremote South Asian</p>
+<p>contexts⚠ Item Exposure</p>
+<p>Popularitem sgetoverused. Item banks mustbelarge</p>
+<p>and managedcarefullytopreventgaming</p>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>CA Tin Low-Resource</h2>
+<p>Settings</p>
+<p>Severaldevelopmentorganizationshavepiloted CAT-inspired</p>
+<p>approachesusingofflinetablets. The Pratham Education</p>
+<p>Foundation&#x27;sadaptivephone-basedliteracyscreener uses a</p>
+<p>simplified 3-stageadaptivealgorithm — notfull CAT, butdrawingon</p>
+<p>IRTitemcalibrations — toscreen 5 millionchildrenannuallywithjust</p>
+<p>10 itemsperchildwhilemaintainingdiagnosticvalidity.</p>
+<p>Full CATisnotalwaysfeasible. IRT-informedadaptive</p>
+<p>designprinciplescanstillbeappliedevenwithpape r-based</p>
+<p>orlow-techadministration.</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="49">
+<div class="slide-content">
+<p class="section-number">SECTION 9</p>
+<h2>Practical Scale</h2>
+<h2>Developmentwith IRT</h2>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="50">
+<div class="slide-content">
+<h2>The Scale Development Pipeline</h2>
+<p>IRT</p>
+<p>CalibrationPilot StudyExpert</p>
+<p>ReviewWrite Item</p>
+<p>PoolDefine</p>
+<p>Construct</p>
+<p>Robustscaledevelopmentisiterative. IRTentersatstep 4, butthequalityofsteps 1–3 determineswhether IRTanalysisyields</p>
+<p>usefulresults.</p>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>Writing Good Item sfor IRT</h2>
+<p>One Idea Per Item</p>
+<p>Double-barreledquestionsconfusebothrespondents</p>
+<p>and IRTmodelsPlain Language</p>
+<p>Usethevocabularyofyourrespondents — not</p>
+<p>technicalorbureaucraticlanguage</p>
+<p>Spread Difficulty</p>
+<p>Aim foritem sacrossthefulldifficultyrangeto</p>
+<p>maximizeinformationacrossthe θ spectrumContextual Equity</p>
+<p>Reviewitem sforcultural, gender, caste, andlanguage</p>
+<p>assumptionsbeforepiloting</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Sample Size Requirements</h2>
+<p>200</p>
+<p>Rasch / 1PL</p>
+<p>Minimum sampleforstable</p>
+<p>item calibration500</p>
+<ul>
+<li><strong>2PL Model</strong></li>
+</ul>
+<p>Minimum forreliable</p>
+<p>discriminationestimates1000</p>
+<ul>
+<li><strong>3PL Model</strong></li>
+</ul>
+<p>Requiredforstable</p>
+<p>guessingparameter</p>
+<p>estimation3x</p>
+<p>Item Pool Size</p>
+<p>Write 3× theitem syouneed</p>
+<p>— expecttodrop manyin</p>
+<p>calibration</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Case Study: India&#x27;s NIPUN</h2>
+<p>Bharat Literacy</p>
+<p>Assessment</p>
+<p>The NIPUN Bharatmission (National Initiativefor Proficiencyin</p>
+<p>Readingwith Understandingand Numeracy) required state-level</p>
+<p>Foundational Literacyand Numeracyassessmentsat Grade 3. Several</p>
+<p>statespartneredwith NCERTandexternalresearchers toapply Rasch</p>
+<p>calibrationtotheitembank — identifyingthat 40% o fdraftitems</p>
+<p>showedpoorfitorextremelyhighdifficulty, andthat astreamlined</p>
+<p>25-itemassessmentprovidedequivalentdiagnosticinformationto</p>
+<p>theoriginal 60-itemversion.</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="54">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>IRTin Development</h2>
+<h2>Practice</h2>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>IRT Applications Across Development Sectors</h2>
+<p>Poverty Measurement</p>
+<p>DHS Wealth Indexuses IRT-like</p>
+<p>methodstoconstructasset-based</p>
+<p>povertyscoresthatarecomparable</p>
+<p>acrosscountriesandsurveyrounds</p>
+<p>Learning Assessments</p>
+<p>ASER, PISA-D, NAS India, and SEALEY</p>
+<p>alluse IRTforitemcalibration, score</p>
+<p>equating, andlongitudinal</p>
+<p>comparisons</p>
+<p>Empowerment Indices</p>
+<p>WEAI (Women&#x27;s Empowermentin</p>
+<p>Agriculture Index) applies IRT</p>
+<p>principlestoconstructcomposite</p>
+<p>empowermentscoresfrom Likert-</p>
+<p>typeitems</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Equating: Linking Scores Across Tim e</h2>
+<p>Oneof IRT&#x27;s mostpowerfulapplicationsindevelopmentisscoreequating — placingresultsfrom differenttestversions</p>
+<p>ordifferentyearsontothesam escale.</p>
+<p>Why Equating Matters</p>
+<p>Totracklearningoutcomesovertim e, youneed</p>
+<p>comparablescores — evenifthequestionschanged</p>
+<p>betweenrounds.How It Works</p>
+<p>Anchoritem s (seenbyallcohorts) providethelink. IRT</p>
+<p>estimatesforanchoritem sarefixed; newitem sare</p>
+<p>calibratedrelativetothem . Thisenablestrendanalysis</p>
+<p>acrossyears, states, orprogram cycles.</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="57">
+<div class="slide-content">
+<p class="section-number">SECTION 11</p>
+<h2>Software &amp; Toolsfor IRT</h2>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>IRT Software Landscape</h2>
+<p>Tool Cost Models Supported Best For</p>
+<p>R (mirt, ltm, TAM) Free 1PLto 4PL, GRM, PCM,</p>
+<p>multidimensionalResearchers, flexibleanalysis</p>
+<p>Python (pyirt, irtorch) Free 1PL, 2PL, 3PL Tech-fluentteams, integration</p>
+<p>WINSTEPS/FACETS Paid (~$300) Rasch, partialcredit Practitioners, Raschpurists</p>
+<p>IRTPRO Paid Fullrange, DIF, CATsimulation Large-scaleassessmentagencies</p>
+<p>jMetrik Free (Java) Rasch, CTT, DIF Beginners, GUI-basedworkflow</p>
+<p>Formostdevelopmentorganizationsstartingout, the Rpackagemirt offersthebestbalanceofpower, documentation,</p>
+<p>andcommunitysupport.</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>A Basic R Workflowfor IRT</h2>
+<p># Installandloadmirtinstall.packages(&quot;mirt&quot;)</p>
+<p>library(mirt)</p>
+<p># Fit a 2PLmodeltoyourdata</p>
+<p># data = matrixofbinaryresponses (rows=persons, cols=items)</p>
+<p>model_2pl &lt;- mirt(data = responses,</p>
+<p>model = 1,</p>
+<p>itemtype = &quot;2PL&quot;)</p>
+<p># Viewitemparameterscoef(model_2pl, IRTpars = TRUE, simplify = TRUE)</p>
+<p># Plotitemcharacteristiccurvesplot(model_2pl, type = &quot;trace&quot;)</p>
+<p># Plottestinformationfunctionplot(model_2pl, type = &quot;info&quot;)</p>
+<p># Checkitemfititemfit(model_2pl)</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="60">
+<div class="slide-content">
+<p class="section-number">SECTION 12</p>
+<h2>Ethics, Equity &amp;</h2>
+<h2>Limitationsof IRT</h2>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

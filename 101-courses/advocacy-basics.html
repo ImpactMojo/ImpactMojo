@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advocacy Basics 101 | ImpactMojo</title>
+<meta name="description" content="Advocacy Basics 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #8B0000;
+  --border-art: #800020;
+  --bg-slide: #FFFDF7;
+  --bg-section: #800020;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">POLICY &amp; ECONOMICS IMPACTMOJO 101 SERIES</p>
+<h1>Advocacy Basics 101</h1>
+<p class="subtitle">Fromstakeholdermappingandmessageframingtocampaign strategyandcoalitionbuilding — apracticalguidetopolicyadvocacy in South Asia.</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover</h2>
+<p>Astructuredjourneythroughtheessentialbuildingblocksofeffectiveadvocacy.</p>
+<p>What Is Advocacy?</p>
+<p>Definitions, types, andtheadvocacyecosystem02</p>
+<p>Power &amp; Politics</p>
+<p>Understandingpowerstructuresandpoliticalcontext</p>
+<p>Stakeholder Mapping</p>
+<p>Identifyingandanalyzingkeyactors04</p>
+<p>Message Framing</p>
+<p>Craftingnarrativesthatresonateandpersuade</p>
+<p>Evidence &amp; Research</p>
+<p>Usingdataandstoriestobuildthecase06</p>
+<p>Coalition Building</p>
+<p>Organizingalliesand managingrelationships</p>
+<p>Media &amp; Communications</p>
+<p>Reachingaudiencesthrough multiplechannels02</p>
+<p>Campaign Strategy</p>
+<p>Planning, sequencing, andexecutingcampaigns03</p>
+<p>Policy Windows</p>
+<p>Timingyouradvocacyfor maximum impact</p>
+<p>Monitoring &amp; Learning</p>
+<p>Measuringadvocacyoutcomesandadapting05</p>
+<p>Ethics &amp; Self-Care</p>
+<p>Responsibleadvocacyandsustainingthework</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Defineanddistinguish</p>
+<p>Differenttypesofadvocacyandtheirappropriateuseindevelopmentcontexts</p>
+<p>Mapandanalyze</p>
+<p>Keystakeholders, powerdynamics, anddecision-makingprocesses</p>
+<p>Craftcompellingmessages</p>
+<p>Usingframing, evidence, andstorytellingtechniquestailoredtodifferentaudiences</p>
+<p>Design abasiccampaign</p>
+<p>Withgoals, tactics, timelines, andcoalitionstrategies</p>
+<p>Applyethicalframeworks</p>
+<p>Toreal-worldadvocacydilem masinthe South Asiancontext</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 1</p>
+<h2>What Is Advocacy?</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>Defining Advocacy</h2>
+<p>What Advocacy IS</p>
+<p>Deliberateefforttoinfluencepolicies, laws, or</p>
+<p>practices</p>
+<p>Speakingupforthosewhosevoicesareexcluded</p>
+<p>Buildingpowerforlastingchange</p>
+<p>Strategic, planned, andgoal-orientedWhat Advocacy Is NOT</p>
+<p>Charityorservicedeliveryalone</p>
+<p>Lobbyingforprivatecom mercialgain</p>
+<p>Propagandaor manipulation</p>
+<p>Aone-tim eprotestorpetition</p>
+<p>Advocacyisthebridgebetweenidentifying a</p>
+<p>problem andchangingthesystem thatcausesit.</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>The Advocacy Spectrum</h2>
+<p>Advocacytakes manyform s — from quietpolicybriefingsto mass mobilization. Effectiveadvocates movefluidlyacross</p>
+<p>thespectrum .</p>
+<p>Self-Advocacy</p>
+<p>Individualsspeakingupfortheirownrightsandneeds2</p>
+<p>Com munity Advocacy</p>
+<p>Organizedgroupsvoicingcollectiveconcernslocally</p>
+<p>Policy Advocacy</p>
+<p>Influencinglaws, budgets, andgovernmentdecisions4</p>
+<p>System s Change</p>
+<p>Shiftingnorm s, powerstructures, andinstitutions</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>The Advocacy Ecosystem</h2>
+<p>Advocacydoesnothappeninisolation. Itexistswithin awebofactors,</p>
+<p>institutions, anddynamics. Understandingthisecosyste misthefirststepto</p>
+<p>navigatingiteffectively.</p>
+<p>Civil Society</p>
+<p>NGOs, CBOs, socialmovements, andcommunitygroups</p>
+<p>Government</p>
+<p>Electedofficials, bureaucrats, andregulatorybodies</p>
+<p>Media</p>
+<p>Journalists, editors, socialmediainfluencers</p>
+<p>Donors &amp; Funders</p>
+<p>Foundations, bilateralagencies, andcorporates</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Case Study: RTI Movementin India</h2>
+<p>The Campaign</p>
+<p>The Rightto Information movement, ledbythe MKSSin</p>
+<p>Rajasthaninthe 1990s, beganwithjansunwais (public</p>
+<p>hearings) wherevillagersdemandedtoseegovernment</p>
+<p>expenditurerecords. Itgrewinto anationalcampaign</p>
+<p>thatproducedthe RTI Act, 2005 — oneof India&#x27;s most</p>
+<p>powerfulaccountabilitytools.Key Lessons</p>
+<p>Grassroots mobilizationcanproducenational</p>
+<p>legislation</p>
+<p>Evidenceandcom munitytestimonyarepowerfulin</p>
+<p>tandem</p>
+<p>Sustainedpressureoveryears — notweeks — drives</p>
+<p>change</p>
+<p>Localissuescanrefram enationalnarratives</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Reflection: Why Do You Advocate?</h2>
+<p>Take 5 minutes. Thinkabout apolicyorpracticeinyourcom munityorworkthatyoubelieveisunjustorineffective.</p>
+<p>Whoisaffected? Whohasthepowertochangeit? Whatwould &quot;winning&quot; looklike?</p>
+<p>The Issue</p>
+<p>Whatproblem areyouobserving?</p>
+<p>Whodoesitharm ?The Decision-Maker</p>
+<p>Whohastheauthoritytochange</p>
+<p>this?Your Role</p>
+<p>Whatpositionareyouinto</p>
+<p>advocate? From insideor</p>
+<p>outside?</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 2</p>
+<h2>Power &amp; Politics</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>Understanding Power</h2>
+<p>Alladvocacyisfundamentallyaboutpower — whohasit, whodoesn&#x27;t, andhowtoshiftit. Poweroperatesin multipleform s</p>
+<p>simultaneously.</p>
+<p>Visible Power</p>
+<p>Formalauthority — laws, elections, officialbudgetsHidden Power</p>
+<p>Informalinfluence — whosetstheagendabehindclosed</p>
+<p>doors</p>
+<p>Invisible Power</p>
+<p>Norm sandbeliefsthatshapewhatseem s &quot;natural&quot; or</p>
+<p>possiblePower Within</p>
+<p>Self-worth, agency, andbeliefinone&#x27;srighttoact</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>The Political Landscape</h2>
+<p>Politicsistheterrainonwhichadvocacyoperates. Effectiveadvocatesreadthepoliticallandscapebefore making moves.</p>
+<p>Public Opinion</p>
+<p>Civil Society</p>
+<p>SpaceInstitutional</p>
+<p>AccessPolitical</p>
+<p>Context</p>
+<p>Understandingallfourdimensionshelpsadvocateschoosewhen, where, andhowtopushforchange.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Theoriesof Changein Advocacy</h2>
+<p>Inside Strategy</p>
+<p>Workingwithgovernment</p>
+<p>officials, bureaucrats, andpolicy</p>
+<p>makersthrough meetings,</p>
+<p>researchbriefs, andconsultation</p>
+<p>processes. Bestwhenyouhave</p>
+<p>accessandtrust.Outside Strategy</p>
+<p>Public mobilization, protests,</p>
+<p>mediacampaigns, andelectoral</p>
+<p>pressure. Bestwhenaccessis</p>
+<p>limitedordecision-makersare</p>
+<p>unresponsive.Combined Strategy</p>
+<p>Usingbothinsideandoutside</p>
+<p>tacticsstrategically — alliesinside</p>
+<p>thesystem whilepressurebuilds</p>
+<p>outside. Mosteffectivefor</p>
+<p>complexpolicychange.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Case Study: Forest Rights</h2>
+<p>Act, India</p>
+<p>Context</p>
+<p>Fordecades, Adivasiandforest-</p>
+<p>dwellingcommunitieswere</p>
+<p>deniedrightstolandtheyhad</p>
+<p>cultivatedforgenerations. The</p>
+<p>Campaignfor Survivaland</p>
+<p>Dignitycombinedinside</p>
+<p>lobbying withmassiveoutside</p>
+<p>mobilization , bringing</p>
+<p>thousandsto Delhiwhile</p>
+<p>simultaneouslynegotiatingwith</p>
+<p>sympatheticministers.Outcome</p>
+<p>The Forest Rights Act (2006)</p>
+<p>recognizedlandandgovernance</p>
+<p>rightsforover 100 millionforest</p>
+<p>dwellers — alandmarkwin</p>
+<p>throughcombinedstrategy.</p>
+<p>Implementationremains</p>
+<p>contested, illustratingthat</p>
+<p>passing alawisonlyonestep.</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Power Mapping Exercise</h2>
+<p>Listallactors</p>
+<p>Whoareallthepeopleandinstitutionsconnectedto</p>
+<p>yourissue?2</p>
+<p>Assesstheirpower</p>
+<p>Whohashighvs. lowinfluenceoverthedecisionyou</p>
+<p>wantchanged?</p>
+<p>Assesstheirposition</p>
+<p>Aretheysupportive, opposed, orneutralonyour</p>
+<p>issue?4</p>
+<p>Identifyleverage</p>
+<p>What movescouldshiftneutralactorstoyourside, or</p>
+<p>isolateopponents?</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">SECTION 3</p>
+<h2>Stakeholder Mapping</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>Who Are Stakeholders?</h2>
+<p>Astakeholderisanyperson, group, orinstitutionthataffectsorisaffectedbyyouradvocacyissue. Effectiv emapping</p>
+<p>preventssurprisesandrevealsopportunities.</p>
+<p>Primary Targets</p>
+<p>Thosewithdirectpowertomake</p>
+<p>thechangeyouseekSecondary Targets</p>
+<p>Thosewhoinfluenceyourprimary</p>
+<p>targets</p>
+<p>Constituents</p>
+<p>Peoplewhoselivesaredirectly</p>
+<p>affectedbytheissue</p>
+<p>Allies</p>
+<p>Organizationsandindividualswho</p>
+<p>shareyourgoalsOpponents</p>
+<p>Thosewhoactivelyresistthe</p>
+<p>changeyouseek</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>The Stakeholder Matrix</h2>
+<p>Notallstakeholdersdeserveequalattention. Plotthem bylevelofpowerandalignmentwithyourgoalstoprioritize</p>
+<p>yourengagementstrategy.</p>
+<p>Low Power High Power</p>
+<p>Supportive Engage &amp; empower — buildtheir</p>
+<p>capacitytoamplifyCultivate &amp; mobilize — theseare</p>
+<p>yourchampions</p>
+<p>Neutral Inform &amp; educate — lowprioritybut</p>
+<p>watchforshiftsWinover — higheststrategic</p>
+<p>priority</p>
+<p>Opposed Monitor — don&#x27;tignorebutdon&#x27;t</p>
+<p>overinvestNeutralizeorbypass — manage</p>
+<p>theiropposition</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>Stakeholder Analysis: Key Questions</h2>
+<p>Whatdotheycareabout?</p>
+<p>Understandtheirinterests, incentives, andfears —</p>
+<p>notjusttheirstatedpositions.Whatdotheyknow?</p>
+<p>Aretheyinformedabouttheissue, orworkingfrom</p>
+<p>misconceptionsyoucouldaddress?</p>
+<p>Whatrelationshipsmattertothem?</p>
+<p>Whodotheytrust? Whoseopinionshapestheirs?What&#x27;stheirtimeline?</p>
+<p>Areelections, budgets, orothereventscreating</p>
+<p>pressureoropportunity?</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Case Study: Janani Suraksha Yojana Advocacy</h2>
+<p>The Issue</p>
+<p>High maternal mortalityinrural Indiawaslinkedto</p>
+<p>institutionaldeliverygaps. Civilsocietyactors, health</p>
+<p>researchers, andwomen&#x27;sgroups mapped acomplex</p>
+<p>stakeholderlandscapespanningdistricthealthofficers,</p>
+<p>ASHAs, stategovernments, andnational ministries.Stakeholder Strategy</p>
+<p>ASHAsandcom munityworkers → constituentvoices</p>
+<p>andground-leveldata</p>
+<p>Districthealthofficers → primaryimplementation</p>
+<p>targets</p>
+<p>Statehealth ministers → policyleverforbudget</p>
+<p>allocation</p>
+<p>Media → buildingpublicpressureandvisibility</p>
+<p>Tailoredengagementwitheachgrouphelpedsustainthe</p>
+<p>JSYschem ethroughpoliticaltransitions.</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>Build Your Stakeholder Map</h2>
+<p>Chooseanadvocacyissueyoucareabout. On asheetofpaper, draw acircleinthecenterwithyourissue. Nowplace</p>
+<p>6–8 stakeholdersaroundit. Foreachone, mark: theirpowerlevel (high/medium /low), theircurrentposition</p>
+<p>(support/neutral/oppose), andoneactionyoucouldtaketoengagethem .</p>
+<p><strong>Tip:</strong> Stakeholder mapsarelivingdocuments. Revisitthem asyourcampaignevolves — positionsshift, new</p>
+<p>actorsemerge, andalliancescansurpriseyou.</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="22">
+<div class="slide-content">
+<p class="section-number">SECTION 4</p>
+<h2>Message Framing</h2>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>Why Framing Matters</h2>
+<p>Thesam efactcanleadtooppositeconclusionsdependingonhowitisframed. Framingisthestrategicactofpresenting</p>
+<p>anissuein awaythatconnectswithyouraudience&#x27;svaluesand motivatesaction.</p>
+<p>Without Framing</p>
+<blockquote>&quot;30% ofchildrenin Bihararestunted.&quot;</blockquote>
+<p>With Framing</p>
+<blockquote>&quot;Everythirdchildin Biharislosingtheirchanceat a</blockquote>
+<p>healthylife — and apolicyfixalreadyexists.&quot;What Good Framing Does</p>
+<p>Connectstovaluesyouraudiencealreadyholds</p>
+<p>Makestheproblem feelurgentandsolvable</p>
+<p>Positions aclearactorasresponsible</p>
+<p>Pointstoward aspecificaskoraction</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>The Message Triangle</h2>
+<p>Your Core</p>
+<p>Message</p>
+<p>ValuesSolutionProblem</p>
+<p>Everyeffectiveadvocacy messageconnects aclearproblem to aspecificsolution, groundedinvaluesthatresonatewithyouraudience.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Tailoring Messagesto Audiences</h2>
+<p>Audience What They Care About Message Angle</p>
+<p>Electedofficial Votes, re-election, visiblewins &quot;Thispolicywillbenefityourconstituents</p>
+<p>visiblybeforethenextelection.&quot;</p>
+<p>Seniorbureaucrat Feasibility, legalcompliance, risk &quot;Thisisimplementablewithinexisting</p>
+<p>frameworksandreducesliability.&quot;</p>
+<p>Journalist Novelty, conflict, humaninterest &quot;Meetthefamiliesthispolicyisfailing — and</p>
+<p>thesimplefixthat&#x27;sbeingignored.&quot;</p>
+<p>Generalpublic Fairness, safety, theirownlives &quot;This affectspeoplelikeyou, andyoucan</p>
+<p>helpchangeit.&quot;</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>The Powerof Narrative</h2>
+<p>Datamovesminds. Storiesmovehearts. Themosteffectiv eadvocacyweaves</p>
+<p>bothtogether.</p>
+<p>The Hook</p>
+<p>Aspecificperson, moment, ordetailthatdrawsthelistenerin</p>
+<p>The Problem</p>
+<p>Whatisatstake — theinjustice, thegap, theharm</p>
+<p>The Evidence</p>
+<p>Data, research, ortestimonythatshowsthisisn&#x27;tanisolatedcase</p>
+<p>The Ask</p>
+<p>Oneclear, actionablerequestattheend</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Message Framing Practice</h2>
+<p>Takeonepolicyissueyoucareabout. Writethreedifferent 2–3 sentence messagesforit — onefor agovernment</p>
+<p>official, onefor ajournalist, andonefor acom munity member. Howdothelanguage, tone, andemphasisshift</p>
+<p>acrosseachversion?</p>
+<p><strong>Watchfor:</strong> jargon, passivevoice, andabstractions. Strong messagesarespecific, active, andhuman-centered.</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="28">
+<div class="slide-content">
+<p class="section-number">SECTION 5</p>
+<h2>Evidence &amp; Research</h2>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>Why Evidence Mattersin Advocacy</h2>
+<p>Evidencebuildscredibility, countersopposition, andhelpsdecision-makerssayyes. Butinadvocacy, evidenceisnotjust</p>
+<p>aboutbeingright — it&#x27;saboutbeingpersuasive.</p>
+<p>Quantitative Evidence</p>
+<p>Statistics, surveys, and</p>
+<p>administrativedatathatshow</p>
+<p>thescaleanddistributionof a</p>
+<p>problem . Essentialforbuilding</p>
+<p>thecasethatanissueis</p>
+<p>systemic, notindividual.Qualitative Evidence</p>
+<p>Testimonies, casestudies,</p>
+<p>ethnographies, andinterviews</p>
+<p>thatgivetheproblem ahuman</p>
+<p>face. Powerfulforemotional</p>
+<p>resonanceandillustratinglived</p>
+<p>experience.Legal &amp; Rights-Based</p>
+<p>Evidence</p>
+<p>Constitutionalprovisions,</p>
+<p>internationalconventions, and</p>
+<p>courtrulingsthatfram etheissue</p>
+<p>asanentitlement, not afavor.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>The Evidence Pyramidfor Advocacy</h2>
+<ul>
+<li><strong>1The Ask</strong></li>
+</ul>
+<p>Policysolution</p>
+<ul>
+<li><strong>2Stories</strong></li>
+</ul>
+<p>Humantestimony</p>
+<ul>
+<li><strong>3Data &amp; Research</strong></li>
+</ul>
+<p>Surveys, studies, evaluations</p>
+<ul>
+<li><strong>4Legal Framework</strong></li>
+</ul>
+<p>Rights, laws, constitutionalobligations</p>
+<ul>
+<li><strong>5Ground Reality</strong></li>
+</ul>
+<p>Com munityobservationandlivedexperience</p>
+<p>Strongadvocacystacks multipleevidencetypes. Groundrealityisthefoundation; theasksitsatthetop, supportedbyeverythingbelowit.</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Generating Your Own Evidence</h2>
+<p>Com munity Surveys</p>
+<p>Simplehouseholdorexitsurveysgeneratelocally</p>
+<p>specificdatathatofficialrecords missSocial Audits</p>
+<p>Com munity-ledreviewsofgovernmentrecords</p>
+<p>andexpenditures — pioneeredin India&#x27;s MGNREGS</p>
+<p>monitoring</p>
+<p>Documentation</p>
+<p>Photo, video, andwrittenrecordsofviolations,</p>
+<p>servicegaps, orexclusionsRTI Applications</p>
+<p>Using India&#x27;s Rightto Information Acttoextract</p>
+<p>officialdataheldbygovernmentbodies</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Case Study: ASER &amp; Education Advocacy</h2>
+<p>What ASER Did</p>
+<p>The Annual Statusof Education Report, runby Pratham ,</p>
+<p>filled acriticalevidencegapby measuringwhatchildren</p>
+<p>couldactuallydo — read, write, andsolveproblem s —</p>
+<p>ratherthanjustenrollmentrates. Byinvolvinglocal</p>
+<p>volunteersacross 600+ districts, itproduceddatathat</p>
+<p>nogovernmentsurveyhadattempted.Advocacy Impact</p>
+<p>Shiftedthenationaldebatefrom &quot;access&quot; to &quot;learning</p>
+<p>outcomes&quot;</p>
+<p>Informeddesignofthe Rightto Education Act</p>
+<p>Influenced World Bankand UNICEFeducation</p>
+<p>assessmentsglobally</p>
+<p>Createdannualaccountability momentforstate</p>
+<p>governments</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="33">
+<div class="slide-content">
+<p class="section-number">SECTION 6</p>
+<h2>Coalition Building</h2>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>Why Coalitions Work</h2>
+<p>Nosingleorganizationhasallthepower, credibility, reach, orresourcesneededfor majorpolicychange. Coalitions</p>
+<p>multiplystrength — buttheyrequirecareful management.</p>
+<p>3x</p>
+<p>More Likelyto Win</p>
+<p>Campaignswithbroadcoalitionsare</p>
+<p>significantly morelikelytoachieve</p>
+<p>policychangethansoloefforts60%</p>
+<p>Coalition Campaigns</p>
+<p>Ofsuccessfulpolicycampaignsin</p>
+<p>South Asiainvolvedformal multi-</p>
+<p>organizationcoalitions5+</p>
+<p>Sector Diversity</p>
+<p>Coalitionsspanning morethan 5</p>
+<p>sectors (civilsociety, academia,</p>
+<p>media, com munity, legal) show</p>
+<p>strongestoutcomes</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>Typesof Coalition Structures</h2>
+<p>Loose Network</p>
+<p>Sharedinformationandoccasional</p>
+<p>jointaction. Lowcom mitment, high</p>
+<p>flexibility. Goodforearlystages.Coordinating Coalition</p>
+<p>Regularcoordinationonstrategy</p>
+<p>and messaging. Sharedplatform s</p>
+<p>butindependentaction. Most</p>
+<p>com mon.Formal Alliance</p>
+<p>Jointdecision-making, shared</p>
+<p>resources, andunifiedpublicvoice.</p>
+<p>Highcom mitment, highimpact.</p>
+<p>Requiresgovernance.</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>Managing Coalition Tensions</h2>
+<p>Coalitionsaremessy. Anticipatethesecommontensionsandaddressthemearly.</p>
+<p>Common Tension Why It Arises Howto Manage</p>
+<p>Creditandvisibility Organizationsneedtoshow</p>
+<p>funderstheirroleAgreeonjointattribution</p>
+<p>protocolsupfront</p>
+<p>Tacticaldisagreements Differentrisktolerancesand</p>
+<p>approachesDefinedecision-making</p>
+<p>processincoalitioncharter</p>
+<p>Fundinginequity Largerorgsabsorbresources;</p>
+<p>smallerorgsfeelmarginalizedTransparentbudgetingand</p>
+<p>equitabletask-sharing</p>
+<p>Ideologicaldifferences Differenttheoriesofchangeor</p>
+<p>politicalalignmentsFocusonsharedgoals, not</p>
+<p>sharedworldviews</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>Case Study: Child Labour Campaignsin</h2>
+<p>Pakistan</p>
+<p>The Coalition</p>
+<p>The Pakistan Carpet Weavingcampaignunitedlabor</p>
+<p>unions, children&#x27;srights NGOs, international</p>
+<p>developmentagencies, consumeradvocacygroupsin</p>
+<p>Europe, andsympathetic Pakistaniparliamentarians.</p>
+<p>Eachbroughtuniqueleverage — localcredibility,</p>
+<p>internationalpressure, legalexpertise, andeconomic</p>
+<p>data.Coalition Design Lessons</p>
+<p>Differentactorscantargetdifferentpressurepoints</p>
+<p>simultaneously</p>
+<p>Internationalcoalitionsrequirebalancingglobal</p>
+<p>norm swithlocalleadership</p>
+<p>Structuredcom municationprotocolsprevent mixed</p>
+<p>messaging</p>
+<p>Economicarguments (tradeaccess) complemented</p>
+<p>rights-basedframing</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="38">
+<div class="slide-content">
+<p class="section-number">SECTION 7</p>
+<h2>Media &amp; Communications</h2>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>The Media Landscapein South Asia</h2>
+<p>Advocacycommunicatorsmustnavigate afragmented, fast -changingmediaenvironmentwheretraditional, digital, andsocialchannels</p>
+<p>coexistandinteract.</p>
+<p>Print &amp; Regional Media</p>
+<p>Highlytrustedin Tier 2/3 cities. Regional-</p>
+<p>languagepapersreachcommunitiesthat</p>
+<p>Englishmediaignores.</p>
+<p>Broadcast Media</p>
+<p>TVnewsreachesmassaudiencesbutis</p>
+<p>increasinglypolarized. Selectchannelsand</p>
+<p>timeslotsstrategically.</p>
+<p>Digital &amp; Social Media</p>
+<p>WhatsAppiskingformobilization. Twitter/X</p>
+<p>shapeselitediscourse. Instagramreaches</p>
+<p>youngerdemographics.</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>Developing a Media Strategy</h2>
+<p>Define ObjectiveIdentify Audience</p>
+<p>Choose ChannelsDevelop Messages</p>
+<p>Amediastrategyisnotjustaboutgettingcoverage — it&#x27;saboutreachingtherightpeoplewiththeright messageattherighttim eto moveyouradvocacygoal</p>
+<p>forward.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Working With Journalists</h2>
+<p>Make It Newsworthy</p>
+<p>Tieyourissueto acurrentevent, adatarelease, oran</p>
+<p>anniversary. Journalistscoverwhatisnew, relevant,</p>
+<p>orsurprising.Build Relationships First</p>
+<p>Don&#x27;tonlycontactjournalistswhenyouneed</p>
+<p>coverage. Shareusefulinformationregularly. Be a</p>
+<p>reliablesource.</p>
+<p>Provide Access</p>
+<p>Offerinterviewswithcom munity members, field</p>
+<p>visits, andexclusivedata. Makeiteasyforjournalists</p>
+<p>totellthestory.Respectthe Brief</p>
+<p>Keeppressreleasesunderonepage. Leadwiththe</p>
+<p>news. Provide aclearquote. Includeonelinkor</p>
+<p>contactforfollow-up.</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="42">
+<div class="slide-content">
+<p class="section-number">SECTION 8</p>
+<h2>Campaign Strategy</h2>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="43">
+<div class="slide-content">
+<h2>The Anatom yof a Campaign</h2>
+<ul>
+<li><strong>1 Phase 1: Research</strong></li>
+</ul>
+<p>Stakeholder mapping, problem analysis, evidencegathering, coalition</p>
+<p>formation</p>
+<ul>
+<li><strong>2 Phase 2: Design</strong></li>
+</ul>
+<p>Definegoals, strategy, messages, andtheoryofchange</p>
+<ul>
+<li><strong>3 Phase 3: Build</strong></li>
+</ul>
+<p>Recruitallies, develop materials, trainspokespeople, establish media</p>
+<p>relationships</p>
+<ul>
+<li><strong>4 Phase 4: Launch</strong></li>
+</ul>
+<p>Coordinatedpubliclaunch, mediacoverage, visibleevents</p>
+<ul>
+<li><strong>5 Phase 5: Sustain</strong></li>
+</ul>
+<p>Maintainpressure, respondtosetbacks, keepcoalitionengaged</p>
+<ul>
+<li><strong>6 Phase 6: Win &amp; Consolidate</strong></li>
+</ul>
+<p>Securethechange, monitorimplementation, celebrateandreflect</p>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>Setting SMART Advocacy Goals</h2>
+<p>Vaguegoalsproducevagueresults. Effectivecampaignsbeginwithsharp, specificgoalsthatguideeverytactical</p>
+<p>decision.</p>
+<p>Specific</p>
+<p>Whatexactlydoyouwant</p>
+<p>changed — whichpolicy, budget</p>
+<p>line, orpractice?Measurable</p>
+<p>Howwillyouknowwhenyou&#x27;ve</p>
+<p>achievedit?Achievable</p>
+<p>Isthisrealisticgivenyour</p>
+<p>resources, timefram e, and</p>
+<p>politicalcontext?</p>
+<p>Relevant</p>
+<p>Doeswinningthisgoal meaningfullyimprovelives?Time-bound</p>
+<p>Bywhen? What milestones markprogressalongthe</p>
+<p>way?</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>Case Study: Swachh Bharat</h2>
+<p>Advocacy Dynamics</p>
+<p>Multiple Campaigns, One</p>
+<p>Issue</p>
+<p>Opendefecationeliminationsaw</p>
+<p>paralleladvocacystreams:</p>
+<p>community-led Total Sanitation</p>
+<p>Campaigns (CLTS) focusedon</p>
+<p>behaviorchange; rights-based</p>
+<p>groupspushedforinfrastructure</p>
+<p>entitlements; feminist</p>
+<p>organizationshighlightedthe</p>
+<p>safetydimensionforwomen. Each</p>
+<p>pursueddifferentgoalsbut</p>
+<p>collectivelybuiltpoliticalwillfor a</p>
+<p>nationalpush.Strategic Takeaway</p>
+<p>Campaignsonthesame</p>
+<p>issuedon&#x27;talwaysneedto</p>
+<p>coordinate. Sometimes</p>
+<p>parallelpressurefrom</p>
+<p>differentanglesismore</p>
+<p>effectivethanforced</p>
+<p>unity.</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>Tactics Menu</h2>
+<p>Category Tactic Best For</p>
+<p>Directengagement Policybriefs, meetings, consultations Buildingtrustwithdecision-makers</p>
+<p>Publicpressure Rallies, protests, petitions, social</p>
+<p>mediaSignalingscaleandurgency</p>
+<p>Legalaction PILs, RTI, ombudsmancomplaints Forcingcomplianceandtransparency</p>
+<p>Electoral Votereducation, candidate</p>
+<p>commitmentsCreatingaccountabilitybeforeelections</p>
+<p>Economic Boycotts, supplychainpressure Targetingprivatesectoractors</p>
+<p>Narrative Documentary, art, streettheatre Shiftingpublicopinionandnorms</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="47">
+<div class="slide-content">
+<p class="section-number">SECTION 9</p>
+<h2>Policy Windows</h2>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Kingdon&#x27;s Multiple Stream s Framework</h2>
+<p>Policychangehappenswhenthreestream salignsimultaneously — creating a &quot;policywindow.&quot; Effectiveadvocates</p>
+<p>prepareforthese momentsand movequicklywhentheyopen.</p>
+<p>Problem Stream</p>
+<p>Acrisis, newdata, ordramatic</p>
+<p>event makesthepublicand</p>
+<p>decision-makersawarethat</p>
+<p>actionisneedednowPolicy Stream</p>
+<p>Aviable, feasiblesolutionis</p>
+<p>alreadyavailable — prepared</p>
+<p>byresearchers, thinktanks,</p>
+<p>orexperiencedpractitionersPolitics Stream</p>
+<p>Politicalwillexists — anelection,</p>
+<p>anewgovernment, achampion</p>
+<p>inpower, or ashiftinpublic</p>
+<p>mood</p>
+<p><strong>Theadvocate&#x27;sjob:</strong> Keepyoursolutionready. Whentheproblem stream andpoliticsstream align, you mustbe</p>
+<p>poisedtoact.</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>Recognizing Policy Windowsin South Asia</h2>
+<p>Budget Cycles</p>
+<p>Pre-budgetsubmissionsandconsultations (typically</p>
+<p>November–Januaryin India) arereliableannual</p>
+<p>windowsforfiscalasksElections</p>
+<p>Pre-electionperiodsofferleverageforextracting</p>
+<p>com mitments — manifestoprocesses, candidate</p>
+<p>debates, voterpledges</p>
+<p>Crisis Events</p>
+<p>Disasters, scandals, orhigh-profileincidentscreate</p>
+<p>publicpressureforrapidreform — ifyou&#x27;rereadywith</p>
+<p>solutionsNew Leadership</p>
+<p>Transitionsin ministry, districtadministration, or</p>
+<p>organizationalleadershipoffer areset momentto</p>
+<p>introducenewpriorities</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="50">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Monitoring &amp; Learning</h2>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>Measuring Advocacy Outcomes</h2>
+<p>Advocacyisnotoriouslyhardto measure — changehappensslowly, through manyhands, innon-linearways. Butlearningrequires</p>
+<p>intentionalreflection, notjustcelebration.</p>
+<p>Inputs</p>
+<p>Whatresources, activities, andrelationshipsdidwedeploy?2</p>
+<p>Outputs</p>
+<p>Whatdidweproduce? (eventsheld, mediahits, meetings,</p>
+<p>briefs)</p>
+<p>Outcomes</p>
+<p>Whatchanged? (stakeholderpositions, policycom mitments,</p>
+<p>norm s)4</p>
+<p>Impact</p>
+<p>Whatchangedforthepeopleweadvocatewithandfor?</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>The Advocacy Learning Cycle</h2>
+<p>Plan</p>
+<p>Setgoalsandhypothesesabout</p>
+<p>whatwillworkAct</p>
+<p>Implementcampaignactivitiesand</p>
+<p>tactics</p>
+<p>Observe</p>
+<p>Trackoutputs, monitorstakeholder</p>
+<p>responses, gatherfeedbackReflect</p>
+<p>Askwhatworked, whatdidn&#x27;t, and</p>
+<p>why — adaptyourtheoryofchange</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Common Advocacy Failures — and Whatto</h2>
+<p>Learn</p>
+<p>Common Failure Root Cause Learning</p>
+<p>Policypassedbutnotimplemented Focusedonpassage, not</p>
+<p>implementationecosystemPlanforimplementation</p>
+<p>advocacyfromthestart</p>
+<p>Coalitioncollapsedmid-campaign Nogovernancestructureor</p>
+<p>shareddecisionprocessBuildcoalitioninfrastructure</p>
+<p>beforelaunch</p>
+<p>Messagedidn&#x27;tlandwithkeyaudience Messagetestedin-house, not</p>
+<p>withactualaudiencePre-testmessageswith</p>
+<p>representativeaudience</p>
+<p>members</p>
+<p>Lostthepolicywindow Solutionwasn&#x27;treadywhen</p>
+<p>opportunityaroseKeepsolutions &quot;offtheshelf&quot; and</p>
+<p>readytodeploy</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="54">
+<div class="slide-content">
+<p class="section-number">SECTION 11</p>
+<h2>Ethics &amp; Self-Carein</h2>
+<h2>Advocacy</h2>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>Ethical Dimensionsof Advocacy</h2>
+<p>Advocatesholdsignificantpower — torepresentcom munities, shapenarratives, andclaim legitimacy. Withthatpowercomes</p>
+<p>responsibility.</p>
+<p>Representation &amp; Voice</p>
+<p>Arethecom munities mostaffectedbytheissueleading</p>
+<p>andshapingthecampaign — orbeingspokenforwithout</p>
+<p>their meaningfulparticipation?Accuracy &amp; Honesty</p>
+<p>Isevidenceusedfairlyandaccurately, orselectivelyto</p>
+<p>support apredeterminedconclusion? Advocacybuilton</p>
+<p>distorteddataundermineslong-term credibility.</p>
+<p>Do No Harm</p>
+<p>Couldthiscampaignputcom munity members,</p>
+<p>informants, oralliedorganizationsatrisk? Safety must</p>
+<p>beconsideredbeforevisibility.Transparency</p>
+<p>Arefundingsourcesandorganizationalinterests</p>
+<p>disclosed? Whobenefitsifthiscampaignsucceeds?</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Sustainingthe Advocate</h2>
+<p>Advocacyis alonggame. Burnout, compassionfatigue, an d</p>
+<p>disillusionmentareoccupationalhazards. Sustainable advocacyrequires</p>
+<p>sustainableadvocates.</p>
+<p>Celebrate</p>
+<p>Small Wins</p>
+<p>Markmilestones —</p>
+<p>notjustvictories.</p>
+<p>Progressmatters.Peer Support</p>
+<p>Buildcommunities</p>
+<p>ofpracticeand</p>
+<p>mutualcarewithin</p>
+<p>teamsReflective</p>
+<p>Practice</p>
+<p>Regularstructured</p>
+<p>reflection</p>
+<p>preventsreactive,</p>
+<p>exhausted</p>
+<p>decision-making</p>
+<p>Know Your Limits</p>
+<p>Settingboundariesisnotfailure — itisstrategyforthelonghaul</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Quiz: Test Your Understanding</h2>
+<p>1. Whichofthefollowingbestdefines &quot;advocacy&quot;?</p>
+<p>A) Providingdirectservicestopeopleinneed   B) Deliberateefforttoinfluencepolicies, laws, orpractices   C) Fundraisingfordevelopmentprojects   D)</p>
+<p>Publishingresearchfindings</p>
+<p>2. In astakeholder matrix, whichquadrantdeservesyourhigheststrategicpriority?</p>
+<p>A) Lowpower + supportive   B) Highpower + opposed   C) Highpower + neutral   D) Lowpower + neutral</p>
+<p>3. The RTImovementin Indiabeganin whichstate?</p>
+<p>A) Gujarat   B) Maharashtra   C) Rajasthan   D) Kerala</p>
+<p>4. Kingdon&#x27;s &quot;policy window &quot; opens when:</p>
+<p>A) Adonoragreestofundadvocacy   B) Problem , policy, andpoliticalstream salign   C) Anewgovernmentiselected   D) Acoalitionisformallylaunched</p>
+<p>5. Whichis NOTaform ofvisiblepower?</p>
+<p>A) Legislation   B) Electoralsystem s   C) Beliefsaboutwhatis &quot;natural&quot;   D) Officialbudgets</p>
+<p>6. An &quot;outsidestrategy&quot; inadvocacy means:</p>
+<p>A) Workingwithinternationalorganizations   B) Public mobilizationandpressurecampaigns   C) Hiringexternalconsultants   D) Focusingonlyonrural</p>
+<p>com munities</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>Advocacyisstrategicandpurposeful</p>
+<p>Itisthedeliberateefforttochangethesystem s, policies, andpowerstructuresthatshapepeople&#x27;slives — notcharity, notservicedeliveryalone.</p>
+<p>Poweranalysisisfoundational</p>
+<p>Understandingvisible, hidden, andinvisiblepowerhelpsyouchoosetherightstrategy — inside, outside, orcombined.</p>
+<p>Stakeholder mapsarelivingtools</p>
+<p>Regularlyupdateyouranalysisaspositionsshift, newactorsemerge, andpoliticalcontextevolves.</p>
+<p>Fram eforyouraudience</p>
+<p>Thesam efactlandsdifferentlydependingonwhohearsit. Tailoryour messagetothevalues, interests, andincentivesofeachaudience.</p>
+<p>Coalitions multiplystrength</p>
+<p>Builddiversealliances — butinvestincoalitiongovernanceto managetheinevitabletensions.</p>
+<p>Timingisstrategy</p>
+<p>Preparesolutionsinadvance, andbereadyto movedecisivelywhenpolicywindowsopen — budgetcycles, elections, crises.</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>Advocacy Deliberate, strategicefforttoinfluencepolicies, laws, socialnorms, orresourceallocationinorder to</p>
+<p>improvelives</p>
+<p>Stakeholder Anyperson, group, orinstitutionthataffectsoris affectedbyyouradvocacyissue</p>
+<p>Framing Thestrategicpresentationofanissuetoconnect withspecificvaluesandmotivateactionfrom atarget</p>
+<p>audience</p>
+<p>Coalition Aformalorinformalallianceoforganizationsworkingtogethertoward asharedadvocacygoal</p>
+<p>Theoryof Change Anexplicitarticulationofhowandwhy asetofactivitiesisexpectedtoleadtodesiredpolicyor social</p>
+<p>change</p>
+<p>Policy Window Amomentwhenproblem, policy, andpoliticalstreams align, creatingopportunityforsignificantpolicy</p>
+<p>change (Kingdon)</p>
+<p>Power Mapping Avisualoranalyticaltoolthatpositionskeyactorsbytheirlevelofpowerandalignmentwithyour</p>
+<p>advocacygoals</p>
+<p>Inside/Outside Strategy Workingwithininstitutions (inside) vs. publicmobilizationandpressure (outside) — oftenusedin</p>
+<p>combination</p>
+<p>Social Audit Community-ledreviewofgovernmentrecordsandexpenditure, pioneeredin Indiaasanaccountability</p>
+<p>mechanism</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="60">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>Foundational Texts</p>
+<p>Advocacyfor Social Justice — David Cohen, Rosadela</p>
+<p>Vega, Gabrielle Watson (Kumarian Press)</p>
+<p>Agendas, Alternativesand Public Policies — John W .</p>
+<p>Kingdon (onpolicywindows)</p>
+<p>Rulesfor Radicals — Saul Alinsky (com munity</p>
+<p>organizingclassics)</p>
+<p>Just Associates Power Analysis Framework — JASS</p>
+<p>(freeonline)</p>
+<p>South Asian Resources</p>
+<p>MKSS India — mkss.in (RTIandsocialauditresources)</p>
+<p>Accountability Initiative — accountabilityindia.in</p>
+<p>PRS Legislative Research — prsindia.orgOnline Platform s</p>
+<p>Transparency International South Asiaresources</p>
+<p>CIVICUS Monitor — civicus.org (civicspacedata)</p>
+<p><strong>ODI:</strong> Overseas Development Instituteresearch</p>
+<p>ASER Reports — asercentre.org</p>
+<p>Related ImpactMojo Courses</p>
+<p>Policy Analysis 101 — Understandinghowpolicyis</p>
+<p>made</p>
+<p>Community Organizing 101 — Grassroots mobilization</p>
+<p>skills</p>
+<p>Datafor Development 101 — Usingevidencein</p>
+<p>developmentpractice</p>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

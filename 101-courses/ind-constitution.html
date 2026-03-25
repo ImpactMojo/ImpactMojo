@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian Constitution 101 | ImpactMojo</title>
+<meta name="description" content="Indian Constitution 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #228B22;
+  --border-art: #006400;
+  --bg-slide: #FFFDF7;
+  --bg-section: #006400;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">Indian Constitution 101</p>
+<h1>Understandingtheframeworkthatshapes India&#x27;sdemocracy —</h1>
+<p class="subtitle">rights, duties, andgovernanceforall. IMPACTMOJO 101 SERIES PHILOSOPHY &amp; GOVERNANCEwww.impactmojo.in</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover</h2>
+<p>Origins &amp; Makingofthe Constitution</p>
+<p>Historicalcontext, Constituent Assembly, keyarchitects02</p>
+<p>Preamble &amp; Core Philosophy</p>
+<p>Values, ideals, andthesoulofthe Constitution</p>
+<p>Fundamental Rights</p>
+<p>Articles 12–35, justiciablerightsofcitizens04</p>
+<p>Directive Principles &amp; Fundamental Duties</p>
+<p>Articles 36–51A, non-justiciableguidingprinciples</p>
+<p>Federal Structure</p>
+<p>Centre-Staterelations, legislativelists, cooperativefederalism06</p>
+<p>Parliament &amp; Legislature</p>
+<p>Lok Sabha, Rajya Sabha, law-makingprocess</p>
+<p>Executive &amp; Judiciary</p>
+<p>President, Prim e Minister, Suprem e Court, High Courts02</p>
+<p>Constitutional Amendments</p>
+<p>Howthe Constitutionevolves — proceduresandlandmarkchanges</p>
+<p>Emergency Provisions</p>
+<p>Articles 352–360, national, state, andfinancialemergencies04</p>
+<p>Constitutional Bodies &amp; Commissions</p>
+<p>Election Com mission, CAG, NHRC, and more</p>
+<p>Constitution &amp; Social Justice</p>
+<p>Reservations, genderjustice, minorityrights06</p>
+<p>Living Constitution</p>
+<p>Contemporarydebates, judicialactivism , andfuturechallenges</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Explainthe Constitutional Framework</p>
+<p>Describethestructure, philosophy, and major</p>
+<p>provisionsofthe Indian Constitutionwithconfidence.Analyze Rights &amp; Duties</p>
+<p>Distinguishbetween Fundamental Rights, Directive</p>
+<p>Principles, and Fundamental Duties — andtheir</p>
+<p>practicalimplications.</p>
+<p>Understand Federal Dynamics</p>
+<p>Explainhowpowerissharedbetweenthe Centreand</p>
+<p>Statesandwhyit mattersfordevelopment.Applyto Real Contexts</p>
+<p>Connectconstitutionalprovisionstorealpolicy, social</p>
+<p>justice, andgrassrootsdevelopmentissuesin South</p>
+<p>Asia.</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 1</p>
+<h2>Origins &amp; Makingofthe</h2>
+<h2>Constitution</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>Why Does India Need a Written Constitution?</h2>
+<p>The Challengeof 1947</p>
+<p>Indiaemergedfrom colonialruleasanextraordinarily</p>
+<p>diversenation — hundredsoflanguages, religions,</p>
+<p>castes, andprincelystates. Asharedlegalframework</p>
+<p>wasessentialtounity.What a Constitution Does</p>
+<p>Definestherelationshipbetweenthe Stateand</p>
+<p>citizens</p>
+<p>Establishestheorgansofgovernmentandtheir</p>
+<p>powers</p>
+<p>Setslimitsongovernmentalauthority</p>
+<p>Enshrinesvaluesthatguidepubliclife</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>The Roadtothe Constitution</h2>
+<p>1 1934</p>
+<p>M.N. Royfirstproposestheideaof a Constituent Assemblyfor India</p>
+<p>2 1940</p>
+<p>August Offeracknowledgesneedfor Indianparticipationin</p>
+<p>constitution-making</p>
+<ul>
+<li><strong>3 Dec 1946</strong></li>
+</ul>
+<p>Constituent Assemblyfirst meetsunder Dr. Rajendra Prasadas</p>
+<p>President</p>
+<ul>
+<li><strong>4 Aug 1947</strong></li>
+</ul>
+<p>Independence — Constituent Assemblybecomessovereignbody</p>
+<ul>
+<li><strong>5 Nov 1949</strong></li>
+</ul>
+<p>Constitutionadopted; 284 memberssignthefinaldocument</p>
+<ul>
+<li><strong>6 Jan 26, 1950</strong></li>
+</ul>
+<p>Constitutioncomesintoforce — Republic Dayisborn</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>Key Architectsofthe</h2>
+<p>Constitution</p>
+<p>Dr. B.R. Ambedkar</p>
+<p>Chairmanofthe Drafting Committee; primarydrafterofthefinaltext</p>
+<p>Jawaharlal Nehru</p>
+<p>Movedthe Objectives Resolution; shapedthe Preamble&#x27;s vision</p>
+<p>Sardar Patel</p>
+<p>Guidedintegrationofprincelystates; chairedkeycommittees</p>
+<p>B.N. Rau</p>
+<p>Constitutional Adviserwhopreparedtheinitialdraft basedonglobal</p>
+<p>constitutions</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Sourcesofthe Indian Constitution</h2>
+<p>India&#x27;s Constitutionis athoughtfulsynthesisofthebestglobalconstitutionaltraditions.</p>
+<p>United Kingdom</p>
+<p>Parliamentarysystem , Cabinetgovernment, Rule</p>
+<p>of Law, singlecitizenshipUnited States</p>
+<p>Fundamental Rights, judicialreview, independence</p>
+<p>ofjudiciary, preamble</p>
+<p>Ireland</p>
+<p>Directive Principlesof State Policy, methodof</p>
+<p>presidentialelectionCanada</p>
+<p>Federalstructurewith astrong Centre, residuary</p>
+<p>powerswith Centre</p>
+<p>Germany (Weimar)</p>
+<p>Suspensionof Fundamental Rightsduring</p>
+<p>emergencySouth Africa</p>
+<p>Amendmentprocedure, electionof membersto</p>
+<p>Rajya Sabha</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Reflection: Who Wasinthe Room?</h2>
+<p>The Constituent Assembly — Bythe Numbers</p>
+<p>389</p>
+<p>Total Members</p>
+<p>Representativesfrom provinces</p>
+<p>andprincelystates15</p>
+<p>Women Members</p>
+<p>Including Sarojini Naidu, Hansa</p>
+<p>Mehta, and Rajkumari Amrit</p>
+<p>Kaur</p>
+<p>2 yrs</p>
+<ul>
+<li><strong>11 Months</strong></li>
+</ul>
+<p>Tim etakentodraftthe</p>
+<p>Constitution (Dec 1946 – Nov</p>
+<p>1949)Discussion Prompt</p>
+<p>The Assemblywasnotdirectlyelectedbyuniversal</p>
+<p>franchise — itwaschosenbyprovinciallegislative</p>
+<p>assembliesunderlimitedfranchise. Whosevoiceswere</p>
+<p>centered? Whosewere missing? Howdoesrepresentation</p>
+<p>inconstitution-makingshapethedocumentitself?</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 2</p>
+<h2>Preamble &amp; Core</h2>
+<h2>Philosophy</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>The Preamble: Soulofthe Constitution</h2>
+<blockquote>&quot;We, the Peopleof India, havingsolemnlyresolvedtoconstitute Indiainto a Sovereign, Socialist, Secular,</blockquote>
+<p>Democratic Republicandtosecuretoallitscitizens: Justice, Liberty, Equalityandtopromoteamongthem all</p>
+<p>Fraternity...&quot;</p>
+<p>The Preambleistheconstitutionalidentitycard — not merely adecorativeintroductionbut aguidetointerpretingevery</p>
+<p>provisionthatfollows. The Suprem e Courtin Kesavananda Bharati (1973) confirmeditispartofthe Constitution.</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>Unpackingthe Key Words</h2>
+<p>Sovereign</p>
+<p>Indiaisinternallyandexternallysuprem e — noexternalauthoritycanoverrideitslaws</p>
+<p>Socialist</p>
+<p>Addedin 1976 (42nd Amendment) — com mitmenttoreducinginequalityandstate-guidedwelfare</p>
+<p>Secular</p>
+<p>Statehasnoofficialreligion; treatsallreligionsequally (addedin 1976)</p>
+<p>Democratic</p>
+<p>Governmentderivesauthorityfrom thepeoplethroughfreeandfairelections</p>
+<p>Republic</p>
+<p>Headof Stateiselected, nothereditary — the Presidentof India</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>The Four Constitutional Goals</h2>
+<p>JusticeLiberty</p>
+<p>EqualityFraternity</p>
+<p>Thesefourgoalsareinterdependent — libertywithoutequalitycanbecom eprivilege, andequalitywithoutfraternitycanbecom ecolduniformity.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Case Study: Preamblein</h2>
+<p>Action — Indra Sawhney</p>
+<p>(1992)</p>
+<p>The Context</p>
+<p>Whenthegovernment</p>
+<p>implemented Mandal Commission</p>
+<p>recommendationsfor OBC</p>
+<p>reservations (27%), itwas</p>
+<p>challengedasviolatingequality.</p>
+<p>The Supreme Courtupheld</p>
+<p>reservations — reasoningdirectly</p>
+<p>fromthe Preamble&#x27;scommitment</p>
+<p>tosocialjusticeandequalityof</p>
+<p>opportunity .Key Lesson</p>
+<p>The Preambleisnotdecorative —</p>
+<p>courtsuseittoresolveconflicts</p>
+<p>betweendifferentprovisionsand</p>
+<p>todeterminethe Constitution&#x27;s</p>
+<p>fundamentalpurposewhen</p>
+<p>ambiguityarises.</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="15">
+<div class="slide-content">
+<p class="section-number">SECTION 3</p>
+<h2>Fundamental Rights</h2>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="16">
+<div class="slide-content">
+<h2>What Are Fundamental Rights?</h2>
+<p>Definition</p>
+<p>Fundamental Rights (Part III, Articles 12–35) are</p>
+<p>justiciablerights — meaningtheyareenforceable</p>
+<p>throughcourts. Ifthe Stateviolatesthem , anycitizen</p>
+<p>canapproachthe Suprem e Courtdirectlyunder Article</p>
+<p>32.Why &quot;Fundamental&quot;?</p>
+<p>Theyareessentialforindividualdignityandfreedom</p>
+<p>Theybindthe State — notjustcitizens</p>
+<p>Theycannotbetakenawaybyordinarylegislation</p>
+<p>Violationcanbechallengeddirectlyinthe Suprem e</p>
+<p>Court (Art. 32) or High Court (Art. 226)</p>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>The Six Fundamental Rights</h2>
+<p>Rightto Equality</p>
+<p><strong>Arts. 14–18:</strong> Nodiscriminationongroundsofreligion, race, caste, sex, or</p>
+<p>placeofbirthRightto Freedom</p>
+<p><strong>Arts. 19–22:</strong> Speech, assembly, movement, profession; protectionagainst</p>
+<p>arbitraryarrest</p>
+<p>Right Against Exploitation</p>
+<p><strong>Arts. 23–24:</strong> Prohibitshumantrafficking, forcedlabour, childlabourin</p>
+<p>hazardousindustriesRightto Religion</p>
+<p><strong>Arts. 25–28:</strong> Freedom ofconscience, practice, andpropagationofreligion</p>
+<p>Cultural &amp; Educational Rights</p>
+<p><strong>Arts. 29–30:</strong> Minoritiescanprotectlanguage, culture, andruneducational</p>
+<p>institutionsRightto Constitutional Remedies</p>
+<p><strong>Art. 32:</strong> Dr. Ambedkarcalledthis &quot;theheartandsoulofthe Constitution&quot;</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Writs: The Enforcement Toolkit</h2>
+<p>Article 32 and 226 empowercitizenstoapproachcourtsthroughfivetypesofwrits:</p>
+<ul>
+<li><strong>1Habeas Corpus</strong></li>
+</ul>
+<blockquote>&quot;Producethebody&quot; — challengesunlawfuldetention</blockquote>
+<ul>
+<li><strong>2Mandamus</strong></li>
+</ul>
+<blockquote>&quot;Wecom mand&quot; — directs apublicauthoritytoperform itsduty</blockquote>
+<ul>
+<li><strong>3Prohibition</strong></li>
+</ul>
+<p>Stopslowercourtsfrom exceedingtheirjurisdiction</p>
+<ul>
+<li><strong>4Certiorari</strong></li>
+</ul>
+<p>Bringsuprecordsoflowercourtsforreview</p>
+<ul>
+<li><strong>5Quo Warranto</strong></li>
+</ul>
+<blockquote>&quot;Bywhatauthority&quot; — challengesillegaloccupationofpublicoffice</blockquote>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>Case Study: Rightto</h2>
+<p>Education</p>
+<p>Originally, educationwas a Directive Principle (non-enforceable). The</p>
+<p>86th Constitutional Amendment (2002) added Article 21A 4</p>
+<p>makingfreeandcompulsoryeducationforchildrenaged 63 14 a</p>
+<p>Fundamental Right. The Rightto Education Act, 2009 gaveit</p>
+<p>legislativeteeth.</p>
+<p><strong>Development Connection:</strong> Thisshiftfrom DPSPto</p>
+<p>Fundamental Rightreflectshowconstitutionalevolution</p>
+<p>respondstograssrootsdemands. NGOsandsocial</p>
+<p>movementsplayed akeyroleinpushingforthischange.</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Reasonable Restrictions: Rights Are Not Absolute</h2>
+<p>Fundamental</p>
+<p>Rights</p>
+<p>Speech,</p>
+<p>Movement,</p>
+<p>Assembly,</p>
+<p>ProfessionGroundsfor</p>
+<p>Restriction</p>
+<p>Sovereignty,</p>
+<p>Security, Order,</p>
+<p>Morality, Decency,</p>
+<p>Contempt</p>
+<p>The Statecanrestrictrights — butonlyonspecificgroundslistedinthe Constitution, andrestrictions mustpassthetestof</p>
+<p>reasonablenessasreviewedbycourts.</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="21">
+<div class="slide-content">
+<p class="section-number">SECTION 4</p>
+<h2>Directive Principles &amp;</h2>
+<h2>Fundamental Duties</h2>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="22">
+<div class="slide-content">
+<h2>Directive Principlesof State Policy (DPSP)</h2>
+<p>What Are DPSPs?</p>
+<p>Part IV, Articles 36–51. Thesearenon-justiciable</p>
+<p>guidelines — thegovernmenthas aconstitutional</p>
+<p>obligationtoworktowardsthem , butcourtscannot</p>
+<p>strikedownlawsforfailingto meetthem .Why They Matter</p>
+<p>Theyrepresentthepositiveobligationsofthe State</p>
+<p>Theyguidelegislatureandexecutiveinpolicy-making</p>
+<p>Theyaretheeconomicandsocialdemocracyclauses</p>
+<p>Courtsusethem totestreasonablenessofrestrictions</p>
+<p>on FR</p>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>Three Familiesof DPSPs</h2>
+<p>Socialistic Principles</p>
+<p>Equalpayforequalwork (Art.</p>
+<p>39), righttowork (Art. 41), free</p>
+<p>legalaid (Art. 39A), livingwage</p>
+<p>(Art. 43) — thewelfarestate</p>
+<p>agendaGandhian Principles</p>
+<p>Villagepanchayats (Art. 40),</p>
+<p>cottageindustries (Art. 43),</p>
+<p>prohibitionofintoxicants (Art.</p>
+<p>47), protectionofcow (Art. 48) —</p>
+<p>rootedinvillageself-sufficiencyLiberal-Intellectual</p>
+<p>Principles</p>
+<p>Uniform Civil Code (Art. 44),</p>
+<p>separationofjudiciaryfrom</p>
+<p>executive (Art. 50), international</p>
+<p>peace (Art. 51), protectionof</p>
+<p>monuments (Art. 49)</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>Fundamental Rightsvs. Directive Principles</h2>
+<p>Dimension Fundamental Rights Directive Principles</p>
+<p>Partof Constitution Part III (Arts. 12335) Part IV (Arts. 3 6351)</p>
+<p>Justiciable? Yes 4 courtsenforcethem No 4 courtscannotenforce</p>
+<p>Nature Negativeobligations (Statemust</p>
+<p>not...)Positiveobligations (State</p>
+<p>should...)</p>
+<p>Focus Politicalandcivilrights Economicandsocialrights</p>
+<p>Suspendedin Emergency? Somecanbe (Arts. 3583359) Cannot besuspended</p>
+<p>Amendment Requirespecialmajority + judicial</p>
+<p>reviewEasiertoimplementvialegislation</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Fundamental Duties (Article 51A)</h2>
+<p>Addedbythe 42nd Amendment (1976), and a 11thdutyaddedin 2002. Theseare moralobligations — notlegallyenforceablebutconstitutionally</p>
+<p>expectedofeverycitizen.</p>
+<p>Abidebythe Constitutionandrespectnationalsymbols</p>
+<p>Cherishandfollownobleidealsofthefreedomstruggle</p>
+<p>Protectsovereignty, unityandintegrityof India</p>
+<p>Promoteharmonyandbrotherhoodamongallpeople</p>
+<p>Protectandimprovethenaturalenvironment</p>
+<p>Safeguardpublicproperty; developscientifictemper</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>Reflection: DPSPs &amp;</h2>
+<p>Development Practice</p>
+<p><strong>Discussion Prompt:</strong> The MGNREGA (100 daysof</p>
+<p>guaranteedruralemployment) canbereadas alegislative</p>
+<p>implementationof Art. 41 (righttowork) — a DPSP. Canyou</p>
+<p>thinkofothergovernmentschemesthatoperationalize</p>
+<p>specific Directive Principles? Whydoyouthinksome DP SPs</p>
+<p>havebeenacteduponmorethanothers?</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="27">
+<div class="slide-content">
+<p class="section-number">SECTION 5</p>
+<h2>Federal Structure</h2>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="28">
+<div class="slide-content">
+<h2>India&#x27;s Federal Architecture</h2>
+<p>Quasi-Federal Design</p>
+<p>Indiaisdescribedas &quot;federalinstructure, unitaryin</p>
+<p>spirit.&quot; Ithasfeaturesofboth — astrong Centrewith</p>
+<p>residuarypowers, butconstitutionallyguaranteed State</p>
+<p>autonom y.Key Federal Features</p>
+<p>Written, suprem e Constitution</p>
+<p>Divisionofpowersbetween Centreand States</p>
+<p>Independentjudiciarytoresolvedisputes</p>
+<p>Bicamerallegislatureatthe Centre</p>
+<p>Twosetsofgovernment (Central + State)</p>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>The Three Legislative Lists</h2>
+<p>Residual/Overrid</p>
+<p>e</p>
+<p>High State AuthorityShared</p>
+<p>AuthorityHigh Centre Authority</p>
+<p>State List — States</p>
+<p>only (e.g., Police,</p>
+<p>Agricultur e)Residuary Powers —</p>
+<p>Centr eprevailsin</p>
+<p>nationalinterestConcurrent List —</p>
+<p>Both (e.g., Education,</p>
+<p>Forests)Union List —</p>
+<p>Parliamentonly (e.g.,</p>
+<p>Defence, Foreign</p>
+<p>Affairs)</p>
+<p>Inpractice, the Concurrent Listand Union&#x27;sresiduarypowers meanthe Centreholdssignificantlegislativeauthority, especiallyintimesofnational</p>
+<p>interest.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>Centre–State Financial Relations</h2>
+<p>Finance Com mission</p>
+<p>Constitutedevery 5 years (Art.</p>
+<p>280) torecom mendhowtax</p>
+<p>revenuesaresharedbetween</p>
+<p>Centreand States. The 15th</p>
+<p>Finance Com mission (2021–26)</p>
+<p>recom mended a 41% devolution</p>
+<p>to States.GST Council</p>
+<p>Anewcooperativefederalbody</p>
+<p>createdunderthe 101st</p>
+<p>Amendment (2017). Centreand</p>
+<p>Statesjointlydecidetaxrates — a</p>
+<p>landmarkincooperative</p>
+<p>federalism .Grants-in-Aid</p>
+<p>The Centregivesgrantsto States</p>
+<p>under Art. 275 (fordevelopment)</p>
+<p>and Art. 282 (discretionary). Tied</p>
+<p>grantscancreatedependency</p>
+<p>andreduce Stateautonom y.</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Case Study: Cooperative</h2>
+<p>Federalism — NITI Aayog &amp;</p>
+<p>SDGs</p>
+<p>NITI Aayogreplacedthe Planning Commissionin 2015 with a</p>
+<p>mandateforcooperativeandcompetitivefederalism . Statesare</p>
+<p>nowpartnersinplanning, notjustrecipientsofcentra ldirectives.</p>
+<p>NITI&#x27;s SDG India Indexranks Statesondevelopmentindicators —</p>
+<p>creatinghealthycompetitionwhilemaintainingconstitutionalunity.</p>
+<p><strong>Key Insight:</strong> Developmentoutcomesimprovewhen States</p>
+<p>haveboththefiscalautonomyandtheaccountability to</p>
+<p>implementschemessuitedtolocalconditions.</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="32">
+<div class="slide-content">
+<p class="section-number">SECTION 6</p>
+<h2>Parliament &amp; Legislature</h2>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="33">
+<div class="slide-content">
+<h2>Structureof India&#x27;s Parliament</h2>
+<p>Presidentof India</p>
+<p>Sum mons, proroguesand</p>
+<p>dissolves Parliament. Allbills</p>
+<p>require Presidentialassent. Part</p>
+<p>of Parliamentconstitutionally</p>
+<p>(Art. 79).Rajya Sabha (Upper</p>
+<p>House)</p>
+<p>245 members. Represents States.</p>
+<p>Max. 12 nominatedby President.</p>
+<p>Membersserve 6-yearterm s; 1/3</p>
+<p>retireevery 2 years. Cannotbe</p>
+<p>dissolved.Lok Sabha (Lower House)</p>
+<p>543 elected members. Directly</p>
+<p>electedfor 5-yearterm s.</p>
+<p>Representspeople. Government</p>
+<p>mustcom manditsconfidence.</p>
+<p>Money Billsoriginatehere.</p>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>How a Bill Becomes Law</h2>
+<p>Other House &amp; AssentClause VotingCommittee ReviewBill Introduced</p>
+<p>Money Billsfollow aspecialroute — introducedonlyin Lok Sabha, Rajya Sabhacanonlydelayby 14 days. Constitutional Amendment Bills</p>
+<p>requirespecialprocedures (Art. 368).</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>Parliamentary Accountability Mechanism s</h2>
+<p>Question Hour</p>
+<p>Firsthourofeveryparliamentary</p>
+<p>sitting. MPsquestion ministerson</p>
+<p>governmentfunctioning — akey</p>
+<p>transparencytool.No-Confidence Motion</p>
+<p>Ifpassedin Lok Sabha, the Councilof</p>
+<p>Ministers mustresign. Ensures</p>
+<p>executiveaccountabilitytoelected</p>
+<p>legislature.Parliamentary Com mittees</p>
+<p>Standing, Select, and Joint</p>
+<p>com mitteesscrutinizebills, budgets,</p>
+<p>andgovernmentaccountsindetail</p>
+<p>beforefull Housedebate.</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="36">
+<div class="slide-content">
+<p class="section-number">SECTION 7</p>
+<h2>Executive &amp; Judiciary</h2>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>The Constitutional Executive</h2>
+<p>Nominalvs. Real Executive</p>
+<p>Indiafollowsthe Westminster model. The Presidentis</p>
+<p>theconstitutionalhead (nominalexecutive) — actingon</p>
+<p>theaidandadviceofthe Councilof Ministers (Art. 74).</p>
+<p>The Prime Ministerand Cabinetaretherealexecutive.Presidential Powers</p>
+<p>Appoints PM, Governors, CJI, CAG</p>
+<p>Sum mons/dissolves Parliament</p>
+<p>Grantspardons (Art. 72)</p>
+<p>Declaresemergencies (Arts. 352, 356, 360)</p>
+<p>Sendsbillsbackforreconsideration</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>The Judicial System</h2>
+<ul>
+<li><strong>1Supreme Court</strong></li>
+</ul>
+<p>Apexcourt; guardianof Constitution; original, appellate &amp; advisoryjurisdiction</p>
+<ul>
+<li><strong>2High Courts</strong></li>
+<li><strong>25 High Courts; appellatejurisdictionoversubordinatecourts; writjurisdiction (Art.</strong></li>
+</ul>
+<p>226)</p>
+<ul>
+<li><strong>3District Courts</strong></li>
+</ul>
+<p>Principalcivilandcriminalcourtsatdistrictlevel</p>
+<ul>
+<li><strong>4Subordinate Courts</strong></li>
+</ul>
+<p>Munsifcourts, magistratecourts, familycourts, consumerforum s</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>Judicial Review &amp; Public Interest Litigation</h2>
+<p>Judicial Review</p>
+<p>Courtscanstrikedownlawsthatviolatethe Constitution.</p>
+<p>The Suprem e Courtin Marbury v. Madison-inspired</p>
+<p>reasoningguardsthe Constitution&#x27;ssupremacy. In India,</p>
+<p>even Constitutional Amendmentscanbestruckdownif</p>
+<p>theydamagethe Basic Structure (Kesavananda Bharati,</p>
+<p>1973).PIL: Justicefor All</p>
+<p>Public Interest Litigation (PIL) allowsanycitizen — not</p>
+<p>justtheaggrievedparty — toapproachcourtsonbehalf</p>
+<p>ofpublicinterest. Ithastransformed Indian</p>
+<p>constitutionallaw, enablinglandmarkrulingsonbonded</p>
+<p>labour, childrights, environment, andtransparency.</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="40">
+<div class="slide-content">
+<p class="section-number">SECTION 8</p>
+<h2>Constitutional</h2>
+<h2>Amendments</h2>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Howthe Constitution Is Amended</h2>
+<p><strong>Type 1:</strong> Simple</p>
+<p><strong>MajorityType 2:</strong> Special</p>
+<p>Majority</p>
+<p><strong>Type 3:</strong> Special</p>
+<p>+ State Ratify</p>
+<p>Thisthree-tiersystem makes India&#x27;s Constitutionneithertoorigidnortooflexible — balancingstabilitywithadaptability.</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>Landmark Constitutional Amendments</h2>
+<p>1st Amendment (1951)</p>
+<p>Validatedlandreform laws; addedreasonablerestrictionsto</p>
+<p>freespeech</p>
+<p>42nd Amendment (1976)</p>
+<blockquote>&quot;Mini Constitution&quot; — added Socialist, Secular, Integrityto</blockquote>
+<p>Preamble; Fundamental Duties; shiftedsubjectsto Concurrent</p>
+<p>List 44th Amendment (1978)</p>
+<p>Restoreddemocraticsafeguardsdilutedbythe 42nd; removed</p>
+<p>Rightto Propertyfrom Fundamental Rights</p>
+<p>73rd &amp; 74th (1992)</p>
+<p>Constitutionalized Panchayati Rajand Urban Local Bodies —</p>
+<p>thirdtierofdemocracy</p>
+<p>101st Amendment (2017)</p>
+<p>Introduced GST — biggesttaxreform , restructuring Centre-</p>
+<p>Statefinancialrelations</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="43">
+<div class="slide-content">
+<h2>The Basic Structure Doctrine</h2>
+<p>Kesavananda Bharati v. Stateof Kerala</p>
+<p>(1973)</p>
+<p>In alandmark 7–6 judgment, the Suprem e Courtheld</p>
+<p>thatwhile Parliamentcanamendanypartofthe</p>
+<p>Constitution, itcannotdestroyits Basic Structure.</p>
+<p>Thisisperhapsthe mostconsequentialconstitutional</p>
+<p>rulingin Indianhistory.Elementsof Basic Structure (illustrative)</p>
+<p>Supremacyofthe Constitution</p>
+<p>Republicananddemocraticform ofgovernment</p>
+<p>Secularcharacterofthe State</p>
+<p>Separationofpowers</p>
+<p>Judicialreview</p>
+<p>Fundamental Rights (core)</p>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="44">
+<div class="slide-content">
+<p class="section-number">SECTION 9</p>
+<h2>Emergency Provisions</h2>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>Three Typesof Emergency</h2>
+<p>National Emergency (Art.</p>
+<p>352)</p>
+<p>Declaredongroundsofwar,</p>
+<p>externalaggression, orarmed</p>
+<p>rebellion. Proclaimedtwice — 1962</p>
+<p>(Chinawar) and 1971 (Bangladesh</p>
+<p>war). Alsodeclaredduringthe</p>
+<p>controversial 1975–77 Internal</p>
+<p>Emergency.State Emergency (Art.</p>
+<p>356)</p>
+<p>Alsocalled President&#x27;s Rule.</p>
+<p>Invokedwhen a State&#x27;s</p>
+<p>constitutional machineryfails.</p>
+<p>Hasbeenusedover 100 times —</p>
+<p>oftencontroversiallyforpolitical</p>
+<p>purposes.Financial Emergency (Art.</p>
+<p>360)</p>
+<p>Declaredif India&#x27;sfinancial</p>
+<p>stabilityorcreditisthreatened.</p>
+<p>Hasneverbeendeclaredin India&#x27;s</p>
+<p>history — demonstratesrelative</p>
+<p>macroeconomicstability.</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>The 1975–77 Emergency: A</h2>
+<p>Constitutional Crisis</p>
+<p>The Internal Emergencydeclaredby PM Indira Gandhion June 25,</p>
+<p>1975 suspendedcivilliberties, censoredthepress, andimprisoned</p>
+<p>oppositionleaders. Ittestedthe Constitution&#x27;sresiliencelikenothing</p>
+<p>before.</p>
+<p><strong>Constitutional Lesson:</strong> The 44th Amendment (1978)</p>
+<p>required Cabinetapprovalforemergencyproclamationsan d</p>
+<p>regularparliamentaryrenewal — safeguardsagainstfuture</p>
+<p>misuse. Democraticconstitutionsneedbothlegalan d</p>
+<p>politicalguardrails.</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="47">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Constitutional Bodies &amp;</h2>
+<h2>Commissions</h2>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Key Constitutional Bodies</h2>
+<p>Election Commissionof India</p>
+<p>Art. 324. Independentbodyconductingfreeand</p>
+<p>fairelections. Chief Election Com missionerhas</p>
+<p>securityoftenure — cannotberemovedexceptlike</p>
+<p>a Suprem e Courtjudge.Comptroller &amp; Auditor General (CAG)</p>
+<p>Art. 148. Guardianofpublicfunds — auditsall</p>
+<p>Centraland Stategovernmentaccounts. Reports</p>
+<p>to Parliament. Criticalaccountabilityinstitution.</p>
+<p>Union Public Service Commission</p>
+<p>(UPSC)</p>
+<p>Art. 315. Recruitscivilservantsthrough</p>
+<p>competitiveexaminations. Ensures merit-based</p>
+<p>bureaucracyinsulatedfrom politicalpatronage.Attorney Generalof India</p>
+<p>Art. 76. Government&#x27;schieflawofficer. Appears</p>
+<p>onbehalfof Indiaincourts. Advisesthe</p>
+<p>governmentonlegal matters.</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>Panchayati Raj: The Third Tier</h2>
+<p>73rd Amendment (1992)</p>
+<p>Gaveconstitutionalstatusto Gram Panchayatsforthe</p>
+<p>firsttim e. Mandatedelectionsevery 5 years, reservation</p>
+<p>for SC/ST/women (minimum 1/3), and a State Finance</p>
+<p>Com missiontodevolvefunds.Impacton Development</p>
+<p>Over 2.5 lakhelectedlocalbodies</p>
+<p>31 lakhelectedrepresentatives</p>
+<p>Nearly 50% arewomenin manystates</p>
+<p>Responsiblefor 29 subjectsin 11th Schedule</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="50">
+<div class="slide-content">
+<p class="section-number">SECTION 11</p>
+<h2>Constitution &amp; Social</h2>
+<h2>Justice</h2>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>Reservations: Constitutional Affirmative Action</h2>
+<p>For Scheduled Castes &amp; Scheduled Tribes</p>
+<p>Arts. 15(4) and 16(4) allowreservationsineducationand</p>
+<p>publicemployment. SCsget 15%, STs 7.5% in Central</p>
+<p>services — reflectingtheirproportioninthepopulation.For Other Backward Classes</p>
+<p>Mandal Com missionrecom mendations (1980) ledto 27%</p>
+<p>OBCreservationincentraljobs. Upheldin Indra Sawhney</p>
+<p>(1992) with 50% overallceiling.</p>
+<p>For Women (Local Bodies)</p>
+<p>73rdand 74th Amendments mandate minimum 1/3</p>
+<p>reservationforwomeninpanchayatsand municipal</p>
+<p>bodies. Several Stateshaveraiseditto 50%.EWS Reservation (103rd Amendment, 2019)</p>
+<p>10% reservationfor Economically Weaker Sections (EW S)</p>
+<p>amonggeneralcategory. Controversial — challengedas</p>
+<p>violatingthe 50% ceilingandbasicstructure.</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Gender Justiceinthe Constitution</h2>
+<p>Constitutional Protections</p>
+<p><strong>Art. 14:</strong> Equalitybeforelawregardlessofsex</p>
+<p><strong>Art. 15:</strong> Nodiscriminationongroundsofsex</p>
+<p><strong>Art. 15(3):</strong> Statecan makespecialprovisionsfor</p>
+<p>womenandchildren</p>
+<p><strong>Art. 39(a):</strong> Equalrighttolivelihood</p>
+<p><strong>Art. 39(d):</strong> Equalpayforequalwork</p>
+<p><strong>Art. 51A(e):</strong> Dutytorenouncepracticesderogatoryto</p>
+<p>womenKey Judicial Milestones</p>
+<p><strong>Vishaka (1997):</strong> Suprem e Courtframedworkplace</p>
+<p>sexualharassmentguidelines (now POSH Act)</p>
+<p><strong>Joseph Shine (2018):</strong> Adulterylawstruckdownas</p>
+<p>violatingwomen&#x27;sdignity</p>
+<p><strong>Navtej Johar (2018):</strong> Section 377 decriminalized —</p>
+<p>readingdignityinto Art. 21</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="53">
+<div class="slide-content">
+<p class="section-number">SECTION 12</p>
+<h2>The Living Constitution</h2>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>The Expanding Article 21</h2>
+<p>Article 21 — &quot;Nopersonshallbedeprivedofhislifeorpersonallibertyexceptaccordingtoprocedureestablishedbylaw&quot; — hasbeen</p>
+<p>interpretedexpansivelytoinclude:</p>
+<p>Rightto Clean Environment</p>
+<p>M.C. Mehtacasestransformedenvironmentallawthrough</p>
+<p>Art. 21Rightto Food</p>
+<p>PUCLcase (2001) — SCdirectedstatestoimplementfood</p>
+<p>schemesas aright</p>
+<p>Rightto Health</p>
+<p>Statehasobligationtoprovide medicalfacilitiestoprotect</p>
+<p>life (Paschim Bangacase)Rightto Privacy</p>
+<p>Puttaswam y (2017) — 9-judgebenchdeclaredprivacy a</p>
+<p>fundamentalrightunder Art. 21</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>Contemporary Constitutional Debates</h2>
+<p>Uniform Civil Code</p>
+<p>Art. 44 DPSPcallsfor a UCC —</p>
+<p>stillunrealized. Thedebate</p>
+<p>betweenuniformityand</p>
+<p>diversityofpersonallaws</p>
+<p>continueswithpolitical</p>
+<p>intensity.Judicial Appointments</p>
+<p>&amp; Independence</p>
+<p>The Collegium system (judges</p>
+<p>appointingjudges) vs. the</p>
+<p>National Judicial Appointments</p>
+<p>Com mission (struckdownin</p>
+<p>2015) — whoshouldcontrol</p>
+<p>appointmentsto maintain</p>
+<p>independence?Free Speechvs. Sedition</p>
+<p>Section 124A IPC (sedition)</p>
+<p>frequentlychallengedas</p>
+<p>inconsistentwith Art. 19. SC</p>
+<p>placeditunderreviewin 2022.</p>
+<p>Balancebetweendissentand</p>
+<p>sovereigntyremainscontested.</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Quiz: Test Your Understanding</h2>
+<p>Q1</p>
+<p>Whichwritisusedtochallengeunlawfuldetention? (a)</p>
+<p>Mandamus (b) Habeas Corpus (c) Certiorari (d) Quo</p>
+<p>WarrantoQ2</p>
+<p>Directive Principlesarecontainedinwhich Partofthe</p>
+<p>Constitution? (a) Part II (b) Part III (c) Part IV (d) Part V</p>
+<p>Q3</p>
+<p>Which Amendmentintroducedthewords &#x27;Socialist&#x27; and</p>
+<p>&#x27;Secular&#x27; inthe Preamble? (a) 1st (b) 24th (c) 42nd (d) 44thQ4</p>
+<p>The Basic Structure Doctrinewasestablishedinwhichcase?</p>
+<p>(a) Golaknath (b) Menaka Gandhi (c) Kesavananda Bharati</p>
+<p>(d) Indra Sawhney</p>
+<p>Q5</p>
+<p>Which Constitutional Amendmentgave Panchayati Rajits</p>
+<p>constitutionalstatus? (a) 42nd (b) 44th (c) 73rd (d) 86thQ6</p>
+<p>Whicharticleiscalledthe &quot;heartandsoulofthe Constitution&quot;</p>
+<p>by Dr. Ambedkar? (a) Art. 14 (b) Art. 19 (c) Art. 21 (d) Art. 32</p>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>The Constitutionis alivingdocument</p>
+<p>Ithasbeenamended 105+ timesbutits Basic Structur e — democracy,</p>
+<p>secularism, federalism, andfundamentalrights — remains intact.</p>
+<p>Rightsneedenforcementmechanisms</p>
+<p>Fundamental Rightsaremeaningfulbecausecourtscan enforcethem.</p>
+<p>DPSPsrequirepoliticalwillandcivilsocietypressuretoimplement.</p>
+<p>Federalismiscontestedanddynamic</p>
+<p>The Constitutionbalancesunitywithdiversity. Howpoweris</p>
+<p>distributedbetween Centreand Statesshapeseverydevelopment</p>
+<p>outcome.</p>
+<p>Socialjusticeisconstitutionalized</p>
+<p>Reservations, minorityrights, andanti-discriminationprovisionsare</p>
+<p>notpolicychoices — theyareconstitutionalimperatives.</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Glossaryof Key Terms</h2>
+<p>Term Definition</p>
+<p>Constituent Assembly Thebodythatdraftedandadopted the Indian Constitution (194631949)</p>
+<p>Preamble Theintroductorystatementofthe Constitution, statingitsfundamentalpurposesandguidingvalues</p>
+<p>Fundamental Rights Justiciablerightsguaranteedtoallcitizensunder Part III (Arts. 12335)</p>
+<p>Directive Principles (DPSP) Non-justiciableguidelinesfo r Statepolicyunder Part IV (Arts. 36351)</p>
+<p>Judicial Review Thepowerofcourtstostrikedownlawsinconsistentwiththe Constitution</p>
+<p>Basic Structure Doctrine Theprinciplethat Parliamentcannotamendthe Constitutioninwaysthatdestroyitsessential</p>
+<p>features</p>
+<p>Habeas Corpus Awritrequiring adetainedpersontobe broughtbefore acourttotestthelegalityofdetention</p>
+<p>PIL Public Interest Litigation 4 legalactionfiledintheinterestofthepublicratherthan aspecific</p>
+<p>individual</p>
+<p>Concurrent List Listofsubjectsonwhichboth Parliament and State Legislaturescanmakelaws (7th Schedule)</p>
+<p>President&#x27;s Rule Impositionofcentralrulein a Stateunder Art. 356 whenconstitutionalgovernancefails</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Further Reading &amp; Resources</h2>
+<p>Essential Books</p>
+<p>Granville Austin — The Indian Constitution: Cornerstoneof</p>
+<p>a Nation (Oxford)</p>
+<p>B.R. Ambedkar — Annihilationof Caste</p>
+<p>Nani Palkhivala — Our Constitution Defacedand Defiled</p>
+<p>M.P. Jain — Indian Constitutional Law (standardtextbook)</p>
+<p>Shyam Divan &amp; Armin Rosencranz — Environmental Law</p>
+<p>and Policyin India</p>
+<p>Online Resources</p>
+<p><strong>India Code:</strong> www.indiacode.nic.in (fulltextof Constitution)</p>
+<p><strong>Suprem e Courtof India:</strong> www.sci.gov.in</p>
+<p><strong>PRS Legislative Research:</strong> www.prsindia.orgKey Reports &amp; Papers</p>
+<p>National Com missionto Reviewthe Workingofthe</p>
+<p>Constitution (2002) Report</p>
+<p>Sarkaria Com mission Reporton Centre-State Relations</p>
+<p>(1988)</p>
+<p>Punchhi Com mission Report (2010) on Federalism</p>
+<p>Documentaries &amp; Media</p>
+<blockquote>&quot;Ambedkar: The Makingof a Legend&quot; — Doordarshan</blockquote>
+<p>archives</p>
+<p>Constituent Assembly Debates — availableon</p>
+<p>www.constitutionofindia.net</p>
+<p>The Wire, Scroll.inand The Hinduforconstitutional</p>
+<p>com mentary</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

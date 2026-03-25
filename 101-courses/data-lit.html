@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Literacy 101 | ImpactMojo</title>
+<meta name="description" content="Data Literacy 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #556B2F;
+  --border-art: #2F4F4F;
+  --bg-slide: #FFFDF7;
+  --bg-section: #2F4F4F;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">DATA &amp; TECHNOLOGY</p>
+<h1>Data Literacy 101</h1>
+<p class="subtitle">Understanding, Interpreting &amp; Communicatingwith Datain Development Contexts ImpactMojo 101 Series · Free Development Educationfor Sout h Asia</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover</h2>
+<p>Acomprehensivejourneythroughdataliteracy — from thebasicsofdatacollectiontovisualizationandcom munication.</p>
+<p>What Is Data Literacy?</p>
+<p>Definitions, types, andwhyit matters02</p>
+<p>Typesof Data</p>
+<p>Quantitative, qualitative, primary, secondary</p>
+<p>Survey Design</p>
+<p>Questionnaires, sampling, andbias04</p>
+<p>Data Collection Methods</p>
+<p>Tools, fieldapproaches, anddigitalplatform s</p>
+<p>Data Cleaning &amp; Management</p>
+<p>Qualitychecks, missingvalues, storage06</p>
+<p>Descriptive Statistics</p>
+<p>Means, medians, distributions</p>
+<p>Data Visualization</p>
+<p>Charts, graphs, storytellingwithdata08</p>
+<p>Interpreting &amp; Communicating Findings</p>
+<p>Readingdatacritically, avoiding misuse</p>
+<p>Open Data &amp; Ethics</p>
+<p>Privacy, consent, andresponsibleuse10</p>
+<p>Datain M&amp;E</p>
+<p>Monitoring, evaluation, andindicators</p>
+<p>Data Literacyin Practice</p>
+<p>Casestudiesfrom South Asia12</p>
+<p>Building a Data Culture</p>
+<p>Organizationalcapacityandnextsteps</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<ul>
+<li><strong>1Define &amp; Classify</strong></li>
+</ul>
+<p>Distinguishbetweentypesofdataandunderstandwheneachisappropriate</p>
+<ul>
+<li><strong>2Design &amp; Collect</strong></li>
+</ul>
+<p>Design abasicsurveyinstrumentandunderstandsamplingprinciples</p>
+<ul>
+<li><strong>3Clean &amp; Organize</strong></li>
+</ul>
+<p>Identifydataqualityissuesandapplybasicdata managementpractices</p>
+<ul>
+<li><strong>4Analyze &amp; Interpret</strong></li>
+</ul>
+<p>Applydescriptivestatisticsandreaddatacriticallywithoutbias</p>
+<ul>
+<li><strong>5Visualize &amp; Communicate</strong></li>
+</ul>
+<p>Chooseappropriatecharttypesandtellclearstorieswithdata</p>
+<ul>
+<li><strong>6Apply Ethically</strong></li>
+</ul>
+<p>Navigatedataprivacy, consent, andresponsibleuseindevelopmentwork</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 01</p>
+<h2>What Is Data</h2>
+<h2>Literacy?</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>Defining Data Literacy</h2>
+<p>Data Literacy Is...</p>
+<p>Theabilitytoread, understand, create, and</p>
+<p>communicatedataasinformation — knowingwhento</p>
+<p>trustdata, whentoquestionit, andhowtouseitto</p>
+<p>makedecisions.Why It Mattersin Development</p>
+<p>Developmentpractitionersrelyonevidencetodesign</p>
+<p>program s, targetresources, anddemonstrateimpact.</p>
+<p>Withoutdataliteracy, gooddatacanbe misread — and</p>
+<p>baddatacangounquestioned.</p>
+<blockquote>&quot;Noteveryoneneedstobe adatascientist. Buteveryone</blockquote>
+<p>workingindevelopmentneedstobedataliterate.&quot;</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>The Data Literacy Spectrum</h2>
+<p>Dataliteracyisnotall-or-nothing. Thinkofitas aspectrum ofskills:</p>
+<ul>
+<li><strong>1Data Champion</strong></li>
+</ul>
+<p>Drivesdataculture, buildscapacity</p>
+<ul>
+<li><strong>2Data Analyst</strong></li>
+</ul>
+<p>Cleans, models, visualizesdata</p>
+<ul>
+<li><strong>3Data User</strong></li>
+</ul>
+<p>Interpretsandappliesfindings</p>
+<ul>
+<li><strong>4Data Reader</strong></li>
+</ul>
+<p>Understandsbasicchartsandstatistics</p>
+<ul>
+<li><strong>5Data Aware</strong></li>
+</ul>
+<p>Knowsdataexistsandisused</p>
+<p>Mostdevelopmentprofessionalsneedtooperateatthe Data Userlevel — abletoread, question, andapplydataintheirwork.</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>Datainthe Development Cycle</h2>
+<p>Assess Needs Design</p>
+<p>Program</p>
+<p>ImplementMonitor &amp;</p>
+<p>Evaluate</p>
+<p>Dataisn&#x27;tjustforresearchers — it&#x27;sembeddedineverystageofdevelopmentwork, from needsassessmentsandprogram</p>
+<p>designto monitoring, evaluation, andlearning.</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>Case Study: ASERin India</h2>
+<p>The Annual Statusof Education Report (ASER) , runby Pratham,</p>
+<p>isoneoftheworld&#x27;slargestcitizen-ledsurveys — assessingreading</p>
+<p>andarithmeticlevelsofchildreninrural India.</p>
+<p>Scale</p>
+<p>600+ districts, 300,000+</p>
+<p>householdsannuallyMethod</p>
+<p>Trainedlocalvolunteers,</p>
+<p>standardizedtools</p>
+<p>Impact</p>
+<p>Shapednationaleducationpolicyonlearningoutcomes</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Reflection: Your Data World</h2>
+<p><strong>Discussion Prompt:</strong> Thinkaboutthelasttim eyouuseddatainyourworkorstudies. Whattypeofdatawas</p>
+<p>it? Howwasitcollected? Didyouquestionitsqualityorsource? Sharewith apartnerorwrite abriefreflection.</p>
+<p>Gooddataliteracystartswithcuriosityandhealthyskepticism . Practiceasking: Wheredidthisdatacom efrom ?</p>
+<p>Whocollectedit? What mightbe missing?</p>
+<p><strong>Ask:</strong> Source</p>
+<p><strong>Whocollectedthisdataandwhy?Ask:</strong> Method</p>
+<p>Howwasitcollected?</p>
+<p><strong>Ask:</strong> Gaps</p>
+<p><strong>Whoorwhat mightbe missing?Ask:</strong> Purpose</p>
+<p>Whatdecisionwillthisdatainform ?</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 02</p>
+<h2>Typesof Data</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>Quantitativevs. Qualitative</h2>
+<p>Quantitative Data</p>
+<p>Expressedas nu m b e r s. Canbecountedor measured.</p>
+<p>Numberofchildrenenrolled</p>
+<p>Householdincom e ( ₹ )</p>
+<p>Distancetonearestclinic (km )</p>
+<p><strong>Goodfor:</strong> Measuringscale, trackingchangeovertim e,</p>
+<p>statisticalanalysisQualitative Data</p>
+<p>Expressedaswords, images, ornarratives. Captures</p>
+<p>meaningandexperience.</p>
+<p>Reasonsfamiliesdon&#x27;tsendgirlstoschool</p>
+<p>Com munityperceptionsof ahealthprogram</p>
+<p>Storiesofchangefrom beneficiaries</p>
+<p><strong>Goodfor:</strong> Understandingwhy, exploringcomplexity,</p>
+<p>generatingnewquestions</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>Primaryvs. Secondary Data</h2>
+<p>Primary Data</p>
+<p>Datayoucollectyourselffor aspecificpurpose —</p>
+<p>surveys, interviews, observations, focusgroups.</p>
+<p>Highcontrol, highcost.Secondary Data</p>
+<p>Dataalreadycollectedbysomeoneelse — census</p>
+<p>records, governmentreports, publishedstudies.</p>
+<p>Lowercostbut maynotfityourexactneeds.</p>
+<p>Mostdevelopmentprogram suseboth — secondarydataforcontextandbenchmarks, primarydataforprogram -</p>
+<p>specificquestions.</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Levelsof Measurement</h2>
+<p>Understandinghowdataismeasuredshapestheanalysisyoucando:</p>
+<p>Level Description Example</p>
+<p>Nominal Categorieswithnoorder Religion, caste, croptyp e</p>
+<p>Ordinal Rankedcategories Educationlevel (primary/secondar y/tertiary)</p>
+<p>Interval Equalspacing, notruezero Temperature (°C), years (AD)</p>
+<p>Ratio Equalspacing, truezero Income, distance, age</p>
+<p>Developmentsurveysmostcommonlyusenominalandordinal scales — e.g., Likertscalesforattitudequestions.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Case Study: NFHS Datain</h2>
+<p>India</p>
+<p>The National Family Health Survey (NFHS) is anationally</p>
+<p>representativesurveycoveringhealth, nutrition, and population</p>
+<p>indicatorsacross India.</p>
+<p>6.3L</p>
+<p>Households</p>
+<p>Surveyed</p>
+<p>NFHS-5 (2019321)707</p>
+<p>Districts Covered</p>
+<p>Allstatesand UTs131</p>
+<p>Indicators</p>
+<p>Tracked</p>
+<p>Health, nutrition,</p>
+<p>gender</p>
+<p>NFHScombinesquantitativeandqualitativemethods 4 amodelof</p>
+<p>mixed-methodsdatacollectionindevelopment.</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Exercise: Classifythe Data</h2>
+<p><strong>Quick Exercise:</strong> Foreachitem below, identify (a) quantitativeorqualitative, (b) primaryorsecondary, and (c)</p>
+<p>levelof measurement.</p>
+<p>Numberoflatrinesbuiltin avillage</p>
+<p><strong>Yourclassification:</strong> ___Reasonswomendon&#x27;tuseantenatalcare</p>
+<p><strong>Yourclassification:</strong> ___</p>
+<p>Censuspopulationdatafor Rajasthan</p>
+<p><strong>Yourclassification:</strong> ___Satisfactionrating (1–5) from</p>
+<p>beneficiaries</p>
+<p><strong>Yourclassification:</strong> ___</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">SECTION 03</p>
+<h2>Survey Design</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>The Survey Design Process</h2>
+<p>Revise</p>
+<p>InstrumentPilot TestDraft</p>
+<p>QuestionsIdentify</p>
+<p>VariablesDefine</p>
+<p>Question</p>
+<p>Goodsurveysdon&#x27;thappenbyaccident. Eachstep matters — especiallythepilottest, whichisfrequentlyskippedin</p>
+<p>developmentworkatsignificantcost.</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Writing Good Survey Questions</h2>
+<p>Be Specific</p>
+<p>Avoidvagueterm s. &quot;Howoften&quot; shouldspecify a</p>
+<p>tim eperiod — &quot;Inthelast 30 days, how manytimes</p>
+<p>didyou...?&quot;One Ideaat a Tim e</p>
+<p>Nevercombinetwoquestions. &quot;Doyouwashhands</p>
+<p>beforecookingandeating?&quot; is adouble-barreled</p>
+<p>question — splitit.</p>
+<p>Avoid Leading Questions</p>
+<blockquote>&quot;Don&#x27;tyouagreethattheprogram washelpful?&quot;</blockquote>
+<p>leadstherespondent. Useneutralphrasing</p>
+<p>instead.Offer Exhaustive Options</p>
+<p>Forclosedquestions, responseoptions mustcover</p>
+<p>allpossibilities. Include &quot;Other&quot; and &quot;Don&#x27;tknow&quot;</p>
+<p>whereappropriate.</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>Sampling: Reachingthe Right People</h2>
+<p>Probability Sampling</p>
+<p>Everyunithas aknownchanceofbeingselected. Allows</p>
+<p>generalizationto alargerpopulation.</p>
+<p>Simplerandom sampling</p>
+<p>Stratifiedsampling</p>
+<p>Clustersampling (com monin South Asia)</p>
+<p>SystematicsamplingNon-Probability Sampling</p>
+<p>Unitsselectedbasedonconvenienceorjudgment.</p>
+<p>Cannotgeneralize, butusefulforexploration.</p>
+<p>Purposivesampling</p>
+<p>Snowballsampling</p>
+<p>Conveniencesampling</p>
+<p>Quotasampling</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Com mon Survey Biases</h2>
+<p>Social Desirability Bias</p>
+<p>Respondentsanswerthewaythey</p>
+<p>thinktheinterviewerwantsto</p>
+<p>hear. Com moninquestionsabout</p>
+<p>healthbehaviors, incom e, or</p>
+<p>sensitivetopics.Recall Bias</p>
+<p>People misrememberpastevents.</p>
+<p>Useshortrecallperiods (7-dayor</p>
+<p>30-day) andreferenceeventsto</p>
+<p>anchor memory.Selection Bias</p>
+<p>Thesampledoesn&#x27;trepresentthe</p>
+<p>targetpopulation. Women,</p>
+<p>minorities, andthepoorestare</p>
+<p>oftenunderrepresented.</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>Case Study: Aajeevika</h2>
+<p>Bureau Survey Design</p>
+<p>Aajeevika Bureau in Rajasthanworkedwithmigrantlaborersto</p>
+<p>redesigntheirlivelihoodsurveyafterpoordataquality. Byshorteningthe</p>
+<p>questionnairefrom 120 to 45 questions, addinglocallanguage</p>
+<p>translationsin Rajasthani, andtrainingenumeratorsonprobing</p>
+<p>techniques, dataqualityimproveddramatically.</p>
+<p>Before</p>
+<p>120 questions, 3+ hoursperinterview, highfatigue, unreliabledata</p>
+<p>After</p>
+<p>45 questions, 60-mininterview, locallanguage, 90% completionrate</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="22">
+<div class="slide-content">
+<p class="section-number">SECTION 04</p>
+<h2>Data Collection</h2>
+<h2>Methods</h2>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>A Spectrum of Collection Methods</h2>
+<ul>
+<li><strong>1 Face-to-Face Interview</strong></li>
+</ul>
+<p>Highresponse, highcost, interviewereffect</p>
+<ul>
+<li><strong>2 Focus Group Discussion</strong></li>
+</ul>
+<p>Richqualitativedata, groupdynamics</p>
+<ul>
+<li><strong>3 Self-Administered Questionnaire</strong></li>
+</ul>
+<p>Lowcost, literacyrequired</p>
+<ul>
+<li><strong>4 Phone / IVR Survey</strong></li>
+</ul>
+<p>Widereach, lowerresponserate</p>
+<ul>
+<li><strong>5 Digital / CAPI</strong></li>
+</ul>
+<p>Real-tim edata, validationbuilt-in</p>
+<p>In South Asia, face-to-face CAPIsurveys (Computer-Assisted Personal Interviewing) using mobilephoneshavebecom ethedominant methodforlarge-scale</p>
+<p>developmentdatacollection.</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>Digital Data Collection Tools</h2>
+<p>KoboToolbox</p>
+<p>Free, open-sourceplatform builtforhumanitarianand</p>
+<p>developmentcontexts. Worksoffline. Widelyusedin</p>
+<p>South Asia.ODK / ODK Collect</p>
+<p>Open Data Kit — thebackboneof manydevelopment</p>
+<p>surveys. Highlycustomizable, offline-capable, Android-</p>
+<p>based.</p>
+<p>SurveyCTO</p>
+<p>Com mercialplatform popularwith NGOsandresearch</p>
+<p>firm s. Robustvalidation, real-tim e monitoringdashboard.Google Form s</p>
+<p>Simple, free, web-based. Suitableforsmall-scaleor</p>
+<p>internalsurveyswhereofflineaccessisn&#x27;trequired.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Qualitative Methods: FGDsand Interviews</h2>
+<p>Focus Group Discussion (FGD)</p>
+<p>6–10 participants. Guideddiscussion. Surfacesshared</p>
+<p>norm sandgroupdynamics.</p>
+<p><strong>Bestfor:</strong> Exploringcom munityperceptions, generating</p>
+<p>hypotheses, validatingfindings</p>
+<p><strong>Watchoutfor:</strong> Dominantvoices, groupthink, sensitive</p>
+<p>topicsKey Informant Interview (KII)</p>
+<p>1:1 in-depthconversationwithpurposivelyselected</p>
+<p>expertorstakeholder.</p>
+<p><strong>Bestfor:</strong> System sknowledge, powerdynamics, program</p>
+<p>history</p>
+<p><strong>Watchoutfor:</strong> Gatekeeperslimitingaccess, positivity</p>
+<p>bias</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>Case Study: MGNREGS</h2>
+<p>Beneficiary Survey — Bihar</p>
+<p>Astudyon MGNREGS (National Rural Employment Guarantee</p>
+<p>Scheme) in Biharused amixed-methodsapproach — household</p>
+<p>surveys + FGDswithwomen&#x27;sgroups — touncoverthat 40% ofjob</p>
+<p>cardswereheldbyvillageleaders, notactualworkers. Surveydata</p>
+<p>showedtheenrollmentnumbers; FGDsrevealedthepowerdynamics</p>
+<p>behindthem.</p>
+<p><strong>Key Lesson:</strong> Quantitativedatashowedwhatwas</p>
+<p>happening. Qualitativedataexplainedwhy. Neitheralone</p>
+<p>wassufficient.</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="27">
+<div class="slide-content">
+<p class="section-number">SECTION 05</p>
+<h2>Data Cleaning &amp;</h2>
+<h2>Management</h2>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="28">
+<div class="slide-content">
+<h2>Why Data Cleaning Matters</h2>
+<p>80%</p>
+<p>Tim ein Analysis</p>
+<p>Analystsspend ~80% oftheirtim e</p>
+<p>cleaningdata, notanalyzingit30%</p>
+<p>Typical Error Rate</p>
+<p>Studiesshow 20–30% ofsurvey</p>
+<p>recordshaveatleastoneerrorinraw</p>
+<p>data1st</p>
+<p>Priority</p>
+<p>Datacleaning musthappenbefore</p>
+<p>anyanalysisorvisualizationbegins</p>
+<blockquote>&quot;Garbagein, garbageout.&quot; Cleandataisthefoundationoftrustworthyanalysis. Indevelopmentcontexts, poordata</blockquote>
+<p>qualitycanleadto misdirectedresourcesand missedpopulations.</p>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>Com mon Data Problem s</h2>
+<p>Missing Values</p>
+<p>Fieldsleftblankorcodedas 99/999. Mustdecide:</p>
+<p>exclude, impute, orflag — dependingontheextent</p>
+<p>andpattern.Duplicates</p>
+<p>Sam erespondententeredtwice. Checkunique</p>
+<p>identifiers — survey ID, GPScoordinates, phone</p>
+<p>numbers.</p>
+<p>Outliers</p>
+<p>Extrem evaluesthat mayberealorerrors. A</p>
+<p>householdincom eof ₹ 50,00,000 in aruralsurvey</p>
+<p>needsverification.Inconsistencies</p>
+<p>Logicalcontradictions — e.g., &quot;Age: 8 years&quot; but</p>
+<blockquote>&quot;Maritalstatus: Married.&quot; Theseneedfield-level</blockquote>
+<p>validationrules.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>The Data Cleaning Workflow</h2>
+<p>Import Raw Data</p>
+<p>Loadsourcefilesand recor d</p>
+<p>provenance.Run Validation</p>
+<p>Checks</p>
+<p>Detectmissing, duplicates,</p>
+<p>outliers, logicerrors.Flagand Resolve</p>
+<p>Errors</p>
+<p>Logissues, corrector</p>
+<p>annotate records.</p>
+<p>Export Clean Dataset</p>
+<p>Savecleaneddataand</p>
+<p>updatecleaninglog.</p>
+<p>Alwaysdocumenteverycleaningdecisionin adatacleaninglog — recordwhatwaschanged, why, andbywhom . Thisensurestransparencyand</p>
+<p>reproducibility.</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>Data Management Best Practices</h2>
+<p>Folder Structure</p>
+<p><strong>Organizefilesinto:</strong> /raw, /clean, /output,</p>
+<p>/documentation. Neveroverwriterawdata.Version Control</p>
+<p>Nam efileswithdates (dataset_clean_2024-03-</p>
+<p>15.csv). Useversionnumbersforscripts.</p>
+<p>Access Control</p>
+<p>Sensitivedatashouldbepassword-protectedand</p>
+<p>sharedonlyon aneed-to-knowbasis.Regular Backups</p>
+<p>Storedatainatleasttwolocations. Cloudstorage</p>
+<p>+ localdrive. Losingfielddataisirreversible.</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="32">
+<div class="slide-content">
+<p class="section-number">SECTION 06</p>
+<h2>Descriptive</h2>
+<h2>Statistics</h2>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="33">
+<div class="slide-content">
+<h2>Measuresof Central Tendency</h2>
+<p>Mean, Median, Mode</p>
+<p>Thesethree measuresdescribe &quot;thetypicalvalue&quot; in a</p>
+<p>dataset — buttheybehaveverydifferently.</p>
+<p><strong>Mean:</strong> Sum ÷ count. Sensitivetooutliers.</p>
+<p><strong>Median:</strong> Middlevaluewhensorted. Robustto</p>
+<p>outliers.</p>
+<p><strong>Mode:</strong> Mostfrequentvalue. Usefulforcategorical</p>
+<p>data.Example: Household Incom e</p>
+<p>In avillagewith 10 households, ifonehouseholdearns</p>
+<p>₹10 lakhandnineearn ₹ 5,000 each:</p>
+<p><strong>Meanincome:</strong> ₹1,04,500 (misleading!)</p>
+<p><strong>Medianincome:</strong> ₹5,000 (morerepresentative)</p>
+<p>Inskeweddistributions (com moninincom e/wealth</p>
+<p>data), medianisusuallymoremeaningfulthan</p>
+<p>mean.</p>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>Measuresof Spread</h2>
+<p>Range</p>
+<p>Max − Min. Simplebutverysensitivetooutliers. Only</p>
+<p>tellsyouabouttheextremes.Standard Deviation</p>
+<p>Averagedistancefrom the mean. Low SD = data</p>
+<p>clusteredtogether. High SD = dataspreadout.</p>
+<p>Interquartile Range (IQR)</p>
+<p>Rangeofthe middle 50% ofvalues (Q3 − Q1). Robust</p>
+<p>tooutliers. Preferredforskeweddistributions.Percentiles</p>
+<p>Positioninthedistribution. &quot;The 90thpercentile&quot; =</p>
+<p>90% ofvaluesfallbelowthispoint.</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>Reading a Distribution</h2>
+<p>0 2 4 6 8 10 12 14 16 18 20 22 24 26 28</p>
+<p>% of Population014</p>
+<p>1524</p>
+<p>2534</p>
+<p>3549</p>
+<p>5064</p>
+<p>65Age Group</p>
+<p>Thisillustrativedistributionof arural South Asianpopulationshows ayoung, right-skewedagedistribution — withthe majorityunder 35. Thishasdirectimplicationsforprogram</p>
+<p>designineducation, livelihoods, andhealth.</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>Cross-Tabulations: Seeing Relationships</h2>
+<p>Across-tab (orcontingencytable) showshowtwocategoricalvariablesrelatetoeachother:</p>
+<p>School Attendance Has Toiletat Home No Toiletat Home Tota l</p>
+<p>Attends School 82% 61% 72%</p>
+<p>Does Not Attend 18% 39% 28%</p>
+<p>Total 100% 100% 100%</p>
+<p>Thisillustrativetablesuggests acorrelation betweensanitationaccessandschoolattendance — thoug hcorrelation</p>
+<p>doesnotimplycausation.</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="37">
+<div class="slide-content">
+<p class="section-number">SECTION 07</p>
+<h2>Data Visualization</h2>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="38">
+<div class="slide-content">
+<h2>Choosingthe Right Chart</h2>
+<p>Compare Values</p>
+<p>Barchartorcolum nchart. Worksbestwithupto 8–10</p>
+<p>categories. Makebarshorizontalwhenlabelsarelong.Show Change Over Tim e</p>
+<p>Linechartorareachart. Alwaysstartthe Y-axisat</p>
+<p>zerounlessexplicitlyannotating atruncatedaxis.</p>
+<p>Show Composition</p>
+<p>Pieordonutchart (max 5 slices). Stackedbarfor</p>
+<p>showingproportionsacross multiplegroups.Show Correlation</p>
+<p>Scatterplot. Eachdotisanobservation. Lookfor</p>
+<p>patterns — clusters, trends, oroutliers.</p>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>The Chart-Type Decision Framework</h2>
+<p>Composition</p>
+<p>Use Pieor Stacked Bar</p>
+<p>Changeovertim e</p>
+<p>Use Lineor Area</p>
+<p>Comparison</p>
+<p>Use Baror Column</p>
+<p>Whatdoyouwanttoshow?</p>
+<p>Clarifyyourgoal</p>
+<p><strong>Whenindoubt:</strong> simplicitywins. Aclearbarchartcom municatesbetterthan aflashybutconfusing 3Dchart. Youraudience&#x27;sunderstandingisthe</p>
+<p>goal — notthetool&#x27;sfeatures.</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>Child Malnutrition: Visualizing Change</h2>
+<p>Wasting %</p>
+<p>Stunting %</p>
+<p>01 02 03 04 05 0</p>
+<p>2 0 0 6 2 0 1 1 2 0 1 6 2 0 2 1</p>
+<p><strong>Ye a r2 0 3 0 S D G Ta r ge t :</strong> 2 5</p>
+<p>Illustrativedatabasedon NFHStrends. Stuntinghasdeclinedbutremainshigh. Wastingremainspersistentlyelevated. The SDGtargetlineshowshowfar Indiastillneedstogo — a</p>
+<p>powerfuluseof agoalreferencelineinadvocacy.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Data Visualization Dosand Don&#x27;ts</h2>
+<p>✓ Do</p>
+<p>Labelaxesclearlywithunits</p>
+<p>Use adescriptivetitlethatstatesthefinding</p>
+<p>Startthe Y-axisatzeroforbarcharts</p>
+<p>Usecolorpurposefullytohighlight, notdecorate</p>
+<p>Include adatasourcenote</p>
+<p>Testwithyouraudiencebeforepublishing  Don&#x27;t</p>
+<p>Use 3Dcharts — theydistortperception</p>
+<p>Usepiechartswith morethan 5 slices</p>
+<p>Usered-greencolorcombinations (colorblind</p>
+<p>unfriendly)</p>
+<p>Truncateaxestoexaggeratechange</p>
+<p>Overloadonechartwithtoo manyvariables</p>
+<p>Usejargoninchartlabels</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>Case Study: Gaon Data —</h2>
+<p>Data Visualizationfor</p>
+<p>Rural India</p>
+<p>Gaon Data (now Gram Vaani) built aplatformtovisualizevillage -</p>
+<p>leveldatain India, making SECC, census, andprogra mdataaccessible</p>
+<p>tolocaladministratorsandpanchayatsthroughsimpledashboards.</p>
+<p><strong>Theirkeydesignprinciple:</strong> everychartmustbeunderstandableto a</p>
+<p>gramsevakwithsecondaryeducation.</p>
+<p><strong>Design Principle:</strong> Thebestdevelopmentvisualizationsare</p>
+<p>designedfortheleastdata-literatepersonintheroom , not</p>
+<p>themost.</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="43">
+<div class="slide-content">
+<p class="section-number">SECTION 08</p>
+<h2>Interpreting &amp;</h2>
+<h2>Communicating</h2>
+<h2>Findings</h2>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>From Datato Insight</h2>
+<p>Insight &amp;</p>
+<p>RecommendationInterpretatio</p>
+<p>nPattern</p>
+<p>RecognitionRaw</p>
+<p>Numbers</p>
+<p>Anumberwithoutcontextisnotaninsight. Interpretationrequiresaddingcontext: historicaltrends, benchmarks,</p>
+<p>geographiccomparisons, andcausalreasoninggroundedinfieldknowledge.</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>Com mon Interpretation Errors</h2>
+<p>Correlation ≠ Causation</p>
+<p>Icecream salescorrelatewithdrowningrates — both</p>
+<p>riseinsum mer. Alwaysask: isthere aconfounding</p>
+<p>factor?Ecological Fallacy</p>
+<p>Drawingconclusionsaboutindividualsfrom group-</p>
+<p>leveldata. Adistrict&#x27;saverageliteracydoesn&#x27;ttellyou</p>
+<p>aboutanyindividualhousehold.</p>
+<p>Survivorship Bias</p>
+<p>Onlyseeingdatafrom thosewhostayedinthe</p>
+<p>program — notdropouts. Your &quot;success&quot; story may</p>
+<p>excludethosewho mostneededhelp.Cherry-Picking</p>
+<p>Selectingonlydatathatsupports apredetermined</p>
+<p>conclusion. Reportingonlypositiveindicatorswhile</p>
+<p>ignoringneutralornegativeones.</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>Com municating Findingsto Different Audiences</h2>
+<p>Policymakers &amp; Funders</p>
+<p>Leadwiththeheadlinefinding. Useonekeychart.</p>
+<p>Connecttotheirpriorities. Keepitto 2–3 pages max.2</p>
+<p>Program Staff</p>
+<p>Emphasizeoperationalimplications. Whatshouldwedo</p>
+<p>differently? Usetablesandbenchmarks.</p>
+<p>Community Members</p>
+<p>Uselocallanguage. Showdataabouttheircom munity.</p>
+<p>Usepicturesandparticipatory methods. Avoid</p>
+<p>percentages.4</p>
+<p>Researchers &amp; Peers</p>
+<p>Include methodology, limitations, andconfidence</p>
+<p>intervals. Academicrigorexpected.</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="47">
+<div class="slide-content">
+<p class="section-number">SECTION 09</p>
+<h2>Open Data &amp; Ethics</h2>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Data Ethicsin Development</h2>
+<p>Informed Consent</p>
+<p>Participants mustunderstandwhat</p>
+<p>dataiscollectedandhowitwillbe</p>
+<p>used — intheirownlanguageData Privacy</p>
+<p>Personallyidentifiableinformation</p>
+<p>mustbeprotected. Anonymize</p>
+<p>beforesharingorpublishing</p>
+<p>Do No Harm</p>
+<p>Couldsharingthisdataput</p>
+<p>vulnerablepeopleatrisk? Consider</p>
+<p>powerdynamics, stigm a, and</p>
+<p>misuseData Sovereignty</p>
+<p>Com munitieshaverightsovertheir</p>
+<p>owndata. Ownershipandaccess</p>
+<p>shouldbediscussedupfront</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>Open Datain South Asia</h2>
+<p>Key Open Data Platform sdata.gov.in — India&#x27;snationalopendataportalwith</p>
+<p>7,000+ datasets</p>
+<p>OpenCRVS — Opencivilregistrationplatform usedin</p>
+<p>Bangladesh</p>
+<p>Nepal Open Data Portal — Governmentstatistics</p>
+<p>andgeographicdata</p>
+<p>DISE (India) — District-levelschooleducationdataPrinciplesof Open Data</p>
+<p>Freelyavailablewithoutrestrictions</p>
+<p>Machine-readableformats (CSV, JSON)</p>
+<p>Clearlicensing (Creative Com mons)</p>
+<p>Properlydocumented metadata</p>
+<p>Opendataacceleratesdevelopmentresearchbutrequires</p>
+<p>dataliteracytouseresponsibly — openaccessdoes</p>
+<p>not meanopento misinterpretation.</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="50">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Datain Monitoring</h2>
+<h2>&amp; Evaluation</h2>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>The M&amp;E Data Framework</h2>
+<p>Activities</p>
+<p>Actionscarried</p>
+<p>outOutcomes</p>
+<p>Behavioral</p>
+<p>changesInputs</p>
+<p>Resources</p>
+<p>investedImpact</p>
+<p>Long- term</p>
+<p>changeOutputs</p>
+<p>Whatisproduced</p>
+<p>Eachleveloftheresultschainrequiresdifferenttypesofdata. Inputandoutputdataarerelativelyeasytocollect; outcomeandimpact</p>
+<p>datarequire morerigorousdesignincludingbaselinesandcontrolgroups.</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Indicators: SM ARTand Otherwise</h2>
+<p>Specific</p>
+<p>Clearlydefined — who, what, where.</p>
+<blockquote>&quot;Percentageofwomenaged 15–49</blockquote>
+<p>whoused moderncontraceptioninthe</p>
+<p>last 12 months.&quot;Measurable</p>
+<p>Canbetrackedwithavailabletools</p>
+<p>anddatasources. Avoidindicators</p>
+<p>requiringdatathatdoesn&#x27;texist.Achievable</p>
+<p>Realisticgivenyourprogram scale,</p>
+<p>resources, andtimefram e. Don&#x27;t</p>
+<p>promiseto move anational-level</p>
+<p>indicator.</p>
+<p>Relevant</p>
+<p>Directlylinkedtowhatyourprogram istryingtochange.</p>
+<p>Avoidproxyindicatorsthatdriftfrom thetheoryofchange.Time-Bound</p>
+<p><strong>Specifywhenyouwill measure:</strong> atendline (18 months),</p>
+<p>annually, oratprogram close.</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="53">
+<div class="slide-content">
+<h2>Case Study: PMJDY —</h2>
+<p>Tracking Financial</p>
+<p>Inclusion</p>
+<p>The Pradhan Mantri Jan Dhan Yojana M&amp;Esystemtracksaccounts</p>
+<p>opened, balances, andactiveusageacross India. The program</p>
+<p>revealed acriticaldatalesson: openinganaccount ≠ financial</p>
+<p>inclusion. Bytrackingusageindicators alongsideenrollment, data</p>
+<p>showed 30%+ accountshadzerobalance — prompting aredesign</p>
+<p>towardactiveusecampaigns.</p>
+<p><strong>Key Learning:</strong> Chooseindicatorsthatmeasurethechange</p>
+<p>youactuallycareabout — notjusttheactivitythat&#x27; seasyto</p>
+<p>count.</p>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="54">
+<div class="slide-content">
+<p class="section-number">SECTION 11</p>
+<h2>Data Literacyin</h2>
+<h2>Practice</h2>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>A Data Literacy Frameworkfor Organizations</h2>
+<ul>
+<li><strong>1Culture</strong></li>
+</ul>
+<p>Leadershipvaluesevidence</p>
+<ul>
+<li><strong>2Systems</strong></li>
+</ul>
+<p>Tools, platform s, andprocesses</p>
+<ul>
+<li><strong>3Skills</strong></li>
+</ul>
+<p>Staffcapacityatalllevels</p>
+<ul>
+<li><strong>4Data</strong></li>
+</ul>
+<p>Quality, accessible, relevantdata</p>
+<p>Buildingdataliteracyinanorganizationrequiresworkatallfourlevels. Cu l tu reatthetop matters most — ifleadershipdoesn&#x27;tuse</p>
+<p>datato makedecisions, staffwon&#x27;tprioritizecollectingitwell.</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="56">
+<div class="slide-content">
+<h2>Com mon Pitfallsin Development Data</h2>
+<p>Dataforcompliance, notlearning</p>
+<p>Collectingdataonlybecausedonorsrequireit —</p>
+<p>thenneverusingittoimproveprogram sIndicatoroverload</p>
+<p>Tracking 80+ indicatorswhen 10 well-chosenones</p>
+<p>wouldtell abetterstory</p>
+<p>Headquarters-fielddisconnect</p>
+<p>Datacollectedinvillagesisanalyzedonlyatthe</p>
+<p>centraloffice — fieldstaffneverseeresultsGenderblindness</p>
+<p>Notdisaggregatingbysex masks majorinequities —</p>
+<blockquote>&quot;average&quot; often means &quot;maledefault&quot;</blockquote>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="57">
+<div class="slide-content">
+<p class="section-number">SECTION 12</p>
+<h2>Building a Data</h2>
+<h2>Culture</h2>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Stepsto Build a Data Culture</h2>
+<p>Start Small, Win Fast</p>
+<p>Pickoneprogram area. Build asimpledashboard. Show</p>
+<p>howdataimprovedonedecision. Buildfrom success.Build Skills Across Levels</p>
+<p>Datachampionsdon&#x27;thavetobein IT. Trainfield</p>
+<p>supervisors, program managers, andcom munications</p>
+<p>staff.</p>
+<p>Closethe Feedback Loop</p>
+<p>Sharedatabacktothosewhocollectedit. Ifenumerators</p>
+<p>neverseeresults, dataqualitysuffers.Get Leadership Buy-In</p>
+<p>Askseniorleadershiptocitedataintheir</p>
+<p>com munications. Modeldata-drivenlanguagein</p>
+<p>meetings.</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Quiz: Test Your Data Literacy</h2>
+<p><strong>Q 1:</strong> Whattypeofdatais</p>
+<blockquote>&quot;villagenam e&quot;?</blockquote>
+<p>a) Ratio   b) Nominal   c) Ordinal   d)</p>
+<p><strong>IntervalQ 2:</strong> Whichsampling method</p>
+<p>allow sgeneralizationto a</p>
+<p>population?</p>
+<p>a) Convenience   b) Snowball   c)</p>
+<p><strong>Simple Random   d) PurposiveQ 3:</strong> Ahouseholdearns ₹80</p>
+<p>lakhbutothersearn ₹5,000.</p>
+<p>Whichisbettertoreport?</p>
+<p>a) Meanincom e   b) Medianincom e</p>
+<p>c) Mode   d) Range</p>
+<p><strong>Q 4:</strong> Icecream salesand</p>
+<p>drowningbothrisein</p>
+<p>sum mer. Thisisanexample</p>
+<p>of:</p>
+<p>a) Causation   b) Correlationwith</p>
+<p>confounding   c) Survivorshipbias   d)</p>
+<p><strong>EcologicalfallacyQ 5:</strong> Whatdoes SM ARTstand</p>
+<p>forinindicatordesign?</p>
+<p>a) Simple, Meaningful, Achievable,</p>
+<p>Robust, Tested   b) Specific,</p>
+<p>Measurable, Achievable, Relevant,</p>
+<p>Tim e-Bound</p>
+<p><strong>Answers:</strong> 1-b, 2-c, 3-b, 4-b, 5-b</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="60">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>Data Literacyis a Spectrum</p>
+<p>Everyoneindevelopmentneedstobe adatauser, notjust</p>
+<p>datacollectorsoranalystsType &amp; Level Matter</p>
+<p>Choosingtherightdatatype (quantitative/qualitative,</p>
+<p>primary/secondary) shapeswhatquestionsyoucan</p>
+<p>answer</p>
+<p>Design Before You Collect</p>
+<p>Goodsurveydesignandsamplingpreventproblem sthat</p>
+<p>noamountofdatacleaningcanfixlaterContext Creates Insight</p>
+<p>Numberswithoutcontext mislead. Interpretationrequires</p>
+<p>fieldknowledge, benchmarks, andcriticalthinking</p>
+<p>Visualizefor Your Audience</p>
+<p>Designchartsfortheleastdata-literatepersoninthe</p>
+<p>room — claritybeatssophisticationeverytim eEthics Is Not Optional</p>
+<p>Consent, privacy, anddo-no-harm principles mustbe</p>
+<p>embeddedineverydataprojectfrom thestart</p>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

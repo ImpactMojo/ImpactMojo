@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theory of Change Workbench 101 | ImpactMojo</title>
+<meta name="description" content="Theory of Change Workbench 101 — Free development education course from ImpactMojo.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand-primary: #0EA5E9;
+  --brand-accent: #A0522D;
+  --border-art: #8B4513;
+  --bg-slide: #FFFDF7;
+  --bg-section: #8B4513;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #777;
+  --sepia-bg: #F5E6D0;
+  --sepia-dark: #3E2723;
+}
+
+html, body { height: 100%; overflow: hidden; background: #111; }
+
+/* ─── Slide Container ─────────────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  overflow-y: auto;
+  border: 6px solid var(--border-art);
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--border-art) 0px,
+    var(--border-art) 4px,
+    transparent 4px,
+    transparent 8px,
+    var(--brand-accent) 8px,
+    var(--brand-accent) 12px,
+    transparent 12px,
+    transparent 16px
+  ) 6;
+}
+
+.slide.active { display: flex; }
+
+/* ─── Typography ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--border-art); }
+h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+p, li, blockquote, td {
+  font-family: 'Amaranth', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  background: #f0ebe3;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+strong { color: var(--text-primary); }
+
+ul {
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: bold;
+}
+
+blockquote {
+  border-left: 4px solid var(--border-art);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.03);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background: var(--border-art);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Slide Types ─────────────────────────────────────────────── */
+.slide--title {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--title h1 { font-size: 3.2rem; }
+
+.slide--section {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg-section);
+  color: #fff;
+}
+
+.slide--section h2 { color: #fff; font-size: 2.6rem; }
+.slide--section .section-number { color: rgba(255,255,255,0.7); }
+
+.slide--thankyou {
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sepia-bg) 0%, var(--bg-slide) 100%);
+}
+
+.slide--thankyou h2 { color: var(--border-art); font-size: 2.4rem; margin-bottom: 0.5rem; }
+
+.thankyou-info {
+  margin-top: 2rem;
+  font-family: 'Amaranth', sans-serif;
+  color: var(--text-muted);
+}
+
+.thankyou-info p { margin: 0.3rem 0; }
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,253,247,0.95);
+  border-top: 1px solid #e8e0d4;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.nav-controls {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border-art);
+  background: var(--bg-slide);
+  color: var(--border-art);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover { background: var(--border-art); color: #fff; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--border-art);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide { padding: 2rem 1.5rem 3rem; }
+  h1 { font-size: 2rem; }
+  .slide--title h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  p, li { font-size: 1rem; }
+  .nav-controls { bottom: 1rem; right: 1rem; }
+}
+
+@media print {
+  .slide { page-break-after: always; display: flex !important; position: relative; height: 100vh; }
+  .nav-controls, .progress-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+<div class="slide slide--title" data-slide="1">
+<div class="slide-content">
+<p class="category-badge">MEL &amp; RESEARCH IMPACTMOJO 101 SERIES</p>
+<h1>Theoryof Change</h1>
+<p class="subtitle">Workbench 101 Buildandtest Theoriesof Changefordevelopmentprogram susing logicalframeworksandresultschains.</p>
+</div>
+<div class="slide-footer">
+  <span>1 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="2">
+<div class="slide-content">
+<h2>What We&#x27;ll Cover Today</h2>
+<p>Aguidedjourneythrough Theoryof Change — from foundationalconceptstopracticalapplicationin South Asiandevelopmentcontexts.</p>
+<p>Whatis Theoryof Change?</p>
+<p>Definitions, origins, andwhyit matters02</p>
+<p>Core Components</p>
+<p>Inputs, outputs, outcomes, impact</p>
+<p>Assumptions &amp; Risks</p>
+<p>Makingyourlogicvisible04</p>
+<p>Results Chains</p>
+<p>Buildingcausalpathways</p>
+<p>Logical Frameworks</p>
+<p>Logframesandtheirstructure06</p>
+<p>Stakeholder Mapping</p>
+<p>Whodriveschange?</p>
+<p>Indicators &amp; Evidence</p>
+<p>Measuringwhat matters08</p>
+<p>Common Pitfalls</p>
+<p>Whatgoeswrongandwhy</p>
+<p>ToCin Practice</p>
+<p>South Asiancasestudies10</p>
+<p>Testing &amp; Iteration</p>
+<p>Learningloopsandadaptation</p>
+<p>Participatory ToC</p>
+<p>Co-creatingwithcom munities12</p>
+<p>From ToCto MEL Plan</p>
+<p>Connectingtheoryto measurement</p>
+</div>
+<div class="slide-footer">
+  <span>2 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="3">
+<div class="slide-content">
+<h2>Learning Objectives</h2>
+<p>Bytheendofthiscourse, youwillbeableto:</p>
+<p>Defineandexplain</p>
+<p>Thecoreconceptsof Theoryof Change, resultschains, andlogicalframeworks</p>
+<p>Buildand map</p>
+<p>Aresultschainlinkinginputstolong-term impactwithclearcausallogic</p>
+<p>Identifyandarticulate</p>
+<p>Keyassumptions, risks, andpreconditionsin adevelopmentprogram</p>
+<p>Applyandadapt</p>
+<p>ToCframeworkstoreal South Asiandevelopmentprogram sandcontexts</p>
+<p>Connectandintegrate</p>
+<p>Theoryof Changewith MELplanning, indicators, andevidencegathering</p>
+</div>
+<div class="slide-footer">
+  <span>3 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="4">
+<div class="slide-content">
+<p class="section-number">SECTION 01</p>
+<h2>Whatis Theoryof Change?</h2>
+</div>
+<div class="slide-footer">
+  <span>4 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="5">
+<div class="slide-content">
+<h2>Defining Theoryof Change</h2>
+<p>A Theoryof Change (ToC) is acomprehensivedescriptionandillustrationofhowandwhy adesiredchangeis</p>
+<p>expectedtohappenin aparticularcontext.</p>
+<p>Whatit IS</p>
+<p>Aroadmapfrom activitiestoimpact</p>
+<p>Atestablesetofcausalclaim s</p>
+<p>Aliving, adaptabledocument</p>
+<p>Acom municationandalignmenttoolWhatitis NOT</p>
+<p>Afixed, one-tim eexercise</p>
+<p>Just alogfram eor M&amp;Eplan</p>
+<p>Aguaranteeofoutcomes</p>
+<p>Atop-downplanningdocument</p>
+</div>
+<div class="slide-footer">
+  <span>5 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="6">
+<div class="slide-content">
+<h2>Originsand Evolution</h2>
+<p>ToCemergedfrom program evaluationtheoryinthe 1990s — butitsrootsgodeeperintosocialscienceandsystem sthinking.</p>
+<p>1 1970s–80s</p>
+<p>Program theoryandlogic modelsgaintractionin USevaluation</p>
+<p>practice</p>
+<ul>
+<li><strong>2 Early 1990s</strong></li>
+</ul>
+<p>Carol Weisscoins &quot;Theoryof Change&quot; — emphasizingcausal</p>
+<p>mechanism s, notjustactivities</p>
+<ul>
+<li><strong>3 Late 1990s</strong></li>
+</ul>
+<p>ActKnowledgeand Aspen Institutepopularizeparticipatory ToC</p>
+<p>methods</p>
+<p>4 2000s</p>
+<p>Donors (DFID, USAID, Gates) require ToCingrantapplications</p>
+<p>globally</p>
+<p>5 2010s–now</p>
+<p>South Asian NGOsandgovernmentsintegrate ToCintoprogram</p>
+<p>designand MELsystem s</p>
+</div>
+<div class="slide-footer">
+  <span>6 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="7">
+<div class="slide-content">
+<h2>Why Theoryof Change Matters</h2>
+<p>Clarity</p>
+<p>Forcesteamstoarticulateexactlyhowtheirworkproduceschange</p>
+<p>Alignment</p>
+<p>Createssharedunderstandingamongstaff, donors, andcommunities</p>
+<p>Learning</p>
+<p>Provides atestableframeworktoidentifywhatworks andwhatdoesn&#x27;t</p>
+<p>Accountability</p>
+<p>Linksactivitiestooutcomes, makingperformancetransparent</p>
+</div>
+<div class="slide-footer">
+  <span>7 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="8">
+<div class="slide-content">
+<h2>ToCvs. Logic Modelvs. Logframe</h2>
+<p>Thesetermsareoftenconfused. Here&#x27;showtheyrelate:</p>
+<p>Feature Theoryof Change Logic Model Logframe</p>
+<p>Focus Causalmechanisms +</p>
+<p>assumptionsInput-outputlogic Objectives + indicators</p>
+<p>Depth Deep, narrative Medium Structured, tabular</p>
+<p>Participation High (ideally) Medium Low (oftentop-dow n)</p>
+<p>Flexibility High — evolveswith</p>
+<p>learningMedium Low — fixedatdesign</p>
+<p>Usedfor Strategy, learning,</p>
+<p>communicationProgramdesign Donorreporting</p>
+</div>
+<div class="slide-footer">
+  <span>8 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="9">
+<div class="slide-content">
+<h2>Reflection: Your First ToC Instinct</h2>
+<p>Thinkabout adevelopmentprogram youknow — from yourwork, studies, orcom munity. Itcouldbe ahealth</p>
+<p>cam p, ascholarshipschem e, or awomen&#x27;sself-helpgroup.</p>
+<p>Whatdoesitdo?</p>
+<p>List 2–3 mainactivitiestheprogram runsWhodoesitreach?</p>
+<p>Whoarethedirectparticipantsorbeneficiaries?</p>
+<p>Whatchanges?</p>
+<p>Whatisdifferentforpeoplebecauseofthisprogram —</p>
+<p>intheshortterm ? Longterm ?Whywoulditwork?</p>
+<p>Whatassumptionsareyou makingabouthowthe</p>
+<p>changehappens?</p>
+<p>Jotdownyouranswers. You&#x27;vejustsketched arough Theoryof Change!</p>
+</div>
+<div class="slide-footer">
+  <span>9 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="10">
+<div class="slide-content">
+<p class="section-number">SECTION 02</p>
+<h2>Core Componentsof a</h2>
+<h2>Theoryof Change</h2>
+</div>
+<div class="slide-footer">
+  <span>10 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="11">
+<div class="slide-content">
+<h2>The Building Blocks</h2>
+<p>Every Theoryof Changeisbuiltfrom acom monsetofcomponents — from resourcestolastingchange.</p>
+<p>Activities</p>
+<p>Actionsand</p>
+<p>programdeliveryOutcomes</p>
+<p>Behavioraland</p>
+<p>condition</p>
+<p>changesInputs</p>
+<p>Resources, staff,</p>
+<p>andpartnersImpact</p>
+<p>Long- term</p>
+<p>systemicchangeOutputs</p>
+<p>Directproducts</p>
+<p>andservices</p>
+<p>Eachlevelrepresents adifferenttypeofresult — andthearrowsbetweenthem representyourcausalclaim s. Thestrengthof a ToCliesinhowwell</p>
+<p>thosearrowsarejustified.</p>
+</div>
+<div class="slide-footer">
+  <span>11 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="12">
+<div class="slide-content">
+<h2>Inputs, Activities, Outputs</h2>
+<p>Inputs</p>
+<p><strong>Resourcesinvested:</strong> staff, funds,</p>
+<p>equipment, tim e, partnerships.</p>
+<p><strong>Example:</strong> ₹ 50Lgrant + 3 field</p>
+<p>officers + com munityhealth</p>
+<p>workersActivities</p>
+<p>Whattheprogram doeswith</p>
+<p>thoseresources. Example:</p>
+<p>Conduct monthlynutrition</p>
+<p>workshopsin 30 villagesOutputs</p>
+<p>Tangible, countableproductsof</p>
+<p>activities. Example: 1,200 women</p>
+<p>trained; 30 workshopkits</p>
+<p>distributed</p>
+<p>Outputsareunderyourcontrol. Outcomesandimpactdependonhowpeoplerespond — andonfactorsbeyond</p>
+<p>yourprogram .</p>
+</div>
+<div class="slide-footer">
+  <span>12 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="13">
+<div class="slide-content">
+<h2>Outcomesand Impact</h2>
+<p>Outcomes</p>
+<p>Changesinknowledge, attitudes, behavior, or</p>
+<p>conditionsamongparticipantsorcom munities.</p>
+<p><strong>Sh o r t - te r m :</strong> Womenknowrecom mendedfeeding</p>
+<p>practices</p>
+<p><strong>Me di u m - te r m :</strong> Feedingbehaviorsimproveat</p>
+<p>householdlevel</p>
+<p><strong>Lo n g - te r m :</strong> Childstuntingratesfallintarget</p>
+<p>villagesImpact</p>
+<p>Thebroader, systemic, ortransformationalchangein</p>
+<p>societythattheprogram contributesto.</p>
+<p>Reducedunder-5 malnutritioninthedistrict</p>
+<p>Improvedhumancapitalintheregion</p>
+<p>Shiftedcom munitynorm saroundchildnutrition</p>
+<p><strong>Note:</strong> Impactisrarelyattributabletooneprogram alone.</p>
+</div>
+<div class="slide-footer">
+  <span>13 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="14">
+<div class="slide-content">
+<h2>Case Study: SEWA&#x27;s Livelihood ToC</h2>
+<p>The Self-Employed Women&#x27;s Association (SEWA) in Gujaratbuilttheir ToCon asimple</p>
+<p>butpowerfulchain:</p>
+<ul>
+<li><strong>1Organizewomenintotradegroups</strong></li>
+<li><strong>2Provideskillstraining + microfinance</strong></li>
+<li><strong>3Increaseincome + economicagency</strong></li>
+<li><strong>4Reducevulnerability + improvewell-being</strong></li>
+</ul>
+<p>SEWA&#x27;s ToCwasgroundedinfeministeconomics — assumingthatcollectivepower , notjust</p>
+<p>individualskills, drivessustainablechangeforinformalwomenworkers.</p>
+</div>
+<div class="slide-footer">
+  <span>14 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="15">
+<div class="slide-content">
+<h2>Exercise: Labelthe Components</h2>
+<p>Readthefollowingprogram descriptionandidentifyeachcomponent: Inputs, Activities, Outputs, Outcomes,</p>
+<p>and Impact.</p>
+<blockquote>&quot;A Rajasthan-based NGOreceives a ₹ 1 croregranttotrain 500 first-generationgirlstudentsindigitalliteracyover 18</blockquote>
+<p>months. Aftertraining, girlsusesmartphonestoaccessgovernmentscholarshipportals. Within ayear, enrollmentin</p>
+<p>highereducationamongtrainedgirlsrisesby 40%. Theorganizationaim storeducegendergapsintertiaryeducation</p>
+<p>acrossthestate.&quot;</p>
+<p>Input? Activity? Output? Outcome?</p>
+<p>Impact?</p>
+</div>
+<div class="slide-footer">
+  <span>15 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="16">
+<div class="slide-content">
+<p class="section-number">SECTION 03</p>
+<h2>Assumptionsand Risks</h2>
+</div>
+<div class="slide-footer">
+  <span>16 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="17">
+<div class="slide-content">
+<h2>The Hidden Heartof Every ToC</h2>
+<p>Everyarrowinyourresultschainrestsonanassumption — abeliefaboutwhyonethingleadstoanother. Making</p>
+<p>assumptionsexplicitisoneofthe mostimportantthings a ToCdoes.</p>
+<p>Whatareassumptions?</p>
+<p>Beliefsaboutconditions, behaviors,</p>
+<p>orrelationshipsthat mustholdtrue</p>
+<p>foryourlogictowork — butthat</p>
+<p>aren&#x27;tguaranteed.Why makethem explicit?</p>
+<p>Hiddenassumptionsarewhere</p>
+<p>program sfail. Namingthem lets</p>
+<p>youtest, monitor, andadaptthem</p>
+<p>proactively.Typesofassumptions</p>
+<p>Aboutbeneficiaries (willthey</p>
+<p>participate?), context (areservices</p>
+<p>available?), causality (doestraining</p>
+<p>changebehavior?), and</p>
+<p>sustainability (willchange</p>
+<p>persist?).</p>
+</div>
+<div class="slide-footer">
+  <span>17 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="18">
+<div class="slide-content">
+<h2>Assumptionsvs. Risks</h2>
+<p>Assumptions</p>
+<p>What mustbe TRUEforyourcausallogictohold. These</p>
+<p>arepositiveconditionsyou&#x27;rerelyingon.</p>
+<p>Womenhavetim etoattendtrainingsessions</p>
+<p>Husbandssupportwives&#x27; participation</p>
+<p>Local marketsexistfornewproductsRisks</p>
+<p>Whatcouldgo W RONG — threatsthatcouldderailyour</p>
+<p>program logic, evenifassumptionshold.</p>
+<p>Seasonal migrationdisruptsattendance</p>
+<p>Politicalinstabilityaffectsfieldoperations</p>
+<p>Floodsdestroyproductiveassets</p>
+<p>Strong ToCsnam eboth — anddescribehowtheprogram will monitorandrespondtoeach.</p>
+</div>
+<div class="slide-footer">
+  <span>18 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="19">
+<div class="slide-content">
+<h2>The Assumption Ladder</h2>
+<p>Assumptionsoperateatdifferentlevelsoftheresultschain. Thehigherthelevel, theharderassumptionsaretocontrolorverify.</p>
+<ul>
+<li><strong>1Impact Assumptions</strong></li>
+</ul>
+<p>System -levelconditionsbeyondprogram control</p>
+<ul>
+<li><strong>2Outcom e Assumptions</strong></li>
+</ul>
+<p>Behaviorchangeisdurable; com munitycontextenablesit</p>
+<ul>
+<li><strong>3Output Assumptions</strong></li>
+</ul>
+<p>Participantsengage meaningfullywithactivities</p>
+<ul>
+<li><strong>4Activity Assumptions</strong></li>
+</ul>
+<p>Staffaretrained; materialsarriveontim e</p>
+<ul>
+<li><strong>5Input Assumptions</strong></li>
+</ul>
+<p>Fundsaredisbursed; partnersdelivercom mitments</p>
+</div>
+<div class="slide-footer">
+  <span>19 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="20">
+<div class="slide-content">
+<h2>Case Study: Assumptionsin a</h2>
+<p>Bangladesh WASH Program</p>
+<p>A WASHprograminrural Bangladeshassumedthatprovidinglatrineswould</p>
+<p>increasesanitationcoverage. Aftertwoyears, opendefecationhadbarely</p>
+<p>changed.</p>
+<p>Assumption</p>
+<p>Made</p>
+<p>Latrineavailability</p>
+<ul>
+<li>latrineuseWhat Was</li>
+</ul>
+<p>Missing</p>
+<p>Behaviorchange</p>
+<p>communication;</p>
+<p>addressingsocial</p>
+<p>normsaround</p>
+<p>opendefecationRevised ToC</p>
+<p>Added</p>
+<p>community-led</p>
+<p>totalsanitation</p>
+<p>(CLTS) component</p>
+<p>totriggernorm</p>
+<p>change, notjust</p>
+<p>supply</p>
+</div>
+<div class="slide-footer">
+  <span>20 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="21">
+<div class="slide-content">
+<h2>Testing Your Assumptions</h2>
+<p>Evidence Review</p>
+<p>Whatdoesexistingresearchsayaboutthiscausallink?</p>
+<p>Searchforstudiesinsimilarcontexts.Com munity Consultation</p>
+<p>Askcom munitieswhetheryourassumptionsreflecttheir</p>
+<p>reality. Theirknowledgeisevidencetoo.</p>
+<p>Pilot Testing</p>
+<p>Testkeyassumptionsin asmallgeographybeforescaling.</p>
+<p>Buildfeedbackloopsintodesign.Ongoing Monitoring</p>
+<p>Buildassumption-trackingintoyour MELsystem . Flag</p>
+<p>whenassumptionsarenotholding.</p>
+</div>
+<div class="slide-footer">
+  <span>21 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="22">
+<div class="slide-content">
+<p class="section-number">SECTION 04</p>
+<h2>Results Chains</h2>
+</div>
+<div class="slide-footer">
+  <span>22 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="23">
+<div class="slide-content">
+<h2>Whatis a Results Chain?</h2>
+<p>Aresultschainisthecorevisualspineof a Theoryof Change — alinear (orbranching) mapofcausalconnectionsfrom</p>
+<p>youractivitiestoyourintendedimpact.</p>
+<blockquote>&quot;Ifwedo X, then Ywillhappen, because Z.&quot; Thatsimplestructure, repeatedandconnected, ISyourresults</blockquote>
+<p>chain.</p>
+<p>Linear Chains</p>
+<p>Onepathwayfrom activityto</p>
+<p>impact. Simpleprogram swith a</p>
+<p>focusedscope.Branching Chains</p>
+<p>Multiplepathwaysthatconverge</p>
+<p>on asharedoutcom e. Complex</p>
+<p>program swithdiverse</p>
+<p>components.Nested Chains</p>
+<p>Sub-program seachhavetheir</p>
+<p>ownresultschainfeedingintoan</p>
+<p>overarching ToC. Multi-</p>
+<p>componentprogram s.</p>
+</div>
+<div class="slide-footer">
+  <span>23 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="24">
+<div class="slide-content">
+<h2>Building a Results Chain Stepby Step</h2>
+<p>Document</p>
+<p>Assumption</p>
+<p>sLink</p>
+<p>Activitiesto</p>
+<p>OutcomesIdentify</p>
+<p>Precondition</p>
+<p>sImpact</p>
+<p>Vision</p>
+<p>Workingbackwardsfromimpact (sometimescalled &quot;backward mapping&quot;) isoften moreeffectivethanbuildingforwardfrom</p>
+<p>activities — itkeepsyourlogicanchoredinthechangeyouwanttosee, notjusttheworkyouplantodo.</p>
+</div>
+<div class="slide-footer">
+  <span>24 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="25">
+<div class="slide-content">
+<h2>Preconditionsand Pathways</h2>
+<p>Beforeanoutcom ecanbeachieved, certain p re co n di ti o n s mustbeinplace. Mappingpreconditionsrevealsthefull</p>
+<p>complexityofchange.</p>
+<p><strong>Precondition 1:</strong> Awareness</p>
+<p>Beneficiaries mustknowtheprogram existsand</p>
+<p>understanditspurposePrecondition 2: Access</p>
+<p>People mustbeabletophysicallyandsociallyreach</p>
+<p>program services</p>
+<p><strong>Precondition 3:</strong> Motivation</p>
+<p>Participants mustseevalueinengagingand</p>
+<p>changingbehaviorPrecondition 4: Enabling Environment</p>
+<p>Contextualfactors (familysupport, services,</p>
+<p>policies) mustallowchangetooccur</p>
+</div>
+<div class="slide-footer">
+  <span>25 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="26">
+<div class="slide-content">
+<h2>Case Study: Results Chainfor a Nepal Literacy Program</h2>
+<p>Activity</p>
+<p>Runeveningliteracyclassesin 50 VDCs</p>
+<p>Output</p>
+<p>800 adultwomencomplete 6-monthliteracycourse</p>
+<p>Short-term Outcom e</p>
+<p>Womenreadandwrite Nepaliindependently</p>
+<p>Medium -term Outcom e</p>
+<p>Womenaccesshealthinfo, governmentschemes, andlegaldocuments</p>
+<p>Long-term Outcom e</p>
+<p>Increasedparticipationinlocalgovernanceandhealthdecision-making</p>
+<p>Impact</p>
+<p>Reducedgenderinequalityincivicandhouseholdlife</p>
+</div>
+<div class="slide-footer">
+  <span>26 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="27">
+<div class="slide-content">
+<h2>Group Exercise: Build a Mini Results Chain</h2>
+<p>Workinpairsorsmallgroups. Chooseoneoftheprogram sbelowandsketch a 4-stepresultschainonpaperor</p>
+<p>ashareddoc. Bereadytoshareyourassumptions!</p>
+<p>Option A</p>
+<p>Amobilehealthclinicserving</p>
+<p>tribalcom munitiesin OdishaOption B</p>
+<p>Ascholarshipsprogram for Dalit</p>
+<p>girlsin Tamil NaduOption C</p>
+<p>Farmerproducerorganization</p>
+<p>trainingin Punjab</p>
+<p><strong>Identify:</strong> 1 Activity → 1 Output → 1 Outcome → 1 Impact. Thennam e 2 assumptionsyourchainrelieson.</p>
+</div>
+<div class="slide-footer">
+  <span>27 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="28">
+<div class="slide-content">
+<p class="section-number">SECTION 05</p>
+<h2>Logical Frameworks</h2>
+<h2>(Logframes)</h2>
+</div>
+<div class="slide-footer">
+  <span>28 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="29">
+<div class="slide-content">
+<h2>Whatis a Logfram e?</h2>
+<p>A Logical Framework Matrix (Logfram e) is atabulartoolthatsum marizes aprogram &#x27;sobjectives, indicators, means</p>
+<p>ofverification, andassumptionsin asinglestructuredgrid.</p>
+<p>The 4×4 Matrix</p>
+<p>Standardlogframeshave 4 rows (Impact, Outcom e,</p>
+<p>Output, Activity) and 4 columns:</p>
+<p>Narrative Sum mary</p>
+<p>Indicators</p>
+<p>Meansof Verification</p>
+<p>AssumptionsWhousesit?</p>
+<p>Requiredby mostbilateraldonors — DFID/FCDO, USAID,</p>
+<p>ADB, World Bank, UNDP. Widelyusedby Indian</p>
+<p>governmentschemesandinternational NGOsoperating</p>
+<p>in South Asia.</p>
+<p>It&#x27;stheadministrativetwinof a Theoryof Change — more</p>
+<p>rigid, butstilluseful.</p>
+</div>
+<div class="slide-footer">
+  <span>29 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="30">
+<div class="slide-content">
+<h2>Logframe Structure: A Visual Guide</h2>
+<p>Level Indicator Meansof Verification Assumptions</p>
+<p><strong>Impact:</strong> Reducedchild</p>
+<p>malnutritionintarget</p>
+<p>districts% ofunder-5 children</p>
+<p>withstuntingNFHSdata; district</p>
+<p>healthsurveysGovernmentnutrition</p>
+<p>servicesremain</p>
+<p>functional</p>
+<p><strong>Outcome:</strong> Improvedfeeding</p>
+<p>practicesamongmothers% motherspracticing</p>
+<p>exclusivebreastfeedingHouseholdsurveys, KAP</p>
+<p>studiesSocialnormsdonot</p>
+<p>obstructpractice</p>
+<p>change</p>
+<p><strong>Output:</strong> Womentrainedin</p>
+<p>nutritioncounselingNo. ofwomentrained</p>
+<p>perquarterTrainingregisters,</p>
+<p>attendancesheetsWomenareavailable</p>
+<p>andwillingtoattend</p>
+<p><strong>Activity:</strong> Conductmonthly</p>
+<p>nutritionworkshopsNo. ofworkshopsheld Fieldreports, photos Facilitatorstrained;</p>
+<p>materialsinplace</p>
+</div>
+<div class="slide-footer">
+  <span>30 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="31">
+<div class="slide-content">
+<h2>ToCand Logfram e: Partners, Not Rivals</h2>
+<p>Theoryof Change</p>
+<p>Rich, narrative, participatory. Shows W HYchange</p>
+<p>willhappenandthefullcausalstoryincluding</p>
+<p>context, assumptions, andpathways.Logfram e</p>
+<p>Structured, measurable, reportable. Shows W HAT</p>
+<p>willbe measuredandhowaccountabilitywillbe</p>
+<p>maintainedovertheprogram cycle.</p>
+<p><strong>Bestpractice:</strong> Developthe ToCfirstwithcom munityparticipation. Thenuseittopopulatethelogfram e — not</p>
+<p>theotherwayaround.</p>
+</div>
+<div class="slide-footer">
+  <span>31 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="32">
+<div class="slide-content">
+<h2>Case Study: MGNREGS</h2>
+<p>Logframe Elements</p>
+<p>India&#x27;s Mahatma Gandhi National Rural Employment Guarantee</p>
+<p>Scheme providesoneoftheworld&#x27;slargestnaturalexperimentsinrights-</p>
+<p>baseddevelopmentlogic.</p>
+<p>Impact Goal</p>
+<p>Reducerural</p>
+<p>povertyand</p>
+<p>distressmigrationOutcome</p>
+<p>Increased</p>
+<p>householdincome</p>
+<p>andfoodsecurityin</p>
+<p>leanseasonsOutput</p>
+<p>100 daysof</p>
+<p>guaranteedwage</p>
+<p>employmentper</p>
+<p>householdperyear</p>
+<p>Key Assumption</p>
+<p>Wagesarepaidontime; worksitesarewithin 5kmofresidence</p>
+</div>
+<div class="slide-footer">
+  <span>32 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="33">
+<div class="slide-content">
+<p class="section-number">SECTION 06</p>
+<h2>Stakeholder Mapping</h2>
+</div>
+<div class="slide-footer">
+  <span>33 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="34">
+<div class="slide-content">
+<h2>Why Stakeholders Shape Your ToC</h2>
+<p>Changedoesn&#x27;thappenin avacuum — ithappensthroughpeople. Your ToCmustaccountforwhoinfluences, enables,</p>
+<p>orblocksthechangeyouseek.</p>
+<p>Beneficiaries</p>
+<p>Directparticipantswhoselivesthe</p>
+<p>program aim stochangeGovernment</p>
+<p>Policyenvironment, servicedelivery</p>
+<p>system s, compliance</p>
+<p>Partners &amp; NGOs</p>
+<p>Implementationpartners, civil</p>
+<p>society, com munityorganizations</p>
+<p>Donors</p>
+<p>Funderswhoseprioritiesshape</p>
+<p>program designandreportingInfluencers</p>
+<p>Religiousleaders, casteelders,</p>
+<p>media — whoshapenorm s</p>
+</div>
+<div class="slide-footer">
+  <span>34 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="35">
+<div class="slide-content">
+<h2>Power, Interest, and Influence Matrix</h2>
+<p>Plottingstakeholdersbytheirpowerandinterestinyourprogram helpsyouplanengagementstrategically.</p>
+<p>Low Interest High Interest</p>
+<p>High Power Keep Satisfied — Manageproactively,</p>
+<p>preventresistance (e.g., districtcollectors)Engage Closely — Co-design, consult</p>
+<p>frequently (e.g., primarydonors, state</p>
+<p>departments)</p>
+<p>Low Power Monitor — Minimaleffort, keepinformed</p>
+<p>(e.g., neighboringvillageleaders)Keep Informed — Regularupdates, build</p>
+<p>ownership (e.g., beneficiarycom munities)</p>
+<p>In South Asiandevelopment, informalpower (casteleaders, religiousinstitutions, localpoliticalfigures) often matters</p>
+<p>morethanformalauthority.</p>
+</div>
+<div class="slide-footer">
+  <span>35 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="36">
+<div class="slide-content">
+<h2>Case Study: Stakeholder</h2>
+<p>Complexityin Sri Lanka</p>
+<p>Apost-conflictreconciliationprograminnorthern Sri Lankamapped</p>
+<p>sevendistinctstakeholdergroups withcompetinginterests. Tamil</p>
+<p>communityleaders, Sinhalesegovernmentofficials, and international</p>
+<p>donorseachhelddifferenttheoriesofwhat &quot;reconciliation&quot; meant.</p>
+<p>Lesson 1</p>
+<p>ToCmustreflect</p>
+<p>competing</p>
+<p>narratives — not</p>
+<p>justthedonor&#x27;s</p>
+<p>theoryLesson 2</p>
+<p>Community-held</p>
+<p>theoriesof</p>
+<p>changeareoften</p>
+<p>moregrounded</p>
+<p>thanexternal</p>
+<p>expertmodelsLesson 3</p>
+<p>Stakeholder</p>
+<p>mappingmustbe</p>
+<p>updatedas</p>
+<p>politicalcontext</p>
+<p>shifts</p>
+</div>
+<div class="slide-footer">
+  <span>36 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="37">
+<div class="slide-content">
+<h2>Discussion: Who&#x27;s Missing?</h2>
+<p>Marginalizedvoicesareoftenthe mostimportant — andthe mostabsent — from ToCdesignprocesses.</p>
+<p>Whoistypicallyleft</p>
+<p>out?</p>
+<p>Women, Dalits, Adivasis,</p>
+<p>personswithdisabilities, the</p>
+<p>elderly, LGBTQ+ individuals,</p>
+<p>migrantworkers — thosewith</p>
+<p>leastpowerand mostatstakeWhydoesit matterfor</p>
+<p>your ToC?</p>
+<p>Iftheirperspectivesdon&#x27;t</p>
+<p>shapeyourtheory, your</p>
+<p>assumptionsaboutchangeare</p>
+<p>probablywrongReflectionprompt</p>
+<p>In aprogram youknow, who</p>
+<p>was NOTintheroom whenthe</p>
+<p>ToCwasdeveloped? What</p>
+<p>difference mighttheirpresence</p>
+<p>have made?</p>
+</div>
+<div class="slide-footer">
+  <span>37 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="38">
+<div class="slide-content">
+<p class="section-number">SECTION 07</p>
+<h2>Indicatorsand Evidence</h2>
+</div>
+<div class="slide-footer">
+  <span>38 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="39">
+<div class="slide-content">
+<h2>What Makes a Good Indicator?</h2>
+<p>Indicatorsarethe measurementtoolsthattellyouwhetheryourresultschainis movingintherightdirection. The SMARTframeworkisthe</p>
+<p>classicstandard.</p>
+<p>Specific</p>
+<p>Clearlydefined — leavesnoambiguity</p>
+<p>aboutwhatisbeing measuredMeasurable</p>
+<p>Canbecounted, scored, orobserved —</p>
+<p>quantitativeorwell-definedqualitativeAchievable</p>
+<p>Realisticgivenprogram resources,</p>
+<p>timefram e, andcontext</p>
+<p>Relevant</p>
+<p>Directlytracksthechangeyoucareabout — not aproxyfor</p>
+<p>convenienceTime-bound</p>
+<p>Specifieswhenthechangeisexpectedtobe measured</p>
+</div>
+<div class="slide-footer">
+  <span>39 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="40">
+<div class="slide-content">
+<h2>Quantitativevs. Qualitative Indicators</h2>
+<p>Quantitative Indicators</p>
+<p>Numbers, percentages, counts. Easiertoaggregateand</p>
+<p>report.</p>
+<p>% ofwomenwithbankaccounts</p>
+<p>No. ofchildrenenrolledinschool</p>
+<p>Householdincom e ( ₹ /month)</p>
+<p><strong>Risk:</strong> Can missthe &quot;sowhat?&quot; — hittingnumberswithout</p>
+<p>achievingrealchange.Qualitative Indicators</p>
+<p>Stories, observations, experiences. Capturesnuanceand</p>
+<p>meaning.</p>
+<p>Womenreportfeeling moreconfidentinhousehold</p>
+<p>decisions</p>
+<p>Com munityleadersdescribeshiftinsocialnorm s</p>
+<p>Participatoryrankingofwell-beingchanges</p>
+<p><strong>Risk:</strong> Hardertocompareacrosssites; requiresskilled</p>
+<p>facilitation.</p>
+<p><strong>Bestpractice:</strong> Mixboth. Usequantitativeindicatorsforaccountabilityandqualitativeforunderstanding.</p>
+</div>
+<div class="slide-footer">
+  <span>40 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="41">
+<div class="slide-content">
+<h2>Linking Indicatorstothe Results Chain</h2>
+<p>Activity Level</p>
+<p>Workshopsheldand</p>
+<p>participants reached</p>
+<p>Output Level</p>
+<p>Trainedparticipantsand</p>
+<p>materialsdistributed</p>
+<p>Outcom e Level</p>
+<p>Knowledge, behavior,</p>
+<p>incomechanges</p>
+<p>Eachlevelofyourresultschainneedsitsowntypeofindicator. Acom mon mistakeis measuringonlyoutputs (easytocount) andignoring</p>
+<p>outcomeindicators (harderbut more meaningful).</p>
+</div>
+<div class="slide-footer">
+  <span>41 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="42">
+<div class="slide-content">
+<h2>Case Study: Indicator Design</h2>
+<p>in a Pakistan Education</p>
+<p>Program</p>
+<p>Agirls&#x27; educationprogramin Khyber Pakhtunkhwainitiallytrackedonly</p>
+<p>enrollmentrates asitsoutcomeindicator. Mid-termevaluationfoun d</p>
+<p>enrollmentrisingbutlearningoutcomesstagnant .</p>
+<p>Original</p>
+<p>Indicator</p>
+<p>No. ofgirlsenrolled</p>
+<p>inprimaryschoolProblem</p>
+<p>Girlsenrolledbut</p>
+<p>notlearning — ToC</p>
+<p>assumed</p>
+<p>enrollment =</p>
+<p>learningRevised</p>
+<p>Indicator Set</p>
+<p>Foundational</p>
+<p>literacyand</p>
+<p>numeracyscores</p>
+<p>(ASER-style);</p>
+<p>teacher</p>
+<p>attendance;</p>
+<p>classroomquality</p>
+</div>
+<div class="slide-footer">
+  <span>42 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="43">
+<div class="slide-content">
+<p class="section-number">SECTION 08</p>
+<h2>Common Pitfallsin Theory</h2>
+<h2>of Change</h2>
+</div>
+<div class="slide-footer">
+  <span>43 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="44">
+<div class="slide-content">
+<h2>The Most Com mon ToC Mistakes</h2>
+<p>The &quot;Magic Leap&quot;</p>
+<p>Jumpingfrom outputsdirectlytoimpactwithno</p>
+<p>plausiblecausalpathwayinbetween — skipping</p>
+<p>outcomesentirelyAssumption Blindness</p>
+<p>Nevernamingtheassumptions — treatingcausal</p>
+<p>linksasobviouswhentheyareactuallycontestedor</p>
+<p>context-dependent</p>
+<p>Activity Confusion</p>
+<p>Confusingactivities (whatyoudo) withoutcomes</p>
+<p>(whatchanges) — writingoutcomeslike &quot;conduct</p>
+<p>training&quot; insteadof &quot;womenapplynewskills&quot;The Wish List</p>
+<p>Listingeverypossibleimpactratherthanfocusing</p>
+<p>on arealistic, specificcausalpathwaytheprogram</p>
+<p>canactuallyinfluence</p>
+</div>
+<div class="slide-footer">
+  <span>44 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="45">
+<div class="slide-content">
+<h2>Donor-Drivenvs. Community-Driven ToC</h2>
+<p>Oneofthemostpersistenttensionsindevelopmentpractic eiswhosetheoryofchangeactuallydrivestheprogram .</p>
+<p>Dimension Donor-Driven ToC Community-Driven ToC</p>
+<p>Developedby Headquarters; externalconsultants Communitymembers; frontlinestaff</p>
+<p>Language Technical, jargon-heavy Locallanguage; plainterms</p>
+<p>Assumptions Basedonglobalevidence Basedonlocalexperience</p>
+<p>Ownership Lowamongimplementers Highamongcommunities</p>
+<p>Risk Disconnectedfromrealityonthe</p>
+<p>groundMaynotsatisfydonoraccountability</p>
+<p>needs</p>
+<p><strong>Aimforboth:</strong> participatorydevelopmentwithsufficientrigortosatisfyaccountability. Thisishard — butit&#x27;sthe standardto</p>
+<p>aspireto.</p>
+</div>
+<div class="slide-footer">
+  <span>45 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="46">
+<div class="slide-content">
+<h2>When ToC Goes Wrong: A Field</h2>
+<p>Reality Check</p>
+<p>The Frozen ToC</p>
+<p>Designedonceatprojectstartandneverrevisited — evenascontextchanges</p>
+<p>dramatically. Becomes acomplianceartifactrather than alearningtool.</p>
+<p>The Crowded ToC</p>
+<p>Triestoshoweveryactivityandeverypossibleoutcome across acomplex</p>
+<p>multi-yearprogram. Becomesunreadableandunusable. Simplicityis avirtue.</p>
+<p>The Invisible ToC</p>
+<p>Writtenintothegrantproposalbutneversharedwith fieldstaffor</p>
+<p>communities. Programrunsoninstinct, notsharedtheory .</p>
+</div>
+<div class="slide-footer">
+  <span>46 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="47">
+<div class="slide-content">
+<p class="section-number">SECTION 09</p>
+<h2>Theoryof Changein</h2>
+<h2>Practice: South Asian Case</h2>
+<h2>Studies</h2>
+</div>
+<div class="slide-footer">
+  <span>47 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="48">
+<div class="slide-content">
+<h2>Case Study Deep Dive: Pratham &#x27;s Teachingatthe Right Level</h2>
+<p>Pratham (India) isgloballyrecognizedforitsevidence-backed Theoryof Changeineducation. Their ToCchallengedconventionalassumptionsaboutschooling.</p>
+<ul>
+<li><strong>1 Problem Identified</strong></li>
+</ul>
+<p>Childreninschoolbutnotlearning — curriculum pitchedtoohigh</p>
+<p>aboveactualskilllevels</p>
+<ul>
+<li><strong>2 Hypothesis</strong></li>
+</ul>
+<p>Groupingchildrenbylearninglevel (notage/grade) + intensive</p>
+<p>foundationalinstruction → learninggains</p>
+<ul>
+<li><strong>3 Pilot</strong></li>
+</ul>
+<p>Testedin Vadodaraand Mumbai; random controlledtrialsshowed</p>
+<p>dramaticliteracygains</p>
+<ul>
+<li><strong>4 Scale</strong></li>
+</ul>
+<p>TaRLmodeladoptedin 15+ countries; embeddedin Indian</p>
+<p>governmentprogram s</p>
+<ul>
+<li><strong>5 Key Assumption Validated</strong></li>
+</ul>
+<p>Foundationalliteracyisprerequisiteforallsubsequentlearning;</p>
+<p>groupingworksbetterthanagepromotion</p>
+</div>
+<div class="slide-footer">
+  <span>48 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="49">
+<div class="slide-content">
+<h2>Case Study: BRAC&#x27;s Graduation</h2>
+<p>Program, Bangladesh</p>
+<p>BRAC&#x27;s Ultra-Poor Graduation Program isoneofthemostrigorouslyevaluated ToC</p>
+<p>modelsintheworld, nowreplicatedacross 40+ countries.</p>
+<ul>
+<li><strong>1Asset Transfer</strong></li>
+</ul>
+<p>Productiveasset (livestock) giventoultra-poorhouseholds</p>
+<ul>
+<li><strong>2Consumption Support</strong></li>
+</ul>
+<p>18-monthstipendtopreventassetdistresssale</p>
+<ul>
+<li><strong>3Skills + Coaching</strong></li>
+</ul>
+<p>Enterprisetraining + weeklymentoringvisits</p>
+<ul>
+<li><strong>4Sustainable Livelihoods</strong></li>
+</ul>
+<p>Households &quot;graduate&quot; outofextremepoverty — RCTsconfirmed 7-year</p>
+<p>sustainedimpact</p>
+</div>
+<div class="slide-footer">
+  <span>49 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="50">
+<div class="slide-content">
+<p class="section-number">SECTION 10</p>
+<h2>Testingand Iterating Your</h2>
+<h2>Theoryof Change</h2>
+</div>
+<div class="slide-footer">
+  <span>50 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="51">
+<div class="slide-content">
+<h2>ToCas a Living Document</h2>
+<p>A Theoryof Changeisnot acontract — it&#x27;sa h y po t he si s. Thebestprogram streattheir ToCas alivingdocumentthat</p>
+<p>evolveswithevidenceandexperience.</p>
+<p>Design</p>
+<p>Developinitial ToCwith</p>
+<p>stakeholders; document</p>
+<p>assumptionsImplement</p>
+<p>Runprogram ; collectdataagainst</p>
+<p>indicators</p>
+<p>Review</p>
+<p>Annualor mid-term reviewof</p>
+<p>resultsandassumptionsAdapt</p>
+<p>Revise ToCbasedonwhatyou&#x27;ve</p>
+<p>learned; updateindicators</p>
+</div>
+<div class="slide-footer">
+  <span>51 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="52">
+<div class="slide-content">
+<h2>Participatory ToC: Co-Creating</h2>
+<p>with Communities</p>
+<p>Community Visioning</p>
+<p>Startwiththecommunity&#x27;sownvisionofchange — notth e NGO&#x27;s. Facilitate</p>
+<p>discussions: &quot;Whatdoes agoodlifelooklikeherein 10 years?&quot;</p>
+<p>Visual Facilitation</p>
+<p>Usepictures, stories, andlocalmetaphorstobuild ToCvisuals. Communitymembers</p>
+<p>shouldbeabletodrawandexplaintheirownchain.</p>
+<p>Validation Cycles</p>
+<p>Sharedraft ToCbackwithcommunityforfeedback. Runseasonalreviewstocheck</p>
+<p>whetherthetheorystillholdsinchangingcontexts.</p>
+</div>
+<div class="slide-footer">
+  <span>52 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="53">
+<div class="slide-content">
+<p class="section-number">SECTION 11</p>
+<h2>From Theoryof Changeto</h2>
+<h2>MEL Plan</h2>
+</div>
+<div class="slide-footer">
+  <span>53 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="54">
+<div class="slide-content">
+<h2>Connecting ToCto Your MEL System</h2>
+<p>Your Theoryof Changeisthefoundationofyour MEL (Monitoring, Evaluation, and Learning) plan. Everyelementofthe MELsystem shouldtracebackto a</p>
+<p>componentofthe ToC.</p>
+<p>ToC Results Chain</p>
+<p>Mapinputs, activities,</p>
+<p>outputs, outcomes, impact.Select Indicators</p>
+<p>Chooseindicatorsforeach</p>
+<p>ToClevelandoutcome.Design Tools</p>
+<p>Developsurveys, FGDs, and</p>
+<p>routine records.</p>
+<p>Learning &amp;</p>
+<p>Adaptation</p>
+<p>Embed reviewcyclesand</p>
+<p>feedbackloopsinto MEL.</p>
+<p>Without a ToC, MELbecomes areportingexercise. With a ToC, MELbecomes alearningengine.</p>
+</div>
+<div class="slide-footer">
+  <span>54 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="55">
+<div class="slide-content">
+<h2>Buildingthe Learning Loop</h2>
+<p>Monitoring</p>
+<p>Trackoutputsandshort-term outcomesregularly. Are</p>
+<p>youdoingwhatyouplanned? Areearlysignsof</p>
+<p>changeappearing?Evaluation</p>
+<p>Periodicallyassesswhetheroutcomesandimpactare</p>
+<p>beingachieved — andwhetheryourcausaltheory</p>
+<p>holds.</p>
+<p>Learning</p>
+<p>Synthesizefindings. Updateyour ToC. Shareinsights</p>
+<p>withstaff, partners, andcom munities. Don&#x27;tlet</p>
+<p>evidencesitin adrawer.Adaptation</p>
+<p>Changeprogram designbasedonwhatyou&#x27;ve</p>
+<p>learned. Flexibilityis afeature, not aweakness.</p>
+</div>
+<div class="slide-footer">
+  <span>55 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--section" data-slide="56">
+<div class="slide-content">
+<p class="section-number">SECTION 12</p>
+<h2>Scalingand Systemic</h2>
+<h2>Change</h2>
+</div>
+<div class="slide-footer">
+  <span>56 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="57">
+<div class="slide-content">
+<h2>When ToC Meets System s Change</h2>
+<p>Asprogram sscale, simplelinearresultschainsoftenbreakdown. Systemsthinkinghelpsusunderstandwhychangeis</p>
+<p>non-linear, context-dependent, andemergent.</p>
+<p>Feedback Loops</p>
+<p>Changeinonepartofthesystem</p>
+<p>affectsothers — sometimes</p>
+<p>amplifying, sometimes</p>
+<p>counteractingyourprogram &#x27;s</p>
+<p>effectsPath Dependency</p>
+<p>Historyandcontextshapewhich</p>
+<p>changesarepossible. Social</p>
+<p>norm sandinstitutionsconstrain</p>
+<p>orenablechangepathwaysEmergence</p>
+<p>Atscale, unexpectedoutcomes</p>
+<p>emerge. Agood ToCanticipates</p>
+<p>surprisesandbuildsinflexibility</p>
+<p>torespond</p>
+</div>
+<div class="slide-footer">
+  <span>57 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="58">
+<div class="slide-content">
+<h2>Quiz: Test Your Understanding</h2>
+<p>Whatistheprimarypurposeof</p>
+<p>makingassumptionsexplicitin a</p>
+<p>ToC?</p>
+<p>a) Tosatisfydonorrequirements   b) To</p>
+<p>identifywherelogic mightfail   c) Toreduce</p>
+<p>program costs   d) Tosimplifythelogfram e2</p>
+<p>Whichoftheseisan OUTCOME</p>
+<p>(notanoutput)?</p>
+<p>a) 500 farmerstrained   b) 30 workshops</p>
+<p>conducted   c) Farmersadoptnewirrigation</p>
+<p>practices   d) Training manualsprinted3</p>
+<p>Whatdoes &quot;backwardmapping&quot;</p>
+<p>meanin ToCdesign?</p>
+<p>a) Reviewingpastprogram s   b) Starting</p>
+<p>from impactandworkingbacktoactivities</p>
+<p>c) Mappingstakeholdersafterprogram</p>
+<p>design   d) Conducting afinalevaluation</p>
+<p>In apower-interestmatrix, howshouldyouengage</p>
+<p>high-power, low-intereststakeholders?</p>
+<p>a) Ignorethem   b) Engagecloselyinco-design   c) Keepsatisfied;</p>
+<p>manageproactively   d) Onlyinform vianewsletters5</p>
+<p>Whatisthekeydifferencebetween a ToCand a</p>
+<p>logframe?</p>
+<p>a) Logframesareusedonlyin South Asia   b) ToCcapturescausal</p>
+<p>narrativeandassumptions; logfram estructuresindicators   c) They</p>
+<p>areidenticaltools   d) ToCisusedonlyforevaluations</p>
+</div>
+<div class="slide-footer">
+  <span>58 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide " data-slide="59">
+<div class="slide-content">
+<h2>Key Takeaways</h2>
+<p>ToCis acausalstory</p>
+<p>Itexplains HOW and W HYchangehappens — notjustwhatyourprogram does</p>
+<p>Assumptionsaretheheartofit</p>
+<p>Makingassumptionsexplicit — andtestingthem — iswhatseparatesgood ToCfrom wishfulthinking</p>
+<p>Participation makesitreal</p>
+<p>Com munitiesandfrontlinestaff mustshapethetheory — otherwiseitwon&#x27;treflectrealityontheground</p>
+<p>ToCdrivesyour MEL</p>
+<p>Everyindicator, datasource, andlearningquestionshouldconnectbacktoyourresultschain</p>
+<p>It mustevolve</p>
+<p>Treatyour ToCas alivinghypothesis — reviewit, reviseit, andletevidenceshapeyourthinking</p>
+</div>
+<div class="slide-footer">
+  <span>59 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+
+<div class="slide slide--thankyou" data-slide="60">
+<div class="slide-content">
+<h2>Thank You for Learning with ImpactMojo</h2>
+<p class="subtitle">Keep exploring. Keep questioning. Keep building.</p>
+<div class="thankyou-info">
+<p>hello@impactmojo.in</p>
+<p>www.impactmojo.in</p>
+<p>CC BY-NC-SA 4.0</p>
+</div>
+</div>
+<div class="slide-footer">
+  <span>60 / 60</span>
+  <span>www.impactmojo.in</span>
+  <span>CC BY-NC-SA 4.0</span>
+</div>
+</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prev()" aria-label="Previous slide">&#8592;</button>
+  <button class="nav-btn" onclick="next()" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var current = 0;
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var progress = document.getElementById('progress');
+
+  function show(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  window.next = function() { show(current + 1); };
+  window.prev = function() { show(current - 1); };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  var touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx > 0 ? show(current - 1) : show(current + 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>
