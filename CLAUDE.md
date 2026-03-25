@@ -54,22 +54,4 @@ Persistent project context lives in `.claude/memory.md` — carries state, decis
 
 ## Community Resources
 
-Curated skills, MCP servers, and repos worth tracking (sourced from [@zodchiii's roundup](https://x.com/i/status/2034924354337714642)):
-
-### GitHub Repos to Watch
-- [anthropics/skills](https://github.com/anthropics/skills) — Official Anthropic skills repository
-- [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) — Curated community skills (22k+ stars)
-- [anthropics/claude-code-security-review](https://github.com/anthropics/claude-code-security-review) — Security review skill
-- [199-biotechnologies/claude-deep-research-skill](https://github.com/199-biotechnologies/claude-deep-research-skill) — Deep research patterns
-- [promptfoo/promptfoo](https://github.com/promptfoo/promptfoo) — Prompt/output testing
-- [mendableai/firecrawl](https://github.com/mendableai/firecrawl) — Web scraping for content research
-- [eyaltoledano/claude-task-master](https://github.com/eyaltoledano/claude-task-master) — AI project management
-- [upstash/context7](https://github.com/upstash/context7) — Library docs injection MCP
-- [tavily-ai/tavily-mcp](https://github.com/tavily-ai/tavily-mcp) — AI-native search MCP
-
-### Notable Community Skills
-- **Frontend Design** (277k+ installs) — UI generation patterns
-- **Claude SEO** (12 sub-skills) — Search optimization
-- **Systematic Debugging** — Structured troubleshooting
-- **Context Optimization** — Better context window usage
-- Browse more at [skillsmp.com](https://skillsmp.com)
+See `.claude/mcp-servers.md` for MCP server recommendations and community skills/repos.

@@ -59,3 +59,23 @@ Requires: `ANTHROPIC_API_KEY`
 - Each server adds tools that Claude can invoke during conversations
 - Free tiers are sufficient for ImpactMojo's usage patterns
 - See `data/dataverse.json` for the full catalog of 260+ tools and data sources
+
+## Community Resources
+
+Curated skills, MCP servers, and repos worth tracking (sourced from [@zodchiii's roundup](https://x.com/i/status/2034924354337714642)):
+
+### GitHub Repos to Watch
+- [anthropics/skills](https://github.com/anthropics/skills) — Official Anthropic skills repository
+- [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) — Curated community skills (22k+ stars)
+- [anthropics/claude-code-security-review](https://github.com/anthropics/claude-code-security-review) — Security review skill
+- [199-biotechnologies/claude-deep-research-skill](https://github.com/199-biotechnologies/claude-deep-research-skill) — Deep research patterns
+- [promptfoo/promptfoo](https://github.com/promptfoo/promptfoo) — Prompt/output testing
+- [mendableai/firecrawl](https://github.com/mendableai/firecrawl) — Web scraping for content research
+- [eyaltoledano/claude-task-master](https://github.com/eyaltoledano/claude-task-master) — AI project management
+
+### Notable Community Skills
+- **Frontend Design** (277k+ installs) — UI generation patterns
+- **Claude SEO** (12 sub-skills) — Search optimization
+- **Systematic Debugging** — Structured troubleshooting
+- **Context Optimization** — Better context window usage
+- Browse more at [skillsmp.com](https://skillsmp.com)

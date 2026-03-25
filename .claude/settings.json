@@ -2,13 +2,23 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
-      "Bash(git status)",
+      "Bash(git status *)",
       "Bash(git diff *)",
       "Bash(git log *)",
       "Bash(git branch *)",
       "Bash(git fetch *)",
-      "Bash(curl -s -H *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git checkout *)",
+      "Bash(git merge *)",
+      "Bash(git stash *)",
+      "Bash(git show *)",
+      "Bash(git remote *)",
+      "Bash(curl -s *)",
       "Bash(cp index.html Backups/*)",
+      "Bash(python3 -m json.tool *)",
+      "Bash(ls *)",
       "Read",
       "Write",
       "Edit",
@@ -19,7 +29,9 @@
     "deny": [
       "Bash(rm -rf *)",
       "Bash(git push --force *)",
+      "Bash(git push -f *)",
       "Bash(git reset --hard *)",
+      "Bash(git clean -f *)",
       "Read(.env)",
       "Read(.env.*)",
       "Read(.claude/.env.keys)"
@@ -33,6 +45,26 @@
           {
             "type": "command",
             "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/block-destructive.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/validate-json.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/validate-json.sh"
           }
         ]
       }
@@ -53,7 +85,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Before stopping, check if this session involved major changes (new features, significant refactoring, multi-file edits, new pages/games). If yes, verify: 1) All changes committed and pushed, 2) CHANGELOG.md updated if user-facing, 3) README.md still accurate, 4) docs/ updated if architecture changed, 5) data/search-index.json updated if new searchable content added, 6) sitemap.xml updated if new pages added, 7) No stale branches left, 8) Log session summary to .claude/memory.md via /memory skill. If any items need attention, remind the user. Return {\"decision\": \"block\", \"reason\": \"Housekeeping items remain\"} to block, or {\"decision\": \"allow\"} if all good."
+            "prompt": "Before stopping, check if this session involved major changes. If yes, remind the user about: uncommitted changes, changelog updates, search-index.json, sitemap.xml, and logging to .claude/memory.md via /memory."
           }
         ]
       }
