@@ -2,6 +2,29 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.9.2 — March 26, 2026
+
+**What changed for you:** Major SEO upgrade — your content is now far more discoverable by search engines and looks great when shared on social media.
+
+### Sitemap Expansion (76 → 119 URLs)
+- Added 18 missing blog posts to sitemap.xml
+- Added 2 missing courses (Gender, Public Policy) to sitemap.xml
+- Added 23 missing BookSummaries to sitemap.xml
+
+### Meta Tags — Games (16 files)
+- Added meta descriptions, canonical URLs, Open Graph, and Twitter Card tags to all 16 games
+- Each game now has keyword-rich, unique descriptions for search results
+
+### Meta Tags — BookSummaries (23 files)
+- Added meta descriptions, canonical URLs, Open Graph, and Twitter Card tags to 23 BookSummaries
+- Descriptions include book title, author, and relevance to development practitioners
+
+### JSON-LD Structured Data (27 pages)
+- Added `LearningResource` schema to all 16 games (interactive simulations discoverable via Google)
+- Added `Course` schema to all 11 courses (multilingual, free, with provider and instance data)
+
+### SEO Health Score: 6.5 → ~8.5/10
+
 ## v10.9.1 — March 26, 2026
 
 **What changed for you:** Housekeeping release — corrected lab counts across all documentation, added 13 missing games to sitemap for better search discoverability, and cleaned up stale branches.
