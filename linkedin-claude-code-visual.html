@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Claude Code Setup</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0f0f1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .card {
+    width: 1200px;
+    background: linear-gradient(135deg, #0f0f2e 0%, #1a1a3e 50%, #0f0f2e 100%);
+    border-radius: 24px;
+    padding: 3.5rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(118, 75, 162, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: 800;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  .header h1 span {
+    background: linear-gradient(135deg, #667eea, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    color: #8b8ba3;
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+    padding-left: 64px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: border-color 0.3s;
+  }
+
+  .section:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+  }
+
+  .section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .ai .section-icon { background: rgba(99, 179, 237, 0.15); }
+  .ai .section-title { color: #63b3ed; }
+
+  .ops .section-icon { background: rgba(72, 187, 120, 0.15); }
+  .ops .section-title { color: #48bb78; }
+
+  .content .section-icon { background: rgba(237, 137, 54, 0.15); }
+  .content .section-title { color: #ed8936; }
+
+  .research .section-icon { background: rgba(159, 122, 234, 0.15); }
+  .research .section-title { color: #9f7aea; }
+
+  .safety .section-icon { background: rgba(245, 101, 101, 0.15); }
+  .safety .section-title { color: #f56565; }
+
+  .vendor .section-icon { background: rgba(56, 178, 172, 0.15); }
+  .vendor .section-title { color: #38b2ac; }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: #c4c4d4;
+  }
+
+  .skill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .ai .skill-dot { background: #63b3ed; }
+  .ops .skill-dot { background: #48bb78; }
+  .content .skill-dot { background: #ed8936; }
+  .research .skill-dot { background: #9f7aea; }
+  .safety .skill-dot { background: #f56565; }
+  .vendor .skill-dot { background: #38b2ac; }
+
+  .skill-name {
+    font-weight: 600;
+    color: #e2e2f0;
+  }
+
+  .divider {
+    color: #4a4a6a;
+    margin: 0 0.15rem;
+  }
+
+  .stats-bar {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: #8b8ba3;
+    font-weight: 500;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-left {
+    font-size: 0.75rem;
+    color: #5a5a7a;
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #8b8ba3;
+    font-weight: 600;
+  }
+
+  .footer-badge {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="header-icon">~</div>
+      <h1>My Global <span>Claude Code</span> Setup</h1>
+    </div>
+    <div class="subtitle">16 skills, 2 safety hooks, and a self-updating knowledge base in ~/.claude/</div>
+
+    <div class="grid">
+      <!-- AI APIs -->
+      <div class="section ai">
+        <div class="section-header">
+          <div class="section-icon">&#x1f9e0;</div>
+          <div class="section-title">AI API Wrappers</div>
+        </div>
+        <ul class="skill-list">
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Gemini AI</span><span class="divider">&mdash;</span>Google GenAI</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Grok AI</span><span class="divider">&mdash;</span>xAI reasoning</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">DeepSeek AI</span><span class="divider">&mdash;</span>cost-effective batch</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Sarvam AI</span><span class="divider">&mdash;</span>South Asian langs</li>
+        </ul>
+      </div>
+
+      <!-- Platform Ops -->
+      <div class="section ops">
+        <div class="section-header">
+          <div class="section-icon">&#x2699;&#xfe0f;</div>
+          <div class="section-title">Platform Operations</div>
+        </div>
+        <ul class="skill-list">
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">GitHub Ops</span><span class="divider">&mdash;</span>PRs, issues, releases</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Supabase Ops</span><span class="divider">&mdash;</span>DB, auth, migrations</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Netlify Ops</span><span class="divider">&mdash;</span>deploys, DNS, env</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Gamma Ops</span><span class="divider">&mdash;</span>AI presentations</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Napkin AI</span><span class="divider">&mdash;</span>infographics</li>
+        </ul>
+      </div>
+
+      <!-- Content Creation -->
+      <div class="section content">
+        <div class="section-header">
+          <div class="section-icon">&#x1f4c4;</div>
+          <div class="section-title">Content Creation</div>
+        </div>
+        <ul class="skill-list">
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">PDF Processing</span><span class="divider">&mdash;</span>extract, merge, create</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">PPTX</span><span class="divider">&mdash;</span>branded slides</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Frontend Design</span><span class="divider">&mdash;</span>accessible HTML/CSS</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Web Artifacts</span><span class="divider">&mdash;</span>interactive tools</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">SEO</span><span class="divider">&mdash;</span>12-capability audits</li>
+        </ul>
+      </div>
+
+      <!-- Research & Memory -->
+      <div class="section research">
+        <div class="section-header">
+          <div class="section-icon">&#x1f50d;</div>
+          <div class="section-title">Research & Memory</div>
+        </div>
+        <ul class="skill-list">
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Deep Research</span><span class="divider">&mdash;</span>multi-source synthesis</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Memory</span><span class="divider">&mdash;</span>persistent context</li>
+        </ul>
+      </div>
+
+      <!-- Safety Hooks -->
+      <div class="section safety">
+        <div class="section-header">
+          <div class="section-icon">&#x1f6e1;&#xfe0f;</div>
+          <div class="section-title">Safety Hooks</div>
+        </div>
+        <ul class="skill-list">
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">block-destructive</span><span class="divider">&mdash;</span>blocks rm -rf, force-push</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">session-start</span><span class="divider">&mdash;</span>API key bootstrap</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">permissions</span><span class="divider">&mdash;</span>allow/deny matrix</li>
+        </ul>
+      </div>
+
+      <!-- Vendored Guides -->
+      <div class="section vendor">
+        <div class="section-header">
+          <div class="section-icon">&#x1f4da;</div>
+          <div class="section-title">Vendored Best Practices</div>
+        </div>
+        <ul class="skill-list">
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Delegation</span><span class="divider">&mdash;</span>7 agent templates</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Context</span><span class="divider">&mdash;</span>token efficiency</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">Shell Rules</span><span class="divider">&mdash;</span>safe patterns</li>
+          <li class="skill-item"><span class="skill-dot"></span><span class="skill-name">+ 5 more</span><span class="divider">&mdash;</span>auto-synced</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-number">16</span>
+        <span class="stat-label">Skills</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2</span>
+        <span class="stat-label">Safety Hooks</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">9</span>
+        <span class="stat-label">API Keys</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">8</span>
+        <span class="stat-label">Vendored Guides</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">0</span>
+        <span class="stat-label">Setup per project</span>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-left">~/.claude/ &mdash; available in every project, every session</div>
+      <div class="footer-right">
+        <span class="footer-badge">CLAUDE CODE</span>
+        <span>Global Configuration</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
