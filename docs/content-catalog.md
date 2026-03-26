@@ -264,7 +264,7 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 | **ImpactLex** | 500+ development terms dictionary (PWA) | Free |
 | **Dev Case Studies** | 200 curated cases from 117 countries | Free |
 | **DevDiscourses** | 500+ curated research papers and books | Free |
-| **Dataverse** | 247 data tools, APIs, and datasets | Free — [Browse](/dataverse.html) |
+| **Dataverse** | 269 data tools, APIs, and datasets | Free — [Browse](/dataverse.html) |
 | **Blog: Learning Loops** | Articles on development practice | Free — [Read](/blog.html) |
 | **Podcast: Between the Logframes** | Audio episodes on Spotify | Free |
 | **Dojos** | 35+ practice-based skill sessions | Paid |
@@ -282,7 +282,7 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 | BookSummaries | 5 |
 | Premium tools | 9 |
 | Handout pages | 80+ |
-| Dataverse entries | 247 |
+| Dataverse entries | 269 |
 | Dev case studies | 200 |
 | DevDiscourses entries | 500+ |
 | ImpactLex terms | 500+ |

@@ -47,7 +47,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
 | **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export — dark mode, filters, CSV export |
-| **Dataverse** | 247 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories — dark mode, category filters, responsive cards |
+| **Dataverse** | 269 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories — dark mode, category filters, responsive cards |
 | **400+ Handouts** | Downloadable resources across 6 learning tracks |
 | **Learning Loops Blog** | Articles, tutorials, and case studies on development practice |
 | **Between the Logframes** | Development podcast — honest conversations on MEAL and impact work |
@@ -202,7 +202,7 @@ Interactive simulations powered by **MiroFish AI agents** with **Indian folk art
 - [**DevDiscourses**](https://github.com/Varnasr/development-discourses) — 500+ curated open-access research papers, books, and grey literature
 - [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) — Auto-updating tracker of Indian development policies across 22 sectors
 - **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings
-- **Dataverse** — 247 curated tools, datasets, APIs, MCP servers, and platforms for social impact research
+- **Dataverse** — 269 curated tools, datasets, APIs, MCP servers, and platforms for social impact research
 - **400+ Handouts** — Downloadable HTML resources across 6 learning tracks
 - **Learning Loops Blog** — Articles, tutorials, case studies, platform updates
 - **Between the Logframes Podcast** — Development conversations on MEAL, ToC, and impact work

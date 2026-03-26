@@ -17,7 +17,7 @@ Everything on the platform is free to use. No login required, no paywall, no tri
 - [Getting Started](getting-started.md) — How to use the platform, step by step
 - [Workshops & Facilitation](workshops-and-facilitation.md) — Run workshops using ImpactMojo content
 - [Handouts Guide](handouts-guide.md) — How to find, use, and print 400+ handouts
-- [Dataverse Guide](dataverse-guide.md) — 247 data tools and datasets, explained
+- [Dataverse Guide](dataverse-guide.md) — 269 data tools and datasets, explained
 - [FAQ](faq.md) — Common questions answered
 
 **If you want to contribute:**

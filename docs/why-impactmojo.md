@@ -17,7 +17,7 @@ Development professionals in South Asia face a training gap:
 
 ### 1. Genuinely free, not freemium
 
-48 courses, 16 games, 11 labs, 400+ handouts, 247+ data tools, 500+ curated papers — all free. No login wall, no trial period, no feature gating. The free tier is the real product.
+48 courses, 16 games, 11 labs, 400+ handouts, 269 data tools, 500+ curated papers — all free. No login wall, no trial period, no feature gating. The free tier is the real product.
 
 Premium tools exist for advanced practitioners (qualitative analysis, AI transcription, code conversion) and sustain the platform, but 95% of the content is free forever.
 
