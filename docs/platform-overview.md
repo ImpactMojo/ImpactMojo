@@ -146,7 +146,7 @@ Entries are organized by topic and tagged for easy browsing.
 
 Dataverse is your starting point for development data. It includes:
 
-- **247 datasets, tools, and APIs** from sources like the World Bank, DHS, NFHS, NSSO, and more
+- **269 datasets, tools, and APIs** from sources like the World Bank, DHS, NFHS, NSSO, and more
 - **APIs** for programmatic data access
 - **Tools** for data analysis and visualization
 - **MCP servers** for AI-assisted development research
