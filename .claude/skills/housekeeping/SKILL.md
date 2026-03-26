@@ -57,7 +57,7 @@ Run through this checklist after completing major work on ImpactMojo.
 
 11. **Google Analytics check**
     - Verify ALL HTML pages include the Google Analytics snippet with ID `G-JRCMEB9TBW`
-    - Check new pages: `grep -rL "G-JRCMEB9TBW" *.html courses/*/*.html Games/*.html Labs/*.html` to find pages missing the tag
+    - Check: `grep -rL "G-JRCMEB9TBW" *.html courses/*/*.html Games/*.html Labs/*.html`
     - The required snippet in `<head>`:
       ```html
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
@@ -65,13 +65,70 @@ Run through this checklist after completing major work on ImpactMojo.
       ```
     - Add the snippet to any page missing it
 
-12. **GitHub "Alive Docs" sync**
+12. **Branding & UX consistency check**
+    Run these checks on ALL pages, especially new or modified ones. Every user-facing HTML page must include the full ImpactMojo branding stack:
+
+    **a) Footer** (`class="footer"`)
+    - 4-section footer: About, Legal (IT Act), Quick Links, Resources
+    - Footer bottom with © year, PinPoint Ventures credit, MIT License
+    - Check: `grep -L 'class="footer"' *.html courses/*/*.html`
+
+    **b) Fonts** (Amaranth + Inter + JetBrains Mono)
+    - Google Fonts import with preload pattern in `<head>`
+    - Check: `grep -L 'fonts.googleapis.com' *.html courses/*/*.html Games/*.html Labs/*.html`
+    - Required import: `Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500`
+
+    **c) Language selector** (5 languages)
+    - `data-i18n` attributes on all user-facing text elements
+    - `js/translate.js` script included
+    - Supported: English, Hindi (हिन्दी), Tamil (தமிழ்), Bengali (বাংলা), Marathi (मराठी)
+    - Check: `grep -L 'translate.js\|data-i18n' *.html`
+
+    **d) Theme toggle** (Light / Dark / System)
+    - `.theme-selector` container with 3 buttons: `data-theme="system"`, `data-theme="light"`, `data-theme="dark"`
+    - `body.dark-mode` CSS class with proper dark mode overrides
+    - Check: `grep -L 'theme-selector' *.html courses/*/*.html`
+
+    **e) Accessibility widget** (UserWay)
+    - UserWay script with account ID `EksmhlPg9k`
+    - Widget layout: `full`
+    - Check: `grep -L 'EksmhlPg9k' *.html courses/*/*.html`
+
+    **f) Paper plane SVGs** (`.v3-paper-plane`)
+    - Decorative floating paper plane elements
+    - Related classes: `.v3-big-plane`, `.v3-floating-elements`
+    - Check: `grep -L 'v3-paper-plane' *.html`
+
+    **g) Blob decorations** (`.v3-blob`)
+    - 4 gradient blobs: `.v3-blob-1` (blue), `.v3-blob-2` (indigo), `.v3-blob-3` (green), `.v3-blob-4` (amber)
+    - Container: `.v3-floating-elements`
+    - Dark mode variants must have reduced opacity
+    - Check: `grep -L 'v3-blob' *.html`
+
+    **h) Cookie consent banner** (`#cookieConsent`)
+    - Cookie icon button + expandable consent panel
+    - Accept button stores `localStorage.cookieConsent = 'true'`
+    - `data-i18n` attributes for multilingual support
+    - Check: `grep -L 'cookieConsent' *.html`
+
+    **i) Speed dial / FAB toolbox** (`#imxSpeedDial`)
+    - Floating action button with tools: Mojini chatbot, Reading Lists, Analytics, Pomodoro, Lo-Fi Music, Compare
+    - Check: `grep -L 'imxSpeedDial' *.html`
+
+    **j) SVG icon sprite** (Sargam Icons)
+    - Hidden SVG sprite block with `<symbol id="si_*">` definitions
+    - Usage pattern: `<use href="#si_IconName"/>`
+    - Check: `grep -L 'si_Activity\|si_Heart\|si_Book' *.html`
+
+    **Exceptions:** Games (`/Games/*.html`) and Labs (`/Labs/*-lab.html`) are self-contained single-file tools — they need GA, fonts, theme toggle, and accessibility widget but may skip footer, speed dial, blobs, and cookie banner.
+
+13. **GitHub "Alive Docs" sync**
     - **Wiki**: Clone `Varnasr/ImpactMojo.wiki.git`, update affected pages (Home, Content-Guide, Changelog, Roadmap, Architecture, Book-Summaries, 101-Course-Decks), push
     - **Discussions**: Post announcement in Announcements category for user-facing additions
     - **Issues**: Close resolved issues with commit/PR links; update tracking issues (#272 BookSummaries, etc.)
     - **Milestones**: Update milestone progress if applicable
 
-13. **GitBook cross-check**
+14. **GitBook cross-check**
     - Verify `docs/changelog.md` has entries for all changes made
     - Verify `docs/platform-overview.md` counts match `index.html` counts
     - Verify `docs/content-catalog.md` tables include all new content
