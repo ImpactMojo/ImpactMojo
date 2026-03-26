@@ -55,13 +55,23 @@ Run through this checklist after completing major work on ImpactMojo.
     - Check text contrast on new UI elements (WCAG AA)
     - Test all forms submit to correct Formspree endpoint
 
-11. **GitHub "Alive Docs" sync**
+11. **Google Analytics check**
+    - Verify ALL HTML pages include the Google Analytics snippet with ID `G-JRCMEB9TBW`
+    - Check new pages: `grep -rL "G-JRCMEB9TBW" *.html courses/*/*.html Games/*.html Labs/*.html` to find pages missing the tag
+    - The required snippet in `<head>`:
+      ```html
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+      <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>
+      ```
+    - Add the snippet to any page missing it
+
+12. **GitHub "Alive Docs" sync**
     - **Wiki**: Clone `Varnasr/ImpactMojo.wiki.git`, update affected pages (Home, Content-Guide, Changelog, Roadmap, Architecture, Book-Summaries, 101-Course-Decks), push
     - **Discussions**: Post announcement in Announcements category for user-facing additions
     - **Issues**: Close resolved issues with commit/PR links; update tracking issues (#272 BookSummaries, etc.)
     - **Milestones**: Update milestone progress if applicable
 
-12. **GitBook cross-check**
+13. **GitBook cross-check**
     - Verify `docs/changelog.md` has entries for all changes made
     - Verify `docs/platform-overview.md` counts match `index.html` counts
     - Verify `docs/content-catalog.md` tables include all new content
