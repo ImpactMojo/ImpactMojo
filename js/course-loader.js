@@ -44,7 +44,13 @@
   // ── Get auth token if user is logged in ─────────────────────────
   function getAccessToken() {
     try {
-      // Try Supabase session from localStorage
+      // Check custom storage key used by auth.js
+      var customSession = localStorage.getItem('impactmojo-auth');
+      if (customSession) {
+        var parsed = JSON.parse(customSession);
+        if (parsed && parsed.access_token) return parsed.access_token;
+      }
+      // Fallback: try default Supabase session keys
       var keys = Object.keys(localStorage);
       for (var i = 0; i < keys.length; i++) {
         if (keys[i].indexOf('sb-') === 0 && keys[i].indexOf('-auth-token') > -1) {
