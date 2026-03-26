@@ -15,7 +15,7 @@ Everything you need to learn, teach, and facilitate:
 - **ImpactLex** — 500+ development terms dictionary
 - **Dev Case Studies** — 200 curated cases from 117 countries
 - **DevDiscourses** — 500+ curated research papers and books
-- **Dataverse** — 247+ data tools, APIs, and datasets
+- **Dataverse** — 269 data tools, APIs, and datasets
 - **Field Notes & Podcast** — The Margin Muse (field observations) and Between the Logframes (podcast)
 - **Multilingual content** — English, Hindi, Tamil, Bengali, Telugu, Marathi
 
