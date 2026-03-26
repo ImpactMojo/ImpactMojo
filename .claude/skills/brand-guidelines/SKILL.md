@@ -79,12 +79,28 @@ The toggle stores preference in `localStorage.getItem('impactmojo-theme')` and d
 ```
 
 ### 2. Sticky Top Bar
+Must include: home button, Premium button, and language selector.
 ```html
 <div class="topbar">
-  <a href="/">ImpactMojo</a>
-  <a href="/premium.html" class="premium-btn">Premium</a>
+  <a href="/" class="home-btn" aria-label="Return to ImpactMojo home">🏠 ImpactMojo</a>
+  <div class="topbar-right">
+    <div class="lang-selector">
+      <select id="language-select" aria-label="Select language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="ta">தமிழ்</option>
+        <option value="bn">বাংলা</option>
+        <option value="te">తెలుగు</option>
+        <option value="mr">मराठी</option>
+      </select>
+    </div>
+    <a href="/premium.html" class="premium-btn">Get Premium</a>
+  </div>
 </div>
 ```
+- Home button: always links to `/`, visible on all inner pages
+- Language selector: triggers Google Translate or equivalent
+- Premium button: styled as a CTA (gradient background, white text, rounded)
 
 ### 3. Floating Paper Plane SVG
 Every inner page includes a decorative floating paper plane (CSS animated, reduced-motion aware):
@@ -103,10 +119,49 @@ Every inner page includes a decorative floating paper plane (CSS animated, reduc
 ```
 
 ### 4. Full 4-Section Footer
+Every page must include the complete footer with all four sections:
+```html
+<footer class="site-footer">
+  <div class="footer-grid">
+    <!-- Section 1: About ImpactMojo -->
+    <div class="footer-col">
+      <h4>About ImpactMojo</h4>
+      <a href="/about.html">About Us</a>
+      <a href="/ImpactMojo_PressKit.html">Press Kit</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/coaching.html">Coaching</a>
+    </div>
+    <!-- Section 2: Legal -->
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms-of-service.html">Terms of Service</a>
+      <a href="/refund-policy.html">Refund Policy</a>
+      <a href="/data-protection.html">Data Protection</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </div>
+    <!-- Section 3: Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="/catalog.html">Course Catalog</a>
+      <a href="/workshops.html">Workshops</a>
+      <a href="/premium.html">Premium</a>
+      <a href="/dojos.html">Dojos</a>
+    </div>
+    <!-- Section 4: Resources -->
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="/blog.html">Blog</a>
+      <a href="/podcast.html">Podcast</a>
+      <a href="https://impactmojo.gitbook.io/impactmojo">GitBook Docs</a>
+      <a href="https://github.com/Varnasr/ImpactMojo">GitHub</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 ImpactMojo. Code: MIT | Content: CC BY-NC-ND 4.0</p>
+  </div>
+</footer>
 ```
-About | Legal | Quick Links | Resources
-```
-Includes: GitBook docs link, GitHub link, social links, copyright.
 
 ### 5. Sargam Icons
 Use Sargam Icons (`si_` prefix) for all UI icons. Do not use Font Awesome, Heroicons, or emoji as icons.
