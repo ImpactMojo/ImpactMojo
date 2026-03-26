@@ -111,7 +111,7 @@ Single-page courses covering essential development topics. All free, no login re
 
 ---
 
-## Interactive Labs (19)
+## Interactive Labs (11)
 
 Hands-on workbenches where you build, design, and practice real skills.
 
@@ -127,6 +127,7 @@ Hands-on workbenches where you build, design, and practice real skills.
 | 8 | Risk and Mitigation Lab | MEL | [Open](https://101.impactmojo.in/risk-mitigation-lab) |
 | 9 | Resource and Sustainability Lab | MEL | [Open](https://101.impactmojo.in/resource-sustainability-lab) |
 | 10 | Impact and Partnerships Lab | MEL | [Open](https://101.impactmojo.in/impact-partnerships) |
+| 11 | Gender Studies Lab | Gender & Equity | [Open](/Labs/gender-studies-lab.html) |
 
 ---
 
@@ -150,6 +151,10 @@ All games now feature **MiroFish AI agents** powered by Groq/Gemini/DeepSeek wit
 | 10 | Externality Game | Pigouvian tax and market failure | Ashok, Nalini, Bina | [Play](/Games/externality-game.html) |
 | 11 | The Real Middle | Income inequality dynamics in India | 5 simulated households | [Play](/Games/real-middle-india.html) |
 | 12 | Econ Concepts Puzzle | 12 economics brain-teasers | — | [Play](/Games/econ-concepts-game.html) |
+| 13 | Climate Action Game | Climate policy trade-offs and adaptation | — | [Play](/Games/climate-action-game.html) |
+| 14 | Gender Equity Game | Gender budgeting and equity decisions | — | [Play](/Games/gender-equity-game.html) |
+| 15 | Public Health Game | Public health resource allocation | — | [Play](/Games/public-health-game.html) |
+| 16 | Digital Ethics Game | Ethical dilemmas in technology and data | — | [Play](/Games/digital-ethics-game.html) |
 
 ---
 
@@ -272,9 +277,9 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 |----------|-------|
 | Flagship courses | 9 |
 | Foundational courses | 39 |
-| Interactive labs | 19 |
+| Interactive labs | 11 |
 | Learning games | 16 |
-| BookSummaries | 1 |
+| BookSummaries | 5 |
 | Premium tools | 9 |
 | Handout pages | 80+ |
 | Dataverse entries | 247 |
