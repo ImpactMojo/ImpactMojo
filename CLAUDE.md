@@ -101,3 +101,12 @@ Curated skills, MCP servers, and repos worth tracking (sourced from [@zodchiii's
 - [vanna-ai/vanna](https://github.com/vanna-ai/vanna) — Natural language → SQL
 - [karpathy/rendergit](https://github.com/karpathy/rendergit) — Git repo → single file for humans and LLMs
 - [github/spec-kit](https://github.com/github/spec-kit) — Spec-driven dev (50k+ stars)
+
+## Claude Code Best Practices (Vendored)
+
+General-purpose Claude Code operating guides synced from [griffinhilly/claude-code-synthesis](https://github.com/griffinhilly/claude-code-synthesis). Load on demand — not always in context.
+
+- **Operating model**: `.claude/vendor/claude-code-synthesis/CLAUDE.md`
+- **Guides**: `.claude/vendor/claude-code-synthesis/guides/` (shell-rules, delegation-templates, skills-reference, context-efficiency, postgres-batching, overnight-runner, prefer-apis, bookmark-archive)
+
+Sync with: `/project:sync-guides`
