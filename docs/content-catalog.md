@@ -117,16 +117,16 @@ Hands-on workbenches where you build, design, and practice real skills.
 
 | # | Lab | Track | Link |
 |---|-----|-------|------|
-| 1 | Theory of Change Lab | MEL | [Open](https://101.impactmojo.in/toc-workbench) |
-| 2 | MLE Design Lab | MEL | [Open](https://101.impactmojo.in/mel-design-lab) |
-| 3 | MEL Plan Lab | MEL | [Open](https://101.impactmojo.in/mel-plan-lab) |
-| 4 | Storytelling Lab | Health & Communication | [Open](https://101.impactmojo.in/storytelling-lab) |
-| 5 | Design Thinking Lab | MEL | [Open](https://101.impactmojo.in/design-thinking-lab) |
-| 6 | Community Development Lab | MEL | [Open](https://101.impactmojo.in/community-lab) |
-| 7 | Policy & Advocacy Lab | Philosophy & Governance | [Open](https://101.impactmojo.in/policy-advocacy-lab) |
-| 8 | Risk and Mitigation Lab | MEL | [Open](https://101.impactmojo.in/risk-mitigation-lab) |
-| 9 | Resource and Sustainability Lab | MEL | [Open](https://101.impactmojo.in/resource-sustainability-lab) |
-| 10 | Impact and Partnerships Lab | MEL | [Open](https://101.impactmojo.in/impact-partnerships) |
+| 1 | Theory of Change Lab | MEL | [Open](/Labs/toc-lab.html) |
+| 2 | MLE Design Lab | MEL | [Open](/Labs/mel-design-lab.html) |
+| 3 | MEL Plan Lab | MEL | [Open](/Labs/mel-plan-lab.html) |
+| 4 | Storytelling Lab | Health & Communication | [Open](/Labs/storytelling-lab.html) |
+| 5 | Design Thinking Lab | MEL | [Open](/Labs/design-thinking-lab.html) |
+| 6 | Community Development Lab | MEL | [Open](/Labs/community-lab.html) |
+| 7 | Policy & Advocacy Lab | Philosophy & Governance | [Open](/Labs/policy-advocacy-lab.html) |
+| 8 | Risk and Mitigation Lab | MEL | [Open](/Labs/risk-mitigation-lab.html) |
+| 9 | Resource and Sustainability Lab | MEL | [Open](/Labs/resource-sustainability-lab.html) |
+| 10 | Impact and Partnerships Lab | MEL | [Open](/Labs/impact-partnerships-lab.html) |
 | 11 | Gender Studies Lab | Gender & Equity | [Open](/Labs/gender-studies-lab.html) |
 
 ---

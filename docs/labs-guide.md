@@ -14,21 +14,21 @@ All labs are **free, browser-based, and require no login**.
 
 | Lab | What You Build | Link |
 |-----|---------------|------|
-| **Theory of Change Lab** | A structured ToC with assumptions, indicators, and causal pathways | [Open](https://101.impactmojo.in/toc-workbench) |
-| **MLE Design Lab** | A monitoring, learning, and evaluation framework for your programme | [Open](https://101.impactmojo.in/mel-design-lab) |
-| **MEL Plan Lab** | A complete MEL plan with data collection schedule, tools, and responsibilities | [Open](https://101.impactmojo.in/mel-plan-lab) |
-| **Design Thinking Lab** | A human-centred design process from empathy mapping to prototyping | [Open](https://101.impactmojo.in/design-thinking-lab) |
-| **Community Development Lab** | A participatory community assessment and action plan | [Open](https://101.impactmojo.in/community-lab) |
-| **Risk and Mitigation Lab** | A risk register with likelihood, impact, and mitigation strategies | [Open](https://101.impactmojo.in/risk-mitigation-lab) |
-| **Resource and Sustainability Lab** | A resource mobilisation and sustainability plan | [Open](https://101.impactmojo.in/resource-sustainability-lab) |
-| **Impact and Partnerships Lab** | A partnership mapping and impact measurement framework | [Open](https://101.impactmojo.in/impact-partnerships) |
+| **Theory of Change Lab** | A structured ToC with assumptions, indicators, and causal pathways | [Open](/Labs/toc-lab.html) |
+| **MLE Design Lab** | A monitoring, learning, and evaluation framework for your programme | [Open](/Labs/mel-design-lab.html) |
+| **MEL Plan Lab** | A complete MEL plan with data collection schedule, tools, and responsibilities | [Open](/Labs/mel-plan-lab.html) |
+| **Design Thinking Lab** | A human-centred design process from empathy mapping to prototyping | [Open](/Labs/design-thinking-lab.html) |
+| **Community Development Lab** | A participatory community assessment and action plan | [Open](/Labs/community-lab.html) |
+| **Risk and Mitigation Lab** | A risk register with likelihood, impact, and mitigation strategies | [Open](/Labs/risk-mitigation-lab.html) |
+| **Resource and Sustainability Lab** | A resource mobilisation and sustainability plan | [Open](/Labs/resource-sustainability-lab.html) |
+| **Impact and Partnerships Lab** | A partnership mapping and impact measurement framework | [Open](/Labs/impact-partnerships-lab.html) |
 
 ### Communication & Governance Labs
 
 | Lab | What You Build | Link |
 |-----|---------------|------|
-| **Storytelling Lab** | A structured impact story with narrative arc and evidence integration | [Open](https://101.impactmojo.in/storytelling-lab) |
-| **Policy & Advocacy Lab** | A policy brief and advocacy strategy with stakeholder mapping | [Open](https://101.impactmojo.in/policy-advocacy-lab) |
+| **Storytelling Lab** | A structured impact story with narrative arc and evidence integration | [Open](/Labs/storytelling-lab.html) |
+| **Policy & Advocacy Lab** | A policy brief and advocacy strategy with stakeholder mapping | [Open](/Labs/policy-advocacy-lab.html) |
 
 ---
 
