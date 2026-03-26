@@ -151,10 +151,20 @@ const ImpactMojoAuth = {
                                 this.profile = cached;
                             }
                         }
+                        // Render instantly with cached profile (shows correct tier without waiting)
+                        if (this.profile) this.updateUI();
                         try {
                             await this.fetchProfile();
                         } catch (e) {
                             console.error('Profile fetch failed during init:', e);
+                            // If profile is still null after failure, retry once more
+                            if (!this.profile) {
+                                try {
+                                    this._profileFetchPromise = null;
+                                    this._lastProfileFetchTime = 0;
+                                    await this.fetchProfile();
+                                } catch (_) {}
+                            }
                         }
                         this._initialSessionHadUser = true;
                     }
@@ -829,6 +839,13 @@ const ImpactMojoAuth = {
             this.user = data.user;
             this._signInProcessed = true;
             await this.fetchProfile();
+
+            // Ensure cached profile is set for next page load
+            if (this.profile && typeof window.IMState !== 'undefined') {
+                window.IMState.cachedProfile.set(this.profile);
+            }
+            // Update UI immediately so auth classes are applied
+            this.updateUI();
 
             // Sync data after login (non-blocking — don't delay redirect)
             this.syncAll().catch(function (e) {
