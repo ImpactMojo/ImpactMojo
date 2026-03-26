@@ -2,6 +2,27 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.9.1 — March 26, 2026
+
+**What changed for you:** Housekeeping release — corrected lab counts across all documentation, added 13 missing games to sitemap for better search discoverability, and cleaned up stale branches.
+
+### Documentation Consistency Sweep
+- Fixed **lab count** from 19 → 11 across 12 files (faq, why-impactmojo, mojini-guide, learning-design, getting-started, transparency, premium, platform-overview, content-catalog, welcome, catalog.html, README)
+- Fixed **foundational courses count** from 47 → 39 in platform-overview.md
+- Fixed **docs/README.md version** from 10.1.0 → 10.9.0
+- Fixed **Dataverse count** from 215 → 247 in docs/README.md and welcome.md
+- Fixed **BookSummaries count** from 1 → 5 in content-catalog.md summary table
+- Added 4 missing games (Climate Action, Gender Equity, Public Health, Digital Ethics) to content-catalog.md games table
+- Added Gender Studies Lab to content-catalog.md labs table
+
+### Sitemap
+- Added 13 missing games to sitemap.xml (was 3, now all 16 games listed)
+
+### Repository Cleanup
+- Pruned stale remote tracking refs
+- Identified 9 stale branches for deletion (no open PRs)
+- Created pre-housekeeping backup of index.html
+
 ## v10.9.0 — March 24, 2026
 
 **What changed for you:** Every page on ImpactMojo now has a consistent look and feel — unified fonts, mobile-responsive design, 3-mode theme toggle (System/Light/Dark), floating paper plane, standardized footer, and a sticky navigation bar with a home link and Premium button.

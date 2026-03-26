@@ -25,7 +25,7 @@ Each flagship course includes:
 
 **How to use them:** Work through a course at your own pace (one module per week is a comfortable rhythm). Assign modules to your team as pre-reading before a planning session. Use them as the curriculum backbone for a university course or NGO training programme.
 
-### Foundational Courses (47 courses)
+### Foundational Courses (39 courses)
 
 Comprehensive study decks that cover a specific skill or concept in depth. These are self-paced reading materials — thorough in their coverage but simpler in format than flagship courses. **23 of these are now also available as visual 101 Course Decks** — 60-slide Gamma presentations with Indian folk art illustrations. See the [101 Course Decks Guide](101-decks-guide.md) for the full list and access links.
 
@@ -76,7 +76,7 @@ Each game:
 
 ---
 
-## Interactive Labs (19 labs)
+## Interactive Labs (11 labs)
 
 Labs are browser-based workbenches where you build something. Unlike courses (where you read and reflect), labs are hands-on — you follow a guided workflow and produce a real output.
 
@@ -244,7 +244,7 @@ Switch languages from the platform interface. This makes ImpactMojo usable for t
 
 ## What's Free vs. Premium?
 
-The vast majority of ImpactMojo is **completely free** — this is a genuine commitment, not a marketing strategy. All 48 courses, 16 games, 19 labs, handouts, ImpactLex, case studies, DevDiscourses, and Dataverse are available at no cost.
+The vast majority of ImpactMojo is **completely free** — this is a genuine commitment, not a marketing strategy. All 48 courses, 16 games, 11 labs, handouts, ImpactLex, case studies, DevDiscourses, and Dataverse are available at no cost.
 
 Premium memberships (starting at ₹399/month) unlock additional tools, PDF/PNG export from labs, certificates, and priority access to coaching and workshops.
 
