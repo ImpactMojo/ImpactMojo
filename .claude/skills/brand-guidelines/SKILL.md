@@ -91,6 +91,8 @@ Before considering ANY new or modified HTML page complete, verify ALL of these a
 | 12 | **Absolute URLs** | `grep 'href="[a-z]'` (no leading /) | All internal links must use absolute paths (`/premium.html` not `premium.html`) |
 | 13 | **Viewport meta** | `grep 'viewport'` | `<meta name="viewport" content="width=device-width, initial-scale=1.0">` |
 | 14 | **Favicons** | `grep 'favicon'` | `<link href="/assets/images/favicon.png" rel="icon">` |
+| 15 | **Topbar position: fixed** | `grep 'im-topbar.*sticky'` (should find NOTHING) | Topbar MUST be `position: fixed` not `sticky` — sticky breaks on `display:flex` body layouts |
+| 16 | **Body padding-top** | Check body/main has `padding-top:44px` or `margin-top:44px` | Required to prevent content hiding behind fixed topbar |
 
 ## Required Page Elements
 
@@ -99,8 +101,30 @@ Before considering ANY new or modified HTML page complete, verify ALL of these a
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
 
-### 2. Sticky Top Bar
+### 2. Fixed Top Bar
 Must include: **logo image**, home link, Premium button, and **3-mode theme toggle**.
+
+**CRITICAL**: The topbar MUST use `position: fixed` (NOT `sticky`). Many pages use `body{display:flex}` for sidebar layouts. A `sticky` topbar becomes a flex child and pushes all content to the right. Use `fixed` with `left:0; right:0` and add `padding-top: 44px` or `margin-top: 44px` to the body/main content.
+
+Required CSS for the topbar:
+```css
+.im-topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    background: var(--im-nav-bg, rgba(15, 23, 42, 0.95));
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border, #334155);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem;
+}
+```
+And on the body or main content area:
+```css
+body { padding-top: 44px; }
+/* OR if body uses display:flex with a sidebar: */
+main { margin-top: 44px; }
+nav.sidebar { top: 44px; height: calc(100vh - 44px); }
+```
 ```html
 <div class="im-topbar" id="imTopbar">
     <div class="im-topbar-left">

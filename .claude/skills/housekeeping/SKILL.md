@@ -74,6 +74,14 @@ Run through this checklist after completing major work on ImpactMojo.
     - Verify no broken navigation links
     - Check text contrast on new UI elements (WCAG AA)
     - Test all forms submit to correct Formspree endpoint
+    - **Topbar layout check** — CRITICAL, this has broken 30+ pages before:
+      ```bash
+      # Find pages where im-topbar uses sticky (should be ZERO results)
+      grep -rl 'position: sticky' --include="*.html" | xargs grep -l 'im-topbar' | grep -v Backups
+      grep -rl 'position:sticky' --include="*.html" | xargs grep -l 'im-topbar' | grep -v Backups
+      ```
+      If any results: change `position: sticky; top: 0;` to `position: fixed; top: 0; left: 0; right: 0;`
+      and add `padding-top: 44px` to body or `margin-top: 44px` to main content.
 
 11. **Google Analytics check**
     - Verify ALL HTML pages include the Google Analytics snippet with ID `G-JRCMEB9TBW`
