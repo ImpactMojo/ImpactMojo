@@ -2,6 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.10.0 — March 27, 2026
+
+**What changed for you:** ImpactMojo now has its own MCP server — connect any AI assistant (Claude Desktop, Claude Code, Cursor, etc.) to search our entire knowledge base: 700+ content items, 203 BCT techniques with South Asian context, 270 dataverse tools, India climate data, 16 economics games, and practice challenges.
+
+### MCP Server (`/mcp-server/`)
+- 11 tools: search_content, lookup_bct, search_bcts, list_bct_categories, browse_dataverse, search_dataverse, list_challenges, get_challenge, list_courses, get_game_info, query_climate_data
+- 3 resources: platform overview, content catalog, learning tracks
+- TypeScript + `@modelcontextprotocol/sdk`, stdio transport
+- Published as `@varnasr/impactmojo-mcp-server` on GitHub Packages
+- Added to Dataverse catalog as `impactmojo-mcp`
+- Auto-publishes on `mcp-server/v*` tags via GitHub Actions
+
 ## v10.9.1 — March 26, 2026
 
 **What changed for you:** Housekeeping release — corrected lab counts across all documentation, added 13 missing games to sitemap for better search discoverability, and cleaned up stale branches.
