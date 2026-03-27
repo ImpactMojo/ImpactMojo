@@ -1380,3 +1380,38 @@ window.supabaseClient = supabaseClient;
         'body.user-authenticated .auth-logged-out { display: none !important; }';
     (document.head || document.documentElement).appendChild(style);
 })();
+
+// SYNCHRONOUS auth state recovery from localStorage.
+// This runs BEFORE any async Supabase events fire, so the user sees
+// their logged-in state instantly on every page — no waiting for
+// network calls or event callbacks.
+(function () {
+    try {
+        var sessionRaw = localStorage.getItem('impactmojo-auth');
+        if (!sessionRaw) return;
+        var session = JSON.parse(sessionRaw);
+        if (!session || !session.access_token) return;
+
+        // Session exists — user is logged in. Add class immediately.
+        document.body.classList.add('user-authenticated');
+
+        // Restore cached profile for tier/name display
+        var cachedRaw = localStorage.getItem('impactmojo_cached_profile');
+        if (cachedRaw) {
+            try {
+                var cached = JSON.parse(cachedRaw);
+                if (cached) {
+                    ImpactMojoAuth.profile = cached;
+                    // Update tier/name displays if they exist
+                    document.querySelectorAll('.auth-user-name').forEach(function (el) {
+                        el.textContent = cached.display_name || cached.full_name || 'Account';
+                    });
+                    document.querySelectorAll('.auth-user-tier').forEach(function (el) {
+                        var tierNames = { explorer: 'Explorer (Free)', practitioner: 'Practitioner', professional: 'Professional', organization: 'Organization' };
+                        el.textContent = tierNames[cached.subscription_tier] || 'Explorer (Free)';
+                    });
+                }
+            } catch (_) {}
+        }
+    } catch (_) {}
+})();
