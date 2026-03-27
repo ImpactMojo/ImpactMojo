@@ -36,7 +36,7 @@
      *
      * @param {Object} opts
      * @param {HTMLElement}  opts.loadingEl    - overlay to hide when ready
-     * @param {string}       opts.redirectUrl  - redirect target for unauthenticated users (default: 'login.html')
+     * @param {string}       opts.redirectUrl  - redirect target for unauthenticated users (default: '/login.html')
      * @param {string|null}  opts.requiredTier - tier required to access the page (null = any logged-in user)
      * @param {number}       opts.timeoutMs    - safety timeout before fallback checks (default: 10000)
      * @param {Function}     opts.onReady      - callback(user, profile) when auth passes
