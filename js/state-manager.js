@@ -352,6 +352,7 @@
           subscription_tier: profile.subscription_tier || 'explorer',
           subscription_status: profile.subscription_status || null,
           organization: profile.organization || null,
+          role: profile.role || null,
           cachedAt: new Date().toISOString()
         });
       },
