@@ -1367,3 +1367,16 @@ window.addEventListener('beforeunload', () => {
 // Export for use in other scripts
 window.ImpactMojoAuth = ImpactMojoAuth;
 window.supabaseClient = supabaseClient;
+
+// Inject auth CSS immediately so .auth-logged-in elements are hidden
+// by default (prevents flash of both logged-in and logged-out buttons)
+(function () {
+    if (document.getElementById('auth-topbar-styles')) return;
+    var style = document.createElement('style');
+    style.id = 'auth-topbar-styles';
+    style.textContent =
+        '.auth-logged-in { display: none !important; }' +
+        'body.user-authenticated .auth-logged-in { display: inline-flex !important; }' +
+        'body.user-authenticated .auth-logged-out { display: none !important; }';
+    (document.head || document.documentElement).appendChild(style);
+})();
