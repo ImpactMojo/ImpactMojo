@@ -111,7 +111,7 @@
       } else if (lowerMsg.indexOf('password') !== -1 || lowerMsg.indexOf('reset') !== -1) {
         response = "To reset your password, click the 'Change Password' button in Account Settings. We'll send you an email with reset instructions.";
       } else if (lowerMsg.indexOf('premium') !== -1 || lowerMsg.indexOf('upgrade') !== -1) {
-        response = "Interested in Premium? Visit our <a href='premium.html'>Premium page</a> to see all the benefits and features available.";
+        response = "Interested in Premium? Visit our <a href='/premium.html'>Premium page</a> to see all the benefits and features available.";
       }
       var botMsg = document.createElement('div');
       botMsg.className = 'message bot-message';
@@ -599,7 +599,7 @@
     // --- Auth Gate ---
     AuthGate.protect({
       loadingEl: document.getElementById('loadingOverlay'),
-      redirectUrl: 'login.html',
+      redirectUrl: '/login.html',
       timeoutMs: 5000,
       onReady: function (user, profile) {
         updatePageData();
