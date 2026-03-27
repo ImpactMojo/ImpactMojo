@@ -2591,6 +2591,17 @@
             transform: translateX(0) !important;
         }
 
+        @media (max-width: 768px) {
+            .coach-callout {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            .coach-photo {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
         /* Additional variables referenced but not defined */
         :root {
             --spacing-3xl: 4rem;
@@ -3814,25 +3825,40 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             }
         }
         
-        // ============================================
-        // COACH CALLOUT POPUP ANIMATION
-        // ============================================
-        const coachCallouts = document.querySelectorAll('.coach-callout');
-        
-        const popupObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('popup-visible');
+    </script>
+<script>
+        // Coach Callout Popup Animation
+        // Runs on DOMContentLoaded for static content AND on courseContentLoaded for dynamic content
+        (function() {
+            function initCoachCallouts() {
+                var coachCallouts = document.querySelectorAll('.coach-callout:not(.coach-observed)');
+                if (!coachCallouts.length) return;
+
+                if ('IntersectionObserver' in window) {
+                    var observer = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('popup-visible');
+                            }
+                        });
+                    }, {
+                        threshold: 0.15,
+                        rootMargin: '0px 0px -30px 0px'
+                    });
+
+                    coachCallouts.forEach(function(callout) {
+                        callout.classList.add('coach-observed');
+                        observer.observe(callout);
+                    });
+                } else {
+                    coachCallouts.forEach(function(callout) {
+                        callout.classList.add('popup-visible');
+                    });
                 }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px'
-        });
-        
-        coachCallouts.forEach(callout => {
-            popupObserver.observe(callout);
-        });
+            }
+            document.addEventListener('DOMContentLoaded', initCoachCallouts);
+            document.addEventListener('courseContentLoaded', initCoachCallouts);
+        })();
     </script>
     
     <!-- Google Analytics -->
