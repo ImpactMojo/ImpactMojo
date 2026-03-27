@@ -1115,14 +1115,27 @@ const ImpactMojoAuth = {
         var accountBtn = document.createElement('a');
         accountBtn.href = '/account.html';
         accountBtn.className = 'auth-logged-in topbar-auth-injected';
-        accountBtn.style.cssText = 'color:var(--text-secondary,#94a3b8);text-decoration:none;font-size:0.85rem;margin-right:0.75rem;align-items:center;gap:0.25rem;';
+        accountBtn.style.cssText = 'color:var(--text-secondary,#94a3b8);text-decoration:none;font-size:0.85rem;margin-right:0.5rem;align-items:center;gap:0.25rem;';
         accountBtn.innerHTML =
             '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:0.25rem;">' +
             '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' +
             '<span class="auth-user-name">Account</span>';
 
+        var logoutBtn = document.createElement('a');
+        logoutBtn.href = '#';
+        logoutBtn.className = 'auth-logged-in topbar-auth-injected';
+        logoutBtn.style.cssText = 'color:var(--text-secondary,#94a3b8);text-decoration:none;font-size:0.8rem;margin-right:0.75rem;opacity:0.7;';
+        logoutBtn.textContent = 'Log Out';
+        logoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            ImpactMojoAuth.signOut().then(function () {
+                window.location.href = '/';
+            });
+        });
+
         var firstChild = topbarRight.firstChild;
-        topbarRight.insertBefore(accountBtn, firstChild);
+        topbarRight.insertBefore(logoutBtn, firstChild);
+        topbarRight.insertBefore(accountBtn, logoutBtn);
         topbarRight.insertBefore(signupBtn, accountBtn);
         topbarRight.insertBefore(loginBtn, signupBtn);
     },
