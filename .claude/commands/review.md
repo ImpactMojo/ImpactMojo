@@ -10,7 +10,9 @@ description: Review the current branch diff for issues before merging
 
 !`git diff main...HEAD`
 
-Review the above changes for:
+Spawn the `deploy-reviewer` agent to review the above changes with fresh context.
+
+The agent should check for:
 1. Broken links or missing cross-references
 2. Content count inconsistencies (game/lab/course counts)
 3. Invalid JSON in data files
@@ -18,4 +20,4 @@ Review the above changes for:
 5. Mobile responsiveness concerns
 6. Missing documentation updates
 
-Give specific, actionable feedback per file.
+Report the agent's verdict and any BLOCKER/CONCERN/NIT items.
