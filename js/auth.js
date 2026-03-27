@@ -141,38 +141,31 @@ const ImpactMojoAuth = {
 
                 if (event === 'INITIAL_SESSION') {
                     this._processingAuthEvent = true;
-                    // Initial session check complete - set user if session exists
                     if (session?.user) {
                         this.user = session.user;
-                        // Immediately restore cached profile for instant UI
+                        // Restore cached profile — this has tier/role from last successful fetch
                         if (typeof window.IMState !== 'undefined') {
                             var cached = window.IMState.cachedProfile.get();
                             if (cached && cached.id === session.user.id) {
                                 this.profile = cached;
                             }
                         }
-                        // Render instantly — shows logged-in state even without profile details
-                        this.updateUI();
-                        try {
-                            await this.fetchProfile();
-                        } catch (e) {
-                            console.error('Profile fetch failed during init:', e);
-                            // If profile is still null after failure, retry once more
-                            if (!this.profile) {
-                                try {
-                                    this._profileFetchPromise = null;
-                                    this._lastProfileFetchTime = 0;
-                                    await this.fetchProfile();
-                                } catch (_) {}
-                            }
-                        }
                         this._initialSessionHadUser = true;
                     }
                     this._processingAuthEvent = false;
-                    // Mark auth as ready BEFORE sync — sync is non-blocking
                     this.isAuthReady = true;
                     if (this._authReadyResolve) this._authReadyResolve();
+                    // Render immediately with whatever we have (user + cached profile)
                     this.updateUI();
+                    // Fetch fresh profile in BACKGROUND — don't block page load
+                    if (session?.user) {
+                        var self = this;
+                        this.fetchProfile().then(function () {
+                            self.updateUI(); // re-render with fresh data
+                        }).catch(function (e) {
+                            console.error('Background profile fetch failed:', e);
+                        });
+                    }
                     // Sync from cloud in background (non-blocking)
                     if (session?.user) {
                         this.syncFromCloud().catch(function (e) {
@@ -446,7 +439,7 @@ const ImpactMojoAuth = {
 
                 var profilePromise = supabaseClient
                     .from('profiles')
-                    .select('*')
+                    .select('id, display_name, full_name, email, avatar_url, subscription_tier, subscription_status, organization, role')
                     .eq('id', this.user.id)
                     .single();
 
