@@ -18,6 +18,7 @@ Free development education platform for South Asia. Static HTML/CSS/JS, Supabase
 - **Handouts**: 400+ in `/Handouts/{Track}/`
 - **Data**: JSON in `/data/` (search-index, dataverse, BCT repository)
 - **Docs**: GitBook in `/docs/`
+- **NotebookLM**: 11 AI Study Companion notebooks managed via `notebooklm-py`. Registry: `data/notebooklm-registry.json`. Script: `scripts/notebooklm-manage.py`
 
 ## Conventions
 
