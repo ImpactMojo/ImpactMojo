@@ -1,16 +1,21 @@
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Resolve paths relative to the repo root (mcp-server/dist/ -> repo root)
+// Try packaged data first (mcp-server/data/), then repo root (../../data/)
 function dataPath(filename: string): string {
+  const packaged = resolve(__dirname, "../data", filename);
+  if (existsSync(packaged)) return packaged;
   return resolve(__dirname, "../../data", filename);
 }
 
 function rootPath(filename: string): string {
+  // For catalog_data.json — check packaged location first
+  const packaged = resolve(__dirname, "../data", filename);
+  if (existsSync(packaged)) return packaged;
   return resolve(__dirname, "../..", filename);
 }
 
@@ -234,7 +239,8 @@ export function loadAllData(): LoadedData {
   const challenges = loadJSON(dataPath("challenges.json")) as Challenge[];
 
   // 5. Courses from catalog_data.json
-  const catalogRaw = loadJSON(rootPath("catalog_data.json")) as {
+  const catalogPath = rootPath("catalog_data.json");
+  const catalogRaw = loadJSON(catalogPath) as {
     DATA: Course[];
   };
   const courses = catalogRaw.DATA;
