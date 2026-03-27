@@ -75,6 +75,9 @@
 ## Technical
 
 * [Architecture](architecture.md)
+* [MCP Server Guide](mcp-server-guide.md)
+* [NotebookLM Setup](notebooklm-setup.md)
+* [Game Agents](game-agents.md)
 * [Typography](typography.md)
 * [API Reference](api-reference.md)
 * [Deployment Guide](deployment.md)
