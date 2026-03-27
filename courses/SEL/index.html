@@ -3270,57 +3270,40 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
         }
 
 
-            // ============================================
-            // COACH CALLOUT POPUP ANIMATION
-            // ============================================
-            const coachCallouts = document.querySelectorAll('.coach-callout');
-            
-            const popupObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('popup-visible');
-                        // Optional: unobserve after animation to prevent re-triggering
-                        // popupObserver.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.2,  // Trigger when 20% visible
-                rootMargin: '0px 0px -50px 0px'  // Trigger slightly before fully in view
-            });
-            
-            coachCallouts.forEach(callout => {
-                popupObserver.observe(callout);
-            });
-
     </script>
 <script>
         // Coach Callout Popup Animation
-        document.addEventListener('DOMContentLoaded', function() {
-            var coachCallouts = document.querySelectorAll('.coach-callout');
-            
-            if ('IntersectionObserver' in window) {
-                var observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('popup-visible');
-                        }
-                    });
-                }, {
-                    threshold: 0.15,
-                    rootMargin: '0px 0px -30px 0px'
-                });
-                
-                coachCallouts.forEach(function(callout) {
-                    observer.observe(callout);
-                });
-            } else {
-                // Fallback for older browsers
-                coachCallouts.forEach(function(callout) {
-                    callout.classList.add('popup-visible');
-                });
-            }
-        });
+        // Runs on DOMContentLoaded for static content AND on courseContentLoaded for dynamic content
+        (function() {
+            function initCoachCallouts() {
+                var coachCallouts = document.querySelectorAll('.coach-callout:not(.coach-observed)');
+                if (!coachCallouts.length) return;
 
+                if ('IntersectionObserver' in window) {
+                    var observer = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('popup-visible');
+                            }
+                        });
+                    }, {
+                        threshold: 0.15,
+                        rootMargin: '0px 0px -30px 0px'
+                    });
+
+                    coachCallouts.forEach(function(callout) {
+                        callout.classList.add('coach-observed');
+                        observer.observe(callout);
+                    });
+                } else {
+                    coachCallouts.forEach(function(callout) {
+                        callout.classList.add('popup-visible');
+                    });
+                }
+            }
+            document.addEventListener('DOMContentLoaded', initCoachCallouts);
+            document.addEventListener('courseContentLoaded', initCoachCallouts);
+        })();
     </script>
 <!-- ImpactMojo Theme Toggle JS -->
 <script>
