@@ -47,10 +47,11 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
 | **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export — dark mode, filters, CSV export |
-| **Dataverse** | 269 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories — dark mode, category filters, responsive cards |
+| **Dataverse** | 270 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories — dark mode, category filters, responsive cards |
 | **400+ Handouts** | Downloadable resources across 6 learning tracks |
 | **Learning Loops Blog** | Articles, tutorials, and case studies on development practice |
 | **Between the Logframes** | Development podcast — honest conversations on MEAL and impact work |
+| **MCP Server** | Model Context Protocol server — connect any AI assistant to search all ImpactMojo content, BCTs, Dataverse, climate data, and more ([Setup guide](mcp-server/README.md)) |
 
 ### Business Models & Services
 
@@ -202,7 +203,7 @@ Interactive simulations powered by **MiroFish AI agents** with **Indian folk art
 - [**DevDiscourses**](https://github.com/Varnasr/development-discourses) — 500+ curated open-access research papers, books, and grey literature
 - [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) — Auto-updating tracker of Indian development policies across 22 sectors
 - **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings
-- **Dataverse** — 269 curated tools, datasets, APIs, MCP servers, and platforms for social impact research
+- **Dataverse** — 270 curated tools, datasets, APIs, MCP servers, and platforms for social impact research
 - **400+ Handouts** — Downloadable HTML resources across 6 learning tracks
 - **Learning Loops Blog** — Articles, tutorials, case studies, platform updates
 - **Between the Logframes Podcast** — Development conversations on MEAL, ToC, and impact work
@@ -380,7 +381,7 @@ ImpactMojo/
 ├── dojos.html              # Practice-based skill sessions
 ├── catalog.html            # Complete learning catalog
 ├── bct-repository.html     # BCT Repository (203 techniques, fuzzy search, bookmarks, comparison, PDF export)
-├── dataverse.html          # Dataverse (247 tools & datasets across 22 categories)
+├── dataverse.html          # Dataverse (270 tools & datasets across 22 categories)
 ├── blog.html               # Learning Loops blog
 ├── podcast.html            # Between the Logframes podcast
 ├── handouts.html           # 400+ downloadable resources
@@ -422,9 +423,15 @@ ImpactMojo/
 │   └── netlify/edge-functions/
 │       └── auth-gate.ts
 │
+├── mcp-server/                   # MCP server for AI assistants
+│   ├── src/index.ts               # Entry point (McpServer + stdio transport)
+│   ├── src/data-loader.ts         # Loads all JSON data at startup
+│   ├── src/tools/                 # 11 MCP tools (search, BCT, dataverse, climate, etc.)
+│   └── src/resources/             # 3 MCP resources (overview, catalog, tracks)
+│
 ├── data/
 │   ├── bct-repository.json # BCT technique data (203 entries)
-│   ├── dataverse.json      # Dataverse catalog data (247 entries, 22 categories)
+│   ├── dataverse.json      # Dataverse catalog data (270 entries, 22 categories)
 │   └── game-agents.json    # MiroFish AI agent personas (30+ agents across 10 games)
 │
 ├── assets/

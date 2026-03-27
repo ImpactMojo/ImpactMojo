@@ -142,11 +142,11 @@ Entries are organized by topic and tagged for easy browsing.
 
 ---
 
-## Dataverse (247 resources)
+## Dataverse (270 resources)
 
 Dataverse is your starting point for development data. It includes:
 
-- **269 datasets, tools, and APIs** from sources like the World Bank, DHS, NFHS, NSSO, and more
+- **270 datasets, tools, and APIs** from sources like the World Bank, DHS, NFHS, NSSO, and more
 - **APIs** for programmatic data access
 - **Tools** for data analysis and visualization
 - **MCP servers** for AI-assisted development research
@@ -201,6 +201,23 @@ Regular articles on development practice, platform updates, sector trends, and r
 ## Podcast
 
 Audio episodes available on Spotify — conversations about development practice, research methods, and the work of building more equitable systems. Listen during your commute or while doing fieldwork.
+
+---
+
+## MCP Server (for AI Assistants)
+
+ImpactMojo has a **Model Context Protocol (MCP) server** that lets any AI assistant — Claude Desktop, Claude Code, Cursor, or other MCP-compatible clients — search and query our entire knowledge base programmatically.
+
+**11 tools available:**
+- `search_content` — Full-text search across all 700+ content items
+- `lookup_bct` / `search_bcts` / `list_bct_categories` — 203 BCT techniques with South Asian context and case studies
+- `browse_dataverse` / `search_dataverse` — 270 tools, datasets, APIs
+- `list_challenges` / `get_challenge` — Practice exercises with rubrics
+- `list_courses` — 48 courses across 6 learning tracks
+- `get_game_info` — 16 economics simulation games with AI agent personas
+- `query_climate_data` — India GHG emissions from Climate TRACE
+
+**How to use it:** Install the MCP server locally, connect it to your AI assistant, and ask questions like "find BCT techniques for nutrition in India" or "what climate data does ImpactMojo have?" See the [MCP Server README](https://github.com/Varnasr/ImpactMojo/tree/main/mcp-server) for setup instructions.
 
 ---
 

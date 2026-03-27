@@ -56,6 +56,9 @@ Email digests for course updates, streak reminders, and community activity. ([#1
 
 ## Recently Completed
 
+### v10.10.0 — March 2026
+- **ImpactMojo MCP Server** — 11 tools and 3 resources exposing the full knowledge base via Model Context Protocol. Works with Claude Desktop, Claude Code, Cursor, and any MCP client. npm-publishable.
+
 ### v10.9.0 — March 2026
 - Sitewide design audit: 242 pages updated with ImpactMojo fonts, 3-mode theme toggle, paper plane SVG, sticky topbar, and footer
 - Full mobile responsiveness across all BookSummaries, Games, Handouts, Blog, Courses, Labs, Templates, and Premium Tools

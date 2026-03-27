@@ -148,7 +148,7 @@ To set up an organization account, contact the ImpactMojo team. Sliding-scale pr
 
 ## What is the Dataverse?
 
-The Dataverse is a curated library of **269 data sources, tools, datasets, and APIs** relevant to development practice in South Asia.
+The Dataverse is a curated library of **270 data sources, tools, datasets, and APIs** relevant to development practice in South Asia.
 
 Think of it as a carefully organized reference shelf. Instead of searching the internet for "India poverty data" and wading through hundreds of results, you can browse the Dataverse to find:
 
