@@ -73,7 +73,25 @@
 
       function checkAdmin(user, profile) {
         if (!user) { deny('not logged in'); return; }
-        if (!profile) { deny('no profile'); return; }
+        if (!profile) {
+          // Profile may still be loading (slow network / token refresh).
+          // Retry once with a fresh fetch before denying.
+          console.warn('[AdminGate] No profile yet — retrying fetch...');
+          ImpactMojoAuth._profileFetchPromise = null;
+          ImpactMojoAuth._lastProfileFetchTime = 0;
+          ImpactMojoAuth.fetchProfile().then(function () {
+            if (resolved) return;
+            var p = ImpactMojoAuth.profile;
+            if (!p) { deny('no profile after retry'); return; }
+            if (p.role !== 'admin') { deny('role is ' + p.role); return; }
+            if (p.subscription_tier !== 'organization') {
+              deny('tier is ' + (p.subscription_tier || 'none') + ' (organization required)');
+              return;
+            }
+            succeed(user, p);
+          }).catch(function () { deny('profile fetch failed'); });
+          return;
+        }
         if (profile.role !== 'admin') {
           deny('role is ' + profile.role);
           return;
