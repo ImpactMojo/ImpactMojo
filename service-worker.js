@@ -1,6 +1,6 @@
 // Service Worker for ImpactMojo PWA
 // v5 - Offline PWA support for flagship courses, shell caching, offline fallback
-const CACHE_NAME = 'impactmojo-v8';
+const CACHE_NAME = 'impactmojo-v9';
 const COURSE_CACHE_PREFIX = 'impactmojo-course-';
 
 // App shell: core assets cached on install
@@ -105,29 +105,45 @@ self.addEventListener('fetch', event => {
   }
 
   const pathname = url.pathname;
+
+  // Auth-critical files — ALWAYS fetch from network, never serve stale
+  const AUTH_FILES = ['/js/auth.js', '/js/config.js', '/js/state-manager.js', '/js/topbar-auth.js'];
+  if (AUTH_FILES.includes(pathname)) {
+    event.respondWith(
+      fetch(event.request).then(response => {
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        }
+        return response;
+      }).catch(() => caches.match(event.request) || new Response('', { status: 503 }))
+    );
+    return;
+  }
+
   const isHTML = event.request.headers.get('accept')?.includes('text/html') ||
                  pathname.endsWith('.html') || pathname === '/';
 
-  // Check if this URL is part of the pre-cached shell or course pages
+  // Check if this URL is part of the pre-cached shell
   const isShellAsset = SHELL_ASSETS.includes(pathname);
+
+  // Course pages use network-first (not cache-first) so auth fixes deploy instantly
   const isCoursePage = COURSE_PAGES.includes(pathname) ||
                        FLAGSHIP_COURSES.some(id => pathname === `/courses/${id}/`);
 
-  if (isShellAsset || isCoursePage) {
-    // Cache-first for shell assets and pre-cached course pages
+  if (isShellAsset && !isCoursePage) {
+    // Cache-first for shell assets only (not course pages)
     event.respondWith(
       caches.match(event.request).then(cached => {
         if (cached) {
-          // Return cache immediately, update in background
           const fetchPromise = fetch(event.request).then(response => {
             if (response.ok) {
               caches.open(CACHE_NAME).then(cache => cache.put(event.request, response));
             }
           }).catch(() => {});
-          fetchPromise; // fire-and-forget
+          fetchPromise;
           return cached;
         }
-        // Not in cache yet - fetch and cache
         return fetch(event.request).then(response => {
           if (response.ok) {
             const clone = response.clone();
