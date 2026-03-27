@@ -421,7 +421,7 @@ const ImpactMojoAuth = {
                     .single();
 
                 var timeoutPromise = new Promise(function (_, reject) {
-                    setTimeout(function () { reject(new Error('Profile fetch timed out')); }, 8000);
+                    setTimeout(function () { reject(new Error('Profile fetch timed out')); }, 15000);
                 });
 
                 const { data, error } = await Promise.race([profilePromise, timeoutPromise]);

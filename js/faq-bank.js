@@ -83,7 +83,7 @@
     { re: /(certificate|certification)s?\b/i,
       a: "We don't issue formal certificates. ImpactMojo focuses on **skills and credentials** you can demonstrate via real work and portfolio artefacts." },
     { re: /\bcredential(s)?\b|\bbadge(s)?\b|\bportfolio\b/i,
-      a: "Our credentials are skill signals based on doing work"" labs, projects, and artefacts you can show. They're designed to be more meaningful than a generic certificate." },
+      a: "Our credentials are skill signals based on doing work — labs, projects, and artefacts you can show. They're designed to be more meaningful than a generic certificate." },
     { re: /\baccredit(ed|ation)|academic credit|university|ugc\b/i,
       a: "ImpactMojo is not an accredited degree program and doesn't offer academic credit. It's a practitioner-focused learning platform." },
 

@@ -1391,6 +1391,7 @@ IMX.Streak = {
         var today = this.getTodayString();
         
         // Already recorded today
+        if (!data.visitDates) data.visitDates = [];
         if (data.visitDates.includes(today)) {
             return;
         }
