@@ -151,8 +151,8 @@ const ImpactMojoAuth = {
                                 this.profile = cached;
                             }
                         }
-                        // Render instantly with cached profile (shows correct tier without waiting)
-                        if (this.profile) this.updateUI();
+                        // Render instantly — shows logged-in state even without profile details
+                        this.updateUI();
                         try {
                             await this.fetchProfile();
                         } catch (e) {
@@ -202,8 +202,8 @@ const ImpactMojoAuth = {
                                 this.profile = cached;
                             }
                         }
-                        if (this.profile) this.updateUI();
-                        return; // let INITIAL_SESSION handle the full flow
+                        this.updateUI(); // show logged-in state immediately
+                        return; // let INITIAL_SESSION handle profile fetch
                     }
                     this._processingAuthEvent = true;
                     this.user = session.user;
