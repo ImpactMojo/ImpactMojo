@@ -11,7 +11,7 @@
  *
  *   AuthGate.protect({
  *       loadingEl:    document.getElementById('loadingOverlay'),
- *       redirectUrl:  'login.html',           // where to send unauthenticated users
+ *       redirectUrl:  '/login.html',          // where to send unauthenticated users
  *       requiredTier: null,                   // or 'practitioner', 'organization', etc.
  *       timeoutMs:    10000,                  // safety timeout (default 10s)
  *       onReady:      function(user, profile) { ... }   // called when auth passes
@@ -47,7 +47,7 @@
       this._protected = true;
 
       var loadingEl   = opts.loadingEl || null;
-      var redirectUrl = opts.redirectUrl || 'login.html';
+      var redirectUrl = opts.redirectUrl || '/login.html';
       var requiredTier = opts.requiredTier || null;
       var timeoutMs   = opts.timeoutMs || 5000;
       var onReady     = opts.onReady || function () {};
