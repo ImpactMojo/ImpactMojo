@@ -59,6 +59,16 @@ Run through this checklist after completing major work on ImpactMojo.
      ```
      Update the stats banner numbers and the intro paragraph in `upgrade.html` to match.
      Also update any count references in `premium.html`, `index.html` hero/stats sections.
+   - **Update upgrade letter counts** (`upgrade.html`): Run these commands and update the stats in the letter if they've changed:
+     ```bash
+     echo "Flagship courses: $(ls -d courses/*/index.html | wc -l)"
+     echo "101 courses: $(ls 101-courses/*.html | wc -l)"
+     echo "Labs: $(ls Labs/*-lab.html | wc -l)"
+     echo "Games: $(ls Games/*.html | wc -l)"
+     echo "Book summaries: $(ls BookSummaries/*-companion.html | wc -l)"
+     ```
+     Update the stats banner numbers and the intro paragraph in `upgrade.html` to match.
+     Also update any count references in `premium.html`, `index.html` hero/stats sections.
 
 10. **Quality checks**
     - Verify no broken navigation links
