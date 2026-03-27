@@ -189,6 +189,22 @@ const ImpactMojoAuth = {
                     if (this._signInProcessed && this.user?.id === session.user.id) {
                         return;
                     }
+                    // If INITIAL_SESSION hasn't fired yet, defer to it —
+                    // SIGNED_IN can fire first on page load when restoring a
+                    // session from localStorage, but the token may not be
+                    // fully refreshed yet, causing profile queries to hang.
+                    if (!this.isAuthReady && !this._initialSessionHadUser) {
+                        this.user = session.user;
+                        // Restore cached profile for instant UI
+                        if (typeof window.IMState !== 'undefined') {
+                            var cached = window.IMState.cachedProfile.get();
+                            if (cached && cached.id === session.user.id) {
+                                this.profile = cached;
+                            }
+                        }
+                        if (this.profile) this.updateUI();
+                        return; // let INITIAL_SESSION handle the full flow
+                    }
                     this._processingAuthEvent = true;
                     this.user = session.user;
                     try {
@@ -414,6 +430,19 @@ const ImpactMojoAuth = {
 
         this._profileFetchPromise = (async () => {
             try {
+                // Ensure session is valid before querying — on page load the
+                // Supabase client may fire SIGNED_IN before the token is fully
+                // restored, causing RLS to reject/hang the profiles query.
+                try {
+                    var sess = await supabaseClient.auth.getSession();
+                    if (!sess?.data?.session) {
+                        console.warn('fetchProfile: no active session, skipping');
+                        var cached = fallbackToCache();
+                        this._scheduleProfileRetry();
+                        return cached;
+                    }
+                } catch (_) { /* proceed anyway */ }
+
                 var profilePromise = supabaseClient
                     .from('profiles')
                     .select('*')
