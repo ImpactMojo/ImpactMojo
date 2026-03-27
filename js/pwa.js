@@ -1,35 +1,21 @@
-// ImpactMojo PWA - Service Worker Registration
-// Registers the service worker and handles update notifications
+// ImpactMojo — PWA cleanup
+// Unregisters any existing service worker so users get fresh files from Netlify CDN.
 (function () {
   'use strict';
-
   if (!('serviceWorker' in navigator)) return;
 
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
-      .then(function (registration) {
-        console.log('ImpactMojo SW registered, scope:', registration.scope);
-
-        // Check for updates every 30 minutes
-        setInterval(function () {
-          registration.update();
-        }, 30 * 60 * 1000);
-
-        // Notify user when a new version is available
-        registration.addEventListener('updatefound', function () {
-          var newWorker = registration.installing;
-          if (!newWorker) return;
-
-          newWorker.addEventListener('statechange', function () {
-            if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
-              // New SW activated - optionally show a refresh prompt
-              console.log('ImpactMojo SW updated. Refresh for latest version.');
-            }
-          });
-        });
-      })
-      .catch(function (err) {
-        console.log('ImpactMojo SW registration failed:', err);
+  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    registrations.forEach(function (reg) {
+      reg.unregister().then(function () {
+        console.log('ImpactMojo SW unregistered');
       });
+    });
   });
+
+  // Clear all caches left behind by old service worker
+  if ('caches' in window) {
+    caches.keys().then(function (keys) {
+      keys.forEach(function (key) { caches.delete(key); });
+    });
+  }
 })();
