@@ -1101,9 +1101,55 @@ const ImpactMojoAuth = {
     // UI UPDATE METHODS
     // =====================================================
 
+    // Auto-inject auth buttons into .im-topbar-right on any page
+    _injectTopbarAuth() {
+        var topbarRight = document.querySelector('.im-topbar-right');
+        if (!topbarRight || topbarRight.querySelector('.topbar-auth-injected')) return;
+
+        var loginBtn = document.createElement('a');
+        loginBtn.href = '/login.html';
+        loginBtn.className = 'auth-logged-out topbar-auth-injected';
+        loginBtn.style.cssText = 'color:var(--text-secondary,#94a3b8);text-decoration:none;font-size:0.85rem;margin-right:0.5rem;';
+        loginBtn.textContent = 'Log In';
+
+        var signupBtn = document.createElement('a');
+        signupBtn.href = '/signup.html';
+        signupBtn.className = 'auth-logged-out topbar-auth-injected';
+        signupBtn.style.cssText = 'background:#6366f1;color:#fff;text-decoration:none;font-size:0.8rem;padding:0.3rem 0.75rem;border-radius:6px;margin-right:0.75rem;';
+        signupBtn.textContent = 'Sign Up';
+
+        var accountBtn = document.createElement('a');
+        accountBtn.href = '/account.html';
+        accountBtn.className = 'auth-logged-in topbar-auth-injected';
+        accountBtn.style.cssText = 'color:var(--text-secondary,#94a3b8);text-decoration:none;font-size:0.85rem;margin-right:0.75rem;align-items:center;gap:0.25rem;';
+        accountBtn.innerHTML =
+            '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:0.25rem;">' +
+            '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' +
+            '<span class="auth-user-name">Account</span>';
+
+        var firstChild = topbarRight.firstChild;
+        topbarRight.insertBefore(accountBtn, firstChild);
+        topbarRight.insertBefore(signupBtn, accountBtn);
+        topbarRight.insertBefore(loginBtn, signupBtn);
+    },
+
     // Update UI based on auth state
     updateUI() {
         const isLoggedIn = !!this.user;
+
+        // Inject auth buttons into topbar if not already present
+        this._injectTopbarAuth();
+
+        // Inject auth CSS if not already present
+        if (!document.getElementById('auth-topbar-styles')) {
+            var style = document.createElement('style');
+            style.id = 'auth-topbar-styles';
+            style.textContent =
+                '.auth-logged-in { display: none !important; }' +
+                'body.user-authenticated .auth-logged-in { display: inline-flex !important; }' +
+                'body.user-authenticated .auth-logged-out { display: none !important; }';
+            document.head.appendChild(style);
+        }
 
         // Add/remove body class for CSS-based auth display (handles !important)
         if (isLoggedIn) {
