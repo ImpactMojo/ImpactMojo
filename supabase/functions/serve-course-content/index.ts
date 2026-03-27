@@ -136,27 +136,16 @@ serve(async (req: Request) => {
       );
     }
 
-    // For unauthenticated users, only return preview modules (content_html)
-    // Non-preview modules get metadata only (title, intro) — no content
+    // All course content is free — no auth gating on modules.
+    // Premium gating applies to tools/templates on the homepage, not courses.
     const responseModules = data.map((mod) => {
-      if (mod.is_preview || isAuthenticated) {
-        return {
-          module_number: mod.module_number,
-          module_title: mod.module_title,
-          module_intro: mod.module_intro,
-          content_html: mod.content_html,
-          quiz_html: mod.quiz_html,
-          locked: false,
-        };
-      }
-      // Locked: return metadata only, no content
       return {
         module_number: mod.module_number,
         module_title: mod.module_title,
         module_intro: mod.module_intro,
-        content_html: null,
-        quiz_html: null,
-        locked: true,
+        content_html: mod.content_html,
+        quiz_html: mod.quiz_html,
+        locked: false,
       };
     });
 
