@@ -30,12 +30,19 @@ ImpactMojo has a **Model Context Protocol (MCP) server** that lets any AI assist
 | `impactmojo://catalog` | Full content catalog (courses, games, challenges) |
 | `impactmojo://tracks` | Learning track descriptions |
 
-## Setup
+## Install
 
-### 1. Build
+### Option A: From GitHub Packages
 
 ```bash
-cd mcp-server
+npm install @varnasr/impactmojo-mcp-server --registry=https://npm.pkg.github.com
+```
+
+### Option B: From source
+
+```bash
+git clone https://github.com/Varnasr/ImpactMojo.git
+cd ImpactMojo/mcp-server
 npm install
 npm run build
 ```

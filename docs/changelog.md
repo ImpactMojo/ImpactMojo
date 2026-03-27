@@ -10,7 +10,9 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - 11 tools: search_content, lookup_bct, search_bcts, list_bct_categories, browse_dataverse, search_dataverse, list_challenges, get_challenge, list_courses, get_game_info, query_climate_data
 - 3 resources: platform overview, content catalog, learning tracks
 - TypeScript + `@modelcontextprotocol/sdk`, stdio transport
+- Published as `@varnasr/impactmojo-mcp-server` on GitHub Packages
 - Added to Dataverse catalog as `impactmojo-mcp`
+- Auto-publishes on `mcp-server/v*` tags via GitHub Actions
 
 ## v10.9.1 — March 26, 2026
 
