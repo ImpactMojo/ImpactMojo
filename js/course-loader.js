@@ -149,26 +149,22 @@
       try { await window.ImpactMojoAuth.waitForAuthReady(); } catch (_) {}
     }
 
-    // Force a session refresh to ensure we have a valid, non-expired token.
-    // getSession() returns the cached session; refreshSession() actually
-    // contacts Supabase to get a new access token if the current one expired.
+    // Force a session refresh to get a non-expired access token.
+    // The edge function calls getUser() to verify — expired tokens are rejected,
+    // and modules 2+ get locked. Always refresh to ensure a valid token.
     var token = null;
     try {
       if (window.supabaseClient) {
-        var result = await window.supabaseClient.auth.getSession();
-        var session = result?.data?.session;
-        if (session) {
-          // Check if token expires within 60 seconds — if so, force refresh
-          var expiresAt = session.expires_at || 0;
-          var now = Math.floor(Date.now() / 1000);
-          if (expiresAt - now < 60) {
-            console.log('[CourseLoader] Token expiring soon, refreshing...');
-            var refreshResult = await window.supabaseClient.auth.refreshSession();
-            if (refreshResult?.data?.session?.access_token) {
-              token = refreshResult.data.session.access_token;
-            }
-          } else {
-            token = session.access_token;
+        var refreshResult = await window.supabaseClient.auth.refreshSession();
+        if (refreshResult?.data?.session?.access_token) {
+          token = refreshResult.data.session.access_token;
+          console.log('[CourseLoader] Using refreshed token');
+        } else {
+          // Refresh failed — try cached session as fallback
+          var sessionResult = await window.supabaseClient.auth.getSession();
+          if (sessionResult?.data?.session?.access_token) {
+            token = sessionResult.data.session.access_token;
+            console.log('[CourseLoader] Using cached session token (refresh failed)');
           }
         }
       }
@@ -176,7 +172,7 @@
       console.warn('[CourseLoader] Session refresh failed:', e);
     }
 
-    // Fallback to localStorage if Supabase client didn't provide a token
+    // Fallback to localStorage
     if (!token) token = getAccessToken();
 
     console.log('[CourseLoader] Fetching with token:', token ? 'yes (' + token.substring(0, 20) + '...)' : 'anon');
