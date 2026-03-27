@@ -42,24 +42,36 @@
   if (!courseId) return;
 
   // ── Get auth token if user is logged in ─────────────────────────
+  // Prefers the token from Supabase's in-memory session (which may have
+  // been refreshed) over the raw localStorage value (which may be stale).
   function getAccessToken() {
     try {
+      // Prefer the live client session (token may have been refreshed)
+      if (window.supabaseClient) {
+        // getSession() is async; we'll handle that in loadContent()
+        // For sync fallback, read localStorage
+      }
       // Check custom storage key used by auth.js
       var customSession = localStorage.getItem('impactmojo-auth');
       if (customSession) {
         var parsed = JSON.parse(customSession);
         if (parsed && parsed.access_token) return parsed.access_token;
       }
-      // Fallback: try default Supabase session keys
-      var keys = Object.keys(localStorage);
-      for (var i = 0; i < keys.length; i++) {
-        if (keys[i].indexOf('sb-') === 0 && keys[i].indexOf('-auth-token') > -1) {
-          var session = JSON.parse(localStorage.getItem(keys[i]));
-          if (session && session.access_token) return session.access_token;
-        }
-      }
     } catch (e) { /* ignore */ }
     return null;
+  }
+
+  // Async version that gets the freshest token
+  async function getFreshAccessToken() {
+    try {
+      if (window.supabaseClient) {
+        var result = await window.supabaseClient.auth.getSession();
+        if (result?.data?.session?.access_token) {
+          return result.data.session.access_token;
+        }
+      }
+    } catch (e) { /* fall through to sync method */ }
+    return getAccessToken();
   }
 
   // ── Loading skeleton ────────────────────────────────────────────
@@ -81,7 +93,7 @@
       '<div style="margin-bottom:1rem;"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_Lock.svg" alt="Locked" style="width:48px;height:48px;opacity:0.6;filter:brightness(0) saturate(100%) invert(48%) sepia(95%) saturate(1012%) hue-rotate(178deg) brightness(97%) contrast(97%);"></div>' +
       '<h3 style="font-family:var(--font-display,Inter,sans-serif);margin-bottom:0.5rem;color:var(--text-primary,#1e293b);">Sign in to continue</h3>' +
       '<p style="color:var(--text-secondary,#475569);max-width:400px;margin:0 auto 1.5rem;">Create a free ImpactMojo account to access all course modules, track your progress, and earn certificates.</p>' +
-      '<a href="/#auth" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;background:var(--color-primary,#4F46E5);color:#fff;border-radius:8px;font-weight:600;text-decoration:none;transition:transform 0.2s;">Sign up free →</a>' +
+      '<a href="/login.html" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;background:var(--color-primary,#4F46E5);color:#fff;border-radius:8px;font-weight:600;text-decoration:none;transition:transform 0.2s;">Sign up free →</a>' +
       '</div>';
   }
 
@@ -129,10 +141,16 @@
   }
 
   // ── Fetch content from edge function ────────────────────────────
-  function loadContent() {
+  async function loadContent() {
     showLoading();
 
-    var token = getAccessToken();
+    // Wait for auth to be ready so we have a fresh (refreshed) token
+    if (typeof window.ImpactMojoAuth !== 'undefined' && typeof window.ImpactMojoAuth.waitForAuthReady === 'function') {
+      try { await window.ImpactMojoAuth.waitForAuthReady(); } catch (_) {}
+    }
+
+    // Get the freshest token (may have been refreshed by Supabase)
+    var token = await getFreshAccessToken();
     var headers = {
       'Content-Type': 'application/json',
       'apikey': cfg.SUPABASE_ANON_KEY,
