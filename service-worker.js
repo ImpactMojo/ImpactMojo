@@ -1,9 +1,12 @@
 // Service Worker for ImpactMojo PWA
 // v5 - Offline PWA support for flagship courses, shell caching, offline fallback
-const CACHE_NAME = 'impactmojo-v6';
+const CACHE_NAME = 'impactmojo-v7';
 const COURSE_CACHE_PREFIX = 'impactmojo-course-';
 
 // App shell: core assets cached on install
+// NOTE: auth.js, config.js, state-manager.js are NOT in SHELL_ASSETS
+// because they use stale-while-revalidate instead — cache-first causes
+// stale auth code to persist across deploys, breaking login.
 const SHELL_ASSETS = [
   '/',
   '/index.html',
@@ -11,7 +14,6 @@ const SHELL_ASSETS = [
   '/manifest.json',
   '/js/pwa.js',
   '/js/offline.js',
-  '/js/auth.js',
   '/js/router.js',
   '/js/search.js',
   '/js/cookie-ui.js',
