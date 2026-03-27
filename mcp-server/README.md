@@ -28,8 +28,14 @@ MCP (Model Context Protocol) server that exposes ImpactMojo's development educat
 | `impactmojo://catalog` | Full content catalog (courses, games, challenges) |
 | `impactmojo://tracks` | Learning track descriptions |
 
-## Setup
+## Install
 
+**From GitHub Packages:**
+```bash
+npm install @varnasr/impactmojo-mcp-server --registry=https://npm.pkg.github.com
+```
+
+**From source:**
 ```bash
 cd mcp-server
 npm install
