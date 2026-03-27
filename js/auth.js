@@ -137,7 +137,7 @@ const ImpactMojoAuth = {
             // Listen for auth changes FIRST - this is what processes OAuth callbacks
             // Supabase fires INITIAL_SESSION first, then SIGNED_IN if OAuth tokens are in URL
             supabaseClient.auth.onAuthStateChange(async (event, session) => {
-                console.log('Auth state changed:', event);
+                console.log('Auth state changed:', event, 'hasSession:', !!session, 'hasUser:', !!session?.user);
 
                 if (event === 'INITIAL_SESSION') {
                     this._processingAuthEvent = true;
@@ -435,6 +435,7 @@ const ImpactMojoAuth = {
                 // restored, causing RLS to reject/hang the profiles query.
                 try {
                     var sess = await supabaseClient.auth.getSession();
+                    console.log('[Auth] fetchProfile session check:', !!sess?.data?.session, 'userId:', sess?.data?.session?.user?.id?.substring(0,8) || 'none');
                     if (!sess?.data?.session) {
                         console.warn('fetchProfile: no active session, skipping');
                         var cached = fallbackToCache();
@@ -1136,6 +1137,7 @@ const ImpactMojoAuth = {
     // Update UI based on auth state
     updateUI() {
         const isLoggedIn = !!this.user;
+        console.log('[Auth] updateUI called — isLoggedIn:', isLoggedIn, 'tier:', this.profile?.subscription_tier || 'none', 'user:', this.user?.email || 'null');
 
         // Inject auth buttons into topbar if not already present
         this._injectTopbarAuth();
