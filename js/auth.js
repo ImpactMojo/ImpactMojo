@@ -1099,6 +1099,8 @@ const ImpactMojoAuth = {
     _injectTopbarAuth() {
         var topbarRight = document.querySelector('.im-topbar-right');
         if (!topbarRight || topbarRight.querySelector('.topbar-auth-injected')) return;
+        // Skip injection if the page already has its own auth buttons (e.g. account.html, premium.html)
+        if (document.querySelector('header .auth-logged-out, header .auth-logged-in, .nav-buttons .auth-logged-out')) return;
 
         var loginBtn = document.createElement('a');
         loginBtn.href = '/login.html';
