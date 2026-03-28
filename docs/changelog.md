@@ -2,6 +2,22 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.11.0 — March 28, 2026
+
+**What changed for you:** Two new blog posts with napkin.ai-generated illustrations, and a significantly expanded Content Marketing Kit with 5 new LinkedIn posts covering all 6 learning tracks.
+
+### Blog
+- **Introducing the ImpactMojo MCP Server** — Full blog post explaining what MCP is, what our server offers (11 tools, 3 resources), how to connect it, and example prompts
+- **Open source blog illustrations** — Real napkin.ai infographics replacing placeholder images on the GitHub open dev ecosystem post
+- Both posts include 2 professionally generated infographics via Napkin.ai API
+
+### Content Marketing Kit
+- **5 new LinkedIn posts** (LI-11–LI-15): Climate & Sustainability, Gender & Inclusion, AI in Development, Book Companions, MCP Server Launch
+- **Broadened scope** — Renamed "Economics Games" to "Interactive Learning Games" across assets; ImpactMojo covers 6 tracks, not just economics
+- **Corrected counts** throughout (9 courses, 15 games, 270 dataverse tools)
+- **Redesigned brochure thumbnails** with content previews
+- Total assets: 25 → 30
+
 ## v10.10.0 — March 27, 2026
 
 **What changed for you:** ImpactMojo now has its own MCP server — connect any AI assistant (Claude Desktop, Claude Code, Cursor, etc.) to search our entire knowledge base: 700+ content items, 203 BCT techniques with South Asian context, 270 dataverse tools, India climate data, 16 economics games, and practice challenges.
