@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<meta name="description" content="How our Model Context Protocol server lets any AI assistant search courses, BCTs, climate data, and 700+ development education resources."/>
+<meta property="og:title" content="Introducing the ImpactMojo MCP Server | Learning Loops">
+<meta property="og:description" content="Our MCP server lets any AI assistant search 700+ development education resources, BCTs, courses, and climate data.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.impactmojo.in/blog/impactmojo-mcp-server.html">
+<meta property="article:author" content="The ImpactMojo Team">
+<meta property="article:published_time" content="2026-03-28">
+<meta property="article:section" content="Platform">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="open source">
+<meta name="twitter:card" content="summary_large_image">
+<title>Introducing the ImpactMojo MCP Server | Learning Loops</title>
+<link href="../assets/images/favicon.png" rel="icon" type="image/png"/>
+<link href="../assets/images/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<!-- ImpactMojo Fonts: Amaranth (body) + Inter (headings) + JetBrains Mono (code) -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --primary-bg: #0F172A; --secondary-bg: #1E293B; --accent-color: #0EA5E9; --accent-hover: #0284C7; --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --text-primary: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B; --card-bg: #1E293B; --hover-bg: #334155; --border-color: #334155; --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%); --nav-bg: rgba(15, 23, 42, 0.95); --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1); --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2); }
+body.light-mode { --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #94A3B8; --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0; --nav-bg: rgba(255, 255, 255, 0.95); --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07); --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1); }
+body { font-family: 'Amaranth', sans-serif; background: var(--primary-bg); color: var(--text-primary); line-height: 1.8; min-height: 100vh; transition: background 0.3s ease, color 0.3s ease; }
+.header { position: sticky; top: 0; background: var(--nav-bg); backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid var(--border-color); }
+.nav-container { max-width: 900px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+.logo-container { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--text-primary); }
+.logo-container img { width: 36px; height: 36px; border-radius: 8px; }
+.logo-main { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+.back-link { color: var(--text-secondary); text-decoration: none; font-family: 'Amaranth', sans-serif; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s ease; }
+.back-link:hover { color: var(--accent-color); }
+.back-link svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+.theme-toggle { background: var(--secondary-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.5rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+.theme-toggle:hover { background: var(--hover-bg); border-color: var(--accent-color); }
+.theme-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+.article-container { max-width: 750px; margin: 0 auto; padding: 3rem 1.5rem; }
+.article-header { margin-bottom: 2.5rem; text-align: center; }
+.article-category { display: inline-block; background: var(--accent-color); color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-family: 'Amaranth', sans-serif; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem; }
+.article-title { font-family: 'Inter', sans-serif; font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: var(--text-primary); }
+.article-meta { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; font-family: 'Amaranth', sans-serif; font-size: 0.9rem; color: var(--text-muted); }
+.article-meta span { display: flex; align-items: center; gap: 0.35rem; }
+.article-meta svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+.article-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.article-tag { background: var(--hover-bg); color: var(--text-muted); padding: 0.25rem 0.6rem; border-radius: 12px; font-family: 'Amaranth', sans-serif; font-size: 0.75rem; }
+.article-content { font-size: 1.125rem; color: var(--text-secondary); }
+.article-content p { margin-bottom: 1.5rem; }
+.article-content h2 { font-family: 'Inter', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin: 2.5rem 0 1rem; }
+.article-content h3 { font-family: 'Inter', sans-serif; font-size: 1.35rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.75rem; }
+.article-content ul, .article-content ol { margin: 1.5rem 0; padding-left: 1.5rem; }
+.article-content li { margin-bottom: 0.75rem; }
+.article-content blockquote { border-left: 4px solid var(--accent-color); padding: 1rem 1.5rem; margin: 2rem 0; background: var(--secondary-bg); border-radius: 0 8px 8px 0; font-style: italic; }
+.article-content a { color: var(--accent-color); text-decoration: underline; }
+.article-content a:hover { color: var(--accent-hover); }
+.article-illustration { margin: 2.5rem 0; text-align: center; }
+.article-illustration img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border-color); }
+.article-illustration figcaption { font-family: 'Amaranth', sans-serif; font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem; font-style: italic; }
+.highlight-box { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+.highlight-box h4 { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.75rem; }
+.share-section { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: center; }
+.share-section h4 { font-family: 'Amaranth', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem; }
+.share-buttons { display: flex; justify-content: center; gap: 0.75rem; }
+.share-btn { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--secondary-bg); border: 1px solid var(--border-color); color: var(--text-secondary); text-decoration: none; transition: all 0.2s ease; }
+.share-btn:hover { background: var(--accent-color); border-color: var(--accent-color); color: white; transform: translateY(-2px); }
+.share-btn svg { width: 20px; height: 20px; fill: currentColor; }
+.newsletter-cta { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+.newsletter-cta h3 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+.newsletter-cta p { color: var(--text-secondary); margin-bottom: 1rem; font-family: 'Amaranth', sans-serif; font-size: 0.95rem; }
+.newsletter-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--gradient-primary); color: white; text-decoration: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-family: 'Amaranth', sans-serif; font-weight: 600; font-size: 0.95rem; transition: all 0.2s ease; }
+.newsletter-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.related-posts { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
+.related-posts h3 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; }
+.related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.related-card { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.2s ease; }
+.related-card:hover { border-color: var(--accent-color); transform: translateY(-3px); }
+.related-card-category { font-family: 'Amaranth', sans-serif; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--accent-color); margin-bottom: 0.5rem; }
+.related-card-title { font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+.footer { background: var(--secondary-bg); border-top: 1px solid var(--border-color); padding: 2rem; text-align: center; margin-top: 3rem; }
+.footer p { font-family: 'Amaranth', sans-serif; color: var(--text-muted); font-size: 0.875rem; margin-bottom: 0.5rem; }
+.footer a { color: var(--accent-color); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+@media (max-width: 768px) { .article-title { font-size: 2rem; } .related-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .article-container { padding: 2rem 1rem; } .article-title { font-size: 1.75rem; } .article-content { font-size: 1rem; } .article-meta { flex-direction: column; gap: 0.5rem; } }
+</style>
+<style>
+/* ===== ImpactMojo Design System ===== */
+:root {
+    --im-primary-bg: #0F172A;
+    --im-secondary-bg: #1E293B;
+    --im-accent: #0EA5E9;
+    --im-accent-hover: #0284C7;
+    --im-secondary-accent: #6366F1;
+    --im-success: #10B981;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-border: #334155;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+}
+[data-theme="light"] {
+    --im-primary-bg: #F8FAFC;
+    --im-secondary-bg: #FFFFFF;
+    --im-accent: #0284C7;
+    --im-accent-hover: #0369A1;
+    --im-text-primary: #0F172A;
+    --im-text-secondary: #475569;
+    --im-text-muted: #64748B;
+    --im-card-bg: #FFFFFF;
+    --im-hover-bg: #F1F5F9;
+    --im-border: #E2E8F0;
+    --im-nav-bg: rgba(248, 250, 252, 0.95);
+}
+
+/* ImpactMojo Top Bar */
+.im-topbar {
+    position: sticky; top: 0; z-index: 9999;
+    background: var(--im-nav-bg, rgba(15, 23, 42, 0.95));
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border, #334155);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left {
+    display: flex; align-items: center; gap: 0.75rem;
+}
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    color: var(--im-text-primary, #F1F5F9);
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; }
+.im-topbar-right {
+    display: flex; align-items: center; gap: 0.5rem;
+}
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important;
+    padding: 0.35rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s;
+    -webkit-text-fill-color: #fff;
+}
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+
+/* Theme Selector - 3 mode */
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg, #1E293B);
+    border: 1px solid var(--im-border, #334155);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary, #94A3B8);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover {
+    background: var(--im-hover-bg, #334155);
+    color: var(--im-text-primary, #F1F5F9);
+}
+.im-theme-btn.active {
+    background: var(--im-accent, #0EA5E9);
+    color: #fff;
+}
+.im-theme-btn svg { width: 16px; height: 16px; }
+
+/* Paper Plane */
+.im-paper-plane {
+    position: fixed; top: 15%; right: 8%;
+    width: 120px; height: 120px;
+    opacity: 0.15; z-index: 0;
+    pointer-events: none;
+    animation: im-fly 25s ease-in-out infinite;
+}
+[data-theme="light"] .im-paper-plane { opacity: 0.2; }
+@keyframes im-fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(60px, -40px) rotate(12deg); }
+    40% { transform: translate(120px, 30px) rotate(-8deg); }
+    60% { transform: translate(40px, 60px) rotate(15deg); }
+    80% { transform: translate(-30px, 20px) rotate(-5deg); }
+}
+
+/* ImpactMojo Footer */
+.im-footer {
+    background: var(--im-secondary-bg, #1E293B);
+    border-top: 1px solid var(--im-border, #334155);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', sans-serif;
+    color: var(--im-text-secondary, #94A3B8);
+}
+.im-footer-content {
+    max-width: 1100px; margin: 0 auto;
+}
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted, #64748B);
+}
+.im-footer-made a { color: var(--im-accent, #0EA5E9); }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', sans-serif;
+    color: var(--im-text-primary, #F1F5F9);
+    font-size: 0.9rem; margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary, #94A3B8);
+    text-decoration: none; font-size: 0.85rem;
+    transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent, #0EA5E9); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border, #334155);
+    font-size: 0.8rem; color: var(--im-text-muted, #64748B);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent, #0EA5E9); text-decoration: none; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 480px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+    .im-topbar-home span { display: none; }
+}
+
+/* ImpactMojo Global Font Overrides */
+body { font-family: 'Amaranth', sans-serif !important; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif !important; }
+code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !important; }
+</style>
+</head>
+<body>
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Premium
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<header class="header">
+<nav class="nav-container">
+    <a class="logo-container" href="../index.html">
+        <img alt="ImpactMojo" src="../assets/images/ImpactMojo%20Logo.png" width="36" height="36">
+        <div class="logo-main">ImpactMojo</div>
+    </a>
+    <div class="nav-right">
+        <a href="../blog.html" class="back-link">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            All Posts
+        </a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+            <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <svg class="moon-icon" style="display:none" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </div>
+</nav>
+</header>
+<main class="article-container">
+    <article>
+        <header class="article-header">
+            <span class="article-category">Platform</span>
+            <h1 class="article-title">Introducing the ImpactMojo MCP Server</h1>
+            <div class="article-meta">
+                <span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>The ImpactMojo Team</span>
+                <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>March 28, 2026</span>
+                <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>7 min read</span>
+            </div>
+            <div class="article-tags">
+                <span class="article-tag">MCP</span>
+                <span class="article-tag">AI</span>
+                <span class="article-tag">open source</span>
+                <span class="article-tag">tools</span>
+            </div>
+        </header>
+        <div class="article-content">
+<h2>What is the Model Context Protocol?</h2>
+<p>If you have used an AI assistant recently, you have probably noticed a limitation: the AI knows a lot in general, but it does not know about your specific tools, datasets, or organisational knowledge. The <a href="https://modelcontextprotocol.io/" target="_blank">Model Context Protocol</a> (MCP) is an open standard that solves this problem. Think of it as a USB port for AI — plug in an MCP server, and your AI assistant gains structured access to external data sources and tools.</p>
+<p>For development education, this is transformative. Instead of an AI assistant guessing about behaviour change techniques or paraphrasing half-remembered course descriptions, it can query a structured knowledge base and return precise, contextual information. That is exactly what the ImpactMojo MCP Server does.</p>
+
+<figure class="article-illustration"><img src="../assets/images/blog/impactmojo-mcp-server/illustration-1.png" alt="ImpactMojo MCP Server architecture diagram" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div style="display:none; padding: 3rem; background: var(--secondary-bg); border-radius: 12px; color: var(--text-muted); text-align: center;">[Illustration 1: ImpactMojo MCP Server architecture]</div><figcaption>The ImpactMojo MCP Server connects AI assistants to our entire knowledge base</figcaption></figure>
+
+<h2>What Our MCP Server Offers</h2>
+<p>The ImpactMojo MCP Server exposes 11 tools and 3 resources across four domains, giving any MCP-compatible AI assistant full access to our knowledge base.</p>
+
+<div class="highlight-box"><h4>Search &amp; Discovery</h4>
+<ul>
+<li><strong>search_content</strong> — Full-text search across 700+ content items (courses, games, labs, handouts)</li>
+<li><strong>browse_dataverse</strong> — Browse 270 tools, datasets, APIs, and MCP servers by category</li>
+<li><strong>search_dataverse</strong> — Keyword search across all dataverse items</li>
+</ul></div>
+
+<div class="highlight-box"><h4>Behaviour Change Techniques</h4>
+<ul>
+<li><strong>lookup_bct</strong> — Get full details on any of 203 BCT techniques, including South Asian context and case studies</li>
+<li><strong>search_bcts</strong> — Search and filter BCTs by keyword, sector, category, or evidence level</li>
+<li><strong>list_bct_categories</strong> — List all 26 BCT categories with counts</li>
+</ul></div>
+
+<div class="highlight-box"><h4>Learning &amp; Practice</h4>
+<ul>
+<li><strong>list_courses</strong> — Browse 48 courses across 6 learning tracks, filterable by track, type, and level</li>
+<li><strong>list_challenges</strong> — List practice challenges by track and difficulty</li>
+<li><strong>get_challenge</strong> — Full challenge details with case context, rubric, and resources</li>
+</ul></div>
+
+<div class="highlight-box"><h4>Simulations &amp; Data</h4>
+<ul>
+<li><strong>get_game_info</strong> — 16 economics simulation games, each with AI agent personas for guided play</li>
+<li><strong>query_climate_data</strong> — India GHG emissions data from Climate TRACE</li>
+</ul></div>
+
+<p>The server also exposes three resources: a platform overview with content counts, a full content catalogue, and learning track descriptions. These give AI assistants broad context about ImpactMojo before drilling into specifics.</p>
+
+<h2>How It Works</h2>
+<p>The server is built with TypeScript and the official <a href="https://github.com/modelcontextprotocol/sdk" target="_blank">@modelcontextprotocol/sdk</a>, communicating over stdio transport. At startup, it loads six JSON data files — the search index, BCT repository, dataverse, course catalogue, game agents, and climate data — totalling roughly 750KB. Everything is held in memory for instant queries.</p>
+<p>There are no external network calls and no database connections. The server is entirely self-contained: clone the repository, build the TypeScript, and you have a fully functional MCP server ready to connect to any compatible AI client. It is published as <code style="background: var(--secondary-bg); padding: 0.15rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em;">@varnasr/impactmojo-mcp-server</code> on GitHub Packages.</p>
+
+<blockquote>"The best educational platform is the one that shows up with the right resource at the right moment. MCP makes that possible."</blockquote>
+
+<figure class="article-illustration"><img src="../assets/images/blog/impactmojo-mcp-server/illustration-2.png" alt="11 tools available through the ImpactMojo MCP Server" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div style="display:none; padding: 3rem; background: var(--secondary-bg); border-radius: 12px; color: var(--text-muted); text-align: center;">[Illustration 2: ImpactMojo MCP Server tools]</div><figcaption>11 tools organised across search, behaviour change, learning, and data domains</figcaption></figure>
+
+<h2>Getting Started</h2>
+<p>Connecting the ImpactMojo MCP Server to your AI assistant takes less than two minutes. Here are three ways to do it.</p>
+
+<h3>With Claude Code</h3>
+<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: var(--text-primary);">claude mcp add impactmojo -- node /path/to/mcp-server/dist/index.js</pre>
+
+<h3>With Claude Desktop</h3>
+<p>Add this to your <code style="background: var(--secondary-bg); padding: 0.15rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em;">claude_desktop_config.json</code>:</p>
+<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: var(--text-primary);">{
+  "mcpServers": {
+    "impactmojo": {
+      "command": "node",
+      "args": ["/path/to/mcp-server/dist/index.js"]
+    }
+  }
+}</pre>
+
+<h3>From Source</h3>
+<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: var(--text-primary);">git clone https://github.com/Varnasr/ImpactMojo.git
+cd ImpactMojo/mcp-server
+npm install
+npm run build</pre>
+
+<p>You can also test it with the MCP Inspector:</p>
+<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: var(--text-primary);">npx @modelcontextprotocol/inspector node dist/index.js</pre>
+
+<h2>What You Can Ask</h2>
+<p>Once connected, here are the kinds of questions your AI assistant can answer using ImpactMojo's knowledge base:</p>
+
+<div class="highlight-box"><h4>Example Prompts</h4>
+<ul>
+<li>"Search for courses about randomised controlled trials"</li>
+<li>"Look up BCT technique 4.1 and show me South Asian case studies"</li>
+<li>"What tools in the Dataverse are relevant to climate adaptation?"</li>
+<li>"List practice challenges for the MEAL track at intermediate difficulty"</li>
+<li>"Show me India's GHG emissions data from Climate TRACE"</li>
+<li>"What economics simulation games cover market failures?"</li>
+</ul></div>
+
+<p>These are not generic web searches. Each query goes directly to our structured data — the same data that powers the ImpactMojo platform — and returns precise, contextual results.</p>
+
+<h2>Why This Matters</h2>
+<p>Development practitioners should not need to memorise 700+ resources across MEAL, theory of change, behaviour change, research methods, data science, and climate adaptation. AI assistants with MCP can surface the right course, technique, or dataset at the moment it is needed — whether that is during programme design, a field evaluation, or a late-night literature review.</p>
+<p>This is the future of development education: structured knowledge bases that meet practitioners where they are, in their AI workflows. Not replacing expertise, but augmenting it with instant access to curated, contextual resources.</p>
+
+<h2>What's Next</h2>
+<p>We are already planning the next iteration of the MCP server. On the roadmap: deeper integration with our Supabase backend for personalised learning progress, additional data sources from our expanding content library, and support for more MCP clients as the ecosystem grows. The server is open source and MIT-licensed — contributions are welcome.</p>
+<p>If you are building tools for the development sector, we would love to see how you use the ImpactMojo MCP Server. Connect it to your AI workflow, explore the knowledge base, and let us know what you build.</p>
+        </div>
+        
+        </div>
+        <div class="share-section">
+            <h4>Share This Post</h4>
+            <div class="share-buttons">
+                <a href="https://twitter.com/intent/tweet?url=https://www.impactmojo.in/blog/impactmojo-mcp-server.html&text=Introducing%20the%20ImpactMojo%20MCP%20Server" target="_blank" class="share-btn" title="Share on Twitter"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.impactmojo.in/blog/impactmojo-mcp-server.html" target="_blank" class="share-btn" title="Share on LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.impactmojo.in/blog/impactmojo-mcp-server.html" target="_blank" class="share-btn" title="Share on Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="mailto:?subject=Introducing%20the%20ImpactMojo%20MCP%20Server&body=Check%20out%20this%20article:%20https://www.impactmojo.in/blog/impactmojo-mcp-server.html" class="share-btn" title="Share via Email"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+            </div>
+        </div>
+        <div class="newsletter-cta">
+            <h3>Want More Insights?</h3>
+            <p>Subscribe to <strong>Research Rundown</strong> for weekly curated research from the development sector.</p>
+            <a href="https://varna.substack.com" target="_blank" class="newsletter-btn">Subscribe on Substack</a>
+        </div>
+        <section class="related-posts">
+            <h3>Related Posts</h3>
+            <div class="related-grid">
+                <a href="tools-we-use.html" class="related-card">
+                    <div class="related-card-category">Platform</div>
+                    <div class="related-card-title">Behind the Scenes: The Tools That Power ImpactMojo</div>
+                </a>
+                <a href="github-open-dev-ecosystem.html" class="related-card">
+                    <div class="related-card-category">Platform</div>
+                    <div class="related-card-title">Exploring GitHub's Open Development Ecosystem</div>
+                </a>
+            </div>
+        </section>
+    </article>
+</main>
+<footer class="footer">
+    <p>&copy; 2026 ImpactMojo. Released under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>.</p>
+    <p>Supported by <a href="https://www.pinpointventures.in" target="_blank">PinPoint Ventures</a></p>
+    <p style="margin-top: 1rem;"><a href="../blog.html">&larr; Back to Learning Loops</a></p>
+    <p style="margin-top: 0.5rem;"><a href="https://impactmojo.gitbook.io/impactmojo" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></p>
+</footer>
+<script>
+function toggleTheme() { document.body.classList.toggle('light-mode'); const isLight = document.body.classList.contains('light-mode'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); updateThemeIcons(); }
+function updateThemeIcons() { const isLight = document.body.classList.contains('light-mode'); document.querySelector('.sun-icon').style.display = isLight ? 'none' : 'block'; document.querySelector('.moon-icon').style.display = isLight ? 'block' : 'none'; }
+(function() { const savedTheme = localStorage.getItem('theme'); if (savedTheme === 'light') { document.body.classList.add('light-mode'); } updateThemeIcons(); })();
+</script>
+<script defer src="../js/translate.js"></script>
+<script src="/js/search.js" defer></script>
+<!-- ImpactMojo Theme Toggle JS -->
+<script>
+(function() {
+    function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    function applyTheme(theme) {
+        var resolved = theme === 'system' ? getSystemTheme() : theme;
+        document.documentElement.setAttribute('data-theme', resolved);
+        // Also handle legacy body classes
+        document.body.classList.remove('dark-mode', 'light-mode');
+        if (resolved === 'light') document.body.classList.add('light-mode');
+        else document.body.classList.add('dark-mode');
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    // Apply immediately before render
+    applyTheme(saved);
+    document.addEventListener('DOMContentLoaded', function() {
+        applyTheme(saved);
+        updateButtons(saved);
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var t = this.getAttribute('data-imtheme');
+                localStorage.setItem('im-theme', t);
+                applyTheme(t);
+                updateButtons(t);
+            });
+        });
+    });
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function() {
+        if ((localStorage.getItem('im-theme') || 'system') === 'system') {
+            applyTheme('system');
+        }
+    });
+})();
+</script>
+<!-- ImpactMojo Paper Plane -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+    <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+    <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+    <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+
+<!-- Supabase Auth -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
+<script src="/js/state-manager.js"></script>
+<script src="/js/config.js"></script>
+<script src="/js/auth.js"></script>
+</body>
+</html>
