@@ -49,6 +49,12 @@ Run through this checklist after completing major work on ImpactMojo.
 9. **Update counts & references**
    - Verify game, lab, course counts are consistent across all docs, index, catalog, admin dashboards, and transparency pages
    - Check for stale `101.impactmojo.in` references that should now point to self-hosted files
+   - **Update Content Marketing Kit** (`content-marketing-kit.html`): Hardcoded counts appear in stat cards, LinkedIn/Instagram captions, carousel text, and the brochure section. Search and update:
+     ```bash
+     grep -n 'Courses\|Games\|Dataverse\|Lex Terms\|BCT\|Case Studies\|Book Companion' content-marketing-kit.html | head -30
+     ```
+     Key locations: stat-row counts, LI-06 "By the Numbers" visual and caption, all LinkedIn/Instagram captions mentioning counts, sidebar badge "Content Kit · N Assets"
+   - **Update institutional brochure PDF** (`impactmojo-brochure.pdf`): Regenerate if platform counts or track descriptions have changed. The brochure is referenced from the CMK and downloaded by institutional partners.
    - **Update upgrade letter counts** (`upgrade.html`): Run these commands and update the stats in the letter if they've changed:
      ```bash
      echo "Flagship courses: $(ls -d courses/*/index.html | wc -l)"

@@ -352,71 +352,69 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 <h2>What Our MCP Server Offers</h2>
 <p>The ImpactMojo MCP Server exposes 11 tools and 3 resources across four domains, giving any MCP-compatible AI assistant full access to our knowledge base.</p>
 
-<div class="highlight-box"><h4>Search &amp; Discovery</h4>
+<div class="highlight-box"><h4>Search & Discovery</h4>
 <ul>
 <li><strong>search_content</strong> — Full-text search across 700+ content items (courses, games, labs, handouts)</li>
 <li><strong>browse_dataverse</strong> — Browse 270 tools, datasets, APIs, and MCP servers by category</li>
-<li><strong>search_dataverse</strong> — Keyword search across all dataverse items</li>
+<li><strong>search_dataverse</strong> — Keyword search across all Dataverse items</li>
 </ul></div>
 
-<div class="highlight-box"><h4>Behaviour Change Techniques</h4>
+<div class="highlight-box"><h4>Behavior Change Techniques</h4>
 <ul>
-<li><strong>lookup_bct</strong> — Get full details on any of 203 BCT techniques, including South Asian context and case studies</li>
-<li><strong>search_bcts</strong> — Search and filter BCTs by keyword, sector, category, or evidence level</li>
-<li><strong>list_bct_categories</strong> — List all 26 BCT categories with counts</li>
+<li><strong>lookup_bct</strong> — Get full technique details for any of 203 BCTs, with South Asian context and case studies</li>
+<li><strong>search_bcts</strong> — Search and filter by keyword, sector, category, or evidence level</li>
+<li><strong>list_bct_categories</strong> — List all 26 BCT categories with technique counts</li>
 </ul></div>
 
-<div class="highlight-box"><h4>Learning &amp; Practice</h4>
+<div class="highlight-box"><h4>Learning & Practice</h4>
 <ul>
-<li><strong>list_courses</strong> — Browse 48 courses across 6 learning tracks, filterable by track, type, and level</li>
-<li><strong>list_challenges</strong> — List practice challenges by track and difficulty</li>
+<li><strong>list_courses</strong> — 9 flagship courses across 6 learning tracks, filterable by track, type, and level</li>
+<li><strong>list_challenges</strong> — Practice challenges filterable by track and difficulty</li>
 <li><strong>get_challenge</strong> — Full challenge details with case context, rubric, and resources</li>
 </ul></div>
 
-<div class="highlight-box"><h4>Simulations &amp; Data</h4>
+<div class="highlight-box"><h4>Simulations & Data</h4>
 <ul>
-<li><strong>get_game_info</strong> — 16 economics simulation games, each with AI agent personas for guided play</li>
-<li><strong>query_climate_data</strong> — India GHG emissions data from Climate TRACE</li>
+<li><strong>get_game_info</strong> — 15 economics simulation games with AI agent personas</li>
+<li><strong>query_climate_data</strong> — India's GHG emissions data from Climate TRACE</li>
 </ul></div>
 
-<p>The server also exposes three resources: a platform overview with content counts, a full content catalogue, and learning track descriptions. These give AI assistants broad context about ImpactMojo before drilling into specifics.</p>
+<p>The server also exposes three resources: a platform overview (<code>impactmojo://overview</code>), full content catalog (<code>impactmojo://catalog</code>), and learning track descriptions (<code>impactmojo://tracks</code>).</p>
 
 <h2>How It Works</h2>
-<p>The server is built with TypeScript and the official <a href="https://github.com/modelcontextprotocol/sdk" target="_blank">@modelcontextprotocol/sdk</a>, communicating over stdio transport. At startup, it loads six JSON data files — the search index, BCT repository, dataverse, course catalogue, game agents, and climate data — totalling roughly 750KB. Everything is held in memory for instant queries.</p>
-<p>There are no external network calls and no database connections. The server is entirely self-contained: clone the repository, build the TypeScript, and you have a fully functional MCP server ready to connect to any compatible AI client. It is published as <code style="background: var(--secondary-bg); padding: 0.15rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em;">@varnasr/impactmojo-mcp-server</code> on GitHub Packages.</p>
+<p>The architecture is deliberately simple. The server is written in TypeScript using the <code>@modelcontextprotocol/sdk</code> library. At startup, it loads six JSON data files from the ImpactMojo repository — the search index, BCT repository, Dataverse catalog, challenge bank, game agents registry, and Climate TRACE data — totalling roughly 750KB. All data is held in memory for instant queries.</p>
+<p>There are no external network calls. No database connections. No API keys required. The server communicates over stdio transport, which means it runs as a local process alongside your AI client. When your AI asks a question, the MCP server queries its in-memory data and returns structured JSON in milliseconds.</p>
+<p>The package is published as <code>@varnasr/impactmojo-mcp-server</code> on GitHub Packages and is MIT licensed.</p>
 
-<blockquote>"The best educational platform is the one that shows up with the right resource at the right moment. MCP makes that possible."</blockquote>
-
-<figure class="article-illustration"><img src="../assets/images/blog/impactmojo-mcp-server/illustration-2.png" alt="11 tools available through the ImpactMojo MCP Server" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div style="display:none; padding: 3rem; background: var(--secondary-bg); border-radius: 12px; color: var(--text-muted); text-align: center;">[Illustration 2: ImpactMojo MCP Server tools]</div><figcaption>11 tools organised across search, behaviour change, learning, and data domains</figcaption></figure>
+<figure class="article-illustration"><img src="../assets/images/blog/impactmojo-mcp-server/illustration-2.png" alt="11 tools available through the ImpactMojo MCP Server" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div style="display:none; padding: 3rem; background: var(--secondary-bg); border-radius: 12px; color: var(--text-muted); text-align: center;">[Illustration 2: 11 tools organized across search, behavior change, learning, and data domains]</div><figcaption>11 tools organized across search, behavior change, learning, and data domains</figcaption></figure>
 
 <h2>Getting Started</h2>
-<p>Connecting the ImpactMojo MCP Server to your AI assistant takes less than two minutes. Here are three ways to do it.</p>
+<p>Connecting the ImpactMojo MCP Server to your AI client takes under a minute.</p>
 
 <h3>With Claude Code</h3>
-<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: var(--text-primary);">claude mcp add impactmojo -- node /path/to/mcp-server/dist/index.js</pre>
+<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.6;"><code>claude mcp add impactmojo -- node /path/to/mcp-server/dist/index.js</code></pre>
 
 <h3>With Claude Desktop</h3>
-<p>Add this to your <code style="background: var(--secondary-bg); padding: 0.15rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em;">claude_desktop_config.json</code>:</p>
-<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: var(--text-primary);">{
+<p>Add to your <code>claude_desktop_config.json</code>:</p>
+<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.6;"><code>{
   "mcpServers": {
     "impactmojo": {
       "command": "node",
       "args": ["/path/to/mcp-server/dist/index.js"]
     }
   }
-}</pre>
+}</code></pre>
 
 <h3>From Source</h3>
-<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: var(--text-primary);">git clone https://github.com/Varnasr/ImpactMojo.git
+<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.6;"><code>git clone https://github.com/Varnasr/ImpactMojo.git
 cd ImpactMojo/mcp-server
 npm install
-npm run build</pre>
+npm run build</code></pre>
 
-<p>You can also test it with the MCP Inspector:</p>
-<pre style="background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: var(--text-primary);">npx @modelcontextprotocol/inspector node dist/index.js</pre>
+<p>You can test the server with the MCP Inspector: <code>npx @modelcontextprotocol/inspector node dist/index.js</code></p>
 
 <h2>What You Can Ask</h2>
-<p>Once connected, here are the kinds of questions your AI assistant can answer using ImpactMojo's knowledge base:</p>
+<p>Once connected, here are the kinds of questions your AI assistant can now answer precisely, drawing from ImpactMojo's structured data:</p>
 
 <div class="highlight-box"><h4>Example Prompts</h4>
 <ul>
@@ -428,19 +426,47 @@ npm run build</pre>
 <li>"What economics simulation games cover market failures?"</li>
 </ul></div>
 
-<p>These are not generic web searches. Each query goes directly to our structured data — the same data that powers the ImpactMojo platform — and returns precise, contextual results.</p>
-
 <h2>Why This Matters</h2>
-<p>Development practitioners should not need to memorise 700+ resources across MEAL, theory of change, behaviour change, research methods, data science, and climate adaptation. AI assistants with MCP can surface the right course, technique, or dataset at the moment it is needed — whether that is during programme design, a field evaluation, or a late-night literature review.</p>
-<p>This is the future of development education: structured knowledge bases that meet practitioners where they are, in their AI workflows. Not replacing expertise, but augmenting it with instant access to curated, contextual resources.</p>
+<p>Development practitioners should not need to memorise 700+ resources across six learning tracks. They should not need to remember which of 203 behaviour change techniques addresses social support, or which Dataverse tool handles geospatial poverty mapping.</p>
+<p>AI assistants with MCP access can surface the right course, technique, or dataset at the moment it is needed. This is the future of development education: structured knowledge bases that meet practitioners where they are — in their AI workflows, not on a platform they have to navigate separately.</p>
+
+<blockquote>"The best educational platform is the one that shows up with the right resource at the right moment. MCP makes that possible."</blockquote>
 
 <h2>What's Next</h2>
-<p>We are already planning the next iteration of the MCP server. On the roadmap: deeper integration with our Supabase backend for personalised learning progress, additional data sources from our expanding content library, and support for more MCP clients as the ecosystem grows. The server is open source and MIT-licensed — contributions are welcome.</p>
-<p>If you are building tools for the development sector, we would love to see how you use the ImpactMojo MCP Server. Connect it to your AI workflow, explore the knowledge base, and let us know what you build.</p>
-        </div>
-        
+<p>This is version 1.0. We are already planning deeper integration with Supabase for personalised learning progress, more data sources including our 27 book companions and 56 dojo practice sessions, and support for MCP clients beyond Claude. The knowledge base will grow, and the server will grow with it.</p>
+<p>The ImpactMojo MCP Server is open source, MIT licensed, and accepting contributions. If you build something interesting with it, we want to hear about it.</p>
         </div>
         <div class="share-section">
+            <h4>Share This Post</h4>
+            <div class="share-buttons">
+                <a href="https://twitter.com/intent/tweet?url=https://www.impactmojo.in/blog/impactmojo-mcp-server.html&text=Introducing%20the%20ImpactMojo%20MCP%20Server" target="_blank" class="share-btn" title="Share on Twitter"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.impactmojo.in/blog/impactmojo-mcp-server.html" target="_blank" class="share-btn" title="Share on LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.impactmojo.in/blog/impactmojo-mcp-server.html" target="_blank" class="share-btn" title="Share on Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="mailto:?subject=Introducing%20the%20ImpactMojo%20MCP%20Server&body=Check%20out%20this%20article:%20https://www.impactmojo.in/blog/impactmojo-mcp-server.html" class="share-btn" title="Share via Email"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+            </div>
+        </div>
+        <div class="newsletter-cta">
+            <h3>Want More Insights?</h3>
+            <p>Subscribe to <strong>Research Rundown</strong> for weekly curated research from the development sector.</p>
+            <a href="https://varna.substack.com" target="_blank" class="newsletter-btn">Subscribe on Substack</a>
+        </div>
+        <section class="related-posts">
+            <h3>Related Posts</h3>
+            <div class="related-grid">
+                <a href="tools-we-use.html" class="related-card">
+                    <div class="related-card-category">Platform</div>
+                    <div class="related-card-title">Behind the Scenes: The Tools That Power ImpactMojo</div>
+                </a>
+                <a href="github-open-dev-ecosystem.html" class="related-card">
+                    <div class="related-card-category">Platform</div>
+                    <div class="related-card-title">Exploring GitHub's Open Development Ecosystem</div>
+                </a>
+            </div>
+        </section>
+    </article>
+</main>
+<footer class="footer">
+    <p>&copy; 2026 ImpactMojo. Released under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>.</p>
             <h4>Share This Post</h4>
             <div class="share-buttons">
                 <a href="https://twitter.com/intent/tweet?url=https://www.impactmojo.in/blog/impactmojo-mcp-server.html&text=Introducing%20the%20ImpactMojo%20MCP%20Server" target="_blank" class="share-btn" title="Share on Twitter"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
