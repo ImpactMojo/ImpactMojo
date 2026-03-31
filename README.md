@@ -198,10 +198,10 @@ Interactive simulations powered by **MiroFish AI agents** with **Indian folk art
 
 ### Other Resources
 
-- [**ImpactLex**](https://github.com/Varnasr/ImpactLex) — 500+ development terms with contextual definitions (PWA)
-- [**Dev Case Studies Library**](https://github.com/Varnasr/dev-case-studies) — 200 evidence-based case studies from 117 countries
-- [**DevDiscourses**](https://github.com/Varnasr/development-discourses) — 500+ curated open-access research papers, books, and grey literature
-- [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) — Auto-updating tracker of Indian development policies across 22 sectors
+- [**ImpactLex**](https://github.com/ImpactMojo/ImpactLex) — 500+ development terms with contextual definitions (PWA)
+- [**Dev Case Studies Library**](https://github.com/ImpactMojo/dev-case-studies) — 200 evidence-based case studies from 117 countries
+- [**DevDiscourses**](https://github.com/ImpactMojo/development-discourses) — 500+ curated open-access research papers, books, and grey literature
+- [**PolicyDhara**](https://github.com/ImpactMojo/PolicyDhara) — Auto-updating tracker of Indian development policies across 22 sectors
 - **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings
 - **Dataverse** — 270 curated tools, datasets, APIs, MCP servers, and platforms for social impact research
 - **400+ Handouts** — Downloadable HTML resources across 6 learning tracks
@@ -625,13 +625,13 @@ This platform is supported by a family of open-source repositories:
 | Repository | Description |
 |---|---|
 | [**ImpactMojo**](https://github.com/ImpactMojo/ImpactMojo) | Main platform — courses, games, labs, case challenges |
-| [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) | Auto-updating Indian development policy tracker (Astro + Python) |
-| [**development-discourses**](https://github.com/Varnasr/development-discourses) | 500+ curated research papers and grey literature |
-| [**dev-case-studies**](https://github.com/Varnasr/dev-case-studies) | 200 development case studies from 117 countries |
-| [**devdata-practice**](https://github.com/Varnasr/devdata-practice) | 10 realistic dataset generators for development economics |
-| [**deveconomics-toolkit**](https://github.com/Varnasr/deveconomics-toolkit) | 11 interactive Shiny apps (R + Python) |
-| [**ImpactLex**](https://github.com/Varnasr/ImpactLex) | Offline PWA glossary of development terminology |
-| [**The-Real-Middle**](https://github.com/Varnasr/The-Real-Middle) | Interactive income inequality explorer for India |
+| [**PolicyDhara**](https://github.com/ImpactMojo/PolicyDhara) | Auto-updating Indian development policy tracker (Astro + Python) |
+| [**development-discourses**](https://github.com/ImpactMojo/development-discourses) | 500+ curated research papers and grey literature |
+| [**dev-case-studies**](https://github.com/ImpactMojo/dev-case-studies) | 200 development case studies from 117 countries |
+| [**devdata-practice**](https://github.com/ImpactMojo/devdata-practice) | 10 realistic dataset generators for development economics |
+| [**deveconomics-toolkit**](https://github.com/ImpactMojo/deveconomics-toolkit) | 11 interactive Shiny apps (R + Python) |
+| [**ImpactLex**](https://github.com/ImpactMojo/ImpactLex) | Offline PWA glossary of development terminology |
+| [**The-Real-Middle**](https://github.com/ImpactMojo/The-Real-Middle) | Interactive income inequality explorer for India |
 
 All repos share consistent governance (Code of Conduct, Security Policy, Contributing Guidelines) and are tracked in [STACK_GROUPS.md](.github/STACK_GROUPS.md).
 

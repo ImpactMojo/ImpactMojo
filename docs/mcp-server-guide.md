@@ -35,7 +35,7 @@ ImpactMojo has a **Model Context Protocol (MCP) server** that lets any AI assist
 ### Option A: From GitHub Packages
 
 ```bash
-npm install @varnasr/impactmojo-mcp-server --registry=https://npm.pkg.github.com
+npm install @impactmojo/impactmojo-mcp-server --registry=https://npm.pkg.github.com
 ```
 
 ### Option B: From source

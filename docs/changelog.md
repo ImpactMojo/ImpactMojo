@@ -26,7 +26,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - 11 tools: search_content, lookup_bct, search_bcts, list_bct_categories, browse_dataverse, search_dataverse, list_challenges, get_challenge, list_courses, get_game_info, query_climate_data
 - 3 resources: platform overview, content catalog, learning tracks
 - TypeScript + `@modelcontextprotocol/sdk`, stdio transport
-- Published as `@varnasr/impactmojo-mcp-server` on GitHub Packages
+- Published as `@impactmojo/impactmojo-mcp-server` on GitHub Packages
 - Added to Dataverse catalog as `impactmojo-mcp`
 - Auto-publishes on `mcp-server/v*` tags via GitHub Actions
 
@@ -232,7 +232,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 ## v10.1.0 — March 16, 2026
 
 ### Git Standards (29 repos)
-- Propagated `.gitattributes`, `.editorconfig`, `.githooks/`, `.gitmessage`, `CODEOWNERS`, `SECURITY.md`, `dependabot.yml`, PR & issue templates across all 29 Varnasr repos
+- Propagated `.gitattributes`, `.editorconfig`, `.githooks/`, `.gitmessage`, `CODEOWNERS`, `SECURITY.md`, `dependabot.yml`, PR & issue templates across all 29 ImpactMojo repos
 - Pre-commit hook blocks secrets, debugger, conflict markers; warns on console.log and large files
 - Commit-msg hook enforces prefix convention (Add/Fix/Update/Translate/Docs/Refactor/Test/CI/Chore)
 - Dependabot auto-configured per ecosystem (npm, pip, github-actions)
