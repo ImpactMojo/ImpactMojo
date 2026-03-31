@@ -2,6 +2,25 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.12.0 — March 31, 2026
+
+**What changed for you:** Repository moved to the ImpactMojo GitHub org, and documentation is now self-hosted (no more GitBook). Translation support expanded to 14 South Asian languages.
+
+### Organization Migration
+- Repository moved from `Varnasr/ImpactMojo` to `ImpactMojo/ImpactMojo` — all site links updated
+- GitHub org configured with avatar, description, topics, and profile README
+- Netlify reconnected to the new org
+
+### Documentation
+- **Self-hosted Docsify** replaces GitBook at `impactmojo.in/docs/`
+- Dark/light/system theme toggle, full-text search, code copy buttons, prev/next navigation
+- **Google Translate** with 14 languages: Hindi, Bengali, Marathi, Tamil, Telugu, Kannada, Malayalam, Gujarati, Punjabi, Odia, Assamese, Urdu, Nepali, Sinhala
+- ImpactMojo branded design (Inter + Amaranth fonts, brand gradient, responsive)
+
+### Infrastructure
+- MCP server package scope: `@varnasr` → `@impactmojo`
+- `_redirects` updated for self-hosted docs and new GitHub Pages URLs
+
 ## v10.11.0 — March 28, 2026
 
 **What changed for you:** Two new blog posts with napkin.ai-generated illustrations, and a significantly expanded Content Marketing Kit with 5 new LinkedIn posts covering all 6 learning tracks.

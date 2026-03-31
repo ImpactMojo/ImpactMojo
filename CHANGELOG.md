@@ -5,6 +5,23 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.12.0] - 2026-03-31
+
+### Added
+- **Self-hosted Docsify documentation** — Replaced GitBook with branded Docsify at `/docs/`, featuring dark/light/system theme, full-text search, code copy, prev/next pagination, Google Translate (14 South Asian languages), ImpactMojo branding (Inter + Amaranth + JetBrains Mono fonts, brand colors)
+- **GitHub org profile README** — `.github/profile/README.md` visible at github.com/ImpactMojo
+
+### Changed
+- **Repository moved to ImpactMojo org** — All 200+ GitHub URLs updated from `Varnasr/ImpactMojo` to `ImpactMojo/ImpactMojo` across HTML, docs, config, and data files
+- **MCP package scope** — `@varnasr/impactmojo-mcp-server` → `@impactmojo/impactmojo-mcp-server`
+- **Netlify repo connection** — Updated from `Varnasr/ImpactMojo` to `ImpactMojo/ImpactMojo`
+- **GitHub org settings** — Avatar, description, URL, email, location, and 16 repo topics configured
+- **Sister repo links** — README and blog references to ImpactLex, PolicyDhara, dev-case-studies, etc. updated to org
+- **`_redirects`** — Removed GitBook proxy, added Docsify SPA fallback; updated `varnasr.github.io` → `impactmojo.github.io`
+
+### Removed
+- **GitBook dependency** — No longer proxying to `impactmojo.gitbook.io`; all docs self-hosted
+
 ## [10.11.0] - 2026-03-28
 
 ### Added
