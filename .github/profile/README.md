@@ -26,7 +26,7 @@ Static HTML/CSS/JS | Supabase | Netlify | MCP Server | Google Translate
 
 - **Contribute:** See [CONTRIBUTING.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CONTRIBUTING.md)
 - **Report Issues:** [Bug Tracker](https://github.com/ImpactMojo/ImpactMojo/issues)
-- **Documentation:** [GitBook](https://impactmojo.gitbook.io/impactmojo) | [Wiki](https://github.com/ImpactMojo/ImpactMojo/wiki)
+- **Documentation:** [Docs](https://www.impactmojo.in/docs/) | [Wiki](https://github.com/ImpactMojo/ImpactMojo/wiki)
 - **Contact:** hello@impactmojo.in
 
 ## Licensing

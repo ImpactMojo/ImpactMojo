@@ -65,13 +65,6 @@
 
 * [How to Contribute](contributing.md)
 
-## Translations
-
-* [हिन्दी (Hindi)](https://impactmojo.gitbook.io/impactmojo/hi/)
-* [বাংলা (Bengali)](https://impactmojo.gitbook.io/impactmojo/bn/)
-* [मराठी (Marathi)](https://impactmojo.gitbook.io/impactmojo/mr/)
-* [தமிழ் (Tamil)](https://impactmojo.gitbook.io/impactmojo/ta/)
-
 ## Technical
 
 * [Architecture](architecture.md)

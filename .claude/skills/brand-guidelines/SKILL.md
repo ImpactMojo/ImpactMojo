@@ -268,7 +268,7 @@ Every page must include the complete footer with all four sections:
       <h4>Resources</h4>
       <a href="/blog.html">Blog</a>
       <a href="/podcast.html">Podcast</a>
-      <a href="https://impactmojo.gitbook.io/impactmojo">GitBook Docs</a>
+      <a href="/docs/">GitBook Docs</a>
       <a href="https://github.com/ImpactMojo/ImpactMojo">GitHub</a>
     </div>
   </div>
