@@ -102,7 +102,7 @@ Run these checks after adding content:
 
 After verifying the content:
 
-1. **GitHub Wiki** — clone `Varnasr/ImpactMojo.wiki.git`, update relevant pages (Content-Guide, Changelog, and type-specific pages like Book-Summaries or 101-Course-Decks), push
+1. **GitHub Wiki** — clone `ImpactMojo/ImpactMojo.wiki.git`, update relevant pages (Content-Guide, Changelog, and type-specific pages like Book-Summaries or 101-Course-Decks), push
 2. **GitHub Discussion** — create an Announcements discussion for significant new content (games, courses, book summaries)
 3. **GitHub Issues** — close related tracking issues with links to the commit/PR
 

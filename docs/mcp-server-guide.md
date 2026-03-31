@@ -41,7 +41,7 @@ npm install @varnasr/impactmojo-mcp-server --registry=https://npm.pkg.github.com
 ### Option B: From source
 
 ```bash
-git clone https://github.com/Varnasr/ImpactMojo.git
+git clone https://github.com/ImpactMojo/ImpactMojo.git
 cd ImpactMojo/mcp-server
 npm install
 npm run build
@@ -95,4 +95,4 @@ Once connected, ask your AI assistant:
 - **Stack**: TypeScript + `@modelcontextprotocol/sdk` over stdio transport
 - **Data**: Loads all JSON from `/data/` at startup (~750KB in memory)
 - **No network calls**: Pure local data serving, no database connections
-- **Source**: [`/mcp-server/`](https://github.com/Varnasr/ImpactMojo/tree/main/mcp-server)
+- **Source**: [`/mcp-server/`](https://github.com/ImpactMojo/ImpactMojo/tree/main/mcp-server)

@@ -92,7 +92,7 @@ See the [Privacy Policy](privacy-guide.md) for full details.
 
 ## Open Source
 
-ImpactMojo's source code is publicly available on GitHub at [github.com/Varnasr/ImpactMojo](https://github.com/Varnasr/ImpactMojo). The codebase is licensed under MIT (source code) and CC BY-NC-ND 4.0 (educational content).
+ImpactMojo's source code is publicly available on GitHub at [github.com/ImpactMojo/ImpactMojo](https://github.com/ImpactMojo/ImpactMojo). The codebase is licensed under MIT (source code) and CC BY-NC-ND 4.0 (educational content).
 
 This means:
 - Anyone can inspect how the platform works
@@ -105,7 +105,7 @@ This means:
 
 If you believe ImpactMojo is not living up to these commitments:
 
-1. **Report it.** Email [hello@impactmojo.in](mailto:hello@impactmojo.in) or open an issue on [GitHub](https://github.com/Varnasr/ImpactMojo/issues).
+1. **Report it.** Email [hello@impactmojo.in](mailto:hello@impactmojo.in) or open an issue on [GitHub](https://github.com/ImpactMojo/ImpactMojo/issues).
 2. **We'll respond.** Within 2 business days.
 3. **We'll fix it.** If we've made an error or failed to meet a commitment, we'll correct it and be transparent about what happened.
 

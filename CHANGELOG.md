@@ -302,18 +302,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dojos skill session page
 - Blog (Learning Loops) and podcast (Between the Logframes)
 
-[10.7.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.6.0...v10.7.0
-[10.6.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.5.1...v10.6.0
-[10.5.1]: https://github.com/Varnasr/ImpactMojo/compare/v10.5.0...v10.5.1
-[10.5.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.4.1...v10.5.0
-[10.4.1]: https://github.com/Varnasr/ImpactMojo/compare/v10.4.0...v10.4.1
-[10.4.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.3.0...v10.4.0
-[10.3.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.2.0...v10.3.0
-[10.2.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.1.0...v10.2.0
-[10.1.0]: https://github.com/Varnasr/ImpactMojo/compare/v10.0.0...v10.1.0
-[10.0.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.5.0...v10.0.0
-[9.5.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.1.0...v9.5.0
-[9.1.0]: https://github.com/Varnasr/ImpactMojo/compare/v9.0.0...v9.1.0
-[9.0.0]: https://github.com/Varnasr/ImpactMojo/compare/v8.0.0...v9.0.0
-[8.0.0]: https://github.com/Varnasr/ImpactMojo/compare/v7.0.0...v8.0.0
-[7.0.0]: https://github.com/Varnasr/ImpactMojo/releases/tag/v7.0.0
+[10.7.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.6.0...v10.7.0
+[10.6.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.5.1...v10.6.0
+[10.5.1]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.5.0...v10.5.1
+[10.5.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.4.1...v10.5.0
+[10.4.1]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.4.0...v10.4.1
+[10.4.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.3.0...v10.4.0
+[10.3.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.2.0...v10.3.0
+[10.2.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.1.0...v10.2.0
+[10.1.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.0.0...v10.1.0
+[10.0.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v9.5.0...v10.0.0
+[9.5.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v9.1.0...v9.5.0
+[9.1.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v9.0.0...v9.1.0
+[9.0.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v8.0.0...v9.0.0
+[8.0.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v7.0.0...v8.0.0
+[7.0.0]: https://github.com/ImpactMojo/ImpactMojo/releases/tag/v7.0.0

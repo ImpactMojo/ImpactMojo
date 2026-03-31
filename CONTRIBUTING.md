@@ -81,7 +81,7 @@ To bypass hooks in emergencies: `git commit --no-verify` (use sparingly)
 
 ## Reporting Issues
 
-Use [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues) to report:
+Use [GitHub Issues](https://github.com/ImpactMojo/ImpactMojo/issues) to report:
 
 - Broken links or pages
 - Accessibility barriers

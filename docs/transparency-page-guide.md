@@ -134,4 +134,4 @@ We'd rather be a small platform with honest, verifiable numbers than a platform 
 
 ## Questions?
 
-If something on the Transparency page seems unclear, inconsistent, or incomplete, tell us. Email [hello@impactmojo.in](mailto:hello@impactmojo.in) or open an issue on [GitHub](https://github.com/Varnasr/ImpactMojo/issues). Transparency works best when people actually scrutinise it.
+If something on the Transparency page seems unclear, inconsistent, or incomplete, tell us. Email [hello@impactmojo.in](mailto:hello@impactmojo.in) or open an issue on [GitHub](https://github.com/ImpactMojo/ImpactMojo/issues). Transparency works best when people actually scrutinise it.

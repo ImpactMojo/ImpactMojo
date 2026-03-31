@@ -104,7 +104,7 @@ If you're here to contribute to the codebase, translations, or content, welcome!
 ### Quick Start
 
 ```bash
-git clone https://github.com/Varnasr/ImpactMojo.git
+git clone https://github.com/ImpactMojo/ImpactMojo.git
 cd ImpactMojo
 python -m http.server 8000
 # Open http://localhost:8000
@@ -112,6 +112,6 @@ python -m http.server 8000
 
 The site is static HTML/CSS/JS with no build step — just clone and serve. See the [Architecture](architecture.md) and [Contributing](contributing.md) guides for details.
 
-**GitHub:** [github.com/Varnasr/ImpactMojo](https://github.com/Varnasr/ImpactMojo)
+**GitHub:** [github.com/ImpactMojo/ImpactMojo](https://github.com/ImpactMojo/ImpactMojo)
 
 **License:** MIT for source code, CC BY-NC-ND 4.0 for educational content.

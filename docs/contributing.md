@@ -8,8 +8,8 @@ Many of our most valuable contributions come from practitioners, not programmers
 
 | What you can do | How | Difficulty |
 |-----------------|-----|------------|
-| **Report an error** | Found a broken link, wrong statistic, or outdated reference? Open a [Content Issue](https://github.com/Varnasr/ImpactMojo/issues/new?template=content_issue.md) | Very easy |
-| **Suggest a topic** | Know a topic that should be covered? Start a [Discussion](https://github.com/Varnasr/ImpactMojo/discussions/categories/ideas) | Very easy |
+| **Report an error** | Found a broken link, wrong statistic, or outdated reference? Open a [Content Issue](https://github.com/ImpactMojo/ImpactMojo/issues/new?template=content_issue.md) | Very easy |
+| **Suggest a topic** | Know a topic that should be covered? Start a [Discussion](https://github.com/ImpactMojo/ImpactMojo/discussions/categories/ideas) | Very easy |
 | **Share a case study** | Have a real-world development case study from your work? Email us at hello@impactmojo.in | Easy |
 | **Translate content** | Help make courses available in Hindi, Tamil, Bengali, Telugu, or Marathi | Easy–Medium |
 | **Review content** | Are you an expert in MEL, gender studies, or development economics? Help us review courses for accuracy | Easy |
@@ -89,7 +89,7 @@ If you're contributing educational content, here's what we aim for:
 
 ## Reporting Issues
 
-Use [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues) with the appropriate template:
+Use [GitHub Issues](https://github.com/ImpactMojo/ImpactMojo/issues) with the appropriate template:
 
 - **Bug Report** — something is broken (link, layout, error)
 - **Feature Request** — a new idea or improvement
@@ -100,5 +100,5 @@ Use [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues) with the appro
 - [WhatsApp PLC](https://chat.whatsapp.com/EsBjbKaQfupG1HbtajTjHM) — Peer discussions among practitioners
 - [Discord](https://discord.gg/M3ZCmUe7ab) — Technical discussions and tinkering
 - [Telegram](https://t.me/impactmojo) — Free resources and updates
-- [GitHub Discussions](https://github.com/Varnasr/ImpactMojo/discussions) — Ideas, Q&A, and announcements
+- [GitHub Discussions](https://github.com/ImpactMojo/ImpactMojo/discussions) — Ideas, Q&A, and announcements
 - **Email:** hello@impactmojo.in — For anything else

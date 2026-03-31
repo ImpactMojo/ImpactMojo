@@ -30,9 +30,9 @@ Everything on the platform is free to use. No login required, no paywall, no tri
 
 ## Quick Links
 
-- [GitHub Repository](https://github.com/Varnasr/ImpactMojo)
-- [Issue Tracker](https://github.com/Varnasr/ImpactMojo/issues)
-- [Discussions](https://github.com/Varnasr/ImpactMojo/discussions)
+- [GitHub Repository](https://github.com/ImpactMojo/ImpactMojo)
+- [Issue Tracker](https://github.com/ImpactMojo/ImpactMojo/issues)
+- [Discussions](https://github.com/ImpactMojo/ImpactMojo/discussions)
 - [Roadmap](roadmap.md) — What's coming next
 - [Changelog](changelog.md) — What's changed recently
 - [Glossary](glossary.md) — Technical terms explained in plain language

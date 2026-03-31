@@ -157,7 +157,7 @@ Run through this checklist after completing major work on ImpactMojo.
     **Exceptions:** Games (`/Games/*.html`) and Labs (`/Labs/*-lab.html`) are self-contained single-file tools — they need GA, fonts, theme toggle, and accessibility widget but may skip footer, speed dial, blobs, and cookie banner.
 
 13. **GitHub "Alive Docs" sync**
-    - **Wiki**: Clone `Varnasr/ImpactMojo.wiki.git`, update affected pages (Home, Content-Guide, Changelog, Roadmap, Architecture, Book-Summaries, 101-Course-Decks), push
+    - **Wiki**: Clone `ImpactMojo/ImpactMojo.wiki.git`, update affected pages (Home, Content-Guide, Changelog, Roadmap, Architecture, Book-Summaries, 101-Course-Decks), push
     - **Discussions**: Post announcement in Announcements category for user-facing additions
     - **Issues**: Close resolved issues with commit/PR links; update tracking issues (#272 BookSummaries, etc.)
     - **Milestones**: Update milestone progress if applicable

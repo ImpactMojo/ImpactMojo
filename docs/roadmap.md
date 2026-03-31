@@ -1,21 +1,21 @@
 # Roadmap
 
-What's coming next for ImpactMojo. This is a living document — we'd love your input. Suggest ideas in [GitHub Discussions](https://github.com/Varnasr/ImpactMojo/discussions/categories/ideas).
+What's coming next for ImpactMojo. This is a living document — we'd love your input. Suggest ideas in [GitHub Discussions](https://github.com/ImpactMojo/ImpactMojo/discussions/categories/ideas).
 
 ## Currently In Progress
 
 ### Vernacular Content
-Professional translations of courses in Hindi, Tamil, Bengali, and Marathi. ([#29](https://github.com/Varnasr/ImpactMojo/issues/29))
+Professional translations of courses in Hindi, Tamil, Bengali, and Marathi. ([#29](https://github.com/ImpactMojo/ImpactMojo/issues/29))
 
 **What this means for you:** If you work with teams who are more comfortable in regional languages, full course translations (not just Google Translate) will be available soon. We're starting with the most-used flagship courses.
 
 ### Cohort-Based Learning
-Scheduled cohorts with deadlines, discussion threads, and group progression. ([#144](https://github.com/Varnasr/ImpactMojo/issues/144))
+Scheduled cohorts with deadlines, discussion threads, and group progression. ([#144](https://github.com/ImpactMojo/ImpactMojo/issues/144))
 
 **What this means for you:** Instead of self-paced learning only, you'll be able to enrol your team in a cohort that progresses through a course together on a set schedule — like an online class, but built into the platform.
 
 ### Notification System
-Email digests for course updates, streak reminders, and community activity. ([#145](https://github.com/Varnasr/ImpactMojo/issues/145))
+Email digests for course updates, streak reminders, and community activity. ([#145](https://github.com/ImpactMojo/ImpactMojo/issues/145))
 
 **What this means for you:** You'll get gentle reminders to keep learning, plus notifications when new courses, handouts, or tools are added.
 
@@ -91,7 +91,7 @@ Email digests for course updates, streak reminders, and community activity. ([#1
 
 ## How to Suggest Features
 
-1. Check [existing discussions](https://github.com/Varnasr/ImpactMojo/discussions/categories/ideas) to see if someone has already suggested it
+1. Check [existing discussions](https://github.com/ImpactMojo/ImpactMojo/discussions/categories/ideas) to see if someone has already suggested it
 2. Open a new discussion in the **Ideas** category
 3. Describe the problem you're trying to solve — not just the feature you want. For example: "My team struggles to track who has completed which training module" is more helpful than "Add a dashboard"
 4. Include examples from your development practice if possible — it helps us prioritize

@@ -414,7 +414,7 @@
         '<a href="/about">About</a>' +
         '<a href="/privacy-policy">Privacy</a>' +
         '<a href="/terms-of-service">Terms</a>' +
-        '<a href="https://github.com/Varnasr/ImpactMojo" target="_blank" rel="noopener noreferrer">GitHub</a>' +
+        '<a href="https://github.com/ImpactMojo/ImpactMojo" target="_blank" rel="noopener noreferrer">GitHub</a>' +
       '</div>' +
       '<p class="imx-gf-copy">\u00A9 ' + new Date().getFullYear() + ' ImpactMojo. MIT + CC BY-NC-ND 4.0</p>' +
     '</div>';

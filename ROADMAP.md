@@ -75,4 +75,4 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 
 ## How to Contribute
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. Feature requests and roadmap suggestions are welcome via [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues) or [Discussions](https://github.com/Varnasr/ImpactMojo/discussions).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. Feature requests and roadmap suggestions are welcome via [GitHub Issues](https://github.com/ImpactMojo/ImpactMojo/issues) or [Discussions](https://github.com/ImpactMojo/ImpactMojo/discussions).

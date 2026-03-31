@@ -80,6 +80,6 @@ This means:
 
 - **Email:** [hello@impactmojo.in](mailto:hello@impactmojo.in)
 - **Podcast:** *Between the Logframes* on Spotify
-- **GitHub:** [github.com/Varnasr/ImpactMojo](https://github.com/Varnasr/ImpactMojo)
+- **GitHub:** [github.com/ImpactMojo/ImpactMojo](https://github.com/ImpactMojo/ImpactMojo)
 
 We respond to emails within 2 business days. For partnership inquiries, workshop bookings, or coaching requests, email is the best way to reach us.

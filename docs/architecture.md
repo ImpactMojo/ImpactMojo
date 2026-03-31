@@ -160,4 +160,4 @@ organization:  [same as professional]
 
 ## File Structure
 
-See [README → Project Structure](https://github.com/Varnasr/ImpactMojo#project-structure) for the full directory layout.
+See [README → Project Structure](https://github.com/ImpactMojo/ImpactMojo#project-structure) for the full directory layout.

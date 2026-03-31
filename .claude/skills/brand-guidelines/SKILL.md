@@ -269,7 +269,7 @@ Every page must include the complete footer with all four sections:
       <a href="/blog.html">Blog</a>
       <a href="/podcast.html">Podcast</a>
       <a href="https://impactmojo.gitbook.io/impactmojo">GitBook Docs</a>
-      <a href="https://github.com/Varnasr/ImpactMojo">GitHub</a>
+      <a href="https://github.com/ImpactMojo/ImpactMojo">GitHub</a>
     </div>
   </div>
   <div class="footer-bottom">

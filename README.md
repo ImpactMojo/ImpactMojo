@@ -4,8 +4,8 @@
 [![Code License: MIT](https://img.shields.io/badge/Code-MIT-green.svg)](LICENSE)
 [![Content License: CC BY-NC-ND 4.0](https://img.shields.io/badge/Content-CC_BY--NC--ND_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![GitHub Issues](https://img.shields.io/github/issues/Varnasr/ImpactMojo)](https://github.com/Varnasr/ImpactMojo/issues)
-[![GitHub Wiki](https://img.shields.io/badge/docs-Wiki-blue)](https://github.com/Varnasr/ImpactMojo/wiki)
+[![GitHub Issues](https://img.shields.io/github/issues/ImpactMojo/ImpactMojo)](https://github.com/ImpactMojo/ImpactMojo/issues)
+[![GitHub Wiki](https://img.shields.io/badge/docs-Wiki-blue)](https://github.com/ImpactMojo/ImpactMojo/wiki)
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
@@ -21,7 +21,7 @@
 
 ImpactMojo is a free learning platform providing rigorous, practical educational content on MEAL, Theory of Change, research methods, gender studies, and development economics for NGOs, impact practitioners, and students across South Asia.
 
-**Live:** [impactmojo.in](https://www.impactmojo.in) · **Docs:** [GitBook Documentation](https://impactmojo.gitbook.io/impactmojo) · **Wiki:** [GitHub Wiki](https://github.com/Varnasr/ImpactMojo/wiki) · **Issues:** [Bug Tracker](https://github.com/Varnasr/ImpactMojo/issues)
+**Live:** [impactmojo.in](https://www.impactmojo.in) · **Docs:** [GitBook Documentation](https://impactmojo.gitbook.io/impactmojo) · **Wiki:** [GitHub Wiki](https://github.com/ImpactMojo/ImpactMojo/wiki) · **Issues:** [Bug Tracker](https://github.com/ImpactMojo/ImpactMojo/issues)
 
 ---
 
@@ -311,7 +311,7 @@ Premium tools are hosted as separate Netlify sites, each protected by a JWT auth
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Varnasr/ImpactMojo.git
+   git clone https://github.com/ImpactMojo/ImpactMojo.git
    cd ImpactMojo
    ```
 
@@ -600,9 +600,9 @@ We welcome contributions! Whether improving content, fixing bugs, enhancing acce
 
 | Channel | Details |
 |---------|---------|
-| **Bug Reports** | [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues) |
-| **Feature Requests** | [GitHub Issues](https://github.com/Varnasr/ImpactMojo/issues) |
-| **Documentation** | [GitHub Wiki](https://github.com/Varnasr/ImpactMojo/wiki) |
+| **Bug Reports** | [GitHub Issues](https://github.com/ImpactMojo/ImpactMojo/issues) |
+| **Feature Requests** | [GitHub Issues](https://github.com/ImpactMojo/ImpactMojo/issues) |
+| **Documentation** | [GitHub Wiki](https://github.com/ImpactMojo/ImpactMojo/wiki) |
 | **General Inquiries** | hello@impactmojo.in |
 | **Workshops & Coaching** | coaching@impactmojo.in |
 | **Registration** | register@impactmojo.in |
@@ -624,7 +624,7 @@ This platform is supported by a family of open-source repositories:
 
 | Repository | Description |
 |---|---|
-| [**ImpactMojo**](https://github.com/Varnasr/ImpactMojo) | Main platform — courses, games, labs, case challenges |
+| [**ImpactMojo**](https://github.com/ImpactMojo/ImpactMojo) | Main platform — courses, games, labs, case challenges |
 | [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) | Auto-updating Indian development policy tracker (Astro + Python) |
 | [**development-discourses**](https://github.com/Varnasr/development-discourses) | 500+ curated research papers and grey literature |
 | [**dev-case-studies**](https://github.com/Varnasr/dev-case-studies) | 200 development case studies from 117 countries |

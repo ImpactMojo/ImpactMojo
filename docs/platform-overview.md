@@ -217,7 +217,7 @@ ImpactMojo has a **Model Context Protocol (MCP) server** that lets any AI assist
 - `get_game_info` — 16 economics simulation games with AI agent personas
 - `query_climate_data` — India GHG emissions from Climate TRACE
 
-**How to use it:** Install the MCP server locally, connect it to your AI assistant, and ask questions like "find BCT techniques for nutrition in India" or "what climate data does ImpactMojo have?" See the [MCP Server README](https://github.com/Varnasr/ImpactMojo/tree/main/mcp-server) for setup instructions.
+**How to use it:** Install the MCP server locally, connect it to your AI assistant, and ask questions like "find BCT techniques for nutrition in India" or "what climate data does ImpactMojo have?" See the [MCP Server README](https://github.com/ImpactMojo/ImpactMojo/tree/main/mcp-server) for setup instructions.
 
 ---
 

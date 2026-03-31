@@ -268,7 +268,7 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 | **Blog: Learning Loops** | Articles on development practice | Free — [Read](/blog.html) |
 | **Podcast: Between the Logframes** | Audio episodes on Spotify | Free |
 | **Dojos** | 35+ practice-based skill sessions | Paid |
-| **MCP Server** | 11 tools + 3 resources for AI assistants (Claude, Cursor, etc.) | Free — [Setup](https://github.com/Varnasr/ImpactMojo/tree/main/mcp-server) |
+| **MCP Server** | 11 tools + 3 resources for AI assistants (Claude, Cursor, etc.) | Free — [Setup](https://github.com/ImpactMojo/ImpactMojo/tree/main/mcp-server) |
 
 ---
 

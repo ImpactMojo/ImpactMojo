@@ -102,7 +102,7 @@ After creating the companion:
       -d '{"query": "mutation { createDiscussion(input: {repositoryId: \"...\", categoryId: \"...\", title: \"...\", body: \"...\"}) { discussion { url } } }"}'
     ```
 13. **Update GitHub Issue #272** — check off the new book in the BookSummaries expansion tracking issue
-14. **Update GitHub Wiki** — clone `Varnasr/ImpactMojo.wiki.git`, update `Book-Summaries.md` and `Content-Guide.md` with the new entry, push
+14. **Update GitHub Wiki** — clone `ImpactMojo/ImpactMojo.wiki.git`, update `Book-Summaries.md` and `Content-Guide.md` with the new entry, push
 15. **Comment on related discussions** — if Discussion #276 ("Which books should we summarise next?") listed this book, comment confirming it's now live
 
 ## Writing Guidelines

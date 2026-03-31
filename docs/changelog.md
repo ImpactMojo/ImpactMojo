@@ -1,6 +1,6 @@
 # Changelog
 
-What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/Varnasr/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
+What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
 ## v10.11.0 — March 28, 2026
 
