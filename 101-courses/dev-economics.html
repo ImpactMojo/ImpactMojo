@@ -4,10 +4,563 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Development Economics 101 | ImpactMojo</title>
-<meta http-equiv="refresh" content="0;url=/101-courses/native/dev-economics.html">
-<style>body{background:#1C1917;color:white;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}a{color:#0EA5E9}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amaranth:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="/101-courses/native/shared/deck.css">
 </head>
 <body>
-<p>Loading native deck... <a href="/101-courses/native/dev-economics.html">Click here</a> if not redirected.</p>
+<div id="theme-bar">
+ <button class="theme-btn" onclick="setTheme('system')">System</button>
+ <button class="theme-btn active" onclick="setTheme('light')">Light</button>
+ <button class="theme-btn" onclick="setTheme('dark')">Dark</button>
+</div>
+<svg class="sprites" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="si_Heart" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21C12 21 3 14.5 3 8.5a4.5 4.5 0 0 1 9-0.5 4.5 4.5 0 0 1 9 .5C21 14.5 12 21 12 21Z"/></symbol>
+  <symbol id="si_Book" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 7.333C12 5.5 10.5 4 8.667 4H2v12h6.708C12 16 12 19.334 12 19.334m0-12C12 5.5 13.5 4 15.333 4H22v12h-6.667C12 16 12 19.334 12 19.334m0-12v12"/></symbol>
+  <symbol id="si_Wallet" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M2 8.4V17c0 1.657 1.343 3 3 3h14c1.657 0 3-1.343 3-3V11c0-1.657-1.343-3-3-3H5c-1.657 0-3-1.343-3-3V6c0-1.105.895-2 2-2h13c1.105 0 2 .895 2 2v2M16 15h2"/></symbol>
+  <symbol id="si_Flag" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M4 22V4m0 0 16 6-16 6"/></symbol>
+  <symbol id="si_Chat" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M19 16h-2.525a.99.99 0 0 0-.775.375l-2.925 3.65c-.4.5-1.162.5-1.562 0l-2.925-3.65A.99.99 0 0 0 7.512 16H5c-1.662 0-3-1.338-3-3V6c0-1.662 1.338-3 3-3h14c1.663 0 3 1.338 3 3v7c0 1.662-1.337 3-3 3Z"/></symbol>
+  <symbol id="si_Lightning" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 2 4 14h8l-1 8 9-12h-8l1-8Z"/></symbol>
+  <symbol id="si_Lock" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M7 10V7a5 5 0 0 1 10 0v3m-1.4 1H8.4A2.4 2.4 0 0 0 6 13.4v5.2A2.4 2.4 0 0 0 8.4 21h7.2a2.4 2.4 0 0 0 2.4-2.4v-5.2A2.4 2.4 0 0 0 15.6 11Z"/></symbol>
+  <symbol id="si_Arrow_right" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m14 16 4-4m0 0-4-4m4 4H6"/></symbol>
+  <symbol id="si_Globe_detailed" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 22c-3 0-5-4.477-5-10S9 2 12 2s5 4.477 5 10-2 10-5 10ZM2 12h20"/></symbol>
+</svg>
+<div id="progress-bar"></div>
+<div id="fs-hint" onclick="toggleFS()">fullscreen</div>
+<div id="deck">
+ <div class="slide-viewport" id="viewport">
+<div class="slide active" id="s1">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="title-screen">
+  <div class="title-bg"></div>
+  <div class="title-bar"></div>
+  <div class="title-content">
+   <div class="title-series">ImpactMojo 101 Series &middot; Free Forever</div>
+   <div class="title-main">Development<br>Economics<br>101</div>
+   <div class="title-sub">Understanding Poverty, Growth &amp; Economic Transformation in the Global South &mdash; Theory, Evidence &amp; South Asian Practice</div>
+   <div class="title-tags">
+    <span class="title-tag">PhD-Level Rigor</span>
+    <span class="title-tag">South Asia Focus</span>
+    <span class="title-tag">100 Slides</span>
+    <span class="title-tag">Free Access</span>
+   </div>
+  </div>
+  <div class="title-geo"><svg viewBox="0 0 300 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%"><defs><pattern id="hex" x="0" y="0" width="40" height="46" patternUnits="userSpaceOnUse"><polygon points="20,2 38,12 38,34 20,44 2,34 2,12" fill="none" stroke="white" stroke-width="1"/></pattern></defs><rect width="300" height="620" fill="url(#hex)"/></svg></div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+<div class="slide" id="s2">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Agenda</div>
+  <div class="slide-title md" style="margin-bottom:8px">What We Cover in 100 Slides</div>
+  <div class="toc-grid">
+   <div class="toc-item"><div class="toc-num">01</div><div class="toc-name">What Is Development Economics?</div><div class="toc-slides">Slides 3&ndash;8</div></div>
+   <div class="toc-item"><div class="toc-num">02</div><div class="toc-name">Measuring Development</div><div class="toc-slides">Slides 9&ndash;16</div></div>
+   <div class="toc-item"><div class="toc-num">03</div><div class="toc-name">Poverty &amp; Inequality</div><div class="toc-slides">Slides 17&ndash;25</div></div>
+   <div class="toc-item"><div class="toc-num">04</div><div class="toc-name">Growth &amp; Structural Transformation</div><div class="toc-slides">Slides 26&ndash;34</div></div>
+   <div class="toc-item"><div class="toc-num">05</div><div class="toc-name">Agriculture &amp; Rural Livelihoods</div><div class="toc-slides">Slides 35&ndash;41</div></div>
+   <div class="toc-item"><div class="toc-num">06</div><div class="toc-name">Human Capital: Education &amp; Health</div><div class="toc-slides">Slides 42&ndash;50</div></div>
+   <div class="toc-item"><div class="toc-num">07</div><div class="toc-name">Credit, Finance &amp; Markets</div><div class="toc-slides">Slides 51&ndash;58</div></div>
+   <div class="toc-item"><div class="toc-num">08</div><div class="toc-name">Trade, Globalisation &amp; Institutions</div><div class="toc-slides">Slides 59&ndash;67</div></div>
+   <div class="toc-item"><div class="toc-num">09</div><div class="toc-name">Evidence, RCTs &amp; Policy</div><div class="toc-slides">Slides 68&ndash;77</div></div>
+   <div class="toc-item"><div class="toc-num">10</div><div class="toc-name">South Asia Deep Dive</div><div class="toc-slides">Slides 78&ndash;90</div></div>
+   <div class="toc-item"><div class="toc-num">11</div><div class="toc-name">Contemporary Challenges</div><div class="toc-slides">Slides 91&ndash;97</div></div>
+   <div class="toc-item"><div class="toc-num">12</div><div class="toc-name">Further Reading &amp; Resources</div><div class="toc-slides">Slides 98&ndash;100</div></div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">02</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+<div class="slide" id="s3">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="section-divider"><div class="div-num">01</div><div class="div-label">Section One</div><div class="div-title">What Is Development Economics?</div><div class="div-accent"></div></div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">03</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s4">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 01 &middot; Defining the Field</div>
+  <div class="slide-title md" style="margin-bottom:10px">A Field That Studies Why Nations Prosper &mdash; or Don't</div>
+  <div class="two-col half">
+   <div>
+    <div class="slide-body">Development economics examines the economic, institutional, and social conditions that determine living standards in low- and middle-income countries. It takes seriously the ways markets fail, institutions are weak, and history constrains choices.</div>
+    <div class="hbox" style="margin-top:12px"><div class="hbox-text"><strong>Core question:</strong> Why do some countries grow rich while others remain poor &mdash; and what can governments and development practitioners actually do about it?</div></div>
+    <ul class="bullet-list" style="margin-top:12px">
+     <li>Combines macro (growth, trade) with micro (households, firms, credit markets)</li>
+     <li>Takes context seriously &mdash; what works in one setting may fail in another</li>
+     <li>Relies heavily on field experiments, household surveys, and historical evidence</li>
+     <li>Deeply connected to policy &mdash; World Bank, IMF, state governments, NGOs all draw on it</li>
+    </ul>
+   </div>
+   <div>
+    <div class="term-box">
+     <div class="term-word">Development Economics</div>
+     <div class="term-def">The branch of economics that studies economic, social, and institutional transformation of low- and middle-income countries &mdash; including growth, poverty, health, education, credit markets, and governance &mdash; with special emphasis on market failures and state capacity.</div>
+    </div>
+    <div class="hbox green" style="margin-top:12px"><div class="hbox-text">Nearly <strong>700 million people</strong> still live in extreme poverty (below $2.15/day PPP). Understanding why &mdash; and what to do &mdash; is among the most consequential questions in social science. &mdash; World Bank, 2023</div></div>
+    <div class="hbox amber" style="margin-top:10px"><div class="hbox-text"><strong>India's stake:</strong> With 230M+ people below the international poverty line and the world's largest population of MPI-poor, development economics is not abstract for South Asian practitioners.</div></div>
+   </div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">04</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s5">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 01 &middot; How This Field Differs</div>
+  <div class="slide-title md" style="margin-bottom:10px">Development Economics vs Standard Economics</div>
+  <table class="ctable">
+   <thead><tr><th>Dimension</th><th>Standard Economics</th><th>Development Economics</th></tr></thead>
+   <tbody>
+    <tr><td><strong>Markets</strong></td><td>Assumed to function reasonably well</td><td>Markets frequently fail: missing, thin, or severely distorted</td></tr>
+    <tr><td><strong>Information</strong></td><td>Broadly symmetric</td><td>Severe asymmetries &mdash; farmers, borrowers, patients all face information deficits</td></tr>
+    <tr><td><strong>Institutions</strong></td><td>Background conditions</td><td>Central &mdash; weak rule of law, absent land records, no banking access all matter</td></tr>
+    <tr><td><strong>History</strong></td><td>Often ignored</td><td>Path dependence is real: colonial legacies, land reform, caste all shape outcomes today</td></tr>
+    <tr><td><strong>Units of analysis</strong></td><td>Rational representative agent</td><td>Heterogeneous households, gender, ethnicity, geography, social networks</td></tr>
+    <tr><td><strong>Methods</strong></td><td>Theory + aggregate national data</td><td>RCTs, household surveys, natural experiments, ethnography, administrative data</td></tr>
+    <tr><td><strong>Policy ambition</strong></td><td>Marginal adjustments</td><td>Structural change in institutions, incentives, capabilities, and power relations</td></tr>
+   </tbody>
+  </table>
+  <div class="hbox" style="margin-top:10px"><div class="hbox-text"><strong>Why it matters for practitioners:</strong> If you apply standard economic reasoning uncritically in a low-income Indian district &mdash; assuming credit markets work, information is available, labour contracts are enforced &mdash; you will systematically misdiagnose problems.</div></div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">05</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s6">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 01 &middot; Intellectual Lineage</div>
+  <div class="slide-title sm" style="margin-bottom:12px">Foundational Thinkers Who Shaped the Field</div>
+  <div class="stat-grid c3" style="margin-top:0">
+   <div class="stat-card"><div style="font-family:var(--font-head);font-weight:800;font-size:14px;color:var(--ink);margin-bottom:4px">Amartya Sen</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--cyan);margin-bottom:7px">Nobel 1998 &middot; India</div><div class="stat-label">Capabilities approach; famines as entitlement failures; Development as Freedom (1999)</div></div>
+   <div class="stat-card green"><div style="font-family:var(--font-head);font-weight:800;font-size:14px;color:var(--ink);margin-bottom:4px">Banerjee &amp; Duflo</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--green);margin-bottom:7px">Nobel 2019 &middot; MIT J-PAL</div><div class="stat-label">RCT methodology for poverty interventions; Poor Economics (2011); experimental approach</div></div>
+   <div class="stat-card amber"><div style="font-family:var(--font-head);font-weight:800;font-size:14px;color:var(--ink);margin-bottom:4px">Arthur Lewis</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--amber);margin-bottom:7px">Nobel 1979 &middot; West Indies</div><div class="stat-label">Dual-sector model; surplus labour in agriculture; structural transformation</div></div>
+   <div class="stat-card indigo"><div style="font-family:var(--font-head);font-weight:800;font-size:14px;color:var(--ink);margin-bottom:4px">Debraj Ray</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--indigo);margin-bottom:7px">NYU &middot; Textbook author</div><div class="stat-label">Development Economics (1998) &mdash; the canonical graduate text; poverty traps; inequality and growth</div></div>
+   <div class="stat-card red"><div style="font-family:var(--font-head);font-weight:800;font-size:14px;color:var(--ink);margin-bottom:4px">Pranab Bardhan</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--red);margin-bottom:7px">UC Berkeley &middot; India</div><div class="stat-label">Political economy of India; land, labour and rural institutions; decentralisation</div></div>
+   <div class="stat-card"><div style="font-family:var(--font-head);font-weight:800;font-size:14px;color:var(--ink);margin-bottom:4px">Jean Dr&egrave;ze &amp; A. Sen</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--cyan);margin-bottom:7px">India-focused collaboration</div><div class="stat-label">An Uncertain Glory (2013); public action, rights-based approach, MGNREGS evidence</div></div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">06</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s7">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 01 &middot; Schools of Thought</div>
+  <div class="slide-title md" style="margin-bottom:14px">Three Major Traditions</div>
+  <div class="stat-grid c3" style="margin-top:0">
+   <div class="dark-card"><div class="dark-card-label">Tradition 01</div><div class="dark-card-title">Structural &amp; Institutional</div><div class="dark-card-body">Development requires structural transformation &mdash; shifting resources from low-productivity agriculture to high-productivity industry. Institutions are deep determinants. <em>Lewis, Acemoglu &amp; Robinson, Rodrik, North</em></div></div>
+   <div class="dark-card" style="border-top:3px solid var(--green)"><div class="dark-card-label" style="color:var(--green)">Tradition 02</div><div class="dark-card-title">Experimental &amp; Micro-Empirical</div><div class="dark-card-body">Use RCTs and natural experiments to identify what actually works for poor households. Build policy from rigorous field evidence. <em>Banerjee, Duflo, Kremer, J-PAL, IPA</em></div></div>
+   <div class="dark-card" style="border-top:3px solid var(--amber)"><div class="dark-card-label" style="color:var(--amber)">Tradition 03</div><div class="dark-card-title">Capabilities &amp; Human Development</div><div class="dark-card-body">Development is about expanding freedoms and capabilities &mdash; not just income. Health, education, dignity, agency matter intrinsically. <em>Sen, Nussbaum, UNDP HDR, Dr&egrave;ze</em></div></div>
+  </div>
+  <div class="hbox" style="margin-top:12px"><div class="hbox-text">In practice, the strongest development thinking draws on all three: structural change needs micro-foundations and institutional context, and should be judged by whether it expands human capabilities for the poorest.</div></div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">07</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s8">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content" style="display:flex;flex-direction:column;justify-content:center">
+  <div class="section-label">Foundational Perspective</div>
+  <div class="quote-block">
+   <div class="quote-text">"Development can be seen as a process of expanding the real freedoms that people enjoy. Focusing on human freedoms contrasts with narrower views of development, such as identifying development with the growth of gross national product."</div>
+   <div class="quote-attr">&mdash; Amartya Sen &middot; Development as Freedom (1999) &middot; Nobel Laureate in Economics, 1998</div>
+  </div>
+  <div class="two-col half" style="margin-top:14px">
+   <div class="hbox green"><div class="hbox-text"><strong>What Sen means:</strong> GDP growth that leaves people in ill health, illiterate, politically voiceless is not development &mdash; even if average incomes rise.</div></div>
+   <div class="hbox indigo"><div class="hbox-text"><strong>For practitioners:</strong> Always ask &mdash; are our programmes expanding capabilities for those most constrained? Who can actually access benefits?</div></div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">08</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+<div class="slide" id="s9">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="section-divider"><div class="div-num">02</div><div class="div-label">Section Two</div><div class="div-title">Measuring Development</div><div class="div-accent"></div></div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">09</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s10">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 02 &middot; GDP</div>
+  <div class="slide-title md" style="margin-bottom:10px">GDP Per Capita: The Default Measure &amp; Its Limits</div>
+  <div class="two-col half">
+   <div>
+    <div class="term-box">
+     <div class="term-word">GDP Per Capita</div>
+     <div class="term-def">Gross Domestic Product divided by total population. Measures average economic output per person. Compared across countries using PPP (Purchasing Power Parity) adjustments.</div>
+    </div>
+    <div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-top:14px;margin-bottom:8px">What GDP Does Well</div>
+    <ul class="bullet-list green" style="margin-top:0">
+     <li>Easy to measure and compare across countries and over time</li>
+     <li>Strongly correlated with life expectancy, child mortality, literacy</li>
+     <li>Required for ODA eligibility, debt ratios, IMF programmes</li>
+    </ul>
+   </div>
+   <div>
+    <div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--red);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">What GDP Cannot Capture</div>
+    <ul class="bullet-list red" style="margin-top:0">
+     <li><strong>Distribution:</strong> A country can grow while the poorest get poorer</li>
+     <li><strong>Unpaid work:</strong> Subsistence farming, care work excluded by definition</li>
+     <li><strong>Environmental costs:</strong> Deforestation and pollution <em>boost</em> GDP</li>
+     <li><strong>Informal economy:</strong> 80%+ of employment in LMICs is informal, partially uncounted</li>
+     <li><strong>Wellbeing:</strong> Life satisfaction, security, dignity are invisible to GDP</li>
+    </ul>
+    <div class="hbox amber" style="margin-top:10px"><div class="hbox-text"><strong>India case:</strong> India's GDP growth averaged 7%+ from 2014&ndash;2019. Yet female LFPR fell, rural real wages stagnated, and MPI-poor numbers remained in hundreds of millions.</div></div>
+   </div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">10</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s11">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 02 &middot; Human Development Index</div>
+  <div class="slide-title sm" style="margin-bottom:10px">The Human Development Index (HDI): Health &times; Education &times; Income</div>
+  <div class="two-col a32">
+   <div>
+    <div class="slide-body sm" style="margin-bottom:10px">Created by Mahbub ul Haq and Amartya Sen for UNDP in 1990 as a deliberate challenge to income-centric thinking. HDI = geometric mean of three normalised indices.</div>
+    <div style="background:white;border-radius:10px;padding:14px;box-shadow:0 2px 6px rgba(0,0,0,0.06);margin-bottom:10px">
+     <div style="font-family:var(--font-head);font-weight:700;font-size:11px;color:var(--ink-mid);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">HDI = Geometric Mean of Three Indices</div>
+     <div style="display:flex;gap:8px;align-items:stretch">
+      <div style="flex:1;background:#EFF6FF;border-radius:7px;padding:11px;text-align:center;border-top:3px solid var(--cyan)">
+       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="color:var(--cyan);display:block;margin:0 auto 5px"><use href="#si_Heart"/></svg>
+       <div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--cyan)">Health</div>
+       <div style="font-family:var(--font-mono);font-size:9px;color:var(--ink-light);margin-top:3px">Life expectancy at birth</div>
+      </div>
+      <div style="font-size:18px;color:var(--ink-light);display:flex;align-items:center">&times;</div>
+      <div style="flex:1;background:#F0FDF4;border-radius:7px;padding:11px;text-align:center;border-top:3px solid var(--green)">
+       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="color:var(--green);display:block;margin:0 auto 5px"><use href="#si_Book"/></svg>
+       <div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--green)">Education</div>
+       <div style="font-family:var(--font-mono);font-size:9px;color:var(--ink-light);margin-top:3px">Mean &amp; expected schooling</div>
+      </div>
+      <div style="font-size:18px;color:var(--ink-light);display:flex;align-items:center">&times;</div>
+      <div style="flex:1;background:#FFFBEB;border-radius:7px;padding:11px;text-align:center;border-top:3px solid var(--amber)">
+       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="color:var(--amber);display:block;margin:0 auto 5px"><use href="#si_Wallet"/></svg>
+       <div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--amber)">Income</div>
+       <div style="font-family:var(--font-mono);font-size:9px;color:var(--ink-light);margin-top:3px">GNI per capita (PPP)</div>
+      </div>
+     </div>
+    </div>
+    <div class="hbox"><div class="hbox-text" style="font-size:12px"><strong>Bangladesh paradox:</strong> Bangladesh has lower GDP per capita than Pakistan but a higher HDI &mdash; driven by superior health and education outcomes, especially for women.</div></div>
+   </div>
+   <div>
+    <div style="font-family:var(--font-head);font-weight:700;font-size:12px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">South Asia HDI Rankings 2023</div>
+    <div class="stat-grid c2" style="margin-top:0;gap:8px">
+     <div class="stat-card"><div class="stat-number" style="font-size:22px">0.644</div><div class="stat-label">India &middot; Rank 134/193 &middot; Medium HD</div></div>
+     <div class="stat-card green"><div class="stat-number" style="font-size:22px">0.670</div><div class="stat-label">Sri Lanka &middot; Rank 78 &middot; High HD</div></div>
+     <div class="stat-card amber"><div class="stat-number" style="font-size:22px">0.661</div><div class="stat-label">Bangladesh &middot; Rank 129 &middot; Medium HD</div></div>
+     <div class="stat-card red"><div class="stat-number" style="font-size:22px">0.530</div><div class="stat-label">Pakistan &middot; Rank 164 &middot; Medium HD (lower)</div></div>
+    </div>
+    <div class="hbox indigo" style="margin-top:10px"><div class="hbox-text" style="font-size:12px"><strong>India's HDI gap:</strong> India ranks 134 despite being the world's 5th largest economy &mdash; signalling underinvestment in health and education relative to economic output.</div></div>
+   </div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">11</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s12">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 02 &middot; Poverty Measurement</div>
+  <div class="slide-title sm" style="margin-bottom:10px">Poverty Lines: What They Are &amp; Why They Are Contested</div>
+  <div class="two-col half">
+   <div>
+    <table class="ctable" style="font-size:11px">
+     <thead><tr><th>Poverty Line</th><th>Threshold</th><th>Purpose</th></tr></thead>
+     <tbody>
+      <tr><td><strong>World Bank Extreme</strong></td><td>$2.15/day PPP</td><td>Global extreme poverty tracking &middot; SDG 1</td></tr>
+      <tr><td><strong>World Bank Lower-Middle</strong></td><td>$3.65/day PPP</td><td>LMIC-relevant threshold</td></tr>
+      <tr><td><strong>India Tendulkar Line</strong></td><td>~&#8377;32/day urban</td><td>Access to welfare schemes &mdash; widely criticised as too low</td></tr>
+      <tr><td><strong>India Rangarajan Line</strong></td><td>&#8377;47/day urban</td><td>Higher 2014 revision, not officially adopted</td></tr>
+      <tr><td><strong>MPI</strong></td><td>Deprived in 3+ of 10 indicators</td><td>Non-income multidimensional poverty</td></tr>
+     </tbody>
+    </table>
+   </div>
+   <div>
+    <div class="hbox amber"><div class="hbox-text"><strong>PPP explained:</strong> Purchasing Power Parity adjusts for price level differences. $2.15/day PPP means "the equivalent purchasing power of $2.15 in the United States."</div></div>
+    <div class="hbox red" style="margin-top:10px"><div class="hbox-text"><strong>The core contestation:</strong> Any single monetary threshold is ultimately arbitrary. Poverty is multidimensional &mdash; someone above the income line may lack safe water, education access, or basic security.</div></div>
+    <div class="hbox green" style="margin-top:10px"><div class="hbox-text"><strong>India data gap:</strong> India has not released a comprehensive consumption expenditure survey since 2011&ndash;12. The 2022&ndash;23 HCES has major methodological changes making comparison impossible.</div></div>
+   </div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">12</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s13">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 02 &middot; Data</div>
+  <div class="slide-title sm" style="margin-bottom:10px">Global Extreme Poverty: The Long Decline &mdash; and COVID's Reversal</div>
+  <div class="two-col a23">
+   <div style="display:flex;flex-direction:column;gap:8px">
+    <div class="stat-card"><div class="stat-number">36%</div><div class="stat-label">World poverty rate 1990 &mdash; 1 in 3 humans</div></div>
+    <div class="stat-card green"><div class="stat-number">8.5%</div><div class="stat-label">World poverty rate 2019 &mdash; before COVID</div></div>
+    <div class="stat-card red"><div class="stat-number">+70M</div><div class="stat-label">Additional people pushed into poverty by COVID-19 in 2020</div></div>
+    <div class="stat-card amber"><div class="stat-number">690M</div><div class="stat-label">Still in extreme poverty today. ~50% in Sub-Saharan Africa</div></div>
+    <div class="hbox" style="margin-top:2px"><div class="hbox-text" style="font-size:11px"><strong>China effect:</strong> Much of global poverty reduction since 1990 is attributable to China alone &mdash; lifting ~800M people. Excluding China, progress is far more modest.</div></div>
+   </div>
+   <div>
+    <div class="chart-wrap">
+     <div class="chart-title">Share of World Population Below $2.15/day PPP (%)</div>
+     <canvas id="povertyChart"></canvas>
+     <div class="chart-source">Source: World Bank Poverty &amp; Inequality Platform (PIP), 2023</div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">13</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s14">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 02 &middot; Multidimensional Poverty</div>
+  <div class="slide-title sm" style="margin-bottom:8px">The Multidimensional Poverty Index (MPI): Beyond Income</div>
+  <div class="slide-body sm" style="margin-bottom:10px">Developed by Alkire &amp; Foster (OPHI, Oxford) for UNDP in 2010. A person is MPI poor if simultaneously deprived in at least one-third of weighted indicators across three dimensions.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+   <div style="border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.07)">
+    <div style="background:var(--cyan);color:white;padding:8px 12px;font-family:var(--font-head);font-weight:700;font-size:11px">HEALTH &middot; Weight 1/3</div>
+    <div style="background:#EFF6FF;padding:10px 12px;font-family:var(--font-body);font-size:12px;color:var(--ink-mid);line-height:1.5"><strong>Child mortality</strong> &mdash; any household member under 18 has died<br><strong>Nutrition</strong> &mdash; any adult or child is undernourished</div>
+   </div>
+   <div style="border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.07)">
+    <div style="background:var(--indigo);color:white;padding:8px 12px;font-family:var(--font-head);font-weight:700;font-size:11px">EDUCATION &middot; Weight 1/3</div>
+    <div style="background:#EEF2FF;padding:10px 12px;font-family:var(--font-body);font-size:12px;color:var(--ink-mid);line-height:1.5"><strong>Years of schooling</strong> &mdash; no member completed 6 years<br><strong>School attendance</strong> &mdash; school-age child not enrolled</div>
+   </div>
+   <div style="border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.07)">
+    <div style="background:var(--green);color:white;padding:8px 12px;font-family:var(--font-head);font-weight:700;font-size:11px">LIVING STANDARDS &middot; Weight 1/3</div>
+    <div style="background:#F0FDF4;padding:10px 12px;font-family:var(--font-body);font-size:12px;color:var(--ink-mid);line-height:1.5">6 indicators at 1/18 each:<br><strong>Cooking fuel &middot; Sanitation &middot; Water &middot; Electricity &middot; Housing &middot; Assets</strong></div>
+   </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+   <div class="stat-card"><div class="stat-number" style="font-size:22px">1.1B</div><div class="stat-label">MPI poor globally, 2023</div></div>
+   <div class="stat-card indigo"><div class="stat-number" style="font-size:22px">234M</div><div class="stat-label">MPI poor in India (NFHS-5, 2021)</div></div>
+   <div class="stat-card amber"><div class="stat-number" style="font-size:22px">59%</div><div class="stat-label">Global MPI poor in SSA &amp; South Asia combined</div></div>
+   <div class="stat-card green"><div class="stat-number" style="font-size:22px">415M</div><div class="stat-label">Lifted from MPI poverty in India 2005&ndash;2021</div></div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">14</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s15">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 02 &middot; Inequality Measurement</div>
+  <div class="slide-title sm" style="margin-bottom:10px">The Gini Coefficient &amp; the Lorenz Curve</div>
+  <div class="two-col half">
+   <div>
+    <div class="term-box">
+     <div class="term-word">Gini Coefficient</div>
+     <div class="term-def">A summary measure of income or wealth distribution ranging from 0 (perfect equality) to 1 (one person owns everything). Named after Italian statistician Corrado Gini (1912).</div>
+    </div>
+    <div class="stat-grid c2" style="margin-top:10px;gap:8px">
+     <div class="stat-card"><div class="stat-number" style="font-size:20px">0.35</div><div class="stat-label">India income Gini (World Bank, 2022)</div></div>
+     <div class="stat-card red"><div class="stat-number" style="font-size:20px">0.63</div><div class="stat-label">India wealth Gini &mdash; top 10% own 77% of wealth</div></div>
+     <div class="stat-card amber"><div class="stat-number" style="font-size:20px">0.53</div><div class="stat-label">South Africa &mdash; world's highest income Gini</div></div>
+     <div class="stat-card green"><div class="stat-number" style="font-size:20px">0.27</div><div class="stat-label">Norway &mdash; among the most equal economies</div></div>
+    </div>
+   </div>
+   <div>
+    <div class="chart-wrap">
+     <div class="chart-title">Lorenz Curve: Perfect Equality vs India vs Nordics</div>
+     <canvas id="lorenzChart"></canvas>
+     <div class="chart-source">Gini = Area A / (Area A + Area B) &middot; Higher = more unequal</div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">15</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s16">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 02 &middot; Full Measurement Landscape</div>
+  <div class="slide-title sm" style="margin-bottom:10px">Development Metrics: From GDP to Planetary Boundaries</div>
+  <table class="ctable" style="font-size:11px">
+   <thead><tr><th>Indicator</th><th>What It Measures</th><th>Produced By</th><th>Key Limitation</th></tr></thead>
+   <tbody>
+    <tr><td><strong>GDP per capita</strong></td><td>Average economic output per person</td><td>World Bank, IMF</td><td>Ignores distribution, unpaid work, environment</td></tr>
+    <tr><td><strong>HDI</strong></td><td>Health + Education + Income composite</td><td>UNDP</td><td>Country averages hide regional and gender gaps</td></tr>
+    <tr><td><strong>MPI</strong></td><td>Simultaneous deprivations across 10 indicators</td><td>UNDP-OPHI</td><td>Threshold-dependent; does not capture near-poor</td></tr>
+    <tr><td><strong>Gini coefficient</strong></td><td>Income or wealth distribution</td><td>World Bank, WID</td><td>Insensitive to who gains/loses at extremes</td></tr>
+    <tr><td><strong>Genuine savings</strong></td><td>Net wealth including natural capital depletion</td><td>World Bank</td><td>Very difficult to price natural assets</td></tr>
+    <tr><td><strong>Subjective wellbeing</strong></td><td>Self-reported life satisfaction</td><td>Gallup, WHR</td><td>Cultural biases in self-reporting</td></tr>
+    <tr><td><strong>Gender Gap Index</strong></td><td>Economic, political, health, education parity</td><td>WEF</td><td>Doesn't capture intra-household inequality</td></tr>
+   </tbody>
+  </table>
+  <div class="hbox" style="margin-top:10px"><div class="hbox-text"><strong>Practitioner principle:</strong> No single metric is sufficient. Good development analysis triangulates across income measures, non-income deprivations, distributional data, and qualitative evidence.</div></div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">16</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+<div class="slide" id="s17">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="section-divider"><div class="div-num">03</div><div class="div-label">Section Three</div><div class="div-title">Poverty &amp; Inequality</div><div class="div-accent"></div></div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">17</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s18">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 03 &middot; Poverty Dynamics</div>
+  <div class="slide-title md" style="margin-bottom:10px">The Poverty Trap: Why the Poor Stay Poor</div>
+  <div class="two-col half">
+   <div>
+    <div class="term-box">
+     <div class="term-word">Poverty Trap</div>
+     <div class="term-def">A self-reinforcing mechanism where poverty persists because the very conditions of being poor prevent the investments needed to escape it. Below a critical asset threshold, households cannot accumulate &mdash; they deplete savings during shocks, cannot invest in education or health, and remain locked in low-productivity equilibria.</div>
+    </div>
+    <div class="hbox" style="margin-top:10px"><div class="hbox-text"><strong>Classic mechanism:</strong> Low income &rarr; low savings &rarr; no investment in children &rarr; low human capital &rarr; low adult productivity &rarr; low income. Each link reinforces the others across generations.</div></div>
+    <ul class="bullet-list amber" style="margin-top:10px">
+     <li>Credit market failure: banks won't lend without collateral</li>
+     <li>Health shocks deplete savings and pull children from school</li>
+     <li>Malnutrition in early childhood reduces cognitive development permanently</li>
+     <li>Social and spatial exclusion limits information access and opportunities</li>
+    </ul>
+   </div>
+   <div>
+    <div style="background:white;border-radius:10px;padding:16px;box-shadow:0 2px 6px rgba(0,0,0,0.06)">
+     <div style="font-family:var(--font-head);font-weight:700;font-size:11px;color:var(--ink-mid);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Multiple Equilibria: The S-Curve Model</div>
+     <svg viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+      <line x1="30" y1="175" x2="305" y2="175" stroke="#C4B9AF" stroke-width="1.5"/>
+      <line x1="30" y1="175" x2="30" y2="10" stroke="#C4B9AF" stroke-width="1.5"/>
+      <line x1="30" y1="175" x2="295" y2="15" stroke="#DDD6CC" stroke-width="1" stroke-dasharray="5,3"/>
+      <path d="M30,170 Q55,162 80,155 Q100,150 115,138 Q130,118 152,92 Q172,68 196,50 Q222,36 252,28 Q275,24 295,23" fill="none" stroke="var(--cyan)" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="44" cy="165" r="5" fill="var(--red)"/>
+      <circle cx="168" cy="85" r="5" fill="var(--amber)"/>
+      <circle cx="270" cy="26" r="5" fill="var(--green)"/>
+      <text x="50" y="160" font-size="8" font-family="JetBrains Mono,monospace" fill="var(--red)">Low eq.</text>
+      <text x="155" y="78" font-size="8" font-family="JetBrains Mono,monospace" fill="var(--amber)">Unstable</text>
+      <text x="254" y="20" font-size="8" font-family="JetBrains Mono,monospace" fill="var(--green)">High eq.</text>
+      <text x="155" y="192" font-size="9" font-family="Amaranth,sans-serif" fill="#78716C" text-anchor="middle">Current wealth / assets</text>
+      <text x="12" y="95" font-size="9" font-family="Amaranth,sans-serif" fill="#78716C" text-anchor="middle" transform="rotate(-90,12,95)">Next period wealth</text>
+     </svg>
+     <div style="font-family:var(--font-mono);font-size:9px;color:var(--ink-light);margin-top:6px">S-curve crosses 45&deg; at 3 points: two stable equilibria (poor / rich), one unstable threshold. Policy implication: a one-time push across the threshold can have permanent effects.</div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">18</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s19">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 03 &middot; What Poverty Actually Feels Like</div>
+  <div class="slide-title md" style="margin-bottom:10px">Poverty Is Multidimensional: Voices From the Field</div>
+  <div class="quote-block" style="padding:22px 32px">
+   <div class="quote-text" style="font-size:15px">"Poor people's descriptions of what it means to be poor rarely start with income. They talk about insecurity, voicelessness, powerlessness, physical weakness, isolation, and humiliation."</div>
+   <div class="quote-attr">&mdash; Deepa Narayan &middot; Voices of the Poor: Can Anyone Hear Us? &middot; World Bank, 2000</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px">
+   <div class="stat-card">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="color:var(--cyan);margin-bottom:8px"><use href="#si_Flag"/></svg>
+    <div style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin-bottom:4px">Material Deprivation</div>
+    <div class="stat-label">Lack of food, shelter, clothing, productive assets, and income security</div>
+   </div>
+   <div class="stat-card green">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="color:var(--green);margin-bottom:8px"><use href="#si_Chat"/></svg>
+    <div style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin-bottom:4px">Voicelessness</div>
+    <div class="stat-label">No power in political processes, local governance, or legal systems</div>
+   </div>
+   <div class="stat-card amber">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="color:var(--amber);margin-bottom:8px"><use href="#si_Lightning"/></svg>
+    <div style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin-bottom:4px">Vulnerability</div>
+    <div class="stat-label">Susceptibility to shocks: illness, drought, price spikes, violence</div>
+   </div>
+   <div class="stat-card red">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="color:var(--red);margin-bottom:8px"><use href="#si_Lock"/></svg>
+    <div style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin-bottom:4px">Social Exclusion</div>
+    <div class="stat-label">Caste, gender, ethnicity &mdash; structural barriers to markets, services, dignity</div>
+   </div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">19</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<div class="slide" id="s20">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 03 &middot; Social Protection</div>
+  <div class="slide-title sm" style="margin-bottom:10px">Social Protection in India: Floors, Nets &amp; Ladders</div>
+  <table class="ctable" style="font-size:11px">
+   <thead><tr><th>Instrument</th><th>Mechanism</th><th>India Programme</th><th>Evidence Summary</th></tr></thead>
+   <tbody>
+    <tr><td><strong>Food subsidy</strong></td><td>Subsidised/free foodgrains</td><td>NFSA/PDS &mdash; 80 crore beneficiaries</td><td>Reduces caloric poverty; JAM reduced leakage</td></tr>
+    <tr><td><strong>Employment guarantee</strong></td><td>State as employer of last resort</td><td>MGNREGS &mdash; 100 days guaranteed</td><td>Reduces distress migration; wage floor effects real</td></tr>
+    <tr><td><strong>Cash transfers</strong></td><td>Direct income support via DBT</td><td>PM-KISAN (&#8377;6,000/yr to farmers)</td><td>Low leakage post-JAM; positive consumption impact</td></tr>
+    <tr><td><strong>School feeding</strong></td><td>Free meals to incentivise attendance</td><td>PM-POSHAN &mdash; world's largest</td><td>Strong evidence on enrolment, especially girls</td></tr>
+    <tr><td><strong>Health insurance</strong></td><td>Public coverage for catastrophic costs</td><td>PM-JAY/Ayushman Bharat</td><td>Reduces medical impoverishment; supply gaps persist</td></tr>
+   </tbody>
+  </table>
+  <div class="hbox" style="margin-top:10px"><div class="hbox-text"><strong>Key debate:</strong> Should India move towards a Universal Basic Income? Dr&egrave;ze and Khera argue MGNREGS + PDS are more effective than cash for the poorest given India's rural political economy and market failures in food and labour.</div></div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">20</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+<div class="slide" id="s21">
+ <div class="slide-header"><a href="https://www.impactmojo.in" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Development Economics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="ty-screen">
+  <div style="position:relative;z-index:2;text-align:center">
+   <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:60px;height:60px;margin:0 auto 18px"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg>
+   <div class="ty-title">Keep Learning.</div>
+   <div class="ty-sub">This deck is part of ImpactMojo's free 101 Series &mdash; PhD-level rigour for South Asian development practitioners. More sections coming soon. Every concept, every citation, every case is here because it matters.</div>
+   <div class="ty-ctas">
+    <a href="https://www.impactmojo.in/courses/devecon/" class="cta-btn primary" target="_blank">Explore the Full Course</a>
+    <a href="https://www.impactmojo.in/upgrade.html" class="cta-btn secondary" target="_blank">Go Premium</a>
+   </div>
+   <div style="margin-top:24px;font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.25)">CC BY-NC-SA 4.0 &middot; ImpactMojo &middot; www.impactmojo.in</div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">21</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+ </div><!-- /slide-viewport -->
+</div><!-- /deck -->
+
+<div id="nav">
+ <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">&#8249;</button>
+ <span id="prog-text">1 / 21</span>
+ <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">&#8250;</button>
+</div>
+
+<script src="/101-courses/native/shared/deck.js"></script>
+<script>
+function initChart(slideIdx) {
+  var id = SLIDE_IDS[slideIdx];
+  if (id === 's13') {
+    mkChart('povertyChart', 'line', {
+      labels: ['1990','1996','2002','2008','2013','2017','2019','2021'],
+      datasets: [{
+        label: '% below $2.15/day (World)',
+        data: [36,29,24,18,11,9.1,8.5,8.7],
+        borderColor: '#0EA5E9', backgroundColor: 'rgba(14,165,233,0.08)', fill: true, tension: 0.3, pointRadius: 3
+      },{
+        label: 'Excl. China',
+        data: [28,23,20,17,14,12.5,12,12.5],
+        borderColor: '#F59E0B', borderDash: [5,3], tension: 0.3, pointRadius: 2
+      }]
+    });
+  }
+  if (id === 's15') {
+    mkChart('lorenzChart', 'line', {
+      labels: ['0','10','20','30','40','50','60','70','80','90','100'],
+      datasets: [
+        { label: 'Perfect Equality', data: [0,10,20,30,40,50,60,70,80,90,100], borderColor: '#78716C', borderDash: [4,4], pointRadius: 0 },
+        { label: 'India', data: [0,1.5,3.5,7,12,19,27,38,53,71,100], borderColor: '#EF4444', fill: false, tension: 0.3, pointRadius: 2 },
+        { label: 'Nordics', data: [0,4,9,16,24,33,44,55,68,82,100], borderColor: '#10B981', fill: false, tension: 0.3, pointRadius: 2 }
+      ]
+    });
+  }
+}
+
+initDeck({
+  title: 'Development Economics 101',
+  slideIds: ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14','s15','s16','s17','s18','s19','s20','s21']
+});
+</script>
 </body>
 </html>
