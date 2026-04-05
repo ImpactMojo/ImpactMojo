@@ -27,12 +27,12 @@ Each flagship course includes:
 
 ### Foundational Courses (39 courses)
 
-Comprehensive study decks that cover a specific skill or concept in depth. These are self-paced reading materials — thorough in their coverage but simpler in format than flagship courses. **23 of these are now also available as visual 101 Course Decks** — 60-slide Gamma presentations with Indian folk art illustrations. See the [101 Course Decks Guide](101-decks-guide.md) for the full list and access links.
+Comprehensive study decks that cover a specific skill or concept in depth. These are self-paced reading materials — thorough in their coverage but simpler in format than flagship courses. **4 courses are now native 100-slide HTML decks** (Dev Econ, MEL, Climate, Inequality) with interactive charts, light/dark theme, and keyboard/touch navigation. The remaining courses are available as visual Gamma presentations. See the [101 Course Decks Guide](101-decks-guide.md) for details.
 
 **What they include:**
 - Comprehensive topic coverage — each one covers its subject thoroughly
 - Self-study format — read at your own pace, no interactive components
-- Visual presentation decks (23 courses and growing) with Indian folk art by track
+- Native HTML slide decks (4 courses) or Gamma visual presentations (34 courses) with Indian folk art by track
 
 **What they don't include (yet):**
 - Interactive features, quizzes, or assessments

@@ -33,6 +33,8 @@ Email digests for course updates, streak reminders, and community activity. ([#1
 - **Survey Instrument Library** — Browse and adapt validated survey instruments
 
 ### Content
+- [x] **Native 101 slide decks** — 4 foundational decks migrated from Gamma iframes to self-hosted HTML (Dev Econ, MEL, Climate, Inequality) with 100 slides each, interactive charts, light/dark theme, keyboard/touch nav
+- Migrate remaining 34 foundational decks to native HTML format
 - Additional foundational courses across all 6 tracks
 - Regional case study packs focusing on state-level India data
 

@@ -44,7 +44,7 @@ Single-page courses covering essential development topics. All free, no login re
 
 | Course | Link |
 |--------|------|
-| MEL Basics 101 | [Open](https://101.impactmojo.in/mel-basics-101) |
+| MEL Basics 101 | [Open](https://www.impactmojo.in/101-courses/mel-basics.html) ⭐ Native |
 | Theory of Change 101 | [Open](https://101.impactmojo.in/toc-basics-101) |
 | Qualitative Methods 101 | [Open](https://101.impactmojo.in/qual-methods) |
 | Survey Design 101 | [Open](https://101.impactmojo.in/survey-design) |
@@ -70,7 +70,7 @@ Single-page courses covering essential development topics. All free, no login re
 
 | Course | Link |
 |--------|------|
-| Development Economics 101 | [Open](https://101.impactmojo.in/development-economics) |
+| Development Economics 101 | [Open](https://www.impactmojo.in/101-courses/dev-economics.html) ⭐ Native |
 | Global Development Governance 101 | [Open](https://101.impactmojo.in/dev-architecture) |
 | Fundraising Basics 101 | [Open](https://101.impactmojo.in/fundraising-basics) |
 | Decent Work For All 101 | [Open](https://101.impactmojo.in/decent-work) |
