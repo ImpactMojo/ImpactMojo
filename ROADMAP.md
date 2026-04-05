@@ -53,8 +53,10 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 - [x] **Premium design consistency** — premium.html and premium-tools pages aligned with main site design standards (fonts, borders, shadows)
 - [x] **RQ Premium redirect fix** — race condition in resource-launch.js preventing upgrade modal from showing
 
-## Q2 2026 (Apr-Jun) — Planned
+## Q2 2026 (Apr-Jun) — In Progress
 
+- [x] **Native 101 slide decks** — Replaced Gamma iframes with self-hosted HTML decks for Dev Econ, MEL, and Climate (100 slides each, Chart.js, light/dark theme, keyboard/touch nav)
+- [ ] **Migrate remaining 35 foundational decks** — Convert all Gamma iframe wrappers to native HTML using Claude Chat + Claude Code workflow
 - [ ] **Vernacular Content** — Full courses in Hindi and Tamil (#29)
 - [ ] **Analytics dashboard v2** — Learner analytics with completion funnels, time-on-task, assessment scores
 - [ ] **Mobile app (PWA)** — Enhanced PWA with push notifications and background sync

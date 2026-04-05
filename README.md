@@ -39,7 +39,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 
 | Category | Description |
 |----------|-------------|
-| **48 Courses** | 9 flagship + 39 foundational courses across 6 learning tracks |
+| **48 Courses** | 9 flagship + 39 foundational courses across 6 learning tracks (3 native HTML slide decks with 100 slides each; remaining 35 Gamma-hosted) |
 | **11 Interactive Labs** | Hands-on workbenches for MEL, policy, partnerships, budgeting, gender analysis, and more |
 | **16 Learning Games** | Interactive simulations with MiroFish AI agents and Indian folk art (Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) |
 | **ImpactLex Dictionary** | 500+ development terms with contextual definitions (PWA) |

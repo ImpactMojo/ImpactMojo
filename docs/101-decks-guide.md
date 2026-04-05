@@ -6,13 +6,32 @@ ImpactMojo's **39 foundational courses** are available as visual presentation de
 
 These aren't typical slide decks. Each one is a structured learning journey designed for self-study or facilitated workshops, with case studies drawn from development practice in India and South Asia. They are free to view, share, and use in educational settings.
 
-All decks are accessible at `https://101.impactmojo.in/{course-slug}` and require no login or download.
+All decks are accessible at `https://www.impactmojo.in/101-courses/{course-slug}.html` and require no login or download.
+
+### Native HTML Decks (New — April 2026)
+
+Three decks have been migrated from Gamma iframe wrappers to **self-hosted native HTML slide decks** with 100 slides each:
+
+| Deck | Slides | Charts | URL |
+|------|--------|--------|-----|
+| Development Economics 101 | 100 | 17 Chart.js | [View](https://www.impactmojo.in/101-courses/dev-economics.html) |
+| MEL Fundamentals 101 | 100 | — | [View](https://www.impactmojo.in/101-courses/mel-basics.html) |
+| Climate Essentials 101 | 100 | — | [View](https://www.impactmojo.in/101-courses/climate-essentials.html) |
+
+Native decks feature: light/dark/system theme toggle, keyboard/touch/swipe navigation, fullscreen mode, responsive viewport scaling, and interactive Chart.js visualisations. The shared template (`101-courses/native/shared/deck.css` + `deck.js`) is ready for all future 101 deck conversions.
+
+**Workflow for new native decks:**
+1. Generate 100-slide HTML in Claude Chat using an existing native deck as format template
+2. Save/paste the output to `101-courses/{slug}.html`
+3. Fix JS bugs (viewport split after slide 50, newlines in chart labels) and push
+
+The remaining 35 decks still use Gamma iframe wrappers and will be migrated incrementally.
 
 ---
 
 ## What's in Each Deck
 
-Every 101 deck follows a consistent structure across approximately 60 slides:
+Every 101 deck follows a consistent structure across approximately 60–100 slides:
 
 1. **Title card** — Course name, ImpactMojo branding, track identity
 2. **Agenda** — Overview of what the deck covers
@@ -49,7 +68,7 @@ Each track uses a distinct Indian folk art tradition for its illustrations, grou
 
 ## Available Decks
 
-As of March 2026, **22 of 39** decks have been generated — 18 with full PDF exports available, and 4 with decks ready on Gamma (PDF export pending). The remaining courses are queued for generation once Gamma API credits are replenished.
+As of April 2026, **3 native HTML decks** are live (Dev Econ, MEL, Climate) and **22 of 39** Gamma decks have been generated. The remaining courses are being migrated from Gamma iframes to native HTML.
 
 ### MEL & Research
 

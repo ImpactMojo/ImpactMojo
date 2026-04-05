@@ -2,6 +2,22 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.13.0 — April 5, 2026
+
+**What changed for you:** Three 101 foundational course decks — Development Economics, MEL, and Climate Essentials — are now native HTML slide decks replacing the old Gamma.app embeds. Full 100-slide presentations with light/dark theme, keyboard/touch navigation, interactive Chart.js charts, and content that fills the screen properly.
+
+### Native 101 Slide Decks
+- **Development Economics 101** — 100 slides, 12 sections, 17 interactive charts covering poverty, growth, agriculture, human capital, finance, trade, evidence, South Asia, and contemporary challenges
+- **MEL 101** — 100 slides covering theory of change, indicators, data collection, evaluation methods, learning systems, and MEL failures
+- **Climate Essentials 101** — 100 slides covering climate science, adaptation, mitigation, policy, finance, and South Asian climate vulnerability
+
+### Design System
+- Shared CSS/JS template for all future native 101 decks
+- Light/dark/system theme toggle
+- Keyboard arrows, touch swipe, and fullscreen navigation
+- Responsive viewport scaling (1280×720 base, scales to any screen)
+- Proportionally sized components that fill the slide area
+
 ## v10.12.0 — March 31, 2026
 
 **What changed for you:** Repository moved to the ImpactMojo GitHub org, and documentation is now self-hosted (no more GitBook). Translation support expanded to 14 South Asian languages.

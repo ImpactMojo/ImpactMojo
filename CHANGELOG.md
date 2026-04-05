@@ -5,6 +5,23 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.13.0] - 2026-04-05
+
+### Added
+- **Native 101 slide decks** — Replaced Gamma.app iframe wrappers with self-hosted HTML slide decks for 3 foundational courses: Development Economics 101, MEL 101, Climate Essentials 101
+- **Shared deck template** — Reusable CSS (`101-courses/native/shared/deck.css`) and JS engine (`deck.js`) for all native 101 decks: light/dark/system theme, keyboard/touch/swipe nav, fullscreen, Chart.js integration, viewport scaling
+- **17 Chart.js visualisations** in Dev Econ 101 (poverty trends, Lorenz curve, convergence trajectories, structural transformation, India GDP growth, rural credit, HCI comparison, UPI growth, global trade, FDI, RCT publications, caste income, urbanisation, SDG progress, jobless growth)
+
+### Changed
+- **101 deck CSS** — Proportionally larger fonts, padding, and gaps across all slide components to fill 1280×720 viewport: titles 32px/26px, body 16px, bullets 16px, stat numbers 36px, quotes 20px, charts 230px height
+- **Inline style overrides** — Bumped 200+ hardcoded inline font sizes (11→13px, 12→14px, 13→15px) that CSS classes couldn't override
+- **Dev Econ CTA** — "Explore the Full Course" → "Explore the Flagship Course"
+
+### Fixed
+- **Slide navigation** — Slides 51–100 were outside `slide-viewport` div in all Claude Chat-generated decks, making them unreachable by nav JS
+- **JS syntax error** — Literal newlines inside Chart.js label strings broke entire script block
+- **`chartsInit` declaration order** — Variable referenced before declaration in Dev Econ deck
+
 ## [10.12.0] - 2026-03-31
 
 ### Added
