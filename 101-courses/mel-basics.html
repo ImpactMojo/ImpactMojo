@@ -2918,24 +2918,12 @@ const charts={};
 
 function goTo(n){
   if(n<1||n>TOTAL)return;
-  document.getElementById('s'+cur).classList.remove('active');
-  cur=n;
-  document.getElementById('s'+cur).classList.add('active');
-  document.getElementById('prog-text').textContent=cur+' / '+TOTAL;
-  document.getElementById('prevBtn').disabled=cur===1;
-  document.getElementById('nextBtn').disabled=cur===TOTAL;
-  document.getElementById('progress-bar').style.width=((cur/TOTAL)*100)+'%';
+  document.getElementById('s'+cur).classList.remove('active');   cur=n;   document.getElementById('s'+cur).classList.add('active');   document.getElementById('prog-text').textContent=cur+' / '+TOTAL;   document.getElementById('prevBtn').disabled=cur===1;   document.getElementById('nextBtn').disabled=cur===TOTAL;   document.getElementById('progress-bar').style.width=((cur/TOTAL)*100)+'%';
   scaleViewport();
   initChart(cur);
 }
 
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(cur+1);
-  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(cur-1);
-});
-
-let tx=0;
-document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('keydown',e=>{   if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(cur+1);   if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(cur-1); });  let tx=0; document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
 document.addEventListener('touchend',e=>{
   const dx=e.changedTouches[0].clientX-tx;
   if(Math.abs(dx)>50){dx<0?goTo(cur+1):goTo(cur-1);}
@@ -2944,9 +2932,7 @@ document.addEventListener('touchend',e=>{
 function scaleViewport(){
   const vp=document.getElementById('viewport');
   const s=Math.min(window.innerWidth/1280,window.innerHeight/720);
-  vp.style.transform='scale('+s+')';
-}
-window.addEventListener('resize',scaleViewport);
+  vp.style.transform='scale('+s+')'; } window.addEventListener('resize',scaleViewport);
 scaleViewport();
 
 function toggleFS(){
@@ -2955,12 +2941,7 @@ function toggleFS(){
 }
 
 function setTheme(t){
-  document.body.classList.remove('light','dark');
-  if(t==='light')document.body.classList.add('light');
-  if(t==='dark')document.body.classList.add('dark');
-  localStorage.setItem('im-theme',t);
-  document.querySelectorAll('.theme-btn').forEach(b=>{
-    b.classList.toggle('active',b.textContent.toLowerCase()===t||(t==='system'&&b.textContent==='System'));
+  document.body.classList.remove('light','dark');   if(t==='light')document.body.classList.add('light');   if(t==='dark')document.body.classList.add('dark');   localStorage.setItem('im-theme',t);   document.querySelectorAll('.theme-btn').forEach(b=>{     b.classList.toggle('active',b.textContent.toLowerCase()===t||(t==='system'&&b.textContent==='System'));
   });
   Object.keys(charts).forEach(k=>{if(charts[k])charts[k].update();});
 }
@@ -2968,19 +2949,8 @@ const savedTheme=localStorage.getItem('im-theme')||'light';
 setTheme(savedTheme);
 
 function initChart(slide){
-  const dark=document.body.classList.contains('dark');
-  const textColor=dark?'rgba(255,255,255,0.6)':'rgba(28,25,23,0.7)';
-  const gridColor=dark?'rgba(255,255,255,0.08)':'rgba(28,25,23,0.08)';
-
-  if(slide===31&&!charts['indicChart']){
-    const ctx=document.getElementById('indicChart');
-    if(!ctx)return;
-    charts['indicChart']=new Chart(ctx,{
-      type:'bar',
-      data:{
-        labels:['Donor requires it','Easy to collect','Already measured elsewhere','Linked to ToC outcome','Field team requested it','Evidence of decision use'],
-        datasets:[{
-          label:'% of respondents citing reason',
+  const dark=document.body.classList.contains('dark');   const textColor=dark?'rgba(255,255,255,0.6)':'rgba(28,25,23,0.7)';   const gridColor=dark?'rgba(255,255,255,0.08)':'rgba(28,25,23,0.08)';    if(slide===31&&!charts['indicChart']){
+    const ctx=document.getElementById('indicChart');     if(!ctx)return;     charts['indicChart']=new Chart(ctx,{       type:'bar',       data:{         labels:['Donor requires it','Easy to collect','Already measured elsewhere','Linked to ToC outcome','Field team requested it','Evidence of decision use'],         datasets:[{           label:'% of respondents citing reason',
           data:[78,65,42,38,22,18],
           backgroundColor:['rgba(99,102,241,0.8)','rgba(14,165,233,0.8)','rgba(16,185,129,0.8)','rgba(245,158,11,0.8)','rgba(239,68,68,0.8)','rgba(99,102,241,0.5)'],
           borderRadius:4
@@ -2998,16 +2968,7 @@ function initChart(slide){
   }
 
   if(slide===34&&!charts['indLevelChart']){
-    const ctx=document.getElementById('indLevelChart');
-    if(!ctx)return;
-    charts['indLevelChart']=new Chart(ctx,{
-      type:'bar',
-      data:{
-        labels:['Impact','Outcome','Output','Activity/Process'],
-        datasets:[{
-          label:'Minimum',data:[2,3,5,4],backgroundColor:'rgba(99,102,241,0.5)',borderRadius:4
-        },{
-          label:'Maximum',data:[3,5,8,6],backgroundColor:'rgba(14,165,233,0.8)',borderRadius:4
+    const ctx=document.getElementById('indLevelChart');     if(!ctx)return;     charts['indLevelChart']=new Chart(ctx,{       type:'bar',       data:{         labels:['Impact','Outcome','Output','Activity/Process'],         datasets:[{           label:'Minimum',data:[2,3,5,4],backgroundColor:'rgba(99,102,241,0.5)',borderRadius:4         },{           label:'Maximum',data:[3,5,8,6],backgroundColor:'rgba(14,165,233,0.8)',borderRadius:4
         }]
       },
       options:{
@@ -3022,19 +2983,10 @@ function initChart(slide){
   }
 
   if(slide===50&&!charts['evalChart']){
-    const ctx=document.getElementById('evalChart');
-    if(!ctx)return;
-    charts['evalChart']=new Chart(ctx,{
-      type:'bubble',
+    const ctx=document.getElementById('evalChart');     if(!ctx)return;     charts['evalChart']=new Chart(ctx,{       type:'bubble',
       data:{
         datasets:[
-          {label:'RCT',data:[{x:9,y:3,r:12}],backgroundColor:'rgba(99,102,241,0.7)'},
-          {label:'DiD/RDD',data:[{x:7,y:5,r:10}],backgroundColor:'rgba(14,165,233,0.7)'},
-          {label:'PSM',data:[{x:5,y:6,r:9}],backgroundColor:'rgba(16,185,129,0.7)'},
-          {label:'Pre-Post Survey',data:[{x:3,y:8,r:12}],backgroundColor:'rgba(245,158,11,0.7)'},
-          {label:'Contribution Analysis',data:[{x:6,y:7,r:10}],backgroundColor:'rgba(239,68,68,0.7)'},
-          {label:'Qualitative Only',data:[{x:4,y:9,r:8}],backgroundColor:'rgba(99,102,241,0.4)'},
-          {label:'Outcome Harvesting',data:[{x:5,y:8,r:9}],backgroundColor:'rgba(16,185,129,0.4)'}
+          {label:'RCT',data:[{x:9,y:3,r:12}],backgroundColor:'rgba(99,102,241,0.7)'},           {label:'DiD/RDD',data:[{x:7,y:5,r:10}],backgroundColor:'rgba(14,165,233,0.7)'},           {label:'PSM',data:[{x:5,y:6,r:9}],backgroundColor:'rgba(16,185,129,0.7)'},           {label:'Pre-Post Survey',data:[{x:3,y:8,r:12}],backgroundColor:'rgba(245,158,11,0.7)'},           {label:'Contribution Analysis',data:[{x:6,y:7,r:10}],backgroundColor:'rgba(239,68,68,0.7)'},           {label:'Qualitative Only',data:[{x:4,y:9,r:8}],backgroundColor:'rgba(99,102,241,0.4)'},           {label:'Outcome Harvesting',data:[{x:5,y:8,r:9}],backgroundColor:'rgba(16,185,129,0.4)'}
         ]
       },
       options:{
@@ -3050,8 +3002,7 @@ function initChart(slide){
 }
 
 // Init
-document.getElementById('prevBtn').disabled=true;
-document.getElementById('progress-bar').style.width=((1/TOTAL)*100)+'%';
+document.getElementById('prevBtn').disabled=true; document.getElementById('progress-bar').style.width=((1/TOTAL)*100)+'%';
 </script>
 </body>
 </html>
