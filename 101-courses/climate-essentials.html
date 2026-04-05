@@ -2698,19 +2698,12 @@ function showSlide(n){
   n=Math.max(1,Math.min(TOTAL,n));
   slides.forEach(s=>s.classList.remove('active'));
   const target=document.getElementById('s'+n);
-  if(target){target.classList.add('active');initChart(n);}
-  cur=n;
-  document.getElementById('prog-text').textContent=n+' / '+TOTAL;
-  document.getElementById('prevBtn').disabled=(n===1);
-  document.getElementById('nextBtn').disabled=(n===TOTAL);
-  document.getElementById('progress-bar').style.width=((n/TOTAL)*100)+'%';
+  if(target){target.classList.add('active');initChart(n);}   cur=n;   document.getElementById('prog-text').textContent=n+' / '+TOTAL;   document.getElementById('prevBtn').disabled=(n===1);   document.getElementById('nextBtn').disabled=(n===TOTAL);   document.getElementById('progress-bar').style.width=((n/TOTAL)*100)+'%';
 }
 function changeSlide(d){showSlide(cur+d);}
 
 // keyboard
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key==='ArrowDown')changeSlide(1);
-  else if(e.key==='ArrowLeft'||e.key==='ArrowUp')changeSlide(-1);
+document.addEventListener('keydown',e=>{   if(e.key==='ArrowRight'||e.key==='ArrowDown')changeSlide(1);   else if(e.key==='ArrowLeft'||e.key==='ArrowUp')changeSlide(-1);
 });
 
 // touch
@@ -2730,13 +2723,7 @@ function toggleFS(){
 // ── THEME ──────────────────────────────────────────────────────────
 function setTheme(t){
   const b=document.body;
-  b.classList.remove('light','dark');
-  if(t==='light')b.classList.add('light');
-  else if(t==='dark')b.classList.add('dark');
-  document.querySelectorAll('.theme-btn').forEach(btn=>{
-    btn.classList.toggle('active',btn.textContent.toLowerCase()===t||(t==='system'&&btn.textContent==='System'));
-  });
-  localStorage.setItem('im-theme',t);
+  b.classList.remove('light','dark');   if(t==='light')b.classList.add('light');   else if(t==='dark')b.classList.add('dark');   document.querySelectorAll('.theme-btn').forEach(btn=>{     btn.classList.toggle('active',btn.textContent.toLowerCase()===t||(t==='system'&&btn.textContent==='System'));   });   localStorage.setItem('im-theme',t);
 }
 (function(){const saved=localStorage.getItem('im-theme')||'light';setTheme(saved);})();
 
@@ -2744,9 +2731,7 @@ function setTheme(t){
 function scaleVP(){
   const vp=document.getElementById('viewport');
   const sx=window.innerWidth/1280,sy=window.innerHeight/720;
-  vp.style.transform='scale('+Math.min(sx,sy)+')';
-}
-window.addEventListener('resize',scaleVP);
+  vp.style.transform='scale('+Math.min(sx,sy)+')'; } window.addEventListener('resize',scaleVP);
 scaleVP();
 
 // ── CHARTS ─────────────────────────────────────────────────────────
@@ -2755,8 +2740,7 @@ function initChart(n){
   if(chartInited.has(n))return;
   chartInited.add(n);
 
-  const GREEN='#10B981',CYAN='#0EA5E9',AMBER='#F59E0B',RED='#EF4444',INDIGO='#6366F1';
-  const gridColor='rgba(0,0,0,0.08)';
+  const GREEN='#10B981',CYAN='#0EA5E9',AMBER='#F59E0B',RED='#EF4444',INDIGO='#6366F1';   const gridColor='rgba(0,0,0,0.08)';
   const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{family:'JetBrains Mono',size:10},color:'#78716C',boxWidth:12}},tooltip:{titleFont:{family:'JetBrains Mono',size:10},bodyFont:{family:'Amaranth',size:11}}},scales:{x:{grid:{color:gridColor},ticks:{font:{family:'JetBrains Mono',size:9},color:'#78716C'}},y:{grid:{color:gridColor},ticks:{font:{family:'JetBrains Mono',size:9},color:'#78716C'}}}};
 
   // S9: Temperature scenarios
@@ -2766,8 +2750,7 @@ function initChart(n){
     const ssp126=years.map(y=>{if(y<2020)return null;const t=(y-2020)/80;return +(1.1+t*0.7).toFixed(2);});
     const ssp245=years.map(y=>{if(y<2020)return null;const t=(y-2020)/80;return +(1.1+t*1.6).toFixed(2);});
     const ssp585=years.map(y=>{if(y<2020)return null;const t=(y-2020)/80;return +(1.1+t*3.3).toFixed(2);});
-    new Chart(document.getElementById('tempChart'),{type:'line',data:{labels:years,datasets:[
-      {label:'Historical',data:hist,borderColor:CYAN,borderWidth:2,pointRadius:0,tension:0.4},
+    new Chart(document.getElementById('tempChart'),{type:'line',data:{labels:years,datasets:[       {label:'Historical',data:hist,borderColor:CYAN,borderWidth:2,pointRadius:0,tension:0.4},
       {label:'SSP1-2.6 (1.5°C)',data:ssp126,borderColor:GREEN,borderWidth:1.5,borderDash:[4,3],pointRadius:0,tension:0.4},
       {label:'SSP2-4.5 (2.7°C)',data:ssp245,borderColor:AMBER,borderWidth:1.5,borderDash:[4,3],pointRadius:0,tension:0.4},
       {label:'SSP5-8.5 (4.4°C)',data:ssp585,borderColor:RED,borderWidth:1.5,borderDash:[4,3],pointRadius:0,tension:0.4},
@@ -2779,9 +2762,7 @@ function initChart(n){
     const yrs=[1993,1997,2001,2005,2009,2013,2017,2021,2023,2030,2050,2100];
     const sl=[0,8,16,25,35,46,58,72,101,null,null,null];
     const proj=[null,null,null,null,null,null,null,null,101,130,280,600];
-    new Chart(document.getElementById('seaChart'),{type:'line',data:{labels:yrs,datasets:[
-      {label:'Observed (NASA satellite)',data:sl,borderColor:CYAN,borderWidth:2,pointRadius:3,fill:true,backgroundColor:'rgba(14,165,233,0.08)',tension:0.3},
-      {label:'Projection mid-range',data:proj,borderColor:AMBER,borderWidth:1.5,borderDash:[5,3],pointRadius:2,fill:false,tension:0.3},
+    new Chart(document.getElementById('seaChart'),{type:'line',data:{labels:yrs,datasets:[       {label:'Observed (NASA satellite)',data:sl,borderColor:CYAN,borderWidth:2,pointRadius:3,fill:true,backgroundColor:'rgba(14,165,233,0.08)',tension:0.3},       {label:'Projection mid-range',data:proj,borderColor:AMBER,borderWidth:1.5,borderDash:[5,3],pointRadius:2,fill:false,tension:0.3},
     ]},options:base});
   }
 
@@ -2803,8 +2784,7 @@ function initChart(n){
   // S36: LCOE
   if(n===36&&document.getElementById('lcoeChart')){
     const yrs=[2010,2012,2014,2016,2018,2020,2022,2023];
-    new Chart(document.getElementById('lcoeChart'),{type:'line',data:{labels:yrs,datasets:[
-      {label:'Solar PV',data:[378,264,189,125,86,57,49,49],borderColor:AMBER,borderWidth:2,pointRadius:3,tension:0.3},
+    new Chart(document.getElementById('lcoeChart'),{type:'line',data:{labels:yrs,datasets:[       {label:'Solar PV',data:[378,264,189,125,86,57,49,49],borderColor:AMBER,borderWidth:2,pointRadius:3,tension:0.3},
       {label:'Onshore Wind',data:[102,100,100,92,80,65,50,33],borderColor:GREEN,borderWidth:2,pointRadius:3,tension:0.3},
       {label:'Coal (reference)',data:[111,111,110,108,108,108,105,105],borderColor:RED,borderWidth:1.5,borderDash:[4,3],pointRadius:0,tension:0},
     ]},options:{...base,scales:{...base.scales,y:{...base.scales.y,title:{display:true,text:'USD/MWh',font:{family:'JetBrains Mono',size:9},color:'#78716C'}}}}});
@@ -2813,10 +2793,7 @@ function initChart(n){
   // S37: Renewables GW added
   if(n===37&&document.getElementById('renewChart')){
     const yrs=[2015,2016,2017,2018,2019,2020,2021,2022,2023];
-    new Chart(document.getElementById('renewChart'),{type:'bar',data:{labels:yrs,datasets:[
-      {label:'Solar',data:[49,71,95,100,115,135,165,192,300],backgroundColor:'rgba(245,158,11,0.8)',stack:'s'},
-      {label:'Wind',data:[60,55,52,51,60,73,93,75,117],backgroundColor:'rgba(16,185,129,0.8)',stack:'s'},
-      {label:'Other renewables',data:[30,28,27,28,27,30,31,28,30],backgroundColor:'rgba(99,102,241,0.6)',stack:'s'},
+    new Chart(document.getElementById('renewChart'),{type:'bar',data:{labels:yrs,datasets:[       {label:'Solar',data:[49,71,95,100,115,135,165,192,300],backgroundColor:'rgba(245,158,11,0.8)',stack:'s'},       {label:'Wind',data:[60,55,52,51,60,73,93,75,117],backgroundColor:'rgba(16,185,129,0.8)',stack:'s'},       {label:'Other renewables',data:[30,28,27,28,27,30,31,28,30],backgroundColor:'rgba(99,102,241,0.6)',stack:'s'},
     ]},options:{...base,scales:{...base.scales,x:{...base.scales.x,stacked:true},y:{...base.scales.y,stacked:true,title:{display:true,text:'GW added per year',font:{family:'JetBrains Mono',size:9},color:'#78716C'}}}}});
   }
 }
