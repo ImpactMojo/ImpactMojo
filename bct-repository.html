@@ -70,7 +70,7 @@
     --card-bg: #FFFFFF;
     --hover-bg: #F1F5F9;
     --border-color: #E2E8F0;
-    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --gradient-primary: linear-gradient(135deg, #0369A1 0%, #4338CA 100%);
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.07);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.05);
@@ -95,7 +95,7 @@
     --card-bg: #1E293B;
     --hover-bg: #334155;
     --border-color: #334155;
-    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --gradient-primary: linear-gradient(135deg, #0369A1 0%, #4338CA 100%);
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
@@ -120,7 +120,7 @@ body.light-mode, [data-theme="light"] {
     --card-bg: #FFFFFF;
     --hover-bg: #F1F5F9;
     --border-color: #E2E8F0;
-    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --gradient-primary: linear-gradient(135deg, #0369A1 0%, #4338CA 100%);
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.07);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.05);
@@ -145,7 +145,7 @@ body.dark-mode, [data-theme="dark"] {
     --card-bg: #1E293B;
     --hover-bg: #334155;
     --border-color: #334155;
-    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --gradient-primary: linear-gradient(135deg, #0369A1 0%, #4338CA 100%);
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
@@ -433,7 +433,11 @@ p a, .hero-credit a { text-decoration: underline; }
 .technique-card-bar { height: 4px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
 .technique-card-inner { padding: 24px; }
 .technique-card-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
-.technique-id-badge { font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; color: #fff; letter-spacing: 0.3px; }
+/* WCAG AA: fixed dark badge background ensures white text passes contrast
+   regardless of category color. Category identity is preserved via the
+   .technique-card-bar stripe above the card. The inline `style="background:..."`
+   set by the renderer is overridden via !important. */
+.technique-id-badge { font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; color: #fff; letter-spacing: 0.3px; background: #0F172A !important; }
 .technique-evidence-badge { font-size: 0.7rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; margin-left: auto; }
 .evidence-strong { background: rgba(16, 185, 129, 0.12); color: var(--success-color); }
 .evidence-moderate { background: rgba(245, 158, 11, 0.12); color: var(--warning-color); }
@@ -451,10 +455,13 @@ p a, .hero-credit a { text-decoration: underline; }
 .sector-pill {
     display: inline-block; padding: 3px 10px; border-radius: 20px;
     font-size: 0.72rem; font-weight: 500;
-    background: rgba(14, 165, 233, 0.08); color: var(--accent-color); border: 1px solid rgba(14, 165, 233, 0.15);
+    /* WCAG AA: sky-800 #075985 = 7.56:1 on white. Was sky-500 #0EA5E9 = 2.77:1. */
+    background: rgba(14, 165, 233, 0.08); color: #075985; border: 1px solid rgba(14, 165, 233, 0.15);
 }
+body.dark-mode .sector-pill, [data-theme="dark"] .sector-pill { color: #7DD3FC; }
 .sector-pill-more { background: var(--hover-bg); color: var(--text-muted); border-color: var(--border-color); }
-.sector-pill-case-study { background: rgba(139, 92, 246, 0.1); color: #8B5CF6; border-color: rgba(139, 92, 246, 0.2); }
+.sector-pill-case-study { background: rgba(139, 92, 246, 0.1); color: #5B21B6; border-color: rgba(139, 92, 246, 0.2); }
+body.dark-mode .sector-pill-case-study, [data-theme="dark"] .sector-pill-case-study { color: #C4B5FD; }
 
 @media (max-width: 768px) { .techniques-grid { grid-template-columns: 1fr; } }
 
@@ -599,7 +606,9 @@ p a, .hero-credit a { text-decoration: underline; }
 .footer-section a:hover { color: var(--accent-color); }
 .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 24px; text-align: center; }
 .footer-bottom p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px; }
-.footer-bottom a { color: var(--accent-color); }
+/* WCAG AA: sky-800 #075985 = 7.56:1 on white. Was sky-500 #0EA5E9 = 2.77:1. */
+.footer-bottom a { color: #075985; }
+body.dark-mode .footer-bottom a, [data-theme="dark"] .footer-bottom a { color: #7DD3FC; }
 @media (max-width: 768px) { .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
 @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
 
@@ -797,7 +806,8 @@ body.printing-technique .copy-toast { display: none !important; }
     font-family: inherit; transition: all 0.2s; white-space: nowrap;
 }
 .view-tab:hover { color: var(--text-primary); background: var(--hover-bg); }
-.view-tab.active { background: var(--accent-color); color: #fff; }
+/* WCAG AA: white on sky-700 #0369A1 = 5.22:1. Was sky-500 #0EA5E9 = 2.99:1. */
+.view-tab.active { background: #0369A1; color: #fff; }
 .view-tab svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
 .view-tab .tab-count {
     background: rgba(255,255,255,0.2); padding: 1px 7px; border-radius: 10px;
@@ -883,9 +893,12 @@ body.printing-technique .copy-toast { display: none !important; }
     display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
 }
 .compare-bar-label {
-    font-size: 0.82rem; font-weight: 700; color: var(--secondary-accent);
+    font-size: 0.82rem; font-weight: 700;
+    /* WCAG AA: indigo-700 #4338CA = 7.66:1 on white. Was indigo-500 #6366F1 = 4.21:1. */
+    color: #4338CA;
     text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
 }
+body.dark-mode .compare-bar-label, [data-theme="dark"] .compare-bar-label { color: #A5B4FC; }
 .compare-bar-items { display: flex; gap: 8px; flex: 1; flex-wrap: wrap; }
 .compare-bar-chip {
     display: inline-flex; align-items: center; gap: 6px;
@@ -991,6 +1004,45 @@ body.printing-technique .copy-toast { display: none !important; }
 .v3-blob-1 { top: 10%; right: 10%; width: 400px; height: 400px; background: var(--accent-color); }
 .v3-blob-2 { bottom: 20%; left: 5%; width: 300px; height: 300px; background: var(--secondary-accent); animation-delay: -5s; }
 @keyframes pulseBlob { 0%, 100% { transform: scale(1); opacity: 0.15; } 50% { transform: scale(1.1); opacity: 0.2; } }
+
+/* WCAG 2.1 AA contrast overrides — sky-500 #0EA5E9 fails as text on white (2.77:1).
+   Override all text uses of var(--accent-color) with sky-800 #075985 (7.56:1 on white)
+   in light mode and sky-300 #7DD3FC (8.77:1 on dark) in dark mode. Background/border
+   uses of --accent-color are unchanged so the brand identity stays the same. */
+a,
+.hero-credit a,
+.attribution-text a,
+.stat-value,
+.nav-link.active,
+.category-chip.active,
+.category-chip.active .chip-count,
+.modal-tag-sector,
+.related-chip,
+.modal-nav-btn:hover {
+    color: #075985;
+}
+body.dark-mode a,
+body.dark-mode .hero-credit a,
+body.dark-mode .attribution-text a,
+body.dark-mode .stat-value,
+body.dark-mode .nav-link.active,
+body.dark-mode .category-chip.active,
+body.dark-mode .category-chip.active .chip-count,
+body.dark-mode .modal-tag-sector,
+body.dark-mode .related-chip,
+body.dark-mode .modal-nav-btn:hover,
+[data-theme="dark"] a,
+[data-theme="dark"] .hero-credit a,
+[data-theme="dark"] .attribution-text a,
+[data-theme="dark"] .stat-value,
+[data-theme="dark"] .nav-link.active,
+[data-theme="dark"] .category-chip.active,
+[data-theme="dark"] .category-chip.active .chip-count,
+[data-theme="dark"] .modal-tag-sector,
+[data-theme="dark"] .related-chip,
+[data-theme="dark"] .modal-nav-btn:hover {
+    color: #7DD3FC;
+}
 </style>
 <style>
 /* ===== ImpactMojo Design System ===== */
@@ -1292,7 +1344,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                     <li>Read the practical examples for implementation ideas</li>
                     <li>Combine complementary techniques for multi-component interventions</li>
                 </ul>
-                <span class="guide-tag" style="background: rgba(14, 165, 233, 0.1); color: #0EA5E9;">Intervention Design</span>
+                <span class="guide-tag" style="background: rgba(14, 165, 233, 0.1); color: #075985;">Intervention Design</span>
             </div>
             <div class="guide-card">
                 <div class="guide-card-icon" style="background: rgba(99, 102, 241, 0.1); color: #6366F1;">
@@ -1306,7 +1358,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                     <li>Link techniques to your Theory of Change pathways</li>
                     <li>Export selected techniques as CSV for documentation</li>
                 </ul>
-                <span class="guide-tag" style="background: rgba(99, 102, 241, 0.1); color: #6366F1;">Evidence-Based Proposals</span>
+                <span class="guide-tag" style="background: rgba(99, 102, 241, 0.1); color: #4338CA;">Evidence-Based Proposals</span>
             </div>
             <div class="guide-card">
                 <div class="guide-card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">
@@ -1320,7 +1372,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                     <li>Track fidelity of implementation against the BCT definitions</li>
                     <li>Use category groupings for structured reporting</li>
                 </ul>
-                <span class="guide-tag" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">Monitoring & Evaluation</span>
+                <span class="guide-tag" style="background: rgba(16, 185, 129, 0.1); color: #065F46;">Monitoring & Evaluation</span>
             </div>
         </div>
     </section>

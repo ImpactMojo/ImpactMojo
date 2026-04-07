@@ -69,19 +69,47 @@ jobs:
         id: pa11y
         run: |
           set +e
-          pa11y-ci --config .pa11yci --json 2>&1 | tee pa11y-results.json
+          # Direct redirection: stdout (JSON) -> file, stderr -> log.
+          # Avoids `tee` + `2>&1` which mixes stderr into the JSON file and
+          # can corrupt or truncate the output. Also avoids PIPESTATUS pitfalls
+          # since there's no pipe — $? is pa11y-ci's exit code directly.
+          pa11y-ci --config .pa11yci --json > pa11y-results.json
           PA11Y_EXIT=$?
-          # Extract summary from JSON output for the report
+          echo "pa11y-results.json size: $(wc -c < pa11y-results.json) bytes"
+          # Extract summary from JSON output for the report.
+          # pa11y-ci --json emits a single top-level JSON object to stdout, but
+          # `2>&1 | tee` mixes stderr (status messages) into the same file. We
+          # use depth-counted brace walking to extract the first balanced JSON
+          # object instead of relying on indexOf/lastIndexOf which break when
+          # there's extra output before/after the JSON.
           node -e "
             const fs = require('fs');
             try {
               const raw = fs.readFileSync('pa11y-results.json', 'utf8');
-              const jsonStart = raw.indexOf('{');
-              if (jsonStart === -1) {
+              const start = raw.indexOf('{');
+              if (start === -1) {
                 fs.writeFileSync('pa11y-report.md', '## Accessibility Audit Results\n\nNo JSON output produced. Check workflow logs.\n');
                 process.exit(0);
               }
-              const data = JSON.parse(raw.slice(jsonStart));
+              // Walk forward from the first { counting depth, respecting strings
+              let depth = 0, end = -1, inString = false, escape = false;
+              for (let i = start; i < raw.length; i++) {
+                const c = raw[i];
+                if (escape) { escape = false; continue; }
+                if (c === '\\\\') { escape = true; continue; }
+                if (c === '\"') { inString = !inString; continue; }
+                if (inString) continue;
+                if (c === '{') depth++;
+                else if (c === '}') {
+                  depth--;
+                  if (depth === 0) { end = i; break; }
+                }
+              }
+              if (end === -1) {
+                fs.writeFileSync('pa11y-report.md', '## Accessibility Audit Results\n\nIncomplete JSON output. Check workflow logs.\n');
+                process.exit(0);
+              }
+              const data = JSON.parse(raw.slice(start, end + 1));
               let md = '## Accessibility Audit Results (WCAG 2.1 AA)\n\n';
               const total = data.total || 0;
               const passes = data.passes || 0;
@@ -110,7 +138,10 @@ jobs:
               }
               fs.writeFileSync('pa11y-report.md', md);
             } catch(e) {
-              fs.writeFileSync('pa11y-report.md', '## Accessibility Audit Results\n\nFailed to parse results. See workflow logs for details.\n');
+              // Surface the actual error so we can debug parser failures.
+              const msg = (e && e.message) ? e.message : String(e);
+              fs.writeFileSync('pa11y-report.md', '## Accessibility Audit Results\n\nFailed to parse results: ' + msg + '\n\nSee workflow logs for details.\n');
+              console.error('parser error:', msg);
             }
           "
           echo "exit_code=$PA11Y_EXIT" >> "$GITHUB_OUTPUT"

@@ -40,8 +40,14 @@ jobs:
         id: axe
         run: |
           set +e
-          npm run test:a11y 2>&1 | tee axe-results.txt
+          # Capture combined stdout+stderr to file, but use PIPESTATUS so
+          # the upstream exit code is preserved (tee always returns 0).
+          # We need both because the axe wrapper writes the human-readable
+          # report on both streams.
+          npm run test:a11y > axe-results.txt 2>&1
           AXE_EXIT=$?
+          # Echo to log so the run is visible in the Actions UI
+          cat axe-results.txt
           echo "exit_code=$AXE_EXIT" >> "$GITHUB_OUTPUT"
 
           # Build a markdown report from the output

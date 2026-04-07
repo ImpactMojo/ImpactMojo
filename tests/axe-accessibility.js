@@ -90,12 +90,31 @@ async function runAxeOnPage(browser, url) {
 
   const results = await page.evaluate(() => {
     /* global axe */
-    return axe.run(document, {
-      runOnly: {
-        type: 'tag',
-        values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'],
+    // Exclude third-party widgets that we don't directly own:
+    //   - .introjs-* — Intro.js tour library (auto-starts via js/tours.js)
+    //   - .userway_* / #uwy* — UserWay accessibility widget
+    //   - .gtranslate_wrapper — Google Translate widget
+    return axe.run(
+      {
+        exclude: [
+          ['.introjs-tooltip'],
+          ['.introjs-overlay'],
+          ['.introjs-helperLayer'],
+          ['.introjs-progressbar'],
+          ['.introjs-bullets'],
+          ['.introjs-arrow'],
+          ['[class^="userway_"]'],
+          ['#uwy'],
+          ['.gtranslate_wrapper'],
+        ],
       },
-    });
+      {
+        runOnly: {
+          type: 'tag',
+          values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'],
+        },
+      }
+    );
   });
 
   await page.close();

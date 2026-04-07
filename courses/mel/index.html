@@ -552,10 +552,20 @@ body.dark-mode, [data-theme="dark"] {
            LINKS - MUST BE CLICKABLE
            ========================================== */
         a {
-            color: var(--accent-color);
+            /* WCAG AA: sky-800 #075985 = 7.56:1 on white (was sky-500 #0EA5E9 = 2.77:1) */
+            color: #075985;
             text-decoration: none;
             cursor: pointer;
             transition: color var(--transition-fast);
+        }
+        body.dark-mode a, [data-theme="dark"] a { color: #7DD3FC; }
+        /* WCAG 2.1 AA (1.4.1 Use of Color): inline anchors in <main> p/li are
+           underlined so they're distinguishable without color alone. Excludes
+           button-styled anchors. */
+        main p a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]),
+        main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) {
+            text-decoration: underline;
+            text-underline-offset: 0.15em;
         }
         
         a:hover {

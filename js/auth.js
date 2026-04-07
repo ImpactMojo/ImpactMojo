@@ -1102,22 +1102,25 @@ const ImpactMojoAuth = {
         // Skip injection if the page already has its own auth buttons (e.g. account.html, premium.html)
         if (document.querySelector('header .auth-logged-out, header .auth-logged-in, .nav-buttons .auth-logged-out')) return;
 
+        // WCAG AA: fallback colors must pass 4.5:1 even when --text-secondary
+        // is unset. #475569 (slate-600) = 7.58:1 on white.
         var loginBtn = document.createElement('a');
         loginBtn.href = '/login.html';
         loginBtn.className = 'auth-logged-out topbar-auth-injected';
-        loginBtn.style.cssText = 'color:var(--text-secondary,#94a3b8);text-decoration:none;font-size:0.85rem;margin-right:0.5rem;';
+        loginBtn.style.cssText = 'color:var(--text-secondary,#475569);text-decoration:none;font-size:0.85rem;margin-right:0.5rem;';
         loginBtn.textContent = 'Log In';
 
+        // WCAG AA: white on indigo-600 #4f46e5 = 5.18:1 (was indigo-500 #6366f1 = 4.04:1).
         var signupBtn = document.createElement('a');
         signupBtn.href = '/signup.html';
         signupBtn.className = 'auth-logged-out topbar-auth-injected';
-        signupBtn.style.cssText = 'background:#6366f1;color:#fff;text-decoration:none;font-size:0.8rem;padding:0.3rem 0.75rem;border-radius:6px;margin-right:0.75rem;';
+        signupBtn.style.cssText = 'background:#4f46e5;color:#fff;text-decoration:none;font-size:0.8rem;padding:0.3rem 0.75rem;border-radius:6px;margin-right:0.75rem;';
         signupBtn.textContent = 'Sign Up';
 
         var accountBtn = document.createElement('a');
         accountBtn.href = '/account.html';
         accountBtn.className = 'auth-logged-in topbar-auth-injected';
-        accountBtn.style.cssText = 'color:var(--text-secondary,#94a3b8);text-decoration:none;font-size:0.85rem;margin-right:0.5rem;align-items:center;gap:0.25rem;';
+        accountBtn.style.cssText = 'color:var(--text-secondary,#475569);text-decoration:none;font-size:0.85rem;margin-right:0.5rem;align-items:center;gap:0.25rem;';
         accountBtn.innerHTML =
             '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:0.25rem;">' +
             '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' +
@@ -1126,7 +1129,7 @@ const ImpactMojoAuth = {
         var logoutBtn = document.createElement('a');
         logoutBtn.href = '#';
         logoutBtn.className = 'auth-logged-in topbar-auth-injected';
-        logoutBtn.style.cssText = 'color:var(--text-secondary,#94a3b8);text-decoration:none;font-size:0.8rem;margin-right:0.75rem;opacity:0.7;';
+        logoutBtn.style.cssText = 'color:var(--text-secondary,#475569);text-decoration:none;font-size:0.8rem;margin-right:0.75rem;opacity:0.7;';
         logoutBtn.textContent = 'Log Out';
         logoutBtn.addEventListener('click', function (e) {
             e.preventDefault();
