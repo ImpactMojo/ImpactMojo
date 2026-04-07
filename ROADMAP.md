@@ -56,10 +56,20 @@ ImpactMojo development priorities for 2026. Items are roughly ordered by priorit
 ## Q2 2026 (Apr-Jun) — In Progress
 
 - [x] **Native 101 slide decks** — Replaced Gamma iframes with self-hosted HTML decks for Dev Econ, MEL, and Climate (100 slides each, Chart.js, light/dark theme, keyboard/touch nav)
+- [x] **Handout 404s + same-origin serving** — `getHandoutURL` now serves from `/Handouts/` with URL-encoded path segments (previously pointed at a stale mirror)
+- [x] **Brand theme unification** — single `im-theme` localStorage key across main site, handouts, games, account page; seamless legacy-key migration
+- [x] **WCAG 2.1 AA contrast baseline** — muted-text token bumps across 115 files, `link-in-text-block` underline rule on 74 content pages, `id="home"` anchor fix, card-colour overrides
+- [x] **Device-mode default theme resolution** on 70 pages — follows OS `prefers-color-scheme` on first paint, explicit class overrides keep the 3-button toggle dominant
+- [x] **Duplicate header cleanup** — removed `im-topbar` overlay from 28 pages where it was hiding the legacy main navigation
+- [x] **Emoji → Sargam line icons** — 39 pictographic emoji replaced with `si_*` icons across 10 content pages
+- [x] **"Coming Soon" course cards** — 10 unbuilt placeholder cards marked with disabled state instead of dead mirror links
+- [x] **Brand identity audit complete** — every content page has correct fonts, paper plane, theme toggle, home link, Premium link, footer landmark, CC BY-NC-SA attribution, language dropdown
+- [x] **FieldCases + DevDiscourses theme toggle** (sister sites on `varnasr.github.io`) — 3-button system/light/dark selector shipped on both
 - [ ] **Migrate remaining 35 foundational decks** — Convert all Gamma iframe wrappers to native HTML using Claude Chat + Claude Code workflow
 - [ ] **Vernacular Content** — Full courses in Hindi and Tamil (#29)
 - [ ] **Analytics dashboard v2** — Learner analytics with completion funnels, time-on-task, assessment scores
 - [ ] **Mobile app (PWA)** — Enhanced PWA with push notifications and background sync
+- [ ] **Games/climate-action-game.html device-mode** — single remaining dark-only page; needs designer-authored light tokens for earth-tone palette (`#F5F0EB`)
 
 ## Q3 2026 (Jul-Sep) — Planned
 

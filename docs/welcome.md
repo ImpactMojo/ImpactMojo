@@ -38,7 +38,7 @@ No login is required to start learning. Just open the website and begin.
 ImpactMojo is much more than a course library. Here's what's available:
 
 ### Courses
-**9 flagship courses** (each with ~13 in-depth modules) covering topics like MEL for Development, Theory of Change, and Development Economics. Plus **39 foundational courses** — shorter, focused lessons on specific skills and concepts. All organized across 6 learning tracks.
+**11 flagship courses** (each with ~13 in-depth modules) covering topics like MEL for Development, Theory of Change, and Development Economics. Plus **38 foundational courses** — shorter, focused lessons on specific skills and concepts. All organized across 6 learning tracks.
 
 ### Economics Simulation Games
 **16 interactive games** that let you experience economic and development concepts by making decisions — budget allocations, market dynamics, policy trade-offs, and more. Ideal for workshops and classrooms.

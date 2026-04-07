@@ -4,7 +4,7 @@ Complete catalog of all ImpactMojo learning resources with direct links. Everyth
 
 ---
 
-## Flagship Courses (9)
+## Flagship Courses (11)
 
 Deep, multi-module courses with 12–13 modules each, interactive lexicons, South Asian case studies, and AI study companions.
 
@@ -36,7 +36,7 @@ Interactive book companions under Specials — deep, chapter-by-chapter explorat
 
 ---
 
-## Foundational Courses (39)
+## Foundational Courses (38)
 
 Single-page courses covering essential development topics. All free, no login required.
 

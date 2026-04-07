@@ -5,6 +5,36 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.14.0] - 2026-04-07
+
+### Added
+- **Device-mode default theme resolution** on 70 pages — `:root` now carries light tokens, `@media (prefers-color-scheme: dark) { :root {} }` drives dark, and explicit `body.{light,dark}-mode` + `[data-theme="*"]` overrides keep the theme toggle dominant. Applied to blog posts, Labs, course index + lexicon pages, admin pages, book companion tools, premium tools, `transparency`, `testimonials`, `challenges`, `bct-repository`, `dataverse`, `toc-builder`, `toc-workbench`.
+- **Link-in-text-block underline rule** (WCAG 2.1 AA §1.4.1) on 74 content pages — inline `<a>` inside `<main> p` / `<main> li` now carries `text-decoration: underline`, scoped to exclude button-styled anchors.
+- **CC BY-NC-SA 4.0 attribution** backfilled into 17 handouts — all 84 handout pages now uniform on every brand-default check.
+- **Premium topbar link** added to 11 main-site pages whose only Premium button lived inside the removed duplicate `im-topbar`.
+- **Language translation widget** (`js/translate.js`) on `climate-trace-india.html` and `transparency.html`.
+- **`id="home"` anchor** on `index.html` hero section so `<a href="#home">` nav links resolve (fixes pa11y NoSuchID).
+- **Paper plane SVG** on `courses/gender/lexicon.html` and `courses/pubpol/lexicon.html`.
+- **`<footer>` landmark** with ImpactMojo attribution on `courses/pubpol/lexicon.html`.
+- **PR-comment permissions** — `accessibility.yml` + `ci.yml` now grant `pull-requests: write` (scoped per job) so `marocchino/sticky-pull-request-comment@v3` stops failing.
+
+### Changed
+- **WCAG AA muted-text contrast** bumped across 115 files mode-aware: light `--text-muted #94A3B8→#52627A` (2.56:1→6.20:1), dark `--text-muted #64748B→#94A3B8` (3.75:1→6.96:1), dark `--text-secondary #94A3B8→#CBD5E1` (6.96:1→12.02:1).
+- **`catalog.html` card colours** — scoped overrides for `.card-rating` (amber `#F59E0B`→`#B45309`/`#FBBF24`) and `.card-track` (sky `#0EA5E9`→`#0369A1`/`#38BDF8`), both now pass WCAG AA.
+- **Theme system unified** on `im-theme` localStorage key — `js/cookie-ui.js`, `js/account.js`, `js/game-shell.js` all read canonical first then fall back to legacy keys (`theme`, `impactmojo-theme`, `imx_theme`) for seamless migration; all writes mirrored to legacy keys. Also set `data-theme` on `<html>`.
+- **Brand fonts** — `BookSummaries/ultralearning-companion.html` (was Source Serif 4) and `BookSummaries/deep-work-companion.html` (was Merriweather) migrated to Inter / Amaranth / JetBrains Mono.
+- **Content counts** aligned to ground truth across 26 files (11 flagship, 38 foundational, 11 Labs, 16 Games): `README.md`, `CLAUDE.md`, catalog, index, premium, upgrade, content-marketing-kit, org-dashboard, verify-certificate, updates, PressKit, blog post, and 13 `docs/*.md` files.
+- **39 pictographic emoji → Sargam line icons** across 10 content pages. Typographic symbols (✓ ✔ ✦ ✧ ⚠) left as decorative characters.
+- **10 unbuilt course cards** in `catalog.html` + `catalog_data.json` marked `comingSoon: true`, rendered as disabled cards with dashed border and amber "Coming Soon" pill badge: Survey Design 101, Gender Mainstreaming 101, Mixed Methods 101, Impact Evaluation 101, Maternal Health 101, Child Development 101, Feminist Research 101, Economics 101, VaniScribe (×2).
+
+### Fixed
+- **Handout 404s** — `getHandoutURL` in `handouts.html` now serves from same-origin `/Handouts/` with URL-encoded path segments (was pointing at a stale `varnasr.github.io/ImpactMojo/` mirror).
+- **Duplicate `im-topbar` covering main site nav** on 28 pages — the overlay was hiding the legacy `<header class="header">` main navigation (including all dropdowns). Removed from pages where the legacy header is the real main nav; kept on handouts, blog posts, lexicons, games, and slide decks where it's the only topbar.
+- **121 of 131 stale `101.impactmojo.in` links** rewritten to self-hosted equivalents via a Python migration with filesystem existence checks.
+
+### Removed
+- **PhD-level rigor marketing language** — reverted to actual tagline.
+
 ## [10.13.0] - 2026-04-05
 
 ### Added
@@ -49,7 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - **CMK: Broadened scope beyond economics** — Renamed "Economics Games" to "Interactive Learning Games" across IG-04, LI-07, CR-03; updated headlines and hashtags
-- **CMK: Corrected content counts** — 48 → 9 courses, 16 → 15 games, 247 → 270 dataverse throughout all captions and visuals
+- **CMK: Corrected content counts** — 48 → 9 courses, 16 → 16 games, 247 → 270 dataverse throughout all captions and visuals
 - **CMK: Redesigned brochure thumbnails** — Replaced plain colored boxes with content-preview thumbnails showing actual page content
 - **CMK: Updated year** — "Content Kit 2025" → "Content Kit 2026"
 
@@ -324,7 +354,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - User profiles with progress tracking
 - Bookmarks, personal notes, and reading lists
 - Course comparison feature
-- 39 foundational courses across 6 learning tracks
+- 38 foundational courses across 6 learning tracks
 - 12 economics learning games
 - 10 interactive labs
 - ImpactLex PWA with 500+ terms

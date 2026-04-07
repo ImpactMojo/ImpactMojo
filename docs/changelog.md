@@ -2,6 +2,29 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.14.0 — April 7, 2026
+
+### Added
+- **Device-mode default theme** on 70 pages — pages now follow your OS dark/light preference on first paint, and the 3-button theme toggle still wins if you pick explicitly
+- **Underlined inline links** in body paragraphs across 74 content pages — meets WCAG 2.1 AA §1.4.1 (Use of Color)
+- **CC BY-NC-SA 4.0 attribution** backfilled into 17 handouts that were missing it — all 84 handouts are now uniform
+- **Premium topbar link** added to 11 main-site pages
+- **Language translation widget** on `climate-trace-india` and `transparency`
+- **Paper plane decoration** on `courses/gender/lexicon` and `courses/pubpol/lexicon`; footer landmark on `courses/pubpol/lexicon`
+
+### Changed
+- **WCAG AA muted-text contrast** bumped across 115 files (light and dark modes both)
+- **`catalog.html` card colours** (ratings + track labels) darker to pass WCAG AA
+- **Theme system unified** on a single `im-theme` localStorage key — picks now carry across games, account page, main site, and handouts consistently
+- **Brand fonts** — two BookSummaries pages migrated back to the canonical Inter / Amaranth / JetBrains Mono stack
+- **10 unbuilt course cards** marked "Coming Soon" with a disabled amber-pill card style
+- **39 pictographic emoji → Sargam line icons** across 10 pages
+
+### Fixed
+- **Handout 404s** — self-hosted with URL-encoded paths (was linking to a stale mirror)
+- **Duplicate headers** on 28 pages where the `im-topbar` was hiding the main site navigation
+- **121 stale `101.impactmojo.in` course links** rewritten to self-hosted equivalents
+
 ## v10.13.0 — April 5, 2026
 
 **What changed for you:** Three 101 foundational course decks — Development Economics, MEL, and Climate Essentials — are now native HTML slide decks replacing the old Gamma.app embeds. Full 100-slide presentations with light/dark theme, keyboard/touch navigation, interactive Chart.js charts, and content that fills the screen properly.
@@ -49,7 +72,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 ### Content Marketing Kit
 - **5 new LinkedIn posts** (LI-11–LI-15): Climate & Sustainability, Gender & Inclusion, AI in Development, Book Companions, MCP Server Launch
 - **Broadened scope** — Renamed "Economics Games" to "Interactive Learning Games" across assets; ImpactMojo covers 6 tracks, not just economics
-- **Corrected counts** throughout (9 courses, 15 games, 270 dataverse tools)
+- **Corrected counts** throughout (9 courses, 16 games, 270 dataverse tools)
 - **Redesigned brochure thumbnails** with content previews
 - Total assets: 25 → 30
 
@@ -153,7 +176,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - Updated README version to 10.8.1 and date
 - Fixed stale content counts across admin dashboard, analytics, transparency, and catalog pages (courses: 41→48, games: 11→16, labs: 15→19)
 - Updated Dataverse count from 215 to 247 in index.html and transparency page
-- Updated catalog.html header to reflect 9 flagship courses and 19 labs
+- Updated catalog.html header to reflect 11 flagship courses and 19 labs
 - Refreshed sitemap.xml lastmod dates to 2026-03-21
 - Created pre-housekeeping backup of index.html
 
@@ -336,7 +359,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - Premium membership tiers (Explorer, Practitioner, Professional, Organization)
 - User accounts with Google login and magic links
-- 39 foundational courses across 6 learning tracks
+- 38 foundational courses across 6 learning tracks
 - 12 economics simulation games
 - 10 interactive labs
 - ImpactLex dictionary (500+ terms)
