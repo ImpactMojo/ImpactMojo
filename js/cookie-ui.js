@@ -161,43 +161,70 @@
 
         // Theme Toggle
         // Theme Selection System
+        //
+        // Canonical localStorage key is 'im-theme' (matches the 84 handout pages
+        // and the handout template). On first read we migrate any value set by
+        // the older keys ('theme', 'impactmojo-theme', 'imx_theme') so existing
+        // users keep their preference when the site updates.
+        function readTheme() {
+            var t = localStorage.getItem('im-theme');
+            if (t) return t;
+            // Migrate legacy keys (one-shot, newest-first precedence)
+            var legacy = localStorage.getItem('theme')
+                      || localStorage.getItem('impactmojo-theme')
+                      || localStorage.getItem('imx_theme');
+            if (legacy) {
+                localStorage.setItem('im-theme', legacy);
+                return legacy;
+            }
+            return 'system';
+        }
+        function writeTheme(theme) {
+            localStorage.setItem('im-theme', theme);
+            // Keep legacy keys in sync so any page still reading them sees the same value
+            localStorage.setItem('theme', theme);
+            localStorage.setItem('impactmojo-theme', theme);
+            localStorage.setItem('imx_theme', theme);
+        }
         function initThemeSelector() {
             const themeBtns = document.querySelectorAll('.theme-btn');
-            const currentTheme = localStorage.getItem('theme') || 'system';
-            
+            const currentTheme = readTheme();
+
             // Set initial active state
             updateActiveThemeButton(currentTheme);
             applyTheme(currentTheme);
-            
+
             // Add click handlers
             themeBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const theme = btn.dataset.theme;
-                    localStorage.setItem('theme', theme);
+                    writeTheme(theme);
                     updateActiveThemeButton(theme);
                     applyTheme(theme);
                 });
             });
         }
-        
+
         function updateActiveThemeButton(theme) {
             document.querySelectorAll('.theme-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.theme === theme);
             });
         }
-        
+
         function applyTheme(theme) {
             if (theme === 'system') {
                 const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
                 document.body.classList.toggle('dark-mode', systemTheme === 'dark');
+                document.documentElement.setAttribute('data-theme', systemTheme);
             } else {
                 document.body.classList.toggle('dark-mode', theme === 'dark');
+                document.documentElement.setAttribute('data-theme', theme);
             }
         }
-        
+
         // Listen for system theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            const currentTheme = localStorage.getItem('theme') || 'system';
+            const currentTheme = readTheme();
             if (currentTheme === 'system') {
                 applyTheme('system');
             }
@@ -205,7 +232,11 @@
 
         // Load theme immediately to prevent flash
         (function() {
-            var savedTheme = localStorage.getItem('theme') || 'system';
+            var savedTheme = localStorage.getItem('im-theme')
+                          || localStorage.getItem('theme')
+                          || localStorage.getItem('impactmojo-theme')
+                          || localStorage.getItem('imx_theme')
+                          || 'system';
             var isDark;
             
             if (savedTheme === 'dark') {

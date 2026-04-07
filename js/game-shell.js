@@ -34,8 +34,20 @@
   };
 
   // ── Theme System (System / Light / Dark) ──────────────────
-  var THEME_KEY = 'imx_theme';
+  // Canonical key is 'im-theme' (matches handouts + cookie-ui.js + account.js).
+  // Also mirror to legacy keys so any page still reading them stays in sync.
+  var THEME_KEY = 'im-theme';
+  var LEGACY_KEYS = ['imx_theme', 'theme', 'impactmojo-theme'];
   var saved = localStorage.getItem(THEME_KEY);
+  if (!saved) {
+    // Migrate from legacy keys once
+    for (var i = 0; i < LEGACY_KEYS.length; i++) {
+      var v = localStorage.getItem(LEGACY_KEYS[i]);
+      if (v) { saved = v; localStorage.setItem(THEME_KEY, v); break; }
+    }
+  }
+  // Treat an explicit 'system' value as "no preference" for active-state logic
+  if (saved === 'system') saved = null;
 
   function getSystemPref() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
@@ -48,13 +60,19 @@
   function applyTheme(pref) {
     var resolved = resolveTheme(pref);
     document.body.classList.toggle('light-mode', resolved === 'light');
+    document.documentElement.setAttribute('data-theme', resolved);
     document.querySelectorAll('.imx-theme-btn').forEach(function(btn) {
       btn.classList.toggle('active', btn.getAttribute('data-theme') === (pref || 'system'));
     });
   }
   function setTheme(pref) {
-    if (pref === 'system' || !pref) localStorage.removeItem(THEME_KEY);
-    else localStorage.setItem(THEME_KEY, pref);
+    if (pref === 'system' || !pref) {
+      localStorage.removeItem(THEME_KEY);
+      LEGACY_KEYS.forEach(function(k) { localStorage.removeItem(k); });
+    } else {
+      localStorage.setItem(THEME_KEY, pref);
+      LEGACY_KEYS.forEach(function(k) { localStorage.setItem(k, pref); });
+    }
     applyTheme(pref);
   }
   applyTheme(saved);

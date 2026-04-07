@@ -22,8 +22,14 @@
   // THEME
   // =========================================================================
 
+  // Canonical key is 'im-theme' (matches handouts + cookie-ui.js).
+  // Fall back to legacy keys on first read so existing users keep their pick.
   function getPreferredTheme() {
-    return localStorage.getItem('impactmojo-theme') || 'system';
+    return localStorage.getItem('im-theme')
+        || localStorage.getItem('impactmojo-theme')
+        || localStorage.getItem('theme')
+        || localStorage.getItem('imx_theme')
+        || 'system';
   }
   function applyTheme(theme) {
     var resolved = theme;
@@ -33,7 +39,11 @@
     document.documentElement.setAttribute('data-theme', resolved);
     document.body.classList.toggle('light-mode', resolved === 'light');
     document.body.classList.toggle('dark-mode', resolved === 'dark');
+    localStorage.setItem('im-theme', theme);
+    // Mirror to legacy keys so any page still reading them stays in sync
     localStorage.setItem('impactmojo-theme', theme);
+    localStorage.setItem('theme', theme);
+    localStorage.setItem('imx_theme', theme);
     document.querySelectorAll('.theme-btn').forEach(function(btn) {
       btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
     });
