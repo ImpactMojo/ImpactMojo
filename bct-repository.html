@@ -433,7 +433,11 @@ p a, .hero-credit a { text-decoration: underline; }
 .technique-card-bar { height: 4px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
 .technique-card-inner { padding: 24px; }
 .technique-card-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
-.technique-id-badge { font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; color: #fff; letter-spacing: 0.3px; }
+/* WCAG AA: fixed dark badge background ensures white text passes contrast
+   regardless of category color. Category identity is preserved via the
+   .technique-card-bar stripe above the card. The inline `style="background:..."`
+   set by the renderer is overridden via !important. */
+.technique-id-badge { font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; color: #fff; letter-spacing: 0.3px; background: #0F172A !important; }
 .technique-evidence-badge { font-size: 0.7rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; margin-left: auto; }
 .evidence-strong { background: rgba(16, 185, 129, 0.12); color: var(--success-color); }
 .evidence-moderate { background: rgba(245, 158, 11, 0.12); color: var(--warning-color); }
@@ -451,10 +455,13 @@ p a, .hero-credit a { text-decoration: underline; }
 .sector-pill {
     display: inline-block; padding: 3px 10px; border-radius: 20px;
     font-size: 0.72rem; font-weight: 500;
-    background: rgba(14, 165, 233, 0.08); color: var(--accent-color); border: 1px solid rgba(14, 165, 233, 0.15);
+    /* WCAG AA: sky-800 #075985 = 7.56:1 on white. Was sky-500 #0EA5E9 = 2.77:1. */
+    background: rgba(14, 165, 233, 0.08); color: #075985; border: 1px solid rgba(14, 165, 233, 0.15);
 }
+body.dark-mode .sector-pill, [data-theme="dark"] .sector-pill { color: #7DD3FC; }
 .sector-pill-more { background: var(--hover-bg); color: var(--text-muted); border-color: var(--border-color); }
-.sector-pill-case-study { background: rgba(139, 92, 246, 0.1); color: #8B5CF6; border-color: rgba(139, 92, 246, 0.2); }
+.sector-pill-case-study { background: rgba(139, 92, 246, 0.1); color: #5B21B6; border-color: rgba(139, 92, 246, 0.2); }
+body.dark-mode .sector-pill-case-study, [data-theme="dark"] .sector-pill-case-study { color: #C4B5FD; }
 
 @media (max-width: 768px) { .techniques-grid { grid-template-columns: 1fr; } }
 
@@ -797,7 +804,8 @@ body.printing-technique .copy-toast { display: none !important; }
     font-family: inherit; transition: all 0.2s; white-space: nowrap;
 }
 .view-tab:hover { color: var(--text-primary); background: var(--hover-bg); }
-.view-tab.active { background: var(--accent-color); color: #fff; }
+/* WCAG AA: white on sky-700 #0369A1 = 5.22:1. Was sky-500 #0EA5E9 = 2.99:1. */
+.view-tab.active { background: #0369A1; color: #fff; }
 .view-tab svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
 .view-tab .tab-count {
     background: rgba(255,255,255,0.2); padding: 1px 7px; border-radius: 10px;
