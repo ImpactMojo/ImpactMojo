@@ -39,7 +39,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 
 | Category | Description |
 |----------|-------------|
-| **48 Courses** | 9 flagship + 39 foundational courses across 6 learning tracks (3 native HTML slide decks with 100 slides each; remaining 35 Gamma-hosted) |
+| **48 Courses** | 11 flagship + 38 foundational courses across 6 learning tracks (3 native HTML slide decks with 100 slides each; remaining 35 Gamma-hosted) |
 | **11 Interactive Labs** | Hands-on workbenches for MEL, policy, partnerships, budgeting, gender analysis, and more |
 | **16 Learning Games** | Interactive simulations with MiroFish AI agents and Indian folk art (Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) |
 | **ImpactLex Dictionary** | 500+ development terms with contextual definitions (PWA) |
@@ -121,7 +121,7 @@ Available to Practitioner and Professional tier subscribers:
 
 ## Content Inventory
 
-### Flagship Courses (9)
+### Flagship Courses (11)
 
 Deep, comprehensive learning tracks — free for all users:
 
@@ -137,7 +137,7 @@ Deep, comprehensive learning tracks — free for all users:
 | **Social-Emotional Learning for Development** | SEL frameworks for development contexts |
 | **Constitution & Law** | Constitutional governance and development law |
 
-### Foundational Courses (39)
+### Foundational Courses (38)
 
 Shorter introductory courses covering the breadth of development practice:
 
@@ -255,7 +255,7 @@ Comprehensive ToC learning and building toolkit:
 - **Reading Lists** — Curated resource collections
 - **Course Comparison** — Compare courses side-by-side
 - **Interactive Assessments** — MCQ, multi-select, and T/F quizzes for MEL, DataViz, and DevAI courses with scoring, feedback, and localStorage persistence
-- **Offline PWA Support** — Service worker caches all 9 flagship courses for offline access with automatic background updates
+- **Offline PWA Support** — Service worker caches all 11 flagship courses for offline access with automatic background updates
 - **Certificate Generation** — Auto-issued on course completion with public verification and Open Badges 3.0 metadata
 - **Badge Wallet** — View, download, and share W3C verifiable credential badges
 - **Portfolio Builder** — Premium feature: curate certificates, projects & case studies with PDF export
