@@ -70,18 +70,23 @@ jobs:
         run: |
           set +e
           pa11y-ci --config .pa11yci --json 2>&1 | tee pa11y-results.json
-          PA11Y_EXIT=$?
+          # PIPESTATUS[0] = exit code of pa11y-ci
+          # (without this, $? would be `tee`'s exit code which is always 0,
+          # causing the wrapper to always take the success branch even on failure)
+          PA11Y_EXIT=${PIPESTATUS[0]}
           # Extract summary from JSON output for the report
           node -e "
             const fs = require('fs');
             try {
               const raw = fs.readFileSync('pa11y-results.json', 'utf8');
               const jsonStart = raw.indexOf('{');
-              if (jsonStart === -1) {
+              const jsonEnd = raw.lastIndexOf('}');
+              if (jsonStart === -1 || jsonEnd === -1 || jsonEnd <= jsonStart) {
                 fs.writeFileSync('pa11y-report.md', '## Accessibility Audit Results\n\nNo JSON output produced. Check workflow logs.\n');
                 process.exit(0);
               }
-              const data = JSON.parse(raw.slice(jsonStart));
+              // pa11y-ci can emit log lines after the closing brace; bound the slice
+              const data = JSON.parse(raw.slice(jsonStart, jsonEnd + 1));
               let md = '## Accessibility Audit Results (WCAG 2.1 AA)\n\n';
               const total = data.total || 0;
               const passes = data.passes || 0;
