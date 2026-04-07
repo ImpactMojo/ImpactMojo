@@ -8269,8 +8269,11 @@ body.introjs-active-tour .nav-links > li.has-dropdown:not(.tour-dropdown-open):h
   display: inline-flex; align-items: center; gap: 0.3rem;
   margin-top: 1rem;
   font-size: 0.82rem; font-weight: 600;
-  color: var(--accent-color);
+  /* WCAG AA: sky-800 #075985 = 7.56:1 on white. Was #0EA5E9 = 2.77:1. */
+  color: #075985;
 }
+body.dark-mode .imx-resource-cta,
+[data-theme="dark"] .imx-resource-cta { color: #7DD3FC; }
 .imx-resource-cta svg {
   stroke: var(--accent-color); fill: none; stroke-width: 2;
 }
@@ -14680,12 +14683,14 @@ PASTE THIS ENTIRE BLOCK JUST BEFORE
     }
 }
 
-/* WCAG 2.1 AA (1.4.1 Use of Color): inline anchors in <main> p/li are
-   underlined so they're distinguishable without color alone. Excludes
-   button-styled anchors so CTAs and nav buttons are unaffected. */
+/* WCAG 2.1 AA (1.4.1 Use of Color): inline anchors in content paragraphs
+   must be distinguishable without color alone. Use !important to override
+   any later text-decoration:none rules cascading from card/CTA styles. */
 main p a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]),
-main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) {
-    text-decoration: underline;
+main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]),
+section p a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]),
+section li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) {
+    text-decoration: underline !important;
     text-underline-offset: 0.15em;
 }
 </style>
