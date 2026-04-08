@@ -3,6 +3,19 @@
   command = "echo '{\"v\":\"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'\"}' > version.json"
   publish = "."
 
+# Long cache for static assets — images, logos, favicons rarely change.
+# Browsers will still revalidate via ETag if Netlify regenerates them.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+# CSS files (custom stylesheets, not inline) — same revalidation pattern as JS
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
 # Short cache for JS/CSS so updates propagate quickly
 [[headers]]
   for = "/js/*"
