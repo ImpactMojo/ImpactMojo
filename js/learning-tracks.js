@@ -246,7 +246,9 @@
     var items=[]; ITEM_SELECTORS.forEach(function(sel){ body.querySelectorAll(sel).forEach(function(el){ items.push(el); }); });
     if (!items.length) return;
     var bar=document.createElement('div'); bar.className='imx-filterbar';
-    var input=document.createElement('input'); input.type='search'; input.placeholder='Filter by keyword or tag'; bar.appendChild(input);
+    // WCAG 2.1 4.1.2: every input needs an accessible name. Aria-label
+    // is sufficient since the placeholder is visible alongside.
+    var input=document.createElement('input'); input.type='search'; input.placeholder='Filter by keyword or tag'; input.setAttribute('aria-label', 'Filter modal items by keyword or tag'); bar.appendChild(input);
     var tagSet={}; items.forEach(function(el){
       (el.getAttribute('data-tag')||'').split(/[\\s,]+/).forEach(function(t){ if(t) tagSet[t]=true; });
       (el.getAttribute('data-tags')||'').split(/[\\s,]+/).forEach(function(t){ if(t) tagSet[t]=true; });
