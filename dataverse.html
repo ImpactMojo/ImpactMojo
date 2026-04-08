@@ -790,22 +790,34 @@ img { max-width: 100%; display: block; }
     text-transform: uppercase;
     letter-spacing: 0.03em;
 }
+/* WCAG AA: each badge needs a darker text color for the brand-tinted bg.
+   #065F46 emerald-800 = 7.84:1 on the emerald tint.
+   #075985 sky-800 = 7.56:1 on the sky tint.
+   #92400E amber-800 = 5.94:1 on the amber tint. */
 .badge-free {
     background: rgba(16, 185, 129, 0.12);
-    color: var(--success-color);
+    color: #065F46;
 }
 .badge-status-live {
     background: rgba(16, 185, 129, 0.12);
-    color: var(--success-color);
+    color: #065F46;
 }
 .badge-status-beta {
     background: rgba(14, 165, 233, 0.12);
-    color: var(--accent-color);
+    color: #075985;
 }
 .badge-status-coming-soon {
     background: rgba(245, 158, 11, 0.12);
-    color: var(--warning-color);
+    color: #92400E;
 }
+body.dark-mode .badge-free,
+body.dark-mode .badge-status-live,
+[data-theme="dark"] .badge-free,
+[data-theme="dark"] .badge-status-live { color: #6EE7B7; }
+body.dark-mode .badge-status-beta,
+[data-theme="dark"] .badge-status-beta { color: #7DD3FC; }
+body.dark-mode .badge-status-coming-soon,
+[data-theme="dark"] .badge-status-coming-soon { color: #FCD34D; }
 .badge-source {
     background: var(--hover-bg);
     color: var(--text-secondary);
@@ -1254,6 +1266,40 @@ img { max-width: 100%; display: block; }
 .v3-blob-1 { top: 10%; right: 10%; width: 400px; height: 400px; background: var(--accent-color); }
 .v3-blob-2 { bottom: 20%; left: 5%; width: 300px; height: 300px; background: var(--secondary-accent); animation-delay: -5s; }
 @keyframes pulseBlob { 0%, 100% { transform: scale(1); opacity: 0.15; } 50% { transform: scale(1.1); opacity: 0.2; } }
+
+/* WCAG 2.1 AA contrast overrides — sky-500 #0EA5E9 fails as text on white (2.77:1).
+   Override all text uses of var(--accent-color) with sky-800 #075985 (7.56:1 on white)
+   in light mode and sky-300 #7DD3FC (8.77:1 on dark) in dark mode. Background/border
+   uses of --accent-color are unchanged so the brand identity stays the same. */
+a,
+.nav-link.active,
+.stat-value,
+.badge-status-beta,
+.tool-card-link,
+.api-snippet code,
+.modal-section-title {
+    color: #075985;
+}
+body.dark-mode a,
+body.dark-mode .nav-link.active,
+body.dark-mode .stat-value,
+body.dark-mode .badge-status-beta,
+body.dark-mode .tool-card-link,
+body.dark-mode .api-snippet code,
+body.dark-mode .modal-section-title,
+[data-theme="dark"] a,
+[data-theme="dark"] .nav-link.active,
+[data-theme="dark"] .stat-value,
+[data-theme="dark"] .badge-status-beta,
+[data-theme="dark"] .tool-card-link,
+[data-theme="dark"] .api-snippet code,
+[data-theme="dark"] .modal-section-title {
+    color: #7DD3FC;
+}
+/* WCAG AA: warning amber-500 #F59E0B fails as text. Use amber-800 #92400E. */
+.badge-status-coming-soon { color: #92400E; }
+body.dark-mode .badge-status-coming-soon,
+[data-theme="dark"] .badge-status-coming-soon { color: #FCD34D; }
 </style>
 <style>
 /* ===== ImpactMojo Design System ===== */
@@ -1572,7 +1618,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
                     <li>Make HTTP requests using Python <code>requests</code>, R <code>httr</code>, or <code>curl</code></li>
                     <li>Parse JSON/XML responses and integrate into your workflow</li>
                 </ul>
-                <span class="guide-tag" style="background: rgba(14, 165, 233, 0.1); color: #0EA5E9;">Programmatic Access</span>
+                <span class="guide-tag" style="background: rgba(14, 165, 233, 0.1); color: #075985;">Programmatic Access</span>
             </div>
             <!-- MCP Server Guide -->
             <div class="guide-card">
@@ -1587,7 +1633,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
                     <li>Ask your AI assistant to query the data source naturally in conversation</li>
                     <li>The AI fetches live data and provides analysis without manual API calls</li>
                 </ul>
-                <span class="guide-tag" style="background: rgba(99, 102, 241, 0.1); color: #6366F1;">AI-Powered Access</span>
+                <span class="guide-tag" style="background: rgba(99, 102, 241, 0.1); color: #4338CA;">AI-Powered Access</span>
             </div>
             <!-- Dataset Guide -->
             <div class="guide-card">
@@ -1602,7 +1648,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
                     <li>Load into Stata, R, Python (pandas), or Excel for analysis</li>
                     <li>Cite the source using the provided reference in your publications</li>
                 </ul>
-                <span class="guide-tag" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">Bulk Download</span>
+                <span class="guide-tag" style="background: rgba(16, 185, 129, 0.1); color: #065F46;">Bulk Download</span>
             </div>
             <!-- Tool Guide -->
             <div class="guide-card">
@@ -1617,7 +1663,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
                     <li>Follow the tool's interface to transform, visualize, or export your data</li>
                     <li>Download results as images, PDFs, or data files for your reports</li>
                 </ul>
-                <span class="guide-tag" style="background: rgba(245, 158, 11, 0.1); color: #F59E0B;">Browser-Based</span>
+                <span class="guide-tag" style="background: rgba(245, 158, 11, 0.1); color: #92400E;">Browser-Based</span>
             </div>
             <!-- Platform Guide -->
             <div class="guide-card">
@@ -1632,7 +1678,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
                     <li>Filter by country, year, indicator, or theme to find relevant data</li>
                     <li>Download datasets, reports, or visualizations for your analysis</li>
                 </ul>
-                <span class="guide-tag" style="background: rgba(139, 92, 246, 0.1); color: #8B5CF6;">Online Libraries</span>
+                <span class="guide-tag" style="background: rgba(139, 92, 246, 0.1); color: #5B21B6;">Online Libraries</span>
             </div>
             <!-- Resource Guide -->
             <div class="guide-card">
@@ -1647,7 +1693,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
                     <li>Use taxonomies and frameworks to structure your analysis or programme design</li>
                     <li>Bookmark resources you'll return to — they're reference material, not one-time reads</li>
                 </ul>
-                <span class="guide-tag" style="background: rgba(236, 72, 153, 0.1); color: #EC4899;">Reference Material</span>
+                <span class="guide-tag" style="background: rgba(236, 72, 153, 0.1); color: #9D174D;">Reference Material</span>
             </div>
             <!-- Skill Guide -->
             <div class="guide-card">
@@ -1662,7 +1708,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
                     <li>Follow the guided prompts — the skill structures your task step-by-step</li>
                     <li>Review and refine the output for your specific context and needs</li>
                 </ul>
-                <span class="guide-tag" style="background: rgba(20, 184, 166, 0.1); color: #14B8A6;">AI-Assisted</span>
+                <span class="guide-tag" style="background: rgba(20, 184, 166, 0.1); color: #115E59;">AI-Assisted</span>
             </div>
         </div>
     </section>
