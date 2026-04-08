@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEL Architecture — Pinpoint Ventures</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal:      #00838F;
+    --teal-l:    #E0F2F1;
+    --teal-m:    #4DB6AC;
+    --grey:      #546E7A;
+    --grey-l:    #ECEFF1;
+    --grey-m:    #B0BEC5;
+    --violet:    #6D3B8C;
+    --vio-l:     #EDE7F6;
+    --orange:    #BF360C;
+    --black:     #1A2332;
+    --white:     #FFFFFF;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F7FAFB;
+    color: var(--black);
+    padding: 2rem;
+    min-height: 100vh;
+  }
+
+  .wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--teal);
+  }
+
+  .org { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; color: var(--grey); text-transform: uppercase; margin-bottom: 0.4rem; }
+  .title { font-size: 1.35rem; font-weight: 600; color: var(--teal); line-height: 1.3; }
+  .subtitle { font-size: 0.82rem; color: var(--grey); margin-top: 0.25rem; }
+  .badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; background: var(--orange); color: white; padding: 0.2rem 0.5rem; border-radius: 2px; margin-top: 0.5rem; display: inline-block; letter-spacing: 0.05em; }
+
+  /* Legend */
+  .legend {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    margin-bottom: 1.5rem; padding: 0.75rem 1rem;
+    background: white; border-radius: 4px;
+    border: 1px solid var(--grey-l);
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--grey); }
+  .leg-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+  /* Diagram container */
+  .diagram { background: white; border-radius: 6px; padding: 2rem 1.5rem; border: 1px solid var(--grey-l); overflow-x: auto; }
+
+  /* Columns layout */
+  .toc-flow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    position: relative;
+    min-width: 900px;
+  }
+
+  .col-label {
+    font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; text-align: center;
+    padding: 0.35rem 0.5rem; margin-bottom: 0.75rem;
+    border-radius: 3px;
+  }
+
+  .col-inputs  .col-label { background: var(--grey-l); color: var(--grey); }
+  .col-act     .col-label { background: #E8F5E9; color: #2E7D32; }
+  .col-out     .col-label { background: #FFF3E0; color: #E65100; }
+  .col-outcome .col-label { background: var(--teal-l); color: var(--teal); }
+  .col-impact  .col-label { background: var(--vio-l); color: var(--violet); }
+
+  .col { padding: 0 0.4rem; }
+
+  .box {
+    border-radius: 4px; padding: 0.55rem 0.65rem;
+    margin-bottom: 0.5rem; position: relative;
+    font-size: 0.76rem; line-height: 1.35;
+  }
+
+  .box-input  { background: var(--grey-l); border-left: 3px solid var(--grey-m); color: var(--black); }
+  .box-act    { background: #E8F5E9; border-left: 3px solid #66BB6A; }
+  .box-out    { background: #FFF8E1; border-left: 3px solid #FFA726; }
+  .box-outcome { background: var(--teal-l); border-left: 3px solid var(--teal-m); }
+  .box-impact  { background: var(--vio-l); border-left: 3px solid var(--violet); font-weight: 500; }
+
+  .box-title { font-weight: 600; font-size: 0.74rem; margin-bottom: 0.2rem; }
+  .box-body  { font-size: 0.7rem; color: var(--grey); line-height: 1.3; }
+
+  /* Evidence markers */
+  .ev-marker {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem; font-weight: 500;
+    padding: 0.05rem 0.3rem;
+    border-radius: 2px; margin-top: 0.3rem;
+    letter-spacing: 0.04em;
+  }
+  .ev-ca { background: #E3F2FD; color: #0D47A1; border: 1px solid #90CAF9; }
+  .ev-oh { background: #FCE4EC; color: #880E4F; border: 1px solid #F48FB1; }
+  .ev-hh { background: #F3E5F5; color: #4A148C; border: 1px solid #CE93D8; }
+
+  /* Arrows between columns */
+  .arrows {
+    position: absolute; top: 2.2rem; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+  }
+
+  /* Learning loops section */
+  .loops {
+    margin-top: 1.5rem; padding: 1rem 1.2rem;
+    background: #FAFBFC; border: 1px dashed var(--grey-m);
+    border-radius: 4px;
+    min-width: 900px;
+  }
+  .loops-title { font-size: 0.72rem; font-weight: 600; color: var(--grey); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .loops-row { display: flex; gap: 1rem; align-items: stretch; }
+  .loop-box {
+    flex: 1; padding: 0.6rem 0.75rem; border-radius: 4px;
+    font-size: 0.7rem; line-height: 1.35;
+    border: 1px solid var(--grey-l);
+  }
+  .loop-box-title { font-weight: 600; font-size: 0.72rem; margin-bottom: 0.2rem; }
+  .loop-1 { background: #E3F2FD; border-color: #90CAF9; }
+  .loop-2 { background: var(--teal-l); border-color: var(--teal-m); }
+  .loop-3 { background: var(--vio-l); border-color: #CE93D8; }
+  .loop-4 { background: #FFF8E1; border-color: #FFA726; }
+
+  /* CA layer */
+  .ca-layer {
+    margin-top: 1.5rem; padding: 1rem 1.2rem;
+    background: #E8EAF6; border-left: 4px solid #3F51B5;
+    border-radius: 0 4px 4px 0; min-width: 900px;
+  }
+  .ca-title { font-size: 0.72rem; font-weight: 600; color: #1A237E; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .ca-claims { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
+  .ca-claim {
+    background: white; border-radius: 3px; padding: 0.5rem 0.6rem;
+    border: 1px solid #9FA8DA; font-size: 0.7rem; line-height: 1.3;
+  }
+  .ca-claim-label { font-weight: 600; font-size: 0.65rem; color: #3F51B5; margin-bottom: 0.15rem; }
+
+  /* OH layer */
+  .oh-layer {
+    margin-top: 1rem; padding: 1rem 1.2rem;
+    background: #FCE4EC; border-left: 4px solid #E91E63;
+    border-radius: 0 4px 4px 0; min-width: 900px;
+  }
+  .oh-title { font-size: 0.72rem; font-weight: 600; color: #880E4F; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .oh-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+  .oh-box { background: white; border-radius: 3px; padding: 0.5rem 0.6rem; border: 1px solid #F48FB1; font-size: 0.7rem; line-height: 1.3; }
+  .oh-box-label { font-weight: 600; font-size: 0.65rem; color: #880E4F; margin-bottom: 0.15rem; }
+
+  .footnote { font-size: 0.68rem; color: var(--grey); margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid var(--grey-l); line-height: 1.5; }
+  .fn-bold { font-weight: 600; }
+
+  /* SVG arrow styles */
+  .flow-arrow { fill: none; stroke: var(--grey-m); stroke-width: 1.5; marker-end: url(#arrow); }
+  .flow-arrow-strong { fill: none; stroke: var(--teal-m); stroke-width: 2; marker-end: url(#arrow-teal); }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div>
+      <div class="org">Pinpoint Ventures Advisory</div>
+      <div class="title">MEL Architecture: Contribution Analysis + Outcome Harvesting</div>
+      <div class="subtitle">India Health and Climate Resilience Fund (IHCRF)  ·  Programme MEL Framework v2.0</div>
+      <div class="badge">ILLUSTRATIVE SAMPLE</div>
+    </div>
+    <div style="text-align:right; font-size:0.68rem; color:var(--grey); line-height:1.6; padding-top:0.2rem;">
+      Designed by Pinpoint Ventures<br>pinpointventures.in
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="leg-dot" style="background:#B0BEC5;"></div> Input</div>
+    <div class="legend-item"><div class="leg-dot" style="background:#81C784;"></div> Activity</div>
+    <div class="legend-item"><div class="leg-dot" style="background:#FFB74D;"></div> Output</div>
+    <div class="legend-item"><div class="leg-dot" style="background:#4DB6AC;"></div> Outcome</div>
+    <div class="legend-item"><div class="leg-dot" style="background:#9575CD;"></div> Impact</div>
+    <div class="legend-item"><span class="ev-marker ev-ca">CA</span> Contribution Analysis evidence</div>
+    <div class="legend-item"><span class="ev-marker ev-oh">OH</span> Outcome Harvesting source</div>
+    <div class="legend-item"><span class="ev-marker ev-hh">HH</span> Household survey data point</div>
+  </div>
+
+  <div class="diagram">
+
+    <!-- Theory of Change Flow -->
+    <div style="position:relative; min-width:900px;">
+
+      <!-- Column headers + content -->
+      <div class="toc-flow">
+
+        <!-- INPUTS -->
+        <div class="col col-inputs">
+          <div class="col-label">Inputs</div>
+          <div class="box box-input">
+            <div class="box-title">Fund capital</div>
+            <div class="box-body">IHCRF grant disbursements to 4 priority districts</div>
+          </div>
+          <div class="box box-input">
+            <div class="box-title">Technical support</div>
+            <div class="box-body">MEL, programme design, HCD facilitation</div>
+          </div>
+          <div class="box box-input">
+            <div class="box-title">Community time + knowledge</div>
+            <div class="box-body">FGDs, field verification, community scorecards</div>
+          </div>
+          <div class="box box-input">
+            <div class="box-title">Government systems</div>
+            <div class="box-body">ASHA, ANM, PHC infrastructure; HMIS reporting</div>
+          </div>
+        </div>
+
+        <!-- ACTIVITIES -->
+        <div class="col col-act">
+          <div class="col-label">Activities</div>
+          <div class="box box-act">
+            <div class="box-title">Health facility strengthening</div>
+            <div class="box-body">Equipment, drug supply, staff deployment support</div>
+            <div><span class="ev-marker ev-ca">CA</span></div>
+          </div>
+          <div class="box box-act">
+            <div class="box-title">Community health worker training</div>
+            <div class="box-body">Climate-health content in ASHA module; refresher cycles</div>
+            <div><span class="ev-marker ev-ca">CA</span></div>
+          </div>
+          <div class="box box-act">
+            <div class="box-title">Climate-health surveillance</div>
+            <div class="box-body">Sentinel sites; weekly climate-illness reporting</div>
+            <div><span class="ev-marker ev-ca">CA</span></div>
+          </div>
+          <div class="box box-act">
+            <div class="box-title">Community resilience support</div>
+            <div class="box-body">SHG health savings pilots; livelihood diversification</div>
+            <div><span class="ev-marker ev-oh">OH</span></div>
+          </div>
+        </div>
+
+        <!-- OUTPUTS -->
+        <div class="col col-out">
+          <div class="col-label">Outputs</div>
+          <div class="box box-out">
+            <div class="box-title">Facilities upgraded</div>
+            <div class="box-body">% facilities meeting climate-readiness standard</div>
+            <div><span class="ev-marker ev-ca">CA</span> <span class="ev-marker ev-hh">HH</span></div>
+          </div>
+          <div class="box box-out">
+            <div class="box-title">CHWs trained</div>
+            <div class="box-body">ASHA + ANM with climate-health competency certification</div>
+            <div><span class="ev-marker ev-ca">CA</span></div>
+          </div>
+          <div class="box box-out">
+            <div class="box-title">Surveillance system active</div>
+            <div class="box-body">Weekly sentinel data flowing to district & state</div>
+            <div><span class="ev-marker ev-ca">CA</span></div>
+          </div>
+          <div class="box box-out">
+            <div class="box-title">SHG health funds active</div>
+            <div class="box-body">Groups with dedicated health emergency savings</div>
+            <div><span class="ev-marker ev-oh">OH</span> <span class="ev-marker ev-hh">HH</span></div>
+          </div>
+        </div>
+
+        <!-- OUTCOMES -->
+        <div class="col col-outcome">
+          <div class="col-label">Outcomes</div>
+          <div class="box box-outcome">
+            <div class="box-title">Improved health-seeking behaviour</div>
+            <div class="box-body">Reduced delay; higher govt facility utilisation during climate events</div>
+            <div><span class="ev-marker ev-oh">OH</span> <span class="ev-marker ev-hh">HH</span></div>
+          </div>
+          <div class="box box-outcome">
+            <div class="box-title">Reduced catastrophic expenditure</div>
+            <div class="box-body">Fewer HH pushed into health-related debt post-shock</div>
+            <div><span class="ev-marker ev-hh">HH</span></div>
+          </div>
+          <div class="box box-outcome">
+            <div class="box-title">System responsiveness to climate</div>
+            <div class="box-body">Early warning acted on; surge protocols activated</div>
+            <div><span class="ev-marker ev-ca">CA</span> <span class="ev-marker ev-oh">OH</span></div>
+          </div>
+          <div class="box box-outcome">
+            <div class="box-title">Strengthened community agency</div>
+            <div class="box-body">Emergent: communities negotiating access; policy advocacy</div>
+            <div><span class="ev-marker ev-oh">OH</span></div>
+          </div>
+        </div>
+
+        <!-- IMPACT -->
+        <div class="col col-impact">
+          <div class="col-label">Impact</div>
+          <div class="box box-impact">
+            <div class="box-title">Reduced climate-health mortality and morbidity</div>
+            <div class="box-body">Decline in heat-related and water-borne disease burden in priority districts, disaggregated by social group and gender</div>
+            <div style="margin-top:0.4rem;"><span class="ev-marker ev-ca">CA</span> <span class="ev-marker ev-hh">HH</span></div>
+          </div>
+          <div class="box box-impact" style="margin-top:0.5rem;">
+            <div class="box-title">Reduced vulnerability of marginalised households</div>
+            <div class="box-body">Measurable improvement in composite vulnerability score at district level (3-year horizon)</div>
+            <div style="margin-top:0.4rem;"><span class="ev-marker ev-hh">HH</span></div>
+          </div>
+        </div>
+
+      </div><!-- /toc-flow -->
+
+      <!-- SVG Arrows between columns -->
+      <svg style="position:absolute; top:2rem; left:0; width:100%; height:calc(100% - 2rem); pointer-events:none;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 z" fill="#B0BEC5"/>
+          </marker>
+          <marker id="arrow-teal" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 z" fill="#4DB6AC"/>
+          </marker>
+        </defs>
+        <!-- Column connector lines (approximate, decorative) -->
+        <line x1="20%" y1="50%" x2="20%" y2="50%" class="flow-arrow"/>
+      </svg>
+
+    </div><!-- /relative -->
+
+    <!-- Contribution Analysis Layer -->
+    <div class="ca-layer">
+      <div class="ca-title">Contribution Analysis Framework — Contribution Claims and Evidence Portfolio</div>
+      <div class="ca-claims">
+        <div class="ca-claim">
+          <div class="ca-claim-label">Claim 1</div>
+          <strong>Facility upgrading → reduced access barriers during climate events</strong><br>
+          Evidence: pre-post facility audit; community access scorecard; HH survey module D (D.7)
+        </div>
+        <div class="ca-claim">
+          <div class="ca-claim-label">Claim 2</div>
+          <strong>CHW training → improved early recognition of climate-related illness</strong><br>
+          Evidence: competency assessment; sentinel reporting coverage; community KII
+        </div>
+        <div class="ca-claim">
+          <div class="ca-claim-label">Claim 3</div>
+          <strong>Surveillance system → faster district health response to climate shocks</strong><br>
+          Evidence: response time logs; DHAP amendment records; desk review of district orders
+        </div>
+        <div class="ca-claim">
+          <div class="ca-claim-label">Claim 4</div>
+          <strong>SHG health savings → reduced catastrophic OOP post-shock</strong><br>
+          Evidence: HH survey module E (E.5–E.6); SHG fund utilisation logs; FGDs with members
+        </div>
+      </div>
+    </div>
+
+    <!-- Outcome Harvesting Layer -->
+    <div class="oh-layer">
+      <div class="oh-title">Outcome Harvesting — Collection Design</div>
+      <div class="oh-row">
+        <div class="oh-box">
+          <div class="oh-box-label">Harvest Cycle</div>
+          Six-monthly outcome harvest. Field staff submit outcome stories using structured prompt; MEL team substantiates against documentary evidence and community informant.
+        </div>
+        <div class="oh-box">
+          <div class="oh-box-label">Outcome Story Elements</div>
+          Who changed? What changed? When? Contributing factors named by community, not assumed by programme staff. Stories disaggregated by gender and caste.
+        </div>
+        <div class="oh-box">
+          <div class="oh-box-label">Emergent Outcome Watch</div>
+          Three watch domains not in ToC: (i) community advocacy for facility staffing; (ii) inter-village climate preparedness arrangements; (iii) women's decision-making on health-seeking.
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Loops -->
+    <div class="loops">
+      <div class="loops-title">Learning and Adaptation Loops</div>
+      <div class="loops-row">
+        <div class="loop-box loop-1">
+          <div class="loop-box-title">Rapid loop (quarterly)</div>
+          HMIS + sentinel data reviewed by programme team. Immediate flag to district if climate-illness spike not triggering expected system response.
+        </div>
+        <div class="loop-box loop-2">
+          <div class="loop-box-title">Mid-cycle loop (annual)</div>
+          Outcome harvest reviewed; contribution claims tested against evidence. Programme design adjustments documented in adaptive management log.
+        </div>
+        <div class="loop-box loop-3">
+          <div class="loop-box-title">Strategic loop (end of phase)</div>
+          HH survey results + harvest + CA evidence triangulated. District prioritisation framework reviewed. Portfolio reallocation decisions informed by composite evidence.
+        </div>
+        <div class="loop-box loop-4">
+          <div class="loop-box-title">System loop (cross-programme)</div>
+          IHCRF findings fed into state NHM planning cycle. Surveillance data shared with NIMHANS/ICMR climate-health research. Policy brief prepared for MoHFW.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /diagram -->
+
+  <div class="footnote">
+    <span class="fn-bold">Framework design:</span> Pinpoint Ventures Advisory LLP. 
+    This MEL architecture integrates Contribution Analysis (Mayne, 2012) — which tests causal claims through structured evidence portfolios — with Outcome Harvesting (Wilson-Grau &amp; Britt, 2012), which captures changes in the behaviour of social actors that the programme has influenced, intended or otherwise. The two methods are complementary: CA is appropriate where causal pathways are well-specified; OH is appropriate where programme influence is less direct and outcomes may be emergent. 
+    <span class="fn-bold">Data sources referenced:</span> HMIS (facility outputs); Household Survey modules B–E (access, climate, quality, resilience); Sentinel surveillance system; Community Key Informant Interviews; SHG utilisation records.
+    &nbsp;&nbsp;|&nbsp;&nbsp;<span class="fn-bold">ILLUSTRATIVE SAMPLE</span> — Pinpoint Ventures Advisory LLP — pinpointventures.in
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wage Gap Decomposition — Pinpoint Ventures</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal:    #00838F;
+    --teal-l:  #E0F2F1;
+    --teal-m:  #4DB6AC;
+    --grey:    #546E7A;
+    --grey-l:  #ECEFF1;
+    --grey-m:  #B0BEC5;
+    --violet:  #6D3B8C;
+    --vio-l:   #EDE7F6;
+    --orange:  #BF360C;
+    --amber:   #F57F17;
+    --black:   #1A2332;
+    --expl:    #00838F;    /* explained = teal */
+    --unex:    #6D3B8C;    /* unexplained = violet */
+    --total:   #B0BEC5;    /* total bar bg */
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F4F7F8;
+    color: var(--black);
+    padding: 2rem 1rem;
+    min-height: 100vh;
+  }
+
+  .wrapper { max-width: 960px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    background: white; border-top: 4px solid var(--teal);
+    padding: 1.5rem 2rem; margin-bottom: 1.25rem;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .org { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.25rem; }
+  .title { font-size: 1.2rem; font-weight: 600; color: var(--black); line-height: 1.3; margin-bottom: 0.3rem; }
+  .subtitle { font-size: 0.78rem; color: var(--grey); line-height: 1.5; }
+  .badge { font-family: 'DM Mono', monospace; font-size: 0.6rem; background: var(--orange); color: white; padding: 0.18rem 0.45rem; border-radius: 2px; letter-spacing: 0.05em; display: inline-block; margin-top: 0.5rem; }
+
+  /* Explainer */
+  .explainer {
+    background: white; padding: 1.25rem 2rem;
+    margin-bottom: 1.25rem; border-left: 3px solid var(--teal);
+    font-size: 0.82rem; color: var(--grey); line-height: 1.65;
+  }
+  .explainer strong { color: var(--black); }
+  .pill {
+    display: inline-block; border-radius: 3px; padding: 0.1rem 0.45rem;
+    font-size: 0.72rem; font-weight: 600; margin: 0 0.1rem;
+  }
+  .pill-exp  { background: #E0F2F1; color: var(--teal); }
+  .pill-unex { background: #EDE7F6; color: var(--violet); }
+
+  /* Tab controls */
+  .tab-bar {
+    display: flex; gap: 0.5rem; margin-bottom: 1rem;
+  }
+  .tab {
+    font-size: 0.78rem; font-weight: 500; padding: 0.45rem 1rem;
+    border: 1.5px solid var(--grey-l); border-radius: 4px;
+    background: white; color: var(--grey); cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .tab.active { background: var(--teal); color: white; border-color: var(--teal); }
+  .tab:hover:not(.active) { border-color: var(--teal-m); color: var(--teal); }
+
+  /* Chart panels */
+  .panel { display: none; background: white; padding: 1.5rem 2rem; }
+  .panel.active { display: block; }
+
+  .panel-title { font-size: 0.88rem; font-weight: 600; color: var(--black); margin-bottom: 0.3rem; }
+  .panel-desc { font-size: 0.76rem; color: var(--grey); margin-bottom: 1.25rem; line-height: 1.5; }
+
+  .chart-area { position: relative; }
+
+  /* Legend */
+  .legend-row {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    margin-top: 1.25rem; padding-top: 1rem;
+    border-top: 1px solid var(--grey-l);
+  }
+  .leg { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--grey); }
+  .leg-swatch { width: 14px; height: 10px; border-radius: 2px; }
+
+  /* Data table */
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.78rem; }
+  .data-table th { background: var(--teal); color: white; font-weight: 600; padding: 0.45rem 0.75rem; text-align: left; font-size: 0.72rem; }
+  .data-table th:not(:first-child) { text-align: right; }
+  .data-table td { padding: 0.4rem 0.75rem; border-bottom: 1px solid var(--grey-l); }
+  .data-table td:not(:first-child) { text-align: right; font-family: 'DM Mono', monospace; font-size: 0.75rem; }
+  .data-table tr:nth-child(even) td { background: var(--teal-l); }
+  .data-table .td-group { font-weight: 600; color: var(--black); }
+  .data-table .td-exp  { color: var(--teal); }
+  .data-table .td-unex { color: var(--violet); }
+  .data-table .td-tot  { color: var(--grey); font-weight: 600; }
+
+  /* Annotations panel */
+  .annotations { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  .ann { background: var(--grey-l); border-radius: 3px; padding: 0.75rem 0.9rem; font-size: 0.75rem; line-height: 1.5; }
+  .ann-label { font-weight: 600; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--grey); margin-bottom: 0.3rem; }
+  .ann-val { font-family: 'DM Mono', monospace; font-size: 1.0rem; font-weight: 500; color: var(--violet); }
+  .ann-context { color: var(--grey); font-size: 0.72rem; }
+
+  /* Footer */
+  .footnote {
+    font-size: 0.68rem; color: var(--grey); margin-top: 1.25rem;
+    padding: 1rem 2rem; background: white; line-height: 1.6;
+    border-top: 1px solid var(--grey-l);
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div>
+      <div class="org">Pinpoint Ventures Advisory · Data Visualisation</div>
+      <div class="title">Caste and Gender Wage Gap Decomposition — India</div>
+      <div class="subtitle">
+        Oaxaca-Blinder decomposition of log wage gaps between social groups<br>
+        Reference group: Upper Caste (General) male regular wage workers · PLFS 2019–20
+      </div>
+      <div class="badge">ILLUSTRATIVE SAMPLE · Indicative values based on published literature</div>
+    </div>
+    <div style="text-align:right; font-size:0.65rem; color:var(--grey); padding-top:0.25rem; line-height:1.6;">
+      Pinpoint Ventures Advisory<br>pinpointventures.in
+    </div>
+  </div>
+
+  <div class="explainer">
+    The <strong>Oaxaca-Blinder decomposition</strong> splits an observed wage gap between two groups into two parts:
+    the <span class="pill pill-exp">Explained</span> component — due to measurable differences in education, work experience, occupation, sector, and location —
+    and the <span class="pill pill-unex">Unexplained</span> component, which captures the wage penalty that persists after equalising all observed characteristics.
+    The unexplained component is the standard empirical measure of <strong>labour market discrimination</strong>.
+    It represents what a worker from a disadvantaged group would lose relative to the reference group even if they held identical qualifications, occupation, and location.
+    Values are log-point gaps; approximate percentage gap = exp(log gap) – 1.
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="showPanel('caste')">Caste Gap Decomposition</button>
+    <button class="tab" onclick="showPanel('gender')">Gender Gap by Caste Group</button>
+    <button class="tab" onclick="showPanel('intersect')">Intersection: Caste × Gender</button>
+  </div>
+
+  <!-- Panel 1: Caste decomposition -->
+  <div class="panel active" id="panel-caste">
+    <div class="panel-title">Wage Gap Decomposition by Caste Group — vs. Upper Caste Reference</div>
+    <div class="panel-desc">
+      Regular wage workers. Dependent variable: log monthly wages. Controls: education, potential experience, industry, occupation, rural/urban, state.
+      Gaps are relative to upper caste (General) male workers.
+    </div>
+    <div class="chart-area">
+      <canvas id="chart-caste" height="220"></canvas>
+    </div>
+    <div class="legend-row">
+      <div class="leg"><div class="leg-swatch" style="background:#00838F;"></div> Explained (human capital, location, sector)</div>
+      <div class="leg"><div class="leg-swatch" style="background:#6D3B8C;"></div> Unexplained (discrimination premium)</div>
+      <div class="leg"><div class="leg-swatch" style="background:#B0BEC5;"></div> Total gap</div>
+    </div>
+
+    <div class="annotations">
+      <div class="ann">
+        <div class="ann-label">Highest discrimination penalty</div>
+        <div class="ann-val">ST workers: 24 log pts</div>
+        <div class="ann-context">The unexplained penalty for ST workers equals that of SC workers despite a larger total gap, because ST workers also face larger explained disadvantages — lower average education, rural concentration, agricultural sector.</div>
+      </div>
+      <div class="ann">
+        <div class="ann-label">SC explained vs unexplained</div>
+        <div class="ann-val">~50/50 split</div>
+        <div class="ann-context">For SC workers, roughly half the total gap reflects measurable human capital differences and half reflects residual discrimination — consistent across multiple NSSO and PLFS rounds since 2004–05.</div>
+      </div>
+      <div class="ann">
+        <div class="ann-label">Muslim workers</div>
+        <div class="ann-val">23 log pts unexplained</div>
+        <div class="ann-context">Muslim workers show the highest unexplained share relative to total gap, consistent with India Discrimination Report 2022 findings on labour market exclusion by religious identity.</div>
+      </div>
+      <div class="ann">
+        <div class="ann-label">OBC convergence</div>
+        <div class="ann-val">Gap narrowing since 2004</div>
+        <div class="ann-context">OBC total gap has declined across NSSO rounds, driven primarily by reduction in the explained component (education convergence). Unexplained component has remained more stable at 10–13 log points.</div>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Group (vs. Upper Caste reference)</th>
+          <th>Explained (log pts)</th>
+          <th>Unexplained (log pts)</th>
+          <th>Total gap (log pts)</th>
+          <th>Unexplained share</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-group">Scheduled Caste (SC)</td>
+          <td class="td-exp">22</td>
+          <td class="td-unex">22</td>
+          <td class="td-tot">44</td>
+          <td>50%</td>
+        </tr>
+        <tr>
+          <td class="td-group">Scheduled Tribe (ST)</td>
+          <td class="td-exp">29</td>
+          <td class="td-unex">24</td>
+          <td class="td-tot">53</td>
+          <td>45%</td>
+        </tr>
+        <tr>
+          <td class="td-group">Other Backward Class (OBC)</td>
+          <td class="td-exp">15</td>
+          <td class="td-unex">12</td>
+          <td class="td-tot">27</td>
+          <td>44%</td>
+        </tr>
+        <tr>
+          <td class="td-group">Muslim (regular wage workers)</td>
+          <td class="td-exp">19</td>
+          <td class="td-unex">23</td>
+          <td class="td-tot">42</td>
+          <td>55%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Panel 2: Gender gap by caste -->
+  <div class="panel" id="panel-gender">
+    <div class="panel-title">Gender Wage Gap Decomposition — Women vs. Men, by Social Group</div>
+    <div class="panel-desc">
+      Regular wage workers. Dependent variable: log monthly wages. Controls: education, experience, industry, occupation, rural/urban, state.
+      Comparison within each social group: women relative to men in same group.
+    </div>
+    <div class="chart-area">
+      <canvas id="chart-gender" height="220"></canvas>
+    </div>
+    <div class="legend-row">
+      <div class="leg"><div class="leg-swatch" style="background:#00838F;"></div> Explained</div>
+      <div class="leg"><div class="leg-swatch" style="background:#6D3B8C;"></div> Unexplained (discrimination)</div>
+    </div>
+
+    <table class="data-table" style="margin-top:1.25rem;">
+      <thead>
+        <tr>
+          <th>Social Group</th>
+          <th>Explained (log pts)</th>
+          <th>Unexplained (log pts)</th>
+          <th>Total gender gap</th>
+          <th>Unexplained share</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-group">Upper Caste (General)</td>
+          <td class="td-exp">9</td>
+          <td class="td-unex">17</td>
+          <td class="td-tot">26</td>
+          <td>65%</td>
+        </tr>
+        <tr>
+          <td class="td-group">OBC</td>
+          <td class="td-exp">11</td>
+          <td class="td-unex">20</td>
+          <td class="td-tot">31</td>
+          <td>65%</td>
+        </tr>
+        <tr>
+          <td class="td-group">SC</td>
+          <td class="td-exp">10</td>
+          <td class="td-unex">23</td>
+          <td class="td-tot">33</td>
+          <td>70%</td>
+        </tr>
+        <tr>
+          <td class="td-group">ST</td>
+          <td class="td-exp">12</td>
+          <td class="td-unex">25</td>
+          <td class="td-tot">37</td>
+          <td>68%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Panel 3: Intersection -->
+  <div class="panel" id="panel-intersect">
+    <div class="panel-title">Intersection of Caste and Gender — Cumulative Wage Penalty</div>
+    <div class="panel-desc">
+      Total unexplained wage penalty faced by women from each social group, relative to upper caste men.
+      Combines caste-based and gender-based discrimination components.
+      The double penalty for SC and ST women is not simply additive; interaction effects have been modelled separately.
+    </div>
+    <div class="chart-area">
+      <canvas id="chart-intersect" height="240"></canvas>
+    </div>
+    <div class="legend-row">
+      <div class="leg"><div class="leg-swatch" style="background:#4DB6AC;"></div> Caste penalty (unexplained)</div>
+      <div class="leg"><div class="leg-swatch" style="background:#6D3B8C;"></div> Additional gender penalty</div>
+      <div class="leg"><div class="leg-swatch" style="background:#BF360C;"></div> Interaction (caste × gender, not purely additive)</div>
+    </div>
+
+    <div style="margin-top:1.25rem; padding:1rem 1.1rem; background:var(--vio-l); border-radius:3px; font-size:0.78rem; line-height:1.6; color:#3A1C4D;">
+      <strong>Intersectionality note:</strong> SC and ST women face a compounded penalty that exceeds the simple sum of their caste penalty and gender penalty. The interaction term — captured in the third bar segment — reflects the additional disadvantage that cannot be explained by either caste or gender alone. This is consistent with Thorat and Newman's (2010) audit evidence showing that caste identity and gender identity interact in hiring discrimination, not merely compound.
+    </div>
+  </div>
+
+  <div class="footnote">
+    <strong>Data and methodology:</strong> Values are illustrative estimates consistent with the published literature on labour market discrimination in India, particularly
+    Thorat, Attewell and Madheswaran (2022) <em>India Discrimination Report</em> (Oxford University Press);
+    Madheswaran and Attewell (2007), <em>Economic and Political Weekly</em>;
+    and Azam (2012), <em>Journal of Development Studies.</em>
+    Decomposition method: Oaxaca (1973) / Blinder (1973) procedure using regular wage worker sample from PLFS 2019–20.
+    Log-point gaps are approximate; exact figures vary by reference period, sample restriction, and control set.
+    This visualisation is an <strong>illustrative sample</strong> of Pinpoint Ventures' quantitative analysis work and does not constitute primary research output.
+    &nbsp;|&nbsp; ILLUSTRATIVE SAMPLE — Pinpoint Ventures Advisory LLP — pinpointventures.in
+  </div>
+
+</div>
+
+<script>
+// Tab switching
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+  // Trigger chart resize
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
+}
+
+const TEAL   = '#00838F';
+const TEAL_M = '#4DB6AC';
+const VIOLET = '#6D3B8C';
+const GREY_M = '#B0BEC5';
+const ORANGE = '#BF360C';
+const TEAL_L = 'rgba(0,131,143,0.15)';
+const VIO_L  = 'rgba(109,59,140,0.15)';
+
+const baseFont = { family: "'DM Sans', sans-serif", size: 11 };
+
+Chart.defaults.font = baseFont;
+Chart.defaults.color = '#546E7A';
+
+// ── Chart 1: Caste decomposition (horizontal stacked bars) ──────────────────
+const ctx1 = document.getElementById('chart-caste').getContext('2d');
+new Chart(ctx1, {
+  type: 'bar',
+  data: {
+    labels: ['SC workers', 'ST workers', 'OBC workers', 'Muslim workers'],
+    datasets: [
+      {
+        label: 'Explained',
+        data: [22, 29, 15, 19],
+        backgroundColor: TEAL,
+        borderRadius: 2,
+        borderSkipped: false,
+      },
+      {
+        label: 'Unexplained (discrimination)',
+        data: [22, 24, 12, 23],
+        backgroundColor: VIOLET,
+        borderRadius: 2,
+        borderSkipped: false,
+      }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => ` ${ctx.dataset.label}: ${ctx.parsed.x} log pts`,
+          afterBody: (items) => {
+            const total = items.reduce((s, i) => s + i.parsed.x, 0);
+            return [`Total gap: ${total} log pts (~${Math.round((Math.exp(total/100)-1)*100)}% wage gap)`];
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        stacked: true,
+        title: { display: true, text: 'Log-point wage gap (vs. Upper Caste male reference)', font: { size: 10 } },
+        grid: { color: 'rgba(176,190,197,0.3)' },
+        max: 65,
+        ticks: {
+          callback: (v) => v + ' pts'
+        }
+      },
+      y: {
+        stacked: true,
+        grid: { display: false },
+        ticks: { font: { weight: '500' } }
+      }
+    }
+  }
+});
+
+// ── Chart 2: Gender gap by caste ────────────────────────────────────────────
+const ctx2 = document.getElementById('chart-gender').getContext('2d');
+new Chart(ctx2, {
+  type: 'bar',
+  data: {
+    labels: ['Upper Caste (Gen.)', 'OBC', 'SC', 'ST'],
+    datasets: [
+      {
+        label: 'Explained',
+        data: [9, 11, 10, 12],
+        backgroundColor: TEAL,
+        borderRadius: 2,
+        borderSkipped: false,
+      },
+      {
+        label: 'Unexplained (gender discrimination)',
+        data: [17, 20, 23, 25],
+        backgroundColor: VIOLET,
+        borderRadius: 2,
+        borderSkipped: false,
+      }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => ` ${ctx.dataset.label}: ${ctx.parsed.x} log pts`,
+        }
+      }
+    },
+    scales: {
+      x: {
+        stacked: true,
+        title: { display: true, text: 'Log-point gender gap within social group (women vs. men)', font: { size: 10 } },
+        grid: { color: 'rgba(176,190,197,0.3)' },
+        max: 50,
+        ticks: { callback: (v) => v + ' pts' }
+      },
+      y: {
+        stacked: true,
+        grid: { display: false },
+        ticks: { font: { weight: '500' } }
+      }
+    }
+  }
+});
+
+// ── Chart 3: Intersection ────────────────────────────────────────────────────
+const ctx3 = document.getElementById('chart-intersect').getContext('2d');
+new Chart(ctx3, {
+  type: 'bar',
+  data: {
+    labels: ['Upper Caste women\n(vs. UC men)', 'OBC women\n(vs. UC men)', 'SC women\n(vs. UC men)', 'ST women\n(vs. UC men)'],
+    datasets: [
+      {
+        label: 'Caste penalty (unexplained)',
+        data: [0, 12, 22, 24],
+        backgroundColor: TEAL_M,
+        borderRadius: 2,
+        borderSkipped: false,
+      },
+      {
+        label: 'Gender penalty (additional)',
+        data: [17, 20, 23, 25],
+        backgroundColor: VIOLET,
+        borderRadius: 2,
+        borderSkipped: false,
+      },
+      {
+        label: 'Interaction effect',
+        data: [0, 3, 5, 6],
+        backgroundColor: ORANGE,
+        borderRadius: 2,
+        borderSkipped: false,
+      }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => ` ${ctx.dataset.label}: ${ctx.parsed.x} log pts`,
+          afterBody: (items) => {
+            const total = items.reduce((s, i) => s + i.parsed.x, 0);
+            return [`Cumulative unexplained penalty: ${total} log pts`];
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        stacked: true,
+        title: { display: true, text: 'Cumulative unexplained wage penalty (log pts, vs. Upper Caste male)', font: { size: 10 } },
+        grid: { color: 'rgba(176,190,197,0.3)' },
+        max: 65,
+        ticks: { callback: (v) => v + ' pts' }
+      },
+      y: {
+        stacked: true,
+        grid: { display: false },
+        ticks: { font: { weight: '500' } }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
