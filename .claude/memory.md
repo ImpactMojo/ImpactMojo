@@ -61,3 +61,38 @@ Persistent context that carries across Claude Code sessions. Updated automatical
   - `Games/climate-action-game.html` is the last dark-only page — uses earth-tone palette `#F5F0EB` and needs designer-authored light tokens
   - Some pages have layered topbar conflicts (im-topbar + nav element at top:0) that cause cosmetic z-index hiding but aren't critical bugs — the earlier removal attempt was too aggressive and caught false positives
   - Wiki sync (`ImpactMojo/ImpactMojo.wiki.git`) not done this session — pending
+
+- **2026-04-07 (continued)**: Workflow correctness + axe baseline clear marathon. Shipped PR #358 (housekeeping batch, replacing earlier #357) and PR #359 (8-pass a11y baseline clear).
+
+  **#358 (housekeeping):**
+  - 213 files: 61 count drift fixes across 28 files, CHANGELOG v10.14.0, ROADMAP Q2 update, 100% Google Analytics coverage on 185 pages (89 added), 100% SEO baseline on 185 pages (1,425 meta tags inserted), `Backups/index-backup-20260407-1001-after-brand-cleanup.html`, `.claude/memory.md` Session Log + 5 Recent Decisions
+  - **`.claude/skills/housekeeping/SKILL.md` rewritten 169 → 922 lines** with YAML frontmatter, count-drift script, false-positive avoidance, brand identity audit, duplicate-header detection allowlist, WCAG token canon, emoji→Sargam mapping, Parcel-bundle handling, enliven-repo workflow, content-type checklists. Also installed at `~/.claude/skills/housekeeping/SKILL.md` for global availability.
+  - Catalog.html aria-hidden-focus fix (emoji→Sargam script had inserted `<img>` inside `placeholder=""` attribute on `#searchInput`)
+
+  **#359 (workflow + a11y baseline):**
+  - **CI workflow correctness fix** — both `.github/workflows/accessibility.yml` and `.github/workflows/ci.yml` had `$?` capture after `npm run test:a11y | tee` which always returned 0 (tee's exit code), so the wrapper script always took the success branch. PRs #350–#358 all silently passed despite real a11y violations. Fixed with `${PIPESTATUS[0]}`. Also discovered `tee` + `2>&1` was truncating pa11y's JSON output to ~17% of full size (65KB vs 393KB) — switched to direct stdout redirection (`pa11y-ci ... > pa11y-results.json`) which avoids the pipe entirely. Pa11y JSON parser also bumped to use depth-counted brace walking with diagnostic catch logging.
+  - **Tests config**: Added third-party widget exclusions to `tests/axe-accessibility.js` — `.introjs-*` (auto-starts via `js/tours.js` 1.5s delay), `.userway_*`, `#uwy*`, `.gtranslate_wrapper`. These are vendor-injected DOM that we don't directly own.
+  - **8-pass axe baseline clear**: 11 → 6 → 5 → 3 → 2 → 1 → 1 → 1 → **0**. Fixes spanned `index.html` (.imx-tag-muted token bump, 10 inline Explore Course CTA colors, 8 flagship feature spans, .imx-resource-cta, .v3-hero-eyebrow, .imx-track-flagship-pill, community card badges + CTAs, premium tier headers + descriptions, footer link rules, footer compliance opacity), `about.html` (.lang-status both variants, .team-role, .upi-box h4, global a + footer), `catalog.html` (.card-rating, .card-track, 5 .card-type variants), `bct-repository.html` (14 text uses of accent-color via override block, .sector-pill, .technique-id-badge fixed dark bg, .compare-bar-label, .footer-bottom a, --gradient-primary token), `courses/mel/index.html` (global a + link-in-text-block rule), and `js/auth.js` (Sign Up button background #6366f1 → #4f46e5, fallback #94a3b8 → #475569 across Login/Account/Logout).
+  - **Pa11y trajectory** (cascade from axe fixes): 720 → 577 → ~414 → ~410 (plateaued — remaining errors are on the 8 pages outside axe's set).
+  - **Issue #360** opened to track pa11y baseline cleanup as a clean follow-up (lexicons, handouts, premium, dataverse, etc.). Strategy documented: run pa11y locally, identify top 3-5 token clusters, apply scoped overrides, target 0-20 errors.
+
+  **Final session totals:**
+  - 9 PRs merged to main (#350–#356, #358, #359) + 1 closed (#357 superseded)
+  - 1 follow-up issue opened (#360)
+  - Skill globally available + 922-line checklist locked in
+  - axe-core: 0 serious violations on all 5 audited pages (was hiding 11)
+  - pa11y: 720 → 410 errors (still red, tracked in #360)
+  - Google Analytics: 100% coverage on 185 content pages
+  - SEO baseline: 100% coverage on 185 content pages
+  - Content counts unified across 28 files
+  - CI gates now truthful — any new a11y regression will be caught and reported correctly
+
+  **Key reusable learnings (added to housekeeping skill):**
+  - `tee` + `2>&1` mixing stderr into stdout can corrupt large JSON output. Use direct redirection (`> file.json`) for capturing data; let stderr go to the workflow log.
+  - `$?` after a pipe captures the LAST command's exit code. Use `${PIPESTATUS[0]}` for the upstream command.
+  - Brand color text on light brand-tinted backgrounds is the #1 a11y anti-pattern. Always use a darker variant for text (sky-500 → sky-800, indigo-500 → indigo-700, etc.).
+  - `opacity: 0.8` on text using `var(--text-secondary)` puts contrast right at the 4.5:1 threshold. Either remove the opacity or use a darker base color.
+  - JS-injected DOM (auth widgets, tours, sticky bots) needs its own a11y audit — fallback colors in `style.cssText` strings often use `#94a3b8` which fails AA.
+  - Inline `style="..."` overrides cascade rules unless `!important`. Bulk fixing inline color requires sed or per-element edits.
+  - Third-party widget DOM (Intro.js, UserWay, Google Translate) should be excluded from axe via `axe.run({exclude: [...]})` rather than fixing the vendor's HTML.
+  - The pa11y JSON parser needs depth-counted brace walking (not `lastIndexOf('}')`) because JSON strings can contain `}` literals.
