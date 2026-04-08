@@ -2,6 +2,17 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.15.0 — April 8, 2026
+
+### Fixed
+- **Content-count drift sitewide** — `about.html`, `catalog.html` (hero + meta + filter chip), `transparency.html`, `org-dashboard.html`, `404.html`, `podcast.html`, Supabase signup/invite email templates, and four `docs/` files all now show the canonical counts: **48 courses (11 flagship + 38 foundational), 11 labs, 16 games**. Previously several of these still read 39 / 10 / 12.
+- **`index.html` flagship stat line** — corrected "10 Flagship Courses" → "11 Flagship Courses" in the "What's Included" strip above the flagship course cards.
+- **`catalog.html` missing flagship cards** — added Constitution & Law, Public Policy, and Gender Studies to the catalog JS data (they existed on the homepage but weren't in the catalog's searchable/filterable collection). Flagship filter chip now reflects the real 11.
+
+### Changed
+- **Learning Track Quiz promoted** — the "Not sure where to start?" quiz CTA has moved from section #6 of the homepage (below Learning Pathways) to directly under the hero area, right after the Daily Tip + Surprise Me buttons. First-time visitors now see the 5-question recommender before any content library listings.
+- **New hero quiz shortcut** — added a tertiary "Not sure? Take the 5-question quiz →" link in the hero CTA block for visitors who want to jump straight to the quiz without scrolling.
+
 ## v10.14.0 — April 7, 2026
 
 ### Added
