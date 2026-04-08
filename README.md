@@ -1,6 +1,8 @@
 # ImpactMojo
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f9e879bf-4792-42aa-96ea-c3a3b396f8b8/deploy-status)](https://app.netlify.com/sites/impactmojo/deploys)
+[![Accessibility: WCAG 2.1 AA](https://img.shields.io/badge/Accessibility-WCAG_2.1_AA-success.svg)](https://www.impactmojo.in/accessibility.html)
+[![axe-core audit](https://github.com/ImpactMojo/ImpactMojo/actions/workflows/accessibility.yml/badge.svg?branch=main)](https://github.com/ImpactMojo/ImpactMojo/actions/workflows/accessibility.yml)
 [![Code License: MIT](https://img.shields.io/badge/Code-MIT-green.svg)](LICENSE)
 [![Content License: CC BY-NC-ND 4.0](https://img.shields.io/badge/Content-CC_BY--NC--ND_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)

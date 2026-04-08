@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.16.0 — April 8, 2026
+
+### Added
+- **Accessibility Statement page** at `/accessibility.html` — formal WCAG 2.1 Level AA conformance statement covering our commitment, how we test (axe-core + pa11y-ci on every PR), accessibility features, known limitations (Gamma iframes, canvas-based games, third-party widgets), and how to report a barrier. Linked from the footer Legal section, the About page, and the UserWay widget's statement link.
+- **README badges** — new "Accessibility: WCAG 2.1 AA" shield and a live GitHub Actions status badge for the `accessibility.yml` workflow, so the repo README reflects current CI truth.
+- **About page accessibility callout** — a brief paragraph in "What We Offer" announcing WCAG 2.1 AA conformance with a link to the full statement.
+
+### Changed
+- **UserWay widget** — the commented-out `data-statement_url` and `data-statement_text` config was wired up to point at the new `/accessibility.html` page. The UserWay button now surfaces "Our Accessibility Statement" as a direct link.
+
 ## v10.15.0 — April 8, 2026
 
 ### Fixed
