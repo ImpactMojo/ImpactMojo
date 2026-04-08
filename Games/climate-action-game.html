@@ -10,6 +10,72 @@
 <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
+  /* Light mode (device-mode default) — warm Warli cream + earth-tone palette
+     Contrast-tested to WCAG 2.1 AA against the cream background. */
+  --bg-primary: #FFF8F0;
+  --bg-secondary: #FAF0E0;
+  --bg-card: #FFFFFF;
+  --terracotta: #8B3A20;
+  --terracotta-dark: #5C2414;
+  --forest-green: #1B5E20;
+  --sky-blue: #0D47A1;
+  --amber-warn: #B45309;
+  --amber-bright: #E65100;
+  --danger-red: #B71C1C;
+  --text-primary: #1A0E0A;
+  --text-secondary: #3A2218;
+  --text-muted: #5A3A28;
+  --warli-white: #FFF8F0;
+  --warli-ink: #1A0E0A;
+  --border: #D4C4B0;
+  --gauge-empty: #E8D8C4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1A0E0A;
+    --bg-secondary: #2A1810;
+    --bg-card: #3A2218;
+    --terracotta: #C85A3A;
+    --terracotta-dark: #8B3A20;
+    --forest-green: #4CAF50;
+    --sky-blue: #42A5F5;
+    --amber-warn: #FFA726;
+    --amber-bright: #FFD54F;
+    --danger-red: #EF5350;
+    --text-primary: #F5F0EB;
+    --text-secondary: #C8B8A8;
+    --text-muted: #8A7A6A;
+    --warli-white: #F5F0EB;
+    --warli-ink: #F5F0EB;
+    --border: #5A3A28;
+    --gauge-empty: #1A0E0A;
+  }
+}
+
+body.light-mode,
+[data-theme="light"] {
+  --bg-primary: #FFF8F0;
+  --bg-secondary: #FAF0E0;
+  --bg-card: #FFFFFF;
+  --terracotta: #8B3A20;
+  --terracotta-dark: #5C2414;
+  --forest-green: #1B5E20;
+  --sky-blue: #0D47A1;
+  --amber-warn: #B45309;
+  --amber-bright: #E65100;
+  --danger-red: #B71C1C;
+  --text-primary: #1A0E0A;
+  --text-secondary: #3A2218;
+  --text-muted: #5A3A28;
+  --warli-white: #FFF8F0;
+  --warli-ink: #1A0E0A;
+  --border: #D4C4B0;
+  --gauge-empty: #E8D8C4;
+}
+
+body.dark-mode,
+[data-theme="dark"] {
   --bg-primary: #1A0E0A;
   --bg-secondary: #2A1810;
   --bg-card: #3A2218;
@@ -24,7 +90,9 @@
   --text-secondary: #C8B8A8;
   --text-muted: #8A7A6A;
   --warli-white: #F5F0EB;
+  --warli-ink: #F5F0EB;
   --border: #5A3A28;
+  --gauge-empty: #1A0E0A;
 }
 
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
@@ -93,6 +161,10 @@ body {
   display: block;
   border-radius: 14px;
   border: 2px solid var(--terracotta-dark);
+  /* Warli motifs use currentColor for fill/stroke so they adapt to theme:
+     dark mode paints them cream on brown; light mode paints them brown on cream. */
+  color: var(--warli-ink);
+  background: var(--bg-secondary);
 }
 
 .concept-box {
@@ -260,7 +332,7 @@ body {
 .gauge-bar {
   width: 100%;
   height: 18px;
-  background: #1A0E0A;
+  background: var(--gauge-empty);
   border-radius: 9px;
   overflow: hidden;
   margin-bottom: .3rem;
@@ -913,11 +985,11 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
   <svg class="warli-scene" viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
     <rect width="700" height="260" fill="#8B3A20" rx="10"/>
     <!-- Ground line -->
-    <line x1="0" y1="210" x2="700" y2="210" stroke="#F5F0EB" stroke-width="1.5" opacity=".6"/>
+    <line x1="0" y1="210" x2="700" y2="210" stroke="currentColor" stroke-width="1.5" opacity=".6"/>
     <!-- Sun -->
-    <circle cx="600" cy="55" r="28" fill="none" stroke="#F5F0EB" stroke-width="1.5"/>
-    <circle cx="600" cy="55" r="20" fill="none" stroke="#F5F0EB" stroke-width="1"/>
-    <g stroke="#F5F0EB" stroke-width="1">
+    <circle cx="600" cy="55" r="28" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <circle cx="600" cy="55" r="20" fill="none" stroke="currentColor" stroke-width="1"/>
+    <g stroke="currentColor" stroke-width="1">
       <line x1="600" y1="20" x2="600" y2="10"/>
       <line x1="600" y1="90" x2="600" y2="100"/>
       <line x1="565" y1="55" x2="555" y2="55"/>
@@ -928,7 +1000,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
       <line x1="625" y1="80" x2="632" y2="87"/>
     </g>
     <!-- Trees -->
-    <g stroke="#F5F0EB" stroke-width="1.5" fill="none">
+    <g stroke="currentColor" stroke-width="1.5" fill="none">
       <line x1="80" y1="210" x2="80" y2="150"/>
       <circle cx="80" cy="140" r="18"/>
       <circle cx="68" cy="150" r="12"/>
@@ -939,10 +1011,10 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
       <circle cx="150" cy="158" r="10"/>
     </g>
     <!-- River -->
-    <path d="M0 230 Q100 220 200 235 Q300 250 400 230 Q500 215 600 235 Q650 242 700 230" stroke="#F5F0EB" stroke-width="1.5" fill="none" opacity=".7"/>
-    <path d="M0 240 Q100 230 200 245 Q300 255 400 240 Q500 225 600 245 Q650 252 700 240" stroke="#F5F0EB" stroke-width="1" fill="none" opacity=".4"/>
+    <path d="M0 230 Q100 220 200 235 Q300 250 400 230 Q500 215 600 235 Q650 242 700 230" stroke="currentColor" stroke-width="1.5" fill="none" opacity=".7"/>
+    <path d="M0 240 Q100 230 200 245 Q300 255 400 240 Q500 225 600 245 Q650 252 700 240" stroke="currentColor" stroke-width="1" fill="none" opacity=".4"/>
     <!-- Warli people (triangular bodies) -->
-    <g fill="none" stroke="#F5F0EB" stroke-width="1.5">
+    <g fill="none" stroke="currentColor" stroke-width="1.5">
       <!-- Person 1 -->
       <circle cx="250" cy="172" r="7"/>
       <path d="M243 180 L250 205 L257 180 Z"/>
@@ -962,7 +1034,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
       <circle cx="320" cy="190" r="6"/>
     </g>
     <!-- Huts -->
-    <g fill="none" stroke="#F5F0EB" stroke-width="1.5">
+    <g fill="none" stroke="currentColor" stroke-width="1.5">
       <path d="M420 210 L420 185 L450 165 L480 185 L480 210"/>
       <line x1="425" y1="210" x2="475" y2="210"/>
       <rect x="440" y="195" width="15" height="15" rx="1"/>
@@ -970,7 +1042,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
       <line x1="525" y1="210" x2="565" y2="210"/>
     </g>
     <!-- Birds -->
-    <g stroke="#F5F0EB" stroke-width="1" fill="none" opacity=".6">
+    <g stroke="currentColor" stroke-width="1" fill="none" opacity=".6">
       <path d="M200 60 Q205 50 210 60"/>
       <path d="M220 50 Q225 40 230 50"/>
       <path d="M240 65 Q245 55 250 65"/>
@@ -978,7 +1050,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
       <path d="M370 55 Q375 45 380 55"/>
     </g>
     <!-- Animals -->
-    <g fill="none" stroke="#F5F0EB" stroke-width="1.5">
+    <g fill="none" stroke="currentColor" stroke-width="1.5">
       <!-- Deer -->
       <ellipse cx="170" cy="200" rx="12" ry="7"/>
       <line x1="162" y1="205" x2="162" y2="210"/>
@@ -990,7 +1062,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
       <line x1="162" y1="190" x2="165" y2="182"/>
     </g>
     <!-- Title -->
-    <text x="350" y="30" text-anchor="middle" font-size="14" fill="#F5F0EB" font-weight="bold" font-family="sans-serif" opacity=".8">Where village meets climate, choices shape the future.</text>
+    <text x="350" y="30" text-anchor="middle" font-size="14" fill="currentColor" font-weight="bold" font-family="sans-serif" opacity=".8">Where village meets climate, choices shape the future.</text>
   </svg>
 
   <h1>Climate Action Challenge</h1>
@@ -1451,21 +1523,21 @@ function renderInterludeArt(phase) {
   if (isStruggling) {
     svg.innerHTML = `
       <rect width="700" height="200" fill="#8B3A20" rx="10"/>
-      <line x1="0" y1="160" x2="700" y2="160" stroke="#F5F0EB" stroke-width="1.5" opacity=".5"/>
+      <line x1="0" y1="160" x2="700" y2="160" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
       <!-- Wilting trees -->
-      <g stroke="#F5F0EB" stroke-width="1.5" fill="none" opacity=".6">
+      <g stroke="currentColor" stroke-width="1.5" fill="none" opacity=".6">
         <line x1="100" y1="160" x2="100" y2="120"/>
         <path d="M90 120 Q100 100 110 120"/>
         <line x1="200" y1="160" x2="200" y2="130"/>
         <path d="M190 130 Q200 115 210 130"/>
       </g>
       <!-- Cracks in ground -->
-      <g stroke="#F5F0EB" stroke-width="1" opacity=".4">
+      <g stroke="currentColor" stroke-width="1" opacity=".4">
         <path d="M300 160 L310 175 L320 160 L335 180"/>
         <path d="M400 160 L415 180 L420 165"/>
       </g>
       <!-- Worried people -->
-      <g fill="none" stroke="#F5F0EB" stroke-width="1.5">
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
         <circle cx="350" cy="125" r="7"/>
         <path d="M343 133 L350 155 L357 133 Z"/>
         <line x1="343" y1="140" x2="335" y2="148"/>
@@ -1474,21 +1546,21 @@ function renderInterludeArt(phase) {
         <path d="M443 136 L450 155 L457 136 Z"/>
       </g>
       <!-- Harsh sun -->
-      <circle cx="600" cy="45" r="30" fill="none" stroke="#F5F0EB" stroke-width="2" opacity=".8"/>
-      <g stroke="#F5F0EB" stroke-width="1.5" opacity=".6">
+      <circle cx="600" cy="45" r="30" fill="none" stroke="currentColor" stroke-width="2" opacity=".8"/>
+      <g stroke="currentColor" stroke-width="1.5" opacity=".6">
         <line x1="600" y1="8" x2="600" y2="0"/>
         <line x1="630" y1="20" x2="638" y2="12"/>
         <line x1="638" y1="45" x2="648" y2="45"/>
         <line x1="630" y1="70" x2="638" y2="78"/>
       </g>
-      <text x="350" y="25" text-anchor="middle" font-size="12" fill="#F5F0EB" font-family="sans-serif" opacity=".7">The land cries for balance...</text>
+      <text x="350" y="25" text-anchor="middle" font-size="12" fill="currentColor" font-family="sans-serif" opacity=".7">The land cries for balance...</text>
     `;
   } else {
     svg.innerHTML = `
       <rect width="700" height="200" fill="#8B3A20" rx="10"/>
-      <line x1="0" y1="160" x2="700" y2="160" stroke="#F5F0EB" stroke-width="1.5" opacity=".6"/>
+      <line x1="0" y1="160" x2="700" y2="160" stroke="currentColor" stroke-width="1.5" opacity=".6"/>
       <!-- Healthy trees -->
-      <g stroke="#F5F0EB" stroke-width="1.5" fill="none">
+      <g stroke="currentColor" stroke-width="1.5" fill="none">
         <line x1="80" y1="160" x2="80" y2="110"/>
         <circle cx="80" cy="100" r="16"/>
         <circle cx="68" cy="108" r="10"/>
@@ -1499,13 +1571,13 @@ function renderInterludeArt(phase) {
         <circle cx="190" cy="112" r="9"/>
       </g>
       <!-- Solar panels (triangles) -->
-      <g stroke="#F5F0EB" stroke-width="1.5" fill="none">
+      <g stroke="currentColor" stroke-width="1.5" fill="none">
         <path d="M500 160 L510 140 L520 160 Z"/>
         <path d="M525 160 L535 140 L545 160 Z"/>
         <path d="M550 160 L560 140 L570 160 Z"/>
       </g>
       <!-- Happy people -->
-      <g fill="none" stroke="#F5F0EB" stroke-width="1.5">
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
         <circle cx="300" cy="120" r="7"/>
         <path d="M293 128 L300 150 L307 128 Z"/>
         <line x1="293" y1="135" x2="283" y2="128"/>
@@ -1518,12 +1590,12 @@ function renderInterludeArt(phase) {
         <path d="M393 130 L400 152 L407 130 Z"/>
       </g>
       <!-- Birds -->
-      <g stroke="#F5F0EB" stroke-width="1" fill="none" opacity=".5">
+      <g stroke="currentColor" stroke-width="1" fill="none" opacity=".5">
         <path d="M240 50 Q245 40 250 50"/>
         <path d="M260 45 Q265 35 270 45"/>
         <path d="M280 55 Q285 45 290 55"/>
       </g>
-      <text x="350" y="25" text-anchor="middle" font-size="12" fill="#F5F0EB" font-family="sans-serif" opacity=".7">The village grows stronger together.</text>
+      <text x="350" y="25" text-anchor="middle" font-size="12" fill="currentColor" font-family="sans-serif" opacity=".7">The village grows stronger together.</text>
     `;
   }
 }
@@ -1632,9 +1704,9 @@ function renderResultsArt() {
   if (good) {
     svg.innerHTML = `
       <rect width="700" height="260" fill="#8B3A20" rx="10"/>
-      <line x1="0" y1="210" x2="700" y2="210" stroke="#F5F0EB" stroke-width="1.5" opacity=".6"/>
+      <line x1="0" y1="210" x2="700" y2="210" stroke="currentColor" stroke-width="1.5" opacity=".6"/>
       <!-- Flourishing trees -->
-      <g stroke="#F5F0EB" stroke-width="1.5" fill="none">
+      <g stroke="currentColor" stroke-width="1.5" fill="none">
         <line x1="60" y1="210" x2="60" y2="140"/>
         <circle cx="60" cy="128" r="20"/>
         <circle cx="45" cy="140" r="13"/>
@@ -1649,15 +1721,15 @@ function renderResultsArt() {
         <circle cx="613" cy="143" r="11"/>
       </g>
       <!-- River flowing -->
-      <path d="M0 235 Q100 225 200 240 Q300 252 400 235 Q500 220 600 240 Q650 248 700 235" stroke="#F5F0EB" stroke-width="1.5" fill="none" opacity=".7"/>
+      <path d="M0 235 Q100 225 200 240 Q300 252 400 235 Q500 220 600 240 Q650 248 700 235" stroke="currentColor" stroke-width="1.5" fill="none" opacity=".7"/>
       <!-- Solar panels -->
-      <g stroke="#F5F0EB" stroke-width="1.5" fill="none">
+      <g stroke="currentColor" stroke-width="1.5" fill="none">
         <path d="M460 210 L470 190 L480 210 Z"/>
         <path d="M485 210 L495 190 L505 210 Z"/>
         <path d="M510 210 L520 190 L530 210 Z"/>
       </g>
       <!-- Dancing/celebrating people -->
-      <g fill="none" stroke="#F5F0EB" stroke-width="1.5">
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
         <circle cx="250" cy="168" r="7"/>
         <path d="M243 176 L250 200 L257 176 Z"/>
         <line x1="243" y1="183" x2="232" y2="175"/>
@@ -1678,7 +1750,7 @@ function renderResultsArt() {
         <line x1="407" y1="185" x2="417" y2="178"/>
       </g>
       <!-- Birds -->
-      <g stroke="#F5F0EB" stroke-width="1" fill="none" opacity=".5">
+      <g stroke="currentColor" stroke-width="1" fill="none" opacity=".5">
         <path d="M200 50 Q205 40 210 50"/>
         <path d="M230 40 Q235 30 240 40"/>
         <path d="M260 55 Q265 45 270 55"/>
@@ -1686,15 +1758,15 @@ function renderResultsArt() {
         <path d="M420 45 Q425 35 430 45"/>
       </g>
       <!-- Sun (gentle) -->
-      <circle cx="600" cy="50" r="22" fill="none" stroke="#F5F0EB" stroke-width="1.5"/>
-      <g stroke="#F5F0EB" stroke-width="1" opacity=".5">
+      <circle cx="600" cy="50" r="22" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <g stroke="currentColor" stroke-width="1" opacity=".5">
         <line x1="600" y1="22" x2="600" y2="14"/>
         <line x1="600" y1="78" x2="600" y2="86"/>
         <line x1="572" y1="50" x2="564" y2="50"/>
         <line x1="628" y1="50" x2="636" y2="50"/>
       </g>
       <!-- Animals -->
-      <g fill="none" stroke="#F5F0EB" stroke-width="1.5">
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
         <ellipse cx="180" cy="200" rx="12" ry="7"/>
         <line x1="172" y1="205" x2="172" y2="210"/>
         <line x1="177" y1="205" x2="177" y2="210"/>
@@ -1702,14 +1774,14 @@ function renderResultsArt() {
         <line x1="188" y1="205" x2="188" y2="210"/>
         <circle cx="170" cy="194" r="4"/>
       </g>
-      <text x="350" y="25" text-anchor="middle" font-size="13" fill="#F5F0EB" font-weight="bold" font-family="sans-serif" opacity=".8">When village and nature act as one, all flourish.</text>
+      <text x="350" y="25" text-anchor="middle" font-size="13" fill="currentColor" font-weight="bold" font-family="sans-serif" opacity=".8">When village and nature act as one, all flourish.</text>
     `;
   } else {
     svg.innerHTML = `
       <rect width="700" height="260" fill="#8B3A20" rx="10"/>
-      <line x1="0" y1="210" x2="700" y2="210" stroke="#F5F0EB" stroke-width="1.5" opacity=".4"/>
+      <line x1="0" y1="210" x2="700" y2="210" stroke="currentColor" stroke-width="1.5" opacity=".4"/>
       <!-- Dead/bare trees -->
-      <g stroke="#F5F0EB" stroke-width="1.5" fill="none" opacity=".5">
+      <g stroke="currentColor" stroke-width="1.5" fill="none" opacity=".5">
         <line x1="80" y1="210" x2="80" y2="160"/>
         <line x1="80" y1="175" x2="68" y2="160"/>
         <line x1="80" y1="180" x2="95" y2="168"/>
@@ -1718,13 +1790,13 @@ function renderResultsArt() {
         <line x1="200" y1="188" x2="212" y2="175"/>
       </g>
       <!-- Cracked earth -->
-      <g stroke="#F5F0EB" stroke-width="1" opacity=".4">
+      <g stroke="currentColor" stroke-width="1" opacity=".4">
         <path d="M250 210 L260 230 L270 215 L285 240"/>
         <path d="M350 210 L365 235 L370 218"/>
         <path d="M450 210 L462 228 L468 212 L480 232"/>
       </g>
       <!-- Distressed people -->
-      <g fill="none" stroke="#F5F0EB" stroke-width="1.5">
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
         <circle cx="320" cy="175" r="7"/>
         <path d="M313 183 L320 205 L327 183 Z"/>
         <line x1="313" y1="190" x2="305" y2="196"/>
@@ -1735,9 +1807,9 @@ function renderResultsArt() {
         <line x1="407" y1="193" x2="415" y2="199"/>
       </g>
       <!-- Harsh sun -->
-      <circle cx="580" cy="50" r="35" fill="none" stroke="#F5F0EB" stroke-width="2" opacity=".8"/>
-      <circle cx="580" cy="50" r="25" fill="none" stroke="#F5F0EB" stroke-width="1.5" opacity=".6"/>
-      <g stroke="#F5F0EB" stroke-width="1.5" opacity=".7">
+      <circle cx="580" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="2" opacity=".8"/>
+      <circle cx="580" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".6"/>
+      <g stroke="currentColor" stroke-width="1.5" opacity=".7">
         <line x1="580" y1="8" x2="580" y2="0"/>
         <line x1="615" y1="18" x2="625" y2="8"/>
         <line x1="622" y1="50" x2="635" y2="50"/>
@@ -1747,9 +1819,9 @@ function renderResultsArt() {
         <line x1="545" y1="82" x2="535" y2="92"/>
       </g>
       <!-- Flood water rising -->
-      <path d="M0 220 Q50 215 100 222 Q150 228 200 220 Q250 212 300 222 Q350 230 400 220 Q450 212 500 222 Q550 230 600 220 Q650 212 700 222" stroke="#F5F0EB" stroke-width="1" fill="none" opacity=".5"/>
-      <path d="M0 228 Q50 222 100 230 Q150 236 200 228 Q250 220 300 230 Q350 238 400 228 Q450 220 500 230 Q550 238 600 228 Q650 220 700 230" stroke="#F5F0EB" stroke-width="1" fill="none" opacity=".3"/>
-      <text x="350" y="25" text-anchor="middle" font-size="13" fill="#F5F0EB" font-weight="bold" font-family="sans-serif" opacity=".8">Without balance, neither village nor nature can endure.</text>
+      <path d="M0 220 Q50 215 100 222 Q150 228 200 220 Q250 212 300 222 Q350 230 400 220 Q450 212 500 222 Q550 230 600 220 Q650 212 700 222" stroke="currentColor" stroke-width="1" fill="none" opacity=".5"/>
+      <path d="M0 228 Q50 222 100 230 Q150 236 200 228 Q250 220 300 230 Q350 238 400 228 Q450 220 500 230 Q550 238 600 228 Q650 220 700 230" stroke="currentColor" stroke-width="1" fill="none" opacity=".3"/>
+      <text x="350" y="25" text-anchor="middle" font-size="13" fill="currentColor" font-weight="bold" font-family="sans-serif" opacity=".8">Without balance, neither village nor nature can endure.</text>
     `;
   }
 }
@@ -1765,7 +1837,7 @@ function resetGame() {
 <script>
 (function() {
     function getSystemTheme() {
-        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     function applyTheme(theme) {
         var resolved = theme === 'system' ? getSystemTheme() : theme;
