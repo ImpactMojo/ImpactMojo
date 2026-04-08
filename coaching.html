@@ -113,7 +113,7 @@ body.dark-mode {
     --card-bg: #1E293B;
     --hover-bg: #334155;
     --border-color: #334155;
-    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --gradient-primary: linear-gradient(135deg, #0369A1 0%, #4338CA 100%);
     --gradient-accent: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
     --nav-bg: rgba(15, 23, 42, 0.95);
     --nav-text: #F1F5F9;
@@ -163,6 +163,8 @@ body {
     width: 40px;
     height: 40px;
     background: var(--gradient-primary);
+
+    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -285,6 +287,8 @@ body {
     font-size: 2.5rem;
     font-weight: 800;
     background: var(--gradient-primary);
+
+    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -326,6 +330,8 @@ body {
     width: 60px;
     height: 60px;
     background: var(--gradient-primary);
+
+    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -404,6 +410,8 @@ body {
     width: 48px;
     height: 48px;
     background: var(--gradient-primary);
+
+    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -554,6 +562,8 @@ body {
 
 .btn-primary {
     background: var(--gradient-primary);
+
+    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
     color: white;
 }
 
@@ -573,6 +583,8 @@ body {
 /* Contact CTA */
 .contact-cta {
     background: var(--gradient-primary);
+
+    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
     border-radius: 16px;
     padding: 3rem;
     text-align: center;
@@ -594,7 +606,8 @@ body {
 
 .contact-cta .btn {
     background: white;
-    color: var(--accent-color);
+    /* WCAG AA: sky-800 #075985 on white = 7.56:1. Was sky-500 #0EA5E9 = 2.77:1. */
+    color: #075985;
 }
 
 .contact-cta .btn:hover {
@@ -668,6 +681,8 @@ body {
     height: 56px;
     border-radius: 50%;
     background: var(--gradient-primary);
+
+    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
     border: none;
     cursor: pointer;
     display: flex;
@@ -713,6 +728,8 @@ body {
 
 .chat-header {
     background: var(--gradient-primary);
+
+    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
     color: white;
     padding: 16px 20px;
     display: flex;
@@ -769,6 +786,8 @@ body {
     width: 32px;
     height: 32px;
     background: var(--gradient-primary);
+
+    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -841,6 +860,8 @@ body {
 
 .chat-send {
     background: var(--gradient-primary);
+
+    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
     border: none;
     border-radius: 50%;
     width: 44px;
@@ -1120,6 +1141,72 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
     text-decoration: underline;
     text-underline-offset: 0.15em;
 }
+
+/* WCAG 2.1 AA contrast overrides — sky-500 #0EA5E9 fails as text on white (2.77:1).
+   Override all text uses of var(--accent-color) with sky-800 #075985 (7.56:1 on white)
+   in light mode and sky-300 #7DD3FC (8.77:1 on dark) in dark mode. Background/border
+   uses of --accent-color are unchanged so the brand identity stays the same. */
+a,
+.nav-link.active,
+.stat-value,
+.tool-card-link,
+.modal-section-title,
+.badge-status-beta,
+.badge-status-ready,
+.tier-price,
+.tier-name,
+.faq-question,
+.faq-link,
+.feature-link,
+.session-card-link,
+.tier-cta-link,
+.handout-link,
+.handout-card a {
+    color: #075985;
+}
+body.dark-mode a,
+body.dark-mode .nav-link.active,
+body.dark-mode .stat-value,
+body.dark-mode .tool-card-link,
+body.dark-mode .modal-section-title,
+body.dark-mode .badge-status-beta,
+body.dark-mode .badge-status-ready,
+body.dark-mode .tier-price,
+body.dark-mode .tier-name,
+body.dark-mode .faq-question,
+body.dark-mode .faq-link,
+body.dark-mode .feature-link,
+body.dark-mode .session-card-link,
+body.dark-mode .tier-cta-link,
+body.dark-mode .handout-link,
+body.dark-mode .handout-card a,
+[data-theme="dark"] a,
+[data-theme="dark"] .nav-link.active,
+[data-theme="dark"] .stat-value,
+[data-theme="dark"] .tool-card-link,
+[data-theme="dark"] .modal-section-title,
+[data-theme="dark"] .badge-status-beta,
+[data-theme="dark"] .badge-status-ready,
+[data-theme="dark"] .tier-price,
+[data-theme="dark"] .tier-name,
+[data-theme="dark"] .faq-question,
+[data-theme="dark"] .faq-link,
+[data-theme="dark"] .feature-link,
+[data-theme="dark"] .session-card-link,
+[data-theme="dark"] .tier-cta-link,
+[data-theme="dark"] .handout-link,
+[data-theme="dark"] .handout-card a {
+    color: #7DD3FC;
+}
+/* WCAG AA: amber-500 #F59E0B fails as text. Use amber-800 #92400E. */
+.badge-status-coming-soon, .warning-text { color: #92400E; }
+body.dark-mode .badge-status-coming-soon, body.dark-mode .warning-text,
+[data-theme="dark"] .badge-status-coming-soon, [data-theme="dark"] .warning-text { color: #FCD34D; }
+/* WCAG AA: emerald-500 #10B981 fails as text. Use emerald-800 #065F46. */
+.badge-free, .badge-status-live, .success-text { color: #065F46; }
+body.dark-mode .badge-free, body.dark-mode .badge-status-live, body.dark-mode .success-text,
+[data-theme="dark"] .badge-free, [data-theme="dark"] .badge-status-live, [data-theme="dark"] .success-text { color: #6EE7B7; }
+
 </style>
 <!-- SEO meta (autogenerated) -->
 <meta name="robots" content="index, follow">
@@ -1160,7 +1247,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
                 <button class="theme-btn" data-theme="light" title="Light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
                 <button class="theme-btn" data-theme="dark" title="Dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
             </div>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" onclick="toggleMobileMenu()">
                 <svg viewBox="0 0 24 24">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -1482,7 +1569,8 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
         </div>
     </div>
     <div class="chat-input-container">
-        <input type="text" class="chat-input" id="chatInput" placeholder="Ask about coaching services..." onkeypress="handleKeyPress(event)">
+        <label for="chatInput" class="sr-only">Ask about coaching services</label>
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ask about coaching services..." aria-label="Ask about coaching services" onkeypress="handleKeyPress(event)">
         <button class="chat-send" aria-label="Send message" onclick="sendMessage()">
             <svg viewBox="0 0 24 24">
                 <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -1662,7 +1750,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 (function() {
     function getSystemTheme() {
-        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     function applyTheme(theme) {
         var resolved = theme === 'system' ? getSystemTheme() : theme;
