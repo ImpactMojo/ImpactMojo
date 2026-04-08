@@ -5,13 +5,14 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 ## Project State
 
 - **Current content counts**: 16 Games, 11 Flagship Courses, 38 Foundational Courses (4 native HTML, 34 Gamma iframe), 400+ Handouts, 11 Labs, 27 Book Summaries
-- **Last verified**: 2026-04-07
+- **Last verified**: 2026-04-08
 - **Deploy target**: Netlify (auto-deploy on push to main)
 - **Backend**: Supabase project `ddyszmfffyedolkcugld`
 
 ## Recent Decisions
 
 <!-- Append new decisions at the top -->
+- **2026-04-08**: Fixed count drift sitewide after user feedback flagged about.html (39/10/12) vs index.html (48/11/16) mismatch. Corrected `about.html`, `catalog.html` (hero + meta + flagship filter chip), `transparency.html`, `org-dashboard.html`, `404.html`, `podcast.html`, Supabase signup/invite email templates, and `docs/{labs-guide,terms-guide,roadmap}.md` — all now show canonical 48 courses / 11 labs / 16 games / 11 flagship. Also added 3 missing flagship cards (Constitution & Law, Public Policy, Gender Studies) to `catalog.html` JS data (they were on the homepage but absent from the searchable catalog). **Learning Track Quiz** promoted from section #6 to directly below the hero at ~L8990 (was L10113); added a tertiary hero CTA "Not sure? Take the 5-question quiz →" linking to `#quiz` at L8956 using the existing `v3-premium-link` class (no new CSS). Branch: `claude/fix-homepage-inconsistencies-SGaT6`. Known remaining drift: catalog.html JS still has `c1-c39` foundational entries (canonical 38) and only 10/12 lab/game entries — a separate issue to open.
 - **2026-04-07**: Theme system fully unified on `im-theme` localStorage key. `js/cookie-ui.js`, `js/account.js`, `js/game-shell.js` all read canonical first then fall back to legacy keys (`theme`, `impactmojo-theme`, `imx_theme`) for one-shot migration; all writes mirror to legacy keys. Never introduce a new theme key.
 - **2026-04-07**: Device-mode default is the canonical theme pattern. `:root { LIGHT tokens }` + `@media (prefers-color-scheme: dark) { :root { DARK tokens } }` + explicit `body.{light,dark}-mode` + `[data-theme="*"]` overrides. Class overrides win via specificity. 70 pages converted; only `Games/climate-action-game.html` remains (custom earth-tone palette).
 - **2026-04-07**: WCAG AA muted-text canon: `--text-muted` is `#52627A` in light (6.20:1) / `#94A3B8` in dark (6.96:1); `--text-secondary` is `#475569` light (7.58:1) / `#CBD5E1` dark (12.02:1). Never use `#94A3B8` for `--text-muted` in light or `#64748B` for it in dark.

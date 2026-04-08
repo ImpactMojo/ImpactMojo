@@ -87,7 +87,7 @@ Email digests for course updates, streak reminders, and community activity. ([#1
 - Offline PWA support
 - ImpactMojo Dataverse (215+ tools and datasets)
 - BCT Repository (203 behaviour change techniques)
-- 12 learning games, 10 interactive labs
+- 16 learning games, 11 interactive labs
 - Dark mode and high-contrast theme
 - Multilingual support (6 languages)
 
