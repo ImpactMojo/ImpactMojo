@@ -11,6 +11,9 @@
 //   POST /send-notification/cohort-deadlines
 //     No body — finds cohorts ending within 3 days and notifies enrolled members
 //
+//   POST /send-notification/engagement-drip
+//     No body — sends timed drip emails (welcome, day 3, day 7, day 14) based on signup date
+//
 // Env: SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
 //      RESEND_API_KEY (optional — for email delivery via Resend.com)
 
@@ -285,6 +288,179 @@ serve(async (req: Request) => {
         message: "Cohort deadline reminders sent",
         cohorts: cohorts.length,
         emails_sent: sent,
+      });
+    }
+
+    // ── Automated: Engagement Drip Sequence ───────────────────────────
+    // Sends timed emails to users based on days since signup:
+    //   Day 0: Welcome (on signup, via DB trigger or first drip run)
+    //   Day 3: First course nudge
+    //   Day 7: Content depth showcase
+    //   Day 14: Re-engagement
+    if (path === "engagement-drip") {
+      const { data: users } = await admin
+        .from("profiles")
+        .select("id, email, full_name, display_name, created_at, subscription_tier, courses_completed, streak_days")
+        .not("email", "is", null);
+
+      if (!users || users.length === 0) {
+        return json({ message: "No users for drip", count: 0 });
+      }
+
+      const now = new Date();
+      let sent = 0;
+      const actions: string[] = [];
+
+      for (const user of users) {
+        const daysSinceSignup = Math.floor(
+          (now.getTime() - new Date(user.created_at).getTime()) / (24 * 60 * 60 * 1000)
+        );
+        const name = user.full_name || user.display_name || "there";
+        const coursesCompleted = user.courses_completed?.length || 0;
+
+        // Check if we already sent this drip stage
+        const dripKey = (stage: string) => `drip_${stage}`;
+        async function alreadySent(stage: string): Promise<boolean> {
+          const { data } = await admin
+            .from("notifications")
+            .select("id")
+            .eq("user_id", user.id)
+            .eq("type", "welcome")
+            .contains("metadata", { drip_stage: stage })
+            .limit(1);
+          return (data?.length ?? 0) > 0;
+        }
+
+        // Day 0: Welcome
+        if (daysSinceSignup >= 0 && !(await alreadySent("welcome"))) {
+          const subject = `Welcome to ImpactMojo, ${name}!`;
+          const html = wrapEmail(
+            "Welcome to ImpactMojo!",
+            `<p>Hi ${name},</p>
+<p>Welcome to ImpactMojo — free development education for South Asia.</p>
+<p>Here's where to start:</p>
+<ul style="padding-left:20px;margin:12px 0">
+<li><strong>Take a course</strong> — <a href="https://www.impactmojo.in/courses/mel/index.html" style="color:#F59E0B">Monitoring, Evaluation & Learning</a> is our most popular</li>
+<li><strong>Play a game</strong> — <a href="https://www.impactmojo.in/Games/public-good-game.html" style="color:#F59E0B">The Public Good Game</a> teaches collective action in 10 minutes</li>
+<li><strong>Browse 400+ handouts</strong> — ready-to-use templates for your next project</li>
+</ul>
+<p>No paywalls, no tricks. Just learn.</p>`,
+            "/catalog.html"
+          );
+
+          await admin.rpc("notify_user", {
+            p_user_id: user.id,
+            p_type: "welcome",
+            p_title: "Welcome to ImpactMojo!",
+            p_body: "Start with our most popular course or play a quick game.",
+            p_link: "/catalog.html",
+            p_metadata: { drip_stage: "welcome" },
+          });
+
+          const emailSent = await sendEmail(user.email, subject, html);
+          if (emailSent) sent++;
+          actions.push(`welcome -> ${user.email}`);
+        }
+
+        // Day 3: First course nudge (only if no courses started)
+        if (daysSinceSignup >= 3 && coursesCompleted === 0 && !(await alreadySent("day3_nudge"))) {
+          const subject = "Your first 10 minutes on ImpactMojo";
+          const html = wrapEmail(
+            "Ready to dive in?",
+            `<p>Hi ${name},</p>
+<p>You signed up a few days ago — here's a quick way to get started:</p>
+<p><strong>Module 1 of every course is free and takes about 10 minutes.</strong></p>
+<p>Pick one that matches your work:</p>
+<ul style="padding-left:20px;margin:12px 0">
+<li><a href="https://www.impactmojo.in/courses/mel/index.html" style="color:#F59E0B">MEL</a> — if you work in monitoring & evaluation</li>
+<li><a href="https://www.impactmojo.in/courses/dataviz/index.html" style="color:#F59E0B">Data Visualization</a> — if you present data to stakeholders</li>
+<li><a href="https://www.impactmojo.in/courses/devecon/index.html" style="color:#F59E0B">Development Economics</a> — if you want the big picture</li>
+</ul>
+<p>Complete all modules to earn a shareable certificate.</p>`,
+            "/catalog.html"
+          );
+
+          await admin.rpc("notify_user", {
+            p_user_id: user.id,
+            p_type: "welcome",
+            p_title: "Your first 10 minutes on ImpactMojo",
+            p_body: "Module 1 of every course is free. Pick one and start learning.",
+            p_link: "/catalog.html",
+            p_metadata: { drip_stage: "day3_nudge" },
+          });
+
+          const emailSent = await sendEmail(user.email, subject, html);
+          if (emailSent) sent++;
+          actions.push(`day3_nudge -> ${user.email}`);
+        }
+
+        // Day 7: Content showcase
+        if (daysSinceSignup >= 7 && !(await alreadySent("day7_showcase"))) {
+          const subject = "More than courses — games, labs, handouts";
+          const html = wrapEmail(
+            "There's more to explore",
+            `<p>Hi ${name},</p>
+<p>ImpactMojo isn't just courses. Here's what most people don't discover right away:</p>
+<ul style="padding-left:20px;margin:12px 0">
+<li><strong>16 Interactive Games</strong> — learn economics by playing, not reading (<a href="https://www.impactmojo.in/#games" style="color:#F59E0B">browse games</a>)</li>
+<li><strong>11 Browser Labs</strong> — build a Theory of Change, design an M&E plan, map stakeholders (<a href="https://www.impactmojo.in/#labs" style="color:#F59E0B">try a lab</a>)</li>
+<li><strong>400+ Handouts</strong> — download templates for your real projects (<a href="https://www.impactmojo.in/handouts.html" style="color:#F59E0B">browse handouts</a>)</li>
+<li><strong>20+ Book Summaries</strong> — key insights from development economics classics (<a href="https://www.impactmojo.in/BookSummaries/" style="color:#F59E0B">read summaries</a>)</li>
+</ul>
+<p>All free. All designed for South Asian development practitioners.</p>`,
+            "/"
+          );
+
+          await admin.rpc("notify_user", {
+            p_user_id: user.id,
+            p_type: "welcome",
+            p_title: "Games, labs, handouts — more to explore",
+            p_body: "Discover interactive games, browser labs, and 400+ downloadable handouts.",
+            p_link: "/",
+            p_metadata: { drip_stage: "day7_showcase" },
+          });
+
+          const emailSent = await sendEmail(user.email, subject, html);
+          if (emailSent) sent++;
+          actions.push(`day7_showcase -> ${user.email}`);
+        }
+
+        // Day 14: Re-engagement (only if still no courses completed)
+        if (daysSinceSignup >= 14 && coursesCompleted === 0 && !(await alreadySent("day14_reengage"))) {
+          const subject = "Still here for you, " + name;
+          const html = wrapEmail(
+            "We're still here",
+            `<p>Hi ${name},</p>
+<p>It's been two weeks since you joined ImpactMojo. No pressure — learning happens at your own pace.</p>
+<p>If you have 5 minutes today, try one of these:</p>
+<ul style="padding-left:20px;margin:12px 0">
+<li><a href="https://www.impactmojo.in/Games/cooperation-paradox-game.html" style="color:#F59E0B">Play the Cooperation Paradox</a> — a 5-minute game about collective action</li>
+<li><a href="https://www.impactmojo.in/dojos.html" style="color:#F59E0B">Join a Dojo session</a> — practice with peers in structured sessions</li>
+</ul>
+<p>If ImpactMojo isn't for you, no worries. You can <a href="https://www.impactmojo.in/account.html#notifications" style="color:#94A3B8">manage your email preferences</a> anytime.</p>`,
+            "/dojos.html"
+          );
+
+          await admin.rpc("notify_user", {
+            p_user_id: user.id,
+            p_type: "welcome",
+            p_title: "We're still here for you",
+            p_body: "Try a 5-minute game or join a dojo session when you're ready.",
+            p_link: "/dojos.html",
+            p_metadata: { drip_stage: "day14_reengage" },
+          });
+
+          const emailSent = await sendEmail(user.email, subject, html);
+          if (emailSent) sent++;
+          actions.push(`day14_reengage -> ${user.email}`);
+        }
+      }
+
+      return json({
+        message: "Engagement drip complete",
+        users_checked: users.length,
+        emails_sent: sent,
+        actions,
       });
     }
 

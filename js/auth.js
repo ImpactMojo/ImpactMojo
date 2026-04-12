@@ -462,6 +462,10 @@ const ImpactMojoAuth = {
                 if (typeof window.IMState !== 'undefined') {
                     window.IMState.cachedProfile.set(data);
                 }
+
+                // Update learning streak (fire-and-forget)
+                supabaseClient.rpc('update_streak', { p_user_id: data.id }).catch(function() {});
+
                 return data;
             } catch (err) {
                 console.error('Profile fetch failed:', err);
