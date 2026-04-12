@@ -5,6 +5,30 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.17.0] - 2026-04-12
+
+### Added
+- **Netlify Forms migration** — 12 forms migrated from Formspree (`xpwdvgzp`) to Netlify Forms with `data-netlify="true"`, `netlify-honeypot="bot-field"`, and unique `name` attributes. Email notifications configured for all forms via Netlify hooks API.
+- **Engagement drip pipeline** — 5-stage email sequence (Day 0/3/7/14/21) in `send-notification` Edge Function with deduplication via `notifications.metadata.drip_stage`. Day 21 pitches Premium for explorer-tier users with one-time support fallback.
+- **Streak tracking** — `update_streak()` PL/pgSQL function increments `profiles.streak_days` on daily login, resets on miss. Called from `auth.js:fetchProfile()` as fire-and-forget RPC.
+- **Post-certificate upsell** — `issue-certificate` Edge Function now sends branded congratulations email with certificate number, verification link, and subtle Premium mention for explorer-tier users.
+- **Monthly newsletter** — `netlify/functions/monthly-newsletter.mjs` scheduled function (15th, 10:00 IST) parses `docs/changelog.md` for recent additions, pulls content counts from `search-index.json`, sends via `monthly-update` endpoint.
+- **Premium sales letter** — `/premium-letter.html` (15KB, standalone, dark mode, mobile responsive). Conversational tone with concrete tool examples and honest pricing rationale.
+- **Practitioner Starter Kit** — `/starter-kit.html` with 10 curated handouts across M&E, data, policy, and cross-cutting tracks.
+- **Branded email template** — `wrapEmail()` rewritten with navy gradient header, stacked logo, blue title bar, amber-to-red accent bar, dark footer with preference management link.
+- **Resend integration** — `RESEND_API_KEY` configured in Supabase secrets. Domain `impactmojo.in` verified with DKIM, SPF, DMARC DNS records added via Netlify DNS API.
+- **Notifications tables** — `notifications` and `notification_preferences` tables applied to production Supabase (were defined in migration but never run). RLS policies, indexes, `notify_user()` function, auto-preference trigger, backfill for 14 existing users.
+- **Daily engagement cron** — `netlify/functions/daily-engagement.mjs` (02:30 UTC / 08:00 IST) runs engagement-drip, streak-reminders, cohort-deadlines in parallel.
+- **Netlify env vars** — `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` set for scheduled functions.
+
+### Changed
+- **Netlify form detection** — `processing_settings.ignore_html_forms` changed from `true` to `false` via Netlify API.
+- **Documentation** — CLAUDE.md, 4 rules files, 2 agent definitions, 3 command files, 2 skill files updated to reference Netlify Forms instead of Formspree.
+- **`auth.js`** — added `supabaseClient.rpc('update_streak')` call after successful profile fetch.
+
+### Removed
+- **Formspree dependency** — all references to `https://formspree.io/f/xpwdvgzp` removed from production HTML/JS files. Backups retain historical references.
+
 ## [10.14.0] - 2026-04-07
 
 ### Added

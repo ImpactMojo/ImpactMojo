@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.17.0 — April 12, 2026
+
+### Added
+- **Formspree eliminated** — all 12 forms migrated to Netlify Forms with email notifications to info@impactmojo.in. Platform now runs on two services (Netlify + Supabase) instead of three.
+- **Engagement email pipeline** — 5-email drip sequence for new users: welcome (Day 0), first course nudge (Day 3), content showcase (Day 7), re-engagement (Day 14), premium soft pitch (Day 21). Runs daily at 08:00 IST via Netlify Scheduled Function.
+- **Streak tracking** — learning streaks now increment automatically on every login and reset after a missed day.
+- **Post-certificate email** — congratulations email with shareable certificate link, sent automatically when a user completes a course. Includes a subtle premium mention for free-tier users.
+- **Monthly newsletter** — automated content roundup on the 15th of every month, pulls highlights from the changelog and content counts from the search index. Includes premium and one-time support links.
+- **Premium sales letter** at `/premium-letter.html` — long-form conversational page explaining Premium membership, tools, and pricing. Written as a personal letter, not a pricing table.
+- **Practitioner Starter Kit** at `/starter-kit.html` — curated collection of 10 essential handouts for development practitioners.
+- **Branded email template** — all platform emails now use a branded template with navy gradient header, ImpactMojo logo, amber accent bar, and dark footer.
+- **Resend email integration** — domain verified (DKIM, SPF, DMARC) for transactional emails from notifications@impactmojo.in. Free tier: 3,000 emails/month.
+- **Notifications infrastructure** — `notifications` and `notification_preferences` tables created in Supabase with RLS policies, indexes, and auto-preference creation for new signups.
+
+### Changed
+- **Netlify form detection** — enabled form processing (was previously disabled: `ignore_html_forms: true`) and configured email notifications for all 12 forms.
+- **Supabase Edge Functions** — `send-notification` updated with engagement-drip and monthly-update endpoints; `issue-certificate` updated with congratulations email and premium upsell.
+
 ## v10.16.0 — April 8, 2026
 
 ### Added
