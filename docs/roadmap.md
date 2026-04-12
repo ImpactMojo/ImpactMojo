@@ -9,15 +9,11 @@ Professional translations of courses in Hindi, Tamil, Bengali, and Marathi. ([#2
 
 **What this means for you:** If you work with teams who are more comfortable in regional languages, full course translations (not just Google Translate) will be available soon. We're starting with the most-used flagship courses.
 
-### Cohort-Based Learning
-Scheduled cohorts with deadlines, discussion threads, and group progression. ([#144](https://github.com/ImpactMojo/ImpactMojo/issues/144))
+### BookSummaries Expansion
+Growing from 28 to 40+ interactive book companions across development economics, statistics, leadership, and productivity. ([#272](https://github.com/ImpactMojo/ImpactMojo/issues/272))
 
-**What this means for you:** Instead of self-paced learning only, you'll be able to enrol your team in a cohort that progresses through a course together on a set schedule — like an online class, but built into the platform.
-
-### Notification System
-Email digests for course updates, streak reminders, and community activity. ([#145](https://github.com/ImpactMojo/ImpactMojo/issues/145))
-
-**What this means for you:** You'll get gentle reminders to keep learning, plus notifications when new courses, handouts, or tools are added.
+### Native 101 Deck Migration
+Migrating remaining 34 foundational course decks from Gamma iframes to self-hosted HTML with 100 slides each, interactive charts, and keyboard/touch navigation.
 
 ## Planned — Q2 2026 (April–June)
 
@@ -27,16 +23,10 @@ Email digests for course updates, streak reminders, and community activity. ([#1
 - **Video walkthroughs** for interactive labs — short guided videos showing how to use each lab
 - **Practitioner interview series** — Real practitioners sharing how they apply concepts in the field
 
-### New Tools
-- **Sample Size Calculator** — A standalone lab for planning survey sample sizes
-- **Budget Template Generator** — Create project budgets using standard development sector formats
-- **Survey Instrument Library** — Browse and adapt validated survey instruments
-
 ### Content
-- [x] **Native 101 slide decks** — 4 foundational decks migrated from Gamma iframes to self-hosted HTML (Dev Econ, MEL, Climate, Inequality) with 100 slides each, interactive charts, light/dark theme, keyboard/touch nav
-- Migrate remaining 34 foundational decks to native HTML format
 - Additional foundational courses across all 6 tracks
 - Regional case study packs focusing on state-level India data
+- **Survey Instrument Library** — Browse and adapt validated survey instruments
 
 ### Community
 - **Peer review system** — Get feedback on your lab outputs from other practitioners
@@ -53,10 +43,37 @@ Email digests for course updates, streak reminders, and community activity. ([#1
 - **Live workshop integration** — Book workshops directly through the platform with calendar integration
 
 ### Platform Quality
-- **Full accessibility audit** — Comprehensive WCAG 2.1 AA review and fixes across all pages
 - **Impact measurement dashboard** — Track real-world outcomes from learners' projects and practice
 
 ## Recently Completed
+
+### v10.18.0 — April 2026
+- **Sitemap expansion** — 84 → 171 indexed URLs (all courses, BookSummaries, blog posts, and public pages)
+- **Stale link cleanup** — ~100 legacy `101.impactmojo.in` links migrated to self-hosted paths
+- **Search index cleanup** — Removed phantom entries, added missing labs
+- **Count drift fixes** across marketing kit, press kit, README, and docs
+
+### v10.17.0 — April 2026
+- **Formspree eliminated** — All 12 forms migrated to Netlify Forms. Platform now runs on 2 services (Netlify + Supabase) instead of 3
+- **Engagement email pipeline** — 5-email drip sequence (Day 0/3/7/14/21) with streak reminders and cohort deadlines. ([#144](https://github.com/ImpactMojo/ImpactMojo/issues/144), [#145](https://github.com/ImpactMojo/ImpactMojo/issues/145))
+- **Monthly newsletter** — Automated content roundup on the 15th of every month
+- **Premium sales letter** and **Practitioner Starter Kit** pages
+- **Branded email template** — Consistent design across all platform emails via Resend
+
+### v10.16.0 — April 2026
+- **Accessibility Statement** at `/accessibility.html` — Formal WCAG 2.1 Level AA conformance statement
+- **Full accessibility audit** — axe-core + pa11y-ci CI pipeline, UserWay widget integration
+
+### v10.15.0 — April 2026
+- **Content count corrections** sitewide — all files now show canonical 48 courses / 11 labs / 16 games
+
+### v10.14.0 — April 2026
+- **Device-mode default theme** on 70 pages — OS dark/light preference on first paint
+- **WCAG AA link underlines** across 74 content pages
+- **CC BY-NC-SA 4.0 attribution** backfilled into all 84 handouts
+
+### v10.13.0 — April 2026
+- **4 native 101 slide decks** — Dev Econ, MEL, Climate, Inequality migrated from Gamma to self-hosted HTML (100 slides each, interactive charts, light/dark theme)
 
 ### v10.10.0 — March 2026
 - **ImpactMojo MCP Server** — 11 tools and 3 resources exposing the full knowledge base via Model Context Protocol. Works with Claude Desktop, Claude Code, Cursor, and any MCP client. npm-publishable.
