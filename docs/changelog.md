@@ -2,6 +2,19 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.18.1 — April 12, 2026
+
+### Fixed
+- **README.md** — labs 19→11 (separated into Labs, Tools & Calculators, and Premium Tools sections), added 2 missing flagship courses (Gender Studies, Public Policy), added BookSummaries (28) and AI Study Companions (11) to content table, replaced Formspree with Netlify Forms in tech stack, updated version to 10.18.0 and date to April 12.
+- **content-marketing-kit.html** — games 15→16, labs 10→11, flagship courses 9→11 across ~20 locations including social posts, carousel slides, brand guidelines, and content calendars. Fixed carousel counts (17 Labs→11, 27 Books→28).
+- **ImpactMojo_PressKit.html** — foundational courses 39→38.
+- **docs/roadmap.md** — moved Cohort-Based Learning, Notification System, Sample Size Calculator, Budget Template Generator, and full accessibility audit from "In Progress"/"Planned" to "Recently Completed". Added v10.13–v10.18 release entries. Added BookSummaries expansion and native deck migration to "In Progress".
+
+### GitHub
+- Closed Q1 2026 milestone (past due, all issues resolved).
+- Replied to issue #361 (skill validation workflow proposal).
+- Updated issue #272 (BookSummaries target raised from 5-8 to 40+).
+
 ## v10.18.0 — April 12, 2026
 
 ### Fixed

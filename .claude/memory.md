@@ -13,6 +13,7 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 ## Recent Decisions
 
 <!-- Append new decisions at the top -->
+- **2026-04-12 (docs/README/roadmap refresh)**: Second housekeeping pass. README.md: labs 19→11 (split into Labs/Tools/Premium), added Gender Studies + Public Policy flagships, added BookSummaries (28) + AI Study Companions (11), Formspree→Netlify Forms, version→10.18.0. Marketing kit: 15→16 games, 10→11 labs, 9→11 flagship across ~20 locations. PressKit: 39→38 foundational. Roadmap: moved 5 completed items, added v10.13–v10.18 history. GitHub: closed Q1 milestone, replied to #361 contributor, updated #272 BookSummaries target to 40+. 9 Dependabot PRs still open (CI bumps + deps).
 - **2026-04-12 (service consolidation + engagement pipeline)**: Major session — consolidated from 3 services to 2 (eliminated Formspree), built full engagement pipeline from scratch. Key changes:
   - **Formspree → Netlify Forms**: 12 forms migrated, `ignore_html_forms` was `true` in Netlify (turned on via API), email notifications configured for all 12 forms to info@impactmojo.in via hooks API.
   - **Resend email integration**: API key `re_EjPJ...` configured in Supabase secrets. Domain `impactmojo.in` verified with DKIM/SPF/DMARC DNS records added via Netlify DNS API. Free tier: 3K emails/month.
