@@ -363,6 +363,7 @@ serve(async (req: Request) => {
 <li><strong>Take a course</strong> — <a href="https://www.impactmojo.in/courses/mel/index.html" style="color:#F59E0B">Monitoring, Evaluation &amp; Learning</a> is our most popular, and Module 1 is completely free</li>
 <li><strong>Play a game</strong> — <a href="https://www.impactmojo.in/Games/public-good-game.html" style="color:#F59E0B">The Public Good Game</a> teaches collective action in about 10 minutes</li>
 <li><strong>Browse 400+ handouts</strong> — ready-to-use templates you can actually take to your next project</li>
+<li><strong>Grab the <a href="https://www.impactmojo.in/starter-kit.html" style="color:#F59E0B">Practitioner Starter Kit</a></strong> — our 10 most essential handouts, hand-picked for development practitioners</li>
 </ul>
 <p>Everything on ImpactMojo is free. No paywalls, no tricks — just learn at your own pace.</p>
 <p>Happy exploring!</p>`,
@@ -495,7 +496,9 @@ serve(async (req: Request) => {
 <li><strong>7 Workshop Pro templates</strong> — facilitation-ready canvases for ToC, stakeholder mapping, and more</li>
 </ul>
 <p>It starts at just <strong>\u20B9399/month</strong> (about $5). And honestly, if you're a development practitioner working in South Asia, these tools will save you hours every week.</p>
-<p>We wrote a longer page explaining everything — have a read when you get a chance:</p>`,
+<p>We wrote a longer page explaining everything — <a href="https://www.impactmojo.in/premium-letter.html" style="color:#F59E0B">have a read when you get a chance</a>.</p>
+<hr style="border:none;border-top:1px solid #E2E8F0;margin:24px 0">
+<p style="color:#64748B;font-size:14px"><strong>Not ready for a subscription?</strong> That's completely fine. If ImpactMojo has been useful to you and you'd like to support what we're building, you can also make a one-time contribution of any amount — it goes directly towards keeping the platform free for everyone. <a href="https://www.impactmojo.in/index.html#support" style="color:#F59E0B">Support ImpactMojo</a></p>`,
             "/premium-letter.html"
           );
 
