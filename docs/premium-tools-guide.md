@@ -20,7 +20,7 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 
 **Who it's for:** Qualitative researchers doing fieldwork in regional languages. Transcribing a 60-minute Hindi interview manually takes 4–6 hours. VaniScribe reduces this dramatically.
 
-**Access:** Professional tier — [Open VaniScribe](https://101.impactmojo.in/vaniscribe)
+**Access:** Professional tier — [See Premium](/premium.html)
 
 ---
 

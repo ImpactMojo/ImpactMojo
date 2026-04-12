@@ -5,6 +5,15 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.18.0] - 2026-04-12
+
+### Fixed
+- **Sitemap coverage** — 87 missing URLs added to `sitemap.xml` (2 courses, 35 foundational, 23 BookSummaries, 18 blog posts, 9 public pages). Total: 84 → 171.
+- **Stale 101.impactmojo.in links** — ~100 legacy subdomain refs migrated to local paths in `js/faq-bank.js`, `js/bookmarks-compare.js`, `js/learning-tracks.js`, `js/game-agents.js`, and 4 docs files.
+- **Search index phantom labs** — 6 duplicate/phantom lab entries removed, 3 missing labs added. Lab count: 17 → 13.
+- **Content count drifts** — `docs/content-guide.md` (flagship 9→11, labs 19→11), `premium.html`, `catalog.html` JS comments corrected.
+- **21 `.DS_Store` files** removed from git tracking.
+
 ## [10.17.0] - 2026-04-12
 
 ### Added

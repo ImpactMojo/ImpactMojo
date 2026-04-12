@@ -74,12 +74,12 @@ As of April 2026, **3 native HTML decks** are live (Dev Econ, MEL, Climate) and 
 
 | Course | Status | Access |
 |--------|--------|--------|
-| MEL Fundamentals | Available | [View deck](https://101.impactmojo.in/mel-basics) |
-| Qualitative Research Methods | Available | [View deck](https://101.impactmojo.in/qual-methods) |
-| Observation to Insight | Available | [View deck](https://101.impactmojo.in/obs2insight) |
-| Visual Ethnography | Available | [View deck](https://101.impactmojo.in/visual-eth) |
-| Research Ethics | Available | [View deck](https://101.impactmojo.in/research-ethics) |
-| Item Response Theory and Qualitative Assessment | Available | [View deck](https://101.impactmojo.in/irt-basics) |
+| MEL Fundamentals | Available | [View deck](/101-courses/mel-basics.html) |
+| Qualitative Research Methods | Available | [View deck](/101-courses/qual-methods.html) |
+| Observation to Insight | Available | [View deck](/101-courses/obs2insight.html) |
+| Visual Ethnography | Available | [View deck](/101-courses/visual-eth.html) |
+| Research Ethics | Available | [View deck](/101-courses/research-ethics.html) |
+| Item Response Theory and Qualitative Assessment | Available | [View deck](/101-courses/irt-basics.html) |
 | BCC and Communications | Coming Soon | — |
 | Theory of Change Workbench | Coming Soon | — |
 
@@ -87,13 +87,13 @@ As of April 2026, **3 native HTML decks** are live (Dev Econ, MEL, Climate) and 
 
 | Course | Status | Access |
 |--------|--------|--------|
-| Data Literacy for Development | Available | [View deck](https://101.impactmojo.in/data-lit) |
-| Data Feminism | Available | [View deck](https://101.impactmojo.in/data-feminism) |
-| EDA for Humanitarian/Health/Social Data | Available | [View deck](https://101.impactmojo.in/eda-hhs) |
-| Bivariate Analysis | Available | [View deck](https://101.impactmojo.in/bi-analysis) |
-| Multivariate Analysis | Available | [View deck](https://101.impactmojo.in/multivariate-basics) |
-| Econometrics 101 | Available | [View deck](https://101.impactmojo.in/econometrics-101) |
-| Digital Development Ethics | Available | [View deck](https://101.impactmojo.in/digital-ethics) |
+| Data Literacy for Development | Available | [View deck](/101-courses/data-lit.html) |
+| Data Feminism | Available | [View deck](/101-courses/data-feminism.html) |
+| EDA for Humanitarian/Health/Social Data | Available | [View deck](/101-courses/eda-hhs.html) |
+| Bivariate Analysis | Available | [View deck](/101-courses/bi-analysis.html) |
+| Multivariate Analysis | Available | [View deck](/101-courses/multivariate-basics.html) |
+| Econometrics 101 | Available | [View deck](/101-courses/econometrics-101.html) |
+| Digital Development Ethics | Available | [View deck](/101-courses/digital-ethics.html) |
 | Education and Pedagogy | Coming Soon | — |
 | Social Emotional Learning | Coming Soon | — |
 | Poverty and Inequality | Coming Soon | — |
@@ -107,13 +107,13 @@ As of April 2026, **3 native HTML decks** are live (Dev Econ, MEL, Climate) and 
 
 | Course | Status | Access |
 |--------|--------|--------|
-| Development Economics | Available | [View deck](https://101.impactmojo.in/dev-economics) |
-| Political Economy | Available | [View deck](https://101.impactmojo.in/pol-economy) |
-| Cost-Effectiveness Analysis | Available | [View deck](https://101.impactmojo.in/cost-effectiveness) |
-| English for Development | Available | [View deck](https://101.impactmojo.in/eng-dev) |
-| Advocacy Fundamentals | Available | [View deck](https://101.impactmojo.in/advocacy-basics) |
-| Livelihoods Fundamentals | Available | [View deck](https://101.impactmojo.in/livelihood-basics) |
-| Climate Essentials | Available | [View deck](https://101.impactmojo.in/climate-essentials) |
+| Development Economics | Available | [View deck](/101-courses/dev-economics.html) |
+| Political Economy | Available | [View deck](/101-courses/pol-economy.html) |
+| Cost-Effectiveness Analysis | Available | [View deck](/101-courses/cost-effectiveness.html) |
+| English for Development | Available | [View deck](/101-courses/eng-dev.html) |
+| Advocacy Fundamentals | Available | [View deck](/101-courses/advocacy-basics.html) |
+| Livelihoods Fundamentals | Available | [View deck](/101-courses/livelihood-basics.html) |
+| Climate Essentials | Available | [View deck](/101-courses/climate-essentials.html) |
 | Post-Truth Politics | Deck Ready (PDF pending) | [View on Gamma](https://gamma.app/docs/07twqrzjtsnf49j) |
 | Fundraising Fundamentals | Deck Ready (PDF pending) | [View on Gamma](https://gamma.app/docs/0j6oy9d9f60xevo) |
 | Global Development Architecture | Deck Ready (PDF pending) | [View on Gamma](https://gamma.app/docs/n6gze051jrfnllw) |
@@ -139,10 +139,10 @@ As of April 2026, **3 native HTML decks** are live (Dev Econ, MEL, Climate) and 
 
 ### Primary access
 
-Visit `https://101.impactmojo.in/{course-slug}` in any browser. For example:
-- [https://101.impactmojo.in/data-lit](https://101.impactmojo.in/data-lit) — Data Literacy for Development
-- [https://101.impactmojo.in/mel-basics](https://101.impactmojo.in/mel-basics) — MEL Fundamentals
-- [https://101.impactmojo.in/dev-economics](https://101.impactmojo.in/dev-economics) — Development Economics
+Visit `/101-courses/{course-slug}.html` in any browser. For example:
+- [/101-courses/data-lit.html](/101-courses/data-lit.html) — Data Literacy for Development
+- [/101-courses/mel-basics.html](/101-courses/mel-basics.html) — MEL Fundamentals
+- [/101-courses/dev-economics.html](/101-courses/dev-economics.html) — Development Economics
 
 ### Gamma fallback
 

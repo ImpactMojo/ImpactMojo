@@ -6,16 +6,16 @@ This page documents how educational content is structured in ImpactMojo, for con
 
 | Type | Count | Format | Access |
 |------|-------|--------|--------|
-| Flagship Courses | 9 | Multi-module (12–13 modules each) | Free |
-| Foundational Courses | 39 | Single-page or multi-section | Free |
-| Interactive Labs | 19 | HTML/JS workbenches | Free |
+| Flagship Courses | 11 | Multi-module (12–13 modules each) | Free |
+| Foundational Courses | 38 | Single-page or multi-section | Free |
+| Interactive Labs | 11 | HTML/JS workbenches | Free |
 | Learning Games | 16 | HTML/JS simulations | Free |
 | Premium Tools | 9 | Separate Netlify sites | Paid tiers |
 | ImpactLex | 500+ terms | PWA dictionary | Free |
 | Dev Case Studies | 200 | Curated library | Free |
 | DevDiscourses | 500+ | Curated papers/books | Free |
 | Handouts | 400+ | HTML pages | Free |
-| BookSummaries | 27 | Interactive book companions | Free (Specials) |
+| BookSummaries | 28 | Interactive book companions | Free (Specials) |
 | 101 Course Decks | 38 | 4 native HTML (100 slides) + 34 Gamma presentations | Free |
 | Blog posts | Ongoing | HTML articles | Free |
 | Podcast | Episodes | Audio (Spotify) | Free |

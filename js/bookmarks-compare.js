@@ -18,7 +18,7 @@ var IMPACTMOJO_COURSE_DATA = {
         audience: 'Beginners to Intermediate',
         duration: '4-6 hours',
         format: 'Self-paced online',
-        url: 'https://101.impactmojo.in/gender-studies'
+        url: '/courses/gender/'
     },
     'meal-101': {
         name: 'MEAL 101',
@@ -30,7 +30,7 @@ var IMPACTMOJO_COURSE_DATA = {
         audience: 'All levels',
         duration: '6-8 hours',
         format: 'Self-paced online',
-        url: 'https://101.impactmojo.in/mel-basics'
+        url: '/101-courses/mel-basics.html'
     },
     'climate-101': {
         name: 'Climate 101',
@@ -42,7 +42,7 @@ var IMPACTMOJO_COURSE_DATA = {
         audience: 'Beginners to Intermediate',
         duration: '5-7 hours',
         format: 'Self-paced online',
-        url: 'https://101.impactmojo.in/climate-essentials'
+        url: '/101-courses/climate-essentials.html'
     },
     'toc-workbench': {
         name: 'Theory of Change Workbench',
@@ -54,7 +54,7 @@ var IMPACTMOJO_COURSE_DATA = {
         audience: 'Intermediate to Advanced',
         duration: '2-4 hours per project',
         format: 'Interactive web tool',
-        url: 'https://101.impactmojo.in/toc-workbench'
+        url: '/Labs/toc-lab.html'
     },
     'logframe-lab': {
         name: 'LogFrame Lab',
@@ -66,7 +66,7 @@ var IMPACTMOJO_COURSE_DATA = {
         audience: 'Intermediate',
         duration: '3-5 hours per project',
         format: 'Interactive web tool',
-        url: 'https://101.impactmojo.in/mel-plan-lab'
+        url: '/Labs/mel-plan-lab.html'
     },
     'storytelling-lab': {
         name: 'Storytelling Lab',
@@ -78,7 +78,7 @@ var IMPACTMOJO_COURSE_DATA = {
         audience: 'All levels',
         duration: '2-3 hours',
         format: 'Interactive exercises',
-        url: 'https://101.impactmojo.in/storytelling-lab'
+        url: '/Labs/storytelling-lab.html'
     },
     'middle-class-game': {
         name: 'The Middle Class Game',
@@ -90,7 +90,7 @@ var IMPACTMOJO_COURSE_DATA = {
         audience: 'All levels',
         duration: '30-45 minutes',
         format: 'Interactive simulation',
-        url: 'https://101.impactmojo.in/real-middle-india'
+        url: '/Games/real-middle-india.html'
     },
     'prospect-theory': {
         name: 'Prospect Theory Game',
@@ -102,7 +102,7 @@ var IMPACTMOJO_COURSE_DATA = {
         audience: 'Intermediate',
         duration: '20-30 minutes',
         format: 'Interactive simulation',
-        url: 'https://101.impactmojo.in/risk-reward-game'
+        url: '/Games/risk-reward-game.html'
     },
     'public-good-game': {
         name: 'Public Good Game',
@@ -114,7 +114,7 @@ var IMPACTMOJO_COURSE_DATA = {
         audience: 'All levels',
         duration: '20-30 minutes',
         format: 'Interactive simulation',
-        url: 'https://101.impactmojo.in/public-good-game'
+        url: '/Games/public-good-game.html'
     },
     'prisoners-dilemma': {
         name: 'Prisoners Dilemma',
@@ -126,7 +126,7 @@ var IMPACTMOJO_COURSE_DATA = {
         audience: 'All levels',
         duration: '15-25 minutes',
         format: 'Interactive simulation',
-        url: 'https://101.impactmojo.in/prisoners-dilemma-game'
+        url: '/Games/prisoners-dilemma-game.html'
     }
 };
 
