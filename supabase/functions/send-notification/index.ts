@@ -72,24 +72,39 @@ async function sendEmail(
 // ── Email templates ──────────────────────────────────────────────────
 function wrapEmail(title: string, body: string, link?: string): string {
   const cta = link
-    ? `<p style="margin:24px 0"><a href="https://www.impactmojo.in${link}" style="background:#F59E0B;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;display:inline-block">View on ImpactMojo</a></p>`
+    ? `<p style="margin:24px 0;text-align:center"><a href="https://www.impactmojo.in${link}" style="background:#F59E0B;color:#0F172A;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:700;font-family:Inter,Helvetica,sans-serif;font-size:15px;display:inline-block">View on ImpactMojo</a></p>`
     : "";
   return `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
-<body style="font-family:'Amaranth',Helvetica,Arial,sans-serif;background:#F8FAFC;margin:0;padding:0">
-<div style="max-width:560px;margin:0 auto;padding:32px 24px">
-<div style="text-align:center;margin-bottom:24px">
-<img src="https://www.impactmojo.in/assets/images/favicon.png" width="40" height="40" alt="ImpactMojo" style="border-radius:8px">
-<h2 style="font-family:Inter,Helvetica,sans-serif;color:#0F172A;margin:12px 0 0">${title}</h2>
+<body style="font-family:'Amaranth',Georgia,serif;background:#F1F5F9;margin:0;padding:0">
+<div style="max-width:600px;margin:0 auto">
+<!-- Branded Header -->
+<div style="background:linear-gradient(135deg,#0F172A 0%,#075985 100%);padding:28px 32px;text-align:center;border-radius:0 0 0 0">
+<a href="https://www.impactmojo.in" style="text-decoration:none;display:inline-flex;align-items:center;gap:12px">
+<img src="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png" width="44" height="44" alt="ImpactMojo" style="border-radius:8px;display:block">
+<span style="font-family:Inter,Helvetica,sans-serif;font-weight:700;font-size:20px;color:#FFFFFF;letter-spacing:-0.02em">ImpactMojo</span>
+</a>
 </div>
-<div style="background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:24px;color:#334155;line-height:1.6;font-size:15px">
+<!-- Title Bar -->
+<div style="background:#075985;padding:16px 32px;text-align:center">
+<h2 style="font-family:Inter,Helvetica,sans-serif;color:#FFFFFF;margin:0;font-size:18px;font-weight:600;line-height:1.4">${title}</h2>
+</div>
+<!-- Body -->
+<div style="background:#FFFFFF;padding:32px;color:#334155;line-height:1.7;font-size:15px">
 ${body}
 ${cta}
 </div>
-<p style="text-align:center;color:#94A3B8;font-size:12px;margin-top:24px">
-ImpactMojo &middot; Free Development Education for South Asia<br>
-<a href="https://www.impactmojo.in/account.html#notifications" style="color:#94A3B8">Manage notification preferences</a>
+<!-- Amber Accent Bar -->
+<div style="height:4px;background:linear-gradient(90deg,#F59E0B 0%,#EF4444 50%,#F59E0B 100%)"></div>
+<!-- Footer -->
+<div style="background:#0F172A;padding:24px 32px;text-align:center">
+<p style="color:#94A3B8;font-family:Inter,Helvetica,sans-serif;font-size:12px;margin:0;line-height:1.6">
+<strong style="color:#CBD5E1">ImpactMojo</strong> &middot; Free Development Education for South Asia<br>
+<a href="https://www.impactmojo.in" style="color:#F59E0B;text-decoration:none">impactmojo.in</a>
+&nbsp;&middot;&nbsp;
+<a href="https://www.impactmojo.in/account.html#notifications" style="color:#94A3B8;text-decoration:underline">Manage email preferences</a>
 </p>
+</div>
 </div></body></html>`;
 }
 
