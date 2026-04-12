@@ -34,6 +34,6 @@ Reference `rules/content-management.md` for cross-reference requirements:
 ## Security
 - No API keys or secrets in committed files
 - No inline event handlers that could enable XSS
-- Forms must point to Formspree endpoint `xpwdvgzp`
+- Forms must use Netlify Forms (`data-netlify="true"` with `netlify-honeypot="bot-field"` and unique `name`)
 
 Give specific, actionable feedback per file with line numbers.

@@ -13,6 +13,6 @@ Spawn the `content-auditor` agent to verify:
 7. No broken internal links in `index.html`
 8. No stale `101.impactmojo.in` references that should be self-hosted
 9. `sitemap.xml` includes all public pages
-10. All forms reference Formspree endpoint `xpwdvgzp`
+10. All forms use Netlify Forms (`data-netlify="true"` with unique `name` attribute)
 
 Report discrepancies with specific file paths and line numbers. Summarize pass/fail for each check.

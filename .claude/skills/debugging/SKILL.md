@@ -18,7 +18,7 @@ Identify the issue type:
 | **JS error** | Feature not working, console error | Check inline `<script>` for syntax errors |
 | **Data issue** | Wrong counts, missing items | Validate JSON: `python3 -m json.tool data/*.json` |
 | **Content mismatch** | Counts don't match, stale text | Run content-auditor agent |
-| **Form broken** | Submission fails | Verify Formspree endpoint `xpwdvgzp` |
+| **Form broken** | Submission fails | Verify `data-netlify="true"` and `name` attr on form; check Netlify Forms dashboard |
 | **Stale reference** | Old URL, 101.impactmojo.in | `grep -rn '101.impactmojo.in' *.html courses/` |
 
 ### Step 2 — Investigate

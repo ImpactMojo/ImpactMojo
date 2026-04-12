@@ -25,4 +25,4 @@ All external API calls use environment variables for authentication (loaded by `
 
 - **GitHub repo**: `https://api.github.com/repos/ImpactMojo/ImpactMojo/`
 - **Supabase project**: `ddyszmfffyedolkcugld`
-- **Formspree form**: `xpwdvgzp`
+- **Forms**: Netlify Forms (no external service — built into Netlify hosting)

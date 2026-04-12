@@ -310,7 +310,7 @@
     }
 
     // ---- Submit ----
-    var FORMSPREE_URL = 'https://formspree.io/f/xpwdvgzp';
+    var NETLIFY_FORM_NAME = 'challenge-submission';
 
     function submitChallenge(challengeId) {
         var textarea = document.getElementById('challengeResponse');
@@ -341,9 +341,9 @@
         delete drafts[challengeId];
         saveDrafts();
 
-        // Submit to Formspree (email notification)
+        // Submit to Netlify Forms (email notification)
         var formData = new FormData();
-        formData.append('_subject', 'Challenge Submission: ' + (ch ? ch.title : challengeId));
+        formData.append('form-name', NETLIFY_FORM_NAME);
         formData.append('challenge_id', challengeId);
         formData.append('challenge_title', ch ? ch.title : '');
         formData.append('challenge_track', ch ? ch.trackLabel : '');
@@ -351,10 +351,10 @@
         formData.append('submission_text', text);
         formData.append('submitted_at', new Date().toISOString());
 
-        fetch(FORMSPREE_URL, {
+        fetch('/', {
             method: 'POST',
-            body: formData,
-            headers: { 'Accept': 'application/json' }
+            body: new URLSearchParams(formData).toString(),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }).catch(function () { /* silent — localStorage is primary fallback */ });
 
         // Sync to Supabase (DB record)

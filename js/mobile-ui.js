@@ -311,13 +311,14 @@
             // Show typing indicator
             addBotMessage('<div style="display: flex; gap: 4px;"><div style="width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; animation: typing 1.4s infinite;"></div><div style="width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; animation: typing 1.4s infinite; animation-delay: 0.2s;"></div><div style="width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; animation: typing 1.4s infinite; animation-delay: 0.4s;"></div></div>');
             
-            // Submit to Formspree
-            fetch('https://formspree.io/f/xpwdvgzp', {
+            // Submit to Netlify Forms
+            var netlifyData = Object.assign({ 'form-name': 'chatbot-feedback' }, feedbackData);
+            fetch('/', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: JSON.stringify(feedbackData)
+                body: new URLSearchParams(netlifyData).toString()
             }).then(() => {
                 // Remove typing indicator
                 const messages = document.getElementById('chatMessages');

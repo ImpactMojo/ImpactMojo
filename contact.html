@@ -10,7 +10,7 @@
     ║  ✓ Theme Toggle (Sun/Moon) with localStorage sync                            ║
     ║  ✓ Auto-refresh on back/forward navigation                                   ║
     ║  ✓ Mojini Chatbot                                                            ║
-    ║  ✓ Formspree Contact Form (endpoint: xpwdvgzp)                               ║
+    ║  ✓ Netlify Forms Contact Form                                                ║
     ║  ✓ Multiple Contact Emails by Department                                     ║
     ║  ✓ Links to Legal Policies                                                   ║
     ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -1274,7 +1274,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
                 Send Us a Message
             </h2>
             
-            <form id="contactForm" action="https://formspree.io/f/xpwdvgzp" method="POST">
+            <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
                 <div class="form-group">
                     <label for="name">Your Name *</label>
                     <input type="text" id="name" name="name" required placeholder="Enter your full name">
@@ -1306,8 +1306,8 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
                     <textarea id="message" name="message" required placeholder="Tell us how we can help you..."></textarea>
                 </div>
                 
-                <!-- Hidden field for spam protection -->
-                <input type="text" name="_gotcha" style="display:none">
+                <!-- Honeypot for spam protection -->
+                <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
                 
                 <button type="submit" class="btn btn-primary">
                     <svg viewBox="0 0 24 24">
@@ -1692,14 +1692,20 @@ function generateResponse(message) {
     return 'You can use the contact form on this page or email us at hello@impactmojo.in. We\'re happy to help with any questions about courses, coaching, partnerships, or anything else!';
 }
 
-// Form submission handling
+// Form submission handling (Netlify Forms via AJAX)
 document.getElementById('contactForm').addEventListener('submit', function(e) {
-    // Let Formspree handle the submission
-    // Show success message after a delay (form will redirect)
-    setTimeout(function() {
+    e.preventDefault();
+    var form = e.target;
+    fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString()
+    }).then(function() {
         document.getElementById('contactForm').style.display = 'none';
         document.getElementById('formSuccess').classList.add('show');
-    }, 100);
+    }).catch(function() {
+        alert('Something went wrong. Please try again or email us at hello@impactmojo.in');
+    });
 });
 
 // Initialize

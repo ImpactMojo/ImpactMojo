@@ -13,7 +13,7 @@ Run through this pre-deploy checklist:
 2. **Counts**: Game, lab, course counts consistent across index.html, catalog, docs?
 3. **JSON**: Validate `data/search-index.json` is valid JSON
 4. **Links**: No broken internal links in recently changed files?
-5. **Forms**: All forms submit to Formspree endpoint `xpwdvgzp`?
+5. **Forms**: All forms use Netlify Forms (`data-netlify="true"` with unique `name`)?
 6. **Sitemap**: New pages added to `sitemap.xml`?
 7. **Docs**: `CHANGELOG.md` updated for user-facing changes?
 8. **Backup**: Current `index.html` backed up to `Backups/`?

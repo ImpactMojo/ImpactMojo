@@ -23,7 +23,7 @@ Free development education platform for South Asia. Static HTML/CSS/JS, Supabase
 ## Conventions
 
 - Games: single self-contained HTML (inline CSS + JS, Indian folk art illustrations)
-- Forms submit to Formspree endpoint `xpwdvgzp`
+- Forms use Netlify Forms (`data-netlify="true"` with `netlify-honeypot="bot-field"`)
 - Content counts hardcoded in multiple places — grep before updating
 
 ## Watch out for

@@ -316,9 +316,10 @@ Use Sargam Icons (`si_` prefix) for all UI icons. Do not use Font Awesome, Heroi
 
 ## Forms
 
-All forms submit to Formspree endpoint `xpwdvgzp`:
+All forms use Netlify Forms with honeypot spam protection:
 ```html
-<form action="https://formspree.io/f/xpwdvgzp" method="POST">
+<form name="unique-form-name" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
 ```
 
 ## File Naming

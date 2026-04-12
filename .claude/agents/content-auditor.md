@@ -34,7 +34,7 @@ Grep for game/lab/course counts in these files and verify they all match:
 - `sitemap.xml` must include all public-facing pages
 
 ### 5. Forms
-- All forms reference Formspree endpoint `xpwdvgzp`
+- All forms use Netlify Forms (`data-netlify="true"` with unique `name` attribute)
 
 ## Output format
 

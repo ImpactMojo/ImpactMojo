@@ -789,10 +789,9 @@ for f, tag, o, c in broken[:20]:
 print(f'Imbalanced: {len(broken)}')
 PY
 
-# 3. Form endpoint consistency (all forms → Formspree xpwdvgzp)
-grep -rln 'formspree\.io/f/[a-z0-9]*' --include="*.html" . | xargs \
-    grep -l 'formspree\.io/f/' 2>/dev/null | xargs \
-    grep 'formspree\.io/f/' | grep -v 'xpwdvgzp' | grep -v Backups
+# 3. Form attribute consistency (all forms → Netlify Forms)
+grep -rln '<form' --include="*.html" . | grep -v Backups | xargs \
+    grep '<form' | grep -v 'data-netlify' | grep -v 'onsubmit' | grep -v 'hidden' | grep -v 'trackQuiz'
 
 # 4. No localhost / 127.0.0.1 / stale dev URLs
 grep -rln 'localhost\|127\.0\.0\.1\|\.ngrok\.' --include="*.html" . | grep -v Backups
