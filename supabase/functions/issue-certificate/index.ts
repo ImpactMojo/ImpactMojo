@@ -226,6 +226,7 @@ async function issueCertificate(
 
   const recipientName =
     profile?.full_name || profile?.display_name || "Learner";
+  const recipientEmail = profile?.email;
 
   // 5. Generate certificate number
   const certificateNumber = generateCertificateNumber(courseId);
@@ -270,6 +271,76 @@ async function issueCertificate(
         certificates_earned: [...currentCerts, cert.id],
       })
       .eq("id", userId);
+  }
+
+  // 8. Send certificate congratulations + premium upsell notification
+  try {
+    const { data: profile } = await admin
+      .from("profiles")
+      .select("subscription_tier")
+      .eq("id", userId)
+      .single();
+
+    // In-app notification for everyone
+    await admin.rpc("notify_user", {
+      p_user_id: userId,
+      p_type: "certificate",
+      p_title: `Congratulations! You earned your ${courseName} certificate`,
+      p_body: `Certificate ${certificateNumber} is ready. Share it on LinkedIn or download it from your account.`,
+      p_link: "/account.html",
+      p_metadata: { course_id: courseId, certificate_number: certificateNumber },
+    });
+
+    // Email — congrats + soft premium pitch for explorer-tier users
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (resendKey && recipientEmail) {
+      const isExplorer = profile?.subscription_tier === "explorer";
+      const premiumPitch = isExplorer
+        ? `<hr style="border:none;border-top:1px solid #E2E8F0;margin:24px 0">
+<p style="color:#64748B;font-size:14px"><strong>Want to keep the momentum going?</strong> ImpactMojo Premium gives you professional-grade tools like VaniScribe AI transcription, realistic datasets, and workshop templates — starting at just \u20B9399/month. <a href="https://www.impactmojo.in/premium-letter.html" style="color:#F59E0B">Learn more</a></p>`
+        : "";
+
+      const html = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
+<body style="font-family:'Amaranth',Helvetica,Arial,sans-serif;background:#F8FAFC;margin:0;padding:0">
+<div style="max-width:560px;margin:0 auto;padding:32px 24px">
+<div style="text-align:center;margin-bottom:24px">
+<img src="https://www.impactmojo.in/assets/images/favicon.png" width="40" height="40" alt="ImpactMojo" style="border-radius:8px">
+<h2 style="font-family:Inter,Helvetica,sans-serif;color:#0F172A;margin:12px 0 0">You did it!</h2>
+</div>
+<div style="background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:24px;color:#334155;line-height:1.6;font-size:15px">
+<p>Hi ${recipientName},</p>
+<p>Huge congratulations — you've completed <strong>${courseName}</strong> and earned your ImpactMojo certificate!</p>
+<p style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:16px;text-align:center;margin:16px 0">
+<strong style="font-size:18px;color:#92400E">Certificate ${certificateNumber}</strong><br>
+<a href="https://www.impactmojo.in${verificationUrl}" style="color:#F59E0B;font-size:13px">Verify &amp; share this certificate</a>
+</p>
+<p>You can download it, share it on LinkedIn, or add the verification link to your CV. It's yours — you earned it.</p>
+<p>Now that you've finished one course, why not try another? Each one earns you a new certificate and builds on what you've learned.</p>
+${premiumPitch}
+</div>
+<p style="text-align:center;color:#94A3B8;font-size:12px;margin-top:24px">
+ImpactMojo &middot; Free Development Education for South Asia<br>
+<a href="https://www.impactmojo.in/account.html#notifications" style="color:#94A3B8">Manage notification preferences</a>
+</p>
+</div></body></html>`;
+
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "ImpactMojo <notifications@impactmojo.in>",
+          to: [recipientEmail],
+          subject: `You earned your ${courseName} certificate! \uD83C\uDF89`,
+          html,
+        }),
+      });
+    }
+  } catch (notifErr) {
+    console.error("Certificate notification failed (non-fatal):", notifErr);
   }
 
   return new Response(

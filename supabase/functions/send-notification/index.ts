@@ -12,7 +12,11 @@
 //     No body — finds cohorts ending within 3 days and notifies enrolled members
 //
 //   POST /send-notification/engagement-drip
-//     No body — sends timed drip emails (welcome, day 3, day 7, day 14) based on signup date
+//     No body — sends timed drip emails (welcome, day 3/7/14/21) based on signup date
+//
+//   POST /send-notification/monthly-update
+//     Body: { subject, intro, highlights: [{title, description, url}], premium_note? }
+//     Sends a monthly content roundup to all users (service role only)
 //
 // Env: SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
 //      RESEND_API_KEY (optional — for email delivery via Resend.com)
@@ -459,6 +463,40 @@ serve(async (req: Request) => {
           if (emailSent) sent++;
           actions.push(`day14_reengage -> ${user.email}`);
         }
+
+        // Day 21: Premium soft pitch (only for explorer tier)
+        if (daysSinceSignup >= 21 && user.subscription_tier === "explorer" && !(await alreadySent("day21_premium"))) {
+          const subject = `Something for the serious practitioners, ${name}`;
+          const html = wrapEmail(
+            "Ready to go deeper?",
+            `<p>Hi ${name},</p>
+<p>You've been on ImpactMojo for a few weeks now, so you've probably explored the courses, games, and handouts. Hopefully some of it's been useful!</p>
+<p>We wanted to let you know about something we've built for practitioners who want to take things further. <strong>ImpactMojo Premium</strong> gives you access to professional-grade tools that we use in our own work:</p>
+<ul style="padding-left:20px;margin:12px 0">
+<li><strong>Research Question Builder Pro</strong> &amp; <strong>Theory of Change Workbench</strong> — go from vague ideas to rigorous frameworks</li>
+<li><strong>VaniScribe AI</strong> — transcribe interviews in Hindi, Tamil, Bengali, and 10+ South Asian languages</li>
+<li><strong>DevData Practice</strong> — work with 840,000+ rows of realistic development datasets</li>
+<li><strong>Statistical Code Converter</strong> — translate between R, Stata, SPSS, and Python instantly</li>
+<li><strong>7 Workshop Pro templates</strong> — facilitation-ready canvases for ToC, stakeholder mapping, and more</li>
+</ul>
+<p>It starts at just <strong>\u20B9399/month</strong> (about $5). And honestly, if you're a development practitioner working in South Asia, these tools will save you hours every week.</p>
+<p>We wrote a longer page explaining everything — have a read when you get a chance:</p>`,
+            "/premium-letter.html"
+          );
+
+          await admin.rpc("notify_user", {
+            p_user_id: user.id,
+            p_type: "welcome",
+            p_title: "Ready to go deeper? Meet ImpactMojo Premium",
+            p_body: "Professional-grade tools for serious development practitioners.",
+            p_link: "/premium-letter.html",
+            p_metadata: { drip_stage: "day21_premium" },
+          });
+
+          const emailSent = await sendEmail(user.email, subject, html);
+          if (emailSent) sent++;
+          actions.push(`day21_premium -> ${user.email}`);
+        }
       }
 
       return json({
@@ -467,6 +505,61 @@ serve(async (req: Request) => {
         emails_sent: sent,
         actions,
       });
+    }
+
+    // ── Monthly content email ─────────────────────────────────────────
+    // Called manually or via scheduled function once a month.
+    // Body: { subject, intro, highlights: [{title, description, url}], premium_note? }
+    if (path === "monthly-update") {
+      const authHeader = req.headers.get("Authorization");
+      if (!authHeader?.startsWith("Bearer ")) {
+        return json({ error: "Missing Authorization header" }, 401);
+      }
+      const token = authHeader.replace("Bearer ", "");
+      if (token !== serviceRoleKey) {
+        return json({ error: "Service role required" }, 403);
+      }
+
+      const body = await req.json();
+      const { subject, intro, highlights, premium_note } = body;
+      if (!subject || !intro || !highlights?.length) {
+        return json({ error: "subject, intro, and highlights[] required" }, 400);
+      }
+
+      const highlightsHtml = highlights
+        .map(
+          (h: { title: string; description: string; url: string }) =>
+            `<li style="margin-bottom:12px"><strong><a href="https://www.impactmojo.in${h.url}" style="color:#F59E0B;text-decoration:none">${h.title}</a></strong><br><span style="color:#64748B;font-size:14px">${h.description}</span></li>`
+        )
+        .join("");
+
+      const premiumFooter = premium_note
+        ? `<hr style="border:none;border-top:1px solid #E2E8F0;margin:24px 0"><p style="color:#64748B;font-size:13px">${premium_note}</p>`
+        : "";
+
+      const { data: users } = await admin
+        .from("profiles")
+        .select("id, email, full_name, display_name")
+        .not("email", "is", null);
+
+      let sent = 0;
+      for (const user of users || []) {
+        const name = user.full_name || user.display_name || "there";
+        const html = wrapEmail(
+          subject,
+          `<p>Hi ${name},</p>
+<p>${intro}</p>
+<ul style="padding-left:20px;margin:16px 0;list-style:none">${highlightsHtml}</ul>
+<p>That's it for this month. Happy learning!</p>
+${premiumFooter}`,
+          "/"
+        );
+
+        const emailSent = await sendEmail(user.email, subject, html);
+        if (emailSent) sent++;
+      }
+
+      return json({ message: "Monthly update sent", users: users?.length || 0, emails_sent: sent });
     }
 
     // ── Manual: Send notification to specific user(s) ────────────────
