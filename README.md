@@ -50,8 +50,10 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
 | **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export — dark mode, filters, CSV export |
 | **Dataverse** | 270 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories — dark mode, category filters, responsive cards |
+| **28 Book Companions** | Interactive study companions for development economics, statistics, leadership, and productivity texts |
+| **11 AI Study Companions** | NotebookLM-powered study notebooks for all flagship courses |
 | **400+ Handouts** | Downloadable resources across 6 learning tracks |
-| **Learning Loops Blog** | Articles, tutorials, and case studies on development practice |
+| **28 Blog Posts** | Learning Loops Blog — articles, tutorials, and case studies on development practice |
 | **Between the Logframes** | Development podcast — honest conversations on MEAL and impact work |
 | **MCP Server** | Model Context Protocol server — connect any AI assistant to search all ImpactMojo content, BCTs, Dataverse, climate data, and more ([Setup guide](mcp-server/README.md)) |
 
@@ -138,6 +140,8 @@ Deep, comprehensive learning tracks — free for all users:
 | **Media for Development** | Communication, power, narrative, and practice |
 | **Social-Emotional Learning for Development** | SEL frameworks for development contexts |
 | **Constitution & Law** | Constitutional governance and development law |
+| **Public Policy: Process, Design & Governance** | How policy gets made, implemented, and evaluated |
+| **Gender Studies: Feminisms, Power & Social Change** | Feminist theory, gender analysis, and development |
 
 ### Foundational Courses (38)
 
@@ -152,7 +156,7 @@ Shorter introductory courses covering the breadth of development practice:
 | **Health & Wellbeing** | Public Health 101, Climate Essentials, Social Emotional Learning, Decent Work for All, Livelihoods Fundamentals |
 | **Communication & Data** | English for Development, Visual Ethnography, Data Literacy for Development, BCC and Communications, Advocacy Fundamentals, Digital Development Ethics, Education and Pedagogy |
 
-### Interactive Labs (19)
+### Interactive Labs (11)
 
 - **Theory of Change Lab** — Guided ToC builder with real-time flowchart diagram and PNG export
 - **MEL Design Lab** — Monitoring, evaluation, and learning framework builder
@@ -164,15 +168,22 @@ Shorter introductory courses covering the breadth of development practice:
 - **Resource Sustainability Lab** — Resource mobilisation and sustainability planning
 - **Impact Partnerships Lab** — Partnership mapping and collaboration framework
 - **Community Engagement Lab** — Participatory assessment and action planning
-- **Gender Analysis Lab** — Gender analysis frameworks and assessment tools
+- **Gender Studies Lab** — Gender analysis frameworks and assessment tools
+
+### Tools & Calculators
+
 - **Sample Size Calculator** — Survey sample size for proportion, mean, two-group, and cluster designs
 - **Budget Template Generator** — Project budget builder with smart templates and CSV export
 - **Theory of Change Workbench** — Educational workbench with BCT annotations, worked examples, and sector guidance
 - **Theory of Change Builder** — Drag-and-drop canvas with 229 BCT techniques and PNG export
+
+### Premium Tools (Paid Tiers)
+
 - **RQ Builder Pro** — Guided research question formulation with PICO/SPIDER framing (Practitioner)
 - **TOC Workbench Pro** — Publication-ready theories of change with assumption mapping (Practitioner)
 - **Qual Insights Lab Pro** — AI-assisted qualitative analysis for transcripts (Professional)
 - **Code Convert Pro** — Script translation between Stata, R, Python, SPSS (Professional)
+- **VaniScribe** — AI transcription for 10+ South Asian languages (Professional)
 
 ### Learning Games (16)
 
@@ -286,7 +297,7 @@ Comprehensive ToC learning and building toolkit:
 | **Curated i18n** | Hand-crafted translations (`i18n/*.json`) for key UI strings |
 | **Open Badges 3.0** | W3C Verifiable Credentials for course completion badges |
 | **Google Analytics** | Usage analytics |
-| **Formspree** | Contact form handling |
+| **Netlify Forms** | Contact & feedback form handling |
 | **UserWay** | Accessibility widget |
 | **axe-core + Puppeteer** | Automated WCAG 2.1 AA accessibility testing |
 | **Google Fonts** | Amaranth (body) + Inter (headings) + JetBrains Mono (code) |
@@ -681,8 +692,8 @@ The platform is shaped by contributions from educators, practitioners, designers
 
 ---
 
-**Version:** 10.8.1
-**Last Updated:** 2026-03-21
+**Version:** 10.18.0
+**Last Updated:** 2026-04-12
 **License:** MIT (code) + CC BY-NC-ND 4.0 (content)
 **Hosting:** Netlify
 

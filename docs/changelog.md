@@ -2,6 +2,28 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.18.1 — April 12, 2026
+
+### Fixed
+- **README.md** — labs 19→11 (separated into Labs, Tools & Calculators, and Premium Tools sections), added 2 missing flagship courses (Gender Studies, Public Policy), added BookSummaries (28) and AI Study Companions (11) to content table, replaced Formspree with Netlify Forms in tech stack, updated version to 10.18.0 and date to April 12.
+- **content-marketing-kit.html** — games 15→16, labs 10→11, flagship courses 9→11 across ~20 locations including social posts, carousel slides, brand guidelines, and content calendars. Fixed carousel counts (17 Labs→11, 27 Books→28).
+- **ImpactMojo_PressKit.html** — foundational courses 39→38.
+- **docs/roadmap.md** — moved Cohort-Based Learning, Notification System, Sample Size Calculator, Budget Template Generator, and full accessibility audit from "In Progress"/"Planned" to "Recently Completed". Added v10.13–v10.18 release entries. Added BookSummaries expansion and native deck migration to "In Progress".
+
+### GitHub
+- Closed Q1 2026 milestone (past due, all issues resolved).
+- Replied to issue #361 (skill validation workflow proposal).
+- Updated issue #272 (BookSummaries target raised from 5-8 to 40+).
+
+## v10.18.0 — April 12, 2026
+
+### Fixed
+- **Sitemap coverage** — added 87 missing URLs to `sitemap.xml`: 2 flagship courses (gender, pubpol), 35 foundational 101-courses, 23 BookSummaries, 18 blog posts, and 9 public pages (transparency, dataverse, bct-repository, challenges, climate-trace-india, portfolio, live-projects, toc-builder, verify-certificate). Total URLs: 84 → 171.
+- **Stale `101.impactmojo.in` links** — migrated ~100 legacy subdomain links to local paths across `js/faq-bank.js`, `js/bookmarks-compare.js`, `js/learning-tracks.js`, `js/game-agents.js`, and 4 docs files. All course links now point to `/101-courses/*.html`, all lab links to `/Labs/*.html`.
+- **Search index phantom labs** — removed 6 duplicate/phantom lab entries from `data/search-index.json` (survey-design-lab, sampling-lab, logframe-builder, data-cleaning-lab, indicator-design-lab, toc-workbench); added missing entries for design-thinking-lab, mel-design-lab, and community-lab. Lab count: 17 → 13 (11 labs + 2 BookCompanionTools).
+- **Content count drifts** — fixed `docs/content-guide.md` (flagship 9→11, labs 19→11, BookSummaries 27→28), `premium.html` ("47 foundational courses, labs & games" → "48 free courses, 11 labs & 16 games"), `catalog.html` JS comments (COURSES 39→38, LABS 10→11).
+- **21 `.DS_Store` files** removed from git tracking (already in `.gitignore`).
+
 ## v10.17.0 — April 12, 2026
 
 ### Added

@@ -76,14 +76,14 @@
 
   // Build a very rich index of names -> hrefs from anchors and card containers
   function buildIndex(){
-    var idxPrimary = {}; // prefers 101.impactmojo.in
+    var idxPrimary = {}; // prefers /101-courses/
     var idxOther   = {};
 
     var anchors = Array.prototype.slice.call(document.querySelectorAll('a[href]'));
     anchors.forEach(function(a){
       var href = a.getAttribute('href') || '';
       if (!href) return;
-      var bucket = href.indexOf('101.impactmojo.in') !== -1 ? idxPrimary : idxOther;
+      var bucket = href.indexOf('/101-courses/') !== -1 ? idxPrimary : idxOther;
 
       // direct anchor text and data-title
       [a.getAttribute('data-title'), a.textContent].forEach(function(t){
@@ -115,7 +115,7 @@
       if (a){
         var href = a.getAttribute('href') || '';
         if (!href) return;
-        var bucket = href.indexOf('101.impactmojo.in') !== -1 ? idxPrimary : idxOther;
+        var bucket = href.indexOf('/101-courses/') !== -1 ? idxPrimary : idxOther;
         bucket[k] = href;
       }
     });

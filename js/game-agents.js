@@ -4,7 +4,7 @@
  * Date: March 17, 2026
  *
  * MiroFish-inspired client library for AI-powered game opponents.
- * Provides the bridge between game frontends (101.impactmojo.in)
+ * Provides the bridge between game frontends (impactmojo.in/Games/)
  * and the game-agent Supabase Edge Function.
  *
  * USAGE (in any game HTML):

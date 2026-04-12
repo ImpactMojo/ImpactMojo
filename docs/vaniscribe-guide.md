@@ -6,7 +6,7 @@ VaniScribe is ImpactMojo's **AI-powered transcription tool** — it converts spo
 
 If you've ever spent 4–6 hours manually typing out a 60-minute Hindi interview, VaniScribe is designed to eliminate that bottleneck.
 
-**Access:** Professional tier (₹999/month) — [Open VaniScribe](https://101.impactmojo.in/vaniscribe)
+**Access:** Professional tier (₹999/month) — [See Premium](/premium.html)
 
 ---
 

@@ -44,70 +44,72 @@ Single-page courses covering essential development topics. All free, no login re
 
 | Course | Link |
 |--------|------|
-| MEL Basics 101 | [Open](https://www.impactmojo.in/101-courses/mel-basics.html) ⭐ Native |
-| Theory of Change 101 | [Open](https://101.impactmojo.in/toc-basics-101) |
-| Qualitative Methods 101 | [Open](https://101.impactmojo.in/qual-methods) |
-| Survey Design 101 | [Open](https://101.impactmojo.in/survey-design) |
-| Research Ethics 101 | [Open](https://101.impactmojo.in/research-ethics) |
-| Mixed Methods 101 | [Open](https://101.impactmojo.in/mixed-methods) |
-| Impact Evaluation 101 | [Open](https://101.impactmojo.in/impact-eval) |
-| Community Development 101 | [Open](https://101.impactmojo.in/community-dev) |
-| English for Development 101 | [Open](https://101.impactmojo.in/eng-dev) |
+| MEL Basics 101 | [Open](/101-courses/mel-basics.html) |
+| Theory of Change 101 | [Open](/101-courses/toc-workbench.html) |
+| Qualitative Methods 101 | [Open](/101-courses/qual-methods.html) |
+| Survey Design 101 | Coming Soon |
+| Research Ethics 101 | [Open](/101-courses/research-ethics.html) |
+| Mixed Methods 101 | Coming Soon |
+| Impact Evaluation 101 | Coming Soon |
+| Community Development 101 | [Open](/101-courses/community-dev.html) |
+| English for Development 101 | [Open](/101-courses/eng-dev.html) |
 
 ### Data & Technology
 
 | Course | Link |
 |--------|------|
-| Data Literacy 101 | [Open](https://101.impactmojo.in/data-literacy) |
-| Econometrics 101 | [Open](https://101.impactmojo.in/econometrics-101) |
-| Exploratory Data Analysis 101 | [Open](https://101.impactmojo.in/eda-hhs) |
-| Bivariate Analysis 101 | [Open](https://101.impactmojo.in/bi-analysis) |
-| Item Response Theory 101 | [Open](https://101.impactmojo.in/irt-basics) |
-| Multivariate Analysis 101 | [Open](https://101.impactmojo.in/multivariate-basics) |
-| Observation to Insight 101 | [Open](https://101.impactmojo.in/obs2insight) |
+| Data Literacy 101 | [Open](/101-courses/data-lit.html) |
+| Econometrics 101 | [Open](/101-courses/econometrics-101.html) |
+| Exploratory Data Analysis 101 | [Open](/101-courses/eda-hhs.html) |
+| Bivariate Analysis 101 | [Open](/101-courses/bi-analysis.html) |
+| Item Response Theory 101 | [Open](/101-courses/irt-basics.html) |
+| Multivariate Analysis 101 | [Open](/101-courses/multivariate-basics.html) |
+| Observation to Insight 101 | [Open](/101-courses/obs2insight.html) |
 
 ### Policy & Economics
 
 | Course | Link |
 |--------|------|
-| Development Economics 101 | [Open](https://www.impactmojo.in/101-courses/dev-economics.html) ⭐ Native |
-| Global Development Governance 101 | [Open](https://101.impactmojo.in/dev-architecture) |
-| Fundraising Basics 101 | [Open](https://101.impactmojo.in/fundraising-basics) |
-| Decent Work For All 101 | [Open](https://101.impactmojo.in/decent-work) |
-| Cost Effectiveness 101 | [Open](https://101.impactmojo.in/CE) |
-| Economics for Policy Practitioners 101 | [Open](https://101.impactmojo.in/dev-economics) |
-| Decolonial Development 101 | [Open](https://101.impactmojo.in/decolonize-dev) |
+| Development Economics 101 | [Open](/101-courses/dev-economics.html) |
+| Global Development Governance 101 | [Open](/101-courses/dev-architecture.html) |
+| Fundraising Basics 101 | [Open](/101-courses/fundraising-basics.html) |
+| Decent Work For All 101 | [Open](/101-courses/decent-work.html) |
+| Cost Effectiveness 101 | [Open](/101-courses/cost-effectiveness.html) |
+| Economics for Policy Practitioners 101 | [Open](/101-courses/pol-economy.html) |
+| Decolonial Development 101 | [Open](/101-courses/decolonize-dev.html) |
 
 ### Gender & Equity
 
 | Course | Link |
 |--------|------|
-| Gender Mainstreaming 101 | [Open](https://101.impactmojo.in/gender-mainstreaming) |
-| Feminist Research 101 | [Open](https://101.impactmojo.in/feminist-research) |
-| Marginalised Identities 101 | [Open](https://101.impactmojo.in/social-margins) |
-| Data Feminism 101 | [Open](https://101.impactmojo.in/data-feminism) |
+| Gender Studies | [Open](/courses/gender/) |
+| Women's Economic Empowerment 101 | [Open](/101-courses/wee-studies.html) |
+| Marginalised Identities 101 | [Open](/101-courses/social-margins.html) |
+| Data Feminism 101 | [Open](/101-courses/data-feminism.html) |
 
 ### Health & Communication
 
 | Course | Link |
 |--------|------|
-| Public Health 101 | [Open](https://101.impactmojo.in/public-health) |
-| Visual Ethnography 101 | [Open](https://101.impactmojo.in/visual-ethnography) |
-| Maternal Health 101 | [Open](https://101.impactmojo.in/maternal-health) |
-| Child Development 101 | [Open](https://101.impactmojo.in/child-development) |
-| Sexual Health 101 | [Open](https://101.impactmojo.in/sexual-health) |
-| Care Economy 101 | [Open](https://101.impactmojo.in/care-economy-101) |
-| SEL Basics 101 | [Open](https://101.impactmojo.in/sel-basics) |
-| Education and Pedagogy 101 | [Open](https://101.impactmojo.in/edu-pedagogy) |
+| Public Health 101 | [Open](/101-courses/pub-health-basics.html) |
+| Visual Ethnography 101 | [Open](/101-courses/visual-eth.html) |
+| SRHR Basics 101 | [Open](/101-courses/SRHR-basics.html) |
+| Care Economy 101 | [Open](/101-courses/care-economy-101.html) |
+| SEL Basics 101 | [Open](/101-courses/sel-basics.html) |
+| Education and Pedagogy 101 | [Open](/101-courses/edu-pedagogy.html) |
+| Livelihoods 101 | [Open](/101-courses/livelihood-basics.html) |
+| BCC Programming 101 | [Open](/101-courses/bcc-comms.html) |
 
 ### Philosophy & Governance
 
 | Course | Link |
 |--------|------|
-| Environmental Justice 101 | [Open](https://101.impactmojo.in/env-justice) |
-| Post Truth Politics 101 | [Open](https://101.impactmojo.in/post-truth-101) |
-| Digital Ethics 101 | [Open](https://101.impactmojo.in/digital-ethics) |
-| Indian Constitution 101 | [Open](https://101.impactmojo.in/ind-constitution) |
+| Environmental Justice 101 | [Open](/101-courses/env-justice.html) |
+| Post Truth Politics 101 | [Open](/101-courses/post-truth-101.html) |
+| Digital Ethics 101 | [Open](/101-courses/digital-ethics.html) |
+| Indian Constitution 101 | [Open](/101-courses/ind-constitution.html) |
+| Advocacy & Communications 101 | [Open](/101-courses/advocacy-basics.html) |
+| Inequality Basics 101 | [Open](/101-courses/inequality-basics.html) |
 
 ---
 
@@ -245,13 +247,13 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 
 | # | Tool | Tier | Description | Link |
 |---|------|------|-------------|------|
-| 1 | RQ Builder Pro | Practitioner | Guided research question builder with PICO/SPIDER framing | [Open](https://101.impactmojo.in/researchQ-pro) |
-| 2 | TOC Workbench Pro | Practitioner | Advanced ToC building with assumption mapping and PDF/PNG export | [Open](https://101.impactmojo.in/toc-workbench) |
+| 1 | RQ Builder Pro | Practitioner | Guided research question builder with PICO/SPIDER framing | [Premium](/premium.html) |
+| 2 | TOC Workbench Pro | Practitioner | Advanced ToC building with assumption mapping and PDF/PNG export | [Premium](/premium.html) |
 | 3 | Field Notes from a Development Economist | Professional | Behind-the-scenes analysis of real programs and trade-offs | [Open](https://impactmojo-field-notes-pro.netlify.app/) |
-| 4 | Qualitative Research Lab | Professional | AI-assisted thematic coding and memo generation | [Open](https://101.impactmojo.in/qual-insights) |
-| 5 | Statistical Code Converter Pro | Professional | Translate code between R, Stata, SPSS & Python with regression diagnostics and power analysis | [Open](https://101.impactmojo.in/code-convert-pro) |
+| 4 | Qualitative Research Lab | Professional | AI-assisted thematic coding and memo generation | [Premium](/premium.html) |
+| 5 | Statistical Code Converter Pro | Professional | Translate code between R, Stata, SPSS & Python with regression diagnostics and power analysis | [Premium](/premium.html) |
 | 6 | DevData Practice | Professional | 36 dataset generators with 840k+ rows of realistic development data | [Open](https://impactmojo-devdata-pro.netlify.app/) |
-| 7 | VaniScribe: AI Transcription | Professional | Transcribe interviews in 10+ South Asian languages | [Open](https://101.impactmojo.in/vaniscribe) |
+| 7 | VaniScribe: AI Transcription | Professional | Transcribe interviews in 10+ South Asian languages | [Premium](/premium.html) |
 | 8 | Visualization Cookbook | Professional | Question-driven chart recipes with production-ready Python code | [Open](https://impactmojo-devdata-pro.netlify.app/charts.html) |
 | 9 | DevEconomics Toolkit | Professional | 11 interactive Shiny apps for impact evaluation and program design | [Open](https://impactmojo-devecon-toolkit.netlify.app/) |
 
