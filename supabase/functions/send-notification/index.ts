@@ -79,15 +79,15 @@ function wrapEmail(title: string, body: string, link?: string): string {
 <body style="font-family:'Amaranth',Georgia,serif;background:#F1F5F9;margin:0;padding:0">
 <div style="max-width:600px;margin:0 auto">
 <!-- Branded Header -->
-<div style="background:linear-gradient(135deg,#0F172A 0%,#075985 100%);padding:28px 32px;text-align:center;border-radius:0 0 0 0">
-<a href="https://www.impactmojo.in" style="text-decoration:none;display:inline-flex;align-items:center;gap:12px">
-<img src="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png" width="44" height="44" alt="ImpactMojo" style="border-radius:8px;display:block">
-<span style="font-family:Inter,Helvetica,sans-serif;font-weight:700;font-size:20px;color:#FFFFFF;letter-spacing:-0.02em">ImpactMojo</span>
+<div style="background:linear-gradient(135deg,#0F172A 0%,#075985 100%);padding:32px 32px 24px;text-align:center">
+<a href="https://www.impactmojo.in" style="text-decoration:none">
+<img src="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png" width="48" height="48" alt="ImpactMojo" style="border-radius:10px;display:block;margin:0 auto">
 </a>
+<p style="font-family:Inter,Helvetica,sans-serif;font-weight:700;font-size:20px;color:#FFFFFF;letter-spacing:-0.02em;margin:12px 0 0">ImpactMojo</p>
 </div>
 <!-- Title Bar -->
-<div style="background:#075985;padding:16px 32px;text-align:center">
-<h2 style="font-family:Inter,Helvetica,sans-serif;color:#FFFFFF;margin:0;font-size:18px;font-weight:600;line-height:1.4">${title}</h2>
+<div style="background:#075985;padding:14px 32px;text-align:center">
+<h2 style="font-family:Inter,Helvetica,sans-serif;color:#FFFFFF;margin:0;font-size:17px;font-weight:600;line-height:1.4">${title}</h2>
 </div>
 <!-- Body -->
 <div style="background:#FFFFFF;padding:32px;color:#334155;line-height:1.7;font-size:15px">
