@@ -337,14 +337,16 @@ serve(async (req: Request) => {
           const html = wrapEmail(
             "Welcome to ImpactMojo!",
             `<p>Hi ${name},</p>
-<p>Welcome to ImpactMojo — free development education for South Asia.</p>
-<p>Here's where to start:</p>
+<p>Thanks so much for signing up! We're really glad you're here.</p>
+<p>Over the next couple of weeks, we'll send you a few short emails to help you get the most out of ImpactMojo. Nothing spammy — just friendly pointers to the good stuff.</p>
+<p>But if you want to jump straight in, here are three great starting points:</p>
 <ul style="padding-left:20px;margin:12px 0">
-<li><strong>Take a course</strong> — <a href="https://www.impactmojo.in/courses/mel/index.html" style="color:#F59E0B">Monitoring, Evaluation & Learning</a> is our most popular</li>
-<li><strong>Play a game</strong> — <a href="https://www.impactmojo.in/Games/public-good-game.html" style="color:#F59E0B">The Public Good Game</a> teaches collective action in 10 minutes</li>
-<li><strong>Browse 400+ handouts</strong> — ready-to-use templates for your next project</li>
+<li><strong>Take a course</strong> — <a href="https://www.impactmojo.in/courses/mel/index.html" style="color:#F59E0B">Monitoring, Evaluation &amp; Learning</a> is our most popular, and Module 1 is completely free</li>
+<li><strong>Play a game</strong> — <a href="https://www.impactmojo.in/Games/public-good-game.html" style="color:#F59E0B">The Public Good Game</a> teaches collective action in about 10 minutes</li>
+<li><strong>Browse 400+ handouts</strong> — ready-to-use templates you can actually take to your next project</li>
 </ul>
-<p>No paywalls, no tricks. Just learn.</p>`,
+<p>Everything on ImpactMojo is free. No paywalls, no tricks — just learn at your own pace.</p>
+<p>Happy exploring!</p>`,
             "/catalog.html"
           );
 
@@ -352,7 +354,7 @@ serve(async (req: Request) => {
             p_user_id: user.id,
             p_type: "welcome",
             p_title: "Welcome to ImpactMojo!",
-            p_body: "Start with our most popular course or play a quick game.",
+            p_body: "Thanks for signing up! We'll send you a few emails to help you get started.",
             p_link: "/catalog.html",
             p_metadata: { drip_stage: "welcome" },
           });
@@ -364,26 +366,26 @@ serve(async (req: Request) => {
 
         // Day 3: First course nudge (only if no courses started)
         if (daysSinceSignup >= 3 && coursesCompleted === 0 && !(await alreadySent("day3_nudge"))) {
-          const subject = "Your first 10 minutes on ImpactMojo";
+          const subject = `Got 10 minutes, ${name}?`;
           const html = wrapEmail(
-            "Ready to dive in?",
+            "Got 10 minutes?",
             `<p>Hi ${name},</p>
-<p>You signed up a few days ago — here's a quick way to get started:</p>
-<p><strong>Module 1 of every course is free and takes about 10 minutes.</strong></p>
-<p>Pick one that matches your work:</p>
+<p>Hope you've had a chance to look around! If not, no worries — here's an easy way to get started.</p>
+<p><strong>Module 1 of every course is free and takes about 10 minutes.</strong> That's it — just pick one and see if it clicks:</p>
 <ul style="padding-left:20px;margin:12px 0">
-<li><a href="https://www.impactmojo.in/courses/mel/index.html" style="color:#F59E0B">MEL</a> — if you work in monitoring & evaluation</li>
-<li><a href="https://www.impactmojo.in/courses/dataviz/index.html" style="color:#F59E0B">Data Visualization</a> — if you present data to stakeholders</li>
-<li><a href="https://www.impactmojo.in/courses/devecon/index.html" style="color:#F59E0B">Development Economics</a> — if you want the big picture</li>
+<li><a href="https://www.impactmojo.in/courses/mel/index.html" style="color:#F59E0B">MEL</a> — great if you work in monitoring &amp; evaluation</li>
+<li><a href="https://www.impactmojo.in/courses/dataviz/index.html" style="color:#F59E0B">Data Visualization</a> — perfect if you present data to stakeholders</li>
+<li><a href="https://www.impactmojo.in/courses/devecon/index.html" style="color:#F59E0B">Development Economics</a> — ideal if you want the big picture</li>
 </ul>
-<p>Complete all modules to earn a shareable certificate.</p>`,
+<p>The best part? Complete all the modules in any course and you'll earn a shareable digital certificate. Looks great on LinkedIn!</p>
+<p>Give it a try when you have a few minutes.</p>`,
             "/catalog.html"
           );
 
           await admin.rpc("notify_user", {
             p_user_id: user.id,
             p_type: "welcome",
-            p_title: "Your first 10 minutes on ImpactMojo",
+            p_title: "Got 10 minutes? Try your first module",
             p_body: "Module 1 of every course is free. Pick one and start learning.",
             p_link: "/catalog.html",
             p_metadata: { drip_stage: "day3_nudge" },
@@ -396,26 +398,27 @@ serve(async (req: Request) => {
 
         // Day 7: Content showcase
         if (daysSinceSignup >= 7 && !(await alreadySent("day7_showcase"))) {
-          const subject = "More than courses — games, labs, handouts";
+          const subject = "Did you know there's way more than courses?";
           const html = wrapEmail(
-            "There's more to explore",
+            "There's way more to explore",
             `<p>Hi ${name},</p>
-<p>ImpactMojo isn't just courses. Here's what most people don't discover right away:</p>
+<p>Quick heads up — most people don't realise that ImpactMojo is a lot more than just courses. Here's what else is waiting for you:</p>
 <ul style="padding-left:20px;margin:12px 0">
-<li><strong>16 Interactive Games</strong> — learn economics by playing, not reading (<a href="https://www.impactmojo.in/#games" style="color:#F59E0B">browse games</a>)</li>
-<li><strong>11 Browser Labs</strong> — build a Theory of Change, design an M&E plan, map stakeholders (<a href="https://www.impactmojo.in/#labs" style="color:#F59E0B">try a lab</a>)</li>
-<li><strong>400+ Handouts</strong> — download templates for your real projects (<a href="https://www.impactmojo.in/handouts.html" style="color:#F59E0B">browse handouts</a>)</li>
-<li><strong>20+ Book Summaries</strong> — key insights from development economics classics (<a href="https://www.impactmojo.in/BookSummaries/" style="color:#F59E0B">read summaries</a>)</li>
+<li><strong>16 Interactive Games</strong> — learn economics by playing, not reading. Seriously fun. (<a href="https://www.impactmojo.in/#games" style="color:#F59E0B">Browse games</a>)</li>
+<li><strong>11 Browser Labs</strong> — build a Theory of Change, design an M&amp;E plan, map your stakeholders — all in your browser (<a href="https://www.impactmojo.in/#labs" style="color:#F59E0B">Try a lab</a>)</li>
+<li><strong>400+ Handouts</strong> — practical templates you can download and use in your real projects (<a href="https://www.impactmojo.in/handouts.html" style="color:#F59E0B">Browse handouts</a>)</li>
+<li><strong>20+ Book Summaries</strong> — the key insights from development economics classics, without reading 300 pages (<a href="https://www.impactmojo.in/BookSummaries/" style="color:#F59E0B">Read summaries</a>)</li>
 </ul>
-<p>All free. All designed for South Asian development practitioners.</p>`,
+<p>All of it is free. All of it is designed specifically for South Asian development practitioners like you.</p>
+<p>Have a poke around — you might be surprised what you find!</p>`,
             "/"
           );
 
           await admin.rpc("notify_user", {
             p_user_id: user.id,
             p_type: "welcome",
-            p_title: "Games, labs, handouts — more to explore",
-            p_body: "Discover interactive games, browser labs, and 400+ downloadable handouts.",
+            p_title: "Games, labs, handouts — way more to explore",
+            p_body: "Did you know there are interactive games, browser labs, and 400+ handouts?",
             p_link: "/",
             p_metadata: { drip_stage: "day7_showcase" },
           });
@@ -427,25 +430,27 @@ serve(async (req: Request) => {
 
         // Day 14: Re-engagement (only if still no courses completed)
         if (daysSinceSignup >= 14 && coursesCompleted === 0 && !(await alreadySent("day14_reengage"))) {
-          const subject = "Still here for you, " + name;
+          const subject = `We're still here when you're ready, ${name}`;
           const html = wrapEmail(
-            "We're still here",
+            "Still here for you",
             `<p>Hi ${name},</p>
-<p>It's been two weeks since you joined ImpactMojo. No pressure — learning happens at your own pace.</p>
-<p>If you have 5 minutes today, try one of these:</p>
+<p>It's been a couple of weeks since you joined ImpactMojo — just wanted to check in.</p>
+<p>Absolutely no pressure. We know life gets busy, and learning happens when the timing is right for you.</p>
+<p>Whenever you do have a spare 5 minutes, these are a great way to dip your toes in:</p>
 <ul style="padding-left:20px;margin:12px 0">
-<li><a href="https://www.impactmojo.in/Games/cooperation-paradox-game.html" style="color:#F59E0B">Play the Cooperation Paradox</a> — a 5-minute game about collective action</li>
-<li><a href="https://www.impactmojo.in/dojos.html" style="color:#F59E0B">Join a Dojo session</a> — practice with peers in structured sessions</li>
+<li><a href="https://www.impactmojo.in/Games/cooperation-paradox-game.html" style="color:#F59E0B">Play the Cooperation Paradox</a> — a quick, fun game about collective action dilemmas</li>
+<li><a href="https://www.impactmojo.in/dojos.html" style="color:#F59E0B">Check out our Dojo sessions</a> — structured practice sessions you can join with peers</li>
 </ul>
-<p>If ImpactMojo isn't for you, no worries. You can <a href="https://www.impactmojo.in/account.html#notifications" style="color:#94A3B8">manage your email preferences</a> anytime.</p>`,
+<p>This is the last email in our welcome series. If you'd like to keep hearing from us, just log in anytime and we'll keep you posted on new content. If not, no hard feelings at all — you can <a href="https://www.impactmojo.in/account.html#notifications" style="color:#94A3B8">manage your preferences here</a>.</p>
+<p>Wishing you all the best!</p>`,
             "/dojos.html"
           );
 
           await admin.rpc("notify_user", {
             p_user_id: user.id,
             p_type: "welcome",
-            p_title: "We're still here for you",
-            p_body: "Try a 5-minute game or join a dojo session when you're ready.",
+            p_title: "We're still here when you're ready",
+            p_body: "No pressure — just a friendly check-in and a couple of quick things to try.",
             p_link: "/dojos.html",
             p_metadata: { drip_stage: "day14_reengage" },
           });
