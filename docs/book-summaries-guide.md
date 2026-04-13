@@ -28,7 +28,6 @@ All book summaries are **free, browser-based, and require no login**. They are s
 | **Basic Econometrics** | Damodar N. Gujarati & Dawn C. Porter, McGraw-Hill | 22 | Econometrics | `/BookSummaries/basic-econometrics-companion.html` |
 | **Econometrics by Example** | Damodar N. Gujarati, Palgrave Macmillan | 20 | Econometrics | `/BookSummaries/econometrics-by-example-companion.html` |
 | **Principles for Navigating Big Debt Crises** | Ray Dalio, 2018 | 3 Parts | Development Economics | `/BookSummaries/dalio-big-debt-crises-companion.html` |
-| **Handbook for IPCC Authors: Climate Communications** | Corner, Shaw & Clarke, Climate Outreach 2018 | 6 Principles | Communication | `/BookSummaries/ipcc-climate-comms-handbook-companion.html` |
 | **Storytelling to Accelerate Climate Solutions** | Emily Coren & Hua Wang (Eds.), Springer 2024 | 20 | Communication | `/BookSummaries/storytelling-climate-solutions-companion.html` |
 
 ---
