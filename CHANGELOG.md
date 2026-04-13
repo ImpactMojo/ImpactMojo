@@ -5,6 +5,15 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.19.0] - 2026-04-13
+
+### Added
+- **3 new Book Summaries** (28 → 31 total):
+  - *Principles for Navigating Big Debt Crises* — Ray Dalio (2018)
+  - *Handbook for IPCC Authors: Climate Communications* — Corner, Shaw & Clarke (2018)
+  - *Storytelling to Accelerate Climate Solutions* — Coren & Wang (Springer, 2024)
+- BookSummaries index cards, search index entries, sitemap URLs, docs updates
+
 ## [10.18.0] - 2026-04-12
 
 ### Fixed

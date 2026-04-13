@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.19.0 — April 13, 2026
+
+### Book Summaries
+- **3 new book companions** added (28 → 31 total):
+  - *Principles for Navigating Big Debt Crises* — Ray Dalio (2018) — debt cycles, deleveraging, and central bank policy across 48 historical cases
+  - *Handbook for IPCC Authors: Climate Communications* — Corner, Shaw & Clarke (Climate Outreach, 2018) — six evidence-based principles for climate communication
+  - *Storytelling to Accelerate Climate Solutions* — Coren & Wang (Springer, 2024) — 20 chapters on narrative approaches to climate action
+- Updated BookSummaries index page: hero count 28→31, filter counts (dev-econ 5→6, leadership 7→9)
+- Added entries to `data/search-index.json`, `sitemap.xml`, and docs
+
 ## v10.18.1 — April 12, 2026
 
 ### Fixed

@@ -22,7 +22,7 @@ Deep, multi-module courses with 12–13 modules each, interactive lexicons, Sout
 
 ---
 
-## BookSummaries (5)
+## BookSummaries (8)
 
 Interactive book companions under Specials — deep, chapter-by-chapter explorations with data tools and AI-powered Q&A. See the [Book Summaries Guide](book-summaries-guide.md) for full details.
 
@@ -33,6 +33,9 @@ Interactive book companions under Specials — deep, chapter-by-chapter explorat
 | 3 | Design Thinking: A Guide to Creative Problem Solving | Andrew Pressman (Routledge 2019) | 10 | Design & Innovation | [Open](/BookSummaries/dt-companion.html) |
 | 4 | Basic Econometrics | Gujarati & Porter (McGraw-Hill) | 22 | Econometrics | [Open](/BookSummaries/basic-econometrics-companion.html) |
 | 5 | Econometrics by Example | Gujarati (Palgrave Macmillan) | 20 | Econometrics | [Open](/BookSummaries/econometrics-by-example-companion.html) |
+| 6 | Principles for Navigating Big Debt Crises | Ray Dalio (2018) | 3 Parts | Development Economics | [Open](/BookSummaries/dalio-big-debt-crises-companion.html) |
+| 7 | Handbook for IPCC Authors: Climate Communications | Corner, Shaw & Clarke (Climate Outreach 2018) | 6 Principles | Communication | [Open](/BookSummaries/ipcc-climate-comms-handbook-companion.html) |
+| 8 | Storytelling to Accelerate Climate Solutions | Coren & Wang (Springer 2024) | 20 | Communication | [Open](/BookSummaries/storytelling-climate-solutions-companion.html) |
 
 ---
 

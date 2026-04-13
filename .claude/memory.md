@@ -4,7 +4,7 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 
 ## Project State
 
-- **Current content counts**: 16 Games, 11 Flagship Courses, 38 Foundational Courses (4 native HTML, 34 Gamma iframe), 400+ Handouts, 11 Labs, 28 Book Summaries, 28 Blog Posts, 47 top-level HTML pages
+- **Current content counts**: 16 Games, 11 Flagship Courses, 38 Foundational Courses (4 native HTML, 34 Gamma iframe), 400+ Handouts, 11 Labs, 31 Book Summaries, 28 Blog Posts, 47 top-level HTML pages
 - **Last verified**: 2026-04-12
 - **Sitemap coverage**: 171 URLs (verified 2026-04-12)
 - **Deploy target**: Netlify (auto-deploy on push to main)
