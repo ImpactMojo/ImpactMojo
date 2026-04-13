@@ -25,7 +25,20 @@
 body { font-family: 'Amaranth', sans-serif !important; }
 h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif !important; }
 code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !important; }
-body{padding-top:56px !important}.im-topbar{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid #334155;padding:0.5rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:0.75rem;font-family:Inter,sans-serif}</style><meta charset=UTF-8>
+body{padding-top:56px !important}.im-topbar{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid #334155;padding:0.5rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:0.75rem;font-family:Inter,sans-serif}
+/* === Dark Mode === */
+html.dark body { background: #0f172a; color: #e2e8f0; }
+html.dark #root,
+html.dark main,
+html.dark .app,
+html.dark [id^="p-"],
+html.dark .panel { filter: invert(0.88) hue-rotate(180deg); }
+html.dark #root img,
+html.dark #root svg:not([class*="im-"]),
+html.dark main img,
+html.dark main svg:not([class*="im-"]) { filter: invert(1) hue-rotate(180deg); }
+html.dark .im-topbar, html.dark .im-footer { filter: none; }
+</style><meta charset=UTF-8>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name=viewport content="width=device-width, initial-scale=1.0"><title>Handbook of Social Protection — ImpactMojo Companion</title><body>
 <!-- Sargam Icon Sprites -->
@@ -110,5 +123,39 @@ Provide nuanced, evidence-based answers. Clearly signal evidence quality (strong
 <script src="/js/state-manager.js"></script>
 <script src="/js/config.js"></script>
 <script src="/js/auth.js"></script>
+<script>
+// ImpactMojo 3-way theme system
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+            document.body.classList.toggle('dark-mode', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.body.classList.toggle('dark-mode', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+        if (localStorage.getItem('im-theme') === 'system') applyTheme('system');
+    });
+})();
+</script>
 </body>
 </html>
