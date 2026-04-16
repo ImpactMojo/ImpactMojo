@@ -46,7 +46,11 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 - `index.html` is ~620KB — always backup before major edits
 - Content counts are hardcoded in 4+ locations — grep before updating
 - Some `101.impactmojo.in` links are stale — migrate to self-hosted paths
-- **Supabase cannot be downgraded to free tier**: Supabase deletes inactive free-tier projects after 2 weeks. ImpactMojo stays on paid tier to guarantee continuity. Never suggest downgrading.
+- **Supabase inactivity risk mitigated**: Supabase pauses/deletes inactive free-tier projects after ~1-2 weeks. Mitigations in place:
+  - `netlify/functions/daily-engagement.mjs` hits Edge Functions daily at 02:30 UTC
+  - `netlify/functions/supabase-keepalive.mjs` hits Auth/DB/Storage APIs weekly at 03:17 UTC Sundays (redundancy)
+  - Requires `SUPABASE_SERVICE_ROLE_KEY` env var set in Netlify dashboard
+  - With both functions live, downgrading to free tier should be safe
 
 ## Session Log
 
