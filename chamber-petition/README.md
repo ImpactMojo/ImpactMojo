@@ -8,6 +8,9 @@ chambers instead of work-stations.
 - **Live site**: https://chamber-petition.netlify.app/
 - **Netlify site ID**: `6581a696-c2d1-4a16-bcdf-681dc517762b`
 - **Backend**: Netlify Forms (migrated from Supabase on 2026-04-16)
+- **Form name**: `aor-petition` (id `69e0c835009c6c0008de271a`)
+- **Notification email**: submissions sent to **devvrat.SCAORA@gmail.com**
+- **Notification hook ID**: `69e0c8a0add950870abd4b78`
 - **No git integration** — deploys happen via Netlify API / drag-drop
 
 ## Architecture
@@ -21,7 +24,7 @@ chambers instead of work-stations.
 
 - **2025-12-27**: Original Supabase version launched
 - **2026-03-31**: 67th signature collected (last before migration)
-- **2026-04-16**: Migrated to Netlify Forms, Supabase `AORPetition` project deleted
+- **2026-04-16**: Migrated to Netlify Forms, Supabase `AORPetition` project deleted. Disabled `ignore_html_forms` on Netlify site so form detection fires. Notification email routed to devvrat.SCAORA@gmail.com.
 
 ## Backup
 
