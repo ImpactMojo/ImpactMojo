@@ -51,6 +51,7 @@ Persistent context that carries across Claude Code sessions. Updated automatical
   - `netlify/functions/supabase-keepalive.mjs` hits Auth/DB/Storage APIs weekly at 03:17 UTC Sundays (redundancy)
   - Requires `SUPABASE_SERVICE_ROLE_KEY` env var set in Netlify dashboard
   - With both functions live, downgrading to free tier should be safe
+- **Chamber petition (AOR) lives in `Varnasr/Experiments/chamber-petition/`**: Migrated from Supabase to Netlify Forms on 2026-04-16, then moved out of impactmojo/impactmojo to Varnasr/Experiments as a sandbox project. Netlify site: `chamber-petition` (id `6581a696-c2d1-4a16-bcdf-681dc517762b`). Notifications to devvrat.SCAORA@gmail.com. 67-signature backup preserved there.
 
 ## Session Log
 
