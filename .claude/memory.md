@@ -51,7 +51,7 @@ Persistent context that carries across Claude Code sessions. Updated automatical
   - `netlify/functions/supabase-keepalive.mjs` hits Auth/DB/Storage APIs weekly at 03:17 UTC Sundays (redundancy)
   - Requires `SUPABASE_SERVICE_ROLE_KEY` env var set in Netlify dashboard
   - With both functions live, downgrading to free tier should be safe
-- **Chamber petition (AOR) lives in `Varnasr/Experiments/chamber-petition/`**: Migrated from Supabase to Netlify Forms on 2026-04-16, then moved out of impactmojo/impactmojo to Varnasr/Experiments as a sandbox project. Netlify site: `chamber-petition` (id `6581a696-c2d1-4a16-bcdf-681dc517762b`). Notifications to devvrat.SCAORA@gmail.com. 67-signature backup preserved there.
+- **Chamber petition (AOR) lives in `Varnasr/Experiments/chamber-petition/`**: Migrated from Supabase to Netlify Forms on 2026-04-16, then moved out of impactmojo/impactmojo to Varnasr/Experiments as a sandbox project. Netlify site: `chamber-petition` (id `6581a696-c2d1-4a16-bcdf-681dc517762b`) is now linked to that repo (base_dir=`chamber-petition`, deploy_key_id=`69e0d3654796c31483fe0aa4`, GitHub deploy_key=`148764262`) — pushes to Varnasr/Experiments `main` trigger auto-deploy. Form `aor-petition` (id `69e0c835009c6c0008de271a`) routes to devvrat.SCAORA@gmail.com (hook `69e0c8a0add950870abd4b78`). No standalone GitHub repo ever existed for this project. 67-signature backup preserved in the subfolder.
 
 ## Session Log
 
