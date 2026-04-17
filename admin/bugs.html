@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bug Tracker | ImpactMojo Admin</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/images/favicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>
+<style>
+:root {
+    --bg: #FFFFFF; --bg2: #F8FAFC; --accent: #0EA5E9; --accent-h: #0284C7;
+    --purple: #6366F1; --green: #10B981; --amber: #F59E0B; --red: #EF4444;
+    --text: #0F172A; --text2: #475569; --muted: #52627A;
+    --card: #FFFFFF; --hover: #F1F5F9; --border: #E2E8F0;
+    --grad: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --sh: 0 1px 3px rgba(0,0,0,0.08); --sh2: 0 4px 12px rgba(0,0,0,0.08);
+}
+@media(prefers-color-scheme:dark){:root{
+    --bg:#0F172A;--bg2:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;
+    --card:#1E293B;--hover:#334155;--border:#334155;
+    --sh:0 1px 2px rgba(0,0,0,0.3);--sh2:0 4px 12px rgba(0,0,0,0.4);
+}}
+body.light-mode,[data-theme="light"]{
+    --bg:#FFFFFF;--bg2:#F8FAFC;--text:#0F172A;--text2:#475569;--muted:#52627A;
+    --card:#FFFFFF;--hover:#F1F5F9;--border:#E2E8F0;
+    --sh:0 1px 3px rgba(0,0,0,0.08);--sh2:0 4px 12px rgba(0,0,0,0.08);
+}
+body.dark-mode,[data-theme="dark"]{
+    --bg:#0F172A;--bg2:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;
+    --card:#1E293B;--hover:#334155;--border:#334155;
+    --sh:0 1px 2px rgba(0,0,0,0.3);--sh2:0 4px 12px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Amaranth',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+/* Header */
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);padding:0 24px}
+.header-inner{max-width:1200px;margin:0 auto;height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.header-left{display:flex;align-items:center;gap:16px}
+.back-link{display:flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;transition:color 0.2s}
+.back-link:hover{color:var(--accent)}
+.back-link svg{width:16px;height:16px}
+.page-title{font-family:'Inter',sans-serif;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:8px}
+.page-title svg{width:20px;height:20px;color:var(--red)}
+.header-right{display:flex;align-items:center;gap:12px}
+
+/* Theme toggle */
+.theme-sel{display:flex;gap:2px;background:var(--hover);border:1px solid var(--border);border-radius:8px;padding:2px}
+.theme-btn{background:transparent;border:none;color:var(--muted);padding:6px;border-radius:5px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;width:30px;height:30px}
+.theme-btn:hover{background:var(--hover);color:var(--text)}
+.theme-btn.active{background:var(--accent);color:#fff}
+.theme-btn svg{width:14px;height:14px}
+
+/* Main */
+.main{max-width:1200px;margin:0 auto;padding:80px 24px 48px}
+
+/* Stats bar */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.stat-card.c-red::before{background:var(--red)}
+.stat-card.c-green::before{background:var(--green)}
+.stat-card.c-blue::before{background:var(--accent)}
+.stat-val{font-family:'Inter',sans-serif;font-size:1.75rem;font-weight:800;line-height:1.2}
+.stat-val.red{color:var(--red)}.stat-val.green{color:var(--green)}.stat-val.blue{color:var(--accent)}
+.stat-label{font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;font-weight:500;margin-top:2px}
+
+/* Toolbar */
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.toolbar-left{display:flex;gap:8px;flex-wrap:wrap}
+.toggle-btn{font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:600;padding:7px 16px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+.toggle-btn:hover{border-color:var(--accent);color:var(--accent)}
+.toggle-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.toggle-btn .count{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.2);padding:1px 6px;border-radius:4px;font-size:0.75rem}
+.toggle-btn:not(.active) .count{background:var(--hover);color:var(--muted)}
+.report-btn{font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:600;padding:8px 20px;border-radius:8px;border:none;background:var(--grad);color:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;text-decoration:none;transition:opacity 0.2s;white-space:nowrap}
+.report-btn:hover{opacity:0.9}
+.report-btn svg{width:16px;height:16px}
+
+/* Bug list */
+.bug-list{display:flex;flex-direction:column;gap:8px}
+.bug-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;align-items:flex-start;gap:14px;text-decoration:none;color:inherit;transition:all 0.2s;cursor:pointer}
+.bug-item:hover{border-color:var(--accent);box-shadow:var(--sh2);transform:translateY(-1px)}
+.bug-num{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--muted);min-width:44px;padding-top:2px}
+.bug-body{flex:1;min-width:0}
+.bug-title{font-family:'Inter',sans-serif;font-weight:600;font-size:0.92rem;line-height:1.4;margin-bottom:4px}
+.bug-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bug-label{display:inline-block;font-family:'Inter',sans-serif;font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:100px;line-height:1.5}
+.bug-date{font-size:0.75rem;color:var(--muted);font-family:'Inter',sans-serif}
+.bug-avatar{width:24px;height:24px;border-radius:50%;flex-shrink:0;margin-top:2px}
+
+/* States */
+.empty-state,.error-state{text-align:center;padding:60px 24px;color:var(--muted)}
+.empty-state svg,.error-state svg{width:48px;height:48px;margin-bottom:12px;opacity:0.5}
+.empty-state h3,.error-state h3{font-family:'Inter',sans-serif;font-size:1.1rem;color:var(--text);margin-bottom:6px}
+.empty-state p,.error-state p{font-size:0.88rem;max-width:400px;margin:0 auto 16px}
+.fallback-link{color:var(--accent);text-decoration:none;font-weight:600;font-size:0.85rem}
+.fallback-link:hover{text-decoration:underline}
+
+/* Loading skeleton */
+.skeleton{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:14px;animation:pulse 1.5s ease-in-out infinite}
+.skel-bar{background:var(--hover);border-radius:4px}
+.skel-num{width:44px;height:16px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-title{height:16px;width:60%}
+.skel-meta{height:12px;width:35%}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+@media(max-width:640px){
+    .header{padding:0 12px}
+    .main{padding:72px 12px 32px}
+    .stats{grid-template-columns:1fr 1fr}
+    .toolbar{flex-direction:column;align-items:stretch}
+    .toolbar-left{justify-content:center}
+    .report-btn{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="header-inner">
+    <div class="header-left">
+        <a href="/admin/" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Admin
+        </a>
+        <div class="page-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Bug Tracker
+        </div>
+    </div>
+    <div class="header-right">
+        <div class="theme-sel" aria-label="Theme">
+            <button class="theme-btn" data-theme-btn="system" title="System"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="theme-btn" data-theme-btn="light" title="Light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="theme-btn" data-theme-btn="dark" title="Dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+</header>
+
+<main class="main">
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat-card c-red">
+            <div class="stat-val red" id="openCount">-</div>
+            <div class="stat-label">Open Bugs</div>
+        </div>
+        <div class="stat-card c-green">
+            <div class="stat-val green" id="closedCount">-</div>
+            <div class="stat-label">Closed (all time)</div>
+        </div>
+        <div class="stat-card c-blue">
+            <div class="stat-val blue" id="totalCount">-</div>
+            <div class="stat-label">Total Tracked</div>
+        </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="toggle-btn active" data-state="open" onclick="switchState('open')">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Open <span class="count" id="openBtnCount">0</span>
+            </button>
+            <button class="toggle-btn" data-state="closed" onclick="switchState('closed')">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Closed <span class="count" id="closedBtnCount">0</span>
+            </button>
+        </div>
+        <a class="report-btn" href="https://github.com/ImpactMojo/ImpactMojo/issues/new?labels=bug&title=%5BBug%5D+&body=%23%23+Description%0A%0A%23%23+Steps+to+Reproduce%0A1.+%0A2.+%0A3.+%0A%0A%23%23+Expected+Behavior%0A%0A%23%23+Actual+Behavior%0A%0A%23%23+Screenshots%0A" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Report Bug
+        </a>
+    </div>
+
+    <!-- Bug list -->
+    <div id="bugList">
+        <div class="skeleton"><div class="skel-bar skel-num"></div><div class="skel-body"><div class="skel-bar skel-title"></div><div class="skel-bar skel-meta"></div></div></div>
+        <div class="skeleton"><div class="skel-bar skel-num"></div><div class="skel-body"><div class="skel-bar skel-title"></div><div class="skel-bar skel-meta"></div></div></div>
+        <div class="skeleton"><div class="skel-bar skel-num"></div><div class="skel-body"><div class="skel-bar skel-title"></div><div class="skel-bar skel-meta"></div></div></div>
+    </div>
+</main>
+
+<script>
+// Theme toggle
+(function() {
+    function apply(t) {
+        var dark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        document.body.classList.toggle('dark-mode', dark);
+        document.body.classList.toggle('light-mode', !dark);
+    }
+    function update(pref) {
+        document.querySelectorAll('[data-theme-btn]').forEach(function(b) {
+            b.classList.toggle('active', b.getAttribute('data-theme-btn') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    apply(saved); update(saved);
+    document.querySelectorAll('[data-theme-btn]').forEach(function(b) {
+        b.addEventListener('click', function() {
+            var t = this.getAttribute('data-theme-btn');
+            localStorage.setItem('im-theme', t);
+            apply(t); update(t);
+        });
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+        if (localStorage.getItem('im-theme') === 'system') apply('system');
+    });
+})();
+
+// Bug tracker
+var REPO = 'ImpactMojo/ImpactMojo';
+var API = 'https://api.github.com/repos/' + REPO + '/issues';
+var cache = { open: null, closed: null };
+var currentState = 'open';
+
+function relativeTime(dateStr) {
+    var now = Date.now(), then = new Date(dateStr).getTime();
+    var diff = Math.floor((now - then) / 1000);
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 2592000) return Math.floor(diff / 86400) + 'd ago';
+    if (diff < 31536000) return Math.floor(diff / 2592000) + 'mo ago';
+    return Math.floor(diff / 31536000) + 'y ago';
+}
+
+function labelColor(hex) {
+    var r = parseInt(hex.substr(0, 2), 16), g = parseInt(hex.substr(2, 2), 16), b = parseInt(hex.substr(4, 2), 16);
+    var lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return lum > 0.5 ? '#000' : '#fff';
+}
+
+function renderBugs(issues) {
+    var list = document.getElementById('bugList');
+    if (!issues.length) {
+        var isOpen = currentState === 'open';
+        list.innerHTML = '<div class="empty-state">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">' +
+            (isOpen ? '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>' : '<polyline points="20 6 9 17 4 12"/>') +
+            '</svg>' +
+            '<h3>' + (isOpen ? 'No open bugs!' : 'No closed bugs found') + '</h3>' +
+            '<p>' + (isOpen ? 'The issue tracker is clear. Nice work keeping things tidy.' : 'No bugs have been closed yet.') + '</p>' +
+            '<a class="fallback-link" href="https://github.com/' + REPO + '/issues?q=label%3Abug" target="_blank">View all issues on GitHub</a>' +
+            '</div>';
+        return;
+    }
+    list.innerHTML = issues.map(function(issue) {
+        var labels = issue.labels.filter(function(l) { return l.name !== 'bug'; }).map(function(l) {
+            return '<span class="bug-label" style="background:#' + l.color + ';color:' + labelColor(l.color) + '">' + l.name + '</span>';
+        }).join('');
+        var avatar = issue.assignee ? '<img class="bug-avatar" src="' + issue.assignee.avatar_url + '&s=48" alt="' + issue.assignee.login + '" title="' + issue.assignee.login + '">' : '';
+        return '<a class="bug-item" href="' + issue.html_url + '" target="_blank" rel="noopener noreferrer">' +
+            '<span class="bug-num">#' + issue.number + '</span>' +
+            '<div class="bug-body">' +
+                '<div class="bug-title">' + issue.title + '</div>' +
+                '<div class="bug-meta">' +
+                    '<span class="bug-label" style="background:rgba(215,58,74,0.15);color:var(--red)">bug</span>' +
+                    labels +
+                    '<span class="bug-date">' + relativeTime(issue.created_at) + '</span>' +
+                '</div>' +
+            '</div>' +
+            avatar +
+        '</a>';
+    }).join('');
+}
+
+function showError(msg) {
+    document.getElementById('bugList').innerHTML = '<div class="error-state">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
+        '<h3>Could not load bugs</h3>' +
+        '<p>' + msg + '</p>' +
+        '<a class="fallback-link" href="https://github.com/' + REPO + '/issues?q=label%3Abug" target="_blank">View on GitHub instead</a>' +
+        '</div>';
+}
+
+function showSkeleton() {
+    document.getElementById('bugList').innerHTML =
+        '<div class="skeleton"><div class="skel-bar skel-num"></div><div class="skel-body"><div class="skel-bar skel-title"></div><div class="skel-bar skel-meta"></div></div></div>' +
+        '<div class="skeleton"><div class="skel-bar skel-num"></div><div class="skel-body"><div class="skel-bar skel-title"></div><div class="skel-bar skel-meta"></div></div></div>' +
+        '<div class="skeleton"><div class="skel-bar skel-num"></div><div class="skel-body"><div class="skel-bar skel-title"></div><div class="skel-bar skel-meta"></div></div></div>';
+}
+
+function fetchBugs(state) {
+    if (cache[state]) {
+        renderBugs(cache[state]);
+        return;
+    }
+    showSkeleton();
+    fetch(API + '?labels=bug&state=' + state + '&per_page=50&sort=created&direction=desc')
+        .then(function(r) {
+            if (!r.ok) throw new Error(r.status === 403 ? 'GitHub API rate limit reached. Try again in a minute.' : 'GitHub API returned ' + r.status);
+            return r.json();
+        })
+        .then(function(issues) {
+            cache[state] = issues;
+            renderBugs(issues);
+        })
+        .catch(function(err) {
+            showError(err.message);
+        });
+}
+
+function switchState(state) {
+    currentState = state;
+    document.querySelectorAll('[data-state]').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-state') === state);
+    });
+    fetchBugs(state);
+}
+
+function updateStats() {
+    var openReq = fetch(API + '?labels=bug&state=open&per_page=1', { method: 'HEAD' });
+    var closedReq = fetch(API + '?labels=bug&state=closed&per_page=1', { method: 'HEAD' });
+
+    fetch(API + '?labels=bug&state=open&per_page=100')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var openN = data.length;
+            document.getElementById('openCount').textContent = openN;
+            document.getElementById('openBtnCount').textContent = openN;
+            cache.open = data;
+            if (currentState === 'open') renderBugs(data);
+
+            return fetch(API + '?labels=bug&state=closed&per_page=100');
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var closedN = data.length;
+            document.getElementById('closedCount').textContent = closedN;
+            document.getElementById('closedBtnCount').textContent = closedN;
+            cache.closed = data;
+
+            var total = parseInt(document.getElementById('openCount').textContent) + closedN;
+            document.getElementById('totalCount').textContent = total;
+        })
+        .catch(function() {
+            document.getElementById('openCount').textContent = '?';
+            document.getElementById('closedCount').textContent = '?';
+            document.getElementById('totalCount').textContent = '?';
+        });
+}
+
+updateStats();
+</script>
+</body>
+</html>
