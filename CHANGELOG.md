@@ -5,6 +5,25 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.20.0] - 2026-04-20
+
+### Added
+- **Book Summary: *Beyond Developmentality* — Debal Deb** (Earthscan, 2009). Deb's eco-socialist critique of the doctrine of development: eight neo-classical myths, "developmentality" as Foucauldian epistemic apparatus, inclusive freedom, strong sustainability grounded in the Basudha farm counter-evidence. 9 chapters + 4 learning pathways + 8 key concepts + 6 South Asia lenses. BookSummaries total: 31 → 32 (with interactive archive).
+- **Archived interactive companion** at `/BookSummaries/beyond-developmentality-deb-interactive.html` (original React SPA preserved), linked from the new templated page via "Launch interactive companion".
+- Landing card, search-index entry, sitemap entry for the new book.
+
+### Changed
+- **Brand refresh across all 31 book summaries.** Every BookSummary now passes the 14-item ImpactMojo brand checklist:
+  - Floating paper plane SVG (decorative, 30 files gained it)
+  - Skip-to-content link for WCAG 2.4.1 (30 files)
+  - `translate.js` defer script (30 files)
+  - Favicon + apple-touch-icon (28 files)
+  - Full `im-topbar` with logo + Premium CTA + 3-mode theme selector (19 files)
+  - Single-file fixes: theme selector for `handbook-social-protection.html`
+
+### Fixed
+- Book counters in `BookSummaries/index.html`: total 30 → 31, dev-econ filter 6 → 7.
+
 ## [10.19.0] - 2026-04-13
 
 ### Added
