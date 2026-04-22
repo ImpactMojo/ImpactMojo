@@ -159,7 +159,7 @@ Resources cover poverty, health, education, gender, governance, climate, and mor
 
 ## BookSummaries
 
-Interactive book companions that go far beyond a summary. Each BookSummary offers chapter-by-chapter navigation, evidence explorers, data playgrounds with interactive simulators, programme comparison tools, concept glossaries, and AI-powered Q&A. Currently available under Specials. See the [Book Summaries Guide](book-summaries-guide.md) for full details.
+Interactive book companions that go far beyond a summary. Each BookSummary offers chapter-by-chapter navigation, evidence explorers, data playgrounds with interactive simulators, programme comparison tools, concept glossaries, and AI-powered Q&A. Currently available under Specials. See the [Book Companions Guide](book-summaries-guide.md) for full details.
 
 **Current entries (5 books, 100+ chapters):**
 - *The Handbook of Social Protection and Inclusionary Development* (Hanna & Olken, MIT Press 2026) — 30+ chapters, evidence explorer, data playground, AI Q&A

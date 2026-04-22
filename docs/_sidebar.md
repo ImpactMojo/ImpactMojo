@@ -12,7 +12,7 @@
   - [Labs Guide](labs-guide.md)
   - [Live Case Challenges](challenges-guide.md)
   - [Dojos Guide](dojos-guide.md)
-  - [Book Summaries Guide](book-summaries-guide.md)
+  - [Book Companions Guide](book-summaries-guide.md)
   - [101 Course Decks](101-decks-guide.md)
   - [Podcast Guide](podcast-guide.md)
   - [Certificates & Progress](certificates-and-progress.md)

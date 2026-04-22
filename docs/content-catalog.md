@@ -24,7 +24,7 @@ Deep, multi-module courses with 12–13 modules each, interactive lexicons, Sout
 
 ## BookSummaries (7)
 
-Interactive book companions under Specials — deep, chapter-by-chapter explorations with data tools and AI-powered Q&A. See the [Book Summaries Guide](book-summaries-guide.md) for full details.
+Interactive book companions under Specials — deep, chapter-by-chapter explorations with data tools and AI-powered Q&A. See the [Book Companions Guide](book-summaries-guide.md) for full details.
 
 | # | Book | Author | Chapters | Category | Link |
 |---|------|--------|----------|----------|------|
