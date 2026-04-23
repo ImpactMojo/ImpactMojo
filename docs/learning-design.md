@@ -109,7 +109,7 @@ Development education delivered only in English excludes the majority of practit
 Our multilingual approach means:
 
 - Key courses and resources are available in multiple languages.
-- The ImpactLex glossary (500+ terms) provides definitions across languages, so teams working in different languages share a common vocabulary.
+- The ImpactLex glossary (390+ terms) provides definitions across languages, so teams working in different languages share a common vocabulary.
 - Language switching is built into the interface — not a separate, lesser version of the site.
 
 ## Accessibility and Offline Support

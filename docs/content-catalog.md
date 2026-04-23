@@ -265,7 +265,7 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 
 | Resource | Description | Access |
 |----------|-------------|--------|
-| **ImpactLex** | 500+ development terms dictionary (PWA) | Free |
+| **ImpactLex** | 390+ development terms dictionary (PWA, hosted on ImpactMojo) | Free |
 | **Dev Case Studies** | 200 curated cases from 117 countries | Free |
 | **DevDiscourses** | 500+ curated research papers and books | Free |
 | **Dataverse** | 270 data tools, APIs, and datasets | Free — [Browse](/dataverse.html) |
@@ -290,6 +290,6 @@ Advanced tools for researchers and practitioners. Requires a paid membership.
 | Dataverse entries | 270 |
 | Dev case studies | 200 |
 | DevDiscourses entries | 500+ |
-| ImpactLex terms | 500+ |
+| ImpactLex terms | 390+ |
 | Languages supported | 6 (English, Hindi, Tamil, Bengali, Telugu, Marathi) |
 | Learning tracks | 6 |

@@ -105,13 +105,14 @@ They're organized by track, so you can browse all handouts related to MEL, gende
 
 ---
 
-## ImpactLex (500+ terms)
+## ImpactLex (390+ terms)
 
-ImpactLex is a **development sector dictionary** — a searchable, browsable collection of over 500 terms with clear, practitioner-friendly definitions. It's built as a Progressive Web App (PWA), which means:
+ImpactLex is a **development sector dictionary** — a searchable, browsable collection of 390+ terms, formulas, and case studies with clear, practitioner-friendly definitions. It's hosted on ImpactMojo at [/impactlex/](https://www.impactmojo.in/impactlex/) and works as a Progressive Web App (PWA), which means:
 
 - It **works offline** once you've loaded it — useful when you're in the field without reliable internet
 - You can **add it to your phone's home screen** like a regular app
-- It's **searchable** — type a term and find it instantly
+- It's **searchable** — type a term, acronym, or concept and find it instantly
+- Every term has a **shareable URL** — drop the link into a workshop chat or report
 
 **Example entries:** Attribution, Beneficiary Feedback Mechanism, Counterfactual, Disaggregated Data, Evaluability Assessment... all the way to Zero-Based Budgeting.
 

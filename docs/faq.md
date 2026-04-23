@@ -6,7 +6,7 @@ Common questions from educators, facilitators, and practitioners.
 
 ## Is ImpactMojo really free?
 
-Yes. All 11 flagship courses (13 modules each), 38 foundational courses, 16 learning games, 11 interactive labs, 400+ handouts, the ImpactLex glossary (500+ terms), 200 Dev Case Studies, 500+ DevDiscourses papers, and interactive BookSummaries are completely free.
+Yes. All 11 flagship courses (13 modules each), 38 foundational courses, 16 learning games, 11 interactive labs, 400+ handouts, the ImpactLex glossary (390+ terms), 200 Dev Case Studies, 500+ DevDiscourses papers, and interactive BookSummaries are completely free.
 
 There are paid tiers (Practitioner, Professional, and Organization) that unlock additional tools — things like advanced lab features, PDF/PNG export, AI-powered tools, and team dashboards. But the core learning experience is free and always will be.
 
@@ -78,7 +78,7 @@ ImpactMojo content is available in **6 South Asian languages**. The platform's m
 
 Language switching is built into the interface — you can switch languages without leaving the page you are on.
 
-The ImpactLex glossary is particularly useful in multilingual settings. It provides definitions of 500+ development terms across languages, so teams working in different languages can share a common vocabulary.
+The ImpactLex glossary is particularly useful in multilingual settings. It provides definitions of 390+ development terms across languages, so teams working in different languages can share a common vocabulary.
 
 ---
 
