@@ -12,5 +12,5 @@ window.IMPACTLEX_CONFIG = {
   snapshotUrl: '/impactlex/data/seed-snapshot.json',
 
   // Emails allowed into /impactlex/review.html. Add your own here.
-  adminEmails: [],
+  adminEmails: ['info@impactmojo.in'],
 };
