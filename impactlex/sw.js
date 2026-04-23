@@ -8,7 +8,7 @@
  *   - Everything else → network-first with cache fallback
  */
 
-const VERSION = 'impactlex-v1';
+const VERSION = 'impactlex-v2';
 const SHELL_CACHE = `${VERSION}-shell`;
 const DATA_CACHE = `${VERSION}-data`;
 
@@ -16,6 +16,7 @@ const SHELL_URLS = [
   '/impactlex/',
   '/impactlex/index.html',
   '/impactlex/app.js',
+  '/impactlex/config.js',
   '/impactlex/styles.css',
   '/impactlex/manifest.webmanifest',
   '/impactlex/data/seed-snapshot.json',
