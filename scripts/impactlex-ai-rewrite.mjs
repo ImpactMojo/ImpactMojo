@@ -44,7 +44,10 @@ const argVal = (f) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] :
 
 const LIMIT = parseInt(argVal('--limit') || '0', 10) || Infinity;
 const ONLY = (argVal('--only') || '').split(',').map((s) => s.trim()).filter(Boolean);
-const FORCE_PROVIDER = argVal('--provider'); // gemini | grok | deepseek
+const FORCE_PROVIDER = argVal('--provider'); // gemini | groq | grok | deepseek
+const PUBLISH = hasFlag('--publish'); // skip review queue, go straight to status: 'published'
+const SLEEP_MS = parseInt(argVal('--sleep') || '0', 10) || 2000;
+const STATUS_TARGET = PUBLISH ? 'published' : 'ai-draft';
 
 if (!existsSync(LOG_DIR)) mkdirSync(LOG_DIR, { recursive: true });
 const LOG = join(LOG_DIR, `impactlex-rewrite-${new Date().toISOString().slice(0, 10)}.jsonl`);
@@ -238,7 +241,7 @@ async function main() {
         example: parsed.example || term.example,
         related: Array.isArray(parsed.relatedTerms) ? parsed.relatedTerms : term.related,
         editorNotes: parsed.notes || null,
-        status: 'ai-draft',
+        status: STATUS_TARGET,
         aiProvider: provider,
         aiDraftedAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
@@ -253,8 +256,8 @@ async function main() {
         writeFileSync(SNAPSHOT, JSON.stringify(snapshot, null, 2));
         console.log(`[progress] ${completed}/${seeds.length} — snapshot saved`);
       }
-      // Soft rate-limit: ~30 req/min per provider.
-      await new Promise((r) => setTimeout(r, 2000));
+      // Pacing: respect per-provider rate limits. Default 2s; --sleep can adjust.
+      await new Promise((r) => setTimeout(r, SLEEP_MS));
     } catch (err) {
       console.error(`[err] ${term.id}: ${err.message}`);
       log({ id: term.id, status: 'error', error: err.message });
