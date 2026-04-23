@@ -23,6 +23,14 @@
 import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+
+/** Same deterministic UUID derivation used by the migration script. */
+function slugToUuid(slug, namespace = 'impactlex') {
+  const h = createHash('sha256').update(`${namespace}:${slug}`).digest('hex');
+  const variant = (parseInt(h.slice(16, 17), 16) & 0x3 | 0x8).toString(16);
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-${variant}${h.slice(17, 20)}-${h.slice(20, 32)}`;
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -65,7 +73,8 @@ function fillPrompt(term, allTerms) {
 async function callGemini(prompt) {
   const key = process.env.GEMINI_API_KEY;
   if (!key) throw new Error('GEMINI_API_KEY not set');
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+  const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
   const res = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -97,6 +106,25 @@ async function callGrok(prompt) {
   return data.choices?.[0]?.message?.content || '';
 }
 
+async function callGroq(prompt) {
+  const key = process.env.GROQ_API_KEY;
+  if (!key) throw new Error('GROQ_API_KEY not set');
+  const model = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model,
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.4,
+      response_format: { type: 'json_object' },
+    }),
+  });
+  if (!res.ok) throw new Error(`Groq ${res.status}: ${await res.text()}`);
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content || '';
+}
+
 async function callDeepSeek(prompt) {
   const key = process.env.DEEPSEEK_API_KEY;
   if (!key) throw new Error('DEEPSEEK_API_KEY not set');
@@ -117,13 +145,14 @@ async function callDeepSeek(prompt) {
 
 const PROVIDERS = {
   gemini: { name: 'gemini', call: callGemini, envKey: 'GEMINI_API_KEY' },
+  groq: { name: 'groq', call: callGroq, envKey: 'GROQ_API_KEY' },
   grok: { name: 'grok', call: callGrok, envKey: 'GROK_API_KEY' },
   deepseek: { name: 'deepseek', call: callDeepSeek, envKey: 'DEEPSEEK_API_KEY' },
 };
 
 function providerChain() {
   if (FORCE_PROVIDER) return [PROVIDERS[FORCE_PROVIDER]].filter(Boolean);
-  return [PROVIDERS.gemini, PROVIDERS.grok, PROVIDERS.deepseek].filter((p) => process.env[p.envKey]);
+  return [PROVIDERS.gemini, PROVIDERS.groq, PROVIDERS.grok, PROVIDERS.deepseek].filter((p) => process.env[p.envKey]);
 }
 
 async function generate(prompt) {
@@ -163,7 +192,12 @@ async function pushDrafts(terms) {
   const endpoint = 'https://api.instantdb.com/admin/transact';
   for (let i = 0; i < terms.length; i += 50) {
     const chunk = terms.slice(i, i + 50);
-    const steps = chunk.map((t) => ['update', 'terms', t.id, t]);
+    const steps = chunk.map((t) => {
+      const slug = t.id;
+      const uuid = slugToUuid(`terms:${slug}`);
+      const { id, ...rest } = t;
+      return ['update', 'terms', uuid, { ...rest, slug }];
+    });
     const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${token}`, 'App-Id': appId, 'Content-Type': 'application/json' },
