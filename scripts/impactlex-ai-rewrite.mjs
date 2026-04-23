@@ -158,17 +158,24 @@ function providerChain() {
   return [PROVIDERS.gemini, PROVIDERS.groq, PROVIDERS.grok, PROVIDERS.deepseek].filter((p) => process.env[p.envKey]);
 }
 
+// Round-robin index across the available provider chain. Spreading load across
+// providers means we can stay under each provider's per-minute rate limits
+// without bottlenecking on any single one.
+let _rrIndex = 0;
 async function generate(prompt) {
   const chain = providerChain();
-  if (!chain.length) throw new Error('No provider API key set. Set GEMINI_API_KEY, GROK_API_KEY, or DEEPSEEK_API_KEY.');
+  if (!chain.length) throw new Error('No provider API key set. Set GEMINI_API_KEY, GROK_API_KEY, GROQ_API_KEY, or DEEPSEEK_API_KEY.');
+  // Try chain starting from the round-robin head; fall back through the rest.
   let lastErr;
-  for (const provider of chain) {
+  for (let i = 0; i < chain.length; i++) {
+    const provider = chain[(_rrIndex + i) % chain.length];
     try {
       const raw = await provider.call(prompt);
+      _rrIndex = (_rrIndex + i + 1) % chain.length; // advance head past the success
       return { provider: provider.name, raw };
     } catch (err) {
       lastErr = err;
-      console.warn(`[warn] ${provider.name} failed: ${err.message}`);
+      console.warn(`[warn] ${provider.name} failed: ${err.message.slice(0, 200)}`);
     }
   }
   throw lastErr;

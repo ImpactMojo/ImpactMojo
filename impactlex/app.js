@@ -83,7 +83,7 @@
         state.liveSource = 'instantdb';
         updateStats();
         render();
-        showStatus('Live — glossary synced from InstantDB', '');
+        // No user-facing status on success; backend choice is implementation detail.
       });
     } catch (err) {
       console.warn('InstantDB connection failed, staying on snapshot:', err);

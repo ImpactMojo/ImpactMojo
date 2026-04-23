@@ -8,7 +8,7 @@
  *   - Everything else → network-first with cache fallback
  */
 
-const VERSION = 'impactlex-v3';
+const VERSION = 'impactlex-v4';
 const SHELL_CACHE = `${VERSION}-shell`;
 const DATA_CACHE = `${VERSION}-data`;
 
