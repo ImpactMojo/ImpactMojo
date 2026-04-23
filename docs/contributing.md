@@ -83,7 +83,7 @@ If you're contributing educational content, here's what we aim for:
 
 - **Tone:** Accessible but rigorous. Write for a practitioner with 2–3 years of experience.
 - **Examples:** Prefer South Asian context (India, Bangladesh, Nepal, Sri Lanka).
-- **Jargon:** Define terms on first use. If it's a common sector term, add it to [ImpactLex](https://on-web.link/ImpactLex).
+- **Jargon:** Define terms on first use. If it's a common sector term, add it to [ImpactLex](https://www.impactmojo.in/impactlex/).
 - **Attribution:** Always cite sources. Link to [DevDiscourses](https://www.impactmojo.in/dataverse) where possible.
 - **Accessibility:** Use clear headings, alt text for images, and sufficient colour contrast.
 

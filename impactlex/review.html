@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>ImpactLex Review | ImpactMojo</title>
+<meta name="description" content="Admin review queue for ImpactLex contributions and AI drafts.">
+<meta name="theme-color" content="#0284C7">
+
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/impactlex/styles.css">
+
+<style>
+.review-page { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.review-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+.review-tab {
+  padding: 0.6rem 1.2rem; background: transparent; border: none; cursor: pointer;
+  font-family: 'Amaranth', sans-serif; font-size: 0.95rem; color: var(--text-secondary);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.review-tab.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+.review-tab .count { margin-left: 0.4rem; opacity: 0.7; font-size: 0.85rem; }
+.review-panel { display: none; }
+.review-panel.active { display: block; }
+.review-item {
+  background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px;
+  padding: 1.5rem; margin-bottom: 1rem;
+}
+.review-item h3 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+.review-item .meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+.diff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 768px) { .diff-grid { grid-template-columns: 1fr; } }
+.diff-col { background: var(--hover-bg); padding: 1rem; border-radius: 10px; }
+.diff-col h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 0.5rem; }
+.diff-col textarea { width: 100%; min-height: 180px; font-family: 'Amaranth', sans-serif; font-size: 0.92rem;
+  background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.75rem; color: var(--text-primary); resize: vertical; }
+.review-actions { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.empty-panel { padding: 3rem 1rem; text-align: center; color: var(--text-muted); }
+.auth-gate { max-width: 420px; margin: 4rem auto; padding: 2rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; text-align: center; }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header class="header">
+  <nav class="nav-container" aria-label="Primary">
+    <a class="logo-container" href="/impactlex/">
+      <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="44" height="44" loading="eager">
+      <div class="logo-text">
+        <div class="logo-main">ImpactLex Review</div>
+        <div class="logo-tagline">Moderation queue</div>
+      </div>
+    </a>
+    <div class="nav-buttons">
+      <a class="nav-link" href="/impactlex/">Back to glossary</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" type="button">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="auth-gate" id="auth-gate">
+    <h2>Admin only</h2>
+    <p style="margin: 0.75rem 0; color: var(--text-secondary);">This page is restricted to ImpactLex reviewers.</p>
+    <div class="form-group" style="margin-top: 1.25rem;">
+      <label for="reviewer-email">Your email</label>
+      <input type="email" id="reviewer-email" required>
+      <div class="form-hint">Used only to check you're on the reviewer allow-list.</div>
+    </div>
+    <button class="btn btn-primary" id="reviewer-continue" type="button" style="margin-top: 0.5rem;">Continue</button>
+    <div id="auth-error" style="color: var(--danger-color); margin-top: 1rem; font-size: 0.9rem;"></div>
+  </div>
+
+  <div class="review-page" id="review-page" hidden>
+    <h1 style="font-size: 1.75rem; margin-bottom: 1.5rem;">Review queue</h1>
+
+    <div class="review-tabs" role="tablist">
+      <button class="review-tab active" data-tab="contributions" role="tab">Contributions <span class="count" id="count-contributions">0</span></button>
+      <button class="review-tab" data-tab="drafts" role="tab">AI Drafts <span class="count" id="count-drafts">0</span></button>
+      <button class="review-tab" data-tab="edits" role="tab">Suggested Edits <span class="count" id="count-edits">0</span></button>
+    </div>
+
+    <div class="review-panel active" id="panel-contributions" role="tabpanel">
+      <div class="empty-panel">Contributions will appear here once the InstantDB backend is wired up. Meanwhile, locally queued submissions are in browser storage.</div>
+    </div>
+    <div class="review-panel" id="panel-drafts" role="tabpanel">
+      <div class="empty-panel">Run <code>node scripts/impactlex-ai-rewrite.mjs</code> to generate AI drafts from seed terms.</div>
+    </div>
+    <div class="review-panel" id="panel-edits" role="tabpanel">
+      <div class="empty-panel">No pending edits.</div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function() {
+  const THEME_KEY = 'im-theme';
+  const saved = localStorage.getItem(THEME_KEY);
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem(THEME_KEY, next);
+  });
+
+  // Simple allow-list check. Not real auth — just a barrier against casual access.
+  // Real auth happens via InstantDB magic-link when wired up.
+  const ADMIN_ALLOWLIST = (window.IMPACTLEX_CONFIG && window.IMPACTLEX_CONFIG.adminEmails) || [];
+  const storedEmail = localStorage.getItem('impactlex:user-email');
+
+  function renderQueues() {
+    // Load local contributions queue (offline submissions)
+    const local = JSON.parse(localStorage.getItem('impactlex:contributions-queue') || '[]');
+    const panel = document.getElementById('panel-contributions');
+    document.getElementById('count-contributions').textContent = local.length;
+    if (!local.length) return;
+
+    panel.innerHTML = local.map((c) => `
+      <div class="review-item" data-id="${c.id}">
+        <h3>${escapeHtml(c.term)}</h3>
+        <div class="meta">${c.category} · ${new Date(c.createdAt).toLocaleString()} ${c.email ? '· ' + escapeHtml(c.email) : ''}</div>
+        <div class="diff-grid">
+          <div class="diff-col"><h4>Definition</h4><textarea readonly>${escapeHtml(c.definition || '')}</textarea></div>
+          <div class="diff-col"><h4>Example</h4><textarea readonly>${escapeHtml(c.example || '')}</textarea></div>
+        </div>
+        <div class="review-actions">
+          <button class="btn btn-primary" data-action="approve" data-id="${c.id}" type="button">Approve</button>
+          <button class="btn" data-action="reject" data-id="${c.id}" type="button">Reject</button>
+        </div>
+      </div>
+    `).join('');
+
+    panel.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const queue = JSON.parse(localStorage.getItem('impactlex:contributions-queue') || '[]');
+      const next = queue.filter((c) => c.id !== btn.dataset.id);
+      localStorage.setItem('impactlex:contributions-queue', JSON.stringify(next));
+      renderQueues();
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function enterReview(email) {
+    // Dev mode: if ADMIN_ALLOWLIST is empty, allow any email to view (snapshot mode).
+    if (ADMIN_ALLOWLIST.length && !ADMIN_ALLOWLIST.includes(email)) {
+      document.getElementById('auth-error').textContent = 'That email is not on the reviewer allow-list.';
+      return;
+    }
+    localStorage.setItem('impactlex:user-email', email);
+    document.getElementById('auth-gate').hidden = true;
+    document.getElementById('review-page').hidden = false;
+    renderQueues();
+  }
+
+  if (storedEmail && (!ADMIN_ALLOWLIST.length || ADMIN_ALLOWLIST.includes(storedEmail))) {
+    enterReview(storedEmail);
+  }
+
+  document.getElementById('reviewer-continue').addEventListener('click', () => {
+    const email = document.getElementById('reviewer-email').value.trim().toLowerCase();
+    if (!email || !email.includes('@')) {
+      document.getElementById('auth-error').textContent = 'Please enter a valid email.';
+      return;
+    }
+    enterReview(email);
+  });
+
+  document.querySelectorAll('.review-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.review-tab').forEach((t) => t.classList.remove('active'));
+      document.querySelectorAll('.review-panel').forEach((p) => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(`panel-${tab.dataset.tab}`).classList.add('active');
+    });
+  });
+})();
+</script>
+</body>
+</html>

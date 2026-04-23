@@ -211,7 +211,7 @@ Interactive simulations powered by **MiroFish AI agents** with **Indian folk art
 
 ### Other Resources
 
-- [**ImpactLex**](https://github.com/Varnasr/ImpactLex) — 500+ development terms with contextual definitions (PWA)
+- [**ImpactLex**](https://www.impactmojo.in/impactlex/) — 390+ development terms, formulas, and case studies (PWA, offline-capable, hosted on ImpactMojo)
 - [**Dev Case Studies Library**](https://github.com/Varnasr/dev-case-studies) — 200 evidence-based case studies from 117 countries
 - [**DevDiscourses**](https://github.com/Varnasr/development-discourses) — 500+ curated open-access research papers, books, and grey literature
 - [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) — Auto-updating tracker of Indian development policies across 22 sectors
@@ -643,7 +643,7 @@ This platform is supported by a family of open-source repositories:
 | [**dev-case-studies**](https://github.com/Varnasr/dev-case-studies) | 200 development case studies from 117 countries |
 | [**devdata-practice**](https://github.com/Varnasr/devdata-practice) | 10 realistic dataset generators for development economics |
 | [**deveconomics-toolkit**](https://github.com/Varnasr/deveconomics-toolkit) | 11 interactive Shiny apps (R + Python) |
-| [**ImpactLex**](https://github.com/Varnasr/ImpactLex) | Offline PWA glossary of development terminology |
+| [**ImpactLex**](https://www.impactmojo.in/impactlex/) | Offline PWA glossary of development terminology — now hosted on ImpactMojo. Legacy repo: [Varnasr/ImpactLex](https://github.com/Varnasr/ImpactLex) |
 | [**The-Real-Middle**](https://github.com/Varnasr/The-Real-Middle) | Interactive income inequality explorer for India |
 
 All repos share consistent governance (Code of Conduct, Security Policy, Contributing Guidelines) and are tracked in [STACK_GROUPS.md](.github/STACK_GROUPS.md).

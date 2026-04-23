@@ -2,6 +2,26 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.20.0 — April 23, 2026
+
+### ImpactLex — full upgrade + migration home
+
+- **Brought ImpactLex into ImpactMojo** at `/impactlex/`. The external Varnasr/ImpactLex PWA becomes a legacy reference; the live glossary now deploys with the rest of the site.
+- **Unified data source** — merged the external ImpactLex glossary (35 terms + 5 case studies + 10 formulas) with the 10 course-specific lexicons (MEL, Gender, DataViz, DevAI, DevEcon, Gandhi, Law, PoA, PubPol, SEL). Deduped by term, unioned course tags. **Total: 390 terms, 5 case studies, 10 formulae.**
+- **New backend: InstantDB** (evaluated against Supabase; kept separate to isolate anonymous glossary traffic from learner data). App is snapshot-first with real-time enhancement — works fully offline against the local JSON snapshot, progressively hydrates from InstantDB when configured.
+- **Refreshed look** — matches ImpactMojo V3 design system: Amaranth + Inter typography, sky-blue gradient, paper-plane decoration, 3-mode theme toggle, fixed topbar, full footer. PWA-installable with service worker.
+- **New features**:
+  - Instant fuzzy search across term, acronym, aliases, definition
+  - Category + course filters (6 categories × 10 courses)
+  - Term-of-the-Day (rotates daily)
+  - Deep-linkable term pages at `/impactlex/term.html?id=<slug>`
+  - Bookmarks (localStorage; cloud-ready when logged in)
+  - Contribute-a-term form with offline queue + moderation workflow
+  - Cross-reference chips (click related terms to jump)
+- **AI rewrite pipeline** — `scripts/impactlex-ai-rewrite.mjs` drafts definitions in ImpactMojo voice (South Asia–grounded, practitioner-focused) via Gemini / Grok / DeepSeek fallback chain, with a review UI at `/impactlex/review.html`.
+- **Course lexicon cross-links** — every course lexicon page now shows a banner linking into the filtered ImpactLex view with its term count.
+- Updated `index.html` nav + resource card, `data/search-index.json`, `sitemap.xml`, `README.md`, `docs/impactlex-guide.md`.
+
 ## v10.19.0 — April 13, 2026
 
 ### Book Summaries

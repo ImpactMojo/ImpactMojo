@@ -13,6 +13,7 @@ All external API calls use environment variables for authentication (loaded by `
 | Grok | `$GROK_API_KEY` | `Authorization: Bearer $GROK_API_KEY` | `grok-ai` |
 | DeepSeek | `$DEEPSEEK_API_KEY` | `Authorization: Bearer $DEEPSEEK_API_KEY` | `deepseek-ai` |
 | Sarvam AI | `$SARVAM_API_KEY` | `Authorization: Bearer $SARVAM_API_KEY` | `sarvam-ai` |
+| InstantDB | `$INSTANTDB_APP_ID` + `$INSTANTDB_ADMIN_TOKEN` | Client: `init({ appId })`. Admin: `Authorization: Bearer $INSTANTDB_ADMIN_TOKEN` + `App-Id: $INSTANTDB_APP_ID` | `impactlex-ops` |
 
 ## Rules
 
