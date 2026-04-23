@@ -16,6 +16,7 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -189,6 +190,17 @@ async function loadExternal() {
   };
 }
 
+/**
+ * Deterministic UUID v4-formatted string derived from a slug.
+ * Same slug always yields the same UUID → re-pushes are idempotent upserts.
+ * InstantDB requires UUIDs as entity IDs; we keep the slug queryable in `slug`.
+ */
+function slugToUuid(slug, namespace = 'impactlex') {
+  const h = createHash('sha256').update(`${namespace}:${slug}`).digest('hex');
+  const variant = (parseInt(h.slice(16, 17), 16) & 0x3 | 0x8).toString(16);
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-${variant}${h.slice(17, 20)}-${h.slice(20, 32)}`;
+}
+
 async function pushToInstantDB(snapshot) {
   const appId = process.env.INSTANTDB_APP_ID;
   const adminToken = process.env.INSTANTDB_ADMIN_TOKEN;
@@ -197,10 +209,15 @@ async function pushToInstantDB(snapshot) {
     process.exit(1);
   }
   const endpoint = `https://api.instantdb.com/admin/transact`;
-  const pushCollection = async (collection, rows) => {
+  const pushCollection = async (collection, rows, slugField = 'slug') => {
     for (let i = 0; i < rows.length; i += 100) {
       const chunk = rows.slice(i, i + 100);
-      const steps = chunk.map((t) => ['update', collection, t.id, t]);
+      const steps = chunk.map((row) => {
+        const slug = row.id; // original slug
+        const uuid = slugToUuid(`${collection}:${slug}`);
+        const { id, ...rest } = row;
+        return ['update', collection, uuid, { ...rest, [slugField]: slug }];
+      });
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: {

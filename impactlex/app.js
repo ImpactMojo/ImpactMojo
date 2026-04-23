@@ -73,9 +73,11 @@
       db.subscribeQuery({ terms: {}, caseStudies: {}, formulae: {} }, (resp) => {
         if (resp.error) { console.warn('InstantDB error:', resp.error); return; }
         const d = resp.data;
-        if (d.terms?.length) state.terms = d.terms.filter((t) => t.status === 'published');
-        if (d.caseStudies?.length) state.caseStudies = d.caseStudies;
-        if (d.formulae?.length) state.formulae = d.formulae;
+        // InstantDB uses UUIDs as entity ids; the app routes on slugs. Normalize.
+        const useSlug = (row) => ({ ...row, uuid: row.id, id: row.slug || row.id });
+        if (d.terms?.length) state.terms = d.terms.filter((t) => t.status === 'published').map(useSlug);
+        if (d.caseStudies?.length) state.caseStudies = d.caseStudies.map(useSlug);
+        if (d.formulae?.length) state.formulae = d.formulae.map(useSlug);
         state.liveSource = 'instantdb';
         updateStats();
         render();
