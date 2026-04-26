@@ -1,5 +1,5 @@
 ---
-description: "Weekly content drop — research a trending dev-econ topic and produce a full publication brief (blog + threads + visuals + SEO)"
+description: "Weekly content drop — research a trending dev-econ topic and produce a full publication brief (blog + video + threads + visuals + SEO)"
 ---
 
 # Weekly Drop
@@ -33,29 +33,48 @@ Adapted from the "Full Automation via Claude Cowork" playbook (YouTube edition) 
    - Include the napkin illustration `<img>` placeholders inline; actual generation happens in step 6
    - Wire up the cross-links from step 3
 
-5. **Draft the Threads post** (`threads-writer` skill)
+5. **Build the video pack** — full YouTube-ready production brief (the original Cowork video deliverables, retained)
+   - Save everything under `video/` in the drop folder.
+   - **`video/script.md`** — retention-optimized 8–10 minute script using PAS structure with re-hooks every ~90 seconds. Mark hook beats with `[HOOK]` tags. Add a cold-open under 15 seconds and a single CTA pointing at the matching ImpactMojo lab/game/course.
+   - **`video/storyboard.md`** — scene-by-scene breakdown: timecode, on-screen text, visual treatment, and B-roll cue per scene.
+   - **`video/narration.md`** — narration prompt(s):
+     - **English narration** → ElevenLabs prompt block (voice, stability, similarity, style settings, pacing notes)
+     - **Hindi / regional narration** → `sarvam-ai` TTS config (model, speaker, language code, sample rate) for South Asian languages — preferred over ElevenLabs for non-English. Do **not** call Sarvam without user confirmation.
+   - **`video/broll.md`** — B-roll list with **Pexels** + **Coverr** search terms per scene (free stock for English/global footage), plus napkin.ai prompts for any custom hand-drawn animation slots that stock footage can't cover.
+   - **`video/captions.srt`** — caption stub aligned to the script's section breaks (will need timing pass during edit).
+   - **`video/youtube.md`** — YouTube metadata pack:
+     - Title (≤ 60 chars, retention-optimized, no clickbait)
+     - Description with chapters, source citations, and ImpactMojo cross-links
+     - Tags (10–15)
+     - Pinned comment draft
+     - End-screen CTA spec (which lab / course to link)
+   - **`video/thumbnails.md`** — **5 thumbnail concepts** (matches the original Cowork deliverable). Each: composition sketch in words + napkin.ai prompt + headline overlay text (≤ 5 words).
+   - **`video/shorts.md`** — 2–3 vertical Shorts/Reels cut-down ideas, 30–60s each, with hook + payoff + CTA.
+
+6. **Draft the Threads post** (`threads-writer` skill)
    - Save as `threads.md`
    - Long-form, evidence-backed, citing the 3 sources from step 1
-   - Replaces the "ElevenLabs narration prompt" slot from the original playbook
+   - Should reference the video drop where relevant ("full breakdown in the video, link in bio")
 
-6. **Generate napkin.ai illustration prompts** (`napkin-ai` skill)
-   - 3–5 prompts mapped scene-by-scene to the blog's section breaks (replaces the "Pexels B-roll list" from the original)
+7. **Generate napkin.ai illustration prompts** (`napkin-ai` skill)
+   - 3–5 prompts mapped scene-by-scene to the blog's section breaks AND the video's storyboard scenes (so blog hero images and video custom slots reuse the same visual language)
    - Save prompts to `illustrations/prompts.md`
    - Only call the Napkin API if the user confirms — otherwise just leave the prompts ready
 
-7. **SEO + social pack**
+8. **SEO + social pack**
    - Save as `seo.md` in the drop folder. Include:
      - SEO `<title>` (≤ 60 chars) + `<meta name="description">` (≤ 155 chars)
      - Open Graph title + description + suggested OG image
-     - JSON-LD `Article` schema stub
-     - **5 social hook headlines** (replaces the "5 thumbnail concepts" from the original) — for X / LinkedIn / Threads / Bluesky / WhatsApp broadcast
+     - JSON-LD `Article` + `VideoObject` schema stubs (the latter referencing the YouTube upload once published)
+     - **5 social hook headlines** for X / LinkedIn / Threads / Bluesky / WhatsApp broadcast — these promote the blog + video as a bundle
 
-8. **Notify + offer to promote**
+9. **Notify + offer to promote**
    - Print a summary: topic, slug, files written, suggested cross-links, any blockers (missing API key, etc.)
    - Ask the user whether to:
-     a. Promote the drop into `Blog/` + update `blog.html` card + search-index (run `housekeeping` after)
-     b. Open a GitHub issue tracking the drop for review (use `github-ops` skill)
-     c. Leave it in `WeeklyDrops/` for human review
+     a. Promote the **blog** into `Blog/` + update `blog.html` card + search-index (run `housekeeping` after)
+     b. Generate the **video assets** for real (Sarvam/ElevenLabs narration audio, napkin.ai thumbnail PNGs) — paid, requires confirmation
+     c. Open a GitHub issue tracking the drop for review (use `github-ops` skill)
+     d. Leave everything in `WeeklyDrops/` for human review
 
 ## Scheduling notes (the "Every Monday at 7am" piece)
 
@@ -69,7 +88,9 @@ Or invoke manually each Monday. The `loop` skill is interval-based (not calendar
 
 ## Guardrails
 
-- Do **not** publish anything to the live site automatically. Everything lands in `WeeklyDrops/` for review.
-- Run the `fact-check` skill on the blog draft before promoting.
-- Do **not** burn API credits without confirmation: napkin.ai image generation, gamma deck creation, and any paid LLM calls require explicit user approval.
+- Do **not** publish anything to the live site or upload anything to YouTube automatically. Everything lands in `WeeklyDrops/` for review.
+- Run the `fact-check` skill on **both** the blog draft and the video script before promoting — video is harder to correct after publish.
+- Do **not** burn API credits without confirmation: napkin.ai image generation, Sarvam TTS audio, ElevenLabs narration, and gamma deck creation are all paid and require explicit user approval. Default behavior is to leave only prompts/configs ready, not generated assets.
+- Prefer `sarvam-ai` over ElevenLabs for Hindi / regional language narration (better South Asian phonetics, project-aligned).
 - Backup `index.html` before any promotion step touches it (per `.claude/rules/content-management.md`).
+- Video editing happens outside Claude Code. The drop ships a complete brief; final cut is human work in DaVinci / Premiere / CapCut.
