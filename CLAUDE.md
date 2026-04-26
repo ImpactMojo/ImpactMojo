@@ -57,3 +57,4 @@ Persistent project context lives in `.claude/memory.md` — carries state, decis
 
 - **Community resources** (skills, MCP servers, repos): `.claude/references.md`
 - **Claude Code best practices** (vendored guides): `.claude/vendor/claude-code-synthesis/` — sync with `/project:sync-guides`
+- **Open-source AI catalog**: [alvinunreal/awesome-opensource-ai](https://github.com/alvinunreal/awesome-opensource-ai) — curated models, frameworks, tools & infrastructure (14 categories)
