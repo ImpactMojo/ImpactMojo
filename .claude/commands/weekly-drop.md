@@ -78,13 +78,25 @@ Adapted from the "Full Automation via Claude Cowork" playbook (YouTube edition) 
 
 ## Scheduling notes (the "Every Monday at 7am" piece)
 
-Claude Code does not natively schedule calendar-based jobs. To run this every Monday at 07:00 local:
+Claude Code does not natively schedule calendar-based jobs. **Recommended path: GitHub Actions** (already wired up at `.github/workflows/weekly-drop.yml`):
+
+- Cron: Mondays 01:30 UTC (= 07:00 IST)
+- Generates the drop, commits to a `weekly-drop/<slug>` branch, opens a PR for human review
+- No paid APIs called automatically — illustrations / narration stay as configs only
+- One-time setup: add `ANTHROPIC_API_KEY` to repository Secrets
+
+When invoked from CI, the prompt includes the literal string `CI MODE` — in that case:
+- Skip step 9's interactive promotion menu
+- Do **not** call any paid APIs
+- Print `WEEKLY_DROP_SLUG=<slug>` on the last line so the workflow can find the folder
+
+Alternative: local cron, if you have an always-on machine and an interactive session is fine:
 
 ```cron
 0 7 * * 1 cd ~/ImpactMojo && claude -p "/weekly-drop" >> .claude/logs/weekly-drop.log 2>&1
 ```
 
-Or invoke manually each Monday. The `loop` skill is interval-based (not calendar-based) and is not the right fit here.
+The `loop` skill is interval-based (not calendar-based) and is not the right fit here.
 
 ## Guardrails
 
