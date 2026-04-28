@@ -78,23 +78,17 @@ Adapted from the "Full Automation via Claude Cowork" playbook (YouTube edition) 
 
 ## Scheduling notes (the "Every Monday at 7am" piece)
 
-Claude Code does not natively schedule calendar-based jobs. **Recommended path: GitHub Actions** (already wired up at `.github/workflows/weekly-drop.yml`):
+**Recommended: run it manually.** Set a Monday 07:00 IST reminder on your phone, open Claude Code in this repo, and type `/weekly-drop`. Cost is whatever your existing Claude Code subscription already covers — usually $0 marginal. You stay in the loop on voice and framing while it's fresh.
 
-- Cron: Mondays 01:30 UTC (= 07:00 IST)
-- Generates the drop, commits to a `weekly-drop/<slug>` branch, opens a PR for human review
-- No paid APIs called automatically — illustrations / narration stay as configs only
-- One-time setup: add `ANTHROPIC_API_KEY` to repository Secrets
+The autonomous-via-API path was considered and rejected: per-run token cost (~$0.50–$3), unattended drops drift in voice within a few weeks, and Claude Code does not natively schedule calendar jobs anyway.
 
-When invoked from CI, the prompt includes the literal string `CI MODE` — in that case:
-- Skip step 9's interactive promotion menu
-- Do **not** call any paid APIs
-- Print `WEEKLY_DROP_SLUG=<slug>` on the last line so the workflow can find the folder
+If you ever change your mind, two paths exist:
 
-Alternative: local cron, if you have an always-on machine and an interactive session is fine:
-
-```cron
-0 7 * * 1 cd ~/ImpactMojo && claude -p "/weekly-drop" >> .claude/logs/weekly-drop.log 2>&1
-```
+- **GitHub Actions** — schedule a headless `claude -p "/weekly-drop"` on cron `30 1 * * 1` (Mon 01:30 UTC = 07:00 IST), commit output to a `weekly-drop/<slug>` branch, open a PR. Requires `ANTHROPIC_API_KEY` repo secret. See git history on `claude/impactmojo-local-setup-fUuAQ` for a previous draft of `.github/workflows/weekly-drop.yml`.
+- **Local cron** on an always-on machine:
+  ```cron
+  0 7 * * 1 cd ~/ImpactMojo && claude -p "/weekly-drop" >> .claude/logs/weekly-drop.log 2>&1
+  ```
 
 The `loop` skill is interval-based (not calendar-based) and is not the right fit here.
 
