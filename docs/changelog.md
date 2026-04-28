@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.21.0 — April 28, 2026
+
+### Infrastructure & Claude Code setup
+
+- **New Supabase user**: `taranga.sriraman@gmail.com` added with organization tier (highest plan), learner role (non-admin). Password reset email sent.
+- **Global Claude Code setup**: Promoted 16 reusable skills to `~/.claude/` (AI APIs, platform ops, content creation, research). Available across all projects.
+- **Vendored best practices**: claude-code-synthesis guides synced to `~/.claude/vendor/` with `/sync-guides` command for updates.
+- **Housekeeping skill upgraded**: Added Google Analytics verification (step 11) and comprehensive branding consistency checks (step 12) covering footer, fonts, language selector, theme toggle, UserWay accessibility widget, paper plane SVGs, blob decorations, cookie consent, speed dial FAB, and SVG icon sprite.
+- **Dataverse**: Added "Awesome Open Source AI" catalog (271 total items).
+
 ## v10.20.0 — April 23, 2026
 
 ### ImpactLex — full upgrade + migration home
