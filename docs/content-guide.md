@@ -16,6 +16,7 @@ This page documents how educational content is structured in ImpactMojo, for con
 | DevDiscourses | 500+ | Curated papers/books | Free |
 | Handouts | 400+ | HTML pages | Free |
 | BookSummaries | 28 | Interactive book companions | Free (Specials) |
+| Deep Dives | 5 | Curated annotated reading lists | Free (Specials) |
 | 101 Course Decks | 38 | 4 native HTML (100 slides) + 34 Gamma presentations | Free |
 | Blog posts | Ongoing | HTML articles | Free |
 | Podcast | Episodes | Audio (Spotify) | Free |
@@ -109,3 +110,38 @@ Translation contributions are welcome. See [Contributing](Contributing) for guid
 - **Jargon:** Define terms on first use. Add to ImpactLex if they're sector-standard.
 - **Attribution:** Cite sources. Link to DevDiscourses where possible.
 - **Accessibility:** Use semantic HTML, alt text for images, sufficient color contrast.
+
+## How to Write a Deep Dive
+
+Deep Dives are curated annotated reading lists, inspired by the [CASI Deep Dive series](https://casi.sas.upenn.edu/iit) at UPenn. Each list is an editorial artifact with a named curator's voice, not a neutral bibliography.
+
+### Anatomy of a Deep Dive
+
+1. **Hero** — title, one-line tagline, topic chip, count of readings.
+2. **Curator card** — name, role, 2–3 sentence bio. Mark as `Editor's Pick` (in-house) or `Invited Curator`.
+3. **Editor's Note** — 2–4 paragraph framing essay in the curator's voice. This is the substance; the list is the receipt.
+4. **3–6 themed sections** — e.g. "Foundations", "Recent Debates", "Voices from the Field". Don't make a flat list.
+5. **Reading items** — for each: a type badge (📘 Book / 📄 Paper / 🎙 Podcast / 🎬 Film / 📊 Dataset / 📰 Article / 🌐 Web), a full citation with outbound link, and a 2–4 sentence annotation that says why the work matters and how it fits the syllabus.
+6. **Related ImpactMojo content** — cross-link 2–4 courses, labs, games, or book companions.
+7. **Suggested citation** — APA-style citation block.
+8. **Contribute CTA** — link to the pitch form.
+
+### Files to create / update
+
+To add a new Deep Dive:
+
+1. Copy `/DeepDives/_template.html` → `/DeepDives/{slug}.html`. Fill in title, tagline, topic, curator, editor's note, sections, readings.
+2. Add an entry to `/data/deep-dives.json` (id, title, tagline, topic, url, curator, sections, tags, reading_count, published).
+3. Add an entry to `/data/search-index.json` with `"type": "deep-dive"` and `"category": "Deep Dives"`.
+4. Add a `<url>` entry to `/sitemap.xml`.
+5. Add a card to `catalog.html` `allContent` array (`type: 'deep-dive'`, pick a track).
+6. (Optional) Feature on the homepage by editing the Deep Dives section in `/index.html` if it's flagship-quality.
+7. Update count text everywhere — grep for `(5 Deep Dives|5 readings)` and bump the number.
+
+### Editorial guidelines
+
+- **Curator voice over neutrality.** A list without a point of view is just a bibliography. Tell the reader what you would press into their hands and why.
+- **Mixed media is encouraged.** A good Deep Dive has at least one podcast, one dataset, and one practitioner-facing source alongside the academic core.
+- **Annotate, don't summarise.** Two to four sentences. Why this work, why now, who should read it.
+- **Cross-link generously.** Use the "Related ImpactMojo Content" block to send readers to courses, labs, and book companions that build on the list.
+- **Stay in scope.** Each Deep Dive is one coherent topic — don't try to cover a whole field.

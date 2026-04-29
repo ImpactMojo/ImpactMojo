@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<!--
+    ImpactMojo Deep Dive — Template
+    Replace [TITLE], [TAGLINE], [TOPIC], [CURATOR_*], [INTRO], [SECTIONS]
+    See /docs/content-guide.md for the full authoring guide.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[TITLE] — ImpactMojo Deep Dive</title>
+<meta name="description" content="[TAGLINE]">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="[TITLE] — ImpactMojo Deep Dive">
+<meta property="og:description" content="[TAGLINE]">
+<meta property="og:url" content="https://impactmojo.in/DeepDives/[SLUG].html">
+<meta property="og:image" content="https://impactmojo.in/assets/images/ImpactMojo%20Logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="[TITLE] — ImpactMojo Deep Dive">
+<meta name="twitter:description" content="[TAGLINE]">
+
+<link rel="icon" href="/assets/images/ImpactMojo%20Logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+<style>
+/* === ImpactMojo Brand Topbar / Footer === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #94A3B8;
+    --im-text-muted: #64748B;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+body { padding-top: 56px !important; margin: 0; }
+.im-topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: var(--im-nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--im-border); padding: 0.5rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; font-family: 'Inter', 'Amaranth', sans-serif; }
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 1rem; color: #0EA5E9; }
+.im-topbar-home img { width: 24px; height: 24px; border-radius: 4px; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn { background: var(--im-gradient); color: #fff; padding: 0.35rem 0.85rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 0.35rem; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector { display: flex; gap: 2px; background: var(--im-card-bg); border: 1px solid var(--im-border); border-radius: 8px; padding: 2px; }
+.im-theme-btn { background: transparent; border: none; color: var(--im-text-secondary); padding: 6px; border-radius: 5px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; }
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: var(--im-accent); color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+
+.im-footer { background: var(--im-secondary-bg); border-top: 1px solid var(--im-border); padding: 2rem 1rem; margin-top: 4rem; font-family: 'Inter', 'Amaranth', sans-serif; color: var(--im-text-secondary); }
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made { text-align: center; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--im-text-muted); }
+.im-footer-made a { color: var(--im-accent); }
+.im-footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
+.im-footer-section h4 { color: var(--im-text-primary); font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600; }
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a { color: var(--im-text-secondary); font-size: 0.85rem; transition: color 0.2s; }
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom { text-align: center; padding-top: 1rem; border-top: 1px solid var(--im-border); font-size: 0.8rem; color: var(--im-text-muted); }
+.im-footer-bottom a { color: var(--im-accent); }
+
+/* === Deep Dive Editorial Design === */
+:root {
+    --dd-bg: #FAF7F2;
+    --dd-surface: #FFFFFF;
+    --dd-border: #E8E0D5;
+    --dd-text: #1C1C1C;
+    --dd-text-soft: #4A4A4A;
+    --dd-muted: #6B6560;
+    --dd-accent: #C8910A;
+    --dd-accent-soft: #FFF8E6;
+    --dd-teal: #1A6B5A;
+    --dd-teal-soft: #EBF5F2;
+    --dd-radius: 10px;
+}
+html.dark {
+    --dd-bg: #0F172A;
+    --dd-surface: #1E293B;
+    --dd-border: #334155;
+    --dd-text: #F1F5F9;
+    --dd-text-soft: #CBD5E1;
+    --dd-muted: #94A3B8;
+    --dd-accent: #F59E0B;
+    --dd-accent-soft: rgba(245, 158, 11, 0.12);
+    --dd-teal: #38BDF8;
+    --dd-teal-soft: rgba(56, 189, 248, 0.10);
+}
+html, body { background: var(--dd-bg); color: var(--dd-text); font-family: 'Lora', Georgia, serif; line-height: 1.7; }
+.dd-wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+/* Hero */
+.dd-eyebrow { display: inline-flex; align-items: center; gap: .5rem; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--dd-accent); margin-bottom: 1rem; }
+.dd-eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--dd-accent); }
+.dd-title { font-family: 'Inter', sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; margin: 0 0 .75rem; color: var(--dd-text); }
+.dd-tagline { font-size: 1.15rem; color: var(--dd-muted); font-style: italic; margin-bottom: 1.75rem; }
+.dd-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+.dd-chip { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; padding: .25rem .65rem; border-radius: 999px; background: var(--dd-accent-soft); color: var(--dd-accent); }
+.dd-chip.dd-chip-teal { background: var(--dd-teal-soft); color: var(--dd-teal); }
+
+/* Curator card */
+.dd-curator { display: flex; gap: 1rem; align-items: flex-start; padding: 1.25rem; border: 1px solid var(--dd-border); border-radius: var(--dd-radius); background: var(--dd-surface); margin-bottom: 2rem; }
+.dd-curator-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--dd-accent); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.25rem; flex-shrink: 0; }
+.dd-curator-body { flex: 1; }
+.dd-curator-name { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: .15rem; color: var(--dd-text); }
+.dd-curator-role { font-family: 'Inter', sans-serif; font-size: .85rem; color: var(--dd-muted); margin-bottom: .5rem; }
+.dd-curator-bio { font-size: .95rem; color: var(--dd-text-soft); line-height: 1.6; }
+.dd-curator-badge { display: inline-block; margin-top: .6rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .2rem .55rem; border-radius: 4px; background: var(--dd-teal-soft); color: var(--dd-teal); }
+
+/* Editor's Note */
+.dd-note { padding: 1.5rem 1.75rem; background: var(--dd-surface); border-left: 3px solid var(--dd-accent); border-radius: 0 var(--dd-radius) var(--dd-radius) 0; margin-bottom: 2.5rem; }
+.dd-note-label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--dd-accent); margin-bottom: .75rem; }
+.dd-note p { font-size: 1.05rem; line-height: 1.75; color: var(--dd-text-soft); margin: 0 0 1rem; }
+.dd-note p:last-child { margin-bottom: 0; }
+
+/* Themed sections */
+.dd-section { margin-bottom: 2.75rem; }
+.dd-section-num { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: var(--dd-accent); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .25rem; }
+.dd-section-title { font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 700; margin: 0 0 .35rem; color: var(--dd-text); }
+.dd-section-intro { font-size: 1rem; color: var(--dd-muted); margin-bottom: 1.25rem; line-height: 1.65; }
+
+/* Reading item */
+.dd-item { padding: 1.1rem 1.25rem; border: 1px solid var(--dd-border); border-radius: var(--dd-radius); background: var(--dd-surface); margin-bottom: .85rem; transition: border-color .2s, transform .2s; }
+.dd-item:hover { border-color: var(--dd-accent); }
+.dd-item-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; flex-wrap: wrap; }
+.dd-type { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .2rem .55rem; border-radius: 4px; background: var(--dd-accent-soft); color: var(--dd-accent); }
+.dd-type[data-t="paper"] { background: rgba(99, 102, 241, .12); color: #6366F1; }
+.dd-type[data-t="podcast"] { background: rgba(168, 85, 247, .12); color: #A855F7; }
+.dd-type[data-t="film"] { background: rgba(239, 68, 68, .12); color: #EF4444; }
+.dd-type[data-t="dataset"] { background: rgba(16, 185, 129, .12); color: #10B981; }
+.dd-type[data-t="article"] { background: rgba(14, 165, 233, .12); color: #0EA5E9; }
+.dd-type[data-t="web"] { background: rgba(100, 116, 139, .12); color: #64748B; }
+html.dark .dd-type[data-t="paper"] { background: rgba(99, 102, 241, .25); color: #A5B4FC; }
+html.dark .dd-type[data-t="podcast"] { background: rgba(168, 85, 247, .25); color: #C4B5FD; }
+html.dark .dd-type[data-t="film"] { background: rgba(239, 68, 68, .25); color: #FCA5A5; }
+html.dark .dd-type[data-t="dataset"] { background: rgba(16, 185, 129, .25); color: #6EE7B7; }
+html.dark .dd-type[data-t="article"] { background: rgba(14, 165, 233, .25); color: #7DD3FC; }
+html.dark .dd-type[data-t="web"] { background: rgba(148, 163, 184, .25); color: #CBD5E1; }
+.dd-cite { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; color: var(--dd-text); }
+.dd-cite a { color: var(--dd-text); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s, color .2s; }
+.dd-cite a:hover { color: var(--dd-accent); border-bottom-color: var(--dd-accent); }
+.dd-cite a::after { content: " ↗"; font-size: .8em; color: var(--dd-muted); }
+.dd-meta { font-family: 'Inter', sans-serif; font-size: .8rem; color: var(--dd-muted); margin-bottom: .5rem; }
+.dd-annot { font-size: .98rem; color: var(--dd-text-soft); line-height: 1.65; margin: 0; }
+
+/* Related ImpactMojo content */
+.dd-related { padding: 1.5rem 1.75rem; background: var(--dd-teal-soft); border-radius: var(--dd-radius); margin: 2.5rem 0; }
+.dd-related-label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--dd-teal); margin-bottom: .85rem; }
+.dd-related ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.dd-related li { font-family: 'Inter', sans-serif; font-size: .95rem; }
+.dd-related a { color: var(--dd-text); text-decoration: none; border-bottom: 1px dotted var(--dd-teal); transition: color .2s; }
+.dd-related a:hover { color: var(--dd-teal); }
+
+/* Cite this list */
+.dd-cite-block { padding: 1.25rem 1.5rem; background: var(--dd-surface); border: 1px dashed var(--dd-border); border-radius: var(--dd-radius); margin: 2rem 0; }
+.dd-cite-label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--dd-muted); margin-bottom: .5rem; }
+.dd-cite-text { font-family: 'Inter', sans-serif; font-size: .9rem; color: var(--dd-text-soft); line-height: 1.6; }
+
+/* Contribute CTA */
+.dd-cta { padding: 1.75rem; background: var(--dd-accent-soft); border-radius: var(--dd-radius); text-align: center; }
+.dd-cta h3 { font-family: 'Inter', sans-serif; font-size: 1.25rem; margin: 0 0 .5rem; color: var(--dd-accent); }
+.dd-cta p { font-size: .95rem; color: var(--dd-text-soft); margin: 0 0 1rem; }
+.dd-cta a { display: inline-block; background: var(--dd-accent); color: #fff !important; font-family: 'Inter', sans-serif; font-weight: 600; padding: .65rem 1.5rem; border-radius: 8px; text-decoration: none; }
+.dd-cta a:hover { opacity: .9; }
+
+/* Back link */
+.dd-back { display: inline-block; margin-bottom: 1.5rem; font-family: 'Inter', sans-serif; font-size: .85rem; color: var(--dd-muted); text-decoration: none; }
+.dd-back:hover { color: var(--dd-accent); }
+
+@media (max-width: 640px) {
+    .dd-wrap { padding: 1.5rem 1rem 3rem; }
+    .dd-curator { flex-direction: column; }
+    .dd-note, .dd-related, .dd-cta { padding: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ImpactMojo Topbar -->
+<header class="im-topbar" role="banner">
+  <div class="im-topbar-left">
+    <a class="im-topbar-home" href="/" aria-label="ImpactMojo home">
+      <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo">
+      <span>ImpactMojo</span>
+    </a>
+  </div>
+  <div class="im-topbar-right">
+    <a class="im-premium-btn" href="/premium.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Premium
+    </a>
+    <div class="im-theme-selector" role="group" aria-label="Theme">
+      <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="System theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </button>
+      <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Light theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Dark theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="dd-wrap">
+  <a class="dd-back" href="/DeepDives/">← All Deep Dives</a>
+
+  <!-- HERO -->
+  <div class="dd-eyebrow">Deep Dive · [TOPIC]</div>
+  <h1 class="dd-title">[TITLE]</h1>
+  <p class="dd-tagline">[TAGLINE]</p>
+  <div class="dd-chips">
+    <span class="dd-chip">[CHIP_1]</span>
+    <span class="dd-chip">[CHIP_2]</span>
+    <span class="dd-chip dd-chip-teal">[N] readings</span>
+  </div>
+
+  <!-- CURATOR -->
+  <div class="dd-curator">
+    <div class="dd-curator-avatar">[INITIALS]</div>
+    <div class="dd-curator-body">
+      <div class="dd-curator-name">[CURATOR_NAME]</div>
+      <div class="dd-curator-role">[CURATOR_ROLE]</div>
+      <div class="dd-curator-bio">[CURATOR_BIO]</div>
+      <span class="dd-curator-badge">Editor's Pick</span>
+    </div>
+  </div>
+
+  <!-- EDITOR'S NOTE -->
+  <div class="dd-note">
+    <div class="dd-note-label">Editor's Note</div>
+    <p>[INTRO_PARA_1]</p>
+    <p>[INTRO_PARA_2]</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <section class="dd-section">
+    <div class="dd-section-num">Section 01</div>
+    <h2 class="dd-section-title">[SECTION_1_TITLE]</h2>
+    <p class="dd-section-intro">[SECTION_1_INTRO]</p>
+
+    <article class="dd-item">
+      <div class="dd-item-head">
+        <span class="dd-type" data-t="book">📘 Book</span>
+        <span class="dd-cite"><a href="[URL]" target="_blank" rel="noopener">[CITATION]</a></span>
+      </div>
+      <p class="dd-annot">[ANNOTATION]</p>
+    </article>
+  </section>
+
+  <!-- RELATED IMPACTMOJO CONTENT -->
+  <div class="dd-related">
+    <div class="dd-related-label">Continue on ImpactMojo</div>
+    <ul>
+      <li>📚 <a href="/courses/[COURSE]/">[COURSE TITLE]</a></li>
+    </ul>
+  </div>
+
+  <!-- CITE THIS LIST -->
+  <div class="dd-cite-block">
+    <div class="dd-cite-label">Suggested citation</div>
+    <p class="dd-cite-text">[CURATOR_NAME] (2026). "[TITLE]." <em>ImpactMojo Deep Dives</em>. Retrieved from https://impactmojo.in/DeepDives/[SLUG].html</p>
+  </div>
+
+  <!-- CONTRIBUTE CTA -->
+  <div class="dd-cta">
+    <h3>Want to curate a Deep Dive?</h3>
+    <p>If you teach, research, or practice in development and have a reading list worth sharing — pitch us.</p>
+    <a href="/contact.html?topic=DeepDive">Pitch a Deep Dive →</a>
+  </div>
+</main>
+
+<!-- ImpactMojo Footer -->
+<footer class="im-footer" role="contentinfo">
+  <div class="im-footer-content">
+    <p class="im-footer-made">Made with ❤ by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+    <div class="im-footer-grid">
+      <div class="im-footer-section">
+        <h4>About ImpactMojo</h4>
+        <ul>
+          <li><a href="/about.html">About Us</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="https://github.com/ImpactMojo/ImpactMojo" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+          <li><a href="/transparency.html">Transparency</a></li>
+        </ul>
+      </div>
+      <div class="im-footer-section">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="/terms-of-service.html">Terms of Service</a></li>
+          <li><a href="/disclaimer.html">Disclaimer</a></li>
+          <li><a href="/data-protection.html">Data Protection</a></li>
+        </ul>
+      </div>
+      <div class="im-footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="/catalog.html">All Courses</a></li>
+          <li><a href="/DeepDives/">Deep Dives</a></li>
+          <li><a href="/BookSummaries/">Book Companions</a></li>
+          <li><a href="/premium.html">Premium</a></li>
+        </ul>
+      </div>
+      <div class="im-footer-section">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="/handouts.html">Handouts</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="/faq.html">FAQ</a></li>
+          <li><a href="/sitemap.html">Sitemap</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="im-footer-bottom">
+      <p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+      <p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// 3-way theme toggle (system / light / dark)
+(function() {
+    function applyTheme(t) {
+        if (t === 'system') {
+            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark', d);
+        } else {
+            document.documentElement.classList.toggle('dark', t === 'dark');
+        }
+    }
+    function updateButtons(pref) {
+        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
+        });
+    }
+    var saved = localStorage.getItem('im-theme') || 'system';
+    applyTheme(saved);
+    updateButtons(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var t = this.getAttribute('data-imtheme');
+            localStorage.setItem('im-theme', t);
+            applyTheme(t);
+            updateButtons(t);
+        });
+    });
+})();
+</script>
+
+</body>
+</html>
