@@ -2,6 +2,23 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.22.0 — April 29, 2026
+
+### Deep Dives — curated reading lists from named scholars
+
+Inspired by the [CASI Deep Dive series](https://casi.sas.upenn.edu/iit) at the University of Pennsylvania, we've launched a new content type: themed annotated reading lists curated by named scholars and practitioners.
+
+- **5 starter lists**, each with ~11 readings across 4 themed sections, all curated by Sukhmeet Bedi (Editor's Pick):
+  - Reading Indian Political Economy
+  - Impact Measurement: Foundations and Frontiers
+  - Climate and Just Transitions in South Asia
+  - Caste, Identity, and Development
+  - Data, Power, and the Global South
+- **Mixed media**: each list draws on books, papers, podcasts, datasets, and articles — not just academic citations.
+- **Annotated, not just cited**: every reading carries 2–4 sentences explaining why it matters and how it fits the syllabus.
+- **Open call for curators**: practitioners and scholars who'd like to curate a Deep Dive can pitch via [/contact.html?topic=DeepDive](/contact.html?topic=DeepDive).
+- **Live at**: [/DeepDives/](/DeepDives/) · also linked from the homepage and the Specials nav dropdown.
+
 ## v10.21.0 — April 28, 2026
 
 ### Infrastructure & Claude Code setup
