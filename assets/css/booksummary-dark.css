@@ -1,0 +1,57 @@
+/* ==========================================================================
+   ImpactMojo BookSummaries — Dark Mode
+   BookSummaries share a consistent CSS variable system (--bg, --card, --text,
+   --muted, --border, --accent, --accent-light, --teal, --teal-light) defined
+   in their inline <style> with the warm cream editorial palette.
+   This file overrides those variables in dark mode so the existing CSS
+   (which uses var(--bg) etc) automatically adapts. No filter-invert,
+   no per-page rewrites.
+   ========================================================================== */
+
+body.dark-mode, html.dark body, [data-theme="dark"] body {
+    --bg: #0F172A;
+    --card: #1E293B;
+    --border: #334155;
+    --text: #F1F5F9;
+    --muted: #94A3B8;
+    --accent: #F59E0B;
+    --accent-light: rgba(245, 158, 11, 0.14);
+    --teal: #38BDF8;
+    --teal-light: rgba(56, 189, 248, 0.12);
+}
+
+/* Common surface elements that may have hardcoded background colors in
+   the BookSummary inline CSS — explicit overrides for the most common
+   patterns observed across the 47 BookSummaries. */
+body.dark-mode .hero, html.dark .hero, [data-theme="dark"] .hero {
+    background: #1E293B !important;
+    color: #F1F5F9 !important;
+    border: 1px solid #334155;
+}
+body.dark-mode .hero .auth, html.dark .hero .auth,
+body.dark-mode .hero .tagline, html.dark .hero .tagline {
+    color: #CBD5E1 !important;
+}
+body.dark-mode nav, html.dark nav, [data-theme="dark"] nav {
+    background: #0F172A !important;
+    border-bottom: 1px solid #334155;
+}
+body.dark-mode .tab-btn, html.dark .tab-btn { color: rgba(241, 245, 249, .65) !important; }
+body.dark-mode .tab-btn.active, html.dark .tab-btn.active {
+    background: #F59E0B !important;
+    color: #0F172A !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.light-mode):not([data-theme="light"]) {
+        --bg: #0F172A;
+        --card: #1E293B;
+        --border: #334155;
+        --text: #F1F5F9;
+        --muted: #94A3B8;
+        --accent: #F59E0B;
+        --accent-light: rgba(245, 158, 11, 0.14);
+        --teal: #38BDF8;
+        --teal-light: rgba(56, 189, 248, 0.12);
+    }
+}

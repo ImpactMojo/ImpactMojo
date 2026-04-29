@@ -1,0 +1,38 @@
+/* ==========================================================================
+   ImpactMojo — Light Mode Fallback
+   For pages that are designed dark-by-intention (notably Games with
+   Indian folk-art visual systems) where building a per-page light theme
+   would require substantial redesign. Uses filter-invert + hue-rotate
+   so the page becomes legible in light mode while preserving inline-SVG
+   and image colors via counter-invert on media.
+   ========================================================================== */
+
+body.light-mode,
+[data-theme="light"] body,
+html.light body {
+    background: #F8FAFC;
+    filter: invert(0.92) hue-rotate(180deg);
+}
+
+/* Counter-invert media so photos, charts, and inline-SVG illustrations
+   render in their original colors. */
+body.light-mode img, body.light-mode video, body.light-mode iframe,
+body.light-mode canvas, body.light-mode picture, body.light-mode svg image,
+[data-theme="light"] img, [data-theme="light"] video, [data-theme="light"] iframe,
+[data-theme="light"] canvas, [data-theme="light"] picture, [data-theme="light"] svg image,
+html.light img, html.light video, html.light iframe,
+html.light canvas, html.light picture, html.light svg image {
+    filter: invert(0.92) hue-rotate(180deg);
+}
+
+/* ImpactMojo topbar keeps its dark-by-default styling — counter the body
+   filter so the topbar nav renders correctly. */
+body.light-mode .im-topbar,
+[data-theme="light"] .im-topbar,
+html.light .im-topbar {
+    filter: invert(0.92) hue-rotate(180deg);
+}
+
+body.light-mode, [data-theme="light"], html.light {
+    transition: background 0.2s ease;
+}
