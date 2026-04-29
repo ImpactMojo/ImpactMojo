@@ -41,20 +41,21 @@ https://perspective.impactmojo.in/*    https://www.someperspective.info/:splat  
 
 # PolicyDhara — Indian public policy tracker (Astro app on GitHub Pages
 # from Varnasr/PolicyDhara). Page emits absolute asset paths under
-# /PolicyDhara/_astro/... so we also proxy that path. 301 the
-# no-slash form to the trailing-slash form so relative URLs resolve.
-/policydhara        /policydhara/                                    301
+# /PolicyDhara/_astro/... so we also proxy that path.
+# IMPORTANT: proxy rules MUST come before the no-slash → slash 301,
+# otherwise Netlify's trailing-slash normalization causes a redirect loop.
 /policydhara/       https://varnasr.github.io/PolicyDhara/           200!
 /policydhara/*      https://varnasr.github.io/PolicyDhara/:splat     200!
 /PolicyDhara/*      https://varnasr.github.io/PolicyDhara/:splat     200!
+/policydhara        /policydhara/                                    301!
 
 # DevDiscourses — open-access research library (Varnasr/development-discourses
-# on GitHub Pages). Page uses relative asset paths (css/, js/), so we 301
-# the no-slash form to /devdiscourses/ first; then the splat rule proxies
-# all sub-resources. Replaces the on-web.link cloaked iframe.
-/devdiscourses      /devdiscourses/                                  301
+# on GitHub Pages). Page uses relative asset paths (css/, js/) so we
+# canonicalise to the trailing-slash form and proxy all sub-resources.
+# Replaces the on-web.link cloaked iframe.
 /devdiscourses/     https://varnasr.github.io/development-discourses/         200!
 /devdiscourses/*    https://varnasr.github.io/development-discourses/:splat   200!
+/devdiscourses      /devdiscourses/                                  301!
 
 # ===========================================
 # DOCUMENTATION (self-hosted Docsify)
