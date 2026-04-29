@@ -121,6 +121,17 @@ body { padding-top: 56px; background: var(--dd-bg); color: var(--dd-text); font-
 .im-footer-section a:hover { color: var(--im-accent); }
 .im-footer-bottom { text-align: center; padding-top: 1rem; border-top: 1px solid var(--im-border); font-size: 0.8rem; color: var(--im-text-muted); }
 .im-footer-bottom a { color: var(--im-accent); text-decoration: none; }
+.im-footer-made svg { width: 14px; height: 14px; vertical-align: middle; color: #EF4444; }
+
+/* Skip link */
+.im-skip-link { position: absolute; top: -40px; left: 0; background: var(--im-accent); color: #fff; padding: 8px 16px; z-index: 10000; text-decoration: none; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; }
+.im-skip-link:focus { top: 0; }
+
+/* Paper plane (decorative, fixed bottom-right). Subtle, never dominant. */
+.im-paper-plane { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 48px; height: 48px; opacity: 0.10; pointer-events: none; z-index: 0; animation: imFloat 6s ease-in-out infinite; }
+html.dark .im-paper-plane { opacity: 0.18; }
+@keyframes imFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
+@media (prefers-reduced-motion: reduce) { .im-paper-plane { animation: none; } }
 
 @media (max-width: 640px) {
     .dd-wrap { padding: 2rem 1rem 3rem; }
@@ -129,6 +140,7 @@ body { padding-top: 56px; background: var(--dd-bg); color: var(--dd-text); font-
 </style>
 </head>
 <body>
+<a href="#main-content" class="im-skip-link">Skip to content</a>
 
 <header class="im-topbar" role="banner">
   <div class="im-topbar-left">
@@ -172,11 +184,13 @@ body { padding-top: 56px; background: var(--dd-bg); color: var(--dd-text); font-
     <p>If you teach, research, or practice in development and have a reading list worth sharing — pitch us. We work closely with curators on framing, tone, and cross-links.</p>
     <a href="/contact.html?topic=DeepDive">Pitch a Deep Dive →</a>
   </section>
+
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#6366F1"/></svg>
 </main>
 
 <footer class="im-footer" role="contentinfo">
   <div class="im-footer-content">
-    <p class="im-footer-made">Made with ❤ by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+    <p class="im-footer-made">Made with <svg aria-hidden="true"><use href="#si_Heart"/></svg> by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
     <div class="im-footer-grid">
       <div class="im-footer-section"><h4>About ImpactMojo</h4><ul>
         <li><a href="/about.html">About Us</a></li>
@@ -210,35 +224,10 @@ body { padding-top: 56px; background: var(--dd-bg); color: var(--dd-text); font-
   </div>
 </footer>
 
-<script>
-// Theme toggle
-(function() {
-    function applyTheme(t) {
-        if (t === 'system') {
-            var d = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            document.documentElement.classList.toggle('dark', d);
-        } else {
-            document.documentElement.classList.toggle('dark', t === 'dark');
-        }
-    }
-    function updateButtons(pref) {
-        document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
-            btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
-        });
-    }
-    var saved = localStorage.getItem('im-theme') || 'system';
-    applyTheme(saved);
-    updateButtons(saved);
-    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var t = this.getAttribute('data-imtheme');
-            localStorage.setItem('im-theme', t);
-            applyTheme(t);
-            updateButtons(t);
-        });
-    });
-})();
+<!-- Sargam sprite + theme toggle (shared) -->
+<script src="/DeepDives/dd-shared.js"></script>
 
+<script>
 // Render the deep-dives grid from registry
 (async function() {
     const grid = document.getElementById('ddGrid');
@@ -285,5 +274,13 @@ body { padding-top: 56px; background: var(--dd-bg); color: var(--dd-text); font-
 })();
 </script>
 
+
+
+<!-- Supabase Auth (deferred, non-blocking) -->
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
+<script defer src="/js/state-manager.js"></script>
+<script defer src="/js/config.js"></script>
+<script defer src="/js/auth.js"></script>
+<script defer src="/js/translate.js"></script>
 </body>
 </html>
