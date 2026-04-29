@@ -1,0 +1,40 @@
+/* ==========================================================================
+   ImpactMojo — Dark Mode Fallback
+   For pages that are content-heavy, designed primarily for one mode, and
+   have a 3-mode theme toggle but no dedicated dark-mode CSS rules.
+   Uses a filter-invert + hue-rotate approach: cheap, content-readable,
+   preserves photo and chart colors via the inverse filter on media.
+   ========================================================================== */
+
+html.dark body,
+body.dark-mode,
+[data-theme="dark"] body {
+    background: #0F172A;
+    /* Invert the page; rotate hues so blues stay blue, etc. */
+    filter: invert(0.92) hue-rotate(180deg);
+}
+
+/* Counter-invert media so photos, charts, illustrations look correct. */
+html.dark img, html.dark video, html.dark iframe, html.dark svg image,
+html.dark canvas, html.dark picture,
+body.dark-mode img, body.dark-mode video, body.dark-mode iframe,
+body.dark-mode svg image, body.dark-mode canvas, body.dark-mode picture,
+[data-theme="dark"] img, [data-theme="dark"] video, [data-theme="dark"] iframe,
+[data-theme="dark"] svg image, [data-theme="dark"] canvas, [data-theme="dark"] picture {
+    filter: invert(0.92) hue-rotate(180deg);
+}
+
+/* ImpactMojo topbar: keep its own dark-by-default styling — counter the body
+   filter so the topbar renders correctly. */
+html.dark .im-topbar,
+body.dark-mode .im-topbar,
+[data-theme="dark"] .im-topbar {
+    filter: invert(0.92) hue-rotate(180deg);
+}
+
+/* Reduce-motion / accessibility safety: if the user prefers reduced motion
+   the filter still applies (it's not animated), but we make sure no transitions
+   cause flicker on theme switch. */
+html.dark, body.dark-mode, [data-theme="dark"] {
+    transition: background 0.2s ease;
+}
