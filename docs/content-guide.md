@@ -113,7 +113,7 @@ Translation contributions are welcome. See [Contributing](Contributing) for guid
 
 ## How to Write a Deep Dive
 
-Deep Dives are curated annotated reading lists, inspired by the [CASI Deep Dive series](https://casi.sas.upenn.edu/iit) at UPenn. Each list is an editorial artifact with a named curator's voice, not a neutral bibliography.
+Deep Dives are curated annotated reading lists. Each list is an editorial artifact with a named curator's voice, not a neutral bibliography — closer to a long-form essay-as-syllabus than to a stand-alone references page.
 
 ### Anatomy of a Deep Dive
 

@@ -6,14 +6,14 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Deep Dives — curated reading lists from named scholars
 
-Inspired by the [CASI Deep Dive series](https://casi.sas.upenn.edu/iit) at the University of Pennsylvania, we've launched a new content type: themed annotated reading lists curated by named scholars and practitioners.
+A new content type: themed annotated reading lists curated by named scholars and practitioners.
 
-- **5 starter lists**, each with ~11 readings across 4 themed sections, all curated by Sukhmeet Bedi (Editor's Pick):
-  - Reading Indian Political Economy
-  - Impact Measurement: Foundations and Frontiers
-  - Climate and Just Transitions in South Asia
-  - Caste, Identity, and Development
-  - Data, Power, and the Global South
+- **5 starter lists**, each with ~11 readings across 4 themed sections, curated by a rotating mix of Sukhmeet Bedi (Editor's Pick) and the ImpactMojo Editorial team (House Pick — open to invited curators):
+  - Reading Indian Political Economy — *Sukhmeet Bedi*
+  - Impact Measurement: Foundations and Frontiers — *ImpactMojo Editorial*
+  - Climate and Just Transitions in South Asia — *Sukhmeet Bedi*
+  - Caste, Identity, and Development — *ImpactMojo Editorial*
+  - Data, Power, and the Global South — *ImpactMojo Editorial*
 - **Mixed media**: each list draws on books, papers, podcasts, datasets, and articles — not just academic citations.
 - **Annotated, not just cited**: every reading carries 2–4 sentences explaining why it matters and how it fits the syllabus.
 - **Open call for curators**: practitioners and scholars who'd like to curate a Deep Dive can pitch via [/contact.html?topic=DeepDive](/contact.html?topic=DeepDive).
