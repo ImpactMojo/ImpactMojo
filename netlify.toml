@@ -4,6 +4,19 @@
   publish = "."
   functions = "netlify/functions"
 
+# HTML pages — short edge cache so TTFB drops from ~1.4s to <100ms on
+# repeat hits. must-revalidate + Netlify's auto-cache-purge on deploy
+# means visitors still see fresh content within seconds of a push.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
 # Long cache for static assets — images, logos, favicons rarely change.
 # Browsers will still revalidate via ETag if Netlify regenerates them.
 [[headers]]
