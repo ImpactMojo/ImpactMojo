@@ -2,6 +2,21 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.8 — May 1, 2026 (Flagship modules audit)
+
+Audited the 12 flagship courses for module-count drift between the actual `id="module-N"` anchors in each course's `index.html` and the counts claimed in catalog descriptions and homepage flagship cards. 5 drifts (catalog) and 3 drifts (homepage) found and fixed:
+
+| Course | Actual | Was-catalog | Was-home | Fix |
+|---|---|---|---|---|
+| Gandhi | 13 | 13 ✓ | 12 ✗ | home → 13 |
+| Devecon | 13 | 13 ✓ | 12 ✗ | home → 13 |
+| Dataviz | 12 | 13 ✗ | 12 ✓ | catalog → 12 |
+| DevAI | 12 | 13 ✗ | 12 ✓ | catalog → 12 |
+| MEL | 14 | 13 ✗ | 13 ✗ | both → 14 |
+| SEL | 13 | 12 ✗ | 13 ✓ | catalog → 13 |
+
+7 of 12 flagships were already accurate (POA, Media, Law, PubPol, PubChoice, Gender, plus the 3 fixed-on-one-side above had a correct second source). Lexicon term counts (claimed 50–83 across courses) cannot be verified from the static HTML — terms are loaded dynamically (Supabase). Trusting existing claims.
+
 ## v10.23.7 — May 1, 2026 (BookSummaries deep-pass)
 
 Brand audit on all 31 BookSummary companion pages:
