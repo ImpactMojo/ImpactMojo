@@ -2,6 +2,14 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.7 — May 1, 2026 (BookSummaries deep-pass)
+
+Brand audit on all 31 BookSummary companion pages:
+
+- **30 of 31 clean** for viewport, meta description, OG, GA, Amaranth fonts, im-topbar with Browse, and no emojis.
+- **dt-companion.html** (Design Thinking) had **54 emojis** across 24 unique characters (lightbulb, map, puzzle, magnifier, target, megaphone, etc.) used as decorative icons in tabs, author avatar, concept hero icons, and the toolkit cards. Replaced all 24 with inline Lucide-style stroke SVGs and added `svg { width: 1em; height: 1em }` rules so existing parent `font-size` continues to control the size.
+- **Title cross-check**: all 31 catalog titles match the canonical title inside each BookSummary HTML file.
+
 ## v10.23.6 — May 1, 2026 (3 new 101-courses, 2 superseded)
 
 ### New courses
