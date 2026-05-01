@@ -2,6 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.3 — May 1, 2026 (Games audit)
+
+### Brand alignment
+
+Audited all 16 games for metadata, brand, and link consistency.
+
+- **Emoji removal**: 14 emojis in `climate-action-game.html` (mitigation/adaptation actions + climate events) and 5 in `public-health-game.html` (cards + interventions) replaced with inline Lucide-style stroke SVGs. CSS updated so SVG sizing follows parent `font-size` via `width: 1em; height: 1em`. The platform brand standard is Sargam icons / inline SVGs only — no emojis.
+- **Stale Netlify URLs in catalog**: `https://therealmiddle.netlify.app`, `https://risk-reward-be.netlify.app`, `https://cooperationparadox.netlify.app/` were pointing at external subdomains while the self-hosted versions exist at `/Games/real-middle-india.html`, `/Games/risk-reward-game.html`, `/Games/cooperation-paradox-game.html`. Catalog now points at the self-hosted files.
+- **Missing topbar**: `externality-game.html` had the `.im-topbar` CSS but no rendered nav element. Injected the standard im-topbar with home/Browse/Premium links.
+
+All 16 games verified for: viewport meta, title, meta description, OG tags, GA, Amaranth/Inter fonts, back-link to homepage, im-topbar with Browse + Premium buttons.
+
 ## v10.23.2 — May 1, 2026 (Reference Libraries audit)
 
 ### Count alignment across pages
