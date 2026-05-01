@@ -2,6 +2,39 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.1 — May 1, 2026 (later same day)
+
+### Catalog → complete content index
+
+`/catalog.html` was advertising `Games (16)` while only listing 12 in its JS array, and was missing entire content types (BookSummaries, Reference Libraries, Handouts). Now indexes **128 items across 9 content types**:
+
+| Type | Count | Filter chip |
+|---|---|---|
+| Flagship | 12 | `Flagship (12)` |
+| Course | 39 | `Courses (39)` |
+| Lab | 11 | `Labs (11)` (was advertised as 10) |
+| Game | 16 | `Games (16)` (was 12 in array) |
+| Premium | 7 | `Premium (7)` |
+| Deep Dive | 5 | `Deep Dives (5)` |
+| **Book Companion** | **31** | **NEW** |
+| **Reference** | **6** | **NEW** |
+| **Handouts** | **1 collective** | **NEW** |
+
+- 4 missing games added: Algorithm's Dilemma, Epidemic Response, Climate Action, Care Economy.
+- 1 missing lab added: Gender Analysis Lab.
+- 31 BookSummaries added with hand-written descriptions (no SEO boilerplate).
+- 6 Reference Libraries indexed: ImpactLex, DevDiscourses, FieldCases, PolicyDhara, Dataverse, NudgeKit.
+- Handouts surfaced as a single collective entry → `/handouts.html` (didn't bloat with 400 individual entries).
+- 3 new card-type pill colours (book-summary amber, reference indigo, handout teal) with light + dark variants.
+
+### Browse access from inner pages
+
+Inner pages (12 flagship courses, 31 BookSummaries, 5 DeepDives, 4 lexicons, 3 premium tools, climate-trace-india, 76 other utility pages — **132 total**) had only a minimal `im-topbar` with a logo and Premium button. Users on a course page couldn't reach the catalog or any reference library without going home first.
+
+Injected an `Browse` link (4-square grid icon) into the `im-topbar` of every inner page, just left of the Premium button. Points at `/catalog.html`. Inline CSS so each page's topbar look is preserved.
+
+The homepage was deliberately left untouched — it has the full nav with Specials dropdown.
+
 ## v10.23.0 — May 1, 2026
 
 ### Public Choice — 12th flagship course

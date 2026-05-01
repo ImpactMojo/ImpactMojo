@@ -4,23 +4,29 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 
 ## Project State
 
-- **Current content counts**: 16 Games, **12 Flagship Courses** (Public Choice added v10.23), 38 Foundational Courses (4 native HTML, 34 Gamma iframe), 85 Handouts, 11 Labs, 50 Book Summaries, **5 Deep Dives** (new content type, v10.22), 28 Blog Posts, 47 top-level HTML pages
+- **Current content counts**: 16 Games, **12 Flagship Courses** (Public Choice added v10.23), 38 Foundational Courses (4 native HTML, 34 Gamma iframe), 85 Handouts, 11 Labs, **31 BookSummary companion pages** (50 *.html files including interactive variants), **5 Deep Dives** (new content type, v10.22), 28 Blog Posts, 47 top-level HTML pages, **6 Reference Libraries** (ImpactLex, DevDiscourses, FieldCases, PolicyDhara, Dataverse, NudgeKit)
 - **Last verified**: 2026-05-01
 - **Sitemap coverage**: 173+ URLs (added Public Choice + lexicon)
+- **Catalog coverage**: 128 items across 9 content types (was 85 across 6 before v10.23.1)
 - **Deploy target**: Netlify (auto-deploy on push to main, HTML now edge-cached for 5 min)
 - **Backend**: Supabase project `ddyszmfffyedolkcugld`
 - **Edge functions**: `netlify/edge-functions/policydhara.ts` + `devdiscourses.ts` proxy GitHub Pages content with `<base>` injection
 
-## Known catalog count drift (open)
+## Known drift (open)
 
-- `catalog.html` filter chips say `Games (16)` but JS `allContent` only has 12 — 4 missing: digital-ethics, public-health, climate-action, gender-equity
-- `catalog.html` says `Labs (10)` but disk has 11 — 1 missing
-- Catalog doesn't index BookSummaries (50), Handouts (85), ImpactLex, FieldCases, DevDiscourses, PolicyDhara, Dataverse, NudgeKit (only DeepDives is the non-courses/labs/games type indexed)
-- Course pages have minimal `im-topbar` only — no Specials dropdown, so users can't reach Reference Libraries from a course page without going home first
+- `data/search-index.json` has only ~9 BookSummary / reference entries vs **31 BookSummaries + 6 Reference Libraries** now in catalog. Search-index backfill is a separate maintenance task — flagged but not done in v10.23.1.
+- `data/search-index.json` doesn't include Public Choice (missed during pubchoice launch).
+- BookSummary catalog title for `gog-companion.html` reads "The Great Greenwashing" — wrong; gog is The Goal by Goldratt. One title-string review pass would catch others like this.
 
 ## Recent Decisions
 
 <!-- Append new decisions at the top -->
+- **2026-05-01 (later same day — Group 1 audit follow-through)**: Catalog overhaul + Browse access on inner pages. Closed all 4 open items from morning audit. 133 files changed in one commit (`951e9c9`):
+  - **Catalog** (`catalog.html`): now indexes 128 items across 9 content types (was 85 across 6). Added 4 missing games (digital-ethics, public-health, climate-action, gender-equity), 1 missing lab (gender-studies), 31 BookSummaries with hand-written 1-line descriptions, 6 Reference Libraries (one card per platform: ImpactLex, DevDiscourses, FieldCases, PolicyDhara, Dataverse, NudgeKit), and 1 collective Handouts entry → /handouts.html. New filter chips: Book Companions (31), Reference (6), Handouts. Bumped Labs chip 10→11. Added 3 new `.card-type` colour rules with light + dark variants.
+  - **Browse access from inner pages**: Course pages, BookSummaries, DeepDives, lexicons, premium-tools, etc. only had a minimal im-topbar with logo + Premium button. Users couldn't reach the catalog from a course page. Injected an `<a class="im-browse-btn" href="/catalog.html">Browse</a>` into the `im-topbar` of 132 inner pages, just left of the Premium button. Used a Python regex to find files containing `class="im-premium-btn"` and inserted the link + a small `.im-browse-btn` CSS rule inline. Homepage skipped (has the full nav with Specials dropdown).
+  - **Decision**: Don't add 400+ individual Handouts to catalog allContent — would bloat the JS array. Single collective entry → /handouts.html keeps catalog browseable.
+  - **Decision**: Reference Libraries get one card per platform (not one card per item) since each is its own searchable surface.
+  - **Reusable learning**: Use Python with `git ls-files` (not `find`) to enumerate tracked HTML files for bulk injection; safely handles paths-with-spaces by avoiding shell `.split()`.
 - **2026-05-01 (Public Choice launch + perf overhaul + nav fixes)**: Major session, 26 commits to main. Highlights:
   - **Public Choice flagship** added as the 12th flagship course at `/courses/pubchoice/`. Title aligned to flagship pattern: "Public Choice: Decisions, Incentives & Institutions" (matches "Public Policy: Process, Design & Governance"). Indigo gradient card. 13 modules imported to Supabase `course_content` table — table is `course_content` not `modules` (deployment notes were wrong). Module 1 only has `is_preview=true` to match convention used by other flagships.
   - **CSS extraction perf win**: Pulled 215 KB of inline `<style>` (4 head blocks) out of `index.html` into `/css/imx-main.css`. HTML brotli wire size 96 KB → 64 KB. Cascade preserved by concatenating in document order. Body-position `<style>` blocks (5, 14 KB total) left inline because cascade-position-sensitive.
