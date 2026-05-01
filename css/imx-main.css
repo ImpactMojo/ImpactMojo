@@ -8323,3 +8323,80 @@ textarea:focus-visible,
 .specials-grouped .dropdown-section-items li a {
     padding-left: 1.5rem !important;
 }
+
+/* ==========================================================================
+   Mobile margin safety net (≤768px)
+   Several sections were authored with inline padding or zero horizontal
+   padding and never got a mobile rule. This block enforces consistent
+   side breathing room across the homepage and inner pages without
+   touching desktop layouts.
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Top-level <section> elements get a base side padding floor */
+    body > section,
+    main > section,
+    .imx-libraries-grid-section,
+    .imx-tracks-compact,
+    .imx-pathways-section,
+    .imx-flagship-courses,
+    .enhanced-support-section,
+    .newsletter-section,
+    .whats-new-section,
+    .whatsapp-plc-section,
+    section.section,
+    section[id="community"],
+    section[id="quiz"],
+    section[id="popular-courses"],
+    section[id="labs"],
+    section[id="games"],
+    section[id="deep-dives"],
+    section[id="premium"],
+    section[id="about"] {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
+
+    /* Inline-styled section wrappers that set max-width and auto margins
+       (the common "centered container" pattern) — make sure they don't
+       lose the floor padding. */
+    body > section > div[style*="max-width"],
+    main > section > div[style*="max-width"] {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Card grids — ensure they single-column at this width and have a
+       minimum gap so cards never visually butt into each other. */
+    .cards-grid,
+    .imx-libraries-grid,
+    .imx-resource-grid,
+    .imx-community-grid,
+    .imx-premium-tiers,
+    .flagship-grid,
+    .support-options-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    /* Hero / first-page padding floor */
+    .hero, .imx-hero, header.imx-hero, .v3-hero, .hero-section {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
+
+    /* Explicit override for the worst offender (was padding: 2rem 0;) */
+    .imx-libraries-grid-section {
+        padding: 2rem 1.25rem !important;
+    }
+}
+
+/* Even tighter floor for very small phones */
+@media (max-width: 380px) {
+    body > section,
+    main > section,
+    .imx-libraries-grid-section,
+    .hero, .imx-hero, header.imx-hero, .v3-hero {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
