@@ -7007,18 +7007,36 @@ waitForDependencies(patchSaveFunctions);
 
 
 <script>
-// Fix: push anchor hashes to address bar on all internal link clicks
+// Fix: push anchor hashes to address bar on all internal link clicks.
+// Matches both bare anchors (#foo) AND home-page anchors (/#foo) so
+// that nav links coming from sub-pages also get smooth-scroll when the
+// user is already on /. From a non-home page, /#foo falls through to
+// browser-native navigation (which correctly loads / and scrolls).
 document.addEventListener('click', function(e) {
-    var link = e.target.closest('a[href^="#"]');
+    var link = e.target.closest('a[href]');
     if (!link) return;
-    var hash = link.getAttribute('href');
-    if (hash && hash.length > 1) {
-        var target = document.querySelector(hash);
-        if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            history.pushState(null, null, hash);
+    var href = link.getAttribute('href');
+    if (!href) return;
+
+    // Pure anchor on current page
+    var hash = null;
+    if (href.charAt(0) === '#' && href.length > 1) {
+        hash = href;
+    } else if (href.indexOf('/#') === 0 && href.length > 2) {
+        // /#foo from the home page → treat as same-page anchor.
+        // From any other path, let the browser navigate normally.
+        if (location.pathname === '/' || location.pathname === '/index.html') {
+            hash = '#' + href.slice(2);
         }
+    }
+    if (!hash) return;
+
+    var target;
+    try { target = document.querySelector(hash); } catch (_) { return; }
+    if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, null, hash);
     }
 });
 </script>
