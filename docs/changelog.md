@@ -2,6 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.5 — May 1, 2026 (Premium tools audit)
+
+Audited the Premium tools surface against `premium.html` and `docs/faq.md` (both list 9 tools across two tiers).
+
+- **Catalog dedup**: removed duplicate Code Converter entry — `p3` (Statistical Code Converter Pro) and `p5` (Code Converter Pro) both pointed at the same `code-converter-pro.html`. Kept the canonical title and merged the better description.
+- **Catalog rename**: `p2` was titled "Qualitative Research Lab Pro" — actual product is "Qualitative Insights Lab Pro" (per premium.html marketing). Renamed in catalog and aligned the tool's own `<title>`/meta/h1 (8 occurrences) from the abbreviated "Qual Insights Lab Pro" to the full canonical name.
+- **Catalog backfill**: added 4 missing premium tools — TOC Workbench Pro (live, was previously only in search-index), DevData Practice (coming soon), Visualization Cookbook (coming soon), DevEconomics Toolkit (coming soon). Catalog filter chip updated 7 → 9 to match catalog hero copy.
+- **Search-index backfill**: added 2 missing tool entries (`code-converter-pro.html`, `qual-insights-lab.html`) so site search now resolves all premium tools.
+- **Description rewrites**: tightened catalog descriptions for 4 entries to match the more specific copy on premium.html (Field Notes, RQ Builder, TOC Workbench, Code Converter).
+
+All 3 tool files in `/premium-tools/` verified clean for viewport, meta description, OG, GA, Amaranth, im-topbar with Browse + Premium, no emojis.
+
 ## v10.23.4 — May 1, 2026 (Labs audit)
 
 Audited all 11 labs for metadata, brand, and link consistency.
