@@ -2,6 +2,59 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.0 — May 1, 2026
+
+### Public Choice — 12th flagship course
+
+- New flagship course at [/courses/pubchoice/](/courses/pubchoice/) — *Public Choice: Decisions, Incentives & Institutions*. 13 modules synthesising the Virginia school (rent-seeking), Bloomington school (commons), and New Institutional Economics, with cases from India, Bangladesh, Pakistan, Sri Lanka, and Nepal.
+- 83-term interactive lexicon at [/courses/pubchoice/lexicon.html](/courses/pubchoice/lexicon.html).
+- 13 modules imported to Supabase `course_content` table (matches the convention used by the other 11 flagships: module 1 is preview, 2–13 require auth).
+- Wired into homepage flagship grid, catalog filter (`Flagship (12)`), JSON-LD ItemList, sitemap, and search-index.
+
+### Performance — measurable wins shipped
+
+- **Extracted 215 KB of inline `<style>` from index.html → `/css/imx-main.css`.** Browser now caches CSS across navigations and downloads it in parallel with HTML. Index.html dropped from 645 KB raw / 96 KB brotli → 431 KB raw / 64 KB brotli.
+- **HTML edge caching** added in `netlify.toml` (`/*.html` and `/` → `public, max-age=300, must-revalidate`). Repeat-visit TTFB fell from ~1.4s to **175 ms** (8× faster). Netlify auto-purges on deploy so freshness is preserved.
+- **Auth scripts deferred** at the bottom of body (`@supabase/supabase-js`, state-manager, config, auth) so the parser doesn't block on them.
+
+### Specials nav — accordion subgroups
+
+The Specials dropdown was a flat list of 13 items. Now organised into 4 collapsible subgroups (all closed by default):
+- **Reference Libraries** — ImpactLex · DevDiscourses · FieldCases · PolicyDhara · Dataverse · NudgeKit
+- **Long-form Reading** — Book Companions · Deep Dives
+- **Practice & Programs** — Flagship Courses · ToC Workbench · Dojos · Challenges
+- **Behind the Scenes** — Live Projects
+
+Single-open accordion behaviour (opening one section closes others). On mobile the cap on dropdown height was lifted so accordion items aren't clipped.
+
+### Navigation — fixes after we found a chain of subtle bugs
+
+- All 13 Specials items now use absolute URLs (`/#flagship-courses` etc.). Previously several used bare anchors (`#flagship-courses`, `#case-studies`, `#dev-discourses`) or relative paths (`dataverse.html`, `challenges.html`) that only worked from the homepage.
+- **`js/router.js` now respects hash fragments before path-based routes**. Earlier, navigating to `/#flagship-courses` would match the home route and scroll to top, overriding the hash. Now the hash always wins. (This was the actual cause of "clicking Flagship Courses does nothing.")
+- Capture-phase click handler on accordion items as a belt-and-suspenders force-navigate.
+- Mobile: tapping an accordion item now closes the menu so the user can see the page scroll.
+- `js/faq-bank.js` line 167 had a string-literal syntax error (stray `""`) that was killing the whole file's parsing — fixed.
+
+### Mobile — margin safety net + Public Choice hero text fix
+
+- Sitewide mobile (≤768px) padding floor on top-level sections, hero blocks, and the named `imx-*` sections so cards stop bleeding into the viewport edge. Tightens to 1rem on screens ≤380px.
+- Public Choice hero had two inline `color: rgba(255,255,255,...)` text elements with no dark background — invisible against the page bg. Switched to theme variables; the "Boundary with Politics of Aspiration" callout uses a new `.pubchoice-boundary-strong` class with proper light/dark amber.
+
+### Reference libraries — eliminated `on-web.link`
+
+- `/policydhara`, `/devdiscourses`, `/impactlex` (and `/dictionary`) all redirected through `on-web.link` shortlinks. PolicyDhara was already 404'ing.
+- Replaced with **Netlify Edge Functions** that proxy directly from `varnasr.github.io/PolicyDhara` and `varnasr.github.io/development-discourses`, injecting a `<base href="...">` into the HTML so relative asset paths resolve.
+- ImpactLex now points at the in-repo `/impactlex/` (was migrated locally in v10.20.0).
+- Updated 4 pages that linked to `on-web.link/DevDiscourses` (`index.html`, `premium.html`, `updates.html`, `content-marketing-kit.html`).
+
+### DevEcon CSS shim
+
+- `courses/devecon/index.html` referenced `var(--indigo)`, `var(--cyan)`, `var(--orange)`, `var(--success)` in 17 places (quiz, phase, reflection, feedback components) but never defined them. Quiz number circles rendered faint, dashed reflection borders disappeared, correct/incorrect feedback bands lost colour. Defined the four aliases in each of the 4 `:root` / theme blocks.
+
+### Misc polish
+
+- Catalog `.track-filter.active` failed WCAG AA contrast (sky-500 text on sky-500-at-20% background). Fixed to amber-700 light / sky-300 dark — same WCAG-safe pattern used for `.card-type.course` two CSS blocks above.
+
 ## v10.22.0 — April 29, 2026
 
 ### Deep Dives — curated reading lists from named scholars

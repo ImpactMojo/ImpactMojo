@@ -4,15 +4,46 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 
 ## Project State
 
-- **Current content counts**: 16 Games, 11 Flagship Courses, 38 Foundational Courses (4 native HTML, 34 Gamma iframe), 400+ Handouts, 11 Labs, 30 Book Summaries, 28 Blog Posts, 47 top-level HTML pages
-- **Last verified**: 2026-04-12
-- **Sitemap coverage**: 171 URLs (verified 2026-04-12)
-- **Deploy target**: Netlify (auto-deploy on push to main)
+- **Current content counts**: 16 Games, **12 Flagship Courses** (Public Choice added v10.23), 38 Foundational Courses (4 native HTML, 34 Gamma iframe), 85 Handouts, 11 Labs, 50 Book Summaries, **5 Deep Dives** (new content type, v10.22), 28 Blog Posts, 47 top-level HTML pages
+- **Last verified**: 2026-05-01
+- **Sitemap coverage**: 173+ URLs (added Public Choice + lexicon)
+- **Deploy target**: Netlify (auto-deploy on push to main, HTML now edge-cached for 5 min)
 - **Backend**: Supabase project `ddyszmfffyedolkcugld`
+- **Edge functions**: `netlify/edge-functions/policydhara.ts` + `devdiscourses.ts` proxy GitHub Pages content with `<base>` injection
+
+## Known catalog count drift (open)
+
+- `catalog.html` filter chips say `Games (16)` but JS `allContent` only has 12 — 4 missing: digital-ethics, public-health, climate-action, gender-equity
+- `catalog.html` says `Labs (10)` but disk has 11 — 1 missing
+- Catalog doesn't index BookSummaries (50), Handouts (85), ImpactLex, FieldCases, DevDiscourses, PolicyDhara, Dataverse, NudgeKit (only DeepDives is the non-courses/labs/games type indexed)
+- Course pages have minimal `im-topbar` only — no Specials dropdown, so users can't reach Reference Libraries from a course page without going home first
 
 ## Recent Decisions
 
 <!-- Append new decisions at the top -->
+- **2026-05-01 (Public Choice launch + perf overhaul + nav fixes)**: Major session, 26 commits to main. Highlights:
+  - **Public Choice flagship** added as the 12th flagship course at `/courses/pubchoice/`. Title aligned to flagship pattern: "Public Choice: Decisions, Incentives & Institutions" (matches "Public Policy: Process, Design & Governance"). Indigo gradient card. 13 modules imported to Supabase `course_content` table — table is `course_content` not `modules` (deployment notes were wrong). Module 1 only has `is_preview=true` to match convention used by other flagships.
+  - **CSS extraction perf win**: Pulled 215 KB of inline `<style>` (4 head blocks) out of `index.html` into `/css/imx-main.css`. HTML brotli wire size 96 KB → 64 KB. Cascade preserved by concatenating in document order. Body-position `<style>` blocks (5, 14 KB total) left inline because cascade-position-sensitive.
+  - **HTML edge cache**: Added `[[headers]]` for `/*.html` and `/` in `netlify.toml`: `public, max-age=300, must-revalidate`. TTFB dropped from 1.4s → 175 ms (8×). Was previously `max-age=0, must-revalidate`. Auto-purge on deploy means freshness is preserved.
+  - **Eliminated `on-web.link`** from all live pages. Replaced `_redirects` proxies with **Netlify Edge Functions** because `_redirects` rules can't differentiate trailing-slash forms (Netlify normalises) → caused redirect loops AND blank pages (relative asset paths broke). Edge functions proxy `varnasr.github.io/PolicyDhara` and `varnasr.github.io/development-discourses`, inject a `<base href>` into HTML so relative paths resolve. Updated 4 pages that linked to old `on-web.link/DevDiscourses`.
+  - **Specials nav redesigned** as 4-section accordion (Reference Libraries / Long-form Reading / Practice & Programs / Behind the Scenes), all collapsed by default, single-open behaviour. CSS appended to extracted `imx-main.css`. Mobile cap (`max-height: 500px`) was clipping accordion items — lifted for `.specials-grouped` specifically.
+  - **Navigation bug chain solved**: ALL Specials links now absolute (`/#flagship-courses`, `/#case-studies`, `/#dev-discourses`, `/dataverse.html`, `/challenges.html`). The actual blocker was **`js/router.js` matching path `/` to the `home` route and overriding the hash** — fixed by checking `window.location.hash` first in `handleRoute()`. Hash always wins over path-based default route. Same fix benefits all hash-based nav.
+  - **Mobile margin safety net** appended to `imx-main.css`: forces `padding-left/right: 1.25rem` on top-level sections, named `imx-*` sections, and id'd sections. Tightens to 1rem at ≤380px. Card grids collapse to single column. Worst offender was `.imx-libraries-grid-section` (was `padding: 2rem 0`).
+  - **Public Choice hero**: 3 inline `color: rgba(255,255,255,...)` elements were invisible on light bg. Switched to `var(--color-text-secondary)` / `var(--color-text)`. Boundary callout strong/link wrapped in `.pubchoice-boundary-strong` class with theme-aware amber (#92400E light / #FCD34D dark).
+  - **DevEcon CSS shim**: `var(--indigo)`, `--cyan`, `--orange`, `--success` referenced 17 times but never defined. Added to all 4 :root / theme blocks. Same bug pattern that was fixed in pubchoice earlier.
+  - **Catalog WCAG fix**: `.track-filter.active` was sky-500 on sky-500-at-20% (~2.8:1, fails AA). Switched to amber-700 light / sky-300 dark.
+  - **`js/faq-bank.js` line 167** had stray `""` mid-string — killed file parsing. Fixed.
+  - **PolicyDhara link** updated from `https://on-web.link/PolicyDhara` to `https://www.impactmojo.in/policydhara` on the homepage card. Also changed `#policy-dhara` anchor in nav to `/policydhara`.
+  - **Bylines for Deep Dives**: Sukhmeet Bedi role corrected from "Founder, ImpactMojo" to "Series Editor — Deep Dives" (user is the founder, not Sukhmeet). 3 of 5 Deep Dives now bylined "ImpactMojo Editorial / House Pick" instead of all-Sukhmeet.
+  - **Key reusable learnings:**
+    - Netlify `_redirects` normalises trailing slashes when matching → can't reliably differentiate `/foo` from `/foo/` for proxy rules. Use Edge Functions when you need exact-form matching.
+    - When proxying a third-party HTML page through Netlify, inject `<base href="/your-path/">` into the HTML or its relative asset URLs will resolve against the wrong base and the page will render unstyled.
+    - Site-wide JS routers can override browser-native hash navigation. Always check `window.location.hash` BEFORE matching path → route in any client router.
+    - Capture-phase click handlers + `stopPropagation` will block bubble-phase mobile-menu-close handlers. If you need to force navigation on capture, also explicitly close any UI that's expected to dismiss on click.
+    - Inline `style="color: rgba(255,255,255,...)"` on hero text is the most common dark-mode-residue bug — pages designed for a dark hero get re-skinned to light without removing white text.
+    - When extracting inline `<style>` to external file, preserve document order. Brace-balance check is a fast sanity test.
+    - 215 KB CSS extraction also saves brotli bytes (96 KB → 64 KB) and lets browsers parallelise download.
+- **2026-04-29 (Deep Dives content type launch)**: New content type `Deep Dives` at `/DeepDives/` — themed annotated reading lists curated by named scholars/practitioners. 5 starter lists (Indian Political Economy, Impact Measurement, Climate & Just Transitions, Caste & Identity, Data & Power), bylined as Sukhmeet Bedi (Editor's Pick × 2) or ImpactMojo Editorial (House Pick × 3). Brand-aligned: Sargam icons (no emojis), Amaranth body / Inter headings, paper plane SVG, skip link. Supporting infra: `/data/deep-dives.json` registry, landing page with topic filters, per-list HTML template, shared CSS/JS, sitemap entries, search-index entries, catalog filter chip "Deep Dives (5)", homepage section card grid, nav dropdown link. Inspired by CASI Deep Dive series (credit removed in subsequent commit per user request).
 - **2026-04-28 (global Claude Code + infra)**: Added Supabase user `taranga.sriraman@gmail.com` (org tier, learner role, ID: `b8726430-c343-408f-820d-cb0322aca632`). Promoted 16 general-purpose skills to global `~/.claude/` (gemini/grok/deepseek/sarvam/github/netlify/supabase/gamma/napkin/pdf/pptx/frontend-design/web-artifacts/seo/deep-research/memory). 8 project-specific stay in `.claude/`. Vendored griffinhilly/claude-code-synthesis to `~/.claude/vendor/` with `/sync-guides`. Housekeeping expanded: step 11 (GA `G-JRCMEB9TBW`), step 12 (10-element branding check). Added alvinunreal/awesome-opensource-ai to dataverse (#271) + CLAUDE.md. LinkedIn article drafted. Version: v10.21.0.
 - **2026-04-12 (docs/README/roadmap refresh)**: Second housekeeping pass. README.md: labs 19→11 (split into Labs/Tools/Premium), added Gender Studies + Public Policy flagships, added BookSummaries (28) + AI Study Companions (11), Formspree→Netlify Forms, version→10.18.0. Marketing kit: 15→16 games, 10→11 labs, 9→11 flagship across ~20 locations. PressKit: 39→38 foundational. Roadmap: moved 5 completed items, added v10.13–v10.18 history. GitHub: closed Q1 milestone, replied to #361 contributor, updated #272 BookSummaries target to 40+. 9 Dependabot PRs still open (CI bumps + deps).
 - **2026-04-12 (service consolidation + engagement pipeline)**: Major session — consolidated from 3 services to 2 (eliminated Formspree), built full engagement pipeline from scratch. Key changes:
