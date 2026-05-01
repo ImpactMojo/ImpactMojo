@@ -92,6 +92,35 @@ function toggleMobileDropdown(event, element) {
     li.classList.toggle('open');
 }
 
+// Toggle a subsection inside the Specials dropdown (accordion).
+function toggleSpecialsSection(event, btn) {
+    event.preventDefault();
+    event.stopPropagation();
+    var section = btn.closest('.dropdown-section');
+    if (!section) return;
+    var willOpen = !section.classList.contains('open');
+    // Close other open sections in the same dropdown for a tidy single-open feel
+    var dropdown = section.closest('.dropdown-menu');
+    if (dropdown) {
+        dropdown.querySelectorAll('.dropdown-section.open').forEach(function (s) {
+            if (s !== section) {
+                s.classList.remove('open');
+                var t = s.querySelector('.dropdown-section-toggle');
+                if (t) t.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+    section.classList.toggle('open', willOpen);
+    btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+}
+
+// Initialise the default-open Specials section once DOM is ready.
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.dropdown-section[data-default-open="true"]').forEach(function (s) {
+        s.classList.add('open');
+    });
+});
+
 /* Mobile detection flag */
 window.IMPACTMOJO_IS_MOBILE = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
@@ -435,27 +464,52 @@ window.addEventListener('click', function(e) {
 <polyline points="6 9 12 15 18 9"></polyline>
 </svg>
 </a>
-<ul class="dropdown-menu" id="specials-dropdown">
-<li class="dropdown-label">Reference Libraries</li>
-<li id="nav-impactlex"><a href="/impactlex/" style="color: #0EA5E9; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Search"/></svg> ImpactLex</a></li>
-<li id="nav-devdiscourses"><a href="#dev-discourses" style="color: #8B5CF6; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Article"/></svg> DevDiscourses</a></li>
-<li id="nav-casestudies"><a href="#case-studies" style="color: #10B981; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Book"/></svg> FieldCases</a></li>
-<li id="nav-policydhara"><a href="/policydhara" style="color: #F59E0B; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Library_books"/></svg> PolicyDhara</a></li>
-<li id="nav-dataverse"><a href='dataverse.html' style='color: #6366F1; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Database"/></svg> Dataverse</a></li>
-<li id="nav-nudgekit"><a href="/bct-repository" style="color: #EC4899; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Fact_check"/></svg> NudgeKit</a></li>
-<li class="dropdown-divider"></li>
-<li class="dropdown-label">Long-form Reading</li>
-<li id="nav-booksummaries"><a href='/BookSummaries/' style='color: #D97706; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Book"/></svg> Book Companions</a></li>
-<li id="nav-deepdives"><a href='/DeepDives/' style='color: #C8910A; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Library_books"/></svg> Deep Dives</a></li>
-<li class="dropdown-divider"></li>
-<li class="dropdown-label">Practice &amp; Programs</li>
-<li id="nav-flagship"><a href="#flagship-courses" style="color: #6366F1; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg> Flagship Courses</a></li>
-<li id="nav-toc-workbench"><a href='/toc-workbench.html' style="color: #10B981; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Crosshair_detailed"/></svg> ToC Workbench</a></li>
-<li id="nav-dojos-special"><a href='/dojos' style='color: #14B8A6; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Activity"/></svg> <span data-i18n="nav.dojos">Dojos</span></a></li>
-<li id="nav-challenges"><a href='challenges.html' style='color: #EF4444; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Crosshair_detailed"/></svg> <span data-i18n="nav.challenges">Challenges</span></a></li>
-<li class="dropdown-divider"></li>
-<li class="dropdown-label">Behind the Scenes</li>
-<li id="nav-live-projects"><a href='/live-projects.html' style='color: #0EA5E9; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Bar_chart"/></svg> Live Projects</a></li>
+<ul class="dropdown-menu specials-grouped" id="specials-dropdown">
+<li class="dropdown-section" data-default-open="true">
+  <button type="button" class="dropdown-section-toggle" onclick="toggleSpecialsSection(event, this)" aria-expanded="true">
+    <span>Reference Libraries</span>
+    <svg class="dropdown-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
+  <ul class="dropdown-section-items">
+    <li id="nav-impactlex"><a href="/impactlex/" style="color: #0EA5E9; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Search"/></svg> ImpactLex</a></li>
+    <li id="nav-devdiscourses"><a href="#dev-discourses" style="color: #8B5CF6; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Article"/></svg> DevDiscourses</a></li>
+    <li id="nav-casestudies"><a href="#case-studies" style="color: #10B981; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Book"/></svg> FieldCases</a></li>
+    <li id="nav-policydhara"><a href="/policydhara" style="color: #F59E0B; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Library_books"/></svg> PolicyDhara</a></li>
+    <li id="nav-dataverse"><a href='dataverse.html' style='color: #6366F1; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Database"/></svg> Dataverse</a></li>
+    <li id="nav-nudgekit"><a href="/bct-repository" style="color: #EC4899; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Fact_check"/></svg> NudgeKit</a></li>
+  </ul>
+</li>
+<li class="dropdown-section">
+  <button type="button" class="dropdown-section-toggle" onclick="toggleSpecialsSection(event, this)" aria-expanded="false">
+    <span>Long-form Reading</span>
+    <svg class="dropdown-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
+  <ul class="dropdown-section-items">
+    <li id="nav-booksummaries"><a href='/BookSummaries/' style='color: #D97706; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Book"/></svg> Book Companions</a></li>
+    <li id="nav-deepdives"><a href='/DeepDives/' style='color: #C8910A; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Library_books"/></svg> Deep Dives</a></li>
+  </ul>
+</li>
+<li class="dropdown-section">
+  <button type="button" class="dropdown-section-toggle" onclick="toggleSpecialsSection(event, this)" aria-expanded="false">
+    <span>Practice &amp; Programs</span>
+    <svg class="dropdown-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
+  <ul class="dropdown-section-items">
+    <li id="nav-flagship"><a href="#flagship-courses" style="color: #6366F1; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg> Flagship Courses</a></li>
+    <li id="nav-toc-workbench"><a href='/toc-workbench.html' style="color: #10B981; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Crosshair_detailed"/></svg> ToC Workbench</a></li>
+    <li id="nav-dojos-special"><a href='/dojos' style='color: #14B8A6; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Activity"/></svg> <span data-i18n="nav.dojos">Dojos</span></a></li>
+    <li id="nav-challenges"><a href='challenges.html' style='color: #EF4444; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Crosshair_detailed"/></svg> <span data-i18n="nav.challenges">Challenges</span></a></li>
+  </ul>
+</li>
+<li class="dropdown-section">
+  <button type="button" class="dropdown-section-toggle" onclick="toggleSpecialsSection(event, this)" aria-expanded="false">
+    <span>Behind the Scenes</span>
+    <svg class="dropdown-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
+  <ul class="dropdown-section-items">
+    <li id="nav-live-projects"><a href='/live-projects.html' style='color: #0EA5E9; font-weight: 600;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Bar_chart"/></svg> Live Projects</a></li>
+  </ul>
+</li>
 </ul>
 </li>
 
