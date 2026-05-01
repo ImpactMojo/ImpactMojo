@@ -2,6 +2,17 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.10 — May 1, 2026 (Handouts emoji → SVG)
+
+Closed the open finding from v10.23.9: replaced **all 1,317 emoji instances** across 63 handout files (144 unique characters) with inline Sargam-style stroke SVGs.
+
+- Mapping: viewBox 0 0 24 24, stroke 1.5px, currentColor — visually consistent with the Sargam icon family already used in DeepDives and the homepage nav.
+- Self-contained inline SVGs (no sprite/CDN dependency) so handouts remain print-portable.
+- Each modified file got a one-time `.hi-emoji { width: 1em; height: 1em; vertical-align: -0.15em; display: inline-block; }` rule injected into its existing `<style>` block so SVG sizing follows surrounding `font-size`.
+- Skipped emojis inside `<script>` and `<style>` blocks (3 instances) to avoid breaking JS data structures.
+
+Verification: 0 body emojis remain in any handout. File count unchanged (84 HTML + 1 PDF).
+
 ## v10.23.9 — May 1, 2026 (Handouts audit)
 
 Audited the 85 handouts (84 HTML + 1 PDF across 10 top-level Track directories).

@@ -16,7 +16,7 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 
 ## Known drift (open)
 
-- **Handouts emoji cleanup (Group 8 finding)**: 62 of 84 handout HTMLs contain emojis as visual scanning aids in print-optimised reference cards (~1000+ instances). Replacing with inline SVGs would risk regression in 8.5×11" print layouts and is ~12× the dt-companion effort. Awaits explicit user direction.
+- (none currently)
 
 ## Recent Decisions
 
