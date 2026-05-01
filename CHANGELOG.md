@@ -5,6 +5,38 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.10] - 2026-05-01
+
+### Added
+- **Public Choice — 12th flagship course** at `/courses/pubchoice/` — *Decisions, Incentives & Institutions*. 13 modules synthesising the Virginia school (rent-seeking), Bloomington school (commons), and New Institutional Economics, with cases from India, Bangladesh, Pakistan, Sri Lanka, and Nepal. 83-term interactive lexicon. 12th NotebookLM AI Study Companion.
+- **3 new 101-courses** — native slide-deck (1280×720, 12 sections) format: *Caste Studies 101* (varna/jati, Ambedkarite thought, anti-caste movements), *Public Finance & Budgeting 101* (Union/state budgets, finance commissions, budget transparency), *Work, Labour & Livelihoods 101* (SNA boundary, care economy, sustainable-livelihoods framework, agrarian question, migration, non-farm economy).
+- **Deep Dives** — new content type at `/DeepDives/`: 5 curated annotated reading lists by Sukhmeet Bedi + ImpactMojo Editorial team (Indian Political Economy, Impact Measurement, Climate & Just Transitions in South Asia, Caste/Identity/Development, Data/Power/Global South). Mixed media (books, papers, podcasts, datasets), 2–4 sentence annotations per reading.
+
+### Changed
+- **Foundational course count: 38 → 41**. *Work, Labour & Livelihoods 101* supersedes both *Decent Work for All 101* and *Livelihoods 101* (deleted with 301 redirects). Net +3.
+- **Performance wins on index.html**: extracted 215 KB inline `<style>` to `/css/imx-main.css` (cacheable, parallel-loadable). Index dropped from 645 KB raw / 96 KB brotli → 431 KB / 64 KB. Repeat-visit TTFB improved from ~1.4s to **175 ms** (8× faster) via Netlify edge caching (`max-age=300, must-revalidate`). Auth scripts deferred to bottom of body.
+- **Specials nav restructured** into 4 collapsible accordion subgroups (Reference Libraries, Long-form Reading, Practice & Programs, Behind the Scenes) replacing a flat 13-item dropdown.
+- **Reference library proxies cleaned up** — eliminated `on-web.link` shortlinks (one was already 404'ing). PolicyDhara, DevDiscourses now served via Netlify Edge Functions proxying directly from the upstream GitHub Pages repos with injected `<base href>` for asset resolution.
+
+### Fixed (content audit batch — Group 1–8)
+- **Reference Libraries**: ImpactLex term count drift (claimed 1,200 vs actual 1,055), DevDiscourses count, FieldCases count — all aligned to source-of-truth across catalog, homepage, FAQ.
+- **Search-index**: backfilled 27 BookSummary/Reference/Handout entries that were on disk but missing from `data/search-index.json`. 3 catalog descriptions corrected (Hindi-shipping mojini-guide misclaim).
+- **Games**: emoji → SVG migration for climate-action and public-health games (Lucide-style, viewBox 0 0 24 24, 1.5px stroke). Stale `101.impactmojo.in` links replaced with self-hosted paths. `im-topbar` injected into all 16 games.
+- **Labs**: `toc-lab` Browse button added. 2 mistyped lab catalog entries corrected.
+- **Premium tools**: removed duplicate Code Converter Pro entry. Renamed *Qualitative Research Lab Pro* → *Qualitative Insights Lab Pro* (8 occurrences in source file). 4 missing tools backfilled to catalog (TOC Workbench Pro live; DevData Practice / Visualization Cookbook / DevEconomics Toolkit coming soon). Filter chip 7 → 9. Search-index entries added for all live tools.
+- **BookSummaries**: 30 of 31 companions verified clean (viewport, meta, OG, GA, Amaranth, im-topbar, no emojis). Replaced **54 emoji instances** in dt-companion.html (Design Thinking) with inline Sargam-style SVGs across 24 unique characters. All 31 catalog titles confirmed to match canonical `<title>` in source files.
+- **Flagship modules**: 5 catalog drifts + 3 homepage drifts in module counts. After fixes, all 12 flagships have consistent counts across catalog, homepage cards, and `id="module-N"` anchors. Specifically: Gandhi 12→13 (home), Devecon 12→13 (home), Dataviz 13→12 (catalog), DevAI 13→12 (catalog), MEL 13→14 (both), SEL 12→13 (catalog).
+- **Handouts render bug** in `handouts.html`: `TRACK_MAPPING` had 5 of 6 stale folder-name keys (`Data Analysis Track`, `Gender Studies Track`, `Research Methods Track`, etc.) that didn't match disk. Only Policy & Economics rendered with proper colour/order — the other 5 tracks fell into "Other Resources" alphabetical fallback. Fixed all 5 + added 4 missing mappings (Education and Pedagogy, Thematic Areas, Cross Cutting Resources, Quick Reference Cards).
+- **Handouts emoji removal**: replaced **1,317 emoji instances** across 63 handout files (144 unique characters) with inline Sargam-style SVGs. Self-contained (no sprite/CDN dependency) so handouts stay print-portable.
+- **Typo fix**: `Handouts/Thematic Areas/South Aisa Region/` → `South Asia Region/`.
+- **Count corrections**: catalog + README "400+ handouts" was inflated marketing copy → 85 actual.
+- **README + 18 docs files**: backfilled all stale counts (11→12 flagships, 38→41 foundational, 48→53 courses, 400+→85 handouts, 11→12 NotebookLM).
+- **Mobile**: sitewide ≤768px padding floor on top-level sections so cards stop bleeding into viewport edge.
+- **Specials nav**: all 13 items now use absolute URLs (`/#flagship-courses` etc.). `js/router.js` now respects hash fragments before path-based routes.
+- **DevEcon CSS shim**: defined missing `--indigo`, `--cyan`, `--orange`, `--success` aliases in all 4 `:root` blocks of `courses/devecon/index.html` (17 components were referencing undefined vars).
+- **Catalog accessibility**: `.track-filter.active` failed WCAG AA contrast (sky-500 on sky-500@20%). Fixed to amber-700 light / sky-300 dark.
+- **`faq-bank.js` line 167**: stray `""` syntax error was killing the whole file's parsing — fixed.
+
 ## [10.20.0] - 2026-04-20
 
 ### Added

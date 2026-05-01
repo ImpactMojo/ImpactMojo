@@ -41,7 +41,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 
 | Category | Description |
 |----------|-------------|
-| **48 Courses** | 11 flagship + 38 foundational courses across 6 learning tracks (3 native HTML slide decks with 100 slides each; remaining 35 Gamma-hosted) |
+| **53 Courses** | 12 flagship + 41 foundational courses across 6 learning tracks (3 native HTML slide decks with 100 slides each; remaining 38 Gamma-hosted) |
 | **11 Interactive Labs** | Hands-on workbenches for MEL, policy, partnerships, budgeting, gender analysis, and more |
 | **16 Learning Games** | Interactive simulations with MiroFish AI agents and Indian folk art (Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) |
 | **ImpactLex Dictionary** | 390+ development terms with contextual definitions, formulas, and case studies (PWA, hosted on ImpactMojo) |
@@ -51,7 +51,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export — dark mode, filters, CSV export |
 | **Dataverse** | 270 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories — dark mode, category filters, responsive cards |
 | **30 Book Companions** | Interactive study companions for development economics, statistics, leadership, and productivity texts |
-| **11 AI Study Companions** | NotebookLM-powered study notebooks for all flagship courses |
+| **12 AI Study Companions** | NotebookLM-powered study notebooks for all flagship courses |
 | **85 Handouts** | Downloadable resources across 6 learning tracks |
 | **28 Blog Posts** | Learning Loops Blog — articles, tutorials, and case studies on development practice |
 | **Between the Logframes** | Development podcast — honest conversations on MEAL and impact work |
@@ -125,7 +125,7 @@ Available to Practitioner and Professional tier subscribers:
 
 ## Content Inventory
 
-### Flagship Courses (11)
+### Flagship Courses (12)
 
 Deep, comprehensive learning tracks — free for all users:
 
@@ -142,18 +142,19 @@ Deep, comprehensive learning tracks — free for all users:
 | **Constitution & Law** | Constitutional governance and development law |
 | **Public Policy: Process, Design & Governance** | How policy gets made, implemented, and evaluated |
 | **Gender Studies: Feminisms, Power & Social Change** | Feminist theory, gender analysis, and development |
+| **Public Choice: Decisions, Incentives & Institutions** | Mechanics of choice — voting paradoxes, rent-seeking, bureaucracy, federalism |
 
-### Foundational Courses (38)
+### Foundational Courses (41)
 
 Shorter introductory courses covering the breadth of development practice:
 
 | Track | Courses |
 |-------|---------|
 | **MEL & Research** | MEL Fundamentals, Qualitative Research Methods, Research Ethics, Observation to Insight, EDA for Humanitarian/Health/Social Data, Bivariate Analysis, Multivariate Analysis, Item Response Theory, Cost Effectiveness 101 |
-| **Economics & Policy** | Economics 101, Development Economics, Political Economy, Econometrics 101, Poverty and Inequality, Global Development Architecture, Fundraising Fundamentals |
-| **Gender & Equity** | Gender Studies 101, Women's Economic Empowerment, Sexual Rights and Health, Care Economy and Unpaid Work, Marginalized Identities and Development, Data Feminism |
+| **Economics & Policy** | Economics 101, Development Economics, Political Economy, Econometrics 101, Poverty and Inequality, Global Development Architecture, Fundraising Fundamentals, **Public Finance & Budgeting 101** |
+| **Gender & Equity** | Gender Studies 101, Women's Economic Empowerment, Sexual Rights and Health, Care Economy and Unpaid Work, Marginalized Identities and Development, Data Feminism, **Caste Studies 101** |
 | **Governance & Society** | Indian Constitution and Development, Post-Truth Politics, Decolonizing Development, Community-Led Development, Environmental Justice |
-| **Health & Wellbeing** | Public Health 101, Climate Essentials, Social Emotional Learning, Decent Work for All, Livelihoods Fundamentals |
+| **Health & Wellbeing** | Public Health 101, Climate Essentials, Social Emotional Learning, **Work, Labour & Livelihoods 101** (replaces Decent Work + Livelihoods Fundamentals) |
 | **Communication & Data** | English for Development, Visual Ethnography, Data Literacy for Development, BCC and Communications, Advocacy Fundamentals, Digital Development Ethics, Education and Pedagogy |
 
 ### Interactive Labs (11)
@@ -268,7 +269,7 @@ Comprehensive ToC learning and building toolkit:
 - **Reading Lists** — Curated resource collections
 - **Course Comparison** — Compare courses side-by-side
 - **Interactive Assessments** — MCQ, multi-select, and T/F quizzes for MEL, DataViz, and DevAI courses with scoring, feedback, and localStorage persistence
-- **Offline PWA Support** — Service worker caches all 11 flagship courses for offline access with automatic background updates
+- **Offline PWA Support** — Service worker caches all 12 flagship courses for offline access with automatic background updates
 - **Certificate Generation** — Auto-issued on course completion with public verification and Open Badges 3.0 metadata
 - **Badge Wallet** — View, download, and share W3C verifiable credential badges
 - **Portfolio Builder** — Premium feature: curate certificates, projects & case studies with PDF export

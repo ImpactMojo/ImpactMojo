@@ -1,6 +1,6 @@
 # NotebookLM Setup
 
-Programmatic management of ImpactMojo's 11 AI Study Companion notebooks using [notebooklm-py](https://github.com/teng-lin/notebooklm-py).
+Programmatic management of ImpactMojo's 12 AI Study Companion notebooks using [notebooklm-py](https://github.com/teng-lin/notebooklm-py).
 
 ## Installation
 
