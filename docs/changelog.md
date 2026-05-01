@@ -2,6 +2,36 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.9 — May 1, 2026 (Handouts audit)
+
+Audited the 85 handouts (84 HTML + 1 PDF across 10 top-level Track directories).
+
+### Render bug fixed: stale TRACK_MAPPING in handouts.html
+
+The `TRACK_MAPPING` config in `handouts.html` had **5 of 6** keys that didn't match disk folder names. As a result, only "Policy and Economics Track" was being rendered with its proper colour/order/displayName — the other 5 tracks were silently being grouped into "Other Resources" (alphabetical fallback). Fixed:
+
+| TRACK_MAPPING key was | Now (matches disk) |
+|---|---|
+| Data Analysis Track | Data and Technology Track |
+| Gender Studies Track | Gender Equity and Inclusion Track |
+| Research Methods Track | Monitoring Evaluation and Learning Track |
+| Philosophy Law and Governance | Philosophy Law and Governance Track |
+| Health Communication and Wellbeing | Health Communication and Wellbeing Track |
+
+Also added 4 missing top-level mappings that exist on disk but weren't in TRACK_MAPPING: **Education and Pedagogy**, **Thematic Areas**, **Cross Cutting Resources**, **Quick Reference Cards**. All 4 will now render with proper display names, colours, and order rather than as "Other Resources".
+
+### Typo fix
+
+Renamed `Handouts/Thematic Areas/South Aisa Region/` → `South Asia Region/`.
+
+### Count correction
+
+Catalog and README claimed "400+ handouts" — actual count is 85. Updated catalog hd1 description (400+ → 85) and 3 README references.
+
+### Open finding (not fixed): emojis in 62 of 84 handouts
+
+Approximately **1,000+ emoji instances** across 62 print-optimised handout files (📊 🎯 💡 🔍 etc., used as visual scanning aids in reference cards). Replacing them with inline SVGs would be ~12× the work of the dt-companion replacement and risks regressions in 8.5×11" print layouts. Flagged for explicit decision before action.
+
 ## v10.23.8 — May 1, 2026 (Flagship modules audit)
 
 Audited the 12 flagship courses for module-count drift between the actual `id="module-N"` anchors in each course's `index.html` and the counts claimed in catalog descriptions and homepage flagship cards. 5 drifts (catalog) and 3 drifts (homepage) found and fixed:

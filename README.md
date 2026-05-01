@@ -52,7 +52,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **Dataverse** | 270 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories — dark mode, category filters, responsive cards |
 | **30 Book Companions** | Interactive study companions for development economics, statistics, leadership, and productivity texts |
 | **11 AI Study Companions** | NotebookLM-powered study notebooks for all flagship courses |
-| **400+ Handouts** | Downloadable resources across 6 learning tracks |
+| **85 Handouts** | Downloadable resources across 6 learning tracks |
 | **28 Blog Posts** | Learning Loops Blog — articles, tutorials, and case studies on development practice |
 | **Between the Logframes** | Development podcast — honest conversations on MEAL and impact work |
 | **MCP Server** | Model Context Protocol server — connect any AI assistant to search all ImpactMojo content, BCTs, Dataverse, climate data, and more ([Setup guide](mcp-server/README.md)) |
@@ -217,7 +217,7 @@ Interactive simulations powered by **MiroFish AI agents** with **Indian folk art
 - [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) — Auto-updating tracker of Indian development policies across 22 sectors
 - **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings
 - **Dataverse** — 270 curated tools, datasets, APIs, MCP servers, and platforms for social impact research
-- **400+ Handouts** — Downloadable HTML resources across 6 learning tracks
+- **85 Handouts** — Downloadable HTML resources across 6 learning tracks
 - **Learning Loops Blog** — Articles, tutorials, case studies, platform updates
 - **Between the Logframes Podcast** — Development conversations on MEAL, ToC, and impact work
 
@@ -397,7 +397,7 @@ ImpactMojo/
 ├── dataverse.html          # Dataverse (270 tools & datasets across 22 categories)
 ├── blog.html               # Learning Loops blog
 ├── podcast.html            # Between the Logframes podcast
-├── handouts.html           # 400+ downloadable resources
+├── handouts.html           # 85 downloadable resources
 ├── testimonials.html       # Wall of Love
 │
 ├── community/
