@@ -8,19 +8,21 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 - **Last verified**: 2026-05-01
 - **Sitemap coverage**: 173+ URLs (added Public Choice + lexicon)
 - **Catalog coverage**: 128 items across 9 content types (was 85 across 6 before v10.23.1)
+- **Search-index coverage**: 525 entries (backfilled 27 BookSummary/Reference/Handout entries in v10.23.2)
+- **Reference Library counts** (verified v10.23.2): ImpactLex 390 terms · FieldCases 200 cases / 117 countries · NudgeKit 203 BCTs / 26 categories · Dataverse 272 items · DevDiscourses 500+ papers · PolicyDhara (Indian policy docs)
 - **Deploy target**: Netlify (auto-deploy on push to main, HTML now edge-cached for 5 min)
 - **Backend**: Supabase project `ddyszmfffyedolkcugld`
 - **Edge functions**: `netlify/edge-functions/policydhara.ts` + `devdiscourses.ts` proxy GitHub Pages content with `<base>` injection
 
 ## Known drift (open)
 
-- `data/search-index.json` has only ~9 BookSummary / reference entries vs **31 BookSummaries + 6 Reference Libraries** now in catalog. Search-index backfill is a separate maintenance task — flagged but not done in v10.23.1.
-- `data/search-index.json` doesn't include Public Choice (missed during pubchoice launch).
-- BookSummary catalog title for `gog-companion.html` reads "The Great Greenwashing" — wrong; gog is The Goal by Goldratt. One title-string review pass would catch others like this.
+- (none currently — Group 1 + Group 2 drifts closed in v10.23.1 and v10.23.2)
 
 ## Recent Decisions
 
 <!-- Append new decisions at the top -->
+- **2026-05-01 (Group 2 — Reference Libraries audit)**: Audited 6 reference libraries against actual data. Found and fixed 6 count drifts in commit `xxxxxx`: dataverse.html hero (215→272), index.html Dataverse card (259→272), bct-repository.html (200+→203, 4 occurrences across meta/og/twitter/ld-json/hero), index.html NudgeKit categories (16→26), index.html flagship summary (11→12), data/dataverse.json totalItems (271→272). ImpactLex (390 terms) and FieldCases (200 cases / 117 countries) verified accurate. Edge functions for policydhara and devdiscourses are correctly registered via inline `export const config = { path: [...] }` — no netlify.toml binding needed.
+- **2026-05-01 (later same day — search-index backfill)**: Closed two flagged drifts in commit `655c1fd`. Backfilled 27 missing entries in `data/search-index.json` (24 BookSummary, 2 Reference Library, 1 Handouts; total now 525). Fixed 3 wrong BookSummary descriptions in catalog that were guessed from filename slugs: `gog` (Pinto's Great Greenwashing, not Goldratt's Goal); `dt` (Design Thinking method, not "data thinking"); `info-we-trust` (RJ Andrews 2019, not McCandless).
 - **2026-05-01 (later same day — Group 1 audit follow-through)**: Catalog overhaul + Browse access on inner pages. Closed all 4 open items from morning audit. 133 files changed in one commit (`951e9c9`):
   - **Catalog** (`catalog.html`): now indexes 128 items across 9 content types (was 85 across 6). Added 4 missing games (digital-ethics, public-health, climate-action, gender-equity), 1 missing lab (gender-studies), 31 BookSummaries with hand-written 1-line descriptions, 6 Reference Libraries (one card per platform: ImpactLex, DevDiscourses, FieldCases, PolicyDhara, Dataverse, NudgeKit), and 1 collective Handouts entry → /handouts.html. New filter chips: Book Companions (31), Reference (6), Handouts. Bumped Labs chip 10→11. Added 3 new `.card-type` colour rules with light + dark variants.
   - **Browse access from inner pages**: Course pages, BookSummaries, DeepDives, lexicons, premium-tools, etc. only had a minimal im-topbar with logo + Premium button. Users couldn't reach the catalog from a course page. Injected an `<a class="im-browse-btn" href="/catalog.html">Browse</a>` into the `im-topbar` of 132 inner pages, just left of the Premium button. Used a Python regex to find files containing `class="im-premium-btn"` and inserted the link + a small `.im-browse-btn` CSS rule inline. Homepage skipped (has the full nav with Specials dropdown).

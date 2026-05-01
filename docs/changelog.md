@@ -2,6 +2,23 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.2 — May 1, 2026 (Reference Libraries audit)
+
+### Count alignment across pages
+
+Reference Library counts had drifted across landing cards, hero descriptions, and meta tags. Audited the 6 libraries and aligned every claim to the actual data:
+
+| Library | Was | Now | Source |
+|---|---|---|---|
+| Dataverse hero + `<meta>` | 215+ | 270+ | `data/dataverse.json` (272 items) |
+| Dataverse home card | 259 | 272 | – |
+| NudgeKit hero + `<meta>` + ld-json | 200+ | 203 | `data/bct-repository.json` |
+| NudgeKit home card | 16 Categories | 26 Categories | – |
+| Flagship summary chip | 11 | 12 | Public Choice added in v10.23.0 |
+| Dataverse meta `totalItems` | 271 | 272 | actual category sum |
+
+ImpactLex (390 terms) and FieldCases (200 cases / 117 countries) verified accurate.
+
 ## v10.23.1 — May 1, 2026 (later same day)
 
 ### Catalog → complete content index
