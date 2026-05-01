@@ -2,6 +2,15 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.4 — May 1, 2026 (Labs audit)
+
+Audited all 11 labs for metadata, brand, and link consistency.
+
+- **toc-lab.html**: was missing the Browse link (only lab without one). Injected into the existing `top-controls` div, styled to match its local `premium-link` pattern.
+- **Search-index re-typing**: 2 entries (`/BookCompanionTools/budget-template-generator.html`, `/BookCompanionTools/sample-size-calculator.html`) were mistyped as `type: lab`. They are calculators that complement book summaries, not labs. Re-typed to `tool` with category `Book Companion Tools`. Lab count in search-index now matches the 11 files on disk.
+
+All 11 labs verified clean: viewport meta, title, meta description, OG, GA, Amaranth/Inter fonts, im-topbar with Browse + Premium, no emojis.
+
 ## v10.23.3 — May 1, 2026 (Games audit)
 
 ### Brand alignment
