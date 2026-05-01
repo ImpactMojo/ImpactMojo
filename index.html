@@ -119,6 +119,23 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.dropdown-section[data-default-open="true"]').forEach(function (s) {
         s.classList.add('open');
     });
+
+    // Belt-and-suspenders: force navigation on accordion item clicks. The
+    // dropdown items are <a href="...">; some other listener somewhere in
+    // the page was swallowing the click on Flagship Courses (and likely
+    // other accordion items). Attach a capture-phase handler that fires
+    // before anything else and explicitly navigates.
+    document.querySelectorAll('.dropdown-section-items a[href]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+            var href = a.getAttribute('href');
+            if (!href || href === '#' || href.charAt(0) === '#' && href.length === 1) return;
+            // Allow modified clicks (open in new tab) to behave normally.
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.href = href;
+        }, true);
+    });
 });
 
 /* Mobile detection flag */
