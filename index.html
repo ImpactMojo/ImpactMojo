@@ -132,7 +132,14 @@ document.addEventListener('DOMContentLoaded', function () {
             // Allow modified clicks (open in new tab) to behave normally.
             if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
             e.preventDefault();
-            e.stopPropagation();
+            // Don't stopPropagation — let the bubble-phase mobile menu
+            // close handler (line ~6742) still fire, so the menu collapses
+            // on tap instead of staying open.
+            // Close mobile menu explicitly too, in case the bubble handler
+            // isn't attached (e.g. desktop viewport that resized to mobile).
+            if (window.innerWidth <= 768 && typeof window.closeMobileMenu === 'function') {
+                setTimeout(window.closeMobileMenu, 50);
+            }
             window.location.href = href;
         }, true);
     });
