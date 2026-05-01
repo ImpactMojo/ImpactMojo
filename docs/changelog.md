@@ -2,6 +2,25 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.23.6 — May 1, 2026 (3 new 101-courses, 2 superseded)
+
+### New courses
+
+Three native slide-deck courses (1280×720 presentation format) shipped:
+
+- **Work, Labour & Livelihoods 101** (12 sections) — SNA boundary, care economy, sustainable-livelihoods framework, agrarian question, migration, non-farm economy. **Replaces** the old `decent-work.html` and `livelihood-basics.html` (both Gamma-iframe pages absorbed into this comprehensive course).
+- **Caste Studies 101** — varna and jati, Ambedkarite thought, the political economy of caste, anti-caste movements, the politics of measurement.
+- **Public Finance & Budgeting 101** — fiscal architecture, Union and state budgets, finance commissions, budget transparency in India.
+
+### Cross-references updated
+
+- `catalog.html`: c28 retitled from "Decent Work For All 101" to "Work, Labour & Livelihoods 101" (URL repointed); 2 new entries appended (c40 caste-studies, c41 public-finance-budgeting). Filter chip 39 → 41. Hero copy 38 → 41 foundational courses.
+- `index.html`: courses-modal entry for Livelihoods 101 retitled to Work, Labour & Livelihoods 101 with new URL + description; duplicate Decent Work modal item removed.
+- `data/search-index.json`: 3 new entries appended.
+- `sitemap.xml`: 2 old `<url>` entries removed; 3 new added.
+- `_redirects`: 4 new 301 redirects so `/101-courses/decent-work` and `/101-courses/livelihood-basics` (both with and without `.html`) point at the replacement.
+- Files deleted: `101-courses/decent-work.html`, `101-courses/livelihood-basics.html`.
+
 ## v10.23.5 — May 1, 2026 (Premium tools audit)
 
 Audited the Premium tools surface against `premium.html` and `docs/faq.md` (both list 9 tools across two tiers).
