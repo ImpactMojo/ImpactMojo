@@ -250,12 +250,21 @@
 
         console.log('Router: Handling path:', path);
 
-        if (!route) {
-            // No matching route, check for hash fragment
-            if (window.location.hash) {
-                const hashTarget = window.location.hash.substring(1);
+        // If a hash is present, ALWAYS prefer scrolling to the hash target
+        // over the path-based default. This was the bug behind 'clicking
+        // Flagship Courses does nothing': URL becomes /#flagship-courses,
+        // path matches '/' route → scroll to 'home' → looks like nothing
+        // happened. With the hash check first, /#flagship-courses scrolls
+        // to the actual flagship section.
+        if (window.location.hash) {
+            const hashTarget = window.location.hash.substring(1);
+            if (hashTarget) {
                 scrollToSection(hashTarget);
+                return;
             }
+        }
+
+        if (!route) {
             return;
         }
 

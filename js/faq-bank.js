@@ -164,7 +164,7 @@
     { re: /(advanced|deeper|next step)/i,
       a: "For deeper work, explore **labs** and **Premium** deeper-dives." },
     { re: /(duration|time|how long).+course/i,
-      a: "Most courses are **self-paced**. Time varies by learner"" check each course page for modules and suggested pace." },
+      a: "Most courses are **self-paced**. Time varies by learner — check each course page for modules and suggested pace." },
     { re: /\blive\b.+(class|session|cohort)/i,
       a: "Most learning is self-paced. When live/cohort options are offered, the course page will say so." },
     { re: /enrol|enroll|join|sign ?up/i,
