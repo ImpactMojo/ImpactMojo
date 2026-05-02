@@ -5,6 +5,25 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.11] - 2026-05-01
+
+### Changed
+- **Caste Studies 101 folded into expanded Social Margins 101.** User feedback: separate Caste Studies course was too narrow; Social Margins is the better umbrella name for a course covering all identity vectors (caste, tribe, religion, gender, sexuality, disability, region, language, class). Architectural switchover (`fd3c909`) shipped first; Phase A content expansion ongoing across releases.
+- **Foundational course count: 41 → 40** (Caste Studies merged into expanded Social Margins). 4 native HTML decks now: social-margins, public-finance-budgeting, work-labour-livelihoods, plus 36 Gamma-hosted.
+- `social-margins.html` (was the Gamma-only Marginalised Identities 101) now lives as a 100-slide native HTML deck:
+  - Section 01 (slides 3-8) **fully rewritten** to be foundational across all identities — "What Are Social Margins?", "Vectors of Marginalisation", "Foundational Voices on Identity & Marginalisation" (Ambedkar, Crenshaw, Spivak, Iris Marion Young, Phule, Uma Chakravarti), "Categories That Shape Identity Analysis" (ascribed/achieved, visible/invisible, identity/structure, recognition/redistribution), "Intersectionality — How Identities Compound" (Crenshaw + South Asian translation).
+  - Sections 02-11 (slides 9-97) currently retain the existing strong caste content (origins, anti-caste thought, colonialism/census, Article 17/reservations, economy, violence, education, gender×caste, diaspora, contemporary debates). Agenda transparently flags that broader sections (Tribal/Adivasi, Religion, Gender broader, Sexuality, Disability, Region, Language, Class) are "in expansion in upcoming releases".
+  - Section 12 lexicon (slide 99) restructured to a 3-column table with **Vector** annotations — added Intersectionality, Subaltern, Recognition vs Redistribution, NALSA judgment, Section 377, Hijra, RPWD Act 2016, Social model of disability, Communalism, Sub-nationalism alongside existing caste terms.
+- 301 redirects: `/101-courses/caste-studies` → `/101-courses/social-margins.html`.
+- Catalog `c40` (Caste Studies) deleted; `c17` retitled "Marginalised Identities 101" → "Social Margins 101" with broader scope description. Filter chip 41 → 40.
+- Homepage modal: Caste Studies item removed; Social Margins item swapped from Gamma fallback to direct native HTML link with new description. Heading "All Courses (53)" → 52. View-All-Courses button 53 → 52. C16 dropdown option label updated.
+- `search-index.json`: `COURSE-CASTE-STUDIES` replaced by `COURSE-SOCIAL-MARGINS` with expanded tag set.
+- `sitemap.xml`: caste-studies removed; social-margins lastmod 2026-04-05 → 2026-05-01, priority 0.7 → 0.8.
+- 13 docs files updated to reflect 53 → 52 / 41 → 40 counts (README, catalog hero, 11 docs/*.md).
+
+### Note
+This is a **Phase B (architectural) commit + partial Phase A (content)**. The deck is correctly named, discoverable, and has rewritten foundational framing — but full deep treatment of non-caste identity vectors as their own sections is queued for upcoming releases. User explicitly authorised iterative refinement: "we can always revise A".
+
 ## [10.23.10] - 2026-05-01
 
 ### Added
