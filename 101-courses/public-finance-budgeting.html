@@ -382,6 +382,20 @@ body.dark .two-col .slide-body{color:rgba(255,255,255,0.7)}
 .chart-takeaway{font-family:var(--font-body);font-size:13px;color:var(--ink-mid);font-style:italic;margin-top:10px;padding:8px 12px;background:rgba(245,158,11,0.06);border-left:3px solid var(--amber);border-radius:4px}
 .chart-takeaway strong{color:var(--ink);font-style:normal}
 
+/* ========== POLISH FIX BLOCK (v10.23.19) ========== */
+#fs-hint{top:14px !important;right:18px !important;font-size:10px !important;color:rgba(255,255,255,0.85) !important;background:rgba(0,0,0,0.55);padding:6px 12px;border-radius:14px;letter-spacing:0.6px;z-index:3000 !important}
+body.dark #fs-hint{background:rgba(255,255,255,0.14)}
+#nav{opacity:0.18;transition:opacity 0.25s ease;bottom:18px}
+#nav:hover, body.nav-active #nav{opacity:1}
+.slide-content{padding-bottom:46px}
+.slide.compact .slide-content{padding-top:18px;padding-bottom:42px}
+.slide.compact .slide-body{font-size:12.5px;line-height:1.45}
+.slide.compact .ctable td{padding:6px 10px;font-size:12px;line-height:1.35}
+.slide.compact .ctable th{padding:7px 10px;font-size:11px}
+.slide.compact .hbox{padding:10px 14px;margin-top:8px}
+.slide.compact .hbox-text{font-size:12.5px;line-height:1.4}
+.slide.compact .two-col{gap:14px}
+/* end polish fix block */
 </style>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 </head>
@@ -3233,6 +3247,33 @@ if (c10 && window.echarts) {
     document.addEventListener('DOMContentLoaded', () => setTimeout(initECharts, 80));
   }
 })();
+
+// ========== POLISH FIX BLOCK (v10.23.19) ==========
+(function autoCompact(){
+  document.querySelectorAll('.slide').forEach(function(slide){
+    if (slide.classList.contains('compact')) return;
+    if (slide.querySelector('.end-screen, .title-screen, .section-divider, .toc-grid')) return;
+    var li = slide.querySelectorAll('li').length;
+    var tables = slide.querySelectorAll('table').length;
+    var text = (slide.textContent||'').length;
+    if (li >= 11 || tables >= 2 || text > 1900) {
+      slide.classList.add('compact');
+    }
+  });
+})();
+(function navIdle(){
+  var t;
+  function ping(){
+    document.body.classList.add('nav-active');
+    clearTimeout(t);
+    t = setTimeout(function(){document.body.classList.remove('nav-active');}, 2200);
+  }
+  ['mousemove','keydown','touchstart','click'].forEach(function(e){
+    document.addEventListener(e, ping, {passive:true});
+  });
+  ping();
+})();
+// end polish fix block
 </script>
 
 </body>
