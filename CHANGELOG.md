@@ -5,6 +5,11 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.17] - 2026-05-02
+
+### Fixed
+- **Browse button redesign across 118 inner pages.** The previous Browse-link styling was a flat text link with muted colour — visually weak next to the gradient Premium button. Replaced site-wide with an outline button: 1.5px border, uppercase Inter 700, 0.5rem padding, hover state that fills with the cyan accent + lifts on translateY + adds soft shadow. Dark-mode variant uses translucent white background. Result: better visual balance with the Premium button, more inviting interaction state. Affected: all flagship course pages, all 101 deck landing pages, all DeepDives pages, all BookSummary pages, all top-level pages.
+
 ## [10.23.16] - 2026-05-02
 
 ### Added
