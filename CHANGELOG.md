@@ -5,6 +5,16 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.21] - 2026-05-02
+
+### Fixed
+- **Pseudo-table alignment hardening** across all 7 native decks. User reported "table block" layouts where text was misaligned because the layouts use div-grids rather than `<table>` elements. Without a specific slide reference, applied structural alignment fixes to the most common pseudo-table patterns:
+  - `.stat-grid` cards now use flex column with `stat-label` pushed to bottom (`margin-top:auto`) so labels align across a row even when card heights differ from variable text wrapping.
+  - `.col-panel` uses flex column with title fixed at top, body flowing below.
+  - `.two-col` (and variants `.half`, `.a32`, `.a23`) get `align-items:start` so content top-aligns when column heights differ.
+  - Inline `display:grid` divs inside `.slide-content`: cells now use flex column for predictable internal alignment.
+- Speculative fix; awaiting specific slide URL for targeted treatment of remaining cases.
+
 ## [10.23.20] - 2026-05-02
 
 ### Fixed
