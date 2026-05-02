@@ -5,6 +5,22 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.14] - 2026-05-02
+
+### Added
+- **Social Margins 101 Section 12: The Other Vectors — A South Asian Survey** (10 net-new slides). Substantively expands the deck from 100 to 110 slides with vector-specific primers on tribal/Adivasi, religion, gender (broader), sexuality & queer/trans, disability, region & language, class, migration & statelessness, plus a closing practitioner toolkit. Each primer includes structural framing, foundational voices, key indicators, constitutional/statutory architecture, and intersectional cautions. Honest accounting: caste sections (02-11) retain their depth, but the deck now genuinely delivers on its broader name.
+- **101-courses/index.html** — new landing page for the ImpactMojo 101 Series. 40 courses with native HTML / Slide Deck / Coming Soon filter chips, search, tracks, hero stats, full SEO + GA. Sitemap entry, /101 short-URL redirect.
+- **Standardised end slide** across all 7 native ImpactMojo-hosted 101 decks (climate-essentials, dev-economics, inequality-basics, mel-basics, public-finance-budgeting, social-margins, work-labour-livelihoods). New `.end-screen` template with gradient background, dot pattern, glow effect, gradient bar, gradient-text "Thank You" headline, byline, 3 themed CTAs (primary gradient / secondary outline / tertiary ghost), meta footer with CC BY-NC-SA. Replaces 7 different bespoke ugly closing slides with one consistent beautiful template.
+
+### Fixed
+- **Public Finance & Budgeting 101 overflow**: 18 dense slides (11+ list items each) marked with new `.slide.compact` modifier. Reduced font-size, line-height, and padding within compact slides to fit content within the fixed 1280×720 viewport. Same compact treatment applied conservatively (14+ li or 320+ words threshold) to 30 dense slides across the other 6 native decks.
+- **Stale 101.impactmojo.in references**: removed from native deck end slide CTAs; replaced with self-hosted `/101-courses/` URL throughout.
+- **Slide 100 (thank-you) on Social Margins**: stale link fixed; CTAs swapped from devecon/poa/101.impactmojo.in to gender/poa/decolonize-dev which are thematically aligned with Social Margins; later replaced entirely by the new standardised end-slide template.
+
+### Changed
+- Social Margins TOC + agenda updated to reflect 110 slides + new Section 12 (slides 98-107) + renumbered Section 13 (Further Reading, Glossary, Thank You at slides 108-110). Reading-the-deck guide rewritten to describe the new structure.
+- HTML balance: 1494 → 1656 open/close divs in social-margins.html (added 10 substantive slides + Section 12 divider + agenda expansion). All 7 native decks balance-checked.
+
 ## [10.23.13] - 2026-05-02
 
 ### Changed
