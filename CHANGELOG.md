@@ -5,6 +5,25 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.15] - 2026-05-02
+
+### Added
+- **14 substantive ECharts data slides** across all 7 native ImpactMojo-hosted 101 decks (2 per deck). Each slide carries: contextual paragraph above the chart, full-width visualisation in a bordered canvas, and a "what to see" amber-callout takeaway below. Charts use the requested fancy types (no pies):
+  - **climate-essentials**: Sankey of global CO₂ emissions (energy carrier → sector, ~37 GtCO₂); area chart of NASA GISTEMP temperature anomaly 1880-2023.
+  - **dev-economics**: Multi-series line panel of South Asia per-capita GDP (PPP) trajectories 1990-2023 — India, Bangladesh, Pakistan, Sri Lanka, Nepal; Sankey of India's structural transformation (workforce 1991→2011→2023, by sector).
+  - **inequality-basics**: Area chart of India top-10% income share 1922-2022 (V-shape); Lorenz curve of India wealth distribution 2023 (WID).
+  - **mel-basics**: Bubble panel of evaluation methods (rigour × feasibility × cost) — RCT, DiD/RDD, PSM, pre-post survey, contribution analysis, outcome harvesting, qualitative, MSC; circular graph linking indicator types (input/output/outcome/impact) to MEL methods.
+  - **public-finance-budgeting**: Union Budget Sankey (tax revenue → expenditure heads, FY24); multi-country debt/GDP panel (India, Bangladesh, Pakistan, Brazil, China, USA, Japan).
+  - **social-margins**: Identity-intersection chord (caste/tribe/religion/gender/sexuality/disability/region/class with edge-weights reflecting empirical co-incidence); SC/ST PoA Act atrocity cases bar+line panel 1995-2022 (cases + conviction rate).
+  - **work-labour-livelihoods**: Stacked area of India workforce share by sector 1983-2023; Sankey of formal/informal decomposition of India's workforce (PLFS 2022-23).
+- ECharts 5.5.0 added to all 7 native decks — supports sankey, chord, area, beeswarm, parallel coordinates, custom layouts.
+- New `.slide.compact` modifier: tighter font/spacing for slides with 11+ list items (PFB) or 14+ li / 320+ words (others). 51 slides marked compact across the 7 decks (PFB 18, climate-essentials 6, dev-economics 7, inequality-basics 5, mel-basics 4, social-margins 3, work-labour-livelihoods 8).
+
+### Fixed
+- **Work, Labour & Livelihoods 101 slides 13-15 overflow** marked compact.
+- **All 7 native deck SLIDE_IDS arrays** rebuilt to include new chart slides — total slide counts now: climate-essentials 102, dev-economics 102, inequality-basics 102, mel-basics 102, public-finance-budgeting 102, social-margins 112, work-labour-livelihoods 102. Progress text + TOTAL constants synchronised.
+- All chart slide IDs renamed from temporary `sN_chart` form to plain sequential `sN` for navigation continuity.
+
 ## [10.23.14] - 2026-05-02
 
 ### Added
