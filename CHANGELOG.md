@@ -5,6 +5,18 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.13] - 2026-05-02
+
+### Changed
+- **Groups 9-14 audit batch.** Closed all six remaining content-type audits (101-courses, Deep Dives, Blog, Top-level pages, Flagship course pages, NotebookLM registry). 130 files scanned across 6 groups; 86 files patched in a single commit.
+- **SEO baseline 100%** across all 130 audited files: 14 canonical links + 38 og:image + 70 og:site_name + 4 full twitter:card blocks added. Default og:image is the ImpactMojo logo at `/assets/images/ImpactMojo Logo.png`. Twitter cards include matching title/description/image. Inserted after the last existing `og:` tag where present, otherwise after meta description.
+- **3 native 101 decks (PFB, social-margins, work-labour-livelihoods)** received full SEO + Google Analytics installation: meta description, robots, canonical, og:type/title/description/url/image/site_name, twitter:card block, and the GA G-JRCMEB9TBW snippet. Previously they had only `<title>` + viewport because the Claude-Chat-generated slide-deck template ships with minimal head metadata.
+- **54 dingbat replacements** (✓ ✗ ✦ ✧) → inline Sargam-style stroke SVGs across 14 files: `101-courses/mel-basics.html` (10 ✗/✓ marks in pros/cons lists), `blog/learning-by-doing.html` (1), `blog/theory-of-change-pitfalls.html` (5 ✓ Strong labels), `content-marketing-kit.html` (8), and 10 flagship course pages (3 sparkles each in v3-hero decoration). SVGs sized via `width:1em; height:1em` with `vertical-align:-0.15em` to inherit text colour and baseline.
+- **NotebookLM registry verified clean**: 11 entries, all with title + URL, JSON valid. No drift between registry and platform claims.
+
+### Known drift (deferred)
+- 21 real-emoji chars remain across 7 files (📚📧💬👋♥🌐📩⚠📏🏆🎓🗓): used as functional UI category icons (`accessibility.html`, `forgot-password.html` chatbot menus), friendly greetings (`👋` on `blog.html`, `catalog.html`), and content emphasis (3 in `whats-coming-in-2026.html`). Need bespoke 1:1 SVG mapping per use case rather than bulk substitution. Tracked for a dedicated emoji-to-Sargam pass.
+
 ## [10.23.12] - 2026-05-02
 
 ### Changed
