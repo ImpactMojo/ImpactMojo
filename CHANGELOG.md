@@ -5,6 +5,14 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.12] - 2026-05-02
+
+### Changed
+- **Social Margins 101 — Phase A finish (lightweight cross-vector signposting).** Caste content in sections 02-11 retained as the deepest vector treatment in the deck; each section divider now carries an italic "Parallels" subtitle explicitly connecting the section's analytical frame to other vectors (tribe, religion, gender, sexuality, disability, region, language, class). Examples: section 04 (Colonialism & Census) parallels — Hindu/Muslim binary, Scheduled Tribes vs PVTGs, Hindi/Urdu wedge, criminalised hijra under CTA 1871; section 05 (Constitution) parallels — Schedules V/VI, Articles 25-30, NALSA, RPWD Act; section 11 (Contemporary Debates) parallels — caste census ↔ religion-based reservation, EWS ↔ poverty as vector, AI bias ↔ identity surveillance.
+- Agenda note (slide 2) rewritten from "deep treatment of caste anchored by..." to a "Reading the deck" framing that names where each vector is treated and explicitly signposts the parallels mechanism.
+- Added `.div-subtitle` CSS rule (italic 15px, 62%-opacity white, max-width 680px) to support cross-vector subtitles on section dividers.
+- HTML balance preserved (1494 open / 1494 close divs, 100 slides). Phase A is considered complete for v10.23.x. Net-new vector sections (Tribal/Adivasi, Religion broader, Gender broader, Sexuality, Disability, Region/Language, Class) as their own slide modules are tracked for future releases under the broader Social Margins expansion.
+
 ## [10.23.11] - 2026-05-01
 
 ### Changed
