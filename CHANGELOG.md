@@ -5,6 +5,12 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.18] - 2026-05-02
+
+### Fixed
+- **Native 101 deck tables — added inside borders + vertical alignment** across all 7 native decks (climate-essentials, dev-economics, inequality-basics, mel-basics, public-finance-budgeting, social-margins, work-labour-livelihoods). The `.ctable` class previously had only `border-bottom` on `<td>`, no vertical separators between columns, and no `vertical-align` rule — multi-line cells looked misaligned and columns blurred together. Added: outer 1px border, vertical right-borders on every `<th>`/`<td>` (with `:last-child` cleared), `vertical-align: top` so wrapped text in one cell doesn't drag adjacent cells with it, and `tr:last-child td { border-bottom: none }` for a clean bottom edge. Dark-mode counterparts also added. Tables now read as proper grids rather than horizontal-stripe blocks.
+- **Slide-header logo links → 101 Series landing page** across every slide in all 7 native decks (724 links updated total: 102 per deck × 6 + 112 in social-margins). Previously the logo on every slide pointed to `https://www.impactmojo.in` (homepage), which made it hard to jump back to the 101 Series landing without navigating up two levels. Now the logo on every slide (including the end slide) points to `https://www.impactmojo.in/101-courses/` — the real landing page for the 101 deck context. Single click from any slide → browse all 40 101 courses.
+
 ## [10.23.17] - 2026-05-02
 
 ### Fixed
