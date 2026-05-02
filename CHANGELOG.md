@@ -5,6 +5,27 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.20] - 2026-05-02
+
+### Fixed
+- **Fullscreen button no longer covers `www.impactmojo.in`** in slide-header. Added `padding-right:120px` to `.slide-header` across all 7 native decks, pushing the right-hand `header-url` text leftward so the fs-hint pill (positioned `right:18px`) sits in clear space and no longer obscures the URL text.
+
+### Added
+- **Auto-spacious mode** for sparse slides — symmetric counterpart to v10.23.19's auto-compact. JS heuristic adds `.slide.spacious` to any non-compact, non-divider slide with under 420 characters of text content (excluding chart canvases and tables). Spacious mode bumps `slide-title.sm` from 24px → 30px, `slide-body` from 15px → 17px, `bullet-list li` from 15px → 16px, and adds 18px padding on `hbox` callouts. Slides that previously looked underfilled with small fonts now read with appropriate visual weight.
+- **One new ECharts data slide per native deck** (7 charts total), inserted just before the End slide:
+  - **climate-essentials** — CO₂ per capita 2023 by region (horizontal bar). Africa 1.0 / India 1.9 / EU 6.4 / China 7.7 / Russia 11.4 / USA 14.4 t/cap. Source: Global Carbon Project / Our World in Data.
+  - **dev-economics** — India sectoral GDP composition 1950-2023 (stacked area). Agri 51%→17%, Industry 14%→27%, Services 35%→56%. Source: World Bank / RBI.
+  - **inequality-basics** — Top 1% pre-tax income share, cross-country comparison (horizontal bar). Sweden 11.7% → South Africa 21.9%, with India at 21.7%, USA 20.5%. Source: WID 2024.
+  - **mel-basics** — Theory of Change as a 5-node directed graph (Inputs → Activities → Outputs → Outcomes → Impact) with arrow-labelled link types (efficiency, effectiveness, attribution, contribution).
+  - **public-finance-budgeting** — Tax-to-GDP ratio cross-country bar. Bangladesh 8% / Indonesia 12% / India 17.8% → Brazil 32.5% / OECD 33.8% / Norway 39.8%. Source: World Bank / OECD / IMF.
+  - **social-margins** — Multidimensional Poverty headcount by social group (India 2023). ST 21.4% / Muslims 14.4% / SC 14.0% / OBC 11.5% / National 11.3% / Hindus 11.6% / Others 7.5%. Source: NITI Aayog National MPI 2023.
+  - **work-labour-livelihoods** — India female LFPR (15+) 2017-18 → 2022-23 (line with area). 17.5% → 33.0% trajectory. Source: PLFS annual rounds.
+- Each new chart slide carries: section label, contextual paragraph, full-width canvas, and "what to see" amber-callout takeaway.
+- End slide IDs renumbered from `s102` → `s103` (and `s112` → `s113` in social-margins) to make room.
+
+### Fixed (drive-by)
+- Typo `www.impacctmojo.in` → `www.impactmojo.in` in dev-economics deck slide-footer (one slide).
+
 ## [10.23.19] - 2026-05-02
 
 ### Fixed

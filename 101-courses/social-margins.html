@@ -396,6 +396,16 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
 .slide.compact .hbox{padding:10px 14px;margin-top:8px}
 .slide.compact .hbox-text{font-size:12.5px;line-height:1.4}
 .slide.compact .two-col{gap:14px}
+/* fs-hint no longer covers header-url */
+.slide-header{padding-right:120px}
+/* spacious mode for slides with very little content */
+.slide.spacious .slide-title.sm{font-size:30px}
+.slide.spacious .slide-title.md{font-size:38px}
+.slide.spacious .slide-body{font-size:17px;line-height:1.7}
+.slide.spacious .bullet-list li{font-size:16px;line-height:1.6}
+.slide.spacious .hbox{padding:18px 22px;margin-top:14px}
+.slide.spacious .hbox-text{font-size:16px;line-height:1.6}
+.slide.spacious .slide-content{padding-top:42px}
 /* end polish fix block */
 </style>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
@@ -3342,8 +3352,23 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
  <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">111</span><span class="footer-right">www.impactmojo.in</span></div>
 </div>
 
-<!-- ====== END SLIDE (standardised) ====== -->
+<!-- ====== S112: APPENDIX CHART (auto v10.23.20) ====== -->
 <div class="slide" id="s112">
+ <div class="slide-header"><a href="https://www.impactmojo.in/101-courses/" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Social Margins 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 13 &middot; Quick Data Check</div>
+  <div class="slide-title sm" style="margin-bottom:6px">Multidimensional Poverty by Social Group &mdash; India 2023</div>
+  <div class="chart-slide-frame">
+   <div class="chart-context">Headcount ratio (% of group classified multidimensionally poor). Data: NITI Aayog National MPI 2023 (NFHS-5 base).</div>
+   <div class="chart-canvas" id="sm_mpi_bar"></div>
+   <div class="chart-takeaway"><strong>What to see:</strong> ST and SC groups carry MPI rates roughly 2&times; the national average. Muslims show similarly elevated rates. Aggregate national figures hide these vertical inequalities &mdash; targeted reservation and welfare design exists precisely because of these structural gaps.</div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">112</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<!-- ====== END SLIDE (standardised) ====== -->
+<div class="slide" id="s113">
  <div class="slide-header"><a href="https://www.impactmojo.in/101-courses/" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Social Margins 101</span><span class="header-url">www.impactmojo.in</span></div>
  <div class="end-screen">
   <div class="end-bar"></div>
@@ -3367,7 +3392,7 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
    </div>
   </div>
  </div>
- <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">112</span><span class="footer-right">www.impactmojo.in</span></div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">113</span><span class="footer-right">www.impactmojo.in</span></div>
 </div>
 
  </div><!-- /slide-viewport -->
@@ -3391,7 +3416,7 @@ const SLIDE_IDS = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10',
   's81','s82','s83','s84','s85','s86','s87','s88','s89','s90',
   's91','s92','s93','s94','s95','s96','s97','s98','s99','s100',
   's101','s102','s103','s104','s105','s106','s107','s108','s109','s110',
-  's111','s112'];
+  's111','s112','s113'];
 
 let cur = 0;
 const TOTAL = SLIDE_IDS.length;
@@ -3560,6 +3585,21 @@ if (c12 && window.echarts) {
   });
   window.addEventListener('resize', () => ch.resize());
 }
+  
+const cAppendix_sm = document.getElementById('sm_mpi_bar');
+if (cAppendix_sm && window.echarts) {
+  const ch = echarts.init(cAppendix_sm);
+  ch.setOption({
+    backgroundColor: 'transparent',
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, valueFormatter: v => v + '%' },
+    grid: { left: 90, right: 50, top: 18, bottom: 36 },
+    xAxis: { type: 'value', name: 'MPI headcount %', nameLocation: 'middle', nameGap: 26, nameTextStyle: { fontFamily: 'Inter', fontSize: 11, color: '#475569' }, axisLabel: { fontFamily: 'JetBrains Mono', fontSize: 10, color: '#475569', formatter: '{value}%' }, splitLine: { lineStyle: { color: 'rgba(148,163,184,0.2)' } } },
+    yAxis: { type: 'category', data: ['Others','Hindus avg','National avg','OBC','SC','Muslims','ST'], axisLabel: { fontFamily: 'Inter', fontSize: 12, color: '#1C1917' }, axisLine: { lineStyle: { color: '#94A3B8' } } },
+    series: [{ type: 'bar', data: [7.5, 11.6, 11.3, 11.5, 14.0, 14.4, 21.4], itemStyle: { color: p => p.dataIndex >= 5 ? '#EF4444' : (p.dataIndex >= 3 ? '#F59E0B' : '#10B981') }, label: { show: true, position: 'right', formatter: '{c}%', fontFamily: 'JetBrains Mono', fontSize: 11, color: '#1C1917' }, barWidth: 22 }]
+  });
+  window.addEventListener('resize', () => ch.resize());
+}
+
   };
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     setTimeout(initECharts, 80);
@@ -3592,6 +3632,16 @@ if (c12 && window.echarts) {
     document.addEventListener(e, ping, {passive:true});
   });
   ping();
+})();
+(function autoSpacious(){
+  document.querySelectorAll(".slide").forEach(function(slide){
+    if (slide.classList.contains("compact")) return;
+    if (slide.querySelector(".end-screen, .title-screen, .section-divider, .toc-grid, .chart-canvas, .chart-wrap, table, svg.diagram")) return;
+    var text = (slide.textContent||"").length;
+    if (text > 0 && text < 420) {
+      slide.classList.add("spacious");
+    }
+  });
 })();
 // end polish fix block
 </script>
