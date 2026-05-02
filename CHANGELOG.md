@@ -5,6 +5,26 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.13] - 2026-05-02
+
+### Changed
+- **Groups 9-14 audit batch.** Closed all six remaining content-type audits (101-courses, Deep Dives, Blog, Top-level pages, Flagship course pages, NotebookLM registry). 130 files scanned across 6 groups; 86 files patched in a single commit.
+- **SEO baseline 100%** across all 130 audited files: 14 canonical links + 38 og:image + 70 og:site_name + 4 full twitter:card blocks added. Default og:image is the ImpactMojo logo at `/assets/images/ImpactMojo Logo.png`. Twitter cards include matching title/description/image. Inserted after the last existing `og:` tag where present, otherwise after meta description.
+- **3 native 101 decks (PFB, social-margins, work-labour-livelihoods)** received full SEO + Google Analytics installation: meta description, robots, canonical, og:type/title/description/url/image/site_name, twitter:card block, and the GA G-JRCMEB9TBW snippet. Previously they had only `<title>` + viewport because the Claude-Chat-generated slide-deck template ships with minimal head metadata.
+- **54 dingbat replacements** (✓ ✗ ✦ ✧) → inline Sargam-style stroke SVGs across 14 files: `101-courses/mel-basics.html` (10 ✗/✓ marks in pros/cons lists), `blog/learning-by-doing.html` (1), `blog/theory-of-change-pitfalls.html` (5 ✓ Strong labels), `content-marketing-kit.html` (8), and 10 flagship course pages (3 sparkles each in v3-hero decoration). SVGs sized via `width:1em; height:1em` with `vertical-align:-0.15em` to inherit text colour and baseline.
+- **NotebookLM registry verified clean**: 11 entries, all with title + URL, JSON valid. No drift between registry and platform claims.
+
+### Known drift (deferred)
+- 21 real-emoji chars remain across 7 files (📚📧💬👋♥🌐📩⚠📏🏆🎓🗓): used as functional UI category icons (`accessibility.html`, `forgot-password.html` chatbot menus), friendly greetings (`👋` on `blog.html`, `catalog.html`), and content emphasis (3 in `whats-coming-in-2026.html`). Need bespoke 1:1 SVG mapping per use case rather than bulk substitution. Tracked for a dedicated emoji-to-Sargam pass.
+
+## [10.23.12] - 2026-05-02
+
+### Changed
+- **Social Margins 101 — Phase A finish (lightweight cross-vector signposting).** Caste content in sections 02-11 retained as the deepest vector treatment in the deck; each section divider now carries an italic "Parallels" subtitle explicitly connecting the section's analytical frame to other vectors (tribe, religion, gender, sexuality, disability, region, language, class). Examples: section 04 (Colonialism & Census) parallels — Hindu/Muslim binary, Scheduled Tribes vs PVTGs, Hindi/Urdu wedge, criminalised hijra under CTA 1871; section 05 (Constitution) parallels — Schedules V/VI, Articles 25-30, NALSA, RPWD Act; section 11 (Contemporary Debates) parallels — caste census ↔ religion-based reservation, EWS ↔ poverty as vector, AI bias ↔ identity surveillance.
+- Agenda note (slide 2) rewritten from "deep treatment of caste anchored by..." to a "Reading the deck" framing that names where each vector is treated and explicitly signposts the parallels mechanism.
+- Added `.div-subtitle` CSS rule (italic 15px, 62%-opacity white, max-width 680px) to support cross-vector subtitles on section dividers.
+- HTML balance preserved (1494 open / 1494 close divs, 100 slides). Phase A is considered complete for v10.23.x. Net-new vector sections (Tribal/Adivasi, Religion broader, Gender broader, Sexuality, Disability, Region/Language, Class) as their own slide modules are tracked for future releases under the broader Social Margins expansion.
+
 ## [10.23.11] - 2026-05-01
 
 ### Changed
