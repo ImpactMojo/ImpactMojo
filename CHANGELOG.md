@@ -5,6 +5,11 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.22] - 2026-05-02
+
+### Fixed
+- **Real overflow detection replaces heuristic auto-compact** across all 7 native decks. The v10.23.19 heuristic (≥11 li / ≥2 tables / >1900 chars) missed slides that genuinely overflowed but didn't hit any of those thresholds — e.g. climate-essentials slide 4 (5 bullets + 1 hbox + 1 5-row component grid: cut off at the bottom). Replaced with a runtime check that observes `scrollHeight > clientHeight` on the active slide's `.slide-content` container and applies `.compact`. If the slide still overflows after compact is applied, an `.ultra-compact` class escalates further (smaller fonts, tighter padding, denser table cells/hboxes/term-boxes/col-panels). MutationObserver re-runs the check whenever a new slide becomes active and on window resize. Net effect: any slide that doesn't fit gets auto-tightened until it does, regardless of whether the overflow comes from bullets, tables, info-boxes, term-definitions, stat-cards, or grid-based component lists.
+
 ## [10.23.21] - 2026-05-02
 
 ### Fixed
