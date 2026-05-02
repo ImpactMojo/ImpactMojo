@@ -5,6 +5,18 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.19] - 2026-05-02
+
+### Fixed
+- **Native deck formatting polish — fullscreen button, nav overlap, content overflow** across all 7 native decks.
+  - **Fullscreen button (`#fs-hint`)**: previously rendered at 9px font with 25% white opacity — barely visible, sometimes mistaken for being clipped/cut off. Repositioned with safer margins (top:14px, right:18px), bumped font to 10px, raised contrast to 85% white, added a translucent dark pill background (with dark-mode counterpart) and 14px border-radius. Now obviously a clickable element.
+  - **Bottom navigation overlap**: `#nav` fixed at `bottom:16px` was sitting visually on top of slide content because the slide-viewport scales to fill the browser window. Added a fade-on-idle behaviour (drops to 18% opacity after 2.2s of no input; full opacity on hover or any mouse/keyboard/touch activity). Also increased `.slide-content` bottom padding from 20px to 46px so content doesn't crowd into the nav strip even when nav is fully visible.
+  - **Content overflow auto-compact**: added a JS heuristic that runs at load and adds the existing `.slide.compact` modifier to any slide with ≥11 `<li>` items, ≥2 `<table>`s, or >1900 characters of text. Skips title screens, section dividers, end screens, and TOC slides. Existing `.slide.compact` rules already shrink fonts and padding on dense slides; auto-application means content-heavy slides no longer overflow the 1280×720 viewport. Also tightened `.slide.compact` rules for tables (`.ctable td` 12px / 6px padding), info-boxes (`.hbox` 10px padding, 12.5px text), and bottom-padding on the content area.
+
+### Known follow-ups (not in this PR)
+- Some slides have **too little content** with small fonts on otherwise-empty slides — opposite of overflow. Needs per-slide content audit and either copy expansion or font promotion (`slide-title sm` → `lg`). Out of scope for a structural CSS fix.
+- **Charts/diagrams density**: most decks currently carry only 2 ECharts data slides each (the v10.23.15 batch). User asked for more diagrams across decks — that's substantive content work (research, data sourcing, ECharts authoring per slide) and warrants its own PR.
+
 ## [10.23.18] - 2026-05-02
 
 ### Fixed
