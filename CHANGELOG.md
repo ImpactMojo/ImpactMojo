@@ -5,6 +5,18 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.17] - 2026-05-02
+
+### Fixed
+- **Browse button redesign across 118 inner pages.** The previous Browse-link styling was a flat text link with muted colour — visually weak next to the gradient Premium button. Replaced site-wide with an outline button: 1.5px border, uppercase Inter 700, 0.5rem padding, hover state that fills with the cyan accent + lifts on translateY + adds soft shadow. Dark-mode variant uses translucent white background. Result: better visual balance with the Premium button, more inviting interaction state. Affected: all flagship course pages, all 101 deck landing pages, all DeepDives pages, all BookSummary pages, all top-level pages.
+
+## [10.23.16] - 2026-05-02
+
+### Added
+- **Universal "Resources & Practice" cross-link section** added to all 12 flagship course pages (SEL, dataviz, devai, devecon, gandhi, gender, law, media, mel, poa, pubchoice, pubpol). Each section carries 7 colour-coded resource cards: Hands-on Lab (course-specific or generic), NotebookLM AI Companion (with course-specific URL where available — 11 of 12 flagships have one), Foundational 101 Decks (course-specific recommendations + browse-all), BookCompanion Field Companions (course-specific + browse-all), Print-Friendly Reference Handouts, Live Dojo Practice Sessions, Premium Tools & Coaching. Closes the long-running flagship parity ask: every flagship now has a consistent baseline of cross-linked resources, regardless of how rich its main content is.
+- Per-flagship customisation: dataviz cross-links the dataviz lab + storytelling/info-we-trust books; mel cross-links TOC Lab + MEL Plan Lab; gender cross-links 3 thematically-related 101 courses (SRHR, care economy, data feminism); pubchoice cross-links Political Economy + Public Finance 101 + Indian Constitution 101; etc.
+- Bespoke Sargam-style SVGs replace 21 remaining body emojis (📚 📧 💬 👋 ♥ 🌐 📩 ⚠ 📏 🏆 🎓 🗓) across 7 files (`accessibility.html`, `blog.html`, `blog/sample-size-matters.html`, `blog/whats-coming-in-2026.html`, `catalog.html`, `content-marketing-kit.html`, `forgot-password.html`). Body emojis platform-wide now at zero.
+
 ## [10.23.15] - 2026-05-02
 
 ### Added
