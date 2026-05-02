@@ -297,6 +297,16 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
 .slide.compact .hbox{padding:10px 14px;margin-top:8px}
 .slide.compact .hbox-text{font-size:12.5px;line-height:1.4}
 .slide.compact .two-col{gap:14px}
+/* fs-hint no longer covers header-url */
+.slide-header{padding-right:120px}
+/* spacious mode for slides with very little content */
+.slide.spacious .slide-title.sm{font-size:30px}
+.slide.spacious .slide-title.md{font-size:38px}
+.slide.spacious .slide-body{font-size:17px;line-height:1.7}
+.slide.spacious .bullet-list li{font-size:16px;line-height:1.6}
+.slide.spacious .hbox{padding:18px 22px;margin-top:14px}
+.slide.spacious .hbox-text{font-size:16px;line-height:1.6}
+.slide.spacious .slide-content{padding-top:42px}
 /* end polish fix block */
 </style>
 <!-- Google Analytics -->
@@ -2049,8 +2059,23 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
 </div>
 
 <!-- S100 -->
-<!-- ====== END SLIDE (standardised) ====== -->
+<!-- ====== S102: APPENDIX CHART (auto v10.23.20) ====== -->
 <div class="slide" id="s102">
+ <div class="slide-header"><a href="https://www.impactmojo.in/101-courses/" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Inequality Basics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 11 &middot; Quick Data Check</div>
+  <div class="slide-title sm" style="margin-bottom:6px">Top 1% Income Share &mdash; Cross-Country Comparison</div>
+  <div class="chart-slide-frame">
+   <div class="chart-context">Pre-tax income share of the top 1%, latest available year (2022 or 2023). Data: World Inequality Database 2024.</div>
+   <div class="chart-canvas" id="iq_top1_bar"></div>
+   <div class="chart-takeaway"><strong>What to see:</strong> India and South Africa have among the highest top-1% income concentration in the world &mdash; both above 21%. China&rsquo;s top-1% share is roughly half that. Sweden remains comparatively equal at ~12%. India&rsquo;s extreme concentration is recent: it has grown from ~6% in 1980 to over 21% today.</div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">102</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<!-- ====== END SLIDE (standardised) ====== -->
+<div class="slide" id="s103">
  <div class="slide-header"><a href="https://www.impactmojo.in/101-courses/" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Inequality Basics 101</span><span class="header-url">www.impactmojo.in</span></div>
  <div class="end-screen">
   <div class="end-bar"></div>
@@ -2074,7 +2099,7 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
    </div>
   </div>
  </div>
- <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">102</span><span class="footer-right">www.impactmojo.in</span></div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">103</span><span class="footer-right">www.impactmojo.in</span></div>
 </div>
 
  </div><!-- end slide-viewport -->
@@ -2082,12 +2107,12 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
 
 <nav id="nav">
  <button class="nav-btn" id="prevBtn" onclick="go(-1)">&#8249;</button>
- <span id="prog-text">1 / 102</span>
+ <span id="prog-text">1 / 101</span>
  <button class="nav-btn" id="nextBtn" onclick="go(1)">&#8250;</button>
 </nav>
 
 <script>
-let cur = 1, total = 100;
+let cur = 1, total = 101;
 const slides = document.querySelectorAll('.slide');
 const progText = document.getElementById('prog-text');
 const bar = document.getElementById('progress-bar');
@@ -2252,6 +2277,20 @@ if (c6 && window.echarts) {
   });
   window.addEventListener('resize', () => ch.resize());
 }
+const cAppendix_iq = document.getElementById('iq_top1_bar');
+if (cAppendix_iq && window.echarts) {
+  const ch = echarts.init(cAppendix_iq);
+  ch.setOption({
+    backgroundColor: 'transparent',
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, valueFormatter: v => v + '%' },
+    grid: { left: 110, right: 50, top: 18, bottom: 36 },
+    xAxis: { type: 'value', name: 'Top 1% pre-tax income share', nameLocation: 'middle', nameGap: 26, nameTextStyle: { fontFamily: 'Inter', fontSize: 11, color: '#475569' }, axisLabel: { fontFamily: 'JetBrains Mono', fontSize: 10, color: '#475569', formatter: '{value}%' }, splitLine: { lineStyle: { color: 'rgba(148,163,184,0.2)' } } },
+    yAxis: { type: 'category', data: ['Sweden','France','China','World avg','Brazil','USA','India','South Africa'], axisLabel: { fontFamily: 'Inter', fontSize: 12, color: '#1C1917' }, axisLine: { lineStyle: { color: '#94A3B8' } } },
+    series: [{ type: 'bar', data: [11.7, 11.0, 14.2, 19.0, 20.3, 20.5, 21.7, 21.9], itemStyle: { color: p => p.dataIndex >= 6 ? '#EF4444' : (p.dataIndex >= 4 ? '#F59E0B' : '#10B981') }, label: { show: true, position: 'right', formatter: '{c}%', fontFamily: 'JetBrains Mono', fontSize: 11, color: '#1C1917' }, barWidth: 22 }]
+  });
+  window.addEventListener('resize', () => ch.resize());
+}
+
   };
   // Defer until DOM ready + ECharts loaded
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
@@ -2285,6 +2324,16 @@ if (c6 && window.echarts) {
     document.addEventListener(e, ping, {passive:true});
   });
   ping();
+})();
+(function autoSpacious(){
+  document.querySelectorAll(".slide").forEach(function(slide){
+    if (slide.classList.contains("compact")) return;
+    if (slide.querySelector(".end-screen, .title-screen, .section-divider, .toc-grid, .chart-canvas, .chart-wrap, table, svg.diagram")) return;
+    var text = (slide.textContent||"").length;
+    if (text > 0 && text < 420) {
+      slide.classList.add("spacious");
+    }
+  });
 })();
 // end polish fix block
 </script>
