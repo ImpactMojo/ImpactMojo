@@ -2104,8 +2104,23 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
  <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">102</span><span class="footer-right">www.impactmojo.in</span></div>
 </div>
 
-<!-- ====== END SLIDE (standardised) ====== -->
+<!-- ====== S103: APPENDIX CHART 2 (auto v10.23.24) ====== -->
 <div class="slide" id="s103">
+ <div class="slide-header"><a href="https://www.impactmojo.in/101-courses/" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Inequality Basics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 11 &middot; Quick Data Check</div>
+  <div class="slide-title sm" style="margin-bottom:6px">India Consumption Gini 1983&ndash;2022 &mdash; The Long Trajectory</div>
+  <div class="chart-slide-frame">
+   <div class="chart-context">Consumption Gini coefficient (rural + urban combined), India. Data: NSSO consumption rounds + PLFS. Higher = more unequal.</div>
+   <div class="chart-canvas" id="iq_gini_line"></div>
+   <div class="chart-takeaway"><strong>What to see:</strong> India&rsquo;s consumption Gini was relatively stable around 0.32&ndash;0.33 through the 1990s, then rose with liberalisation. Income Gini (not shown) is much higher (~0.50) and rose more sharply. The gap between consumption and income Gini reflects the savings behaviour of the rich plus measurement gaps in surveys.</div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">103</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<!-- ====== END SLIDE (standardised) ====== -->
+<div class="slide" id="s104">
  <div class="slide-header"><a href="https://www.impactmojo.in/101-courses/" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">Inequality Basics 101</span><span class="header-url">www.impactmojo.in</span></div>
  <div class="end-screen">
   <div class="end-bar"></div>
@@ -2129,7 +2144,7 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
    </div>
   </div>
  </div>
- <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">103</span><span class="footer-right">www.impactmojo.in</span></div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">104</span><span class="footer-right">www.impactmojo.in</span></div>
 </div>
 
  </div><!-- end slide-viewport -->
@@ -2321,6 +2336,28 @@ if (cAppendix_iq && window.echarts) {
   window.addEventListener('resize', () => ch.resize());
 }
 
+  
+const cExtra_iq = document.getElementById('iq_gini_line');
+if (cExtra_iq && window.echarts) {
+  const ch = echarts.init(cExtra_iq);
+  ch.setOption({
+    backgroundColor: 'transparent',
+    tooltip: { trigger: 'axis' },
+    grid: { left: 60, right: 36, top: 24, bottom: 36 },
+    xAxis: { type: 'category', boundaryGap: false, data: ['1983','1987','1993','1999','2004','2009','2011','2017','2022'], axisLabel: { fontFamily: 'JetBrains Mono', fontSize: 10, color: '#475569' }, axisLine: { lineStyle: { color: '#94A3B8' } } },
+    yAxis: { type: 'value', name: 'Consumption Gini', nameTextStyle: { fontFamily: 'Inter', fontSize: 11, color: '#475569' }, axisLabel: { fontFamily: 'JetBrains Mono', fontSize: 10, color: '#475569' }, splitLine: { lineStyle: { color: 'rgba(148,163,184,0.2)' } }, min: 0.28, max: 0.40 },
+    series: [{
+      type: 'line', smooth: true,
+      data: [0.32, 0.32, 0.33, 0.33, 0.36, 0.37, 0.36, 0.35, 0.355],
+      lineStyle: { width: 3, color: '#EF4444' },
+      itemStyle: { color: '#EF4444' },
+      symbol: 'circle', symbolSize: 8,
+      label: { show: true, formatter: '{c}', fontFamily: 'JetBrains Mono', fontSize: 10, color: '#1C1917', position: 'top' },
+      markLine: { data: [{ type: 'average', name: 'avg' }], lineStyle: { color: '#94A3B8', type: 'dashed' }, label: { fontFamily: 'JetBrains Mono', fontSize: 10 } }
+    }]
+  });
+  window.addEventListener('resize', () => ch.resize());
+}
   };
   // Defer until DOM ready + ECharts loaded
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
