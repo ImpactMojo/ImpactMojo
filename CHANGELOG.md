@@ -5,6 +5,20 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.23] - 2026-05-02
+
+### Fixed
+- **axe-core SERIOUS color-contrast violation resolved** on all 12 flagship Resources & Practice cards. Eyebrow text on `.lab` (#10B981 → #047857), `.notebooklm` (#6366F1 → #4338CA), `.course101` (#0EA5E9 → #0369A1), and `.dojo` (#EF4444 → #B91C1C) cards previously failed WCAG 2.1 AA at 2.54-4.47:1 contrast on white card backgrounds. New darker variants all clear ≥5.4:1 (PASS). Same hue family preserved — only brightness reduced. Affected: SEL, dataviz, devai, devecon, gandhi, gender, law, media, mel, poa, pubchoice, pubpol.
+- **axe-core image-redundant-alt warning** on `.sidebar-logo-icon > img[alt="ImpactMojo"]` resolved across 7 flagship pages (mel, devecon, law, media, poa, pubchoice, pubpol). The img sits in the same `<a class="sidebar-logo">` as a `<span class="sidebar-logo-text">ImpactMojo</span>` — the alt was redundant. Set `alt=""` so the image is treated as decorative and the link is labelled by the visible text.
+- **axe-core landmark-region warnings** resolved:
+  - `index.html` practitioner trust strip: `<div class="practitioner-trust-strip">` → `<aside aria-label="Practitioner trust">`. The 8 social-proof spans (Multilateral Banks, UN Agencies, Research Institutes, etc.) are now inside an aside landmark.
+  - `bct-repository.html` `#compareBar`: `<div>` → `<aside role="region">`.
+  - All 12 flagship topbars: added `role="navigation" aria-label="Site navigation"` to `<div class="im-topbar" id="imTopbar">`. The browse/premium/theme-selector children are now inside a navigation landmark.
+
+### Result
+- axe-core CI check that has been failing on every commit since v10.23.16 should now pass.
+- pa11y-ci, Validate HTML, Check broken links, and main CI workflow continue to pass.
+
 ## [10.23.22] - 2026-05-02
 
 ### Fixed
