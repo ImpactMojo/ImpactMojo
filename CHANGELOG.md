@@ -5,6 +5,24 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.34] - 2026-05-03
+
+### Fixed
+- **Auto-fit JS was truncated across all 7 native decks** during a prior merge conflict resolution — only the opening comment marker remained, with the entire `autoFit` IIFE body deleted. Re-injected the full `autoFit` function so proportional zoom-on-overflow works again. Lowered the floor from **0.85x → 0.78x** so genuinely overflowing slides scale further before "give up and overflow" — fonts can shrink to ~12px (still readable) before allowing visible cutoff.
+- **Stale agenda count in social-margins s2**: "What We Cover in 110 Slides" → "What We Cover in 123 Slides" (deck has been at 121 then 123 slides for some time; agenda was never updated).
+
+### Added — universal fit tightening (all 7 decks)
+- Consistent slightly-tighter base spacing applied across every slide so most content fits naturally without needing zoom. **No font-size changes** — only padding, margins, and line-height adjustments. This is the "broad CSS rule" the user asked for.
+  - `.slide-content` padding `24px 40px 20px` → `18px 36px 16px` (saves ~10px vertical, 8px horizontal)
+  - `.slide-title.md/.sm` margin-bottom `10/8 → 6/4px` (saves ~4px each)
+  - `.bullet-list` gap `10 → 7px`, line-height `1.55 → 1.5` (saves ~10px on long lists)
+  - `.hbox` padding `14 → 11px`, hbox-text line-height `1.55 → 1.45` (saves ~6px each)
+  - `.term-box` padding `18px 22px → 14px 18px`
+  - `.dark-card` padding tightened (saves ~4-6px each)
+  - `.col-panel`, `.stat-card` padding tightened
+  - `.ctable td/th` padding `10→8px`, line-height `1.4` (saves ~4-8px per row across long tables)
+- Net effect: every slide gets ~30-50px more usable vertical space than before, so most content fits naturally. Auto-fit zoom only kicks in for genuinely dense slides.
+
 ## [10.23.33] - 2026-05-03
 
 ### Added

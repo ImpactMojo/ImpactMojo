@@ -333,6 +333,27 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
 .slide.ultra-compact .col-panel-title{font-size:10px;margin-bottom:4px}
 .slide.ultra-compact .two-col{gap:10px}
 /* end polish fix block */
+
+/* ========== UNIVERSAL FIT TIGHTENING (v10.23.34) ========== */
+/* Apply consistent slightly-tighter spacing across all slides so most content
+   fits naturally. No font-size changes — only padding, margins, gaps. */
+.slide-content{padding:18px 36px 16px !important}
+.slide-title.md{margin-bottom:6px !important}
+.slide-title.sm{margin-bottom:4px !important}
+.bullet-list{gap:7px;margin-top:10px}
+.bullet-list li{line-height:1.5}
+.hbox{padding:11px 14px;margin-top:8px}
+.hbox-text{line-height:1.45}
+.term-box{padding:14px 18px;margin-top:10px}
+.term-def{line-height:1.5}
+.dark-card{padding:16px 16px;margin-bottom:8px}
+.dark-card-body{line-height:1.45}
+.col-panel{padding:14px 14px}
+.stat-card{padding:14px 16px}
+.section-label{margin-bottom:8px}
+.ctable td{padding:8px 12px;line-height:1.4}
+.ctable th{padding:9px 12px}
+/* ========== /UNIVERSAL FIT TIGHTENING ========== */
 </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
@@ -2503,7 +2524,32 @@ if (cExtra_iq && window.echarts) {
 })();
 // ========== /SLIDE DEEP-LINKING ==========
 
-// ========== PROPORTIONAL AUTO-FIT (v10.23.31) ===</script>
+// ========== PROPORTIONAL AUTO-FIT (v10.23.34) ==========
+(function autoFit(){
+  function fit(slide){
+    if (!slide) return;
+    var content = slide.querySelector(".slide-content");
+    if (!content) return;
+    content.style.zoom = "";
+    if (slide.querySelector(".title-screen, .section-divider, .end-screen")) return;
+    var natural = content.scrollHeight;
+    var avail = content.clientHeight;
+    if (natural <= avail + 4) return;
+    var scale = avail / natural;
+    if (scale < 0.78) return;
+    content.style.zoom = scale;
+  }
+  function fitActive(){
+    document.querySelectorAll(".slide.active").forEach(fit);
+  }
+  var vp = document.getElementById("viewport") || document.querySelector(".slide-viewport");
+  if (vp && window.MutationObserver) {
+    new MutationObserver(fitActive).observe(vp, {subtree:true, attributes:true, attributeFilter:["class"]});
+  }
+  window.addEventListener("resize", function(){ setTimeout(fitActive, 50); });
+  setTimeout(fitActive, 250);
+})();
+// ========== /PROPORTIONAL AUTO-FIT ==========</script>
 
 </body>
 </html>
