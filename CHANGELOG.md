@@ -5,6 +5,13 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.31] - 2026-05-03
+
+### Added
+- **Proportional auto-fit rule** across all 7 native decks. User asked: "No content exceeds the viewport dimensions without shrinking font too much and also without allowing overflow." Implementation: at slide-active change, JS measures `slide-content.scrollHeight` vs `clientHeight` — if natural content exceeds available space, applies CSS `zoom` to scale the entire slide-content down proportionally (fonts, padding, margins, and image dimensions all shrink together so visual hierarchy is preserved). Hard floor at **0.85x** (max 15% reduction) so fonts stay readable (~13px minimum on a 15px base). Below that scale, the slide is allowed to overflow rather than become unreadable — signal that the slide genuinely needs editorial trimming.
+- **Compared to v10.23.22's auto-compact**: that approach used selective font-size reductions (only some elements got smaller, breaking visual hierarchy) and went all the way to 11px ultra-compact. The new auto-fit is proportional (everything scales together) and capped at a 15% reduction, so it never makes text unreadable.
+- Deck behaviour: most slides need no scaling. A few slightly-overflowing slides scale to ~0.92-0.97x (visually almost identical to base). Heavily overflowing slides (those that needed `.compact` or `.ultra-compact` in v10.23.22) overflow visibly — flagging them for content trim.
+
 ## [10.23.30] - 2026-05-02
 
 ### Added
