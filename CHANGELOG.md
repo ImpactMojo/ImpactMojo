@@ -5,6 +5,11 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.27] - 2026-05-02
+
+### Fixed
+- **Stat-grid cards now size to their own content** — across all 7 native decks. Changed `.stat-grid { align-items: stretch }` (default) to `align-items: start`. Previously cards in a row stretched to match the tallest sibling, leaving empty space at the bottom of cards with shorter labels. Now each card is just as tall as its own content; the row no longer shows uneven empty space below shorter labels. User flagged this pattern as the broader version of the v10.23.26 stat-card alignment issue.
+
 ## [10.23.26] - 2026-05-02
 
 ### Fixed
