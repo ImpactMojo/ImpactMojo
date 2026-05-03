@@ -5,6 +5,16 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.33] - 2026-05-03
+
+### Added
+- **Social Margins 101 — split overflowing s117 + s118 into 4 slides total**. User confirmed both reading list (s117, 26 items) and glossary (s118, 24 terms) overflow at full font size; user said "break for both."
+  - **s117** now: "Where to Go Next — Primary Indian Sources & Data" — 10 items split into 2 columns (foundational documents | surveys & data).
+  - **s118** (NEW): "Where to Go Next — Major Scholarly & Literary Works" — 16 items split into 2 columns (foundational thinkers | modern scholarship + literary voices).
+  - **s119** (was s118): "Working Glossary I — Cross-cutting & Caste" — 12 terms (Intersectionality, Subaltern, Recognition vs Redistribution, Brahmanical patriarchy, Varna/Jati, Dalit, Adivasi/ST, Bahujan, Pasmanda, NALSA, Section 377, Hijra).
+  - **s120** (NEW): "Working Glossary II — Identity Vectors & Acts" — 12 terms (Brahmanical patriarchy × sexuality, RPWD Act 2016, Social model, Communalism, Sub-nationalism, Untouchability, Endogamy, SC/ST/OBC/EWS, PoA Act 1989, Mandal, Manual scavenging, Honour killing).
+  - **s121, s122, s123** — renumbered from s119/s120/s121 (MPI chart, Scavenging chart, End slide). Total slides now 123 (was 121).
+
 ## [10.23.32] - 2026-05-03
 
 ### Fixed
