@@ -3307,6 +3307,39 @@ if (cExtra_ce && window.echarts) {
   window.addEventListener("hashchange", jumpToHash);
 })();
 // ========== /SLIDE DEEP-LINKING ==========
+
+// ========== PROPORTIONAL AUTO-FIT (v10.23.31) ==========
+// Rule: no slide content exceeds viewport. If natural content > available
+// height, scale the whole slide-content down via CSS zoom (proportional —
+// fonts, padding, margins all shrink together to preserve visual hierarchy).
+// Hard floor at 0.85x (max 15% reduction) so fonts stay readable. Below
+// that, allow overflow rather than make text unreadable — signal that the
+// slide genuinely needs editorial trimming.
+(function autoFit(){
+  function fit(slide){
+    if (!slide) return;
+    var content = slide.querySelector(".slide-content");
+    if (!content) return;
+    content.style.zoom = "";  // reset before measuring
+    if (slide.querySelector(".title-screen, .section-divider, .end-screen")) return;
+    var natural = content.scrollHeight;
+    var avail = content.clientHeight;
+    if (natural <= avail + 4) return;  // fits naturally
+    var scale = avail / natural;
+    if (scale < 0.85) return;  // too aggressive — preserve readability
+    content.style.zoom = scale;
+  }
+  function fitActive(){
+    document.querySelectorAll(".slide.active").forEach(fit);
+  }
+  var vp = document.getElementById("viewport") || document.querySelector(".slide-viewport");
+  if (vp && window.MutationObserver) {
+    new MutationObserver(fitActive).observe(vp, {subtree:true, attributes:true, attributeFilter:["class"]});
+  }
+  window.addEventListener("resize", function(){ setTimeout(fitActive, 50); });
+  setTimeout(fitActive, 250);
+})();
+// ========== /PROPORTIONAL AUTO-FIT ==========
 </script>
 
 </body>
