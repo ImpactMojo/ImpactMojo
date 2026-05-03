@@ -2424,6 +2424,58 @@ if (cExtra_iq && window.echarts) {
   ping();
 })();
 // end polish fix block
+
+// ========== SLIDE DEEP-LINKING (v10.23.30) ==========
+(function slideDeepLinking(){
+  function syncHashFromActive(){
+    var active = document.querySelector(".slide.active");
+    if (active && active.id) {
+      var newHash = "#" + active.id;
+      if (location.hash !== newHash) {
+        history.replaceState(null, "", newHash);
+      }
+    }
+  }
+  function jumpToHash(){
+    if (!location.hash || !/^#s\d+$/.test(location.hash)) return;
+    var targetId = location.hash.slice(1);
+    var target = document.getElementById(targetId);
+    if (!target || !target.classList.contains("slide")) return;
+    if (target.classList.contains("active")) return;
+    var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+    var idx = slides.indexOf(target);
+    if (idx < 0) return;
+    var success = false;
+    if (typeof showSlide === "function") {
+      try { showSlide(idx + 1); if (target.classList.contains("active")) success = true; } catch(e){}
+      if (!success) { try { showSlide(idx); if (target.classList.contains("active")) success = true; } catch(e){} }
+    }
+    if (!success && typeof show === "function") {
+      try { show(idx + 1); if (target.classList.contains("active")) success = true; } catch(e){}
+    }
+    if (!success) {
+      slides.forEach(function(s){ s.classList.remove("active"); });
+      target.classList.add("active");
+      var prog = document.getElementById("prog-text");
+      if (prog) prog.textContent = (idx + 1) + " / " + slides.length;
+      var bar = document.getElementById("progress-bar");
+      if (bar) bar.style.width = ((idx + 1) / slides.length * 100) + "%";
+      var pb = document.getElementById("prevBtn");
+      var nb = document.getElementById("nextBtn");
+      if (pb) pb.disabled = (idx === 0);
+      if (nb) nb.disabled = (idx === slides.length - 1);
+    }
+  }
+  var vp = document.getElementById("viewport") || document.querySelector(".slide-viewport");
+  if (vp && window.MutationObserver) {
+    new MutationObserver(syncHashFromActive).observe(vp, {subtree:true, attributes:true, attributeFilter:["class"]});
+  }
+  if (location.hash && /^#s\d+$/.test(location.hash)) {
+    setTimeout(jumpToHash, 250);
+  }
+  window.addEventListener("hashchange", jumpToHash);
+})();
+// ========== /SLIDE DEEP-LINKING ==========
 </script>
 
 </body>
