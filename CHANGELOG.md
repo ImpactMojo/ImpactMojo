@@ -5,6 +5,28 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.25] - 2026-05-02
+
+### Added
+- **Social Margins 101 Phase 2 vector expansion** — 7 new deeper data + practice slides inserted into Section 12 (slides 108-114), one per vector beyond the existing primer. Section 12 now carries 17 slides total (was 10).
+  - **s108 — Adivasi Land Loss & Forest Rights**: FRA 2006 implementation gap (~13% of CFR claims granted), 50%+ of all displacement is tribal, Hasdeo/Niyamgiri/Pathalgadi flashpoints, Schedule V vs VI vs PESA. Practitioner FPIC translation.
+  - **s109 — Religious Minorities — Sachar to Citizenship**: Sachar 2006 (Muslims worse than SCs), Misra 2007 + Ranganath Mishra (Dalit Christian/Muslim SC eligibility pending), CAA 2019 + NRC Assam (1.9M excluded), 12-state anti-conversion laws.
+  - **s110 — Gender Beyond Caste**: care economy 297 vs 31 min/day (9.6× gap, widest in G20), FLFPR 33% recovery, MMR 97/100K (Kerala 19, Assam 195), SRHR access. Counter to "gender mainstreaming" as add-on.
+  - **s111 — Queer & Trans Post-NALSA**: NALSA 2014, Section 377 read-down 2018, Trans Persons Act 2019 critique vs Pakistan 2018 Act, marriage equality 2023 verdict (Supriyo Chakraborty), hijra/khwaja sira historical recognition.
+  - **s112 — Disability — The 4% Reservation Reality**: Census 2.21% vs WHO 15-20% (measurement politics), 4% PwD reservation only ~1.5% filled, 27% disabled children out of school, NMHS mental health gap (150M need care, <9k psychiatrists).
+  - **s113 — Linguistic Federalism**: 22 Eighth Schedule + 800 unscheduled, Three-Language Formula NEP 2020, Tamil Nadu anti-Hindi politics since 1965, language as gatekeeper for state employment + judicial access.
+  - **s114 — Class as a Vector**: Top 1% wealth share 40.6% (Oxfam 2023), 36% of BPL households are SC/ST, EWS 10% reservation (Janhit Abhiyan 2022), within-caste class differentiation. Why income-only and caste-only targeting both miss what the other captures.
+- Each new slide carries: structural body paragraph, 4 bullet points with citations, and a colored callout box ("practitioner translation" / "for programme design" / etc.). Templates use the existing `.two-col.half`, `.bullet-list`, `.hbox` styles.
+
+### Changed
+- **Slide IDs renumbered** in social-margins: existing s108-s114 (Section 13 + appendix charts + End slide) shifted to s115-s121. SLIDE_IDS array extended; End slide footer `slide-number` updated to 121.
+- **TOC entry** for Section 12 updated from "Slides 98-107" → "Slides 98-114".
+- **Section 13 entry** in Reading the deck note updated from "108-110" → "115-117".
+- **Section 12 divider subtitle** rewritten to mention the 8 primers + 7 deeper slides structure.
+
+### Result
+- Social Margins 101 deck now has **121 total slides** (was 114) with substantively expanded treatment of all 7 vectors beyond caste. Phase 2 closed.
+
 ## [10.23.24] - 2026-05-02
 
 ### Added
