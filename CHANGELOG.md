@@ -5,6 +5,16 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.26] - 2026-05-02
+
+### Fixed
+- **Stat-card label alignment** across all 7 native decks. The v10.23.21 "alignment hardening" added `.stat-card .stat-label{flex:1 1 auto; margin-top:auto}` which pushed the label to the BOTTOM edge of equal-height stat-cards in a grid — creating an awkward gap between the stat-number and the label whenever cards stretched to match the tallest sibling. User flagged climate-essentials slide 10 (Carbon Budget) where the 380 GtCO₂ + 10 years stat-cards showed the gap most clearly. Removed the offending flex rules so stat-cards revert to natural block layout: number on top, label right below, no forced bottom-anchoring. Cards still equal-height via grid `align-items:stretch` default; extra space (when any) sits at the bottom edge of the card, not in the middle.
+- Also removed two over-broad rules from v10.23.21 that forced `display:flex; flex-direction:column` on every `<div>` child of inline `display:grid` containers (caused unintended layout shifts on hand-coded grids in some slides).
+
+### Kept
+- `.two-col, .two-col.half/.a32/.a23 { align-items:start }` — top-aligns side-by-side columns when content heights differ. Genuine improvement, retained.
+- `.col-panel { display:flex; flex-direction:column }` + `.col-panel-title { flex:0 0 auto }` — keeps col-panel titles at top with body flowing below. Retained.
+
 ## [10.23.25] - 2026-05-02
 
 ### Added
