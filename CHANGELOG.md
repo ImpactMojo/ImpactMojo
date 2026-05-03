@@ -5,6 +5,14 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.30] - 2026-05-02
+
+### Added
+- **Slide deep-linking via URL hash** across all 7 native decks. The URL now updates as you navigate (`#s1` → `#s2` → ...). Pasting a deep-link URL like `https://www.impactmojo.in/101-courses/climate-essentials.html#s31` jumps directly to slide 31 on load. Browser back/forward buttons now traverse slide history. Implementation: `MutationObserver` watches `.slide.active` class changes and syncs `location.hash` via `history.replaceState` (no page reload). On load + on `hashchange` event, parses the hash and calls the deck's own `showSlide()`/`show()` function (tries multiple signatures), falling back to manual class swap + progress UI update if no API matches.
+
+### Fixed
+- **Climate-essentials slide 4 overflow** — removed the redundant Pakistan floods bullet (`<li>The 2022 Pakistan floods were made 50% more likely…</li>`) that was getting clipped at the bottom now that font-shrinking is disabled. Same data point appears in slide 9's "Attribution evidence" hbox with fuller context (one-third of country underwater, 1,700 deaths, $30B damage), so no information is lost.
+
 ## [10.23.29] - 2026-05-02
 
 ### Changed
