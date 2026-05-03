@@ -5,6 +5,16 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.29] - 2026-05-02
+
+### Changed
+- **No more font shrinking on slides**. User explicitly: "I dont want to shrink fonts. I want to make sure the content is proportionately and consistently fitting." Removed `class="slide compact"` from all 51 manually-marked slides across 7 native decks (climate 6 + dev-econ 7 + inequality 5 + mel 4 + pub-finance 18 + social-margins 3 + work-labour 8). Also disabled the runtime `ensureFit` auto-compact (introduced in v10.23.22) — JS no longer adds `.compact` or `.ultra-compact` classes on overflow detection. CSS rules for `.slide.compact` and `.slide.ultra-compact` remain in the stylesheets but become inert (no slides carry the class). Slides that previously got their fonts shrunk to fit now render at base font sizes.
+- **Trade-off acknowledged**: slides that genuinely have too much content for the 1280×720 viewport will now overflow visibly (clipped at the bottom) rather than auto-shrink. This makes content overflow obvious so it can be addressed editorially (split into 2 slides, trim content) rather than masked by font reduction.
+
+### Fixed (slide structure)
+- **Slide 31 climate-essentials (Carbon Budget — Stern vs Nordhaus)** — `<div class="two-col half">` was closing too early before the right column, orphaning the right-column stat-grid + hbox outside the grid container. Right column now properly nested inside two-col.
+- **Slides s4 climate, s4 + s63 dev-economics** — same orphaned-right-column malformation, fixed via Python regex pattern matcher.
+
 ## [10.23.28] - 2026-05-02
 
 ### Fixed
