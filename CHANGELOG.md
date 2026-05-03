@@ -5,6 +5,16 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.32] - 2026-05-03
+
+### Fixed
+- **Social Margins 101 — duplicate s121 slide removed**. User flagged slides 119, 120, 121 all "blank". Investigation revealed s120 and s121 were duplicate "Manual Scavenging Deaths" chart slides (both with canvas `id="sm_scavenging_deaths"`) — likely from a merge resolution that didn't dedup properly. Since ECharts can only initialize one canvas per ID, the second instance was always blank. Removed s121, renumbered End slide s122 → s121, updated SLIDE_IDS array, fixed end-byline mention. Total slides now 121.
+- **Chart slides showing blank on first view across all 7 native decks**. ECharts canvases initialize when the deck loads — but only the first slide is `display:flex`; all others are `display:none`. A canvas inside a hidden parent has 0 width at init time, so ECharts creates the chart but renders to a 0×0 canvas. When the user navigates to the chart slide, the canvas now has dimensions but no resize event fires, so the chart stays blank. Fix: added `MutationObserver` on `.slide.active` class changes that calls `echarts.getInstanceByDom(canvas).resize()` for every chart canvas in the newly-active slide. Initial pass at 400ms ensures even the deck's first chart slide (if active at load) renders properly.
+
+### Known follow-ups (not in this PR)
+- **Slides 117 + 118 in social-margins overflow** — s117 has 26 list items (Where to Go Next reading), s118 is a 4898-char working glossary table. Both need editorial trim or split. Will scope per slide.
+- **Slides 2, 55, 113 reported as "mostly blank"** — these all have content in source (TOC, table, bullets respectively); user reporting them as blank may be a rendering issue separate from the chart fix above. Need user re-check post-deploy to confirm.
+
 ## [10.23.31] - 2026-05-03
 
 ### Added

@@ -3526,6 +3526,32 @@ function setTheme(t) {
 })();
 
 showSlide(0);
+
+// ========== CHART RESIZE-ON-ACTIVATE (v10.23.32) ==========
+// ECharts canvases initialize with 0 width when their parent slide is
+// display:none. When a slide first becomes active, the canvas now has
+// dimensions but the chart hasn't redrawn. Force resize on activation.
+(function chartResize(){
+  function resizeIn(slide){
+    if (!slide || !window.echarts) return;
+    slide.querySelectorAll(".chart-canvas").forEach(function(c){
+      var inst = echarts.getInstanceByDom(c);
+      if (inst) {
+        try { inst.resize(); } catch(e){}
+      }
+    });
+  }
+  function resizeActive(){
+    document.querySelectorAll(".slide.active").forEach(resizeIn);
+  }
+  var vp = document.getElementById("viewport") || document.querySelector(".slide-viewport");
+  if (vp && window.MutationObserver) {
+    new MutationObserver(resizeActive).observe(vp, {subtree:true, attributes:true, attributeFilter:["class"]});
+  }
+  // Initial pass after charts have had time to init
+  setTimeout(resizeActive, 400);
+})();
+// ========== /CHART RESIZE-ON-ACTIVATE ==========
 </script>
 
 <script>
