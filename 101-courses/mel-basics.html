@@ -3141,8 +3141,23 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
  <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">102</span><span class="footer-right">www.impactmojo.in</span></div>
 </div>
 
-<!-- ====== END SLIDE (standardised) ====== -->
+<!-- ====== S103: APPENDIX CHART 2 (auto v10.23.24) ====== -->
 <div class="slide" id="s103">
+ <div class="slide-header"><a href="https://www.impactmojo.in/101-courses/" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">MEL Basics 101</span><span class="header-url">www.impactmojo.in</span></div>
+ <div class="slide-content">
+  <div class="section-label">Section 11 &middot; Quick Data Check</div>
+  <div class="slide-title sm" style="margin-bottom:6px">MEL RACI Matrix &mdash; Who Does What</div>
+  <div class="chart-slide-frame">
+   <div class="chart-context">A schematic RACI (Responsible, Accountable, Consulted, Informed) matrix mapping common MEL tasks to typical roles in a development programme.</div>
+   <div class="chart-canvas" id="mel_raci_heatmap"></div>
+   <div class="chart-takeaway"><strong>What to see:</strong> Field teams are <em>responsible</em> for primary data collection; M&amp;E officers are <em>accountable</em> for indicator reporting; senior management gets <em>informed</em>. RACI is a planning tool &mdash; useful for clarifying who owns each step before disagreements emerge mid-cycle.</div>
+  </div>
+ </div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">103</span><span class="footer-right">www.impactmojo.in</span></div>
+</div>
+
+<!-- ====== END SLIDE (standardised) ====== -->
+<div class="slide" id="s104">
  <div class="slide-header"><a href="https://www.impactmojo.in/101-courses/" class="logo-mark" target="_blank"><svg class="logo-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,130 L150,50" stroke="#6366F1" stroke-width="2" stroke-dasharray="4,4"/><circle cx="150" cy="50" r="4" fill="#10B981"/></svg><span class="logo-wordmark">ImpactMojo</span></a><span class="header-center">MEL Basics 101</span><span class="header-url">www.impactmojo.in</span></div>
  <div class="end-screen">
   <div class="end-bar"></div>
@@ -3166,7 +3181,7 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
    </div>
   </div>
  </div>
- <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">103</span><span class="footer-right">www.impactmojo.in</span></div>
+ <div class="slide-footer"><span class="footer-left">CC BY-NC-SA 4.0 &middot; ImpactMojo 101 Series</span><span class="slide-number">104</span><span class="footer-right">www.impactmojo.in</span></div>
 </div>
 
 
@@ -3180,12 +3195,12 @@ body.dark #fs-hint{background:rgba(255,255,255,0.14)}
 
 <div id="nav">
  <button class="nav-btn" id="prevBtn" onclick="goTo(cur-1)">&#8249;</button>
- <span id="prog-text">1 / 103</span>
+ <span id="prog-text">1 / 104</span>
  <button class="nav-btn" id="nextBtn" onclick="goTo(cur+1)">&#8250;</button>
 </div>
 
 <script>
-const TOTAL=103;
+const TOTAL=104;
 let cur=1;
 const charts={};
 
@@ -3379,6 +3394,58 @@ if (cAppendix_mel && window.echarts) {
   window.addEventListener('resize', () => ch.resize());
 }
 
+  
+const cExtra_mel = document.getElementById('mel_raci_heatmap');
+if (cExtra_mel && window.echarts) {
+  const ch = echarts.init(cExtra_mel);
+  // RACI codes: 1=Responsible, 2=Accountable, 3=Consulted, 4=Informed
+  // tasks (y) × roles (x): [xIdx, yIdx, code]
+  const data = [
+    // ToC design
+    [0,0,3],[1,0,2],[2,0,3],[3,0,4],[4,0,4],
+    // Indicator framework
+    [0,1,4],[1,1,2],[2,1,1],[3,1,3],[4,1,4],
+    // Baseline survey
+    [0,2,4],[1,2,3],[2,2,2],[3,2,1],[4,2,4],
+    // Routine monitoring
+    [0,3,4],[1,3,4],[2,3,2],[3,3,1],[4,3,3],
+    // Endline evaluation
+    [0,4,4],[1,4,2],[2,4,1],[3,4,3],[4,4,4],
+    // Reporting & communication
+    [0,5,4],[1,5,1],[2,5,2],[3,5,4],[4,5,3]
+  ];
+  ch.setOption({
+    backgroundColor: 'transparent',
+    tooltip: {
+      formatter: p => {
+        const codes = ['','Responsible','Accountable','Consulted','Informed'];
+        return codes[p.value[2]];
+      }
+    },
+    grid: { left: 130, right: 60, top: 70, bottom: 18 },
+    xAxis: { type: 'category', data: ['Sr. Mgmt','Programme Mgr','M&E Officer','Field Team','External Eval'], position: 'top', axisLabel: { fontFamily: 'Inter', fontSize: 11, fontWeight: 600, color: '#1C1917', interval: 0 }, axisLine: { show: false }, axisTick: { show: false }, splitLine: { show: false } },
+    yAxis: { type: 'category', data: ['ToC design','Indicator framework','Baseline survey','Routine monitoring','Endline evaluation','Reporting'], inverse: true, axisLabel: { fontFamily: 'Inter', fontSize: 11, color: '#1C1917' }, axisLine: { show: false }, axisTick: { show: false }, splitLine: { show: false } },
+    visualMap: {
+      type: 'piecewise',
+      pieces: [
+        { value: 1, label: 'R - Responsible', color: '#EF4444' },
+        { value: 2, label: 'A - Accountable', color: '#0EA5E9' },
+        { value: 3, label: 'C - Consulted', color: '#F59E0B' },
+        { value: 4, label: 'I - Informed', color: '#94A3B8' }
+      ],
+      orient: 'horizontal', bottom: 0, left: 'center',
+      textStyle: { fontFamily: 'JetBrains Mono', fontSize: 10, color: '#475569' },
+      itemWidth: 14, itemHeight: 14
+    },
+    series: [{
+      type: 'heatmap',
+      data: data,
+      label: { show: true, fontFamily: 'JetBrains Mono', fontSize: 13, fontWeight: 700, color: '#fff', formatter: p => ['','R','A','C','I'][p.value[2]] },
+      itemStyle: { borderColor: '#fff', borderWidth: 2 }
+    }]
+  });
+  window.addEventListener('resize', () => ch.resize());
+}
   };
   // Defer until DOM ready + ECharts loaded
   if (document.readyState === 'complete' || document.readyState === 'interactive') {

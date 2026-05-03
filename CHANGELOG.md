@@ -5,6 +5,23 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.24] - 2026-05-02
+
+### Added
+- **One more ECharts data slide per native deck** (7 new charts, total now 4 per deck), inserted just before the End slide:
+  - **climate-essentials** — India's power mix 2010 vs 2024 (stacked bar). Coal still ~50% of installed capacity, but solar grew 0.2 GW → 90 GW. Source: CEA / Ministry of Power.
+  - **dev-economics** — India MPI decline 2005-06 → 2019-21 (line+area). 55.1% → 16.4% headcount; 415M people exited multidimensional poverty. Source: NITI Aayog / OPHI.
+  - **inequality-basics** — India consumption Gini 1983-2022 (line). Stable through 1990s; rose with liberalisation. Source: NSSO + PLFS.
+  - **mel-basics** — RACI matrix heatmap (6 tasks × 5 roles, R/A/C/I codes). Programme Manager accountable; M&E officer responsible for indicator framework; Field Team responsible for data collection.
+  - **public-finance-budgeting** — India fiscal deficit Centre + States + Combined 2010-2024 (multi-line). Combined deficit averaged ~6.5% pre-COVID, jumped to 13.3% in 2020-21, slow consolidation since. Source: RBI State Finances + Union Budget.
+  - **social-margins** — Manual scavenging deaths in India 2013-2023 (bar). 39-117 deaths/year despite the 2013 Prohibition Act. Over 95% of victims are Dalits. Source: NCSK + Ministry of Social Justice.
+  - **work-labour-livelihoods** — India labour share of GVA 1981-2022 (line+area). Fell from ~60% to ~50% — a 10pp shift from labour to capital, mirroring global middle-income trend. Source: Penn World Tables + RBI.
+- End slide IDs renumbered s103 → s104 (s113 → s114 in social-margins) to make room.
+
+### Updated (Wiki)
+- **`101-Course-Decks.md`** — full rewrite reflecting the 40-course state with 7 native HTML decks + 31 Gamma + 2 coming soon. Documents native deck features (end slides, charts, runtime overflow detection, auto-spacious, table improvements, logo→landing, fullscreen pill).
+- **`Changelog.md`** — condensed v10.23.13-23 summary entry covering 11 point releases.
+
 ## [10.23.23] - 2026-05-02
 
 ### Fixed
