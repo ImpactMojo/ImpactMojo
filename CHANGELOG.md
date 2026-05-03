@@ -5,6 +5,12 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.28] - 2026-05-02
+
+### Fixed
+- **Bullet-list `<strong>` no longer breaks into a separate column**. Across all 7 native decks. The `.bullet-list li` rule used `display:flex; gap:12px; align-items:flex-start` with the bullet as a `::before` pseudo-element — but inline children of a flex container become flex items themselves, so each `<strong>...</strong>` was rendering as a separate flex item alongside the trailing text node. Result: the strong got its own narrow column and the body text got a wider one, so on slide 10 of climate-essentials (Carbon Budget) "Deep decarbonisation:" wrapped to its own column while the body "Energy systems, transport..." rendered in a parallel column. User flagged this as the "deep carbonisation misalignment".
+- Replaced flex layout with `position:relative` + `padding-left:19px` on `<li>` and `position:absolute; left:0; top:9px` on `::before`. The bullet dot floats outside the text flow; strong + body text now wrap together as a single inline flow. Applied to all 7 decks (each had different default bullet colors — handled). Responsive override updated from `margin-top:7px` to `top:8px` to match the larger 8px bullet on bigger screens.
+
 ## [10.23.27] - 2026-05-02
 
 ### Fixed
