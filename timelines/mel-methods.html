@@ -108,6 +108,73 @@ html,body{font-family:var(--font-body);color:var(--ink);background:var(--paper);
 .tl-footer{padding:32px 28px;text-align:center;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:11px;color:var(--ink-light);letter-spacing:0.5px}
 .tl-footer a{color:var(--ink-mid);text-decoration:none}
 .tl-footer a:hover{color:var(--cyan);text-decoration:underline}
+
+/* ========== TIMELINE V2 REDESIGN (v10.23.38) ========== */
+/* Fixes: sticky era header overlap; progressive disclosure; cleaner hierarchy */
+
+/* 1. STICKY OVERLAP FIX */
+.era-header{position:static !important;background:transparent !important;padding:0 !important;margin-bottom:18px}
+.era-header::before{content:'';display:block;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin-bottom:18px}
+
+/* Make era marker integrated with header */
+.era-marker{position:relative !important;left:auto !important;top:auto !important;display:inline-flex !important;margin-right:14px;vertical-align:middle;width:38px !important;height:38px !important}
+.era{padding-left:0 !important;margin-bottom:64px}
+@media(max-width:680px){.era{padding-left:0 !important}}
+
+/* Stack era header content cleanly */
+.era-header{display:flex;flex-wrap:wrap;align-items:center;gap:0 14px}
+.era-num{display:none}
+.era-title{display:inline-block;margin:0 !important}
+.era-years{display:inline-block;margin:0 !important;color:var(--ink-light) !important;font-weight:600;background:var(--paper-mid);padding:4px 10px;border-radius:14px;font-size:11px !important}
+.era-blurb{flex-basis:100%;margin-top:10px !important;font-size:14.5px !important;color:var(--ink-mid)}
+
+/* Hide the rail (no longer needed without sticky positioning) */
+.tl-rail{display:none !important}
+
+/* 2. CARD GRID per era */
+.era > .node{margin-bottom:14px}
+
+/* 3. PROGRESSIVE DISCLOSURE — cards collapsed by default */
+.node{cursor:pointer;padding:18px 22px !important;transition:all 0.2s ease}
+.node:hover{box-shadow:0 6px 18px rgba(15,23,42,0.08) !important;transform:translateY(-1px)}
+.node-dot{display:none !important}
+.node-section,.node-links{max-height:0;overflow:hidden;opacity:0;transition:max-height 0.3s ease,opacity 0.25s ease,margin 0.3s ease;margin-top:0 !important;margin-bottom:0 !important;padding-top:0 !important;border-top:0 !important}
+.node.is-open{padding-bottom:22px !important}
+.node.is-open .node-section{max-height:600px;opacity:1;margin-bottom:14px !important}
+.node.is-open .node-section:first-of-type{margin-top:14px !important;padding-top:14px !important;border-top:1px dashed var(--border)}
+.node.is-open .node-links{max-height:200px;opacity:1;padding-top:12px !important;border-top:1px dashed var(--border) !important;margin-top:12px !important}
+
+/* 4. CARD HEADER — year + title + author + chevron */
+.node-year{display:inline-block;background:var(--paper-mid);color:var(--ink) !important;padding:4px 12px;border-radius:14px;font-size:13px !important;font-weight:700 !important;letter-spacing:0.5px !important;margin-bottom:8px !important}
+.node-title{font-size:18px !important;line-height:1.3 !important;margin-bottom:4px !important;padding-right:32px}
+.node-author{margin-bottom:0 !important;font-size:13.5px !important}
+.node-section-label{font-size:9.5px !important;letter-spacing:1.5px !important;font-weight:800 !important}
+.node-section-text{font-size:14px !important;line-height:1.55 !important}
+
+/* 5. CHEVRON — visual cue for expandability */
+.node{position:relative}
+.node::after{content:"";position:absolute;top:24px;right:22px;width:10px;height:10px;border-right:2px solid var(--ink-light);border-bottom:2px solid var(--ink-light);transform:rotate(45deg);transition:transform 0.2s ease;opacity:0.5}
+.node.is-open::after{transform:rotate(225deg);opacity:0.8}
+.node:hover::after{opacity:1;border-color:var(--cyan)}
+
+/* 6. ERA NAV BAR — sticky scroll-to nav at top */
+.era-nav{position:sticky;top:62px;z-index:40;background:var(--paper-soft);border-bottom:1px solid var(--border);padding:10px 28px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.era-nav-inner{max-width:1100px;margin:0 auto;display:flex;gap:6px;align-items:center;flex-wrap:nowrap;white-space:nowrap}
+.era-nav a{font-family:var(--font-head);font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:14px;color:var(--ink-mid);text-decoration:none;border:1px solid var(--border);background:var(--paper);transition:all 0.15s;flex-shrink:0}
+.era-nav a:hover{border-color:var(--cyan);color:var(--cyan)}
+.era-nav-label{font-family:var(--font-mono);font-size:10px;color:var(--ink-light);text-transform:uppercase;letter-spacing:1.2px;font-weight:600;margin-right:6px;flex-shrink:0}
+
+/* Hide old filter bar (replaced by era-nav and the click-to-expand) */
+.filter-bar{display:none !important}
+
+/* 7. MOBILE TIGHTENING */
+@media(max-width:680px){
+  .era-title{font-size:20px !important}
+  .node{padding:14px 18px !important}
+  .node-title{font-size:16px !important;padding-right:28px}
+  .node::after{top:18px;right:18px;width:8px;height:8px}
+}
+/* ========== /TIMELINE V2 REDESIGN ========== */
 </style>
 </head>
 <body>
@@ -440,6 +507,65 @@ if (location.hash) {
     if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
   }, 200);
 }
+
+// ========== TIMELINE V2 INTERACTION (v10.23.38) ==========
+(function timelineV2(){
+  // 1. Click-to-expand on cards
+  document.querySelectorAll('.node').forEach(function(node){
+    node.addEventListener('click', function(e){
+      // Don't toggle when clicking links inside the card
+      if (e.target.tagName === 'A' || e.target.closest('a')) return;
+      node.classList.toggle('is-open');
+    });
+  });
+
+  // 2. Build era-nav from existing eras
+  var timelineWrap = document.querySelector('.timeline-wrap');
+  if (timelineWrap) {
+    var eras = document.querySelectorAll('.era');
+    if (eras.length > 0) {
+      var nav = document.createElement('nav');
+      nav.className = 'era-nav';
+      nav.setAttribute('aria-label', 'Era navigation');
+      var inner = document.createElement('div');
+      inner.className = 'era-nav-inner';
+      var label = document.createElement('span');
+      label.className = 'era-nav-label';
+      label.textContent = 'Eras:';
+      inner.appendChild(label);
+      eras.forEach(function(era){
+        var titleEl = era.querySelector('.era-title');
+        var id = era.id;
+        if (titleEl && id) {
+          var a = document.createElement('a');
+          a.href = '#' + id;
+          a.textContent = titleEl.textContent;
+          a.addEventListener('click', function(e){
+            e.preventDefault();
+            era.scrollIntoView({behavior:'smooth', block:'start'});
+            history.replaceState(null, '', '#' + id);
+          });
+          inner.appendChild(a);
+        }
+      });
+      nav.appendChild(inner);
+      // Insert nav before the timeline-wrap
+      timelineWrap.parentNode.insertBefore(nav, timelineWrap);
+    }
+  }
+
+  // 3. Open node if hash points to it
+  if (location.hash && location.hash.startsWith('#n-')) {
+    setTimeout(function(){
+      var target = document.querySelector(location.hash);
+      if (target && target.classList.contains('node')) {
+        target.classList.add('is-open');
+        target.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+    }, 200);
+  }
+})();
+// ========== /TIMELINE V2 INTERACTION ==========
 </script>
 
 </body>
