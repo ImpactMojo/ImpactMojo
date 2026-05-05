@@ -5,6 +5,11 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.37] - 2026-05-03
+
+### Added
+- **Timelines added to main site navigation** under Specials → Long-form Reading (alongside Book Companions and Deep Dives). Single-line addition to `index.html`'s nav-specials dropdown — `/timelines/` now reachable from every page on the site without needing to know the URL.
+
 ## [10.23.36] - 2026-05-03
 
 ### Added
