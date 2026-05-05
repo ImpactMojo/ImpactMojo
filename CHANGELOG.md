@@ -5,6 +5,19 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.36] - 2026-05-03
+
+### Added
+- **Four more timelines shipped — all 5 stubs from v10.23.35 now LIVE.** User: "do the stubs." Each is hand-curated, citation-backed, era-grouped, with cross-links to existing ImpactMojo content.
+  - **Indian Policy & Welfare State, 1947–Today** (15 nodes, 7 eras): Independence/Partition · Constitution · First Five-Year Plan · 1956 Industrial Policy + Mahalanobis · Green Revolution · Bank Nationalisation 1969 · Garibi Hatao · Emergency · NABARD · Mandal · 1991 LPG · 73rd/74th amendments · Mid-Day Meal/PoA · RTI · MGNREGA · FRA · RTE · NFSA · Jan Dhan/JAM · GST · CAA-NRC + Article 370 · NEP 2020 · Farm Laws · Bihar Caste Survey 2023.
+  - **MEL & Research Methods, 1969–Today** (18 nodes, 6 eras): USAID Logframe 1969 · OECD-DAC formed · DAC Evaluation Criteria 1991 · Theory of Change 1995 · Paris Declaration 2005 · UNEG Norms · J-PAL 2003 · 3ie · PDIA · MSC + Outcome Harvesting · DAC Coherence added 2019 · COVID Remote MEL · Generative AI for evaluation · Decolonial/Made-in-Africa Evaluation.
+  - **Climate Policy & Justice, 1972–Today** (17 nodes, 6 eras): Stockholm 1972 · Limits to Growth · Brundtland · IPCC · Rio · Kyoto · USA Withdraws · Copenhagen failure · Paris Agreement · IPCC 1.5°C report · Greta · IPCC AR6 · COP27 Loss & Damage Fund · COP28 Dubai "transition away from fossil fuels".
+  - **Indian Rights & Social Margins, 1950–Today** (18 nodes, 6 eras): Constitution Articles 14/15/16/17 · Untouchability Act · Mandal Commission · SC/ST PoA Act · Mandal Accepted · 73rd/74th · PESA · RTI/MGNREGS · FRA · NFSA + Koushal · NALSA third gender · RPWD Act · Section 377 read-down · Trans Persons Act + Triple Talaq + Article 370 · CAA · Janhit Abhiyan EWS · Supriyo marriage equality · Davinder Singh sub-categorisation 2024.
+- **Total now: 5 LIVE timelines, 95 nodes, 38 eras** spanning ~250 years of development thinking, ~75-80 years of Indian state-building/rights, ~55 years of MEL practice, and ~52 years of climate diplomacy.
+- Landing page `/timelines/` updated: all 5 cards now LIVE with node counts; hero stats updated to "5 Live · 95 Total nodes · 38 Eras covered".
+- `sitemap.xml` updated with 4 new URLs (priority 0.8). 194 URLs total.
+- `data/search-index.json` updated with 4 new entries (TIMELINE003-006). 537 entries total.
+
 ## [10.23.35] - 2026-05-03
 
 ### Added
