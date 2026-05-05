@@ -5,6 +5,15 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.35] - 2026-05-03
+
+### Added
+- **New content type: ImpactMojo Timelines.** Curated, citation-backed visual histories at `/timelines/`. Each timeline carries: era-grouped nodes, original argument, why-it-mattered, the critique that came after, and cross-links to existing ImpactMojo decks/BookSummaries/handouts. Single-file HTML per timeline, brand-consistent styling, deep-link via `#node-id`, era filter chips, sticky era headers.
+- **First timeline live: "Development Thinking, 1776–Today" — 25 nodes, 7 eras**. From Adam Smith and Marx through Truman's "underdeveloped," Lewis dual-sector, the Bandung Conference, Rostow's stages, Prebisch–Singer, Cardoso–Faletto, Wallerstein, the ILO Basic Needs approach, Sen's *Poverty and Famines* + *Development as Freedom*, the Washington Consensus, MDGs, Acemoglu–Robinson on institutions, J-PAL/RCTs, Easterly's *White Man's Burden*, Piketty's *Capital*, the SDGs, Hickel/degrowth, the polycrisis frame, COP27 Loss and Damage, and Bridgetown/BRICS+/decolonial turn 2023.
+- **Landing page** at `/timelines/index.html` showcases the new content type with one card LIVE (Development Thinking) and four others marked "Soon" (Indian Policy & Welfare State; MEL & Research Methods; Climate Policy & Justice; Indian Rights & Social Margins).
+- **Sitemap** updated with `/timelines/` and `/timelines/development-thinking.html` (priority 0.8).
+- **Search-index** updated with two new entries (`TIMELINE001` landing, `TIMELINE002` Development Thinking).
+
 ## [10.23.34] - 2026-05-03
 
 ### Fixed
