@@ -5,6 +5,23 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.23.38] - 2026-05-03
+
+### Fixed
+- **Timeline era headers no longer overlap card content.** The original v10.23.35-36 design used `position: sticky` on `.era-header` which caused the "01 / 02 / 03" era numbers to sit on top of node cards as users scrolled. Removed sticky positioning; era headers are now inline section breaks.
+
+### Changed
+- **Timeline cards now use progressive disclosure** (matches reference site behaviour). Cards are collapsed by default showing year + title + author + chevron. Click anywhere on the card to expand the Argued / Mattered / Critique sections + cross-links. Click again to collapse. Reduces the wall-of-text feel that made timelines hard to scan.
+- **Era jump-nav added** (sticky pill bar below topbar) — click an era name to smooth-scroll to that section. Replaces the old filter chips that hid eras (jump is more intuitive than filter for sequential reading).
+- **Era headers redesigned** as inline flex (marker + title + years pill + blurb below) — cleaner than the previous stacked layout with the absolutely-positioned marker.
+- **Vertical timeline rail removed** — no longer needed without sticky positioning; visual hierarchy now comes from the era headers + card grouping.
+- Deep-link via `#n-...` still works AND auto-opens the target node when the page loads.
+
+### Why
+User: "the format of the timelines is not working. it's hard to read and understand. pls look at the original example shared and try to emulate just using our brand and fonts. also the sections 01 02 03 etc are overlapping the text content."
+
+Applied to all 5 timelines (Development Thinking, Indian Policy, MEL & Methods, Climate Policy, Indian Rights) via single CSS+JS override block.
+
 ## [10.23.37] - 2026-05-03
 
 ### Added
