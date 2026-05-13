@@ -30,6 +30,8 @@ export default async (request: Request, context: Context) => {
 
     const ct = upstream.headers.get("content-type") || "";
     if (!ct.includes("text/html")) {
+        // Assets (CSS/JS/images) ship from Astro with content-hashed filenames,
+        // so upstream's long cache is safe to pass through.
         const headers = new Headers(upstream.headers);
         headers.delete("content-security-policy");
         headers.delete("x-frame-options");
@@ -47,6 +49,14 @@ export default async (request: Request, context: Context) => {
     headers.delete("content-length");
     headers.delete("content-security-policy");
     headers.delete("x-frame-options");
+    // Override upstream's max-age=600 — GitHub Pages caches HTML for 10 min,
+    // which means upstream PolicyDhara deploys took up to 10 min to appear here.
+    // Short browser cache + stale-while-revalidate keeps TTFB fast but lets
+    // edits propagate within ~60s of an upstream deploy.
+    headers.set(
+        "cache-control",
+        "public, max-age=60, s-maxage=60, stale-while-revalidate=600",
+    );
     return new Response(body, { status: upstream.status, headers });
 };
 
