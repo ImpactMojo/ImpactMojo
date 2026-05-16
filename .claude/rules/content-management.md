@@ -13,6 +13,7 @@ When adding or modifying content:
    ```
 4. **Update docs**: `docs/games-guide.md`, `docs/labs-guide.md`, `docs/content-guide.md` as relevant
 5. **Update changelog**: `docs/changelog.md` for user-facing changes
+   - **5a. Learner-facing additions** (new games, labs, courses, book summaries, deep dives, blog posts, premium tools): also add a `- **Title** — short description` bullet to a `### For Learners` subsection in the release entry. The monthly newsletter (`netlify/functions/monthly-newsletter.mjs`) parses **only** that subsection — anything in `### Added` / `### Changed` / `### Fixed` or topic-specific sections is treated as internal/dev-facing and ignored. Keep bullets short and benefit-focused; never include infra terms (Formspree, drip, RLS, Edge Function, migration, cron, webhook, etc.) — a defensive blocklist will strip them anyway.
 6. **Update sitemap**: add `<url>` entry to `sitemap.xml`
 7. **Update catalog**: `catalog.html` / `catalog_data.json` for courses
 8. **Check stale links**: `grep -rn "101.impactmojo.in" index.html courses/` for refs that should be self-hosted
