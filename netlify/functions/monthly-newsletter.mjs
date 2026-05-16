@@ -2,9 +2,16 @@
  * Netlify Scheduled Function — Monthly Newsletter
  *
  * Runs on the 15th of every month at 10:00 IST (04:30 UTC).
- * Reads CHANGELOG.md and docs/changelog.md for what's new in the past 30 days,
- * reads search-index.json for current content counts, and sends a monthly
- * update email to all users via the send-notification Edge Function.
+ *
+ * Pulls learner-facing highlights from `### For Learners` subsections in
+ * docs/changelog.md (dated within the last 35 days) and reads
+ * search-index.json for current content counts. Sends a monthly update
+ * email via the send-notification Edge Function.
+ *
+ * IMPORTANT: only bullets under a `### For Learners` subsection are picked up.
+ * Anything in `### Added`, `### Changed`, `### Fixed`, or topic-specific
+ * subsections is treated as internal/dev-facing and ignored. See
+ * `.claude/rules/content-management.md` step 5a.
  *
  * Environment variables (set in Netlify dashboard):
  *   SUPABASE_URL              — Supabase project URL
@@ -15,7 +22,7 @@ const SUPABASE_URL = process.env.SUPABASE_URL || "https://ddyszmfffyedolkcugld.s
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const SITE_URL = "https://www.impactmojo.in";
 
-// Parse the user-facing changelog (docs/changelog.md) for recent "Added" items
+// Parse docs/changelog.md for recent `### For Learners` bullets.
 async function getRecentChanges() {
   try {
     const resp = await fetch(`${SITE_URL}/docs/changelog.md`);
@@ -28,32 +35,36 @@ async function getRecentChanges() {
     const highlights = [];
     const lines = text.split("\n");
     let currentDate = null;
-    let inAdded = false;
+    let inSection = false;
 
     for (const line of lines) {
       // Match version headers like "## v10.16.0 — April 8, 2026"
       const versionMatch = line.match(/^## .+?—\s*(.+)$/);
       if (versionMatch) {
-        const parsed = new Date(versionMatch[1].trim());
+        // Strip parenthetical suffix like "April 8, 2026 (some note)" so
+        // Date.parse() gets a clean string.
+        const dateStr = versionMatch[1].trim().replace(/\s*\(.*\)\s*$/, "");
+        const parsed = new Date(dateStr);
         if (!isNaN(parsed.getTime())) {
           currentDate = parsed;
         }
-        inAdded = false;
+        inSection = false;
         continue;
       }
 
-      // Track if we're in an "Added" section
-      if (line.match(/^### Added/i)) {
-        inAdded = true;
+      // Only the curated `### For Learners` subsection is learner-facing.
+      // Internal `### Added` / `### Changed` / `### Fixed` / topic sections
+      // are ignored on purpose — see file header comment.
+      if (line.match(/^### For Learners\b/i)) {
+        inSection = true;
         continue;
       }
       if (line.match(/^### /)) {
-        inAdded = false;
+        inSection = false;
         continue;
       }
 
-      // Only collect "Added" items from recent dates
-      if (inAdded && currentDate && currentDate >= cutoff) {
+      if (inSection && currentDate && currentDate >= cutoff) {
         const itemMatch = line.match(/^- \*\*(.+?)\*\*\s*[—–-]\s*(.+)/);
         if (itemMatch) {
           highlights.push({
@@ -64,7 +75,12 @@ async function getRecentChanges() {
       }
     }
 
-    return highlights.slice(0, 5); // Max 5 highlights
+    // Defensive blocklist: even if a contributor accidentally drops infra
+    // language into `### For Learners`, drop it before the email ships.
+    const BLOCK = /\b(Formspree|drip|streak[ -]?tracking|RLS|Edge Function|migration|SUPABASE|cron|webhook|infrastructure|Netlify Function|API key|service.role)\b/i;
+    return highlights
+      .filter((h) => !BLOCK.test(`${h.title} ${h.description}`))
+      .slice(0, 5);
   } catch (err) {
     console.error("Failed to parse changelog:", err);
     return [];
