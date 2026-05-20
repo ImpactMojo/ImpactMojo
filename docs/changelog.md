@@ -2,6 +2,40 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.24.0 — May 20, 2026 (Flagship course chrome normalization)
+
+Reader feedback was that the 12 flagship courses "looked different from each other" — mobile and desktop both. Over a session of audits, ran a line-by-line comparison against `devecon` (canonical) and closed the drift across 9 incremental PRs.
+
+### For Learners
+
+- **Consistent course experience** — all 12 flagship courses now share the same mobile and desktop chrome, so switching between Public Policy and Gender Studies (and the other 10) no longer feels like switching sites.
+- **Mobile hamburger works on every course** — the menu button is in the same place on each course and tapping outside the open drawer closes it.
+- **Accessibility widget present on every course** — the UserWay button is pinned right-middle on all 12, so font size / contrast / readability controls are one tap away regardless of course.
+
+### Changed
+
+- **Footer**: all 12 courses now render the same 3-column footer (Learn / Connect / Support / legal links / Docs link). Replaced 4 divergent footer patterns and removed a duplicate `<footer>` block in SEL.
+- **Mobile (390px)**: body font 16px, sidebar drawer 280px, mobile-header height 56px, mobile-header top offset 0 — uniform across all 12. Was: body ranged 15–17px, drawer ranged 240–280px, header anchored 0–6px from top.
+- **Desktop (1440px)**: sidebar width 260px, hero H1 `clamp(2.5rem, 5vw, 3.5rem)` (→ 56px) — uniform across all 12. Was: sidebars 260/280px split 8/4; H1 sizes ranged 38.4–56px.
+- **Theme storage key**: unified `impactmojo-theme` localStorage key across all 12 (was: 6 different keys).
+- **Sidebar drawer toggle class**: `.sidebar.active` across all 12 (was: 2 courses used `.sidebar.open`).
+
+### Fixed
+
+- **devai** — hamburger button was invisible because a broken UserWay script (`data-account="xxxx"` placeholder) rendered as a giant blue button covering the right side of the mobile-header. Replaced with canonical config.
+- **devai** — mobile-header element order was reversed (LOGO → HAM). Reordered to canonical HAM → LOGO → THEME.
+- **dataviz** — `.mobile-menu-btn` had `position: fixed; top: 12px; left: 12px;` taking it out of the flex flow and floating over the "ImpactMojo" logo. Moved back into the flex container.
+- **dataviz, gandhi** — UserWay accessibility widget rendered as a dark/black box at the default top-right position because the positioning CSS (`.uwy.userway_p5`, `.uwy .uai`) was missing. Added.
+- **gender, pubpol** — no UserWay accessibility widget at all. Added.
+- **devai, dataviz** — tapping outside the open mobile sidebar didn't close it. Added the `<div class="sidebar-overlay">` element, the canonical backdrop CSS, and the click handler.
+- **Mobile quiz options** — text was wrapping one word per line at narrow viewports because long words inside flex containers had no overflow control. Added `min-width: 0; overflow-wrap: anywhere` to quiz option containers.
+
+### Out of scope (deliberately deferred)
+
+- gender + SEL mobile-header use a 44px spacer instead of the canonical theme toggle. Each course uses a different theme system (`.im-theme-btn` with `data-imtheme`) which needs a small per-course glue layer to wire up properly.
+- devai + SEL are missing the `.sidebar-collapse-btn` (the desktop chevron that shrinks the sidebar to icons).
+- gender's mobile-header brand text is "Gender Studies" instead of "ImpactMojo" — may be intentional, awaiting decision.
+
 ## v10.23.10 — May 1, 2026 (Handouts emoji → SVG)
 
 Closed the open finding from v10.23.9: replaced **all 1,317 emoji instances** across 63 handout files (144 unique characters) with inline Sargam-style stroke SVGs.
