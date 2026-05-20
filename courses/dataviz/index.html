@@ -197,7 +197,7 @@
             position: fixed;
             left: 0;
             top: 4px;
-            width: 280px;
+            width: 260px;
             height: calc(100vh - 4px);
             background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
             color: #F1F5F9;
@@ -427,7 +427,7 @@
 
         .hero h1 {
             font-family: 'Inter', sans-serif;
-            font-size: 2.75rem;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 1rem;
@@ -1283,10 +1283,10 @@
         /* Responsive */
         @media (max-width: 1024px) {
             .sidebar {
-                width: 280px;
+                width: 260px;
             }
             .main-content {
-                margin-left: 280px;
+                margin-left: 260px;
             }
             .section {
                 padding: 2.5rem 2rem;
@@ -1301,10 +1301,12 @@
 
         @media (max-width: 768px) {
             .sidebar {
+                width: 280px;
+                max-width: 85vw;
                 transform: translateX(-100%);
                 transition: transform 0.3s ease;
             }
-            .sidebar.open {
+            .sidebar.active {
                 transform: translateX(0);
             }
             .main-content {
@@ -3992,7 +3994,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 
         // Mobile sidebar toggle
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebar').classList.toggle('active');
         }
 
         // Chart Chooser Logic
@@ -4110,7 +4112,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                     if (target) {
                         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         // Close mobile sidebar
-                        document.getElementById('sidebar').classList.remove('open');
+                        document.getElementById('sidebar').classList.remove('active');
                     }
                 }
             });
