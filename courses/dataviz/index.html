@@ -1348,7 +1348,7 @@
         .mobile-header {
             display: none;
             position: fixed;
-            top: 4px;
+            top: 0;
             left: 0;
             right: 0;
             height: 56px;
@@ -2409,6 +2409,18 @@
   .resource-card.handout .resource-card-eyebrow{color:#CBD5E1}
 }
 
+/* UserWay Widget Positioning - Small, Right Middle */
+.uwy.userway_p5 {
+    right: 10px !important;
+    left: auto !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+}
+.uwy .uai {
+    width: 40px !important;
+    height: 40px !important;
+}
 
 </style>
 <style>
@@ -2608,8 +2620,23 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
     body { padding-top: 56px !important; }
     .mobile-header { z-index: 10000 !important; display: flex !important; }
     .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; }
-    /* If a sidebar-overlay element exists, ensure it sits above page content */
-    .sidebar-overlay { z-index: 9998; }
+    /* Sidebar overlay (mobile drawer backdrop) */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 9998;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .sidebar-overlay.active {
+        display: block;
+        pointer-events: auto;
+        opacity: 1;
+    }
 
     .v3-paper-plane, .v3-floating-elements, .v3-blob, .v3-big-plane,
     .v3-sparkle, .organic-blob, .floating-plane, .im-paper-plane {
@@ -2748,6 +2775,9 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             </svg>
         </button>
     </header>
+
+    <!-- Sidebar Overlay (for mobile) -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <!-- Navigation Sidebar -->
     <aside class="sidebar" id="sidebar">
@@ -3991,7 +4021,16 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
         // Mobile sidebar toggle
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
+            var ov = document.getElementById('sidebar-overlay');
+            if (ov) ov.classList.toggle('active');
         }
+        (function(){
+            var ov = document.getElementById('sidebar-overlay');
+            if (ov) ov.addEventListener('click', function() {
+                document.getElementById('sidebar').classList.remove('active');
+                ov.classList.remove('active');
+            });
+        })();
 
         // Chart Chooser Logic
         const chartRecommendations = {
