@@ -1097,10 +1097,54 @@ a:hover { text-decoration: underline; }
 }
 
 /* ============================================================
+   MOBILE HEADER + SIDEBAR DRAWER (added 2026-05-20)
+   ============================================================ */
+.mobile-header {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0; height: 56px;
+  background: var(--bg-secondary, var(--bg-primary, #1A1128));
+  border-bottom: 1px solid var(--border-color, rgba(124,58,237,0.2));
+  align-items: center; justify-content: space-between;
+  padding: 0 16px; z-index: 10000;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.mobile-menu-btn {
+  width: 44px; height: 44px; min-width: 44px; min-height: 44px;
+  background: transparent; border: 1px solid var(--border-color, rgba(124,58,237,0.2));
+  color: var(--text-primary, #F1EFF8); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.mobile-menu-btn:active { background: var(--accent-primary, #7C3AED); color: #fff; }
+.mobile-menu-btn svg { width: 22px; height: 22px; stroke: currentColor; }
+.mobile-header-brand {
+  font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1rem;
+  color: var(--text-primary, #F1EFF8); text-decoration: none;
+}
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6); z-index: 9998;
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+/* ============================================================
    MOBILE RESPONSIVE
    ============================================================ */
 @media (max-width: 900px) {
-  .sidebar { display: none; }
+  .mobile-header { display: flex; }
+  body { padding-top: 56px; }
+  .layout { margin-top: 0; }
+  .sidebar {
+    position: fixed; top: 0; left: 0;
+    width: 280px; max-width: 85vw;
+    height: 100vh; height: 100dvh;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+  }
+  .sidebar.active { transform: translateX(0); }
   .hero { padding: 40px 24px; }
   .hero h1 { font-size: 1.8rem; }
   .module { padding: 32px 24px; }
@@ -1441,6 +1485,66 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
   .resource-card.handout .resource-card-eyebrow{color:#CBD5E1}
 }
 
+
+
+/* MOBILE-FIX-2026-05-20 START */
+/* ==========================================================
+   Phone rendering improvements (≤900px). Does not touch desktop.
+   - Hides the global .im-topbar so the page's .mobile-header
+     (hamburger + home + theme) becomes visible at top
+   - Reflows tables / iframes / images that overflow viewport
+   - Drops decorative SVG blobs that cause horizontal scroll
+   - Boosts tap targets, hero typography, content padding
+   ========================================================== */
+@media (max-width: 900px) {
+    .im-topbar { display: none !important; }
+    body { padding-top: 56px !important; }
+    .mobile-header { z-index: 10000 !important; display: flex !important; }
+    .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; }
+    /* If a sidebar-overlay element exists, ensure it sits above page content */
+    .sidebar-overlay { z-index: 9998; }
+
+    .v3-paper-plane, .v3-floating-elements, .v3-blob, .v3-big-plane,
+    .v3-sparkle, .organic-blob, .floating-plane, .im-paper-plane {
+        display: none !important;
+    }
+
+    img, iframe, video, embed, object { max-width: 100%; height: auto; }
+    iframe[src*="youtube"], iframe[src*="vimeo"] { aspect-ratio: 16 / 9; height: auto; width: 100%; }
+
+    .module table, .prose table, table.concept-table, table.data-table,
+    table.comparison-table, .module-content table, .content-wrapper table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    pre, code { max-width: 100%; overflow-x: auto; word-wrap: break-word; }
+
+    .hero-stats, .hero-meta { flex-wrap: wrap; gap: 0.5rem !important; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+@media (max-width: 480px) {
+    .sidebar-link, .nav-link, .module-nav-link {
+        min-height: 44px;
+        padding-top: 0.6rem !important;
+        padding-bottom: 0.6rem !important;
+    }
+    .hero { padding-left: 1rem !important; padding-right: 1rem !important; padding-top: 2rem !important; padding-bottom: 2rem !important; }
+    .hero h1, .hero-title { font-size: clamp(1.55rem, 6.5vw, 1.95rem) !important; line-height: 1.25 !important; }
+    .hero-subtitle, .hero-tagline, .hero-lede { font-size: 0.95rem !important; line-height: 1.55 !important; }
+    .content-wrapper, .main-content { padding-left: 1rem !important; padding-right: 1rem !important; }
+    h2 { font-size: 1.3rem !important; }
+    h3 { font-size: 1.1rem !important; }
+    .stat-grid, .feature-grid, .resources-grid, .card-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .hero-stat { flex: 1 1 calc(50% - 0.5rem); min-width: 0; }
+}
+/* MOBILE-FIX-2026-05-20 END */
+
 </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
@@ -1462,6 +1566,20 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
 </head>
 <body>
+
+<!-- Mobile Header (visible ≤900px) -->
+<header class="mobile-header" role="banner">
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open navigation menu" aria-expanded="false" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+    <a href="../../index.html" class="mobile-header-brand">Gender Studies</a>
+    <span style="width:44px"></span>
+</header>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
 
 <a href="#main-content" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;padding:8px 16px;background:#F59E0B;color:#0F172A;font-weight:600;font-size:0.9rem;text-decoration:none;border-radius:0 0 8px 0;" onfocus="this.style.cssText='position:fixed;left:0;top:0;z-index:9999;padding:8px 16px;background:#F59E0B;color:#0F172A;font-weight:600;font-size:0.9rem;text-decoration:none;border-radius:0 0 8px 0;'" onblur="this.style.cssText='position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;'">Skip to content</a>
 
@@ -1977,6 +2095,41 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
 
   </main>
 </div>
+
+<script>
+/* ============================================================
+   MOBILE SIDEBAR DRAWER (added 2026-05-20)
+   ============================================================ */
+(function() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  if (!sidebar || !overlay || !menuBtn) return;
+
+  function openSidebar() {
+    sidebar.classList.add('active');
+    overlay.classList.add('active');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('active');
+    overlay.classList.remove('active');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  menuBtn.addEventListener('click', () => {
+    sidebar.classList.contains('active') ? closeSidebar() : openSidebar();
+  });
+  overlay.addEventListener('click', closeSidebar);
+  // Close drawer when any sidebar link is tapped
+  sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    if (window.innerWidth <= 900) closeSidebar();
+  }));
+  // Reset on resize back to desktop
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) closeSidebar(); });
+})();
+</script>
 
 <script>
 /* ============================================================

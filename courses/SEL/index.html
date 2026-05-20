@@ -2921,6 +2921,66 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
   .resource-card.handout .resource-card-eyebrow{color:#CBD5E1}
 }
 
+
+
+/* MOBILE-FIX-2026-05-20 START */
+/* ==========================================================
+   Phone rendering improvements (≤900px). Does not touch desktop.
+   - Hides the global .im-topbar so the page's .mobile-header
+     (hamburger + home + theme) becomes visible at top
+   - Reflows tables / iframes / images that overflow viewport
+   - Drops decorative SVG blobs that cause horizontal scroll
+   - Boosts tap targets, hero typography, content padding
+   ========================================================== */
+@media (max-width: 900px) {
+    .im-topbar { display: none !important; }
+    body { padding-top: 56px !important; }
+    .mobile-header { z-index: 10000 !important; display: flex !important; }
+    .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; }
+    /* If a sidebar-overlay element exists, ensure it sits above page content */
+    .sidebar-overlay { z-index: 9998; }
+
+    .v3-paper-plane, .v3-floating-elements, .v3-blob, .v3-big-plane,
+    .v3-sparkle, .organic-blob, .floating-plane, .im-paper-plane {
+        display: none !important;
+    }
+
+    img, iframe, video, embed, object { max-width: 100%; height: auto; }
+    iframe[src*="youtube"], iframe[src*="vimeo"] { aspect-ratio: 16 / 9; height: auto; width: 100%; }
+
+    .module table, .prose table, table.concept-table, table.data-table,
+    table.comparison-table, .module-content table, .content-wrapper table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    pre, code { max-width: 100%; overflow-x: auto; word-wrap: break-word; }
+
+    .hero-stats, .hero-meta { flex-wrap: wrap; gap: 0.5rem !important; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+@media (max-width: 480px) {
+    .sidebar-link, .nav-link, .module-nav-link {
+        min-height: 44px;
+        padding-top: 0.6rem !important;
+        padding-bottom: 0.6rem !important;
+    }
+    .hero { padding-left: 1rem !important; padding-right: 1rem !important; padding-top: 2rem !important; padding-bottom: 2rem !important; }
+    .hero h1, .hero-title { font-size: clamp(1.55rem, 6.5vw, 1.95rem) !important; line-height: 1.25 !important; }
+    .hero-subtitle, .hero-tagline, .hero-lede { font-size: 0.95rem !important; line-height: 1.55 !important; }
+    .content-wrapper, .main-content { padding-left: 1rem !important; padding-right: 1rem !important; }
+    h2 { font-size: 1.3rem !important; }
+    h3 { font-size: 1.1rem !important; }
+    .stat-grid, .feature-grid, .resources-grid, .card-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .hero-stat { flex: 1 1 calc(50% - 0.5rem); min-width: 0; }
+}
+/* MOBILE-FIX-2026-05-20 END */
+
 </style>
 
 
@@ -2955,6 +3015,21 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 </div>
 
 <a href="#main-content" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;padding:8px 16px;background:#F59E0B;color:#0F172A;font-weight:600;font-size:0.9rem;text-decoration:none;border-radius:0 0 8px 0;" onfocus="this.style.cssText='position:fixed;left:0;top:0;z-index:9999;padding:8px 16px;background:#F59E0B;color:#0F172A;font-weight:600;font-size:0.9rem;text-decoration:none;border-radius:0 0 8px 0;'" onblur="this.style.cssText='position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;'">Skip to content</a>
+
+<!-- Mobile Header (visible ≤900px) — added 2026-05-20 -->
+<header class="mobile-header" role="banner">
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open navigation menu" aria-expanded="false" type="button">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+    <a href="/" style="font-weight: 600; color: var(--color-text); text-decoration: none; font-size: 1rem;">ImpactMojo</a>
+    <span style="width:44px"></span>
+</header>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
         <div class="layout">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
