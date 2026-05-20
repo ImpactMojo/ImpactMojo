@@ -344,7 +344,7 @@
         
         @media (max-width: 1024px) {
             .sidebar { transform: translateX(-100%); transition: transform var(--transition-base); }
-            .sidebar.open { transform: translateX(0); }
+            .sidebar.active { transform: translateX(0); }
             .main-content { margin-left: 0; }
             .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: var(--spacing-md) var(--spacing-lg); background: var(--bg-primary); border-bottom: 1px solid var(--border-color); position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
             .mobile-menu-btn { background: none; border: none; padding: var(--spacing-sm); cursor: pointer; }
@@ -1535,37 +1535,45 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
     </section>
 
     <footer class="footer">
-                <div class="footer-content">
-                    <div>
-                        <div class="footer-brand"><img src="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo">ImpactMojo</div>
-                        <p class="footer-tagline">Free development education for everyone.</p>
-                    </div>
-                    <div class="footer-links">
-                        <div class="footer-column">
-                            <h5>Learn</h5>
-                            <a href='/catalog'>All Courses</a>
-                            <a href='/workshops'>Workshops</a>
-                            <a href='/handouts'>Handouts</a>
-                        </div>
-                        <div class="footer-column">
-                            <h5>Connect</h5>
-                            <a href='/about'>About Us</a>
-                            <a href='/contact'>Contact</a>
-                            <a href='/faq'>FAQ</a>
-                        </div>
-                        <div class="footer-column">
-                            <h5>Support</h5>
-                            <a href='/premium'>Premium</a>
-                            <a href="/premium">Support Us</a>
-                            <a href='/coaching'>Coaching</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <span>© 2026 ImpactMojo. Pay What You Think Is Fair.</span>
-                    <div><a href='/privacy-policy'>Privacy</a> • <a href='/terms-of-service'>Terms</a> • <a href='/disclaimer'>Disclaimer</a></div>
-                </div>
-                <p style="margin-top: 0.5rem;"><a href="/docs/" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></p>
+    <div class="footer-content">
+        <div class="footer-logo">
+            <a href="/">
+                <img src="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" height="40">
+            </a>
+            <p>Free development education for everyone.</p>
+        </div>
+        <div class="footer-links">
+            <div class="footer-column">
+                <h4>Learn</h4>
+                <a href="/catalog">All Courses</a>
+                <a href="/workshops">Workshops</a>
+                <a href="/handouts">Handouts</a>
+                <a href="/podcast">Podcast</a>
+            </div>
+            <div class="footer-column">
+                <h4>Connect</h4>
+                <a href="/about">About Us</a>
+                <a href="/contact">Contact</a>
+                <a href="/faq">FAQ</a>
+                <a href="/blog">Blog</a>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <a href="/premium">Premium</a>
+                <a href="/premium">Support Us</a>
+                <a href="/coaching">Coaching</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 ImpactMojo. Pay What You Think Is Fair.</p>
+        <div class="footer-legal">
+            <a href="/privacy-policy">Privacy</a>
+            <a href="/terms-of-service">Terms</a>
+            <a href="/disclaimer">Disclaimer</a>
+        </div>
+    </div>
+    <p style="margin-top: 0.5rem;"><a href="/docs/" rel="noopener noreferrer" target="_blank">Docs (GitBook)</a></p>
 </footer>
         </main>
     </div>
@@ -1612,7 +1620,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const sidebar = document.getElementById('sidebar');
             if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', function() { sidebar.classList.toggle('open'); });
+                mobileMenuBtn.addEventListener('click', function() { sidebar.classList.toggle('active'); });
             }
             
             // Coach Callout Popup Animation - initialized via IIFE below
@@ -1620,7 +1628,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             // Update aria-expanded on mobile menu toggle
             if (mobileMenuBtn) {
                 mobileMenuBtn.addEventListener('click', function() {
-                    var isOpen = sidebar.classList.contains('open');
+                    var isOpen = sidebar.classList.contains('active');
                     mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
                 });
             }
@@ -1629,7 +1637,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute('href'));
-                    if (target) { target.scrollIntoView({ behavior: 'smooth' }); sidebar.classList.remove('open'); }
+                    if (target) { target.scrollIntoView({ behavior: 'smooth' }); sidebar.classList.remove('active'); }
                 });
             });
         });
