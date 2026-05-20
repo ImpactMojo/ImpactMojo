@@ -2,6 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+    /* THEME-KEY-UNIFY 2026-05-20: migrate any legacy theme prefs to the
+       canonical `impactmojo-theme` key, then make sure data-theme is set
+       before first paint to avoid a flash. */
+    (function(){
+        try {
+            var canon = 'impactmojo-theme';
+            var legacy = ['theme','im-theme'];
+            if (!localStorage.getItem(canon)) {
+                for (var i = 0; i < legacy.length; i++) {
+                    var v = localStorage.getItem(legacy[i]);
+                    if (v) { localStorage.setItem(canon, v); break; }
+                }
+            }
+            legacy.forEach(function(k){ localStorage.removeItem(k); });
+            var saved = localStorage.getItem(canon);
+            var resolved = saved;
+            if (!saved || saved === 'system') {
+                resolved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', resolved);
+        } catch(e){}
+    })();
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0F172A">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1555,7 +1580,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             const themeLabel = themeToggle.querySelector('span');
             
             function getPreferredTheme() {
-                const saved = localStorage.getItem('theme');
+                const saved = localStorage.getItem('impactmojo-theme');
                 if (saved) return saved;
                 if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
                 const hour = new Date().getHours();
@@ -1564,7 +1589,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             
             function setTheme(theme) {
                 document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
+                localStorage.setItem('impactmojo-theme', theme);
                 themeLabel.textContent = theme === 'dark' ? 'Dark mode' : 'Light mode';
             }
             
@@ -1699,7 +1724,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             btn.classList.toggle('active', btn.getAttribute('data-imtheme') === pref);
         });
     }
-    var saved = localStorage.getItem('im-theme') || 'system';
+    var saved = localStorage.getItem('impactmojo-theme') || 'system';
     // Apply immediately before render
     applyTheme(saved);
     document.addEventListener('DOMContentLoaded', function() {
@@ -1708,7 +1733,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
         document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 var t = this.getAttribute('data-imtheme');
-                localStorage.setItem('im-theme', t);
+                localStorage.setItem('impactmojo-theme', t);
                 applyTheme(t);
                 updateButtons(t);
             });
@@ -1716,7 +1741,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
     });
     // Listen for system theme changes
     window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function() {
-        if ((localStorage.getItem('im-theme') || 'system') === 'system') {
+        if ((localStorage.getItem('impactmojo-theme') || 'system') === 'system') {
             applyTheme('system');
         }
     });
