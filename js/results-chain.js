@@ -286,8 +286,14 @@ window.FResultsChain = (function () {
     if (!box) return;
     box.innerHTML = Object.keys(D.states).map(function (k) {
       var s = D.states[k];
-      return '<li><span class="rc-key rc-key--' + k + '"></span><b>' + esc(s.label) + "</b> " +
-             esc(s.note) + "</li>";
+      // The label and the note go in ONE element. .rc-legend li is a two-column
+      // grid, and a bare text node inside a grid container becomes an anonymous
+      // grid item: left loose, the note was auto-placed into row 2 of the 26px
+      // swatch column and rendered about 75px wide and up to 535px tall, one
+      // word per line, at every viewport width. See issue #1072.
+      return '<li><span class="rc-key rc-key--' + k + '"></span>' +
+             '<span class="rc-legend-t"><b>' + esc(s.label) + "</b> " +
+             esc(s.note) + "</span></li>";
     }).join("");
   }
 

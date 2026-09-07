@@ -275,6 +275,16 @@ jobs:
       - name: Mobile search reachability
         run: node tests/mobile-search.js
 
+      # A bare text node inside a grid container becomes an anonymous grid item
+      # and is auto-placed like a cell. On the results chain that put each
+      # legend note in the 26px swatch column, ~75px wide and up to 535px tall,
+      # one word per line, at every width, from the day the page shipped
+      # (#1072). Valid markup, all the text present, contrast and tap targets
+      # fine -- so axe passed 64 of 64 variants over it and pa11y 23 of 23
+      # pages, twice. A person on a phone found it.
+      - name: No text stranded in a grid or flex container
+        run: node tests/stray-grid-text.js
+
   theories:
     name: Theories library build and contrast
     runs-on: ubuntu-latest

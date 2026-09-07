@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.289.0 — September 7, 2026 (The results chain legend reads as sentences again)
+
+### Fixed
+
+- **The results chain legend rendered one word per line, at every width, from the day the page shipped** (#1072). Reported from a phone. `drawLegend()` wrote each row as a swatch `<span>`, a `<b>` for the label, and then the note as a **bare text node**, into `.rc-legend li { display: grid; grid-template-columns: 26px 1fr }`. That is three grid items, not two: CSS wraps a loose text node in an *anonymous grid item* and auto-places it like any other cell, so the note went to row 2, column 1, the 26px swatch track, widened only as far as its longest unbreakable word. Measured in Chromium, the four rows rendered **83×370**, **72×535**, **78×488** and **69×158**, identical at 390px, 768px and 1280px. The note is now wrapped in its own element, which puts exactly two children in the grid.
+
+  **Nothing was going to catch it.** The markup is valid, every word is present and in the right order, contrast and tap targets are fine. axe passed 64 of 64 variants over that page and pa11y 23 of 23 pages, twice, because neither has an opinion about a paragraph laid out four words tall. `git log -L` puts both the CSS rule and the markup in the same commit as the page itself, and it survived two later passes over the same file, both spent looking at the diagram above the legend.
+
+  So `tests/stray-grid-text.js` is new, in the `mobile` CI job. It renders every page under `fundamentals/` and `theories/` at 390px and 1280px and fails on any bare text node inside a grid or flex container that renders **under half its container's width and more than three lines tall**. Both conditions have to hold, because a loose text node beside an element is usually deliberate and this repo is full of the good kind: `.chip`, `.cat` and the results chain's own link key all put a swatch or a number next to a bare label in a flex row, one line, most of the container's width. The two populations are nowhere near each other — the broken rows measured 6 to 22 per cent of container width and 6.7 to 22.7 lines; every deliberate case is a single line. Verified by reintroducing the defect, which the guard reported on all four rows at both widths, and by removing it again. The page list is read from the filesystem, so a page added later is covered without anyone remembering.
+
 ## v10.288.0 — September 7, 2026 (The two newest Fundamentals get the diagram they were missing)
 
 ### For Learners
