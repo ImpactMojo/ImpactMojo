@@ -118,8 +118,11 @@ window.FEmpowerment = (function () {
           return '<button type="button" class="em-ind" data-ind="' + esc(i.id) + '" aria-pressed="false">' +
                  spark(i.series, d.colour, 92, 30) +
                  "<span><b>" + esc(i.name) + "</b><em>" +
-                 esc(i.series[0].label + " " + i.series[0].value + " &rarr; " +
-                     i.series[i.series.length - 1].label + " " + i.series[i.series.length - 1].value) +
+                 // The arrow is markup, so it is concatenated outside esc().
+                 // Passing it through escaped the ampersand and printed "&rarr;".
+                 esc(i.series[0].label + " " + i.series[0].value.toFixed(1)) + " &rarr; " +
+                 esc(i.series[i.series.length - 1].label + " " +
+                     i.series[i.series.length - 1].value.toFixed(1)) +
                  "</em></span></button>";
         }).join("") + "</div></section>";
     }).join("");
