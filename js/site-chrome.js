@@ -74,7 +74,7 @@
 '.im-sc-theme{display:inline-flex;gap:2px;background:color-mix(in srgb,var(--sc-fg) 6%,transparent);border:1px solid var(--sc-bd);border-radius:9px;padding:3px}',
 '.im-sc-tbtn{width:26px;height:24px;border:0;border-radius:6px;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}',
 '.im-sc-tbtn[aria-pressed="true"]{background:var(--sc-grad);color:#fff}',
-'@media(max-width:720px){.im-sc-label{display:none}.im-sc-btn{padding:0 8px}.im-sc-icon{width:32px}.im-sc-path{display:none}}',
+'@media(max-width:720px){.im-sc-label{display:none}.im-sc-btn{padding:0 8px;min-width:34px;justify-content:center}.im-sc-icon{width:32px}.im-sc-path{display:none}}',
 // Phones: the full control row + wordmark overflow a narrow bar, which collapses
 // the flex spacer and jams the language globe against the "impactmojo.in" wordmark
 // (reads like "impactmojo.<globe>"). Drop the bar wordmark below 600px — the logo
@@ -109,7 +109,14 @@
   function ic(name, alt) { return '<img class="im-sc-i" src="' + SI + name + '.svg" alt="' + (alt || '') + '" width="15" height="15" loading="lazy" onerror="this.style.display=\'none\'">'; }
   var I = {
     globe: ic('si_Globe_detailed'), star: ic('si_Star'), info: ic('si_Info'), home: ic('si_Home', 'Home'),
-    sys: ic('si_Monitor'), sun: ic('si_Sun'), moon: ic('si_Moon'), search: ic('si_Search')
+    sys: ic('si_Monitor'), sun: ic('si_Sun'), moon: ic('si_Moon'),
+    // Inline, not ic(): every other icon here is decorative next to a visible
+    // label, but below 720px the label is hidden and the icon IS the button.
+    // ic() hides the <img> on error, so one failed CDN fetch collapsed this to
+    // an 18px sliver on a phone -- search present, and not findable (#1062).
+    search: '<svg class="im-sc-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+          + 'stroke-width="1.8" stroke-linecap="round" width="15" height="15" aria-hidden="true">'
+          + '<circle cx="11" cy="11" r="7.5"/><path d="m21 21-4-4"/></svg>'
   };
   var LOGO = SITE + '/assets/images/apple-touch-icon.png'; // 7KB vs the 599KB full logo
 

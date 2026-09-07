@@ -244,6 +244,58 @@ jobs:
       - name: Check content counts match data/counts.json
         run: python3 scripts/check-counts.py
 
+  mobile-search:
+    name: Site search is reachable on a phone
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start local server
+        run: npx http-server -p 8080 -s &
+
+      - name: Wait for server
+        run: sleep 3
+
+      # Measures the search affordance at a 390px viewport and clicks it. This
+      # is the only check that would have caught #1062: the button was in the
+      # DOM with the right class and a working handler, inside a container the
+      # mobile stylesheet sets to display:none, so every desktop check passed
+      # while search was unreachable on a phone. axe and pa11y would not report
+      # it either -- a zero-size element with an aria-label is a layout outcome,
+      # not a WCAG violation.
+      - name: Mobile search reachability
+        run: node tests/mobile-search.js
+
+  theories:
+    name: Theories library build and contrast
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # Rebuilds the library from data/theories/ and fails if anything it
+      # generates has drifted: a page, the browser data file, the sitemap rows
+      # or the search-index rows. It also validates the graphs, where an edge
+      # pointing at a renamed node would otherwise be dropped silently and the
+      # diagram would keep looking finished.
+      - name: Generated files match data/theories/
+        run: python3 scripts/build-theories.py --check
+
+      # SVG text on a coloured box, which is the arrangement rules/testing.md
+      # item 12 records getting wrong twice. axe does not evaluate SVG text
+      # contrast, so nothing else in this workflow would notice.
+      - name: Diagram text contrast in both themes
+        run: python3 scripts/check-theories-contrast.py
+
   fix-issues:
     name: Fixes cite an issue
     runs-on: ubuntu-latest

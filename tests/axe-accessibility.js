@@ -38,6 +38,11 @@ const PAGES = [
   'fundamentals/ladder.html',
   'fundamentals/power-cube.html',
   'fundamentals/who-counts.html',
+  'fundamentals/results-chain.html',
+  'fundamentals/empowerment.html',
+  'theories/index.html',
+  'theories/dependency.html',
+  'theories/ambedkar-annihilation.html',
 ];
 
 // Each page is audited once per variant. Running only the default light theme

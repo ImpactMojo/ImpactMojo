@@ -11,6 +11,7 @@
 * [Handouts Guide](handouts-guide.md)
 * [Dataverse Guide](dataverse-guide.md)
 * [BCT Repository Guide](bct-repository-guide.md)
+* [Theories of Development Guide](theories-guide.md)
 * [Games Guide](games-guide.md)
 * [Labs Guide](labs-guide.md)
 * [Live Case Challenges Guide](challenges-guide.md)
