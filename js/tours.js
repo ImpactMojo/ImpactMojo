@@ -58,11 +58,28 @@
 
     var filtered = steps.filter(function (s) {
       if (!s.element) return true;
-      // Temporarily open dropdown to check if element exists
+      // Temporarily open dropdown so the check sees the element as a reader would
       ensureDropdownVisible(s.element);
-      var exists = !!document.querySelector(s.element);
+      var el = document.querySelector(s.element);
+      // `whenVisible` steps must be rendered, not merely present (#1066).
+      //
+      // Intro.js highlights a box, so a step whose element is display:none
+      // points at nothing. That is how to choose between two copies of one
+      // control at different breakpoints: the search button exists twice, and
+      // existence alone cannot say which one the reader can see.
+      //
+      // Deliberately opt-in rather than applied to every step. Measured on the
+      // homepage at 390px, a blanket visibility rule drops seven of ten steps,
+      // because the desktop nav items and the theme selector are display:none
+      // on a phone and live in the hamburger menu instead. Those steps do
+      // currently anchor to nothing on mobile, which is worth fixing, but it
+      // changes what a phone visitor is shown and is not this fix's to decide.
+      var ok = !!el;
+      if (ok && s.whenVisible) {
+        ok = el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length > 0;
+      }
       closeAllTourDropdowns();
-      return exists;
+      return ok;
     });
 
     if (filtered.length < 2) {
@@ -125,7 +142,11 @@
       { element: '#nav-labs', intro: '<strong>Studios</strong><br>35 studios where you build real artefacts — a Theory of Change, a LogFrame, a sampling plan, a survey instrument.' },
       { element: '#nav-specials', intro: '<strong>Explore</strong><br>The 135-game library, 166 reading companions, 23 deep dives, citation-backed timelines, and daily practice dojos.' },
       { element: '#nav-libraries', intro: '<strong>Libraries &amp; data</strong><br>Reference collections: the Dataverse of data tools, the ImpactLex glossary, NudgeKit behaviour-change techniques, and Indian policy documents.' },
-      { element: '.ims-nav-btn', intro: '<strong>Search everything</strong><br>Press <kbd>Ctrl</kbd>+<kbd>K</kbd> anywhere to search across every course, studio, game and companion.' },
+      // Two steps, one per breakpoint; the filter above keeps whichever button
+      // is actually on screen. Splitting them is what lets the copy match the
+      // control: there is no keyboard shortcut to offer a reader on a phone.
+      { element: '.ims-nav-btn:not(.ims-nav-btn--m)', whenVisible: true, intro: '<strong>Search everything</strong><br>Press <kbd>Ctrl</kbd>+<kbd>K</kbd> anywhere to search across every course, studio, game and companion.' },
+      { element: '.ims-nav-btn--m', whenVisible: true, intro: '<strong>Search everything</strong><br>Tap the magnifier any time to search across every course, studio, game and companion.' },
       { element: '#quiz', intro: '<strong>Not sure where to start?</strong><br>Six quick questions give you a personal starting path — and the homepage remembers it.' },
       { element: '.theme-selector', intro: '<strong>Theme</strong><br>Light, dark, or follow your device.' },
       { element: '#pro-studio', intro: '<strong>Pro Studio</strong><br>Professional tools for subscribers — and everything you’ve seen so far stays free, forever.' }

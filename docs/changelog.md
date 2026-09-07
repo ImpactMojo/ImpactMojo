@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.286.0 — September 7, 2026 (The tour points at the button you can see)
+
+### For Learners
+
+- **The homepage tour tells you how to search on the device you are actually holding.** On a phone it points at the search icon and says to tap it, instead of telling you to press a key combination a phone does not have.
+
+### Fixed
+
+- **The homepage tour's search step pointed at a hidden element on desktop, and told phone visitors to press Ctrl+K** (#1066). The first half was a regression from the previous release: the new mobile search button carries the same `.ims-nav-btn` class as the desktop one, and `startTour()` picked steps by `!!document.querySelector(s.element)`, which returns the first match in DOM order. The mobile button is injected into `.nav-container` ahead of `.mobile-menu-toggle`, so it won at every width — including 1280px, where it is `display: none`. Measured in Chromium: at 1280px the selector resolved to the mobile button (hidden) while the real one sat visible at 118×30 a few pixels away. Nothing errored; the step simply highlighted nothing. The step is now two steps, one per breakpoint, each with a selector that can match only one button, and copy that matches the control it points at. Steps may set `whenVisible: true` to require the element to be rendered rather than merely present; only these two do. **Deliberately opt-in**: measured against the real homepage, requiring visibility for every step drops seven of ten on a phone, because the desktop nav items and the theme selector are `display: none` at 390px and live in the hamburger menu instead. Those seven do currently anchor to nothing on mobile, which is a real defect and is recorded in #1066 rather than fixed here, because repairing it changes what a phone visitor is shown. With the flag opt-in, each width keeps nine of ten steps and every step other than the search pair behaves exactly as before.
+
 ## v10.285.0 — September 7, 2026 (Theories of Development)
 
 ### For Learners

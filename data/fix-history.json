@@ -4,6 +4,13 @@
   "count": 120,
   "entries": [
     {
+      "title": "The homepage tour's search step pointed at a hidden element on desktop, and told phone visitors to press Ctrl+K",
+      "detail": "(#1066). The first half was a regression from the previous release: the new mobile search button carries the same .ims-nav-btn class as the desktop one, and startTour() picked steps by !!document.querySelector(s.element), which returns the first match in DOM order. The mobile button is injected into .nav-container ahead of .mobile-menu-toggle, so it won at every width — including 1280px, where it is display: none. Measured in Chromium: at 1280px the selector resolved to the mobile button (hidden) while the real one sat visible at 118×30 a few pixels away. Nothing errored; the step simply highlighted nothing. The step is now two steps, one per breakpoint, each with a selector that can match only one button, and copy that matches the control it points at. Steps may set whenVisible: true to require the element to be rendered rather than merely present; only these two do. Deliberately opt-in: measured against the real homepage, requiring visibility for every step drops seven of ten on a phone, because the desktop nav items and the theme selector are display: none at 390px and live in the hamburger menu instead. Those seven do currently anchor to nothing on mobile, which is a real defect and is recorded in #1066 rather than fixed here, because repairing it changes what a phone visitor is shown. With the flag opt-in, each width keeps nine of ten steps and every step other than the search pair behaves exactly as before.",
+      "fixed_on": "2026-09-07",
+      "release": "v10.286.0",
+      "issue": 1066
+    },
+    {
       "title": "Site-wide search was unreachable on mobile",
       "detail": "(#1062). js/search.js injected its button into .nav-buttons, and css/imx-main.css sets that container to display: none !important below 768px, so on a phone the button sat in the DOM at 0×0 with the correct class and a working click handler. The hamburger menu carried no search entry either, and Ctrl+K is not something a phone offers. Every desktop check passed throughout, which is why it lasted: measured in Chromium on /index.html, the button is 118×30 and visible at 1280px and 0×0 at 390px. axe and pa11y would not have reported it — a zero-size element with a valid aria-label is a layout outcome, not a WCAG violation. There is now an icon-only button in .nav-container, which stays laid out at every width, shown only below the breakpoint that hides the other one. It carries order: 98 because that bar sequences itself with flex order rather than DOM order, and a button left at the default renders to the left of the logo, which is where the first attempt put it.",
       "fixed_on": "2026-09-07",
@@ -834,13 +841,6 @@
       "detail": "removed from git tracking (already in .gitignore).",
       "fixed_on": "2026-04-12",
       "release": "v10.18.0",
-      "issue": null
-    },
-    {
-      "title": "Content-count drift sitewide",
-      "detail": "— about.html, catalog.html (hero + meta + filter chip), transparency.html, org-dashboard.html, 404.html, podcast.html, Supabase signup/invite email templates, and four docs/ files all now show the canonical counts: 48 courses (13 flagship + 40 foundational), 13 labs, 17 games. Previously several of these still read 39 / 10 / 12.",
-      "fixed_on": "2026-04-08",
-      "release": "v10.15.0",
       "issue": null
     }
   ]
