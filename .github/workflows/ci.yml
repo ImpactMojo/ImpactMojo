@@ -741,7 +741,16 @@ jobs:
     runs-on: ubuntu-latest
     # Without this a hung step inherits GitHub's 360-minute default and the
     # job neither passes nor fails -- which reads as "still running".
-    timeout-minutes: 15
+    #
+    # 15 was too tight and cancelled PR #1069 on nothing: the same crawl over
+    # the same link set took 13m31s on main at run 2602 twenty-three minutes
+    # earlier, so ordinary third-party latency was enough to cross it. A
+    # cancelled job makes the whole run cancelled, which defeated the step's
+    # own `fail: schedule-only` guard below -- the one that exists so a PR is
+    # never blocked by third-party flakiness. This cap is only meant to stop a
+    # genuinely hung crawl, so it needs headroom over the real duration rather
+    # than a margin the crawl can eat.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
 
