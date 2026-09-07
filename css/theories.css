@@ -52,14 +52,16 @@
   }
 }
 
-/* --th-accent exists because --color-primary-2 (#764ba2) measures 2.36:1 on
-   the dark card, so anything setting text in it fails WCAG AA in dark mode.
-   The same token is used for .section-head .kicker in css/fundamentals.css and
-   fails there too, on every Fundamentals page; that is not fixed from here,
-   because this sheet only loads on /theories/ pages and a fix in the shared
-   file needs verifying against all of them. The override below covers the
-   kicker on these pages. */
-.section-head .kicker { color: var(--th-accent); }
+/* --th-accent exists because --color-primary-2 (#764ba2) measures 2.36:1 on the
+   dark card, so a component setting text in it raw fails WCAG AA in dark mode.
+   That is what axe caught on the components in this sheet.
+
+   css/fundamentals.css does NOT have this problem: the two places it sets text
+   in that token, .section-head .kicker and .ev .fig, are both overridden to
+   #c9b8ff (8.42:1 on the dark card) under [data-theme="dark"] AND under
+   prefers-color-scheme, so the toggle and the system default agree. Checked
+   with axe on Fundamentals pages in both dark paths: zero contrast violations.
+   No override of theirs is needed or wanted here. */
 
 /* --------------------------------------------------------------- hero extras */
 .hero .claim {

@@ -156,6 +156,23 @@
       '.ims-nav-btn svg{width:15px;height:15px}' +
       '.ims-nav-btn kbd{font-size:0.65rem;padding:1px 5px;border-radius:3px;border:1px solid var(--border-color,#d1d5db);background:var(--card-bg,#fff);font-family:monospace;color:var(--text-secondary,#475569)}' +
       '@media(max-width:768px){.ims-nav-btn kbd{display:none}.ims-nav-btn{padding:6px 10px}}' +
+      /* Mobile button (#1062). The desktop button lives in .nav-buttons, which
+         css/imx-main.css sets to display:none !important below 768px, so on a
+         phone it was in the DOM at 0x0 and there was no search entry in the
+         hamburger menu either. This one sits in .nav-container, which stays
+         visible, and appears only where the other one disappears. 44px square
+         is the minimum comfortable tap target. */
+      /* order:98 because the mobile bar sequences itself with flex order, not
+         DOM order: .logo-container is 1, .nav-buttons 2, .mobile-menu-toggle
+         99. A button left at the default 0 renders before the logo, which is
+         where this one first landed. 98 puts it immediately left of the
+         hamburger, and margin-left:auto keeps the pair together on the right. */
+      '.ims-nav-btn--m{display:none;align-items:center;justify-content:center;width:44px;height:44px;padding:0;' +
+        'order:98;margin:0 4px 0 auto;border-radius:10px;border:1px solid var(--border-color,#e2e8f0);' +
+        'background:var(--surface-color,#f8fafc);color:var(--text-secondary,#475569);cursor:pointer;flex:0 0 auto}' +
+      '.ims-nav-btn--m svg{width:20px;height:20px}' +
+      '[data-theme="dark"] .ims-nav-btn--m{background:#1e293b;color:#e2e8f0;border-color:#334155}' +
+      '@media(max-width:768px){.ims-nav-btn--m{display:inline-flex}}' +
       /* --text-secondary is defined in dark mode but --surface-color is not,
          so the button kept its light fallback background under light text:
          1.42:1. Pin both sides for dark rather than relying on the vars. */
@@ -300,19 +317,27 @@
     return el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
   }
 
+  var ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
+             '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+
+  function makeButton(cls, label, inner) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = cls;
+    btn.setAttribute('aria-label', label);
+    btn.innerHTML = inner;
+    btn.addEventListener('click', function (e) { e.preventDefault(); openSearch(); });
+    return btn;
+  }
+
   /* ---- Inject nav button ---- */
   function injectNavButton() {
-    var btn = document.createElement('button');
-    btn.className = 'ims-nav-btn';
-    btn.setAttribute('aria-label', 'Search (Ctrl+K)');
-    btn.innerHTML =
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
-      'Search' +
-      '<kbd>⌘K</kbd>';
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      openSearch();
-    });
+    /* Pages that load the shared top bar already have .im-sc-search there, and
+       that one keeps its icon on a narrow screen. Two search buttons in one bar
+       is worse than one. */
+    if (document.querySelector('.im-sc-search')) return;
+
+    var btn = makeButton('ims-nav-btn', 'Search (Ctrl+K)', ICON + 'Search' + '<kbd>⌘K</kbd>');
 
     /* Place in nav-buttons area (next to theme selector / auth buttons) for prominence */
     var navButtons = document.querySelector('.nav-buttons');
@@ -323,16 +348,34 @@
       } else {
         navButtons.insertBefore(btn, navButtons.firstChild);
       }
+      injectMobileButton();
       return;
     }
 
-    /* Fallback: append to nav container */
+    /* Fallback: append to nav container. This one is not inside .nav-buttons,
+       so it stays visible on a phone and needs no companion. */
     var nav = document.querySelector('.nav-with-badge') || document.querySelector('.nav-container');
     if (nav) {
       nav.style.display = 'flex';
       nav.style.alignItems = 'center';
       nav.appendChild(btn);
     }
+  }
+
+  /* ---- Mobile companion (#1062) ----
+     .nav-buttons is display:none below 768px, so the button above cannot be
+     reached on a phone; the hamburger menu carries no search entry either, and
+     Ctrl+K is not available to someone holding a phone. This puts an icon-only
+     button in .nav-container, which stays laid out at every width, next to the
+     hamburger. CSS shows it only below the same breakpoint, so the two are
+     never both on screen. */
+  function injectMobileButton() {
+    var container = document.querySelector('.nav-container');
+    if (!container || container.querySelector('.ims-nav-btn--m')) return;
+    var btn = makeButton('ims-nav-btn ims-nav-btn--m', 'Search', ICON);
+    var toggle = container.querySelector('.mobile-menu-toggle, #mobile-menu-btn');
+    if (toggle) container.insertBefore(btn, toggle);
+    else container.appendChild(btn);
   }
 
   /* ---- Init ---- */

@@ -244,6 +244,37 @@ jobs:
       - name: Check content counts match data/counts.json
         run: python3 scripts/check-counts.py
 
+  mobile-search:
+    name: Site search is reachable on a phone
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start local server
+        run: npx http-server -p 8080 -s &
+
+      - name: Wait for server
+        run: sleep 3
+
+      # Measures the search affordance at a 390px viewport and clicks it. This
+      # is the only check that would have caught #1062: the button was in the
+      # DOM with the right class and a working handler, inside a container the
+      # mobile stylesheet sets to display:none, so every desktop check passed
+      # while search was unreachable on a phone. axe and pa11y would not report
+      # it either -- a zero-size element with an aria-label is a layout outcome,
+      # not a WCAG violation.
+      - name: Mobile search reachability
+        run: node tests/mobile-search.js
+
   theories:
     name: Theories library build and contrast
     runs-on: ubuntu-latest
