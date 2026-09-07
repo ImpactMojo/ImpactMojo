@@ -130,6 +130,68 @@ window.FEmpowerment = (function () {
   }
 
   /* ------------------------------------------------------------- the bands */
+  /* --------------------------------------------------------- the sequence */
+  /* Kabeer's three parts are a sequence, not a menu: resources are the
+     pre-conditions, agency is the process, achievements are the outcomes, and a
+     measurement of any one alone can move for reasons the framework would not
+     count. The page said so in prose and then drew three stacked cards, which
+     is a menu. See issue #1070.
+
+     HTML rather than SVG, following js/ladder.js. Text inside an SVG is scaled
+     by the ratio of rendered width to viewBox, so a declared size is not a
+     rendered size (#1068); nothing here has that problem, and each stage gets
+     real button semantics without being given them. */
+  function drawChain() {
+    var host = document.getElementById("emChain");
+    if (!host) return;
+    var parts = [];
+    D.dimensions.forEach(function (d, i) {
+      if (i) parts.push('<span class="fw-conn" aria-hidden="true"></span>');
+      var n = D.indicators.filter(function (x) { return x.dimension === d.id; }).length;
+      parts.push('<button type="button" class="em-stage" data-dim="' + esc(d.id) + '"' +
+        ' aria-pressed="false" style="--em:' + esc(d.colour) + '">' +
+        '<span class="em-stage-i">' + (i + 1) + "</span>" +
+        "<b>" + esc(d.name) + "</b>" +
+        '<span class="em-stage-gloss">' + esc(d.gloss) + "</span>" +
+        // "series" is its own plural, so there is nothing to agree with.
+        '<span class="em-stage-n">' + n + " series below</span>" +
+        "</button>");
+    });
+    host.innerHTML =
+      '<div class="fw-chain" role="group" aria-label="' +
+        esc("Kabeer's three parts, in sequence: resources, then agency, then achievements") +
+      '">' + parts.join("") + "</div>" +
+      '<p class="em-chain-note" id="emChainNote" role="status"></p>';
+
+    host.querySelectorAll("[data-dim]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var first = D.indicators.filter(function (x) {
+          return x.dimension === b.getAttribute("data-dim");
+        })[0];
+        if (first) select(first.id);
+      });
+    });
+  }
+
+  /* Which part the open indicator measures, and what Kabeer says that part
+     cannot settle on its own. This is the argument of the page, and until now
+     it was only reachable by reading a card the reader had already scrolled
+     past. */
+  function markChain(ind) {
+    var d = dim(ind.dimension);
+    document.querySelectorAll("#emChain [data-dim]").forEach(function (b) {
+      var on = b.getAttribute("data-dim") === ind.dimension;
+      b.classList.toggle("is-on", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    var note = document.getElementById("emChainNote");
+    if (note) {
+      note.innerHTML =
+        "<b>" + esc(ind.name) + "</b> measures <b>" + esc(d.name.toLowerCase()) + "</b>. " +
+        esc(d.caution);
+    }
+  }
+
   function drawBands() {
     var box = document.getElementById("emBands");
     if (!box) return;
@@ -161,6 +223,7 @@ window.FEmpowerment = (function () {
     var ind = byId(id);
     if (!ind) return;
     state.indicator = id;
+    markChain(ind);
     document.querySelectorAll("#emBands .em-ind").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-ind") === id));
     });
@@ -183,6 +246,7 @@ window.FEmpowerment = (function () {
 
   function init() {
     if (!D) return;
+    drawChain();
     drawBands();
     select("violence");
 

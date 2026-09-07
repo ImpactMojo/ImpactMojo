@@ -13,6 +13,16 @@
   --color-accent-pink: #f093fb;
   --color-accent-blue: #4facfe;
 
+  /* The severed link on the Results Chain, in text and in the graphic. It needs
+     its own token because --color-accent-pink cannot do this job: #f093fb is
+     2.04:1 on the light card, so it is used everywhere else in this file as a
+     4px border and never as ink. As a break marker it would have been below the
+     3:1 a meaningful graphic needs and the 4.5:1 its label needs, in the default
+     theme, on the one mark that carries the page's argument.
+     Light #be123c: 6.29:1 on the card, 5.59:1 on the sunk panel.
+     Dark  #fb7185: 5.57:1 and 6.05:1. */
+  --color-break: #be123c;
+
   --color-text: #2d3748;
   --color-text-muted: #4a5568;   /* was #718096 — only 4.01:1 on white, fails AA */
   --color-link: #4c51bf;         /* was #667eea — only 3.66:1 on white, fails AA */
@@ -33,6 +43,7 @@
   --color-bg-card: #1f2735;
   --color-bg-sunk: #182031;
   --color-border: #33415a;
+  --color-break: #fb7185;
 
   --wheel-plate: #1b2333;
   --wheel-stroke: #141a26;
@@ -47,6 +58,7 @@
   --color-bg-card: #1f2735;
   --color-bg-sunk: #182031;
   --color-border: #33415a;
+  --color-break: #fb7185;
 
   --wheel-plate: #1b2333;
   --wheel-stroke: #141a26;
@@ -443,6 +455,62 @@ details.ax[open] > summary { border-bottom: 1px solid var(--color-border); }
    Shared diagram grammar: every Fundamentals page has one clickable, labelled
    diagram, a live caption under it, and the evidence panel beside it.
    ============================================================================= */
+
+/* ---------- Chain grammar: a row of nodes joined by arrows ----------------
+   Used by the Results Chain and by Resources, Agency, Achievements. Both draw a
+   sequence in which each step is supposed to produce the next, so both get the
+   same object: nodes in order, an arrow between each pair, and the whole thing
+   turning to run down the page when it stops fitting across one.
+
+   The nodes themselves stay page-specific (.rc-node, .em-stage): what a node
+   has to say differs, and only the results chain has a link that stops. */
+.fw-chain { display: flex; align-items: stretch; justify-content: center; flex-wrap: nowrap; }
+
+.fw-conn { flex: 0 0 30px; align-self: center; position: relative; height: 14px; }
+.fw-conn::before { content: ""; position: absolute; left: 0; right: 7px; top: 6px; height: 2px; background: var(--color-text-muted); }
+.fw-conn::after { content: ""; position: absolute; right: 0; top: 1px; width: 0; height: 0;
+  border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 7px solid var(--color-text-muted); }
+
+/* A connection that does not arrive: two stubs, a gap, the words, and
+   deliberately no arrowhead. A dashed line all the way across would read as
+   "weaker"; the claim is that it stops. */
+.fw-conn--cut { flex: 0 0 76px; height: auto; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0 0.2rem; }
+.fw-conn--cut::before, .fw-conn--cut::after { display: none; }
+.fw-conn--cut i { position: relative; display: block; width: 100%; height: 14px; }
+.fw-conn--cut i::before, .fw-conn--cut i::after { content: ""; position: absolute; top: 6px; height: 2px; background: var(--color-break); }
+.fw-conn--cut i::before { left: 0; width: 34%; }
+.fw-conn--cut i::after { right: 0; left: auto; width: 34%; }
+.fw-cut-note { font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.1; text-align: center; color: var(--color-break); }
+
+/* Below this the row does not fit: five nodes and four arrows need about 670px
+   to sit across, and less than that will not hold a link name beside its state.
+   The chain runs down the page instead, and the argument survives the rotation,
+   since a step down reads the same as a step across. Every node becomes a
+   full-width target.
+
+   A container query, not a media query, and the difference is the whole point.
+   The window is not what constrains this: on a 1600px screen the narrow column
+   of .lv-layout is 493px, so a viewport rule would have kept five nodes in a
+   row and squeezed each to 65px. What matters is the width the chain is
+   actually given, which is what @container asks. Its hosts declare
+   container-type: inline-size below. */
+@container (max-width: 660px) {
+  .fw-chain { flex-direction: column; align-items: stretch; }
+
+  /* The connector turns through a right angle: the arrow now points down. */
+  .fw-conn { flex: 0 0 22px; width: 14px; height: 22px; align-self: center; }
+  .fw-conn::before { left: 6px; right: auto; top: 0; bottom: 7px; width: 2px; height: auto; }
+  .fw-conn::after { right: auto; left: 1px; top: auto; bottom: 0;
+    border-left: 6px solid transparent; border-right: 6px solid transparent;
+    border-top: 7px solid var(--color-text-muted); border-bottom: 0; }
+
+  .fw-conn--cut { flex: 0 0 auto; flex-direction: row; align-items: center; gap: 0.5rem; width: 100%; padding: 0.15rem 0; }
+  .fw-conn--cut i { width: 14px; height: 34px; margin-left: 0.8rem; }
+  .fw-conn--cut i::before, .fw-conn--cut i::after { left: 6px; right: auto; width: 2px; height: auto; }
+  .fw-conn--cut i::before { top: 0; height: 34%; }
+  .fw-conn--cut i::after { top: auto; bottom: 0; height: 34%; }
+  .fw-cut-note { text-align: left; }
+}
 
 /* ---------- Ladder: two side rails with rungs spanning between them ---------- */
 .ladder { position: relative; padding: 0 34px; }
@@ -959,10 +1027,14 @@ details.ax[open] > summary { border-bottom: 1px solid var(--color-border); }
    The Results Chain (/fundamentals/results-chain.html)
    Data: /js/results-chain-data.js   Logic: /js/results-chain.js
 
-   No text is painted onto a bar here. Link names sit below the axis on the page
-   background, and the one place ink meets a programme colour is the panel
-   eyebrow, where results-chain.js picks the ink by comparing the two candidate
-   contrast ratios rather than testing luminance against a constant.
+   The interactive chain is HTML, not SVG (see js/results-chain.js). Every node
+   is a real button, so it wraps, stacks and scales like text rather than like a
+   drawing, and the 5.2px-label failure recorded in #1068 cannot recur here.
+
+   Ink on a programme colour happens in exactly two places, the chain node and
+   the panel eyebrow, and results-chain.js picks it in both by comparing the two
+   candidate contrast ratios rather than testing luminance against a constant.
+   The small multiples carry no text at all.
    ============================================================================= */
 
 .rc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
@@ -971,32 +1043,74 @@ details.ax[open] > summary { border-bottom: 1px solid var(--color-border); }
 .rc-sm figcaption span { font-family: var(--font-mono); font-size: 0.74rem; color: var(--color-text-muted); font-weight: 400; }
 .rc-sm-break { font-size: 0.8rem; color: var(--color-text-muted); margin: 0.2rem 0 0; }
 
-.rc-svg { display: block; width: 100%; height: auto; }
-.rc-tick { font-family: var(--font-mono); font-size: 9.5px; fill: var(--color-text-muted); }
-.rc-step { stroke: var(--color-accent-pink); stroke-width: 1.6; stroke-dasharray: 4 3; fill: none; }
-.rc-bar rect { transition: fill-opacity 160ms ease; }
-/* :not(.rc-hit) so the break marks the bar, not the full-width transparent
-   tap area the narrow layout adds behind each row -- otherwise it draws a
-   dashed box across the whole row, which reads as a stray outline. The
-   selection outline below deliberately does take the hit rect: on a phone
-   an outlined row is a clearer "you are here" than an outlined 6px bar. */
-.rc-bar--break rect:not(.rc-hit) { stroke: var(--color-text); stroke-width: 1.2; stroke-dasharray: 3 2; }
-.rc-chart .rc-bar { cursor: pointer; }
-.rc-chart .rc-bar:hover rect { fill-opacity: 1; }
-.rc-chart .rc-bar.is-on rect { stroke: var(--color-text); stroke-width: 2; stroke-dasharray: none; }
-.rc-chart .rc-bar:focus-visible { outline: 3px solid var(--color-accent-blue); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { .rc-bar rect { transition: none; } }
+/* --- the five links, named once above the grid of small multiples --------- */
+.rc-order { list-style: none; margin: 0 0 1.1rem; padding: 0; display: flex; flex-wrap: wrap; gap: 0.45rem 0.9rem; }
+.rc-order li { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; }
+.rc-order li span { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--color-bg-sunk); border: 1px solid var(--color-border); font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; color: var(--color-text-muted); }
+.rc-order li + li::before { content: "\2192"; color: var(--color-text-muted); margin-right: 0.5rem; }
 
-.rc-chart { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 16px; padding: 0.8rem; }
+/* --- small multiples: shapes only, no text ------------------------------- */
+.rc-svg { display: block; width: 100%; height: auto; }
+.rc-flow { stroke: var(--color-text-muted); stroke-width: 2; fill: none; }
+.rc-head { fill: var(--color-text-muted); }
+/* The severed connector is the page's whole claim, so it is the one thing on a
+   small multiple allowed to draw the eye. */
+.rc-flow--cut, .rc-head--cut { stroke: var(--color-break); fill: var(--color-break); }
+.rc-cut { stroke: var(--color-break); stroke-width: 2; stroke-linecap: round; fill: none; }
+.rc-mnode rect { stroke: var(--color-border); stroke-width: 1; }
+.rc-mnode--absent rect { stroke: var(--color-text-muted); stroke-width: 1.5; stroke-dasharray: 4 3; }
+
+/* --- the interactive chain: HTML, one button per link -------------------- */
+.rc-chart { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 16px; padding: 1rem 0.9rem; container-type: inline-size; }
+.rc-picker { margin-bottom: 1.2rem; }
+/* The panel sits under the full-width chain rather than beside it, so it needs
+   a measure of its own: a 1100px line of body text is unreadable. */
+.rc-panel { margin-top: 1.2rem; max-width: 68ch; }
+/* One visual channel carries "how is this link measured", in all three places
+   it appears: the opacity of the programme colour, on a four-step ramp. It is
+   the fill of a node in the small multiples, the swatch inside a node here, and
+   the swatch in the legend, so a reader learns it once.
+
+   Text never sits on it. A wash pale enough to read as "barely measured" cannot
+   carry text at 4.5:1, and darkening the text to compensate would destroy the
+   ramp; so every node keeps the page's own ink on the page's own card, and the
+   ramp lives in a swatch beside the words. That is also why the ramp is safe to
+   extend: a colour added later changes nothing about the contrast. */
+.rc-node { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; text-align: left;
+  padding: 0.6rem 0.65rem 0.7rem; border-radius: 12px; cursor: pointer;
+  background: var(--color-bg-sunk); color: var(--color-text);
+  border: 2px solid var(--color-border); border-left: 4px solid var(--rc);
+  transition: background-color 160ms ease, box-shadow 160ms ease; }
+.rc-node-sw { display: block; width: 26px; height: 6px; border-radius: 3px; background: var(--rc); }
+.rc-node--continuous .rc-node-sw { opacity: 1; }
+.rc-node--periodic   .rc-node-sw { opacity: 0.66; }
+.rc-node--research   .rc-node-sw { opacity: 0.4; }
+/* Not measured is not a faint version of measured, so it is not on the ramp: it
+   is an empty outline, which is what the small multiples draw too. */
+.rc-node--absent .rc-node-sw { background: transparent; border: 1.5px dashed var(--color-text-muted); height: 6px; }
+
+.rc-node-i { font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-text-muted); }
+.rc-node b { font-family: var(--font-heading); font-size: 0.95rem; line-height: 1.15; }
+.rc-node em { font-family: var(--font-mono); font-style: normal; font-size: 0.72rem; color: var(--color-text-muted); }
+.rc-node:hover { background: var(--color-bg-card); }
+.rc-node.is-on { border-color: var(--color-text); box-shadow: 0 0 0 1px var(--color-text); }
+.rc-node:focus-visible { outline: 3px solid var(--color-accent-blue); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .rc-node { transition: none; } }
+
 
 .rc-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
 .rc-legend li { display: grid; grid-template-columns: 26px 1fr; gap: 0.7rem; align-items: start; font-size: 0.92rem; color: var(--color-text-muted); }
 .rc-legend b { color: var(--color-text); }
-.rc-key { display: block; width: 18px; border-radius: 3px; background: var(--color-text-muted); }
-.rc-key--continuous { height: 26px; }
-.rc-key--periodic { height: 17px; margin-top: 9px; }
-.rc-key--research { height: 9px; margin-top: 17px; }
-.rc-key--absent { height: 3px; margin-top: 23px; }
+/* The legend teaches the ramp the diagrams use, so it has to be the same ramp.
+   It used to be four bars of decreasing height, which was a second visual
+   language for one variable and taught the reader nothing about the shapes on
+   the rest of the page. */
+.rc-key { display: block; width: 22px; height: 22px; border-radius: 5px; background: var(--color-text); }
+.rc-key--continuous { opacity: 1; }
+.rc-key--periodic { opacity: 0.66; }
+.rc-key--research { opacity: 0.4; }
+.rc-key--absent { background: transparent; border: 1.5px dashed var(--color-text-muted); }
 
 .rc-eyebrow { display: inline-block; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 1.6px; text-transform: uppercase; padding: 0.22rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
 .rc-gloss { font-size: 0.9rem; color: var(--color-text-muted); }
@@ -1019,6 +1133,37 @@ details.ax[open] > summary { border-bottom: 1px solid var(--color-border); }
    on the card background; every label sits on that background and takes a
    theme token.
    ============================================================================= */
+
+/* --- the sequence: three stages, joined, above the evidence --------------
+   The stage colours are the same three the band cards and the panel eyebrow
+   use. None of them carries text: a stage is the page's own card and ink, with
+   its colour as a border and a rule, so a colour changed later cannot take a
+   label below 4.5:1 with it. */
+.em-chain-host { margin-bottom: 2rem; container-type: inline-size; }
+.em-stage { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; text-align: left; cursor: pointer;
+  padding: 0.85rem 0.9rem 0.9rem; border-radius: 14px;
+  background: var(--color-bg-card); color: var(--color-text);
+  border: 1px solid var(--color-border); border-top: 4px solid var(--em);
+  transition: background-color 160ms ease, box-shadow 160ms ease; }
+.em-stage-i { font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-text-muted); }
+.em-stage b { font-family: var(--font-heading); font-size: 1.05rem; line-height: 1.15; }
+.em-stage-gloss { font-size: 0.86rem; color: var(--color-text-muted); }
+.em-stage-n { font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-text-muted); margin-top: 0.15rem; }
+.em-stage:hover { background: var(--color-bg-sunk); }
+.em-stage.is-on { box-shadow: 0 0 0 2px var(--color-text); }
+.em-stage:focus-visible { outline: 3px solid var(--color-accent-blue); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .em-stage { transition: none; } }
+
+/* The whole point of the diagram: which part the open indicator measures, and
+   what Kabeer says that part cannot settle alone. */
+.em-chain-note { margin: 1rem 0 0; padding: 0.85rem 1rem; border-radius: 12px;
+  background: var(--color-bg-sunk); border-left: 4px solid var(--color-break);
+  font-size: 0.92rem; }
+.em-chain-note b { font-family: var(--font-heading); }
+
+@media (max-width: 760px) {
+  .em-stage { padding: 0.75rem 0.85rem 0.8rem; }
+}
 
 .em-bands { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
 .em-band { background: var(--color-bg-card); border: 1px solid var(--color-border); border-top: 4px solid var(--em, var(--color-border)); border-radius: 14px; padding: 1.1rem 1.2rem; }
@@ -1055,14 +1200,20 @@ details.ax[open] > summary { border-bottom: 1px solid var(--color-border); }
 .em-test p { font-size: 0.9rem; margin: 0; }
 .em-src { font-family: var(--font-mono); font-size: 0.76rem; color: var(--color-text-muted); border-top: 1px solid var(--color-border); padding-top: 0.7rem; margin-bottom: 0; }
 
-/* Results chain, narrow layout (<=640px). The chain turns vertical there: five
-   full-width rows instead of five bars across ~343px, because a 9.5px tick
-   inside a 560-unit viewBox rendered at 5.7 CSS px on a phone, and the short
-   bars were 7px tap targets. The viewBox is close to the rendered width here,
-   so these sizes are close to their CSS pixel values. */
-.rc-rlabel { font-family: var(--font-heading); font-size: 12px; font-weight: 700; fill: var(--color-text); }
-.rc-chart .rc-bar .rc-hit { cursor: pointer; }
-@media (max-width: 640px) {
+/* Results chain, narrow layout. The chain container and its connectors rotate
+   in the shared grammar above; only the node's own internals change here, from
+   a stacked card to a single line with the state pushed to the right. Same
+   container query, same threshold, for the same reason. */
+@container (max-width: 660px) {
+  .rc-node { flex: 0 0 auto; flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 0.2rem 0.55rem; padding: 0.7rem 0.8rem; }
+  .rc-node-sw { order: 3; flex: 0 0 100%; }
+  .rc-node b { flex: 1 1 auto; }
+  .rc-node em { flex: 0 0 auto; text-align: right; }
+}
+
+/* The small multiples grid is laid out by the window, so this one stays a
+   media query. */
+@media (max-width: 760px) {
   .rc-sm { padding: 0.9rem 0.9rem 0.7rem; }
   .rc-sm-break { margin-top: 0.45rem; }
 }
