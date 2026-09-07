@@ -2,6 +2,25 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.285.0 — September 7, 2026 (Theories of Development)
+
+### For Learners
+
+- **Theories of Development** — a new library at `/theories/`. Twelve theories about why some places are poor, each drawn as a causal chain you step through one layer at a time, so you watch the argument being assembled rather than meeting it finished.
+- **The global canon and South Asian traditions in one catalogue.** Rostow, Lewis, dependency theory, the Washington Consensus, capabilities, institutions and randomised evaluation sit beside Gandhi, Ambedkar, the Nehru–Mahalanobis plan, Bardhan's dominant proprietary classes and the Chipko argument. Filter by tradition, topic or period, or search by thinker.
+- **Every theory is set against the record.** Each page takes the theory's own claims one at a time and reports what the evidence shows, with a named source and a year. Kuznets looking for Rostow's take-off and not finding it; Schultz's influenza argument against Lewis; Banerjee and Iyer on colonial land tenure; the five per cent of Indian marriages that cross caste, forty years after Article 17.
+- **Four placements per theory, and the reason for each.** Who allocates, what comes first, where hierarchy sits, who moves. The usual left-to-right axis separates Ambedkar from Nehru while they share most of their economics, so these ask what the theories on this shelf actually disagree about. The scores are ours and each page shows the sentence behind its own, so they can be argued with.
+
+### Added
+
+- `data/theories/` holds one JSON file per theory plus the shared vocabulary in `_meta.json`. `scripts/build-theories.py` generates the pages, `js/theories-data.js`, and the `/theories/` rows in `sitemap.xml` and `data/search-index.json`; `--check` runs in CI as the `theories` job. It refuses to build on an edge pointing at a node that does not exist, an axis scored without a note justifying it, evidence with no source or year, or a compare/contrast link to a theory that is not there. The edge check is the one that earns its keep: a renderer drops such an edge silently, so the diagram keeps looking finished while an arrow the argument depends on is missing.
+- `js/theories.js` lays the graph out and draws it, rather than shipping a pre-rendered image. A baked SVG carries its fills with it and this site has two themes; every fill and ink here comes from a token defined per theme in `css/theories.css`. `scripts/check-theories-contrast.py` reads those tokens and fails below 4.5:1 in either theme — including the *dimmed* state of completed steps, which is a composite against the canvas rather than a token pair, and which was set at 0.22 opacity and unreadable until the guard was pointed at it.
+- The three new page shapes joined `tests/axe-accessibility.js` and `.pa11yci` instead of being left off both lists, and `theories/*.html` joined `scripts/stamp-assets.py`. The generator emits the same content hash the stamper would, so the two agree rather than rewriting each other.
+
+### Changed
+
+- `--th-accent` on `/theories/` pages replaces `--color-primary-2` for small uppercase text. `#764ba2` measures **2.36:1** on the dark card, so anything setting text in it fails AA in dark mode. The same token does the same thing to `.section-head .kicker` in `css/fundamentals.css`, on every Fundamentals page; that is recorded here rather than fixed, because a change to the shared file needs checking against all eight of those pages and does not belong in this one.
+
 ## v10.284.0 — September 3, 2026 (Icons that were never there)
 
 ### Fixed

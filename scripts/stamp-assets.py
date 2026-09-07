@@ -49,6 +49,11 @@ PAGE_GLOBS = [
     # does not error -- the guarded call simply does not run and the reader
     # gets an empty box, which is the exact failure this stamp exists for.
     "the-long-view/*.html",
+    # Theories of Development. The pages are generated, and the generator emits
+    # the same stamp this script would, so these entries assert the two agree
+    # rather than doing the stamping. If they ever disagree, this job fails and
+    # scripts/build-theories.py is what needs fixing.
+    "theories/*.html",
 ]
 
 # Known gap, deliberately not closed here: BookSummaries (186 pages), blog (39),
