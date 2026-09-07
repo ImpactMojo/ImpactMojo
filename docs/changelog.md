@@ -2,6 +2,27 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.288.0 — September 7, 2026 (The two newest Fundamentals get the diagram they were missing)
+
+### For Learners
+
+- **The results chain is now a chain.** Five links, four arrows, and where a programme's measurement stops carrying weight the arrow is drawn cut, with the words on it. The six programmes are the same chain six times over, so the thing the page is arguing, that the break falls in the same place in all six, is now something you can see rather than something you have to be told. Click any link for the instrument behind it.
+- **Kabeer's three parts are drawn as the sequence they are.** Resources, then agency, then achievements, joined. Open any of the four Indian series and it tells you which of the three that series measures and what Kabeer says that part cannot settle on its own. The series and their sources are unchanged, and sit below.
+
+### Fixed
+
+- **The results chain and the empowerment page drew charts instead of the framework, the only two Fundamentals without an interactive diagram** (#1070). Every other page in the library draws the framework it teaches as a shape you can interact with: the wheel's twelve axes and three rings, the cube's three faces, the ladder's eight rungs, the capability chain, the two axes of practical and strategic gender needs, the asset pentagon, the barrier stack, the gap matrix. The two pages added last week drew evidence and left the framework in prose.
+
+  On the results chain that mattered specifically. There was no chain in it: five bars, no nodes, no arrows, and the break rendered as a one-pixel vertical rule drawn only when the next state's weight fell by more than 20. The page's headline claim is that the chain breaks one link later, and a bar chart cannot show a break in a chain because it never draws one. On the empowerment page, `drawBands()` emitted three cards, two screens below prose reading "The three parts are a sequence and not a menu".
+
+  Both now draw the framework first and keep the evidence below, which is what `capabilities.html` and `gender-needs.html` already did. Three things fell out of building it that are worth recording.
+
+  **The diagrams are HTML, not SVG.** `js/ladder.js` has said why since it was written: "Renders the eight rungs as real `<button>`s (not SVG), so every target scales." Text inside an SVG is multiplied by the ratio of rendered width to `viewBox`, which is what produced the 5.2px labels in #1068 a day earlier. HTML has no such scaling, wraps and stacks by itself, and gives each node real button semantics without being handed them. The small multiples stay SVG and now carry **no text at all**: the five links are named once, in HTML, above the grid, and each figure carries a full sentence as its accessible name.
+
+  **The chain reacts to its container, not to the window.** A `@media` rule would have been wrong here and quietly so. Five nodes and four arrows need about 670px across, and the narrow column of the two-column layout is **493px on a 1600px screen**, so a viewport rule would have kept the row horizontal and squeezed every node to 65px on the widest displays. Measured: 39px at a 900px viewport, 65px at 1280px and above. `@container` asks the question that actually matters, and the results chain also moved out of the two-column layout to a full width the row can use.
+
+  **A new colour token, because the obvious one failed.** The severed link is marked in `--color-break`, added per theme (`#be123c` light, `#fb7185` dark). The existing `--color-accent-pink` could not do it: `#f093fb` is **2.04:1** on the light card, which is why every other use of it in `css/fundamentals.css` is a 4px border and never ink. As a break marker it would have been below the 3:1 a meaningful graphic needs and the 4.5:1 its label needs, in the default theme, on the one mark carrying the page's argument. Caught by measuring every text node in the diagram against its painted background at five widths in both themes, not by eye and not by axe.
+
 ## v10.287.0 — September 7, 2026 (Charts drawn at the size they are shown)
 
 ### For Learners

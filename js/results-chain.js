@@ -1,12 +1,27 @@
 /* =============================================================================
    ImpactMojo — Fundamentals: The Results Chain
-   Six Indian programmes drawn as small multiples of the same five-link chain,
-   with each link's height set by how it is actually measured.
    Depends on /js/results-chain-data.js.
 
-   The small multiples are the argument. One programme's staircase could be a
-   quirk of that ministry; six identical staircases, all stepping down between
-   the same two links, is a property of the way the chain is built.
+   The page argues that the chain breaks one link before the claim a programme
+   is defended with, and that it breaks in the same place in all six. So the
+   chain has to be on the screen: five links, four connectors, and the broken
+   one drawn broken. An earlier version of this file drew five bars whose
+   heights encoded the measurement state, which could show that the fourth
+   number was smaller than the third but could not show a severed link, because
+   there was no link. See issue #1070.
+
+   Two renderings of the same object:
+
+     - the interactive chain is HTML, not SVG, following js/ladder.js. Text in
+       an SVG is multiplied by the ratio between the rendered width and the
+       viewBox, so a size declared in the source is not a size on the screen
+       (#1068). HTML has no such scaling, wraps by itself, stacks by itself in
+       a media query, and gives every node real button semantics for free.
+
+     - the small multiples are SVG and carry no text at all. Six shapes side by
+       side is the argument; naming every node six times over is not. The five
+       links are named once, in HTML, above the grid, and each figure carries a
+       full sentence as its accessible name.
    ============================================================================= */
 
 window.FResultsChain = (function () {
@@ -44,118 +59,147 @@ window.FResultsChain = (function () {
     return D.programmes.filter(function (p) { return p.id === id; })[0];
   }
 
-  /* ------------------------------------------------------------ the chain */
-  /* Below this width the chain is drawn top to bottom instead of left to right.
-     Five bars across a 343px phone leaves each about 55px, which is not enough
-     for "Activities" to be legible: a 9.5px label inside a 560-unit viewBox
-     scaled into a 337px column renders at 5.7 CSS px, and at 360px it is 5.2.
-     The short bars were unusable as targets too -- an "absent" bar is 8% of the
-     plot height, roughly 7px tall, well under the 24px minimum. Turning the
-     chain vertical fixes both at once, and the argument survives the rotation:
-     the step down the page reads the same as the step across it. */
-  var NARROW_MAX = 640;
+  function linkAt(i) { return D.links[i]; }
 
-  function isNarrow() {
-    return !!(window.matchMedia && window.matchMedia('(max-width:' + NARROW_MAX + 'px)').matches);
+  function linkIndex(id) {
+    for (var i = 0; i < D.links.length; i++) if (D.links[i].id === id) return i;
+    return -1;
   }
 
-  function svgOpen(p, w, h, interactive) {
-    /* role="img" only on the static small multiples. The interactive copy holds
-       focusable bars, and role="img" declares its content atomic, which axe
-       reports as nested-interactive and a screen reader would honour by hiding
-       the buttons. The interactive one is a group. */
-    return '<svg viewBox="0 0 ' + w + ' ' + h + '" class="rc-svg" role="' +
-           (interactive ? 'group' : 'img') + '" aria-label="' +
-           esc(p.name + ': how each link of the results chain is measured') + '">';
+  /* The break is recorded on the link the chain fails to reach, so the link it
+     survives to is the one before. "Breaks after outputs" and "breaks at
+     outcomes" name the same connector. */
+  function lastGoodLink(p) {
+    return linkAt(Math.max(0, linkIndex(p.breaks) - 1));
   }
 
-  function barAttrs(link, cell, st, p, interactive, isBreak) {
-    var cls = 'rc-bar rc-bar--' + cell.state + (isBreak ? ' rc-bar--break' : '');
-    return '<g class="' + cls + '" data-link="' + esc(link.id) + '"' +
-           (interactive ? ' tabindex="0" role="button" aria-label="' +
-             esc(link.name + ': ' + st.label) + '"' : '') + '>';
+  /* ------------------------------------------------- the chain, as HTML */
+  function nodeHTML(p, link, i, interactive) {
+    var cell = p.chain[link.id];
+    var st = D.states[cell.state];
+    var tag = interactive ? "button" : "div";
+    return "<" + tag + ' class="rc-node rc-node--' + esc(cell.state) + '"' +
+      ' style="--rc:' + esc(p.colour) + '"' +
+      (interactive
+        ? ' type="button" data-link="' + esc(link.id) + '" aria-pressed="false"'
+        : "") +
+      "><span class=\"rc-node-i\">" + (i + 1) + "</span>" +
+      "<b>" + esc(link.name) + "</b>" +
+      "<em>" + esc(st.short) + "</em>" +
+      "</" + tag + ">";
   }
 
-  /* Wide: five bars side by side, height carrying the measurement weight. */
-  function chartWide(p, interactive) {
-    var W = 560, H = 128, PAD_B = 26, PAD_T = 8;
-    var slot = W / D.links.length;
-    var barW = slot - 14;
-    var parts = [svgOpen(p, W, H, interactive)];
+  /* The connector into link i. Severed when that link is where the chain
+     stops carrying weight, which is the one thing this page is about, so it
+     is labelled in text rather than left to the reader to infer from a
+     dashed line. */
+  function connHTML(p, i) {
+    var cut = p.breaks === linkAt(i).id;
+    if (!cut) return '<span class="fw-conn" aria-hidden="true"></span>';
+    return '<span class="fw-conn fw-conn--cut">' +
+             '<i aria-hidden="true"></i>' +
+             '<span class="fw-cut-note">breaks here</span>' +
+           "</span>";
+  }
+
+  function drawChain(p) {
+    var host = document.getElementById("rcChart");
+    if (!host) return;
+    var parts = [];
+    D.links.forEach(function (link, i) {
+      if (i) parts.push(connHTML(p, i));
+      parts.push(nodeHTML(p, link, i, true));
+    });
+    host.innerHTML = '<div class="fw-chain" role="group" aria-label="' +
+      esc(p.name + ": the five links, and how each one is measured") + '">' +
+      parts.join("") + "</div>";
+
+    host.querySelectorAll("[data-link]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        select(p.id, b.getAttribute("data-link"));
+      });
+    });
+    markChain();
+  }
+
+  function markChain() {
+    document.querySelectorAll("#rcChart [data-link]").forEach(function (b) {
+      var on = b.getAttribute("data-link") === state.link;
+      b.classList.toggle("is-on", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  /* ------------------------------------- the same chain, as a small multiple */
+  /* Fixed geometry, no text. A node is a shape whose fill says how it is
+     measured; the reader learns the five positions once from the key above the
+     grid and then reads six shapes without reading six sets of labels. */
+  var NW = 44, NH = 34, GAP = 26, PAD = 8;
+
+  /* Kept in step with .rc-key and .rc-node-sw in css/fundamentals.css. Opacity
+     of the programme colour is the one channel this page uses for "how is this
+     measured", so the three places it appears have to agree. */
+  var RAMP = { continuous: "1", periodic: "0.66", research: "0.4" };
+
+  function nodeX(i) { return PAD + i * (NW + GAP); }
+
+  /* One sentence naming every link and its state, plus where the chain breaks.
+     The figure carries no text, so this is the whole of it for a screen
+     reader, and it should read as prose rather than as a list of fragments. */
+  function multipleLabel(p) {
+    var says = D.links.map(function (l) {
+      return l.name.toLowerCase() + " " + D.states[p.chain[l.id].state].label.toLowerCase();
+    }).join(", ");
+    return p.name + ": " + says + ". The chain breaks after " +
+           lastGoodLink(p).name.toLowerCase() + ".";
+  }
+
+  function multipleSVG(p) {
+    var n = D.links.length;
+    var W = PAD * 2 + n * NW + (n - 1) * GAP;
+    var H = NH + PAD * 2;
+    var mid = PAD + NH / 2;
+    var parts = ['<svg viewBox="0 0 ' + W + " " + H + '" class="rc-svg" role="img" aria-label="' +
+                 esc(multipleLabel(p)) + '">'];
+
+    for (var i = 0; i < n - 1; i++) {
+      var x0 = nodeX(i) + NW, x1 = nodeX(i + 1);
+      var cut = p.breaks === linkAt(i + 1).id;
+      var cls = cut ? "rc-flow rc-flow--cut" : "rc-flow";
+      if (cut) {
+        var c = (x0 + x1) / 2;
+        // Two stubs with a gap between them, and the conventional pair of
+        // slashes across the gap. A dashed line alone reads as "weaker", which
+        // is not the claim: the claim is that it stops.
+        parts.push('<path class="' + cls + '" d="M' + x0 + "," + mid + " L" + (x0 + 6) + "," + mid + '"/>');
+        parts.push('<path class="' + cls + '" d="M' + (x1 - 12) + "," + mid + " L" + (x1 - 6) + "," + mid + '"/>');
+        parts.push('<path class="rc-cut" d="M' + (c - 5) + "," + (mid - 7) + " L" + (c - 1) + "," + (mid + 7) +
+                   " M" + (c + 1) + "," + (mid - 7) + " L" + (c + 5) + "," + (mid + 7) + '"/>');
+      } else {
+        parts.push('<path class="' + cls + '" d="M' + x0 + "," + mid + " L" + (x1 - 6) + "," + mid + '"/>');
+      }
+      parts.push('<path class="rc-head' + (cut ? " rc-head--cut" : "") + '" d="M' + (x1 - 6) + "," + (mid - 4) +
+                 " L" + x1 + "," + mid + " L" + (x1 - 6) + "," + (mid + 4) + ' Z"/>');
+    }
 
     D.links.forEach(function (link, i) {
-      var cell = p.chain[link.id];
-      var st = D.states[cell.state];
-      var h = Math.round((H - PAD_B - PAD_T) * (st.weight / 100));
-      var x = Math.round(i * slot + 7);
-      var y = H - PAD_B - h;
-
-      parts.push(barAttrs(link, cell, st, p, interactive, p.breaks === link.id));
-      parts.push('<rect x="' + x + '" y="' + y + '" width="' + Math.round(barW) +
-                 '" height="' + h + '" rx="4" fill="' + p.colour + '"' +
-                 ' fill-opacity="' + (0.28 + 0.72 * st.weight / 100).toFixed(2) + '"/>');
-      parts.push('<text class="rc-tick" x="' + Math.round(x + barW / 2) + '" y="' + (H - 9) +
-                 '" text-anchor="middle">' + esc(link.name) + '</text>');
-      parts.push('<title>' + esc(link.name + ' — ' + st.label) + '</title>');
-      parts.push('</g>');
-
-      // The step down, drawn between this bar and the next.
-      if (i < D.links.length - 1) {
-        var next = D.states[p.chain[D.links[i + 1].id].state];
-        if (next.weight < st.weight - 20) {
-          var mx = Math.round((i + 1) * slot);
-          parts.push('<path class="rc-step" d="M' + mx + ',' + (PAD_T + 2) +
-                     ' L' + mx + ',' + (H - PAD_B) + '"/>');
-        }
-      }
+      var cellState = p.chain[link.id].state;
+      var st = D.states[cellState];
+      parts.push('<g class="rc-mnode rc-mnode--' + esc(cellState) + '">');
+      // The same four-step ramp the legend and the chain nodes use: opacity of
+      // the programme colour, and an empty dashed outline for "not measured",
+      // which is a different thing from a faint version of measured.
+      parts.push(cellState === "absent"
+        ? '<rect x="' + nodeX(i) + '" y="' + PAD + '" width="' + NW + '" height="' + NH +
+          '" rx="7" fill="none"/>'
+        : '<rect x="' + nodeX(i) + '" y="' + PAD + '" width="' + NW + '" height="' + NH +
+          '" rx="7" fill="' + p.colour + '" fill-opacity="' + RAMP[cellState] + '"/>');
+      parts.push("<title>" + esc(link.name + " — " + st.label) + "</title>");
+      parts.push("</g>");
     });
-    parts.push('</svg>');
-    return parts.join('');
-  }
 
-  /* Narrow: five rows down the page, length carrying the same weight. The
-     viewBox is close to the rendered pixel width, so a 12-unit label is a 12px
-     label, and each row is a full-width target rather than a 7px sliver. */
-  function chartNarrow(p, interactive) {
-    var W = 340, LABEL_W = 86, ROW_H = 30, GAP = 7, PAD_T = 6, PAD_B = 6;
-    var barX = LABEL_W + 8;
-    var maxBar = W - barX - 8;
-    var H = PAD_T + D.links.length * ROW_H + (D.links.length - 1) * GAP + PAD_B;
-    var parts = [svgOpen(p, W, H, interactive)];
-
-    D.links.forEach(function (link, i) {
-      var cell = p.chain[link.id];
-      var st = D.states[cell.state];
-      var y = PAD_T + i * (ROW_H + GAP);
-      var len = Math.max(6, Math.round(maxBar * (st.weight / 100)));
-
-      parts.push(barAttrs(link, cell, st, p, interactive, p.breaks === link.id));
-      // A transparent full-width hit area, so the row is tappable even where
-      // the bar itself is short. Without it "Not measured" is a 6px target.
-      parts.push('<rect class="rc-hit" x="0" y="' + y + '" width="' + W +
-                 '" height="' + ROW_H + '" rx="6" fill="transparent"/>');
-      parts.push('<text class="rc-rlabel" x="' + LABEL_W + '" y="' + (y + ROW_H / 2 + 4) +
-                 '" text-anchor="end">' + esc(link.name) + '</text>');
-      parts.push('<rect x="' + barX + '" y="' + (y + 5) + '" width="' + len +
-                 '" height="' + (ROW_H - 10) + '" rx="4" fill="' + p.colour + '"' +
-                 ' fill-opacity="' + (0.28 + 0.72 * st.weight / 100).toFixed(2) + '"/>');
-      parts.push('<title>' + esc(link.name + ' — ' + st.label) + '</title>');
-      parts.push('</g>');
-
-      if (i < D.links.length - 1) {
-        var next = D.states[p.chain[D.links[i + 1].id].state];
-        if (next.weight < st.weight - 20) {
-          var my = y + ROW_H + Math.round(GAP / 2);
-          parts.push('<path class="rc-step" d="M' + barX + ',' + my + ' L' + (W - 8) + ',' + my + '"/>');
-        }
-      }
-    });
-    parts.push('</svg>');
-    return parts.join('');
-  }
-
-  function chartFor(p, interactive) {
-    return isNarrow() ? chartNarrow(p, interactive) : chartWide(p, interactive);
+    parts.push("</svg>");
+    return parts.join("");
   }
 
   function drawSmallMultiples() {
@@ -163,14 +207,21 @@ window.FResultsChain = (function () {
     if (!box) return;
     box.innerHTML = D.programmes.map(function (p) {
       return '<figure class="rc-sm">' +
-             '<figcaption><b>' + esc(p.name) + "</b> <span>since " + esc(p.since) + "</span></figcaption>" +
-             chartFor(p, false) +
+             "<figcaption><b>" + esc(p.name) + "</b> <span>since " + esc(p.since) + "</span></figcaption>" +
+             multipleSVG(p) +
              '<p class="rc-sm-break">Breaks after <b>' +
-               esc(D.links.filter(function (l) {
-                 var i = D.links.map(function (x) { return x.id; }).indexOf(p.breaks);
-                 return l.id === D.links[Math.max(0, i - 1)].id;
-               })[0].name.toLowerCase()) + "</b></p>" +
+               esc(lastGoodLink(p).name.toLowerCase()) + "</b></p>" +
              "</figure>";
+    }).join("");
+  }
+
+  /* The five links named once, in HTML, above the grid. In the figures the
+     nodes carry no text, so this is where a reader learns the order. */
+  function drawMultiplesKey() {
+    var box = document.getElementById("rcOrder");
+    if (!box) return;
+    box.innerHTML = D.links.map(function (l, i) {
+      return "<li><span>" + (i + 1) + "</span>" + esc(l.name) + "</li>";
     }).join("");
   }
 
@@ -189,29 +240,21 @@ window.FResultsChain = (function () {
   }
 
   function select(progId, linkId) {
-    state.programme = progId;
-    state.link = linkId || "outputs";
     var p = programmeById(progId);
     if (!p) return;
+    var changedProgramme = state.programme !== progId;
+    state.programme = progId;
+    state.link = linkId || "outputs";
 
     document.querySelectorAll("#rcPicker .chip").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-prog") === progId));
     });
 
-    var chart = document.getElementById("rcChart");
-    if (chart) {
-      chart.innerHTML = chartFor(p, true);
-      chart.querySelectorAll("[data-link]").forEach(function (g) {
-        function go() { select(progId, g.getAttribute("data-link")); }
-        g.addEventListener("click", go);
-        g.addEventListener("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
-        });
-      });
-      chart.querySelectorAll("[data-link]").forEach(function (g) {
-        g.classList.toggle("is-on", g.getAttribute("data-link") === state.link);
-      });
-    }
+    // Only rebuild the chain when the programme changed. Re-rendering it on
+    // every link click would destroy the button the reader just pressed, which
+    // takes the focus ring with it.
+    if (changedProgramme || !document.querySelector("#rcChart .fw-chain")) drawChain(p);
+    else markChain();
     renderPanel(p);
   }
 
@@ -250,26 +293,11 @@ window.FResultsChain = (function () {
 
   function init() {
     if (!D) return;
+    drawMultiplesKey();
     drawSmallMultiples();
     drawLegend();
     drawPicker();
     select(D.programmes[0].id, "outputs");
-
-    // Redraw when the viewport crosses the breakpoint -- rotating a phone, or
-    // dragging a desktop window narrow. Debounced, and only when the
-    // orientation actually changed, so a scroll-driven resize on mobile
-    // browsers (the address bar collapsing) does not rebuild the SVGs.
-    var wasNarrow = isNarrow(), t = null;
-    window.addEventListener("resize", function () {
-      clearTimeout(t);
-      t = setTimeout(function () {
-        var now = isNarrow();
-        if (now === wasNarrow) return;
-        wasNarrow = now;
-        drawSmallMultiples();
-        select(state.programme, state.link);
-      }, 150);
-    });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

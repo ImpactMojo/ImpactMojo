@@ -46,17 +46,21 @@ window.RESULTSCHAIN = (function () {
       question: "Was it because of this?" }
   ];
 
-  /* Height in the small multiples is this weight. It is a ranking of how close
-     a measurement sits to the programme and how often it arrives, not a score
-     of quality: a well-run MIS can be wrong and a good study can be right. */
+  /* `short` is the form the chain diagram prints inside a node, where the full
+     label does not fit beside the link name. It says the same thing; it is not
+     a different claim. The full label is what the legend and the panel use.
+
+     Weight is the small multiples' fill opacity. It is a ranking of how close a
+     measurement sits to the programme and how often it arrives, not a score of
+     quality: a well-run MIS can be wrong and a good study can be right. */
   var states = {
-    continuous: { weight: 100, label: "Counted continuously",
+    continuous: { weight: 100, label: "Counted continuously", short: "Continuous",
                   note: "A public management information system, updated daily or monthly, at the level of the individual transaction." },
-    periodic:   { weight: 62,  label: "A survey, every few years",
+    periodic:   { weight: 62,  label: "A survey, every few years", short: "Survey cycle",
                   note: "A national sample survey on a multi-year cycle, run by an agency other than the programme and not designed to evaluate it." },
-    research:   { weight: 30,  label: "Only where a researcher went",
+    research:   { weight: 30,  label: "Only where a researcher went", short: "Studies only",
                   note: "Measured by independent studies in particular districts and years. Real evidence, and not a number the programme can be managed by." },
-    absent:     { weight: 8,   label: "Not measured",
+    absent:     { weight: 8,   label: "Not measured", short: "Not measured",
                   note: "No routine instrument collects it at national scale." }
   };
 
