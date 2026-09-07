@@ -125,6 +125,22 @@ async function clickAsAPersonWould(page, selector) {
     for (const [label, viewport] of [['mobile', MOBILE], ['desktop', DESKTOP]]) {
       const page = await browser.newPage();
       await page.setViewport(viewport);
+
+      // Opt out of the homepage tour before any page script runs.
+      //
+      // js/tours.js auto-starts intro.js 1500ms after DOMContentLoaded unless
+      // this key is set, and intro.js lays a full-page .introjs-overlay over
+      // everything, so a first-time desktop visitor genuinely cannot click the
+      // search button until the tour is dismissed. That is what a guided tour is
+      // for -- one of its own steps points at .ims-nav-btn -- so it is intended
+      // behaviour, not the defect this test exists for, and blocking on it would
+      // only measure the tour.
+      //
+      // It never appeared in the agent sandbox because intro.js comes from a CDN
+      // that sandbox cannot reach. The probe below is what named it.
+      await page.evaluateOnNewDocument(() => {
+        try { localStorage.setItem('impactmojo_tour_seen_index', '1'); } catch (e) {}
+      });
       // domcontentloaded, not load: these pages pull fonts and libraries from a
       // CDN, and waiting on those makes the test fail for the wrong reason on
       // any runner without outbound network.
@@ -133,6 +149,17 @@ async function clickAsAPersonWould(page, selector) {
       // Web fonts change the header's height when they land, which moves the
       // button. Settle before measuring so the box we report is the real one.
       await page.evaluate(() => (document.fonts ? document.fonts.ready : null)).catch(() => {});
+
+      // If the opt-out ever stops matching tours.js, say so here rather than
+      // failing later as a mystery about a covered button.
+      const tourSuppressed = await page.evaluate(() => {
+        try { return localStorage.getItem('impactmojo_tour_seen_index') === '1'; }
+        catch (e) { return false; }
+      });
+      if (!tourSuppressed) {
+        failures.push(`${path} at ${label}: the tour opt-out did not take. Check the ` +
+                      `STORAGE_PREFIX in js/tours.js still matches this test.`);
+      }
 
       const shown = await visibleSearchButtons(page);
 
