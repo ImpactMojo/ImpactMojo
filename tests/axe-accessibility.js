@@ -38,6 +38,8 @@ const PAGES = [
   'fundamentals/ladder.html',
   'fundamentals/power-cube.html',
   'fundamentals/who-counts.html',
+  'fundamentals/results-chain.html',
+  'fundamentals/empowerment.html',
   'theories/index.html',
   'theories/dependency.html',
   'theories/ambedkar-annihilation.html',
