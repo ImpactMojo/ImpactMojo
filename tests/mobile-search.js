@@ -66,6 +66,54 @@ async function visibleSearchButtons(page) {
   return found;
 }
 
+
+/**
+ * Click the way a person does: at a point on the screen, having first confirmed
+ * the element is the thing actually at that point.
+ *
+ * Puppeteer's page.click() measures the box and then dispatches a mouse event
+ * at its centre, with no actionability check. Two things make that unreliable
+ * here and neither shows up as an error:
+ *
+ *   - a layout shift between measuring and dispatching sends the click to
+ *     wherever the element used to be. This is what failed in CI and passes
+ *     locally: the runner loads the fonts and CDN icons that reflow the 132px
+ *     header, and this sandbox cannot reach them.
+ *   - an element on top swallows the event silently.
+ *
+ * Both are also worth asserting rather than working around. A control a pointer
+ * cannot reach is exactly as unreachable to a reader as the 0x0 one in #1062,
+ * so "visible but not hittable" is reported as a failure with the covering
+ * element named, instead of surfacing later as a mysterious dead click.
+ */
+async function clickAsAPersonWould(page, selector) {
+  const deadline = Date.now() + 5000;
+  let why = 'never became hittable';
+  while (Date.now() < deadline) {
+    const probe = await page.evaluate((sel) => {
+      const el = document.querySelector(sel);
+      if (!el) return { ok: false, why: 'the element is no longer in the DOM' };
+      const r = el.getBoundingClientRect();
+      const x = r.x + r.width / 2, y = r.y + r.height / 2;
+      if (r.width < 1 || r.height < 1) return { ok: false, why: 'the element has no size' };
+      const top = document.elementFromPoint(x, y);
+      if (!top) return { ok: false, why: 'nothing is at its centre point (scrolled out of view?)' };
+      if (top === el || el.contains(top)) return { ok: true, x, y };
+      const name = (n) => n.tagName.toLowerCase() + (n.id ? '#' + n.id : '') +
+        (typeof n.className === 'string' && n.className.trim()
+          ? '.' + n.className.trim().split(/\s+/)[0] : '');
+      return { ok: false, why: `it is covered by ${name(top)}` };
+    }, selector);
+    if (probe.ok) {
+      await page.mouse.click(probe.x, probe.y);
+      return { clicked: true };
+    }
+    why = probe.why;
+    await new Promise((r) => setTimeout(r, 200));
+  }
+  return { clicked: false, why };
+}
+
 (async () => {
   const failures = [];
   const browser = await puppeteer.launch({
@@ -82,6 +130,9 @@ async function visibleSearchButtons(page) {
       // any runner without outbound network.
       await page.goto(BASE + path, { waitUntil: 'domcontentloaded', timeout: 30000 });
       await new Promise((r) => setTimeout(r, 2000));   // search.js injects on DOMContentLoaded
+      // Web fonts change the header's height when they land, which moves the
+      // button. Settle before measuring so the box we report is the real one.
+      await page.evaluate(() => (document.fonts ? document.fonts.ready : null)).catch(() => {});
 
       const shown = await visibleSearchButtons(page);
 
@@ -107,7 +158,14 @@ async function visibleSearchButtons(page) {
         // how fast the runner is, which is a flaky test pretending to be a real
         // one. Eight seconds is generous and only ever spent on a genuine
         // failure.
-        await page.click(b.sel);
+        const hit = await clickAsAPersonWould(page, b.sel);
+        if (!hit.clicked) {
+          failures.push(`${path} at ${label}: ${b.sel} measures ${b.w}x${b.h} but a pointer ` +
+                        `cannot reach it — ${hit.why}. A control that cannot be clicked is as ` +
+                        `unreachable as a hidden one.`);
+          await page.close();
+          continue;
+        }
         const deadline = Date.now() + 8000;
         let state = 'no modal in the DOM';
         while (Date.now() < deadline) {
