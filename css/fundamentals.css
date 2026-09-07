@@ -975,7 +975,12 @@ details.ax[open] > summary { border-bottom: 1px solid var(--color-border); }
 .rc-tick { font-family: var(--font-mono); font-size: 9.5px; fill: var(--color-text-muted); }
 .rc-step { stroke: var(--color-accent-pink); stroke-width: 1.6; stroke-dasharray: 4 3; fill: none; }
 .rc-bar rect { transition: fill-opacity 160ms ease; }
-.rc-bar--break rect { stroke: var(--color-text); stroke-width: 1.2; stroke-dasharray: 3 2; }
+/* :not(.rc-hit) so the break marks the bar, not the full-width transparent
+   tap area the narrow layout adds behind each row -- otherwise it draws a
+   dashed box across the whole row, which reads as a stray outline. The
+   selection outline below deliberately does take the hit rect: on a phone
+   an outlined row is a clearer "you are here" than an outlined 6px bar. */
+.rc-bar--break rect:not(.rc-hit) { stroke: var(--color-text); stroke-width: 1.2; stroke-dasharray: 3 2; }
 .rc-chart .rc-bar { cursor: pointer; }
 .rc-chart .rc-bar:hover rect { fill-opacity: 1; }
 .rc-chart .rc-bar.is-on rect { stroke: var(--color-text); stroke-width: 2; stroke-dasharray: none; }
@@ -1049,3 +1054,15 @@ details.ax[open] > summary { border-bottom: 1px solid var(--color-border); }
 .em-test h4 { font-size: 0.95rem; margin: 0 0 0.4rem; }
 .em-test p { font-size: 0.9rem; margin: 0; }
 .em-src { font-family: var(--font-mono); font-size: 0.76rem; color: var(--color-text-muted); border-top: 1px solid var(--color-border); padding-top: 0.7rem; margin-bottom: 0; }
+
+/* Results chain, narrow layout (<=640px). The chain turns vertical there: five
+   full-width rows instead of five bars across ~343px, because a 9.5px tick
+   inside a 560-unit viewBox rendered at 5.7 CSS px on a phone, and the short
+   bars were 7px tap targets. The viewBox is close to the rendered width here,
+   so these sizes are close to their CSS pixel values. */
+.rc-rlabel { font-family: var(--font-heading); font-size: 12px; font-weight: 700; fill: var(--color-text); }
+.rc-chart .rc-bar .rc-hit { cursor: pointer; }
+@media (max-width: 640px) {
+  .rc-sm { padding: 0.9rem 0.9rem 0.7rem; }
+  .rc-sm-break { margin-top: 0.45rem; }
+}

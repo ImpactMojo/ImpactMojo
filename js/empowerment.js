@@ -48,9 +48,34 @@ window.FEmpowerment = (function () {
   }
 
   /* --------------------------------------------------------- the big chart */
+  /* Width of the column the figures render into, so the SVG can be drawn 1:1.
+     A fixed 620-unit viewBox is squeezed into whatever the column actually is,
+     and every font size inside is multiplied by that ratio: measured at 0.55 in
+     a 340px phone column, which turned 9.5px axis labels into 5.2px, and 0.795
+     even on desktop, which made them 7.55px. Drawing at the real width makes a
+     declared size a true size. */
+  function chartWidth() {
+    var box = document.getElementById("emChart");
+    var w = box ? box.clientWidth - 32 : 0;          // figure padding either side
+    return Math.max(300, Math.min(620, Math.round(w || 620)));
+  }
+
   function bigChart(ind) {
     var d = dim(ind.dimension);
-    var W = 620, H = 306, L = 58, R = 18, T = 24, B = 78;
+    var W = chartWidth(), H = 306, L = 58, R = 18, T = 24, B = 78;
+    // Labels drawn at their true size are large enough to collide, which the
+    // old squeezed rendering hid by making them unreadable. Measured on the
+    // seven education categories: at -32 degrees, three pairs overlapped at
+    // 340px and one at 493px. More categories in less width need a steeper
+    // tilt and more room beneath; upright is the only angle that cannot
+    // collide, since each label then occupies its own text height.
+    var many = Math.max(ind.series.length, ind.companion.length) > 5;
+    var TILT = -32;
+    // Upright labels need real room: "Higher secondary" is about 80px of it,
+    // and at B=108 it was clipping out of the bottom of the box. Give that
+    // case a taller canvas rather than squeezing the plot to pay for it.
+    if (many && W < 460) { TILT = -90; B = 118; H = 340; }
+    else if (many) { TILT = -50; B = 92; }
     var plotW = W - L - R, plotH = H - T - B;
     var y = function (v) { return T + plotH - plotH * (v / 100); };
     var out = ['<svg viewBox="0 0 ' + W + " " + H + '" class="em-svg" role="img" aria-label="' +
@@ -75,7 +100,7 @@ window.FEmpowerment = (function () {
         out.push('<text class="em-val" x="' + px.toFixed(1) + '" y="' + (y(p.value) - 10).toFixed(1) +
                  '" text-anchor="middle">' + p.value.toFixed(1) + "</text>");
         out.push('<text class="em-tick" x="' + px.toFixed(1) + '" y="' + (H - B + 18) +
-                 '" text-anchor="end" transform="rotate(-32 ' + px.toFixed(1) + " " + (H - B + 18) + ')">' +
+                 '" text-anchor="end" transform="rotate(' + TILT + " " + px.toFixed(1) + " " + (H - B + 18) + ')">' +
                  esc(p.label) + "</text>");
       });
     }
@@ -160,6 +185,20 @@ window.FEmpowerment = (function () {
     if (!D) return;
     drawBands();
     select("violence");
+
+    // The chart is drawn at the column's real width, so it has to be redrawn
+    // when that width changes. Debounced, and only on an actual change, so a
+    // mobile browser collapsing its address bar does not rebuild the SVGs.
+    var lastW = chartWidth(), t = null;
+    window.addEventListener("resize", function () {
+      clearTimeout(t);
+      t = setTimeout(function () {
+        var now = chartWidth();
+        if (Math.abs(now - lastW) < 8) return;
+        lastW = now;
+        if (state.indicator) select(state.indicator);
+      }, 150);
+    });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

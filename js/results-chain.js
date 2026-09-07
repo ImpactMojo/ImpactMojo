@@ -45,19 +45,43 @@ window.FResultsChain = (function () {
   }
 
   /* ------------------------------------------------------------ the chain */
-  /* One programme's row: five bars whose height is the measurement weight.
-     The break is marked between the two links where the step happens. */
-  function chartFor(p, interactive) {
-    var W = 560, H = 128, PAD_B = 26, PAD_T = 8;
-    var slot = W / D.links.length;
-    var barW = slot - 14;
+  /* Below this width the chain is drawn top to bottom instead of left to right.
+     Five bars across a 343px phone leaves each about 55px, which is not enough
+     for "Activities" to be legible: a 9.5px label inside a 560-unit viewBox
+     scaled into a 337px column renders at 5.7 CSS px, and at 360px it is 5.2.
+     The short bars were unusable as targets too -- an "absent" bar is 8% of the
+     plot height, roughly 7px tall, well under the 24px minimum. Turning the
+     chain vertical fixes both at once, and the argument survives the rotation:
+     the step down the page reads the same as the step across it. */
+  var NARROW_MAX = 640;
+
+  function isNarrow() {
+    return !!(window.matchMedia && window.matchMedia('(max-width:' + NARROW_MAX + 'px)').matches);
+  }
+
+  function svgOpen(p, w, h, interactive) {
     /* role="img" only on the static small multiples. The interactive copy holds
        focusable bars, and role="img" declares its content atomic, which axe
        reports as nested-interactive and a screen reader would honour by hiding
        the buttons. The interactive one is a group. */
-    var parts = ['<svg viewBox="0 0 ' + W + ' ' + H + '" class="rc-svg" role="' +
-                 (interactive ? "group" : "img") + '" aria-label="' +
-                 esc(p.name + ": how each link of the results chain is measured") + '">'];
+    return '<svg viewBox="0 0 ' + w + ' ' + h + '" class="rc-svg" role="' +
+           (interactive ? 'group' : 'img') + '" aria-label="' +
+           esc(p.name + ': how each link of the results chain is measured') + '">';
+  }
+
+  function barAttrs(link, cell, st, p, interactive, isBreak) {
+    var cls = 'rc-bar rc-bar--' + cell.state + (isBreak ? ' rc-bar--break' : '');
+    return '<g class="' + cls + '" data-link="' + esc(link.id) + '"' +
+           (interactive ? ' tabindex="0" role="button" aria-label="' +
+             esc(link.name + ': ' + st.label) + '"' : '') + '>';
+  }
+
+  /* Wide: five bars side by side, height carrying the measurement weight. */
+  function chartWide(p, interactive) {
+    var W = 560, H = 128, PAD_B = 26, PAD_T = 8;
+    var slot = W / D.links.length;
+    var barW = slot - 14;
+    var parts = [svgOpen(p, W, H, interactive)];
 
     D.links.forEach(function (link, i) {
       var cell = p.chain[link.id];
@@ -65,18 +89,15 @@ window.FResultsChain = (function () {
       var h = Math.round((H - PAD_B - PAD_T) * (st.weight / 100));
       var x = Math.round(i * slot + 7);
       var y = H - PAD_B - h;
-      var isBreak = p.breaks === link.id;
-      var cls = "rc-bar rc-bar--" + cell.state + (isBreak ? " rc-bar--break" : "");
-      parts.push('<g class="' + cls + '" data-link="' + esc(link.id) + '"' +
-                 (interactive ? ' tabindex="0" role="button" aria-label="' +
-                   esc(link.name + ": " + st.label) + '"' : "") + '>');
+
+      parts.push(barAttrs(link, cell, st, p, interactive, p.breaks === link.id));
       parts.push('<rect x="' + x + '" y="' + y + '" width="' + Math.round(barW) +
                  '" height="' + h + '" rx="4" fill="' + p.colour + '"' +
                  ' fill-opacity="' + (0.28 + 0.72 * st.weight / 100).toFixed(2) + '"/>');
       parts.push('<text class="rc-tick" x="' + Math.round(x + barW / 2) + '" y="' + (H - 9) +
-                 '" text-anchor="middle">' + esc(link.name) + "</text>");
-      parts.push("<title>" + esc(link.name + " — " + st.label) + "</title>");
-      parts.push("</g>");
+                 '" text-anchor="middle">' + esc(link.name) + '</text>');
+      parts.push('<title>' + esc(link.name + ' — ' + st.label) + '</title>');
+      parts.push('</g>');
 
       // The step down, drawn between this bar and the next.
       if (i < D.links.length - 1) {
@@ -88,8 +109,53 @@ window.FResultsChain = (function () {
         }
       }
     });
-    parts.push("</svg>");
-    return parts.join("");
+    parts.push('</svg>');
+    return parts.join('');
+  }
+
+  /* Narrow: five rows down the page, length carrying the same weight. The
+     viewBox is close to the rendered pixel width, so a 12-unit label is a 12px
+     label, and each row is a full-width target rather than a 7px sliver. */
+  function chartNarrow(p, interactive) {
+    var W = 340, LABEL_W = 86, ROW_H = 30, GAP = 7, PAD_T = 6, PAD_B = 6;
+    var barX = LABEL_W + 8;
+    var maxBar = W - barX - 8;
+    var H = PAD_T + D.links.length * ROW_H + (D.links.length - 1) * GAP + PAD_B;
+    var parts = [svgOpen(p, W, H, interactive)];
+
+    D.links.forEach(function (link, i) {
+      var cell = p.chain[link.id];
+      var st = D.states[cell.state];
+      var y = PAD_T + i * (ROW_H + GAP);
+      var len = Math.max(6, Math.round(maxBar * (st.weight / 100)));
+
+      parts.push(barAttrs(link, cell, st, p, interactive, p.breaks === link.id));
+      // A transparent full-width hit area, so the row is tappable even where
+      // the bar itself is short. Without it "Not measured" is a 6px target.
+      parts.push('<rect class="rc-hit" x="0" y="' + y + '" width="' + W +
+                 '" height="' + ROW_H + '" rx="6" fill="transparent"/>');
+      parts.push('<text class="rc-rlabel" x="' + LABEL_W + '" y="' + (y + ROW_H / 2 + 4) +
+                 '" text-anchor="end">' + esc(link.name) + '</text>');
+      parts.push('<rect x="' + barX + '" y="' + (y + 5) + '" width="' + len +
+                 '" height="' + (ROW_H - 10) + '" rx="4" fill="' + p.colour + '"' +
+                 ' fill-opacity="' + (0.28 + 0.72 * st.weight / 100).toFixed(2) + '"/>');
+      parts.push('<title>' + esc(link.name + ' — ' + st.label) + '</title>');
+      parts.push('</g>');
+
+      if (i < D.links.length - 1) {
+        var next = D.states[p.chain[D.links[i + 1].id].state];
+        if (next.weight < st.weight - 20) {
+          var my = y + ROW_H + Math.round(GAP / 2);
+          parts.push('<path class="rc-step" d="M' + barX + ',' + my + ' L' + (W - 8) + ',' + my + '"/>');
+        }
+      }
+    });
+    parts.push('</svg>');
+    return parts.join('');
+  }
+
+  function chartFor(p, interactive) {
+    return isNarrow() ? chartNarrow(p, interactive) : chartWide(p, interactive);
   }
 
   function drawSmallMultiples() {
@@ -188,6 +254,22 @@ window.FResultsChain = (function () {
     drawLegend();
     drawPicker();
     select(D.programmes[0].id, "outputs");
+
+    // Redraw when the viewport crosses the breakpoint -- rotating a phone, or
+    // dragging a desktop window narrow. Debounced, and only when the
+    // orientation actually changed, so a scroll-driven resize on mobile
+    // browsers (the address bar collapsing) does not rebuild the SVGs.
+    var wasNarrow = isNarrow(), t = null;
+    window.addEventListener("resize", function () {
+      clearTimeout(t);
+      t = setTimeout(function () {
+        var now = isNarrow();
+        if (now === wasNarrow) return;
+        wasNarrow = now;
+        drawSmallMultiples();
+        select(state.programme, state.link);
+      }, 150);
+    });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

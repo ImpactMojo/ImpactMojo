@@ -2,6 +2,21 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.287.0 — September 7, 2026 (Charts drawn at the size they are shown)
+
+### For Learners
+
+- **The results chain turns vertical on a phone.** Five bars side by side left about 55 pixels each and printed their labels at under six, so the chart was there and could not be read. Below 640 pixels it is now five full-width rows running down the page, with bar length carrying the same weight bar height carried across. Every row is a tappable target the whole width of the screen, including the short ones, which is where the argument is: PM-KISAN's outcomes bar is the shortest cell on the page and the one worth pressing.
+- **The empowerment charts are drawn at the width they are given.** The axis labels were rendering at 5.2 pixels on a phone and 7.6 on a laptop, against a 9.5 declared in the source. They now render at the size they say.
+
+### Fixed
+
+- **Chart text on the two new Fundamentals pages rendered at 5.2px on a phone, and the results chain's bars were 7px tap targets** (#1068). Both charts draw into a fixed-width `viewBox` that the browser then scales into whatever column it lands in, and every font size inside an SVG is multiplied by that ratio. Measured in Chromium: on `/fundamentals/results-chain.html` a 560-unit chart lands in a 337px column at a 390px viewport, so a 9.5px tick renders at **5.71px**, and at 360px it is **5.20px**. `/fundamentals/empowerment.html` was worse, because its two figures stack in one column at every width: a 620-unit chart in a 493px column at **1280px** put the same 9.5px label at **7.55px**, small enough next to a 9.5 in the source to look deliberate.
+
+  The results chain carried a second defect at those widths. Bar *height* encodes how the link is measured, so the weakest states are slivers: an `absent` bar is 8 per cent of the plot height, about **7px** tall in a 55px slot, far under the 24×24 minimum, and it is the cell the page is arguing about. Below 640px the chain is now drawn top to bottom, five rows with length carrying the weight, each row backed by a transparent full-width hit rect so a short bar is still a full target. Measured after: every target **343×30** at 390px and **313×28** at 360px, labels 12 to 15px, no horizontal overflow, desktop unchanged. The empowerment page computes its `viewBox` from the real column at render time, so the scale is **1.003** at 390px and **1.002** at 1280px, and its tick tilt and bottom margin adapt for the crowded indicators, which removed three label collisions at 390px and one at 1280px. Both pages redraw on a debounced resize, and only when the orientation actually changes, so the address bar collapsing on a mobile browser does not rebuild the SVGs.
+
+  **Nothing was going to catch this.** `rules/testing.md` item 12 already records that axe does not evaluate SVG text contrast; size is the same blind spot, and both pages report zero axe violations at 390px in both themes with every label unreadable. pa11y does not look at SVG text either. The pages were built and reviewed at 1280px, where the results chain is legible and the empowerment page's 7.55px passes for a small caption.
+
 ## v10.286.0 — September 7, 2026 (The tour points at the button you can see)
 
 ### For Learners
