@@ -43,6 +43,11 @@ REQUIRED = ["id", "name", "short", "thinkers", "year", "years_label", "era",
             "compare_note", "contrast_note", "reading"]
 
 
+def load_discourses():
+    d = json.loads(DISCOURSES.read_text(encoding="utf-8"))
+    return d["base_url"], d["entries"]
+
+
 def load():
     meta = json.loads((SRC / "_meta.json").read_text(encoding="utf-8"))
     theories = []
@@ -56,7 +61,7 @@ def load():
     return meta, theories
 
 
-def validate(meta, theories):
+def validate(meta, theories, discourse_entries):
     """Every failure here is one that would otherwise ship looking correct."""
     problems = []
     ids = [t["id"] for t in theories]
@@ -135,6 +140,18 @@ def validate(meta, theories):
             for key in ("claim", "finding", "source", "year"):
                 if not ev.get(key):
                     problems.append(f"{where}: an evidence entry has no '{key}'")
+
+        # Links into Development Discourses. That library lives in another
+        # repository, so an id here cannot be checked against it directly; it is
+        # checked against the committed snapshot instead, which
+        # scripts/sync-development-discourses.py refreshes from the source and
+        # which refuses to drop an id a theory still points at. A theory with no
+        # honest match in that library carries no links rather than a forced one.
+        for did in t.get("discourses", []):
+            if did not in discourse_entries:
+                problems.append(f"{where}: discourses id '{did}' is not in "
+                                f"data/development-discourses.json (run "
+                                f"scripts/sync-development-discourses.py)")
 
         for rel in ("compare", "contrast"):
             if t[rel] not in ids:
@@ -310,6 +327,29 @@ def page_shell(title, description, keywords, og_title, og_desc, path, body, scri
 """
 
 
+def discourses_block(t, base, entries):
+    """Named entries in Development Discourses, or an honest sentence when there
+    is none.
+
+    A forced link is worse than no link: it costs the reader a click and teaches
+    them that the cross-references are decorative. Rostow carries none for that
+    reason -- the library is a practitioner collection of current research and
+    grey literature, and it holds nothing that bears on stage theory.
+    """
+    ids = t.get("discourses", [])
+    if not ids:
+        return ('    <p>Development Discourses, the open-access reference library, holds no entry '
+                'that bears directly on this theory. Browse it at '
+                '<a href="/devdiscourses/">impactmojo.in/devdiscourses</a>.</p>')
+    rows = []
+    for did in ids:
+        e = entries[did]
+        rows.append('      <li><a href="%s">%s</a> &mdash; %s (%s)</li>'
+                    % (esc(base + did), esc(e["title"]), esc(e["authors"]), esc(e["year"])))
+    return ('    <p>Open access, in <a href="/devdiscourses/">Development Discourses</a>:</p>\n'
+            '    <ul class="reading reading--dd">\n' + "\n".join(rows) + '\n    </ul>')
+
+
 def axis_bar(meta, t):
     rows = []
     for axis in meta["axes"]:
@@ -327,7 +367,7 @@ def axis_bar(meta, t):
     return "\n".join(rows)
 
 
-def theory_body(meta, t, by_id):
+def theory_body(meta, t, by_id, dd_base, dd_entries):
     thinkers = "".join(
         f"""        <div class="credit-card">
           <h3>{esc(th['name'])}{(' <span class="yrs">' + esc(th['years']) + '</span>') if th.get('years') else ''}</h3>
@@ -468,7 +508,7 @@ def theory_body(meta, t, by_id):
     <ul class="reading">
 {reading}
     </ul>
-    <p>More on this and neighbouring arguments in <a href="https://varnasr.github.io/development-discourses/">Development Discourses</a>, an open-access reference library of research and grey literature for South Asian development work.</p>
+{discourses_block(t, dd_base, dd_entries)}
   </div>
 </section>
 """
@@ -578,7 +618,7 @@ def index_body(meta, theories):
 """
 
 
-def build(meta, theories, today):
+def build(meta, theories, today, dd_base, dd_entries):
     """Return {relative path: text} for everything this script owns."""
     by_id = {t["id"]: t for t in theories}
     out = {}
@@ -607,7 +647,7 @@ def build(meta, theories, today):
             og_title=f"Theories of Development | {t['name']}",
             og_desc=t["claim"][:300],
             path=f"/theories/{t['id']}.html",
-            body=theory_body(meta, t, by_id),
+            body=theory_body(meta, t, by_id, dd_base, dd_entries),
             scripts=(f'<script src="{stamp("/js/theories-data.js")}"></script>\n'
                      f'<script src="{stamp("/js/theories.js")}" data-theory="{t["id"]}"></script>'),
         )
@@ -630,6 +670,7 @@ def build(meta, theories, today):
     return out
 
 
+DISCOURSES = ROOT / "data" / "development-discourses.json"
 SITEMAP = ROOT / "sitemap.xml"
 SEARCH_INDEX = ROOT / "data" / "search-index.json"
 
@@ -703,7 +744,8 @@ def main():
         print("FAIL - no theory files found in data/theories/")
         return 1
 
-    problems = validate(meta, theories)
+    dd_base, dd_entries = load_discourses()
+    problems = validate(meta, theories, dd_entries)
     if problems:
         print(f"FAIL - {len(problems)} problem(s) in data/theories/:")
         for p in problems:
@@ -711,7 +753,7 @@ def main():
         return 1
 
     today = datetime.date.today().isoformat()
-    out = build(meta, theories, today)
+    out = build(meta, theories, today, dd_base, dd_entries)
 
     if check:
         drift = []

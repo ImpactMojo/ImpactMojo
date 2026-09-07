@@ -354,6 +354,10 @@ window.THEORIES = {
           "year": 1945,
           "note": "Gandhi restates the village; Nehru refuses it in writing. Four pages that decided the shape of Indian planning."
         }
+      ],
+      "discourses": [
+        "radical-decentralization-does-community-driven-development-work",
+        "decentralization-governance-and-localizing-sdgs-in-asia-and-the-pacific"
       ]
     },
     {
@@ -614,6 +618,10 @@ window.THEORIES = {
           "year": 1947,
           "note": "The economic programme, submitted to the Constituent Assembly. The section on agriculture as a state industry is the part least often read."
         }
+      ],
+      "discourses": [
+        "caste-discrimination-and-exclusion-in-modern-india",
+        "land-reform-poverty-reduction-and-growth-evidence-from-india"
       ]
     },
     {
@@ -872,6 +880,10 @@ window.THEORIES = {
           "year": 1901,
           "note": "The Indian precursor, with the drain estimated rather than asserted."
         }
+      ],
+      "discourses": [
+        "trade-and-development-report-2023",
+        "the-long-term-effects-of-africas-slave-trades"
       ]
     },
     {
@@ -1098,6 +1110,10 @@ window.THEORIES = {
           "year": 1964,
           "note": "The case that peasant farmers are poor but efficient, and the influenza argument against zero marginal product."
         }
+      ],
+      "discourses": [
+        "world-employment-and-social-outlook-trends-2024",
+        "the-urban-informal-economy-achieving-prospering-and-territorial-equality"
       ]
     },
     {
@@ -1339,6 +1355,9 @@ window.THEORIES = {
           "year": 1956,
           "note": "The wage goods counter-model, published the same year and largely ignored at the time."
         }
+      ],
+      "discourses": [
+        "misallocation-and-manufacturing-tfp-in-china-and-india"
       ]
     },
     {
@@ -1905,6 +1924,11 @@ window.THEORIES = {
           "year": 1997,
           "note": "Where the general category, the environmentalism of the poor, is set out and compared across countries."
         }
+      ],
+      "discourses": [
+        "land-reform-poverty-reduction-and-growth-evidence-from-india",
+        "land-governance-assessment-framework-implementation-manual-for-assessing",
+        "smallholders-food-security-and-the-environment"
       ]
     },
     {
@@ -2160,6 +2184,11 @@ window.THEORIES = {
           "year": 1995,
           "note": "The approach applied to India, with the inter-state comparison that carries the public action argument."
         }
+      ],
+      "discourses": [
+        "human-development-report-202324",
+        "acute-multidimensional-poverty-a-new-index-for-developing-countries",
+        "counting-and-multidimensional-poverty-measurement"
       ]
     },
     {
@@ -2423,6 +2452,11 @@ window.THEORIES = {
           "year": 2010,
           "note": "The revision, comparing India with China, and where he says which parts of 1984 did not survive."
         }
+      ],
+      "discourses": [
+        "the-origins-of-state-capacity-property-rights-taxation-and-politics",
+        "bureaucracy-and-development",
+        "energy-subsidy-reform-lessons-and-implications"
       ]
     },
     {
@@ -2678,6 +2712,11 @@ window.THEORIES = {
           "year": 2001,
           "note": "The growth comparison, by an economist who was at the World Bank while it happened."
         }
+      ],
+      "discourses": [
+        "goodbye-washington-consensus-hello-washington-confusion-a-review-of-the-world",
+        "economic-reform-and-the-process-of-global-integration",
+        "misallocation-and-manufacturing-tfp-in-china-and-india"
       ]
     },
     {
@@ -2937,6 +2976,11 @@ window.THEORIES = {
           "year": 2012,
           "note": "The general statement, written for a wide readership. Chapter 15 is where China is dealt with."
         }
+      ],
+      "discourses": [
+        "the-origins-of-state-capacity-property-rights-taxation-and-politics",
+        "the-long-term-effects-of-africas-slave-trades",
+        "state-capacity-and-economic-development-a-network-approach"
       ]
     },
     {
@@ -3183,6 +3227,11 @@ window.THEORIES = {
           "year": 2007,
           "note": "Quarterly Journal of Economics. The Pratham trials, and the origin of teaching at the right level."
         }
+      ],
+      "discourses": [
+        "randomization-and-social-policy-evaluation-revisited",
+        "experimentation-at-scale",
+        "impact-evaluation-in-practice-second-edition"
       ]
     }
   ]
