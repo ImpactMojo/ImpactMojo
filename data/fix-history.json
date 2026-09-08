@@ -4,6 +4,13 @@
   "count": 120,
   "entries": [
     {
+      "title": "The BCT repository's Print / Save as PDF printed the whole library instead of the open technique",
+      "detail": "(#1078). Reported by a reader who asked for one card and got 65 pages. printTechnique() adds body.printing-technique and the stylesheet then hides everything behind the modal, one selector per region. Eleven of the twelve are classes and work. The twelfth aimed at .main-content, and the element is <main id=\"main-content\"> — an id. The selector matched nothing, #techniquesContainer sits inside that element, and so all 203 technique cards laid out underneath the modal and went to the printer. Measured in Chromium with print media emulated and BCT142 open, the exact state reported, testing each card with getClientRects().length (empty when any ancestor is hidden) rather than its own display: 203 cards laid out before, 0 after, print height 26,285px down to 1,326px, with the modal itself intact in both. One character: .main-content became #main-content. Nothing was going to catch this. The page is correct on screen — the modal renders, the button fires, the handler is right. The defect lives only in the print stylesheet, and no guard, axe run or pa11y pass evaluates print media. It needed somebody to press the button and look at what came out.",
+      "fixed_on": "2026-09-08",
+      "release": "v10.291.0",
+      "issue": 1078
+    },
+    {
       "title": "The mobile-search test waited on a third party without knowing it",
       "detail": "(#1077). tests/mobile-search.js navigates with waitUntil: 'domcontentloaded', chosen, its comment said, to keep the test off the CDN. That reasoning was incomplete: a defer script executes before DOMContentLoaded and a parser-blocking one delays it outright, and all four pages it visits load @supabase/supabase-js from jsDelivr — deferred on index.html, blocking on catalog.html and fundamentals/wheel.html. So the event the test waited on was gated on jsDelivr answering. On 2026-09-08 it did not, and the first navigation died on exactly 30.000s in a run whose diff touched three files, none of them loaded by any of those pages; the same test had passed 15 hours earlier, all eight navigations in 21 seconds. The test now serves only its own origin, as tests/stray-grid-text.js already does. Reproduced by stalling every off-origin request: the old test returns FAIL - Navigation timeout of 30000 ms exceeded, byte-for-byte the CI failure, and the new one navigates all eight pages.",
       "fixed_on": "2026-09-08",
@@ -832,13 +839,6 @@
     {
       "title": "ImpactMojo_PressKit.html",
       "detail": "— foundational courses 39→38.",
-      "fixed_on": "2026-04-12",
-      "release": "v10.18.1",
-      "issue": null
-    },
-    {
-      "title": "docs/roadmap.md",
-      "detail": "— moved Cohort-Based Learning, Notification System, Sample Size Calculator, Budget Template Generator, and full accessibility audit from \"In Progress\"/\"Planned\" to \"Recently Completed\". Added v10.13–v10.18 release entries. Added BookSummaries expansion and native deck migration to \"In Progress\".",
       "fixed_on": "2026-04-12",
       "release": "v10.18.1",
       "issue": null

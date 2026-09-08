@@ -2,6 +2,20 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.291.0 — September 8, 2026 (Print one technique, not the whole library)
+
+### For Learners
+
+- **Print / Save as PDF on a behaviour change technique now gives you that technique.** It was handing you the entire library — 65 pages for one card. Open a technique, print, and you get the one you are reading.
+
+### Fixed
+
+- **The BCT repository's Print / Save as PDF printed the whole library instead of the open technique** (#1078). Reported by a reader who asked for one card and got 65 pages. `printTechnique()` adds `body.printing-technique` and the stylesheet then hides everything behind the modal, one selector per region. Eleven of the twelve are classes and work. The twelfth aimed at `.main-content`, and the element is `<main id="main-content">` — an id. The selector matched nothing, `#techniquesContainer` sits inside that element, and so all 203 technique cards laid out underneath the modal and went to the printer.
+
+  Measured in Chromium with print media emulated and `BCT142` open, the exact state reported, testing each card with `getClientRects().length` (empty when any ancestor is hidden) rather than its own `display`: **203 cards laid out before, 0 after**, print height 26,285px down to 1,326px, with the modal itself intact in both. One character: `.main-content` became `#main-content`.
+
+  **Nothing was going to catch this.** The page is correct on screen — the modal renders, the button fires, the handler is right. The defect lives only in the print stylesheet, and no guard, axe run or pa11y pass evaluates print media. It needed somebody to press the button and look at what came out.
+
 ## v10.290.0 — September 8, 2026 (A refused deploy trigger says so)
 
 ### Fixed
