@@ -2,6 +2,22 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.292.0 — September 8, 2026 (The site navigation stops printing on worksheets)
+
+### For Learners
+
+- **Print a lab worksheet or practice pack and you get the worksheet.** The site navigation bar and footer were appearing on every printed page. They no longer print.
+
+### Fixed
+
+- **The shared nav bar and footer printed on all 60 pages that offer a print button** (#1080). Found while checking whether #1078 was a one-off. It was not: same mechanism, a print rule aimed at a name that had moved, with a much smaller consequence.
+
+  `js/site-chrome.js` deletes the legacy chrome outright — its `build()` removes `.im-topbar`, `.site-header`, `header.header`, `footer`, `.footer`, `.im-footer` from the DOM — and injects its own under `.im-sc`, `.im-sc-bar`, `.im-sc-foot`. Its injected stylesheet carried **no `@media print` rule at all**, while the 60 pages still told the printer to hide the names it had just removed: `.im-footer` on 59 of them, `.im-topbar` on 41, `.header` on 38, `.footer` on 6, `.site-header` on 1. Every one of those matched nothing, so a printed worksheet opened with 22 navigation links across the top.
+
+  Measured in Chromium with print media emulated, testing each element with `getClientRects().length`: **60 of 60 pages printing the chrome before, 0 of 60 after.** The rule now lives in the shared file, so every page inherits it and a page added later needs no copy of its own — which is the point, since sixty separate copies of a name is exactly how the last rename got lost.
+
+  **On screen, nothing moved.** Checked eight pages that load the chrome across two widths and both themes: the bar and footer render as before, no horizontal overflow. `index.html` shows no shared chrome in the sandbox, but it shows none with or without this change, so that is a pre-existing sandbox artefact rather than a regression — verified by running the same probe against `main`'s copy of the file.
+
 ## v10.291.0 — September 8, 2026 (Print one technique, not the whole library)
 
 ### For Learners
