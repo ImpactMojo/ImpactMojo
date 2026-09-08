@@ -38,6 +38,7 @@ const COURSE_URLS = {
   gender: ['/courses/gender/', '/courses/gender/lexicon.html'],
   intervention: ['/courses/intervention/', '/courses/intervention/lexicon.html'],
   esg: ['/courses/esg/', '/courses/esg/lexicon.html'],
+  'gender-mel': ['/courses/gender-mel/', '/courses/gender-mel/lexicon.html'],
   law: ['/courses/law/', '/courses/law/lexicon.html'],
   livelihoods: ['/courses/livelihoods/', '/courses/livelihoods/lexicon.html'],
   media: ['/courses/media/', '/courses/media/lexicon.html'],

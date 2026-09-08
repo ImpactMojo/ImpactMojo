@@ -9,7 +9,7 @@
     'gandhi', 'devecon', 'devai', 'dataviz',
     'mel', 'poa', 'media', 'law', 'SEL',
     'gender', 'pubchoice', 'pubpol', 'causal', 'livelihoods', 'powerBI',
-    'intervention', 'nothing-about-us', 'nvc-rj', 'esg'
+    'intervention', 'nothing-about-us', 'nvc-rj', 'esg', 'gender-mel'
   ];
 
   // ─── Toast notification helper ───
