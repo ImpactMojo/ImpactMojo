@@ -601,6 +601,24 @@ jobs:
       - name: Check every heading survives the chrome strip
         run: python3 scripts/check-h1-survives-chrome.py
 
+  homepage-courses:
+    name: Homepage lists every flagship
+    runs-on: ubuntu-latest
+    # Without this a hung step inherits GitHub's 360-minute default and the
+    # job neither passes nor fails -- which reads as "still running".
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # Adding a flagship updates counts.json, the catalog, the sitemap, the
+      # search index, the offline cache and the certificate map. Nothing
+      # updated index.html, so three of twenty-one courses had zero references
+      # on the front page and the JSON-LD told search engines there were 18
+      # (#1085). A course missing from the resume map also loses its
+      # "continue where you left off" card, silently.
+      - name: Every course directory appears on the homepage
+        run: python3 scripts/check-homepage-courses.py
+
   search-coverage:
     name: Site-search coverage
     runs-on: ubuntu-latest
