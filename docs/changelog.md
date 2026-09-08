@@ -29,6 +29,32 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **Wired sitewide**: `data/counts.json` (courses 72→73, flagship 20→21, with 86 drifted numbers corrected by `check-counts.py --fix`), `search-index.json`, `sitemap.xml`, `catalog.html` and its JSON-LD course list, `courses/index.html`, `js/offline.js`, `service-worker.js` `COURSE_URLS`, `js/course-progress.js` `COURSE_NAMES`, `data/notebooklm-registry.json`, and the Supabase `auto_issue_certificate` course map. The last of those is server-side on purpose: RLS lets a user write their own progress rows, so a client-supplied course name would let anyone mint a certificate.
 
+## v10.294.0 — September 8, 2026 (Everything about gender, in one place, and three courses rejoin the homepage)
+
+### For Learners
+
+- **A roundup of every gender-related resource on the platform** — three flagship courses, six 101 decks, three Studios, three Fundamentals pages, two deep dives, six reading companions, a timeline, a game, a challenge and the printable handouts, with what each one is for. It also names three gaps we have not filled. [Read it](/blog/gender-on-impactmojo-a-roundup.html).
+
+- **Three flagship courses are findable from the homepage again** — Sustainability & ESG, Social Movements, and the new Gender-Sensitive MEL. If you started one of them, the "continue where you left off" card now works for it too.
+
+### Added
+
+- **`blog/gender-on-impactmojo-a-roundup.html`** — a roundup post covering 34 linked resources across the gender material, every link checked against a real file. The worked figure at its centre is the one the new MEL flagship is built around: India's Time Use Survey 2024 supports both "women do 3.2 times as much unpaid work as men" and "5.9 times", for ages 15 to 59, because the first averages over participants and the second over everyone. The gap between the two is the 51.5 per cent male participation rate. Both are correct; neither is the number.
+
+- **`scripts/check-homepage-courses.py`** and the `homepage-courses` CI job — asserts that every directory under `courses/` appears in the homepage's JSON-LD flagship `ItemList` **and** in the resume map, and that `numberOfItems` matches the number of items listed. Verified by removing one course, which the guard reported on both counts, and restoring it.
+
+### Fixed
+
+- **Three of the twenty-one flagship courses had no presence on the homepage at all** (#1085). Counting `/courses/<slug>` references in `index.html`: `esg` **0**, `social-movements` **0**, `gender-mel` **0**, `nothing-about-us` 1, every other course 2 to 5. Adding a flagship updates `data/counts.json`, `catalog.html`, `courses/index.html`, `sitemap.xml`, `data/search-index.json`, `js/offline.js`, `service-worker.js`, `js/course-progress.js` and the certificate map. Nothing updates `index.html`, and nothing checked it, so the omission repeated three times without ever failing anything.
+
+  Two separate defects sat inside that. The JSON-LD `ItemList` declared `"numberOfItems": 18` while listing **17**, so it was inconsistent with itself before it was inconsistent with the library, and it was missing four courses — which meant the structured data handed to search engines described 18 flagships where 21 exist. `check-counts.py` cannot see this: it matches prose and stat tiles, and `numberOfItems` is a JSON-LD attribute in neither shape.
+
+  The second is the one a learner would notice. The homepage's resume map turns a stored slug into a title and a link for the "continue where you left off" card. It was missing `esg`, `social-movements` and `gender-mel`, so a learner who started any of those three, and came back to the homepage expecting to be returned to it, got nothing. Their progress was in `localStorage` the whole time; the lookup missed, the card did not render, and no error was raised anywhere.
+
+  Measured in Chromium, writing a real progress record (`{completed:[1,2,3,4], totalModules:13, updatedAt:…}`) to `localStorage` and reloading the homepage, before and after the change. **Before:** the card appeared for `mel` and for neither `esg`, `social-movements` nor `gender-mel`. **After:** it appears for all four, plus `nothing-about-us`, each with the right title and the right link. The first attempt at this test reported no card for any course including `mel`, because the payload used `lastModule` and `updated` where the code requires `totalModules` and `updatedAt` — worth recording, since a test that fails on the control is measuring itself rather than the change.
+
+  Both structures are now complete at 21, and the new guard fails if a future course is added to one and not the other.
+
 ## v10.293.0 — September 8, 2026 (One slow link check no longer cancels every other check)
 
 ### Fixed
