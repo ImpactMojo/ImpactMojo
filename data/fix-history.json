@@ -4,6 +4,13 @@
   "count": 120,
   "entries": [
     {
+      "title": "The shared nav bar and footer printed on all 60 pages that offer a print button",
+      "detail": "(#1080). Found while checking whether #1078 was a one-off. It was not: same mechanism, a print rule aimed at a name that had moved, with a much smaller consequence. js/site-chrome.js deletes the legacy chrome outright — its build() removes .im-topbar, .site-header, header.header, footer, .footer, .im-footer from the DOM — and injects its own under .im-sc, .im-sc-bar, .im-sc-foot. Its injected stylesheet carried no @media print rule at all, while the 60 pages still told the printer to hide the names it had just removed: .im-footer on 59 of them, .im-topbar on 41, .header on 38, .footer on 6, .site-header on 1. Every one of those matched nothing, so a printed worksheet opened with 22 navigation links across the top. Measured in Chromium with print media emulated, testing each element with getClientRects().length: 60 of 60 pages printing the chrome before, 0 of 60 after. The rule now lives in the shared file, so every page inherits it and a page added later needs no copy of its own — which is the point, since sixty separate copies of a name is exactly how the last rename got lost. On screen, nothing moved. Checked eight pages that load the chrome across two widths and both themes: the bar and footer render as before, no horizontal overflow. index.html shows no shared chrome in the sandbox, but it shows none with or without this change, so that is a pre-existing sandbox artefact rather than a regression — verified by running the same probe against main's copy of the file.",
+      "fixed_on": "2026-09-08",
+      "release": "v10.292.0",
+      "issue": 1080
+    },
+    {
       "title": "The BCT repository's Print / Save as PDF printed the whole library instead of the open technique",
       "detail": "(#1078). Reported by a reader who asked for one card and got 65 pages. printTechnique() adds body.printing-technique and the stylesheet then hides everything behind the modal, one selector per region. Eleven of the twelve are classes and work. The twelfth aimed at .main-content, and the element is <main id=\"main-content\"> — an id. The selector matched nothing, #techniquesContainer sits inside that element, and so all 203 technique cards laid out underneath the modal and went to the printer. Measured in Chromium with print media emulated and BCT142 open, the exact state reported, testing each card with getClientRects().length (empty when any ancestor is hidden) rather than its own display: 203 cards laid out before, 0 after, print height 26,285px down to 1,326px, with the modal itself intact in both. One character: .main-content became #main-content. Nothing was going to catch this. The page is correct on screen — the modal renders, the button fires, the handler is right. The defect lives only in the print stylesheet, and no guard, axe run or pa11y pass evaluates print media. It needed somebody to press the button and look at what came out.",
       "fixed_on": "2026-09-08",
@@ -832,13 +839,6 @@
     {
       "title": "content-marketing-kit.html",
       "detail": "— games 15→16, labs 10→11, flagship courses 9→11 across ~20 locations including social posts, carousel slides, brand guidelines, and content calendars. Fixed carousel counts (17 Labs→11, 27 Books→28).",
-      "fixed_on": "2026-04-12",
-      "release": "v10.18.1",
-      "issue": null
-    },
-    {
-      "title": "ImpactMojo_PressKit.html",
-      "detail": "— foundational courses 39→38.",
       "fixed_on": "2026-04-12",
       "release": "v10.18.1",
       "issue": null

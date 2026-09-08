@@ -97,7 +97,18 @@
 'body.im-sc-on{padding-top:0!important}',
 'body.im-sc-on .sidebar{top:46px!important;height:calc(100dvh - 46px)!important}',
 'body.im-sc-on .sidebar-overlay{top:46px!important}',
-'body.im-sc-on .reading-progress{top:46px!important}'
+'body.im-sc-on .reading-progress{top:46px!important}',
+// The chrome hides itself on paper.
+//
+// It has to be here rather than in each page's own print stylesheet, because
+// build() above DELETES the legacy chrome -- .im-topbar, .site-header, .header,
+// footer, .im-footer -- and injects its own under .im-sc names. Sixty pages
+// still tell the printer to hide the old names, so those rules match nothing
+// and the nav bar and footer printed on every lab worksheet, practice pack and
+// companion tool: 60 of 60 measured, 22 nav links each (#1080). Any page added
+// later inherits this instead of needing its own copy, which is the point --
+// sixty copies of a name is how the last rename got lost.
+'@media print{.im-sc,.im-sc-bar,.im-sc-foot{display:none!important}body.im-sc-on{padding-top:0!important}}'
     ].join('');
   }
 
