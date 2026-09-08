@@ -2,6 +2,33 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.294.0 — September 8, 2026 (A new flagship on measuring gender rather than counting women)
+
+### For Learners
+
+- **Gender-Sensitive Monitoring, Evaluation & Learning** — a new free flagship course, the 21st. Thirteen modules on the measurement that has to follow once a programme stops reporting how many of the people it reached were women: analysis frameworks beyond sex-disaggregation, intersectionality as a sample-size problem, indicators that detect who decides, empowerment measured the way Kabeer defined it, unpaid care read off India's own Time Use Surveys, violence measured under protocols that put the respondent first, feminist evaluation, and the marker and budget systems that claim to hold anyone to account. Ends with a capstone asking you to design a MEL system for a real programme in a named district.
+- **Gender & MEL Lexicon** — 58 terms with a worked example each, searchable and filterable, from practical gender needs and the social relations approach to minimum detectable effect and the per-participant denominator.
+
+### Added
+
+- **`/courses/gender-mel/` — the 21st flagship, and the third of the Q3 2026 roadmap items.** 13 modules totalling about 228,000 characters in `course_content`, a 58-term lexicon, 64 auto-graded questions across the modules, a six-question course assessment, and a capstone with a four-phase timeline and a written deliverables list.
+
+  **The division of labour with the two neighbouring flagships is the reason it exists.** `Gender Studies` teaches feminist theory, movements and the politics of knowledge, and stops before the indicator table. `MEL for Development` teaches results chains, sampling and evaluation design, and treats sex as a disaggregation variable added at the end. What falls between them is most of the actual work, and the course is built on that gap: deciding what a change in gender relations would look like in data, building an instrument that could detect it, collecting it without harming the person who answers, and reporting a finding a steering committee would rather not receive.
+
+  **Built on the ESG shell, deliberately.** `esg`, `nvc-rj` and `intervention` are the only three of the twenty existing flagships that meet `docs/flagship-course-standard.md` in full, and `esg` is the only recent one. The ESG build itself went wrong first time by drafting against `social-movements`, whose shell carries no CSS for `stats-grid`, `key-insight` or the callout colours, so standard content written into it renders unstyled. Measured after this build: every class used across all 13 module bodies resolves to a CSS rule in the shell, in both themes, at 390px and 1280px.
+
+  **Against the Part C checklist**: 17.1 KB of prose per module, one theme-aware SVG diagram per module, one licence-clean paper excerpt per module with a working source link, exactly one reflection prompt closing each module, exactly one coach callout per module alternating Vandana and Varna with no two consecutive modules showing the same face, one or two worked examples per module, and a real capstone with a `capstone-timeline` and deliverables. Correctly **no LaTeX**: the standard gates formulae to quantitative subjects, and the one formula the course needs — the minimum detectable effect — ships as plain HTML rather than as a KaTeX expression that could not be verified to render.
+
+  **Sources were fetched and quoted, not recalled.** Kabeer's UNRISD Discussion Paper 108 was downloaded and its text extracted, so the three passages used across Modules 2, 4, 6 and 13 are verbatim with page numbers. The time-use figures come from MoSPI's own API rather than from press coverage of it: ages 15–59, all unpaid activities, 2024 — women 389 minutes per participant and 366 per person, men 120 and 62, participation 94.2 and 51.5 per cent. The violence series comes from the DHS API: 37.2 per cent (NFHS-3), 30.9 (NFHS-4), 29.1 (NFHS-5) for ever-married women 15–49. India's Gender Budget Statement 13 for 2026–27 was pulled from indiabudget.gov.in, and its three parts were checked to sum exactly to the published grand total of ₹500,878.73 crore before any share was quoted.
+
+- **`courses/gender-mel/lexicon.html`** — 58 terms across 8 categories, each with a definition and a worked example. Caught during the build rather than after it: the page overflowed the viewport by 41px at 390px, because a category pill is `white-space: nowrap` and a long category name set the card's min-content width, pushing the grid track past the viewport. The ESG lexicon has shorter category names and so never showed it. Measured in Chromium at 390px with the ESG lexicon as a control: ESG 0, this one 41 before the fix and 0 after.
+
+- **`assets/images/og-course-gender-mel.png`** — the social card, generated to match the house style, because `check-social-images.py` fails CI on an `og:image` that resolves to nothing.
+
+### Changed
+
+- **Wired sitewide**: `data/counts.json` (courses 72→73, flagship 20→21, with 86 drifted numbers corrected by `check-counts.py --fix`), `search-index.json`, `sitemap.xml`, `catalog.html` and its JSON-LD course list, `courses/index.html`, `js/offline.js`, `service-worker.js` `COURSE_URLS`, `js/course-progress.js` `COURSE_NAMES`, `data/notebooklm-registry.json`, and the Supabase `auto_issue_certificate` course map. The last of those is server-side on purpose: RLS lets a user write their own progress rows, so a client-supplied course name would let anyone mint a certificate.
+
 ## v10.293.0 — September 8, 2026 (One slow link check no longer cancels every other check)
 
 ### Fixed
