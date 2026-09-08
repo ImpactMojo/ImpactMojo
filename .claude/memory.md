@@ -1207,9 +1207,13 @@ worth keeping: *"the Right to Food litigation is very famous, I am sure you will
 - `check-fix-issues.py` and `build-fix-history.py` are **different guards over the same file**.
   Running the first and assuming it covers the second turned CI red on #1006. Run the whole
   suite, not a subset.
-- `broken-links` is `fail: ${{ github.event_name == 'schedule' }}` — advisory on PRs, blocking on
-  the daily run. A PR sitting at `mergeable_state: unstable` with only broken-links outstanding
-  is mergeable. Check `ci.yml` rather than assuming.
+- **The link crawl is no longer in `ci.yml`.** As of 2026-09-08 (#1081) it lives in its own
+  `link-check.yml`, daily at 07:23 UTC plus `workflow_dispatch`, `fail: true`, with `Backups/`
+  excluded. It does not run on PRs at all, so a PR no longer sits at `mergeable_state: unstable`
+  waiting on it. Reason: a job cancelled by `timeout-minutes` cancels the **whole run**, so the
+  advisory crawl overrunning took 44 unrelated jobs with it (PR #1069, PR #1079, main run 2614 at
+  30m33s) and `fail: schedule-only` could not stop that — it governs the step's exit status, not
+  the run's. Do not move a job that talks to hundreds of third-party hosts back into `ci.yml`.
 - The check-runs API served a stale `in_progress` for axe-core on two PRs while the real result
   had already posted as a PR comment. Cross-check the sticky comment before concluding a job hung.
 - Netlify's 300s CDN cache produced a false "wrong content" reading again (POSH guide showed 2 of

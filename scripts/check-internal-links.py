@@ -10,9 +10,10 @@ files that actually exist, the way Netlify resolves them:
   - netlify.toml redirect sources count as resolvable
 
 External links (http/https/mailto/tel), pure fragments (#...), and
-template/data URLs are ignored — the advisory lychee CI job covers the
-external web. This guard is strict about what we fully control: links
-between our own pages.
+template/data URLs are ignored — the daily lychee run in
+.github/workflows/link-check.yml covers the external web. This guard is
+strict about what we fully control: links between our own pages, and it
+runs on every push and pull request, which the external crawl does not.
 
 Exit 0 + PASS when clean; exit 1 with a file:line listing otherwise.
 """
