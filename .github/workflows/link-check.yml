@@ -1,0 +1,65 @@
+# External link crawl — daily, and on demand.
+#
+# This used to be the `broken-links` job inside ci.yml. It was moved out on
+# 2026-09-08 (#1081) because of how GitHub Actions handles a timeout: a
+# cancelled job cancels the whole workflow run. So when the crawl overran its
+# cap, it took the other 44 jobs in that run down with it, and the run read as
+# cancelled rather than as "the advisory link check was slow" — which is
+# precisely what the step's own `fail: schedule-only` guard existed to prevent.
+# It happened on PR #1069, on PR #1079, and on main (run 2614, cancelled at
+# 30m33s). The crawl's duration over an unchanged link set ranged from 3m26s to
+# over 30m within 26 hours, so no cap can be sized correctly; the fix is to stop
+# the duration mattering to anything else.
+#
+# Nothing is lost from the pull-request run. The step was `fail: false` there,
+# by deliberate design (rules/testing.md), so a PR never got an actionable
+# signal from it — third-party latency is not something a contributor can fix.
+# What the check is genuinely for is link rot, which appears with no commit at
+# all, and that is what the daily schedule catches.
+name: Link check
+
+on:
+  schedule:
+    # Daily at 07:23 UTC, an hour after ci.yml, so the two do not queue together.
+    - cron: '23 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  broken-links:
+    name: Check broken links
+    runs-on: ubuntu-latest
+    # Generous, because overrunning here now costs only this workflow. It is
+    # meant to stop a genuinely hung crawl, not to bound a slow one.
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Broken link check
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >
+            --verbose
+            --no-progress
+            --accept 200,204,301,302,403
+            --exclude-path ./netlify-env-files
+            --exclude-path ./Backups
+            --exclude 'chat.whatsapp.com'
+            --exclude 'discord.gg'
+            --exclude 't.me'
+            --exclude 'localhost'
+            --exclude 'impactmojo@ibl'
+            '**/*.html'
+            '**/*.md'
+          # Both triggers here are deliberate runs rather than a side effect of
+          # a push, so both should report what they find. Backups/ is excluded
+          # above: 109 dated copies of the site carrying 11,668 URL references,
+          # 322 of them URLs that appear in no page anyone can reach. Checking
+          # links in a file nobody serves is 10.3% of the crawl for no signal.
+          fail: true
+
+      - name: Upload link check report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: broken-links-report
+          path: ./lychee/out.md

@@ -2,6 +2,22 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.293.0 — September 8, 2026 (One slow link check no longer cancels every other check)
+
+### Fixed
+
+- **The external link crawl was cancelling the entire CI run, on pull requests and on `main` alike** (#1081). It has now been moved out of `ci.yml` into its own workflow, `.github/workflows/link-check.yml`, which runs daily at 07:23 UTC and on demand.
+
+  The mechanism is a property of GitHub Actions rather than of the crawl: **a job cancelled by `timeout-minutes` cancels the whole workflow run**. `Check broken links` shared a run with 44 other jobs, so when it overran its cap it took all of them with it and the run reported as cancelled rather than as one slow advisory check. The step already carried `fail: ${{ github.event_name == 'schedule' }}`, written precisely so that third-party latency could never block a pull request, and that guard was powerless here: it sets the step's exit status, not the run's.
+
+  The crawl's duration over an unchanged link set was 3m26s, 13m31s, 17m11s and then over 30 minutes twice, all within 26 hours. A cap raised from 15 to 30 minutes on 2026-09-07 was crossed on `main` the next morning (run 2614, cancelled at 30m33s) and on PR #1079. There is no correct value for a cap over a quantity that moves by a factor of ten for reasons outside this repository, which is why the cap was not raised a third time.
+
+  **Nothing was lost from the pull-request run.** The step was `fail: false` there by design, so a contributor never received a signal they could act on: a host that answers slowly today is not a defect in their diff. Dead links between our own pages are a different matter, and those are still checked on every push and pull request by `scripts/check-internal-links.py`, which resolves each href the way Netlify does and takes about a second. What the crawl is genuinely for is external link rot, which appears with no commit at all, and the daily schedule is where that was always caught.
+
+  Two smaller changes came with the move. `--exclude-path ./Backups` drops 109 dated copies of the site carrying 11,668 URL references, of which **322 are URLs that appear in no page anyone can reach** — 10.3 per cent of the crawl for no signal, and a directory that grows every time someone takes a backup. And `fail` is now unconditionally `true`, since both remaining triggers are deliberate runs rather than a side effect of somebody's push.
+
+  **What was considered and not done:** bounding each request with `--timeout 10 --max-retries 1`. It attacks the growth mechanism directly and may still be worth adding, but the right values cannot be chosen from measurements taken here, because this sandbox's egress proxy is what a latency test would actually measure. Someone should run the crawl once with `--verbose` on an ordinary network and read which hosts eat the time. The move above makes that a question about one workflow's duration rather than about 44 cancelled checks.
+
 ## v10.292.0 — September 8, 2026 (The site navigation stops printing on worksheets)
 
 ### For Learners

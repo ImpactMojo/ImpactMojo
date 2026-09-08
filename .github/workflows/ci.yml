@@ -1,5 +1,7 @@
-# CI — broken link checks, pa11y accessibility audit, and HTML validation
-# Note: axe-core accessibility testing is handled by accessibility.yml
+# CI — content, data and accessibility guards, and HTML validation.
+# Note: axe-core accessibility testing is handled by accessibility.yml, and the
+# external link crawl by link-check.yml (moved out on 2026-09-08, see #1081 —
+# a job cancelled on timeout cancels the entire run with it).
 name: CI
 
 on:
@@ -745,52 +747,6 @@ jobs:
 
       - name: Check every judgment source_url resolves
         run: python3 scripts/check-judgment-sources.py
-
-  broken-links:
-    name: Check broken links
-    runs-on: ubuntu-latest
-    # Without this a hung step inherits GitHub's 360-minute default and the
-    # job neither passes nor fails -- which reads as "still running".
-    #
-    # 15 was too tight and cancelled PR #1069 on nothing: the same crawl over
-    # the same link set took 13m31s on main at run 2602 twenty-three minutes
-    # earlier, so ordinary third-party latency was enough to cross it. A
-    # cancelled job makes the whole run cancelled, which defeated the step's
-    # own `fail: schedule-only` guard below -- the one that exists so a PR is
-    # never blocked by third-party flakiness. This cap is only meant to stop a
-    # genuinely hung crawl, so it needs headroom over the real duration rather
-    # than a margin the crawl can eat.
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Broken link check
-        uses: lycheeverse/lychee-action@v2
-        with:
-          args: >
-            --verbose
-            --no-progress
-            --accept 200,204,301,302,403
-            --exclude-path ./netlify-env-files
-            --exclude 'chat.whatsapp.com'
-            --exclude 'discord.gg'
-            --exclude 't.me'
-            --exclude 'localhost'
-            --exclude 'impactmojo@ibl'
-            '**/*.html'
-            '**/*.md'
-          # Never block a PR on third-party flakiness, but DO fail the daily
-          # scheduled run — otherwise link rot (which happens with no commit at
-          # all) is invisible: the job stayed green no matter what it found.
-          # A failed scheduled run notifies the repo owner.
-          fail: ${{ github.event_name == 'schedule' }}
-
-      - name: Upload link check report
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: broken-links-report
-          path: ./lychee/out.md
 
   accessibility:
     name: Accessibility audit (pa11y-ci)
