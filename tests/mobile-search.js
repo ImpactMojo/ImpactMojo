@@ -141,9 +141,35 @@ async function clickAsAPersonWould(page, selector) {
       await page.evaluateOnNewDocument(() => {
         try { localStorage.setItem('impactmojo_tour_seen_index', '1'); } catch (e) {}
       });
-      // domcontentloaded, not load: these pages pull fonts and libraries from a
-      // CDN, and waiting on those makes the test fail for the wrong reason on
-      // any runner without outbound network.
+      // Serve nothing but our own origin.
+      //
+      // `domcontentloaded` was chosen to keep this test off the CDN, and that
+      // reasoning was incomplete: a `defer` script executes *before*
+      // DOMContentLoaded, and a parser-blocking one delays it outright. All
+      // four pages here load @supabase/supabase-js from jsDelivr -- deferred on
+      // index.html, blocking on catalog.html and fundamentals/wheel.html -- so
+      // the event this test waits on was gated on a third party answering. On
+      // 2026-09-08 it did not, and the first navigation died on exactly 30.000s
+      // in a run whose diff touched three files, none of them loaded by any of
+      // these pages. The same test had passed 15 hours earlier, all eight
+      // navigations in 21 seconds total.
+      //
+      // Nothing off-origin can move the thing being measured: the search button
+      // comes from js/search.js and js/site-chrome.js, both same-origin, and the
+      // fonts are self-hosted under /assets/fonts. tests/stray-grid-text.js
+      // already does this and has not flaked.
+      //
+      // One deliberate loss: intro.js is off-origin too, so the tour cannot
+      // appear at all here now, and this test no longer doubles as a check that
+      // the localStorage opt-out works. That was never its job -- the comment
+      // above says blocking on the tour "would only measure the tour" -- and the
+      // tourSuppressed probe below still asserts the key is set.
+      await page.setRequestInterception(true);
+      page.on('request', (req) => {
+        if (req.url().startsWith(BASE)) req.continue();
+        else req.abort();
+      });
+
       await page.goto(BASE + path, { waitUntil: 'domcontentloaded', timeout: 30000 });
       await new Promise((r) => setTimeout(r, 2000));   // search.js injects on DOMContentLoaded
       // Web fonts change the header's height when they land, which moves the
