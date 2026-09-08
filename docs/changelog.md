@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.290.0 — September 8, 2026 (A refused deploy trigger says so)
+
+### Fixed
+
+- **`verify-deploy.py` reported a refused build trigger as though it had worked** (#1074). The fallback exists for the case the script was written for: Netlify drops the merge webhook, production silently stays on the previous release. When that fallback POST was itself refused, the script printed `build triggered: None` — Netlify answers a refused POST with a JSON error body, so `b.get("id")` was `None` and the line read like a success with a missing field — then set `triggered = True` so it never tried again, and ended on the generic `no ready production deploy within Ns`. That closing line is also what a merely slow build produces, so the two situations were indistinguishable.
+
+  On 2026-09-07 they had to be told apart. Netlify's API and its GitHub integration were down together from about 13:07 to 23:05 UTC: the v10.289.0 merge never built, the fallback returned 404 on every attempt, and none of that was legible in the output. The run was read as a defect in our own script and a bug was filed against it, wrongly. A build refused at the 90-second mark now says `TRIGGER REFUSED — HTTP 404: Not Found. Netlify has not been asked to build.` at the moment it happens, is retried up to three times instead of once, and is named with its status code in the closing line, which points at Netlify rather than at us.
+
+  `curl_json` now returns the HTTP status alongside the body, which is what makes any of this possible, and parses leniently: Netlify does not always answer in JSON, and a `JSONDecodeError` inside a run whose whole job is to report that something failed would be its own small joke. The docstring also no longer claims the script checks that live `version.json` has advanced. It never did.
+
 ## v10.289.0 — September 7, 2026 (The results chain legend reads as sentences again)
 
 ### Fixed

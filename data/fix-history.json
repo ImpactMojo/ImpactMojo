@@ -4,6 +4,13 @@
   "count": 120,
   "entries": [
     {
+      "title": "verify-deploy.py reported a refused build trigger as though it had worked",
+      "detail": "(#1074). The fallback exists for the case the script was written for: Netlify drops the merge webhook, production silently stays on the previous release. When that fallback POST was itself refused, the script printed build triggered: None — Netlify answers a refused POST with a JSON error body, so b.get(\"id\") was None and the line read like a success with a missing field — then set triggered = True so it never tried again, and ended on the generic no ready production deploy within Ns. That closing line is also what a merely slow build produces, so the two situations were indistinguishable. On 2026-09-07 they had to be told apart. Netlify's API and its GitHub integration were down together from about 13:07 to 23:05 UTC: the v10.289.0 merge never built, the fallback returned 404 on every attempt, and none of that was legible in the output. The run was read as a defect in our own script and a bug was filed against it, wrongly. A build refused at the 90-second mark now says TRIGGER REFUSED — HTTP 404: Not Found. Netlify has not been asked to build. at the moment it happens, is retried up to three times instead of once, and is named with its status code in the closing line, which points at Netlify rather than at us. curl_json now returns the HTTP status alongside the body, which is what makes any of this possible, and parses leniently: Netlify does not always answer in JSON, and a JSONDecodeError inside a run whose whole job is to report that something failed would be its own small joke. The docstring also no longer claims the script checks that live version.json has advanced. It never did.",
+      "fixed_on": "2026-09-08",
+      "release": "v10.290.0",
+      "issue": 1074
+    },
+    {
       "title": "The results chain legend rendered one word per line, at every width, from the day the page shipped",
       "detail": "(#1072). Reported from a phone. drawLegend() wrote each row as a swatch <span>, a <b> for the label, and then the note as a bare text node, into .rc-legend li { display: grid; grid-template-columns: 26px 1fr }. That is three grid items, not two: CSS wraps a loose text node in an anonymous grid item and auto-places it like any other cell, so the note went to row 2, column 1, the 26px swatch track, widened only as far as its longest unbreakable word. Measured in Chromium, the four rows rendered 83×370, 72×535, 78×488 and 69×158, identical at 390px, 768px and 1280px. The note is now wrapped in its own element, which puts exactly two children in the grid. Nothing was going to catch it. The markup is valid, every word is present and in the right order, contrast and tap targets are fine. axe passed 64 of 64 variants over that page and pa11y 23 of 23 pages, twice, because neither has an opinion about a paragraph laid out four words tall. git log -L puts both the CSS rule and the markup in the same commit as the page itself, and it survived two later passes over the same file, both spent looking at the diagram above the legend. So tests/stray-grid-text.js is new, in the mobile CI job. It renders every page under fundamentals/ and theories/ at 390px and 1280px and fails on any bare text node inside a grid or flex container that renders under half its container's width and more than three lines tall. Both conditions have to hold, because a loose text node beside an element is usually deliberate and this repo is full of the good kind: .chip, .cat and the results chain's own link key all put a swatch or a number next to a bare label in a flex row, one line, most of the container's width. The two populations are nowhere near each other — the broken rows measured 6 to 22 per cent of container width and 6.7 to 22.7 lines; every deliberate case is a single line. Verified by reintroducing the defect, which the guard reported on all four rows at both widths, and by removing it again. The page list is read from the filesystem, so a page added later is covered without anyone remembering.",
       "fixed_on": "2026-09-07",
@@ -832,13 +839,6 @@
     {
       "title": "Sitemap coverage",
       "detail": "— added 87 missing URLs to sitemap.xml: 2 flagship courses (gender, pubpol), 35 foundational 101-courses, 23 BookSummaries, 18 blog posts, and 9 public pages (transparency, dataverse, bct-repository, challenges, climate-trace-india, portfolio, live-projects, toc-builder, verify-certificate). Total URLs: 84 → 171.",
-      "fixed_on": "2026-04-12",
-      "release": "v10.18.0",
-      "issue": null
-    },
-    {
-      "title": "Stale 101.impactmojo.in links",
-      "detail": "— migrated ~100 legacy subdomain links to local paths across js/faq-bank.js, js/bookmarks-compare.js, js/learning-tracks.js, js/game-agents.js, and 4 docs files. All course links now point to /101-courses/.html, all lab links to /Labs/.html.",
       "fixed_on": "2026-04-12",
       "release": "v10.18.0",
       "issue": null
