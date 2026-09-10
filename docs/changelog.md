@@ -2,6 +2,28 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.295.0 — September 10, 2026 (Systematic reviews, and Indian-language tools on the roadmap)
+
+### For Learners
+
+- **Systematic Reviews & Evidence Synthesis 101** — a new free foundational course, the 53rd. One hundred slides on finding, appraising and combining what is already known: choosing between a systematic, scoping, rapid or realist review; writing and registering a protocol; searching three databases and the grey literature and saving the strategy as run; screening in pairs; extracting data and turning reported statistics into effect sizes; risk of bias with RoB 2, ROBINS-I and the quasi-experimental tools; a meta-analysis worked by hand under fixed and random effects; synthesis without pooling; GRADE and the summary-of-findings table; PRISMA 2020; and a bibliometric analysis of a field with VOSviewer and Bibliometrix. Every tool named is free.
+
+### Added
+
+- **`101-courses/systematic-reviews.html`** — built from `scripts/deck-builder/specs/systematic_reviews.py`, exactly 100 slides. Measured after the build: 18,515 rendered words (185 a slide against the 140 floor in `docs/101-deck-standard.md`), 36 tables and 61 two-column layouts. Eleven sections: why synthesis and what kind; the question and the protocol; searching; screening and selection; data extraction; risk of bias and study quality; meta-analysis; synthesis without meta-analysis; GRADE and reporting; bibliometric analysis; practice, tools and pitfalls.
+
+  **The worked meta-analysis is computed, not asserted.** Three illustrative studies are pooled under fixed effect (0.093, CI 0.007 to 0.178) and again under random effects with the DerSimonian-Laird tau-squared (0.134, CI &minus;0.014 to 0.282), with Q, I&sup2; and the weights shown at each step, so a learner can reproduce every number on paper. The arithmetic was checked in Python before it went on the slide.
+
+  **Two citations were corrected against the abstracts before shipping.** Buscemi et al. 2006 reports a 21.7% <em>relative</em> difference in errors between single and double extraction (P = 0.019) and 36.1% less time, not absolute error rates; Franco, Malhotra and Simonovits 2014 report 10 of 48 null-result studies published against 56 of 91 strong-result ones, with about two-thirds of nulls never written up. The first draft had both wrong, from memory.
+
+  This is the first of the courses identified in the September 2026 comparison against Craft Connect's research-methods catalogue; academic writing and publishing, time-series analysis, structural equation modelling and qualitative-analysis software follow.
+
+- **`docs/roadmap.md`** — an *Indian-language tools* entry under Q3–Q4 2026: spoken versions of the 101 decks in five languages, OCR for scanned field material in Indian scripts, a second transcription engine in VaniScribe with a free notebook route, and a translation quality trial, all on the open-weight Indic models Bodhan AI released with AI4Bharat in September 2026.
+
+### Changed
+
+- **Wired sitewide**: `data/counts.json` (courses 73→74, foundational 52→53, with drifted numbers corrected by `check-counts.py --fix`), the 101 hub card and the MEL & Research group count, `catalog.html`, `search-index.json`, `sitemap.xml`, the README track table and `docs/content-catalog.md`.
+
 ## v10.294.0 — September 8, 2026 (A new flagship on measuring gender rather than counting women)
 
 ### For Learners
