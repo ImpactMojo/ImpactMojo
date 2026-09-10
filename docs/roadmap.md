@@ -38,6 +38,15 @@ These were previously listed as in progress and have now shipped:
 
 ## Planned — Q3–Q4 2026
 
+### Indian-language tools
+Four open-weight models for Indian languages were released by Bodhan AI with AI4Bharat in September 2026 (speech to text, text to speech, OCR and translation across the 22 scheduled languages). Planned uses, in order:
+
+- **Listen to a course in your language**: spoken versions of the 101 decks in Hindi, Tamil, Bengali, Marathi and Telugu, generated once and cached
+- **Document OCR for field material**: scanned registers, forms and government PDFs in Indian scripts turned into text you can search and analyse
+- **A second transcription engine in VaniScribe**, and a free notebook route that runs the open weights so transcription needs no paid key
+- **A translation quality trial** against the site's existing translations before any switch
+
+
 ### For Organizations
 - **Certificate marketplace** — An employer-facing portal to verify credentials
 - **Partner API** — For organizations that want to integrate ImpactMojo content into their own training platforms
