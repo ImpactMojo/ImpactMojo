@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.296.0 — September 10, 2026 (Academic writing, from the thesis chapter to the journal)
+
+### For Learners
+
+- **Academic Writing & Publishing 101** — a new free foundational course, the 54th. One hundred slides on turning research into something a stranger can check: the claim before the paper, the hourglass shape of an argument, IMRaD and its economics and development-studies variants, a literature review that argues rather than lists, sentences with characters and actions, numbers rounded in prose and exact in tables, citation styles and the UGC's plagiarism tiers, the 2022 PhD regulations and the viva, choosing a journal and spotting a predatory one, open access and preprints, the point-by-point response to reviewers, authorship under the ICMJE criteria, and what to disclose about AI. Every rule comes with a before-and-after or a worked example.
+
+### Added
+
+- **`101-courses/academic-writing.html`** — built from `scripts/deck-builder/specs/academic_writing.py`, exactly 100 slides. Measured after the build: 21,492 rendered words (214 a slide), 29 tables and 75 two-column layouts. Eleven sections: what academic writing is for; the argument; structure; the literature review; sentences and paragraphs; numbers, tables and figures; citation and integrity; the thesis in India; choosing and reaching a journal; peer review and revision; authorship, ethics and practice.
+
+  **Three regulatory facts were checked against current sources before going on a slide**, because each has changed recently: the UGC discontinued the UGC-CARE journal list on 11 February 2025 and replaced it with 36 suggestive parameters under eight heads for institutions to apply themselves; the UGC PhD Regulations 2022 removed the 2016 requirement to publish before thesis submission and require at least two external examiners; and One Nation One Subscription has run since 1 January 2025 on Rs 6,000 crore for 2025–27, covering 13,000-plus journals from 30 publishers for about 6,400 institutions. Two publishing statistics were also corrected from their sources: Card and DellaVigna 2013 (top-five acceptance rates from about 15% to 6%) and Ellison 2002 (time at one journal from about 8 to 16 months), the latter having been drafted from memory as a different figure.
+
+  Second of the courses from the September 2026 comparison against Craft Connect's research-methods catalogue, after Systematic Reviews & Evidence Synthesis 101.
+
+### Changed
+
+- **Wired sitewide**: `data/counts.json` (courses 74→75, foundational 53→54, drift corrected by `check-counts.py --fix`), the 101 hub card and MEL & Research group count, `catalog.html`, `search-index.json`, `sitemap.xml`, the README track table and `docs/content-catalog.md`.
+
 ## v10.295.0 — September 10, 2026 (Systematic reviews, and Indian-language tools on the roadmap)
 
 ### For Learners
