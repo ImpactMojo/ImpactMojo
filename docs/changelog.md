@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.298.0 — September 10, 2026 (Structural equation modelling: a model that cannot fail has not been tested)
+
+### For Learners
+
+- **Structural Equation Modelling 101** — a new free foundational course, the 56th. One hundred slides on measuring what no single question can: what a latent variable is and is not, reflective against formative constructs, confirmatory factor analysis read from real output, omega and AVE and HTMT as a validity table rather than a pass mark, identification by counting, WLSMV for the binary and three-category items South Asian surveys are made of, FIML for missing data, the chi-square and the fit indices with judgement, modification indices and why they produce models that mean nothing, mediation with bootstrapped indirect effects and the sensitivity analysis that exposes its hidden assumption, measurement invariance across Hindi and Bangla versions of a scale, PLS-SEM with the case for and against it, common method bias, equivalent models, and the verbs each design allows.
+
+### Added
+
+- **`101-courses/sem.html`** — built from `scripts/deck-builder/specs/sem.py`, exactly 100 slides. Measured after the build: 21,260 rendered words (212 a slide), 43 tables and 65 two-column layouts. Eleven sections: what SEM is and is not; latent variables and CFA; reliability and validity; specification and identification; estimation, data and sample size; model fit and modification; structural models, mediation and moderation; measurement invariance; PLS-SEM; causality and common method bias; software, reporting and practice.
+
+  **The course is organised around the decisions that get gamed.** Each is presented with the defensible choice and the common abuse beside it: item deletion to cross an AVE threshold, correlated errors from modification indices, saturated structural models whose fit is the CFA's, Baron-Kenny mediation, group comparisons without invariance, PLS-SEM chosen because CB-SEM would not fit, and causal verbs on cross-sectional self-report. Worked tables (a CFA output, a validity table, a mediation with intervals, a Hindi-Bangla invariance sequence, a PLS-SEM assessment, a method-factor comparison) are labelled illustrative with realistic magnitudes. Both sides of the PLS-SEM dispute are cited (Hair et al. 2011, 2019, 2022; Rönkkö and Evermann 2013; Rönkkö et al. 2016).
+
+  Fourth of the courses from the September 2026 comparison against Craft Connect's research-methods catalogue, after Systematic Reviews, Academic Writing and Time Series.
+
+### Changed
+
+- **Wired sitewide**: `data/counts.json` (courses 76→77, foundational 55→56, drift corrected by `check-counts.py --fix`), the 101 hub card and MEL & Research group count, `catalog.html`, `search-index.json`, `sitemap.xml`, the README track table and `docs/content-catalog.md`.
+
 ## v10.297.0 — September 10, 2026 (Time series: is the trend real, or two things moving through time together?)
 
 ### For Learners

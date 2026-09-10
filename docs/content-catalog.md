@@ -107,6 +107,7 @@ Single-page courses covering essential development topics — all self-hosted na
 | Survey Design 101 | [Open](/101-courses/survey-design.html) |
 | Systematic Reviews & Evidence Synthesis 101 | [Open](/101-courses/systematic-reviews.html) |
 | Academic Writing & Publishing 101 | [Open](/101-courses/academic-writing.html) |
+| Structural Equation Modelling 101 | [Open](/101-courses/sem.html) |
 | Research Ethics 101 | [Open](/101-courses/research-ethics.html) |
 | Mixed Methods 101 | [Open](/101-courses/mixed-methods.html) |
 | Impact Evaluation 101 | [Open](/101-courses/impact-eval.html) |
