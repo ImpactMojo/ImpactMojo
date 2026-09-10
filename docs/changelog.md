@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.297.0 — September 10, 2026 (Time series: is the trend real, or two things moving through time together?)
+
+### For Learners
+
+- **Time Series Analysis 101** — a new free foundational course, the 55th. One hundred slides for applied work with Indian data: plotting before modelling, trend and seasonal decomposition with STL and X-13, why 120 monthly observations are not 120 observations, unit-root tests read as a table rather than a verdict, ARIMA identified step by step, exponential smoothing and ETS, forecasts judged out of sample against the seasonal naive benchmark, spurious regression and the cointegration that rescues levels, the ARDL bounds test done properly, VAR impulse responses and what Granger causality does not mean, GARCH and structural breaks including 2016 and 2020, and interrupted time series, synthetic control and CausalImpact for evaluating a programme with no control group. Closes with where every Indian macro and administrative series lives and what each costs to use.
+
+### Added
+
+- **`101-courses/time-series.html`** — built from `scripts/deck-builder/specs/time_series.py`, exactly 100 slides. Measured after the build: 21,109 rendered words (211 a slide), 37 tables and 69 two-column layouts. Eleven sections: why time series is different; components and decomposition; stationarity and unit roots; ARIMA modelling; exponential smoothing and forecasting; evaluating forecasts; regression with time series; VAR and Granger causality; volatility, breaks and seasonality; time series for programme evaluation; Indian data, software and practice.
+
+  **Every worked table is labelled illustrative**, with magnitudes chosen to be realistic (an ADF table with MacKinnon-scale critical values, an ARIMA candidate comparison, a Johansen trace table, an ARDL bounds result, a GARCH(1,1) on rupee-dollar returns, a segmented-regression ITS on institutional deliveries) so the reader learns to read the output rather than to memorise a number. The literature cited is the primary literature: Granger and Newbold 1974, Dickey and Fuller 1979, Engle and Granger 1987, Johansen 1988, Pesaran, Shin and Smith 2001, Sims 1980, Jordà 2005, Bernal, Cummins and Gasparrini 2017, Abadie 2021, and Hyndman and Athanasopoulos's free text as the companion.
+
+  Third of the courses from the September 2026 comparison against Craft Connect's research-methods catalogue, after Systematic Reviews and Academic Writing. Filed on the hub under Data & Technology beside Econometrics 101.
+
+### Changed
+
+- **Wired sitewide**: `data/counts.json` (courses 75→76, foundational 54→55, drift corrected by `check-counts.py --fix`), the 101 hub card and Data & Technology group count, `catalog.html`, `search-index.json`, `sitemap.xml`, the README track table and `docs/content-catalog.md`.
+
 ## v10.296.0 — September 10, 2026 (Academic writing, from the thesis chapter to the journal)
 
 ### For Learners

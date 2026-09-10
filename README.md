@@ -41,7 +41,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 
 | Category | Description |
 |----------|-------------|
-| **75 Courses** | 21 flagship + 54 foundational courses across 6 learning tracks (all foundational decks self-hosted as native HTML slide decks). Every flagship ends with an auto-graded "Assess Yourself" self-check |
+| **76 Courses** | 21 flagship + 55 foundational courses across 6 learning tracks (all foundational decks self-hosted as native HTML slide decks). Every flagship ends with an auto-graded "Assess Yourself" self-check |
 | **35 Interactive Studios** | Hands-on workbenches for MEL, policy, partnerships, budgeting, gender analysis, and more |
 | **135 Game Library** | 18 interactive simulations (MiroFish AI agents, Indian folk art — Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) + 117 crosswords, quizzes & word searches |
 | **ImpactLex Dictionary** | 390+ development terms with contextual definitions, formulas, and case studies (PWA, hosted on ImpactMojo) |
@@ -172,7 +172,7 @@ Shorter introductory courses covering the breadth of development practice. Every
 | Track | Courses |
 |-------|---------|
 | **MEL, Research & Data Methods** (16) | MEL Basics, Theory of Change, Logframe, Impact Evaluation, Cost Effectiveness, Survey Design, Systematic Reviews & Evidence Synthesis, Academic Writing & Publishing, Qualitative Methods, Mixed Methods, Research Ethics, Observation to Insight, Exploratory Data Analysis, Bivariate Analysis, Multivariate Analysis, Item Response Theory |
-| **Economics & Policy** (7) | Development Economics, Political Economy, Econometrics, Inequality Basics, Global Development Governance, Public Finance & Budgeting, Fundraising Basics |
+| **Economics & Policy** (8) | Development Economics, Political Economy, Econometrics, Time Series Analysis, Inequality Basics, Global Development Governance, Public Finance & Budgeting, Fundraising Basics |
 | **Gender & Equity** (7) | Gender Mainstreaming, Women's Economic Empowerment, Feminist Research, Care Economy, Sexual Health, Social Margins, Data Feminism |
 | **Governance, Rights & Society** (8) | Indian Constitution, Post-Truth Politics, Decolonial Development, Community Development, Environmental Justice, Disability Inclusion, Safeguarding & PSEA, **CSR & ESG** |
 | **Health, Climate & Wellbeing** (6) | Public Health, Maternal Health, Child Development, Climate Essentials, SEL Basics, Work, Labour & Livelihoods |
@@ -241,7 +241,7 @@ Browser-based studios under `/Labs/`. Each runs entirely client-side, keeps your
 Everything below is free, runs in the browser, and needs no account.
 
 - **[Teach with ImpactMojo](https://www.impactmojo.in/teach)** (`teach.html`) — syllabus mappings, ready-made course kits, and how to run the material in a classroom or a workshop.
-- **[LMS export](https://www.impactmojo.in/lms-export)** (`lms-export.html`) — package any of the 75 courses — plus the 47 practice workbooks — as **SCORM 1.2**, **SCORM 2004**, **IMS Common Cartridge 1.3**, or a single self-contained HTML file. The package is built in your browser from the live page, so it is never stale. Our analytics, sign-in, Supabase and translation code are stripped before packaging and the rest inlined, so an imported course runs with no network and phones nothing home. SCORM reports completion when the learner reaches the final slide.
+- **[LMS export](https://www.impactmojo.in/lms-export)** (`lms-export.html`) — package any of the 76 courses — plus the 47 practice workbooks — as **SCORM 1.2**, **SCORM 2004**, **IMS Common Cartridge 1.3**, or a single self-contained HTML file. The package is built in your browser from the live page, so it is never stale. Our analytics, sign-in, Supabase and translation code are stripped before packaging and the rest inlined, so an imported course runs with no network and phones nothing home. SCORM reports completion when the learner reaches the final slide.
 - **Studio submissions** (`js/studio-submit.js`) — wraps a Studio's own export in an envelope carrying the student's name, the Studio, a timestamp and a content digest. Studio exports previously carried no identity at all, so thirty files from a class were thirty anonymous JSON blobs. Wired into the LogFrame Builder as the reference implementation; the other Studios take the same two lines.
 - **[Gradebook](https://www.impactmojo.in/gradebook)** (`gradebook.html`) — drop a folder of those submissions in and get one CSV, with tampered files flagged by digest mismatch. Entirely client-side: student work is never uploaded anywhere.
 
