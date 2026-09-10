@@ -2,7 +2,7 @@
 
 ## What the 101 decks are
 
-ImpactMojo's **55 foundational courses** are slide decks you read in a browser. Each is a single self-hosted HTML page of roughly 100 slides, with a light/dark/system theme, keyboard and touch navigation, fullscreen, and interactive Chart.js figures where the argument needs a chart rather than a sentence.
+ImpactMojo's **56 foundational courses** are slide decks you read in a browser. Each is a single self-hosted HTML page of roughly 100 slides, with a light/dark/system theme, keyboard and touch navigation, fullscreen, and interactive Chart.js figures where the argument needs a chart rather than a sentence.
 
 They are not summaries of the flagship courses. A 101 deck is the shortest honest route into a subject: what the thing is, who it binds, what the numbers are, and what a practitioner is expected to know before walking into a meeting about it. A flagship course is the long version, with modules, readings, a lexicon and an assessment.
 
