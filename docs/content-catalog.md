@@ -120,6 +120,7 @@ Single-page courses covering essential development topics — all self-hosted na
 | Data Literacy 101 | [Open](/101-courses/data-lit.html) |
 | Data Visualization 101 | [Open](/101-courses/data-viz.html) |
 | Econometrics 101 | [Open](/101-courses/econometrics-101.html) |
+| Time Series Analysis 101 | [Open](/101-courses/time-series.html) |
 | Exploratory Data Analysis 101 | [Open](/101-courses/eda-hhs.html) |
 | Bivariate Analysis 101 | [Open](/101-courses/bi-analysis.html) |
 | Item Response Theory 101 | [Open](/101-courses/irt-basics.html) |
