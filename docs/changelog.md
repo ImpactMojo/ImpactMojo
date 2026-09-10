@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.299.0 — September 10, 2026 (Statistics without code: jamovi and JASP, with every click written down)
+
+### For Learners
+
+- **Statistics Without Code 101** — a new free foundational course, the 57th. One hundred slides on doing real statistics in jamovi and JASP, the free point-and-click tools built on R: importing a survey CSV and setting every variable's type, filters instead of deletions, computed scores with a stated missing rule, descriptives and the plot that chooses the test, t-tests and ANOVA with effect sizes and assumption checks, regression with diagnostics and the three-column table, chi-square and logistic models with probabilities rather than odds, reliability and factor analysis in the core dialogs, the GAMLj mixed model for children in schools, mediation and meta-analysis modules, Bayes factors in JASP with the prior stated, power for clustered designs, and reproducible reporting from a shared analysis file. Says plainly what the menus cannot do (weighted national surveys) and gives the four lines of R that can.
+
+### Added
+
+- **`101-courses/stats-without-code.html`** — built from `scripts/deck-builder/specs/stats_without_code.py`, exactly 100 slides. Measured after the build: 20,820 rendered words (208 a slide), 49 tables and 68 two-column layouts. Eleven sections: why point-and-click and its limits; getting data in and clean; describing data; comparing groups; correlation and regression; categorical outcomes; scales and factor analysis; the modules; Bayesian analysis in JASP; effect sizes, power and reporting; choosing tools, teaching and practice.
+
+  **Every analysis slide has the same shape**: the question, the menu path, the boxes to tick and why, an illustrative output table, what to do when the assumptions fail, and the sentence for the report. Two illustrative datasets (a self-help-group survey of 640 women in 32 villages and a learning assessment of 1,200 children in 40 schools) run through the whole course, so the reader sees the same evaluation analysed naively and then properly (the cluster-adjusted interval doubles in width). One claim was corrected against jamovi's own documentation before shipping: jamovi does accept a case-weight variable, but only integer frequency weights and with no strata or clusters, which is why weighted national surveys still need R's `survey` package or Stata's `svy`.
+
+  Fifth of the courses from the September 2026 comparison against Craft Connect's research-methods catalogue, replacing their paid Jamovi course. Filed on the hub under Data & Technology.
+
+### Changed
+
+- **Wired sitewide**: `data/counts.json` (courses 77→78, foundational 56→57, drift corrected by `check-counts.py --fix`), the 101 hub card and Data & Technology group count, `catalog.html`, `search-index.json`, `sitemap.xml`, the README track table and `docs/content-catalog.md`.
+
 ## v10.298.0 — September 10, 2026 (Structural equation modelling: a model that cannot fail has not been tested)
 
 ### For Learners
