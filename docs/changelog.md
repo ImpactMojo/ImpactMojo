@@ -2,6 +2,25 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.300.0 — September 14, 2026 (A dyslexia-friendly font, on every page, for anyone who wants one)
+
+### For Learners
+
+- **Reading font switch** — an **Aa** button now sits in the top bar of every page, beside the light/dark control. It sets the whole page in OpenDyslexic, a free typeface with weighted letter bottoms and deliberately asymmetric b/d/p/q shapes, and at the same time opens up the letter, word and line spacing of running text. The choice is remembered across pages and visits. Nothing is downloaded for anyone who does not turn it on.
+
+### Added
+
+- **OpenDyslexic 5.3.0, self-hosted** — four faces in `assets/fonts/` (roman and italic, 400 and 700), under the SIL Open Font License 1.1; licence text in `assets/fonts/OpenDyslexic-OFL.txt`. Declared in `css/fonts.css` and reached only through `html.im-dyslexic`, so a browser fetches none of the 464 KB until the switch is on: verified in headless Chromium across the homepage, a built page, a course and a data explorer — zero font requests in the default state, 200s and a computed family of OpenDyslexic once the class lands.
+
+  **The spacing is the half with the better evidence.** Zorzi et al. (*PNAS* 109(28), 2012) found extra letter spacing raised reading speed and halved errors in Italian and French children with dyslexia, with no training and no change of typeface; the British Dyslexia Association style guide asks for 1.5 line spacing, wider word spacing and ragged-right text. The trials of dyslexia-specific typefaces are weaker — Kuster et al. (*Annals of Dyslexia*, 2018) found Dyslexie gave no reading benefit over Arial in two experiments. So the switch ships the font as an option for readers who prefer it, and carries the spacing change regardless. Both are scoped to running text: the top bar, buttons, stat tiles and chart labels keep their measured layout, and code keeps its monospace.
+
+  Latin only, by design: OpenDyslexic has no Devanagari, Bengali, Tamil, Telugu, Gujarati, Odia or Kannada glyphs, so translated pages fall through to Noto Sans exactly as they do now.
+
+### Changed
+
+- **`js/site-chrome.js`** carries the control. It rides next to whichever theme control a page already has — `.im-sc-right` on the 872 pages the script builds, `.theme-selector` on the homepage, which keeps its own chrome and never reaches `build()` — so the switch is on every page rather than most of them. The saved setting is applied when the script is parsed rather than inside `boot()`, so a reader who has chosen the font does not watch each page render in Inter first.
+- **30 pages now load `css/fonts.css`** — the data explorers, two reading companions, the MEL Rosetta lab, the gradebook and the export tool, which had no link to it and so could not honour the switch. They name `Inter` and `Amaranth` in their own inline styles and were quietly falling back to `system-ui` and Georgia; they now get the faces they ask for. The five Supabase email templates and the admin analytics page are deliberately left out.
+
 ## v10.299.0 — September 10, 2026 (Statistics without code: jamovi and JASP, with every click written down)
 
 ### For Learners

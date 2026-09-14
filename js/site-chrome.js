@@ -9,7 +9,7 @@
  * + data-theme on <html>). All future chrome changes happen in this one file.
  *
  * Top bar (left→right): logo + "impactmojo.in/<page>" breadcrumb · [spacer] ·
- *   Language · Premium · About · light/dark toggle · Home.
+ *   Language · Premium · About · reading font (Aa) · light/dark toggle · Home.
  * Footer: link columns + licence line.
  *
  * Opt out (homepage only): put data-im-home on <html> or <body>, or set
@@ -24,6 +24,15 @@
 
   var root = document.documentElement;
   var meta = function (n) { var m = document.querySelector('meta[name="' + n + '"]'); return m && m.getAttribute('content'); };
+
+  // ── Reading font (OpenDyslexic) ────────────────────────────────────
+  // Applied here, at script execution, rather than inside boot(): a reader who
+  // has chosen the font should not watch each page render in Inter first. The
+  // rules and the four @font-face declarations live in /css/fonts.css, which
+  // downloads nothing until this class is present.
+  var DYS_KEY = 'im-reading-font';
+  function dysOn() { try { return localStorage.getItem(DYS_KEY) === 'opendyslexic'; } catch (e) { return false; } }
+  if (dysOn()) root.classList.add('im-dyslexic');
 
   // ── Opt-out (homepage) ─────────────────────────────────────────────
   var path = location.pathname.replace(/index\.html$/, '');
@@ -245,6 +254,55 @@
 
   function escapeHtml(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
 
+  // ── Reading-font control — every page, homepage included ───────────
+  // It rides next to whichever theme control the page has: .im-sc-right on the
+  // 872 pages this script builds, .theme-selector on the homepage, which keeps
+  // its own chrome and so never reaches build(). Takes the host's own button
+  // class so it inherits that bar's styling instead of carrying a second one.
+  function injectReadingFont() {
+    if (document.getElementById('im-dys-btn')) return;
+    var host = document.querySelector('.im-sc-right') || document.querySelector('.theme-selector');
+    if (!host) return;
+    var inBar = host.classList.contains('im-sc-right');
+
+    // The "on" state has to be styled here rather than in css(): that runs
+    // inside build(), and the homepage never reaches it.
+    if (!document.getElementById('im-dys-style')) {
+      var st = document.createElement('style');
+      st.id = 'im-dys-style';
+      st.textContent = '#im-dys-btn{cursor:pointer}'
+        + '#im-dys-btn[aria-pressed="true"]{background:linear-gradient(135deg,#0EA5E9,#6366F1);color:#fff;border-color:transparent}'
+        + '#im-dys-btn[aria-pressed="true"] span{color:#fff}';
+      document.head.appendChild(st);
+    }
+
+    var b = document.createElement('button');
+    b.id = 'im-dys-btn';
+    b.type = 'button';
+    b.className = inBar ? 'im-sc-btn im-sc-dys' : 'theme-btn im-sc-dys';
+    b.innerHTML = '<span aria-hidden="true" style="font-weight:700;font-size:13px;line-height:1;letter-spacing:.02em">Aa</span>';
+    // The label says what it does, not what it is called: "OpenDyslexic" means
+    // nothing to a reader who has never been told the name of the typeface.
+    b.setAttribute('aria-label', 'Dyslexia-friendly font');
+    function sync() {
+      var on = root.classList.contains('im-dyslexic');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.title = on ? 'Dyslexia-friendly font: on' : 'Dyslexia-friendly font';
+    }
+    b.addEventListener('click', function () {
+      var on = !root.classList.contains('im-dyslexic');
+      root.classList.toggle('im-dyslexic', on);
+      try { localStorage.setItem(DYS_KEY, on ? 'opendyslexic' : 'default'); } catch (e) {}
+      sync();
+    });
+    sync();
+
+    // Before the theme group in the built bar (reading settings together, and
+    // clear of the Home link at the end); appended on the homepage's own group.
+    var themeGroup = host.querySelector('.im-sc-theme');
+    if (themeGroup) host.insertBefore(b, themeGroup); else host.appendChild(b);
+  }
+
   // ── Shared WhatsApp "share ImpactMojo" button — every page, homepage included ──
   // Pre-encoded href (no emoji literals in source) matching the site-standard share
   // message. Guarded against duplicates; skipped if the page already has one.
@@ -282,7 +340,7 @@
     try { navigator.serviceWorker.register('/service-worker.js'); } catch (e) { /* non-fatal */ }
   }
 
-  function boot() { injectWhatsApp(); registerSW(); if (!isHome) build(); }
+  function boot() { injectWhatsApp(); registerSW(); if (!isHome) build(); injectReadingFont(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();
