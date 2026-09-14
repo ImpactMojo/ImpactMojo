@@ -2,6 +2,22 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.301.0 — September 10, 2026 (Six new research-methods courses, in one post)
+
+### For Learners
+
+- **Six new 101 courses on research methods** — a Learning Loops post on the six free foundational courses added this week: Systematic Reviews & Evidence Synthesis, Academic Writing & Publishing, Time Series Analysis, Structural Equation Modelling, Statistics Without Code and Qualitative Analysis Software. What each one covers, the position each one takes, the facts checked before shipping, and the Indian-language models now on the roadmap. [Read it](/blog/six-new-research-methods-courses.html).
+
+### Added
+
+- **`blog/six-new-research-methods-courses.html`** — 1,864 words linking all six new decks plus VaniScribe, Data Protection & the DPDP Act 101, the 101 hub, the catalog and the roadmap. Every figure in it was verified during the build of the course it describes: Buscemi et al. 2006 (single extraction 21.7% more errors, 36% less time), Franco, Malhotra and Simonovits 2014 (10 of 48 null-result studies published against 56 of 91 strong), Card and DellaVigna 2013 (top-five acceptance rates from about 15% to about 6%), UGC-CARE discontinued 11 February 2025, UGC PhD Regulations 2022, One Nation One Subscription live 1 January 2025, and jamovi's integer-only frequency weights. Social preview image at `assets/images/blog/six-new-research-methods-courses-og.png` (1200×630), so `check-social-images.py` passes.
+- **What's New card on `updates.html`** for the six courses, at the top of the grid; the previous newest card was dated July 2026.
+
+### Changed
+
+- **`blog.html`** gains the card at the top of the grid; `search-index.json` gains `BLOG066`; `sitemap.xml` gains the post.
+- **`.claude/memory.md`** records the five courses shipped after the first (Academic Writing #1091, Time Series #1092, SEM #1093, Statistics Without Code #1094, Qualitative Analysis Software #1095), the current counts (79 courses, 58 foundational), the hub group counts (MEL & Research 14, Data & Technology 12) and the ID sequence (catalog through c57, search index through C101NEW10).
+
 ## v10.300.0 — September 10, 2026 (Qualitative analysis software: the filing system for evidence, with the thinking left to you)
 
 ### For Learners
