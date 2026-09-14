@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.300.0 — September 10, 2026 (Qualitative analysis software: the filing system for evidence, with the thinking left to you)
+
+### For Learners
+
+- **Qualitative Analysis Software 101** — a new free foundational course, the 58th. One hundred slides on NVivo, MAXQDA, ATLAS.ti and the free tools Taguette and QualCoder: what the software does and does not do, consent and where the transcripts may go, transcription in Hindi, Bangla and Tamil with a native-speaker check, three translation workflows and what each loses, codebooks with definitions, first and second cycle coding, memos as the place the analysis happens, retrievals read before anything is counted, matrices as pointers rather than proportions, framework matrices, coding in teams with agreement measured per code and acted on, joint displays that make interviews and a survey one study, trustworthiness and COREQ and SRQR, and the AI features: what they do, where the data go, how to validate them like a second coder, and the disclosure sentences. One illustrative study, 36 interviews with SHG members in Bihar and West Bengal, runs through the whole course from recordings to a deposited archive.
+
+### Added
+
+- **`101-courses/qda-software.html`** — built from `scripts/deck-builder/specs/qda_software.py`, exactly 100 slides. Measured after the build: 19,394 rendered words (193 a slide), 45 tables and 58 two-column layouts. Eleven sections: what the software does and does not; preparing the data; the coding workflow; Taguette; QualCoder; NVivo, MAXQDA and ATLAS.ti; queries, matrices and visuals; coding in teams; mixed methods; rigour and reporting; AI, choosing a tool, and practice.
+
+  **The free tools come first and in more detail** because they are the ones most readers can install today, and the course shows the same 36-interview study done in Taguette (twelve interviews, one analyst) and then in QualCoder (36, two languages, two coders, agreement checked) before the commercial three are compared. Ties into the platform's own tools: VaniScribe for Indic transcription, Data Protection & the DPDP Act 101 for the consent questions, and the Bodhan open-weight models for transcription that stays on the machine. Vendor prices are given as approximate and dated; the AI-feature table names where each tool sends the data.
+
+  Sixth and last of the courses from the September 2026 comparison against Craft Connect's research-methods catalogue (their NVivo, MAXQDA and ATLAS.ti course). Filed on the hub under MEL & Research.
+
+### Changed
+
+- **Wired sitewide**: `data/counts.json` (courses 78→79, foundational 57→58, drift corrected by `check-counts.py --fix`), the 101 hub card and MEL & Research group count, `catalog.html`, `search-index.json`, `sitemap.xml`, the README track table and `docs/content-catalog.md`.
+
 ## v10.299.0 — September 10, 2026 (Statistics without code: jamovi and JASP, with every click written down)
 
 ### For Learners
