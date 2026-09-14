@@ -270,9 +270,19 @@
     if (!document.getElementById('im-dys-style')) {
       var st = document.createElement('style');
       st.id = 'im-dys-style';
+      // "On" is the bar's accent as an outline and a wash of itself, with the
+      // label left at the bar's own ink. The obvious version -- copy the theme
+      // buttons, fill with --sc-grad and set the text white -- was measured and
+      // fails: the gradient starts at #0EA5E9, and imx-main.css says in as many
+      // words that white on that is 2.77:1, which is why --accent-solid
+      // (#0369A1, 5.93:1) exists at all. An outline avoids the question, and
+      // matches how the same control looks on the sibling sites. State is not
+      // carried by colour alone: with the switch on, the label renders in
+      // OpenDyslexic, and aria-pressed says so for a screen reader.
+      var acc = 'var(--sc-acc,var(--accent-solid,#0369A1))';
       st.textContent = '#im-dys-btn{cursor:pointer}'
-        + '#im-dys-btn[aria-pressed="true"]{background:linear-gradient(135deg,#0EA5E9,#6366F1);color:#fff;border-color:transparent}'
-        + '#im-dys-btn[aria-pressed="true"] span{color:#fff}';
+        + '#im-dys-btn[aria-pressed="true"]{border-color:' + acc + ';'
+        + 'background:color-mix(in srgb,' + acc + ' 16%,transparent)}';
       document.head.appendChild(st);
     }
 
