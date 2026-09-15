@@ -9,7 +9,7 @@
  * + data-theme on <html>). All future chrome changes happen in this one file.
  *
  * Top bar (left→right): logo + "impactmojo.in/<page>" breadcrumb · [spacer] ·
- *   Language · Premium · About · light/dark toggle · Home.
+ *   Language · Premium · About · reading font (Aa) · light/dark toggle · Home.
  * Footer: link columns + licence line.
  *
  * Opt out (homepage only): put data-im-home on <html> or <body>, or set
@@ -24,6 +24,15 @@
 
   var root = document.documentElement;
   var meta = function (n) { var m = document.querySelector('meta[name="' + n + '"]'); return m && m.getAttribute('content'); };
+
+  // ── Reading font (OpenDyslexic) ────────────────────────────────────
+  // Applied here, at script execution, rather than inside boot(): a reader who
+  // has chosen the font should not watch each page render in Inter first. The
+  // rules and the four @font-face declarations live in /css/fonts.css, which
+  // downloads nothing until this class is present.
+  var DYS_KEY = 'im-reading-font';
+  function dysOn() { try { return localStorage.getItem(DYS_KEY) === 'opendyslexic'; } catch (e) { return false; } }
+  if (dysOn()) root.classList.add('im-dyslexic');
 
   // ── Opt-out (homepage) ─────────────────────────────────────────────
   var path = location.pathname.replace(/index\.html$/, '');
@@ -47,9 +56,9 @@
   function css() {
     return [
 '.im-sc,.im-sc *{box-sizing:border-box}',
-'.im-sc{--sc-bg:rgba(255,255,255,.82);--sc-fg:#0F172A;--sc-mut:#64748B;--sc-bd:#E7EBF0;--sc-acc:#0EA5E9;--sc-grad:linear-gradient(135deg,#0EA5E9,#6366F1)}',
-'html[data-theme="dark"] .im-sc,html.dark .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-fg:#F1F5F9;--sc-mut:#94A3B8;--sc-bd:#25304A}',
-'@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-fg:#F1F5F9;--sc-mut:#94A3B8;--sc-bd:#25304A}}',
+'.im-sc{--sc-bg:rgba(255,255,255,.82);--sc-fg:#0F172A;--sc-mut:#64748B;--sc-bd:#E7EBF0;--sc-acc:#0EA5E9;--sc-sel:#0369A1;--sc-sel-ink:#fff;--sc-grad:linear-gradient(135deg,#0EA5E9,#6366F1)}',
+'html[data-theme="dark"] .im-sc,html.dark .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-fg:#F1F5F9;--sc-mut:#94A3B8;--sc-bd:#25304A;--sc-sel:#38BDF8;--sc-sel-ink:#0B1120}',
+'@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-fg:#F1F5F9;--sc-mut:#94A3B8;--sc-bd:#25304A;--sc-sel:#38BDF8;--sc-sel-ink:#0B1120}}',
 '.im-sc-bar{position:sticky;top:0;z-index:9999;display:flex;align-items:center;gap:12px;height:46px;padding:0 clamp(12px,3vw,24px);',
  'background:var(--sc-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--sc-bd);',
  "font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:13px;color:var(--sc-fg)}",
@@ -67,13 +76,15 @@
 'html[data-theme="dark"] .im-sc .im-sc-i,html.dark .im-sc .im-sc-i{filter:brightness(0) saturate(100%) invert(1);opacity:.85}',
 '@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc .im-sc-i{filter:brightness(0) saturate(100%) invert(1);opacity:.85}}',
 '.im-sc-btn:hover .im-sc-i{opacity:1}',
-'.im-sc-btn.im-sc-prem{background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff}',
+'.im-sc-btn.im-sc-prem{background:linear-gradient(135deg,#B45309,#991B1B);color:#fff}',
 '.im-sc-btn.im-sc-prem:hover{opacity:.92;color:#fff}',
 '.im-sc-prem .im-sc-i,.im-sc-tbtn[aria-pressed="true"] .im-sc-i{filter:brightness(0) invert(1)!important;opacity:1}',
+'html[data-theme="dark"] .im-sc .im-sc-tbtn[aria-pressed="true"] .im-sc-i,html.dark .im-sc .im-sc-tbtn[aria-pressed="true"] .im-sc-i{filter:brightness(0)!important}',
+'@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc .im-sc-tbtn[aria-pressed="true"] .im-sc-i{filter:brightness(0)!important}}',
 '.im-sc-icon{width:34px;height:32px;padding:0;justify-content:center}',
 '.im-sc-theme{display:inline-flex;gap:2px;background:color-mix(in srgb,var(--sc-fg) 6%,transparent);border:1px solid var(--sc-bd);border-radius:9px;padding:3px}',
 '.im-sc-tbtn{width:26px;height:24px;border:0;border-radius:6px;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}',
-'.im-sc-tbtn[aria-pressed="true"]{background:var(--sc-grad);color:#fff}',
+'.im-sc-tbtn[aria-pressed="true"]{background:var(--sc-sel);color:var(--sc-sel-ink)}',
 '@media(max-width:720px){.im-sc-label{display:none}.im-sc-btn{padding:0 8px;min-width:34px;justify-content:center}.im-sc-icon{width:32px}.im-sc-path{display:none}}',
 // Phones: the full control row + wordmark overflow a narrow bar, which collapses
 // the flex spacer and jams the language globe against the "impactmojo.in" wordmark
@@ -245,6 +256,65 @@
 
   function escapeHtml(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
 
+  // ── Reading-font control — every page, homepage included ───────────
+  // It rides next to whichever theme control the page has: .im-sc-right on the
+  // 872 pages this script builds, .theme-selector on the homepage, which keeps
+  // its own chrome and so never reaches build(). Takes the host's own button
+  // class so it inherits that bar's styling instead of carrying a second one.
+  function injectReadingFont() {
+    if (document.getElementById('im-dys-btn')) return;
+    var host = document.querySelector('.im-sc-right') || document.querySelector('.theme-selector');
+    if (!host) return;
+    var inBar = host.classList.contains('im-sc-right');
+
+    // The "on" state has to be styled here rather than in css(): that runs
+    // inside build(), and the homepage never reaches it.
+    if (!document.getElementById('im-dys-style')) {
+      var st = document.createElement('style');
+      st.id = 'im-dys-style';
+      // "On" is the bar's accent as an outline and a wash of itself, with the
+      // label left at the bar's own ink. The obvious version -- copy the theme
+      // buttons, fill with --sc-grad and set the text white -- was measured and
+      // fails: the gradient starts at #0EA5E9, and imx-main.css says in as many
+      // words that white on that is 2.77:1, which is why --accent-solid
+      // (#0369A1, 5.93:1) exists at all. An outline avoids the question, and
+      // matches how the same control looks on the sibling sites. State is not
+      // carried by colour alone: with the switch on, the label renders in
+      // OpenDyslexic, and aria-pressed says so for a screen reader.
+      var acc = 'var(--sc-acc,var(--accent-solid,#0369A1))';
+      st.textContent = '#im-dys-btn{cursor:pointer}'
+        + '#im-dys-btn[aria-pressed="true"]{border-color:' + acc + ';'
+        + 'background:color-mix(in srgb,' + acc + ' 16%,transparent)}';
+      document.head.appendChild(st);
+    }
+
+    var b = document.createElement('button');
+    b.id = 'im-dys-btn';
+    b.type = 'button';
+    b.className = inBar ? 'im-sc-btn im-sc-dys' : 'theme-btn im-sc-dys';
+    b.innerHTML = '<span aria-hidden="true" style="font-weight:700;font-size:13px;line-height:1;letter-spacing:.02em">Aa</span>';
+    // The label says what it does, not what it is called: "OpenDyslexic" means
+    // nothing to a reader who has never been told the name of the typeface.
+    b.setAttribute('aria-label', 'Dyslexia-friendly font');
+    function sync() {
+      var on = root.classList.contains('im-dyslexic');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.title = on ? 'Dyslexia-friendly font: on' : 'Dyslexia-friendly font';
+    }
+    b.addEventListener('click', function () {
+      var on = !root.classList.contains('im-dyslexic');
+      root.classList.toggle('im-dyslexic', on);
+      try { localStorage.setItem(DYS_KEY, on ? 'opendyslexic' : 'default'); } catch (e) {}
+      sync();
+    });
+    sync();
+
+    // Before the theme group in the built bar (reading settings together, and
+    // clear of the Home link at the end); appended on the homepage's own group.
+    var themeGroup = host.querySelector('.im-sc-theme');
+    if (themeGroup) host.insertBefore(b, themeGroup); else host.appendChild(b);
+  }
+
   // ── Shared WhatsApp "share ImpactMojo" button — every page, homepage included ──
   // Pre-encoded href (no emoji literals in source) matching the site-standard share
   // message. Guarded against duplicates; skipped if the page already has one.
@@ -282,7 +352,7 @@
     try { navigator.serviceWorker.register('/service-worker.js'); } catch (e) { /* non-fatal */ }
   }
 
-  function boot() { injectWhatsApp(); registerSW(); if (!isHome) build(); }
+  function boot() { injectWhatsApp(); registerSW(); if (!isHome) build(); injectReadingFont(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();

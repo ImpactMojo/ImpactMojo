@@ -2,6 +2,32 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.302.0 — September 15, 2026 (A dyslexia-friendly font, on every page, for anyone who wants one)
+
+### For Learners
+
+- **Reading font switch.** An **Aa** button now sits in the top bar of every page, beside the light/dark control. It sets the whole page in OpenDyslexic, a free typeface with weighted letter bottoms and deliberately asymmetric b/d/p/q shapes, and at the same time opens up the letter, word and line spacing of running text. The choice is remembered across pages and visits. Nothing is downloaded for anyone who does not turn it on.
+
+### Added
+
+- **OpenDyslexic, self-hosted** (font version 0.920, packaged as `@fontsource/opendyslexic` 5.3.0, where the 5.3.0 is the npm package and not the typeface). Four faces in `assets/fonts/` (roman and italic, 400 and 700), under the SIL Open Font License 1.1; licence text in `assets/fonts/OpenDyslexic-OFL.txt`. Declared in `css/fonts.css` and reached only through `html.im-dyslexic`, so a browser fetches none of the 464 KB until the switch is on: verified in headless Chromium across the homepage, a built page, a course and a data explorer, with zero font requests in the default state, 200s and a computed family of OpenDyslexic once the class lands.
+
+  **The spacing is the half with the better evidence.** Zorzi et al. (*PNAS* 109(28), 2012) found extra letter spacing raised reading speed and halved errors in Italian and French children with dyslexia, with no training and no change of typeface; the British Dyslexia Association style guide asks for 1.5 line spacing, wider word spacing and ragged-right text. The trials of dyslexia-specific typefaces are weaker: Kuster et al. (*Annals of Dyslexia*, 2018) found Dyslexie gave no reading benefit over Arial in two experiments. So the switch ships the font as an option for readers who prefer it, and carries the spacing change regardless. Both are scoped to running text: the top bar, buttons, stat tiles and chart labels keep their measured layout, and code keeps its monospace.
+
+  Latin only, by design: OpenDyslexic has no Devanagari, Bengali, Tamil, Telugu, Gujarati, Odia or Kannada glyphs, so translated pages fall through to Noto Sans exactly as they do now.
+
+### Fixed
+
+- **Top bar: the selected theme button and the Premium button failed contrast on all 872 pages that load the shared chrome (#1097).** Both painted white onto `linear-gradient(135deg, ...)`, and in both cases the light end of the gradient could not carry it. The selected theme button's glyph measured 2.77:1 against `#0EA5E9`, below the 3:1 floor for a meaningful graphic. The Premium button's white label measured 2.15:1 against `#F59E0B` and 3.76:1 at the red end, so no point on that gradient reached the 4.5:1 text floor.
+
+  The bar now has a selected-state pair of tokens, `--sc-sel` and `--sc-sel-ink`, resolved per theme: `#0369A1` with a white glyph in light (5.93:1, and the same against the white bar), `#38BDF8` with a dark glyph in dark (9.8:1). Premium keeps its amber-to-red gradient, darkened to `#B45309` and `#991B1B`, where white measures 5.02:1, 6.59:1 and 8.31:1 across it.
+
+  **Neither audit could have caught this**, beyond the coverage gap already noted for `axe`'s ten pages and pa11y's nineteen: `getComputedStyle` returns `rgba(0,0,0,0)` for `background-color` when the paint comes from `background-image`, so an automated contrast check reads a gradient-filled control as transparent and scores whatever is behind it. It was found by compositing every background behind the element by hand. The wordmark uses the same gradient through `background-clip:text` and is left alone: WCAG exempts text that is part of a logo or brand name.
+
+### Changed
+
+- **`js/site-chrome.js`** carries the control. It rides next to whichever theme control a page already has: `.im-sc-right` on the 872 pages the script builds, and `.theme-selector` on the homepage, which keeps its own chrome and never reaches `build()`. So the switch is on every page rather than most of them. The saved setting is applied when the script is parsed rather than inside `boot()`, so a reader who has chosen the font does not watch each page render in Inter first.
+- **30 pages now load `css/fonts.css`.** The data explorers, two reading companions, the MEL Rosetta lab, the gradebook and the export tool, which had no link to it and so could not honour the switch. They name `Inter` and `Amaranth` in their own inline styles and were quietly falling back to `system-ui` and Georgia; they now get the faces they ask for. The five Supabase email templates and the admin analytics page are deliberately left out.
 ## v10.301.0 — September 10, 2026 (Six new research-methods courses, in one post)
 
 ### For Learners

@@ -4,6 +4,13 @@
   "count": 120,
   "entries": [
     {
+      "title": "Top bar: the selected theme button and the Premium button failed contrast on all 872 pages that load the shared chrome (#1097)",
+      "detail": "Both painted white onto linear-gradient(135deg, ...), and in both cases the light end of the gradient could not carry it. The selected theme button's glyph measured 2.77:1 against #0EA5E9, below the 3:1 floor for a meaningful graphic. The Premium button's white label measured 2.15:1 against #F59E0B and 3.76:1 at the red end, so no point on that gradient reached the 4.5:1 text floor. The bar now has a selected-state pair of tokens, --sc-sel and --sc-sel-ink, resolved per theme: #0369A1 with a white glyph in light (5.93:1, and the same against the white bar), #38BDF8 with a dark glyph in dark (9.8:1). Premium keeps its amber-to-red gradient, darkened to #B45309 and #991B1B, where white measures 5.02:1, 6.59:1 and 8.31:1 across it. Neither audit could have caught this, beyond the coverage gap already noted for axe's ten pages and pa11y's nineteen: getComputedStyle returns rgba(0,0,0,0) for background-color when the paint comes from background-image, so an automated contrast check reads a gradient-filled control as transparent and scores whatever is behind it. It was found by compositing every background behind the element by hand. The wordmark uses the same gradient through background-clip:text and is left alone: WCAG exempts text that is part of a logo or brand name.",
+      "fixed_on": "2026-09-15",
+      "release": "v10.302.0",
+      "issue": 1097
+    },
+    {
       "title": "Three of the twenty-one flagship courses had no presence on the homepage at all",
       "detail": "(#1085). Counting /courses/<slug> references in index.html: esg 0, social-movements 0, gender-mel 0, nothing-about-us 1, every other course 2 to 5. Adding a flagship updates data/counts.json, catalog.html, courses/index.html, sitemap.xml, data/search-index.json, js/offline.js, service-worker.js, js/course-progress.js and the certificate map. Nothing updates index.html, and nothing checked it, so the omission repeated three times without ever failing anything. Two separate defects sat inside that. The JSON-LD ItemList declared \"numberOfItems\": 18 while listing 17, so it was inconsistent with itself before it was inconsistent with the library, and it was missing four courses — which meant the structured data handed to search engines described 18 flagships where 21 exist. check-counts.py cannot see this: it matches prose and stat tiles, and numberOfItems is a JSON-LD attribute in neither shape. The second is the one a learner would notice. The homepage's resume map turns a stored slug into a title and a link for the \"continue where you left off\" card. It was missing esg, social-movements and gender-mel, so a learner who started any of those three, and came back to the homepage expecting to be returned to it, got nothing. Their progress was in localStorage the whole time; the lookup missed, the card did not render, and no error was raised anywhere. Measured in Chromium, writing a real progress record ({completed:[1,2,3,4], totalModules:13, updatedAt:…}) to localStorage and reloading the homepage, before and after the change. Before: the card appeared for mel and for neither esg, social-movements nor gender-mel. After: it appears for all four, plus nothing-about-us, each with the right title and the right link. The first attempt at this test reported no card for any course including mel, because the payload used lastModule and updated where the code requires totalModules and updatedAt — worth recording, since a test that fails on the control is measuring itself rather than the change. Both structures are now complete at 21, and the new guard fails if a future course is added to one and not the other.",
       "fixed_on": "2026-09-08",
@@ -832,13 +839,6 @@
     {
       "title": "devai, dataviz",
       "detail": "— tapping outside the open mobile sidebar didn't close it. Added the <div class=\"sidebar-overlay\"> element, the canonical backdrop CSS, and the click handler.",
-      "fixed_on": "2026-05-20",
-      "release": "v10.24.0",
-      "issue": null
-    },
-    {
-      "title": "Mobile quiz options",
-      "detail": "— text was wrapping one word per line at narrow viewports because long words inside flex containers had no overflow control. Added min-width: 0; overflow-wrap: anywhere to quiz option containers.",
       "fixed_on": "2026-05-20",
       "release": "v10.24.0",
       "issue": null
