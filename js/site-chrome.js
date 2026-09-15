@@ -56,9 +56,9 @@
   function css() {
     return [
 '.im-sc,.im-sc *{box-sizing:border-box}',
-'.im-sc{--sc-bg:rgba(255,255,255,.82);--sc-fg:#0F172A;--sc-mut:#64748B;--sc-bd:#E7EBF0;--sc-acc:#0EA5E9;--sc-grad:linear-gradient(135deg,#0EA5E9,#6366F1)}',
-'html[data-theme="dark"] .im-sc,html.dark .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-fg:#F1F5F9;--sc-mut:#94A3B8;--sc-bd:#25304A}',
-'@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-fg:#F1F5F9;--sc-mut:#94A3B8;--sc-bd:#25304A}}',
+'.im-sc{--sc-bg:rgba(255,255,255,.82);--sc-fg:#0F172A;--sc-mut:#64748B;--sc-bd:#E7EBF0;--sc-acc:#0EA5E9;--sc-sel:#0369A1;--sc-sel-ink:#fff;--sc-grad:linear-gradient(135deg,#0EA5E9,#6366F1)}',
+'html[data-theme="dark"] .im-sc,html.dark .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-fg:#F1F5F9;--sc-mut:#94A3B8;--sc-bd:#25304A;--sc-sel:#38BDF8;--sc-sel-ink:#0B1120}',
+'@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-fg:#F1F5F9;--sc-mut:#94A3B8;--sc-bd:#25304A;--sc-sel:#38BDF8;--sc-sel-ink:#0B1120}}',
 '.im-sc-bar{position:sticky;top:0;z-index:9999;display:flex;align-items:center;gap:12px;height:46px;padding:0 clamp(12px,3vw,24px);',
  'background:var(--sc-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--sc-bd);',
  "font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:13px;color:var(--sc-fg)}",
@@ -76,13 +76,15 @@
 'html[data-theme="dark"] .im-sc .im-sc-i,html.dark .im-sc .im-sc-i{filter:brightness(0) saturate(100%) invert(1);opacity:.85}',
 '@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc .im-sc-i{filter:brightness(0) saturate(100%) invert(1);opacity:.85}}',
 '.im-sc-btn:hover .im-sc-i{opacity:1}',
-'.im-sc-btn.im-sc-prem{background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff}',
+'.im-sc-btn.im-sc-prem{background:linear-gradient(135deg,#B45309,#991B1B);color:#fff}',
 '.im-sc-btn.im-sc-prem:hover{opacity:.92;color:#fff}',
 '.im-sc-prem .im-sc-i,.im-sc-tbtn[aria-pressed="true"] .im-sc-i{filter:brightness(0) invert(1)!important;opacity:1}',
+'html[data-theme="dark"] .im-sc .im-sc-tbtn[aria-pressed="true"] .im-sc-i,html.dark .im-sc .im-sc-tbtn[aria-pressed="true"] .im-sc-i{filter:brightness(0)!important}',
+'@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc .im-sc-tbtn[aria-pressed="true"] .im-sc-i{filter:brightness(0)!important}}',
 '.im-sc-icon{width:34px;height:32px;padding:0;justify-content:center}',
 '.im-sc-theme{display:inline-flex;gap:2px;background:color-mix(in srgb,var(--sc-fg) 6%,transparent);border:1px solid var(--sc-bd);border-radius:9px;padding:3px}',
 '.im-sc-tbtn{width:26px;height:24px;border:0;border-radius:6px;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}',
-'.im-sc-tbtn[aria-pressed="true"]{background:var(--sc-grad);color:#fff}',
+'.im-sc-tbtn[aria-pressed="true"]{background:var(--sc-sel);color:var(--sc-sel-ink)}',
 '@media(max-width:720px){.im-sc-label{display:none}.im-sc-btn{padding:0 8px;min-width:34px;justify-content:center}.im-sc-icon{width:32px}.im-sc-path{display:none}}',
 // Phones: the full control row + wordmark overflow a narrow bar, which collapses
 // the flex spacer and jams the language globe against the "impactmojo.in" wordmark

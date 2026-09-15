@@ -16,6 +16,14 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
   Latin only, by design: OpenDyslexic has no Devanagari, Bengali, Tamil, Telugu, Gujarati, Odia or Kannada glyphs, so translated pages fall through to Noto Sans exactly as they do now.
 
+### Fixed
+
+- **Top bar: the selected theme button and the Premium button failed contrast on all 872 pages that load the shared chrome (#1097).** Both painted white onto `linear-gradient(135deg, ...)`, and in both cases the light end of the gradient could not carry it. The selected theme button's glyph measured 2.77:1 against `#0EA5E9`, below the 3:1 floor for a meaningful graphic. The Premium button's white label measured 2.15:1 against `#F59E0B` and 3.76:1 at the red end, so no point on that gradient reached the 4.5:1 text floor.
+
+  The bar now has a selected-state pair of tokens, `--sc-sel` and `--sc-sel-ink`, resolved per theme: `#0369A1` with a white glyph in light (5.93:1, and the same against the white bar), `#38BDF8` with a dark glyph in dark (9.8:1). Premium keeps its amber-to-red gradient, darkened to `#B45309` and `#991B1B`, where white measures 5.02:1, 6.59:1 and 8.31:1 across it.
+
+  **Neither audit could have caught this**, beyond the coverage gap already noted for `axe`'s ten pages and pa11y's nineteen: `getComputedStyle` returns `rgba(0,0,0,0)` for `background-color` when the paint comes from `background-image`, so an automated contrast check reads a gradient-filled control as transparent and scores whatever is behind it. It was found by compositing every background behind the element by hand. The wordmark uses the same gradient through `background-clip:text` and is left alone: WCAG exempts text that is part of a logo or brand name.
+
 ### Changed
 
 - **`js/site-chrome.js`** carries the control. It rides next to whichever theme control a page already has: `.im-sc-right` on the 872 pages the script builds, and `.theme-selector` on the homepage, which keeps its own chrome and never reaches `build()`. So the switch is on every page rather than most of them. The saved setting is applied when the script is parsed rather than inside `boot()`, so a reader who has chosen the font does not watch each page render in Inter first.
