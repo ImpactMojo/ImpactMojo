@@ -2,6 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.303.1 — September 18, 2026 (The kit labels now match the kits)
+
+### Fixed
+
+- **Three of the six Facilitator Kit labels stated a step or quiz count the file did not have** (#1100). The denominator kit was labelled 2 quizzes and has one quiz step holding two questions; two others were labelled 7 steps and have 8. Introduced in the release an hour earlier: the labels were written from the plan for each kit rather than counted from the finished file, and the files moved during drafting.
+
+  Small, and worth fixing properly rather than quietly, because it is a factual claim about a downloadable resource on the page whose entire argument is that the file is the source of truth. A facilitator budgeting a 45-minute slot uses exactly these numbers.
+
+  **"Quizzes" was also the wrong unit.** One `#[quiz]` step can carry several `##` questions, so "2 quizzes" and "2 questions" are different claims and the page did not say which it meant. The labels now read questions, which is what somebody planning a session actually needs.
+
+  `scripts/check-workshop-kits.py` now parses the landing page and fails if any label disagrees with the file it describes, so the page cannot drift from the kits again. Verified by changing one label to a wrong number, which it reported by name, then restoring it.
+
 ## v10.303.0 — September 18, 2026 (Six workshops you can run yourself, as plain text files)
 
 ### For Learners

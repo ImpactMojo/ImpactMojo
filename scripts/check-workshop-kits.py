@@ -110,6 +110,41 @@ def check(path: pathlib.Path) -> list[str]:
     return problems
 
 
+def check_labels(files: list[pathlib.Path]) -> list[str]:
+    """The landing page prints "N steps · M questions" under each kit.
+
+    Those numbers were first written from the plan for each kit rather than
+    counted from the finished file, and three of six were wrong by the time
+    the files settled (#1100). A facilitator budgeting a 45-minute slot uses
+    exactly these numbers, on a page whose whole argument is that the file is
+    the source of truth.
+    """
+    page = ROOT / "facilitator-kits" / "index.html"
+    if not page.is_file():
+        return []
+    html = page.read_text(encoding="utf-8")
+    problems = []
+
+    for path in files:
+        lines = path.read_text(encoding="utf-8").split("\n")
+        steps = sum(1 for l in lines if l.startswith("# ") or l.startswith("#[quiz]"))
+        questions = sum(1 for l in lines if l.startswith("## "))
+
+        m = re.search(
+            r'href="/facilitator-kits/' + re.escape(path.name) + r'".*?'
+            r'<p class="who-line">(\d+) steps &middot; (\d+) questions',
+            html, re.S)
+        if not m:
+            problems.append(f"{path.name}: no 'N steps · M questions' label on the kits page")
+            continue
+        said_steps, said_qs = int(m.group(1)), int(m.group(2))
+        if said_steps != steps:
+            problems.append(f"{path.name}: page says {said_steps} steps, file has {steps}")
+        if said_qs != questions:
+            problems.append(f"{path.name}: page says {said_qs} questions, file has {questions}")
+    return problems
+
+
 def main() -> int:
     if not KITS.is_dir():
         print("PASS - no facilitator-kits/ directory")
@@ -135,9 +170,19 @@ def main() -> int:
         print("'##' inside a quiz is a question, '- [ ]' / '- [x]' are its options.")
         return 1
 
+    label_problems = check_labels(files)
+    if label_problems:
+        print("FAIL - the kits page describes files that say something else:\n")
+        for lp in label_problems:
+            print(f"  {lp}")
+        print("\nThe landing page states a step and question count per kit. Derive them")
+        print("from the files rather than from the plan the kit was written to. See #1100.")
+        return 1
+
     steps = sum(len([l for l in p.read_text().split("\n")
                      if l.startswith("# ") or l.startswith("#[quiz]")]) for p in files)
-    print(f"PASS - {len(files)} facilitator kit(s) valid, {steps} steps total.")
+    print(f"PASS - {len(files)} facilitator kit(s) valid, {steps} steps total, "
+          f"and the kits page agrees with all {len(files)}.")
     return 0
 
 
