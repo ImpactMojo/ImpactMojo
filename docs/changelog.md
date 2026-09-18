@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.308.0 — September 18, 2026 (Two more clips on the station, and what they are careful not to claim)
+
+### For Learners
+
+- **Designing gender-sensitive FGDs and KIIs** — a five-minute Field Radio short on the three design decisions that shape what a focus group can tell you: whose experience you need to understand, who else is in the room, and who is asking. [Listen](/field-radio.html).
+
+- **What gender-sensitive MEL actually asks** — a three-minute short on why sex-disaggregated participation counts are the start of the question rather than the answer. Sixty women in a hundred-person training says nothing about whether they could attend regularly, use the skill afterwards, or keep the income. [Listen](/field-radio.html).
+
+### Added
+
+- **Two video shorts on the Field Radio station**, taking it from 17 clips to 19, both on the MEL & Research track and both transcribed in full.
+
+  The FGD/KII short is organised around a distinction worth keeping: a sample that includes women and men is not the same thing as a design that can hear them. It works through group composition (adolescent girls asked about mobility restrictions in a room containing their father will not answer as they would alone), sampling across the identities that intersect with gender in a given question — age, caste, class, disability, marital status — and the facilitation choices that follow from both.
+
+  The MEL short makes the parallel argument on the measurement side. It moves from participation to access, benefit, voice and control, with a worked example: instead of counting women who received financial support, count women with independent control over it; instead of counting women present at a community meeting, ask whether they spoke and whether their views entered the decision.
+
+  **Both are transcribed rather than summarised.** The station has carried transcripts since it opened, for search, for anyone who cannot use audio, and because a clip nobody can read is a clip nobody can quote. The transcripts here are lightly cleaned — filler removed, sentences closed — with nothing added and no claim inserted that the speaker did not make.
+
 ## v10.307.0 — September 18, 2026 (A numerator with no denominator is not a rate)
 
 ### For Learners
