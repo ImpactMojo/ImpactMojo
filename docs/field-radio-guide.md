@@ -29,6 +29,18 @@ Browse the station at [/field-radio.html](/field-radio.html).
 
 ---
 
+## Finding a Clip
+
+Every clip has its own entry in site search, so you can reach one without listening through the station. Three things will find it:
+
+- **The title or what it argues** — searching `CREAM indicator` or `baseline counterfactual` returns the clip that covers it.
+- **The speaker or the track** — searching `Vandana` or `MEL & Research` returns their clips.
+- **Something that was said in it.** Transcripts are searched too, so a half-remembered phrase works: `invisible if statements`, `visit registers`, `transport or digital devices`. These matches are listed after the title matches, so searching for a course still returns the course first.
+
+Each result links straight to its clip — `/field-radio.html#vs-08` opens the station with that clip loaded and paused, ready to play. The same link works for sharing a single clip with someone.
+
+---
+
 ## How Clips Are Organised
 
 Field Radio is deliberately un-structured to listen to — you can just press play and let it run — but under the hood every clip is tagged by **track** and **type** so the station can be filtered. There is no algorithm and no ranking: clips are surfaced by track and recency, not by popularity.

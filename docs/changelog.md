@@ -2,6 +2,30 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.309.0 — September 18, 2026 (Nineteen clips that search could not find)
+
+### For Learners
+
+- **Every Field Radio clip is now findable in site search** — search a topic, a speaker, or a phrase you half-remember hearing, and the result opens the station on that clip. [Try it](/field-radio.html).
+
+### Added
+
+- **All 19 Field Radio clips are in site search, transcripts included.** The station had exactly one row in the search index — the page itself. Nineteen clips carrying 45,000 characters of transcript were live and crawlable and unfindable: searching a phrase from a clip returned nothing, and so did searching "CREAM indicator", because the only indexed text was the station's own blurb.
+
+  Each clip now has its own row with a written description, tags for its speaker and track, and a link to `/field-radio.html#<id>` that opens the station on that clip, paused. Transcripts are searched as well, so `invisible if statements` finds the assumptions clip and `transport or digital devices` finds the gender MEL one. Those matches are listed after the ordinary title matches, so searching for a course still returns the course first.
+
+  **The transcripts are not in the search index**, and that is the interesting part. `js/search.js` loads the index on every page load rather than on the first keystroke, so 45,000 characters in it would be a cost every visitor pays on every page for a search few of them run. They are fetched from the station's own manifest on first search instead — which also means the text exists in one place rather than two, and cannot drift.
+
+  **Two things were measured rather than assumed.** Adding the transcript as another field on the existing search index matches nothing: the matcher scores by how near a hit sits to the start of the text, which is right for a title and useless for a 4,000-character transcript, so every test phrase that was not in the opening line missed. It would have shipped looking implemented and doing nothing. The global fix for that moved the top result on 5 of 20 ordinary queries, so the clip transcripts get their own small matcher and the sitewide one is untouched. Re-measured afterwards, exactly one top result moved: `baseline` now returns the clip titled "Baseline design — the decisions that matter" rather than the RCT readiness Studio.
+
+  **And the links needed the station to listen.** It had no fragment handling at all, so all 19 results would have opened on whichever clip was first — playing the wrong clip while looking like it worked. The station now selects the linked clip, widens the track filter if the filter would hide it, and loads it paused.
+
+- **`scripts/build-field-radio-index.py`** and the `field-radio-index` CI job. The rows are generated from `data/field-radio.json`, so renaming a clip renames it in search; a new clip with no description fails the build rather than shipping a machine-made one, and a description left behind for a deleted clip fails as a stale entry.
+
+### Changed
+
+- **The two September clips are credited to Vandana.** They shipped under the neutral house byline because neither transcript names its speaker, and the attribution was confirmed afterwards.
+
 ## v10.308.0 — September 18, 2026 (Two more clips on the station, and what they are careful not to claim)
 
 ### For Learners

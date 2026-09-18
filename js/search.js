@@ -41,7 +41,8 @@
     handout:         { icon: sargamImg('si_File_download'), label: 'Handout',           color: '#65A30D' },
     challenge:       { icon: sargamImg('si_Flag'),          label: 'Challenge',         color: '#DC2626' },
     showcase:        { icon: sargamImg('si_Image'),          label: 'Work Sample',       color: '#7C2D12' },
-    special:         { icon: sargamImg('si_Library_books'), label: 'Special',           color: '#9333EA' }
+    special:         { icon: sargamImg('si_Library_books'), label: 'Special',           color: '#9333EA' },
+    'field-radio':   { icon: sargamImg('si_Mic'),           label: 'Field Radio',       color: '#0EA5E9' }
   };
 
   /* ---- Load Fuse.js ---- */
@@ -180,6 +181,61 @@
     document.head.appendChild(css);
   }
 
+  /* ---- Field Radio transcripts ----
+     The station's 19 clips carry ~45,000 characters of transcript. They are
+     deliberately NOT in data/search-index.json: that file is fetched on every
+     page load (initFuse runs on DOMContentLoaded below), so carrying them
+     there would charge every visitor on every page for a search few of them
+     run. They are fetched here instead, once, on the first query.
+
+     Why a second Fuse instance rather than another key on the main one: the
+     main index uses Fuse's default location scoring with distance 200, which
+     ranks a match by how near it sits to the start of the field. That is fine
+     for a title and useless for a 4,000-character transcript -- measured, a
+     transcript key on the main index matched nothing that was not in the
+     opening line. ignoreLocation fixes it, and setting it globally moved the
+     top result on a quarter of ordinary queries. So it is set here only. */
+  var trFuse = null, trTried = false;
+
+  function loadTranscripts() {
+    if (trTried) return;
+    trTried = true;
+    fetch('/data/field-radio.json')
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        var clips = (d && Array.isArray(d.clips) ? d.clips : []).filter(function (c) {
+          return c && c.id && c.transcript;
+        });
+        if (clips.length && window.Fuse) {
+          trFuse = new window.Fuse(clips, {
+            keys: [{ name: 'transcript' }],
+            threshold: 0.3,
+            ignoreLocation: true,
+            minMatchCharLength: 4,
+            includeScore: true,
+            limit: 5
+          });
+        }
+      })
+      .catch(function (e) { console.warn('ImpactMojo Search: transcripts unavailable', e); });
+  }
+
+  /* Clips whose transcript matches, as index entries, minus any already shown. */
+  function transcriptHits(query, already) {
+    if (!trFuse || query.length < 4) return [];
+    var seen = {};
+    already.forEach(function (r) { seen[r.item.id] = true; });
+    var out = [];
+    trFuse.search(query).forEach(function (r) {
+      var entry = null;
+      for (var i = 0; i < searchData.length; i++) {
+        if (searchData[i].id === 'FIELD-RADIO-' + r.item.id) { entry = searchData[i]; break; }
+      }
+      if (entry && !seen[entry.id]) { seen[entry.id] = true; out.push({ item: entry }); }
+    });
+    return out;
+  }
+
   /* ---- Render results ---- */
   function renderResults(query) {
     if (!fuse || !query || query.length < 2) {
@@ -195,6 +251,10 @@
     }
 
     var results = fuse.search(query, { limit: 15 });
+    // Clips whose spoken words match go after the title/description matches:
+    // a phrase someone half-remembers from a voice note should find it, but
+    // should not outrank a course whose title is what they asked for.
+    results = results.concat(transcriptHits(query, results));
     if (!results.length) {
       resultsList.innerHTML =
         '<div class="ims-empty">' +
@@ -285,6 +345,7 @@
     if (visible) return;
     if (!modal) createModal();
     if (!fuse) initFuse();
+    loadTranscripts();   // fetched when someone opens search, not on every page load
     visible = true;
     modal.classList.add('ims-open');
     input.value = '';

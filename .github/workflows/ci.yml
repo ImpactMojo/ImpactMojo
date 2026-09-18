@@ -622,6 +622,25 @@ jobs:
       - name: Check the three Deep Dive lists agree
         run: python3 scripts/check-deep-dives.py
 
+  field-radio-index:
+    name: Field Radio clips are in site search
+    runs-on: ubuntu-latest
+    # Without this a hung step inherits GitHub's 360-minute default and the
+    # job neither passes nor fails -- which reads as "still running".
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # Each clip has a row in data/search-index.json generated from
+      # data/field-radio.json, so renaming a clip in the manifest renames it in
+      # search. The rows carry no transcript on purpose -- the index is fetched
+      # on every page load -- and js/search.js fetches the manifest on first
+      # search instead. This catches the two ways that drifts: a new clip with
+      # no hand-written description, and a description left behind for a clip
+      # that no longer exists.
+      - name: Clips, descriptions and search rows agree
+        run: python3 scripts/build-field-radio-index.py --check
+
   workshop-kits:
     name: Facilitator kits are valid Workshopy Markdown
     runs-on: ubuntu-latest
