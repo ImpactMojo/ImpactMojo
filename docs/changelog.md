@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.303.0 — September 18, 2026 (Six workshops you can run yourself, as plain text files)
+
+### For Learners
+
+- **Six free workshops you can facilitate yourself** — 45 minutes each, up to 30 people, on denominators in gender data, the assumption hiding in a theory of change, indicators beyond the headcount, what an attribution claim can carry, what a dataset refuses to count, and asking a question that can do harm. Download, edit and run them with your own team. [Facilitator Kits](/facilitator-kits/).
+
+- **A post on why a workshop should be a text file** — what a deck loses, what the format actually is, and the bet we are taking by giving away material people currently pay us for. [Read it](/blog/a-workshop-should-be-a-text-file.html).
+
+### Added
+
+- **`facilitator-kits/` — six runnable workshops in [Workshopy](https://workshopy.io/) Markdown**, plus a landing page. The format is small: `#` starts a step, `#[quiz]` makes that step a graded quiz, `##` inside one is a question and `- [x]` marks the correct option. Verified against Workshopy's own published example rather than assumed.
+
+  Every kit is written to the **free tier's 45-minute, 30-participant limit** rather than written long and hoped over. A resource that technically exists on a free plan but cannot be run there is a lead magnet, not a resource. The constraint improved them: roughly five minutes a step rules out lecturing, so all six have participants doing arithmetic or sorting their own indicator table inside the first ten minutes.
+
+  Licensing is deliberately loose — use them commercially, without attribution. `workshops.html` now links to them and says plainly that the paid three-day workshops are a different product rather than a bigger version of the same one.
+
+- **`scripts/check-workshop-kits.py`** and the `workshop-kits` CI job. The format has a failure mode invisible in a Markdown preview: **a quiz with no `- [x]` grades every participant wrong**, and the file looks entirely normal. A `##` outside a quiz step reads as a question and is not one; a stray `#` mid-paragraph silently splits a step. The guard also caps steps at twelve, since a kit that cannot finish inside 45 minutes is worse than no kit. Verified by breaking one file three ways at once — an unchecked correct answer, a `###` heading, a `##` outside a quiz — which it reported as three separate findings, then restoring it.
+
 ## v10.302.0 — September 15, 2026 (A dyslexia-friendly font, on every page, for anyone who wants one)
 
 ### For Learners

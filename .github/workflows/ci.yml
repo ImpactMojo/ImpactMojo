@@ -601,6 +601,24 @@ jobs:
       - name: Check every heading survives the chrome strip
         run: python3 scripts/check-h1-survives-chrome.py
 
+  workshop-kits:
+    name: Facilitator kits are valid Workshopy Markdown
+    runs-on: ubuntu-latest
+    # Without this a hung step inherits GitHub's 360-minute default and the
+    # job neither passes nor fails -- which reads as "still running".
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # facilitator-kits/*.md are imported into Workshopy, where '#' starts a
+      # step and '#[quiz]' makes it graded. A quiz with no '- [x]' option
+      # grades every participant wrong, and it looks completely normal in a
+      # Markdown preview -- so the first anyone learns of it is a room full of
+      # people. Also caps step count, since a kit that cannot finish inside
+      # the 45-minute free tier is worse than no kit.
+      - name: Kits parse as Workshopy steps and quizzes
+        run: python3 scripts/check-workshop-kits.py
+
   homepage-courses:
     name: Homepage lists every flagship
     runs-on: ubuntu-latest
