@@ -13,52 +13,51 @@ Full course content in regional languages. ([#29](https://github.com/ImpactMojo/
 
 ## Recently Shipped
 
-These were previously listed as in progress and have now shipped:
+These were previously listed as planned or in progress, and are now live. Each names the page, so you can check rather than take our word for it.
 
 - **BookSummaries expansion** — the interactive reading companion library has grown to **172 companions** across development economics, statistics, research methods, communication, leadership, and productivity. ([#272](https://github.com/ImpactMojo/ImpactMojo/issues/272))
 - **Native 101 deck migration** — all **58 foundational course decks** are now self-hosted HTML with ~100 slides each, interactive charts, and keyboard/touch navigation. No third-party presentation embeds remain.
 - **Vernacular interface** — the UI and quality-audited page translations ship in 5 languages (Hindi, Tamil, Bengali, Marathi, Telugu); see "Currently In Progress" above for what's still open.
 - **Practitioner voices** — this was listed as a planned "practitioner interview series". It shipped as **Field Radio**, a station of **19 clips** — voice notes and short videos from practitioners, each with a full transcript, playing back-to-back and filterable by track. Every clip is in site search, including its transcript, so a phrase you half-remember finds the clip. ([Listen](/field-radio.html))
+- **Peer review system** — get feedback on your work from other practitioners, and give it. ([/peer-review.html](/peer-review.html))
+- **Certificate verification for employers** — listed as a "certificate marketplace"; what shipped is the part that matters to a hiring manager, a page that checks whether a credential is real. ([/verify.html](/verify.html))
+- **Partner API** — for organisations integrating ImpactMojo content into their own training platforms. ([/api-docs.html](/api-docs.html))
+- **Community-contributed courses** — practitioners can put a course forward for publication. ([/contribute.html](/contribute.html))
+- **Live workshop listings** — workshops with registration and a calendar file you can add to your own diary. ([/events.html](/events.html))
+- **Impact measurement dashboard** — a public view of community outcomes, and a signed-in route to log your own. ([/impact-dashboard.html](/impact-dashboard.html))
+- **Offline support, both halves** — browser notifications you can switch on from your account, and background sync, so progress recorded on a bad connection is replayed once you are back online rather than lost.
 
-## Planned — Q2 2026 (April–June)
+## Planned
 
-### For Learners & Educators
-- **Analytics dashboard v2** — See completion funnels, time-on-task, and assessment scores for yourself or your team
-- **Enhanced offline support** — Push notifications and background sync so the app stays updated even on intermittent connections
-- **Video walkthroughs** for interactive labs — short guided videos showing how to use each lab
+**These are not dated.** This section used to carry quarter labels, and by September 2026 it still read "Planned — Q2 2026 (April–June)" over items that had either shipped months earlier or not started. A date we have already missed tells you less than no date at all, so the list below is ordered by what we expect to reach first, and nothing here is a commitment to a month.
 
-### Content
-- Additional foundational courses across all 6 tracks
-- Regional case study packs focusing on state-level India data
-- **Survey Instrument Library** — Browse and adapt validated survey instruments
+### Next
 
-### Community
-- **Peer review system** — Get feedback on your lab outputs from other practitioners
-- **Alumni network directory** — Connect with other ImpactMojo learners
+**For learners and educators**
+- **Analytics dashboard v2** — completion funnels, time-on-task and assessment scores, for yourself or your team
+- **Video walkthroughs for the Studios** (the interactive labs) — short guided videos showing how to work through each one
 
-## Planned — Q3–Q4 2026
+**Content**
+- **Survey Instrument Library** — browse and adapt *validated* instruments. Note this is not the existing [Designing a Survey Instrument](/practice-packs/survey-instrument/) Practice Pack, which teaches you to write one from scratch; the library would let you start from instruments that have already been tested.
+- More foundational (101) courses across all six tracks
+- Regional case study packs built on state-level Indian data
 
-### Indian-language tools
-Four open-weight models for Indian languages were released by Bodhan AI with AI4Bharat in September 2026 (speech to text, text to speech, OCR and translation across the 22 scheduled languages). Planned uses, in order:
+**Community**
+- **Alumni directory** — connect with other ImpactMojo learners
+
+### Later
+
+**Indian-language tools.** Four open-weight models for Indian languages were released by Bodhan AI with AI4Bharat in September 2026 (speech to text, text to speech, OCR and translation across the 22 scheduled languages). Planned uses, in order:
 
 - **Listen to a course in your language**: spoken versions of the 101 decks in Hindi, Tamil, Bengali, Marathi and Telugu, generated once and cached
 - **Document OCR for field material**: scanned registers, forms and government PDFs in Indian scripts turned into text you can search and analyse
 - **A second transcription engine in VaniScribe**, and a free notebook route that runs the open weights so transcription needs no paid key
 - **A translation quality trial** against the site's existing translations before any switch
 
+## Release history
 
-### For Organizations
-- **Certificate marketplace** — An employer-facing portal to verify credentials
-- **Partner API** — For organizations that want to integrate ImpactMojo content into their own training platforms
+What shipped in earlier releases. The counts in these entries are as they stood at the time, not today's totals.
 
-### For the Community
-- **Community-contributed courses** — Verified practitioners can publish their own courses on the platform
-- **Live workshop integration** — Book workshops directly through the platform with calendar integration
-
-### Platform Quality
-- **Impact measurement dashboard** — Track real-world outcomes from learners' projects and practice
-
-## Recently Completed
 
 ### v10.82.2 — July 2026
 - **Interactive assessments on every flagship** — all 18 flagship courses now end with a six-question auto-graded "Assess Yourself" self-check (90 questions in total), each grounded in the course's own material, with instant feedback and explanations.
