@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.307.0 — September 18, 2026 (A numerator with no denominator is not a rate)
+
+### For Learners
+
+- **Thirty-seven threat groups, and nothing to divide them by** — a new Data Note counting the threat groups in Anthropic's September 2026 AI misuse report, and explaining why the number cannot be read as a measure of anything. [Read it](/DataNotes/thirty-seven-threat-groups.html).
+
+### Added
+
+- **A Data Note on the September 2026 AI threat report.** Counting the `GTG-NNNNN` designators gives **37 distinct threat groups** across seven harm areas over the eight months from December 2025 to August 2026. The largest is not cyber. It is **surveillance, with ten** — operations building tools to identify and monitor people, including dissidents.
+
+  **The count is ours and the method is published so it can be disputed**: extract every `GTG-` string from the PDF text, assign each to the section it falls in, take distinct values. No designator appears in two sections, so the seven counts sum without double-counting.
+
+  **The point of the note is that 37 is not a rate.** There is no denominator — no published figure for operations attempted, accounts active or cases reviewed — and the selection is explicitly non-random: the report says its cases are "examples of the most notable and novel threat activity", not a sample. Three consequences follow. Better detection raises the count from the same underlying activity, so a rise across successive reports cannot distinguish more misuse from better detection. The organisation counting the misuse of its own product also decides which cases are notable enough to publish. And whether one operation, actor or campaign earns one designator or three is an internal convention the report does not define.
+
+  **Two columns that disagree** make the case concretely. Scams and fraud get one designator and four pages of 154, in what is almost certainly the highest-volume harm area by victim count. Biological misuse gets **zero designators and five case studies** across ten pages — so any count of "threat groups" reports zero for a harm area the report treats as among the most serious it covers. Section length tracks novelty, which is what the report says it selects for, and not prevalence.
+
+  **What it is good for** is the last section, and the reason this is on a development platform. Read as a typology rather than a measurement, the surveillance findings matter directly to civil society in South Asia: a single consultant engineering a mass-interception platform covering a country's mobile operators; one unit analysing hundreds of thousands of social media posts to select 39 opposition accounts; an intelligence unit that once ran many teams of analysts described as reduced to a single office. The useful question for an organisation working on rights, land or labour is not how many threat groups there are. It is what changes about handling a contributor list or a complainant's name when a well-resourced adversary no longer needs a team.
+
 ## v10.306.0 — September 18, 2026 (43 million rural enterprises, and 93% of them employ nobody)
 
 ### For Learners
