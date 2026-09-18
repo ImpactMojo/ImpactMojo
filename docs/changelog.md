@@ -2,6 +2,28 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.304.0 — September 18, 2026 (Three counts nobody was checking, and the kits get into the nav)
+
+### Fixed
+
+- **`libraries.html` showed Dataverse 328 against a canonical 334, and its hero chip claimed 16 libraries against 17 cards (#1102).** Two stale numbers on the hub page for the whole library, and every other card on it correct — which is what made a guard worth more than an edit.
+
+  The Dataverse card is `<span class="lib-n">Dataverse</span><span class="lib-c">328</span>`: **label first, number second**, in a class pair the tile matcher had never been told about. Every shape it does know — `<b>34</b><span>Interactive Labs</span>`, `stat-value`/`stat-label`, `chip`/`nm`, `sn`/`sl`, `tp-cnt` — puts the number first. And `dataverse` was not in `LABEL_KEYS`, so even in the familiar order the label would not have resolved. `check-counts.py` now reads the `lib-n`/`lib-c` pair, which covers all nine numbered cards on that page and any card added later.
+
+  The chip was a separate miss with a plainer cause: `16 libraries` is ordinary prose the guard reads fine, but `libraries` was not a term and there was no canonical figure to compare it against. It was already wrong by one before the Facilitator Kits card went in. Canonical now, and checked.
+
+- **`docs/field-radio-guide.md` said the station carries 15 clips; `data/field-radio.json` has 17 (#1103).** Twelve voice notes and five short videos, newest dated 2026-07-29.
+
+  The guide is the only place that total is written down — `field-radio.html` builds the list from the JSON and quotes no figure — so there was no second copy to contradict it. One hand-typed number with nothing to check it against is not a source of truth, it is a claim. `field-radio` is a canonical count now, `clips` is a term, and the guide joins the scanned docs. It contains exactly two number-plus-word pairs, `15 clips` and `30 seconds`, so adding it cannot fire falsely against another term.
+
+  All three were verified the same way: change the number back, confirm the guard names the file and line, restore.
+
+### Changed
+
+- **Facilitator Kits now appear in navigation.** They shipped yesterday reachable only from `workshops.html`, the Libraries hub, the blog post that introduced them and the sitemap — findable if you already knew, which is the same as unfindable. They are now a **Specials → Practice & Programs** entry on the homepage beside Practice Packs, and a **Learn** link in the shared footer that every page carries.
+
+  The freshness dot comes from `data/nav-updated.json` rather than a hardcoded badge, so it expires on its own after thirty days. That mechanism exists because the two original badges were typed in on 2026-07-29 and still claimed freshness three weeks later; a `New` span written by hand would have repeated it.
+
 ## v10.303.1 — September 18, 2026 (The kit labels now match the kits)
 
 ### Fixed

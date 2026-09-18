@@ -4,6 +4,20 @@
   "count": 120,
   "entries": [
     {
+      "title": "libraries.html showed Dataverse 328 against a canonical 334, and its hero chip claimed 16 libraries against 17 cards (#1102)",
+      "detail": "Two stale numbers on the hub page for the whole library, and every other card on it correct — which is what made a guard worth more than an edit. The Dataverse card is <span class=\"lib-n\">Dataverse</span><span class=\"lib-c\">328</span>: label first, number second, in a class pair the tile matcher had never been told about. Every shape it does know — <b>34</b><span>Interactive Labs</span>, stat-value/stat-label, chip/nm, sn/sl, tp-cnt — puts the number first. And dataverse was not in LABEL_KEYS, so even in the familiar order the label would not have resolved. check-counts.py now reads the lib-n/lib-c pair, which covers all nine numbered cards on that page and any card added later. The chip was a separate miss with a plainer cause: 16 libraries is ordinary prose the guard reads fine, but libraries was not a term and there was no canonical figure to compare it against. It was already wrong by one before the Facilitator Kits card went in. Canonical now, and checked.",
+      "fixed_on": "2026-09-18",
+      "release": "v10.304.0",
+      "issue": 1102
+    },
+    {
+      "title": "docs/field-radio-guide.md said the station carries 15 clips; data/field-radio.json has 17 (#1103)",
+      "detail": "Twelve voice notes and five short videos, newest dated 2026-07-29. The guide is the only place that total is written down — field-radio.html builds the list from the JSON and quotes no figure — so there was no second copy to contradict it. One hand-typed number with nothing to check it against is not a source of truth, it is a claim. field-radio is a canonical count now, clips is a term, and the guide joins the scanned docs. It contains exactly two number-plus-word pairs, 15 clips and 30 seconds, so adding it cannot fire falsely against another term. All three were verified the same way: change the number back, confirm the guard names the file and line, restore.",
+      "fixed_on": "2026-09-18",
+      "release": "v10.304.0",
+      "issue": 1103
+    },
+    {
       "title": "Three of the six Facilitator Kit labels stated a step or quiz count the file did not have",
       "detail": "(#1100). The denominator kit was labelled 2 quizzes and has one quiz step holding two questions; two others were labelled 7 steps and have 8. Introduced in the release an hour earlier: the labels were written from the plan for each kit rather than counted from the finished file, and the files moved during drafting. Small, and worth fixing properly rather than quietly, because it is a factual claim about a downloadable resource on the page whose entire argument is that the file is the source of truth. A facilitator budgeting a 45-minute slot uses exactly these numbers. \"Quizzes\" was also the wrong unit. One #[quiz] step can carry several ## questions, so \"2 quizzes\" and \"2 questions\" are different claims and the page did not say which it meant. The labels now read questions, which is what somebody planning a session actually needs. scripts/check-workshop-kits.py now parses the landing page and fails if any label disagrees with the file it describes, so the page cannot drift from the kits again. Verified by changing one label to a wrong number, which it reported by name, then restoring it.",
       "fixed_on": "2026-09-18",
@@ -825,20 +839,6 @@
     {
       "title": "dataviz",
       "detail": "— .mobile-menu-btn had position: fixed; top: 12px; left: 12px; taking it out of the flex flow and floating over the \"ImpactMojo\" logo. Moved back into the flex container.",
-      "fixed_on": "2026-05-20",
-      "release": "v10.24.0",
-      "issue": null
-    },
-    {
-      "title": "dataviz, gandhi",
-      "detail": "— UserWay accessibility widget rendered as a dark/black box at the default top-right position because the positioning CSS (.uwy.userway_p5, .uwy .uai) was missing. Added.",
-      "fixed_on": "2026-05-20",
-      "release": "v10.24.0",
-      "issue": null
-    },
-    {
-      "title": "gender, pubpol",
-      "detail": "— no UserWay accessibility widget at all. Added.",
       "fixed_on": "2026-05-20",
       "release": "v10.24.0",
       "issue": null

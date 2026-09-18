@@ -95,6 +95,11 @@ DOC_FILES = [
     "docs/freemium-and-premium-guide.md",
     "docs/teaching-and-lms-guide.md",
     "docs/101-decks-guide.md",
+    # The Field Radio guide states the station's clip total. It is the only
+    # place that number is written down -- field-radio.html renders the list
+    # from data/field-radio.json and quotes no total -- so nothing could
+    # disagree with it, and it sat at 15 against 17 real clips.
+    "docs/field-radio-guide.md",
 ]
 
 # Wiki pages that mirror historical prose from the repo, so their numbers are
@@ -112,6 +117,12 @@ COPY_FILES = [
     # it, and its <title>, og:title and <h1> each carried a stale foundational
     # count -- the one page whose entire subject is that number.
     "101-courses/index.html",
+    # The facilitator-kits landing page, for the same reason: not root-level,
+    # so the HTML glob never saw it, and it is the page whose whole subject is
+    # how many kits there are. Note it spells the total in words ("Six
+    # workshops"), which this guard cannot match -- check-workshop-kits.py
+    # covers the spelled-out form against the directory and counts.json.
+    "facilitator-kits/index.html",
 ]
 
 
@@ -169,6 +180,18 @@ TERMS = [
     # to 6 and 7 against an actual 11, because nothing was checking them.
     (r"data\s+notes", "data-notes"),
     (r"law\s+guides", "law-guides"),
+    # The hub page's own hero chip, counting the cards below it. It read 16
+    # against 17 cards before the Facilitator Kits card was added, so it was
+    # already stale by one and nothing on the page or in CI could say so.
+    (r"libraries", "libraries"),
+    # Workshop kits published as Markdown for a live-workshop tool. Both
+    # names are in use: "facilitator kits" on their own page, "workshop
+    # kits" in the blog post that introduced them.
+    (r"facilitator\s+kits", "facilitator-kits"),
+    (r"workshop\s+kits", "facilitator-kits"),
+    # Field Radio's voice notes and short videos. Only "<n> clips" is used;
+    # the station page itself renders from JSON and states no total.
+    (r"clips", "field-radio"),
     (r"handouts", "handouts"),
     (r"timelines", "timelines"),
     (r"practice\s+packs", "practice-packs"),
@@ -209,9 +232,15 @@ SPECIAL = [
 # never matches (bare "tools" is intentionally not a key).
 LABEL_KEYS = [
     ("data explorers", "data-explorers"),
+    # The Libraries card is labelled just "Dataverse"; every other surface
+    # spells it "N datasets" or "N curated data tools", which the prose
+    # patterns already cover.
+    ("dataverse", "dataverse"),
     ("premium tools", "premium-tools"),
     ("reading companions", "reading-companions"),
     ("book companions", "reading-companions"),
+    ("facilitator kits", "facilitator-kits"),
+    ("workshop kits", "facilitator-kits"),
     ("live case challenges", "challenges"),
     ("flagship courses", "flagship-courses"),
     ("foundational courses", "foundational-courses"),
@@ -289,7 +318,18 @@ TILE_TERMS = {
     "handouts": "handouts",
     "timelines": "timelines",
     "practice packs": "practice-packs",
+    "facilitator kits": "facilitator-kits",
 }
+# libraries.html writes its cards label-first, in a class pair of its own:
+#   <span class="lib-n">Dataverse</span><span class="lib-c">328</span>
+# TILE_RE below only understands number-then-label, so this shape was invisible
+# and the Dataverse card sat six short of canonical while the page passed
+# (#1102). Resolved through LABEL_KEYS like any other label, so a card added
+# later is covered without touching this.
+LIB_CARD_RE = re.compile(
+    r'<span class="lib-n">([^<]+)</span>\s*<span class="lib-c">(\d+)</span>'
+)
+
 TILE_RE = re.compile(
     r"(" + "|".join(re.escape(t) for t in TILE_TERMS) + r")\s*"
     r"<span class=\"tp-cnt[^\"]*\">(\d+)",
@@ -331,6 +371,13 @@ def line_hits(line, pattern, counts):
                 yield (m.start(1), m.end(1), key, number, expected)
     for m in TILE_RE.finditer(line):
         key = TILE_TERMS[m.group(1).lower()]
+        expected = counts.get(key)
+        if expected is not None:
+            yield (m.start(2), m.end(2), key, int(m.group(2)), expected)
+    for m in LIB_CARD_RE.finditer(line):
+        key = label_to_key(m.group(1))
+        if key is None:
+            continue
         expected = counts.get(key)
         if expected is not None:
             yield (m.start(2), m.end(2), key, int(m.group(2)), expected)

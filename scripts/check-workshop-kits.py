@@ -26,6 +26,7 @@ get through. A kit that cannot finish in the room is worse than no kit.
 Run: python3 scripts/check-workshop-kits.py
 """
 
+import json
 import pathlib
 import re
 import sys
@@ -145,6 +146,51 @@ def check_labels(files: list[pathlib.Path]) -> list[str]:
     return problems
 
 
+NUMBER_WORDS = {
+    3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight",
+    9: "nine", 10: "ten", 11: "eleven", 12: "twelve",
+}
+
+
+def check_total(files: list[pathlib.Path]) -> list[str]:
+    """The kits page and counts.json must agree with how many kits exist.
+
+    `check-counts.py` cannot do this one on its own. It matches digits, and the
+    page states its total in words -- "Six workshops you can run yourself" reads
+    better than "6 workshops" and is the page's headline. So the spelled-out
+    form is checked here, where the directory is already in hand, alongside the
+    canonical figure in counts.json.
+    """
+    problems = []
+    n = len(files)
+    word = NUMBER_WORDS.get(n)
+
+    counts = ROOT / "data" / "counts.json"
+    if counts.is_file():
+        canonical = json.loads(counts.read_text(encoding="utf-8")).get("facilitator-kits")
+        if canonical is None:
+            problems.append("data/counts.json has no 'facilitator-kits' key")
+        elif canonical != n:
+            problems.append(
+                f"data/counts.json says {canonical} facilitator-kits, directory holds {n}"
+            )
+
+    page = ROOT / "facilitator-kits" / "index.html"
+    if page.is_file() and word:
+        html = page.read_text(encoding="utf-8").lower()
+        wrong = sorted({
+            w for k, w in NUMBER_WORDS.items()
+            if k != n and (f"{w} workshops" in html or f"{w} sessions" in html)
+        })
+        if wrong:
+            problems.append(
+                f"kits page says {'/'.join(wrong)} workshops or sessions; there are {n} ({word})"
+            )
+        if f"{word} workshops" not in html and f"{word} sessions" not in html:
+            problems.append(f"kits page never states the total as '{word}'")
+    return problems
+
+
 def main() -> int:
     if not KITS.is_dir():
         print("PASS - no facilitator-kits/ directory")
@@ -170,9 +216,9 @@ def main() -> int:
         print("'##' inside a quiz is a question, '- [ ]' / '- [x]' are its options.")
         return 1
 
-    label_problems = check_labels(files)
+    label_problems = check_labels(files) + check_total(files)
     if label_problems:
-        print("FAIL - the kits page describes files that say something else:\n")
+        print("FAIL - the kits page or counts.json disagrees with the files:\n")
         for lp in label_problems:
             print(f"  {lp}")
         print("\nThe landing page states a step and question count per kit. Derive them")
