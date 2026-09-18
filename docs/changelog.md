@@ -2,6 +2,36 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.305.0 — September 18, 2026 (Six reading companions, and a working paper worth more than its abstract)
+
+### For Learners
+
+- **Theories of Change in Reality** — twenty-six evaluators on what has actually happened to the theory of change: how a way of thinking became a deliverable, and whether the tool has hit its ceiling or is simply being used badly. [Read it](/BookSummaries/theories-of-change-in-reality-companion.html).
+
+- **The SROI of Four Microfinance Projects** — a social return calculation with the arithmetic left in. Four lenders, ratios from 2.33 to 6.97, and the table showing two of the four return less than a euro per euro once you count only money. [Read it](/BookSummaries/sroi-microfinance-eif-companion.html).
+
+- **Women Leadership, Decentralised Governance and Development** — thirty years and roughly 1.5 million elected women later, twelve studies from seven Indian states on what the panchayat quota produced. [Read it](/BookSummaries/women-leadership-decentralised-governance-companion.html).
+
+- **Practice and Procedure of Parliament** — a navigational companion to Kaul and Shakdher, the Lok Sabha's own procedural reference. Which instrument, at which stage, and what an advocacy plan can actually do. [Read it](/BookSummaries/kaul-shakdher-practice-procedure-parliament-companion.html).
+
+- **Religion As a Cultural System** and **Anthropological Conceptions of Religion** — Geertz's definition and Talal Asad's reply, as a pair. Read together they are a short course in what a universal category costs, which is a question development has of its own vocabulary. [Geertz](/BookSummaries/geertz-religion-cultural-system-companion.html) · [Asad](/BookSummaries/asad-anthropological-conceptions-religion-companion.html).
+
+### Added
+
+- **Six reading companions, bringing the library to 172.** Each was built from the source text rather than from memory: quotations are transcribed from the PDF, page ranges come from the book's own contents, and every figure quoted was read off the table it appears in.
+
+  **Two of them are a pair and should be read as one.** Geertz's five-clause definition of religion (1966, collected 1973) is the most influential in twentieth-century anthropology; Talal Asad's 1983 reply in *Man* dismantles it clause by clause and ends with the question that reorganised the field — how does power create religion? The reason they are on a development platform is the method rather than the subject. Asad's argument is that a universal category is usually one whose history has been forgotten, and he dates and locates the invention of "religion" as a universal to seventeenth-century Europe. The same question can be put to "household", "beneficiary" and "resilience", and the companions say so.
+
+  **The SROI paper's abstract is not its finding.** It reports that every euro invested in microcredit generates at least two euros of social return. The table on page 20 reports that the same four institutions return 1.74, 1.35, **0.66 and 0.11** once you count only outcomes already denominated in money. The whole headline rests on the valuation of non-monetary outcomes, priced from a UK wellbeing database rescaled by GDP per capita, with a room valued at six square metres from a cost-of-living website. The companion carries a four-question tool for interrogating any social return figure, because those four questions — attribution, deadweight, drop-off, proxies — are precisely what a ratio hides.
+
+  **One factual discrepancy is flagged rather than repeated.** The Rajasekhar and Manjula introduction states that women are "around 7%" of India's parliament. Seventy-eight women were elected to the 17th Lok Sabha in 2019 and seventy-four to the 18th in 2024 — about 14.4% and 13.6% of 543 seats. The companion records the discrepancy and tells readers to check the primary source. A reading companion that passes on a wrong number is worse than no companion.
+
+  All six render clean in Chromium: 3,330 to 3,525 characters of visible text, zero horizontal overflow at mobile width, correct `<h1>` on each. The only console error is the blocked Supabase CDN, which two existing companions reproduce identically in the sandbox.
+
+### Changed
+
+- **`data/counts.json`: reading companions 166 → 172**, and `check-counts.py --fix` rewrote **22 stale occurrences across 12 files** — the homepage, the libraries hub, the FAQ, premium, upgrade, the impact dashboard, the content marketing kit, the README, two GitBook docs and the homepage tour script. Every one of those would have been a visible wrong number on a live page, and not one of them is a file anybody would have thought to open.
+
 ## v10.304.0 — September 18, 2026 (Three counts nobody was checking, and the kits get into the nav)
 
 ### Fixed
