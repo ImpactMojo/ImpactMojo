@@ -5,6 +5,36 @@ All notable changes to ImpactMojo are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.309.0] - 2026-09-18
+
+> This file skips from 10.245.0 to 10.309.0. The releases in between are recorded
+> in `docs/changelog.md`, which is the one the site publishes and the monthly
+> newsletter parses; this technical log was not kept up in that window.
+
+### Added
+
+- **Every Field Radio clip is in site search, with its transcript searchable.** The station had one row in `data/search-index.json` — the page itself — while 19 clips carrying 45,000 characters of transcript were live, crawlable and unfindable.
+
+  `scripts/build-field-radio-index.py` generates one row per clip from `data/field-radio.json`, so renaming a clip in the manifest renames it in search. The hand-written part is a `COPY` table of descriptions and tags; a clip missing from it fails the build rather than shipping a machine-made summary, and an entry for a deleted clip fails as stale. Enforced by the `field-radio-index` CI job.
+
+  **The rows carry no transcript.** `js/search.js` calls `initFuse()` on `DOMContentLoaded`, so `data/search-index.json` is fetched on every page load sitewide; 45,000 characters there would be a cost every visitor pays on every page. The transcripts are fetched from `data/field-radio.json` on first search instead — one copy of the text, and the index grew 12 KB rather than 44.
+
+  **Two measurements drove the design.** A `transcript` key on the existing Fuse index matches nothing: `distance: 200` scores by proximity to the start of the field, so on a 4,000-character transcript every probe outside the opening line missed. `ignoreLocation: true` fixes it globally and moved the top result on 5 of 20 ordinary queries across the other 1,368 entries, so transcripts get their own small Fuse instance and the sitewide config is untouched. Re-measured: one top-1 moved across 23 queries, `baseline`, to the clip actually titled "Baseline design".
+
+- **Hash deep-linking on Field Radio** (`js/field-radio.js`). `fromHash()` selects the clip named in the fragment, widens the track filter if the filter would hide it, and loads it paused. `syncHash()` uses `replaceState`, so auto-advance does not build a back-button step per clip, and since `replaceState` does not fire `hashchange` the listener cannot loop. Without this all 19 search results would have opened on whichever clip was first.
+
+- **Two video shorts on Field Radio** (17 → 19), both on the MEL & Research track, transcribed in full and lightly cleaned: "Designing gender-sensitive FGDs and KIIs" (5:12) and "What gender-sensitive MEL actually asks" (3:39). Media streams from the `voices` bucket in Supabase Storage.
+
+- **`rules/testing.md` item 22**, documenting the above and the two findings worth not rediscovering.
+
+### Changed
+
+- **`data/counts.json` gained `field-radio`**, and `docs/field-radio-guide.md` is now scanned by `check-counts.py`, so the station's clip count cannot drift again.
+
+- **The two September clips are credited to Vandana.** They shipped under the neutral house byline used by vs-02/03/04 because neither transcript names its speaker; the attribution was confirmed afterwards.
+
+- **`docs/roadmap.md`**: two present-tense counts were stale — the reading-companion library said 55 (now 172) and the foundational decks said 52 (now 58). Roadmaps are deliberately outside `check-counts.py`'s scope, so nothing was watching them. The planned "practitioner interview series" is recorded as shipped, since Field Radio is what it became.
+
 ## [10.245.0] - 2026-08-23
 
 ### Changed
