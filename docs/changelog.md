@@ -2,6 +2,52 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.307.0 — September 18, 2026 (A numerator with no denominator is not a rate)
+
+### For Learners
+
+- **Thirty-seven threat groups, and nothing to divide them by** — a new Data Note counting the threat groups in Anthropic's September 2026 AI misuse report, and explaining why the number cannot be read as a measure of anything. [Read it](/DataNotes/thirty-seven-threat-groups.html).
+
+### Added
+
+- **A Data Note on the September 2026 AI threat report.** Counting the `GTG-NNNNN` designators gives **37 distinct threat groups** across seven harm areas over the eight months from December 2025 to August 2026. The largest is not cyber. It is **surveillance, with ten** — operations building tools to identify and monitor people, including dissidents.
+
+  **The count is ours and the method is published so it can be disputed**: extract every `GTG-` string from the PDF text, assign each to the section it falls in, take distinct values. No designator appears in two sections, so the seven counts sum without double-counting.
+
+  **The point of the note is that 37 is not a rate.** There is no denominator — no published figure for operations attempted, accounts active or cases reviewed — and the selection is explicitly non-random: the report says its cases are "examples of the most notable and novel threat activity", not a sample. Three consequences follow. Better detection raises the count from the same underlying activity, so a rise across successive reports cannot distinguish more misuse from better detection. The organisation counting the misuse of its own product also decides which cases are notable enough to publish. And whether one operation, actor or campaign earns one designator or three is an internal convention the report does not define.
+
+  **Two columns that disagree** make the case concretely. Scams and fraud get one designator and four pages of 154, in what is almost certainly the highest-volume harm area by victim count. Biological misuse gets **zero designators and five case studies** across ten pages — so any count of "threat groups" reports zero for a harm area the report treats as among the most serious it covers. Section length tracks novelty, which is what the report says it selects for, and not prevalence.
+
+  **What it is good for** is the last section, and the reason this is on a development platform. Read as a typology rather than a measurement, the surveillance findings matter directly to civil society in South Asia: a single consultant engineering a mass-interception platform covering a country's mobile operators; one unit analysing hundreds of thousands of social media posts to select 39 opposition accounts; an intelligence unit that once ran many teams of analysts described as reduced to a single office. The useful question for an organisation working on rights, land or labour is not how many threat groups there are. It is what changes about handling a contributor list or a complainant's name when a well-resourced adversary no longer needs a team.
+
+## v10.306.0 — September 18, 2026 (43 million rural enterprises, and 93% of them employ nobody)
+
+### For Learners
+
+- **Rural Non-Farm Enterprise in India** — a new Deep Dive: 28 readings on why so few of India's 43 million rural enterprises ever hire a single person, from the management-practice experiments to the household-diversion finding on women's returns to capital. [Read it](/DeepDives/rural-non-farm-enterprise-india.html).
+
+### Added
+
+- **A Deep Dive on rural non-farm enterprise**, built outward from Transform Rural India's *State of Rural Entrepreneurship in India 2026* — a white paper that, unusually, publishes the arithmetic behind its headline. Working through its own bibliography was the fastest route to the serious evidence, so the list is largely sources the report itself cites: Bloom and colleagues on management practice in the *QJE*, McKenzie and Woodruff on why classroom training does so little, Iyer/Khanna/Varshney and Munshi on caste and hiring networks, and Bernhardt/Field/Pande/Rigol on what happens to a woman's loan inside her own household.
+
+  **The number the list is organised around is 93%.** That is the share of India's 43.1 million mini and nano rural enterprises — investment up to Rs 25 lakh — that employ nobody at all. Enterprises that do hire are twice as productive per worker, hold roughly six times the fixed assets, and average 4.5 workers. So the policy question is not how to create more rural enterprises; India has 43 million. It is why so few of the existing ones ever hire.
+
+  **The uncomfortable table is the one on returns to capital.** The likelihood of hiring rises steeply with investment — 1.3% of enterprises investing under Rs 10,000 employ anyone, against 82.7% above Rs 25 lakh — while value added per rupee of capital falls from 16.5 to 0.6 across the same range. Employment needs capital and capital earns less as it grows, so no single programme can optimise for both. The editor's note says this rather than smoothing it over.
+
+  **On citations.** Every figure is from a named table in a named source. Where a stable public URL could be verified it is linked; where it could not, the citation is given in full without a link rather than pointed at something that may rot. The figures drawn from the white paper's own reading of ASUSE 2025 unit-level data are labelled as the report's rather than as official statistics, because they are not reproducible from published tables.
+
+- **`scripts/check-deep-dives.py`** and the `deep-dives` CI job.
+
+### Fixed
+
+- **The Deep Dives index omitted one deep dive from its structured data, and four pages misstated how many readings they contain (#1106).** `DeepDives/index.html` carries a JSON-LD `ItemList` that search engines read; it listed 22 of 23 deep dives, with `farm-animal-welfare-india` missing.
+
+  **Nothing could have seen it.** The visible page renders client-side from `data/deep-dives.json`, where the entry was present all along, so the list on screen was complete. Only a crawler saw the short one. And `numberOfItems` said 22 — agreeing with its own short list, which is what a count derived from the thing it is meant to check will always do.
+
+  Writing the guard turned up four more. `sel-evaluation-india` claimed 32 readings and has 40; `the-stunting-puzzle` claimed 13 and has 16 — in both the page's own chip and the data file. `measuring-empowerment` claimed 13 and has 14, `randomista-economics` 14 against 15, in the page chip only. In every case readings had been added later and the count was never revised.
+
+  The guard now checks all three lists against each other — the files on disk, `data/deep-dives.json`, and the index page's `ItemList` — plus `numberOfItems`, each page's `reading_count`, and each page's own visible chip, against a straight count of `<article class="dd-item">` in the file. Verified by deleting the restored entry, which it reported by name.
+
 ## v10.305.0 — September 18, 2026 (Six reading companions, and a working paper worth more than its abstract)
 
 ### For Learners

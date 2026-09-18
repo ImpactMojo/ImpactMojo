@@ -140,7 +140,7 @@
       { element: '#nav-learn', intro: '<strong>Learn</strong><br>The heart of the platform: 79 courses (21 flagship + 58 foundational), interactive studios, and practice packs.' },
       { element: '#nav-flagships', intro: '<strong>Flagship courses</strong><br>Semester-depth courses with progress tracking, self-assessments, and free certificates — MEL, development economics, gender studies, causal inference, and more.' },
       { element: '#nav-labs', intro: '<strong>Studios</strong><br>35 studios where you build real artefacts — a Theory of Change, a LogFrame, a sampling plan, a survey instrument.' },
-      { element: '#nav-specials', intro: '<strong>Explore</strong><br>The 135-game library, 172 reading companions, 23 deep dives, citation-backed timelines, and daily practice dojos.' },
+      { element: '#nav-specials', intro: '<strong>Explore</strong><br>The 135-game library, 172 reading companions, 24 deep dives, citation-backed timelines, and daily practice dojos.' },
       { element: '#nav-libraries', intro: '<strong>Libraries &amp; data</strong><br>Reference collections: the Dataverse of data tools, the ImpactLex glossary, NudgeKit behaviour-change techniques, and Indian policy documents.' },
       // Two steps, one per breakpoint; the filter above keeps whichever button
       // is actually on screen. Splitting them is what lets the copy match the

@@ -4,6 +4,13 @@
   "count": 120,
   "entries": [
     {
+      "title": "The Deep Dives index omitted one deep dive from its structured data, and four pages misstated how many readings they contain (#1106)",
+      "detail": "DeepDives/index.html carries a JSON-LD ItemList that search engines read; it listed 22 of 23 deep dives, with farm-animal-welfare-india missing. Nothing could have seen it. The visible page renders client-side from data/deep-dives.json, where the entry was present all along, so the list on screen was complete. Only a crawler saw the short one. And numberOfItems said 22 — agreeing with its own short list, which is what a count derived from the thing it is meant to check will always do. Writing the guard turned up four more. sel-evaluation-india claimed 32 readings and has 40; the-stunting-puzzle claimed 13 and has 16 — in both the page's own chip and the data file. measuring-empowerment claimed 13 and has 14, randomista-economics 14 against 15, in the page chip only. In every case readings had been added later and the count was never revised. The guard now checks all three lists against each other — the files on disk, data/deep-dives.json, and the index page's ItemList — plus numberOfItems, each page's reading_count, and each page's own visible chip, against a straight count of <article class=\"dd-item\"> in the file. Verified by deleting the restored entry, which it reported by name.",
+      "fixed_on": "2026-09-18",
+      "release": "v10.306.0",
+      "issue": 1106
+    },
+    {
       "title": "libraries.html showed Dataverse 328 against a canonical 334, and its hero chip claimed 16 libraries against 17 cards (#1102)",
       "detail": "Two stale numbers on the hub page for the whole library, and every other card on it correct — which is what made a guard worth more than an edit. The Dataverse card is <span class=\"lib-n\">Dataverse</span><span class=\"lib-c\">328</span>: label first, number second, in a class pair the tile matcher had never been told about. Every shape it does know — <b>34</b><span>Interactive Labs</span>, stat-value/stat-label, chip/nm, sn/sl, tp-cnt — puts the number first. And dataverse was not in LABEL_KEYS, so even in the familiar order the label would not have resolved. check-counts.py now reads the lib-n/lib-c pair, which covers all nine numbered cards on that page and any card added later. The chip was a separate miss with a plainer cause: 16 libraries is ordinary prose the guard reads fine, but libraries was not a term and there was no canonical figure to compare it against. It was already wrong by one before the Facilitator Kits card went in. Canonical now, and checked.",
       "fixed_on": "2026-09-18",
@@ -832,13 +839,6 @@
     {
       "title": "devai",
       "detail": "— mobile-header element order was reversed (LOGO → HAM). Reordered to canonical HAM → LOGO → THEME.",
-      "fixed_on": "2026-05-20",
-      "release": "v10.24.0",
-      "issue": null
-    },
-    {
-      "title": "dataviz",
-      "detail": "— .mobile-menu-btn had position: fixed; top: 12px; left: 12px; taking it out of the flex flow and floating over the \"ImpactMojo\" logo. Moved back into the flex container.",
       "fixed_on": "2026-05-20",
       "release": "v10.24.0",
       "issue": null
