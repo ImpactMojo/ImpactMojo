@@ -15,9 +15,10 @@ Full course content in regional languages. ([#29](https://github.com/ImpactMojo/
 
 These were previously listed as in progress and have now shipped:
 
-- **BookSummaries expansion** — the interactive reading companion library has grown to **55 companions** across development economics, statistics, research methods, communication, leadership, and productivity. ([#272](https://github.com/ImpactMojo/ImpactMojo/issues/272))
-- **Native 101 deck migration** — all **52 foundational course decks** are now self-hosted HTML with ~100 slides each, interactive charts, and keyboard/touch navigation. No third-party presentation embeds remain.
+- **BookSummaries expansion** — the interactive reading companion library has grown to **172 companions** across development economics, statistics, research methods, communication, leadership, and productivity. ([#272](https://github.com/ImpactMojo/ImpactMojo/issues/272))
+- **Native 101 deck migration** — all **58 foundational course decks** are now self-hosted HTML with ~100 slides each, interactive charts, and keyboard/touch navigation. No third-party presentation embeds remain.
 - **Vernacular interface** — the UI and quality-audited page translations ship in 5 languages (Hindi, Tamil, Bengali, Marathi, Telugu); see "Currently In Progress" above for what's still open.
+- **Practitioner voices** — this was listed as a planned "practitioner interview series". It shipped as **Field Radio**, a station of **19 clips** — voice notes and short videos from practitioners, each with a full transcript, playing back-to-back and filterable by track. Every clip is in site search, including its transcript, so a phrase you half-remember finds the clip. ([Listen](/field-radio.html))
 
 ## Planned — Q2 2026 (April–June)
 
@@ -25,7 +26,6 @@ These were previously listed as in progress and have now shipped:
 - **Analytics dashboard v2** — See completion funnels, time-on-task, and assessment scores for yourself or your team
 - **Enhanced offline support** — Push notifications and background sync so the app stays updated even on intermittent connections
 - **Video walkthroughs** for interactive labs — short guided videos showing how to use each lab
-- **Practitioner interview series** — Real practitioners sharing how they apply concepts in the field
 
 ### Content
 - Additional foundational courses across all 6 tracks
