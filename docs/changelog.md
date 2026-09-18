@@ -2,6 +2,34 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.306.0 — September 18, 2026 (43 million rural enterprises, and 93% of them employ nobody)
+
+### For Learners
+
+- **Rural Non-Farm Enterprise in India** — a new Deep Dive: 28 readings on why so few of India's 43 million rural enterprises ever hire a single person, from the management-practice experiments to the household-diversion finding on women's returns to capital. [Read it](/DeepDives/rural-non-farm-enterprise-india.html).
+
+### Added
+
+- **A Deep Dive on rural non-farm enterprise**, built outward from Transform Rural India's *State of Rural Entrepreneurship in India 2026* — a white paper that, unusually, publishes the arithmetic behind its headline. Working through its own bibliography was the fastest route to the serious evidence, so the list is largely sources the report itself cites: Bloom and colleagues on management practice in the *QJE*, McKenzie and Woodruff on why classroom training does so little, Iyer/Khanna/Varshney and Munshi on caste and hiring networks, and Bernhardt/Field/Pande/Rigol on what happens to a woman's loan inside her own household.
+
+  **The number the list is organised around is 93%.** That is the share of India's 43.1 million mini and nano rural enterprises — investment up to Rs 25 lakh — that employ nobody at all. Enterprises that do hire are twice as productive per worker, hold roughly six times the fixed assets, and average 4.5 workers. So the policy question is not how to create more rural enterprises; India has 43 million. It is why so few of the existing ones ever hire.
+
+  **The uncomfortable table is the one on returns to capital.** The likelihood of hiring rises steeply with investment — 1.3% of enterprises investing under Rs 10,000 employ anyone, against 82.7% above Rs 25 lakh — while value added per rupee of capital falls from 16.5 to 0.6 across the same range. Employment needs capital and capital earns less as it grows, so no single programme can optimise for both. The editor's note says this rather than smoothing it over.
+
+  **On citations.** Every figure is from a named table in a named source. Where a stable public URL could be verified it is linked; where it could not, the citation is given in full without a link rather than pointed at something that may rot. The figures drawn from the white paper's own reading of ASUSE 2025 unit-level data are labelled as the report's rather than as official statistics, because they are not reproducible from published tables.
+
+- **`scripts/check-deep-dives.py`** and the `deep-dives` CI job.
+
+### Fixed
+
+- **The Deep Dives index omitted one deep dive from its structured data, and four pages misstated how many readings they contain (#1106).** `DeepDives/index.html` carries a JSON-LD `ItemList` that search engines read; it listed 22 of 23 deep dives, with `farm-animal-welfare-india` missing.
+
+  **Nothing could have seen it.** The visible page renders client-side from `data/deep-dives.json`, where the entry was present all along, so the list on screen was complete. Only a crawler saw the short one. And `numberOfItems` said 22 — agreeing with its own short list, which is what a count derived from the thing it is meant to check will always do.
+
+  Writing the guard turned up four more. `sel-evaluation-india` claimed 32 readings and has 40; `the-stunting-puzzle` claimed 13 and has 16 — in both the page's own chip and the data file. `measuring-empowerment` claimed 13 and has 14, `randomista-economics` 14 against 15, in the page chip only. In every case readings had been added later and the count was never revised.
+
+  The guard now checks all three lists against each other — the files on disk, `data/deep-dives.json`, and the index page's `ItemList` — plus `numberOfItems`, each page's `reading_count`, and each page's own visible chip, against a straight count of `<article class="dd-item">` in the file. Verified by deleting the restored entry, which it reported by name.
+
 ## v10.305.0 — September 18, 2026 (Six reading companions, and a working paper worth more than its abstract)
 
 ### For Learners

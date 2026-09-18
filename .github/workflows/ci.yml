@@ -601,6 +601,27 @@ jobs:
       - name: Check every heading survives the chrome strip
         run: python3 scripts/check-h1-survives-chrome.py
 
+  deep-dives:
+    name: Deep Dive listings agree
+    runs-on: ubuntu-latest
+    # Without this a hung step inherits GitHub's 360-minute default and the
+    # job neither passes nor fails -- which reads as "still running".
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # A deep dive exists in three places: the page, data/deep-dives.json
+      # (which the index fetches and renders), and the JSON-LD ItemList in
+      # DeepDives/index.html (which is what a crawler reads). Nothing compared
+      # them, and on 2026-09-18 the third was missing farm-animal-welfare-india
+      # (#1106). The visible page was fine, because it renders from the JSON,
+      # so only a crawler ever saw it -- and numberOfItems said 22, agreeing
+      # with its own short list. A count derived from the thing it checks
+      # cannot catch anything. The same run found four stale reading counts,
+      # where readings had been added and the chip or the JSON never updated.
+      - name: Check the three Deep Dive lists agree
+        run: python3 scripts/check-deep-dives.py
+
   workshop-kits:
     name: Facilitator kits are valid Workshopy Markdown
     runs-on: ubuntu-latest
