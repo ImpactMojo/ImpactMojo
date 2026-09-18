@@ -55,6 +55,8 @@
         allClips = (data && Array.isArray(data.clips)) ? data.clips : [];
         renderFilters();
         applyFilter("all");
+        fromHash();
+        window.addEventListener("hashchange", fromHash);
       })
       .catch(function () {
         els.stage.innerHTML = '<p class="fr-empty">Field Radio is warming up. Check back shortly.</p>';
@@ -217,6 +219,48 @@
     var wasPlaying = playing || true; // station keeps rolling
     stop();
     load(i, wasPlaying);
+    syncHash();
+  }
+
+  /* ---- Deep links ----
+     Every clip has a row in site search pointing at /field-radio.html#<id>.
+     Without this the station ignored the fragment and opened on whichever clip
+     happened to be first, so a search result for one clip silently played
+     another. replaceState rather than pushState: the hash tracks what is
+     playing, and auto-advance through a 19-clip station should not build 19
+     back-button steps. replaceState does not fire hashchange, so the listener
+     below cannot loop. */
+  function syncHash() {
+    var c = clips[idx];
+    if (!c || !window.history || !history.replaceState) return;
+    try { history.replaceState(null, "", "#" + c.id); } catch (e) {}
+  }
+
+  function indexOfId(id) {
+    for (var i = 0; i < clips.length; i++) { if (clips[i].id === id) return i; }
+    return -1;
+  }
+
+  function fromHash() {
+    var id = (location.hash || "").replace(/^#/, "");
+    if (!id) return;
+    // The linked clip may sit on a track the current filter hides. Widen to
+    // all voices rather than dropping the visitor somewhere they didn't ask for.
+    if (indexOfId(id) < 0) {
+      var known = allClips.some(function (c) { return c.id === id; });
+      if (!known) return;
+      applyFilter("all");
+    }
+    var i = indexOfId(id);
+    if (i < 0) return;
+    stop();
+    // Land on the clip, paused. Arriving from a search result should not start
+    // sound the visitor did not ask for, and a browser would block it anyway.
+    load(i, false);
+    var active = els.list && els.list.querySelector(".fr-item.is-playing");
+    if (active && active.scrollIntoView) {
+      try { active.scrollIntoView({ block: "nearest" }); } catch (e) {}
+    }
   }
 
   if (document.readyState === "loading") {
