@@ -43,6 +43,13 @@ NOT_A_DIVE = {"index.html", "_template.html"}
 EXEMPT: dict[str, str] = {}
 
 ITEM_RE = re.compile(r'<article class="dd-item">')
+# Each page also carries an Article JSON-LD block describing itself. Its "url"
+# is a self-reference, so a url naming a different page is a canonical signal
+# pointing at the wrong document (#1113): two deep dives built by copying
+# platform-gig-work-india.html kept its url, description and datePublished,
+# because the headline was rewritten and nothing on screen reads the rest.
+ARTICLE_RE = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
+SELF_URL_RE = re.compile(r'"url":\s*"[^"]*?/DeepDives/([a-z0-9-]+\.html)"')
 LD_RE = re.compile(r'"itemListElement":\s*\[(.*?)\]\s*\}\s*\}\s*</script>', re.S)
 LD_URL_RE = re.compile(r'"url":\s*"[^"]*?(/DeepDives/[a-z0-9-]+\.html)"')
 NUM_RE = re.compile(r'"numberOfItems":\s*(\d+)')
@@ -103,6 +110,15 @@ def main() -> int:
             problems.append(
                 f"{name}: reading_count is {claimed} but the page has {actual} readings"
             )
+
+        src = page.read_text(encoding="utf-8")
+        for blk in ARTICLE_RE.findall(src):
+            m = SELF_URL_RE.search(blk)
+            if m and m.group(1) != name:
+                problems.append(
+                    f"{name}: its JSON-LD url says {m.group(1)}, which is a different page "
+                    f"(check description and datePublished too)"
+                )
 
         chip = CHIP_RE.search(page.read_text(encoding="utf-8"))
         if not chip:

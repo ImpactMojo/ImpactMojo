@@ -4,6 +4,13 @@
   "count": 120,
   "entries": [
     {
+      "title": "Two Deep Dives told search engines they were a different page (#1113)",
+      "detail": "rural-non-farm-enterprise-india.html carried an Article JSON-LD block whose url, description and datePublished all belonged to platform-gig-work-india.html, the page it had been built from. The headline was rewritten; the other three fields were not. Nothing on screen reads that block, which is why it survived. The visible page, the <title>, the meta description and the Open Graph tags were all correct. Only a crawler saw a self-referential canonical URL pointing at another document, and a publication date ten weeks early. check-deep-dives.py now treats the JSON-LD url as the fourth claim a Deep Dive makes about itself, alongside the file on disk, the JSON entry and the index ItemList. A url naming a different page fails. Audited across all 25 dives: two affected, both built from the same template copy, both fixed. Verified by re-injecting the fault, which the guard reported by name.",
+      "fixed_on": "2026-09-21",
+      "release": "v10.310.0",
+      "issue": 1113
+    },
+    {
       "title": "The Deep Dives index omitted one deep dive from its structured data, and four pages misstated how many readings they contain (#1106)",
       "detail": "DeepDives/index.html carries a JSON-LD ItemList that search engines read; it listed 22 of 23 deep dives, with farm-animal-welfare-india missing. Nothing could have seen it. The visible page renders client-side from data/deep-dives.json, where the entry was present all along, so the list on screen was complete. Only a crawler saw the short one. And numberOfItems said 22 — agreeing with its own short list, which is what a count derived from the thing it is meant to check will always do. Writing the guard turned up four more. sel-evaluation-india claimed 32 readings and has 40; the-stunting-puzzle claimed 13 and has 16 — in both the page's own chip and the data file. measuring-empowerment claimed 13 and has 14, randomista-economics 14 against 15, in the page chip only. In every case readings had been added later and the count was never revised. The guard now checks all three lists against each other — the files on disk, data/deep-dives.json, and the index page's ItemList — plus numberOfItems, each page's reading_count, and each page's own visible chip, against a straight count of <article class=\"dd-item\"> in the file. Verified by deleting the restored entry, which it reported by name.",
       "fixed_on": "2026-09-18",
@@ -832,13 +839,6 @@
     {
       "title": "devai",
       "detail": "— hamburger button was invisible because a broken UserWay script (data-account=\"xxxx\" placeholder) rendered as a giant blue button covering the right side of the mobile-header. Replaced with canonical config.",
-      "fixed_on": "2026-05-20",
-      "release": "v10.24.0",
-      "issue": null
-    },
-    {
-      "title": "devai",
-      "detail": "— mobile-header element order was reversed (LOGO → HAM). Reordered to canonical HAM → LOGO → THEME.",
       "fixed_on": "2026-05-20",
       "release": "v10.24.0",
       "issue": null
