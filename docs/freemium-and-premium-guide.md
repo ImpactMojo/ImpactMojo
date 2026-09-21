@@ -12,7 +12,7 @@ This page explains exactly what is free, what is paid, and why the line is drawn
 
 No sign-in, no card, no trial clock:
 
-- **All 21 flagship courses** and **58 foundational (101) courses**
+- **All 21 flagship courses** and **59 foundational (101) courses**
 - **35 labs** and **135 games** (18 simulations + 117 puzzles)
 - **172 reading companions** and **25 deep dives**
 - **12 data notes** and **Field Radio** — 19 clips of practitioner voice notes and shorts, each with a transcript

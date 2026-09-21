@@ -2,6 +2,28 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.311.0 — September 21, 2026 (Ask who carries the downside)
+
+### For Learners
+
+- **Development Finance 101** — the 59th foundational course, and the one that covers the money arriving from outside the budget: who lends, on what terms, and who can complain. 116 slides across twelve modules. [Open it](/101-courses/development-finance.html).
+
+### Added
+
+- **Development Finance 101**, completing the pair begun with the Deep Dive three days ago. The Deep Dive supplies the reading list; the deck teaches the architecture.
+
+  Twelve modules: why the shape of the money matters; the institutions and how their decisions are actually made; loan instruments and concessionality; the shift from lending to de-risking private capital; how a project gets financed; India's own architecture; land, environment and consent; climate finance and its accounting; accountability mechanisms; following the money in practice; what to check before citing anything; and a final module on the lenders the standard map leaves out, including export credit agencies, non-traditional bilateral lending, sovereign debt distress and municipal finance.
+
+  **India-first where the law is Indian.** NaBFID, the National Monetisation Pipeline, viability gap funding, the RFCTLARR Act 2013 and the EIA Notification 2006 get their own two modules before the global architecture is generalised, because those are the documents an Indian practitioner can actually obtain and act on.
+
+  **The deck teaches a method, not a position.** Three questions recur: who bears the risk, who repays and when, and what was given up to get it. The closing module names three questions the deck deliberately does not settle, and says why a foundational course that resolved live empirical disputes by assertion would be teaching a position rather than a subject.
+
+  Every figure carries its source and year on the slide, and a full module is devoted to what will go out of date and how to check it.
+
+### Changed
+
+- **`scripts/deck_builder.py` no longer writes the canonical host into in-site links.** The shared builder put `https://www.impactmojo.in/101-courses/` in the header of every slide, so a 116-slide deck shipped 119 links that resolve only on the production domain and break on netlify.app, deploy previews and localhost. The four navigation links are now root-relative; the canonical, Open Graph and Twitter tags stay absolute, because those require a full URL. Existing decks already carry converted links, so this stops the builder reintroducing them on the next regeneration.
+
 ## v10.310.0 — September 21, 2026 (Who lends, on what terms, and who can complain)
 
 ### For Learners
