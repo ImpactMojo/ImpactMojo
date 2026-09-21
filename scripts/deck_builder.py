@@ -42,7 +42,7 @@ function initChart(slideIdx) {}
 
 
 def _header(course):
-    return ('<div class="slide-header"><a href="https://www.impactmojo.in/101-courses/" class="logo-mark" '
+    return ('<div class="slide-header"><a href="/101-courses/" class="logo-mark" '
             'target="_blank">' + LOGO + '<span class="logo-wordmark">ImpactMojo</span></a>'
             '<span class="header-center">' + course + '</span>'
             '<span class="header-url">www.impactmojo.in</span></div>')
@@ -94,9 +94,9 @@ def build(course, out_name, meta_desc, title_main_html, title_sub_html, title_ta
                     '<div class="end-headline">' + end_headline_html + '</div>'
                     '<div class="end-byline">' + end_byline + '</div>'
                     '<div class="end-cta">'
-                    '<a class="end-btn end-btn-primary" href="https://www.impactmojo.in/101-courses/" target="_blank">More 101 Courses</a>'
-                    '<a class="end-btn end-btn-secondary" href="https://www.impactmojo.in/" target="_blank">ImpactMojo Home</a>'
-                    '<a class="end-btn end-btn-tertiary" href="https://www.impactmojo.in/catalog.html" target="_blank">Full Catalog</a>'
+                    '<a class="end-btn end-btn-primary" href="/101-courses/" target="_blank">More 101 Courses</a>'
+                    '<a class="end-btn end-btn-secondary" href="/" target="_blank">ImpactMojo Home</a>'
+                    '<a class="end-btn end-btn-tertiary" href="/catalog.html" target="_blank">Full Catalog</a>'
                     '</div>'
                     '<div class="end-meta"><span>Free Forever</span><span class="end-meta-divider">&middot;</span>'
                     '<span>CC BY-NC-ND 4.0</span><span class="end-meta-divider">&middot;</span>'
