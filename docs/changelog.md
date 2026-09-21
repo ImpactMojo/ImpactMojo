@@ -2,6 +2,30 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.310.0 — September 21, 2026 (Who lends, on what terms, and who can complain)
+
+### For Learners
+
+- **The Political Economy of Development Finance** — a new Deep Dive: 26 readings on the institutions behind infrastructure and climate money, the shift from lending to de-risking private capital, and the complaint machinery most affected communities never reach. [Read it](/DeepDives/development-finance-infrastructure.html).
+
+### Added
+
+- **A Deep Dive on development finance**, built because the platform had a hole in a precise place. Political Economy 101 and Public Finance & Budgeting 101 already cover how the Indian state raises and spends money, and the Budget and Fiscal Analysis Studio traces it from Centre to beneficiary. None of them reach the money arriving from outside the budget. Across the whole site the World Bank appeared 181 times and essentially every one was the Bank as a **data source** — Open Data, the WDI, working papers — and never as a lender whose governance, instruments and complaint mechanisms are the object of study. "Inspection Panel" appeared on zero pages, "project finance" on zero, NaBFID on zero.
+
+  **Two numbers frame the list.** Developed countries reported **US$115.9 billion** of climate finance in 2022. Oxfam and CARE calculate the true value at **US$28–35 billion**, the difference being almost entirely instrument: a loan is reported at face value, so ten million dollars lent counts the same as ten million given. Neither figure is wrong. They answer different questions, which is what most arguments about development finance turn out to be about.
+
+  **The organising claim is a shift, not a topic.** A development finance institution used to lend public money to a state. Increasingly it uses public money to make a project bankable for a private investor, absorbing the risks that investor will not carry. Five sections follow that through: the institutions and how decisions are actually made; the move from lending to mobilising private capital, read in the primary documents as well as the critique; how Indian infrastructure is financed, including the two statutes that determine what a project owes the people on its site; climate finance, where the accounting question is sharpest; and data centres, as a sector being turned into an asset class while the rules are still being written.
+
+  **On sourcing.** Every figure is attributed to a named source and year, and the load-bearing ones were verified against the publisher rather than quoted from memory. Nothing is drawn from any other organisation's syllabus or reading list.
+
+### Fixed
+
+- **Two Deep Dives told search engines they were a different page (#1113).** `rural-non-farm-enterprise-india.html` carried an `Article` JSON-LD block whose `url`, `description` and `datePublished` all belonged to `platform-gig-work-india.html`, the page it had been built from. The headline was rewritten; the other three fields were not.
+
+  **Nothing on screen reads that block**, which is why it survived. The visible page, the `<title>`, the meta description and the Open Graph tags were all correct. Only a crawler saw a self-referential canonical URL pointing at another document, and a publication date ten weeks early.
+
+  `check-deep-dives.py` now treats the JSON-LD `url` as the fourth claim a Deep Dive makes about itself, alongside the file on disk, the JSON entry and the index `ItemList`. A `url` naming a different page fails. Audited across all 25 dives: two affected, both built from the same template copy, both fixed. Verified by re-injecting the fault, which the guard reported by name.
+
 ## v10.309.0 — September 18, 2026 (Nineteen clips that search could not find)
 
 ### For Learners
