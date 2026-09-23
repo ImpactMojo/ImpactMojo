@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.312.1 — September 23, 2026 (Three icon names that never existed)
+
+### Fixed
+
+- **Three Sargam icon names in the repository do not exist, and one of them was the replacement template (#1118).** The daily link check reports 404s on `sargam-icons@1.6.6/Icons/Line/*.svg`. Probing all 91 distinct Sargam URLs in the tree against the package's real file list — 433 Line icons in 1.6.7 — found seven names that 404. Three are ours: `si_ChartBar` is `si_Bar_chart`, `si_Alert_triangle` is `si_Warning`, `si_Download` is `si_File_download`. All three verified 200 before committing.
+
+  No live page was affected, which is why it had survived. The broken names sat in `.claude/skills/housekeeping/SKILL.md` §12d, the template a session copies when swapping an emoji for an icon, and in `scripts/gender-pubpol-seed.json`. The defect was in the instruction, so it would have kept reproducing into every page built by following it.
+
+  The other four 404s — `si_Database`, `si_Leaf`, `si_Timer`, `si_Users` — are **not** defects. They appear only as inline `<symbol>` ids under `<use href="#si_…">`, self-contained sprites that fetch nothing and render correctly. Sargam has no leaf, database, timer or group glyph at all, so the names are a coincidence rather than a reference.
+
 ## v10.312.0 — September 23, 2026 (Say how the entry was written)
 
 ### For Learners
