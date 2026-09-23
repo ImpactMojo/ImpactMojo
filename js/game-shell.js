@@ -497,6 +497,14 @@
     'body.light-mode .progress-bar, body.light-mode [class*="progress"]:not([class*="fill"]) { background: #E7DDD0 !important; }' +
     'body.light-mode .hint, body.light-mode .tip, body.light-mode blockquote, body.light-mode .note, body.light-mode .info, body.light-mode .insight-card { background: #FFF8F0 !important; border-color: #D97706 !important; color: #78350F !important; }' +
 
+    /* The folk-art palettes are built for the dark design: bright saffron, leaf
+       green and sky. Used as ink on the light theme's cream they measure 1.39
+       to 2.9:1 — the "How to play" labels, the agent names, the section titles.
+       Weight and size carry the emphasis in light mode; the hue does not. */
+    'body.light-mode strong, body.light-mode b { color: #78350F !important; }' +
+    'body.light-mode .section-title, body.light-mode .agent-name, body.light-mode .back-link, body.light-mode .card-title { color: #78350F !important; }' +
+    'body.light-mode .agent-archetype, body.light-mode .archetype { color: #065F46 !important; }' +
+
     /* ═══ HEADER ═══════════════════════════════════════════ */
     '#imx-game-header {' +
       'position: sticky; top: 0; z-index: 999;' +

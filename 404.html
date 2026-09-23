@@ -159,7 +159,7 @@ window.addEventListener('pageshow', function(event) {
 :root {
     --primary-bg: #F8FAFC;
     --secondary-bg: #FFFFFF;
-    --accent-color: #0284C7;
+    --accent-color: #0369A1;
     --accent-hover: #0369A1;
     --text-primary: #0F172A;
     --text-secondary: #475569;
@@ -171,17 +171,24 @@ window.addEventListener('pageshow', function(event) {
     --nav-text: #0F172A;
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    /* These three were declared only inside body.dark-mode, so in the default
+       (light) theme .action-btn.primary had no background at all and painted
+       white text straight onto the page: 1.04:1, the 404 page's primary call
+       to action, invisible. Both gradient stops carry white above 5.9:1. */
+    --secondary-accent: #4F46E5;
+    --gradient-primary: linear-gradient(135deg, #0369A1 0%, #4338CA 100%);
 }
 
 [data-theme="light"],
 body.light-mode {
     --primary-bg: #F8FAFC;
     --secondary-bg: #FFFFFF;
-    --accent-color: #0284C7;
+    --accent-color: #0369A1;
     --accent-hover: #0369A1;
     --text-primary: #0F172A;
     --text-secondary: #475569;
-    --text-muted: #64748B;
+    --text-muted: #52627A;
     --card-bg: #FFFFFF;
     --hover-bg: #F1F5F9;
     --border-color: #E2E8F0;
@@ -331,10 +338,10 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
 @keyframes v3-float-plane { 0% { transform: translate(0, 0) rotate(0deg); } 20% { transform: translate(-60px, 40px) rotate(10deg); } 40% { transform: translate(120px, 30px) rotate(-8deg); } 60% { transform: translate(40px, 60px) rotate(15deg); } 80% { transform: translate(-30px, 20px) rotate(-5deg); } 100% { transform: translate(0, 0) rotate(0deg); } }
 @media (max-width: 768px) { .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; } }
 @media (prefers-reduced-motion: reduce) { .v3-paper-plane { animation: none !important; } }
-.v3-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: v3PulseBlob 15s ease-in-out infinite; }
+.v3-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.08; animation: v3PulseBlob 15s ease-in-out infinite; }
 .v3-blob-1 { top: 10%; right: 10%; width: 400px; height: 400px; background: var(--accent-color); }
 .v3-blob-2 { bottom: 20%; left: 5%; width: 300px; height: 300px; background: var(--secondary-accent); animation-delay: -5s; }
-@keyframes v3PulseBlob { 0%, 100% { transform: scale(1); opacity: 0.15; } 50% { transform: scale(1.1); opacity: 0.2; } }
+@keyframes v3PulseBlob { 0%, 100% { transform: scale(1); opacity: 0.08; } 50% { transform: scale(1.1); opacity: 0.11; } }
 
 /* ========================================
    HEADER & NAVIGATION
@@ -884,6 +891,10 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
    ======================================== */
 .chatbot-fab {
     position: fixed;
+    border: 0;
+    padding: 0;
+    color: #FFFFFF;
+    font: inherit;
     bottom: 24px;
     right: 24px;
     width: 60px;
@@ -1310,8 +1321,8 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
     --im-secondary-accent: #6366F1;
     --im-success: #10B981;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -1325,7 +1336,7 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -1756,9 +1767,9 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
 </footer>
 
 <!-- Mojini Chatbot -->
-<div class="chatbot-fab" onclick="openChatbot()" aria-label="Open chat">
+<button type="button" class="chatbot-fab" onclick="openChatbot()" aria-label="Open chat">
     <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-</div>
+</button>
 
 <div class="chatbot-modal" id="chatbotModal">
     <div class="chat-header">
@@ -1933,7 +1944,7 @@ document.addEventListener('click', function(e) {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
 <script src="/js/state-manager.js?v=62445627"></script>
 <script src="/js/config.js?v=7e6af861"></script>
-<script src="/js/auth.js?v=804ebed9"></script>
+<script src="/js/auth.js?v=d7104db5"></script>
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
   <script src="/js/site-chrome.js?v=29467edd" defer></script>
 <script src="/js/mojini-ai.js?v=db5170eb" defer></script>

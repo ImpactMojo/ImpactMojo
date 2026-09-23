@@ -2,6 +2,36 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.314.0 — September 23, 2026 (Colours that had no value, and a light theme inverted twice)
+
+### Fixed
+
+- **A colour token declared only in the dark block has no value in the light theme, and the element then paints nothing (#1120).** `--gradient-primary` was declared once, inside `body.dark-mode`, and referenced from 17 pages: the whole legal set, the auth pages, about, contact, faq, podcast, workshops and blog. `background: var(--gradient-primary)` with no value is not an error. The declaration is invalid at computed value time, the property takes its initial value, and a `color: white` on top of it is white text on the page background.
+
+  On `404.html` that was the primary call to action. Measured from the rendered pixels rather than from axe: white on `#F8FAFC`, **1.04:1**. On `blog.html` nine rules referenced it, the active filter button and the chat launcher among them. `--secondary-accent`, `--shadow-xl`, `--danger-color`, `--premium-gold` and the three social brand colours on `account.html` had the same shape. Each now has a light value chosen for the direction it is used in.
+
+- **Sixteen Games ran two light-mode systems at once, and the second undid the first (#1120).** `js/game-shell.js` already provides a complete light theme. Those pages also loaded `assets/css/light-mode-fallback.css`, which applies `filter: invert(0.92) hue-rotate(180deg)` to the whole body for pages that have no light theme at all. So game-shell painted a correct light theme and the fallback inverted it: a near-black panel on a cream page, with the panel's own text still in the dark design's saffron. The fallback is now only on the eight pages that genuinely need it.
+
+  axe cannot evaluate a CSS filter, so every contrast number it reported on those pages was measured against un-inverted colours and meant nothing. This was found by screenshotting the page and looking at it.
+
+- **An accent asked to be both dark ink on a light surface and a light fill under white ink (#1120).** `#0EA5E9` under white is 2.77:1, on `.day-badge`, `.tab-btn.active`, `.step-n`, `.setup-num`, `.msg.user .msg-text` and the skip link, across 191 book companions and 70 other pages. `#0284C7` as ink on white is 4.09:1, in the light palette of 32 pages. Both are `#0369A1` now, which is 5.93:1 in **both** directions. `--text-muted: #64748B` was 4.34:1 on `--hover-bg`, the surface the blog's tag pills sit on.
+
+- **The handouts' Flat-UI palette failed in both directions too (#1120).** `#3498DB`, `#E74C3C`, `#27AE60`, `#F39C12`, `#2980B9`, `#16A085`, `#F1C40F`, `#6C757D` and `#7F8C8D` were used as ink on white *and* as fills carrying white text, measuring 2.19:1 to 4.44:1 across 87 files. Each moved one step darker in the same hue, computed per colour so that both directions clear 4.5:1. Bootstrap's `#FFC107` at 1.42:1 and `#856404` on `#F8D7DA` went with them.
+
+- **99 checkboxes and 17 radios with no accessible name (#1120).** A screen reader announced "checkbox, unchecked" and nothing else. Twelve of the radios had a `<label>Low Threat</label>` beside them with no `for` attribute, which associates nothing. Each control is wrapped in its own label now, which also gives it a click target.
+
+- **The chat launcher was a `<div>` with an `onclick` (#1120).** No keyboard could reach it, and `aria-label` is invalid on a div with no role, so a screen reader had no name for it either. It is a `<button>` on both pages that carry it.
+
+- **A decorative blob at 0.15 alpha sitting under body text (#1120).** It cost about a full point of contrast on every page carrying it, which is what put the legal pages' back link and date stamp at 4.4:1 rather than 5.6:1. It is 0.08 now, on 20 pages, and still visible.
+
+- **`BookCompanionTools/budget-template-generator.html`: 106 unlabelled inputs and seven chart bars carrying white labels at 2.14:1 to 4.47:1 (#1120).** The generated table rows cannot have unique ids, so the name goes on the control: "Unit cost for Project Manager", and so on. The category colours are fills under white text, so the fill is what moved.
+
+- **`BookSummaries/debraj-ray-interactive.html` rendered a light design on a dark body (#1120).** The React app is not a `.panel`, so the companion dark rules never reached it while the blanket `html.dark nav` and `html.dark body main` repainted its chrome `#0F172A` and left its stone inks alone: 1.02:1 on the darkest of them.
+
+### Added
+
+- **`scripts/check-theme-tokens.py`, run by the `theme-tokens` job in CI.** It reports any custom property that a page's own `<style>` references bare while declaring it only inside a dark-theme block. A `var(--x, fallback)` reference is fine and is not reported. Fault-injected against the real `404.html` defect.
+
 ## v10.313.0 — September 23, 2026 (Two script blocks that never ran)
 
 ### Fixed

@@ -464,6 +464,23 @@ jobs:
       - name: Parse every inline script on every page
         run: node scripts/check-inline-js.mjs
 
+  theme-tokens:
+    name: No dark-only colour token
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      # A custom property declared only inside a dark-theme block has no value
+      # at all in the default theme, and `background: var(--x)` with no value
+      # paints nothing rather than erroring. On 2026-09-23 that was the primary
+      # call to action on 404.html: white text on the page background, 1.04:1.
+      - name: Every referenced token has a light value
+        run: python3 scripts/check-theme-tokens.py
+
   impactlex:
     name: ImpactLex provenance and snapshot age
     runs-on: ubuntu-latest

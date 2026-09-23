@@ -34,6 +34,7 @@ Free development education platform for South Asia. Static HTML/CSS/JS, Supabase
 - `data/search-index.json` must stay valid JSON
 - Update `docs/changelog.md` for user-facing changes
 - **ImpactLex entries are not all equal, and the page now says so.** 159 of 494 terms are unreviewed `seed`, 226 were drafted by a language model, 460 have no citation. `impactlex/app.js` renders provenance on every term and offers a filter for it; `scripts/check-impactlex.py` keeps it wired and watches the offline snapshot's age. Do not regenerate that snapshot with `scripts/impactlex-migrate.mjs` — it would overwrite 385 curated definitions with the original import.
+- **A colour token is either ink or a fill, and one token cannot be both.** `#0EA5E9` is 2.77:1 under white *and* 2.77:1 as ink on white; darkening it to fix a link makes the button it fills worse unless the ink moves with it. `css/imx-main.css` splits them: `--accent-color` is the brand sky for fills, borders and icons, `--accent-solid` (#0369A1) is a surface carrying white text, `--accent-ink` (#075985) is text on a light ground. Use the one that matches the job, and remember a token declared only in a dark block has **no value** in the light theme — `scripts/check-theme-tokens.py` catches that, nothing catches the rest. See `.claude/rules/testing.md` item 25.
 - **Fixing a defect? File a `bug` issue first, then fix, then cite it as `(#NNN)` in `### Fixed`** — the public Known Issues page can only show what was filed. See `docs/bug-reporting.md`
 
 ## API Keys
