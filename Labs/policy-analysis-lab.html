@@ -84,8 +84,8 @@ body{font-family:var(--font-sans);background:var(--primary-bg);color:var(--text-
 .header h1{font-family:var(--font-heading);font-size:clamp(1.7rem,3.5vw,2.4rem);margin-bottom:.6rem;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .header p{color:var(--text-secondary);font-size:1.02rem;max-width:780px}
 .course-links{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
-.course-link{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;background:var(--hover-bg);border:1px solid var(--border);border-radius:8px;color:var(--secondary-accent);font-size:.78rem;font-weight:600;text-decoration:none;transition:all .2s}
-.course-link:hover{background:rgba(99,102,241,.1);border-color:var(--secondary-accent)}
+.course-link{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;background:var(--hover-bg);border:1px solid var(--border);border-radius:8px;color:var(--im-ink-info, #4F46E5);font-size:.78rem;font-weight:600;text-decoration:none;transition:all .2s}
+.course-link:hover{background:rgba(99,102,241,.1);border-color:var(--im-ink-info, #4F46E5)}
 
 /* Tool Tabs */
 .tool-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem;padding:.5rem;background:var(--secondary-bg);border-radius:12px;border:1px solid var(--border)}
@@ -142,7 +142,7 @@ textarea{min-height:80px}
 
 /* Buttons */
 .btn{padding:.55rem 1.2rem;border:none;border-radius:8px;font-family:var(--font-heading);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
-.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary{background: var(--im-fill-sky, #0369A1);color:#fff}.btn-primary:hover{background:var(--accent-hover)}
 .btn-secondary{background:var(--hover-bg);color:var(--text-primary);border:1px solid var(--border)}.btn-secondary:hover{background:var(--secondary-bg)}
 .btn-success{background: #0B835B;color:#fff}.btn-success:hover{opacity:.9}
 .btn-danger{background: #E71414;color:#fff;font-size:.78rem;padding:.4rem .8rem}.btn-danger:hover{opacity:.9}
@@ -187,6 +187,14 @@ textarea{min-height:80px}
   .matrix-table{font-size:.75rem}
   .matrix-table td input{font-size:.75rem}
 }
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-info:#4F46E5;}
+@media (prefers-color-scheme: dark){:root{--im-ink-info:#A5B4FC;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-info:#A5B4FC;}
+
+/* A surface that carries white ink; it does not flip with the theme. */
+:root{--im-fill-sky:#0369A1;}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Policy Analysis Studio — Structured Tools for Policy Reasoning", "description": "Interactive Policy Analysis Studio — Bardach 8-step analysis, stakeholder power grid, causal loop builder, decision matrix, and policy brief generator. Free, browser-only, auto-saves your work.", "url": "https://www.impactmojo.in/Labs/policy-analysis-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
 </head>
@@ -307,7 +315,7 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
     <p class="hint">State the policy problem in concrete, measurable terms. Who is affected? What is the gap between the current situation and the desired one?</p>
     <div class="form-group">
       <label>Problem Statement</label>
-      <textarea data-bardach="problem" placeholder="e.g. 40% of rural households in Odisha lack access to piped drinking water, leading to 12,000 annual waterborne disease cases..."></textarea>
+      <textarea aria-label="Problem Statement" data-bardach="problem" placeholder="e.g. 40% of rural households in Odisha lack access to piped drinking water, leading to 12,000 annual waterborne disease cases..."></textarea>
     </div>
   </div>
 
@@ -316,7 +324,7 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
     <p class="hint">What data, studies, or reports support your problem definition? Include quantitative evidence and qualitative context.</p>
     <div class="form-group">
       <label>Key Evidence</label>
-      <textarea data-bardach="evidence" placeholder="e.g. NFHS-5 data shows...; NSSO 76th round reports...; District-level HMIS data indicates..."></textarea>
+      <textarea aria-label="Key Evidence" data-bardach="evidence" placeholder="e.g. NFHS-5 data shows...; NSSO 76th round reports...; District-level HMIS data indicates..."></textarea>
     </div>
   </div>
 
@@ -325,19 +333,19 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
     <p class="hint">List 3-5 distinct policy alternatives, including the status quo. Each should be a genuinely different approach, not a variation of the same idea.</p>
     <div class="form-group">
       <label>Alternative 1 (Status Quo)</label>
-      <textarea data-bardach="alt1" rows="2" placeholder="Continue current approach..."></textarea>
+      <textarea aria-label="Alternative 1 (Status Quo)" data-bardach="alt1" rows="2" placeholder="Continue current approach..."></textarea>
     </div>
     <div class="form-group">
       <label>Alternative 2</label>
-      <textarea data-bardach="alt2" rows="2" placeholder=""></textarea>
+      <textarea aria-label="Alternative 2" data-bardach="alt2" rows="2" placeholder=""></textarea>
     </div>
     <div class="form-group">
       <label>Alternative 3</label>
-      <textarea data-bardach="alt3" rows="2" placeholder=""></textarea>
+      <textarea aria-label="Alternative 3" data-bardach="alt3" rows="2" placeholder=""></textarea>
     </div>
     <div class="form-group">
       <label>Alternative 4 (optional)</label>
-      <textarea data-bardach="alt4" rows="2" placeholder=""></textarea>
+      <textarea aria-label="Alternative 4 (optional)" data-bardach="alt4" rows="2" placeholder=""></textarea>
     </div>
   </div>
 
@@ -346,7 +354,7 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
     <p class="hint">What criteria will you use to evaluate alternatives? Common criteria: effectiveness, cost, equity, political feasibility, administrative feasibility, legality.</p>
     <div class="form-group">
       <label>Evaluation Criteria</label>
-      <textarea data-bardach="criteria" placeholder="1. Effectiveness (% reduction in problem)&#10;2. Cost (total and per-beneficiary)&#10;3. Equity (distributional impact)&#10;4. Political feasibility&#10;5. Administrative feasibility"></textarea>
+      <textarea aria-label="Evaluation Criteria" data-bardach="criteria" placeholder="1. Effectiveness (% reduction in problem)&#10;2. Cost (total and per-beneficiary)&#10;3. Equity (distributional impact)&#10;4. Political feasibility&#10;5. Administrative feasibility"></textarea>
     </div>
   </div>
 
@@ -355,7 +363,7 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
     <p class="hint">For each alternative, project the likely outcomes against your criteria. Be honest about uncertainty and evidence gaps.</p>
     <div class="form-group">
       <label>Projected Outcomes</label>
-      <textarea data-bardach="outcomes" rows="6" placeholder="Alternative 1 (Status Quo): ...&#10;Alternative 2: ...&#10;Alternative 3: ..."></textarea>
+      <textarea aria-label="Projected Outcomes" data-bardach="outcomes" rows="6" placeholder="Alternative 1 (Status Quo): ...&#10;Alternative 2: ...&#10;Alternative 3: ..."></textarea>
     </div>
   </div>
 
@@ -364,7 +372,7 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
     <p class="hint">No alternative dominates on all criteria. What are the key trade-offs? Which criteria matter most given the political and institutional context?</p>
     <div class="form-group">
       <label>Trade-off Analysis</label>
-      <textarea data-bardach="tradeoffs" placeholder="The central trade-off is between..."></textarea>
+      <textarea aria-label="Trade-off Analysis" data-bardach="tradeoffs" placeholder="The central trade-off is between..."></textarea>
     </div>
   </div>
 
@@ -373,7 +381,7 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
     <p class="hint">State your recommended alternative and justify the choice. Acknowledge what you are giving up.</p>
     <div class="form-group">
       <label>Recommendation</label>
-      <textarea data-bardach="decision" placeholder="I recommend Alternative X because..."></textarea>
+      <textarea aria-label="Recommendation" data-bardach="decision" placeholder="I recommend Alternative X because..."></textarea>
     </div>
   </div>
 
@@ -382,7 +390,7 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
     <p class="hint">Craft a concise narrative that communicates your analysis to a busy decision-maker. Lead with the recommendation, then the reasoning.</p>
     <div class="form-group">
       <label>Executive Summary</label>
-      <textarea data-bardach="story" rows="5" placeholder="[Decision-maker name] should adopt [Alternative X] to address [problem]. This will [projected outcome] at a cost of [amount]. The main risk is [trade-off], which can be mitigated by..."></textarea>
+      <textarea aria-label="Executive Summary" data-bardach="story" rows="5" placeholder="[Decision-maker name] should adopt [Alternative X] to address [problem]. This will [projected outcome] at a cost of [amount]. The main risk is [trade-off], which can be mitigated by..."></textarea>
     </div>
   </div>
 
@@ -566,27 +574,27 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
     </div>
     <div class="form-group">
       <label>Problem Statement</label>
-      <textarea data-brief="problem" rows="4"></textarea>
+      <textarea aria-label="Problem Statement" data-brief="problem" rows="4"></textarea>
     </div>
     <div class="form-group">
       <label>Key Evidence</label>
-      <textarea data-brief="evidence" rows="4"></textarea>
+      <textarea aria-label="Key Evidence" data-brief="evidence" rows="4"></textarea>
     </div>
     <div class="form-group">
       <label>Policy Options Considered</label>
-      <textarea data-brief="options" rows="4"></textarea>
+      <textarea aria-label="Policy Options Considered" data-brief="options" rows="4"></textarea>
     </div>
     <div class="form-group">
       <label>Recommendation</label>
-      <textarea data-brief="recommendation" rows="4"></textarea>
+      <textarea aria-label="Recommendation" data-brief="recommendation" rows="4"></textarea>
     </div>
     <div class="form-group">
       <label>Implementation Considerations</label>
-      <textarea data-brief="implementation" rows="3"></textarea>
+      <textarea aria-label="Implementation Considerations" data-brief="implementation" rows="3"></textarea>
     </div>
     <div class="form-group">
       <label>Risks & Mitigation</label>
-      <textarea data-brief="risks" rows="3"></textarea>
+      <textarea aria-label="Risks & Mitigation" data-brief="risks" rows="3"></textarea>
     </div>
   </div>
 
