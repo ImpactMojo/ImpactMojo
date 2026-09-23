@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.312.0 — September 23, 2026 (Say how the entry was written)
+
+### For Learners
+
+- **ImpactLex now tells you how each entry was written** — whether an editor has reviewed it, whether a language model wrote the first draft, and whether it carries a citation. A new filter lets you see only the reviewed entries, or only the ones with a source. 159 of 494 entries have not been reviewed yet and 460 carry no citation; the page says so on each one instead of leaving you to guess. [Open the library](/impactlex/).
+
+### Added
+
+- **Provenance on every ImpactLex entry.** `provenanceOf()` reports three facts per term — reviewed or not, hand-written or model-drafted, cited or not — in the term modal under "How this entry was written". A filter group beside the category and course filters offers All entries, Reviewed, Not yet reviewed, and With a source.
+
+### Changed
+
+- **The ImpactLex Sources block is always shown.** It was hidden whenever a term had no sources, so an uncited entry looked exactly like a cited one. It now reads "No source recorded for this entry. Check it against a primary source before quoting it." An absent citation is information about the entry, and hiding the heading hid it.
+
+### Internal
+
+- **`scripts/check-impactlex.py`**, run by CI as the `impactlex` job. It keeps the provenance wiring in place, fails if the Sources block is hidden again from either the markup or JavaScript, pins the `aiProvider` vocabulary, and fails when the offline snapshot passes 180 days old — that snapshot is what every visitor sees before InstantDB answers, so its age is everyone's first paint rather than a fallback. Five checks fault-injected.
+
 ## v10.311.0 — September 21, 2026 (Ask who carries the downside)
 
 ### For Learners

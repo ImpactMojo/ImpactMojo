@@ -511,3 +511,27 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
     text-decoration: underline;
     text-underline-offset: 0.15em;
 }
+
+/* ── Provenance ──────────────────────────────────────────────────────────
+   How an entry came to exist, shown on every term. The section is never
+   hidden: an entry nobody has reviewed and an entry with no citation both
+   used to look exactly like a reviewed, cited one, because the block was
+   simply dropped when there was nothing to put in it. */
+.provenance-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.provenance-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--text-2, #475569);
+}
+.provenance-list li::before {
+  position: absolute; left: 0; top: 0;
+  font-weight: 700;
+}
+.provenance-list .prov-ok::before   { content: "\2713"; color: #15803d; }
+.provenance-list .prov-warn::before { content: "\26A0"; color: #b45309; }
+.sources-empty { color: var(--text-3, #64748b); font-style: italic; }
+
+[data-theme="dark"] .provenance-list .prov-ok::before   { color: #4ade80; }
+[data-theme="dark"] .provenance-list .prov-warn::before { color: #fbbf24; }
