@@ -2,6 +2,88 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.316.0 — September 23, 2026 (The timelines)
+
+### Fixed
+
+- **The timeline palette was eight colours doing two jobs each (#1120).** `--cyan` `#0891B2`, `--green` `#059669`, `--amber` `#D97706`, `--red` `#DC2626`, `--violet` `#9333EA`, `--rose` `#E11D48`, `--teal` `#0D9488` and `--indigo` `#4F46E5` were written as ink on the cream page *and* as the fill under white on era chips and markers, on six timeline pages. Neither direction cleared 4.5:1 for most of them. Each is now two tokens: the fill moved to a value that carries white (`#0369A1`, `#047857`, `#92400E`, `#991B1B`, `#7E22CE`, `#9F1239`, `#0F766E`), and a matching `--*-ink` carries the text, with a value per theme.
+
+- **The breadcrumb link was distinguished from the text around it by colour alone (#1120).** `--ink-mid` against `--ink-light` is **1.93:1**, well under the 3:1 that WCAG 1.4.1 allows a colour-only distinction. It is underlined now, on all six timeline pages.
+
+## v10.315.0 — September 23, 2026 (The handouts and the Studios)
+
+### Fixed
+
+- **Ninety-nine checkboxes and seventeen radios in `Handouts/` had no accessible name (#1120).** A screen reader announced "checkbox, unchecked" and nothing else. Twelve of the radios had a `<label>Low Threat</label>` sitting beside them with no `for` attribute, which associates nothing and reads as if the work had been done. Each control is wrapped in its own label now, which also gives it a click target. A radio that sits between a card heading and its description takes the heading as its name.
+
+- **251 tables in 81 handouts scrolled the whole page sideways on a phone (#1120).** `poverty_inequality_handout_1.html` measured 1,076px inside a 390px viewport. Each table is in a scroll wrapper the keyboard can enter (`role="region"`, `tabindex="0"`), which is the part usually left out: a scroll container nobody can reach is a second defect on top of the first. Deliberately **not** `display: block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree.
+
+- **The Studios' semantic colours could not sit on both surfaces (#1120).** `#059669` on its own pale mint is 3.37:1 and on the same tint over a dark card 3.01:1; `#D97706`, `#6366F1` and `#DC2626` the same. One value cannot clear 4.5:1 on both, so each is an `--im-ink-*` token with a value per theme. 421 light-palette declarations across 36 Studios moved to the darker ink, and 38 Studios that declare **one** palette and no dark block — in dark mode the site chrome paints the body `#0F172A` while their tokens stay — now carry a dark ink block.
+
+- **176 labels in the Studios bound to nothing (#1120).** `<label>Category</label><select id="roleCat">` associates neither; both now carry `for`/`id`. The sliders in the urban-boundaries Studio had labels with nested markup, which an earlier pass skipped.
+
+- **Nine `role="tablist"` elements over plain buttons (#1120).** `aria-required-children` fails, and the pattern the role announces — arrow-key navigation, `aria-selected`, `aria-controls` — is not there. Where the buttons really do carry `role="tab"` the parent role stays; where they do not, the role goes and an `aria-label` names the group.
+
+- **The deck's fullscreen hint was white at 25 per cent on whatever slide was behind it (#1120).** 1.06:1 on the palest of them, across 60 course decks, and a `<div>` with an `onclick` that no keyboard could reach. It carries its own fill now, so it reads on every slide whatever colour the slide is, and it is a `<button>`.
+
+- **A bare `<a>` in the teacher-evidence Studio took the browser default `#0000EE`**, 1.46:1 on the dark card (#1120).
+
+## v10.314.0 — September 23, 2026 (Colours that had no value, and a light theme inverted twice)
+
+### Fixed
+
+- **A colour token declared only in the dark block has no value in the light theme, and the element then paints nothing (#1120).** `--gradient-primary` was declared once, inside `body.dark-mode`, and referenced from 17 pages: the whole legal set, the auth pages, about, contact, faq, podcast, workshops and blog. `background: var(--gradient-primary)` with no value is not an error. The declaration is invalid at computed value time, the property takes its initial value, and a `color: white` on top of it is white text on the page background.
+
+  On `404.html` that was the primary call to action. Measured from the rendered pixels rather than from axe: white on `#F8FAFC`, **1.04:1**. On `blog.html` nine rules referenced it, the active filter button and the chat launcher among them. `--secondary-accent`, `--shadow-xl`, `--danger-color`, `--premium-gold` and the three social brand colours on `account.html` had the same shape. Each now has a light value chosen for the direction it is used in.
+
+- **Sixteen Games ran two light-mode systems at once, and the second undid the first (#1120).** `js/game-shell.js` already provides a complete light theme. Those pages also loaded `assets/css/light-mode-fallback.css`, which applies `filter: invert(0.92) hue-rotate(180deg)` to the whole body for pages that have no light theme at all. So game-shell painted a correct light theme and the fallback inverted it: a near-black panel on a cream page, with the panel's own text still in the dark design's saffron. The fallback is now only on the eight pages that genuinely need it.
+
+  axe cannot evaluate a CSS filter, so every contrast number it reported on those pages was measured against un-inverted colours and meant nothing. This was found by screenshotting the page and looking at it.
+
+- **An accent asked to be both dark ink on a light surface and a light fill under white ink (#1120).** `#0EA5E9` under white is 2.77:1, on `.day-badge`, `.tab-btn.active`, `.step-n`, `.setup-num`, `.msg.user .msg-text` and the skip link, across 191 book companions and 70 other pages. `#0284C7` as ink on white is 4.09:1, in the light palette of 32 pages. Both are `#0369A1` now, which is 5.93:1 in **both** directions. `--text-muted: #64748B` was 4.34:1 on `--hover-bg`, the surface the blog's tag pills sit on.
+
+- **The handouts' Flat-UI palette failed in both directions too (#1120).** `#3498DB`, `#E74C3C`, `#27AE60`, `#F39C12`, `#2980B9`, `#16A085`, `#F1C40F`, `#6C757D` and `#7F8C8D` were used as ink on white *and* as fills carrying white text, measuring 2.19:1 to 4.44:1 across 87 files. Each moved one step darker in the same hue, computed per colour so that both directions clear 4.5:1. Bootstrap's `#FFC107` at 1.42:1 and `#856404` on `#F8D7DA` went with them.
+
+- **99 checkboxes and 17 radios with no accessible name (#1120).** A screen reader announced "checkbox, unchecked" and nothing else. Twelve of the radios had a `<label>Low Threat</label>` beside them with no `for` attribute, which associates nothing. Each control is wrapped in its own label now, which also gives it a click target.
+
+- **The chat launcher was a `<div>` with an `onclick` (#1120).** No keyboard could reach it, and `aria-label` is invalid on a div with no role, so a screen reader had no name for it either. It is a `<button>` on both pages that carry it.
+
+- **A decorative blob at 0.15 alpha sitting under body text (#1120).** It cost about a full point of contrast on every page carrying it, which is what put the legal pages' back link and date stamp at 4.4:1 rather than 5.6:1. It is 0.08 now, on 20 pages, and still visible.
+
+- **`BookCompanionTools/budget-template-generator.html`: 106 unlabelled inputs and seven chart bars carrying white labels at 2.14:1 to 4.47:1 (#1120).** The generated table rows cannot have unique ids, so the name goes on the control: "Unit cost for Project Manager", and so on. The category colours are fills under white text, so the fill is what moved.
+
+- **`BookSummaries/debraj-ray-interactive.html` rendered a light design on a dark body (#1120).** The React app is not a `.panel`, so the companion dark rules never reached it while the blanket `html.dark nav` and `html.dark body main` repainted its chrome `#0F172A` and left its stone inks alone: 1.02:1 on the darkest of them.
+
+### Added
+
+- **`scripts/check-theme-tokens.py`, run by the `theme-tokens` job in CI.** It reports any custom property that a page's own `<style>` references bare while declaring it only inside a dark-theme block. A `var(--x, fallback)` reference is fine and is not reported. Fault-injected against the real `404.html` defect.
+
+## v10.313.0 — September 23, 2026 (Two script blocks that never ran)
+
+### Fixed
+
+- **Two inline script blocks did not parse, so nothing in either of them had ever run (#1119).** A `<script>` that throws `SyntaxError` is not partially executed. The page renders exactly as designed and the only evidence is one line in the browser console.
+
+  On the homepage, `['What's Premium?','What is Premium?']` put an unescaped apostrophe inside a single-quoted string, and the whole 86-line Mojini block went with it: no chat placeholder text, no greeting, and none of the eight knowledge-base chips. On `status.html`, a `// count-ignore` marker sitting mid-line commented out the rest of the line — including the `url:` key and the closing brace — so the check registry never closed and the public status page ran no JavaScript at all.
+
+  The `count-ignore` marker has to stay on the line `check-counts.py` reads, so it now sits at the end of that line. Moving it to a block comment above fixes the parse and breaks the count check instead; both are green.
+
+### Added
+
+- **`scripts/check-inline-js.mjs`, run by the `inline-js` job in CI.** It cuts each inline script where an HTML parser would cut it — at the first literal `</script` — and asks node to parse the remainder. 1,979 blocks across 917 pages, no browser and no network. Fault-injected against the real homepage defect.
+
+  Two things it has to get right, both found by getting them wrong first. A `<script` appearing *inside* an already-open script element is text to the parser, not a new element; scanning for opening tags without skipping past each element's end reports 17 false failures on the compiled Parcel bundles in `BookSummaries/`. And `vm.Script` parses as a classic script, so a legitimate `type="module"` body using top-level `import` or `await` fails there and nowhere else; anything it rejects is re-checked with `node --check` on a `.mjs` file before it is called a failure.
+
+## v10.312.1 — September 23, 2026 (Three icon names that never existed)
+
+### Fixed
+
+- **Three Sargam icon names in the repository do not exist, and one of them was the replacement template (#1118).** The daily link check reports 404s on `sargam-icons@1.6.6/Icons/Line/*.svg`. Probing all 91 distinct Sargam URLs in the tree against the package's real file list — 433 Line icons in 1.6.7 — found seven names that 404. Three are ours: `si_ChartBar` is `si_Bar_chart`, `si_Alert_triangle` is `si_Warning`, `si_Download` is `si_File_download`. All three verified 200 before committing.
+
+  No live page was affected, which is why it had survived. The broken names sat in `.claude/skills/housekeeping/SKILL.md` §12d, the template a session copies when swapping an emoji for an icon, and in `scripts/gender-pubpol-seed.json`. The defect was in the instruction, so it would have kept reproducing into every page built by following it.
+
+  The other four 404s — `si_Database`, `si_Leaf`, `si_Timer`, `si_Users` — are **not** defects. They appear only as inline `<symbol>` ids under `<use href="#si_…">`, self-contained sprites that fetch nothing and render correctly. Sargam has no leaf, database, timer or group glyph at all, so the names are a coincidence rather than a reference.
+
 ## v10.312.0 — September 23, 2026 (Say how the entry was written)
 
 ### For Learners

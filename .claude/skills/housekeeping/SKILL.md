@@ -583,7 +583,7 @@ them with SVG icons makes the layout noisier, not cleaner.
 ### 12d. Replacement template
 
 ```html
-<img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.6/Icons/Line/si_ChartBar.svg"
+<img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Bar_chart.svg"
      alt="" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block;"
      aria-hidden="true">
 ```

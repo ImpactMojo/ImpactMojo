@@ -18,19 +18,19 @@
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 <style>
 :root{
-  --bg:#F6F8FB; --panel:#FFFFFF; --ink:#0F172A; --mut:#5A6B82; --faint:#8595AB;
-  --bd:#E4EAF1; --acc:#C2410C; --acc2:#6366F1; --good:#10B981; --bad:#EF4444;
+  --bg:#F6F8FB; --panel:#FFFFFF; --ink:#0F172A; --mut:#5A6B82; --faint:#5F708A;
+  --bd:#E4EAF1; --acc:#C2410C; --acc2:#4F46E5; --good:#047857; --bad:#991B1B;
   --grad:linear-gradient(135deg,#C2410C,#6366F1);
   --chip:#EEF3F9; --chipactive:#C2410C; --barlo:#FED7AA; --barhi:#9A3412;
-  --cmpb:#0EA5E9;
+  --cmpb:#0369A1;
 }
 html[data-theme="dark"]{
-  --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#9DB0C7; --faint:#64748B;
+  --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#9DB0C7; --faint:#94A3B8;
   --bd:#25314A; --chip:#1C2740; --chipactive:#F97316; --acc:#FB923C; --barlo:#7C2D12; --barhi:#FDBA74;
   --cmpb:#38BDF8;
 }
 @media(prefers-color-scheme:dark){html:not([data-theme]){
-  --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#9DB0C7; --faint:#64748B;
+  --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#9DB0C7; --faint:#94A3B8;
   --bd:#25314A; --chip:#1C2740; --chipactive:#F97316; --acc:#FB923C; --barlo:#7C2D12; --barhi:#FDBA74;
   --cmpb:#38BDF8;
 }}
@@ -80,7 +80,7 @@ html[data-theme="dark"] select.blank{color:#FDBA74;border-bottom-color:#FB923C}
 .rname .st{font-weight:400;color:var(--faint);font-size:.76rem}
 .tierchip{font-family:'JetBrains Mono';font-size:.62rem;font-weight:600;border-radius:5px;padding:1px 5px;flex:none;vertical-align:middle}
 .t2{background:color-mix(in srgb,var(--acc2) 16%,transparent);color:var(--acc2)}
-.t3{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+.t3{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--im-ink-good, #047857)}
 html[data-theme="dark"] .t2{color:#A5B4FC}
 html[data-theme="dark"] .t3{color:#6EE7B7}
 .rtrack{flex:1;background:var(--chip);border-radius:6px;height:20px;position:relative;overflow:hidden;min-width:40px}
@@ -130,6 +130,18 @@ table.data td.hi{font-weight:800;color:var(--acc)}
 .method b{color:var(--ink)}
 .note{background:var(--chip);border:1px solid var(--bd);border-radius:12px;padding:13px 16px;margin:18px 0;font-size:13px;color:var(--mut)}
 .note b{color:var(--ink)}
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--bad:#FCA5A5;--good:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--bad:#FCA5A5;--good:#6EE7B7;}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-good:#047857;}
+@media (prefers-color-scheme: dark){:root{--im-ink-good:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-good:#6EE7B7;}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
 <script>

@@ -28,8 +28,8 @@
 
 <style>
 :root{
-  --primary-bg:#FFFFFF;--secondary-bg:#F8FAFC;--accent:#0EA5E9;--accent-hover:#0284C7;
-  --accent2:#6366F1;--success:#10B981;--warning:#F59E0B;--danger:#EF4444;
+  --primary-bg:#FFFFFF;--secondary-bg:#F8FAFC;--accent:#0369A1;--accent-hover:#0284C7;
+  --accent2:#4F46E5;--success:#047857;--warning:#92400E;--danger:#991B1B;
   --ink:#0F172A;--muted:#475569;--faint:#52627A;--card:#FFFFFF;--hover:#F1F5F9;--border:#E2E8F0;
   --grad:linear-gradient(135deg,#0EA5E9 0%,#6366F1 100%);
   --font-sans:'Amaranth',sans-serif;--font-head:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;
@@ -77,7 +77,7 @@ a{color:var(--accent)}
 .tcard::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;border-radius:16px 16px 0 0;background:var(--grad);opacity:0;transition:opacity .15s}
 .tcard:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(15,23,42,.13);border-color:var(--accent)}
 .tcard:hover::before{opacity:1}
-.tcard .lvl{font-family:var(--font-mono);font-size:0.75rem;font-weight:600;color:var(--accent2);text-transform:uppercase;letter-spacing:0.08em}
+.tcard .lvl{font-family:var(--font-mono);font-size:0.75rem;font-weight:600;color:var(--im-ink-info, #4F46E5);text-transform:uppercase;letter-spacing:0.08em}
 .tcard h2{font-family:var(--font-head);font-weight:800;font-size:1.35rem;margin:0.25rem 0 0.5rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
 .tcard p{color:var(--muted);font-size:0.95rem;margin-bottom:0.9rem}
 .tcard ul{list-style:none;margin:0 0 1.1rem;font-size:0.9rem}
@@ -107,13 +107,25 @@ a{color:var(--accent)}
 .im-footer-bottom{max-width:960px;margin:1.5rem auto 0;padding-top:1rem;border-top:1px solid var(--border);text-align:center;color:var(--faint);font-size:0.82rem}
 .skip-link{position:absolute;left:-9999px;top:0;padding:0.5rem;background: #0A7AAD;color:#fff;z-index:100}
 .skip-link:focus{left:0}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-info:#4F46E5;}
+@media (prefers-color-scheme: dark){:root{--im-ink-info:#A5B4FC;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-info:#A5B4FC;}
 </style>
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Sampling Toolkit", "url": "https://www.impactmojo.in/Studios/sampling-toolkit.html", "description": "Free sampling primer and guided sample-size workflow for MEL practitioners: probability and non-probability designs, sample-size logic, and a step-by-step sampling plan builder.", "applicationCategory": "EducationalApplication", "operatingSystem": "Any (web browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I decide the sample size for a baseline survey?", "acceptedAnswer": {"@type": "Answer", "text": "Sample size depends on the indicator you need to detect, the expected prevalence or mean, the precision (margin of error) you can accept, the confidence level (usually 95%), and the design effect if you sample in clusters. The Sampling Toolkit walks you through each input and shows how the required sample changes as you adjust them."}}, {"@type": "Question", "name": "What is a design effect in cluster sampling?", "acceptedAnswer": {"@type": "Answer", "text": "When you sample households in clusters (villages, wards) rather than individually at random, respondents within a cluster resemble each other, which reduces the information each interview adds. The design effect inflates your required sample size to compensate — a typical starting assumption is 1.5 to 2, but it should be based on the intra-cluster correlation of your key indicator."}}, {"@type": "Question", "name": "What is the difference between probability and purposive sampling?", "acceptedAnswer": {"@type": "Answer", "text": "Probability sampling gives every unit a known chance of selection, which lets you generalise to the population with quantified uncertainty. Purposive (non-probability) sampling selects information-rich cases deliberately — appropriate for qualitative and exploratory work, but it cannot produce population estimates."}}]}</script>
 </head>
 <body>
-<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0EA5E9;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}</style>
+<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--accent:#38BDF8;--accent2:#A5B4FC;--danger:#FCA5A5;--success:#6EE7B7;--warning:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--accent:#38BDF8;--accent2:#A5B4FC;--danger:#FCA5A5;--success:#6EE7B7;--warning:#FCD34D;}
+</style>
 <div class="im-topbar" id="imTopbar">
   <div class="im-topbar-left">
     <a href="../index.html" class="im-topbar-home">
@@ -221,7 +233,7 @@ a{color:var(--accent)}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
 <script src="/js/state-manager.js?v=62445627"></script>
 <script src="/js/config.js?v=7e6af861"></script>
-<script src="/js/auth.js?v=804ebed9"></script>
+<script src="/js/auth.js?v=d7104db5"></script>
 <script src="/js/theme.js?v=ca787a55"></script>
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
   <script src="/js/site-chrome.js?v=29467edd" defer></script>

@@ -156,9 +156,16 @@ window.addEventListener('pageshow', function(event) {
    CSS VARIABLES - V3 Design System
    ======================================== */
 :root {
+    /* Declared only inside the dark-theme block, so in the default
+       theme every rule referencing one of these had no value at all:
+       a button with no background painting white text onto the page. */
+    --gradient-loop: linear-gradient(135deg, #10B981 0%, #0EA5E9 50%, #6366F1 100%);
+    --gradient-primary: linear-gradient(135deg, #0369A1 0%, #4338CA 100%);
+    --secondary-accent: #4F46E5;
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
     --primary-bg: #F8FAFC;
     --secondary-bg: #FFFFFF;
-    --accent-color: #0284C7;
+    --accent-color: #0369A1;
     --accent-hover: #0369A1;
     --text-primary: #0F172A;
     --text-secondary: #475569;
@@ -176,11 +183,11 @@ window.addEventListener('pageshow', function(event) {
 body.light-mode {
     --primary-bg: #F8FAFC;
     --secondary-bg: #FFFFFF;
-    --accent-color: #0284C7;
+    --accent-color: #0369A1;
     --accent-hover: #0369A1;
     --text-primary: #0F172A;
     --text-secondary: #475569;
-    --text-muted: #64748B;
+    --text-muted: #52627A;
     --card-bg: #FFFFFF;
     --hover-bg: #F1F5F9;
     --border-color: #E2E8F0;
@@ -203,7 +210,7 @@ body.dark-mode {
     /* Text Colors */
     --text-primary: #F1F5F9;
     --text-secondary: #CBD5E1;
-    --text-muted: #94A3B8;
+    --text-muted: #A8B5C7;
     
     /* Card & Surface */
     --card-bg: #1E293B;
@@ -329,10 +336,10 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
 @keyframes v3-float-plane { 0% { transform: translate(0, 0) rotate(0deg); } 20% { transform: translate(-60px, 40px) rotate(10deg); } 40% { transform: translate(120px, 30px) rotate(-8deg); } 60% { transform: translate(40px, 60px) rotate(15deg); } 80% { transform: translate(-30px, 20px) rotate(-5deg); } 100% { transform: translate(0, 0) rotate(0deg); } }
 @media (max-width: 768px) { .v3-paper-plane { width: 100px; height: 100px; top: 10%; right: 5%; opacity: 0.15; } }
 @media (prefers-reduced-motion: reduce) { .v3-paper-plane { animation: none !important; } }
-.v3-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: v3PulseBlob 15s ease-in-out infinite; }
+.v3-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.08; animation: v3PulseBlob 15s ease-in-out infinite; }
 .v3-blob-1 { top: 10%; right: 10%; width: 400px; height: 400px; background: var(--accent-color); }
 .v3-blob-2 { bottom: 20%; left: 5%; width: 300px; height: 300px; background: var(--secondary-accent); animation-delay: -5s; }
-@keyframes v3PulseBlob { 0%, 100% { transform: scale(1); opacity: 0.15; } 50% { transform: scale(1.1); opacity: 0.2; } }
+@keyframes v3PulseBlob { 0%, 100% { transform: scale(1); opacity: 0.08; } 50% { transform: scale(1.1); opacity: 0.11; } }
 
 /* ========================================
    HEADER & NAVIGATION
@@ -470,7 +477,7 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
 .theme-selector { display: flex; gap: 4px; background: var(--hover-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 4px; }
 .theme-btn { background: transparent; border: none; color: var(--text-secondary); padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
 .theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
-.theme-btn.active { background: var(--accent-color); color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.theme-btn.active { background: var(--accent-solid, #0369A1); color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 .theme-btn svg { width: 18px; height: 18px; }
 
 
@@ -645,7 +652,7 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
 .filter-label {
     display: block;
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     margin-bottom: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -684,15 +691,15 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
 
 /* Category-specific colors */
 .filter-btn[data-category="meal"]:hover,
-.filter-btn[data-category="meal"].active { background: #10B981; border-color: #10B981; }
+.filter-btn[data-category="meal"].active { background: #047857; border-color: #047857; }
 .filter-btn[data-category="toc"]:hover,
-.filter-btn[data-category="toc"].active { background: #6366F1; border-color: #6366F1; }
+.filter-btn[data-category="toc"].active { background: #4F46E5; border-color: #4F46E5; }
 .filter-btn[data-category="methods"]:hover,
-.filter-btn[data-category="methods"].active { background: #0EA5E9; border-color: #0EA5E9; }
+.filter-btn[data-category="methods"].active { background: #0369A1; border-color: #0369A1; }
 .filter-btn[data-category="stories"]:hover,
-.filter-btn[data-category="stories"].active { background: #F59E0B; border-color: #F59E0B; }
+.filter-btn[data-category="stories"].active { background: #B45309; border-color: #B45309; }
 .filter-btn[data-category="platform"]:hover,
-.filter-btn[data-category="platform"].active { background: #EC4899; border-color: #EC4899; }
+.filter-btn[data-category="platform"].active { background: #BE185D; border-color: #BE185D; }
 
 .filter-btn[data-category]:hover,
 .filter-btn[data-category].active {
@@ -704,7 +711,7 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
     background: transparent;
     border: 1px solid var(--border-color);
     border-radius: 15px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -716,8 +723,8 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
 }
 
 .tag-btn.active {
-    background: var(--accent-color);
-    border-color: var(--accent-color);
+    background: var(--accent-solid, #0369A1);
+    border-color: var(--accent-solid, #0369A1);
     color: white;
 }
 
@@ -807,11 +814,11 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
     color: white;
 }
 
-.blog-card-category.meal { background: #10B981; }
-.blog-card-category.toc { background: #6366F1; }
-.blog-card-category.methods { background: #0EA5E9; }
-.blog-card-category.stories { background: #F59E0B; }
-.blog-card-category.platform { background: #EC4899; }
+.blog-card-category.meal { background: #047857; }
+.blog-card-category.toc { background: #4F46E5; }
+.blog-card-category.methods { background: #0369A1; }
+.blog-card-category.stories { background: #B45309; }
+.blog-card-category.platform { background: #BE185D; }
 
 .blog-card-date {
     font-size: 0.85rem;
@@ -1048,7 +1055,7 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
 }
 
 .social-link:hover {
-    background: var(--accent-color);
+    background: var(--accent-solid, #0369A1);
     color: white;
     transform: translateY(-2px);
 }
@@ -1127,6 +1134,10 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
    ======================================== */
 .chatbot-fab {
     position: fixed;
+    border: 0;
+    padding: 0;
+    color: #FFFFFF;
+    font: inherit;
     bottom: 24px;
     right: 24px;
     width: 60px;
@@ -1313,7 +1324,7 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
 }
 
 .quick-option:hover {
-    background: var(--accent-color);
+    background: var(--accent-solid, #0369A1);
     border-color: var(--accent-color);
     color: white;
 }
@@ -1552,13 +1563,13 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
 :root {
     --im-primary-bg: #0F172A;
     --im-secondary-bg: #1E293B;
-    --im-accent: #0EA5E9;
+    --im-accent: #0369A1;
     --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1;
-    --im-success: #10B981;
+    --im-secondary-accent: #4F46E5;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -1572,7 +1583,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -1730,7 +1741,14 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 <link rel="canonical" href="https://www.impactmojo.in/blog.html">
 </head>
 <body>
-<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0EA5E9;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}</style>
+<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
+</style>
 
 
 <!-- Decorative Elements -->
@@ -3080,9 +3098,9 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 </footer>
 
 <!-- Mojini Chatbot -->
-<div class="chatbot-fab" onclick="openChatbot()" aria-label="Open chat">
+<button type="button" class="chatbot-fab" onclick="openChatbot()" aria-label="Open chat">
     <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-</div>
+</button>
 
 <div class="chatbot-modal" id="chatbotModal">
     <div class="chat-header">
@@ -3331,7 +3349,7 @@ document.addEventListener('click', function(e) {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
 <script src="/js/state-manager.js?v=62445627"></script>
 <script src="/js/config.js?v=7e6af861"></script>
-<script src="/js/auth.js?v=804ebed9"></script>
+<script src="/js/auth.js?v=d7104db5"></script>
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
   <script src="/js/site-chrome.js?v=29467edd" defer></script>
 <script src="/js/mojini-ai.js?v=db5170eb" defer></script>

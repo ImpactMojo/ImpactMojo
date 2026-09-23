@@ -58,17 +58,17 @@
 :root {
     --primary-bg: #FFFFFF;
     --secondary-bg: #F8FAFC;
-    --accent-color: #F59E0B;
-    --accent-hover: #D97706;
+    --accent-color: #92400E;
+    --accent-hover: #92400E;
     --text-primary: #0F172A;
     --text-secondary: #475569;
     --text-muted: #52627A;
     --card-bg: #FFFFFF;
     --hover-bg: #F1F5F9;
     --border-color: #E2E8F0;
-    --success-color: #10B981;
-    --warning-color: #F59E0B;
-    --danger-color: #EF4444;
+    --success-color: #047857;
+    --warning-color: #92400E;
+    --danger-color: #991B1B;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
     --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
@@ -101,11 +101,11 @@ body.dark-mode {
 [data-theme="light"], body.light-mode {
     --primary-bg: #F8FAFC;
     --secondary-bg: #FFFFFF;
-    --accent-color: #0284C7;
+    --accent-color: #0369A1;
     --accent-hover: #0369A1;
     --text-primary: #0F172A;
     --text-secondary: #475569;
-    --text-muted: #64748B;
+    --text-muted: #52627A;
     --card-bg: #FFFFFF;
     --hover-bg: #F1F5F9;
     --border-color: #E2E8F0;
@@ -129,10 +129,10 @@ body {
 }
 .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
 .btn-outline:hover { border-color: var(--accent-color); color: var(--accent-color); }
-.btn-primary { background: var(--accent-color); color: white; }
+.btn-primary { background: var(--accent-solid, #0369A1); color: white; }
 .btn-primary:hover { background: var(--accent-hover); }
-.btn-danger { background: transparent; color: var(--danger-color); border: 1px solid var(--border-color); }
-.btn-danger:hover { border-color: var(--danger-color); }
+.btn-danger { background: transparent; color: var(--im-ink-bad, #991B1B); border: 1px solid var(--border-color); }
+.btn-danger:hover { border-color: var(--im-ink-bad, #991B1B); }
 .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
 
 .page-title { text-align: center; padding: 2.5rem 2rem 1rem; position: relative; z-index: 1; }
@@ -190,8 +190,8 @@ body {
     background: rgba(245,158,11,0.12); color: var(--accent-color);
 }
 .tag.muted { background: var(--hover-bg); color: var(--text-secondary); }
-.tag.verified { background: rgba(16,185,129,0.14); color: var(--success-color); }
-.tag.private { background: rgba(239,68,68,0.12); color: var(--danger-color); }
+.tag.verified { background: rgba(16,185,129,0.14); color: var(--im-ink-good, #047857); }
+.tag.private { background: rgba(239,68,68,0.12); color: var(--im-ink-bad, #991B1B); }
 .outcome-desc {
     font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem;
     white-space: pre-wrap; word-break: break-word;
@@ -223,8 +223,8 @@ body {
 .checkbox-row label { margin: 0; text-transform: none; letter-spacing: 0; font-size: 0.85rem; color: var(--text-secondary); }
 .form-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1.25rem; }
 .form-msg { font-size: 0.85rem; margin-top: 0.75rem; }
-.form-msg.error { color: var(--danger-color); }
-.form-msg.success { color: var(--success-color); }
+.form-msg.error { color: var(--im-ink-bad, #991B1B); }
+.form-msg.success { color: var(--im-ink-good, #047857); }
 
 .empty-state { text-align: center; padding: 3rem 2rem; color: var(--text-muted); }
 .empty-state svg { width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.4; }
@@ -247,7 +247,7 @@ body {
 
 /* Decoration */
 .v3-decoration-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-.v3-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; }
+.v3-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.08; }
 .v3-blob-1 { top: 10%; right: 10%; width: 400px; height: 400px; background: var(--accent-color); }
 .v3-blob-2 { bottom: 20%; left: 5%; width: 300px; height: 300px; background: #6366F1; }
 
@@ -311,8 +311,20 @@ body {
 @media (max-width: 480px) { .im-topbar-home span { display: none; } }
 
 @media(max-width:600px){.im-topbar{gap:.4rem;padding:.4rem .6rem;flex-wrap:nowrap}.im-topbar-link{display:none}.im-topbar-home span{display:none}.im-browse-btn{font-size:0!important;padding:.45rem!important;gap:0!important}.im-browse-btn svg{width:16px;height:16px}.im-premium-btn{padding:.3rem .55rem;font-size:.72rem}}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-good:#047857;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;}
 </style>
-<style>.reach-band{margin:0 0 1.75rem}.reach-band h2{font-family:'Inter',sans-serif;font-size:1.25rem;font-weight:700;margin:0 0 .35rem}.reach-band > p{color:var(--text-secondary,#6b7280);margin:0 0 1rem;max-width:70ch}.reach-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important}</style>
+<style>.reach-band{margin:0 0 1.75rem}.reach-band h2{font-family:'Inter',sans-serif;font-size:1.25rem;font-weight:700;margin:0 0 .35rem}.reach-band > p{color:var(--text-secondary,#6b7280);margin:0 0 1rem;max-width:70ch}.reach-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important}
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--accent-color:#38BDF8;--danger-color:#FCA5A5;--success-color:#6EE7B7;--warning-color:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--accent-color:#38BDF8;--danger-color:#FCA5A5;--success-color:#6EE7B7;--warning-color:#FCD34D;}
+</style>
 </head>
 <body>
 <a href="#pageContent" class="im-skip-link">Skip to content</a>

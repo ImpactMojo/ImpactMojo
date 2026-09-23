@@ -18,19 +18,19 @@
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 <style>
 :root{
-  --bg:#F6F8FB; --panel:#FFFFFF; --ink:#0F172A; --mut:#5A6B82; --faint:#8595AB;
-  --bd:#E4EAF1; --acc:#0EA5E9; --acc2:#6366F1; --good:#10B981; --bad:#EF4444;
+  --bg:#F6F8FB; --panel:#FFFFFF; --ink:#0F172A; --mut:#5A6B82; --faint:#5F708A;
+  --bd:#E4EAF1; --acc:#0369A1; --acc2:#4F46E5; --good:#047857; --bad:#991B1B;
   --grad:linear-gradient(135deg,#0EA5E9,#6366F1);
-  --chip:#EEF3F9; --chipactive:#0EA5E9;
+  --chip:#EEF3F9; --chipactive:#0369A1;
   --barlo:#BAE6FD; --barhi:#0369A1;
 }
 html[data-theme="dark"]{
-  --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#9DB0C7; --faint:#64748B;
+  --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#9DB0C7; --faint:#94A3B8;
   --bd:#25314A; --chip:#1C2740; --chipactive:#0EA5E9;
   --barlo:#0C4A6E; --barhi:#38BDF8;
 }
 @media(prefers-color-scheme:dark){html:not([data-theme]){
-  --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#9DB0C7; --faint:#64748B;
+  --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#9DB0C7; --faint:#94A3B8;
   --bd:#25314A; --chip:#1C2740; --barlo:#0C4A6E; --barhi:#38BDF8;
 }}
 *{box-sizing:border-box}
@@ -58,7 +58,7 @@ h1,h2,h3,.ui{font-family:'Inter',system-ui,sans-serif}
 .howto h2{font-family:'Amaranth',sans-serif;font-size:.98rem;margin:0 0 6px;display:flex;align-items:center;gap:8px;color:var(--ink)}
 .howto ul{margin:6px 0 0;padding-left:20px;color:var(--mut);font-size:.9rem}
 .howto li{margin:3px 0}
-.howto .good{color:var(--good);font-weight:700}.howto .bad{color:var(--bad);font-weight:700}
+.howto .good{color:var(--im-ink-good, #047857);font-weight:700}.howto .bad{color:var(--im-ink-bad, #991B1B);font-weight:700}
 
 /* Fill-in-the-blanks question composer */
 .qbar{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:20px 22px;margin:20px 0;box-shadow:0 1px 3px rgba(16,24,40,.04)}
@@ -106,7 +106,7 @@ table.data th{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:
 table.data td:first-child,table.data th:first-child{text-align:left}
 table.data tbody tr:hover{background:var(--chip)}
 table.data tr.ai td{font-weight:800;color:var(--acc);border-top:2px solid var(--acc)}
-.up{color:var(--good);font-weight:700}.down{color:var(--bad);font-weight:700}.flat{color:var(--faint)}
+.up{color:var(--im-ink-good, #047857);font-weight:700}.down{color:var(--im-ink-bad, #991B1B);font-weight:700}.flat{color:var(--faint)}
 
 .method{margin:26px 0 60px;color:var(--mut);font-size:13px;line-height:1.6}
 .method h2{font-family:'Amaranth',sans-serif;font-size:1rem;color:var(--ink);margin:0 0 8px}
@@ -114,6 +114,18 @@ table.data tr.ai td{font-weight:800;color:var(--acc);border-top:2px solid var(--
 .note{background:var(--chip);border:1px solid var(--bd);border-radius:12px;padding:13px 16px;margin:18px 0;font-size:13px;color:var(--mut)}
 .note b{color:var(--ink)}
 @media(max-width:640px){.controls{gap:14px 18px;padding:14px}.seg button{padding:6px 10px;font-size:12px}}
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--bad:#FCA5A5;--good:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--bad:#FCA5A5;--good:#6EE7B7;}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-good:#047857;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;}
 </style>
 <meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "ASER Learning Explorer — Foundational Reading & Arithmetic Across India", "description": "Explore ASER (Annual Status of Education Report) foundational-learning data — the share of children who can read a Std II text or do basic arithmetic — ranked across Indian states, trended by school type 2014–2024, with a rung-by-rung skill ladder. Source: ASER Centre / Pratham.", "url": "https://www.impactmojo.in/aser.html", "keywords": ["ASER", "India", "foundational learning", "literacy", "numeracy", "education"], "creator": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}, "spatialCoverage": {"@type": "Place", "name": "India"}, "isAccessibleForFree": true, "citation": "ASER Centre / Pratham, Annual Status of Education Report (ASER), 2012-2024."}</script>

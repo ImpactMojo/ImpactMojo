@@ -298,7 +298,7 @@
             padding: 20px;
             text-align: center;
             font-size: 0.9em;
-            color: #6c757d;
+            color: #495057;
             margin-top: 30px;
         }
         
@@ -346,8 +346,8 @@
     --im-secondary-accent: #6366F1;
     --im-success: #10B981;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -361,7 +361,7 @@
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -518,6 +518,11 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 /* Body clears fixed im-topbar (added by site-wide audit fix) */
 body { padding-top: 56px; }
 @media (max-width: 768px) { body { padding-top: 52px; } }
+
+/* A table wider than the phone scrolls the whole page sideways, and a scroll container a keyboard cannot enter is a second defect on top of the first. Deliberately not `display:block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree. */
+.im-tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.im-tscroll>table{min-width:0}
+.im-tscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
@@ -758,7 +763,7 @@ body { padding-top: 56px; }
             <div class="policy-matrix">
                 <h4><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg> Comparative Analysis Framework</h4>
                 
-                <table class="matrix-table">
+                <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table class="matrix-table">
                     <thead>
                         <tr>
                             <th>Factor</th>
@@ -793,7 +798,7 @@ body { padding-top: 56px; }
                             <td>Incentive compatibility</td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
             </div>
             
             <div class="exercise-box">

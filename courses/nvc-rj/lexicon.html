@@ -22,9 +22,9 @@
             --secondary-bg: #F8FAFC;
             --accent-color: #0369A1;
             --accent-hover: #0284C7;
-            --secondary-accent: #6366F1;
-            --success-color: #10B981;
-            --warning-color: #F59E0B;
+            --secondary-accent: #4F46E5;
+            --success-color: #047857;
+            --warning-color: #92400E;
             --text-primary: #0F172A;
             --text-secondary: #475569;
             --text-muted: #52627A;
@@ -56,9 +56,9 @@ body.light-mode, [data-theme="light"] {
             --secondary-bg: #F8FAFC;
             --accent-color: #0369A1;
             --accent-hover: #0284C7;
-            --secondary-accent: #6366F1;
-            --success-color: #10B981;
-            --warning-color: #F59E0B;
+            --secondary-accent: #4F46E5;
+            --success-color: #047857;
+            --warning-color: #92400E;
             --text-primary: #0F172A;
             --text-secondary: #475569;
             --text-muted: #52627A;
@@ -138,10 +138,10 @@ body.dark-mode, [data-theme="dark"] {
         .term-card:hover { border-color: var(--accent-color); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
         .term-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
         .term-name { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
-        .term-category { font-size: 0.7rem; padding: 0.25rem 0.6rem; background: rgba(99, 102, 241, 0.15); color: var(--secondary-accent); border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; white-space: nowrap; }
+        .term-category { font-size: 0.7rem; padding: 0.25rem 0.6rem; background: rgba(99, 102, 241, 0.15); color: var(--im-ink-info, #4F46E5); border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; white-space: nowrap; }
         .term-definition { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1rem; }
         .term-example { padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.08); border-left: 3px solid var(--success-color); border-radius: 0 6px 6px 0; font-size: 0.85rem; color: var(--text-secondary); }
-        .term-example strong { color: var(--success-color); font-weight: 600; }
+        .term-example strong { color: var(--im-ink-good, #047857); font-weight: 600; }
         
         .no-results { text-align: center; padding: 4rem 2rem; color: var(--text-muted); }
         .no-results svg { width: 64px; height: 64px; stroke: var(--border-color); margin-bottom: 1rem; }
@@ -165,19 +165,24 @@ body.dark-mode, [data-theme="dark"] {
             .filter-select { width: 100%; }
             .header-meta { gap: 1rem; }
         }
-    </style>
+    
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-good:#047857;--im-ink-info:#4F46E5;}
+@media (prefers-color-scheme: dark){:root{--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;}
+</style>
 <style>
 /* ===== ImpactMojo Design System ===== */
 :root {
     --im-primary-bg: #0F172A;
     --im-secondary-bg: #1E293B;
-    --im-accent: #0EA5E9;
+    --im-accent: #0369A1;
     --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1;
-    --im-success: #10B981;
+    --im-secondary-accent: #4F46E5;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -191,7 +196,7 @@ body.dark-mode, [data-theme="dark"] {
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -373,7 +378,14 @@ body { padding-top: 56px; }
    the dark ones, for the unstamped default and for either explicit
    choice. Enforced by scripts/check-theme-contrast.py. */
 @media (prefers-color-scheme: dark) { body:not(.light-mode):not([data-theme="light"]) .category-pill.active .count { background: #0A7AAD; } }
-body.dark-mode .category-pill.active .count, [data-theme="dark"] .category-pill.active .count, html.dark .category-pill.active .count { background: #0A7AAD; }</style>
+body.dark-mode .category-pill.active .count, [data-theme="dark"] .category-pill.active .count, html.dark .category-pill.active .count { background: #0A7AAD; }
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
+</style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
 </head>
@@ -576,7 +588,7 @@ body.dark-mode .category-pill.active .count, [data-theme="dark"] .category-pill.
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
 <script src="/js/state-manager.js?v=62445627"></script>
 <script src="/js/config.js?v=7e6af861"></script>
-<script src="/js/auth.js?v=804ebed9"></script>
+<script src="/js/auth.js?v=d7104db5"></script>
 
 <!-- ImpactLex cross-reference -->
 <div data-impactlex-banner data-course="SEL" style="padding:0 1rem;"></div>

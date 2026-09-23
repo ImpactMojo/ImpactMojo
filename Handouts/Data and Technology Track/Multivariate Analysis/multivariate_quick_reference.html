@@ -25,7 +25,7 @@
         h1 {
             text-align: center;
             color: #2c3e50;
-            border-bottom: 3px solid #3498db;
+            border-bottom: 3px solid #1f7ac0;
             padding-bottom: 8px;
             margin-bottom: 20px;
             font-size: 16px;
@@ -41,14 +41,14 @@
         }
         
         h3 {
-            color: #e74c3c;
+            color: #c0392b;
             margin-top: 15px;
             margin-bottom: 8px;
             font-size: 11px;
         }
         
         .method-card {
-            border: 2px solid #3498db;
+            border: 2px solid #1f7ac0;
             padding: 15px;
             margin: 15px 0;
             border-radius: 6px;
@@ -57,17 +57,17 @@
         }
         
         .correlation-card {
-            border-color: #e74c3c;
+            border-color: #c0392b;
             background-color: #fff8f8;
         }
         
         .anova-card {
-            border-color: #27ae60;
+            border-color: #1e8449;
             background-color: #f8fff8;
         }
         
         .regression-card {
-            border-color: #f39c12;
+            border-color: #9a6207;
             background-color: #fffdf8;
         }
         
@@ -102,7 +102,7 @@
         
         .decision-tree {
             background-color: #e8f6f3;
-            border: 2px solid #16a085;
+            border: 2px solid #0e7160;
             padding: 15px;
             margin: 15px 0;
             border-radius: 6px;
@@ -110,7 +110,7 @@
         
         .assumptions-box {
             background-color: #fdf2e9;
-            border: 1px solid #f39c12;
+            border: 1px solid #9a6207;
             padding: 10px;
             margin: 8px 0;
             border-radius: 4px;
@@ -182,8 +182,8 @@
     --im-secondary-accent: #6366F1;
     --im-success: #10B981;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -197,7 +197,7 @@
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -354,6 +354,11 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 /* Body clears fixed im-topbar (added by site-wide audit fix) */
 body { padding-top: 56px; }
 @media (max-width: 768px) { body { padding-top: 52px; } }
+
+/* A table wider than the phone scrolls the whole page sideways, and a scroll container a keyboard cannot enter is a second defect on top of the first. Deliberately not `display:block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree. */
+.im-tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.im-tscroll>table{min-width:0}
+.im-tscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
@@ -398,7 +403,7 @@ body { padding-top: 56px; }
 
 <div class="decision-tree">
     <h2>Method Selection Decision Tree</h2>
-    <table>
+    <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
         <tr>
             <th style="width: 25%;">Research Question</th>
             <th style="width: 25%;">Method</th>
@@ -429,7 +434,7 @@ body { padding-top: 56px; }
             <td>Historical data, stable relationships</td>
             <td>Forecasting crop yields</td>
         </tr>
-    </table>
+    </table></div>
 </div>
 
 <div class="method-card correlation-card">
@@ -457,7 +462,7 @@ body { padding-top: 56px; }
         
         <div class="column">
             <h3>Interpretation Guide</h3>
-            <table>
+            <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
                 <tr>
                     <th>|r| Value</th>
                     <th>Strength</th>
@@ -478,7 +483,7 @@ body { padding-top: 56px; }
                     <td>Strong</td>
                     <td>Very important relationship</td>
                 </tr>
-            </table>
+            </table></div>
             
             <div class="example-box">
                 <strong>South Asian Examples:</strong><br>
@@ -589,7 +594,7 @@ body { padding-top: 56px; }
         
         <div class="column">
             <h3>Interpretation Guide</h3>
-            <table>
+            <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
                 <tr>
                     <th>Component</th>
                     <th>Interpretation</th>
@@ -610,7 +615,7 @@ body { padding-top: 56px; }
                     <td>95% CI</td>
                     <td>Range of plausible values</td>
                 </tr>
-            </table>
+            </table></div>
             
             <div class="example-box">
                 <strong>Indian Child Health Example:</strong><br>
@@ -667,7 +672,7 @@ body { padding-top: 56px; }
 
 <h2>Common South Asian Development Variables</h2>
 
-<table>
+<div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
     <tr>
         <th>Domain</th>
         <th>Typical Variables</th>
@@ -698,7 +703,7 @@ body { padding-top: 56px; }
         <td>Investment (+), Governance (+)</td>
         <td>Equity issues, maintenance quality</td>
     </tr>
-</table>
+</table></div>
 
 <h2>Statistical Significance vs. Practical Importance</h2>
 
@@ -732,7 +737,7 @@ body { padding-top: 56px; }
 
 <h2>Reporting Results for Different Audiences</h2>
 
-<table>
+<div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
     <tr>
         <th>Audience</th>
         <th>Focus On</th>
@@ -763,7 +768,7 @@ body { padding-top: 56px; }
         <td>Results-focused</td>
         <td>Before/after comparisons</td>
     </tr>
-</table>
+</table></div>
 
 <h2>Quick Diagnostic Checklist</h2>
 

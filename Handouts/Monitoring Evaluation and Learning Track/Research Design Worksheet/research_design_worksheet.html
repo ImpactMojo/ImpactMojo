@@ -27,7 +27,7 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            background: linear-gradient(135deg, #c0392b 0%, #c0392b 100%);
             color: white;
             padding: 30px;
             margin: -30px -30px 30px -30px;
@@ -62,13 +62,13 @@
         
         .section {
             margin: 30px 0;
-            border: 2px solid #e74c3c;
+            border: 2px solid #c0392b;
             border-radius: 10px;
             overflow: hidden;
         }
         
         .section-header {
-            background: #e74c3c;
+            background: #c0392b;
             color: white;
             padding: 15px 25px;
             font-size: 1.3em;
@@ -121,7 +121,7 @@
         }
         
         .response-prompt {
-            color: #6c757d;
+            color: #495057;
             font-style: italic;
             margin-bottom: 10px;
         }
@@ -135,7 +135,7 @@
         }
         
         .checklist h5 {
-            color: #856404;
+            color: #6b5003;
             margin-top: 0;
             margin-bottom: 10px;
         }
@@ -172,7 +172,7 @@
         
         .method-card.selected {
             background: #e8f5e8;
-            border-color: #27ae60;
+            border-color: #1e8449;
         }
         
         .assumption-grid {
@@ -257,7 +257,7 @@
         }
         
         .timeline-table th {
-            background: #e74c3c;
+            background: #c0392b;
             color: white;
             font-weight: 600;
         }
@@ -268,7 +268,7 @@
             background: #e9ecef;
             border-radius: 8px;
             text-align: center;
-            color: #6c757d;
+            color: #495057;
             font-size: 0.9em;
         }
         
@@ -282,13 +282,13 @@
                 padding: 20px;
             }
             .header {
-                background: #e74c3c !important;
+                background: #c0392b !important;
                 -webkit-print-color-adjust: exact;
                 margin: -20px -20px 20px -20px;
                 padding: 20px;
             }
             .section-header {
-                background: #e74c3c !important;
+                background: #c0392b !important;
                 -webkit-print-color-adjust: exact;
             }
         }
@@ -322,8 +322,8 @@
     --im-secondary-accent: #6366F1;
     --im-success: #10B981;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -337,7 +337,7 @@
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -494,6 +494,11 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 /* Body clears fixed im-topbar (added by site-wide audit fix) */
 body { padding-top: 56px; }
 @media (max-width: 768px) { body { padding-top: 52px; } }
+
+/* A table wider than the phone scrolls the whole page sideways, and a scroll container a keyboard cannot enter is a second defect on top of the first. Deliberately not `display:block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree. */
+.im-tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.im-tscroll>table{min-width:0}
+.im-tscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
@@ -612,20 +617,20 @@ body { padding-top: 56px; }
                 <div class="checklist">
                     <h5><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12 10 17 19 8"/><circle cx="12" cy="12" r="10"/></svg> Outcome Quality Checklist</h5>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Specific:</strong> Outcomes are precisely defined and measurable
-                    </div>
+                        <label><input type="checkbox"> <strong>Specific:</strong> Outcomes are precisely defined and measurable
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Relevant:</strong> Outcomes directly relate to program objectives
-                    </div>
+                        <label><input type="checkbox"> <strong>Relevant:</strong> Outcomes directly relate to program objectives
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Feasible:</strong> Data collection is realistic given budget and timeline
-                    </div>
+                        <label><input type="checkbox"> <strong>Feasible:</strong> Data collection is realistic given budget and timeline
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Pre-specified:</strong> Outcomes defined before seeing any results
-                    </div>
+                        <label><input type="checkbox"> <strong>Pre-specified:</strong> Outcomes defined before seeing any results
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Balanced:</strong> Include both intended and potential unintended effects
-                    </div>
+                        <label><input type="checkbox"> <strong>Balanced:</strong> Include both intended and potential unintended effects
+                    </label></div>
                 </div>
             </div>
         </div>
@@ -645,31 +650,31 @@ body { padding-top: 56px; }
                 <div class="method-comparison">
                     <div class="method-card">
                         <h5><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/><circle cx="16" cy="8" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="8" cy="16" r="1.2" fill="currentColor"/><circle cx="16" cy="16" r="1.2" fill="currentColor"/></svg> Randomized Trial</h5>
-                        <input type="radio" name="method" value="rct">
+                        <input type="radio" name="method" value="rct" aria-label="How to Use This Worksheet This worksheet guides you through designing a credible impact evaluation from start to finish. Work through each section systematically, building your research design step by step. The completed worksheet will serve as your evaluation blueprint. Best Practices: Involve program implementers and stakeholders in the design process Be honest about constraints—acknowledge limitations rather than ignore them Consider multiple identification strategies and choose the most credible Plan for potential threats to validity and build in robustness checks 1 Program and Research Question Definition Program Description Describe the development program or intervention you want to evaluate: Primary Research Question State your main causal question clearly and specifically: Theory of Change Map out the causal pathway from intervention to outcomes: Policy Relevance Why does this question matter for policy and practice? 2 Outcome Measurement Strategy Primary Outcomes List 1-3 most important outcomes and how you&#x27;ll measure them: Secondary Outcomes Additional outcomes of interest (spillovers, unintended effects, mechanisms): Outcome Quality Checklist Specific: Outcomes are precisely defined and measurable Relevant: Outcomes directly relate to program objectives Feasible: Data collection is realistic given budget and timeline Pre-specified: Outcomes defined before seeing any results Balanced: Include both intended and potential unintended effects 3 Identification Strategy Selection Assignment Mechanism How are participants selected for the program? Randomized Trial">
                         <p>Random assignment to treatment</p>
                     </div>
                     
                     <div class="method-card">
                         <h5><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 1 1-5.7 5.7L3 18l3 3 6-6a4 4 0 0 0 5.7-5.7l-3 3-3-3z"/></svg> Instrumental Variables</h5>
-                        <input type="radio" name="method" value="iv">
+                        <input type="radio" name="method" value="iv" aria-label="Instrumental Variables">
                         <p>Valid instrument available</p>
                     </div>
                     
                     <div class="method-card">
                         <h5><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg> Difference-in-Differences</h5>
-                        <input type="radio" name="method" value="did">
+                        <input type="radio" name="method" value="did" aria-label="Difference-in-Differences">
                         <p>Policy change over time</p>
                     </div>
                     
                     <div class="method-card">
                         <h5><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l4-4 14 14-4 4zM7 7l2 2M11 11l2 2M15 15l2 2M9 5l2 2M13 9l2 2M17 13l2 2"/></svg> Regression Discontinuity</h5>
-                        <input type="radio" name="method" value="rdd">
+                        <input type="radio" name="method" value="rdd" aria-label="Regression Discontinuity">
                         <p>Threshold-based assignment</p>
                     </div>
                     
                     <div class="method-card">
                         <h5><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="6"/><line x1="18" y1="20" x2="18" y2="10"/></svg> Matching/Regression</h5>
-                        <input type="radio" name="method" value="matching">
+                        <input type="radio" name="method" value="matching" aria-label="Matching/Regression">
                         <p>Selection on observables</p>
                     </div>
                 </div>
@@ -706,16 +711,13 @@ body { padding-top: 56px; }
                         
                         <div class="rating-scale">
                             <div class="rating-option">
-                                <input type="radio" name="selection_threat" value="low">
-                                <label>Low Threat</label>
+                                <label><input type="radio" name="selection_threat" value="low"> Low Threat</label>
                             </div>
                             <div class="rating-option">
-                                <input type="radio" name="selection_threat" value="medium">
-                                <label>Medium Threat</label>
+                                <label><input type="radio" name="selection_threat" value="medium"> Medium Threat</label>
                             </div>
                             <div class="rating-option">
-                                <input type="radio" name="selection_threat" value="high">
-                                <label>High Threat</label>
+                                <label><input type="radio" name="selection_threat" value="high"> High Threat</label>
                             </div>
                         </div>
                     </div>
@@ -729,16 +731,13 @@ body { padding-top: 56px; }
                         
                         <div class="rating-scale">
                             <div class="rating-option">
-                                <input type="radio" name="spillover_threat" value="low">
-                                <label>Low Threat</label>
+                                <label><input type="radio" name="spillover_threat" value="low"> Low Threat</label>
                             </div>
                             <div class="rating-option">
-                                <input type="radio" name="spillover_threat" value="medium">
-                                <label>Medium Threat</label>
+                                <label><input type="radio" name="spillover_threat" value="medium"> Medium Threat</label>
                             </div>
                             <div class="rating-option">
-                                <input type="radio" name="spillover_threat" value="high">
-                                <label>High Threat</label>
+                                <label><input type="radio" name="spillover_threat" value="high"> High Threat</label>
                             </div>
                         </div>
                     </div>
@@ -752,16 +751,13 @@ body { padding-top: 56px; }
                         
                         <div class="rating-scale">
                             <div class="rating-option">
-                                <input type="radio" name="attrition_threat" value="low">
-                                <label>Low Threat</label>
+                                <label><input type="radio" name="attrition_threat" value="low"> Low Threat</label>
                             </div>
                             <div class="rating-option">
-                                <input type="radio" name="attrition_threat" value="medium">
-                                <label>Medium Threat</label>
+                                <label><input type="radio" name="attrition_threat" value="medium"> Medium Threat</label>
                             </div>
                             <div class="rating-option">
-                                <input type="radio" name="attrition_threat" value="high">
-                                <label>High Threat</label>
+                                <label><input type="radio" name="attrition_threat" value="high"> High Threat</label>
                             </div>
                         </div>
                     </div>
@@ -775,16 +771,13 @@ body { padding-top: 56px; }
                         
                         <div class="rating-scale">
                             <div class="rating-option">
-                                <input type="radio" name="external_threat" value="low">
-                                <label>Low Threat</label>
+                                <label><input type="radio" name="external_threat" value="low"> Low Threat</label>
                             </div>
                             <div class="rating-option">
-                                <input type="radio" name="external_threat" value="medium">
-                                <label>Medium Threat</label>
+                                <label><input type="radio" name="external_threat" value="medium"> Medium Threat</label>
                             </div>
                             <div class="rating-option">
-                                <input type="radio" name="external_threat" value="high">
-                                <label>High Threat</label>
+                                <label><input type="radio" name="external_threat" value="high"> High Threat</label>
                             </div>
                         </div>
                     </div>
@@ -816,7 +809,7 @@ body { padding-top: 56px; }
                     <h4>Power Calculation Parameters</h4>
                     <div class="response-prompt">Fill in your power analysis assumptions:</div>
                     
-                    <table class="timeline-table">
+                    <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table class="timeline-table">
                         <thead>
                             <tr>
                                 <th>Parameter</th>
@@ -851,7 +844,7 @@ body { padding-top: 56px; }
                                 <td>Variance explained by controls</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table></div>
                 </div>
                 
                 <div class="question-block">
@@ -891,7 +884,7 @@ body { padding-top: 56px; }
                     <h4>Follow-up Timeline</h4>
                     <div class="response-prompt">When will you measure outcomes?</div>
                     
-                    <table class="timeline-table">
+                    <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table class="timeline-table">
                         <thead>
                             <tr>
                                 <th>Time Point</th>
@@ -920,7 +913,7 @@ body { padding-top: 56px; }
                                 <td>____</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table></div>
                 </div>
                 
                 <div class="question-block">
@@ -935,20 +928,20 @@ body { padding-top: 56px; }
                 <div class="checklist">
                     <h5><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12 10 17 19 8"/><circle cx="12" cy="12" r="10"/></svg> Data Quality Checklist</h5>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Reliable:</strong> Measurement instruments are validated and consistent
-                    </div>
+                        <label><input type="checkbox"> <strong>Reliable:</strong> Measurement instruments are validated and consistent
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Valid:</strong> Measures capture the intended concepts
-                    </div>
+                        <label><input type="checkbox"> <strong>Valid:</strong> Measures capture the intended concepts
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Timely:</strong> Data collection timing aligns with expected treatment effects
-                    </div>
+                        <label><input type="checkbox"> <strong>Timely:</strong> Data collection timing aligns with expected treatment effects
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Comprehensive:</strong> Covers both intended and unintended outcomes
-                    </div>
+                        <label><input type="checkbox"> <strong>Comprehensive:</strong> Covers both intended and unintended outcomes
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Ethical:</strong> Data collection respects participant privacy and consent
-                    </div>
+                        <label><input type="checkbox"> <strong>Ethical:</strong> Data collection respects participant privacy and consent
+                    </label></div>
                 </div>
             </div>
         </div>
@@ -1011,7 +1004,7 @@ body { padding-top: 56px; }
                     <h4>Project Timeline</h4>
                     <div class="response-prompt">Map out key milestones:</div>
                     
-                    <table class="timeline-table">
+                    <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table class="timeline-table">
                         <thead>
                             <tr>
                                 <th>Phase</th>
@@ -1052,7 +1045,7 @@ body { padding-top: 56px; }
                                 <td>Final report</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table></div>
                 </div>
                 
                 <div class="question-block">
@@ -1088,26 +1081,26 @@ body { padding-top: 56px; }
                 <div class="checklist">
                     <h5><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12 10 17 19 8"/><circle cx="12" cy="12" r="10"/></svg> Design Quality Assessment</h5>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Clear Research Question:</strong> Specific, policy-relevant causal question
-                    </div>
+                        <label><input type="checkbox"> <strong>Clear Research Question:</strong> Specific, policy-relevant causal question
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Credible Identification:</strong> Plausible strategy for causal inference
-                    </div>
+                        <label><input type="checkbox"> <strong>Credible Identification:</strong> Plausible strategy for causal inference
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Adequate Power:</strong> Sufficient sample size to detect meaningful effects
-                    </div>
+                        <label><input type="checkbox"> <strong>Adequate Power:</strong> Sufficient sample size to detect meaningful effects
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Threat Mitigation:</strong> Major validity concerns addressed
-                    </div>
+                        <label><input type="checkbox"> <strong>Threat Mitigation:</strong> Major validity concerns addressed
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Feasible Implementation:</strong> Realistic timeline and budget
-                    </div>
+                        <label><input type="checkbox"> <strong>Feasible Implementation:</strong> Realistic timeline and budget
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Ethical Compliance:</strong> Meets standards for research with human subjects
-                    </div>
+                        <label><input type="checkbox"> <strong>Ethical Compliance:</strong> Meets standards for research with human subjects
+                    </label></div>
                     <div class="checklist-item">
-                        <input type="checkbox"> <strong>Pre-specified Analysis:</strong> Clear plan registered before data collection
-                    </div>
+                        <label><input type="checkbox"> <strong>Pre-specified Analysis:</strong> Clear plan registered before data collection
+                    </label></div>
                 </div>
                 
                 <div class="question-block">

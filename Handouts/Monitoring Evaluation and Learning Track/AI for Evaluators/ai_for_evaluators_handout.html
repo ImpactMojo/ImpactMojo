@@ -25,7 +25,7 @@
         h1 {
             text-align: center;
             color: #2c3e50;
-            border-bottom: 3px solid #3498db;
+            border-bottom: 3px solid #1f7ac0;
             padding-bottom: 10px;
             margin-bottom: 25px;
             font-size: 18px;
@@ -41,7 +41,7 @@
         }
 
         h3 {
-            color: #e74c3c;
+            color: #c0392b;
             margin-top: 20px;
             margin-bottom: 10px;
             font-size: 12px;
@@ -55,7 +55,7 @@
         }
 
         .method-section {
-            border: 2px solid #3498db;
+            border: 2px solid #1f7ac0;
             padding: 20px;
             margin: 20px 0;
             border-radius: 8px;
@@ -69,17 +69,17 @@
         }
 
         .coding-section {
-            border-color: #27ae60;
+            border-color: #1e8449;
             background-color: #f8fff8;
         }
 
         .guardrail-section {
-            border-color: #e74c3c;
+            border-color: #c0392b;
             background-color: #fff8f8;
         }
 
         .ethics-section {
-            border-color: #f39c12;
+            border-color: #9a6207;
             background-color: #fffdf8;
         }
 
@@ -125,7 +125,7 @@
 
         .prompt-example {
             background-color: #f0f3ff;
-            border: 1px solid #6c757d;
+            border: 1px solid #495057;
             border-left: 4px solid #6366F1;
             padding: 12px;
             margin: 10px 0;
@@ -170,7 +170,7 @@
             position: absolute;
             left: 0;
             font-size: 14px;
-            color: #3498db;
+            color: #1f7ac0;
         }
 
         .two-column {
@@ -213,8 +213,8 @@
     --im-secondary-accent: #6366F1;
     --im-success: #10B981;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -228,7 +228,7 @@
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -386,6 +386,11 @@ code, pre, .monospace, kbd, samp, .prompt-example { font-family: 'JetBrains Mono
 /* Body clears fixed im-topbar (added by site-wide audit fix) */
 body { padding-top: 56px; }
 @media (max-width: 768px) { body { padding-top: 52px; } }
+
+/* A table wider than the phone scrolls the whole page sideways, and a scroll container a keyboard cannot enter is a second defect on top of the first. Deliberately not `display:block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree. */
+.im-tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.im-tscroll>table{min-width:0}
+.im-tscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
@@ -441,7 +446,7 @@ body { padding-top: 56px; }
 <div class="method-section prompt-section">
     <h2>1. Where AI Helps &mdash; and Where It Doesn't</h2>
     <p>AI assistance is strongest for <em>drafting, restructuring, and first-pass processing</em> of text you already have. It is weakest &mdash; and most dangerous &mdash; where accuracy, judgment, representativeness, or accountability are at stake.</p>
-    <table>
+    <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
         <tr>
             <th>MEL stage</th>
             <th>Good uses (with human review)</th>
@@ -482,7 +487,7 @@ body { padding-top: 56px; }
             <td>Draft cleaning/recode scripts (that you read and run yourself); explain an error message; suggest validation rules</td>
             <td>Pasting raw datasets with PII into a tool; letting AI "clean" data invisibly; trusting generated numbers or aggregates</td>
         </tr>
-    </table>
+    </table></div>
     <div class="warning-box">
         <strong>Rule of thumb:</strong> AI is useful when <em>you supply the substance and it reshapes the form</em>. It is hazardous when you ask it to <em>supply the substance</em> &mdash; facts, figures, citations, or judgments &mdash; because it will produce fluent, confident, and sometimes entirely fabricated content.
     </div>
@@ -667,7 +672,7 @@ Constraint: Do not add, soften, or exaggerate any result. Keep every number.
 
 <div class="method-section ethics-section">
     <h2>5. Limitations &amp; Ethics</h2>
-    <table>
+    <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
         <tr>
             <th>Issue</th>
             <th>What it means for evaluators</th>
@@ -698,7 +703,7 @@ Constraint: Do not add, soften, or exaggerate any result. Keep every number.
             <td>Tool cost and language coverage can advantage some teams and languages over others.</td>
             <td>Be mindful when comparing AI-assisted and non-assisted work; don't let tooling shape whose evidence counts.</td>
         </tr>
-    </table>
+    </table></div>
     <div class="sa-context">
         <h3>The human-accountability principle</h3>
         <p>AI is a tool, not an evaluator. It cannot be accountable to communities, commissioners, or professional standards. A named human must own the design decisions, the interpretation of evidence, and the final judgments. When AI is used, accountability does not transfer to the tool &mdash; it stays with the evaluator. Use AI to work faster and see more, never to decide what is true or what should be done.</p>

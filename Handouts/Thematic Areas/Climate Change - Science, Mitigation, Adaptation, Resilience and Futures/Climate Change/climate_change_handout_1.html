@@ -27,7 +27,7 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #27ae60, #3498db);
+            background: linear-gradient(135deg, #1e8449, #1f7ac0);
             color: white;
             padding: 30px;
             text-align: center;
@@ -51,11 +51,11 @@
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
-            border-left: 5px solid #27ae60;
+            border-left: 5px solid #1e8449;
         }
         
         .time-indicator {
-            background: #3498db;
+            background: #1f7ac0;
             color: white;
             padding: 5px 10px;
             border-radius: 15px;
@@ -70,7 +70,7 @@
         
         .section h2 {
             color: #2c3e50;
-            border-bottom: 2px solid #27ae60;
+            border-bottom: 2px solid #1e8449;
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
@@ -82,20 +82,20 @@
         
         .exercise-box {
             background: #f8f9fa;
-            border: 2px solid #3498db;
+            border: 2px solid #1f7ac0;
             border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
         }
         
         .exercise-box h4 {
-            color: #2980b9;
+            color: #1a6494;
             margin-top: 0;
         }
         
         .climate-fact {
             background: #fff5f5;
-            border: 2px solid #e74c3c;
+            border: 2px solid #c0392b;
             border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
@@ -108,7 +108,7 @@
         
         .science-box {
             background: #f0f8ff;
-            border-left: 4px solid #3498db;
+            border-left: 4px solid #1f7ac0;
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
@@ -116,14 +116,14 @@
         
         .key-point {
             background: #e8f5e8;
-            border-left: 4px solid #27ae60;
+            border-left: 4px solid #1e8449;
             padding: 15px;
             margin: 15px 0;
             border-radius: 5px;
         }
         
         .takeaway {
-            background: linear-gradient(135deg, #27ae60, #3498db);
+            background: linear-gradient(135deg, #1e8449, #1f7ac0);
             color: white;
             padding: 25px;
             border-radius: 8px;
@@ -146,7 +146,7 @@
         
         .data-highlight {
             background: #fff9e6;
-            border: 1px solid #f39c12;
+            border: 1px solid #9a6207;
             padding: 15px;
             margin: 15px 0;
             border-radius: 5px;
@@ -159,7 +159,7 @@
         
         .print-note {
             text-align: center;
-            color: #7f8c8d;
+            color: #5d6d6e;
             font-size: 0.9em;
             margin-top: 30px;
             padding-top: 20px;
@@ -175,7 +175,7 @@
         
         .impact-card {
             background: #f8f9fa;
-            border-left: 4px solid #e74c3c;
+            border-left: 4px solid #c0392b;
             padding: 15px;
             border-radius: 5px;
         }
@@ -199,7 +199,7 @@
         }
         
         .emissions-table th {
-            background-color: #27ae60;
+            background-color: #1e8449;
             color: white;
             font-weight: bold;
         }
@@ -211,7 +211,7 @@
         @media print {
             body { background: white; }
             .container { box-shadow: none; }
-            .header { background: #27ae60 !important; }
+            .header { background: #1e8449 !important; }
             .impact-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
@@ -225,8 +225,8 @@
     --im-secondary-accent: #6366F1;
     --im-success: #10B981;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -240,7 +240,7 @@
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -397,6 +397,11 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 /* Body clears fixed im-topbar (added by site-wide audit fix) */
 body { padding-top: 56px; }
 @media (max-width: 768px) { body { padding-top: 52px; } }
+
+/* A table wider than the phone scrolls the whole page sideways, and a scroll container a keyboard cannot enter is a second defect on top of the first. Deliberately not `display:block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree. */
+.im-tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.im-tscroll>table{min-width:0}
+.im-tscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
@@ -538,7 +543,7 @@ body { padding-top: 56px; }
             
             <h3>Major Greenhouse Gases & Their Sources</h3>
             
-            <table class="emissions-table">
+            <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table class="emissions-table">
                 <thead>
                     <tr>
                         <th>Gas</th>
@@ -578,7 +583,7 @@ body { padding-top: 56px; }
                         <td>Growing AC market, industrial cooling</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             
             <div class="data-highlight">
                 <h4><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="6"/><line x1="18" y1="20" x2="18" y2="10"/></svg> India's Emissions Profile (2022)</h4>

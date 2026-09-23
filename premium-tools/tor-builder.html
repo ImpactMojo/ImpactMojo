@@ -35,7 +35,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
     --primary-bg:#F8FAFC; --secondary-bg:#FFFFFF; --accent-color:#0369A1; --accent-hover:#0369A1;
-    --secondary-accent:#6366F1; --success-color:#16A34A; --warning-color:#D97706; --danger-color:#DC2626;
+    --secondary-accent:#4F46E5; --success-color:#16A34A; --warning-color:#92400E; --danger-color:#991B1B;
     --text-primary:#0F172A; --text-secondary:#475569; --text-muted:#64748B;
     --card-bg:#FFFFFF; --hover-bg:#F1F5F9; --border-color:#E2E8F0; --nav-bg:rgba(248,250,252,0.95);
     --shadow-sm:0 1px 2px rgba(0,0,0,.04); --shadow-md:0 4px 6px rgba(0,0,0,.06); --shadow-lg:0 10px 25px rgba(0,0,0,.08);
@@ -50,7 +50,7 @@
 }}
 body.light-mode{
     --primary-bg:#F8FAFC; --secondary-bg:#FFFFFF; --accent-color:#0369A1; --accent-hover:#0369A1;
-    --success-color:#16A34A; --warning-color:#D97706; --danger-color:#DC2626;
+    --success-color:#16A34A; --warning-color:#92400E; --danger-color:#991B1B;
     --text-primary:#0F172A; --text-secondary:#475569; --text-muted:#64748B;
     --card-bg:#FFFFFF; --hover-bg:#F1F5F9; --border-color:#E2E8F0; --nav-bg:rgba(248,250,252,0.95);
 }
@@ -126,7 +126,7 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
 .dynlist .item{display:flex;gap:.5rem;margin-bottom:.5rem;align-items:flex-start;}
 .dynlist .item input,.dynlist .item textarea{flex:1;}
 .icon-btn{flex-shrink:0;width:38px;height:38px;border:1px solid var(--border-color);background:var(--card-bg);border-radius:9px;color:var(--text-muted);cursor:pointer;font-size:1.1rem;line-height:1;display:flex;align-items:center;justify-content:center;}
-.icon-btn:hover{border-color:var(--danger-color);color:var(--danger-color);}
+.icon-btn:hover{border-color:var(--im-ink-bad, #991B1B);color:var(--im-ink-bad, #991B1B);}
 .add-btn{margin-top:.2rem;display:inline-flex;align-items:center;gap:.4rem;background:none;border:1px dashed var(--border-color);color:var(--accent-color);padding:.45rem .8rem;border-radius:9px;font-family:'Inter',sans-serif;font-weight:600;font-size:.82rem;cursor:pointer;}
 .add-btn:hover{border-color:var(--accent-color);background:var(--hover-bg);}
 
@@ -165,7 +165,7 @@ table.cost .num{text-align:right;font-family:'JetBrains Mono',monospace;}
 .cta p{font-size:.86rem;color:var(--text-secondary);margin-bottom:.6rem;}
 
 /* Lock / upgrade gate */
-:root{--premium-color:#F59E0B;}
+:root{--premium-color:#92400E;}
 .gate-card{text-align:center;background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:2.5rem 1.75rem;max-width:680px;margin:1.5rem auto;}
 .gate-card .lock{width:48px;height:48
 /* Theme-scoped contrast corrections. The pairs below resolve to
@@ -205,6 +205,18 @@ body.dark-mode .skip-link, [data-theme="dark"] .skip-link, html.dark .skip-link 
 @media print{.im-topbar,.paper-plane,.im-footer,.preview-actions,.grid > div:first-child,.hero .links,.cta,.skip-link{display:none !important;}
 .preview{border:none;box-shadow:none;max-height:none;overflow:visible;padding:0;}
 .grid{grid-template-columns:1fr;} body{padding-top:0;}}
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--secondary-accent:#A5B4FC;}}
+[data-theme="dark"],body.dark-mode,html.dark{--secondary-accent:#A5B4FC;}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;}
 </style>
 </head>
 <body>

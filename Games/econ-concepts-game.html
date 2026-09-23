@@ -39,7 +39,7 @@ button{cursor:pointer;font-family:inherit;border:none;outline:none}
 #story-intro .story-art{width:100%;max-width:800px;margin:0 auto 24px}
 #story-intro .story-art svg{width:100%;height:auto;min-height:300px}
 #story-intro .narrative{font-size:1.1rem;line-height:1.75;color:var(--text2);max-width:600px;margin:0 auto 32px;padding:0 12px}
-#story-intro .narrative em{color:var(--amber);font-style:normal;font-weight:600}
+#story-intro .narrative em{color:var(--im-ink-warn, #92400E);font-style:normal;font-weight:600}
 .btn-challenge{
   padding:16px 48px;border-radius:var(--radius);font-size:1.15rem;font-weight:700;
   background:linear-gradient(135deg,#C62828,#E65100,#F9A825);color:#fff;
@@ -106,13 +106,13 @@ button{cursor:pointer;font-family:inherit;border:none;outline:none}
   transition:all .2s;
 }
 .option-card:hover:not(.disabled) .letter{background: #196CF4;color:#fff}
-.option-card.correct{border-color:var(--green);background:rgba(34,197,94,.2);animation:glow .6s ease}
+.option-card.correct{border-color:var(--im-ink-good, #047857);background:rgba(34,197,94,.2);animation:glow .6s ease}
 .option-card.correct .letter{background: #17843F;color:#fff}
-.option-card.wrong{border-color:var(--red);background:rgba(239,68,68,.2);animation:shake .4s ease}
+.option-card.wrong{border-color:var(--im-ink-bad, #991B1B);background:rgba(239,68,68,.2);animation:shake .4s ease}
 .option-card.wrong .letter{background: #E71414;color:#fff}
 .option-card.disabled{cursor:default;opacity:.6}
 .option-card.disabled.correct{opacity:1}
-.option-card.reveal-correct{border-color:var(--green);background:rgba(34,197,94,.18);opacity:1}
+.option-card.reveal-correct{border-color:var(--im-ink-good, #047857);background:rgba(34,197,94,.18);opacity:1}
 .option-card.reveal-correct .letter{background: #17843F;color:#fff}
 
 /* ===== EXPLANATION ===== */
@@ -158,14 +158,14 @@ button{cursor:pointer;font-family:inherit;border:none;outline:none}
 .cat-result-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:8px;margin-bottom:6px;background:var(--bg2)}
 .cat-result-row .name{font-size:.9rem;font-weight:600}
 .cat-result-row .result{font-size:.85rem;font-weight:700}
-.cat-result-row .result.pass{color:var(--green)}
-.cat-result-row .result.fail{color:var(--red)}
+.cat-result-row .result.pass{color:var(--im-ink-good, #047857)}
+.cat-result-row .result.fail{color:var(--im-ink-bad, #991B1B)}
 .end-buttons{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;justify-content:center}
 .btn-share{
   padding:14px 32px;border-radius:var(--radius);font-size:1rem;font-weight:700;
   background:var(--bg2);color:var(--text);border:2px solid var(--bg3);transition:all .2s;
 }
-.btn-share:hover{border-color:var(--green);background:rgba(34,197,94,.1)}
+.btn-share:hover{border-color:var(--im-ink-good, #047857);background:rgba(34,197,94,.1)}
 
 /* ===== STREAK INDICATOR ===== */
 .streak-badge{
@@ -186,19 +186,31 @@ button{cursor:pointer;font-family:inherit;border:none;outline:none}
   .end-stats{grid-template-columns:1fr 1fr}
   #end .final-score{font-size:2.6rem}
 }
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;--indigo:#A5B4FC;--red:#FCA5A5;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;--indigo:#A5B4FC;--red:#FCA5A5;}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-good:#047857;--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-warn:#FCD34D;}
 </style>
 <style>
 /* ===== ImpactMojo Design System ===== */
 :root {
     --im-primary-bg: #0F172A;
     --im-secondary-bg: #1E293B;
-    --im-accent: #0EA5E9;
+    --im-accent: #0369A1;
     --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1;
-    --im-success: #10B981;
+    --im-secondary-accent: #4F46E5;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -212,7 +224,7 @@ button{cursor:pointer;font-family:inherit;border:none;outline:none}
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -393,7 +405,6 @@ body { padding-top: 56px; }
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/light-mode-fallback.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -410,7 +421,7 @@ body { padding-top: 56px; }
 }
 </script>
 <style>
-.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:inherit;opacity:.7;text-decoration:none;margin-bottom:12px;transition:opacity .2s}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:inherit;text-decoration:none;margin-bottom:12px;transition:opacity .2s}
 .back-link:hover{opacity:1;text-decoration:none}
 </style>
 </head>

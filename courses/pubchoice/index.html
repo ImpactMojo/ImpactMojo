@@ -69,9 +69,9 @@
             --accent-color: #3730A3;
             --accent-hover: #2A2480;
             --secondary-accent: #B45309;
-            --success-color: #10B981;
-            --warning-color: #F59E0B;
-            --danger-color: #EF4444;
+            --success-color: #047857;
+            --warning-color: #92400E;
+            --danger-color: #991B1B;
             --text-primary: #0F172A;
             --text-secondary: #475569;
             --text-muted: #52627A;
@@ -183,9 +183,9 @@ body.light-mode, [data-theme="light"] {
             --accent-color: #3730A3;
             --accent-hover: #2A2480;
             --secondary-accent: #B45309;
-            --success-color: #10B981;
-            --warning-color: #F59E0B;
-            --danger-color: #EF4444;
+            --success-color: #047857;
+            --warning-color: #92400E;
+            --danger-color: #991B1B;
             --text-primary: #0F172A;
             --text-secondary: #475569;
             --text-muted: #52627A;
@@ -394,7 +394,7 @@ body.dark-mode, [data-theme="dark"] {
             align-items: center;
             gap: 0.35rem;
             padding: 0.4rem 0.75rem;
-            background: var(--accent-color);
+            background: var(--accent-solid, #0369A1);
             color: white;
             text-decoration: none;
             border-radius: 6px;
@@ -568,7 +568,7 @@ body.dark-mode, [data-theme="dark"] {
         }
         
         ::selection {
-            background: var(--accent-color);
+            background: var(--accent-solid, #0369A1);
             color: white;
         }
         
@@ -739,14 +739,14 @@ body.dark-mode, [data-theme="dark"] {
             top: 60%;
             right: 15%;
             animation-delay: -5s;
-            color: var(--secondary-accent);
+            color: var(--im-ink-info, #4F46E5);
         }
         
         .v3-sparkle-3 {
             bottom: 30%;
             left: 20%;
             animation-delay: -10s;
-            color: var(--success-color);
+            color: var(--im-ink-good, #047857);
         }
         
         @keyframes v3-sparkle-float {
@@ -1005,7 +1005,7 @@ body.dark-mode, [data-theme="dark"] {
         
         .mobile-menu-btn:hover,
         .mobile-menu-btn:active {
-            background: var(--accent-color);
+            background: var(--accent-solid, #0369A1);
             border-color: var(--accent-color);
             color: white;
         }
@@ -3009,6 +3009,11 @@ body.dark-mode, [data-theme="dark"] {
         .data-exercise ol { margin: 0.25rem 0 0 1.25rem; padding: 0; color: var(--text-secondary, #475569); }
         .data-exercise ol li { margin-bottom: 0.45rem; }
         .data-exercise ol li:last-child { margin-bottom: 0; }
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-good:#047857;--im-ink-info:#4F46E5;}
+@media (prefers-color-scheme: dark){:root{--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;}
 </style>
 <style>
 /* ===== ImpactMojo Design System ===== */
@@ -3018,10 +3023,10 @@ body.dark-mode, [data-theme="dark"] {
     --im-accent: #3730A3;
     --im-accent-hover: #2A2480;
     --im-secondary-accent: #B45309;
-    --im-success: #10B981;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -3035,7 +3040,7 @@ body.dark-mode, [data-theme="dark"] {
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -3198,7 +3203,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
     --gold: #B45309;            /* secondary accent (Public Choice) */
     --cyan: #3730A3;            /* repurposed to indigo for this course */
     --orange: #B45309;          /* repurposed to gold for this course */
-    --success: #10B981;         /* matches --success-color */
+    --success: #047857;         /* matches --success-color */
 
     --bg-primary: var(--primary-bg);
     --bg-secondary: var(--secondary-bg);
@@ -3364,6 +3369,13 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 .hero-resource-btn img { filter:brightness(0) invert(1) !important; }
 .hero a { color:#C7D2FE !important; }
 
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-success:#6EE7B7;--success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-success:#6EE7B7;--success:#6EE7B7;}
 </style>
 <!-- SEO meta (autogenerated) -->
 <meta name="robots" content="index, follow">
@@ -5708,7 +5720,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
 <script src="/js/state-manager.js?v=62445627"></script>
 <script src="/js/config.js?v=7e6af861"></script>
-<script src="/js/auth.js?v=804ebed9"></script>
+<script src="/js/auth.js?v=d7104db5"></script>
 
 <!-- Deferred scripts -->
 <script defer src="../../js/course-loader.js"></script>

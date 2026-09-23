@@ -11,7 +11,7 @@
 :root{
   --bg:#0B1120;--bg2:#111827;--bg3:#1F2937;--bg4:#374151;
   --text:#F9FAFB;--text2:#D1D5DB;--text3:#9CA3AF;
-  --green:#059669;--green-light:#34D399;--green-bg:rgba(5,150,105,.22);
+  --green:#10B981;--green-light:#34D399;--green-bg:rgba(5,150,105,.22);
   --amber:#F59E0B;--amber-bg:rgba(245,158,11,.22);
   --red:#EF4444;--red-bg:rgba(239,68,68,.22);
   --blue:#3B82F6;--blue-bg:rgba(59,130,246,.22);
@@ -59,7 +59,7 @@ h3{font-size:1.1rem;font-weight:600;font-family:'Inter',sans-serif}
 .concept-box{background:linear-gradient(135deg,rgba(5,150,105,.16),rgba(59,130,246,.16));border:1px solid rgba(5,150,105,.2);border-radius:var(--radius);padding:1.5rem;margin:1.5rem 0}
 .agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
 .agent-intro{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center;transition:var(--transition)}
-.agent-intro:hover{border-color:var(--green);transform:translateY(-2px)}
+.agent-intro:hover{border-color:var(--im-ink-good, #047857);transform:translateY(-2px)}
 .agent-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto .6rem;font-weight:700}
 
 /* ── Game Screen ── */
@@ -91,7 +91,7 @@ h3{font-size:1.1rem;font-weight:600;font-family:'Inter',sans-serif}
 .resource-label{color:var(--text3);font-size:.85rem}
 
 /* Warning banner */
-.warning-banner{background:var(--amber-bg);border:1px solid rgba(245,158,11,.3);border-radius:var(--radius-sm);padding:.8rem 1rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;font-size:.9rem;color:var(--amber);animation:pulse-border 2s ease infinite}
+.warning-banner{background:var(--amber-bg);border:1px solid rgba(245,158,11,.3);border-radius:var(--radius-sm);padding:.8rem 1rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;font-size:.9rem;color:var(--im-ink-warn, #92400E);animation:pulse-border 2s ease infinite}
 .warning-banner.critical-banner{background:var(--red-bg);border-color:rgba(239,68,68,.3);color:#DC3B3B}
 @keyframes pulse-border{0%,100%{opacity:1}50%{opacity:.7}}
 
@@ -136,18 +136,18 @@ h3{font-size:1.1rem;font-weight:600;font-family:'Inter',sans-serif}
 .score-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center}
 .score-card .score-name{font-weight:700;margin-bottom:.3rem}
 .score-card .score-value{font-size:1.6rem;font-weight:800;color:var(--green-light)}
-.score-card.player-card{border-color:var(--green);background:var(--green-bg)}
+.score-card.player-card{border-color:var(--im-ink-good, #047857);background:var(--green-bg)}
 
 .ostrom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.75rem;margin:1rem 0}
 .ostrom-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem}
-.ostrom-card .ostrom-num{font-size:.75rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
+.ostrom-card .ostrom-num{font-size:.75rem;font-weight:700;color:var(--im-ink-good, #047857);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
 .ostrom-card h4{font-size:.9rem;margin-bottom:.3rem}
 .ostrom-card p{font-size:.8rem;color:var(--text3);line-height:1.5}
 
 /* Collapse overlay */
 .collapse-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:100;animation:fade-in .5s ease}
 .collapse-overlay .collapse-content{text-align:center;max-width:500px;padding:2rem}
-.collapse-overlay h2{font-size:2rem;color:var(--red);margin-bottom:1rem}
+.collapse-overlay h2{font-size:2rem;color:var(--im-ink-bad, #991B1B);margin-bottom:1rem}
 @keyframes fade-in{from{opacity:0}to{opacity:1}}
 
 /* Responsive */
@@ -233,19 +233,31 @@ h3{font-size:1.1rem;font-weight:600;font-family:'Inter',sans-serif}
   .story-card .story-text{font-size:1rem}
   .story-card .warli-frame{padding:8px}
 }
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--green:#6EE7B7;--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;--red:#FCA5A5;}}
+[data-theme="dark"],body.dark-mode,html.dark{--green:#6EE7B7;--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;--red:#FCA5A5;}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-good:#047857;--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-warn:#FCD34D;}
 </style>
 <style>
 /* ===== ImpactMojo Design System ===== */
 :root {
     --im-primary-bg: #0F172A;
     --im-secondary-bg: #1E293B;
-    --im-accent: #0EA5E9;
+    --im-accent: #0369A1;
     --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1;
-    --im-success: #10B981;
+    --im-secondary-accent: #4F46E5;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -259,7 +271,7 @@ h3{font-size:1.1rem;font-weight:600;font-family:'Inter',sans-serif}
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -440,7 +452,6 @@ body { padding-top: 56px; }
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/light-mode-fallback.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -457,7 +468,7 @@ body { padding-top: 56px; }
 }
 </script>
 <style>
-.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:inherit;opacity:.7;text-decoration:none;margin-bottom:12px;transition:opacity .2s}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:inherit;text-decoration:none;margin-bottom:12px;transition:opacity .2s}
 .back-link:hover{opacity:1;text-decoration:none}
 </style>
 </head>

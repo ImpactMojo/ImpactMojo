@@ -1040,23 +1040,34 @@ input[type="range"]::-moz-range-thumb {
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 1.6rem;
   font-weight: 700;
-  color: #F9A825;
+  color: var(--im-ink-warn, #92400E);
   margin-bottom: 0.5rem;
   letter-spacing: 0.02em;
 }
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
+
+:root{--im-ink-warn:#92400E}
+@media (prefers-color-scheme: dark){:root{--im-ink-warn:#FCD34D}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-warn:#FCD34D}
 </style>
 <style>
 /* ===== ImpactMojo Design System ===== */
 :root {
     --im-primary-bg: #0F172A;
     --im-secondary-bg: #1E293B;
-    --im-accent: #0EA5E9;
+    --im-accent: #0369A1;
     --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1;
-    --im-success: #10B981;
+    --im-secondary-accent: #4F46E5;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -1070,7 +1081,7 @@ input[type="range"]::-moz-range-thumb {
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -1251,7 +1262,6 @@ body { padding-top: 56px; }
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/light-mode-fallback.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1268,7 +1278,8 @@ body { padding-top: 56px; }
 }
 </script>
 <style>
-.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:inherit;opacity:.7;text-decoration:none;margin-bottom:12px;transition:opacity .2s}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:inherit;text-decoration:none;margin-bottom:12px;transition:opacity .2s}
+#story-intro .back-link, .story-screen .back-link { color:#CBD5E1 !important }
 .back-link:hover{opacity:1;text-decoration:none}
 </style>
 </head>
@@ -1307,7 +1318,7 @@ body { padding-top: 56px; }
      STORY INTRO SCREEN (Madhubani Art)
      ═══════════════════════════════════════════════════════════════ -->
 <div id="story-intro" class="story-screen">
-  <a href="/game-library.html" class="back-link">← Back to Games</a>
+  <a href="/game-library.html" class="back-link story-back">← Back to Games</a>
   <div class="story-card">
     <div class="story-title">The Village Well</div>
     <div class="story-svg-container">

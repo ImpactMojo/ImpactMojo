@@ -26,7 +26,7 @@
     <style>
         :root {
             --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --premium-color: #6D28D9;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
@@ -72,7 +72,7 @@
         .btn { padding: 0.7rem 1.3rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-size: 0.9rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.45rem; }
         .btn:hover:not(:disabled) { border-color: var(--accent-color); background: var(--hover-bg); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .btn-primary { background: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 700; }
+        .btn-primary { background: var(--accent-solid, #0369A1); border-color: var(--accent-color); color: #fff; font-weight: 700; }
         .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
         .btn-premium { background: var(--gradient-premium); border: none; color: #fff; font-weight: 700; }
         .controls { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
@@ -86,8 +86,8 @@
         .advisor-model { font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-muted); margin-left: auto; }
         .advisor-text { color: var(--text-primary); font-size: 0.98rem; }
         .steer-card { background: rgba(99, 102, 241, 0.08); border: 1px dashed var(--secondary-accent); border-radius: 12px; padding: 0.8rem 1.1rem; font-size: 0.92rem; color: var(--text-secondary); }
-        .steer-card strong { color: var(--secondary-accent); }
-        .synthesis-card { border-left-color: var(--success-color) !important; background: rgba(16, 185, 129, 0.06); }
+        .steer-card strong { color: var(--im-ink-info, #4F46E5); }
+        .synthesis-card { border-left-color: var(--im-ink-good, #047857) !important; background: rgba(16, 185, 129, 0.06); }
 
         .typing { display: inline-flex; gap: 4px; align-items: center; }
         .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); animation: blink 1.2s infinite; }
@@ -97,7 +97,7 @@
         .round-label { text-align: center; font-family: var(--font-heading); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin: 0.5rem 0; }
         .steer-row { display: flex; gap: 0.5rem; margin-top: 1rem; }
         .steer-row input { flex: 1; }
-        .err { color: var(--danger-color); font-size: 0.85rem; margin-top: 0.5rem; }
+        .err { color: var(--im-ink-bad, #991B1B); font-size: 0.85rem; margin-top: 0.5rem; }
         .post-controls { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
         .hint { font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 1rem; }
 
@@ -115,7 +115,19 @@
         /* Footer */
         .im-footer { background: var(--secondary-bg); border-top: 1px solid var(--border-color); margin-top: 3rem; }
         .im-footer-bottom { text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.8rem; }
-    </style>
+    
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--danger-color:#FCA5A5;--secondary-accent:#A5B4FC;--success-color:#6EE7B7;--warning-color:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--danger-color:#FCA5A5;--secondary-accent:#A5B4FC;--success-color:#6EE7B7;--warning-color:#FCD34D;}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-good:#047857;--im-ink-info:#4F46E5;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;}
+</style>
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 </head>
 <body>

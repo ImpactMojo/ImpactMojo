@@ -10,7 +10,7 @@
   --bg:#0F172A;--bg2:#1E293B;--bg3:#334155;--bg4:#475569;
   --text:#F8FAFC;--text2:#CBD5E1;--text3:#94A3B8;
   --saffron:#F97316;--saffron-light:#FB923C;--saffron-bg:rgba(249,115,22,.22);
-  --green:#059669;--green-light:#34D399;--green-bg:rgba(5,150,105,.22);
+  --green:#10B981;--green-light:#34D399;--green-bg:rgba(5,150,105,.22);
   --blue:#3B82F6;--blue-bg:rgba(59,130,246,.22);
   --red:#EF4444;--red-light:#F87171;--red-bg:rgba(239,68,68,.22);
   --amber:#F59E0B;--amber-bg:rgba(245,158,11,.22);
@@ -70,7 +70,7 @@ h3{font-size:1.15rem;font-weight:600}
 .status-item .s-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin-bottom:.25rem}
 .status-item .s-value{font-size:1.5rem;font-weight:800}
 .s-income{color:var(--green-light)}
-.s-savings{color:var(--amber)}
+.s-savings{color:var(--im-ink-warn, #92400E)}
 .s-percentile{color:var(--saffron-light)}
 
 /* Distribution Bar */
@@ -184,19 +184,31 @@ canvas#trajectoryChart{width:100%;height:200px}
 /* ── End Story Art ── */
 .end-story-art{margin:2rem auto;max-width:800px;width:100%}
 .end-story-art svg{width:100%;height:auto;min-height:280px;filter:drop-shadow(0 4px 20px rgba(198,40,40,.2))}
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--green:#6EE7B7;--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;--red:#FCA5A5;}}
+[data-theme="dark"],body.dark-mode,html.dark{--green:#6EE7B7;--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;--red:#FCA5A5;}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-warn:#FCD34D;}
 </style>
 <style>
 /* ===== ImpactMojo Design System ===== */
 :root {
     --im-primary-bg: #0F172A;
     --im-secondary-bg: #1E293B;
-    --im-accent: #0EA5E9;
+    --im-accent: #0369A1;
     --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1;
-    --im-success: #10B981;
+    --im-secondary-accent: #4F46E5;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
-    --im-text-secondary: #94A3B8;
-    --im-text-muted: #64748B;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #1E293B;
     --im-hover-bg: #334155;
     --im-border: #334155;
@@ -210,7 +222,7 @@ canvas#trajectoryChart{width:100%;height:200px}
     --im-accent-hover: #0369A1;
     --im-text-primary: #0F172A;
     --im-text-secondary: #475569;
-    --im-text-muted: #64748B;
+    --im-text-muted: #94A3B8;
     --im-card-bg: #FFFFFF;
     --im-hover-bg: #F1F5F9;
     --im-border: #E2E8F0;
@@ -392,7 +404,6 @@ body { padding-top: 56px; }
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
 <link rel="stylesheet" href="/css/fonts.css">
-<link rel="stylesheet" href="/assets/css/light-mode-fallback.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -409,7 +420,7 @@ body { padding-top: 56px; }
 }
 </script>
 <style>
-.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:inherit;opacity:.7;text-decoration:none;margin-bottom:12px;transition:opacity .2s}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:inherit;text-decoration:none;margin-bottom:12px;transition:opacity .2s}
 .back-link:hover{opacity:1;text-decoration:none}
 </style>
 </head>
