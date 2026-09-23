@@ -33,6 +33,7 @@ Free development education platform for South Asia. Static HTML/CSS/JS, Supabase
 - Stale `101.impactmojo.in` links — should point to self-hosted files
 - `data/search-index.json` must stay valid JSON
 - Update `docs/changelog.md` for user-facing changes
+- **ImpactLex entries are not all equal, and the page now says so.** 159 of 494 terms are unreviewed `seed`, 226 were drafted by a language model, 460 have no citation. `impactlex/app.js` renders provenance on every term and offers a filter for it; `scripts/check-impactlex.py` keeps it wired and watches the offline snapshot's age. Do not regenerate that snapshot with `scripts/impactlex-migrate.mjs` — it would overwrite 385 curated definitions with the original import.
 - **Fixing a defect? File a `bug` issue first, then fix, then cite it as `(#NNN)` in `### Fixed`** — the public Known Issues page can only show what was filed. See `docs/bug-reporting.md`
 
 ## API Keys

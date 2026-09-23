@@ -26,7 +26,7 @@
     terms: [],
     caseStudies: [],
     formulae: [],
-    filter: { category: 'all', course: 'all', query: '' },
+    filter: { category: 'all', course: 'all', provenance: 'all', query: '' },
     bookmarks: new Set(JSON.parse(localStorage.getItem('impactlex:bookmarks') || '[]')),
     liveSource: 'snapshot', // 'snapshot' | 'instantdb'
   };
@@ -106,10 +106,40 @@
     return hay.includes(q);
   }
 
+  /* How an entry came to exist, read off the record rather than inferred.
+   *
+   * Measured over the 494 terms in the committed snapshot on 2026-09-23:
+   *   335 published, 159 still `seed`
+   *   226 drafted by a model (groq or gemini), 268 not
+   *    34 carry a source; 460 do not
+   *
+   * All three rendered identically to a reader. A glossary that a
+   * practitioner quotes from should say which of its entries a person has
+   * reviewed and which carry a citation, and the honest way to do that is to
+   * show it on every term rather than to hide the ones where the answer is
+   * uncomfortable. `rejected` entries never render at all; that is unchanged.
+   */
+  function provenanceOf(t) {
+    return {
+      reviewed: t.status === 'published',
+      aiDrafted: Boolean(t.aiProvider),
+      sourced: Boolean(t.sources && t.sources.length),
+    };
+  }
+
+  const PROVENANCE_FILTERS = {
+    all: { label: 'All entries', test: () => true },
+    reviewed: { label: 'Reviewed', test: (t) => provenanceOf(t).reviewed },
+    unreviewed: { label: 'Not yet reviewed', test: (t) => !provenanceOf(t).reviewed },
+    sourced: { label: 'With a source', test: (t) => provenanceOf(t).sourced },
+  };
+
   function visibleTerms() {
     return state.terms.filter((t) => {
       if (state.filter.category !== 'all' && t.category !== state.filter.category) return false;
       if (state.filter.course !== 'all' && !(t.courses || []).includes(state.filter.course)) return false;
+      const prov = PROVENANCE_FILTERS[state.filter.provenance];
+      if (prov && !prov.test(t)) return false;
       if (!matches(t, state.filter.query)) return false;
       return true;
     });
@@ -160,6 +190,16 @@
           return `<button class="filter-chip${active}" data-filter-type="course" data-filter-value="${c}">${courseLabel[c] || c}<span class="count">${courseCounts[c]}</span></button>`;
         }));
       $('course-filters').innerHTML = chips.join('');
+    }
+
+    const provEl = $('provenance-filters');
+    if (provEl) {
+      provEl.innerHTML = Object.keys(PROVENANCE_FILTERS).map((key) => {
+        const { label, test } = PROVENANCE_FILTERS[key];
+        const active = state.filter.provenance === key ? ' active' : '';
+        const count = state.terms.filter(test).length;
+        return `<button class="filter-chip${active}" data-filter-type="provenance" data-filter-value="${key}">${label}<span class="count">${count}</span></button>`;
+      }).join('');
     }
   }
 
@@ -273,11 +313,27 @@
       rSec.hidden = false;
     } else rSec.hidden = true;
 
-    const sSec = $('modal-sources-section');
-    if (t.sources && t.sources.length) {
-      $('modal-sources').textContent = t.sources.join(' · ');
-      sSec.hidden = false;
-    } else sSec.hidden = true;
+    /* Never hidden. A term with no source used to render exactly like a term
+       whose sources happened not to apply, because the section was dropped. */
+    const hasSources = Boolean(t.sources && t.sources.length);
+    $('modal-sources').textContent = hasSources
+      ? t.sources.join(' · ')
+      : 'No source recorded for this entry.';
+    $('modal-sources').classList.toggle('sources-empty', !hasSources);
+    $('modal-sources-section').hidden = false;
+
+    const prov = provenanceOf(t);
+    $('modal-provenance').innerHTML = [
+      prov.reviewed
+        ? ['ok', 'Reviewed by an editor and published.']
+        : ['warn', 'Not yet reviewed. It is published so the term is findable, and an editor has not checked it.'],
+      prov.aiDrafted
+        ? ['warn', `First draft written by a language model (${escapeHtml(String(t.aiProvider))}), then edited.`]
+        : ['ok', 'Written by hand.'],
+      prov.sourced
+        ? ['ok', 'Carries a citation, listed above.']
+        : ['warn', 'No citation. Check it against a primary source before quoting it.'],
+    ].map(([kind, text]) => `<li class="prov-${kind}">${text}</li>`).join('');
 
     const bm = $('modal-bookmark');
     bm.classList.toggle('btn-primary', state.bookmarks.has(t.id));

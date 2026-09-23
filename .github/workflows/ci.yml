@@ -446,6 +446,24 @@ jobs:
       - name: Check block markup in blog/
         run: python3 scripts/check-html-nesting.py
 
+  impactlex:
+    name: ImpactLex provenance and snapshot age
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # Two failures that are invisible on the page. An entry nobody has
+      # reviewed rendered exactly like one an editor had: 159 of 494 are still
+      # `seed`, 226 were first drafted by a language model, and 460 carry no
+      # citation at all. And the offline snapshot is what every visitor sees
+      # first -- app.js paints it before InstantDB answers -- so its age is
+      # everyone's first paint, not a fallback. It cannot be regenerated
+      # without INSTANTDB_ADMIN_TOKEN, which is why the age has to report
+      # itself rather than be remembered.
+      - name: Check ImpactLex states its provenance
+        run: python3 scripts/check-impactlex.py
+
   viewport:
     name: Viewport meta guard
     runs-on: ubuntu-latest
