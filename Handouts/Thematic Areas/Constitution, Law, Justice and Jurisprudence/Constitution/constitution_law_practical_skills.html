@@ -493,6 +493,11 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 /* Body clears fixed im-topbar (added by site-wide audit fix) */
 body { padding-top: 56px; }
 @media (max-width: 768px) { body { padding-top: 52px; } }
+
+/* A table wider than the phone scrolls the whole page sideways, and a scroll container a keyboard cannot enter is a second defect on top of the first. Deliberately not `display:block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree. */
+.im-tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.im-tscroll>table{min-width:0}
+.im-tscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
@@ -694,7 +699,7 @@ body { padding-top: 56px; }
             
             <h3>Parliamentary Questions - Getting Issues on Official Record</h3>
             
-            <table class="process-table">
+            <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table class="process-table">
                 <thead>
                     <tr>
                         <th>Question Type</th>
@@ -723,7 +728,7 @@ body { padding-top: 56px; }
                         <td>Immediate crises, time-sensitive issues</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             
             <div class="step-by-step">
                 <h5>How to Get Your Issue Raised in Parliament</h5>
@@ -839,7 +844,7 @@ body { padding-top: 56px; }
             
             <h3>Policy Consultation Mechanisms</h3>
             
-            <table class="process-table">
+            <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table class="process-table">
                 <thead>
                     <tr>
                         <th>Consultation Type</th>
@@ -874,7 +879,7 @@ body { padding-top: 56px; }
                         <td>Local context, ground-level insights</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             
             <div class="step-by-step">
                 <h5>Effective Policy Submission Guidelines</h5>

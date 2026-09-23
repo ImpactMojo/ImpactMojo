@@ -22,8 +22,8 @@
 
     <style>
         :root {
-            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0EA5E9; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
             --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
@@ -38,8 +38,8 @@
             --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
         } }
 body.light-mode, [data-theme="light"] {
-            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0EA5E9; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
             --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
@@ -127,7 +127,7 @@ body.dark-mode, [data-theme="dark"] {
         /* Buttons + nav */
         .btn { padding: 0.7rem 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-size: 0.9rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; }
         .btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
-        .btn-primary { background: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 600; }
+        .btn-primary { background: var(--accent-solid, #0369A1); border-color: var(--accent-color); color: #fff; font-weight: 600; }
         .btn-primary:hover { background: #027AB8; color: #fff; }
         .pro-pill { display:inline-flex; align-items:center; gap:0.25rem; background:linear-gradient(135deg,#F59E0B,#EF4444); color:#fff; font-family:var(--font-heading); font-weight:700; font-size:0.6rem; text-transform:uppercase; letter-spacing:0.4px; padding:0.12rem 0.45rem; border-radius:5px; vertical-align:middle; }
         .export-note { font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem; }
@@ -150,7 +150,7 @@ body.dark-mode, [data-theme="dark"] {
         .ladder { list-style: none; margin: 1.25rem 0; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
         .ladder li { display: flex; gap: 0.85rem; padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-color); align-items: flex-start; }
         .ladder li:last-child { border-bottom: none; }
-        .ladder .rung-badge { flex-shrink: 0; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: rgba(99,102,241,0.12); color: var(--secondary-accent); white-space: nowrap; margin-top: 2px; }
+        .ladder .rung-badge { flex-shrink: 0; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: rgba(99,102,241,0.12); color: var(--im-ink-info, #4F46E5); white-space: nowrap; margin-top: 2px; }
         .ladder .rung-body strong { color: var(--text-primary); font-family: var(--font-heading); }
         .ladder .rung-body span { color: var(--text-secondary); font-size: 0.9rem; }
 
@@ -199,12 +199,18 @@ body.dark-mode, [data-theme="dark"] {
             .top-controls, .back-link, .tabs, .nav-row, .btn, .im-topbar, .v3-paper-plane { display: none !important; }
             .tab-panel { display: block !important; page-break-inside: avoid; margin-bottom: 2rem; }
         }
-    </style>
+    
+/* The indigo chip ink needs a value per theme: #4F46E5 on the pale tint,
+   #A5B4FC on the same tint over the dark card. */
+:root{--im-ink-info:#4F46E5}
+@media (prefers-color-scheme: dark){:root{--im-ink-info:#A5B4FC}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-info:#A5B4FC}
+</style>
 <style>
 /* ===== ImpactMojo Design System (topbar / footer) ===== */
 :root {
-    --im-primary-bg: #0F172A; --im-secondary-bg: #1E293B; --im-accent: #0EA5E9; --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1; --im-success: #10B981; --im-text-primary: #F1F5F9; --im-text-secondary: #CBD5E1;
+    --im-primary-bg: #0F172A; --im-secondary-bg: #1E293B; --im-accent: #0369A1; --im-accent-hover: #0284C7;
+    --im-secondary-accent: #4F46E5; --im-success: #047857; --im-text-primary: #F1F5F9; --im-text-secondary: #CBD5E1;
     --im-text-muted: #94A3B8; --im-card-bg: #1E293B; --im-hover-bg: #334155; --im-border: #334155;
     --im-nav-bg: rgba(15, 23, 42, 0.95); --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
 }
@@ -273,7 +279,14 @@ body { padding-top: 56px; }
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "RCT Readiness Diagnostic", "description": "Before you commit to an expensive randomised controlled trial, find out whether your evidence base, your theory of change, your programme rollout and — crucially — your baseline can actually support one, and whether an RCT is even the right tool. A critical, practitioner-first ImpactMojo studio for NGOs in South Asia.", "url": "https://www.impactmojo.in/Labs/rct-readiness-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
 </head>
 <body>
-<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}</style>
+<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
+</style>
 <!-- ImpactMojo Top Bar -->
 <div class="im-topbar" id="imTopbar">
     <div class="im-topbar-left">

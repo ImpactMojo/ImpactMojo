@@ -559,6 +559,11 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 /* Body clears fixed im-topbar (added by site-wide audit fix) */
 body { padding-top: 56px; }
 @media (max-width: 768px) { body { padding-top: 52px; } }
+
+/* A table wider than the phone scrolls the whole page sideways, and a scroll container a keyboard cannot enter is a second defect on top of the first. Deliberately not `display:block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree. */
+.im-tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.im-tscroll>table{min-width:0}
+.im-tscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
@@ -790,7 +795,7 @@ body { padding-top: 56px; }
             <div class="indicator-type">
                 <h4><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l4-4 14 14-4 4zM7 7l2 2M11 11l2 2M15 15l2 2M9 5l2 2M13 9l2 2M17 13l2 2"/></svg> Types of Indicators</h4>
                 
-                <table style="margin-top: 15px;">
+                <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table style="margin-top: 15px;">
                     <thead>
                         <tr>
                             <th>Indicator Type</th>
@@ -825,7 +830,7 @@ body { padding-top: 56px; }
                             <td>Labor force surveys</td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
             </div>
             
             <h3>SMART Indicators Framework</h3>
@@ -881,7 +886,7 @@ body { padding-top: 56px; }
                     <li>Consider what might make this indicator misleading</li>
                 </ol>
                 
-                <table style="margin-top: 10px;">
+                <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table style="margin-top: 10px;">
                     <tr>
                         <th>Indicator</th>
                         <th>SMART Elements</th>
@@ -894,7 +899,7 @@ body { padding-top: 56px; }
                         <td></td>
                         <td></td>
                     </tr>
-                </table>
+                </table></div>
             </div>
             
             <div class="warning-box">

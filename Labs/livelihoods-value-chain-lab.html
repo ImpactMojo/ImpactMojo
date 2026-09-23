@@ -22,8 +22,8 @@
 
     <style>
         :root {
-            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0EA5E9; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
             --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
@@ -38,8 +38,8 @@
             --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
         } }
 body.light-mode, [data-theme="light"] {
-            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0EA5E9; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
             --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
@@ -116,11 +116,11 @@ body.dark-mode, [data-theme="dark"] {
         .capital-card h4 { font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 0.2rem; color: var(--text-primary); }
         .capital-card .cap-hint { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem; }
         .capital-card textarea { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-family: var(--font-sans); font-size: 0.88rem; background: var(--secondary-bg); color: var(--text-primary); min-height: 58px; resize: vertical; }
-        .capital-card.cap-human { border-left-color: #0EA5E9; }
-        .capital-card.cap-social { border-left-color: #6366F1; }
-        .capital-card.cap-natural { border-left-color: #10B981; }
-        .capital-card.cap-physical { border-left-color: #F59E0B; }
-        .capital-card.cap-financial { border-left-color: #EF4444; }
+        .capital-card.cap-human { border-left-color: var(--im-ink-sky, #0369A1); }
+        .capital-card.cap-social { border-left-color: var(--im-ink-info, #4F46E5); }
+        .capital-card.cap-natural { border-left-color: var(--im-ink-good, #047857); }
+        .capital-card.cap-physical { border-left-color: var(--im-ink-warn, #92400E); }
+        .capital-card.cap-financial { border-left-color: var(--im-ink-bad, #991B1B); }
 
         /* Form widgets (mirrors survey-builder style) */
         .builder { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
@@ -165,7 +165,7 @@ body.dark-mode, [data-theme="dark"] {
         /* Buttons + nav */
         .btn { padding: 0.7rem 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-size: 0.9rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; }
         .btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
-        .btn-primary { background: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 600; }
+        .btn-primary { background: var(--accent-solid, #0369A1); border-color: var(--accent-color); color: #fff; font-weight: 600; }
         .btn-primary:hover { background: #027AB8; color: #fff; }
         .btn-add { background: var(--success-color); border-color: var(--success-color); color: #fff; font-weight: 600; }
         .btn-add:hover { opacity: 0.9; background: #0B835B; color: #fff; }
@@ -189,12 +189,18 @@ body.dark-mode, [data-theme="dark"] {
             .top-controls, .back-link, .tabs, .nav-row, .btn, .im-topbar, .v3-paper-plane { display: none !important; }
             .tab-panel { display: block !important; page-break-inside: avoid; margin-bottom: 2rem; }
         }
-    </style>
+    
+/* A semantic colour used as ink sits on a pale tint in the light theme and
+   on a dark card in the other; one value cannot clear 4.5:1 on both. */
+:root{--im-ink-sky:#0369A1;--im-ink-good:#047857;--im-ink-info:#4F46E5;--im-ink-bad:#991B1B;--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-sky:#38BDF8;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;--im-ink-bad:#FCA5A5;--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-sky:#38BDF8;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;--im-ink-bad:#FCA5A5;--im-ink-warn:#FCD34D;}
+</style>
 <style>
 /* ===== ImpactMojo Design System (topbar / footer) ===== */
 :root {
-    --im-primary-bg: #0F172A; --im-secondary-bg: #1E293B; --im-accent: #0EA5E9; --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1; --im-success: #10B981; --im-text-primary: #F1F5F9; --im-text-secondary: #CBD5E1;
+    --im-primary-bg: #0F172A; --im-secondary-bg: #1E293B; --im-accent: #0369A1; --im-accent-hover: #0284C7;
+    --im-secondary-accent: #4F46E5; --im-success: #047857; --im-text-primary: #F1F5F9; --im-text-secondary: #CBD5E1;
     --im-text-muted: #94A3B8; --im-card-bg: #1E293B; --im-hover-bg: #334155; --im-border: #334155;
     --im-nav-bg: rgba(15, 23, 42, 0.95); --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
 }
@@ -263,7 +269,14 @@ body { padding-top: 56px; }
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Livelihoods & Value-Chain Studio", "description": "Interactive Livelihoods & Value-Chain Studio — map a commodity chain, apply the Sustainable Livelihoods Framework and an M4P market-systems lens, find leverage points, and design skilling and market-linkage interventions using real Indian programmes (NRLM, SHGs, FPOs, PMKVY, MGNREGA). A hands-on ImpactMojo studio for South Asia.", "url": "https://www.impactmojo.in/Labs/livelihoods-value-chain-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
 </head>
 <body>
-<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}</style>
+<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
+</style>
 <!-- ImpactMojo Top Bar -->
 <div class="im-topbar" id="imTopbar">
     <div class="im-topbar-left">

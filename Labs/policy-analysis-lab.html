@@ -20,14 +20,14 @@
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
 <style>
 :root{
-  --primary-bg:#FFFFFF;--secondary-bg:#F8FAFC;--accent:#0EA5E9;--accent-hover:#0284C7;
-  --secondary-accent:#6366F1;--success:#10B981;--warning:#F59E0B;--danger:#EF4444;
+  --primary-bg:#FFFFFF;--secondary-bg:#F8FAFC;--accent:#0369A1;--accent-hover:#0284C7;
+  --secondary-accent:#4F46E5;--success:#047857;--warning:#92400E;--danger:#991B1B;
   --text-primary:#0F172A;--text-secondary:#475569;--text-muted:#64748B;
   --card-bg:#FFFFFF;--hover-bg:#F1F5F9;--border:#E2E8F0;
   --gradient:linear-gradient(135deg,#0EA5E9 0%,#6366F1 100%);
   --font-sans:'Amaranth',sans-serif;--font-heading:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;
-  --im-primary-bg:#0F172A;--im-secondary-bg:#1E293B;--im-accent:#0EA5E9;--im-accent-hover:#0284C7;
-  --im-secondary-accent:#6366F1;--im-success:#10B981;--im-text-primary:#F1F5F9;--im-text-secondary:#CBD5E1;
+  --im-primary-bg:#0F172A;--im-secondary-bg:#1E293B;--im-accent:#0369A1;--im-accent-hover:#0284C7;
+  --im-secondary-accent:#4F46E5;--im-success:#047857;--im-text-primary:#F1F5F9;--im-text-secondary:#CBD5E1;
   --im-text-muted:#94A3B8;--im-card-bg:#1E293B;--im-hover-bg:#334155;--im-border:#334155;
   --im-nav-bg:rgba(15,23,42,0.95);--im-gradient:linear-gradient(135deg,#0EA5E9 0%,#6366F1 100%);
 }
@@ -201,7 +201,14 @@ textarea{min-height:80px}
 @media (prefers-color-scheme: dark) { body:not(.light-mode):not([data-theme="light"]) .im-theme-btn.active { background: #0A7AAD; } }
 body.dark-mode .im-theme-btn.active, [data-theme="dark"] .im-theme-btn.active, html.dark .im-theme-btn.active { background: #0A7AAD; }
 @media (prefers-color-scheme: dark) { body:not(.light-mode):not([data-theme="light"]) .im-browse-btn:hover { background: #0A7AAD; } }
-body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, html.dark .im-browse-btn:hover { background: #0A7AAD; }</style>
+body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, html.dark .im-browse-btn:hover { background: #0A7AAD; }
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--accent:#38BDF8;--danger:#FCA5A5;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;--secondary-accent:#A5B4FC;--success:#6EE7B7;--warning:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--accent:#38BDF8;--danger:#FCA5A5;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;--secondary-accent:#A5B4FC;--success:#6EE7B7;--warning:#FCD34D;}
+</style>
 <!-- ImpactMojo Top Bar -->
 <div class="im-topbar" id="imTopbar">
     <div class="im-topbar-left">
@@ -402,8 +409,7 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
   <div class="card">
     <div style="display:flex;gap:.75rem;align-items:end;flex-wrap:wrap;margin-bottom:1rem">
       <div class="form-group" style="flex:1;min-width:150px;margin:0">
-        <label>Stakeholder Name</label>
-        <input type="text" id="sh-name" placeholder="e.g. Ministry of Health">
+        <label for="sh-name">Stakeholder Name</label><input type="text" id="sh-name" placeholder="e.g. Ministry of Health">
       </div>
       <div class="form-group" style="margin:0">
         <label>Color</label>
@@ -413,7 +419,7 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
           <span class="dot-color" data-color="#10B981" style="background:#10B981"></span>
           <span class="dot-color" data-color="#F59E0B" style="background:#F59E0B"></span>
           <span class="dot-color" data-color="#8B5CF6" style="background:#8B5CF6"></span>
-          <span class="dot-color" data-color="#EC4899" style="background:#EC4899"></span>
+          <span class="dot-color" data-color="#BE185D" style="background:#BE185D"></span>
         </div>
       </div>
       <button class="btn btn-primary" onclick="PAL.addStakeholderFromInput()" style="margin-bottom:0">Add</button>
@@ -459,24 +465,20 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
   <div class="card">
     <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem">
       <div class="form-group" style="flex:1;min-width:180px;margin:0">
-        <label>Variable Name</label>
-        <input type="text" id="cl-var-name" placeholder="e.g. Household income">
+        <label for="cl-var-name">Variable Name</label><input type="text" id="cl-var-name" placeholder="e.g. Household income">
       </div>
       <button class="btn btn-primary" onclick="PAL.addCausalNode()" style="align-self:end">Add Variable</button>
     </div>
 
     <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem">
       <div class="form-group" style="flex:1;min-width:100px;margin:0">
-        <label>From</label>
-        <select id="cl-from"></select>
+        <label for="cl-from">From</label><select id="cl-from"></select>
       </div>
       <div class="form-group" style="flex:1;min-width:100px;margin:0">
-        <label>To</label>
-        <select id="cl-to"></select>
+        <label for="cl-to">To</label><select id="cl-to"></select>
       </div>
       <div class="form-group" style="width:100px;margin:0">
-        <label>Polarity</label>
-        <select id="cl-polarity">
+        <label for="cl-polarity">Polarity</label><select id="cl-polarity">
           <option value="+">+ (same direction)</option>
           <option value="-">- (opposite)</option>
         </select>
@@ -510,19 +512,16 @@ body.dark-mode .im-browse-btn:hover, [data-theme="dark"] .im-browse-btn:hover, h
   <div class="card">
     <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem">
       <div class="form-group" style="flex:1;min-width:150px;margin:0">
-        <label>Add Criterion</label>
-        <input type="text" id="mx-criterion" placeholder="e.g. Cost-effectiveness">
+        <label for="mx-criterion">Add Criterion</label><input type="text" id="mx-criterion" placeholder="e.g. Cost-effectiveness">
       </div>
       <div class="form-group" style="width:80px;margin:0">
-        <label>Weight</label>
-        <input type="text" id="mx-weight" placeholder="1-5" value="3">
+        <label for="mx-weight">Weight</label><input type="text" id="mx-weight" placeholder="1-5" value="3">
       </div>
       <button class="btn btn-secondary" onclick="PAL.addCriterion()" style="align-self:end">Add</button>
     </div>
     <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem">
       <div class="form-group" style="flex:1;min-width:150px;margin:0">
-        <label>Add Alternative</label>
-        <input type="text" id="mx-alternative" placeholder="e.g. Option A: Direct transfers">
+        <label for="mx-alternative">Add Alternative</label><input type="text" id="mx-alternative" placeholder="e.g. Option A: Direct transfers">
       </div>
       <button class="btn btn-secondary" onclick="PAL.addAlternative()" style="align-self:end">Add</button>
     </div>

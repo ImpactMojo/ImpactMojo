@@ -22,8 +22,8 @@
 
     <style>
         :root {
-            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0EA5E9; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
             --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
@@ -38,8 +38,8 @@
             --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
         } }
 body.light-mode, [data-theme="light"] {
-            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0EA5E9; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
             --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
@@ -102,7 +102,7 @@ body.dark-mode, [data-theme="dark"] {
         .card-title { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; }
         .btn { padding: 0.65rem 1.25rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.4rem; }
         .btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
-        .btn-primary { background: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 600; }
+        .btn-primary { background: var(--accent-solid, #0369A1); border-color: var(--accent-color); color: #fff; font-weight: 600; }
         .btn-primary:hover { background: var(--accent-hover); }
         .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
         .btn-danger { color: var(--danger-color); }
@@ -147,10 +147,10 @@ body.dark-mode, [data-theme="dark"] {
 :root {
     --im-primary-bg: #0F172A;
     --im-secondary-bg: #1E293B;
-    --im-accent: #0EA5E9;
+    --im-accent: #0369A1;
     --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1;
-    --im-success: #10B981;
+    --im-secondary-accent: #4F46E5;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
     --im-text-secondary: #CBD5E1;
     --im-text-muted: #94A3B8;
@@ -346,7 +346,14 @@ body { padding-top: 56px; }
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Policy Advocacy Studio", "description": "Interactive Policy Advocacy Studio — analyze issues, build evidence, develop advocacy strategy, and create action plans for evidence-based policy change.", "url": "https://www.impactmojo.in/Labs/policy-advocacy-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
 </head>
 <body>
-<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}</style>
+<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
+</style>
 <!-- ImpactMojo Top Bar -->
 <div class="im-topbar" id="imTopbar">
     <div class="im-topbar-left">
@@ -417,7 +424,7 @@ body { padding-top: 56px; }
 
         <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width: 0%"></div></div>
 
-        <div class="tabs" role="tablist">
+        <div class="tabs">
             <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span> Issue Analysis</button>
             <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span> Evidence Building</button>
             <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">3</span> Strategy Development</button>
@@ -433,12 +440,10 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Policy Issue Definition</div>
                 <div class="form-grid">
                     <div class="field full-width">
-                        <label>Policy Issue</label>
-                        <input type="text" id="policyIssue" placeholder="e.g., Inadequate implementation of Forest Rights Act (FRA) 2006 in tribal areas of Odisha">
+                        <label for="policyIssue">Policy Issue</label><input type="text" id="policyIssue" placeholder="e.g., Inadequate implementation of Forest Rights Act (FRA) 2006 in tribal areas of Odisha">
                     </div>
                     <div class="field">
-                        <label>Policy Level</label>
-                        <select id="policyLevel">
+                        <label for="policyLevel">Policy Level</label><select id="policyLevel">
                             <option value="">— Select —</option>
                             <option value="local">Local (Gram Panchayat / Block)</option>
                             <option value="district">District</option>
@@ -448,8 +453,7 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Sector</label>
-                        <select id="sector">
+                        <label for="sector">Sector</label><select id="sector">
                             <option value="">— Select —</option>
                             <option value="health">Health</option>
                             <option value="education">Education</option>
@@ -462,12 +466,10 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field full-width">
-                        <label>Affected Population</label>
-                        <textarea id="affected" placeholder="e.g., ~2.5 lakh tribal families across 8 districts; particularly vulnerable: PVTGs (Dongria Kondh, Juang, Bonda)"></textarea>
+                        <label for="affected">Affected Population</label><textarea id="affected" placeholder="e.g., ~2.5 lakh tribal families across 8 districts; particularly vulnerable: PVTGs (Dongria Kondh, Juang, Bonda)"></textarea>
                     </div>
                     <div class="field full-width">
-                        <label>Current Policy Environment</label>
-                        <textarea id="policyEnv" placeholder="e.g., FRA exists but implementation gaps — only 12% of eligible claims processed; state government has set up task force but lacks ground-level monitoring"></textarea>
+                        <label for="policyEnv">Current Policy Environment</label><textarea id="policyEnv" placeholder="e.g., FRA exists but implementation gaps — only 12% of eligible claims processed; state government has set up task force but lacks ground-level monitoring"></textarea>
                         <span class="field-hint">Consider: existing legislation, government schemes (MGNREGS, NRLM, PM-KISAN), related court orders, budget allocations</span>
                     </div>
                 </div>
@@ -478,12 +480,10 @@ body { padding-top: 56px; }
                 <ul class="item-list" id="decisionMakerList"></ul>
                 <div class="form-grid">
                     <div class="field">
-                        <label>Name / Position</label>
-                        <input type="text" id="dmName" placeholder="e.g., District Collector, Rayagada">
+                        <label for="dmName">Name / Position</label><input type="text" id="dmName" placeholder="e.g., District Collector, Rayagada">
                     </div>
                     <div class="field">
-                        <label>Role / Influence</label>
-                        <input type="text" id="dmRole" placeholder="e.g., Final authority on community forest rights claims">
+                        <label for="dmRole">Role / Influence</label><input type="text" id="dmRole" placeholder="e.g., Final authority on community forest rights claims">
                     </div>
                 </div>
                 <button class="btn btn-sm btn-primary" onclick="addDecisionMaker()">+ Add Decision-Maker</button>
@@ -505,8 +505,7 @@ body { padding-top: 56px; }
                 <div id="evidenceList"></div>
                 <div class="form-grid" style="margin-top:1rem;">
                     <div class="field">
-                        <label>Evidence Type</label>
-                        <select id="evType">
+                        <label for="evType">Evidence Type</label><select id="evType">
                             <option value="data">Quantitative Data</option>
                             <option value="research">Research / Study</option>
                             <option value="case-study">Case Study</option>
@@ -517,24 +516,20 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Source</label>
-                        <input type="text" id="evSource" placeholder="e.g., NFHS-5, CAG audit report, community survey">
+                        <label for="evSource">Source</label><input type="text" id="evSource" placeholder="e.g., NFHS-5, CAG audit report, community survey">
                     </div>
                     <div class="field full-width">
-                        <label>Key Finding</label>
-                        <textarea id="evFinding" placeholder="e.g., Only 3% of community forest rights claims approved vs 45% individual claims — systemic bias against collective rights"></textarea>
+                        <label for="evFinding">Key Finding</label><textarea id="evFinding" placeholder="e.g., Only 3% of community forest rights claims approved vs 45% individual claims — systemic bias against collective rights"></textarea>
                     </div>
                     <div class="field">
-                        <label>Quality Rating</label>
-                        <select id="evQuality">
+                        <label for="evQuality">Quality Rating</label><select id="evQuality">
                             <option value="high">High — peer-reviewed / official</option>
                             <option value="medium">Medium — credible but informal</option>
                             <option value="low">Low — anecdotal</option>
                         </select>
                     </div>
                     <div class="field">
-                        <label>Relevance</label>
-                        <select id="evRelevance">
+                        <label for="evRelevance">Relevance</label><select id="evRelevance">
                             <option value="high">High — directly supports argument</option>
                             <option value="medium">Medium — contextual support</option>
                             <option value="low">Low — background information</option>
@@ -577,20 +572,17 @@ body { padding-top: 56px; }
                 <div id="stakeholderList"></div>
                 <div class="form-grid" style="margin-top:1rem;">
                     <div class="field">
-                        <label>Stakeholder Name</label>
-                        <input type="text" id="shName" placeholder="e.g., Campaign for Survival and Dignity (CSD)">
+                        <label for="shName">Stakeholder Name</label><input type="text" id="shName" placeholder="e.g., Campaign for Survival and Dignity (CSD)">
                     </div>
                     <div class="field">
-                        <label>Position</label>
-                        <select id="shPosition">
+                        <label for="shPosition">Position</label><select id="shPosition">
                             <option value="ally">Ally</option>
                             <option value="neutral">Neutral</option>
                             <option value="opponent">Opponent</option>
                         </select>
                     </div>
                     <div class="field full-width">
-                        <label>Influence & Interest</label>
-                        <input type="text" id="shInfluence" placeholder="e.g., High influence — national network; can mobilize 200+ CSOs">
+                        <label for="shInfluence">Influence & Interest</label><input type="text" id="shInfluence" placeholder="e.g., High influence — national network; can mobilize 200+ CSOs">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="addStakeholder()">+ Add Stakeholder</button>
@@ -600,8 +592,7 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">SMART Objectives</div>
                 <div id="objectiveList"></div>
                 <div class="field">
-                    <label>Advocacy Objective</label>
-                    <input type="text" id="objText" placeholder="e.g., By March 2027, increase community forest rights claims approval rate from 3% to 25% in target districts">
+                    <label for="objText">Advocacy Objective</label><input type="text" id="objText" placeholder="e.g., By March 2027, increase community forest rights claims approval rate from 3% to 25% in target districts">
                     <span class="field-hint">SMART = Specific, Measurable, Achievable, Relevant, Time-bound</span>
                 </div>
                 <button class="btn btn-primary" onclick="addObjective()">+ Add Objective</button>
@@ -624,12 +615,10 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Add Advocacy Action</div>
                 <div class="form-grid">
                     <div class="field full-width">
-                        <label>Activity</label>
-                        <input type="text" id="actActivity" placeholder="e.g., File RTI applications on pending FRA claims in 8 districts">
+                        <label for="actActivity">Activity</label><input type="text" id="actActivity" placeholder="e.g., File RTI applications on pending FRA claims in 8 districts">
                     </div>
                     <div class="field">
-                        <label>Phase</label>
-                        <select id="actPhase">
+                        <label for="actPhase">Phase</label><select id="actPhase">
                             <option value="Phase 1 (Months 1-3)">Phase 1 (Months 1-3)</option>
                             <option value="Phase 2 (Months 4-6)">Phase 2 (Months 4-6)</option>
                             <option value="Phase 3 (Months 7-9)">Phase 3 (Months 7-9)</option>
@@ -637,16 +626,13 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Responsible</label>
-                        <input type="text" id="actResponsible" placeholder="e.g., Legal team + district coordinators">
+                        <label for="actResponsible">Responsible</label><input type="text" id="actResponsible" placeholder="e.g., Legal team + district coordinators">
                     </div>
                     <div class="field">
-                        <label>Budget Estimate</label>
-                        <input type="text" id="actBudget" placeholder="e.g., &#8377;50,000">
+                        <label for="actBudget">Budget Estimate</label><input type="text" id="actBudget" placeholder="e.g., &#8377;50,000">
                     </div>
                     <div class="field">
-                        <label>Success Indicator</label>
-                        <input type="text" id="actIndicator" placeholder="e.g., RTI responses received for all 8 districts">
+                        <label for="actIndicator">Success Indicator</label><input type="text" id="actIndicator" placeholder="e.g., RTI responses received for all 8 districts">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="addAction()">+ Add Action</button>

@@ -24,12 +24,12 @@
         :root {
             --primary-bg: #FFFFFF;
             --secondary-bg: #F8FAFC;
-            --accent-color: #0EA5E9;
+            --accent-color: #0369A1;
             --accent-hover: #0284C7;
-            --secondary-accent: #6366F1;
-            --success-color: #10B981;
-            --warning-color: #F59E0B;
-            --danger-color: #EF4444;
+            --secondary-accent: #4F46E5;
+            --success-color: #047857;
+            --warning-color: #92400E;
+            --danger-color: #991B1B;
             --text-primary: #0F172A;
             --text-secondary: #475569;
             --text-muted: #52627A;
@@ -64,12 +64,12 @@
 body.light-mode, [data-theme="light"] {
             --primary-bg: #FFFFFF;
             --secondary-bg: #F8FAFC;
-            --accent-color: #0EA5E9;
+            --accent-color: #0369A1;
             --accent-hover: #0284C7;
-            --secondary-accent: #6366F1;
-            --success-color: #10B981;
-            --warning-color: #F59E0B;
-            --danger-color: #EF4444;
+            --secondary-accent: #4F46E5;
+            --success-color: #047857;
+            --warning-color: #92400E;
+            --danger-color: #991B1B;
             --text-primary: #0F172A;
             --text-secondary: #475569;
             --text-muted: #52627A;
@@ -209,7 +209,7 @@ body.dark-mode, [data-theme="dark"] {
         /* Buttons */
         .btn { padding: 0.65rem 1.25rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.4rem; }
         .btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
-        .btn-primary { background: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 600; }
+        .btn-primary { background: var(--accent-solid, #0369A1); border-color: var(--accent-color); color: #fff; font-weight: 600; }
         .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
         .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
         .btn-danger { color: var(--danger-color); }
@@ -266,7 +266,7 @@ body.dark-mode, [data-theme="dark"] {
         .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; font-family: var(--font-heading); flex-shrink: 0; }
         .rank-1 { background: rgba(245, 158, 11, 0.2); color: #FBBF24; }
         .rank-2 { background: rgba(148, 163, 184, 0.2); color: #94A3B8; }
-        .rank-3 { background: rgba(180, 83, 9, 0.2); color: #D97706; }
+        .rank-3 { background: rgba(180, 83, 9, 0.2); color: var(--im-ink-warn, #92400E); }
         .rank-other { background: rgba(14, 165, 233, 0.12); color: var(--accent-color); }
 
         /* Add forms */
@@ -333,16 +333,22 @@ body.dark-mode, [data-theme="dark"] {
         .theme-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
         .theme-btn.active { background: #0A7AAD; color: white; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
         .theme-btn svg { width: 18px; height: 18px; }
-    </style>
+    
+/* A semantic colour used as ink sits on a pale tint in the light theme and
+   on a dark card in the other; one value cannot clear 4.5:1 on both. */
+:root{--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-warn:#FCD34D;}
+</style>
 <style>
 /* ===== ImpactMojo Design System ===== */
 :root {
     --im-primary-bg: #0F172A;
     --im-secondary-bg: #1E293B;
-    --im-accent: #0EA5E9;
+    --im-accent: #0369A1;
     --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1;
-    --im-success: #10B981;
+    --im-secondary-accent: #4F46E5;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
     --im-text-secondary: #CBD5E1;
     --im-text-muted: #94A3B8;
@@ -532,6 +538,13 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 /* Body clears fixed im-topbar (added by site-wide audit fix) */
 body { padding-top: 56px; }
 @media (max-width: 768px) { body { padding-top: 52px; } }
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">

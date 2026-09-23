@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.315.0 — September 23, 2026 (The handouts and the Studios)
+
+### Fixed
+
+- **Ninety-nine checkboxes and seventeen radios in `Handouts/` had no accessible name (#1120).** A screen reader announced "checkbox, unchecked" and nothing else. Twelve of the radios had a `<label>Low Threat</label>` sitting beside them with no `for` attribute, which associates nothing and reads as if the work had been done. Each control is wrapped in its own label now, which also gives it a click target. A radio that sits between a card heading and its description takes the heading as its name.
+
+- **251 tables in 81 handouts scrolled the whole page sideways on a phone (#1120).** `poverty_inequality_handout_1.html` measured 1,076px inside a 390px viewport. Each table is in a scroll wrapper the keyboard can enter (`role="region"`, `tabindex="0"`), which is the part usually left out: a scroll container nobody can reach is a second defect on top of the first. Deliberately **not** `display: block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree.
+
+- **The Studios' semantic colours could not sit on both surfaces (#1120).** `#059669` on its own pale mint is 3.37:1 and on the same tint over a dark card 3.01:1; `#D97706`, `#6366F1` and `#DC2626` the same. One value cannot clear 4.5:1 on both, so each is an `--im-ink-*` token with a value per theme. 421 light-palette declarations across 36 Studios moved to the darker ink, and 38 Studios that declare **one** palette and no dark block — in dark mode the site chrome paints the body `#0F172A` while their tokens stay — now carry a dark ink block.
+
+- **176 labels in the Studios bound to nothing (#1120).** `<label>Category</label><select id="roleCat">` associates neither; both now carry `for`/`id`. The sliders in the urban-boundaries Studio had labels with nested markup, which an earlier pass skipped.
+
+- **Nine `role="tablist"` elements over plain buttons (#1120).** `aria-required-children` fails, and the pattern the role announces — arrow-key navigation, `aria-selected`, `aria-controls` — is not there. Where the buttons really do carry `role="tab"` the parent role stays; where they do not, the role goes and an `aria-label` names the group.
+
+- **The deck's fullscreen hint was white at 25 per cent on whatever slide was behind it (#1120).** 1.06:1 on the palest of them, across 60 course decks, and a `<div>` with an `onclick` that no keyboard could reach. It carries its own fill now, so it reads on every slide whatever colour the slide is, and it is a `<button>`.
+
+- **A bare `<a>` in the teacher-evidence Studio took the browser default `#0000EE`**, 1.46:1 on the dark card (#1120).
+
 ## v10.314.0 — September 23, 2026 (Colours that had no value, and a light theme inverted twice)
 
 ### Fixed

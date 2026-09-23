@@ -399,6 +399,11 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 /* Body clears fixed im-topbar (added by site-wide audit fix) */
 body { padding-top: 56px; }
 @media (max-width: 768px) { body { padding-top: 52px; } }
+
+/* A table wider than the phone scrolls the whole page sideways, and a scroll container a keyboard cannot enter is a second defect on top of the first. Deliberately not `display:block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree. */
+.im-tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.im-tscroll>table{min-width:0}
+.im-tscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
@@ -650,7 +655,7 @@ body { padding-top: 56px; }
             
             <h3>Key Design Decisions in Safety Net Programs</h3>
             
-            <table>
+            <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
                 <tr>
                     <th>Design Element</th>
                     <th>Options</th>
@@ -681,7 +686,7 @@ body { padding-top: 56px; }
                     <td>Capacity vs. accountability vs. innovation</td>
                     <td>Aadhaar-enabled payments vs. traditional systems</td>
                 </tr>
-            </table>
+            </table></div>
             
             <h3>Targeting Mechanisms: The Inclusion-Exclusion Challenge</h3>
             
@@ -767,7 +772,7 @@ Population Breakdown:
             
             <h3>Key Performance Indicators for Safety Nets</h3>
             
-            <table>
+            <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
                 <tr>
                     <th>Dimension</th>
                     <th>Indicator</th>
@@ -798,7 +803,7 @@ Population Breakdown:
                     <td>(Admin costs ÷ Total transfers) × 100</td>
                     <td><15%</td>
                 </tr>
-            </table>
+            </table></div>
             
             <div class="exercise-box">
                 <h4><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg> Program Assessment Exercise (10 minutes)</h4>

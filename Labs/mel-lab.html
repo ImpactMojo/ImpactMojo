@@ -22,8 +22,8 @@
 
     <style>
         :root {
-            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0EA5E9; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
             --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
@@ -38,8 +38,8 @@
             --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
         } }
 body.light-mode, [data-theme="light"] {
-            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0EA5E9; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
             --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
@@ -102,7 +102,7 @@ body.dark-mode, [data-theme="dark"] {
         .card-title { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; }
         .btn { padding: 0.65rem 1.25rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-size: 0.85rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
         .btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
-        .btn-primary { background: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 600; }
+        .btn-primary { background: var(--accent-solid, #0369A1); border-color: var(--accent-color); color: #fff; font-weight: 600; }
         .btn-primary:hover { background: var(--accent-hover); }
         .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
         .btn-danger { color: var(--danger-color); }
@@ -143,10 +143,10 @@ body.dark-mode, [data-theme="dark"] {
 :root {
     --im-primary-bg: #0F172A;
     --im-secondary-bg: #1E293B;
-    --im-accent: #0EA5E9;
+    --im-accent: #0369A1;
     --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1;
-    --im-success: #10B981;
+    --im-secondary-accent: #4F46E5;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
     --im-text-secondary: #CBD5E1;
     --im-text-muted: #94A3B8;
@@ -342,7 +342,14 @@ body { padding-top: 56px; }
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "MEL Studio", "description": "Interactive MEL Design Studio — design a Monitoring, Evaluation & Learning system with frameworks, indicators, data collection plans, and analysis strategies.", "url": "https://www.impactmojo.in/Labs/mel-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
 </head>
 <body>
-<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}</style>
+<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
+</style>
 <!-- ImpactMojo Top Bar -->
 <div class="im-topbar" id="imTopbar">
     <div class="im-topbar-left">
@@ -432,12 +439,10 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Evaluation Purpose & Scope</div>
                 <div class="form-grid">
                     <div class="field full-width">
-                        <label>Programme / Project Name</label>
-                        <input type="text" id="progName" placeholder="e.g., Women's Economic Empowerment Programme, Bihar">
+                        <label for="progName">Programme / Project Name</label><input type="text" id="progName" placeholder="e.g., Women's Economic Empowerment Programme, Bihar">
                     </div>
                     <div class="field">
-                        <label>Primary Purpose</label>
-                        <select id="purpose">
+                        <label for="purpose">Primary Purpose</label><select id="purpose">
                             <option value="">— Select —</option>
                             <option value="accountability">Accountability (to donors/stakeholders)</option>
                             <option value="learning">Learning & Adaptive Management</option>
@@ -446,8 +451,7 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Evaluation Approach</label>
-                        <select id="approach">
+                        <label for="approach">Evaluation Approach</label><select id="approach">
                             <option value="">— Select —</option>
                             <option value="theory-based">Theory-Based Evaluation</option>
                             <option value="participatory">Participatory Evaluation</option>
@@ -477,8 +481,7 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Key Evaluation Questions</div>
                 <div id="keqList"></div>
                 <div class="field">
-                    <label>Add Evaluation Question</label>
-                    <input type="text" id="keqInput" placeholder="e.g., To what extent has the programme increased women's income in target villages?">
+                    <label for="keqInput">Add Evaluation Question</label><input type="text" id="keqInput" placeholder="e.g., To what extent has the programme increased women's income in target villages?">
                     <span class="field-hint">Good KEQs are specific, answerable, and tied to a DAC criterion</span>
                 </div>
                 <button class="btn btn-primary" onclick="addKEQ()">+ Add Question</button>
@@ -501,12 +504,10 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Add Indicator</div>
                 <div class="form-grid">
                     <div class="field full-width">
-                        <label>Indicator Statement</label>
-                        <input type="text" id="indStatement" placeholder="e.g., % of women SHG members reporting increased monthly household income">
+                        <label for="indStatement">Indicator Statement</label><input type="text" id="indStatement" placeholder="e.g., % of women SHG members reporting increased monthly household income">
                     </div>
                     <div class="field">
-                        <label>Results Level</label>
-                        <select id="indLevel">
+                        <label for="indLevel">Results Level</label><select id="indLevel">
                             <option value="impact">Impact (Long-term change)</option>
                             <option value="outcome">Outcome (Medium-term change)</option>
                             <option value="output" selected>Output (Direct deliverable)</option>
@@ -514,24 +515,19 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Unit of Measurement</label>
-                        <input type="text" id="indUnit" placeholder="e.g., Percentage, Number, Rupees">
+                        <label for="indUnit">Unit of Measurement</label><input type="text" id="indUnit" placeholder="e.g., Percentage, Number, Rupees">
                     </div>
                     <div class="field">
-                        <label>Baseline Value</label>
-                        <input type="text" id="indBaseline" placeholder="e.g., 23% (NFHS-5 baseline)">
+                        <label for="indBaseline">Baseline Value</label><input type="text" id="indBaseline" placeholder="e.g., 23% (NFHS-5 baseline)">
                     </div>
                     <div class="field">
-                        <label>Target Value</label>
-                        <input type="text" id="indTarget" placeholder="e.g., 60% by Year 3">
+                        <label for="indTarget">Target Value</label><input type="text" id="indTarget" placeholder="e.g., 60% by Year 3">
                     </div>
                     <div class="field">
-                        <label>Data Source</label>
-                        <input type="text" id="indSource" placeholder="e.g., Annual household survey">
+                        <label for="indSource">Data Source</label><input type="text" id="indSource" placeholder="e.g., Annual household survey">
                     </div>
                     <div class="field">
-                        <label>Frequency</label>
-                        <select id="indFreq">
+                        <label for="indFreq">Frequency</label><select id="indFreq">
                             <option value="monthly">Monthly</option>
                             <option value="quarterly" selected>Quarterly</option>
                             <option value="biannual">Bi-annual</option>
@@ -585,8 +581,7 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Sampling Strategy</div>
                 <div class="form-grid">
                     <div class="field">
-                        <label>Sampling Approach</label>
-                        <select id="sampling">
+                        <label for="sampling">Sampling Approach</label><select id="sampling">
                             <option value="">— Select —</option>
                             <option value="random">Simple Random Sampling</option>
                             <option value="stratified">Stratified Random Sampling</option>
@@ -597,12 +592,10 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Sample Size</label>
-                        <input type="text" id="sampleSize" placeholder="e.g., 384 households (95% CI, 5% margin)">
+                        <label for="sampleSize">Sample Size</label><input type="text" id="sampleSize" placeholder="e.g., 384 households (95% CI, 5% margin)">
                     </div>
                     <div class="field full-width">
-                        <label>Sampling Notes</label>
-                        <textarea id="samplingNotes" placeholder="e.g., Stratify by block (4 blocks), oversample SC/ST households by 20% to ensure adequate representation"></textarea>
+                        <label for="samplingNotes">Sampling Notes</label><textarea id="samplingNotes" placeholder="e.g., Stratify by block (4 blocks), oversample SC/ST households by 20% to ensure adequate representation"></textarea>
                     </div>
                 </div>
             </div>
@@ -612,20 +605,16 @@ body { padding-top: 56px; }
                 <div id="timelineList"></div>
                 <div class="form-grid" style="margin-top:1rem;">
                     <div class="field">
-                        <label>Activity</label>
-                        <input type="text" id="tlActivity" placeholder="e.g., Baseline survey">
+                        <label for="tlActivity">Activity</label><input type="text" id="tlActivity" placeholder="e.g., Baseline survey">
                     </div>
                     <div class="field">
-                        <label>Timing</label>
-                        <input type="text" id="tlTiming" placeholder="e.g., Month 1-2">
+                        <label for="tlTiming">Timing</label><input type="text" id="tlTiming" placeholder="e.g., Month 1-2">
                     </div>
                     <div class="field">
-                        <label>Responsible</label>
-                        <input type="text" id="tlResponsible" placeholder="e.g., External evaluation team">
+                        <label for="tlResponsible">Responsible</label><input type="text" id="tlResponsible" placeholder="e.g., External evaluation team">
                     </div>
                     <div class="field">
-                        <label>Estimated Cost</label>
-                        <input type="text" id="tlCost" placeholder="e.g., &#8377;3,50,000">
+                        <label for="tlCost">Estimated Cost</label><input type="text" id="tlCost" placeholder="e.g., &#8377;3,50,000">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="addTimeline()">+ Add Activity</button>
@@ -646,8 +635,7 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Analysis Methods</div>
                 <div class="form-grid">
                     <div class="field">
-                        <label>Quantitative Analysis</label>
-                        <select id="quantMethod">
+                        <label for="quantMethod">Quantitative Analysis</label><select id="quantMethod">
                             <option value="">— Select —</option>
                             <option value="descriptive">Descriptive Statistics</option>
                             <option value="comparative">Comparative (pre-post / treatment-control)</option>
@@ -657,8 +645,7 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Qualitative Analysis</label>
-                        <select id="qualMethod">
+                        <label for="qualMethod">Qualitative Analysis</label><select id="qualMethod">
                             <option value="">— Select —</option>
                             <option value="thematic">Thematic Analysis</option>
                             <option value="content">Content Analysis</option>
@@ -668,8 +655,7 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field full-width">
-                        <label>Analysis Tools / Software</label>
-                        <input type="text" id="tools" placeholder="e.g., SPSS/Stata for quantitative, NVivo/Atlas.ti for qualitative, KoboToolbox for data collection">
+                        <label for="tools">Analysis Tools / Software</label><input type="text" id="tools" placeholder="e.g., SPSS/Stata for quantitative, NVivo/Atlas.ti for qualitative, KoboToolbox for data collection">
                     </div>
                 </div>
             </div>
@@ -679,8 +665,7 @@ body { padding-top: 56px; }
                 <div id="reportList"></div>
                 <div class="form-grid" style="margin-top:1rem;">
                     <div class="field">
-                        <label>Report Type</label>
-                        <select id="rptType">
+                        <label for="rptType">Report Type</label><select id="rptType">
                             <option value="monthly">Monthly Progress Report</option>
                             <option value="quarterly">Quarterly MEL Report</option>
                             <option value="annual">Annual Report</option>
@@ -691,16 +676,13 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Primary Audience</label>
-                        <input type="text" id="rptAudience" placeholder="e.g., Donor, programme team, community, government">
+                        <label for="rptAudience">Primary Audience</label><input type="text" id="rptAudience" placeholder="e.g., Donor, programme team, community, government">
                     </div>
                     <div class="field">
-                        <label>Frequency</label>
-                        <input type="text" id="rptFreq" placeholder="e.g., Quarterly">
+                        <label for="rptFreq">Frequency</label><input type="text" id="rptFreq" placeholder="e.g., Quarterly">
                     </div>
                     <div class="field">
-                        <label>Responsible</label>
-                        <input type="text" id="rptOwner" placeholder="e.g., MEL Manager">
+                        <label for="rptOwner">Responsible</label><input type="text" id="rptOwner" placeholder="e.g., MEL Manager">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="addReport()">+ Add Report</button>
@@ -709,17 +691,14 @@ body { padding-top: 56px; }
             <div class="card">
                 <div class="card-title" style="margin-bottom:1rem;">Learning & Adaptive Management</div>
                 <div class="field">
-                    <label>Learning Questions</label>
-                    <textarea id="learningQs" placeholder="e.g., What programme adaptations are most effective in improving women's agency? How does caste intersect with programme outcomes?"></textarea>
+                    <label for="learningQs">Learning Questions</label><textarea id="learningQs" placeholder="e.g., What programme adaptations are most effective in improving women's agency? How does caste intersect with programme outcomes?"></textarea>
                     <span class="field-hint">Learning questions go beyond accountability — they explore the 'how' and 'why' of change</span>
                 </div>
                 <div class="field">
-                    <label>Learning Loops / Feedback Mechanisms</label>
-                    <textarea id="feedbackMech" placeholder="e.g., Monthly reflection meetings with field staff; quarterly review with community representatives; annual learning workshop with all stakeholders"></textarea>
+                    <label for="feedbackMech">Learning Loops / Feedback Mechanisms</label><textarea id="feedbackMech" placeholder="e.g., Monthly reflection meetings with field staff; quarterly review with community representatives; annual learning workshop with all stakeholders"></textarea>
                 </div>
                 <div class="field">
-                    <label>Data Quality Assurance</label>
-                    <textarea id="dqa" placeholder="e.g., Spot checks on 10% of data, back-checks by supervisors, data cleaning protocols, enumerator training and inter-rater reliability checks"></textarea>
+                    <label for="dqa">Data Quality Assurance</label><textarea id="dqa" placeholder="e.g., Spot checks on 10% of data, back-checks by supervisors, data cleaning protocols, enumerator training and inter-rater reliability checks"></textarea>
                 </div>
             </div>
 
@@ -739,28 +718,22 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Project Information</div>
                 <div class="form-grid">
                     <div class="field full-width">
-                        <label>Project Name</label>
-                        <input type="text" id="projName" placeholder="e.g., Integrated Child Development Services Strengthening, Madhya Pradesh">
+                        <label for="projName">Project Name</label><input type="text" id="projName" placeholder="e.g., Integrated Child Development Services Strengthening, Madhya Pradesh">
                     </div>
                     <div class="field">
-                        <label>Donor / Funder</label>
-                        <input type="text" id="donor" placeholder="e.g., UNICEF India">
+                        <label for="donor">Donor / Funder</label><input type="text" id="donor" placeholder="e.g., UNICEF India">
                     </div>
                     <div class="field">
-                        <label>Duration</label>
-                        <input type="text" id="duration" placeholder="e.g., April 2024 — March 2027 (3 years)">
+                        <label for="duration">Duration</label><input type="text" id="duration" placeholder="e.g., April 2024 — March 2027 (3 years)">
                     </div>
                     <div class="field">
-                        <label>Geographic Scope</label>
-                        <input type="text" id="geography" placeholder="e.g., 5 districts in Madhya Pradesh">
+                        <label for="geography">Geographic Scope</label><input type="text" id="geography" placeholder="e.g., 5 districts in Madhya Pradesh">
                     </div>
                     <div class="field">
-                        <label>Target Population</label>
-                        <input type="text" id="targetPop" placeholder="e.g., 50,000 children under 5 and 25,000 pregnant/lactating women">
+                        <label for="targetPop">Target Population</label><input type="text" id="targetPop" placeholder="e.g., 50,000 children under 5 and 25,000 pregnant/lactating women">
                     </div>
                     <div class="field full-width">
-                        <label>Project Goal</label>
-                        <textarea id="goal" placeholder="e.g., Reduce stunting prevalence among children under 5 from 42% to 30% in target districts by 2027" style="min-height:60px;"></textarea>
+                        <label for="goal">Project Goal</label><textarea id="goal" placeholder="e.g., Reduce stunting prevalence among children under 5 from 42% to 30% in target districts by 2027" style="min-height:60px;"></textarea>
                     </div>
                 </div>
             </div>
@@ -769,8 +742,7 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Objectives</div>
                 <div id="objectiveList"></div>
                 <div class="field">
-                    <label>Add Objective</label>
-                    <input type="text" id="objInput" placeholder="e.g., Improve complementary feeding practices for children 6-23 months">
+                    <label for="objInput">Add Objective</label><input type="text" id="objInput" placeholder="e.g., Improve complementary feeding practices for children 6-23 months">
                 </div>
                 <button class="btn btn-primary" onclick="MELPlan.addObjective()">+ Add Objective</button>
             </div>
@@ -778,8 +750,7 @@ body { padding-top: 56px; }
             <div class="card">
                 <div class="card-title" style="margin-bottom:1rem;">Donor MEL Requirements</div>
                 <div class="field">
-                    <label>Specific Requirements</label>
-                    <textarea id="donorReqs" placeholder="e.g., Quarterly progress reports, annual outcome survey, endline evaluation, sex-disaggregated data, contribution to global indicators"></textarea>
+                    <label for="donorReqs">Specific Requirements</label><textarea id="donorReqs" placeholder="e.g., Quarterly progress reports, annual outcome survey, endline evaluation, sex-disaggregated data, contribution to global indicators"></textarea>
                     <span class="field-hint">Check donor guidelines for mandatory reporting templates, indicator frameworks, and evaluation standards</span>
                 </div>
             </div>
@@ -801,32 +772,26 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Add Indicator Row</div>
                 <div class="form-grid">
                     <div class="field">
-                        <label>Results Level</label>
-                        <select id="mxLevel">
+                        <label for="mxLevel">Results Level</label><select id="mxLevel">
                             <option value="goal">Goal</option>
                             <option value="outcome">Outcome</option>
                             <option value="output" selected>Output</option>
                         </select>
                     </div>
                     <div class="field">
-                        <label>Result Statement</label>
-                        <input type="text" id="mxResult" placeholder="e.g., Output 1.1: Anganwadi workers trained">
+                        <label for="mxResult">Result Statement</label><input type="text" id="mxResult" placeholder="e.g., Output 1.1: Anganwadi workers trained">
                     </div>
                     <div class="field full-width">
-                        <label>Indicator</label>
-                        <input type="text" id="mxIndicator" placeholder="e.g., # of AWWs completing nutrition counselling training">
+                        <label for="mxIndicator">Indicator</label><input type="text" id="mxIndicator" placeholder="e.g., # of AWWs completing nutrition counselling training">
                     </div>
                     <div class="field">
-                        <label>Means of Verification</label>
-                        <input type="text" id="mxMOV" placeholder="e.g., Training attendance registers, post-test scores">
+                        <label for="mxMOV">Means of Verification</label><input type="text" id="mxMOV" placeholder="e.g., Training attendance registers, post-test scores">
                     </div>
                     <div class="field">
-                        <label>Data Source</label>
-                        <input type="text" id="mxSource" placeholder="e.g., Training MIS">
+                        <label for="mxSource">Data Source</label><input type="text" id="mxSource" placeholder="e.g., Training MIS">
                     </div>
                     <div class="field">
-                        <label>Frequency</label>
-                        <select id="mxFreq">
+                        <label for="mxFreq">Frequency</label><select id="mxFreq">
                             <option value="Monthly">Monthly</option>
                             <option value="Quarterly" selected>Quarterly</option>
                             <option value="Bi-annual">Bi-annual</option>
@@ -834,16 +799,13 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Responsible</label>
-                        <input type="text" id="mxResponsible" placeholder="e.g., Training Coordinator">
+                        <label for="mxResponsible">Responsible</label><input type="text" id="mxResponsible" placeholder="e.g., Training Coordinator">
                     </div>
                     <div class="field">
-                        <label>Baseline</label>
-                        <input type="text" id="mxBaseline" placeholder="e.g., 0">
+                        <label for="mxBaseline">Baseline</label><input type="text" id="mxBaseline" placeholder="e.g., 0">
                     </div>
                     <div class="field">
-                        <label>Target</label>
-                        <input type="text" id="mxTarget" placeholder="e.g., 500 AWWs by Year 2">
+                        <label for="mxTarget">Target</label><input type="text" id="mxTarget" placeholder="e.g., 500 AWWs by Year 2">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="MELPlan.addMatrixRow()">+ Add to Matrix</button>
@@ -866,8 +828,7 @@ body { padding-top: 56px; }
                 <div class="card-title" style="margin-bottom:1rem;">Add MEL Activity</div>
                 <div class="form-grid">
                     <div class="field">
-                        <label>Activity</label>
-                        <select id="calActivity">
+                        <label for="calActivity">Activity</label><select id="calActivity">
                             <option value="Baseline Survey">Baseline Survey</option>
                             <option value="Midline Assessment">Midline Assessment</option>
                             <option value="Endline Evaluation">Endline Evaluation</option>
@@ -881,43 +842,34 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Custom Name (if Other)</label>
-                        <input type="text" id="calCustom" placeholder="e.g., Participatory impact assessment">
+                        <label for="calCustom">Custom Name (if Other)</label><input type="text" id="calCustom" placeholder="e.g., Participatory impact assessment">
                     </div>
                     <div class="field">
-                        <label>Timing</label>
-                        <input type="text" id="calTiming" placeholder="e.g., Month 1-2 of Year 1">
+                        <label for="calTiming">Timing</label><input type="text" id="calTiming" placeholder="e.g., Month 1-2 of Year 1">
                     </div>
                     <div class="field">
-                        <label>Responsible</label>
-                        <input type="text" id="calResponsible" placeholder="e.g., External evaluator">
+                        <label for="calResponsible">Responsible</label><input type="text" id="calResponsible" placeholder="e.g., External evaluator">
                     </div>
                 </div>
                 <div class="card-title" style="margin:1rem 0 0.5rem;">Budget Line Items</div>
                 <div class="form-grid-3">
                     <div class="field">
-                        <label>Personnel</label>
-                        <input type="number" id="budgetPersonnel" placeholder="0" min="0">
+                        <label for="budgetPersonnel">Personnel</label><input type="number" id="budgetPersonnel" placeholder="0" min="0">
                     </div>
                     <div class="field">
-                        <label>Travel</label>
-                        <input type="number" id="budgetTravel" placeholder="0" min="0">
+                        <label for="budgetTravel">Travel</label><input type="number" id="budgetTravel" placeholder="0" min="0">
                     </div>
                     <div class="field">
-                        <label>Data Collection</label>
-                        <input type="number" id="budgetData" placeholder="0" min="0">
+                        <label for="budgetData">Data Collection</label><input type="number" id="budgetData" placeholder="0" min="0">
                     </div>
                     <div class="field">
-                        <label>Analysis</label>
-                        <input type="number" id="budgetAnalysis" placeholder="0" min="0">
+                        <label for="budgetAnalysis">Analysis</label><input type="number" id="budgetAnalysis" placeholder="0" min="0">
                     </div>
                     <div class="field">
-                        <label>Reporting / Print</label>
-                        <input type="number" id="budgetReporting" placeholder="0" min="0">
+                        <label for="budgetReporting">Reporting / Print</label><input type="number" id="budgetReporting" placeholder="0" min="0">
                     </div>
                     <div class="field">
-                        <label>Other</label>
-                        <input type="number" id="budgetOther" placeholder="0" min="0">
+                        <label for="budgetOther">Other</label><input type="number" id="budgetOther" placeholder="0" min="0">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="MELPlan.addCalendarItem()">+ Add Activity</button>
@@ -945,8 +897,7 @@ body { padding-top: 56px; }
                 <div id="p_reportList"></div>
                 <div class="form-grid" style="margin-top:1rem;">
                     <div class="field">
-                        <label>Report Type</label>
-                        <select id="p_rptType">
+                        <label for="p_rptType">Report Type</label><select id="p_rptType">
                             <option value="Monthly Progress Report">Monthly Progress Report</option>
                             <option value="Quarterly MEL Report">Quarterly MEL Report</option>
                             <option value="Annual Report">Annual Report</option>
@@ -957,16 +908,13 @@ body { padding-top: 56px; }
                         </select>
                     </div>
                     <div class="field">
-                        <label>Audience</label>
-                        <input type="text" id="p_rptAudience" placeholder="e.g., Donor, project team, government, community">
+                        <label for="p_rptAudience">Audience</label><input type="text" id="p_rptAudience" placeholder="e.g., Donor, project team, government, community">
                     </div>
                     <div class="field">
-                        <label>Frequency</label>
-                        <input type="text" id="p_rptFreq" placeholder="e.g., Quarterly by 15th of following month">
+                        <label for="p_rptFreq">Frequency</label><input type="text" id="p_rptFreq" placeholder="e.g., Quarterly by 15th of following month">
                     </div>
                     <div class="field">
-                        <label>Responsible</label>
-                        <input type="text" id="p_rptOwner" placeholder="e.g., MEL Manager">
+                        <label for="p_rptOwner">Responsible</label><input type="text" id="p_rptOwner" placeholder="e.g., MEL Manager">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="MELPlan.addReport()">+ Add Report</button>
@@ -975,24 +923,20 @@ body { padding-top: 56px; }
             <div class="card">
                 <div class="card-title" style="margin-bottom:1rem;">Learning & Knowledge Management</div>
                 <div class="field">
-                    <label>Key Learning Questions</label>
-                    <textarea id="p_learningQs" placeholder="e.g., What combination of nutrition interventions is most effective in reducing stunting? How do social norms affect complementary feeding practices across different caste groups?"></textarea>
+                    <label for="p_learningQs">Key Learning Questions</label><textarea id="p_learningQs" placeholder="e.g., What combination of nutrition interventions is most effective in reducing stunting? How do social norms affect complementary feeding practices across different caste groups?"></textarea>
                 </div>
                 <div class="field">
-                    <label>Knowledge Management Plan</label>
-                    <textarea id="kmPlan" placeholder="e.g., Document case studies quarterly; maintain photo/video library; share learning briefs on website; present at national nutrition conferences"></textarea>
+                    <label for="kmPlan">Knowledge Management Plan</label><textarea id="kmPlan" placeholder="e.g., Document case studies quarterly; maintain photo/video library; share learning briefs on website; present at national nutrition conferences"></textarea>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-title" style="margin-bottom:1rem;">Data Quality Assurance</div>
                 <div class="field">
-                    <label>DQA Procedures</label>
-                    <textarea id="p_dqa" placeholder="e.g., Monthly data verification by M&E officer; quarterly spot checks on 10% of records; annual data quality assessment using WHO DQA tool; double-entry for survey data"></textarea>
+                    <label for="p_dqa">DQA Procedures</label><textarea id="p_dqa" placeholder="e.g., Monthly data verification by M&E officer; quarterly spot checks on 10% of records; annual data quality assessment using WHO DQA tool; double-entry for survey data"></textarea>
                 </div>
                 <div class="field">
-                    <label>Data Management & Security</label>
-                    <textarea id="dataMgmt" placeholder="e.g., KoboToolbox for mobile data collection; data stored on encrypted server; access restricted to MEL team; monthly backups; anonymized datasets for sharing"></textarea>
+                    <label for="dataMgmt">Data Management & Security</label><textarea id="dataMgmt" placeholder="e.g., KoboToolbox for mobile data collection; data stored on encrypted server; access restricted to MEL team; monthly backups; anonymized datasets for sharing"></textarea>
                 </div>
             </div>
 

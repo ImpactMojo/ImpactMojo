@@ -21,8 +21,8 @@
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
 <style>
 :root{
-  --primary-bg:#FFFFFF;--secondary-bg:#F8FAFC;--accent:#0EA5E9;--accent-hover:#0284C7;
-  --secondary-accent:#6366F1;--success:#10B981;--warning:#F59E0B;--danger:#EF4444;
+  --primary-bg:#FFFFFF;--secondary-bg:#F8FAFC;--accent:#0369A1;--accent-hover:#0284C7;
+  --secondary-accent:#4F46E5;--success:#047857;--warning:#92400E;--danger:#991B1B;
   --text-primary:#0F172A;--text-secondary:#475569;--text-muted:#64748B;
   --card-bg:#FFFFFF;--hover-bg:#F1F5F9;--border:#E2E8F0;
   --gradient:linear-gradient(135deg,#0EA5E9 0%,#6366F1 100%);
@@ -54,6 +54,10 @@ body{font-family:var(--font-sans);background:var(--primary-bg);color:var(--text-
 
 .intro-card{background:var(--card-bg);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
 .intro-card h2{font-family:var(--font-heading);font-size:1.05rem;margin-bottom:.6rem}
+/* A bare <a> with no rule takes the browser default #0000EE, which is 1.46:1
+   on the dark card. Anything that is a control here carries a class. */
+a:not([class]){color:var(--im-ink-sky, #0369A1);text-decoration:underline;text-underline-offset:2px}
+.intro-card a{color:var(--im-ink-sky, #0369A1);text-decoration:underline;text-underline-offset:2px}
 .intro-card p{color:var(--text-secondary);font-size:.94rem;line-height:1.7}
 .intro-card p + p{margin-top:.6rem}
 
@@ -77,13 +81,13 @@ body{font-family:var(--font-sans);background:var(--primary-bg);color:var(--text-
 .card-subtitle{font-size:.8rem;color:var(--text-muted);font-style:italic}
 .card-badges{display:flex;gap:.4rem;flex-wrap:wrap;align-items:flex-start}
 .badge{display:inline-flex;align-items:center;gap:.3rem;padding:.18rem .55rem;border-radius:5px;font-size:.7rem;font-weight:700;font-family:var(--font-heading);text-transform:uppercase;letter-spacing:.5px}
-.badge-strong{background:rgba(16,185,129,.15);color:#059669}
-.badge-moderate{background:rgba(245,158,11,.15);color:#D97706}
-.badge-emerging{background:rgba(99,102,241,.15);color:#4F46E5}
-.badge-weak{background:rgba(239,68,68,.15);color:#DC2626}
-.badge-cost-low{background:rgba(16,185,129,.12);color:#059669}
-.badge-cost-med{background:rgba(245,158,11,.12);color:#D97706}
-.badge-cost-high{background:rgba(239,68,68,.12);color:#DC2626}
+.badge-strong{background:rgba(16,185,129,.15);color:var(--im-ink-good, #047857)}
+.badge-moderate{background:rgba(245,158,11,.15);color:var(--im-ink-warn, #92400E)}
+.badge-emerging{background:rgba(99,102,241,.15);color:var(--im-ink-info, #4F46E5)}
+.badge-weak{background:rgba(239,68,68,.15);color:var(--im-ink-bad, #991B1B)}
+.badge-cost-low{background:rgba(16,185,129,.12);color:var(--im-ink-good, #047857)}
+.badge-cost-med{background:rgba(245,158,11,.12);color:var(--im-ink-warn, #92400E)}
+.badge-cost-high{background:rgba(239,68,68,.12);color:var(--im-ink-bad, #991B1B)}
 
 .card-description{color:var(--text-secondary);font-size:.95rem;line-height:1.7;margin-bottom:.85rem}
 .card-meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.7rem;background:var(--secondary-bg);border-radius:8px;padding:.75rem 1rem;margin-bottom:.85rem}
@@ -126,12 +130,25 @@ body{font-family:var(--font-sans);background:var(--primary-bg);color:var(--text-
   .filter-row{grid-template-columns:1fr 1fr}
   .card-meta-grid{grid-template-columns:1fr 1fr}
 }
+
+/* A semantic colour used as ink sits on a pale tint in the light theme and
+   on a dark card in the other; one value cannot clear 4.5:1 on both. */
+:root{--im-ink-sky:#0369A1;--im-ink-good:#047857;--im-ink-info:#4F46E5;--im-ink-warn:#92400E;--im-ink-bad:#991B1B;}
+@media (prefers-color-scheme: dark){:root{--im-ink-sky:#38BDF8;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;--im-ink-warn:#FCD34D;--im-ink-bad:#FCA5A5;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-sky:#38BDF8;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;--im-ink-warn:#FCD34D;--im-ink-bad:#FCA5A5;}
 </style>
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Teacher Evidence Studio — What Actually Works for Teacher Effectiveness", "description": "Interactive Teacher Evidence Explorer — filter teacher interventions by evidence quality, cost, India relevance, and outcome type. Built from RISE, JPAL, Pratham, ASER, NCERT, and global evaluations 2000–2024.", "url": "https://www.impactmojo.in/Labs/teacher-evidence-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
 </head>
 <body>
-<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}</style>
+<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--accent:#38BDF8;--danger:#FCA5A5;--secondary-accent:#A5B4FC;--success:#6EE7B7;--warning:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--accent:#38BDF8;--danger:#FCA5A5;--secondary-accent:#A5B4FC;--success:#6EE7B7;--warning:#FCD34D;}
+</style>
 
 <a id="main-content" tabindex="-1"></a>
     <div class="container">

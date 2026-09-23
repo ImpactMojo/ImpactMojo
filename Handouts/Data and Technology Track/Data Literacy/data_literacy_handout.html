@@ -384,6 +384,11 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 /* Body clears fixed im-topbar (added by site-wide audit fix) */
 body { padding-top: 56px; }
 @media (max-width: 768px) { body { padding-top: 52px; } }
+
+/* A table wider than the phone scrolls the whole page sideways, and a scroll container a keyboard cannot enter is a second defect on top of the first. Deliberately not `display:block` on the table, which fixes the layout and drops the table's semantics from the accessibility tree. */
+.im-tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.im-tscroll>table{min-width:0}
+.im-tscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 </style>
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
@@ -538,7 +543,7 @@ body { padding-top: 56px; }
             </div>
             
             <h3>The Indicator Iceberg</h3>
-            <table>
+            <div class="im-tscroll" role="region" aria-label="Table, scrolls sideways" tabindex="0"><table>
                 <tr>
                     <th>What You See</th>
                     <th>What's Hidden Below</th>
@@ -559,7 +564,7 @@ body { padding-top: 56px; }
                     <td>Construction vs usage; quality and maintenance</td>
                     <td>Are toilets functional? Who uses them?</td>
                 </tr>
-            </table>
+            </table></div>
             
             <div class="myth-buster">
                 <h4><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg> Myth Buster: The "Average" Trap</h4>
