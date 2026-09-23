@@ -2,6 +2,22 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.313.0 — September 23, 2026 (Two script blocks that never ran)
+
+### Fixed
+
+- **Two inline script blocks did not parse, so nothing in either of them had ever run (#1119).** A `<script>` that throws `SyntaxError` is not partially executed. The page renders exactly as designed and the only evidence is one line in the browser console.
+
+  On the homepage, `['What's Premium?','What is Premium?']` put an unescaped apostrophe inside a single-quoted string, and the whole 86-line Mojini block went with it: no chat placeholder text, no greeting, and none of the eight knowledge-base chips. On `status.html`, a `// count-ignore` marker sitting mid-line commented out the rest of the line — including the `url:` key and the closing brace — so the check registry never closed and the public status page ran no JavaScript at all.
+
+  The `count-ignore` marker has to stay on the line `check-counts.py` reads, so it now sits at the end of that line. Moving it to a block comment above fixes the parse and breaks the count check instead; both are green.
+
+### Added
+
+- **`scripts/check-inline-js.mjs`, run by the `inline-js` job in CI.** It cuts each inline script where an HTML parser would cut it — at the first literal `</script` — and asks node to parse the remainder. 1,979 blocks across 917 pages, no browser and no network. Fault-injected against the real homepage defect.
+
+  Two things it has to get right, both found by getting them wrong first. A `<script` appearing *inside* an already-open script element is text to the parser, not a new element; scanning for opening tags without skipping past each element's end reports 17 false failures on the compiled Parcel bundles in `BookSummaries/`. And `vm.Script` parses as a classic script, so a legitimate `type="module"` body using top-level `import` or `await` fails there and nowhere else; anything it rejects is re-checked with `node --check` on a `.mjs` file before it is called a failure.
+
 ## v10.312.1 — September 23, 2026 (Three icon names that never existed)
 
 ### Fixed
