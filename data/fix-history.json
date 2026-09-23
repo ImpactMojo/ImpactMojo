@@ -4,6 +4,146 @@
   "count": 120,
   "entries": [
     {
+      "title": "The timeline palette was eight colours doing two jobs each (#1120)",
+      "detail": "--cyan #0891B2, --green #059669, --amber #D97706, --red #DC2626, --violet #9333EA, --rose #E11D48, --teal #0D9488 and --indigo #4F46E5 were written as ink on the cream page and as the fill under white on era chips and markers, on six timeline pages. Neither direction cleared 4.5:1 for most of them. Each is now two tokens: the fill moved to a value that carries white (#0369A1, #047857, #92400E, #991B1B, #7E22CE, #9F1239, #0F766E), and a matching --*-ink carries the text, with a value per theme.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.316.0",
+      "issue": 1120
+    },
+    {
+      "title": "The breadcrumb link was distinguished from the text around it by colour alone (#1120)",
+      "detail": "--ink-mid against --ink-light is 1.93:1, well under the 3:1 that WCAG 1.4.1 allows a colour-only distinction. It is underlined now, on all six timeline pages.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.316.0",
+      "issue": 1120
+    },
+    {
+      "title": "Ninety-nine checkboxes and seventeen radios in Handouts/ had no accessible name (#1120)",
+      "detail": "A screen reader announced \"checkbox, unchecked\" and nothing else. Twelve of the radios had a <label>Low Threat</label> sitting beside them with no for attribute, which associates nothing and reads as if the work had been done. Each control is wrapped in its own label now, which also gives it a click target. A radio that sits between a card heading and its description takes the heading as its name.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.315.0",
+      "issue": 1120
+    },
+    {
+      "title": "251 tables in 81 handouts scrolled the whole page sideways on a phone (#1120)",
+      "detail": "poverty_inequality_handout_1.html measured 1,076px inside a 390px viewport. Each table is in a scroll wrapper the keyboard can enter (role=\"region\", tabindex=\"0\"), which is the part usually left out: a scroll container nobody can reach is a second defect on top of the first. Deliberately not display: block on the table, which fixes the layout and drops the table's semantics from the accessibility tree.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.315.0",
+      "issue": 1120
+    },
+    {
+      "title": "The Studios' semantic colours could not sit on both surfaces (#1120)",
+      "detail": "#059669 on its own pale mint is 3.37:1 and on the same tint over a dark card 3.01:1; #D97706, #6366F1 and #DC2626 the same. One value cannot clear 4.5:1 on both, so each is an --im-ink-* token with a value per theme. 421 light-palette declarations across 36 Studios moved to the darker ink, and 38 Studios that declare one palette and no dark block — in dark mode the site chrome paints the body #0F172A while their tokens stay — now carry a dark ink block.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.315.0",
+      "issue": 1120
+    },
+    {
+      "title": "176 labels in the Studios bound to nothing (#1120)",
+      "detail": "<label>Category</label><select id=\"roleCat\"> associates neither; both now carry for/id. The sliders in the urban-boundaries Studio had labels with nested markup, which an earlier pass skipped.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.315.0",
+      "issue": 1120
+    },
+    {
+      "title": "Nine role=\"tablist\" elements over plain buttons (#1120)",
+      "detail": "aria-required-children fails, and the pattern the role announces — arrow-key navigation, aria-selected, aria-controls — is not there. Where the buttons really do carry role=\"tab\" the parent role stays; where they do not, the role goes and an aria-label names the group.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.315.0",
+      "issue": 1120
+    },
+    {
+      "title": "The deck's fullscreen hint was white at 25 per cent on whatever slide was behind it (#1120)",
+      "detail": "1.06:1 on the palest of them, across 60 course decks, and a <div> with an onclick that no keyboard could reach. It carries its own fill now, so it reads on every slide whatever colour the slide is, and it is a <button>.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.315.0",
+      "issue": 1120
+    },
+    {
+      "title": "A bare <a> in the teacher-evidence Studio took the browser default #0000EE",
+      "detail": ", 1.46:1 on the dark card (#1120).",
+      "fixed_on": "2026-09-23",
+      "release": "v10.315.0",
+      "issue": 0
+    },
+    {
+      "title": "A colour token declared only in the dark block has no value in the light theme, and the element then paints nothing (#1120)",
+      "detail": "--gradient-primary was declared once, inside body.dark-mode, and referenced from 17 pages: the whole legal set, the auth pages, about, contact, faq, podcast, workshops and blog. background: var(--gradient-primary) with no value is not an error. The declaration is invalid at computed value time, the property takes its initial value, and a color: white on top of it is white text on the page background. On 404.html that was the primary call to action. Measured from the rendered pixels rather than from axe: white on #F8FAFC, 1.04:1. On blog.html nine rules referenced it, the active filter button and the chat launcher among them. --secondary-accent, --shadow-xl, --danger-color, --premium-gold and the three social brand colours on account.html had the same shape. Each now has a light value chosen for the direction it is used in.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.314.0",
+      "issue": 1120
+    },
+    {
+      "title": "Sixteen Games ran two light-mode systems at once, and the second undid the first (#1120)",
+      "detail": "js/game-shell.js already provides a complete light theme. Those pages also loaded assets/css/light-mode-fallback.css, which applies filter: invert(0.92) hue-rotate(180deg) to the whole body for pages that have no light theme at all. So game-shell painted a correct light theme and the fallback inverted it: a near-black panel on a cream page, with the panel's own text still in the dark design's saffron. The fallback is now only on the eight pages that genuinely need it. axe cannot evaluate a CSS filter, so every contrast number it reported on those pages was measured against un-inverted colours and meant nothing. This was found by screenshotting the page and looking at it.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.314.0",
+      "issue": 1120
+    },
+    {
+      "title": "An accent asked to be both dark ink on a light surface and a light fill under white ink (#1120)",
+      "detail": "#0EA5E9 under white is 2.77:1, on .day-badge, .tab-btn.active, .step-n, .setup-num, .msg.user .msg-text and the skip link, across 191 book companions and 70 other pages. #0284C7 as ink on white is 4.09:1, in the light palette of 32 pages. Both are #0369A1 now, which is 5.93:1 in both directions. --text-muted: #64748B was 4.34:1 on --hover-bg, the surface the blog's tag pills sit on.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.314.0",
+      "issue": 1120
+    },
+    {
+      "title": "The handouts' Flat-UI palette failed in both directions too (#1120)",
+      "detail": "#3498DB, #E74C3C, #27AE60, #F39C12, #2980B9, #16A085, #F1C40F, #6C757D and #7F8C8D were used as ink on white and as fills carrying white text, measuring 2.19:1 to 4.44:1 across 87 files. Each moved one step darker in the same hue, computed per colour so that both directions clear 4.5:1. Bootstrap's #FFC107 at 1.42:1 and #856404 on #F8D7DA went with them.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.314.0",
+      "issue": 1120
+    },
+    {
+      "title": "99 checkboxes and 17 radios with no accessible name (#1120)",
+      "detail": "A screen reader announced \"checkbox, unchecked\" and nothing else. Twelve of the radios had a <label>Low Threat</label> beside them with no for attribute, which associates nothing. Each control is wrapped in its own label now, which also gives it a click target.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.314.0",
+      "issue": 1120
+    },
+    {
+      "title": "The chat launcher was a <div> with an onclick (#1120)",
+      "detail": "No keyboard could reach it, and aria-label is invalid on a div with no role, so a screen reader had no name for it either. It is a <button> on both pages that carry it.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.314.0",
+      "issue": 1120
+    },
+    {
+      "title": "A decorative blob at 0.15 alpha sitting under body text (#1120)",
+      "detail": "It cost about a full point of contrast on every page carrying it, which is what put the legal pages' back link and date stamp at 4.4:1 rather than 5.6:1. It is 0.08 now, on 20 pages, and still visible.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.314.0",
+      "issue": 1120
+    },
+    {
+      "title": "BookCompanionTools/budget-template-generator.html: 106 unlabelled inputs and seven chart bars carrying white labels at 2.14:1 to 4.47:1 (#1120)",
+      "detail": "The generated table rows cannot have unique ids, so the name goes on the control: \"Unit cost for Project Manager\", and so on. The category colours are fills under white text, so the fill is what moved.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.314.0",
+      "issue": 1120
+    },
+    {
+      "title": "BookSummaries/debraj-ray-interactive.html rendered a light design on a dark body (#1120)",
+      "detail": "The React app is not a .panel, so the companion dark rules never reached it while the blanket html.dark nav and html.dark body main repainted its chrome #0F172A and left its stone inks alone: 1.02:1 on the darkest of them.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.314.0",
+      "issue": 1120
+    },
+    {
+      "title": "Two inline script blocks did not parse, so nothing in either of them had ever run (#1119)",
+      "detail": "A <script> that throws SyntaxError is not partially executed. The page renders exactly as designed and the only evidence is one line in the browser console. On the homepage, ['What's Premium?','What is Premium?'] put an unescaped apostrophe inside a single-quoted string, and the whole 86-line Mojini block went with it: no chat placeholder text, no greeting, and none of the eight knowledge-base chips. On status.html, a // count-ignore marker sitting mid-line commented out the rest of the line — including the url: key and the closing brace — so the check registry never closed and the public status page ran no JavaScript at all. The count-ignore marker has to stay on the line check-counts.py reads, so it now sits at the end of that line. Moving it to a block comment above fixes the parse and breaks the count check instead; both are green.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.313.0",
+      "issue": 1119
+    },
+    {
+      "title": "Three Sargam icon names in the repository do not exist, and one of them was the replacement template (#1118)",
+      "detail": "The daily link check reports 404s on sargam-icons@1.6.6/Icons/Line/*.svg. Probing all 91 distinct Sargam URLs in the tree against the package's real file list — 433 Line icons in 1.6.7 — found seven names that 404. Three are ours: si_ChartBar is si_Bar_chart, si_Alert_triangle is si_Warning, si_Download is si_File_download. All three verified 200 before committing. No live page was affected, which is why it had survived. The broken names sat in .claude/skills/housekeeping/SKILL.md §12d, the template a session copies when swapping an emoji for an icon, and in scripts/gender-pubpol-seed.json. The defect was in the instruction, so it would have kept reproducing into every page built by following it. The other four 404s — si_Database, si_Leaf, si_Timer, si_Users — are not defects. They appear only as inline <symbol> ids under <use href=\"#si_…\">, self-contained sprites that fetch nothing and render correctly. Sargam has no leaf, database, timer or group glyph at all, so the names are a coincidence rather than a reference.",
+      "fixed_on": "2026-09-23",
+      "release": "v10.312.1",
+      "issue": 1118
+    },
+    {
       "title": "Two Deep Dives told search engines they were a different page (#1113)",
       "detail": "rural-non-farm-enterprise-india.html carried an Article JSON-LD block whose url, description and datePublished all belonged to platform-gig-work-india.html, the page it had been built from. The headline was rewritten; the other three fields were not. Nothing on screen reads that block, which is why it survived. The visible page, the <title>, the meta description and the Open Graph tags were all correct. Only a crawler saw a self-referential canonical URL pointing at another document, and a publication date ten weeks early. check-deep-dives.py now treats the JSON-LD url as the fourth claim a Deep Dive makes about itself, alongside the file on disk, the JSON entry and the index ItemList. A url naming a different page fails. Audited across all 25 dives: two affected, both built from the same template copy, both fixed. Verified by re-injecting the fault, which the guard reported by name.",
       "fixed_on": "2026-09-21",
@@ -701,146 +841,6 @@
       "detail": "",
       "fixed_on": "2026-07-06",
       "release": "v10.81.0",
-      "issue": null
-    },
-    {
-      "title": "Three blog posts had hidden, unusable menu buttons — now cleaned up; the theme toggle on those pages works again",
-      "detail": "The sidebar collapse button on the SEL, Gender, and AI courses now works on desktop.",
-      "fixed_on": "2026-07-06",
-      "release": "v10.80.2",
-      "issue": null
-    },
-    {
-      "title": "26 blog posts and 4 book companions are now findable in site search",
-      "detail": "— the entire Learning Loops back-catalogue (theory-of-change pitfalls, sample size, participatory MEL, quasi-experimental designs, and more) plus the Health Economics, Unlimited Memory, Public Health Equity & Ethics, and Python econometrics companions.",
-      "fixed_on": "2026-07-05",
-      "release": "v10.80.0",
-      "issue": null
-    },
-    {
-      "title": "The homepage no longer locks the now-free tools",
-      "detail": "The Research Question Builder, Qualitative Insights Lab and Statistical Code Converter cards were still gated (a free user couldn't click through). They're now open, retitled without \"Pro\", and badged Free.",
-      "fixed_on": "2026-07-01",
-      "release": "v10.79.29",
-      "issue": null
-    },
-    {
-      "title": "The Premium page now describes the freemium model",
-      "detail": "— the Explorer (free) tier lists the five free-to-use pro tools, the hero and FAQ say plainly that these tools are free to use with only export behind Premium, and the paid tiers now read \"export from …\" rather than implying the whole tool is paywalled.",
-      "fixed_on": "2026-07-01",
-      "release": "v10.79.29",
-      "issue": null
-    },
-    {
-      "title": "Game Library menu categories now filter correctly",
-      "detail": "— the category links under Platform → Game Library (Policy & Economics, MEL & Research, Gender & Equity, and the rest) each open the Game Library pre-filtered to that track instead of all landing on the same page. The Game Library page now reads ?track= and ?type= deep links.",
-      "fixed_on": "2026-07-01",
-      "release": "v10.79.20",
-      "issue": null
-    },
-    {
-      "title": "Corrected the Game Library breakdown",
-      "detail": "— the \"134 games\" it describes are 17 interactive simulations plus 117 puzzles (not 134); fixed the miscount on the homepage, Premium page, press kit and README.",
-      "fixed_on": "2026-07-01",
-      "release": "v10.79.20",
-      "issue": null
-    },
-    {
-      "title": "Mobile menu no longer cuts off",
-      "detail": "— the slide-out navigation now sizes to the visible screen (dynamic viewport height), so the theme toggle and every item are reachable on phones.",
-      "fixed_on": "2026-06-24",
-      "release": "v10.79.15",
-      "issue": null
-    },
-    {
-      "title": "Power BI flagship link",
-      "detail": "now resolves to the live course instead of a dead URL.",
-      "fixed_on": "2026-06-24",
-      "release": "v10.79.15",
-      "issue": null
-    },
-    {
-      "title": "Retired the Courses, Labs and Games pop-ups in the menu and footer in favour of the new galleries (/courses/, /Labs/, /game-library).",
-      "detail": "",
-      "fixed_on": "2026-06-24",
-      "release": "v10.79.15",
-      "issue": null
-    },
-    {
-      "title": "Completed a full multilingual audit of the Hindi, Tamil, Bengali, and Marathi course pages — ~870 strings corrected across three native-revi…",
-      "detail": "",
-      "fixed_on": "2026-06-16",
-      "release": "v10.79.2",
-      "issue": null
-    },
-    {
-      "title": "Corrected context-blind machine-translation errors in the Hindi, Tamil, Bengali, and Marathi course pages (200 strings across all four langu…",
-      "detail": "",
-      "fixed_on": "2026-06-16",
-      "release": "v10.79.1",
-      "issue": null
-    },
-    {
-      "title": "Repaired broken/dead links across the site: Live Case Challenge resources and Dataverse skill items no longer render dead links; capitalized…",
-      "detail": "",
-      "fixed_on": "2026-06-11",
-      "release": "v10.78.0",
-      "issue": null
-    },
-    {
-      "title": "The Theory of Change Workbench is now consistently labelled free (it was mislabelled \"Premium\" in the catalog and search index despite being…",
-      "detail": "",
-      "fixed_on": "2026-06-11",
-      "release": "v10.78.0",
-      "issue": null
-    },
-    {
-      "title": "The four Pro tools (Research Question Builder, ToR Builder, Qualitative Insights Lab, Statistical Code Converter) are now properly gated to…",
-      "detail": "",
-      "fixed_on": "2026-06-11",
-      "release": "v10.78.0",
-      "issue": null
-    },
-    {
-      "title": "Flagship course modules now load again for returning users",
-      "detail": "If your saved login session had gone stale, the course-content service rejected the whole request, so no modules appeared (just \"Unable to load course content\"). The loader now retries anonymously on that error, so the public module always loads — and signing in again restores the gated modules.",
-      "fixed_on": "2026-06-09",
-      "release": "v10.73.4",
-      "issue": null
-    },
-    {
-      "title": "Language switching no longer hangs on an endless spinner",
-      "detail": "Pages were loading two competing translation systems at once — the legacy Google Translate widget and the newer Sarvam-backed switcher — and they fought each other in a DOM-mutation loop that kept the globe spinner running forever. Removed the legacy Google Translate widget (js/translate.js) from every page and standardised on the single switcher.",
-      "fixed_on": "2026-06-09",
-      "release": "v10.73.1",
-      "issue": null
-    },
-    {
-      "title": "The Long View companion pages (gallery, evidence map, numbers in the news): the \"← The Long View\" topbar back-link wrapped onto multiple lin…",
-      "detail": "",
-      "fixed_on": "2026-06-08",
-      "release": "v10.66.1",
-      "issue": null
-    },
-    {
-      "title": "Status page no longer reports the Supabase backend as \"down\": the probe now sends the public anon key to /auth/v1/health (which 401s without…",
-      "detail": "",
-      "fixed_on": "2026-06-08",
-      "release": "v10.64.0",
-      "issue": null
-    },
-    {
-      "title": "ImpactLex no longer lists five terms twice",
-      "detail": "— Forest Rights Act, Human Development Index, Multidimensional Poverty Index, Purchasing Power Parity and Randomized Controlled Trial each had an acronym-variant that collided on the same id. The snapshot now merges them (390 → 385 unique terms), keeping the richest definition and backfilling missing examples/acronyms. Root cause fixed in scripts/impactlex-migrate.mjs (added an id-level dedupe pass) so it cannot recur on regeneration.",
-      "fixed_on": "2026-06-03",
-      "release": "v10.46.0",
-      "issue": null
-    },
-    {
-      "title": "devai",
-      "detail": "— hamburger button was invisible because a broken UserWay script (data-account=\"xxxx\" placeholder) rendered as a giant blue button covering the right side of the mobile-header. Replaced with canonical config.",
-      "fixed_on": "2026-05-20",
-      "release": "v10.24.0",
       "issue": null
     }
   ]
