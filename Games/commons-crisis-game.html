@@ -11,9 +11,9 @@
 :root{
   --bg:#0B1120;--bg2:#111827;--bg3:#1F2937;--bg4:#374151;
   --text:#F9FAFB;--text2:#D1D5DB;--text3:#9CA3AF;
-  --green:#047857;--green-light:#34D399;--green-bg:rgba(5,150,105,.22);
-  --amber:#92400E;--amber-bg:rgba(245,158,11,.22);
-  --red:#991B1B;--red-bg:rgba(239,68,68,.22);
+  --green:#10B981;--green-light:#34D399;--green-bg:rgba(5,150,105,.22);
+  --amber:#F59E0B;--amber-bg:rgba(245,158,11,.22);
+  --red:#EF4444;--red-bg:rgba(239,68,68,.22);
   --blue:#3B82F6;--blue-bg:rgba(59,130,246,.22);
   --purple:#8B5CF6;
   --radius:12px;--radius-sm:8px;
@@ -59,7 +59,7 @@ h3{font-size:1.1rem;font-weight:600;font-family:'Inter',sans-serif}
 .concept-box{background:linear-gradient(135deg,rgba(5,150,105,.16),rgba(59,130,246,.16));border:1px solid rgba(5,150,105,.2);border-radius:var(--radius);padding:1.5rem;margin:1.5rem 0}
 .agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
 .agent-intro{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center;transition:var(--transition)}
-.agent-intro:hover{border-color:var(--green);transform:translateY(-2px)}
+.agent-intro:hover{border-color:var(--im-ink-good, #047857);transform:translateY(-2px)}
 .agent-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto .6rem;font-weight:700}
 
 /* ── Game Screen ── */
@@ -91,7 +91,7 @@ h3{font-size:1.1rem;font-weight:600;font-family:'Inter',sans-serif}
 .resource-label{color:var(--text3);font-size:.85rem}
 
 /* Warning banner */
-.warning-banner{background:var(--amber-bg);border:1px solid rgba(245,158,11,.3);border-radius:var(--radius-sm);padding:.8rem 1rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;font-size:.9rem;color:var(--amber);animation:pulse-border 2s ease infinite}
+.warning-banner{background:var(--amber-bg);border:1px solid rgba(245,158,11,.3);border-radius:var(--radius-sm);padding:.8rem 1rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;font-size:.9rem;color:var(--im-ink-warn, #92400E);animation:pulse-border 2s ease infinite}
 .warning-banner.critical-banner{background:var(--red-bg);border-color:rgba(239,68,68,.3);color:#DC3B3B}
 @keyframes pulse-border{0%,100%{opacity:1}50%{opacity:.7}}
 
@@ -136,18 +136,18 @@ h3{font-size:1.1rem;font-weight:600;font-family:'Inter',sans-serif}
 .score-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center}
 .score-card .score-name{font-weight:700;margin-bottom:.3rem}
 .score-card .score-value{font-size:1.6rem;font-weight:800;color:var(--green-light)}
-.score-card.player-card{border-color:var(--green);background:var(--green-bg)}
+.score-card.player-card{border-color:var(--im-ink-good, #047857);background:var(--green-bg)}
 
 .ostrom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.75rem;margin:1rem 0}
 .ostrom-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:1rem}
-.ostrom-card .ostrom-num{font-size:.75rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
+.ostrom-card .ostrom-num{font-size:.75rem;font-weight:700;color:var(--im-ink-good, #047857);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
 .ostrom-card h4{font-size:.9rem;margin-bottom:.3rem}
 .ostrom-card p{font-size:.8rem;color:var(--text3);line-height:1.5}
 
 /* Collapse overlay */
 .collapse-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:100;animation:fade-in .5s ease}
 .collapse-overlay .collapse-content{text-align:center;max-width:500px;padding:2rem}
-.collapse-overlay h2{font-size:2rem;color:var(--red);margin-bottom:1rem}
+.collapse-overlay h2{font-size:2rem;color:var(--im-ink-bad, #991B1B);margin-bottom:1rem}
 @keyframes fade-in{from{opacity:0}to{opacity:1}}
 
 /* Responsive */
@@ -240,6 +240,11 @@ h3{font-size:1.1rem;font-weight:600;font-family:'Inter',sans-serif}
    takes the brighter pair. */
 @media (prefers-color-scheme: dark){:root{--green:#6EE7B7;--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;--red:#FCA5A5;}}
 [data-theme="dark"],body.dark-mode,html.dark{--green:#6EE7B7;--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;--red:#FCA5A5;}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-good:#047857;--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-warn:#FCD34D;}
 </style>
 <style>
 /* ===== ImpactMojo Design System ===== */

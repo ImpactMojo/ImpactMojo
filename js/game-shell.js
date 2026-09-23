@@ -501,7 +501,7 @@
        green and sky. Used as ink on the light theme's cream they measure 1.39
        to 2.9:1 — the "How to play" labels, the agent names, the section titles.
        Weight and size carry the emphasis in light mode; the hue does not. */
-    'body.light-mode strong, body.light-mode b { color: #78350F !important; }' +
+    'body.light-mode strong, body.light-mode b { color: inherit !important; }' +
     'body.light-mode .section-title, body.light-mode .agent-name, body.light-mode .back-link, body.light-mode .card-title { color: #78350F !important; }' +
     'body.light-mode .agent-archetype, body.light-mode .archetype { color: #065F46 !important; }' +
 
