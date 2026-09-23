@@ -10,12 +10,12 @@
     :root {
       --primary-bg: #FFFFFF;
       --secondary-bg: #F8FAFC;
-      --accent-color: #0EA5E9;
+      --accent-color: #0369A1;
       --accent-hover: #0284C7;
-      --secondary-accent: #6366F1;
-      --success-color: #10B981;
-      --warning-color: #F59E0B;
-      --danger-color: #EF4444;
+      --secondary-accent: #4F46E5;
+      --success-color: #047857;
+      --warning-color: #92400E;
+      --danger-color: #991B1B;
       --text-primary: #0F172A;
       --text-secondary: #475569;
       --text-muted: #94A3B8;
@@ -252,8 +252,8 @@
     }
     code .comment { color: var(--text-muted); }
     code .cmd { color: var(--accent-color); }
-    code .flag { color: var(--warning-color); }
-    code .string { color: var(--secondary-accent); }
+    code .flag { color: var(--im-ink-warn, #92400E); }
+    code .string { color: var(--im-ink-info, #4F46E5); }
     p code, li code, td code {
       background: var(--code-bg); padding: 2px 6px; border-radius: 4px;
       font-size: 0.84em; border: 1px solid var(--border-color);
@@ -292,9 +292,9 @@
       display: inline-flex; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem;
       font-weight: 600; text-transform: uppercase; margin-bottom: 8px;
     }
-    .diff-intro { background: rgba(16, 185, 129, 0.1); color: var(--success-color); }
-    .diff-inter { background: rgba(245, 158, 11, 0.1); color: var(--warning-color); }
-    .diff-adv { background: rgba(239, 68, 68, 0.1); color: var(--danger-color); }
+    .diff-intro { background: rgba(16, 185, 129, 0.1); color: var(--im-ink-good, #047857); }
+    .diff-inter { background: rgba(245, 158, 11, 0.1); color: var(--im-ink-warn, #92400E); }
+    .diff-adv { background: rgba(239, 68, 68, 0.1); color: var(--im-ink-bad, #991B1B); }
 
     /* FOOTER */
     footer {
@@ -319,7 +319,19 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { color: #8593A7; 
       .dataset-grid { grid-template-columns: 1fr; }
       .section-header h2 { font-size: 1.75rem; }
     }
-  </style>
+  
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--accent-color:#38BDF8;--danger-color:#FCA5A5;--secondary-accent:#A5B4FC;--success-color:#6EE7B7;--warning-color:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--accent-color:#38BDF8;--danger-color:#FCA5A5;--secondary-accent:#A5B4FC;--success-color:#6EE7B7;--warning-color:#FCD34D;}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-good:#047857;--im-ink-info:#4F46E5;--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;--im-ink-warn:#FCD34D;}
+</style>
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>

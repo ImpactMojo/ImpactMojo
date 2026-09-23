@@ -341,9 +341,9 @@ body.light-mode .v3-inline-icon { filter: none; }
     padding: 2rem;
     text-align: center;
 }
-.not-found-icon { width: 48px; height: 48px; color: var(--danger-color); margin: 0 auto 1rem; }
+.not-found-icon { width: 48px; height: 48px; color: var(--im-ink-bad, #991B1B); margin: 0 auto 1rem; }
 .not-found-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; }
-.not-found-card h3 { color: var(--danger-color); margin-bottom: 0.5rem; }
+.not-found-card h3 { color: var(--im-ink-bad, #991B1B); margin-bottom: 0.5rem; }
 .not-found-card p { color: var(--text-secondary); }
 
 /* Error */
@@ -354,7 +354,7 @@ body.light-mode .v3-inline-icon { filter: none; }
     padding: 2rem;
     text-align: center;
 }
-.error-card h3 { color: var(--warning-color); margin-bottom: 0.5rem; }
+.error-card h3 { color: var(--im-ink-warn, #92400E); margin-bottom: 0.5rem; }
 .error-card p { color: var(--text-secondary); }
 
 /* Loading */
@@ -441,6 +441,11 @@ body.light-mode .v3-inline-icon { filter: none; }
 .v3-blob-1 { top: 10%; right: 10%; width: 400px; height: 400px; background: var(--accent-color); }
 .v3-blob-2 { bottom: 20%; left: 5%; width: 300px; height: 300px; background: var(--secondary-accent); animation-delay: -5s; }
 @keyframes pulseBlob { 0%, 100% { transform: scale(1); opacity: 0.08; } 50% { transform: scale(1.1); opacity: 0.11; } }
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-warn:#FCD34D;}
 </style>
 <script src="js/config.js"></script>
 <style>
@@ -448,10 +453,10 @@ body.light-mode .v3-inline-icon { filter: none; }
 :root {
     --im-primary-bg: #0F172A;
     --im-secondary-bg: #1E293B;
-    --im-accent: #0EA5E9;
+    --im-accent: #0369A1;
     --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1;
-    --im-success: #10B981;
+    --im-secondary-accent: #4F46E5;
+    --im-success: #047857;
     --im-text-primary: #F1F5F9;
     --im-text-secondary: #CBD5E1;
     --im-text-muted: #94A3B8;
@@ -645,7 +650,14 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
    the dark ones, for the unstamped default and for either explicit
    choice. Enforced by scripts/check-theme-contrast.py. */
 @media (prefers-color-scheme: dark) { body:not(.light-mode):not([data-theme="light"]) .theme-btn.active { background: #0A7AAD; } }
-body.dark-mode .theme-btn.active, [data-theme="dark"] .theme-btn.active, html.dark .theme-btn.active { background: #0A7AAD; }</style>
+body.dark-mode .theme-btn.active, [data-theme="dark"] .theme-btn.active, html.dark .theme-btn.active { background: #0A7AAD; }
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
+</style>
 
 
 <!-- Header -->

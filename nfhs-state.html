@@ -22,7 +22,7 @@
   --bg:#F6F8FB; --panel:#FFFFFF; --ink:#0F172A; --mut:#5A6B82; --faint:#5F708A;
   --bd:#E4EAF1; --acc:#0369A1; --acc2:#4F46E5; --good:#047857; --bad:#991B1B;
   --grad:linear-gradient(135deg,#0EA5E9,#6366F1);
-  --chip:#EEF3F9; --chipactive:#0EA5E9; --barlo:#BAE6FD; --barhi:#0369A1;
+  --chip:#EEF3F9; --chipactive:#0369A1; --barlo:#BAE6FD; --barhi:#0369A1;
   --sg-valink:#FFFFFF; --rural:#0369A1; --urban:#B45309; --warn:#B45309;
 }
 html[data-theme="dark"]{
@@ -114,7 +114,7 @@ table.data tr.ai td{font-weight:800;color:var(--acc);border-top:2px solid var(--
 .sg .sg-lede{color:var(--mut);font-size:.93rem;margin:0 0 14px;max-width:74ch}
 .sg .sg-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
 .sg .sg-tab{font-family:'Inter';font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:99px;border:1px solid var(--bd);background:var(--chip);color:var(--mut);cursor:pointer}
-.sg .sg-tab[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#fff}
+.sg .sg-tab[aria-pressed="true"]{background: var(--im-fill-sky, #0369A1);border-color:var(--acc);color:#fff}
 .sg .sg-tab:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .sg-row{display:grid;grid-template-columns:9.5rem 1fr 4.6rem;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--bd)}
 .sg-row:last-of-type{border-bottom:0}
@@ -163,11 +163,11 @@ table.data tr.ai td{font-weight:800;color:var(--acc);border-top:2px solid var(--
 .ru-key i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
 .ru-key b.tk{display:inline-block;width:2px;height:11px;background:var(--faint);margin-right:6px;vertical-align:-1px}
 .ru-scale{font-family:'Inter';font-size:10.5px;color:var(--faint);display:flex;justify-content:space-between;margin-top:2px}
-.ru-flag{grid-column:1/-1;font-family:'Inter';font-size:11px;color:var(--warn);padding:2px 0 4px;line-height:1.4}
+.ru-flag{grid-column:1/-1;font-family:'Inter';font-size:11px;color:var(--im-ink-warn, #92400E);padding:2px 0 4px;line-height:1.4}
 .ru-note{margin-top:14px;padding:12px 14px;border:1px solid var(--bd);border-left:4px solid var(--acc2);background:var(--chip);border-radius:10px;font-size:.9rem;color:var(--mut)}
 .ru-note b{color:var(--ink)}
 .ru-note p{margin:0 0 8px}.ru-note p:last-child{margin:0}
-.lowmark{color:var(--warn);font-weight:700}
+.lowmark{color:var(--im-ink-warn, #92400E);font-weight:700}
 .prof-tab{width:100%;border-collapse:collapse;font-family:'Inter';font-size:12.5px}
 .prof-tab th,.prof-tab td{padding:7px 8px;border-bottom:1px solid var(--bd);text-align:right;font-variant-numeric:tabular-nums}
 .prof-tab th{font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--faint);font-weight:700}
@@ -184,6 +184,21 @@ table.data tr.ai td{font-weight:800;color:var(--acc);border-top:2px solid var(--
   .ru-gap small{display:none}   /* the column header already says Gap */
   .prof-tab{font-size:11.5px}
 }
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--bad:#FCA5A5;--good:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--bad:#FCA5A5;--good:#6EE7B7;}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-warn:#FCD34D;}
+
+/* A surface that carries white ink; it does not flip with the theme. */
+:root{--im-fill-sky:#0369A1;}
 </style>
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
 </head>

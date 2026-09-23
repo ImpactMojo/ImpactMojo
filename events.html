@@ -42,17 +42,17 @@
 :root {
     --primary-bg: #FFFFFF;
     --secondary-bg: #F8FAFC;
-    --accent-color: #F59E0B;
-    --accent-hover: #D97706;
+    --accent-color: #92400E;
+    --accent-hover: #92400E;
     --text-primary: #0F172A;
     --text-secondary: #475569;
     --text-muted: #52627A;
     --card-bg: #FFFFFF;
     --hover-bg: #F1F5F9;
     --border-color: #E2E8F0;
-    --success-color: #10B981;
-    --warning-color: #F59E0B;
-    --danger-color: #EF4444;
+    --success-color: #047857;
+    --warning-color: #92400E;
+    --danger-color: #991B1B;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
     --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
@@ -153,7 +153,7 @@ body {
 .event-host strong { color: var(--text-primary); }
 .event-desc { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 0.9rem; flex: 1; }
 .event-capacity { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.9rem; }
-.event-capacity.seats-scarce { font-family: 'Inter', sans-serif; font-weight: 700; color: var(--danger-color); background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.18); border-radius: 8px; padding: 0.35rem 0.6rem; display: inline-flex; align-items: center; gap: 0.3rem; width: fit-content; }
+.event-capacity.seats-scarce { font-family: 'Inter', sans-serif; font-weight: 700; color: var(--im-ink-bad, #991B1B); background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.18); border-radius: 8px; padding: 0.35rem 0.6rem; display: inline-flex; align-items: center; gap: 0.3rem; width: fit-content; }
 .event-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
 /* Dated series block. --im-teal is set per theme rather than as one hex,
@@ -223,7 +223,7 @@ body {
     font-size: 0.92rem; font-family: inherit;
 }
 .reg-form textarea { min-height: 90px; resize: vertical; }
-.reg-form .req { color: var(--danger-color); }
+.reg-form .req { color: var(--im-ink-bad, #991B1B); }
 .reg-actions { margin-top: 1.25rem; }
 .reg-actions .btn { width: 100%; justify-content: center; }
 
@@ -237,7 +237,7 @@ html.dark .reg-error, [data-theme="dark"] .reg-error, body.dark-mode .reg-error 
     color: #FCA5A5; background: #2A1416; border-color: #7F1D1D;
 }
 .reg-success { display: none; text-align: center; padding: 0.5rem 0; }
-.reg-success .tick { font-size: 2.5rem; color: var(--success-color); line-height: 1; }
+.reg-success .tick { font-size: 2.5rem; color: var(--im-ink-good, #047857); line-height: 1; }
 .reg-success h3 { font-family: 'Inter', sans-serif; margin: 0.5rem 0; }
 .reg-success p { color: var(--text-secondary); font-size: 0.92rem; }
 .reg-success .join-box {
@@ -312,6 +312,11 @@ html.dark .reg-error, [data-theme="dark"] .reg-error, body.dark-mode .reg-error 
 @media (max-width: 480px) { .im-topbar-home span { display: none; } }
 
 @media(max-width:600px){.im-topbar{gap:.4rem;padding:.4rem .6rem;flex-wrap:nowrap}.im-topbar-link{display:none}.im-topbar-home span{display:none}.im-browse-btn{font-size:0!important;padding:.45rem!important;gap:0!important}.im-browse-btn svg{width:16px;height:16px}.im-premium-btn{padding:.3rem .55rem;font-size:.72rem}}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-good:#047857;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;}
 </style>
   <script src="/js/form-submit.js?v=36a6a01f"></script>
 </head>
@@ -823,7 +828,14 @@ html.dark .reg-error, [data-theme="dark"] .reg-error, body.dark-mode .reg-error 
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
 
 <!-- ImpactMojo Paper Plane -->
-<style>.im-paper-plane{position:fixed;top:15%;right:8%;width:120px;height:120px;opacity:0.12;z-index:0;pointer-events:none}@media (prefers-reduced-motion: no-preference){.im-paper-plane{animation:im-fly 25s ease-in-out infinite}}@keyframes im-fly{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(50px,-30px) rotate(10deg)}50%{transform:translate(100px,20px) rotate(-6deg)}75%{transform:translate(30px,50px) rotate(12deg)}}</style>
+<style>.im-paper-plane{position:fixed;top:15%;right:8%;width:120px;height:120px;opacity:0.12;z-index:0;pointer-events:none}@media (prefers-reduced-motion: no-preference){.im-paper-plane{animation:im-fly 25s ease-in-out infinite}}@keyframes im-fly{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(50px,-30px) rotate(10deg)}50%{transform:translate(100px,20px) rotate(-6deg)}75%{transform:translate(30px,50px) rotate(12deg)}}
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--accent-color:#38BDF8;--danger-color:#FCA5A5;--success-color:#6EE7B7;--warning-color:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--accent-color:#38BDF8;--danger-color:#FCA5A5;--success-color:#6EE7B7;--warning-color:#FCD34D;}
+</style>
 <svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>

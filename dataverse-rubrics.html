@@ -29,8 +29,8 @@
 
     <style>
         :root {
-            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0EA5E9; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
             --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
@@ -45,8 +45,8 @@
             --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
         } }
 body.light-mode, [data-theme="light"] {
-            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0EA5E9; --accent-hover: #0284C7;
-            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
             --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
             --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
             --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
@@ -105,10 +105,10 @@ body.dark-mode, [data-theme="dark"] {
         .comp-card { border: 1px solid var(--border-color); border-radius: 12px; background: var(--card-bg); padding: 1rem 1.1rem; cursor: pointer; transition: all 0.18s; }
         .comp-card:hover { border-color: var(--accent-color); box-shadow: 0 4px 14px rgba(15,23,42,0.06); transform: translateY(-1px); }
         .comp-card.selected { border-color: var(--accent-color); box-shadow: 0 0 0 2px rgba(14,165,233,0.25); }
-        .comp-card .cc-cat { display:inline-block; font-size: 0.66rem; font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; padding: 2px 8px; border-radius: 6px; background: rgba(99,102,241,0.12); color: var(--secondary-accent); margin-bottom: 0.5rem; }
+        .comp-card .cc-cat { display:inline-block; font-size: 0.66rem; font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; padding: 2px 8px; border-radius: 6px; background: rgba(99,102,241,0.12); color: var(--im-ink-info, #4F46E5); margin-bottom: 0.5rem; }
         .comp-card h3 { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem; }
         .comp-card p { font-size: 0.82rem; color: var(--text-secondary); }
-        .comp-card .cc-score { margin-top: 0.55rem; font-size: 0.72rem; font-family: var(--font-mono); color: var(--success-color); font-weight: 600; }
+        .comp-card .cc-score { margin-top: 0.55rem; font-size: 0.72rem; font-family: var(--font-mono); color: var(--im-ink-good, #047857); font-weight: 600; }
 
         /* rubric detail */
         #rubricDetail { margin-top: 1.75rem; }
@@ -122,8 +122,8 @@ body.dark-mode, [data-theme="dark"] {
         .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border-color); border-radius: 12px; }
         table.rubric { width: 100%; border-collapse: collapse; min-width: 720px; }
         table.rubric th { background: var(--secondary-bg); font-family: var(--font-heading); font-weight: 700; font-size: 0.78rem; color: var(--text-primary); padding: 0.65rem 0.7rem; text-align: left; border-bottom: 2px solid var(--border-color); }
-        table.rubric th.lvl1 { color: var(--danger-color); } table.rubric th.lvl2 { color: var(--warning-color); }
-        table.rubric th.lvl3 { color: var(--accent-color); } table.rubric th.lvl4 { color: var(--success-color); }
+        table.rubric th.lvl1 { color: var(--im-ink-bad, #991B1B); } table.rubric th.lvl2 { color: var(--im-ink-warn, #92400E); }
+        table.rubric th.lvl3 { color: var(--accent-color); } table.rubric th.lvl4 { color: var(--im-ink-good, #047857); }
         table.rubric td { padding: 0; border: 1px solid var(--border-color); vertical-align: top; width: 22%; }
         table.rubric td.crit { width: 12%; padding: 0.6rem 0.7rem; font-family: var(--font-heading); font-weight: 600; font-size: 0.82rem; color: var(--text-primary); background: var(--secondary-bg); }
         .cell { padding: 0.6rem 0.7rem; font-size: 0.82rem; color: var(--text-secondary); cursor: pointer; height: 100%; transition: background 0.15s; }
@@ -148,12 +148,17 @@ body.dark-mode, [data-theme="dark"] {
             .top-controls, .back-link, .btn, .im-topbar, .v3-paper-plane, .chips, .comp-grid, .subject-wrap { display:none !important; }
             #rubricDetail { display:block !important; }
         }
-    </style>
+    
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-good:#047857;--im-ink-info:#4F46E5;--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;--im-ink-warn:#FCD34D;}
+</style>
 <style>
 /* ===== ImpactMojo Design System (topbar / footer) ===== */
 :root {
-    --im-primary-bg: #0F172A; --im-secondary-bg: #1E293B; --im-accent: #0EA5E9; --im-accent-hover: #0284C7;
-    --im-secondary-accent: #6366F1; --im-success: #10B981; --im-text-primary: #F1F5F9; --im-text-secondary: #CBD5E1;
+    --im-primary-bg: #0F172A; --im-secondary-bg: #1E293B; --im-accent: #0369A1; --im-accent-hover: #0284C7;
+    --im-secondary-accent: #4F46E5; --im-success: #047857; --im-text-primary: #F1F5F9; --im-text-secondary: #CBD5E1;
     --im-text-muted: #94A3B8; --im-card-bg: #1E293B; --im-hover-bg: #334155; --im-border: #334155;
     --im-nav-bg: rgba(15, 23, 42, 0.95); --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
 }
@@ -190,6 +195,13 @@ body.dark-mode, [data-theme="dark"] {
 .im-footer-section a { color: var(--im-text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
 .im-footer-section a:hover { color: var(--im-accent); }
 .im-footer-bottom { text-align: center; padding-top: 1rem; border-top: 1px solid var(--im-border); font-size: 0.8rem; color: var(--im-text-muted); }
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
 </style>
 </head>
 <body>

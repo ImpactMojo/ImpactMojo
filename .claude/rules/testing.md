@@ -130,6 +130,14 @@ Before considering any change complete:
     - **A `backdrop-filter` makes axe wrong in the other direction.** The 101-course progress pill reports 1.41:1 on 60 pages. `#nav` carries `background: rgba(0,0,0,0.75)` with `backdrop-filter: blur(8px)`, and axe cannot resolve a background behind a backdrop filter, so it falls back to the page. Sampled from the rendered pixels the real background is `rgb(58,57,55)` and the real contrast is about **8.9:1**. It is an axe artifact, not a defect, and it must not be "fixed" by changing the design.
     - **`opacity` on a measured token un-measures it.** `.back-link` in the Games carried `opacity: .7`, `.episode-card.coming-soon` carried `opacity: 0.8`, and a decorative blob at `0.15` alpha sitting under body text cost about a full point of contrast on 20 pages. A token that has been measured is not a starting point to take a further 20 or 30 per cent off.
 
+    **The convention the fixes settled on, so the next session does not invent a third.** A semantic colour is a *fill* in some rules and *ink* in others, and no single value serves both: `#059669` is 3.37:1 on its own pale mint in the light theme and 3.01:1 on the same tint over a dark card. So:
+
+    - `--im-ink-good` / `-warn` / `-bad` / `-info` / `-sky` / `-pink` are **ink**, and flip with the theme (`#047857` light, `#6EE7B7` dark, and so on). Every use carries the light value as a `var()` fallback so a page that forgets to declare them still renders.
+    - `--im-fill-good` / `-bad` / `-info` / `-sky` are a **surface that carries white text**, and do **not** flip: `#0369A1`, `#047857`, `#991B1B`, `#4F46E5` all clear 4.5:1 under white in either theme.
+    - `css/imx-main.css` says the same thing in its own vocabulary: `--accent-color` is the brand sky for fills, borders and icons; `--accent-solid` (#0369A1) is a surface carrying white; `--accent-ink` (#075985) is text on a light ground.
+
+    **A page with one palette and no dark block is the trap underneath all of it.** 38 Studios declared `:root` and nothing else. In dark mode the site chrome paints the body `#0F172A` while every token on the page stays at its light value, so the page is a light design on a dark ground and nothing on it says so. Give such a page a dark block for its inks, or the next colour fix will simply move the failure from one theme to the other — which is what happened here, twice, before the pattern was clear.
+
     **Form controls: a `<label>` binds only by wrapping the control or by a matching `for`.** 99 checkboxes and 17 radios in `Handouts/` had neither; twelve of the radios had a `<label>Low Threat</label>` sitting beside them, which associates nothing and reads as if the work had been done. Where a generated row cannot carry a unique id — the 106 inputs in `BookCompanionTools/budget-template-generator.html` — the name goes on the control as `aria-label`.
 
 ### A note on the retired maintenance Routines

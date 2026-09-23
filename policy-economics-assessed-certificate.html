@@ -48,6 +48,11 @@
         --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
     }
 }
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-good:#047857;}
+@media (prefers-color-scheme: dark){:root{--im-ink-good:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-good:#6EE7B7;}
 </style>
 
 <style>
@@ -57,16 +62,16 @@
 :root {
     --primary-bg: #0F172A;
     --secondary-bg: #1E293B;
-    --accent-color: #F59E0B;
-    --accent-hover: #D97706;
-    --accent-blue: #0EA5E9;
+    --accent-color: #92400E;
+    --accent-hover: #92400E;
+    --accent-blue: #0369A1;
     --text-primary: #F1F5F9;
     --text-secondary: #CBD5E1;
     --text-muted: #94A3B8;
     --card-bg: #1E293B;
     --hover-bg: #334155;
     --border-color: #334155;
-    --success-color: #10B981;
+    --success-color: #047857;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.25);
 }
@@ -149,7 +154,7 @@ a { color: var(--accent-blue); }
 .inc-card p { color: var(--text-secondary); font-size: 0.92rem; }
 .inc-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: #0A7AAD; color: #fff; font-weight: 700; font-size: 0.82rem; margin-bottom: 0.6rem; }
 .pill { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; border-radius: 999px; padding: 0.12rem 0.6rem; margin-left: 0.4rem; vertical-align: middle; }
-.pill.free { background: rgba(16,185,129,0.15); color: var(--success-color); border: 1px solid var(--success-color); }
+.pill.free { background: rgba(16,185,129,0.15); color: var(--im-ink-good, #047857); border: 1px solid var(--success-color); }
 .pill.new { background: rgba(245,158,11,0.15); color: var(--accent-color); border: 1px solid var(--accent-color); }
 
 /* Who / outcomes */
@@ -187,7 +192,7 @@ a { color: var(--accent-blue); }
 .field input:focus { outline: 2px solid var(--accent-blue); outline-offset: 1px; border-color: var(--accent-blue); }
 .err-msg { display: none; margin-top: 0.9rem; background: #FEF2F2; border: 1px solid #FECACA; color: #B91C1C; border-radius: 8px; padding: 0.7rem 0.9rem; font-size: 0.9rem; font-weight: 600; line-height: 1.5; }
 body.dark-mode .err-msg, [data-theme="dark"] .err-msg { background: #2A1416; border-color: #7F1D1D; color: #FCA5A5; }
-.ok-msg { display: none; margin-top: 0.9rem; background: rgba(16,185,129,0.12); border: 1px solid var(--success-color); color: var(--success-color); border-radius: 8px; padding: 0.7rem 0.9rem; font-size: 0.9rem; font-weight: 600; }
+.ok-msg { display: none; margin-top: 0.9rem; background: rgba(16,185,129,0.12); border: 1px solid var(--success-color); color: var(--im-ink-good, #047857); border-radius: 8px; padding: 0.7rem 0.9rem; font-size: 0.9rem; font-weight: 600; }
 .wa-link { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.8rem; font-size: 0.85rem; color: var(--accent-blue); text-decoration: none; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; padding: 0; }
 .wa-link:hover { text-decoration: underline; }
 
@@ -229,6 +234,13 @@ body.dark-mode .err-msg, [data-theme="dark"] .err-msg { background: #2A1416; bor
     .im-paper-plane { width: 80px; height: 80px; top: 10%; right: 5%; }
     .im-footer-grid { grid-template-columns: 1fr; }
 }
+
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--accent-color:#FCD34D;--success-color:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--accent-color:#FCD34D;--success-color:#6EE7B7;}
 </style>
   <script src="/js/form-submit.js?v=36a6a01f"></script>
 </head>
