@@ -2,6 +2,14 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.316.0 — September 23, 2026 (The timelines)
+
+### Fixed
+
+- **The timeline palette was eight colours doing two jobs each (#1120).** `--cyan` `#0891B2`, `--green` `#059669`, `--amber` `#D97706`, `--red` `#DC2626`, `--violet` `#9333EA`, `--rose` `#E11D48`, `--teal` `#0D9488` and `--indigo` `#4F46E5` were written as ink on the cream page *and* as the fill under white on era chips and markers, on six timeline pages. Neither direction cleared 4.5:1 for most of them. Each is now two tokens: the fill moved to a value that carries white (`#0369A1`, `#047857`, `#92400E`, `#991B1B`, `#7E22CE`, `#9F1239`, `#0F766E`), and a matching `--*-ink` carries the text, with a value per theme.
+
+- **The breadcrumb link was distinguished from the text around it by colour alone (#1120).** `--ink-mid` against `--ink-light` is **1.93:1**, well under the 3:1 that WCAG 1.4.1 allows a colour-only distinction. It is underlined now, on all six timeline pages.
+
 ## v10.315.0 — September 23, 2026 (The handouts and the Studios)
 
 ### Fixed
