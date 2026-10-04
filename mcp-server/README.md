@@ -8,15 +8,15 @@ MCP (Model Context Protocol) server that exposes ImpactMojo's development educat
 
 | Tool | Description |
 |------|-------------|
-| `search_content` | Full-text search across 700+ content items |
+| `search_content` | Full-text search across 1,300+ content items |
 | `lookup_bct` | Get full BCT technique details (South Asian context, case studies) |
 | `search_bcts` | Search/filter 203 Behavior Change Techniques |
 | `list_bct_categories` | List all 26 BCT categories |
-| `browse_dataverse` | Browse 324 tools, datasets, APIs, MCP servers |
+| `browse_dataverse` | Browse 335 tools, datasets, APIs, MCP servers |
 | `search_dataverse` | Keyword search across dataverse items |
 | `list_challenges` | List practice challenges |
 | `get_challenge` | Full challenge with case context and rubric |
-| `list_courses` | 68 courses across 6 learning tracks |
+| `list_courses` | 80 courses across 6 learning tracks |
 | `get_game_info` | 18 simulation games with AI agent personas |
 | `query_climate_data` | India GHG emissions from Climate TRACE |
 

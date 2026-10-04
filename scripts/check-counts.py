@@ -95,6 +95,12 @@ DOC_FILES = [
     "docs/freemium-and-premium-guide.md",
     "docs/teaching-and-lms-guide.md",
     "docs/101-decks-guide.md",
+    # Present-tense guides that the list above left out and that had drifted.
+    "docs/README.md",
+    "docs/deep-dives-guide.md",
+    "docs/workshops-and-facilitation.md",
+    "docs/impactlex-guide.md",
+    "docs/book-summaries-guide.md",
     # The Field Radio guide states the station's clip total. It is the only
     # place that number is written down -- field-radio.html renders the list
     # from data/field-radio.json and quotes no total -- so nothing could
@@ -123,6 +129,17 @@ COPY_FILES = [
     # workshops"), which this guard cannot match -- check-workshop-kits.py
     # covers the spelled-out form against the directory and counts.json.
     "facilitator-kits/index.html",
+    # Found by a wide scan on 2026-10-04: pages and scripts outside the root
+    # that state platform totals in present tense and had drifted. The courses
+    # index <title> and <h1> said 19 flagships against 21, the Labs and Courses
+    # indexes both said "101 Series (51 courses)", the Mojini FAQ answered 19
+    # and 51, and the org profile README said 68 courses, 13 labs.
+    "courses/index.html",
+    "Labs/index.html",
+    "js/faq-bank.js",
+    "mcp-server/README.md",
+    ".github/profile/README.md",
+    "admin/analytics-appscript.js",
 ]
 
 
