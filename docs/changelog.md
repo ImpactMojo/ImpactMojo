@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.317.0 — October 4, 2026 (Global Macro Database)
+
+### Added
+
+- **Global Macro Database in the Dataverse.** 46 macroeconomic variables for 239 countries, 1086 to 2025 with projections to 2031, harmonised from 167 sources (Müller, Xu, Lehbib and Chen, NBER Working Paper 33714). Listed as a link-out to globalmacrodata.com under Economic & Financial. Its terms allow free academic, teaching and non-profit use and require written permission for commercial use, and the entry says so. Dataverse count 334 to 335.
+
+### For Learners
+
+- **Global Macro Database** — GDP, inflation, trade and government finance for 239 countries over nearly a thousand years, joined into one consistent series. Free for students, teachers and researchers.
+
 ## v10.316.0 — September 23, 2026 (The timelines)
 
 ### Fixed
