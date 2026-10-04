@@ -218,6 +218,25 @@ def main():
                                           for n in notes):
         failures.append('meta.coverage_notes         must be a list of non-empty strings')
 
+    # The count on the law guides landing page is prose, and it said 61 while the
+    # docket held 109. check-counts.py reads root-level pages only, so nothing
+    # compared them. The docket page's own social tags had also been pasted from
+    # the RTI guide: og:url pointed at that guide and the Twitter card described it.
+    index = (GUIDES / 'index.html').read_text(encoding='utf-8')
+    for m in re.finditer(r'(\d+)\s+judgments', index):
+        if int(m.group(1)) != len(entries):
+            failures.append('law-guides/index.html says "%s judgments" but the docket holds %d'
+                            % (m.group(1), len(entries)))
+    docket = (GUIDES / 'development-law-docket.html').read_text(encoding='utf-8')
+    og_url = re.search(r'property="og:url" content="([^"]+)"', docket)
+    if not og_url or 'development-law-docket' not in og_url.group(1):
+        failures.append('development-law-docket.html og:url does not point at the docket')
+    for tag in ('title', 'description'):
+        og = re.search(r'property="og:%s" content="([^"]*)"' % tag, docket)
+        tw = re.search(r'name="twitter:%s" content="([^"]*)"' % tag, docket)
+        if not og or not tw or og.group(1) != tw.group(1):
+            failures.append('development-law-docket.html: og:%s and twitter:%s differ' % (tag, tag))
+
     if failures:
         print('FAIL')
         for f in failures:

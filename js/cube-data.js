@@ -3,16 +3,24 @@
    -----------------------------------------------------------------------------
    The cube is John Gaventa's, from "Finding the Spaces for Change: A Power
    Analysis", IDS Bulletin 37(6), 2006. The three dimensions and their nine
-   categories are his, building on Steven Lukes' three dimensions of power
-   (1974) and on VeneKlasen and Miller's forms of power (2002). The teaching
-   resource lives at powercube.net, run by IDS.
+   categories are his. He builds on Steven Lukes' three dimensions of power
+   (1974), and his wording of the three forms is adapted from VeneKlasen and
+   Miller (2002). The teaching resource lives at powercube.net, run by IDS.
 
    ImpactMojo adds the Indian evidence: for each category, and for a set of
    documented Indian cases plotted on all three dimensions at once.
+
+   Every figure below was checked against the source named beside it, and the
+   wording keeps to what that source says. A claim that could not be confirmed
+   was cut. Each category's `definition` is in our own words after Gaventa;
+   `cite` says so on the page.
    ============================================================================= */
 
 window.CUBE = (function () {
   "use strict";
+
+  var AFTER_GAVENTA = "In our words, after Gaventa (2006)";
+  var LEVELS_NOTE = "In our words. Gaventa (2006) describes levels as a range from local to global";
 
   var dims = [
     {
@@ -20,31 +28,34 @@ window.CUBE = (function () {
       question: "Where does the decision get made, and who set the table?",
       cats: [
         { id: "closed", name: "Closed", color: "#4c1d95",
-          gaventa: "Decisions are made by a set of actors behind closed doors, without any pretence of broadening the boundaries of who is involved.",
+          definition: "A small set of actors decides behind closed doors, and nobody pretends to widen who takes part.",
+          cite: AFTER_GAVENTA,
           evidence: [
-            { stat: "Collegium", detail: "Judges of the Supreme Court and High Courts are selected by a collegium of senior judges. There is no application, no published criteria and no external participation. The 99th Amendment tried to replace it and was struck down in 2015.", source: "Supreme Court Advocates-on-Record Association v. Union of India", year: "2015" },
-            { stat: "116", detail: "internet shutdown orders in one year, the sixth year running that India led the world. Orders are issued under the Telegraph Act by an executive officer and are frequently not published.", source: "Access Now, #KeepItOn", year: "2023" },
-            { stat: "Ordinances", detail: "Union and state governments legislate by ordinance between sessions under Articles 123 and 213, which produces binding law with no debate and no hearing.", source: "Constitution of India", year: "1950" }
+            { stat: "Collegium", detail: "Judges of the Supreme Court and High Courts are recommended by the collegium, a body of the senior-most judges. There is no application process. Parliament tried to replace the collegium with a National Judicial Appointments Commission through the Ninety-ninth Constitutional Amendment, and a five-judge bench struck that down by four judges to one on 16 October 2015. In October 2017 the collegium resolved to publish its decisions, with reasons, on the Supreme Court website.", source: "Supreme Court Advocates-on-Record Association v. Union of India, (2016) 5 SCC 1", year: "2015" },
+            { stat: "116", detail: "internet shutdowns were recorded in India in 2023, the most of any country for the sixth year running. Orders were issued by the Union or state Home Secretary under the Telegraph Act, 1885 and its 2017 suspension rules, since replaced by the Telecommunications Act, 2023 and the 2024 rules. Since Anuradha Bhasin v. Union of India (2020) they must be published, and Access Now reports that officials still fail to do so. India recorded 65 in 2025, the lowest since 2017 and second to Myanmar's 95.", source: "Access Now, #KeepItOn reports", year: "2023, 2025" },
+            { stat: "Ordinances", detail: "When Parliament is not sitting, the President may promulgate an ordinance under Article 123 on the advice of ministers, and a Governor may do the same for a state under Article 213. An ordinance has the force of an Act and is made without a debate. It must be laid before the legislature, and it lapses six weeks after the legislature reassembles, or earlier if the legislature disapproves it.", source: "Constitution of India, Articles 123 and 213", year: "1950" }
           ],
-          complication: "A closed space is not always illegitimate. Judicial independence is a reason to keep some decisions away from popular pressure, and the collegium's defenders make exactly that argument. The cube asks who is inside the room, not whether the room should exist."
+          complication: "Some closed spaces have a reason. Judicial independence is the case made for keeping judicial appointments away from political pressure, and the collegium's defenders make it. The cube records who is in the room and leaves open whether the room should exist."
         },
         { id: "invited", name: "Invited", color: "#7c3aed",
-          gaventa: "People are invited to participate by authorities, whether by government, supranational agencies or NGOs. The invitation, and its terms, come from the powerholder.",
+          definition: "Authorities such as government, international agencies or NGOs invite people to take part. The authority sets the invitation and its terms.",
+          cite: AFTER_GAVENTA,
           evidence: [
-            { stat: "2.6 lakh", detail: "gram panchayats hold gram sabha meetings that state law requires, with quorum and notice rules. The agenda, timing and follow-up are set by the administration.", source: "Ministry of Panchayati Raj", year: "2024" },
-            { stat: "§17", detail: "MGNREGA requires the gram sabha to conduct social audits of every work in its jurisdiction, with records read aloud in public.", source: "Mahatma Gandhi National Rural Employment Guarantee Act", year: "2005" },
-            { stat: "2006", detail: "EIA public hearings give affected people a recorded chance to object before a project is cleared, on a notice period and format the regulator sets.", source: "Environment Impact Assessment Notification", year: "2006" }
+            { stat: "2.55 lakh+", detail: "village panchayats each have a gram sabha, the body of all registered voters in the village. Article 243A says a gram sabha exercises the powers and functions that the state legislature provides by law, so what it can do differs from state to state.", source: "Reserve Bank of India, Finances of Panchayati Raj Institutions (data for 2020-21 to 2022-23); Constitution of India, Article 243A", year: "2022-23" },
+            { stat: "§17", detail: "Section 17 of the Mahatma Gandhi National Rural Employment Guarantee Act, 2005 said that the gram sabha \"shall conduct regular social audits of all the projects under the Scheme taken up within the Gram Panchayat\". A new law, the Viksit Bharat–Guarantee for Rozgar and Aajeevika Mission (Gramin) Act, 2025, came into force in rural areas on 1 July 2026. This evidence describes the 2005 Act.", source: "Mahatma Gandhi National Rural Employment Guarantee Act, 2005; Press Information Bureau, 31 July 2026", year: "2005" },
+            { stat: "30 days", detail: "is the minimum notice for a public hearing under the EIA Notification as issued in 2006. Projects in Category A and Category B1 must hold public consultation, which includes a hearing near the site, except for listed activities such as modernising irrigation projects. If a hearing cannot be held in a way that lets local people speak freely, the authority can decide that the consultation need not include one.", source: "Ministry of Environment and Forests, EIA Notification, S.O. 1533(E)", year: "2006" }
           ],
-          complication: "Invited spaces are where most participatory practice happens, and the invitation is also the limit. Gaventa's point is that entering one can legitimise a decision without changing it, which is why the cube asks people to look at the other two spaces before judging how much a seat is worth."
+          complication: "Most organised participation happens in invited spaces, and the invitation sets its limits. Taking a seat can give a decision legitimacy without changing it, which is why the cube asks you to look at the other two spaces before deciding what a seat is worth."
         },
         { id: "claimed", name: "Claimed", color: "#a78bfa",
-          gaventa: "Spaces claimed by less powerful actors from or against the powerholders, or created more autonomously by them: social movements, community associations, places people come together on their own terms.",
+          definition: "Less powerful people claim these spaces from or against the powerholders, or create them on their own. They range from social movements and community associations to ordinary places where people gather to discuss, debate and resist outside institutional policy arenas.",
+          cite: AFTER_GAVENTA,
           evidence: [
-            { stat: "1990s", detail: "The Mazdoor Kisan Shakti Sangathan's public hearings in rural Rajasthan, where wage records were read aloud against what people were actually paid, ran with no statutory basis at all. The Right to Information Act followed a decade later.", source: "MKSS; Right to Information Act 2005", year: "1990s" },
-            { stat: "1985", detail: "The Narmada Bachao Andolan organised against the Sardar Sarovar dam outside any official process, and forced the first World Bank independent review of a project it was funding.", source: "Morse Commission, World Bank", year: "1992" },
-            { stat: "2012", detail: "Protests after the Delhi gang rape produced the Justice Verma Committee, which took 80,000 public submissions in 29 days, and then the Criminal Law (Amendment) Act.", source: "Justice J.S. Verma Committee Report; Criminal Law (Amendment) Act", year: "2013" }
+            { stat: "1990s", detail: "The Mazdoor Kisan Shakti Sangathan began holding public hearings in rural Rajasthan in the mid-1990s, where payment records for local works were read out and compared with what villagers had received. The campaign for a right to see those records led to the Rajasthan Right to Information Act, 2000 and the national Right to Information Act, 2005.", source: "Mazdoor Kisan Shakti Sangathan; Rajasthan Right to Information Act, 2000; Right to Information Act, 2005", year: "1990s to 2005" },
+            { stat: "1991", detail: "The Narmada Bachao Andolan campaigned against the Sardar Sarovar dam from the late 1980s. In 1991 the World Bank's president, Barber Conable, asked for an independent review of the project. The Morse Commission reported in June 1992, and the Bank described it as the first independent review of a project it had funded.", source: "World Bank press release, 18 June 1992", year: "1992" },
+            { stat: "70,000+", detail: "responses reached the Justice Verma Committee, which was set up on 23 December 2012, after the Delhi gang rape of 16 December, and had asked the public for suggestions by 5 January 2013. Its report came on 23 January 2013. Parliament then passed the Criminal Law (Amendment) Act, 2013, which did not adopt every recommendation.", source: "Report of the Committee on Amendments to Criminal Law (Justice J.S. Verma), January 2013", year: "2013" }
           ],
-          complication: "Claimed spaces are the ones that most often change the rules, and they are also the least durable. Each of these three was absorbed into official process afterwards, which is a victory and a domestication at the same time."
+          complication: "Claimed spaces often change the rules, and the rules then bring them inside official process. Each of the three examples above ended up there, as a statute, a Bank review or a committee report. That is a gain, and it means the space is no longer on the claimants' own terms."
         }
       ]
     },
@@ -53,28 +64,31 @@ window.CUBE = (function () {
       question: "At which level is the decision actually taken?",
       cats: [
         { id: "local", name: "Local", color: "#134e4a",
-          gaventa: "The level closest to where people live, where participation is most often invited and where the decisions available may already have been bounded from above.",
+          definition: "The level closest to where people live, such as the village, the ward or the town.",
+          cite: LEVELS_NOTE,
           evidence: [
-            { stat: "29", detail: "subjects are listed in the Eleventh Schedule for devolution to panchayats. How many a state actually devolves, with funds and staff attached, is the state's choice.", source: "Constitution (73rd Amendment) Act", year: "1992" },
-            { stat: "Untied", detail: "Finance Commission grants reach panchayats directly, but most local budgets remain tied to centrally designed schemes, which sets the menu before the gram sabha meets.", source: "Fifteenth Finance Commission", year: "2021-26" }
+            { stat: "29", detail: "subjects are listed in the Eleventh Schedule. Under Article 243G a state legislature may by law give panchayats the powers they need to prepare plans and carry out schemes for economic development and social justice, including on those subjects. The Constitution leaves it to each state legislature whether to do so.", source: "Constitution (73rd Amendment) Act, 1992; Constitution of India, Article 243G", year: "1992" },
+            { stat: "95%+", detail: "of panchayat revenue receipts were grants from the Centre and the states in each of the three years the Reserve Bank of India reviewed, 2020-21 to 2022-23. The Fifteenth Finance Commission's grants to rural local bodies come in two parts. The untied part can be spent on local needs under the Eleventh Schedule subjects, except salaries. The tied part can be spent only on sanitation and drinking water.", source: "Reserve Bank of India, Finances of Panchayati Raj Institutions; Ministry of Panchayati Raj, Press Information Bureau, 25 March 2026", year: "2020-23" }
           ],
-          complication: "Local is where participation is easiest to organise and where the least tends to be at stake. A gram sabha with real authority over a scheme it did not design, cannot alter and does not fund is participating at one level in a decision taken at another."
+          complication: "Participation is easiest to organise at the local level. Whether it reaches anything that matters depends on what higher levels have already fixed, and the two items above show two such limits: powers that depend on state law, and money that arrives with conditions attached."
         },
         { id: "national", name: "National", color: "#0f766e",
-          gaventa: "The level at which most binding law and budget is set, and where formal representation substitutes for direct participation.",
+          definition: "The level at which most binding law and budget is set, and where elected representatives take the place of direct participation.",
+          cite: LEVELS_NOTE,
           evidence: [
-            { stat: "16%", detail: "of Bills introduced in the 17th Lok Sabha were referred to a parliamentary committee, against 71% in the 15th. Pre-legislative consultation policy exists but is not binding.", source: "PRS Legislative Research", year: "2019-24" },
-            { stat: "4.4% / 13.6%", detail: "of the 18th Lok Sabha are Muslim and women respectively, against 14.2% and roughly half of the population.", source: "Election Commission of India; Census 2011", year: "2024" }
+            { stat: "16%", detail: "of Bills in the 17th Lok Sabha (2019 to 2024) were referred to committees for detailed scrutiny, against 28 per cent in the 16th, 71 per cent in the 15th and 60 per cent in the 14th. A Pre-Legislative Consultation Policy issued by the Ministry of Law and Justice in 2014 asks ministries to put draft Bills in the public domain for comment. It is an executive policy and not a law.", source: "PRS Legislative Research, Functioning of the 17th Lok Sabha; Ministry of Law and Justice", year: "2019-24" },
+            { stat: "74 of 543", detail: "members of the 18th Lok Sabha elected in 2024 are women, which is 13.6 per cent of the seats. Women were 48.5 per cent of the population at the 2011 Census.", source: "PRS Legislative Research, Profile of the 18th Lok Sabha; Census of India", year: "2024" }
           ],
-          complication: "The cube's national level is where the wheel's axes bite hardest. Who sits in the room is itself patterned by caste, religion and gender, so a national space can be formally open and demographically closed at once."
+          complication: "A national space can be formally open and still unrepresentative. The figures here show it for gender, and a count of who holds national office can be run along any other axis for which a reliable count exists."
         },
         { id: "global", name: "Global", color: "#14b8a6",
-          gaventa: "The level of treaties, lenders and standard-setters, where decisions with domestic force are taken in rooms no domestic citizen can enter.",
+          definition: "The level of treaties, lenders and standard-setters, where decisions that bind a country are taken in rooms its citizens cannot enter.",
+          cite: LEVELS_NOTE,
           evidence: [
-            { stat: "WTO", detail: "India's public stockholding for food security, which underpins the PDS, has been contested at the WTO since 2013 and runs under an interim peace clause rather than a settled rule.", source: "WTO Bali Ministerial Decision", year: "2013" },
-            { stat: "TRIPS", detail: "India's patent law, including the Section 3(d) bar on evergreening upheld in the Novartis case, is written inside the space TRIPS leaves.", source: "Novartis AG v. Union of India", year: "2013" }
+            { stat: "WTO", detail: "India has contested the rules on public stockholding for food security at the WTO since 2013. Through these programmes the government buys grain at administered prices for the public distribution system. The Bali Ministerial Decision of 2013 and a General Council decision of 27 November 2014 set up an interim \"peace clause\" that shields such programmes from disputes while members look for a permanent solution.", source: "WTO, Bali Ministerial Decision (WT/MIN(13)/38) and General Council Decision (WT/L/939)", year: "2013, 2014" },
+            { stat: "3(d)", detail: "The Patents (Amendment) Act, 2005 brought India's patent law into line with the TRIPS Agreement by allowing product patents, and it also added section 3(d), which refuses a patent for a new form of a known substance unless it enhances the known efficacy of that substance. On 1 April 2013 the Supreme Court applied it in Novartis AG v. Union of India to refuse a patent on the beta crystalline form of imatinib mesylate (Glivec).", source: "Patents (Amendment) Act, 2005; Novartis AG v. Union of India", year: "2005, 2013" }
           ],
-          complication: "Global decisions are the hardest to hold anyone accountable for, and also the ones where Indian negotiators have sometimes had more room than the framing suggests. Section 3(d) exists because that room was used."
+          complication: "Global decisions are the hardest to hold anyone accountable for. Section 3(d) is an example of a country writing its own rule inside a global agreement."
         }
       ]
     },
@@ -83,30 +97,33 @@ window.CUBE = (function () {
       question: "How is the power being exercised, and can you see it?",
       cats: [
         { id: "visible", name: "Visible", color: "#78350f",
-          gaventa: "Observable decision-making: the formal rules, structures, authorities and procedures. Who makes the law, and who sits where.",
+          definition: "Observable decision-making: the formal rules, structures, authorities and procedures. Who makes the law, and who sits where.",
+          cite: AFTER_GAVENTA,
           evidence: [
-            { stat: "Statute", detail: "Reservation in legislatures, education and public employment for SCs, STs and OBCs is written into the Constitution and is contested in the open, in Parliament and in court.", source: "Constitution of India, Arts. 15, 16, 330, 332", year: "1950 onward" },
-            { stat: "Published", detail: "Budgets, Bills, judgments and gazette notifications are all published. Visible power is the layer India documents best, which is why most evidence on this page describes it.", source: "Parliament of India; eGazette", year: "current" }
+            { stat: "Statute", detail: "Seats for Scheduled Castes and Scheduled Tribes in Parliament and the state legislatures are reserved by Articles 330 and 332, and in panchayats and municipalities by Articles 243D and 243T. For Other Backward Classes the Constitution lets the state make special provision in education (Article 15(4) and 15(5)) and in public employment (Article 16(4)), and lets a state reserve seats and offices in local bodies (Articles 243D(6) and 243T(6)). There is no reservation for Other Backward Classes in Parliament or the state legislatures. These provisions are argued over in Parliament and in court.", source: "Constitution of India, Articles 15, 16, 243D, 243T, 330 and 332", year: "1950 onward" },
+            { stat: "Published", detail: "Budgets, Bills, court judgments and gazette notifications are published, so anyone can read the decisions they record and argue over them.", source: "Parliament of India; Gazette of India", year: "current" }
           ],
-          complication: "Visible power is the easiest to study and the easiest to overestimate. A law can be entirely public and still be irrelevant to what happens, which is what the other two forms are for."
+          complication: "Visible power is the easiest to study. A law can be public and still change little of what happens, which is why the cube adds hidden and invisible power."
         },
         { id: "hidden", name: "Hidden", color: "#b45309",
-          gaventa: "Power exercised by setting the agenda: keeping certain issues and certain people away from the table, so that the decision never comes up for a decision.",
+          definition: "Power exercised by setting the agenda: certain powerful people and institutions control who reaches the decision-making table and what gets on the agenda.",
+          cite: AFTER_GAVENTA,
           evidence: [
-            { stat: "1931", detail: "No Indian census has enumerated caste beyond SC and ST since 1931. Without a count there is no denominator, and a claim for proportional share cannot be argued in the terms policy uses.", source: "Census of India", year: "1931" },
-            { stat: "Para 3", detail: "The 1950 Presidential Order bars Dalit Christians and Dalit Muslims from SC status. The Ranganath Misra Commission recommended removing the religious bar in 2007 and it has not been removed.", source: "Constitution (Scheduled Castes) Order; Ranganath Misra Commission", year: "1950, 2007" },
-            { stat: "22.3%", detail: "of registered deaths in India carry a medically certified cause. What kills four in five Indians does not enter the record that health budgets are argued from.", source: "Medical Certification of Cause of Death, ORGI", year: "2022" }
+            { stat: "1931", detail: "The last census to publish a count of every caste was in 1931. Census 2027 will enumerate caste in its second phase, population enumeration, in February 2027, with 1 March 2027 as the reference date. Until those results are published, claims for a proportional share have had no census count of every caste to rest on.", source: "Census of India; Ministry of Home Affairs, Press Information Bureau, 30 March 2026", year: "1931, 2027" },
+            { stat: "Para 3", detail: "Paragraph 3 of the Constitution (Scheduled Castes) Order, 1950 says that no person who professes a religion different from the Hindu, the Sikh or the Buddhist religion is deemed a member of a Scheduled Caste. Dalit Christians and Dalit Muslims are therefore outside the Scheduled Castes. The 1950 text named only the Hindu religion, Sikhs were added in 1956 and Buddhists in 1990. The National Commission for Religious and Linguistic Minorities, chaired by Justice Ranganath Misra, recommended in May 2007 that the paragraph be deleted. It remains in the Order.", source: "Constitution (Scheduled Castes) Order, 1950; National Commission for Religious and Linguistic Minorities", year: "1950, 2007" },
+            { stat: "23.1%", detail: "of the deaths registered in India in 2024 had a medically certified cause (20,66,117 of 89,38,301). The other 76.9 per cent carry no medically certified cause of death.", source: "Registrar General of India, Medical Certification of Cause of Death", year: "2024" }
           ],
-          complication: "Hidden power is inferred rather than observed, which makes it the easiest claim to overreach on. The disciplined version names the specific issue kept off the table, and who benefits from its absence, rather than asserting a general conspiracy."
+          complication: "Hidden power is inferred and cannot be observed directly, so it is the easiest claim to overreach on. The disciplined version names the specific issue kept off the table and who benefits from its absence, and avoids asserting a general conspiracy."
         },
         { id: "invisible", name: "Invisible", color: "#f59e0b",
-          gaventa: "Power that shapes meaning and what people accept as normal, so that an arrangement is not experienced as a decision at all and grievance does not form.",
+          definition: "Power that shapes meaning and what people accept as normal, so that an arrangement is not experienced as a decision at all and grievance does not form.",
+          cite: AFTER_GAVENTA,
           evidence: [
-            { stat: "~27%", detail: "of surveyed households said someone in the household practises untouchability. It persists as ordinary domestic conduct rather than as a policy anyone defends.", source: "India Human Development Survey-II", year: "2011-12" },
-            { stat: "~95%", detail: "of Indian marriages are within caste. Endogamy at that rate is maintained by preference and family expectation, not by any rule that could be repealed.", source: "India Human Development Survey-II", year: "2011-12" },
-            { stat: "299 vs 97", detail: "minutes a day of unpaid domestic work by women and men. The allocation is treated as a fact of life rather than as a distribution anyone chose, and no national account records it.", source: "Time Use Survey, NSO", year: "2019" }
+            { stat: "27%", detail: "of surveyed households said someone in the household practises untouchability in some form: 30 per cent in rural and 20 per cent in urban India. This is what respondents said about themselves.", source: "NCAER, India Human Development Survey-II (press release of 29 November 2014)", year: "2011-12" },
+            { stat: "94.6%", detail: "of married women aged 15 to 49 reported marrying within their caste, and 5.4 per cent reported an inter-caste marriage.", source: "NCAER, India Human Development Survey-II", year: "2011-12" },
+            { stat: "299 vs 97", detail: "minutes a day were spent on unpaid domestic services for household members by the women and the men who did any of this work on the reference day. 81.2 per cent of women and 26.1 per cent of men aged 6 and over did some. Unpaid household services lie outside the production boundary of the UN System of National Accounts, so GDP does not count them.", source: "National Statistics Office, Time Use in India, 2019", year: "2019" }
           ],
-          complication: "Invisible power is the level at which the cube is most useful and least testable. These three figures show a pattern consistent with internalised norms, and they cannot by themselves distinguish a norm someone accepts from a constraint they cannot escape."
+          complication: "Invisible power is the hardest form to test. These figures show a pattern that fits internalised norms. A survey cannot tell a norm someone accepts from a constraint they cannot escape."
         }
       ]
     }
@@ -114,22 +131,22 @@ window.CUBE = (function () {
 
   /* Documented Indian cases, plotted on all three dimensions at once. */
   var cases = [
-    { name: "MKSS wage hearings, Rajasthan", space: "claimed", level: "local", form: "hidden",
-      note: "Muster rolls read aloud against what people were actually paid. A claimed local space used to drag hidden power into view; the practice became statutory as the RTI Act a decade later.", year: "1990s" },
+    { name: "MKSS public hearings, Rajasthan", space: "claimed", level: "local", form: "hidden",
+      note: "Payment records for local works were read out in public and compared with what villagers had received. A claimed local space brought hidden records into view. The campaign for access to records led to Rajasthan's Right to Information Act of 2000 and the national Act of 2005.", year: "1990s" },
     { name: "Right to Information Act", space: "invited", level: "national", form: "hidden",
-      note: "Turned an activist practice into a national entitlement, and converted a claimed space into an invited one. Its work is against hidden power: it makes the file available.", year: "2005" },
+      note: "Gave every citizen a legal right to request records from public authorities. It acts on hidden power by making the file available on request.", year: "2005" },
     { name: "MGNREGA social audit", space: "invited", level: "local", form: "visible",
-      note: "The state invites the gram sabha to audit the state, on a schedule the state sets. Visible power made contestable in the village where the work happened.", year: "2005" },
-    { name: "Niyamgiri gram sabha referendum", space: "invited", level: "local", form: "visible",
-      note: "The Supreme Court created an invited local space and made its output binding. Twelve assemblies were convened and all twelve refused the mine.", year: "2013" },
+      note: "Section 17 of the 2005 Act put the audit of works in the gram sabha's hands. The law created the space and set its terms, and the records it examines are of work done in the village. A new law, the VB-G RAM G Act, 2025, came into force in rural areas on 1 July 2026.", year: "2005" },
+    { name: "Niyamgiri gram sabhas", space: "invited", level: "local", form: "visible",
+      note: "In April 2013 the Supreme Court directed Odisha to put the community's religious and cultural rights to the affected gram sabhas. Twelve gram sabhas met in July and August 2013 and all twelve rejected the mining. The Environment Ministry declined the project in January 2014.", year: "2013" },
     { name: "Narmada Bachao Andolan", space: "claimed", level: "global", form: "visible",
-      note: "A claimed space that reached the global level, forcing the first independent review of a World Bank-funded project.", year: "1985 onward" },
+      note: "A claimed space that reached the global level. The World Bank's president asked for the first independent review of a project the Bank had funded, the Morse Commission of 1991 to 1992.", year: "Late 1980s onward" },
     { name: "Judicial collegium", space: "closed", level: "national", form: "hidden",
-      note: "Selection of judges by judges, with no application and no published criteria. Parliament's attempt to open it was struck down in 2015.", year: "1993 onward" },
-    { name: "Caste not counted since 1931", space: "closed", level: "national", form: "hidden",
-      note: "An absence rather than an act. Keeping the count off the table keeps the claim it would support out of policy argument.", year: "1931 onward" },
+      note: "Judges recommend judges, with no application process. Parliament's attempt to replace the collegium with a commission was struck down in 2015.", year: "1993 onward" },
+    { name: "Caste count, 1931 to 2027", space: "closed", level: "national", form: "hidden",
+      note: "No census since 1931 has published a count of every caste. Without one, claims for a proportional share have had no census figure to rest on. Census 2027 will enumerate caste.", year: "1931 to 2027" },
     { name: "Untouchability in the household", space: "closed", level: "local", form: "invisible",
-      note: "No decision is taken and no rule is cited. Roughly a quarter of surveyed households reported the practice, sustained as ordinary conduct.", year: "2011-12" }
+      note: "No decision is taken and no rule is cited. In the India Human Development Survey-II, 27 per cent of households said someone in the household practises untouchability.", year: "2011-12" }
   ];
 
   return { dims: dims, cases: cases };

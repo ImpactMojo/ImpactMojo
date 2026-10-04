@@ -100,6 +100,17 @@ def main() -> int:
             problems.append(f'the heading says "{m.group(1)}" ({stated}) '
                             f"but {n_cards} framework cards are listed")
 
+    # The meta description listed eight frameworks while the page said "Ten so far".
+    d = re.search(r'<meta name="description" content="(\w+)\s+development frameworks', src, re.I)
+    if d:
+        said = WORDS.get(d.group(1).lower(), int(d.group(1)) if d.group(1).isdigit() else None)
+        if said != n_cards:
+            problems.append(f'the meta description says "{d.group(1)} development frameworks" '
+                            f"but {n_cards} framework cards are listed")
+    else:
+        problems.append('the meta description no longer opens "<N> development frameworks", '
+                        "so its count cannot be checked")
+
     for href in cards:
         if not (ROOT / href.lstrip("/")).exists():
             problems.append(f"card links to {href}, which does not exist")

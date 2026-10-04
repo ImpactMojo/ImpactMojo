@@ -198,7 +198,7 @@ window.FCube = (function () {
     var c = f.cat, h = [];
     h.push('<div class="panel-axis"><span class="swatch" style="background:' + esc(c.color) + '"></span>' + esc(f.dim.name) + '</div>');
     h.push('<h3>' + esc(c.name) + '</h3>');
-    h.push('<blockquote class="arnstein">' + esc(c.gaventa) + '<cite>Gaventa&rsquo;s category, paraphrased from the 2006 paper</cite></blockquote>');
+    h.push('<blockquote class="arnstein">' + esc(c.definition) + '<cite>' + esc(c.cite) + '</cite></blockquote>');
     h.push('<ul class="ev-list">');
     c.evidence.forEach(function (e) {
       h.push('<li class="ev"><div class="fig">' + esc(e.stat) + '</div><div class="txt">' + esc(e.detail) +
@@ -236,7 +236,7 @@ window.FCube = (function () {
   function renderEmpty() {
     document.getElementById("panel").innerHTML =
       '<div class="panel-empty"><h3>Pick a category</h3>' +
-      '<p>Nine categories across three dimensions. Each opens Gaventa&rsquo;s definition and the Indian evidence for it, with a note on what the evidence does not settle.</p>' +
+      '<p>Nine categories across three dimensions. Each opens a definition and the Indian evidence for it, with a note on what the evidence does not settle.</p>' +
       '<ol><li><b>Spaces</b> ask where the decision gets made and who set the table.</li>' +
       '<li><b>Levels</b> ask whether that is local, national or global.</li>' +
       '<li><b>Forms</b> ask whether the power is visible, agenda-setting, or working on what people accept as normal.</li></ol>' +
