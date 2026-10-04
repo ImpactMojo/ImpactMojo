@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.317.0 — October 4, 2026 (Global Macro Database)
+
+### Added
+
+- **Global Macro Database in the Dataverse.** 46 macroeconomic variables for 239 countries, 1086 to 2025 with projections to 2031, harmonised from 167 sources (Müller, Xu, Lehbib and Chen, NBER Working Paper 33714). Listed as a link-out to globalmacrodata.com under Economic & Financial. Its terms allow free academic, teaching and non-profit use and require written permission for commercial use, and the entry says so. Dataverse count 334 to 335.
+
+### Changed
+
+- **Copy rewrite, batch 1: the Law Guides landing page, the Development Law Docket page, the Fundamentals index and the Power Cube.** The prose is plainer and explains more. Every figure and claim on the Power Cube was checked against its source, and anything that could not be confirmed was cut. The Power Cube's definitions are now labelled as ours, after Gaventa, because they were presented as his wording and are not. Translations of these pages are not yet rewritten and are on the roadmap.
+
+### Fixed
+
+- **Wrong counts, wrong social tags and overstated facts on the four pages (#1126).** The Law Guides card said the docket holds 61 judgments and it holds 109. The Fundamentals meta description listed eight frameworks against ten. The docket page's Open Graph URL and Twitter card belonged to the RTI guide, and the Power Cube carried the Wheel's keywords. On the Power Cube, "four in five" deaths without a certified cause is 76.9 per cent (23.1 per cent were certified in 2024), the Justice Verma Committee reported more than 70,000 responses and not 80,000, Articles 330 and 332 reserve seats for SCs and STs only, and the caste-count claim now says Census 2027 will enumerate caste. `check-judgments.py` and `check-fundamentals-index.py` now fail on the first two, and on the docket's social tags.
+
+### For Learners
+
+- **Global Macro Database** — GDP, inflation, trade and government finance for 239 countries over nearly a thousand years, joined into one consistent series. Free for students, teachers and researchers.
+
 ## v10.316.0 — September 23, 2026 (The timelines)
 
 ### Fixed
