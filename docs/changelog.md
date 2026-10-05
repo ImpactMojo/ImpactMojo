@@ -2,6 +2,20 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.321.0 — October 5, 2026 (Team requests)
+
+### Added
+
+- **A request form in the team dashboard.** Under Settings, "Request from our team" lets an organisation ask for branded certificates (with the course, the evidence of completion and an optional logo), a GST invoice (with the payment reference, amount and billing state) or a named contact and onboarding call. Our team handles each by hand and replies by email.
+
+### Changed
+
+- **The Team Plan page, FAQ and dashboard say what is on request.** Branded certificates, GST invoices and a named contact are described as requests handled by our team, not as automatic features.
+
+### For Learners
+
+- **Teams can ask for branded certificates and GST invoices** from their dashboard.
+
 ## v10.320.0 — October 5, 2026 (Membership naming)
 
 ### Changed

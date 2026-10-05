@@ -43,6 +43,7 @@ const ALLOWED_FORMS = new Set([
   "grievance",
   "data-protection",
   "aor-petition",
+  "team-request",
 ]);
 
 const MAX_FIELDS = 40;

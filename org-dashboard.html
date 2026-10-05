@@ -921,8 +921,8 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#10B981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 </div>
                 <div>
-                    <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.25rem;">Certificates</h4>
-                    <p style="font-size:0.8rem; color:var(--text-secondary);">Completion certificates for your team members, each checkable by its ID. Your organisation's logo is not added to them yet</p>
+                    <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.25rem;">Branded Certificates</h4>
+                    <p style="font-size:0.8rem; color:var(--text-secondary);">Completion certificates for your team members, each checkable by its ID. Ask for your organisation's logo on them from Settings</p>
                 </div>
             </div>
             <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:1.25rem; display:flex; gap:1rem; align-items:flex-start;">
@@ -931,7 +931,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 </div>
                 <div>
                     <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.25rem;">Dedicated Support</h4>
-                    <p style="font-size:0.8rem; color:var(--text-secondary);">Priority support by email for your organization</p>
+                    <p style="font-size:0.8rem; color:var(--text-secondary);">A named contact and onboarding call, on request from Settings</p>
                 </div>
             </div>
             <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:1.25rem; display:flex; gap:1rem; align-items:flex-start;">
@@ -940,7 +940,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 </div>
                 <div>
                     <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.25rem;">Invoice Billing</h4>
-                    <p style="font-size:0.8rem; color:var(--text-secondary);">Purchase orders and bank transfers, arranged by email with our team</p>
+                    <p style="font-size:0.8rem; color:var(--text-secondary);">GST invoices, purchase orders and bank transfers, on request from Settings</p>
                 </div>
             </div>
         </div>
@@ -1473,7 +1473,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; overflow:hidden;">
                 <table class="members-table" style="width:100%;">
                     <thead><tr>
-                        <th>Rank</th><th>Member</th><th>Courses Completed</th><th>Certificates</th><th>Last Active</th>
+                        <th>Rank</th><th>Member</th><th>Courses Completed</th><th>Branded Certificates</th><th>Last Active</th>
                     </tr></thead>
                     <tbody id="leaderboardBody"></tbody>
                 </table>
@@ -1575,9 +1575,48 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             <textarea id="settingsBillingAddress" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; min-height:80px; margin-bottom:1rem; resize:vertical;"></textarea>
             <button class="btn btn-primary" onclick="saveOrgSettings()">Save Settings</button>
         </div>
-        <div class="path-card" style="margin-top:1rem;">
-            <h3 style="margin-bottom:0.5rem;">Invoice Billing</h3>
-            <p style="color:var(--text-secondary); font-size:0.9rem;">Need purchase orders or bank transfer options? Contact us at <a href="mailto:hello@impactmojo.in" style="color:var(--accent-color);">hello@impactmojo.in</a> and we'll work with your procurement team.</p>
+        <div class="path-card" style="margin-top:1rem;" id="teamRequestCard">
+            <h3 style="margin-bottom:0.5rem;">Request from our team</h3>
+            <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:1rem;">Branded certificates, GST invoices and a named contact are handled by our team by hand. Tell us what you need and we will reply by email.</p>
+            <form name="team-request" id="teamRequestForm" method="POST" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field" action="/org-dashboard.html">
+                <input type="hidden" name="form-name" value="team-request">
+                <p style="display:none"><label>Do not fill this out: <input name="bot-field"></label></p>
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trType">What do you need? *</label>
+                <select id="trType" name="request_type" required style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <option value="">Select an option&hellip;</option>
+                    <option value="branded-certificates">Branded certificates for my team</option>
+                    <option value="gst-invoice">A GST invoice</option>
+                    <option value="account-manager">A named contact or onboarding call</option>
+                </select>
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trOrg">Organisation *</label>
+                <input type="text" id="trOrg" name="organization" required style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trName">Your name *</label>
+                <input type="text" id="trName" name="name" required style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trEmail">Your email *</label>
+                <input type="email" id="trEmail" name="email" required style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                <div id="trCert" hidden>
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trCourse">Course *</label>
+                    <input type="text" id="trCourse" name="course" placeholder="Course name or link" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trEvidence">Evidence of completion *</label>
+                    <textarea id="trEvidence" name="completion_evidence" rows="4" placeholder="Member emails, or certificate IDs / verification links, one per line" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem; min-height:90px;"></textarea>
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trLogo">Logo to print on the certificates (optional)</label>
+                    <input type="file" id="trLogo" name="logo" accept="image/png,image/jpeg,image/svg+xml" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                </div>
+                <div id="trGst" hidden>
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trPayRef">Payment reference or UTR *</label>
+                    <input type="text" id="trPayRef" name="payment_reference" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trAmount">Amount paid in rupees *</label>
+                    <input type="text" id="trAmount" name="amount_paid" inputmode="decimal" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trGstin">Your GSTIN (if you want input tax credit)</label>
+                    <input type="text" id="trGstin" name="buyer_gstin" maxlength="15" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trState">State of your billing address *</label>
+                    <input type="text" id="trState" name="billing_state" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                </div>
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trNotes">Anything else we should know</label>
+                <textarea id="trNotes" name="notes" rows="3" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem; min-height:70px;"></textarea>
+                <button type="submit" class="btn btn-primary">Send request</button>
+            </form>
+            <p id="teamRequestDone" hidden style="color:var(--success-color); font-size:0.95rem;">Request received. We will reply to the email you gave.</p>
         </div>
     </div>
 </div>
@@ -2460,6 +2499,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 <script src="js/auth.js"></script>
 <script src="js/auth-gate.js"></script>
 <script src="js/dashboard-tabs.js"></script>
+<script src="/js/form-submit.js?v=36a6a01f"></script>
 <script>
 // Organization Dashboard Logic
 (function() {
@@ -3615,6 +3655,44 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 </script>
 
 <!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
+<script>
+// Team requests: Netlify Forms plus /api/form-submit, the same two-path pattern as partnerships.html.
+(function () {
+    var form = document.getElementById('teamRequestForm');
+    if (!form) return;
+    var type = document.getElementById('trType');
+    var cert = document.getElementById('trCert');
+    var gst = document.getElementById('trGst');
+    function sync() {
+        cert.hidden = type.value !== 'branded-certificates';
+        gst.hidden = type.value !== 'gst-invoice';
+        ['trCourse', 'trEvidence'].forEach(function (id) { document.getElementById(id).required = !cert.hidden; });
+        ['trPayRef', 'trAmount', 'trState'].forEach(function (id) { document.getElementById(id).required = !gst.hidden; });
+    }
+    type.addEventListener('change', sync);
+    sync();
+    // Prefill once the dashboard has loaded the organisation and the signed-in user.
+    var tries = 0;
+    var timer = setInterval(function () {
+        tries++;
+        try {
+            if (typeof orgData !== 'undefined' && orgData && !document.getElementById('trOrg').value) document.getElementById('trOrg').value = orgData.name || '';
+            var u = window.ImpactMojoAuth && ImpactMojoAuth.getUser && ImpactMojoAuth.getUser();
+            if (u && u.email && !document.getElementById('trEmail').value) document.getElementById('trEmail').value = u.email;
+        } catch (e) { /* the fields stay editable */ }
+        if (tries > 20) clearInterval(timer);
+    }, 500);
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        window.imxSubmitBothFromElement(form).then(function () {
+            form.hidden = true;
+            document.getElementById('teamRequestDone').hidden = false;
+        }).catch(function () {
+            alert('Something went wrong. Please try again or email hello@impactmojo.in');
+        });
+    });
+})();
+</script>
 <script src="/js/search.js?v=ed523157" defer></script>
 <script defer src="js/auto-refresh.js"></script>
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>

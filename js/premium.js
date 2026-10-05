@@ -91,8 +91,8 @@
                 'Team dashboard & progress analytics',
                 'Invite members by email',
                 'Custom learning paths',
-                'Priority support by email',
-                'Invoice billing, arranged by email'
+                'A named contact, on request',
+                'Branded certificates and GST invoices, on request'
             ]
         },
         
