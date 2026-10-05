@@ -166,6 +166,8 @@ TERMS = [
     # pages ship. It had drifted to 9, 10, 11 and 13 on four surfaces
     # because nothing was canonical.
     (r"premium\s+tools?", "premium-tools"),
+    # Renamed: the tools are Pro Studio now, and the count is the same 13.
+    (r"pro\s+studio\s+tools?", "premium-tools"),
     (r"flagship\s+courses?", "flagship-courses"),
     (r"foundational\s+courses?", "foundational-courses"),
     # The site rarely writes the full phrase. "19 flagship + 51 foundational",
@@ -254,6 +256,7 @@ LABEL_KEYS = [
     # patterns already cover.
     ("dataverse", "dataverse"),
     ("premium tools", "premium-tools"),
+    ("pro studio tools", "premium-tools"),
     ("reading companions", "reading-companions"),
     ("book companions", "reading-companions"),
     ("facilitator kits", "facilitator-kits"),

@@ -249,9 +249,9 @@ For full details, see [Certificates and Progress](certificates-and-progress.md).
 
 ---
 
-## What are ImpactMojo's premium tools?
+## What is Pro Studio?
 
-ImpactMojo has 13 premium tools across two tiers:
+ImpactMojo has 13 Pro Studio tools across two tiers:
 
 **Practitioner Tier (₹399/month):**
 
