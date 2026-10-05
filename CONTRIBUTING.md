@@ -43,19 +43,19 @@ Thank you for your interest in contributing to ImpactMojo! Whether you're fixing
 
 Git hooks enforce commit message prefixes automatically. Use a short prefix to categorize your change:
 
-- `Add:` — New feature, course, or tool
-- `Fix:` — Bug fix or broken link
-- `Update:` — Improvement to existing content or code
-- `Refactor:` — Code restructuring (no behaviour change)
-- `Translate:` — Translation work
-- `Docs:` — Documentation changes
-- `Test:` — Adding or updating tests
-- `CI:` — CI/CD pipeline changes
-- `Chore:` — Maintenance (deps, configs, tooling)
+- `Add:`, New feature, course, or tool
+- `Fix:`, Bug fix or broken link
+- `Update:`, Improvement to existing content or code
+- `Refactor:`, Code restructuring (no behaviour change)
+- `Translate:`, Translation work
+- `Docs:`, Documentation changes
+- `Test:`, Adding or updating tests
+- `CI:`, CI/CD pipeline changes
+- `Chore:`, Maintenance (deps, configs, tooling)
 
 ## Pull Request Guidelines
 
-- Keep PRs focused — one feature or fix per PR
+- Keep PRs focused: one feature or fix per PR
 - Include a brief description of what changed and why
 - Test on both desktop and mobile views
 - If your change affects premium features, note that in the PR description
@@ -74,8 +74,8 @@ This is a vanilla HTML/CSS/JS project. No build step required.
 
 After `npm install`, git hooks are automatically active:
 
-- **pre-commit** — Blocks `.env`/credentials, catches `debugger` statements, detects merge conflict markers, warns on large files
-- **commit-msg** — Rejects commits without a valid prefix (see above)
+- **pre-commit**: Blocks `.env`/credentials, catches `debugger` statements, detects merge conflict markers, warns on large files
+- **commit-msg**: Rejects commits without a valid prefix (see above)
 
 To bypass hooks in emergencies: `git commit --no-verify` (use sparingly)
 

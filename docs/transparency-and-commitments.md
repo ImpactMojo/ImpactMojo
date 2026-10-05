@@ -1,6 +1,6 @@
 # Transparency & Commitments
 
-What ImpactMojo commits to — and how we hold ourselves accountable.
+What ImpactMojo commits to, and how we hold ourselves accountable.
 
 ---
 
@@ -8,7 +8,7 @@ What ImpactMojo commits to — and how we hold ourselves accountable.
 
 ### 1. Free Content Stays Free
 
-All 21 flagship courses, 59 foundational courses, 135 games, 35 labs, 90 handouts, ImpactLex, Dev Case Studies, DevDiscourses, and the Dataverse are free. This is not a promotional offer or a trial period — it's the foundation of the platform.
+All 21 flagship courses, 59 foundational courses, 135 games, 35 labs, 90 handouts, ImpactLex, Dev Case Studies, DevDiscourses, and the Dataverse are free. This is not a promotional offer or a trial period: it's the foundation of the platform.
 
 **What this means in practice:**
 - We will never put existing free content behind a paywall
@@ -18,7 +18,7 @@ All 21 flagship courses, 59 foundational courses, 135 games, 35 labs, 90 handout
 ### 2. Honest About What We Are
 
 ImpactMojo is a small ed-tech platform, not a university or accredited institution. We're transparent about this:
-- Our certificates certify course completion only — they carry no institutional or regulatory weight
+- Our certificates certify course completion only: they carry no institutional or regulatory weight
 - Our tools are designed for practitioners, not enterprise-grade software
 - Our content reflects best practices but may not apply to every local context
 - We have a small team, which means fast iteration but also limitations in support capacity
@@ -36,7 +36,7 @@ We take factual accuracy seriously because development professionals make real d
 - We don't fabricate user numbers, testimonials, or impact metrics
 - We don't claim institutional affiliations or accreditations we don't have
 - We don't promise outcomes (jobs, skills, career advancement) that we can't guarantee
-- Our pricing is straightforward — no hidden fees, no surprise charges
+- Our pricing is straightforward: no hidden fees, no surprise charges
 
 ---
 

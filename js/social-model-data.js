@@ -79,7 +79,7 @@ window.SOCIAL_MODEL = (function () {
         { kind: "communication", weight: 36, text: "Signage and counter numbers offered only visually, and announcements only aurally." }
       ],
       reading: "The clearest case on the page, because the barrier is physically visible and nobody disputes what it is. Fewer than half of persons with disability entered a public building at all in a year, and two-thirds of those who did found it hard.",
-      complication: "The figure counts access, not need. Someone who did not enter a building may not have needed to, or may have stopped needing to after enough attempts — and the survey cannot separate those two.",
+      complication: "The figure counts access, not need. Someone who did not enter a building may not have needed to, or may have stopped needing to after enough attempts, and the survey cannot separate those two.",
       evidence: [
         { stat: "43.6%", detail: "of persons with disability accessed a public building during the last 365 days. Men 48.2%, women 37.3%.", source: "MoSPI, NSS 76th Round, Persons with Disabilities in India, All India", year: "2018" },
         { stat: "63.9%", detail: "of those who did access a public building faced difficulties doing so.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
@@ -103,7 +103,7 @@ window.SOCIAL_MODEL = (function () {
       complication: "58.1% used public transport, which is not the same as 58.1% being able to. The people for whom it is impossible appear in this statistic as people who did not travel.",
       evidence: [
         { stat: "58.1%", detail: "of persons with disability used public transport during the last 365 days. Men 62.6%, women 52.1%.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
-        { stat: "67.1%", detail: "of those who used public transport faced difficulties. The rate barely differs by sex — 66.7% for men, 67.8% for women — which suggests the barrier is in the vehicle rather than in who is boarding it.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
+        { stat: "67.1%", detail: "of those who used public transport faced difficulties. The rate barely differs by sex (66.7% for men, 67.8% for women) which suggests the barrier is in the vehicle rather than in who is boarding it.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
         { stat: "2015", detail: "The Accessible India Campaign set targets for accessible government buildings, transport and information. It is the clearest statement of the environmental barrier as a schedulable public works problem rather than a private misfortune.", source: "Department of Empowerment of Persons with Disabilities, Accessible India Campaign", year: "2015" }
       ]
     },
@@ -119,12 +119,12 @@ window.SOCIAL_MODEL = (function () {
         { kind: "communication", weight: 62, text: "Material offered in one format only. A textbook that exists in print and not in braille, audio or sign is not a difficult text; it is an absent one." },
         { kind: "institutional", weight: 58, text: "Placement in a separate stream, examination rules that do not permit a scribe or extra time without a certificate, and a teacher with no training in the accommodation the law already requires." }
       ],
-      reading: "The compounding case. Rural women with disability complete secondary education at 8.2%, against 31.0% for urban persons with disability overall — a fourfold difference produced by stacking the same barriers on top of the ones the Wheel of Power describes.",
+      reading: "The compounding case. Rural women with disability complete secondary education at 8.2%, against 31.0% for urban persons with disability overall: a fourfold difference produced by stacking the same barriers on top of the ones the Wheel of Power describes.",
       complication: "The framework can say the barriers are stacked; it cannot say in what order they bind. Whether the family's expectation or the school's inaccessibility comes first is exactly the question a programme needs answered, and the survey data does not answer it.",
       evidence: [
         { stat: "14.9%", detail: "of rural persons with disability aged 15 and above have completed secondary education or above; 31.0% in urban areas.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
         { stat: "8.2%", detail: "for rural women with disability, against 19.8% for rural men. The all-India figures are 12.6% for women and 24.3% for men.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
-        { stat: "52.2%", detail: "literacy among persons with disability aged 7 and above — 61.6% for men and 39.6% for women, and 33.3% for rural women.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
+        { stat: "52.2%", detail: "literacy among persons with disability aged 7 and above: 61.6% for men and 39.6% for women, and 33.3% for rural women.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
         { stat: "s.16", detail: "The RPwD Act requires educational institutions funded or recognised by government to provide inclusive education, make buildings and materials accessible, and provide reasonable accommodation to individual requirements.", source: "Rights of Persons with Disabilities Act 2016", year: "2016" }
       ]
     },
@@ -136,7 +136,7 @@ window.SOCIAL_MODEL = (function () {
                  second: "5%", secondLabel: "of seats in government-funded higher education" },
       barriers: [
         { kind: "attitudinal", weight: 80, text: "The employer's estimate of what the applicant can do, formed before any task is described, and rarely tested." },
-        { kind: "institutional", weight: 68, text: "Reservation that applies to government establishments, in an economy where the overwhelming majority of work is informal — so the strongest provision reaches the smallest share of jobs." },
+        { kind: "institutional", weight: 68, text: "Reservation that applies to government establishments, in an economy where the overwhelming majority of work is informal, so the strongest provision reaches the smallest share of jobs." },
         { kind: "environmental", weight: 56, text: "The workplace and the journey to it, which decide whether an offer is one a person can accept." },
         { kind: "communication", weight: 48, text: "Recruitment conducted through inaccessible portals and tests, where the assessment measures access to the format rather than capacity for the work." }
       ],
@@ -145,7 +145,7 @@ window.SOCIAL_MODEL = (function () {
       evidence: [
         { stat: "4%", detail: "of the total vacancies in the cadre strength of every government establishment are reserved for persons with benchmark disabilities, with one per cent each for four specified categories.", source: "Rights of Persons with Disabilities Act 2016, s.34", year: "2016" },
         { stat: "5%", detail: "of seats in government and government-aided higher education institutions are reserved for persons with benchmark disabilities.", source: "Rights of Persons with Disabilities Act 2016, s.32", year: "2016" },
-        { stat: "2021", detail: "In Vikash Kumar v UPSC the Supreme Court held that reasonable accommodation is not confined to persons with benchmark disabilities, and that denying a scribe to a candidate with a disability below the threshold was unlawful — narrowing the gap the threshold creates.", source: "Vikash Kumar v Union Public Service Commission, Supreme Court of India", year: "2021" },
+        { stat: "2021", detail: "In Vikash Kumar v UPSC the Supreme Court held that reasonable accommodation is not confined to persons with benchmark disabilities, and that denying a scribe to a candidate with a disability below the threshold was unlawful: narrowing the gap the threshold creates.", source: "Vikash Kumar v Union Public Service Commission, Supreme Court of India", year: "2021" },
         { stat: "21", detail: "conditions are specified in the Schedule to the RPwD Act, up from seven under the 1995 Act. The list is the mechanism by which the state decides which impairments exist for legal purposes.", source: "Rights of Persons with Disabilities Act 2016, Schedule", year: "2016" }
       ]
     },
@@ -161,10 +161,10 @@ window.SOCIAL_MODEL = (function () {
         { kind: "communication", weight: 48, text: "Questions asked in terms of conditions rather than functioning, so a person who cannot climb the steps to the office does not recognise themselves in the question." },
         { kind: "environmental", weight: 20, text: "Enumeration that does not reach the households least able to travel to it." }
       ],
-      reading: "The barrier that produces every other figure on this page. India records disability at 2.2% against a global estimate nearer 16%, and the gap is not primarily about who exists — it is about what the question asks.",
+      reading: "The barrier that produces every other figure on this page. India records disability at 2.2% against a global estimate nearer 16%, and the gap is not primarily about who exists: it is about what the question asks.",
       complication: "The two figures are not measuring the same thing, and it would be dishonest to present the gap as pure undercounting. The global estimate uses a functioning-based definition that a condition-based count was never going to reproduce. That is the point rather than a caveat: which definition is used decides the size of the population, and therefore the size of the obligation.",
       evidence: [
-        { stat: "2.2%", detail: "of the population is recorded as having a disability — rural 2.3%, urban 2.0%.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
+        { stat: "2.2%", detail: "of the population is recorded as having a disability: rural 2.3%, urban 2.0%.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
         { stat: "2.4% vs 1.9%", detail: "prevalence among men against women. A lower recorded rate among women in a population where women live longer is difficult to explain by biology, and easier to explain by who gets reported.", source: "MoSPI, NSS 76th Round, All India", year: "2018" },
         { stat: "40%", detail: "“Benchmark disability” means not less than forty per cent of a specified disability where it has not been defined in measurable terms. Most entitlements attach to this threshold rather than to disability as such.", source: "Rights of Persons with Disabilities Act 2016, s.2(r)", year: "2016" }
       ]
@@ -176,17 +176,17 @@ window.SOCIAL_MODEL = (function () {
       outcome: { stat: "UDID", label: "a single national card replacing state-issued certificates",
                  second: "s.58", secondLabel: "the statutory certification process it implements" },
       barriers: [
-        { kind: "institutional", weight: 84, text: "Assessment by a medical board that sits in a district hospital on particular days, with an application, a referral and a review — a process whose cost falls hardest on the people least able to travel to it." },
+        { kind: "institutional", weight: 84, text: "Assessment by a medical board that sits in a district hospital on particular days, with an application, a referral and a review: a process whose cost falls hardest on the people least able to travel to it." },
         { kind: "environmental", weight: 58, text: "The journey to the assessment, which is the same journey the certificate is supposed to make easier." },
         { kind: "communication", weight: 44, text: "An online application system that is itself the format barrier this page describes elsewhere." },
         { kind: "attitudinal", weight: 34, text: "The framing of the certificate as a concession granted rather than a right recognised, which shapes how the counter treats the applicant." }
       ],
-      reading: "Included because it is where the social model earns its keep in Indian practice. Nearly every entitlement on this page — reservation, concession, pension, scholarship, scribe — runs through a document, and the process of getting the document is itself disabling.",
+      reading: "Included because it is where the social model earns its keep in Indian practice. Nearly every entitlement on this page (reservation, concession, pension, scholarship, scribe) runs through a document, and the process of getting the document is itself disabling.",
       complication: "A universal identity card is a real improvement on a dozen state formats, and the criticism here is not of the UDID. It is that any certification process converts a right into an administrative achievement, and that the people furthest from the office are the people the right was written for.",
       evidence: [
         { stat: "s.58", detail: "sets out the procedure for certification: application to a notified authority, assessment, and issue of a certificate of disability valid across India.", source: "Rights of Persons with Disabilities Act 2016", year: "2016" },
         { stat: "s.57", detail: "requires the appropriate government to designate certifying authorities and notify them, which is the step that decides how far a person must travel.", source: "Rights of Persons with Disabilities Act 2016", year: "2016" },
-        { stat: "2021", detail: "Vikash Kumar established that reasonable accommodation is owed independently of certification thresholds — the strongest Indian statement that a right should not wait on a document.", source: "Vikash Kumar v UPSC, Supreme Court of India", year: "2021" }
+        { stat: "2021", detail: "Vikash Kumar established that reasonable accommodation is owed independently of certification thresholds: the strongest Indian statement that a right should not wait on a document.", source: "Vikash Kumar v UPSC, Supreme Court of India", year: "2021" }
       ]
     }
   ];

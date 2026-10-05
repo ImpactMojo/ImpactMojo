@@ -1,16 +1,16 @@
 # Architecture
 
-> **Who is this page for?** This page is primarily for developers and technical contributors. If you're an educator or practitioner, the key takeaway is in the "What This Means for Users" section below — you can skip the technical details.
+> **Who is this page for?** This page is primarily for developers and technical contributors. If you're an educator or practitioner, the key takeaway is in the "What This Means for Users" section below: you can skip the technical details.
 
 ## What This Means for Users
 
 ImpactMojo is designed for practitioners in South Asia, many of whom are on slow internet connections or older devices. Here's what our technical choices mean for your experience:
 
-- **Fast loading** — The site is built with simple, lightweight code (no heavy frameworks). Pages load quickly even on 2G/3G connections.
-- **Works offline** — Once you've visited a page, it's saved on your device. You can access flagship courses without an internet connection.
-- **No installation needed** — Everything runs in your web browser. No apps to download, no software to install.
-- **Your data is secure** — Login and account data are handled by Supabase (a trusted database service). Premium tools use time-limited security tokens so your access can't be stolen.
-- **Works on any device** — Phone, tablet, laptop, desktop — old or new. We deliberately avoid technologies that require modern hardware.
+- **Fast loading**. The site is built with simple, lightweight code (no heavy frameworks). Pages load quickly even on 2G/3G connections.
+- **Works offline**: Once you've visited a page, it's saved on your device. You can access flagship courses without an internet connection.
+- **No installation needed**: Everything runs in your web browser. No apps to download, no software to install.
+- **Your data is secure**: Login and account data are handled by Supabase (a trusted database service). Premium tools use time-limited security tokens so your access can't be stolen.
+- **Works on any device** (Phone, tablet, laptop, desktop) old or new. We deliberately avoid technologies that require modern hardware.
 
 ## Technical Overview
 
@@ -72,7 +72,7 @@ ImpactMojo serves practitioners in South Asia, many on low-bandwidth connections
 
 Each premium tool (VaniScribe, Qual Lab, etc.) was built independently. Hosting them as separate sites:
 - Allows independent deployment and iteration
-- Isolates failures — one tool going down doesn't affect others
+- Isolates failures: one tool going down doesn't affect others
 - Makes the JWT auth-gate simple: one edge function per site
 - Allows different teams to own different tools
 
@@ -94,7 +94,7 @@ Each premium tool (VaniScribe, Qual Lab, etc.) was built independently. Hosting 
 ## Environment Variables
 
 ### Main site (impactmojo.in)
-No server-side env vars needed — Supabase credentials are in `js/auth.js` (public anon key only).
+No server-side env vars needed: Supabase credentials are in `js/auth.js` (public anon key only).
 
 ### Supabase Edge Function (mint-resource-token)
 | Variable | Description |

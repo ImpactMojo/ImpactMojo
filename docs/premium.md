@@ -1,6 +1,6 @@
 # Memberships, Workshops & Services
 
-ImpactMojo's core belief is that high-quality development education should be free. All 80 courses, 135 games, 35 labs, 90 handouts, and the entire Dataverse are free to use — no login required, no paywall, no trial period.
+ImpactMojo's core belief is that high-quality development education should be free. All 80 courses, 135 games, 35 labs, 90 handouts, and the entire Dataverse are free to use: no login required, no paywall, no trial period.
 
 Premium memberships and professional services exist to sustain the platform and offer advanced tools for practitioners who need them.
 
@@ -8,26 +8,26 @@ Premium memberships and professional services exist to sustain the platform and 
 
 Everything you need to learn, teach, and facilitate:
 
-- **All courses** — 21 flagship + 59 foundational courses across 6 learning tracks
-- **All games** — 16 economics simulations, perfect for workshops
-- **All labs** — 19 interactive workbenches (Theory of Change builder, research design tools, etc.)
-- **All handouts** — 400+ downloadable reference sheets
-- **ImpactLex** — 390+ development terms dictionary (now hosted on ImpactMojo)
-- **Dev Case Studies** — 200 curated cases from 117 countries
-- **DevDiscourses** — 500+ curated research papers and books
-- **Dataverse** — 335 data tools, APIs, and datasets
-- **Field Notes & Podcast** — The Margin Muse (field observations) and Between the Logframes (podcast)
-- **Multilingual content** — English, Hindi, Tamil, Bengali, Telugu, Marathi
+- **All courses**: 21 flagship + 59 foundational courses across 6 learning tracks
+- **All games**: 16 economics simulations, perfect for workshops
+- **All labs**: 19 interactive workbenches (Theory of Change builder, research design tools, etc.)
+- **All handouts**: 400+ downloadable reference sheets
+- **ImpactLex**: 390+ development terms dictionary (now hosted on ImpactMojo)
+- **Dev Case Studies**: 200 curated cases from 117 countries
+- **DevDiscourses**: 500+ curated research papers and books
+- **Dataverse**: 335 data tools, APIs, and datasets
+- **Field Notes & Podcast**. The Margin Muse (field observations) and Between the Logframes (podcast)
+- **Multilingual content**: English, Hindi, Tamil, Bengali, Telugu, Marathi
 
 ## Membership Tiers
 
-### Explorer — Free Forever
+### Explorer: Free Forever
 
 For students, curious learners, and anyone exploring development topics.
 
 **What you get:** Everything listed above, plus the Telegram community channel. No account required to browse content, but creating a free account unlocks progress tracking, bookmarks, and notes.
 
-### Practitioner — ₹399/month or ₹3,990/year
+### Practitioner: ₹399/month or ₹3,990/year
 
 For NGO staff and early-career professionals who want advanced tools and certificates.
 
@@ -38,28 +38,28 @@ For NGO staff and early-career professionals who want advanced tools and certifi
 
 **For educators:** If you're running workshops, the certificate feature lets your participants receive verifiable credentials. The advanced ToC Lab produces professional-quality outputs your team can use in proposals and reports.
 
-### Professional — ₹999/month or ₹9,990/year
+### Professional: ₹999/month or ₹9,990/year
 
 For researchers, M&E specialists, and consultants who need the full toolkit.
 
 **What you get:** Everything in Practitioner, plus:
-- Qual Insights Lab Pro — advanced qualitative analysis
-- VaniScribe AI — AI-assisted transcription and analysis
-- DevData Practice — data analysis workspace
-- DevEconomics Toolkit — econometrics tools
-- Code Convert Pro — convert between R, Python, Stata, and SPSS
-- Visualization Cookbook — ready-made chart templates
+- Qual Insights Lab Pro: advanced qualitative analysis
+- VaniScribe AI: AI-assisted transcription and analysis
+- DevData Practice: data analysis workspace
+- DevEconomics Toolkit: econometrics tools
+- Code Convert Pro: convert between R, Python, Stata, and SPSS
+- Visualization Cookbook: ready-made chart templates
 - Priority coaching access
 
 **For educators:** The Professional tier is ideal if you're teaching data analysis or research methods. Your students can use real tools to practice skills they're learning in courses.
 
-### Organization — ₹1,499/user/month
+### Organization: ₹1,499/user/month
 
 For NGOs, think tanks, and development agencies training teams.
 
 **What you get:** Everything in Professional, plus:
-- Team dashboard — track progress across your organization
-- Bulk licensing — one admin manages all seats
+- Team dashboard: track progress across your organization
+- Bulk licensing: one admin manages all seats
 - Dedicated support
 - Custom training packages
 
@@ -74,7 +74,7 @@ Intensive cohort-based training for teams, facilitated by Dr. Varna Sri Raman.
 | **Standard** | ₹12,000 per cohort (up to 6 people) | 3 days, 19+ topics, hands-on exercises |
 | **Advanced** | ₹15,000 per cohort | Deeper content, software training, post-workshop mentoring |
 
-**Sliding scale available** for grassroots organizations — no one is turned away for inability to pay.
+**Sliding scale available** for grassroots organizations: no one is turned away for inability to pay.
 
 **Popular workshop topics:** MLE Essentials, Theory of Change, RCTs and Quasi-Experiments, Survey Design, Qualitative Methods, Gender Analysis & WEE, Data Analysis with R/Python, and custom combinations based on your team's needs.
 
@@ -105,15 +105,15 @@ If you find ImpactMojo's free content useful in your work, you can support the p
 
 ## Pricing Philosophy
 
-- **The free tier is genuinely useful** — it's not a teaser or a trial. Every course, game, and lab is fully accessible.
-- **Sliding scale** is always available — for coaching, workshops, and dojos. We believe in equitable access.
-- **Annual discounts** — save 2 months on yearly membership plans.
-- **Cohort pricing** for workshops — a flat rate per team, not per person, so small NGOs aren't penalized.
+- **The free tier is genuinely useful**: it's not a teaser or a trial. Every course, game, and lab is fully accessible.
+- **Sliding scale** is always available: for coaching, workshops, and dojos. We believe in equitable access.
+- **Annual discounts**: save 2 months on yearly membership plans.
+- **Cohort pricing** for workshops: a flat rate per team, not per person, so small NGOs aren't penalized.
 
 
 ## Programs
 
 Two structured programmes sit alongside memberships and services:
 
-- **Build Circles** — four-week AI build cohorts for M&E problems. No lectures: a small cohort, a weekly rhythm, and a Demo Day. A ₹1,000 seat deposit is fully refunded when you demo, and demoing earns a verified certificate. Joining the waitlist is free at [/build-circles.html](https://www.impactmojo.in/build-circles.html).
-- **AI for M&E Certificate Track** (₹2,499) — a self-paced assessed track: a guided path through the AI for Impact flagship, the Counterfactual game, the full Critiquing Evidence practice pack, the AI Agents for Evaluators module, and a capstone reviewed with written feedback. Passing earns a certificate verifiable at [/verify-certificate.html](https://www.impactmojo.in/verify-certificate.html). Enrol at [/ai-for-me-certificate.html](https://www.impactmojo.in/ai-for-me-certificate.html).
+- **Build Circles**: four-week AI build cohorts for M&E problems. No lectures: a small cohort, a weekly rhythm, and a Demo Day. A ₹1,000 seat deposit is fully refunded when you demo, and demoing earns a verified certificate. Joining the waitlist is free at [/build-circles.html](https://www.impactmojo.in/build-circles.html).
+- **AI for M&E Certificate Track** (₹2,499), a self-paced assessed track: a guided path through the AI for Impact flagship, the Counterfactual game, the full Critiquing Evidence practice pack, the AI Agents for Evaluators module, and a capstone reviewed with written feedback. Passing earns a certificate verifiable at [/verify-certificate.html](https://www.impactmojo.in/verify-certificate.html). Enrol at [/ai-for-me-certificate.html](https://www.impactmojo.in/ai-for-me-certificate.html).

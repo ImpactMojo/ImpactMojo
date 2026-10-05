@@ -6,7 +6,7 @@ taken from the current gold-standard flagships (`mel`, `devecon`, `gender`,
 `gandhi`, `law`, `causal`, `intervention`).
 
 > **Architecture note (read first).** A course page is a **shell**, not content.
-> Each module body is an empty placeholder — `<div id="moduleN-content"
+> Each module body is an empty placeholder: `<div id="moduleN-content"
 > class="module-content-placeholder">` — that `js/course-loader.js` fills at
 > runtime from the Supabase `serve-course-content` edge function. This is
 > deliberate anti-fork protection. So:
@@ -24,20 +24,20 @@ taken from the current gold-standard flagships (`mel`, `devecon`, `gender`,
 
 ---
 
-## Part A — Design system (the shell)
+## Part A: Design system (the shell)
 
 | Aspect | Standard | Source token |
 |---|---|---|
 | Content column | Centered, **900px** max-width, `3rem` padding | `--content-max-width: 900px` on `.content-wrapper` |
 | Sidebar | Fixed left, **260px** | `--sidebar-width: 260px` |
-| Main offset | `margin-left: var(--sidebar-width)` (must equal 260px — `gandhi` has a 280px bug) | `.main-content` |
+| Main offset | `margin-left: var(--sidebar-width)` (must equal 260px, `gandhi` has a 280px bug) | `.main-content` |
 | Body font | **Amaranth** | `--font-sans` (note: misleadingly named) |
 | Heading font | **Inter** | `--font-serif` / `--font-heading` |
 | Mono font | **JetBrains Mono** | `--font-mono` |
 | Google Fonts link | `Amaranth:wght@400;700` + `Inter:wght@400;500;600;700;800` + `JetBrains+Mono:wght@400;500` | one `<link>` in `<head>` |
 | Signature gradient | `linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%)` (sky→indigo) | `--gradient-primary` |
 | Accent gradient | `linear-gradient(135deg, #0EA5E9 0%, #10B981 100%)` (blue→emerald) | `--gradient-accent` |
-| Theme support | Four declarations: `:root`, `@media (prefers-color-scheme: dark)`, `[data-theme="light"]`, `[data-theme="dark"]` | — |
+| Theme support | Four declarations: `:root`, `@media (prefers-color-scheme: dark)`, `[data-theme="light"]`, `[data-theme="dark"]` |: |
 
 A course **may** re-skin `--gradient-primary` / `--accent-color` to its own identity
 (gender = purple/magenta, gandhi = saffron/green), but must keep the **token
@@ -45,21 +45,21 @@ names** and the **135° form** so shared components stay coherent.
 
 ### Required chrome, in `<body>` order
 
-1. `.im-topbar#imTopbar` — the **ImpactMojo Top Bar** (logo · Browse · Premium ·
+1. `.im-topbar#imTopbar`, the **ImpactMojo Top Bar** (logo · Browse · Premium ·
    3-button theme selector). Byte-identical across all flagships; copy verbatim.
 2. `.skip-link` (visually-hidden skip-to-content).
-3. `.v3-paper-plane` SVG — floating decorative plane (page-level).
-4. `.v3-organic-bg` wrapper containing four `.v3-blob v3-blob-1..4` — morphing
+3. `.v3-paper-plane` SVG: floating decorative plane (page-level).
+4. `.v3-organic-bg` wrapper containing four `.v3-blob v3-blob-1..4`, morphing
    background blobs. **The wrapper + 4 divs must exist** (CSS alone renders
    nothing).
-5. `.reading-progress#reading-progress` — the scroll progress bar. **The element
+5. `.reading-progress#reading-progress`, the scroll progress bar. **The element
    must exist** (`id="reading-progress"`), or the JS no-ops and the bar never
    shows.
 6. `.mobile-header` (hamburger + theme toggle, ≤900px) and `.sidebar-overlay`.
-7. `.sidebar#sidebar` — grouped nav (`.nav-section` → `.nav-section-title` →
+7. `.sidebar#sidebar`, grouped nav (`.nav-section` → `.nav-section-title` →
    `.nav-link`, `.active` state with left border), gradient logo chip, collapse
    button.
-8. `.hero#hero` — badge, title, `.hero-subtitle` (≤700px), `.hero-meta`,
+8. `.hero#hero`, badge, title, `.hero-subtitle` (≤700px), `.hero-meta`,
    `.feature-tags`, and the **hero resource button row** (Part B).
 9. Module placeholder sections, then `#course-assessment`, then
    `#resources-cross`.
@@ -74,9 +74,9 @@ GA `G-JRCMEB9TBW` · a JSON-LD `Course` schema block. Site utilities use absolut
 
 ---
 
-## Part B — Component catalog (what each piece looks like)
+## Part B: Component catalog (what each piece looks like)
 
-### 1. Hero resource buttons (`.hero-resource-btn`) — **4 expected**
+### 1. Hero resource buttons (`.hero-resource-btn`): **4 expected**
 
 A gold-standard hero carries four buttons, in this spirit:
 
@@ -87,10 +87,10 @@ A gold-standard hero carries four buttons, in this spirit:
 4. **Excel Lexicon** → the downloadable `.xlsx` (Dropbox).
 
 A disabled `<span class="hero-resource-btn soon">…<span class="soon-badge">Soon</span></span>`
-is the honest placeholder while a real URL doesn't exist yet — but a flagship is
+is the honest placeholder while a real URL doesn't exist yet, but a flagship is
 not "on par" until buttons 1 and 2 are live links.
 
-### 2. Related-resources block (`#resources-cross`) — **7 cards**
+### 2. Related-resources block (`#resources-cross`): **7 cards**
 
 Fixed structure: `.resources-eyebrow` → `.resources-h2` → `.resources-lead` →
 `.resources-grid` of seven `.resource-card` in this order:
@@ -103,17 +103,17 @@ Each card = `.resource-card-eyebrow` + `.resource-card-title` +
 `.resource-card-body` + a `<ul>` of links. The `notebooklm` card **must** carry a
 real `notebooklm.google.com` URL (do not repurpose it for the lexicon).
 
-### 3. Coach & reflection prompts — the "alternating" rhythm
+### 3. Coach & reflection prompts: the "alternating" rhythm
 
 Two distinct blocks, one of each per module:
 
-- **`.reflection-prompt`** — the *pedagogical* one. Dashed-cyan box, italic
+- **`.reflection-prompt`**: the *pedagogical* one. Dashed-cyan box, italic
   secondary text, opens with `<strong>Reflect.</strong>`. **One per module**,
   closing the module. It asks the learner a question about their own work; it
   never sells anything.
-- **`.coach-callout`** — a photo + "book a coaching session" CTA. **One per
+- **`.coach-callout`**: a photo + "book a coaching session" CTA. **One per
   module, alternating between the two coaches**: Vandana on odd-numbered
-  modules, Varna on even-numbered ones (or the reverse — what matters is that
+  modules, Varna on even-numbered ones (or the reverse: what matters is that
   consecutive modules never show the same face).
 
 **"Alternating" means alternating coaches, module by module.** It is not a
@@ -130,8 +130,8 @@ Two failure modes, both measured across the live courses in 2026-08:
 - **Same face twice.** Alternation is what keeps the block feeling like a person
   rather than an advertisement. Two Vandanas in a row reads as a banner.
 
-The message must be **specific to that module** — a thing this coach has seen go
-wrong in this subject — not a generic invitation to book a session. A callout
+The message must be **specific to that module**: a thing this coach has seen go
+wrong in this subject, not a generic invitation to book a session. A callout
 whose text would work equally well in any module of any course is doing nothing
 that a footer link would not do.
 
@@ -152,13 +152,13 @@ Markup (the `.coach-photo` path is the tell for which coach it is):
 </div>
 ```
 
-### 4. Worked examples (`.worked-example`) — **≈1–2 per module**
+### 4. Worked examples (`.worked-example`): **≈1–2 per module**
 
-`.worked-example` → `.worked-example-header` (a `sargam-icon` + a "Case —" title)
+`.worked-example` → `.worked-example-header` (a `sargam-icon` + a "Case: " title)
 → several `<p>`, typically contrasting **Response A** vs **Response B** on the same
 problem, grounded in South Asian evidence (ASER/Pratham, J-PAL, etc.).
 
-### 5. Diagrams (Excalidraw-style) — theme-aware inline SVG
+### 5. Diagrams (Excalidraw-style): theme-aware inline SVG
 
 The gold model is `causal`'s `.dag-figure`: a hand-authored inline `<svg>` that
 uses `stroke="currentColor"` / `fill="currentColor"` (so it recolors with the
@@ -175,11 +175,11 @@ an arrowhead `<marker>`; dashed stroke = unobserved/hypothetical.
 ```
 
 The lighter, non-drawn alternative is a **`.comparison-cards`** grid of numbered
-`.comparison-card` (step/pipeline diagrams) — used heavily in `intervention`.
+`.comparison-card` (step/pipeline diagrams): used heavily in `intervention`.
 A flagship should carry **several drawn figures per course**, not zero.
 (An Excalidraw MCP server is available for authoring these.)
 
-### 6. Formulae (`.equation-box`) — **subject-gated**
+### 6. Formulae (`.equation-box`): **subject-gated**
 
 Only for quantitative courses (`causal`, and appropriately `intervention` for
 cost-effectiveness / targeting / cost-per-outcome). Markup:
@@ -191,21 +191,21 @@ cost-effectiveness / targeting / cost-per-outcome). Markup:
 </div>
 ```
 
-Inline math uses `\( … \)`. Rendered by **KaTeX 0.16.11** — the shell must load
+Inline math uses `\( … \)`. Rendered by **KaTeX 0.16.11**: the shell must load
 `katex.min.css` + `katex.min.js` + `auto-render.min.js` and re-typeset **after**
 `course-loader.js` injects DB content. **Do not** add formulae to non-quantitative
-courses (e.g. NVC/nonviolence) — a flagship earns parity through diagrams and
+courses (e.g. NVC/nonviolence): a flagship earns parity through diagrams and
 worked examples there, not forced LaTeX.
 
 ### 6b. Paper excerpts in popups (`js/paper-excerpt.js`)
 
 A flagship surfaces **real, detailed excerpts from key readings** in an accessible
-modal — reproduced only from **open-access / Creative-Commons / public-domain**
+modal: reproduced only from **open-access / Creative-Commons / public-domain**
 text (never full copyrighted paper text). The feature is a self-contained script
 (`/js/paper-excerpt.js`, wired into every course shell) that injects its own modal
 + styles and uses event delegation, so it works on DB-injected module content.
 
-Authoring convention — a trigger button plus a hidden source block, both in the
+Authoring convention: a trigger button plus a hidden source block, both in the
 module content (the DB):
 
 ```html
@@ -246,7 +246,7 @@ ceiling. Optionally ship a downloadable `.xlsx`.
 
 ---
 
-## Part C — Per-course parity checklist
+## Part C: Per-course parity checklist
 
 Tick every row before calling a course a flagship.
 
@@ -257,7 +257,7 @@ Tick every row before calling a course a flagship.
 - [ ] `.im-topbar`, skip-link, `.v3-paper-plane`, `.v3-organic-bg` **with 4 blob
       divs**, `.reading-progress` **element**, mobile header, sidebar
 - [ ] Full shared script bundle + JSON-LD `Course` schema
-- [ ] 4 hero resource buttons (Papers, AI Companion, Lexicon, Excel) — links live
+- [ ] 4 hero resource buttons (Papers, AI Companion, Lexicon, Excel): links live
 - [ ] `#resources-cross` with all 7 cards; `notebooklm` card has a real URL
 
 **Content depth** (per module, in the `course_content` DB rows)
@@ -273,10 +273,10 @@ Tick every row before calling a course a flagship.
 
 ---
 
-## Part D — Current gap snapshot (2026-08-21)
+## Part D: Current gap snapshot (2026-08-21)
 
 Measured, not remembered. Regenerate with `scripts/audit-flagships.py` rather
-than editing this table by hand — the 2026-07 version of Part D was a two-course
+than editing this table by hand: the 2026-07 version of Part D was a two-course
 table maintained manually and it was wrong in **both** directions within a
 month: it recorded `intervention` as having 0 SVG diagrams (it has 14) and
 `nvc-rj` at ~4 KB/module (it is 15.4). A hand-kept conformance table decays
@@ -312,13 +312,13 @@ module bodies on stdin as JSON (see the script's docstring).
 
 **Three of twenty** meet Part C in full: `esg`, `nvc-rj`, `intervention`.
 
-### Coach callouts — done (2026-08-21)
+### Coach callouts: done (2026-08-21)
 
 This is the one row no longer in the table, because all 20 courses now pass it:
 **exactly one coach callout per module, alternating, no two consecutive modules
 showing the same face**, across all 260 modules.
 
-Getting there was mostly *deletion*. The failure was over-use, not absence —
+Getting there was mostly *deletion*. The failure was over-use, not absence, 
 `SEL` carried 52 callouts across 13 modules, `devai` 37 across 12, `dataviz` 30
 across 12. In total **158 surplus blocks were removed**, 20 blocks were
 re-attributed to the other coach (only where the message carried no first-person
@@ -327,7 +327,7 @@ newly written for modules that had none.
 
 `pubchoice` was a separate shape: 13 callouts that named a coach in text but
 showed a generic quote icon instead of a face and carried **no coaching link at
-all** — the CTA the block exists for. Its shell had always styled `.coach-photo`
+all**: the CTA the block exists for. Its shell had always styled `.coach-photo`
 as a 64px circle with `object-fit: cover`, i.e. for a photograph. All 13 were
 re-emitted in canonical markup with the authored messages preserved.
 
@@ -336,18 +336,18 @@ A backup of every module body as it stood before this work is in
 
 ### What is left, in the order worth doing it
 
-1. **`nothing-about-us`** — 5.0 KB/module and the only course with no paper
+1. **`nothing-about-us`**: 5.0 KB/module and the only course with no paper
    excerpts at all. It is not a thin flagship, it is a draft. Rewrite before
    adding components to it.
-2. **Reflection prompts** — absent from 17 of 20 courses. Cheapest large win:
+2. **Reflection prompts**: absent from 17 of 20 courses. Cheapest large win:
    one closing question per module, and the standard already fixes the shape.
-3. **Worked examples** — absent from 16 of 20.
-4. **Capstone timeline** — absent from 13 of 20. Several of those courses do
+3. **Worked examples**: absent from 16 of 20.
+4. **Capstone timeline**: absent from 13 of 20. Several of those courses do
    have a capstone module; what they lack is the `capstone-timeline` component.
-5. **SVG diagrams** — none in `dataviz`, `devecon`, `gandhi`, `mel`,
+5. **SVG diagrams**: none in `dataviz`, `devecon`, `gandhi`, `mel`,
    `nothing-about-us`, `poa`, `powerBI`, `social-movements`. `dataviz` having
    no diagram is the odd one.
-6. **Prose depth** — `livelihoods` (9.3 KB) and `social-movements` (11.3 KB)
+6. **Prose depth**, `livelihoods` (9.3 KB) and `social-movements` (11.3 KB)
    sit below the 10–12 KB the standard targets.
 
 ### Shell gaps (run `scripts/audit-flagships.py --shell-only`)
@@ -356,16 +356,16 @@ Distinct from content, and the reason to check before writing: `devai`,
 `gender`, `gandhi`, `social-movements` and `pubpol` carry **no CSS** for
 `stats-grid`, `key-insight` or the callout colours, so standard content written
 into them renders unstyled. This is exactly how the ESG build went wrong first
-time — it was drafted against `social-movements`, whose shell styles none of it.
+time: it was drafted against `social-movements`, whose shell styles none of it.
 
 ### A note on malformed div nesting
 
-35 modules across 9 courses have unbalanced `<div>` counts — `dataviz` m6 and
+35 modules across 9 courses have unbalanced `<div>` counts, `dataviz` m6 and
 `devai` m2 literally begin with a stray `</div>`. **This is inert**, and worth
 recording so nobody spends a day on it: `js/course-loader.js` injects via
 `placeholder.innerHTML`, and the HTML fragment parser discards unmatched end
 tags and auto-closes unclosed ones at the fragment boundary. Verified in
-Chromium against all three malformation shapes — content stays inside the
+Chromium against all three malformation shapes: content stays inside the
 placeholder in every case. Untidy, not broken.
 
 **External dependencies** (block two components everywhere): a **NotebookLM

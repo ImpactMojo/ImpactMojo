@@ -4,13 +4,13 @@
 
 ImpactMojo's premium tools are **advanced, specialised resources** for researchers and practitioners who need capabilities beyond the free platform. They're designed for fieldwork, data analysis, and technical research tasks.
 
-Premium tools require a paid membership (Practitioner or Professional tier). The free platform covers 95% of learning content — premium tools serve specific professional needs.
+Premium tools require a paid membership (Practitioner or Professional tier). The free platform covers 95% of learning content: premium tools serve specific professional needs.
 
 ---
 
 ## VaniScribe: AI Transcription
 
-**What it does:** Transcribes field interviews, focus group discussions (FGDs), and key informant interviews (KIIs) in **10+ South Asian languages** — Hindi, Tamil, Bengali, Marathi, Telugu, Kannada, Malayalam, Gujarati, Odia, Punjabi, and more.
+**What it does:** Transcribes field interviews, focus group discussions (FGDs), and key informant interviews (KIIs) in **10+ South Asian languages**, Hindi, Tamil, Bengali, Marathi, Telugu, Kannada, Malayalam, Gujarati, Odia, Punjabi, and more.
 
 **Key features:**
 - Speaker diarization (identifies who said what)
@@ -20,13 +20,13 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 
 **Who it's for:** Qualitative researchers doing fieldwork in regional languages. Transcribing a 60-minute Hindi interview manually takes 4–6 hours. VaniScribe reduces this dramatically.
 
-**Access:** Professional tier — [See Premium](/premium.html)
+**Access:** Professional tier, [See Premium](/premium.html)
 
 ---
 
 ## DevData Practice: Dataset Generators
 
-**What it does:** Generates **realistic synthetic datasets** for learning and practice. 36 generators produce 840,000+ rows of data modelled on real development survey structures — DHS, NFHS, ASER, MGNREGA, and more.
+**What it does:** Generates **realistic synthetic datasets** for learning and practice. 36 generators produce 840,000+ rows of data modelled on real development survey structures: DHS, NFHS, ASER, MGNREGA, and more.
 
 **Dataset categories:**
 - Household surveys and consumption data
@@ -44,7 +44,7 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 
 **Why synthetic data?** Real development data is often sensitive, restricted, or messy in ways that distract from learning. DevData Practice generates clean, realistic datasets so learners can focus on methods, not data cleaning.
 
-**Access:** Professional tier — [Open DevData Practice](https://impactmojo-devdata-pro.netlify.app/)
+**Access:** Professional tier, [Open DevData Practice](https://impactmojo-devdata-pro.netlify.app/)
 
 ---
 
@@ -54,7 +54,7 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 
 **Who it's for:** Practitioners who need to create publication-quality charts for reports and presentations and want ready-to-use code rather than starting from scratch.
 
-**Access:** Part of DevData Practice — [Open Visualization Cookbook](https://impactmojo-devdata-pro.netlify.app/charts.html)
+**Access:** Part of DevData Practice, [Open Visualization Cookbook](https://impactmojo-devdata-pro.netlify.app/charts.html)
 
 ---
 
@@ -76,9 +76,9 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 | LogFrame Builder | Construct logical frameworks |
 | WDI Dashboard | Explore World Development Indicators |
 
-**Who it's for:** Development economists, evaluation specialists, and students learning econometric methods. Each app makes a complex method interactive — you adjust parameters and see results in real time.
+**Who it's for:** Development economists, evaluation specialists, and students learning econometric methods. Each app makes a complex method interactive: you adjust parameters and see results in real time.
 
-**Access:** Professional tier — [Open DevEconomics Toolkit](https://impactmojo-devecon-toolkit.netlify.app/)
+**Access:** Professional tier, [Open DevEconomics Toolkit](https://impactmojo-devecon-toolkit.netlify.app/)
 
 ---
 
@@ -90,7 +90,7 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 | **TOC Workbench Pro** | Advanced Theory of Change building with assumption mapping, evidence linkage, and PDF/PNG export | Practitioner+ |
 | **Qualitative Research Lab (Qual Insights)** | AI-assisted qualitative coding and analysis | Professional |
 | **Statistical Code Converter Pro** | Translate code between R, Stata, SPSS & Python with regression diagnostics and power analysis | Professional |
-| **Field Notes from a Dev Economist** ([The Margin Muse](https://impactmojo-field-notes-pro.netlify.app/)) | Practical field observations from development work — not a blog, but grounded notes from real programme experiences | Professional |
+| **Field Notes from a Dev Economist** ([The Margin Muse](https://impactmojo-field-notes-pro.netlify.app/)) | Practical field observations from development work, not a blog, but grounded notes from real programme experiences | Professional |
 
 ---
 
@@ -98,9 +98,9 @@ Premium tools require a paid membership (Practitioner or Professional tier). The
 
 ### For Training Workshops
 
-- Use **DevData Practice** to generate datasets for hands-on data analysis exercises — no need to source or anonymise real data
-- Use the **DevEconomics Toolkit** apps to demonstrate econometric methods interactively — participants adjust parameters and see how results change
-- Use the **Visualization Cookbook** to teach chart selection — participants choose the right chart for their data story
+- Use **DevData Practice** to generate datasets for hands-on data analysis exercises: no need to source or anonymise real data
+- Use the **DevEconomics Toolkit** apps to demonstrate econometric methods interactively: participants adjust parameters and see how results change
+- Use the **Visualization Cookbook** to teach chart selection: participants choose the right chart for their data story
 
 ### For Research Support
 
@@ -116,7 +116,7 @@ The **Organization tier** (₹1,499/user/month) provides team-wide access to all
 
 ## Tips
 
-- **Start with the free platform.** Premium tools solve specific professional problems — make sure you've explored the free courses, games, labs, and handouts first.
+- **Start with the free platform.** Premium tools solve specific professional problems: make sure you've explored the free courses, games, labs, and handouts first.
 - **VaniScribe is the highest-impact tool** for qualitative researchers working in South Asian languages. If you do fieldwork in Hindi, Tamil, or Bengali, this alone justifies a Professional subscription.
 - **DevData Practice is ideal for trainers.** Instead of hunting for suitable practice datasets, generate exactly what you need in seconds.
-- **Sliding scale available** for grassroots organisations — contact hello@impactmojo.in.
+- **Sliding scale available** for grassroots organisations: contact hello@impactmojo.in.

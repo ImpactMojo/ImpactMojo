@@ -34,7 +34,7 @@ async function callEdgeFunction(path) {
 
 export default async () => {
   if (!SERVICE_KEY) {
-    console.log("SUPABASE_SERVICE_ROLE_KEY not set — skipping");
+    console.log("SUPABASE_SERVICE_ROLE_KEY not set: skipping");
     return new Response(JSON.stringify({ error: "Missing service key" }), { status: 500 });
   }
 

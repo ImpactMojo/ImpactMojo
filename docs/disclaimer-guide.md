@@ -1,4 +1,4 @@
-# Disclaimer — In Plain Language
+# Disclaimer. In Plain Language
 
 This is a plain-language summary of ImpactMojo's disclaimer. The full document is at [impactmojo.in/disclaimer.html](https://www.impactmojo.in/disclaimer.html).
 
@@ -12,7 +12,7 @@ ImpactMojo is an **educational platform**. We provide courses, tools, games, lab
 
 ### Not professional advice
 
-Our content is educational — it teaches general principles and best practices. It is **not** a substitute for:
+Our content is educational: it teaches general principles and best practices. It is **not** a substitute for:
 
 - **Legal advice.** If you need guidance on contracts, compliance, or regulations, consult a qualified lawyer.
 - **Financial advice.** If you're making investment, budgeting, or financial planning decisions, consult a qualified financial professional.
@@ -44,27 +44,27 @@ The interactive tools on ImpactMojo (labs, games, the DevEconomics Toolkit) are 
 
 ## About External Links
 
-ImpactMojo links to hundreds of external resources — datasets, research papers, tools, and organisations. We curate these carefully, but:
+ImpactMojo links to hundreds of external resources: datasets, research papers, tools, and organisations. We curate these carefully, but:
 
 - We don't control third-party content and can't guarantee it stays accurate or available
 - Linking to a resource doesn't mean we endorse everything on that site
-- Links may break as external sites change — if you find a broken link, let us know
+- Links may break as external sites change: if you find a broken link, let us know
 
 ---
 
 ## About User-Generated Content and Testimonials
 
 - Comments, forum posts, and testimonials on the platform represent individual views, not ImpactMojo's position
-- Testimonials reflect individual experiences — your results may differ
+- Testimonials reflect individual experiences: your results may differ
 - We don't verify or endorse user-generated content
 
 ---
 
 ## The Technical Reality
 
-- The platform is provided "as is" — we aim for reliability but can't guarantee uninterrupted, error-free access
+- The platform is provided "as is": we aim for reliability but can't guarantee uninterrupted, error-free access
 - We're not responsible for data loss caused by technical failures (though we take reasonable precautions)
-- We may modify or discontinue features — we'll communicate changes when possible
+- We may modify or discontinue features: we'll communicate changes when possible
 
 ---
 

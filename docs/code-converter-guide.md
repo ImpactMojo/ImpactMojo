@@ -2,7 +2,7 @@
 
 ## What Is Code Converter?
 
-Code Converter Pro is ImpactMojo's tool for **translating statistical code between R, Python, Stata, and SPSS**. If you have a script written in one language and need it in another — because a colleague uses different software, or your organisation is migrating to a new platform — Code Converter handles the translation.
+Code Converter Pro is ImpactMojo's tool for **translating statistical code between R, Python, Stata, and SPSS**. If you have a script written in one language and need it in another (because a colleague uses different software, or your organisation is migrating to a new platform) Code Converter handles the translation.
 
 **Access:** Professional tier (₹999/month)
 
@@ -10,7 +10,7 @@ Code Converter Pro is ImpactMojo's tool for **translating statistical code betwe
 
 ## The Problem This Solves
 
-In development research, teams frequently run into language barriers — not spoken languages, but programming languages:
+In development research, teams frequently run into language barriers, not spoken languages, but programming languages:
 
 - **Your organisation uses Stata** but a new team member only knows R
 - **A consultant delivered analysis in Python** but your M&E team uses SPSS
@@ -32,7 +32,7 @@ If you're not a programmer, here's a quick guide to the four languages Code Conv
 | **Stata** | Statistical software popular in economics and social sciences | Economists, evaluation specialists, World Bank/UN staff | $300–$1,500+ per licence |
 | **SPSS** | Statistical software with a graphical interface | Social scientists, public health researchers, government agencies | $99+/month |
 
-Each language has its own syntax (the rules for writing commands), its own strengths, and its own user community. They all do fundamentally similar things — load data, run statistics, create charts — but the code looks different in each one.
+Each language has its own syntax (the rules for writing commands), its own strengths, and its own user community. They all do fundamentally similar things (load data, run statistics, create charts) but the code looks different in each one.
 
 ---
 
@@ -46,9 +46,9 @@ Choose which language you want the code translated into.
 
 ### Step 3: Review the Output
 Code Converter produces the translated code with:
-- **Equivalent functions** — maps each command to its equivalent in the target language
-- **Comments explaining the translation** — so you understand what each line does
-- **Warnings for non-direct translations** — when a function doesn't have an exact equivalent, the converter explains the difference and suggests alternatives
+- **Equivalent functions**: maps each command to its equivalent in the target language
+- **Comments explaining the translation**, so you understand what each line does
+- **Warnings for non-direct translations**: when a function doesn't have an exact equivalent, the converter explains the difference and suggests alternatives
 
 ### Step 4: Test and Adjust
 Run the translated code in your target environment. While Code Converter handles the vast majority of translations accurately, complex or highly specialised code may need minor adjustments.
@@ -75,17 +75,17 @@ Show students the same analysis in multiple languages. "Here's how you run a reg
 
 | Category | Examples | Translation quality |
 |----------|---------|-------------------|
-| **Data manipulation** | Loading data, merging datasets, creating variables, filtering rows | Excellent — direct equivalents exist in all languages |
+| **Data manipulation** | Loading data, merging datasets, creating variables, filtering rows | Excellent: direct equivalents exist in all languages |
 | **Descriptive statistics** | Means, medians, frequencies, cross-tabulations | Excellent |
-| **Regression analysis** | Linear regression, logistic regression, panel data models | Very good — minor syntax differences are handled |
-| **Data visualisation** | Basic charts and plots | Good — visual libraries differ, so output may look slightly different |
-| **Advanced econometrics** | Instrumental variables, matching methods, survival analysis | Good — may require review for specialised packages |
+| **Regression analysis** | Linear regression, logistic regression, panel data models | Very good: minor syntax differences are handled |
+| **Data visualisation** | Basic charts and plots | Good: visual libraries differ, so output may look slightly different |
+| **Advanced econometrics** | Instrumental variables, matching methods, survival analysis | Good: may require review for specialised packages |
 
 ## What May Need Manual Review
 
-- **Package-specific functions** — if your R code uses a very specialised package, the equivalent may not exist in Stata
-- **Complex loops and custom functions** — these translate but may need syntax adjustment
-- **Output formatting** — table formatting differs across languages; the translated code produces the same numbers but may format them differently
+- **Package-specific functions**: if your R code uses a very specialised package, the equivalent may not exist in Stata
+- **Complex loops and custom functions**: these translate but may need syntax adjustment
+- **Output formatting**: table formatting differs across languages; the translated code produces the same numbers but may format them differently
 
 ---
 
@@ -93,5 +93,5 @@ Show students the same analysis in multiple languages. "Here's how you run a reg
 
 - **Always test translated code.** Run it on your data and verify the results match the original.
 - **Start with simple scripts.** If you're new to code translation, start with a short, simple analysis to build confidence.
-- **Use the comments.** The translated code includes explanatory comments — read them to understand how the translation works and learn the new language's syntax.
+- **Use the comments.** The translated code includes explanatory comments: read them to understand how the translation works and learn the new language's syntax.
 - **This is a professional tool, not a learning shortcut.** Code Converter helps teams collaborate across software platforms. If you're learning a new language from scratch, ImpactMojo's Data & Technology courses are a better starting point.

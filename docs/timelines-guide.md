@@ -2,7 +2,7 @@
 
 ## What Are the ImpactMojo Timelines?
 
-ImpactMojo Timelines are **curated, citation-backed visual histories** of how development thinking, policy, methods, climate action, and rights frameworks have evolved. Each timeline is a hand-curated, chronologically-ordered map of a domain — not a wiki dump — with **6 live timelines covering 113 nodes across 44 eras**.
+ImpactMojo Timelines are **curated, citation-backed visual histories** of how development thinking, policy, methods, climate action, and rights frameworks have evolved. Each timeline is a hand-curated, chronologically-ordered map of a domain, not a wiki dump, with **6 live timelines covering 113 nodes across 44 eras**.
 
 Every node carries the original argument, why it mattered, the critique that came after, and links to where you can study the idea more deeply on ImpactMojo (101 decks, Reading Companions, Deep Dives, Handouts). All timelines are **free, browser-based, and require no login**.
 
@@ -29,22 +29,22 @@ Browse all timelines at [/timelines/](/timelines/).
 
 Each node is a card for one landmark text, law, or event. Every node contains:
 
-1. **Year, title, and author/source** — the canonical citation (e.g. *Wealth of Nations*, Adam Smith, 1776)
-2. **Argued** — what the original text or policy actually claimed, in plain language
-3. **Mattered** — why it shaped the field: what agenda it set, what debates it opened
-4. **Critique** — the scholarly pushback that came after, with the critics named
-5. **Cross-links** — buttons to related ImpactMojo content (101 decks, Reading Companions, Deep Dives, Handouts) for deeper study
+1. **Year, title, and author/source**: the canonical citation (e.g. *Wealth of Nations*, Adam Smith, 1776)
+2. **Argued**: what the original text or policy actually claimed, in plain language
+3. **Mattered**, why it shaped the field: what agenda it set, what debates it opened
+4. **Critique**: the scholarly pushback that came after, with the critics named
+5. **Cross-links**: buttons to related ImpactMojo content (101 decks, Reading Companions, Deep Dives, Handouts) for deeper study
 
 Nodes are click-to-expand: the timeline scans as a compact chronology, and any node opens to show its full Argued / Mattered / Critique sections.
 
 ### Navigation and Deep-Linking
 
-- **Era navigation** — a sticky era-nav bar at the top of each timeline lets you jump straight to a period (e.g. "The Reform Era"). Nodes are grouped into eras, each with a short blurb explaining what changed in that period.
-- **Deep-linking** — every node has a stable anchor of the form `#n-year-keyword` (e.g. `/timelines/development-thinking.html#n-1776-smith`). Link directly to a node from a syllabus, slide deck, or reading list, and the page opens at that card.
+- **Era navigation**: a sticky era-nav bar at the top of each timeline lets you jump straight to a period (e.g. "The Reform Era"). Nodes are grouped into eras, each with a short blurb explaining what changed in that period.
+- **Deep-linking**: every node has a stable anchor of the form `#n-year-keyword` (e.g. `/timelines/development-thinking.html#n-1776-smith`). Link directly to a node from a syllabus, slide deck, or reading list, and the page opens at that card.
 
 ### What Timelines Are Not
 
-Timelines are **not a substitute for primary sources**. Each node cites the canonical text and its key critics. Use them as orientation maps before diving into a 101 deck or Reading Companion — or as a way to see how the ideas in a single book or paper sit in a longer intellectual lineage.
+Timelines are **not a substitute for primary sources**. Each node cites the canonical text and its key critics. Use them as orientation maps before diving into a 101 deck or Reading Companion, or as a way to see how the ideas in a single book or paper sit in a longer intellectual lineage.
 
 ---
 
@@ -52,7 +52,7 @@ Timelines are **not a substitute for primary sources**. Each node cites the cano
 
 ### As Orientation Before a 101 Deck
 
-Assign the relevant timeline as pre-reading before a course or deck. Fifteen minutes with the Development Thinking timeline gives learners the arc — modernisation, dependency, capabilities, randomistas — so the deck's concepts land in context rather than in isolation.
+Assign the relevant timeline as pre-reading before a course or deck. Fifteen minutes with the Development Thinking timeline gives learners the arc (modernisation, dependency, capabilities, randomistas) so the deck's concepts land in context rather than in isolation.
 
 ### As Lecture Scaffolds
 
@@ -64,23 +64,23 @@ Give learners a paper or book chapter and ask them to locate it on the timeline:
 
 ### For Comparative Discussions
 
-Pair timelines for richer seminars — Indian Policy alongside Development Thinking shows how global ideas landed (or didn't) in Indian policy; Gender & Work alongside Indian Rights shows legislation and labour-market reality moving at different speeds.
+Pair timelines for richer seminars: Indian Policy alongside Development Thinking shows how global ideas landed (or didn't) in Indian policy; Gender & Work alongside Indian Rights shows legislation and labour-market reality moving at different speeds.
 
 ---
 
 ## Getting Started
 
-1. **Browse the collection** at [/timelines/](/timelines/) — each card shows node and era counts
-2. **Start with Development Thinking** — it is the widest-angle map and every other timeline references its debates
+1. **Browse the collection** at [/timelines/](/timelines/): each card shows node and era counts
+2. **Start with Development Thinking**: it is the widest-angle map and every other timeline references its debates
 3. **Use the era-nav** to jump to the period you teach, rather than scrolling from the start
-4. **Click a node to expand it** — the Argued / Mattered / Critique sections are where the substance lives
-5. **Follow the cross-links** — each node points to the 101 decks, Reading Companions, and Deep Dives where you can go deeper
+4. **Click a node to expand it**: the Argued / Mattered / Critique sections are where the substance lives
+5. **Follow the cross-links**: each node points to the 101 decks, Reading Companions, and Deep Dives where you can go deeper
 
 ---
 
 ## Tips
 
-- **Deep-link nodes in your syllabi.** Anchors like `#n-1949-truman` are stable — a reading list can send learners to exactly the right card.
+- **Deep-link nodes in your syllabi.** Anchors like `#n-1949-truman` are stable: a reading list can send learners to exactly the right card.
 - **The Critique section is the discussion starter.** Every node names its critics. "Do you find the critique convincing?" is a reliable seminar opener.
-- **Read the era blurbs, not just the nodes.** The short paragraph at the top of each era explains what shifted in that period — useful framing for lectures.
+- **Read the era blurbs, not just the nodes.** The short paragraph at the top of each era explains what shifted in that period: useful framing for lectures.
 - **Combine with Deep Dives.** A timeline shows the lineage; the matching Deep Dive supplies the annotated readings. The MEL timeline pairs naturally with the Randomista Economics Deep Dive; Gender & Work pairs with India's Female Labour-Force Puzzle.

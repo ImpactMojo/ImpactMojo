@@ -153,7 +153,7 @@
         // the page reads as a laddered path instead of one uniform card wall.
         if (currentFilter === 'all') {
             var LEVELS = [
-                ['beginner', 'Start here', 'Scoped, confidence-building cases — a first rep for each skill.'],
+                ['beginner', 'Start here', 'Scoped, confidence-building cases: a first rep for each skill.'],
                 ['intermediate', 'Build range', 'Messier briefs with competing constraints, like the real thing.'],
                 ['advanced', 'Test yourself', 'High-ambiguity cases that reward judgement, not templates.']
             ];
@@ -286,7 +286,7 @@
                 '</div>' +
                 '<div class="ch-detail-section" id="chSelfAssess">' +
                     '<h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg> Score Yourself Against the Rubric</h3>' +
-                    '<p style="font-size:0.9rem;opacity:0.85;margin:0 0 0.75rem">Re-read your submission with the evaluator’s eyes. Honest self-scoring is the fastest feedback loop there is — it saves to this device so you can compare attempts.</p>' +
+                    '<p style="font-size:0.9rem;opacity:0.85;margin:0 0 0.75rem">Re-read your submission with the evaluator’s eyes. Honest self-scoring is the fastest feedback loop there is: it saves to this device so you can compare attempts.</p>' +
                     '<table class="ch-rubric-table"><thead><tr><th>Criterion</th><th>Weight</th><th>Your rating</th></tr></thead><tbody>' + saRows + '</tbody></table>' +
                     saScoreHtml +
                     '<button class="ch-btn ch-btn-primary" style="margin-top:0.75rem" onclick="window._challengeSelfAssess(\'' + ch.id + '\')">Save Self-Assessment</button>' +
@@ -299,9 +299,9 @@
                     // can fill it in directly — but only when there is no saved draft to preserve.
                     '<textarea class="ch-textarea" id="challengeResponse" placeholder="Write your response here...">' + escapeHTML(draft || ch.submissionTemplate || '') + '</textarea>' +
                     '<div class="ch-char-count"><span id="charCount">' + ((draft || ch.submissionTemplate || '').length) + '</span> characters (min 200)</div>' +
-                    '<label class="ch-email-label" for="challengeEmail">Your email <span>(required — it is the only way we can send your feedback back)</span></label>' +
+                    '<label class="ch-email-label" for="challengeEmail">Your email <span>(required: it is the only way we can send your feedback back)</span></label>' +
                     '<input type="email" class="ch-email-input" id="challengeEmail" placeholder="you@example.org" autocomplete="email" required aria-required="true" value="' + escapeHTML(getSavedEmail()) + '">' +
-                    '<label class="ch-email-label" for="challengeFile">Attach your work <span>(optional — PDF, Word, Excel, PowerPoint or an image, up to 8&nbsp;MB)</span></label>' +
+                    '<label class="ch-email-label" for="challengeFile">Attach your work <span>(optional: PDF, Word, Excel, PowerPoint or an image, up to 8&nbsp;MB)</span></label>' +
                     '<input type="file" class="ch-file-input" id="challengeFile" accept="' + ACCEPT_TYPES + '">' +
                     '<div class="ch-file-name" id="challengeFileName" hidden></div>' +
                     '<p class="ch-submit-error" id="challengeError" role="alert" hidden></p>' +
@@ -382,7 +382,7 @@
                         .eq('challenge_id', ch.id).eq('user_id', user.id).maybeSingle();
                     if (res && res.data) {
                         var when = res.data.submitted_at ? new Date(res.data.submitted_at).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
-                        el.textContent = 'Recorded to your account' + (when ? ' on ' + when : '') + ' — part of your challenge portfolio.';
+                        el.textContent = 'Recorded to your account' + (when ? ' on ' + when : '') + ', part of your challenge portfolio.';
                     } else {
                         el.textContent = 'Saved on this device (not yet synced to your account).';
                     }
@@ -468,19 +468,19 @@
         // check existed were the untouched template.
         var ch = challenges.find(function (c) { return c.id === challengeId; });
         if (ch && ch.submissionTemplate && text === ch.submissionTemplate.trim()) {
-            showSubmitError('This is still the blank template — fill it in with your own response before submitting.');
+            showSubmitError('This is still the blank template: fill it in with your own response before submitting.');
             return;
         }
 
         var emailInput = document.getElementById('challengeEmail');
         var email = emailInput ? emailInput.value.trim() : '';
         if (!email) {
-            showSubmitError('Please add your email — it is the only way we can send your feedback back.');
+            showSubmitError('Please add your email: it is the only way we can send your feedback back.');
             if (emailInput) emailInput.focus();
             return;
         }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            showSubmitError('That email address doesn\'t look right — please check it.');
+            showSubmitError('That email address doesn\'t look right: please check it.');
             if (emailInput) emailInput.focus();
             return;
         }
@@ -490,7 +490,7 @@
         var file = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
         if (file) {
             if (file.size > MAX_FILE_BYTES) {
-                showSubmitError('That file is ' + (file.size / 1048576).toFixed(1) + ' MB — the limit is 8 MB.');
+                showSubmitError('That file is ' + (file.size / 1048576).toFixed(1) + ' MB: the limit is 8 MB.');
                 return;
             }
             if (!ALLOWED_EXT.test(file.name)) {
@@ -535,7 +535,7 @@
             if (!delivered) {
                 resetSubmitButton();
                 showSubmitError(
-                    'We could not save your submission just now. Your text is kept in this browser — ' +
+                    'We could not save your submission just now. Your text is kept in this browser, ' +
                     'please try again in a moment, or email it to hello@impactmojo.in.'
                 );
                 return;

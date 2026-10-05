@@ -29,7 +29,7 @@ ImpactMojo is a free learning platform providing rigorous, practical educational
 
 ## About
 
-ImpactMojo addresses a critical gap in development education. Development work in India and South Asia often lacks standardized, evidence-based knowledge foundations — resulting in interventions that lack rigor and measurable impact.
+ImpactMojo addresses a critical gap in development education. Development work in India and South Asia often lacks standardized, evidence-based knowledge foundations: resulting in interventions that lack rigor and measurable impact.
 
 We provide accessible, high-quality educational materials grounded in South Asian context, designed for educators, practitioners, researchers, students, and policymakers.
 
@@ -43,28 +43,28 @@ We provide accessible, high-quality educational materials grounded in South Asia
 |----------|-------------|
 | **80 Courses** | 21 flagship + 59 foundational courses across 6 learning tracks (all foundational decks self-hosted as native HTML slide decks). Every flagship ends with an auto-graded "Assess Yourself" self-check |
 | **35 Interactive Studios** | Hands-on workbenches for MEL, policy, partnerships, budgeting, gender analysis, and more |
-| **135 Game Library** | 18 interactive simulations (MiroFish AI agents, Indian folk art — Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) + 117 crosswords, quizzes & word searches |
+| **135 Game Library** | 18 interactive simulations (MiroFish AI agents, Indian folk art: Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) + 117 crosswords, quizzes & word searches |
 | **ImpactLex Dictionary** | 390+ development terms with contextual definitions, formulas, and case studies (PWA, hosted on ImpactMojo) |
 | **Dev Case Studies** | 200 evidence-based case studies from 117 countries |
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
-| **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export — dark mode, filters, CSV export |
-| **Dataverse** | 335 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories — dark mode, category filters, responsive cards |
+| **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export: dark mode, filters, CSV export |
+| **Dataverse** | 335 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories: dark mode, category filters, responsive cards |
 | **172 Reading Companions** | Interactive study companions for development economics, political economy, statistics, leadership, and productivity texts |
 | **12 AI Study Companions** | NotebookLM-powered study notebooks covering the flagship courses |
 | **90 Handouts** | Downloadable resources across 6 learning tracks |
-| **25 Deep Dives** | Curated, annotated reading guides — working syllabi on contested development questions |
-| **6 Timelines** | Citation-backed visual histories (113 nodes / 44 eras) — development thinking, Indian policy, MEL methods, climate, rights, gender & work |
-| **18 Practice Packs** | 4-module applied workbooks with capstone builders — 9 subject + 9 method packs |
-| **15 Live Case Challenges** | Realistic case packets with rubrics — one for every flagship course |
+| **25 Deep Dives** | Curated, annotated reading guides: working syllabi on contested development questions |
+| **6 Timelines** | Citation-backed visual histories (113 nodes / 44 eras): development thinking, Indian policy, MEL methods, climate, rights, gender & work |
+| **18 Practice Packs** | 4-module applied workbooks with capstone builders: 9 subject + 9 method packs |
+| **15 Live Case Challenges** | Realistic case packets with rubrics: one for every flagship course |
 | **Research to Action** | 7 poster series / 70 posters translating research into practice |
-| **32 Blog Posts** | Learning Loops Blog — articles, tutorials, and case studies on development practice |
-| **Between the Logframes** | Development podcast — honest conversations on MEAL and impact work |
-| **MCP Server** | Model Context Protocol server — connect any AI assistant to search all ImpactMojo content, BCTs, Dataverse, climate data, and more ([Setup guide](mcp-server/README.md)) |
+| **32 Blog Posts** | Learning Loops Blog: articles, tutorials, and case studies on development practice |
+| **Between the Logframes** | Development podcast: honest conversations on MEAL and impact work |
+| **MCP Server** | Model Context Protocol server: connect any AI assistant to search all ImpactMojo content, BCTs, Dataverse, climate data, and more ([Setup guide](mcp-server/README.md)) |
 
 ### Business Models & Services
 
-ImpactMojo operates a hybrid model — free foundational content for all, with premium tools and professional services for practitioners and organizations.
+ImpactMojo operates a hybrid model: free foundational content for all, with premium tools and professional services for practitioners and organizations.
 
 #### Workshops
 
@@ -91,7 +91,7 @@ All sessions are 1 hour, bookable via Google Calendar. Contact: hello@impactmojo
 
 #### Dojos
 
-90-minute practice-based skill sessions — learn by doing, not just lectures.
+90-minute practice-based skill sessions: learn by doing, not just lectures.
 
 - **Price:** ₹1,500 per person per session
 - **35+ practitioner skills** across 4 categories: Thinking, Evidence, Action, Communication
@@ -105,9 +105,9 @@ Example skills: pre-mortems, reading RCTs, cost-effectiveness analysis, stakehol
 
 Structured, outcome-focused paths that combine courses, games, and practice into a credential.
 
-- **Build Circles** — four-week AI build cohorts. Pick a real M&E problem, build a working AI workflow with a small matched cohort, and demo it on Demo Day. Free waitlist; the ₹1,000 seat deposit is returned when you demo, along with a verified certificate. ([build-circles.html](build-circles.html))
-- **AI for M&E — Assessed Track** — ₹2,499. A self-paced, assessed track: a guided path through the AI for Impact course, the Counterfactual game, the Critiquing Evidence practice pack, the AI Agents for Evaluators module, and a real-work capstone with written feedback, ending in a verifiable credential. ([ai-for-me-certificate.html](ai-for-me-certificate.html))
-- **AI Agents for Evaluators** — a free, self-paced module (part of the Certificate Track): five agent patterns for M&E work, two no-code build walkthroughs with copy-paste prompts, the ethics non-negotiables, and a capstone brief. ([ai-agents-for-evaluators.html](ai-agents-for-evaluators.html))
+- **Build Circles**: four-week AI build cohorts. Pick a real M&E problem, build a working AI workflow with a small matched cohort, and demo it on Demo Day. Free waitlist; the ₹1,000 seat deposit is returned when you demo, along with a verified certificate. ([build-circles.html](build-circles.html))
+- **AI for M&E, Assessed Track**, ₹2,499. A self-paced, assessed track: a guided path through the AI for Impact course, the Counterfactual game, the Critiquing Evidence practice pack, the AI Agents for Evaluators module, and a real-work capstone with written feedback, ending in a verifiable credential. ([ai-for-me-certificate.html](ai-for-me-certificate.html))
+- **AI Agents for Evaluators**, a free, self-paced module (part of the Certificate Track): five agent patterns for M&E work, two no-code build walkthroughs with copy-paste prompts, the ethics non-negotiables, and a capstone brief. ([ai-agents-for-evaluators.html](ai-agents-for-evaluators.html))
 
 #### Premium Membership Tiers
 
@@ -140,11 +140,11 @@ Available to Practitioner and Professional tier subscribers:
 
 ### Flagship Courses (20)
 
-Deep, comprehensive learning tracks — free for all users:
+Deep, comprehensive learning tracks, free for all users:
 
 | Course | Description |
 |--------|-------------|
-| **MEL for Development** | Monitoring, Evaluation & Learning — frameworks, indicators, data use |
+| **MEL for Development** | Monitoring, Evaluation & Learning: frameworks, indicators, data use |
 | **Seeing Data: Visualization for Impact** | Data storytelling, chart design, accessibility |
 | **AI for Impact: Data Monitoring & Evaluation** | AI/ML applications in development M&E |
 | **Understanding Development: An Economics Perspective** | Growth, inequality, institutions, trade |
@@ -155,19 +155,19 @@ Deep, comprehensive learning tracks — free for all users:
 | **Constitution & Law** | Constitutional governance and development law |
 | **Public Policy: Process, Design & Governance** | How policy gets made, implemented, and evaluated |
 | **Gender Studies: Feminisms, Power & Social Change** | Feminist theory, gender analysis, and development |
-| **Public Choice: Decisions, Incentives & Institutions** | Mechanics of choice — voting paradoxes, rent-seeking, bureaucracy, federalism |
+| **Public Choice: Decisions, Incentives & Institutions** | Mechanics of choice, voting paradoxes, rent-seeking, bureaucracy, federalism |
 | **Causal Inference for Development** | Counterfactuals, RCTs, quasi-experimental designs, and evidence judgement |
-| **Livelihoods in India: Rural, Urban & Skills** | NRLM, informal and gig work, Skill India — evidence for both sides of the commissioning table |
-| **Power BI for Practitioners** | Honest dashboards from real survey data — Power Query, star schemas, DAX, visualisation ethics |
-| **Designing What Works: Development Interventions from Model to Scale** | From a plausible model to something that survives contact with delivery — targeting, fidelity, adaptation, scale |
+| **Livelihoods in India: Rural, Urban & Skills** | NRLM, informal and gig work, Skill India, evidence for both sides of the commissioning table |
+| **Power BI for Practitioners** | Honest dashboards from real survey data: Power Query, star schemas, DAX, visualisation ethics |
+| **Designing What Works: Development Interventions from Model to Scale** | From a plausible model to something that survives contact with delivery, targeting, fidelity, adaptation, scale |
 | **Nonviolence in Practice: Communication, Resistance & Repair** | Nonviolent communication, nonviolent resistance and restorative justice as working methods |
-| **Social Movements & Protests** | How movements form, mobilise, fracture and win — repertoires, framing, repression, outcomes |
-| **Nothing About Us Without Us: Disability, Justice & Development** | Disability as a development question — models, rights, inclusive design, and disability-inclusive MEL |
-| **Sustainability, ESG & Corporate Responsibility for Development Practice** | Corporate money and corporate conduct in India — Section 135 to BRSR, portfolio design against a real district, and the harm side a CSR budget never touches |
+| **Social Movements & Protests** | How movements form, mobilise, fracture and win: repertoires, framing, repression, outcomes |
+| **Nothing About Us Without Us: Disability, Justice & Development** | Disability as a development question, models, rights, inclusive design, and disability-inclusive MEL |
+| **Sustainability, ESG & Corporate Responsibility for Development Practice** | Corporate money and corporate conduct in India: Section 135 to BRSR, portfolio design against a real district, and the harm side a CSR budget never touches |
 
 ### Foundational Courses (52)
 
-Shorter introductory courses covering the breadth of development practice. Every one is a self-hosted native HTML deck of roughly 100 slides, with light/dark themes and keyboard and touch navigation — no third-party presentation embeds.
+Shorter introductory courses covering the breadth of development practice. Every one is a self-hosted native HTML deck of roughly 100 slides, with light/dark themes and keyboard and touch navigation: no third-party presentation embeds.
 
 | Track | Courses |
 |-------|---------|
@@ -185,118 +185,118 @@ Shorter introductory courses covering the breadth of development practice. Every
 Browser-based studios under `/Labs/`. Each runs entirely client-side, keeps your work in the browser, and exports what you build.
 
 **Design & planning**
-- **Theory of Change Studio** — Guided ToC builder with real-time flowchart diagram and PNG export
-- **LogFrame Builder** — Results chain, indicators, means of verification and assumptions, exported as JSON
-- **MEL Studio** — Monitoring, evaluation and learning framework builder
-- **MEL Rosetta Lab** — Translate between the MEL vocabularies different donors insist on
-- **Design Thinking Studio** — Human-centred design process: empathy maps, ideation, prototyping
-- **Risk and Mitigation Studio** — Risk register with 5×5 heatmap and mitigation strategies
-- **Resource Sustainability Studio** — Resource mobilisation and sustainability planning
-- **Grant Writing & Proposal Studio** — Donor matching, theory of change, narrative, budgeting
-- **Budget & Fiscal Analysis Studio** — Read Union/State budgets (BE/RE/actuals), fund-flow simulator, per-capita calculator, fiscal federalism
+- **Theory of Change Studio**: Guided ToC builder with real-time flowchart diagram and PNG export
+- **LogFrame Builder**: Results chain, indicators, means of verification and assumptions, exported as JSON
+- **MEL Studio**: Monitoring, evaluation and learning framework builder
+- **MEL Rosetta Lab**: Translate between the MEL vocabularies different donors insist on
+- **Design Thinking Studio**, Human-centred design process: empathy maps, ideation, prototyping
+- **Risk and Mitigation Studio**: Risk register with 5×5 heatmap and mitigation strategies
+- **Resource Sustainability Studio**: Resource mobilisation and sustainability planning
+- **Grant Writing & Proposal Studio**: Donor matching, theory of change, narrative, budgeting
+- **Budget & Fiscal Analysis Studio**: Read Union/State budgets (BE/RE/actuals), fund-flow simulator, per-capita calculator, fiscal federalism
 
 **Evidence & measurement**
-- **Impact Evaluation Designer** — Match a question to a design, and see what each design can and cannot claim
-- **RCT Readiness Diagnostic** — Whether a randomised design is feasible here, before you promise one
-- **Sampling Basics (Primer)** — Sampling from first principles for people who were never taught it
-- **Sampling Design Studio** — Strata, clusters, weights and the trade-offs between them
-- **Survey Design Studio** — Question wording, scales, bias tests, translation, piloting
-- **Ethics & Research Integrity Studio** — Consent, data privacy, positionality, ethics review, field dilemmas
-- **Teacher Evidence Explorer** — What the evidence says about teaching interventions, and how strong it is
-- **Disability-Inclusive MEL Studio** — Washington Group questions, accessible instruments, disaggregation
+- **Impact Evaluation Designer**: Match a question to a design, and see what each design can and cannot claim
+- **RCT Readiness Diagnostic**: Whether a randomised design is feasible here, before you promise one
+- **Sampling Basics (Primer)**: Sampling from first principles for people who were never taught it
+- **Sampling Design Studio**: Strata, clusters, weights and the trade-offs between them
+- **Survey Design Studio**: Question wording, scales, bias tests, translation, piloting
+- **Ethics & Research Integrity Studio**: Consent, data privacy, positionality, ethics review, field dilemmas
+- **Teacher Evidence Explorer**. What the evidence says about teaching interventions, and how strong it is
+- **Disability-Inclusive MEL Studio**: Washington Group questions, accessible instruments, disaggregation
 
 **Politics, power & participation**
-- **Stakeholder Mapping & Power Analysis Studio** — Power–interest grid, actor and influence mapping
-- **Participatory Methods Studio** — PRA, community mapping, focus groups, participatory M&E
-- **Community Development Studio** — Participatory assessment and action planning
-- **Policy & Advocacy Studio** — Policy brief generator with stakeholder mapping
-- **Policy Analysis Studio** — Problem definition, options appraisal, feasibility
-- **Policy Brief Writing Studio** — Two-page briefs with audience targeting and structure
-- **Impact Partnerships Studio** — Partnership mapping and collaboration framework
-- **Gender Studies Studio** — Gender analysis frameworks and assessment tools
-- **Data Feminism & Intersectional Analysis Studio** — Disaggregation, bias detection, intersectional visualisation
+- **Stakeholder Mapping & Power Analysis Studio**: Power–interest grid, actor and influence mapping
+- **Participatory Methods Studio**: PRA, community mapping, focus groups, participatory M&E
+- **Community Development Studio**: Participatory assessment and action planning
+- **Policy & Advocacy Studio**: Policy brief generator with stakeholder mapping
+- **Policy Analysis Studio**: Problem definition, options appraisal, feasibility
+- **Policy Brief Writing Studio**: Two-page briefs with audience targeting and structure
+- **Impact Partnerships Studio**: Partnership mapping and collaboration framework
+- **Gender Studies Studio**: Gender analysis frameworks and assessment tools
+- **Data Feminism & Intersectional Analysis Studio**: Disaggregation, bias detection, intersectional visualisation
 
 **Conflict, climate & systems**
-- **Conflict-Sensitive Programming Studio** — Do No Harm framework, conflict analysis, adapt/suspend/exit decisions
-- **Before We Fall Apart** — Conflict-preparedness studio for teams and institutions
-- **NVC & Mediation Practice** — Nonviolent communication and mediation, rehearsed against real scenarios
-- **Climate Risk & Adaptation Studio** — Vulnerability assessment, risk matrix, adaptation cost-benefit analysis
-- **Systems Thinking & Complexity Studio** — Causal loop diagrams, iceberg model, leverage points
-- **Livelihoods & Value-Chain** — Map a value chain and find where the margin actually sits
+- **Conflict-Sensitive Programming Studio**: Do No Harm framework, conflict analysis, adapt/suspend/exit decisions
+- **Before We Fall Apart**: Conflict-preparedness studio for teams and institutions
+- **NVC & Mediation Practice**: Nonviolent communication and mediation, rehearsed against real scenarios
+- **Climate Risk & Adaptation Studio**: Vulnerability assessment, risk matrix, adaptation cost-benefit analysis
+- **Systems Thinking & Complexity Studio**: Causal loop diagrams, iceberg model, leverage points
+- **Livelihoods & Value-Chain**: Map a value chain and find where the margin actually sits
 
 **Data, digital & place**
-- **Digital Public Infrastructure Studio** — Aadhaar, UPI, DigiLocker, ABHA, ONDC and the DPDP Act 2023
-- **Impact Storytelling Studio** — Impact narrative builder with 4 format adapters and ethical checklist
-- **Why City Boundaries Lie** — What an urban boundary hides, and what that does to your denominators
+- **Digital Public Infrastructure Studio**: Aadhaar, UPI, DigiLocker, ABHA, ONDC and the DPDP Act 2023
+- **Impact Storytelling Studio**: Impact narrative builder with 4 format adapters and ethical checklist
+- **Why City Boundaries Lie**. What an urban boundary hides, and what that does to your denominators
 
 ### Tools & Calculators
 
-- **Sample Size Calculator** — Survey sample size for proportion, mean, two-group, and cluster designs
-- **Budget Template Generator** — Project budget builder with smart templates and CSV export
-- **Theory of Change Workbench** — Educational workbench with BCT annotations, worked examples, and sector guidance
-- **Theory of Change Builder** — Drag-and-drop canvas with 203 BCT techniques and PNG export
+- **Sample Size Calculator**: Survey sample size for proportion, mean, two-group, and cluster designs
+- **Budget Template Generator**: Project budget builder with smart templates and CSV export
+- **Theory of Change Workbench**: Educational workbench with BCT annotations, worked examples, and sector guidance
+- **Theory of Change Builder**: Drag-and-drop canvas with 203 BCT techniques and PNG export
 
 ### For Instructors
 
 Everything below is free, runs in the browser, and needs no account.
 
-- **[Teach with ImpactMojo](https://www.impactmojo.in/teach)** (`teach.html`) — syllabus mappings, ready-made course kits, and how to run the material in a classroom or a workshop.
-- **[LMS export](https://www.impactmojo.in/lms-export)** (`lms-export.html`) — package any of the 80 courses — plus the 47 practice workbooks — as **SCORM 1.2**, **SCORM 2004**, **IMS Common Cartridge 1.3**, or a single self-contained HTML file. The package is built in your browser from the live page, so it is never stale. Our analytics, sign-in, Supabase and translation code are stripped before packaging and the rest inlined, so an imported course runs with no network and phones nothing home. SCORM reports completion when the learner reaches the final slide.
-- **Studio submissions** (`js/studio-submit.js`) — wraps a Studio's own export in an envelope carrying the student's name, the Studio, a timestamp and a content digest. Studio exports previously carried no identity at all, so thirty files from a class were thirty anonymous JSON blobs. Wired into the LogFrame Builder as the reference implementation; the other Studios take the same two lines.
-- **[Gradebook](https://www.impactmojo.in/gradebook)** (`gradebook.html`) — drop a folder of those submissions in and get one CSV, with tampered files flagged by digest mismatch. Entirely client-side: student work is never uploaded anywhere.
+- **[Teach with ImpactMojo](https://www.impactmojo.in/teach)** (`teach.html`): syllabus mappings, ready-made course kits, and how to run the material in a classroom or a workshop.
+- **[LMS export](https://www.impactmojo.in/lms-export)** (`lms-export.html`), package any of the 80 courses, plus the 47 practice workbooks, as **SCORM 1.2**, **SCORM 2004**, **IMS Common Cartridge 1.3**, or a single self-contained HTML file. The package is built in your browser from the live page, so it is never stale. Our analytics, sign-in, Supabase and translation code are stripped before packaging and the rest inlined, so an imported course runs with no network and phones nothing home. SCORM reports completion when the learner reaches the final slide.
+- **Studio submissions** (`js/studio-submit.js`): wraps a Studio's own export in an envelope carrying the student's name, the Studio, a timestamp and a content digest. Studio exports previously carried no identity at all, so thirty files from a class were thirty anonymous JSON blobs. Wired into the LogFrame Builder as the reference implementation; the other Studios take the same two lines.
+- **[Gradebook](https://www.impactmojo.in/gradebook)** (`gradebook.html`): drop a folder of those submissions in and get one CSV, with tampered files flagged by digest mismatch. Entirely client-side: student work is never uploaded anywhere.
 
 ### Premium Tools (Paid Tiers)
 
-- **RQ Builder Pro** — Guided research question formulation with PICO/SPIDER framing (Practitioner)
-- **TOC Workbench Pro** — Publication-ready theories of change with assumption mapping (Practitioner)
-- **Qual Insights Studio Pro** — AI-assisted qualitative analysis for transcripts (Professional)
-- **Code Convert Pro** — Script translation between Stata, R, Python, SPSS (Professional)
-- **VaniScribe** — AI transcription for 10+ South Asian languages (Professional)
+- **RQ Builder Pro**: Guided research question formulation with PICO/SPIDER framing (Practitioner)
+- **TOC Workbench Pro**: Publication-ready theories of change with assumption mapping (Practitioner)
+- **Qual Insights Studio Pro**: AI-assisted qualitative analysis for transcripts (Professional)
+- **Code Convert Pro**: Script translation between Stata, R, Python, SPSS (Professional)
+- **VaniScribe**: AI transcription for 10+ South Asian languages (Professional)
 
-### Game Library (135 — 18 simulations + 117 puzzles)
+### Game Library (135–18 simulations + 117 puzzles)
 
 Interactive simulations powered by **MiroFish AI agents** with **Indian folk art story illustrations** in 6 traditional styles. Each game features AI opponents with distinct South Asian personas, backed by Groq/Gemini/DeepSeek LLMs with automatic fallback:
 
 **Economics & Markets:**
-- **Public Good Game** — Free-rider problems and collective action (4 AI agents, Pichwai art)
-- **Prisoners' Dilemma** — Strategic interdependence (4 AI agents, Gond art)
-- **Opportunity Cost Game** — Budget allocation with diminishing returns (2 AI agents, Kalamkari art)
-- **Network Effects Game** — Platform adoption and critical mass (3 AI agents, Warli art)
-- **Cooperation Paradox** — Nash equilibrium vs Pareto efficiency (2 AI agents, Warli art)
-- **Risk & Reward Explorer** — Prospect theory and loss aversion (3 AI agents, Kalamkari art)
-- **Bidding Wars** — Sealed-bid auctions and winner's curse (3 AI agents, Pichwai art)
-- **Information Asymmetry** — Akerlof's lemons problem (3 AI agents, Pattachitra art)
-- **Externality Game** — Pigouvian taxation and market failure (3 AI agents)
-- **Commons Crisis** — Tragedy of the commons (4 AI agents)
-- **Real Middle India** — Income inequality in India (Madhubani art)
-- **Econ Concepts Puzzle** — Brain-teasers with South Asian context (Madhubani art)
+- **Public Good Game**: Free-rider problems and collective action (4 AI agents, Pichwai art)
+- **Prisoners' Dilemma**: Strategic interdependence (4 AI agents, Gond art)
+- **Opportunity Cost Game**: Budget allocation with diminishing returns (2 AI agents, Kalamkari art)
+- **Network Effects Game**: Platform adoption and critical mass (3 AI agents, Warli art)
+- **Cooperation Paradox**: Nash equilibrium vs Pareto efficiency (2 AI agents, Warli art)
+- **Risk & Reward Explorer**: Prospect theory and loss aversion (3 AI agents, Kalamkari art)
+- **Bidding Wars**: Sealed-bid auctions and winner's curse (3 AI agents, Pichwai art)
+- **Information Asymmetry**: Akerlof's lemons problem (3 AI agents, Pattachitra art)
+- **Externality Game**: Pigouvian taxation and market failure (3 AI agents)
+- **Commons Crisis**: Tragedy of the commons (4 AI agents)
+- **Real Middle India**: Income inequality in India (Madhubani art)
+- **Econ Concepts Puzzle**: Brain-teasers with South Asian context (Madhubani art)
 
 **Beyond Economics:**
-- **Climate Action Challenge** — Mitigation vs adaptation across decades (Warli art)
-- **Care Economy Challenge** — Gender equity and unpaid care work (Madhubani art)
-- **Epidemic Response** — Public health outbreak management (Pattachitra art)
-- **Algorithm's Dilemma** — AI ethics: fairness, privacy, trust tradeoffs (Gond art)
-- **SEL Simulation: Five Lenses** — Social-emotional learning from five roles incl. parent mode (30 scenarios)
-- **Counterfactual: The Evaluation Game** — Pick the evaluation design that survives eight classic causal-inference traps (Warli art)
+- **Climate Action Challenge**: Mitigation vs adaptation across decades (Warli art)
+- **Care Economy Challenge**: Gender equity and unpaid care work (Madhubani art)
+- **Epidemic Response**: Public health outbreak management (Pattachitra art)
+- **Algorithm's Dilemma**, AI ethics: fairness, privacy, trust tradeoffs (Gond art)
+- **SEL Simulation: Five Lenses**, Social-emotional learning from five roles incl. parent mode (30 scenarios)
+- **Counterfactual: The Evaluation Game**, Pick the evaluation design that survives eight classic causal-inference traps (Warli art)
 
 ### Other Resources
 
-- [**ImpactLex**](https://www.impactmojo.in/impactlex/) — 490+ development terms, formulas, and case studies (PWA, offline-capable, hosted on ImpactMojo)
-- [**Dev Case Studies Library**](https://github.com/Varnasr/dev-case-studies) — 200 evidence-based case studies from 117 countries
-- [**DevDiscourses**](https://github.com/Varnasr/development-discourses) — 500+ curated open-access research papers, books, and grey literature
-- [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) — Auto-updating tracker of Indian development policies across 22 sectors
-- **BCT Repository** — 203 behavior change techniques with definitions, examples, and evidence ratings
-- **Dataverse** — 335 curated tools, datasets, APIs, MCP servers, and platforms for social impact research
-- **90 Handouts** — Downloadable HTML resources across 6 learning tracks
-- **Learning Loops Blog** — Articles, tutorials, case studies, platform updates
-- **Between the Logframes Podcast** — Development conversations on MEAL, ToC, and impact work
+- [**ImpactLex**](https://www.impactmojo.in/impactlex/), 490+ development terms, formulas, and case studies (PWA, offline-capable, hosted on ImpactMojo)
+- [**Dev Case Studies Library**](https://github.com/Varnasr/dev-case-studies), 200 evidence-based case studies from 117 countries
+- [**DevDiscourses**](https://github.com/Varnasr/development-discourses), 500+ curated open-access research papers, books, and grey literature
+- [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara), Auto-updating tracker of Indian development policies across 22 sectors
+- **BCT Repository**: 203 behavior change techniques with definitions, examples, and evidence ratings
+- **Dataverse**: 335 curated tools, datasets, APIs, MCP servers, and platforms for social impact research
+- **90 Handouts**: Downloadable HTML resources across 6 learning tracks
+- **Learning Loops Blog**: Articles, tutorials, case studies, platform updates
+- **Between the Logframes Podcast**: Development conversations on MEAL, ToC, and impact work
 
 ### Multilingual Support
 
 Two-tier translation system for highest quality:
 
-1. **Curated translations** (`i18n/*.json`) — Hand-crafted translations for 200+ key UI strings in Hindi (हिन्दी), Tamil (தமிழ்), Bengali (বাংলা), Marathi (मराठी), Telugu (తెలుగు)
-2. **Google Translate fallback** — Covers remaining content automatically
+1. **Curated translations** (`i18n/*.json`): Hand-crafted translations for 200+ key UI strings in Hindi (हिन्दी), Tamil (தமிழ்), Bengali (বাংলা), Marathi (मराठी), Telugu (తెలుగు)
+2. **Google Translate fallback**: Covers remaining content automatically
 
 Elements marked with `data-i18n` attributes receive curated translations first; Google Translate handles the rest. Language preference persists via localStorage.
 
@@ -324,33 +324,33 @@ Structured credential tracks with milestone progression:
 
 Comprehensive ToC learning and building toolkit:
 
-- **Educational workbench** (`toc-workbench.html`) — Foundations, worked examples with BCT annotations, indicator development, 8 problem sets, sector guidance (8 sectors), cross-cutting frameworks, measurement design
-- **Interactive builder** (`toc-builder.html`) — Drag-and-drop canvas with 203 BCT techniques, MEL frameworks, cross-cutting lenses, 4 sector templates, connection drawing, PNG export
+- **Educational workbench** (`toc-workbench.html`): Foundations, worked examples with BCT annotations, indicator development, 8 problem sets, sector guidance (8 sectors), cross-cutting frameworks, measurement design
+- **Interactive builder** (`toc-builder.html`): Drag-and-drop canvas with 203 BCT techniques, MEL frameworks, cross-cutting lenses, 4 sector templates, connection drawing, PNG export
 - **Coaching/Dojo CTAs** integrated throughout as marketing touchpoints
 
 ---
 
 ## User Features
 
-- **Bookmarks** — Save courses and content for later
-- **Personal Notes** — Take notes while learning with streak tracking
-- **Progress Tracking** — Monitor your learning journey
-- **Reading Lists** — Curated resource collections
-- **Course Comparison** — Compare courses side-by-side
-- **Interactive Assessments** — MCQ, multi-select, and T/F quizzes for MEL, DataViz, and DevAI courses with scoring, feedback, and localStorage persistence
-- **Offline PWA Support** — Service worker caches all 21 flagship courses for offline access with automatic background updates
-- **Certificate Generation** — Auto-issued on course completion with public verification and Open Badges 3.0 metadata
-- **Badge Wallet** — View, download, and share W3C verifiable credential badges
-- **Portfolio Builder** — Premium feature: curate certificates, projects & case studies with PDF export
-- **Full-Text Search** — Ctrl+K / Cmd+K fuzzy search across all courses, studios, games, and resources via Fuse.js
+- **Bookmarks**: Save courses and content for later
+- **Personal Notes**: Take notes while learning with streak tracking
+- **Progress Tracking**: Monitor your learning journey
+- **Reading Lists**: Curated resource collections
+- **Course Comparison**: Compare courses side-by-side
+- **Interactive Assessments**: MCQ, multi-select, and T/F quizzes for MEL, DataViz, and DevAI courses with scoring, feedback, and localStorage persistence
+- **Offline PWA Support**: Service worker caches all 21 flagship courses for offline access with automatic background updates
+- **Certificate Generation**: Auto-issued on course completion with public verification and Open Badges 3.0 metadata
+- **Badge Wallet**: View, download, and share W3C verifiable credential badges
+- **Portfolio Builder**, Premium feature: curate certificates, projects & case studies with PDF export
+- **Full-Text Search**: Ctrl+K / Cmd+K fuzzy search across all courses, studios, games, and resources via Fuse.js
 
 ### Account System
 
-- **Secure Authentication** — Powered by Supabase (Email, Google OAuth, Magic Links)
-- **User Profiles** — Track progress and preferences
-- **Tiered Access** — Explorer (free), Practitioner, Professional, Organization
-- **Team Training Packages** — Organization tier: pre-built training paths (MEL Officer, Program Manager, Field Staff, Governance), facilitator guides, assessment rubrics, cohort management
-- **Community Access** — WhatsApp PLC, Discord, Telegram
+- **Secure Authentication**: Powered by Supabase (Email, Google OAuth, Magic Links)
+- **User Profiles**: Track progress and preferences
+- **Tiered Access**: Explorer (free), Practitioner, Professional, Organization
+- **Team Training Packages**, Organization tier: pre-built training paths (MEL Officer, Program Manager, Field Staff, Governance), facilitator guides, assessment rubrics, cohort management
+- **Community Access**: WhatsApp PLC, Discord, Telegram
 
 ---
 
@@ -573,8 +573,8 @@ Each premium tool is a separate Netlify site with a JWT auth-gate edge function:
 | Workshop Pro | `workshop-pro` |
 
 Each site requires two environment variables:
-- `RESOURCE_TOKEN_SECRET` — shared HMAC signing key
-- `RESOURCE_ID` — unique resource slug
+- `RESOURCE_TOKEN_SECRET`, shared HMAC signing key
+- `RESOURCE_ID`, unique resource slug
 
 ### Deploy Your Own Fork
 
@@ -620,7 +620,7 @@ The authentication system requires a Supabase project with:
    );
    ```
 3. **Edge Function** (`mint-resource-token`) deployed with:
-   - `RESOURCE_TOKEN_SECRET` — HMAC signing key
+   - `RESOURCE_TOKEN_SECRET`, HMAC signing key
 
 ### Clean URL Routing
 
@@ -704,13 +704,13 @@ This platform is supported by a family of open-source repositories:
 
 | Repository | Description |
 |---|---|
-| [**ImpactMojo**](https://github.com/ImpactMojo/ImpactMojo) | Main platform — courses, games, studios, case challenges |
+| [**ImpactMojo**](https://github.com/ImpactMojo/ImpactMojo) | Main platform, courses, games, studios, case challenges |
 | [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara) | Auto-updating Indian development policy tracker (Astro + Python) |
 | [**development-discourses**](https://github.com/Varnasr/development-discourses) | 500+ curated research papers and grey literature |
 | [**dev-case-studies**](https://github.com/Varnasr/dev-case-studies) | 200 development case studies from 117 countries |
 | [**devdata-practice**](https://github.com/Varnasr/devdata-practice) | 10 realistic dataset generators for development economics |
 | [**deveconomics-toolkit**](https://github.com/Varnasr/deveconomics-toolkit) | 11 interactive Shiny apps (R + Python) |
-| [**ImpactLex**](https://www.impactmojo.in/impactlex/) | Offline PWA glossary of development terminology — now hosted on ImpactMojo. Legacy repo: [Varnasr/ImpactLex](https://github.com/Varnasr/ImpactLex) |
+| [**ImpactLex**](https://www.impactmojo.in/impactlex/) | Offline PWA glossary of development terminology, now hosted on ImpactMojo. Legacy repo: [Varnasr/ImpactLex](https://github.com/Varnasr/ImpactLex) |
 | [**The-Real-Middle**](https://github.com/Varnasr/The-Real-Middle) | Interactive income inequality explorer for India |
 
 All repos share consistent governance (Code of Conduct, Security Policy, Contributing Guidelines).
@@ -726,7 +726,7 @@ This repository uses a **dual license**:
 
 **You are welcome to** fork and reuse the technical architecture (code) for your own projects.
 
-**You may not** redistribute, mirror, or republish the educational content — especially premium-gated materials — without written permission. Violations may result in a DMCA takedown.
+**You may not** redistribute, mirror, or republish the educational content, especially premium-gated materials, without written permission. Violations may result in a DMCA takedown.
 
 See [LICENSE](LICENSE) for full terms.
 
@@ -752,8 +752,8 @@ Retrieved from https://www.impactmojo.in
 **Sponsored by** PinPoint Ventures
 
 **Key Contributors:**
-- Vandana Soni — Social Media, Marketing & Partnerships
-- Vignesh — Technical Support
+- Vandana Soni: Social Media, Marketing & Partnerships
+- Vignesh: Technical Support
 
 The platform is shaped by contributions from educators, practitioners, designers, and the broader development community.
 

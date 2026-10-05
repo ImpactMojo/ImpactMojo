@@ -39,7 +39,7 @@ window.FUNDAMENTALS = (function () {
     complication: "Caste is not a single ladder. The OBC band holds dominant landowning castes and very poor artisanal ones together. A Dalit household in Kerala and one in Bihar live in different worlds. Adivasi disadvantage also works differently, through land alienation and distance from services rather than ritual rank, which is part of why ST outcomes are worse than SC outcomes on most indicators.",
     rings: {
       power: {
-        groups: "Savarna castes — Brahmin, Kshatriya, Vaishya and the regionally dominant castes; the Census 'Others' category",
+        groups: "Savarna castes: Brahmin, Kshatriya, Vaishya and the regionally dominant castes; the Census 'Others' category",
         short: "Upper caste",
         evidence: [
           { stat: "~1 in 3", detail: "of Indians outside the SC, ST and OBC categories are in the richest national wealth quintile.", source: "NFHS-5", year: "2019-21" },
@@ -60,7 +60,7 @@ window.FUNDAMENTALS = (function () {
       },
       margin: {
         groups: "Scheduled Castes (Dalits) and Scheduled Tribes (Adivasis)",
-        short: "SC / ST — Dalit, Adivasi",
+        short: "SC / ST: Dalit, Adivasi",
         evidence: [
           { stat: "25%", detail: "of India: SC are 16.6% of the population and ST 8.6%.", source: "Census of India", year: "2011" },
           { stat: "44.4% / 29.2%", detail: "multidimensional poverty headcount for ST and SC, against 14.9% for 'Others'.", source: "NITI Aayog National MPI, baseline round (NFHS-4)", year: "2015-16" },
@@ -73,8 +73,8 @@ window.FUNDAMENTALS = (function () {
       }
     },
     links: [
-      { label: "AISHE Explorer — higher education by social category", href: "/aishe.html" },
-      { label: "NFHS Explorer — health outcomes by group", href: "/nfhs.html" }
+      { label: "AISHE Explorer: higher education by social category", href: "/aishe.html" },
+      { label: "NFHS Explorer: health outcomes by group", href: "/nfhs.html" }
     ]
   },
 
@@ -121,7 +121,7 @@ window.FUNDAMENTALS = (function () {
       }
     },
     links: [
-      { label: "PLFS Workforce Explorer — the female participation gap", href: "/plfs" },
+      { label: "PLFS Workforce Explorer: the female participation gap", href: "/plfs" },
       { label: "Gender Studies Lab", href: "/Labs/gender-studies-lab.html" },
       { label: "Data Feminism Lab", href: "/Labs/data-feminism-lab.html" }
     ]
@@ -165,7 +165,7 @@ window.FUNDAMENTALS = (function () {
       }
     },
     links: [
-      { label: "Ethics in Research Lab — consent and invisible populations", href: "/Labs/ethics-research-lab.html" }
+      { label: "Ethics in Research Lab: consent and invisible populations", href: "/Labs/ethics-research-lab.html" }
     ]
   },
 
@@ -179,7 +179,7 @@ window.FUNDAMENTALS = (function () {
     complication: "Religion and caste are not independent here. The sharpest religious disability in Indian law, the exclusion of Dalit Christians and Dalit Muslims from SC status, is a caste rule enforced through religion. Jain and Parsi communities are small in number but sit near the top of most socioeconomic indicators, so minority and marginalised are not the same category.",
     rings: {
       power: {
-        groups: "Hindus — in practice, upper-caste Hindus",
+        groups: "Hindus: in practice, upper-caste Hindus",
         short: "Hindu",
         evidence: [
           { stat: "79.8%", detail: "of the population, and the reference point from which 'minority' is defined in law.", source: "Census of India", year: "2011" },
@@ -209,7 +209,7 @@ window.FUNDAMENTALS = (function () {
       }
     },
     links: [
-      { label: "Inequality Basics — 101 course", href: "/101-courses/inequality-basics.html" }
+      { label: "Inequality Basics: 101 course", href: "/101-courses/inequality-basics.html" }
     ]
   },
 
@@ -223,7 +223,7 @@ window.FUNDAMENTALS = (function () {
     complication: "This ring mixes assets with income. A salaried graduate with no property and a landless farmer with no wages are in different positions, and neither clearly ranks above the other. Economic position is also the one axis people move along within a lifetime, so it behaves differently from caste or disability even where the gaps look similar.",
     rings: {
       power: {
-        groups: "The owning class — inherited property, land and capital income",
+        groups: "The owning class: inherited property, land and capital income",
         short: "Owning class",
         evidence: [
           { stat: "40.1%", detail: "of national wealth is held by the top 1%, the highest concentration recorded since 1961.", source: "World Inequality Lab", year: "2022-23", url: "https://wid.world/news-article/inequality-in-india-the-billionaire-raj-is-now-more-unequal-than-the-british-colonial-raj/" },
@@ -253,9 +253,9 @@ window.FUNDAMENTALS = (function () {
       }
     },
     links: [
-      { label: "Inequality Basics — 101 course", href: "/101-courses/inequality-basics.html" },
+      { label: "Inequality Basics: 101 course", href: "/101-courses/inequality-basics.html" },
       { label: "Budget & Fiscal Lab", href: "/Labs/budget-fiscal-lab.html" },
-      { label: "The Long View — inequality charts", href: "/the-long-view.html" }
+      { label: "The Long View: inequality charts", href: "/the-long-view.html" }
     ]
   },
 
@@ -295,9 +295,9 @@ window.FUNDAMENTALS = (function () {
       }
     },
     links: [
-      { label: "ASER Explorer — learning outcomes", href: "/aser.html" },
-      { label: "UDISE+ Explorer — school system data", href: "/udise.html" },
-      { label: "AISHE Explorer — higher education", href: "/aishe.html" }
+      { label: "ASER Explorer: learning outcomes", href: "/aser.html" },
+      { label: "UDISE+ Explorer: school system data", href: "/udise.html" },
+      { label: "AISHE Explorer: higher education", href: "/aishe.html" }
     ]
   },
 
@@ -336,7 +336,7 @@ window.FUNDAMENTALS = (function () {
       }
     },
     links: [
-      { label: "Data Feminism Lab — what gets counted", href: "/Labs/data-feminism-lab.html" }
+      { label: "Data Feminism Lab: what gets counted", href: "/Labs/data-feminism-lab.html" }
     ]
   },
 
@@ -418,7 +418,7 @@ window.FUNDAMENTALS = (function () {
       }
     },
     links: [
-      { label: "Sarvam AI translation — ImpactMojo in 11 Indian languages", href: "/about.html" }
+      { label: "Sarvam AI translation: ImpactMojo in 11 Indian languages", href: "/about.html" }
     ]
   },
 
@@ -458,7 +458,7 @@ window.FUNDAMENTALS = (function () {
       }
     },
     links: [
-      { label: "NFHS Explorer — child nutrition", href: "/nfhs.html" }
+      { label: "NFHS Explorer: child nutrition", href: "/nfhs.html" }
     ]
   },
 
@@ -500,7 +500,7 @@ window.FUNDAMENTALS = (function () {
     },
     links: [
       { label: "Cities Explorer", href: "/cities.html" },
-      { label: "IHDS Explorer — rural-urban outcomes", href: "/ihds.html" }
+      { label: "IHDS Explorer: rural-urban outcomes", href: "/ihds.html" }
     ]
   },
 
@@ -514,7 +514,7 @@ window.FUNDAMENTALS = (function () {
     complication: "The wheel puts married at the centre and child marriage in the middle band. But marriage confers power only when it is chosen, and 23.3% of Indian women aged 20 to 24 were married before they turned 18.",
     rings: {
       power: {
-        groups: "Married — within caste and religion, with family approval",
+        groups: "Married: within caste and religion, with family approval",
         short: "Married",
         evidence: [
           { stat: "~95%", detail: "of Indian marriages are within caste. The 5% that are not are the exception the system is built to prevent.", source: "India Human Development Survey-II", year: "2011-12" },

@@ -8,7 +8,7 @@ Common questions from educators, facilitators, and practitioners.
 
 Yes. All 21 flagship courses (13 modules each), 59 foundational courses, 135 learning games, 35 interactive studios, 90 handouts, the ImpactLex glossary (390+ terms), 200 Dev Case Studies, 500+ DevDiscourses papers, and interactive BookSummaries are completely free.
 
-There are paid tiers (Practitioner, Professional, and Organization) that unlock additional tools — things like advanced studio features, PDF/PNG export, AI-powered tools, and team dashboards. But the core learning experience is free and always will be.
+There are paid tiers (Practitioner, Professional, and Organization) that unlock additional tools: things like advanced studio features, PDF/PNG export, AI-powered tools, and team dashboards. But the core learning experience is free and always will be.
 
 We believe development education should not be locked behind a paywall.
 
@@ -20,10 +20,10 @@ No. You can access every course, game, studio, and handout without signing up or
 
 However, creating a free account unlocks useful features:
 
-- **Progress tracking** — the platform remembers where you left off.
-- **Bookmarks and notes** — save content and add personal notes.
-- **Certificates** — earn verifiable digital credentials when you complete a flagship course.
-- **Reading lists** — curate papers from the DevDiscourses library.
+- **Progress tracking**: the platform remembers where you left off.
+- **Bookmarks and notes**: save content and add personal notes.
+- **Certificates**: earn verifiable digital credentials when you complete a flagship course.
+- **Reading lists**: curate papers from the DevDiscourses library.
 
 Creating an account takes less than a minute and requires only an email address.
 
@@ -46,11 +46,11 @@ This is especially useful for practitioners working in field locations with unre
 
 ## Can I use ImpactMojo content in my own workshop?
 
-Yes — and we encourage it. ImpactMojo content is licensed under **Creative Commons BY-NC-ND 4.0**. In plain language, that means:
+Yes, and we encourage it. ImpactMojo content is licensed under **Creative Commons BY-NC-ND 4.0**. In plain language, that means:
 
 - **Use freely.** You can use any course, handout, game, or studio in your workshop, classroom, or training program.
-- **Credit ImpactMojo.** Include a credit line (for example: "Content from ImpactMojo — impactmojo.com") in your slides, handouts, or materials.
-- **Do not sell it.** You cannot charge money for ImpactMojo content itself. (You can, of course, charge for your facilitation — just not for our materials.)
+- **Credit ImpactMojo.** Include a credit line (for example: "Content from ImpactMojo, impactmojo.com") in your slides, handouts, or materials.
+- **Do not sell it.** You cannot charge money for ImpactMojo content itself. (You can, of course, charge for your facilitation: just not for our materials.)
 - **Do not modify and redistribute.** You cannot alter the content and distribute the altered version. Use it as-is, or contact us to discuss adaptations.
 
 If you are an NGO running a free internal training, you are good to go. If you have a more complex use case, reach out and we will work something out.
@@ -76,7 +76,7 @@ For workshops, we recommend printing handouts the day before and organizing them
 
 ImpactMojo content is available in **6 South Asian languages**. The platform's multilingual support covers key courses, the ImpactLex glossary, and select resources.
 
-Language switching is built into the interface — you can switch languages without leaving the page you are on.
+Language switching is built into the interface: you can switch languages without leaving the page you are on.
 
 The ImpactLex glossary is particularly useful in multilingual settings. It provides definitions of 390+ development terms across languages, so teams working in different languages can share a common vocabulary.
 
@@ -107,24 +107,24 @@ Here is a straightforward comparison:
 | 35 studios | Yes | Yes | Yes | Yes |
 | 90 handouts | Yes | Yes | Yes | Yes |
 | ImpactLex, DevDiscourses, Case Studies | Yes | Yes | Yes | Yes |
-| Progress tracking and certificates | — | Yes | Yes | Yes |
-| Advanced studio features (PDF/PNG export) | — | Yes | Yes | Yes |
-| AI-powered tools (VaniScribe, Qual Studio Pro) | — | — | Yes | Yes |
-| DevEconomics Toolkit, Code Converter | — | — | Yes | Yes |
-| Priority coaching | — | — | Yes | Yes |
-| Team dashboards | — | — | — | Yes |
-| Bulk licensing and dedicated support | — | — | — | Yes |
+| Progress tracking and certificates |: | Yes | Yes | Yes |
+| Advanced studio features (PDF/PNG export) |: | Yes | Yes | Yes |
+| AI-powered tools (VaniScribe, Qual Studio Pro) |, |, | Yes | Yes |
+| DevEconomics Toolkit, Code Converter |, |, | Yes | Yes |
+| Priority coaching |, |, | Yes | Yes |
+| Team dashboards |, |, |, | Yes |
+| Bulk licensing and dedicated support |, |, |, | Yes |
 
-**The key point:** The free tier is not a trial. It contains the full curriculum — every course, every game, every studio, every handout. Paid tiers add professional tools and organizational features on top of that foundation.
+**The key point:** The free tier is not a trial. It contains the full curriculum: every course, every game, every studio, every handout. Paid tiers add professional tools and organizational features on top of that foundation.
 
 ---
 
 ## How do I get certificates?
 
 1. **Create a free account** on ImpactMojo.
-2. **Complete a flagship course** — work through all modules and quizzes.
+2. **Complete a flagship course**: work through all modules and quizzes.
 3. **Your certificate is generated automatically** and appears on your dashboard.
-4. **Download or share** — save the certificate as a file, or share the unique verification URL with employers, universities, or grant committees.
+4. **Download or share**: save the certificate as a file, or share the unique verification URL with employers, universities, or grant committees.
 
 Certificates use the W3C Open Badges 3.0 standard, which means they are verifiable digital credentials. Anyone with your verification URL can confirm your certificate is genuine.
 
@@ -136,11 +136,11 @@ Yes. The **Organization tier** (₹1,499/user/month) is designed for NGOs, think
 
 What you get:
 
-- **Team dashboards** — see which courses your team members have started and completed.
-- **Bulk licensing** — manage all accounts from one place.
-- **Custom learning paths** — assign specific courses and tracks to different roles.
-- **Dedicated support** — priority access to the ImpactMojo team.
-- **Progress reports** — useful for donor reporting on capacity building activities.
+- **Team dashboards**: see which courses your team members have started and completed.
+- **Bulk licensing**: manage all accounts from one place.
+- **Custom learning paths**: assign specific courses and tracks to different roles.
+- **Dedicated support**: priority access to the ImpactMojo team.
+- **Progress reports**: useful for donor reporting on capacity building activities.
 
 To set up an organization account, contact the ImpactMojo team. Sliding-scale pricing is available for grassroots organizations.
 
@@ -152,9 +152,9 @@ The Dataverse is a curated library of **270 data sources, tools, datasets, and A
 
 Think of it as a carefully organized reference shelf. Instead of searching the internet for "India poverty data" and wading through hundreds of results, you can browse the Dataverse to find:
 
-- **Datasets** — census data, survey data, economic indicators, health statistics.
-- **Tools** — software and platforms for data collection, analysis, and visualization.
-- **APIs** — programmatic access to development data for researchers and data analysts.
+- **Datasets**: census data, survey data, economic indicators, health statistics.
+- **Tools**: software and platforms for data collection, analysis, and visualization.
+- **APIs**: programmatic access to development data for researchers and data analysts.
 
 Each entry includes a description, a link to the source, and notes on what it is useful for. The Dataverse is free to browse and does not require an account.
 
@@ -164,9 +164,9 @@ Each entry includes a description, a link to the source, and notes on what it is
 
 ImpactMojo works on any device with a modern web browser:
 
-- **Phones** (Android or iPhone) — the platform is mobile-first, so it works well on small screens.
-- **Tablets** — a good option for workshop settings.
-- **Laptops and desktops** — for extended study sessions and studio work.
+- **Phones** (Android or iPhone): the platform is mobile-first, so it works well on small screens.
+- **Tablets**: a good option for workshop settings.
+- **Laptops and desktops**: for extended study sessions and studio work.
 
 **Browser compatibility:** Chrome, Firefox, Safari, and Edge all work. We recommend keeping your browser updated to the latest version.
 
@@ -185,13 +185,13 @@ ImpactMojo works on any device with a modern web browser:
 - Quizzes and assessment components
 - Certificate eligibility on completion
 
-**Foundational courses** (51 in total) are comprehensive study decks — self-paced reading materials that cover a specific topic thoroughly. They are:
+**Foundational courses** (51 in total) are comprehensive study decks: self-paced reading materials that cover a specific topic thoroughly. They are:
 - Great for self-study and reference
 - Comprehensive in their coverage of a topic
-- Older in their technology — they don't include interactive features, assessments, or project components
+- Older in their technology: they don't include interactive features, assessments, or project components
 - Designed as standalone resources, not as interactive learning experiences
 
-**Where we're headed:** The long-term plan is to build all courses to flagship standard — with interactive elements, assessments, and hands-on projects. The foundational courses represent valuable content that will be progressively upgraded. In the meantime, they remain excellent self-study materials and are useful as pre-reading, reference guides, and teaching supplements.
+**Where we're headed:** The long-term plan is to build all courses to flagship standard, with interactive elements, assessments, and hands-on projects. The foundational courses represent valuable content that will be progressively upgraded. In the meantime, they remain excellent self-study materials and are useful as pre-reading, reference guides, and teaching supplements.
 
 If you're choosing between the two, start with a flagship course for the richest learning experience. Use foundational courses when you need to learn a specific topic quickly or want reference material on a subject that doesn't yet have a flagship course.
 
@@ -199,7 +199,7 @@ If you're choosing between the two, start with a flagship course for the richest
 
 ## What is Mojini?
 
-Mojini is ImpactMojo's **platform assistant chatbot** — it helps you find content, answer questions about courses and pricing, and navigate the platform.
+Mojini is ImpactMojo's **platform assistant chatbot**: it helps you find content, answer questions about courses and pricing, and navigate the platform.
 
 **Important: Mojini is not AI-powered.** It's a structured FAQ system that matches your question to a bank of pre-written answers covering 30+ topic patterns. It doesn't use a large language model, doesn't generate new text, and doesn't learn from your conversations. This means it's reliable for questions it knows about but won't be able to help with questions outside its programmed topics.
 
@@ -218,7 +218,7 @@ Yes, but selectively and with human oversight. Here's where:
 
 We never publish unverified AI-generated statistics, generate fake citations, train AI on learner data, or use AI to make automated decisions about your learning.
 
-Mojini (the platform chatbot) is NOT AI — it's a keyword-matching FAQ system.
+Mojini (the platform chatbot) is NOT AI: it's a keyword-matching FAQ system.
 
 For the full policy, see [AI Policy](ai-policy-guide.md).
 
@@ -226,7 +226,7 @@ For the full policy, see [AI Policy](ai-policy-guide.md).
 
 ## Who built ImpactMojo?
 
-ImpactMojo was created by **Dr. Varna Sri Raman** (Founder — development economist, PhD, specialist in social impact measurement and gender studies across South Asia) and **Vandana Soni** (Co-Founder — 15+ years in education programme design, recognised as Top Contributor in Education Sector by Jobs for Her 2022). **Vignesh** serves as Honorary Technical Lead.
+ImpactMojo was created by **Dr. Varna Sri Raman** (Founder (development economist, PhD, specialist in social impact measurement and gender studies across South Asia) and **Vandana Soni** (Co-Founder) 15+ years in education programme design, recognised as Top Contributor in Education Sector by Jobs for Her 2022). **Vignesh** serves as Honorary Technical Lead.
 
 The platform is supported by **PinPoint Ventures**.
 
@@ -257,14 +257,14 @@ ImpactMojo has 13 premium tools across two tiers:
 
 | Tool | What it does | Guide |
 |------|-------------|-------|
-| **RQ Builder Pro** | Guided research question builder with PICO/SPIDER framing, method suggestions, and worked examples | — |
-| **TOC Workbench Pro** | Advanced Theory of Change building with assumption mapping, evidence linkage, version history, and PDF/PNG export | — |
+| **RQ Builder Pro** | Guided research question builder with PICO/SPIDER framing, method suggestions, and worked examples |: |
+| **TOC Workbench Pro** | Advanced Theory of Change building with assumption mapping, evidence linkage, version history, and PDF/PNG export |: |
 
-**Professional Tier (₹999/month) — includes all Practitioner tools plus:**
+**Professional Tier (₹999/month), includes all Practitioner tools plus:**
 
 | Tool | What it does | Guide |
 |------|-------------|-------|
-| **Field Notes from a Development Economist** | Behind-the-scenes analysis of real programs, procurement dynamics, and implementation trade-offs | — |
+| **Field Notes from a Development Economist** | Behind-the-scenes analysis of real programs, procurement dynamics, and implementation trade-offs |: |
 | **VaniScribe** | AI transcription of field interviews in 10+ South Asian languages | [Guide](vaniscribe-guide.md) |
 | **DevData Practice** | Generates realistic synthetic datasets for learning and practice (36 generators, 840K+ rows) | [Guide](devdata-practice-guide.md) |
 | **DevEconomics Toolkit** | 11 interactive web apps for development economics methods (sample size calculators, inequality tools, evaluation design simulators) | [Guide](deveconomics-toolkit-guide.md) |
@@ -290,7 +290,7 @@ We have plain-language summaries of all our policies:
 | **Disclaimer** | What ImpactMojo is and isn't responsible for | [Read](disclaimer-guide.md) |
 | **Transparency** | Our commitments and how we hold ourselves accountable | [Read](transparency-and-commitments.md) |
 
-The full legal documents are available on [impactmojo.in](https://www.impactmojo.in) — the pages above are plain-language summaries.
+The full legal documents are available on [impactmojo.in](https://www.impactmojo.in), the pages above are plain-language summaries.
 
 ---
 
@@ -313,14 +313,14 @@ All updates are logged in the [Changelog](changelog.md).
 
 No. ImpactMojo is a tiny, entirely bootstrapped team. We don't have the budget to pay salaries or stipends.
 
-That said — we would genuinely love your help. If you're interested in contributing (content, translations, code, design, research), here's what we can offer:
+That said: we would genuinely love your help. If you're interested in contributing (content, translations, code, design, research), here's what we can offer:
 
-- **Training.** We'll teach you what we know — research methods, M&E, development practice, platform development.
+- **Training.** We'll teach you what we know: research methods, M&E, development practice, platform development.
 - **Mentorship.** Work alongside the founders and get real feedback on real work.
 - **Experience.** Contribute to an open-source platform used by development professionals across South Asia.
 - **A certificate of experience.** We'll issue a formal certificate acknowledging your contribution and thanking you for your work.
 
-What we can't offer is money. We're honest about that. If you're looking for a paid position, we completely understand — and we hope our free courses help you land one.
+What we can't offer is money. We're honest about that. If you're looking for a paid position, we completely understand, and we hope our free courses help you land one.
 
 If you're interested in volunteering, email [hello@impactmojo.in](mailto:hello@impactmojo.in) and tell us what you'd like to help with.
 

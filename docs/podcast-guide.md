@@ -2,7 +2,7 @@
 
 ## Between the Logframes
 
-**Between the Logframes: Development Conversations That Matter** is ImpactMojo's podcast — 30-minute episodes exploring the honest reality of development work.
+**Between the Logframes: Development Conversations That Matter** is ImpactMojo's podcast, 30-minute episodes exploring the honest reality of development work.
 
 Hosted by **Dr. Varna Sri Raman** (Founder, ImpactMojo; PhD in Development Economics) and **Vandana Soni** (Business Partner, ImpactMojo), the podcast covers topics development professionals face every day but rarely discuss openly.
 
@@ -12,13 +12,13 @@ Hosted by **Dr. Varna Sri Raman** (Founder, ImpactMojo; PhD in Development Econo
 
 The podcast tackles the gap between how development work is *supposed* to go and how it *actually* goes:
 
-- When indicators lie — and what to do about it
+- When indicators lie, and what to do about it
 - Why Theory of Change becomes a tick-box exercise
 - What happens when community needs don't match donor priorities
 - The unglamorous realities of fieldwork
 - Honest conversations about failure, compromise, and learning
 
-The tone is conversational but rigorous — combining academic depth (Dr. Raman's economics background) with operational reality (Soni's business and partnerships experience).
+The tone is conversational but rigorous: combining academic depth (Dr. Raman's economics background) with operational reality (Soni's business and partnerships experience).
 
 ---
 
@@ -30,7 +30,7 @@ Assign an episode before a workshop session. Use it as a discussion starter: "Th
 
 ### For Reflective Practice
 
-Recommend the podcast to participants as ongoing professional development. Episodes are designed to prompt honest reflection about development practice — the kind of thinking that doesn't happen in formal training.
+Recommend the podcast to participants as ongoing professional development. Episodes are designed to prompt honest reflection about development practice: the kind of thinking that doesn't happen in formal training.
 
 ### As a Model for Honest Discourse
 
@@ -40,13 +40,13 @@ The podcast models the kind of frank, evidence-informed conversation that develo
 
 ## Where to Listen
 
-- **Spotify** — search "Between the Logframes"
+- **Spotify**: search "Between the Logframes"
 - **Subscribe for updates** at [hello@impactmojo.in](mailto:hello@impactmojo.in) for notifications when new episodes drop, plus behind-the-scenes content
 
 ---
 
 ## Tips
 
-- **Episodes are 30 minutes** — short enough to assign as homework, long enough to go deep on a topic.
+- **Episodes are 30 minutes**: short enough to assign as homework, long enough to go deep on a topic.
 - **The hosts bring contrasting expertise.** Dr. Raman approaches topics from an economics and evidence perspective; Soni from an operations and partnerships perspective. This tension creates useful discussion.
 - **New episodes are being added regularly.** Subscribe to stay current.

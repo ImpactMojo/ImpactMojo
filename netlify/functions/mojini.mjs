@@ -28,18 +28,18 @@ Almost everything is free forever, no login. Content under CC BY-NC-ND 4.0; code
 
 WHAT'S FREE (no sign-in):
 - 17 flagship courses (/courses/) and 51 foundational "101" courses (/101-courses/)
-- 30 labs (/Labs/) and 135 games (/game-library.html) — 18 simulations + 117 puzzles
+- 30 labs (/Labs/) and 135 games (/game-library.html) (18 simulations + 117 puzzles
 - 105 reading companions (/BookSummaries/), 22 deep dives (/DeepDives/), 6 data dives (/DataDives/)
-- Field Radio — community voice notes (/field-radio.html)
+- Field Radio) community voice notes (/field-radio.html)
 - 89 handouts (/handouts.html), 320 curated datasets in the Dataverse (/dataverse.html)
 - BCT behaviour-change repository (/bct-repository.html), ImpactLex glossary (/impactlex/)
 - 13 libraries hub (/libraries.html); 56-session Dojo practice programme (/dojos.html)
-- Five pro tools that are FREE TO USE (Research Question Builder, ToR Builder, Qualitative Insights Lab, Code Converter, Sampling Studio) — only EXPORT + advanced modes are Premium.
+- Five pro tools that are FREE TO USE (Research Question Builder, ToR Builder, Qualitative Insights Lab, Code Converter, Sampling Studio), only EXPORT + advanced modes are Premium.
 
-FREEMIUM MODEL: "free to build, pay to export." The paywall never blocks learning or doing the work — only exporting a polished deliverable, advanced modes, the full Practice Packs, the AI Advisory Board, VaniScribe, DevData, certificates, and priority coaching.
+FREEMIUM MODEL: "free to build, pay to export." The paywall never blocks learning or doing the work, only exporting a polished deliverable, advanced modes, the full Practice Packs, the AI Advisory Board, VaniScribe, DevData, certificates, and priority coaching.
 PLANS (see /premium.html): Explorer (free) · Practitioner ₹399/mo or ₹3,990/yr · Professional ₹999/mo or ₹9,990/yr · Team (custom). Practice Packs also à la carte.
 
-COMMUNITY (/community): WhatsApp PLC, "Research Rundown" (a Substack newsletter at varna.substack.com), Discord, Telegram. Coaching (/coaching). Peer review (/peer-review.html). Webinars are small (10 seats) — request a seat at /events.html.
+COMMUNITY (/community): WhatsApp PLC, "Research Rundown" (a Substack newsletter at varna.substack.com), Discord, Telegram. Coaching (/coaching). Peer review (/peer-review.html). Webinars are small (10 seats): request a seat at /events.html.
 ABOUT: Founded by Dr. Varna Sri Raman and Vandana Soni. Supported by PinPoint Ventures.`;
 
 const SYSTEM = `You are Mojini, the friendly assistant for ImpactMojo, a free development-education platform for South Asia.
@@ -48,10 +48,10 @@ Answer ONLY using the facts below (plus general, well-established development-se
 ${KNOWLEDGE}
 
 RULES:
-- Be warm, concise and practical — 2 to 4 sentences. No headings or long lists unless the user asks.
+- Be warm, concise and practical, 2 to 4 sentences. No headings or long lists unless the user asks.
 - When a page is relevant, point to it with its root-relative path (e.g. "/premium.html"). Only use paths listed above.
 - If asked about pricing or what's free, use the plan facts exactly; don't guess numbers.
-- If you don't know or it's outside ImpactMojo / the development sector, say so briefly and suggest the catalog (/catalog.html) or search — don't make things up.
+- If you don't know or it's outside ImpactMojo / the development sector, say so briefly and suggest the catalog (/catalog.html) or search: don't make things up.
 - Never claim to perform actions (signing someone up, sending email). You only give information.`;
 
 // ---- Providers (server-side keys only; pick the first free one available) --
@@ -145,7 +145,7 @@ export default async (req) => {
   const question = String(body?.question || "").trim();
   const page = String(body?.page || "").slice(0, 200);
   if (!question) return json({ error: "question required" }, 400);
-  if (question.length > MAX_Q) return json({ error: "That's a long one — try a shorter question." }, 400);
+  if (question.length > MAX_Q) return json({ error: "That's a long one: try a shorter question." }, 400);
 
   const user = page
     ? `The visitor is on the page "${page}".\n\nTheir question: ${question}`
@@ -154,7 +154,7 @@ export default async (req) => {
   const { text, model } = await answer(SYSTEM, user);
   if (!text) {
     return json({
-      answer: "I can't reach my assistant right now. Meanwhile, the catalog (/catalog.html) and search cover almost everything — or email hello@impactmojo.in.",
+      answer: "I can't reach my assistant right now. Meanwhile, the catalog (/catalog.html) and search cover almost everything, or email hello@impactmojo.in.",
       model: null,
       degraded: true,
     });

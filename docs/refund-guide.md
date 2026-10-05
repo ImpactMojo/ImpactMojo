@@ -1,4 +1,4 @@
-# Refund Policy — In Plain Language
+# Refund Policy. In Plain Language
 
 This is a plain-language summary of ImpactMojo's refund policy. The full document is at [impactmojo.in/refund-policy.html](https://www.impactmojo.in/refund-policy.html).
 
@@ -6,7 +6,7 @@ This is a plain-language summary of ImpactMojo's refund policy. The full documen
 
 ## The Short Version
 
-Free content is free — no refund needed. For paid services, we have fair cancellation windows. We're not trying to keep your money if the service didn't work for you.
+Free content is free: no refund needed. For paid services, we have fair cancellation windows. We're not trying to keep your money if the service didn't work for you.
 
 ---
 
@@ -49,7 +49,7 @@ All courses, games, labs, handouts, and resources on the free tier are permanent
 ## Premium Membership Refunds
 
 ### Monthly plans
-- Cancel anytime — your access continues until the end of the current billing period
+- Cancel anytime: your access continues until the end of the current billing period
 - No partial-month refunds
 
 ### Annual plans
@@ -57,7 +57,7 @@ All courses, games, labs, handouts, and resources on the free tier are permanent
 - **After 30 days:** No refund, but you can cancel and your access continues until the plan expires
 
 ### Organisation plans
-- Custom terms based on your agreement — contact us to discuss
+- Custom terms based on your agreement: contact us to discuss
 
 ---
 

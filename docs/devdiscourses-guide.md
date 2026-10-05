@@ -4,9 +4,9 @@
 
 Development Discourses (DevDiscourses) is ImpactMojo's **curated open-access library of 500+ research papers, books, and grey literature** on development, social impact, and public policy.
 
-Unlike Google Scholar (which returns thousands of results of varying quality), DevDiscourses is a hand-curated collection where every resource has been selected for relevance, accessibility, and quality. It prioritises **open-access resources** — so you can actually read what you find.
+Unlike Google Scholar (which returns thousands of results of varying quality), DevDiscourses is a hand-curated collection where every resource has been selected for relevance, accessibility, and quality. It prioritises **open-access resources**, so you can actually read what you find.
 
-**Access:** Free — [Browse DevDiscourses](https://on-web.link/DevDiscourses)
+**Access:** Free, [Browse DevDiscourses](https://on-web.link/DevDiscourses)
 
 ---
 
@@ -28,11 +28,11 @@ Resources are searchable by **topic, type, author, and keyword**.
 
 ## Types of Resources
 
-- **Journal articles** — peer-reviewed research from development and social science journals
-- **Books and book chapters** — foundational texts and recent publications
-- **Working papers** — pre-publication research from think tanks and research institutions
-- **Grey literature** — programme evaluations, policy briefs, and reports from NGOs and multilaterals
-- **Systematic reviews** — comprehensive evidence syntheses on specific topics
+- **Journal articles**: peer-reviewed research from development and social science journals
+- **Books and book chapters**: foundational texts and recent publications
+- **Working papers**: pre-publication research from think tanks and research institutions
+- **Grey literature**: programme evaluations, policy briefs, and reports from NGOs and multilaterals
+- **Systematic reviews**: comprehensive evidence syntheses on specific topics
 
 ---
 
@@ -58,7 +58,7 @@ ImpactMojo's flagship courses reference specific papers and books. DevDiscourses
 
 ## Tips
 
-- **Open-access prioritised** — most resources in the collection can be read for free, unlike paywalled academic databases.
-- **Curated, not comprehensive** — DevDiscourses isn't trying to be Google Scholar. The value is in the curation: every resource was selected for relevance to South Asian development practice.
-- **500+ resources and growing** — suggest additions at hello@impactmojo.in.
-- **Combine with FieldCases** — DevDiscourses provides the theory and evidence; FieldCases provides the practice examples.
+- **Open-access prioritised**: most resources in the collection can be read for free, unlike paywalled academic databases.
+- **Curated, not comprehensive**: DevDiscourses isn't trying to be Google Scholar. The value is in the curation: every resource was selected for relevance to South Asian development practice.
+- **500+ resources and growing**: suggest additions at hello@impactmojo.in.
+- **Combine with FieldCases**: DevDiscourses provides the theory and evidence; FieldCases provides the practice examples.

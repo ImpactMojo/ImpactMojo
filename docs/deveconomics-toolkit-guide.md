@@ -6,19 +6,19 @@ The DevEconomics Toolkit is a collection of **11 interactive web applications** 
 
 You don't need to install anything. Each app runs in your web browser.
 
-**Access:** Professional tier (₹999/month) — [Open DevEconomics Toolkit](https://impactmojo-devecon-toolkit.netlify.app/)
+**Access:** Professional tier (₹999/month), [Open DevEconomics Toolkit](https://impactmojo-devecon-toolkit.netlify.app/)
 
 ---
 
 ## What Are "Shiny Apps"? (A Quick Explanation)
 
-The DevEconomics Toolkit is built using **R Shiny** — a technology that turns statistical code into interactive web applications. Here's what that means in plain language:
+The DevEconomics Toolkit is built using **R Shiny**: a technology that turns statistical code into interactive web applications. Here's what that means in plain language:
 
 - **R** is a programming language widely used by economists and researchers for data analysis
-- **Shiny** is a framework that lets developers turn R code into a web page with buttons, sliders, and charts that anyone can use — no coding required
+- **Shiny** is a framework that lets developers turn R code into a web page with buttons, sliders, and charts that anyone can use: no coding required
 - **You don't need to know R or any programming** to use these apps. They present you with inputs (sliders, dropdown menus, text fields) and show you outputs (charts, tables, calculations) in your browser
 
-Think of it like a calculator, but instead of simple arithmetic, each app calculates something specific to development economics — sample sizes for an RCT, inequality measures, poverty indices, or the results of different evaluation designs.
+Think of it like a calculator, but instead of simple arithmetic, each app calculates something specific to development economics: sample sizes for an RCT, inequality measures, poverty indices, or the results of different evaluation designs.
 
 ---
 
@@ -33,10 +33,10 @@ Think of it like a calculator, but instead of simple arithmetic, each app calcul
 
 **How to use it:** Enter your expected effect size, significance level, desired statistical power, and cluster size (if applicable). The app shows you the minimum sample size and a power curve.
 
-**Who it's for:** Anyone designing an RCT or quasi-experiment — evaluation specialists, researchers, and programme managers writing proposals.
+**Who it's for:** Anyone designing an RCT or quasi-experiment, evaluation specialists, researchers, and programme managers writing proposals.
 
 #### 2. DiD Simulator (Difference-in-Differences)
-**What it does:** Visualises how the **difference-in-differences** method works — the most common way to estimate programme impact when random assignment isn't possible.
+**What it does:** Visualises how the **difference-in-differences** method works, the most common way to estimate programme impact when random assignment isn't possible.
 
 **Why this matters:** DiD is conceptually simple but easy to misapply. The simulator lets you see how the method isolates the treatment effect by comparing changes over time between treatment and control groups.
 
@@ -45,7 +45,7 @@ Think of it like a calculator, but instead of simple arithmetic, each app calcul
 **Who it's for:** Anyone learning or teaching evaluation methods.
 
 #### 3. RDD Explorer (Regression Discontinuity Design)
-**What it does:** Demonstrates how **regression discontinuity** works — exploiting a cutoff (like a poverty threshold or exam score) to estimate causal effects.
+**What it does:** Demonstrates how **regression discontinuity** works, exploiting a cutoff (like a poverty threshold or exam score) to estimate causal effects.
 
 **Why this matters:** RDD is one of the strongest quasi-experimental designs, but it requires understanding of bandwidths, running variables, and the visual logic of the method. This app makes it interactive.
 
@@ -59,14 +59,14 @@ Think of it like a calculator, but instead of simple arithmetic, each app calcul
 ### Inequality & Poverty Tools
 
 #### 5. Gini & Lorenz Curve Tool
-**What it does:** Calculates the **Gini coefficient** (the most common measure of inequality) and draws the **Lorenz curve** — the visual representation of how income or wealth is distributed in a population.
+**What it does:** Calculates the **Gini coefficient** (the most common measure of inequality) and draws the **Lorenz curve**, the visual representation of how income or wealth is distributed in a population.
 
 **Why this matters:** Inequality is central to development work. This tool lets you input data (or use built-in country datasets) and instantly see how equal or unequal a distribution is.
 
 **How to use it:** Enter income data or choose a preset country dataset. The app draws the Lorenz curve and calculates the Gini coefficient. Adjust values to see how changes affect inequality.
 
 #### 6. MPI Explorer (Multidimensional Poverty Index)
-**What it does:** Lets you explore the **Multidimensional Poverty Index** — which measures poverty not just by income but across health, education, and living standards.
+**What it does:** Lets you explore the **Multidimensional Poverty Index**, which measures poverty not just by income but across health, education, and living standards.
 
 **Why this matters:** Income-only poverty measures miss important dimensions. The MPI captures whether households have access to schooling, nutrition, clean water, sanitation, electricity, and adequate housing.
 
@@ -80,22 +80,22 @@ Think of it like a calculator, but instead of simple arithmetic, each app calcul
 ### Planning & Framework Tools
 
 #### 8. Theory of Change Visualiser
-**What it does:** Builds and visualises a **Theory of Change** diagram — mapping the causal chain from activities to outputs to outcomes to impact.
+**What it does:** Builds and visualises a **Theory of Change** diagram, mapping the causal chain from activities to outputs to outcomes to impact.
 
 **How to use it:** Enter your programme's activities, outputs, outcomes, and impact. The app generates a visual diagram showing the causal logic.
 
 #### 9. Cost-Benefit Analysis Tool
-**What it does:** Helps you structure and calculate a **cost-benefit analysis** — comparing the total costs of a programme against its total benefits, discounted to present value.
+**What it does:** Helps you structure and calculate a **cost-benefit analysis**, comparing the total costs of a programme against its total benefits, discounted to present value.
 
 **How to use it:** Enter cost items and benefit estimates, set a discount rate and time horizon, and the app calculates net present value, benefit-cost ratio, and internal rate of return.
 
 #### 10. LogFrame Builder
-**What it does:** Constructs a **logical framework** (logframe) — the standard planning tool used by most donors and development agencies.
+**What it does:** Constructs a **logical framework** (logframe), the standard planning tool used by most donors and development agencies.
 
 **How to use it:** Enter your programme's goal, purpose, outputs, and activities. The app structures them into a logframe matrix with indicators, means of verification, and assumptions.
 
 #### 11. WDI Dashboard (World Development Indicators)
-**What it does:** Lets you explore the **World Bank's World Development Indicators** — the most comprehensive collection of development data covering 200+ countries.
+**What it does:** Lets you explore the **World Bank's World Development Indicators**, the most comprehensive collection of development data covering 200+ countries.
 
 **How to use it:** Select countries and indicators. The app generates time-series charts, cross-country comparisons, and downloadable data tables.
 
@@ -120,7 +120,7 @@ When teams are writing evaluation designs for proposals, the toolkit apps help t
 ## Tips
 
 - **You don't need any programming knowledge.** Every app has a point-and-click interface. If you can use a web form, you can use these tools.
-- **Use real programme numbers.** The tools are most valuable when you input your actual programme parameters — your expected effect sizes, your budget constraints, your target population.
+- **Use real programme numbers.** The tools are most valuable when you input your actual programme parameters: your expected effect sizes, your budget constraints, your target population.
 - **Combine with courses.** The Development Economics flagship course teaches the theory behind these tools. Use the course for concepts and the toolkit for practice.
 - **Apps load in your browser.** They may take a few seconds to initialise the first time, since they're running statistical computations in the background. This is normal.
 - **Internet required.** Unlike some ImpactMojo content, the Shiny apps need an active internet connection to run.

@@ -12,17 +12,17 @@ Deep, multi-module courses with 8–16 modules each, interactive lexicons, South
 |---|--------|-------|---------|---------|------|
 | 1 | Gandhi's Political Thought: Philosophy for Praxis | Philosophy & Governance | 13 | 55 terms | [Open](/courses/gandhi/) |
 | 2 | Understanding Development: An Economics Perspective | Policy & Economics | 13 | 63 terms | [Open](/courses/devecon/) |
-| 3 | Seeing Data: Visualization for Impact | Data & Technology | 13 | — | [Open](/courses/dataviz/) |
+| 3 | Seeing Data: Visualization for Impact | Data & Technology | 13 |, | [Open](/courses/dataviz/) |
 | 4 | AI for Impact: Data Monitoring & Evaluation | Data & Technology | 13 | 50 terms | [Open](/courses/devai/) |
 | 5 | MEL for Development: Monitoring, Evaluation & Learning | MEL & Research | 13 | 65 terms | [Open](/courses/mel/) |
 | 6 | Politics of Aspiration: Rights, Insurance & Social Mobility | Policy & Economics | 13 | 60 terms | [Open](/courses/poa/) |
 | 7 | Media for Development: Communication, Power & Practice | Health & Communication | 12 | 65 terms | [Open](/courses/media/) |
-| 8 | Social-Emotional Learning for Development | Health & Communication | 12 | — | [Open](/courses/sel/) |
-| 9 | Constitution & Law for Development Practice | Philosophy & Governance | 12 | — | [Open](/courses/law/) |
-| 10 | Public Policy: Process, Design & Governance | Philosophy & Governance | 16 | — | [Open](/courses/pubpol/) |
-| 11 | Public Choice: Decisions, Incentives & Institutions | Policy & Economics | 13 | — | [Open](/courses/pubchoice/) |
-| 12 | Gender Studies: Feminisms, Power & Social Change | Health & Communication | 16 | — | [Open](/courses/gender/) |
-| 13 | Livelihoods in India: Rural, Urban & Skills | Policy & Economics | 3 | — | [Open](/courses/livelihoods/) |
+| 8 | Social-Emotional Learning for Development | Health & Communication | 12 |: | [Open](/courses/sel/) |
+| 9 | Constitution & Law for Development Practice | Philosophy & Governance | 12 |: | [Open](/courses/law/) |
+| 10 | Public Policy: Process, Design & Governance | Philosophy & Governance | 16 |, | [Open](/courses/pubpol/) |
+| 11 | Public Choice: Decisions, Incentives & Institutions | Policy & Economics | 13 |, | [Open](/courses/pubchoice/) |
+| 12 | Gender Studies: Feminisms, Power & Social Change | Health & Communication | 16 |, | [Open](/courses/gender/) |
+| 13 | Livelihoods in India: Rural, Urban & Skills | Policy & Economics | 3 |, | [Open](/courses/livelihoods/) |
 | 14 | Power BI for Practitioners | Data & Technology | 8 | 68 terms | [Open](/courses/powerBI/powerbi.html) |
 | 15 | Causal Inference for Development | MEL & Research | 13 | 65 terms | [Open](/courses/causal/) |
 
@@ -30,7 +30,7 @@ Deep, multi-module courses with 8–16 modules each, interactive lexicons, South
 
 ## BookSummaries (163)
 
-Interactive reading companions under Specials — deep, chapter-by-chapter explorations with data tools and AI-powered Q&A. See the [Reading Companions Guide](book-summaries-guide.md) for full details.
+Interactive reading companions under Specials: deep, chapter-by-chapter explorations with data tools and AI-powered Q&A. See the [Reading Companions Guide](book-summaries-guide.md) for full details.
 
 | # | Reading Companion | Link |
 |---|----------------|------|
@@ -94,7 +94,7 @@ Interactive reading companions under Specials — deep, chapter-by-chapter explo
 
 ## Foundational Courses (47)
 
-Single-page courses covering essential development topics — all self-hosted native HTML slide decks (~100 slides each). All free, no login required.
+Single-page courses covering essential development topics: all self-hosted native HTML slide decks (~100 slides each). All free, no login required.
 
 ### MEL & Research
 
@@ -219,7 +219,7 @@ Hands-on workbenches where you build, design, and practice real skills.
 
 ## Game Library (135)
 
-The Game Library at [/game-library](/game-library) unifies **18 simulations** and **117 puzzles** into one filterable collection — ideal for workshops and classroom use.
+The Game Library at [/game-library](/game-library) unifies **18 simulations** and **117 puzzles** into one filterable collection: ideal for workshops and classroom use.
 
 The simulations feature **MiroFish AI agents** powered by Groq/Gemini/DeepSeek with local fallback.
 
@@ -244,17 +244,17 @@ The simulations feature **MiroFish AI agents** powered by Groq/Gemini/DeepSeek w
 | 15 | Epidemic Response Challenge | Public health resource allocation | [Play](/Games/public-health-game.html) |
 | 16 | The Algorithm's Dilemma | Ethical dilemmas in technology and data | [Play](/Games/digital-ethics-game.html) |
 | 17 | SEL Simulation: Five Lenses | Social-emotional learning scenarios through five competency lenses | [Play](/Games/sel-simulation-game.html) |
-| 18 | Counterfactual: The Evaluation Game | Eight impact claims, eight causal-inference traps — pick the strongest feasible evaluation design | [Play](/Games/counterfactual-game.html) |
+| 18 | Counterfactual: The Evaluation Game | Eight impact claims, eight causal-inference traps, pick the strongest feasible evaluation design | [Play](/Games/counterfactual-game.html) |
 
 ### Puzzles (117)
 
-Quick concept puzzles across every learning track — crosswords, matching, ordering, and quiz formats. Browse and filter them all in the [Game Library](/game-library).
+Quick concept puzzles across every learning track: crosswords, matching, ordering, and quiz formats. Browse and filter them all in the [Game Library](/game-library).
 
 ---
 
 ## Timelines (6)
 
-Visual, citation-backed histories of development theory, policy, and practice — 113 nodes across 44 eras. Browse all at the [Timelines index](/timelines/).
+Visual, citation-backed histories of development theory, policy, and practice: 113 nodes across 44 eras. Browse all at the [Timelines index](/timelines/).
 
 | # | Timeline | Span | Link |
 |---|----------|------|------|
@@ -296,7 +296,7 @@ Structured practice exercises with realistic scenarios, worked materials, and mo
 
 ## Live Case Challenges (15)
 
-Real-world case challenges with 2-document case packets and assessment rubrics — one for every flagship course. Browse all at [Challenges](/challenges.html).
+Real-world case challenges with 2-document case packets and assessment rubrics: one for every flagship course. Browse all at [Challenges](/challenges.html).
 
 | # | Challenge | Flagship Course | Link |
 |---|-----------|-----------------|------|
@@ -350,7 +350,7 @@ Curated, fully web-cited reading lists on the debates that shape development pra
 
 ## Research to Action (7 series, 70 posters)
 
-Shareable poster series that turn research and evaluation concepts into visual explainers — 10 posters per series. Browse the album at [/research-to-action/](/research-to-action/).
+Shareable poster series that turn research and evaluation concepts into visual explainers: 10 posters per series. Browse the album at [/research-to-action/](/research-to-action/).
 
 | # | Series | Link |
 |---|--------|------|
@@ -447,7 +447,7 @@ Downloadable reference sheets organized by learning track. Browse all at [Handou
 
 ## Premium Tools & Products (30 products)
 
-Advanced tools and products for researchers and practitioners — 30 in all, including two professional Excel calculators (₹12,000 / ₹15,000) and the Evaluation Essentials Kit (₹2,499). A selection is listed below; see the [Premium page](/premium.html) for the full range.
+Advanced tools and products for researchers and practitioners: 30 in all, including two professional Excel calculators (₹12,000 / ₹15,000) and the Evaluation Essentials Kit (₹2,499). A selection is listed below; see the [Premium page](/premium.html) for the full range.
 
 | # | Tool | Tier | Description | Link |
 |---|------|------|-------------|------|
@@ -467,19 +467,19 @@ Advanced tools and products for researchers and practitioners — 30 in all, inc
 
 | Resource | Description | Access |
 |----------|-------------|--------|
-| **ImpactLex** | 390 development terms dictionary (PWA, hosted on ImpactMojo) | Free — [Browse](/impactlex/) |
+| **ImpactLex** | 390 development terms dictionary (PWA, hosted on ImpactMojo) | Free: [Browse](/impactlex/) |
 | **FieldCases** | 200 curated development cases from 117 countries | Free |
-| **NudgeKit** | 203 behaviour change techniques (BCTs) with South Asian context | Free — [Browse](/bct-repository) |
-| **Dataverse** | 335 data tools, APIs, and datasets | Free — [Browse](/dataverse.html) |
+| **NudgeKit** | 203 behaviour change techniques (BCTs) with South Asian context | Free: [Browse](/bct-repository) |
+| **Dataverse** | 335 data tools, APIs, and datasets | Free: [Browse](/dataverse.html) |
 | **DevDiscourses** | 500+ curated research papers and books | Free |
-| **PolicyDhara** | Indian policy tracking and analysis | Free — [Browse](/policydhara) |
+| **PolicyDhara** | Indian policy tracking and analysis | Free: [Browse](/policydhara) |
 | **NotebookLM Study Companions** | 12 AI study companion notebooks | Free |
-| **Blog: Learning Loops** | 32 articles on development practice | Free — [Read](/blog.html) |
+| **Blog: Learning Loops** | 32 articles on development practice | Free, [Read](/blog.html) |
 | **Podcast: Between the Logframes** | Audio episodes on Spotify | Free |
 | **Dojos** | 56-session practice program | Paid |
-| **Status Page** | Live platform status checks | Free — [View](/status.html) |
-| **Known Issues** | Every open and recently fixed bug, live from the public tracker | Free — [View](/known-issues.html) |
-| **MCP Server** | 11 tools + 3 resources for AI assistants (Claude, Cursor, etc.) | Free — [Setup](https://github.com/ImpactMojo/ImpactMojo/tree/main/mcp-server) |
+| **Status Page** | Live platform status checks | Free: [View](/status.html) |
+| **Known Issues** | Every open and recently fixed bug, live from the public tracker | Free: [View](/known-issues.html) |
+| **MCP Server** | 11 tools + 3 resources for AI assistants (Claude, Cursor, etc.) | Free, [Setup](https://github.com/ImpactMojo/ImpactMojo/tree/main/mcp-server) |
 
 ---
 

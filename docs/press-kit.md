@@ -6,10 +6,10 @@ ImpactMojo's press kit provides journalists, partners, and collaborators with ev
 
 The press kit page ([ImpactMojo_PressKit.html](/ImpactMojo_PressKit.html)) includes:
 
-- **Brand assets** — logos, colour palette, and typography guidelines
-- **Key facts** — platform statistics, mission statement, and founding story
-- **Media-ready descriptions** — short, medium, and long descriptions for press use
-- **Contact information** — media enquiries and partnership requests
+- **Brand assets**: logos, colour palette, and typography guidelines
+- **Key facts**: platform statistics, mission statement, and founding story
+- **Media-ready descriptions**: short, medium, and long descriptions for press use
+- **Contact information**: media enquiries and partnership requests
 
 ## How to Access
 

@@ -2,14 +2,14 @@
 
 ## What Are Data Notes?
 
-Data Notes are **independent data investigations**. Each one takes a single public dataset, interrogates it with original charts, builds a clear argument — and, just as importantly, spells out what the numbers *can't* show. They are ImpactMojo's data-journalism format: closer to an investigative brief than a lesson or a reading list.
+Data Notes are **independent data investigations**. Each one takes a single public dataset, interrogates it with original charts, builds a clear argument, and, just as importantly, spells out what the numbers *can't* show. They are ImpactMojo's data-journalism format: closer to an investigative brief than a lesson or a reading list.
 
 All Data Notes are **free, browser-based, and require no login**. Every chart is drawn on the page (no external services), carries a data table behind it, and names its source.
 
 ### How a Data Note Differs from a Deep Dive
 
-- **A Deep Dive** curates the *literature* on a question — an annotated reading list with a point of view. Many authors, sequenced and annotated.
-- **A Data Note** interrogates the *data* on a question — original analysis of one dataset, with charts we build and an argument we make. One dataset, dug into.
+- **A Deep Dive** curates the *literature* on a question: an annotated reading list with a point of view. Many authors, sequenced and annotated.
+- **A Data Note** interrogates the *data* on a question: original analysis of one dataset, with charts we build and an argument we make. One dataset, dug into.
 
 If you want to know *what to read* on a topic, use a [Deep Dive](deep-dives-guide.md). If you want to know *what the numbers say*, use a Data Note.
 
@@ -39,12 +39,12 @@ Browse all Data Notes at [/DataNotes/](/DataNotes/).
 
 Each Data Note follows the same honest structure:
 
-1. **The finding** — a one-sentence headline of what the data shows, stated up front.
-2. **Stat tiles** — the three or four numbers that anchor the story.
-3. **Chart-led sections** — two to four sections, each pairing narrative with a chart we drew ourselves. Every chart has a title, a plain-English note on what higher/lower means, a data table, and a source line.
-4. **"What this data can and can't tell you"** — a mandatory methodology block. Stocks vs flows, allocation vs delivery, association vs causation, coverage caveats. This is the part that separates a data note from a hot take.
-5. **Sources & data** — every source linked so readers can check our working.
-6. **Go deeper** — links to the matching Deep Dives and courses.
+1. **The finding**: a one-sentence headline of what the data shows, stated up front.
+2. **Stat tiles**: the three or four numbers that anchor the story.
+3. **Chart-led sections**: two to four sections, each pairing narrative with a chart we drew ourselves. Every chart has a title, a plain-English note on what higher/lower means, a data table, and a source line.
+4. **"What this data can and can't tell you"**: a mandatory methodology block. Stocks vs flows, allocation vs delivery, association vs causation, coverage caveats. This is the part that separates a data note from a hot take.
+5. **Sources & data**: every source linked so readers can check our working.
+6. **Go deeper**: links to the matching Deep Dives and courses.
 
 ### Editorial principles
 
@@ -57,15 +57,15 @@ Each Data Note follows the same honest structure:
 
 ## For Educators
 
-- **As a data-literacy teaching case.** Walk students through the "What this data can and can't tell you" block — stocks vs flows, allocation vs delivery — as a live lesson in reading official statistics critically.
+- **As a data-literacy teaching case.** Walk students through the "What this data can and can't tell you" block (stocks vs flows, allocation vs delivery) as a live lesson in reading official statistics critically.
 - **To pair with courses and Deep Dives.** The state welfare-spending investigation pairs with the [Politics of Targeting](/DeepDives/politics-of-targeting.html) and [Health Systems and UHC in South Asia](/DeepDives/health-systems-uhc-south-asia.html) Deep Dives, and with development-economics and MEL courses.
-- **As a prompt for replication.** Point research assistants at the source dataset and ask them to reproduce a chart, then extend it (per-capita spending, trends over time) — the natural next questions each dive leaves open.
+- **As a prompt for replication.** Point research assistants at the source dataset and ask them to reproduce a chart, then extend it (per-capita spending, trends over time): the natural next questions each dive leaves open.
 
 ---
 
 ## Authoring a New Data Note
 
-1. Copy `/DataNotes/state-welfare-budgets.html` (the reference implementation) to `/DataNotes/<slug>.html` and rewrite the content. Keep the `<style>` block and the chart-renderer `<script>` — they are self-contained, theme-aware, and accessible.
+1. Copy `/DataNotes/state-welfare-budgets.html` (the reference implementation) to `/DataNotes/<slug>.html` and rewrite the content. Keep the `<style>` block and the chart-renderer `<script>`, they are self-contained, theme-aware, and accessible.
 2. Edit only the data arrays at the bottom of the chart script. The chart API is:
    - `barChart(mountId, { data:[{label,value,hl?}], max, ticks, avg:{value,label}, suffix?, tipLabel? })`
    - `scatterChart(mountId, { data:[{label,x,y}], xMin, xMax, yMax, xTicks, yTicks })`
@@ -79,6 +79,6 @@ See `/DataNotes/_template.html` for the annotated skeleton.
 
 ## Related
 
-- [Deep Dives Guide](deep-dives-guide.md) — the reading-list companion format
-- Skill `tufte-viz` and `dataviz` — the visualization principles behind the charts
-- Skill `deep-research` — for sourcing and verifying the underlying data
+- [Deep Dives Guide](deep-dives-guide.md): the reading-list companion format
+- Skill `tufte-viz` and `dataviz`, the visualization principles behind the charts
+- Skill `deep-research`, for sourcing and verifying the underlying data

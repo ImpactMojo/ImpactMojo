@@ -224,20 +224,20 @@
   // Pre-built, paid journeys shown alongside the free credential pathways.
   // No progress UI — each links out to its product page.
   var PAID_TRACKS = [
-    { href: '/ai-for-me-certificate.html', name: 'AI for M&E — Assessed Track', track: 'Monitoring, Evaluation & Learning',
-      desc: 'The AI for Impact course, the Counterfactual game, the Critiquing Evidence pack and the AI Agents module — capstone-reviewed, with a verifiable credential you can prove online.',
+    { href: '/ai-for-me-certificate.html', name: 'AI for M&E: Assessed Track', track: 'Monitoring, Evaluation & Learning',
+      desc: 'The AI for Impact course, the Counterfactual game, the Critiquing Evidence pack and the AI Agents module: capstone-reviewed, with a verifiable credential you can prove online.',
       color: '#F59E0B', badge: '#B45309', tag: 'Paid · Verified', cta: 'View the track →' },
-    { href: '/mel-assessed-certificate.html', name: 'MEL — Assessed Track', track: 'Monitoring, Evaluation & Learning',
-      desc: 'The MEL flagship, the Theory of Change and MEL Planning labs and the Donor Reporting pack — capstone-reviewed, with a verifiable credential.',
+    { href: '/mel-assessed-certificate.html', name: 'MEL: Assessed Track', track: 'Monitoring, Evaluation & Learning',
+      desc: 'The MEL flagship, the Theory of Change and MEL Planning labs and the Donor Reporting pack: capstone-reviewed, with a verifiable credential.',
       color: '#F59E0B', badge: '#B45309', tag: 'Paid · Verified', cta: 'View the track →' },
-    { href: '/data-tech-assessed-certificate.html', name: 'Data & Technology — Assessed Track', track: 'Data & Technology',
-      desc: 'Data Visualization and AI for Impact, plus the R & Python and Sampling Design labs — capstone-reviewed, with a verifiable credential.',
+    { href: '/data-tech-assessed-certificate.html', name: 'Data & Technology: Assessed Track', track: 'Data & Technology',
+      desc: 'Data Visualization and AI for Impact, plus the R & Python and Sampling Design labs: capstone-reviewed, with a verifiable credential.',
       color: '#F59E0B', badge: '#B45309', tag: 'Paid · Verified', cta: 'View the track →' },
-    { href: '/policy-economics-assessed-certificate.html', name: 'Policy & Economics — Assessed Track', track: 'Policy & Economics',
-      desc: 'Development Economics and Politics of Aspiration, the Policy Analysis lab and the Governance Evaluation pack — capstone-reviewed, with a verifiable credential.',
+    { href: '/policy-economics-assessed-certificate.html', name: 'Policy & Economics: Assessed Track', track: 'Policy & Economics',
+      desc: 'Development Economics and Politics of Aspiration, the Policy Analysis lab and the Governance Evaluation pack: capstone-reviewed, with a verifiable credential.',
       color: '#F59E0B', badge: '#B45309', tag: 'Paid · Verified', cta: 'View the track →' },
     { href: '/credential-upgrade.html', name: 'Verified Credential Upgrade', track: 'Any completed free pathway',
-      desc: 'Already finished a free pathway? Add just the assessed capstone and a verifiable credential for the pathway you completed — no new content to buy.',
+      desc: 'Already finished a free pathway? Add just the assessed capstone and a verifiable credential for the pathway you completed: no new content to buy.',
       color: '#0EA5E9', badge: '#0369A1', tag: 'Add credential', cta: 'Add a credential →' },
   ];
   function renderPaidCard(t) {

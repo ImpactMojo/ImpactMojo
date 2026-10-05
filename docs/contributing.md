@@ -1,8 +1,8 @@
 # Contributing to ImpactMojo
 
-Thank you for your interest in contributing! ImpactMojo is built by and for the development community. Whether you're a practitioner who spotted an outdated statistic, an educator with a great case study, or a developer who can fix a bug — there's a meaningful way for you to contribute.
+Thank you for your interest in contributing! ImpactMojo is built by and for the development community. Whether you're a practitioner who spotted an outdated statistic, an educator with a great case study, or a developer who can fix a bug: there's a meaningful way for you to contribute.
 
-**Found a bug?** Check [Known Issues](https://www.impactmojo.in/known-issues.html) first — it reads live from this repository's issue tracker, so if we already know, it is listed there with what we know so far. If it is not listed, open an issue and label it `bug`; that is what puts it on the page. If you do not use GitHub, the same page has a form.
+**Found a bug?** Check [Known Issues](https://www.impactmojo.in/known-issues.html) first, it reads live from this repository's issue tracker, so if we already know, it is listed there with what we know so far. If it is not listed, open an issue and label it `bug`; that is what puts it on the page. If you do not use GitHub, the same page has a form.
 
 ## You Don't Need to Be Technical
 
@@ -31,7 +31,7 @@ If you're comfortable with HTML, CSS, or JavaScript, there are plenty of ways to
 
 ### Getting Started (Technical)
 
-ImpactMojo is a vanilla HTML/CSS/JS project — no frameworks, no build step. You can run it locally with just a web browser and a simple server:
+ImpactMojo is a vanilla HTML/CSS/JS project: no frameworks, no build step. You can run it locally with just a web browser and a simple server:
 
 ```bash
 # 1. Fork and clone the repository
@@ -74,7 +74,7 @@ Every commit message starts with a prefix that describes the type of change:
 
 ### Pull Request Guidelines
 
-- Keep PRs focused — one feature or fix per PR
+- Keep PRs focused: one feature or fix per PR
 - Test on desktop and mobile
 - Include screenshots for visual changes
 - Note if changes affect premium features
@@ -93,14 +93,14 @@ If you're contributing educational content, here's what we aim for:
 
 Use [GitHub Issues](https://github.com/ImpactMojo/ImpactMojo/issues) with the appropriate template:
 
-- **Bug Report** — something is broken (link, layout, error)
-- **Feature Request** — a new idea or improvement
-- **Content Issue** — factual error, outdated information, missing topic
+- **Bug Report**: something is broken (link, layout, error)
+- **Feature Request**: a new idea or improvement
+- **Content Issue**: factual error, outdated information, missing topic
 
 ## Community Channels
 
-- [WhatsApp PLC](https://forms.gle/vJaHFd7QcMe4JVF19) — Peer discussions among practitioners
-- [Discord](https://discord.gg/M3ZCmUe7ab) — Technical discussions and tinkering
-- [Telegram](https://t.me/impactmojo) — Free resources and updates
-- [GitHub Discussions](https://github.com/ImpactMojo/ImpactMojo/discussions) — Ideas, Q&A, and announcements
-- **Email:** hello@impactmojo.in — For anything else
+- [WhatsApp PLC](https://forms.gle/vJaHFd7QcMe4JVF19), Peer discussions among practitioners
+- [Discord](https://discord.gg/M3ZCmUe7ab), Technical discussions and tinkering
+- [Telegram](https://t.me/impactmojo), Free resources and updates
+- [GitHub Discussions](https://github.com/ImpactMojo/ImpactMojo/discussions), Ideas, Q&A, and announcements
+- **Email:** hello@impactmojo.in. For anything else

@@ -18,21 +18,21 @@ Earlier versions of this guide described decks generated through Gamma and displ
 
 Every deck follows the same shape:
 
-1. **Title card** — course name, track identity, ImpactMojo branding
-2. **What this covers** — the agenda, stated as questions rather than headings
-3. **Ten to twelve content sections** — concepts, tables, diagrams, and South Asian cases
-4. **Charts where they earn their place** — each with the context above it and the reading below it, not a decorative graphic
-5. **Check-your-understanding** — questions embedded in the deck
-6. **Key takeaways and further reading** — including primary sources and where to find them
+1. **Title card**: course name, track identity, ImpactMojo branding
+2. **What this covers**: the agenda, stated as questions rather than headings
+3. **Ten to twelve content sections**: concepts, tables, diagrams, and South Asian cases
+4. **Charts where they earn their place**: each with the context above it and the reading below it, not a decorative graphic
+5. **Check-your-understanding**: questions embedded in the deck
+6. **Key takeaways and further reading**: including primary sources and where to find them
 
 ### Companion material
 
 47 of the 52 decks also ship two companions:
 
-- **Course Outline poster** — `/101-courses/poster/{slug}.html`, a one-page map of the deck, designed to print
-- **Practice Workbook** — `/101-courses/practice/{slug}.html`, exercises that apply the deck to the reader's own work
+- **Course Outline poster**, `/101-courses/poster/{slug}.html`, a one-page map of the deck, designed to print
+- **Practice Workbook**, `/101-courses/practice/{slug}.html`, exercises that apply the deck to the reader's own work
 
-The five most recent decks — **CSR & ESG**, **Data Protection & the DPDP Act**, **Disability Inclusion**, **GenAI for Practitioners** and **Safeguarding & PSEA** — do not yet have a poster or a workbook. That is a known gap, not a design decision.
+The five most recent decks (**CSR & ESG**, **Data Protection & the DPDP Act**, **Disability Inclusion**, **GenAI for Practitioners** and **Safeguarding & PSEA**) do not yet have a poster or a workbook. That is a known gap, not a design decision.
 
 ---
 
@@ -128,7 +128,7 @@ Browse them all at [/101-courses/](https://www.impactmojo.in/101-courses/).
 
 - **Navigate** with the arrow keys, `Space`, or by swiping. `F` toggles fullscreen.
 - **Theme** follows your device by default; the three-button toggle overrides it.
-- **Deep link** to a slide with `#s42` — the slide IDs are stable, so a link you put in a syllabus will still land in the right place next year.
+- **Deep link** to a slide with `#s42`, the slide IDs are stable, so a link you put in a syllabus will still land in the right place next year.
 - **Offline**: once a deck has loaded, it stays available. Flagship courses can also be downloaded explicitly from the course page.
 
 ---
@@ -139,10 +139,10 @@ Browse them all at [/101-courses/](https://www.impactmojo.in/101-courses/).
 
 The ~100-slide format maps to a **90-minute session** if you are selective, or a half-day if you stop at every case:
 
-1. **Frame it** (10 min) — the title card and the "what this covers" slides
-2. **Work the content** (50 min) — pause at the case studies and let people argue
-3. **Check understanding** (15 min) — run the embedded questions as a group activity, not a test
-4. **Reflect** (15 min) — ask each participant to name one thing they will do differently
+1. **Frame it** (10 min): the title card and the "what this covers" slides
+2. **Work the content** (50 min): pause at the case studies and let people argue
+3. **Check understanding** (15 min): run the embedded questions as a group activity, not a test
+4. **Reflect** (15 min): ask each participant to name one thing they will do differently
 
 ### Pair with handouts and games
 
@@ -160,7 +160,7 @@ Play the game first to create the experience, then use the deck to name what hap
 
 ### Adapt it
 
-The decks are licensed **CC BY-NC-ND 4.0**. You may share them, distribute them to participants, and post them on your organisation's LMS. Credit ImpactMojo and keep the non-commercial terms. If you want to remix or translate a deck for a specific context, [get in touch](mailto:hello@impactmojo.in) — we would rather help than have a bad copy circulate.
+The decks are licensed **CC BY-NC-ND 4.0**. You may share them, distribute them to participants, and post them on your organisation's LMS. Credit ImpactMojo and keep the non-commercial terms. If you want to remix or translate a deck for a specific context, [get in touch](mailto:hello@impactmojo.in), we would rather help than have a bad copy circulate.
 
 ---
 
@@ -170,8 +170,8 @@ The decks are licensed **CC BY-NC-ND 4.0**. You may share them, distribute them 
 
 Decks are generated from Python, not by hand:
 
-- **`scripts/deck_builder.py`** — the shared builder. `build()` assembles the page; helpers (`sec`, `divider`, `bullets`, `table`, `stats`, `twocol`, `flow`, `hbox`, `quote`, `terms`, `SRC`) emit the house components so every deck looks the same.
-- **`scripts/gen_{slug}_deck.py`** — one generator per deck, holding that deck's content.
+- **`scripts/deck_builder.py`**: the shared builder. `build()` assembles the page; helpers (`sec`, `divider`, `bullets`, `table`, `stats`, `twocol`, `flow`, `hbox`, `quote`, `terms`, `SRC`) emit the house components so every deck looks the same.
+- **`scripts/gen_{slug}_deck.py`**: one generator per deck, holding that deck's content.
 - **Charts** use Chart.js in the house `chart-slide-frame` pattern: context above the chart, the chart, and the reading below it. A deck degrades gracefully if Chart.js fails to load.
 
 To regenerate a deck, edit its generator and run it; do not hand-edit the output HTML, or the next run will overwrite you.
@@ -186,6 +186,6 @@ Follow the checklist in `.claude/rules/content-management.md`. In short: update 
 
 - **Read it yourself first.** Note which cases land with your audience and which slides you will skip.
 - **Don't rush the cases.** The South Asian examples are where the abstraction becomes real. Budget time to argue about them.
-- **Sequence within a track.** For a multi-day training, run two or three decks from the same track — Data Literacy, then Bivariate Analysis, then Multivariate Analysis.
+- **Sequence within a track.** For a multi-day training, run two or three decks from the same track: Data Literacy, then Bivariate Analysis, then Multivariate Analysis.
 - **Print the poster.** For the 47 decks that have one, the Course Outline poster is the handout you want on the table.
 - **Give people the deep link, not the deck.** `#s42` gets a reader to the slide you meant instead of the first one.

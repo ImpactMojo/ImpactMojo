@@ -344,7 +344,7 @@ def discourses_block(t, base, entries):
     rows = []
     for did in ids:
         e = entries[did]
-        rows.append('      <li><a href="%s">%s</a> &mdash; %s (%s)</li>'
+        rows.append('      <li><a href="%s">%s</a> by %s (%s)</li>'
                     % (esc(base + did), esc(e["title"]), esc(e["authors"]), esc(e["year"])))
     return ('    <p>Open access, in <a href="/devdiscourses/">Development Discourses</a>:</p>\n'
             '    <ul class="reading reading--dd">\n' + "\n".join(rows) + '\n    </ul>')

@@ -1,6 +1,6 @@
 # Handouts Guide
 
-ImpactMojo offers **400+ free, downloadable handouts** — concise reference materials you can use in workshops, classrooms, self-study, or team training sessions. Think of them as the companion notes you wish every training came with.
+ImpactMojo offers **400+ free, downloadable handouts**: concise reference materials you can use in workshops, classrooms, self-study, or team training sessions. Think of them as the companion notes you wish every training came with.
 
 This guide covers how to find, use, print, and adapt handouts for your work.
 
@@ -8,7 +8,7 @@ This guide covers how to find, use, print, and adapt handouts for your work.
 
 ## What Are Handouts?
 
-Handouts are short, focused reference pages — each one covering a single concept, framework, method, or tool. They're designed to be practical: something a participant can take away from a session and actually use the next day.
+Handouts are short, focused reference pages: each one covering a single concept, framework, method, or tool. They're designed to be practical: something a participant can take away from a session and actually use the next day.
 
 Unlike full courses (which walk you through topics step by step), handouts are quick-reference materials. They work well as:
 
@@ -38,7 +38,7 @@ Handouts are organized across ImpactMojo's **6 learning tracks**, plus a set of 
 
 ### Cross-Cutting Resources
 
-Some handouts don't fit neatly into one track — they're useful across all of them. These include facilitation guides, research methodology primers, writing and reporting templates, and general professional development materials.
+Some handouts don't fit neatly into one track: they're useful across all of them. These include facilitation guides, research methodology primers, writing and reporting templates, and general professional development materials.
 
 ---
 
@@ -54,7 +54,7 @@ Use the **search bar** on the handouts page to find materials on a specific topi
 
 ### Browse by Category
 
-Each learning track has its own section. If you know your area of interest — say, MEL or health communication — you can go straight to that category and browse everything available.
+Each learning track has its own section. If you know your area of interest (say, MEL or health communication) you can go straight to that category and browse everything available.
 
 ---
 
@@ -97,7 +97,7 @@ Every handout is a web page, which means you can print it directly from your bro
 
 ### For Best Results
 
-- **Use Chrome or Edge** — these browsers handle web page printing most reliably
+- **Use Chrome or Edge**: these browsers handle web page printing most reliably
 - **Set margins to "Minimum"** in the print settings for a cleaner layout
 - **Check "Background graphics"** if you want styled elements (shaded boxes, coloured headers) to appear in the printout
 - **Orientation:** Most handouts work well in portrait mode, but if a handout has wide tables, try landscape
@@ -107,14 +107,14 @@ Every handout is a web page, which means you can print it directly from your bro
 We designed handouts knowing they'd be printed in field offices, government training rooms, and university departments where colour printers aren't always available.
 
 - **Black and white works fine.** All critical information is in the text, not in colours or graphics.
-- **Single-sided printing** is perfectly adequate — don't worry about duplex settings if your printer doesn't support it.
+- **Single-sided printing** is perfectly adequate: don't worry about duplex settings if your printer doesn't support it.
 - **Paper size:** Handouts are designed for A4 but print well on Letter size too.
 
 ---
 
 ## How to Use Handouts Offline
 
-If you're heading to a location with unreliable internet — a rural field site, a community centre, a government training hall — you can save handouts for offline access.
+If you're heading to a location with unreliable internet (a rural field site, a community centre, a government training hall) you can save handouts for offline access.
 
 ### Save a Web Page
 
@@ -131,12 +131,12 @@ Use the print method above (Ctrl+P, then "Save as PDF") to create a PDF you can 
 
 ## File Formats
 
-Most handouts are **HTML pages** — the standard format for web content. They open in any browser on any device.
+Most handouts are **HTML pages**: the standard format for web content. They open in any browser on any device.
 
 Some handouts in data-focused tracks also include:
 
-- **Excel templates** (.xlsx) — for data collection tools, indicator tracking sheets, and budget templates
-- **Python and R scripts** — for the Data & Technology track, where handouts sometimes include code you can run
+- **Excel templates** (.xlsx): for data collection tools, indicator tracking sheets, and budget templates
+- **Python and R scripts**: for the Data & Technology track, where handouts sometimes include code you can run
 
 These supplementary files are clearly marked and available for download alongside the main handout.
 
@@ -150,11 +150,11 @@ That said, there's a lot you can do *around* a handout without changing it:
 
 - **Build a workshop agenda** that uses handouts as session materials
 - **Create companion exercises** that reference the handout's frameworks and apply them to your local context
-- **Translate informally** for group discussion — read through a handout together and discuss it in your working language
+- **Translate informally** for group discussion: read through a handout together and discuss it in your working language
 - **Combine handouts** into a curated reading packet for a multi-day training
 - **Write your own discussion questions** or reflection prompts that connect the handout to participants' experience
 
-If you need content adapted for a specific purpose, [reach out to the ImpactMojo team](https://www.impactmojo.in) — we're always interested in partnership opportunities.
+If you need content adapted for a specific purpose, [reach out to the ImpactMojo team](https://www.impactmojo.in), we're always interested in partnership opportunities.
 
 ---
 
