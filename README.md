@@ -116,7 +116,7 @@ Structured, outcome-focused paths that combine courses, games, and practice into
 | **Explorer** | Free | All courses, games, studios, DevDiscourses, Telegram channel |
 | **Practitioner** | ₹399/mo · ₹3,990/yr | Advanced ToC Studio, PDF/PNG export, certificates, full community |
 | **Professional** | ₹999/mo · ₹9,990/yr | + Qual Insights Lab and Code Converter export, VaniScribe notebook, hosted Advisory Board models, Viz Cookbook code copying, DevEconomics Toolkit, priority coaching |
-| **Organization** | ₹1,499/user/mo | + Team dashboard, custom learning paths, training packages and cohorts, invoice billing arranged by email (called the Team Plan on the site) |
+| **Organization** | ₹1,499/user/mo | + Team dashboard, custom learning paths, training packages and cohorts, branded certificates, GST invoices and a named contact on request (called the Team Plan on the site) |
 
 #### Premium Tools
 

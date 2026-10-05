@@ -921,8 +921,8 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#10B981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 </div>
                 <div>
-                    <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.25rem;">Certificates</h4>
-                    <p style="font-size:0.8rem; color:var(--text-secondary);">Completion certificates for your team members, each checkable by its ID. Your organisation's logo is not added to them yet</p>
+                    <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.25rem;">Branded Certificates</h4>
+                    <p style="font-size:0.8rem; color:var(--text-secondary);">Completion certificates for your team members, each checkable by its ID. Ask for your organisation's logo on them from Settings</p>
                 </div>
             </div>
             <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:1.25rem; display:flex; gap:1rem; align-items:flex-start;">
@@ -931,7 +931,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 </div>
                 <div>
                     <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.25rem;">Dedicated Support</h4>
-                    <p style="font-size:0.8rem; color:var(--text-secondary);">Priority support by email for your organization</p>
+                    <p style="font-size:0.8rem; color:var(--text-secondary);">A named contact and onboarding call, on request from Settings</p>
                 </div>
             </div>
             <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:1.25rem; display:flex; gap:1rem; align-items:flex-start;">
@@ -940,7 +940,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 </div>
                 <div>
                     <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.25rem;">Invoice Billing</h4>
-                    <p style="font-size:0.8rem; color:var(--text-secondary);">Purchase orders and bank transfers, arranged by email with our team</p>
+                    <p style="font-size:0.8rem; color:var(--text-secondary);">GST invoices, purchase orders and bank transfers, on request from Settings</p>
                 </div>
             </div>
         </div>
@@ -1015,24 +1015,30 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
     <div class="tab-content active" id="tab-members">
         <div class="members-toolbar">
             <input type="text" class="search-input" id="memberSearch" placeholder="Search members...">
+            <label for="memberTeamFilter" class="sr-only" style="position:absolute;left:-9999px;">Filter by team</label>
+            <select id="memberTeamFilter" class="search-input" style="max-width:200px;" hidden onchange="setTeamFilter(this.value)"><option value="">All teams</option></select>
+            <button class="btn btn-outline" onclick="document.getElementById('memberCsv').click()">Import CSV</button>
+            <input type="file" id="memberCsv" accept=".csv,text/csv" hidden onchange="importMembersCsv(this)">
             <button class="btn btn-primary" onclick="openInviteModal()">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 Invite Member
             </button>
         </div>
+        <div id="csvImportResult" role="status" hidden style="margin:0 0 1rem; padding:0.9rem 1rem; border:1px solid var(--border-color); border-radius:8px; font-size:0.875rem;"></div>
         <table class="members-table">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
+                    <th class="team-col" hidden>Team</th>
                     <th>Progress</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="membersTableBody">
-                <tr><td colspan="6" class="empty-state"><p>No team members yet. Invite your first member above.</p></td></tr>
+                <tr><td colspan="7" class="empty-state"><p>No team members yet. Invite your first member above, or import a CSV with an email column (and optional team and role columns).</p></td></tr>
             </tbody>
         </table>
     </div>
@@ -1435,6 +1441,10 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 
     <!-- Progress Tab -->
     <div class="tab-content" id="tab-progress">
+        <div id="progressTeamBar" hidden style="margin-bottom:1rem;">
+            <label for="progressTeamFilter" style="font-size:0.85rem; color:var(--text-secondary); margin-right:0.5rem;">Team</label>
+            <select id="progressTeamFilter" class="search-input" style="max-width:220px;" onchange="setTeamFilter(this.value)"><option value="">All teams</option></select>
+        </div>
         <div id="progressLoading" class="empty-state">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite">
                 <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
@@ -1469,11 +1479,12 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             <div id="courseBreakdown" style="display:grid; gap:0.75rem; margin-bottom:2rem;"></div>
 
             <!-- Member Leaderboard -->
-            <h3 style="font-family:'Inter',sans-serif; font-size:1.1rem; margin-bottom:1rem;">Team Leaderboard</h3>
+            <h3 style="font-family:'Inter',sans-serif; font-size:1.1rem; margin-bottom:0.25rem;">Team Leaderboard</h3>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Active days counts the days in the last 30 on which a member's course progress was updated. It is a lower bound, because each course keeps only its most recent update. It does not measure time spent.</p>
             <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; overflow:hidden;">
                 <table class="members-table" style="width:100%;">
                     <thead><tr>
-                        <th>Rank</th><th>Member</th><th>Courses Completed</th><th>Certificates</th><th>Last Active</th>
+                        <th>Rank</th><th>Member</th><th>Courses Completed</th><th>Certificates</th><th>Active days (30d)</th><th>Last Active</th>
                     </tr></thead>
                     <tbody id="leaderboardBody"></tbody>
                 </table>
@@ -1575,14 +1586,70 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             <textarea id="settingsBillingAddress" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; min-height:80px; margin-bottom:1rem; resize:vertical;"></textarea>
             <button class="btn btn-primary" onclick="saveOrgSettings()">Save Settings</button>
         </div>
-        <div class="path-card" style="margin-top:1rem;">
-            <h3 style="margin-bottom:0.5rem;">Invoice Billing</h3>
-            <p style="color:var(--text-secondary); font-size:0.9rem;">Need purchase orders or bank transfer options? Contact us at <a href="mailto:hello@impactmojo.in" style="color:var(--accent-color);">hello@impactmojo.in</a> and we'll work with your procurement team.</p>
+        <div class="path-card" style="margin-top:1rem;" id="teamRequestCard">
+            <h3 style="margin-bottom:0.5rem;">Request from our team</h3>
+            <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:1rem;">Branded certificates, GST invoices and a named contact are handled by our team by hand. Tell us what you need and we will reply by email.</p>
+            <form name="team-request" id="teamRequestForm" method="POST" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field" action="/org-dashboard.html">
+                <input type="hidden" name="form-name" value="team-request">
+                <p style="display:none"><label>Do not fill this out: <input name="bot-field"></label></p>
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trType">What do you need? *</label>
+                <select id="trType" name="request_type" required style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <option value="">Select an option&hellip;</option>
+                    <option value="branded-certificates">Branded certificates for my team</option>
+                    <option value="gst-invoice">A GST invoice</option>
+                    <option value="account-manager">A named contact or onboarding call</option>
+                </select>
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trOrg">Organisation *</label>
+                <input type="text" id="trOrg" name="organization" required style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trName">Your name *</label>
+                <input type="text" id="trName" name="name" required style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trEmail">Your email *</label>
+                <input type="email" id="trEmail" name="email" required style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                <div id="trCert" hidden>
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trCourse">Course *</label>
+                    <input type="text" id="trCourse" name="course" placeholder="Course name or link" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trEvidence">Evidence of completion *</label>
+                    <textarea id="trEvidence" name="completion_evidence" rows="4" placeholder="Member emails, or certificate IDs / verification links, one per line" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem; min-height:90px;"></textarea>
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trLogo">Logo to print on the certificates (optional)</label>
+                    <input type="file" id="trLogo" name="logo" accept="image/png,image/jpeg,image/svg+xml" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                </div>
+                <div id="trGst" hidden>
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trPayRef">Payment reference or UTR *</label>
+                    <input type="text" id="trPayRef" name="payment_reference" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trAmount">Amount paid in rupees *</label>
+                    <input type="text" id="trAmount" name="amount_paid" inputmode="decimal" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trGstin">Your GSTIN (if you want input tax credit)</label>
+                    <input type="text" id="trGstin" name="buyer_gstin" maxlength="15" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                    <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trState">State of your billing address *</label>
+                    <input type="text" id="trState" name="billing_state" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem;">
+                </div>
+                <label style="display:block; font-size:0.85rem; font-weight:500; color:var(--text-secondary); margin-bottom:0.35rem;" for="trNotes">Anything else we should know</label>
+                <textarea id="trNotes" name="notes" rows="3" style="width:100%; padding:0.6rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; background:var(--primary-bg); color:var(--text-primary); font-size:0.875rem; margin-bottom:1rem; min-height:70px;"></textarea>
+                <button type="submit" class="btn btn-primary">Send request</button>
+            </form>
+            <p id="teamRequestDone" hidden style="color:var(--success-color); font-size:0.95rem;">Request received. We will reply to the email you gave.</p>
         </div>
     </div>
 </div>
 
 <!-- Invite Member Modal -->
+<div class="modal-overlay" id="assignModal">
+    <div class="modal" style="max-width:520px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h3 style="margin:0; font-size:1.15rem;" id="assignTitle">Assign learning path</h3>
+            <button class="btn btn-outline btn-sm" onclick="closeModal('assignModal')" aria-label="Close">&times;</button>
+        </div>
+        <label for="assignDue" style="display:block; font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.35rem;">Due date (optional)</label>
+        <input type="date" id="assignDue" class="search-input" style="width:100%; margin-bottom:1rem;">
+        <div id="assignList" style="max-height:300px; overflow:auto; margin-bottom:1rem;"></div>
+        <p id="assignMsg" role="status" style="font-size:0.85rem; color:var(--text-secondary); min-height:1.2em;"></p>
+        <div class="modal-actions">
+            <button class="btn btn-outline" onclick="closeModal('assignModal')">Close</button>
+            <button class="btn btn-primary" onclick="saveAssignments()">Assign selected</button>
+        </div>
+    </div>
+</div>
+
 <div class="modal-overlay" id="inviteModal">
     <div class="modal" style="max-width:480px;">
         <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem;">
@@ -1596,6 +1663,10 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         </div>
         <label for="inviteEmail">Email Address</label>
         <input type="email" id="inviteEmail" placeholder="colleague@organization.com">
+        <div id="inviteTeamWrap" hidden>
+            <label for="inviteTeam">Team (optional)</label>
+            <input type="text" id="inviteTeam" list="teamList" placeholder="e.g. Field team">
+        </div>
         <label for="inviteRole">Role</label>
         <select id="inviteRole">
             <option value="member">Member: access to all courses and tools</option>
@@ -2460,10 +2531,15 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 <script src="js/auth.js"></script>
 <script src="js/auth-gate.js"></script>
 <script src="js/dashboard-tabs.js"></script>
+<script src="/js/form-submit.js?v=36a6a01f"></script>
 <script>
 // Organization Dashboard Logic
 (function() {
     var orgData = null;
+    var teamsSupported = false;
+    var activeTeam = '';
+    var assignments = [];
+    var assignPathId = null;
     var members = [];
     var paths = [];
 
@@ -2536,23 +2612,25 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             .from('organization_members')
             .select('*, profiles:user_id(full_name, display_name, email, total_learning_hours, courses_completed)')
             .eq('org_id', orgData.id);
-        members = data || [];
+        members = (data || []).filter(function(m) { return m.status !== 'removed'; });
+        teamsSupported = members.length > 0 && Object.prototype.hasOwnProperty.call(members[0], 'team');
+        refreshTeamUi();
         renderMembers();
     }
 
     function renderMembers(filter) {
         var tbody = document.getElementById('membersTableBody');
-        var filtered = members;
+        var filtered = activeTeam ? members.filter(function(m) { return (m.team || '') === activeTeam; }) : members;
         if (filter) {
             var q = filter.toLowerCase();
-            filtered = members.filter(function(m) {
+            filtered = filtered.filter(function(m) {
                 var name = (m.profiles?.display_name || m.profiles?.full_name || '').toLowerCase();
                 var email = (m.profiles?.email || '').toLowerCase();
                 return name.includes(q) || email.includes(q);
             });
         }
         if (filtered.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:2rem; color:var(--text-muted);">No team members found.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:2rem; color:var(--text-muted);">No team members found.</td></tr>';
             return;
         }
         tbody.innerHTML = filtered.map(function(m) {
@@ -2564,6 +2642,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
                 '<td><strong>' + escHtml(name) + '</strong></td>' +
                 '<td style="color:var(--text-secondary)">' + escHtml(email) + '</td>' +
                 '<td>' + m.role + '</td>' +
+                (teamsSupported ? '<td><input type="text" list="teamList" value="' + escHtml(m.team || '') + '" aria-label="Team for ' + escHtml(name) + '" style="width:120px; padding:0.3rem 0.5rem; border:1px solid var(--border-color); border-radius:6px; background:var(--primary-bg); color:var(--text-primary);" onchange="setMemberTeam(\'' + m.id + '\', this.value)"></td>' : '') +
                 '<td><div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%"></div></div> <span style="font-size:0.75rem;color:var(--text-muted)">' + pct + '%</span></td>' +
                 '<td><span class="status-badge status-' + m.status + '">' + m.status + '</span></td>' +
                 '<td>' + (m.role !== 'admin' ? '<button class="btn-danger btn" onclick="removeMember(\'' + m.id + '\')">Remove</button>' : '') + '</td>' +
@@ -2579,6 +2658,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             .eq('org_id', orgData.id)
             .order('created_at', { ascending: false });
         paths = data || [];
+        await loadAssignments();
         renderPaths();
     }
 
@@ -2604,10 +2684,12 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             return '<div class="path-card">' +
                 '<div class="path-header"><div><div class="path-title">' + escHtml(p.title) + '</div>' +
                 '<div class="path-meta">' + escHtml(p.description || '') + '</div></div>' +
-                '<button class="btn btn-outline btn-sm" onclick="deletePath(\'' + p.id + '\')" style="flex-shrink:0;">Delete</button></div>' +
+                '<div style="display:flex; gap:0.5rem; flex-shrink:0;"><button class="btn btn-primary btn-sm" onclick="openAssign(\'' + p.id + '\')">Assign</button>' +
+                '<button class="btn btn-outline btn-sm" onclick="deletePath(\'' + p.id + '\')">Delete</button></div></div>' +
                 '<div class="path-courses">' + courses + '</div>' +
                 '<div class="path-stats"><span class="path-stat"><strong>' + (p.course_ids || []).length + '</strong> courses</span>' +
                 '<span class="path-stat"><strong>' + totalHrs + '</strong> total hours</span>' +
+                '<span class="path-stat"><strong>' + assignments.filter(function(a) { return a.path_id === p.id; }).length + '</strong> assigned</span>' +
                 '<span class="path-stat" style="color:var(--text-muted); font-size:0.75rem;">Created ' + new Date(p.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) + '</span></div></div>';
         }).join('');
     }
@@ -2738,42 +2820,20 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
     window.inviteMember = async function() {
         var email = document.getElementById('inviteEmail').value.trim();
         var role = document.getElementById('inviteRole').value;
+        var team = document.getElementById('inviteTeam').value;
         if (!email) { alert('Please enter an email address.'); return; }
-        if (members.length >= (orgData?.max_seats || 10)) {
-            alert('You have reached your seat limit. Contact hello@impactmojo.in to add more seats.');
-            return;
-        }
-
-        // Look up user by email (RPC returns the id only — profiles rows are
-        // no longer broadly readable after the 2026-07 RLS fix)
-        var { data: inviteeId } = await supabaseClient
-            .rpc('lookup_profile_id_by_email', { p_email: email });
-        var invitee = inviteeId ? { id: inviteeId } : null;
-
-        if (!invitee) {
-            alert('No ImpactMojo account found with that email. The user must sign up first at impactmojo.in/signup');
-            return;
-        }
-
-        var { error } = await supabaseClient
-            .from('organization_members')
-            .insert({
-                org_id: orgData.id,
-                user_id: invitee.id,
-                role: role,
-                invited_by: ImpactMojoAuth.getUser().id,
-                status: 'active',
-                joined_at: new Date().toISOString()
-            });
-
-        if (error) {
-            if (error.code === '23505') alert('This user is already a member.');
-            else alert('Error: ' + error.message);
-            return;
-        }
-
+        var res = await addMemberByEmail(email, role, team);
+        var msg = {
+            invalid: 'That does not look like an email address.',
+            seats: 'You have reached your seat limit. Contact hello@impactmojo.in to add more seats.',
+            noaccount: 'No ImpactMojo account found with that email. The user must sign up first at impactmojo.in/signup',
+            exists: 'This user is already a member.',
+            error: 'Could not add this member. Please try again.'
+        }[res];
+        if (msg) { alert(msg); return; }
         closeModal('inviteModal');
         document.getElementById('inviteEmail').value = '';
+        document.getElementById('inviteTeam').value = '';
         await loadMembers();
         updateStats();
     };
@@ -2786,6 +2846,193 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             .eq('id', memberId);
         await loadMembers();
         updateStats();
+    };
+
+    // ========== Teams, bulk import and path assignment ==========
+    function distinctTeams() {
+        var seen = {};
+        members.forEach(function(m) { if (m.team) seen[m.team] = true; });
+        return Object.keys(seen).sort();
+    }
+
+    function refreshTeamUi() {
+        var teams = distinctTeams();
+        var th = document.querySelector('.team-col');
+        if (th) th.hidden = !teamsSupported;
+        var list = document.getElementById('teamList');
+        if (!list) { list = document.createElement('datalist'); list.id = 'teamList'; document.body.appendChild(list); }
+        list.innerHTML = teams.map(function(t) { return '<option value="' + escHtml(t) + '">'; }).join('');
+        if (activeTeam && teams.indexOf(activeTeam) === -1) activeTeam = '';
+        ['memberTeamFilter', 'progressTeamFilter'].forEach(function(id) {
+            var sel = document.getElementById(id);
+            if (!sel) return;
+            sel.innerHTML = '<option value="">All teams</option>' + teams.map(function(t) {
+                return '<option value="' + escHtml(t) + '"' + (t === activeTeam ? ' selected' : '') + '>' + escHtml(t) + '</option>';
+            }).join('');
+            sel.hidden = !(teamsSupported && teams.length);
+        });
+        var wrap = document.getElementById('inviteTeamWrap');
+        if (wrap) wrap.hidden = !teamsSupported;
+        var bar = document.getElementById('progressTeamBar');
+        if (bar) bar.hidden = !(teamsSupported && teams.length);
+    }
+
+    window.setTeamFilter = function(v) {
+        activeTeam = v || '';
+        refreshTeamUi();
+        renderMembers(document.getElementById('memberSearch').value);
+        if (document.getElementById('progressContent').style.display === 'block') loadAnalytics();
+    };
+
+    window.setMemberTeam = async function(memberId, value) {
+        var team = (value || '').trim().slice(0, 60) || null;
+        var { error } = await supabaseClient.from('organization_members').update({ team: team }).eq('id', memberId);
+        if (error) { alert('Could not save the team: ' + error.message); return; }
+        members.forEach(function(m) { if (m.id === memberId) m.team = team; });
+        refreshTeamUi();
+    };
+
+    // Adds one person by email. Returns a status string: added, exists, noaccount, seats, invalid.
+    async function addMemberByEmail(email, role, team) {
+        email = (email || '').trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'invalid';
+        // The RPC returns the id only: profiles rows are not broadly readable after the 2026-07 RLS fix.
+        var { data: inviteeId } = await supabaseClient.rpc('lookup_profile_id_by_email', { p_email: email });
+        if (!inviteeId) return 'noaccount';
+        var row = { role: role === 'manager' ? 'manager' : 'member', status: 'active', joined_at: new Date().toISOString(), invited_by: ImpactMojoAuth.getUser().id };
+        if (teamsSupported && team) row.team = String(team).trim().slice(0, 60);
+        var { data: existing } = await supabaseClient.from('organization_members').select('id, status').eq('org_id', orgData.id).eq('user_id', inviteeId).maybeSingle();
+        if (existing && existing.status !== 'removed') return 'exists';
+        if (members.length >= (orgData?.max_seats || 10)) return 'seats';
+        if (existing) {
+            var up = await supabaseClient.from('organization_members').update(row).eq('id', existing.id);
+            return up.error ? 'error' : 'added';
+        }
+        row.org_id = orgData.id; row.user_id = inviteeId;
+        var ins = await supabaseClient.from('organization_members').insert(row);
+        if (ins.error) return ins.error.code === '23505' ? 'exists' : 'error';
+        return 'added';
+    }
+
+    function parseCsv(text) {
+        var rows = [], row = [], field = '', inQ = false;
+        for (var i = 0; i < text.length; i++) {
+            var c = text[i];
+            if (inQ) {
+                if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+                else if (c === '"') inQ = false;
+                else field += c;
+            } else if (c === '"') inQ = true;
+            else if (c === ',') { row.push(field); field = ''; }
+            else if (c === '\n' || c === '\r') {
+                if (c === '\r' && text[i + 1] === '\n') i++;
+                row.push(field); field = '';
+                if (row.some(function(v) { return v.trim() !== ''; })) rows.push(row);
+                row = [];
+            } else field += c;
+        }
+        row.push(field);
+        if (row.some(function(v) { return v.trim() !== ''; })) rows.push(row);
+        return rows;
+    }
+
+    window.importMembersCsv = async function(input) {
+        var file = input.files && input.files[0];
+        input.value = '';
+        if (!file) return;
+        var box = document.getElementById('csvImportResult');
+        box.hidden = false;
+        if (file.size > 200000) { box.textContent = 'That file is too large. Keep it under 200 KB and 200 rows.'; return; }
+        var rows = parseCsv(await file.text());
+        if (!rows.length) { box.textContent = 'The file is empty.'; return; }
+        var head = rows[0].map(function(h) { return h.trim().toLowerCase(); });
+        var iEmail = head.indexOf('email'), iTeam = head.indexOf('team'), iRole = head.indexOf('role');
+        var start = 1;
+        if (iEmail === -1) {
+            // No header row: treat the first column as the email.
+            iEmail = 0; iTeam = -1; iRole = -1; start = /@/.test(rows[0][0] || '') ? 0 : 1;
+        }
+        var data = rows.slice(start, start + 200);
+        var tally = { added: 0, exists: 0, noaccount: [], seats: [], invalid: [], error: [] };
+        for (var r = 0; r < data.length; r++) {
+            box.textContent = 'Importing ' + (r + 1) + ' of ' + data.length + '...';
+            var email = (data[r][iEmail] || '').trim();
+            var res = await addMemberByEmail(email, iRole > -1 ? (data[r][iRole] || '').trim().toLowerCase() : 'member', iTeam > -1 ? data[r][iTeam] : '');
+            if (res === 'added') tally.added++;
+            else if (res === 'exists') tally.exists++;
+            else tally[res].push(email || '(blank)');
+            if (res === 'seats') break;
+            if (res === 'added') await loadMembers();
+        }
+        await loadMembers();
+        updateStats();
+        box.textContent = '';
+        var lines = [tally.added + ' added, ' + tally.exists + ' already on your team.'];
+        if (tally.noaccount.length) lines.push(tally.noaccount.length + (tally.noaccount.length === 1 ? ' has' : ' have') + ' no ImpactMojo account yet. Ask them to sign up at impactmojo.in/signup, then import again: ' + tally.noaccount.join(', '));
+        if (tally.invalid.length) lines.push(tally.invalid.length + (tally.invalid.length === 1 ? ' row had' : ' rows had') + ' no valid email: ' + tally.invalid.join(', '));
+        if (tally.seats.length) lines.push('You have reached your seat limit, so the import stopped at ' + tally.seats[0] + '. Contact hello@impactmojo.in to add seats.');
+        if (tally.error.length) lines.push(tally.error.length + ' could not be saved: ' + tally.error.join(', '));
+        lines.forEach(function(t) { var p = document.createElement('p'); p.style.margin = '0 0 0.4rem'; p.textContent = t; box.appendChild(p); });
+    };
+
+    async function loadAssignments() {
+        if (!paths.length) { assignments = []; return; }
+        var { data } = await supabaseClient.from('learning_path_assignments').select('path_id, user_id, status, due_date')
+            .in('path_id', paths.map(function(p) { return p.id; }));
+        assignments = data || [];
+    }
+
+    function memberLabel(m) { return m.profiles?.display_name || m.profiles?.full_name || m.profiles?.email || 'Member'; }
+
+    window.openAssign = function(pathId) {
+        assignPathId = pathId;
+        var p = paths.filter(function(x) { return x.id === pathId; })[0];
+        document.getElementById('assignTitle').textContent = 'Assign: ' + (p ? p.title : 'learning path');
+        document.getElementById('assignDue').value = '';
+        document.getElementById('assignMsg').textContent = '';
+        renderAssignList();
+        document.getElementById('assignModal').classList.add('active');
+    };
+
+    function renderAssignList() {
+        var box = document.getElementById('assignList');
+        var mine = {};
+        assignments.filter(function(a) { return a.path_id === assignPathId; }).forEach(function(a) { mine[a.user_id] = a; });
+        var active = members.filter(function(m) { return m.status === 'active'; });
+        if (!active.length) { box.textContent = 'Add team members first.'; return; }
+        box.innerHTML = active.map(function(m) {
+            var a = mine[m.user_id];
+            var label = escHtml(memberLabel(m)) + (m.team ? ' <span style="color:var(--text-muted);font-size:0.8rem;">(' + escHtml(m.team) + ')</span>' : '');
+            if (a) {
+                return '<div style="display:flex; justify-content:space-between; align-items:center; padding:0.4rem 0;"><span>' + label +
+                    ' <span style="color:var(--text-muted);font-size:0.8rem;">' + escHtml(a.status || 'assigned') + (a.due_date ? ', due ' + escHtml(a.due_date) : '') + '</span></span>' +
+                    '<button class="btn btn-outline btn-sm" onclick="removeAssignment(\'' + m.user_id + '\')">Unassign</button></div>';
+            }
+            return '<label style="display:flex; gap:0.5rem; align-items:center; padding:0.4rem 0; cursor:pointer;"><input type="checkbox" class="assign-pick" value="' + m.user_id + '"> ' + label + '</label>';
+        }).join('');
+    }
+
+    window.saveAssignments = async function() {
+        var picks = Array.from(document.querySelectorAll('.assign-pick:checked')).map(function(c) { return c.value; });
+        var msg = document.getElementById('assignMsg');
+        if (!picks.length) { msg.textContent = 'Tick at least one member.'; return; }
+        var due = document.getElementById('assignDue').value || null;
+        var by = ImpactMojoAuth.getUser().id;
+        var { error } = await supabaseClient.from('learning_path_assignments')
+            .insert(picks.map(function(uid) { return { path_id: assignPathId, user_id: uid, assigned_by: by, due_date: due }; }));
+        if (error) { msg.textContent = 'Could not assign: ' + error.message; return; }
+        await loadAssignments();
+        renderAssignList();
+        renderPaths();
+        msg.textContent = 'Assigned to ' + picks.length + (picks.length === 1 ? ' member.' : ' members.');
+    };
+
+    window.removeAssignment = async function(userId) {
+        var { error } = await supabaseClient.from('learning_path_assignments').delete().eq('path_id', assignPathId).eq('user_id', userId);
+        if (error) { document.getElementById('assignMsg').textContent = 'Could not unassign: ' + error.message; return; }
+        await loadAssignments();
+        renderAssignList();
+        renderPaths();
     };
 
     window.createPath = async function() {
@@ -2865,7 +3112,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             return;
         }
 
-        var memberIds = members.filter(function(m) { return m.status === 'active'; }).map(function(m) { return m.user_id; });
+        var memberIds = members.filter(function(m) { return m.status === 'active' && (!activeTeam || (m.team || '') === activeTeam); }).map(function(m) { return m.user_id; });
         if (!memberIds.length) return;
 
         // Fetch progress for all team members
@@ -2938,10 +3185,11 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
             memberMap[m.user_id] = m.profiles?.display_name || m.profiles?.full_name || 'Team Member';
         });
         var memberProgress = {};
-        memberIds.forEach(function(id) { memberProgress[id] = { completed: 0, certs: 0, lastActive: null }; });
+        memberIds.forEach(function(id) { memberProgress[id] = { completed: 0, certs: 0, lastActive: null, days: {} }; });
         progress.forEach(function(p) {
             if (memberProgress[p.user_id]) {
                 if (p.completed) memberProgress[p.user_id].completed++;
+                if (p.updated_at > thirtyDaysAgo) memberProgress[p.user_id].days[new Date(p.updated_at).toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' })] = true;
                 if (!memberProgress[p.user_id].lastActive || p.updated_at > memberProgress[p.user_id].lastActive) {
                     memberProgress[p.user_id].lastActive = p.updated_at;
                 }
@@ -2957,9 +3205,9 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         var leaderHtml = sorted.map(function(m, i) {
             var lastActive = m.data.lastActive ? new Date(m.data.lastActive).toLocaleDateString() : 'Never';
             var medal = i === 0 ? ' style="color:#F59E0B;font-weight:700;"' : '';
-            return '<tr><td' + medal + '>' + (i + 1) + '</td><td>' + escHtml(m.name) + '</td><td>' + m.data.completed + ' / 9</td><td>' + m.data.certs + '</td><td style="color:var(--text-secondary);font-size:0.85rem;">' + lastActive + '</td></tr>';
+            return '<tr><td' + medal + '>' + (i + 1) + '</td><td>' + escHtml(m.name) + '</td><td>' + m.data.completed + ' / 9</td><td>' + m.data.certs + '</td><td>' + Object.keys(m.data.days).length + '</td><td style="color:var(--text-secondary);font-size:0.85rem;">' + lastActive + '</td></tr>';
         }).join('');
-        document.getElementById('leaderboardBody').innerHTML = leaderHtml || '<tr><td colspan="5" style="text-align:center; padding:1rem; color:var(--text-muted);">No progress data yet.</td></tr>';
+        document.getElementById('leaderboardBody').innerHTML = leaderHtml || '<tr><td colspan="6" style="text-align:center; padding:1rem; color:var(--text-muted);">No progress data yet.</td></tr>';
 
         // Store for CSV export
         window._orgAnalytics = { members: sorted, courseStats: courseStats, certs: totalCerts };
@@ -2971,11 +3219,12 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 
     window.exportProgressCSV = function() {
         if (!window._orgAnalytics) return;
-        var rows = [['Name', 'Courses Completed', 'Certificates', 'Last Active']];
+        var rows = [['Name', 'Courses Completed', 'Certificates', 'Active days (30d)', 'Last Active']];
         window._orgAnalytics.members.forEach(function(m) {
-            rows.push([m.name, m.data.completed, m.data.certs, m.data.lastActive || 'Never']);
+            rows.push([m.name, m.data.completed, m.data.certs, Object.keys(m.data.days).length, m.data.lastActive || 'Never']);
         });
-        var csv = rows.map(function(r) { return r.join(','); }).join('\n');
+        // Quote every field: a name with a comma would otherwise shift the columns.
+        var csv = rows.map(function(r) { return r.map(function(v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
         var blob = new Blob([csv], { type: 'text/csv' });
         var a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
@@ -3615,6 +3864,44 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 </script>
 
 <!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
+<script>
+// Team requests: Netlify Forms plus /api/form-submit, the same two-path pattern as partnerships.html.
+(function () {
+    var form = document.getElementById('teamRequestForm');
+    if (!form) return;
+    var type = document.getElementById('trType');
+    var cert = document.getElementById('trCert');
+    var gst = document.getElementById('trGst');
+    function sync() {
+        cert.hidden = type.value !== 'branded-certificates';
+        gst.hidden = type.value !== 'gst-invoice';
+        ['trCourse', 'trEvidence'].forEach(function (id) { document.getElementById(id).required = !cert.hidden; });
+        ['trPayRef', 'trAmount', 'trState'].forEach(function (id) { document.getElementById(id).required = !gst.hidden; });
+    }
+    type.addEventListener('change', sync);
+    sync();
+    // Prefill once the dashboard has loaded the organisation and the signed-in user.
+    var tries = 0;
+    var timer = setInterval(function () {
+        tries++;
+        try {
+            if (typeof orgData !== 'undefined' && orgData && !document.getElementById('trOrg').value) document.getElementById('trOrg').value = orgData.name || '';
+            var u = window.ImpactMojoAuth && ImpactMojoAuth.getUser && ImpactMojoAuth.getUser();
+            if (u && u.email && !document.getElementById('trEmail').value) document.getElementById('trEmail').value = u.email;
+        } catch (e) { /* the fields stay editable */ }
+        if (tries > 20) clearInterval(timer);
+    }, 500);
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        window.imxSubmitBothFromElement(form).then(function () {
+            form.hidden = true;
+            document.getElementById('teamRequestDone').hidden = false;
+        }).catch(function () {
+            alert('Something went wrong. Please try again or email hello@impactmojo.in');
+        });
+    });
+})();
+</script>
 <script src="/js/search.js?v=ed523157" defer></script>
 <script defer src="js/auto-refresh.js"></script>
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
