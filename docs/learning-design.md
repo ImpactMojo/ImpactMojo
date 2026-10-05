@@ -88,7 +88,7 @@ The 35 interactive labs are guided, step-by-step workflows that produce a real o
 4. Review your complete ToC framework.
 5. Export or save your work.
 
-Labs run entirely in the browser: no server, no account required to use them. Premium tiers add export features (PDF, PNG), but the core lab experience is free.
+Labs run entirely in the browser: no server, no account required to use them. Paid plans add export features (PDF, PNG), but the core lab experience is free.
 
 ## The Role of Handouts
 

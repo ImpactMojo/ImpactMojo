@@ -33,7 +33,7 @@ The [Sampling Toolkit](/Labs/sampling-toolkit.html) ties the two together, so yo
 
 ---
 
-## Free vs Premium
+## Free and paid
 
 Everything above &mdash; the primer, the full builder, and seeing every recommended sample size &mdash; is **free, no login**. A [Premium](/premium.html) plan unlocks two things:
 

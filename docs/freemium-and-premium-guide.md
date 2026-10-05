@@ -2,7 +2,7 @@
 
 ## The Short Version
 
-**Almost everything on ImpactMojo is free forever, with no login.** Premium is optional: it adds a handful of professional research tools, the full Practice Packs, certificates, and coaching for people who want to go deeper. Nothing that is free today ever moves behind the paywall.
+**Almost everything on ImpactMojo is free forever, with no login.** Membership is optional: it adds a handful of professional research tools, the full Practice Packs, certificates, and coaching for people who want to go deeper. Nothing that is free today ever moves behind the paywall.
 
 This page explains exactly what is free, what is paid, and why the line is drawn where it is.
 
@@ -30,15 +30,15 @@ If you never pay a rupee, ImpactMojo is still one of the largest free developmen
 The seven Pro Studio builders above follow a simple rule we call **free to build, pay to export**:
 
 - **Building is free.** Open any tool, do the full piece of work (draft your Theory of Change, write your ToR, code your qualitative data, design your sample) with no account and no limit.
-- **Only export and advanced modes are Premium.** Downloading your finished artefact (formatted PDF/DOCX), unlocking advanced modes, and saving across devices are the paid layer.
+- **Only export and advanced modes need a paid plan.** Downloading your finished artefact (formatted PDF/DOCX), unlocking advanced modes, and saving across devices are the paid layer.
 
 So the paywall never blocks *learning* or *doing the work*: it only sits at the point where you want to take a polished deliverable away with you.
 
 ---
 
-## What Premium Adds
+## What a paid plan adds
 
-Premium is a subscription for practitioners who want the professional layer. It adds:
+A paid plan is a subscription for practitioners who want the professional layer. It adds:
 
 - **Export** from all seven Pro Studio builders, plus their advanced modes
 - The **full Practice Packs** (beyond the free two-module preview)

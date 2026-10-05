@@ -8,7 +8,7 @@
 //
 // This is not hypothetical here. On 2026-09-23 `index.html` carried
 //
-//     ['What's Premium?','What is Premium?'],
+//     ['What are the plans?','What are the plans?'],
 //
 // inside a single-quoted string, so the whole 86-line Mojini block — the
 // placeholder text, the greeting, and every knowledge-base chip — had never run

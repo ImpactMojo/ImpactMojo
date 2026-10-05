@@ -470,7 +470,7 @@
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                             </svg>
                         </div>
-                        <h2 class="premium-upgrade-title">Unlock Premium Content</h2>
+                        <h2 class="premium-upgrade-title">Unlock paid content</h2>
                         <p class="premium-upgrade-subtitle">Upgrade to access advanced tools, courses, and exclusive features</p>
                     </div>
                     

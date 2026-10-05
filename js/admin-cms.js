@@ -106,7 +106,7 @@
     {
       key: 'tools',
       label: 'Tools & Labs',
-      description: 'Premium and free tools, labs, and workbenches.',
+      description: 'Pro Studio and free tools, labs, and workbenches.',
       defaultContent: { DATA: [] },
       isArray: true,
       arrayKey: 'DATA',

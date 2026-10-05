@@ -10,7 +10,7 @@ This page documents how educational content is structured in ImpactMojo, for con
 | Foundational Courses | 47 | Single-page or multi-section | Free |
 | Interactive Labs | 28 | HTML/JS workbenches | Free |
 | Learning Games | 135 | 18 simulations + 117 puzzles | Free |
-| Premium Tools | 9 | Separate Netlify sites | Paid tiers |
+| Pro Studio tools | 9 | Separate Netlify sites | Paid tiers |
 | ImpactLex | 390+ terms | PWA dictionary | Free |
 | Dev Case Studies | 200 | Curated library | Free |
 | DevDiscourses | 500+ | Curated papers/books | Free |

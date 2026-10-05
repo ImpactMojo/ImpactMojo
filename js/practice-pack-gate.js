@@ -141,7 +141,7 @@
       if (idx >= CFG.freeModules && !tab.querySelector('.pp-lock-pill')) {
         var pill = document.createElement('span');
         pill.className = 'pp-lock-pill';
-        pill.innerHTML = LOCK_SVG + 'Premium';
+        pill.innerHTML = LOCK_SVG + 'Paid plan';
         tab.appendChild(pill);
       }
     });
@@ -158,7 +158,7 @@
         '<div class="pp-gate-head">' +
           '<span class="pp-gate-badge">' + LOCK_SVG + 'Free preview complete</span>' +
           '<h3>Keep going: finish the pack</h3>' +
-          '<p>You\'ve worked through the first ' + CFG.freeModules + ' modules. The remaining modules and your auto-built <strong>' + esc(CFG.artefact) + '</strong> are part of ImpactMojo Premium.</p>' +
+          '<p>You\'ve worked through the first ' + CFG.freeModules + ' modules. The remaining modules and your auto-built <strong>' + esc(CFG.artefact) + '</strong> are part of an ImpactMojo paid plan.</p>' +
         '</div>' +
         '<div class="pp-gate-body">' +
           '<a class="pp-offer primary" href="/premium.html#detail-practitioner">' +

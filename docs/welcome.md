@@ -88,7 +88,7 @@ For a detailed walkthrough of your first visit, see the [Getting Started Guide](
 |------|---------------|
 | [Platform Overview](platform-overview.md) | Detailed guide to every content type on the platform |
 | [Getting Started](getting-started.md) | Step-by-step onboarding for educators |
-| [Premium & Memberships](premium.md) | Membership tiers, workshops, coaching, and dojos |
+| [Memberships & services](premium.md) | Membership tiers, workshops, coaching, and dojos |
 | [Content Guide](content-guide.md) | How content is structured (for contributors) |
 | [Architecture](architecture.md) | Technical system design |
 | [Contributing](contributing.md) | How to contribute code, content, or translations |

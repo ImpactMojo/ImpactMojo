@@ -9,7 +9,7 @@ ImpactMojo is designed for practitioners in South Asia, many of whom are on slow
 - **Fast loading**. The site is built with simple, lightweight code (no heavy frameworks). Pages load quickly even on 2G/3G connections.
 - **Works offline**: Once you've visited a page, it's saved on your device. You can access flagship courses without an internet connection.
 - **No installation needed**: Everything runs in your web browser. No apps to download, no software to install.
-- **Your data is secure**: Login and account data are handled by Supabase (a trusted database service). Premium tools use time-limited security tokens so your access can't be stolen.
+- **Your data is secure**: Login and account data are handled by Supabase (a trusted database service). Pro Studio tools use time-limited security tokens so your access can't be stolen.
 - **Works on any device** (Phone, tablet, laptop, desktop) old or new. We deliberately avoid technologies that require modern hardware.
 
 ## Technical Overview

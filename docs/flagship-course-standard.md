@@ -45,7 +45,7 @@ names** and the **135° form** so shared components stay coherent.
 
 ### Required chrome, in `<body>` order
 
-1. `.im-topbar#imTopbar`, the **ImpactMojo Top Bar** (logo · Browse · Premium ·
+1. `.im-topbar#imTopbar`, the **ImpactMojo Top Bar** (logo · Browse · Membership ·
    3-button theme selector). Byte-identical across all flagships; copy verbatim.
 2. `.skip-link` (visually-hidden skip-to-content).
 3. `.v3-paper-plane` SVG: floating decorative plane (page-level).
