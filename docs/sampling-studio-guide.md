@@ -58,4 +58,4 @@ The Sampling Studio pairs naturally with a few other resources:
 
 - [Labs Guide](labs-guide.md)
 - [The Freemium Model](freemium-and-premium-guide.md)
-- [Premium Tools Overview](premium-tools-guide.md)
+- [Pro Studio guide](premium-tools-guide.md)

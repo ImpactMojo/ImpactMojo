@@ -65,16 +65,16 @@ The art grounds each game in South Asian visual culture while making abstract co
 | **Network Effects Game** | Network economics | How value multiplies as more people join, critical mass dynamics, and why some platforms dominate | Tanvi, Harish, Divya |
 | **Externality Game** | Market failures | Hidden social costs and benefits (pollution, education spillovers) and why markets alone don't solve them | Ashok, Nalini, Bina |
 | **The Real Middle** | Inequality dynamics | Wealth distribution, income mobility, and the precarity of middle-class status in India | 5 simulated households |
-| **Econ Concepts Puzzle** | Mixed economics | Economic reasoning through puzzles and brain-teasers covering supply/demand, game theory, and market structure |: |
+| **Econ Concepts Puzzle** | Mixed economics | Economic reasoning through puzzles and brain-teasers covering supply/demand, game theory, and market structure | – |
 
 ### Beyond Economics
 
 | Game | Concept | What You Learn | AI Agents |
 |------|---------|---------------|-----------|
-| **Climate Action Challenge** | Climate science | Allocate resources between mitigation and adaptation across decades, the lesson that both are needed together |, |
-| **Care Economy Challenge** | Gender equity | Experience the invisible burden of unpaid care work and how policy choices affect equity outcomes |: |
-| **Epidemic Response** | Public health | Manage a disease outbreak across surveillance, treatment, prevention, community health workers, and communication |: |
-| **Counterfactual: The Evaluation Game** | Causal inference | Eight impact claims from Indian programmes, each hiding a classic trap, regression to the mean, self-selection, survivorship bias, spillovers, the observer effect. Pick the evaluation design that finds what would have happened anyway |: |
+| **Climate Action Challenge** | Climate science | Allocate resources between mitigation and adaptation across decades, the lesson that both are needed together | – |
+| **Care Economy Challenge** | Gender equity | Experience the invisible burden of unpaid care work and how policy choices affect equity outcomes | – |
+| **Epidemic Response** | Public health | Manage a disease outbreak across surveillance, treatment, prevention, community health workers, and communication | – |
+| **Counterfactual: The Evaluation Game** | Causal inference | Eight impact claims from Indian programmes, each hiding a classic trap, regression to the mean, self-selection, survivorship bias, spillovers, the observer effect. Pick the evaluation design that finds what would have happened anyway | – |
 
 ---
 

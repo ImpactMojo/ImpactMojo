@@ -71,9 +71,13 @@
     function scrollToSection(sectionId) {
         const section = document.getElementById(sectionId);
         if (section) {
+            // The home route is the top of the page: nothing to scroll to.
+            if (sectionId === 'home') return true;
             // Small delay to ensure page is loaded
             setTimeout(() => {
-                const headerOffset = 100;
+                // Offset by the header's real height, which varies with the viewport.
+                const hdr = document.querySelector('header.header');
+                const headerOffset = hdr ? hdr.offsetHeight + 8 : 100;
                 const elementPosition = section.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                 

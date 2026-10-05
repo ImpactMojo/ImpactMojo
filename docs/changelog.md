@@ -2,6 +2,36 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.319.0 — October 5, 2026 (Plain-language pass, part 1)
+
+### Added
+
+- **The Advisory Board runs on your own API key.** Anyone can now try it: pick Groq, Google Gemini, OpenAI, Anthropic or DeepSeek, paste a key, and the panel runs from the browser, so it costs ImpactMojo nothing. The key stays in the tab and goes only to the provider. A Professional plan can still use ImpactMojo's hosted models, which keep their server-side plan check and daily limit.
+- **A Pro Studio guide.** `docs/premium-tools-guide.md` is rewritten around the 13 tools, what is free, what needs a plan and how the AI tools take your own key. It had described separate Netlify sites and an Organization tier that no longer exist.
+
+### Changed
+
+- **Home, About, Premium and FAQ rewritten in plainer language.** Each page was checked claim by claim against the code and primary sources before the wording changed. Banned filler words, negative-parallelism sentences and heading Title Case are gone.
+
+### Fixed
+
+- **Wrong counts, unsupported claims and invented ratings on the four pages (#1132).** The home page said the Law Docket holds 61 judgments (109), Deep Dives 22 (25), the Data Room 12 and 13 explorers (19) and Libraries 9 (18). The FAQ and its hidden structured data said 19 flagship, 51 foundational and 70 courses (21, 59 and 80). The newsletter promise, the certificate descriptions, the tool descriptions and a bio line were corrected to match the code. The 17 star ratings on the Premium tools were removed because no review data exists behind them. "IT Act 2000 compliant" was removed from the footer because no policy makes that claim.
+- **Premium FAQ refund promise contradicted the refund policy (#1132).** It promised a full refund within 7 days, no questions asked. It now states the refund policy: no refund for a partial month on monthly plans, a prorated refund within 30 days on annual plans. The same 7-day promise on the assessed-certificate page was replaced with a pointer to the policy.
+- **DevData Practice and the Visualization Cookbook were listed as Professional features (#1132).** DevData Practice has no gate and is free; the Cookbook is free to browse and needs Professional only to copy code. Both pages now say so.
+- **Mojini answered from out-of-date lists (#1132).** It said ImpactMojo issues no certificates, listed 35 of 80 courses and 11 labs under older titles, and described the Cookbook as 14 chart types. Its course list is now built from the 80 course pages, its lab list from the labs, and its certificate, Premium, language, DevData, workshop and coaching answers match the site. A lookup that returned nothing for "Gender Studies 101" could throw an error; the per-course handlers that caused it are replaced by one matcher.
+- **The "Trusted by practitioners from" strip on the home page was hidden behind the header (#1132).** The header is fixed and grew to two rows, 132px on a laptop and 157px at about 1,000px wide, while the page was still spaced for the old one-row header. The strip sat at the top of the document under it, and the hero heading was partly covered at 1,024px. The page now pads itself by the header's measured height, so the strip shows below it at every width. The router also scrolled the home page down by about 80px on load because it treated the top of the page as a section to scroll to; it no longer does.
+- **The Pro tools were counted five, seven and thirteen on different pages (#1132).** There are 13 tools in `premium-tools/`, and all 13 are Pro Studio: seven builders that are free to use with export on a paid plan, four tools that are free to open, and two AI tools that run on your own API key. Premium said "five free-to-use pro tools" and named a Sampling Studio that is not among them. The Premium page, the Pro Studio index, the About stats, the sitemap stats, the course upgrade panels, the FAQ docs and the search index now say Pro Studio and 13, and the count check recognises the new name. The "Premium" group on the Pro Studio index is now "AI tools".
+- **R & Python for Development was filed as a lab and counted nowhere (#1132).** It is a seven-module course with live code. It now sits in the 101 series at `/101-courses/r-python-dev.html` (the old address redirects), appears on the 101 index, and is counted: 60 foundational and 81 courses. The deck density check skips it because it has modules, not slides.
+- **The 101 index said 52 and 51 courses and listed 59 (#1132).** Its title, description, hero figure and filter chip now say 60. The sitemap page was also out of step: it listed 17 of 21 flagship courses, 31 labs including two that are not labs, and 51 of 59 decks. All three groups now match the files.
+- **Em dash replacement left doubled colons and wrong separators (#1132).** The first pass read each text node alone, so a colon in one node did not stop a second in the next, and about 1,400 sentences carried two. It now reads whole sentences across inline tags. It also fixed `2022–3rd`-style ranges, brand suffixes in JSON-LD and titles with two colons, and 54 empty table cells in the docs that had become stray colons.
+- **VaniScribe and the Advisory Board were listed as paid (#1132).** The VaniScribe browser transcriber is free with your own Sarvam key and only the Colab notebook needs Professional. The Pro Studio index, the Premium page and Mojini now say so.
+- **The reading companion count was 172 against 171 pages (#1132).** The canonical count in `data/counts.json` now matches the number of companion pages, and every page that stated it was updated.
+
+### For Learners
+
+- **Advisory Board** — describe a development dilemma and five AI advisors debate it. Free to try with your own AI provider key.
+- **R & Python for Development** — learn R and Python from zero with code that runs in your browser, now in the 101 series.
+
 ## v10.318.0 — October 5, 2026 (Law Docket and Law Guides checked against sources)
 
 ### Changed

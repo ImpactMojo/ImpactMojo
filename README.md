@@ -41,7 +41,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 
 | Category | Description |
 |----------|-------------|
-| **80 Courses** | 21 flagship + 59 foundational courses across 6 learning tracks (all foundational decks self-hosted as native HTML slide decks). Every flagship ends with an auto-graded "Assess Yourself" self-check |
+| **81 Courses** | 21 flagship + 60 foundational courses across 6 learning tracks (all foundational decks self-hosted as native HTML slide decks). Every flagship ends with an auto-graded "Assess Yourself" self-check |
 | **35 Interactive Studios** | Hands-on workbenches for MEL, policy, partnerships, budgeting, gender analysis, and more |
 | **135 Game Library** | 18 interactive simulations (MiroFish AI agents, Indian folk art: Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) + 117 crosswords, quizzes & word searches |
 | **ImpactLex Dictionary** | 390+ development terms with contextual definitions, formulas, and case studies (PWA, hosted on ImpactMojo) |
@@ -50,7 +50,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
 | **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export: dark mode, filters, CSV export |
 | **Dataverse** | 335 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories: dark mode, category filters, responsive cards |
-| **172 Reading Companions** | Interactive study companions for development economics, political economy, statistics, leadership, and productivity texts |
+| **171 Reading Companions** | Interactive study companions for development economics, political economy, statistics, leadership, and productivity texts |
 | **12 AI Study Companions** | NotebookLM-powered study notebooks covering the flagship courses |
 | **90 Handouts** | Downloadable resources across 6 learning tracks |
 | **25 Deep Dives** | Curated, annotated reading guides: working syllabi on contested development questions |
@@ -241,7 +241,7 @@ Browser-based studios under `/Labs/`. Each runs entirely client-side, keeps your
 Everything below is free, runs in the browser, and needs no account.
 
 - **[Teach with ImpactMojo](https://www.impactmojo.in/teach)** (`teach.html`): syllabus mappings, ready-made course kits, and how to run the material in a classroom or a workshop.
-- **[LMS export](https://www.impactmojo.in/lms-export)** (`lms-export.html`), package any of the 80 courses, plus the 47 practice workbooks, as **SCORM 1.2**, **SCORM 2004**, **IMS Common Cartridge 1.3**, or a single self-contained HTML file. The package is built in your browser from the live page, so it is never stale. Our analytics, sign-in, Supabase and translation code are stripped before packaging and the rest inlined, so an imported course runs with no network and phones nothing home. SCORM reports completion when the learner reaches the final slide.
+- **[LMS export](https://www.impactmojo.in/lms-export)** (`lms-export.html`), package any of the 81 courses, plus the 47 practice workbooks, as **SCORM 1.2**, **SCORM 2004**, **IMS Common Cartridge 1.3**, or a single self-contained HTML file. The package is built in your browser from the live page, so it is never stale. Our analytics, sign-in, Supabase and translation code are stripped before packaging and the rest inlined, so an imported course runs with no network and phones nothing home. SCORM reports completion when the learner reaches the final slide.
 - **Studio submissions** (`js/studio-submit.js`): wraps a Studio's own export in an envelope carrying the student's name, the Studio, a timestamp and a content digest. Studio exports previously carried no identity at all, so thirty files from a class were thirty anonymous JSON blobs. Wired into the LogFrame Builder as the reference implementation; the other Studios take the same two lines.
 - **[Gradebook](https://www.impactmojo.in/gradebook)** (`gradebook.html`): drop a folder of those submissions in and get one CSV, with tampered files flagged by digest mismatch. Entirely client-side: student work is never uploaded anywhere.
 

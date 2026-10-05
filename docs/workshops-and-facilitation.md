@@ -23,15 +23,15 @@ Here is how to plan:
 
 | Time | Activity | ImpactMojo Resource |
 |------|----------|-------------------|
-| 9:00–9:30 | Welcome, introductions, learning objectives |, |
+| 9:00–9:30 | Welcome, introductions, learning objectives | – |
 | 9:30–10:30 | What is MEL? Core concepts and why it matters | MEL Flagship Course, Modules 1–2 |
-| 10:30–10:45 | Tea break |, |
+| 10:30–10:45 | Tea break | – |
 | 10:45–11:30 | Public Good Game, experience collective action problems | Public Good Game |
 | 11:30–12:00 | Debrief: connecting the game to program design | Facilitator-led discussion |
-| 12:00–1:00 | Lunch |, |
+| 12:00–1:00 | Lunch | – |
 | 1:00–2:00 | Theories of Change, concepts and South Asian examples | MEL Flagship Course, Module 2–3 |
 | 2:00–3:00 | Theory of Change Lab, build your own ToC | Theory of Change Lab |
-| 3:00–3:15 | Tea break |, |
+| 3:00–3:15 | Tea break | – |
 | 3:15–3:45 | Participants present their ToC frameworks | Group presentations |
 | 3:45–4:15 | Indicators and measurement, key principles | MEL Flagship Course, Module 3 |
 | 4:15–4:30 | Wrap-up, reflection prompts, next steps | Reflection prompt handouts |
@@ -86,9 +86,9 @@ Here are tested combinations that reinforce each other:
 |-------|--------|------|-----|----------|
 | Program design | MEL for Development | Public Good Game | Theory of Change Lab | ToC templates, Logframe guide |
 | Research methods | Research Methods | Market Simulation | RQ Builder Lab | Survey design checklist |
-| Economics | Development Economics | Prisoner's Dilemma, Market Sim |: | Key economics concepts |
-| Gender analysis | Gender & WEE | Public Good Game (gendered framing) |: | Gender analysis frameworks |
-| Data literacy | Data Literacy |: | Data exploration via Dataverse | Data visualization handouts |
+| Economics | Development Economics | Prisoner's Dilemma, Market Sim | – | Key economics concepts |
+| Gender analysis | Gender & WEE | Public Good Game (gendered framing) | – | Gender analysis frameworks |
+| Data literacy | Data Literacy | – | Data exploration via Dataverse | Data visualization handouts |
 
 ## Using Handouts in Facilitation
 

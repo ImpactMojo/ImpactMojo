@@ -12,17 +12,17 @@ Deep, multi-module courses with 8–16 modules each, interactive lexicons, South
 |---|--------|-------|---------|---------|------|
 | 1 | Gandhi's Political Thought: Philosophy for Praxis | Philosophy & Governance | 13 | 55 terms | [Open](/courses/gandhi/) |
 | 2 | Understanding Development: An Economics Perspective | Policy & Economics | 13 | 63 terms | [Open](/courses/devecon/) |
-| 3 | Seeing Data: Visualization for Impact | Data & Technology | 13 |, | [Open](/courses/dataviz/) |
+| 3 | Seeing Data: Visualization for Impact | Data & Technology | 13 | – | [Open](/courses/dataviz/) |
 | 4 | AI for Impact: Data Monitoring & Evaluation | Data & Technology | 13 | 50 terms | [Open](/courses/devai/) |
 | 5 | MEL for Development: Monitoring, Evaluation & Learning | MEL & Research | 13 | 65 terms | [Open](/courses/mel/) |
 | 6 | Politics of Aspiration: Rights, Insurance & Social Mobility | Policy & Economics | 13 | 60 terms | [Open](/courses/poa/) |
 | 7 | Media for Development: Communication, Power & Practice | Health & Communication | 12 | 65 terms | [Open](/courses/media/) |
-| 8 | Social-Emotional Learning for Development | Health & Communication | 12 |: | [Open](/courses/sel/) |
-| 9 | Constitution & Law for Development Practice | Philosophy & Governance | 12 |: | [Open](/courses/law/) |
-| 10 | Public Policy: Process, Design & Governance | Philosophy & Governance | 16 |, | [Open](/courses/pubpol/) |
-| 11 | Public Choice: Decisions, Incentives & Institutions | Policy & Economics | 13 |, | [Open](/courses/pubchoice/) |
-| 12 | Gender Studies: Feminisms, Power & Social Change | Health & Communication | 16 |, | [Open](/courses/gender/) |
-| 13 | Livelihoods in India: Rural, Urban & Skills | Policy & Economics | 3 |, | [Open](/courses/livelihoods/) |
+| 8 | Social-Emotional Learning for Development | Health & Communication | 12 | – | [Open](/courses/sel/) |
+| 9 | Constitution & Law for Development Practice | Philosophy & Governance | 12 | – | [Open](/courses/law/) |
+| 10 | Public Policy: Process, Design & Governance | Philosophy & Governance | 16 | – | [Open](/courses/pubpol/) |
+| 11 | Public Choice: Decisions, Incentives & Institutions | Policy & Economics | 13 | – | [Open](/courses/pubchoice/) |
+| 12 | Gender Studies: Feminisms, Power & Social Change | Health & Communication | 16 | – | [Open](/courses/gender/) |
+| 13 | Livelihoods in India: Rural, Urban & Skills | Policy & Economics | 3 | – | [Open](/courses/livelihoods/) |
 | 14 | Power BI for Practitioners | Data & Technology | 8 | 68 terms | [Open](/courses/powerBI/powerbi.html) |
 | 15 | Causal Inference for Development | MEL & Research | 13 | 65 terms | [Open](/courses/causal/) |
 
@@ -213,7 +213,6 @@ Hands-on workbenches where you build, design, and practice real skills.
 | 25 | Stakeholder Mapping & Power Analysis Studio | Governance & Digital | [Open](/Labs/stakeholder-mapping-lab.html) |
 | 26 | Survey Design Studio | Research & Methods | [Open](/Labs/survey-design-lab.html) |
 | 27 | Systems Thinking & Complexity Studio | Research & Methods | [Open](/Labs/systems-thinking-lab.html) |
-| 28 | R & Python for Development | Data & Technology | [Open](/Labs/r-python-dev.html) |
 
 ---
 
