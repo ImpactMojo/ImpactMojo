@@ -44,6 +44,11 @@ MIN_TWO_COL = 28
 # Without both halves the list would quietly become a permanent exemption.
 DECK_BACKLOG = {}
 
+# Interactive courses that live in 101-courses/ but are not slide decks. They have
+# modules and code cells, not slides, so a words-per-slide floor means nothing for them.
+# A name here that no longer exists fails, so the list cannot go stale.
+NOT_DECKS = {'r-python-dev.html'}
+
 SLIDE_RE = re.compile(r'class="slide[ "]')
 TABLE_RE = re.compile(r'<table', re.I)
 TWOCOL_RE = re.compile(r'two-col')
@@ -67,7 +72,11 @@ def measure(path):
 
 
 def main():
-    decks = sorted(p for p in DECKS.glob('*.html') if p.name != 'index.html')
+    decks = sorted(p for p in DECKS.glob('*.html') if p.name != 'index.html' and p.name not in NOT_DECKS)
+    for name in sorted(NOT_DECKS):
+        if not (DECKS / name).exists():
+            print('FAIL - %s is in NOT_DECKS but does not exist' % name)
+            return 1
     if not decks:
         print('FAIL - no decks found in %s' % DECKS)
         return 1

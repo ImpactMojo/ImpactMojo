@@ -6,7 +6,7 @@ Common questions from educators, facilitators, and practitioners.
 
 ## Is ImpactMojo really free?
 
-Yes. All 21 flagship courses (13 modules each), 59 foundational courses, 135 learning games, 35 interactive studios, 90 handouts, the ImpactLex glossary (390+ terms), 200 Dev Case Studies, 500+ DevDiscourses papers, and interactive BookSummaries are completely free.
+Yes. All 21 flagship courses (13 modules each), 60 foundational courses, 135 learning games, 35 interactive studios, 90 handouts, the ImpactLex glossary (390+ terms), 200 Dev Case Studies, 500+ DevDiscourses papers, and interactive BookSummaries are completely free.
 
 There are paid tiers (Practitioner, Professional, and Organization) that unlock additional tools: things like advanced studio features, PDF/PNG export, AI-powered tools, and team dashboards. But the core learning experience is free and always will be.
 
@@ -102,18 +102,18 @@ Here is a straightforward comparison:
 
 | Feature | Explorer (Free) | Practitioner (₹399/mo) | Professional (₹999/mo) | Organization (₹1,499/user/mo) |
 |---------|----------------|------------------------|------------------------|-------------------------------|
-| All 80 courses | Yes | Yes | Yes | Yes |
+| All 81 courses | Yes | Yes | Yes | Yes |
 | 135 games | Yes | Yes | Yes | Yes |
 | 35 studios | Yes | Yes | Yes | Yes |
 | 90 handouts | Yes | Yes | Yes | Yes |
 | ImpactLex, DevDiscourses, Case Studies | Yes | Yes | Yes | Yes |
-| Progress tracking and certificates |: | Yes | Yes | Yes |
-| Advanced studio features (PDF/PNG export) |: | Yes | Yes | Yes |
-| AI-powered tools (VaniScribe, Qual Studio Pro) |, |, | Yes | Yes |
-| DevEconomics Toolkit, Code Converter |, |, | Yes | Yes |
-| Priority coaching |, |, | Yes | Yes |
-| Team dashboards |, |, |, | Yes |
-| Bulk licensing and dedicated support |, |, |, | Yes |
+| Progress tracking and certificates | – | Yes | Yes | Yes |
+| Advanced studio features (PDF/PNG export) | – | Yes | Yes | Yes |
+| AI-powered tools (VaniScribe, Qual Studio Pro) | – | – | Yes | Yes |
+| DevEconomics Toolkit, Code Converter | – | – | Yes | Yes |
+| Priority coaching | – | – | Yes | Yes |
+| Team dashboards | – | – | – | Yes |
+| Bulk licensing and dedicated support | – | – | – | Yes |
 
 **The key point:** The free tier is not a trial. It contains the full curriculum: every course, every game, every studio, every handout. Paid tiers add professional tools and organizational features on top of that foundation.
 
@@ -251,28 +251,13 @@ For full details, see [Certificates and Progress](certificates-and-progress.md).
 
 ## What is Pro Studio?
 
-ImpactMojo has 13 Pro Studio tools across two tiers:
+Pro Studio is ImpactMojo's set of 13 browser tools for research and evaluation work.
 
-**Practitioner Tier (₹399/month):**
+- **Seven builders** are free to use and charge only for export: the Research Question Builder, ToR Builder, Logframe Builder, Empathy Mapping, AI Strategy Canvas, Statistical Code Converter and Qualitative Insights Lab.
+- **Four reference tools** are free to open: the Chart Selector, DevData Practice (36 synthetic dataset generators, more than 840,000 rows), the Visualization Cookbook (63 chart recipes with Python code) and Field Notes. Copying code from the Cookbook or a note from Field Notes needs a Professional plan.
+- **Two AI tools** run on your own API key, so they are free to try: the Advisory Board (a panel of five AI personas that debates your dilemma) and VaniScribe (field transcription with your own Sarvam key). Professional adds ImpactMojo's hosted models for the Advisory Board and the VaniScribe Colab notebook.
 
-| Tool | What it does | Guide |
-|------|-------------|-------|
-| **RQ Builder Pro** | Guided research question builder with PICO/SPIDER framing, method suggestions, and worked examples |: |
-| **TOC Workbench Pro** | Advanced Theory of Change building with assumption mapping, evidence linkage, version history, and PDF/PNG export |: |
-
-**Professional Tier (₹999/month), includes all Practitioner tools plus:**
-
-| Tool | What it does | Guide |
-|------|-------------|-------|
-| **Field Notes from a Development Economist** | Behind-the-scenes analysis of real programs, procurement dynamics, and implementation trade-offs |: |
-| **VaniScribe** | AI transcription of field interviews in 10+ South Asian languages | [Guide](vaniscribe-guide.md) |
-| **DevData Practice** | Generates realistic synthetic datasets for learning and practice (36 generators, 840K+ rows) | [Guide](devdata-practice-guide.md) |
-| **DevEconomics Toolkit** | 11 interactive web apps for development economics methods (sample size calculators, inequality tools, evaluation design simulators) | [Guide](deveconomics-toolkit-guide.md) |
-| **Visualization Cookbook** | Question-driven chart selection with production-ready Python code (14 chart types) | [Guide](visualization-cookbook-guide.md) |
-| **Qual Insights** | AI-assisted qualitative coding and analysis | [Guide](qual-insights-guide.md) |
-| **Statistical Code Converter Pro** | Translate code between R, Stata, SPSS & Python with regression diagnostics, effect size calculators, and power analysis | [Guide](code-converter-guide.md) |
-
-For detailed explanations of each tool, follow the guide links above.
+Plans are Practitioner (₹399 a month) and Professional (₹999 a month). For every tool in detail, see the [Pro Studio guide](premium-tools-guide.md).
 
 ---
 

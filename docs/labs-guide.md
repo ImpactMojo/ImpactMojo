@@ -55,12 +55,22 @@ All studios are **free, browser-based, and require no login**.
 | **Digital Public Infrastructure Studio** | A working map of India's DPI stack (Aadhaar, UPI, DigiLocker, ABHA, ONDC) and the DPDP Act 2023 | [Open](/Labs/dpi-lab.html) |
 | **Gender Analysis Studio** | Gender frameworks applied to your programme, with intersectionality assessment | [Open](/Labs/gender-studies-lab.html) |
 
+### Conflict, livelihoods and MEL translation
+
+| Studio | What You Build | Link |
+|-----|---------------|------|
+| **Before We Fall Apart** | A shared relational charter for a team or collective: agreements, tripwires, needs and a rupture-to-repair protocol | [Open](/Labs/before-we-fall-apart-lab.html) |
+| **Livelihoods & Value-Chain Studio** | A commodity-chain map with a Sustainable Livelihoods and market-systems analysis, and skilling and market-linkage interventions | [Open](/Labs/livelihoods-value-chain-lab.html) |
+| **MEL Rosetta Lab** | A translation of one contested MEL term across OECD-DAC, USAID, EU and FCDO usage, with SMART, CREAM and SPICED compared | [Open](/Labs/mel-rosetta-lab.html) |
+| **NVC & Mediation Practice** | Observation-Feeling-Need-Request statements, a restorative circle plan and rehearsed scenarios | [Open](/Labs/nvc-mediation-lab.html) |
+
 ### Data & Code
 
 | Studio | What You Build | Link |
 |-----|---------------|------|
-| **R & Python for Development** | Live-code fluency in R and Python for development data work, from absolute zero | [Open](/Labs/r-python-dev.html) |
 | **Why City Boundaries Lie** | Data literacy on administrative vs economic city boundaries: an interactive boundary-toggle map, India's Census urban-undercount explained, a 2-of-3 satellite-rule classifier, and an exportable boundary-decision note, with a handoff to Development Data Studio's open Global Urban Boundaries dataset | [Open](/Labs/urban-boundaries-lab.html) |
+
+> **R & Python for Development** used to sit here. It is a seven-module course and now lives in the 101 series: [open it](/101-courses/r-python-dev.html).
 
 > The **Indian Data Navigator**, a guided field-guide to India's major public datasets, now lives in the [Dataverse](/dataverse-india.html), not Studios, since it's a guide to data sources rather than a build-something workbench.
 

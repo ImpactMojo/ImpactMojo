@@ -127,43 +127,72 @@
 :root{--im-ink-bad:#991B1B;--im-ink-good:#047857;--im-ink-info:#4F46E5;}
 @media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;}}
 [data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-info:#A5B4FC;}
+
+        .connect-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin: 12px 0 20px; background: var(--card-bg); }
+        .connect-card h2 { font-family: var(--font-heading); font-size: 1.1rem; margin: 0 0 8px; }
+        .connect-card input[type=password], .connect-card input[type=text], .connect-card select { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--primary-bg); color: var(--text-primary); font: inherit; }
+        .connect-card .field { margin: 12px 0; }
+        .mode-opts label, .remember { display: block; margin: 6px 0; font-size: .95rem; }
 </style>
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 </head>
 <body>
     <div class="container">
-        <a href="/premium.html" class="back-link">← Back to Premium</a>
+        <a href="/premium-tools/" class="back-link">← Back to Pro Studio</a>
 
         <div class="header">
-            <span class="header-badge">★ Professional Tier</span>
+            <span class="header-badge">Pro Studio · free to try with your own key</span>
             <h1>Advisory Board Pro</h1>
-            <p>Pose a real development-sector dilemma. A panel of AI advisors debates it from four different lenses, then the moderator synthesises. Each advisor is voiced by a different model, so the perspectives genuinely diverge.</p>
+            <p>Pose a real development-sector dilemma. A panel of AI advisors debates it from four different lenses, then the moderator synthesises. Use your own API key and all five advisors speak through the model you choose. On a Professional plan you can use ImpactMojo's models instead, where each advisor runs on a different one.</p>
             <div class="panel-roster" id="roster"></div>
         </div>
 
         <!-- FREE PREVIEW (static, no API calls) — visible to everyone -->
         <div class="section-label">Example panel: preview</div>
-        <p class="preview-note">A worked example so you can see how a panel unfolds. Subscribe to run your own dilemma below.</p>
+        <p class="preview-note">A worked example so you can see how a panel unfolds. Add your own API key below to run your own dilemma.</p>
         <div class="transcript" id="preview"></div>
 
-        <!-- LIVE TOOL — gated to Professional -->
+        <!-- LIVE TOOL: free with your own API key; ImpactMojo's hosted models need a Professional plan -->
         <div class="section-label">Run your own panel</div>
-        <div id="gateLoading">Checking your subscription…</div>
 
-        <!-- Shown to non-subscribers -->
-        <div class="gate-card" id="lockGate" style="display:none">
-            <svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            <h2>Convene your own advisory board</h2>
-            <p>Advisory Board Pro is part of the <strong>Professional</strong> plan, alongside the Qualitative Insights Lab, Statistical Code Converter, VaniScribe and DevData. Subscribe to debate your own programme dilemmas with the full panel.</p>
-            <div class="gate-cta">
-                <a href="/premium.html#detail-professional" class="btn btn-premium">See Professional plan</a>
-                <a href="/login.html" class="btn" id="signinBtn">Sign in</a>
+        <div class="connect-card" id="connect">
+            <h2>Connect a model</h2>
+            <p class="hint">This tool is free to try. It runs on an AI model you choose, using your own API key, so it costs ImpactMojo nothing. Your key stays in this browser tab and goes only to the provider you pick. ImpactMojo never receives it.</p>
+            <div class="field" id="modeRow" style="display:none">
+                <label>How to run the panel</label>
+                <div class="mode-opts">
+                    <label><input type="radio" name="mode" value="byok" checked> My own API key</label>
+                    <label><input type="radio" name="mode" value="hosted"> ImpactMojo's models (your Professional plan)</label>
+                </div>
             </div>
-            <div class="gate-price">₹999/month · or ₹9,990/year (2 months free)</div>
+            <div id="byokFields">
+                <div class="field">
+                    <label for="provider">Provider</label>
+                    <select id="provider">
+                        <option value="groq">Groq</option>
+                        <option value="gemini">Google Gemini</option>
+                        <option value="openai">OpenAI</option>
+                        <option value="anthropic">Anthropic (Claude)</option>
+                        <option value="deepseek">DeepSeek</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="apiKey">API key</label>
+                    <input type="password" id="apiKey" autocomplete="off" spellcheck="false" placeholder="Paste your key here">
+                </div>
+                <div class="field">
+                    <label for="modelName">Model (optional)</label>
+                    <input type="text" id="modelName" autocomplete="off" spellcheck="false">
+                    <div class="char-count" id="modelHint"></div>
+                </div>
+                <label class="remember"><input type="checkbox" id="remember"> Remember this key on this device (stored in this browser only)</label>
+                <p class="hint">Usage is billed by your provider. A full panel is about a dozen short calls. Delete the key from the provider's dashboard if you stop using it.</p>
+            </div>
+            <div id="hostedNote" class="hint" style="display:none">Hosted mode uses ImpactMojo's models and counts toward your daily limit on the Professional plan.</div>
+            <div class="gate-cta" id="signinRow" style="display:none"><a href="/login.html" class="btn" id="signinBtn">Sign in</a><a href="/premium.html#detail-professional" class="btn btn-premium">See the Professional plan</a></div>
         </div>
 
-        <!-- Shown to Professional subscribers -->
-        <div id="liveTool" style="display:none">
+        <div id="liveTool">
             <div id="setup">
                 <div class="field">
                     <label for="topic">Your dilemma or question</label>
@@ -174,7 +203,7 @@
                     <button class="btn btn-primary" id="convene">Convene the panel</button>
                 </div>
                 <div class="err" id="setupErr" style="display:none"></div>
-                <p class="hint">Advisors are AI personas voiced by different models: informative perspectives, not professional advice.</p>
+                <p class="hint">Advisors are AI personas: informative perspectives, not professional advice.</p>
             </div>
 
             <div class="transcript" id="transcript"></div>
@@ -194,7 +223,7 @@
 
     <footer class="im-footer">
         <div class="im-footer-bottom">
-            <p>&copy; 2026 ImpactMojo. Advisory Board Pro is a Professional-tier tool. For educational purposes only.</p>
+            <p>&copy; 2026 ImpactMojo. Advisory Board Pro is part of Pro Studio. For educational purposes only.</p>
         </div>
     </footer>
 
@@ -214,6 +243,87 @@
         critic:       { name: "Critic / Equity Lens",   lens: "Power, equity, consequences",         color: "#EF4444" },
     };
     const ROUND_ORDER = ["economist", "practitioner", "behavioral", "critic"];
+
+    // ---- Bring-your-own-key providers --------------------------------------
+    // Every one of these accepts calls straight from a browser. Model names change,
+    // so the field on the page lets a visitor type another one.
+    const PROVIDERS = {
+        groq:      { label: "Groq",      model: "llama-3.3-70b-versatile",   url: "https://api.groq.com/openai/v1/chat/completions", kind: "openai" },
+        openai:    { label: "OpenAI",    model: "gpt-4o-mini",               url: "https://api.openai.com/v1/chat/completions",      kind: "openai" },
+        deepseek:  { label: "DeepSeek",  model: "deepseek-chat",             url: "https://api.deepseek.com/v1/chat/completions",    kind: "openai" },
+        anthropic: { label: "Anthropic", model: "claude-haiku-4-5-20251001", url: "https://api.anthropic.com/v1/messages",           kind: "anthropic" },
+        gemini:    { label: "Gemini",    model: "gemini-2.0-flash",          url: "https://generativelanguage.googleapis.com/v1beta/models/", kind: "gemini" },
+    };
+    // Same personas and rules as netlify/functions/advisor-panel.mjs. If you change one, change both.
+    const PERSONAS = {
+        moderator: "You are the Moderator of a panel of development-sector experts. You are even-handed and never take a side. You frame questions sharply and, when asked to synthesise, you fairly summarise where the panel agreed, where it disagreed, and what a practitioner should weigh.",
+        economist: "You are a Development Economist. You reason from incentives, cost-effectiveness, the strength of the evidence base (RCTs, quasi-experimental work), and whether an intervention can scale affordably. You are rigorous and a little sceptical of claims that lack evidence, but you respect that evidence is incomplete.",
+        practitioner: "You are a Field Practitioner who has implemented programmes on the ground in South Asia. You speak to operational reality: staffing, last-mile delivery, community trust, what actually happens versus what the design assumes. You respect evidence but insist it survive contact with the field.",
+        behavioral: "You are a Behavioural Scientist. You focus on why people do or don't take up an intervention (friction, defaults, salience, social norms, trust) and how design choices change behaviour. You bring concrete behavioural mechanisms, not just 'add a nudge'.",
+        critic: "You are the panel's Critic, arguing from a power and equity lens. You ask who is excluded, who bears the cost, whose voice is missing, and what could go wrong. You challenge the other advisors' assumptions directly but in good faith: you are a sharp critic, not a cynic.",
+    };
+    const SHARED_RULES = "This is a panel discussion for a development-education audience. Stay strictly on the development-sector topic at hand. Keep your contribution to 2\u20134 sentences: make ONE substantive point, and where natural, explicitly build on or push back against a specific advisor by name. Do not repeat what others already said. No headings, no bullet lists, no preamble like 'As the X...': just speak. If the topic is off-topic, harmful, or not a genuine development question, briefly decline and steer back.";
+
+    function buildPrompts(id, opts) {
+        const adv = ADVISORS[id];
+        const topic = $("topic").value.trim();
+        const history = transcript.length
+            ? transcript.map((x) => `${x.name} (${x.lens}): ${x.text}`).join("\n\n")
+            : "(You are opening the discussion.)";
+        let task;
+        if (opts.isSynthesis) task = "As the Moderator, close the panel. In 3\u20135 sentences, synthesise where the advisors agreed, where they disagreed, and what a practitioner should weigh when deciding. Do not introduce new arguments.";
+        else if (opts.isOpening) task = `As the ${adv.name}, open the panel: in 2\u20133 sentences frame why this is a genuine tension worth debating and name the key question the panel should resolve. Do not answer it yet.`;
+        else task = `As the ${adv.name}, give your contribution now.`;
+        const steer = (opts.steer || "").trim();
+        const steerLine = steer ? `\n\nThe user has added a point to steer the discussion, address it directly:\n"${steer}"` : "";
+        return {
+            system: PERSONAS[id] + "\n\n" + SHARED_RULES,
+            user: `TOPIC FOR THE PANEL:\n${topic}\n\nDISCUSSION SO FAR:\n${history}${steerLine}\n\n${task}`,
+        };
+    }
+    const stripThinking = (s) => String(s || "").replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
+
+    // One call to the visitor's own provider. Throws an Error with a plain message.
+    async function callOwnKey(id, opts) {
+        const key = $("apiKey").value.trim();
+        if (!key) throw new Error("Paste your API key above first.");
+        const prov = PROVIDERS[$("provider").value];
+        const model = $("modelName").value.trim() || prov.model;
+        const { system, user } = buildPrompts(id, opts);
+        let url = prov.url, headers = { "Content-Type": "application/json" }, body;
+        if (prov.kind === "openai") {
+            headers.Authorization = "Bearer " + key;
+            body = { model, messages: [{ role: "system", content: system }, { role: "user", content: user }], temperature: 0.8, max_tokens: 500 };
+        } else if (prov.kind === "anthropic") {
+            headers["x-api-key"] = key;
+            headers["anthropic-version"] = "2023-06-01";
+            headers["anthropic-dangerous-direct-browser-access"] = "true";
+            body = { model, max_tokens: 500, temperature: 0.8, system, messages: [{ role: "user", content: user }] };
+        } else {
+            url = prov.url + encodeURIComponent(model) + ":generateContent";
+            headers["x-goog-api-key"] = key;
+            body = { system_instruction: { parts: [{ text: system }] }, contents: [{ role: "user", parts: [{ text: user }] }], generationConfig: { temperature: 0.8, maxOutputTokens: 500 } };
+        }
+        let res;
+        try { res = await fetch(url, { method: "POST", headers, body: JSON.stringify(body) }); }
+        catch (e) { throw new Error("Could not reach " + prov.label + ". Check your connection, or whether a browser extension is blocking the request."); }
+        let data = null;
+        try { data = await res.json(); } catch (e) {}
+        if (!res.ok) {
+            const msg = (data && (data.error && (data.error.message || data.error)) ) || res.statusText;
+            if (res.status === 401 || res.status === 403) throw new Error(prov.label + " did not accept that key. " + (typeof msg === "string" ? msg : ""));
+            if (res.status === 404) throw new Error(prov.label + " does not know the model \"" + model + "\". Type another model name in the Model box.");
+            if (res.status === 429) throw new Error(prov.label + " says you have hit a rate or spending limit. Try again in a minute, or check your plan.");
+            throw new Error(prov.label + " returned an error (" + res.status + "). " + (typeof msg === "string" ? msg : ""));
+        }
+        let text = "";
+        if (prov.kind === "openai") text = data?.choices?.[0]?.message?.content;
+        else if (prov.kind === "anthropic") text = (data?.content || []).map((c) => c.text || "").join("");
+        else text = (data?.candidates?.[0]?.content?.parts || []).map((x) => x.text || "").join("");
+        text = stripThinking(text);
+        if (!text) throw new Error(prov.label + " sent back an empty answer. Try again or pick another model.");
+        return { name: ADVISORS[id].name, lens: ADVISORS[id].lens, text, model };
+    }
 
     const $ = (id) => document.getElementById(id);
     const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
@@ -261,25 +371,57 @@
     }
     renderPreview();
 
-    // ---- Gate: reveal the live tool only for Professional subscribers ---
+    // ---- How the panel runs ----------------------------------------------
+    // "byok": the browser calls the provider directly with the visitor's own key.
+    //         ImpactMojo's servers never see the key and pay nothing.
+    // "hosted": ImpactMojo's own models through /api/advisor-panel, Professional only
+    //         (the function re-checks the plan and a daily limit on the server).
+    let isPro = false;
     async function getToken() {
         try { const { data } = await window.supabaseClient.auth.getSession(); return data?.session?.access_token || ""; }
         catch { return ""; }
     }
+    function currentMode() {
+        const r = document.querySelector('input[name="mode"]:checked');
+        return isPro && r && r.value === "hosted" ? "hosted" : "byok";
+    }
+    function syncMode() {
+        const hosted = currentMode() === "hosted";
+        $("byokFields").style.display = hosted ? "none" : "block";
+        $("hostedNote").style.display = hosted ? "block" : "none";
+    }
+    function syncProvider() {
+        const prov = PROVIDERS[$("provider").value];
+        $("modelName").placeholder = prov.model;
+        $("modelHint").textContent = "Leave blank to use " + prov.model + ". Enter another model name if your account uses a different one.";
+        const saved = readSaved();
+        if (saved && saved.provider === $("provider").value) { $("apiKey").value = saved.key; $("modelName").value = saved.model || ""; }
+    }
+    function readSaved() {
+        try { return JSON.parse(sessionStorage.getItem("imAdvisorKey") || localStorage.getItem("imAdvisorKey") || "null"); }
+        catch (e) { return null; }
+    }
+    function saveKey() {
+        const rec = JSON.stringify({ provider: $("provider").value, key: $("apiKey").value.trim(), model: $("modelName").value.trim() });
+        try {
+            sessionStorage.setItem("imAdvisorKey", rec);
+            if ($("remember").checked) localStorage.setItem("imAdvisorKey", rec); else localStorage.removeItem("imAdvisorKey");
+        } catch (e) { /* storage blocked: the key simply is not remembered */ }
+    }
     async function initGate() {
         try { if (window.ImpactMojoAuth) await window.ImpactMojoAuth.waitForAuthReady(); } catch (e) {}
         const auth = window.ImpactMojoAuth;
-        const isPro = !!(auth && typeof auth.hasTierAccess === "function" && auth.hasTierAccess("professional"));
-        $("gateLoading").style.display = "none";
-        if (isPro) { $("liveTool").style.display = "block"; wireTool(); }
-        else {
-            $("lockGate").style.display = "block";
-            // If already signed in (just not Professional), hide the Sign in button.
-            if (auth && auth.user) { const b = $("signinBtn"); if (b) b.style.display = "none"; }
-        }
+        isPro = !!(auth && typeof auth.hasTierAccess === "function" && auth.hasTierAccess("professional"));
+        if (isPro) $("modeRow").style.display = "block";
+        document.querySelectorAll('input[name="mode"]').forEach((r) => r.addEventListener("change", syncMode));
+        $("provider").addEventListener("change", syncProvider);
+        const saved = readSaved();
+        if (saved && PROVIDERS[saved.provider]) { $("provider").value = saved.provider; $("remember").checked = !!localStorage.getItem("imAdvisorKey"); }
+        syncProvider(); syncMode();
+        wireTool();
     }
 
-    // ---- Live tool (Professional only) ----------------------------------
+    // ---- Live tool --------------------------------------------------------
     let transcript = [], round = 0, pendingSteer = "", busy = false, wired = false;
 
     function wireTool() {
@@ -290,6 +432,7 @@
         $("convene").addEventListener("click", async () => {
             const topic = $("topic").value.trim();
             if (topic.length < 12) { $("setupErr").style.display = "block"; $("setupErr").textContent = "Please describe your dilemma in a sentence or two."; return; }
+            if (currentMode() === "byok" && !$("apiKey").value.trim()) { $("setupErr").style.display = "block"; $("setupErr").textContent = "Paste your API key in the box above first."; return; }
             $("setupErr").style.display = "none";
             $("setup").style.display = "none";
             busy = true;
@@ -351,22 +494,28 @@
     async function callAdvisor(id, opts = {}) {
         showTyping(id);
         try {
-            const token = await getToken();
-            const res = await fetch(API, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
-                body: JSON.stringify({
-                    topic: $("topic").value.trim(),
-                    transcript: transcript.map(({ name, lens, text }) => ({ name, lens, text })),
-                    advisorId: id,
-                    isOpening: !!opts.isOpening,
-                    isSynthesis: !!opts.isSynthesis,
-                    steer: opts.steer || "",
-                }),
-            });
-            const data = await res.json();
+            let data;
+            if (currentMode() === "hosted") {
+                const token = await getToken();
+                const res = await fetch(API, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+                    body: JSON.stringify({
+                        topic: $("topic").value.trim(),
+                        transcript: transcript.map(({ name, lens, text }) => ({ name, lens, text })),
+                        advisorId: id,
+                        isOpening: !!opts.isOpening,
+                        isSynthesis: !!opts.isSynthesis,
+                        steer: opts.steer || "",
+                    }),
+                });
+                data = await res.json();
+                if (!res.ok) throw new Error(data.error || "request failed");
+            } else {
+                data = await callOwnKey(id, opts);
+                saveKey();
+            }
             clearTyping();
-            if (!res.ok) throw new Error(data.error || "request failed");
             const entry = { id, name: data.name, lens: data.lens, text: data.text, model: data.model };
             transcript.push(entry);
             const card = cardEl(ADVISORS[id], entry, opts.isSynthesis);
@@ -376,7 +525,7 @@
         } catch (e) {
             clearTyping();
             const err = document.createElement("div");
-            err.className = "err"; err.textContent = "⚠ " + e.message;
+            err.className = "err"; err.textContent = "\u26a0 " + e.message;
             $("transcript").appendChild(err);
             return false;
         }

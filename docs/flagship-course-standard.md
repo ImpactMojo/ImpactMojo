@@ -37,7 +37,7 @@ taken from the current gold-standard flagships (`mel`, `devecon`, `gender`,
 | Google Fonts link | `Amaranth:wght@400;700` + `Inter:wght@400;500;600;700;800` + `JetBrains+Mono:wght@400;500` | one `<link>` in `<head>` |
 | Signature gradient | `linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%)` (sky→indigo) | `--gradient-primary` |
 | Accent gradient | `linear-gradient(135deg, #0EA5E9 0%, #10B981 100%)` (blue→emerald) | `--gradient-accent` |
-| Theme support | Four declarations: `:root`, `@media (prefers-color-scheme: dark)`, `[data-theme="light"]`, `[data-theme="dark"]` |: |
+| Theme support | Four declarations: `:root`, `@media (prefers-color-scheme: dark)`, `[data-theme="light"]`, `[data-theme="dark"]` | – |
 
 A course **may** re-skin `--gradient-primary` / `--accent-color` to its own identity
 (gender = purple/magenta, gandhi = saffron/green), but must keep the **token

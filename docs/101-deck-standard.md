@@ -19,7 +19,7 @@ Measured 2026-08-22 across all 52 decks. The result is not a gradient:
 | | decks | words/slide | words |
 |---|---|---|---|
 | Thin | **41** | 67–81 | 6,691–8,057 |
-| *(nothing in between)* | 0 | 82–139 |: |
+| *(nothing in between)* | 0 | 82–139 | – |
 | Dense | **11** | 140–227 | 14,426–23,585 |
 
 Every deck has ~100 slides and ~102 SVG figures, so the shell is uniform and

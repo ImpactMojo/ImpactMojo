@@ -4,23 +4,23 @@ Measured directly from the production `course_content` DB and the course shells,
 
 | course | mods | kB/mod | diagrams | excerpts | coach (Vandana/Varna) | reflect | worked | formulae | prog-bar | Conn-Res | hero-Papers | KaTeX |
 |---|--:|--:|--:|--:|--|--:|--:|--:|:--:|--:|:--:|:--:|
-| devecon | 13 | 21.1 | 13 | 0 | 13: 13/13 | 0 | 0 | 5 | yes | 7 | yes |, |
-| pubpol | 16 | 10.1 | **1** | 0 | **16: 0/8 (no alt)** | 0 | 0 | 0 | yes | 7 | yes |, |
-| pubchoice | 13 | 32.8 | **0** | 0 | **13: 0/6 (no alt)** | 0 | 0 | 0 | yes | 7 | yes |, |
-| livelihoods | 17 | 3.6 | **3** | 0 | 0: 0/0 | 0 | 0 | 0 | yes | 6 | **no** |, |
-| mel | 14 | 15.5 | 14 | 0 | 10: 6/7 | 0 | 0 | 0 | yes | 7 | yes |, |
+| devecon | 13 | 21.1 | 13 | 0 | 13: 13/13 | 0 | 0 | 5 | yes | 7 | yes | – |
+| pubpol | 16 | 10.1 | **1** | 0 | **16: 0/8 (no alt)** | 0 | 0 | 0 | yes | 7 | yes | – |
+| pubchoice | 13 | 32.8 | **0** | 0 | **13: 0/6 (no alt)** | 0 | 0 | 0 | yes | 7 | yes | – |
+| livelihoods | 17 | 3.6 | **3** | 0 | 0: 0/0 | 0 | 0 | 0 | yes | 6 | **no** | – |
+| mel | 14 | 15.5 | 14 | 0 | 10: 6/7 | 0 | 0 | 0 | yes | 7 | yes | – |
 | causal | 13 | 10.5 | 13 | 0 | 5: 2/3 | 0 | 13 | 9 | yes | 7 | yes | yes |
-| dataviz | 12 | 14.9 | 12 | 0 | 12: 10/11 | 0 | 0 | 0 | **MISSING** | 7 | yes |, |
-| powerBI | 8 | 27.0 | 8 | 0 | **8: 0/8 (no alt)** | 0 | 0 | 0 | yes | **0** | yes |, |
-| devai | 12 | 12.5 | **0** | 0 | 12: 12/12 | 0 | 0 | 0 | **MISSING** | 7 | yes |, |
-| gender | 16 | 6.1 | **0** | 0 | **16: 0/8 (no alt)** | 0 | 0 | 0 | yes | 7 | yes |, |
-| sel | 13 | 12.8 | **0** | 0 | 13: 13/13 | 0 | 0 | 0 | **MISSING** | 7 | yes |, |
-| law | 13 | 18.6 | **0** | 0 | 13: 6/7 | 0 | 0 | 1 | yes | 7 | yes |, |
-| poa | 13 | 17.5 | 13 | 0 | 13: 6/7 | 0 | 0 | 1 | yes | 7 | yes |, |
-| media | 12 | 14.1 | **1** | 0 | 12: 11/12 | 0 | 0 | 0 | yes | 7 | yes |, |
-| gandhi | 13 | 14.2 | 13 | 0 | 13: 7/7 | 0 | 0 | 0 | yes | 7 | yes |, |
+| dataviz | 12 | 14.9 | 12 | 0 | 12: 10/11 | 0 | 0 | 0 | **MISSING** | 7 | yes | – |
+| powerBI | 8 | 27.0 | 8 | 0 | **8: 0/8 (no alt)** | 0 | 0 | 0 | yes | **0** | yes | – |
+| devai | 12 | 12.5 | **0** | 0 | 12: 12/12 | 0 | 0 | 0 | **MISSING** | 7 | yes | – |
+| gender | 16 | 6.1 | **0** | 0 | **16: 0/8 (no alt)** | 0 | 0 | 0 | yes | 7 | yes | – |
+| sel | 13 | 12.8 | **0** | 0 | 13: 13/13 | 0 | 0 | 0 | **MISSING** | 7 | yes | – |
+| law | 13 | 18.6 | **0** | 0 | 13: 6/7 | 0 | 0 | 1 | yes | 7 | yes | – |
+| poa | 13 | 17.5 | 13 | 0 | 13: 6/7 | 0 | 0 | 1 | yes | 7 | yes | – |
+| media | 12 | 14.1 | **1** | 0 | 12: 11/12 | 0 | 0 | 0 | yes | 7 | yes | – |
+| gandhi | 13 | 14.2 | 13 | 0 | 13: 7/7 | 0 | 0 | 0 | yes | 7 | yes | – |
 | intervention | 14 | 15.6 | 14 | 1 | 0: 0/0 | 14 | 13 | 4 | yes | 7 | yes | yes |
-| nvc-rj | 12 | 12.3 | 12 | 0 | **5: 0/5 (no alt)** | 12 | 12 | 0 | yes | 7 | yes |, |
+| nvc-rj | 12 | 12.3 | 12 | 0 | **5: 0/5 (no alt)** | 12 | 12 | 0 | yes | 7 | yes | – |
 
 ## Reading the matrix
 - **coach (Vandana/Varna):** `N: v/r` = N coach-callouts, v mention Vandana, r mention Varna. Gold courses alternate (both > 0). **Bold '(no alt)'** = Varna-only, fails C3: **pubpol, pubchoice, gender, nvc-rj**. `0:0/0` = no coach-callouts at all: **intervention, livelihoods**.

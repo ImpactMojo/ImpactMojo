@@ -74,6 +74,7 @@
     { t:"Public Finance & Budgeting 101", u:"/101-courses/public-finance-budgeting.html", o:"Public Finance & Budgeting 101: fiscal architecture, budget cycles, taxation, and intergovernmental transfers in South Asia."},
     { t:"Qualitative Analysis Software 101", u:"/101-courses/qda-software.html", o:"Qualitative Analysis Software 101: a free foundational course on NVivo, MAXQDA, ATLAS.ti and the free tools Taguette and QualCoder."},
     { t:"Qualitative Methods 101", u:"/101-courses/qual-methods.html", o:"Qualitative Methods 101: a free foundational course for development practitioners and researchers in South Asia."},
+    { t:"R & Python for Development: a South Asia 101", u:"/101-courses/r-python-dev.html", o:"Learn R and Python from absolute zero for development-sector data work in South Asia: run real code live in your browser, no installation."},
     { t:"Research Ethics 101", u:"/101-courses/research-ethics.html", o:"Research Ethics 101: a free foundational course for development practitioners and researchers in South Asia."},
     { t:"Safeguarding & PSEA 101", u:"/101-courses/safeguarding-psea.html", o:"Data Literacy 101: a free foundational course for development practitioners in South Asia."},
     { t:"SEL Basics 101", u:"/101-courses/sel-basics.html", o:"SEL Basics 101: a free foundational course for educators and education-programme staff in South Asia."},
@@ -160,9 +161,9 @@
 
     // Premium / Pricing
     { re: /\bpremium\b(?!.*(what|include|benefit|price))/i,
-      a: "**Practitioner** (₹399 a month) opens all 18 Practice Packs in full, the Research Question Builder Pro and Theory of Change Workbench Pro, and certificates with PDF download. **Professional** (₹999 a month) adds Qualitative Insights Lab Pro, Statistical Code Converter Pro, VaniScribe AI transcription, copying code from the Visualization Cookbook, the DevEconomics Toolkit, and priority coaching. DevData Practice is free to use. Field Notes from a Dev Economist is free. See the Premium page for current prices." },
+      a: "**Practitioner** (₹399 a month) opens all 18 Practice Packs in full, the Research Question Builder Pro and Theory of Change Workbench Pro, and certificates with PDF download. **Professional** (₹999 a month) adds export from the Qualitative Insights Lab and Statistical Code Converter, the VaniScribe Colab notebook, hosted models for the Advisory Board, copying code from the Visualization Cookbook, the DevEconomics Toolkit, and priority coaching. DevData Practice is free to use. The Advisory Board is free to try with your own AI provider key, and Professional adds ImpactMojo's hosted models. Field Notes from a Dev Economist is free. See the Premium page for current prices." },
     { re: /\b(what('| i)?s|about).+premium|\bpremium\b.+(include|cover|benefit)/i,
-      a: "**Practitioner** (₹399 a month) opens all 18 Practice Packs in full, the Research Question Builder Pro and Theory of Change Workbench Pro, and certificates with PDF download. **Professional** (₹999 a month) adds Qualitative Insights Lab Pro, Statistical Code Converter Pro, VaniScribe AI transcription, copying code from the Visualization Cookbook, the DevEconomics Toolkit, and priority coaching. DevData Practice is free to use. Field Notes from a Dev Economist is free. See the Premium page for current prices." },
+      a: "**Practitioner** (₹399 a month) opens all 18 Practice Packs in full, the Research Question Builder Pro and Theory of Change Workbench Pro, and certificates with PDF download. **Professional** (₹999 a month) adds export from the Qualitative Insights Lab and Statistical Code Converter, the VaniScribe Colab notebook, hosted models for the Advisory Board, copying code from the Visualization Cookbook, the DevEconomics Toolkit, and priority coaching. DevData Practice is free to use. The Advisory Board is free to try with your own AI provider key, and Professional adds ImpactMojo's hosted models. Field Notes from a Dev Economist is free. See the Premium page for current prices." },
     { re: /\b(price|cost|fee|paid|free).+premium|\bpremium.+(price|cost|fee)/i,
       a: "Premium has two plans: **Practitioner** (₹399 a month) and **Professional** (₹999 a month). The Premium page lists what each includes. The courses, labs and games are free." },
 
@@ -236,7 +237,7 @@
 
     // Flagship count
     { re: /how many.*course|flagship|all.*course/i,
-      a: () => "We have **21 flagship courses** and **59 foundational courses**, 80 in all. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
+      a: () => "We have **21 flagship courses** and **60 foundational courses**, 81 in all. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
 
     // PoA specific
     { re: /poa|politics.*aspiration|nrega|rti|nfsa|forest.*right/i,
@@ -269,7 +270,7 @@
       a: "**Social-Emotional Learning for Practitioners** is our flagship course on practitioner wellbeing, burnout prevention, empathy, resilience, facilitation skills, conflict resolution, and reflective practice. 13 modules with 55+ term interactive lexicon. Visit: /courses/sel/" },
     // VaniScribe
     { re: /vaniscribe|transcri|field.*interview|fgd.*transcri|kii.*transcri|south.*asian.*language|sarvam|diarization/i,
-      a: "**VaniScribe** is our premium AI transcription tool for development researchers. Transcribe field interviews, FGDs, and KIIs in Hindi, Tamil, Bengali, and 10+ South Asian languages using Sarvam AI. Features speaker diarization, auto-timestamping, and export to structured formats for qualitative analysis. Visit: /premium.html" },
+      a: "**VaniScribe** transcribes field interviews and recordings in the browser in Hindi, Bengali, Tamil, Telugu and other Indian languages, using your own Sarvam AI key, so it is free to try. The Professional Colab notebook adds speaker labels, interviews up to 60 minutes and batches of up to 20 files. Open it at /premium-tools/vaniscribe.html" },
     // Visualization Cookbook
     { re: /viz.*cookbook|visualization.*cookbook|chart.*recipe|chart.*type|python.*chart|data.*viz.*code/i,
       a: "The **Visualization Cookbook** has 63 chart recipes with Python code, organised by the question you are asking of your data (comparison, distribution, relationship, composition, time series, spatial). Browsing is free. Copying the code needs a Professional plan. Open it at /premium-tools/viz-cookbook.html" },

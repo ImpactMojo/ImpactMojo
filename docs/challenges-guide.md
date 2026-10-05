@@ -53,7 +53,7 @@ ImpactMojo offers **15 challenges across 6 learning tracks**, ranging from Begin
 
 | Challenge | Difficulty | Partner |
 |-----------|-----------|---------|
-| Apply Gandhian Strategy to a Contemporary Social Movement | Beginner |: |
+| Apply Gandhian Strategy to a Contemporary Social Movement | Beginner | – |
 | Draft an RTI Strategy for an Accountability Campaign | Intermediate | Jan Sarokar (Citizens' Group) |
 
 **What you do:** Apply political philosophy frameworks to real social movements, or design a Right to Information strategy for a citizen accountability campaign.

@@ -33,7 +33,7 @@
   - [ImpactLex (Glossary)](impactlex-guide.md)
   - [FieldCases (Case Library)](fieldcases-guide.md)
   - [DevDiscourses (Research)](devdiscourses-guide.md)
-  - [Premium Tools Overview](premium-tools-guide.md)
+  - [Pro Studio guide](premium-tools-guide.md)
   - [VaniScribe Guide](vaniscribe-guide.md)
   - [DevData Practice](devdata-practice-guide.md)
   - [DevEconomics Toolkit](deveconomics-toolkit-guide.md)
